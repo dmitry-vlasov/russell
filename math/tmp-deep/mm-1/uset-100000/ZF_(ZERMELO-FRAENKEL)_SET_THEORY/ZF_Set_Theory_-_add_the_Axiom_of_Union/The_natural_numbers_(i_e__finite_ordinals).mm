@@ -1,18 +1,27 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Transfinite_induction.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The natural numbers (i.e. finite ordinals)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Declare new symbol. $)
-$c om  $.
-$( Greek letter omega $)
-$( Extend class notation to include the class of natural numbers. $)
+
+$(Declare new symbol. $)
+
+$c om $.
+
+$(Greek letter omega $)
+
+$(Extend class notation to include the class of natural numbers. $)
+
 ${
-	com $a class om $.
+	$v  $.
+	a_com $a class om $.
 $}
-$( Define the class of natural numbers, which are all ordinal numbers that
+
+$(Define the class of natural numbers, which are all ordinal numbers that
        are less than every limit ordinal, i.e. all finite ordinals.  Our
        definition is a variant of the Definition of N of [BellMachover]
        p. 471.  See ~ dfom2 for an alternate definition.  Later, when we assume
@@ -25,173 +34,198 @@ $( Define the class of natural numbers, which are all ordinal numbers that
        ( ~ df-nn ) that are a subset of the complex numbers defined much later
        in our development, although the two sets have analogous properties and
        operations defined on them.  (Contributed by NM, 15-May-1994.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	fdf-om_0 $f set x $.
-	fdf-om_1 $f set y $.
-	df-om $a |- om = { x e. On | A. y ( Lim y -> x e. y ) } $.
+	$v x y  $.
+	$d x y  $.
+	f0_df-om $f set x $.
+	f1_df-om $f set y $.
+	a_df-om $a |- om = { x e. On | A. y ( Lim y -> x e. y ) } $.
 $}
-$( An alternate definition of the set of natural numbers ` om ` .
+
+$(An alternate definition of the set of natural numbers ` om ` .
        Definition 7.28 of [TakeutiZaring] p. 42, who use the symbol K_I for the
        inner class builder of non-limit ordinal numbers (see ~ nlimon ).
        (Contributed by NM, 1-Nov-2004.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	idfom2_0 $f set z $.
-	fdfom2_0 $f set x $.
-	fdfom2_1 $f set y $.
-	dfom2 $p |- om = { x e. On | suc x C_ { y e. On | -. Lim y } } $= com idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 wal fdfom2_0 con0 crab fdfom2_0 sup_set_class csuc fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wss fdfom2_0 con0 crab fdfom2_0 idfom2_0 df-om idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 wal fdfom2_0 sup_set_class csuc fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wss fdfom2_0 con0 fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 wal idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi idfom2_0 wal fdfom2_0 sup_set_class csuc fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wss fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi idfom2_0 fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi wi idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi wi idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wi wi idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wi fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel wa idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn wb idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class con0 wcel wa idfom2_0 sup_set_class fdfom2_0 sup_set_class wss idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class fdfom2_0 sup_set_class onsssuc idfom2_0 sup_set_class fdfom2_0 sup_set_class ontri1 bitr3d ancoms idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wb fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel wa fdfom2_1 sup_set_class wlim wn idfom2_0 sup_set_class wlim wn fdfom2_1 idfom2_0 sup_set_class con0 fdfom2_1 sup_set_class idfom2_0 sup_set_class wceq fdfom2_1 sup_set_class wlim idfom2_0 sup_set_class wlim fdfom2_1 sup_set_class idfom2_0 sup_set_class limeq notbid elrab a1i imbi12d pm5.74da idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wa fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi wi idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wi wi idfom2_0 sup_set_class wlim idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wa fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel idfom2_0 sup_set_class wlim idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class cvv wcel idfom2_0 sup_set_class wlim idfom2_0 sup_set_class con0 wcel idfom2_0 vex idfom2_0 sup_set_class cvv limelon mpan pm4.71ri imbi1i idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel impexp idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wi idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wi fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class wlim wn wi idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa wi idfom2_0 sup_set_class wlim fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel con34b idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn wa fdfom2_0 sup_set_class idfom2_0 sup_set_class wcel wn idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class wlim wn ibar imbi2d syl5bb pm5.74i 3bitri syl6rbbr idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi wi idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel wa idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel wi idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel impexp fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel wa idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab wcel fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel wa idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel simpr fdfom2_0 sup_set_class con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class csuc con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class con0 wcel wi fdfom2_0 sup_set_class suceloni fdfom2_0 sup_set_class csuc con0 wcel idfom2_0 sup_set_class fdfom2_0 sup_set_class csuc wcel idfom2_0 sup_set_class con0 wcel fdfom2_0 sup_set_class csuc idfom2_0 sup_set_class onelon ex syl ancrd impbid2 imbi1d syl5bbr bitrd albidv idfom2_0 fdfom2_0 sup_set_class csuc fdfom2_1 sup_set_class wlim wn fdfom2_1 con0 crab dfss2 syl6bbr rabbiia eqtri $.
+	$v x y  $.
+	$d x z  $.
+	$d y z  $.
+	f0_dfom2 $f set x $.
+	f1_dfom2 $f set y $.
+	i0_dfom2 $f set z $.
+	p_dfom2 $p |- om = { x e. On | suc x C_ { y e. On | -. Lim y } } $= f0_dfom2 i0_dfom2 a_df-om i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class p_onsssuc i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class p_ontri1 i0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class a_con0 a_wcel a_wa i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_wss i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn p_bitr3d i0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn a_wb p_ancoms f1_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class p_limeq f1_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wceq f1_dfom2 a_sup_set_class a_wlim i0_dfom2 a_sup_set_class a_wlim p_notbid f1_dfom2 a_sup_set_class a_wlim a_wn i0_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 i0_dfom2 a_sup_set_class a_con0 p_elrab i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wb f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel a_wa p_a1i f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel a_wa i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa p_imbi12d f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wi p_pm5.74da i0_dfom2 p_vex i0_dfom2 a_sup_set_class a_cvv p_limelon i0_dfom2 a_sup_set_class a_cvv a_wcel i0_dfom2 a_sup_set_class a_wlim i0_dfom2 a_sup_set_class a_con0 a_wcel p_mpan i0_dfom2 a_sup_set_class a_wlim i0_dfom2 a_sup_set_class a_con0 a_wcel p_pm4.71ri i0_dfom2 a_sup_set_class a_wlim i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wa f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel p_imbi1i i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel p_impexp i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel p_con34b i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn p_ibar i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn p_imbi2d i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_wlim a_wn a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wi p_syl5bb i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wi p_pm5.74i i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wa f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wi a_wi p_3bitri f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wn i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim a_wn a_wa a_wi a_wi i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi p_syl6rbbr i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel p_impexp i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel p_simpr f0_dfom2 a_sup_set_class p_suceloni f0_dfom2 a_sup_set_class a_csuc i0_dfom2 a_sup_set_class p_onelon f0_dfom2 a_sup_set_class a_csuc a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel p_ex f0_dfom2 a_sup_set_class a_con0 a_wcel f0_dfom2 a_sup_set_class a_csuc a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel a_wi p_syl f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel p_ancrd f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel a_wa i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel p_impbid2 f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel a_wa i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel p_imbi1d i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel a_wa i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi p_syl5bbr f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi a_wi i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi p_bitrd f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi i0_dfom2 p_albidv i0_dfom2 f0_dfom2 a_sup_set_class a_csuc f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab p_dfss2 f0_dfom2 a_sup_set_class a_con0 a_wcel i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_wal i0_dfom2 a_sup_set_class f0_dfom2 a_sup_set_class a_csuc a_wcel i0_dfom2 a_sup_set_class f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wcel a_wi i0_dfom2 a_wal f0_dfom2 a_sup_set_class a_csuc f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wss p_syl6bbr i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_wal f0_dfom2 a_sup_set_class a_csuc f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wss f0_dfom2 a_con0 p_rabbiia a_com i0_dfom2 a_sup_set_class a_wlim f0_dfom2 a_sup_set_class i0_dfom2 a_sup_set_class a_wcel a_wi i0_dfom2 a_wal f0_dfom2 a_con0 a_crab f0_dfom2 a_sup_set_class a_csuc f1_dfom2 a_sup_set_class a_wlim a_wn f1_dfom2 a_con0 a_crab a_wss f0_dfom2 a_con0 a_crab p_eqtri $.
 $}
-$( Membership in omega.  The left conjunct can be eliminated if we assume
+
+$(Membership in omega.  The left conjunct can be eliminated if we assume
        the Axiom of Infinity; see ~ elom3 .  (Contributed by NM,
        15-May-1994.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d A x y $.
-	ielom_0 $f set y $.
-	felom_0 $f set x $.
-	felom_1 $f class A $.
-	elom $p |- ( A e. om <-> ( A e. On /\ A. x ( Lim x -> A e. x ) ) ) $= felom_0 sup_set_class wlim ielom_0 sup_set_class felom_0 sup_set_class wcel wi felom_0 wal felom_0 sup_set_class wlim felom_1 felom_0 sup_set_class wcel wi felom_0 wal ielom_0 felom_1 con0 com ielom_0 sup_set_class felom_1 wceq felom_0 sup_set_class wlim ielom_0 sup_set_class felom_0 sup_set_class wcel wi felom_0 sup_set_class wlim felom_1 felom_0 sup_set_class wcel wi felom_0 ielom_0 sup_set_class felom_1 wceq ielom_0 sup_set_class felom_0 sup_set_class wcel felom_1 felom_0 sup_set_class wcel felom_0 sup_set_class wlim ielom_0 sup_set_class felom_1 felom_0 sup_set_class eleq1 imbi2d albidv ielom_0 felom_0 df-om elrab2 $.
+	$v x A  $.
+	$d A x y  $.
+	f0_elom $f set x $.
+	f1_elom $f class A $.
+	i0_elom $f set y $.
+	p_elom $p |- ( A e. om <-> ( A e. On /\ A. x ( Lim x -> A e. x ) ) ) $= i0_elom a_sup_set_class f1_elom f0_elom a_sup_set_class p_eleq1 i0_elom a_sup_set_class f1_elom a_wceq i0_elom a_sup_set_class f0_elom a_sup_set_class a_wcel f1_elom f0_elom a_sup_set_class a_wcel f0_elom a_sup_set_class a_wlim p_imbi2d i0_elom a_sup_set_class f1_elom a_wceq f0_elom a_sup_set_class a_wlim i0_elom a_sup_set_class f0_elom a_sup_set_class a_wcel a_wi f0_elom a_sup_set_class a_wlim f1_elom f0_elom a_sup_set_class a_wcel a_wi f0_elom p_albidv i0_elom f0_elom a_df-om f0_elom a_sup_set_class a_wlim i0_elom a_sup_set_class f0_elom a_sup_set_class a_wcel a_wi f0_elom a_wal f0_elom a_sup_set_class a_wlim f1_elom f0_elom a_sup_set_class a_wcel a_wi f0_elom a_wal i0_elom f1_elom a_con0 a_com p_elrab2 $.
 $}
-$( Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
+
+$(Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	iomsson_0 $f set x $.
-	iomsson_1 $f set y $.
-	omsson $p |- om C_ On $= com iomsson_0 sup_set_class csuc iomsson_1 sup_set_class wlim wn iomsson_1 con0 crab wss iomsson_0 con0 crab con0 iomsson_0 iomsson_1 dfom2 iomsson_0 sup_set_class csuc iomsson_1 sup_set_class wlim wn iomsson_1 con0 crab wss iomsson_0 con0 ssrab2 eqsstri $.
+	$v  $.
+	$d x y  $.
+	i0_omsson $f set x $.
+	i1_omsson $f set y $.
+	p_omsson $p |- om C_ On $= i0_omsson i1_omsson p_dfom2 i0_omsson a_sup_set_class a_csuc i1_omsson a_sup_set_class a_wlim a_wn i1_omsson a_con0 a_crab a_wss i0_omsson a_con0 p_ssrab2 a_com i0_omsson a_sup_set_class a_csuc i1_omsson a_sup_set_class a_wlim a_wn i1_omsson a_con0 a_crab a_wss i0_omsson a_con0 a_crab a_con0 p_eqsstri $.
 $}
-$( The class of natural numbers is a subclass of any (infinite) limit
+
+$(The class of natural numbers is a subclass of any (infinite) limit
        ordinal.  Exercise 1 of [TakeutiZaring] p. 44.  Remarkably, our proof
        does not require the Axiom of Infinity.  (Contributed by NM,
        30-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	ilimomss_0 $f set x $.
-	ilimomss_1 $f set y $.
-	flimomss_0 $f class A $.
-	limomss $p |- ( Lim A -> om C_ A ) $= flimomss_0 word flimomss_0 wlim com flimomss_0 wss flimomss_0 limord flimomss_0 word flimomss_0 con0 wcel flimomss_0 con0 wceq wo flimomss_0 wlim com flimomss_0 wss wi flimomss_0 ordeleqon flimomss_0 con0 wcel flimomss_0 wlim com flimomss_0 wss wi flimomss_0 con0 wceq flimomss_0 con0 wcel flimomss_0 wlim com flimomss_0 wss flimomss_0 con0 wcel flimomss_0 wlim wa ilimomss_0 com flimomss_0 flimomss_0 con0 wcel flimomss_0 wlim ilimomss_0 sup_set_class com wcel ilimomss_0 sup_set_class flimomss_0 wcel wi flimomss_0 con0 wcel ilimomss_0 sup_set_class com wcel flimomss_0 wlim ilimomss_0 sup_set_class flimomss_0 wcel ilimomss_0 sup_set_class com wcel ilimomss_1 sup_set_class wlim ilimomss_0 sup_set_class ilimomss_1 sup_set_class wcel wi ilimomss_1 wal flimomss_0 con0 wcel flimomss_0 wlim ilimomss_0 sup_set_class flimomss_0 wcel wi ilimomss_0 sup_set_class com wcel ilimomss_0 sup_set_class con0 wcel ilimomss_1 sup_set_class wlim ilimomss_0 sup_set_class ilimomss_1 sup_set_class wcel wi ilimomss_1 wal ilimomss_1 ilimomss_0 sup_set_class elom simprbi ilimomss_1 sup_set_class wlim ilimomss_0 sup_set_class ilimomss_1 sup_set_class wcel wi flimomss_0 wlim ilimomss_0 sup_set_class flimomss_0 wcel wi ilimomss_1 flimomss_0 con0 ilimomss_1 sup_set_class flimomss_0 wceq ilimomss_1 sup_set_class wlim flimomss_0 wlim ilimomss_0 sup_set_class ilimomss_1 sup_set_class wcel ilimomss_0 sup_set_class flimomss_0 wcel ilimomss_1 sup_set_class flimomss_0 limeq ilimomss_1 sup_set_class flimomss_0 ilimomss_0 sup_set_class eleq2 imbi12d spcgv syl5 com23 imp ssrdv ex flimomss_0 con0 wceq com flimomss_0 wss flimomss_0 wlim flimomss_0 con0 wceq com flimomss_0 wss com con0 wss omsson flimomss_0 con0 com sseq2 mpbiri a1d jaoi sylbi mpcom $.
+	$v A  $.
+	$d x y A  $.
+	f0_limomss $f class A $.
+	i0_limomss $f set x $.
+	i1_limomss $f set y $.
+	p_limomss $p |- ( Lim A -> om C_ A ) $= f0_limomss p_limord f0_limomss p_ordeleqon i1_limomss i0_limomss a_sup_set_class p_elom i0_limomss a_sup_set_class a_com a_wcel i0_limomss a_sup_set_class a_con0 a_wcel i1_limomss a_sup_set_class a_wlim i0_limomss a_sup_set_class i1_limomss a_sup_set_class a_wcel a_wi i1_limomss a_wal p_simprbi i1_limomss a_sup_set_class f0_limomss p_limeq i1_limomss a_sup_set_class f0_limomss i0_limomss a_sup_set_class p_eleq2 i1_limomss a_sup_set_class f0_limomss a_wceq i1_limomss a_sup_set_class a_wlim f0_limomss a_wlim i0_limomss a_sup_set_class i1_limomss a_sup_set_class a_wcel i0_limomss a_sup_set_class f0_limomss a_wcel p_imbi12d i1_limomss a_sup_set_class a_wlim i0_limomss a_sup_set_class i1_limomss a_sup_set_class a_wcel a_wi f0_limomss a_wlim i0_limomss a_sup_set_class f0_limomss a_wcel a_wi i1_limomss f0_limomss a_con0 p_spcgv i0_limomss a_sup_set_class a_com a_wcel i1_limomss a_sup_set_class a_wlim i0_limomss a_sup_set_class i1_limomss a_sup_set_class a_wcel a_wi i1_limomss a_wal f0_limomss a_con0 a_wcel f0_limomss a_wlim i0_limomss a_sup_set_class f0_limomss a_wcel a_wi p_syl5 f0_limomss a_con0 a_wcel i0_limomss a_sup_set_class a_com a_wcel f0_limomss a_wlim i0_limomss a_sup_set_class f0_limomss a_wcel p_com23 f0_limomss a_con0 a_wcel f0_limomss a_wlim i0_limomss a_sup_set_class a_com a_wcel i0_limomss a_sup_set_class f0_limomss a_wcel a_wi p_imp f0_limomss a_con0 a_wcel f0_limomss a_wlim a_wa i0_limomss a_com f0_limomss p_ssrdv f0_limomss a_con0 a_wcel f0_limomss a_wlim a_com f0_limomss a_wss p_ex p_omsson f0_limomss a_con0 a_com p_sseq2 f0_limomss a_con0 a_wceq a_com f0_limomss a_wss a_com a_con0 a_wss p_mpbiri f0_limomss a_con0 a_wceq a_com f0_limomss a_wss f0_limomss a_wlim p_a1d f0_limomss a_con0 a_wcel f0_limomss a_wlim a_com f0_limomss a_wss a_wi f0_limomss a_con0 a_wceq p_jaoi f0_limomss a_word f0_limomss a_con0 a_wcel f0_limomss a_con0 a_wceq a_wo f0_limomss a_wlim a_com f0_limomss a_wss a_wi p_sylbi f0_limomss a_word f0_limomss a_wlim a_com f0_limomss a_wss p_mpcom $.
 $}
-$( A natural number is an ordinal number.  (Contributed by NM,
+
+$(A natural number is an ordinal number.  (Contributed by NM,
      27-Jun-1994.) $)
+
 ${
-	$v A $.
-	fnnon_0 $f class A $.
-	nnon $p |- ( A e. om -> A e. On ) $= com con0 fnnon_0 omsson sseli $.
+	$v A  $.
+	f0_nnon $f class A $.
+	p_nnon $p |- ( A e. om -> A e. On ) $= p_omsson a_com a_con0 f0_nnon p_sseli $.
 $}
-$( A natural number is an ordinal number.  (Contributed by NM,
+
+$(A natural number is an ordinal number.  (Contributed by NM,
        27-Jun-1994.) $)
+
 ${
-	$v A $.
-	fnnoni_0 $f class A $.
-	ennoni_0 $e |- A e. om $.
-	nnoni $p |- A e. On $= fnnoni_0 com wcel fnnoni_0 con0 wcel ennoni_0 fnnoni_0 nnon ax-mp $.
+	$v A  $.
+	f0_nnoni $f class A $.
+	e0_nnoni $e |- A e. om $.
+	p_nnoni $p |- A e. On $= e0_nnoni f0_nnoni p_nnon f0_nnoni a_com a_wcel f0_nnoni a_con0 a_wcel a_ax-mp $.
 $}
-$( A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) $)
+
+$(A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) $)
+
 ${
-	$v A $.
-	fnnord_0 $f class A $.
-	nnord $p |- ( A e. om -> Ord A ) $= fnnord_0 com wcel fnnord_0 con0 wcel fnnord_0 word fnnord_0 nnon fnnord_0 eloni syl $.
+	$v A  $.
+	f0_nnord $f class A $.
+	p_nnord $p |- ( A e. om -> Ord A ) $= f0_nnord p_nnon f0_nnord p_eloni f0_nnord a_com a_wcel f0_nnord a_con0 a_wcel f0_nnord a_word p_syl $.
 $}
-$( Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
+
+$(Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	iordom_0 $f set x $.
-	iordom_1 $f set y $.
-	iordom_2 $f set z $.
-	ordom $p |- Ord om $= com wtr com con0 wss con0 word com word com wtr iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class com wcel wa iordom_1 sup_set_class com wcel wi iordom_0 wal iordom_1 iordom_1 iordom_0 com dftr2 iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class com wcel wa iordom_1 sup_set_class com wcel wi iordom_0 iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class com wcel iordom_1 sup_set_class com wcel iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class con0 wcel iordom_2 sup_set_class wlim iordom_0 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 wal wa iordom_1 sup_set_class con0 wcel iordom_2 sup_set_class wlim iordom_1 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 wal wa iordom_0 sup_set_class com wcel iordom_1 sup_set_class com wcel iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class con0 wcel iordom_1 sup_set_class con0 wcel iordom_2 sup_set_class wlim iordom_0 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 wal iordom_2 sup_set_class wlim iordom_1 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 wal iordom_0 sup_set_class con0 wcel iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_1 sup_set_class con0 wcel iordom_0 sup_set_class iordom_1 sup_set_class onelon expcom iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_2 sup_set_class wlim iordom_0 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 sup_set_class wlim iordom_1 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_2 sup_set_class wlim iordom_0 sup_set_class iordom_2 sup_set_class wcel iordom_1 sup_set_class iordom_2 sup_set_class wcel iordom_2 sup_set_class wlim iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class iordom_2 sup_set_class wcel iordom_1 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 sup_set_class wlim iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class iordom_2 sup_set_class wcel iordom_1 sup_set_class iordom_2 sup_set_class wcel iordom_2 sup_set_class wlim iordom_2 sup_set_class word iordom_2 sup_set_class wtr iordom_1 sup_set_class iordom_0 sup_set_class wcel iordom_0 sup_set_class iordom_2 sup_set_class wcel wa iordom_1 sup_set_class iordom_2 sup_set_class wcel wi iordom_2 sup_set_class limord iordom_2 sup_set_class ordtr iordom_2 sup_set_class iordom_1 sup_set_class iordom_0 sup_set_class trel 3syl exp3a com12 a2d alimdv anim12d iordom_2 iordom_0 sup_set_class elom iordom_2 iordom_1 sup_set_class elom 3imtr4g imp ax-gen mpgbir omsson ordon com con0 trssord mp3an $.
+	$v  $.
+	$d x y z  $.
+	i0_ordom $f set x $.
+	i1_ordom $f set y $.
+	i2_ordom $f set z $.
+	p_ordom $p |- Ord om $= i1_ordom i0_ordom a_com p_dftr2 i0_ordom a_sup_set_class i1_ordom a_sup_set_class p_onelon i0_ordom a_sup_set_class a_con0 a_wcel i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i1_ordom a_sup_set_class a_con0 a_wcel p_expcom i2_ordom a_sup_set_class p_limord i2_ordom a_sup_set_class p_ordtr i2_ordom a_sup_set_class i1_ordom a_sup_set_class i0_ordom a_sup_set_class p_trel i2_ordom a_sup_set_class a_wlim i2_ordom a_sup_set_class a_word i2_ordom a_sup_set_class a_wtr i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wa i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi p_3syl i2_ordom a_sup_set_class a_wlim i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel p_exp3a i2_ordom a_sup_set_class a_wlim i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi p_com12 i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i2_ordom a_sup_set_class a_wlim i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel p_a2d i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i2_ordom a_sup_set_class a_wlim i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom a_sup_set_class a_wlim i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom p_alimdv i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class a_con0 a_wcel i1_ordom a_sup_set_class a_con0 a_wcel i2_ordom a_sup_set_class a_wlim i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom a_wal i2_ordom a_sup_set_class a_wlim i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom a_wal p_anim12d i2_ordom i0_ordom a_sup_set_class p_elom i2_ordom i1_ordom a_sup_set_class p_elom i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class a_con0 a_wcel i2_ordom a_sup_set_class a_wlim i0_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom a_wal a_wa i1_ordom a_sup_set_class a_con0 a_wcel i2_ordom a_sup_set_class a_wlim i1_ordom a_sup_set_class i2_ordom a_sup_set_class a_wcel a_wi i2_ordom a_wal a_wa i0_ordom a_sup_set_class a_com a_wcel i1_ordom a_sup_set_class a_com a_wcel p_3imtr4g i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class a_com a_wcel i1_ordom a_sup_set_class a_com a_wcel p_imp i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class a_com a_wcel a_wa i1_ordom a_sup_set_class a_com a_wcel a_wi i0_ordom a_ax-gen a_com a_wtr i1_ordom a_sup_set_class i0_ordom a_sup_set_class a_wcel i0_ordom a_sup_set_class a_com a_wcel a_wa i1_ordom a_sup_set_class a_com a_wcel a_wi i0_ordom a_wal i1_ordom p_mpgbir p_omsson p_ordon a_com a_con0 p_trssord a_com a_wtr a_com a_con0 a_wss a_con0 a_word a_com a_word p_mp3an $.
 $}
-$( A member of a natural number is a natural number.  (Contributed by NM,
+
+$(A member of a natural number is a natural number.  (Contributed by NM,
      21-Jun-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felnn_0 $f class A $.
-	felnn_1 $f class B $.
-	elnn $p |- ( ( A e. B /\ B e. om ) -> A e. om ) $= com word com wtr felnn_0 felnn_1 wcel felnn_1 com wcel wa felnn_0 com wcel wi ordom com ordtr com felnn_0 felnn_1 trel mp2b $.
+	$v A B  $.
+	f0_elnn $f class A $.
+	f1_elnn $f class B $.
+	p_elnn $p |- ( ( A e. B /\ B e. om ) -> A e. om ) $= p_ordom a_com p_ordtr a_com f0_elnn f1_elnn p_trel a_com a_word a_com a_wtr f0_elnn f1_elnn a_wcel f1_elnn a_com a_wcel a_wa f0_elnn a_com a_wcel a_wi p_mp2b $.
 $}
-$( The class of natural numbers ` om ` is either an ordinal number (if we
+
+$(The class of natural numbers ` om ` is either an ordinal number (if we
      accept the Axiom of Infinity) or the proper class of all ordinal numbers
      (if we deny the Axiom of Infinity).  Remark in [TakeutiZaring] p. 43.
      (Contributed by NM, 10-May-1998.) $)
+
 ${
-	omon $p |- ( om e. On \/ om = On ) $= com word com con0 wcel com con0 wceq wo ordom com ordeleqon mpbi $.
+	$v  $.
+	p_omon $p |- ( om e. On \/ om = On ) $= p_ordom a_com p_ordeleqon a_com a_word a_com a_con0 a_wcel a_com a_con0 a_wceq a_wo p_mpbi $.
 $}
-$( Omega is an ordinal number.  (Contributed by Mario Carneiro,
+
+$(Omega is an ordinal number.  (Contributed by Mario Carneiro,
        30-Jan-2013.) $)
+
 ${
-	omelon2 $p |- ( om e. _V -> om e. On ) $= com con0 wcel com cvv wcel com con0 wcel wn com con0 wceq com cvv wcel wn com con0 wcel com con0 wceq omon ori com con0 wceq com cvv wcel con0 cvv wcel onprc com con0 cvv eleq1 mtbiri syl con4i $.
+	$v  $.
+	p_omelon2 $p |- ( om e. _V -> om e. On ) $= p_omon a_com a_con0 a_wcel a_com a_con0 a_wceq p_ori p_onprc a_com a_con0 a_cvv p_eleq1 a_com a_con0 a_wceq a_com a_cvv a_wcel a_con0 a_cvv a_wcel p_mtbiri a_com a_con0 a_wcel a_wn a_com a_con0 a_wceq a_com a_cvv a_wcel a_wn p_syl a_com a_con0 a_wcel a_com a_cvv a_wcel p_con4i $.
 $}
-$( A natural number is not a limit ordinal.  (Contributed by NM,
+
+$(A natural number is not a limit ordinal.  (Contributed by NM,
        18-Oct-1995.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d x A $.
-	innlim_0 $f set x $.
-	fnnlim_0 $f class A $.
-	nnlim $p |- ( A e. om -> -. Lim A ) $= fnnlim_0 com wcel fnnlim_0 wlim fnnlim_0 fnnlim_0 wcel fnnlim_0 com wcel fnnlim_0 word fnnlim_0 fnnlim_0 wcel wn fnnlim_0 nnord fnnlim_0 ordirr syl fnnlim_0 com wcel innlim_0 sup_set_class wlim fnnlim_0 innlim_0 sup_set_class wcel wi innlim_0 wal fnnlim_0 wlim fnnlim_0 fnnlim_0 wcel wi fnnlim_0 com wcel fnnlim_0 con0 wcel innlim_0 sup_set_class wlim fnnlim_0 innlim_0 sup_set_class wcel wi innlim_0 wal innlim_0 fnnlim_0 elom simprbi innlim_0 sup_set_class wlim fnnlim_0 innlim_0 sup_set_class wcel wi fnnlim_0 wlim fnnlim_0 fnnlim_0 wcel wi innlim_0 fnnlim_0 com innlim_0 sup_set_class fnnlim_0 wceq innlim_0 sup_set_class wlim fnnlim_0 wlim fnnlim_0 innlim_0 sup_set_class wcel fnnlim_0 fnnlim_0 wcel innlim_0 sup_set_class fnnlim_0 limeq innlim_0 sup_set_class fnnlim_0 fnnlim_0 eleq2 imbi12d spcgv mpd mtod $.
+	$v A  $.
+	$d x A  $.
+	f0_nnlim $f class A $.
+	i0_nnlim $f set x $.
+	p_nnlim $p |- ( A e. om -> -. Lim A ) $= f0_nnlim p_nnord f0_nnlim p_ordirr f0_nnlim a_com a_wcel f0_nnlim a_word f0_nnlim f0_nnlim a_wcel a_wn p_syl i0_nnlim f0_nnlim p_elom f0_nnlim a_com a_wcel f0_nnlim a_con0 a_wcel i0_nnlim a_sup_set_class a_wlim f0_nnlim i0_nnlim a_sup_set_class a_wcel a_wi i0_nnlim a_wal p_simprbi i0_nnlim a_sup_set_class f0_nnlim p_limeq i0_nnlim a_sup_set_class f0_nnlim f0_nnlim p_eleq2 i0_nnlim a_sup_set_class f0_nnlim a_wceq i0_nnlim a_sup_set_class a_wlim f0_nnlim a_wlim f0_nnlim i0_nnlim a_sup_set_class a_wcel f0_nnlim f0_nnlim a_wcel p_imbi12d i0_nnlim a_sup_set_class a_wlim f0_nnlim i0_nnlim a_sup_set_class a_wcel a_wi f0_nnlim a_wlim f0_nnlim f0_nnlim a_wcel a_wi i0_nnlim f0_nnlim a_com p_spcgv f0_nnlim a_com a_wcel i0_nnlim a_sup_set_class a_wlim f0_nnlim i0_nnlim a_sup_set_class a_wcel a_wi i0_nnlim a_wal f0_nnlim a_wlim f0_nnlim f0_nnlim a_wcel a_wi p_mpd f0_nnlim a_com a_wcel f0_nnlim a_wlim f0_nnlim f0_nnlim a_wcel p_mtod $.
 $}
-$( The class of natural numbers is a subclass of the class of non-limit
+
+$(The class of natural numbers is a subclass of the class of non-limit
        ordinal numbers.  Exercise 4 of [TakeutiZaring] p. 42.  (Contributed by
        NM, 2-Nov-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
+
 ${
-	$v x $.
-	fomssnlim_0 $f set x $.
-	omssnlim $p |- om C_ { x e. On | -. Lim x } $= com fomssnlim_0 sup_set_class wlim wn fomssnlim_0 con0 crab wss com con0 wss fomssnlim_0 sup_set_class wlim wn fomssnlim_0 com wral omsson fomssnlim_0 sup_set_class wlim wn fomssnlim_0 com fomssnlim_0 sup_set_class nnlim rgen fomssnlim_0 sup_set_class wlim wn fomssnlim_0 con0 com ssrab mpbir2an $.
+	$v x  $.
+	$d x  $.
+	f0_omssnlim $f set x $.
+	p_omssnlim $p |- om C_ { x e. On | -. Lim x } $= p_omsson f0_omssnlim a_sup_set_class p_nnlim f0_omssnlim a_sup_set_class a_wlim a_wn f0_omssnlim a_com p_rgen f0_omssnlim a_sup_set_class a_wlim a_wn f0_omssnlim a_con0 a_com p_ssrab a_com f0_omssnlim a_sup_set_class a_wlim a_wn f0_omssnlim a_con0 a_crab a_wss a_com a_con0 a_wss f0_omssnlim a_sup_set_class a_wlim a_wn f0_omssnlim a_com a_wral p_mpbir2an $.
 $}
-$( Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
+
+$(Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
      proof, however, does not require the Axiom of Infinity.  (Contributed by
      NM, 26-Mar-1995.)  (Proof shortened by Mario Carneiro, 2-Sep-2015.) $)
+
 ${
-	$v x $.
-	ilimom_0 $f set x $.
-	limom $p |- Lim om $= com word com wlim ordom com word com con0 wcel com con0 wceq wo com wlim com ordeleqon com con0 wcel com wlim com con0 wceq com con0 wcel ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel wi ilimom_0 wal com wlim com con0 wcel com com wcel ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel wi ilimom_0 wal com word com com wcel wn ordom com ordirr ax-mp com com wcel com con0 wcel ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel wi ilimom_0 wal ilimom_0 com elom baib mtbii com wlim wn ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel wi ilimom_0 ilimom_0 sup_set_class wlim com wlim wn com ilimom_0 sup_set_class wcel ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel com wlim ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel wn com ilimom_0 sup_set_class wceq com wlim ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wcel com ilimom_0 sup_set_class wceq ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class wss com ilimom_0 sup_set_class wcel com ilimom_0 sup_set_class wceq wo ilimom_0 sup_set_class limomss ilimom_0 sup_set_class wlim com word ilimom_0 sup_set_class word com ilimom_0 sup_set_class wss com ilimom_0 sup_set_class wcel com ilimom_0 sup_set_class wceq wo wb ordom ilimom_0 sup_set_class limord com ilimom_0 sup_set_class ordsseleq sylancr mpbid ord com ilimom_0 sup_set_class wceq com wlim ilimom_0 sup_set_class wlim com ilimom_0 sup_set_class limeq biimprcd syld con1d com12 alrimiv nsyl2 com con0 wceq com wlim con0 wlim limon com con0 limeq mpbiri jaoi sylbi ax-mp $.
+	$v  $.
+	i0_limom $f set x $.
+	p_limom $p |- Lim om $= p_ordom a_com p_ordeleqon p_ordom a_com p_ordirr a_com a_word a_com a_com a_wcel a_wn a_ax-mp i0_limom a_com p_elom a_com a_com a_wcel a_com a_con0 a_wcel i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_wi i0_limom a_wal p_baib a_com a_con0 a_wcel a_com a_com a_wcel i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_wi i0_limom a_wal p_mtbii i0_limom a_sup_set_class p_limomss p_ordom i0_limom a_sup_set_class p_limord a_com i0_limom a_sup_set_class p_ordsseleq i0_limom a_sup_set_class a_wlim a_com a_word i0_limom a_sup_set_class a_word a_com i0_limom a_sup_set_class a_wss a_com i0_limom a_sup_set_class a_wcel a_com i0_limom a_sup_set_class a_wceq a_wo a_wb p_sylancr i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wss a_com i0_limom a_sup_set_class a_wcel a_com i0_limom a_sup_set_class a_wceq a_wo p_mpbid i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_com i0_limom a_sup_set_class a_wceq p_ord a_com i0_limom a_sup_set_class p_limeq a_com i0_limom a_sup_set_class a_wceq a_com a_wlim i0_limom a_sup_set_class a_wlim p_biimprcd i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_wn a_com i0_limom a_sup_set_class a_wceq a_com a_wlim p_syld i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_com a_wlim p_con1d i0_limom a_sup_set_class a_wlim a_com a_wlim a_wn a_com i0_limom a_sup_set_class a_wcel p_com12 a_com a_wlim a_wn i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_wi i0_limom p_alrimiv a_com a_con0 a_wcel i0_limom a_sup_set_class a_wlim a_com i0_limom a_sup_set_class a_wcel a_wi i0_limom a_wal a_com a_wlim p_nsyl2 p_limon a_com a_con0 p_limeq a_com a_con0 a_wceq a_com a_wlim a_con0 a_wlim p_mpbiri a_com a_con0 a_wcel a_com a_wlim a_com a_con0 a_wceq p_jaoi a_com a_word a_com a_con0 a_wcel a_com a_con0 a_wceq a_wo a_com a_wlim p_sylbi a_com a_word a_com a_wlim a_ax-mp $.
 $}
-$( A class belongs to omega iff its successor does.  (Contributed by NM,
+
+$(A class belongs to omega iff its successor does.  (Contributed by NM,
      3-Dec-1995.) $)
+
 ${
-	$v A $.
-	fpeano2b_0 $f class A $.
-	peano2b $p |- ( A e. om <-> suc A e. om ) $= com wlim fpeano2b_0 com wcel fpeano2b_0 csuc com wcel wb limom com fpeano2b_0 limsuc ax-mp $.
+	$v A  $.
+	f0_peano2b $f class A $.
+	p_peano2b $p |- ( A e. om <-> suc A e. om ) $= p_limom a_com f0_peano2b p_limsuc a_com a_wlim f0_peano2b a_com a_wcel f0_peano2b a_csuc a_com a_wcel a_wb a_ax-mp $.
 $}
-$( A nonzero natural number is a successor.  (Contributed by NM,
+
+$(A nonzero natural number is a successor.  (Contributed by NM,
        18-Feb-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$d x A $.
-	fnnsuc_0 $f set x $.
-	fnnsuc_1 $f class A $.
-	nnsuc $p |- ( ( A e. om /\ A =/= (/) ) -> E. x e. om A = suc x ) $= fnnsuc_1 com wcel fnnsuc_1 c0 wne wa fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 com wrex fnnsuc_1 com wcel fnnsuc_1 c0 wne wa fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex fnnsuc_1 wlim fnnsuc_1 com wcel fnnsuc_1 wlim wn fnnsuc_1 c0 wne fnnsuc_1 nnlim adantr fnnsuc_1 com wcel fnnsuc_1 word fnnsuc_1 c0 wne fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex wn fnnsuc_1 wlim wi fnnsuc_1 nnord fnnsuc_1 word fnnsuc_1 c0 wne wa fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex wn fnnsuc_1 fnnsuc_1 cuni wceq fnnsuc_1 wlim fnnsuc_1 word fnnsuc_1 fnnsuc_1 cuni wceq fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex wn wb fnnsuc_1 c0 wne fnnsuc_0 fnnsuc_1 orduninsuc adantr fnnsuc_1 word fnnsuc_1 c0 wne fnnsuc_1 fnnsuc_1 cuni wceq fnnsuc_1 wlim fnnsuc_1 wlim fnnsuc_1 word fnnsuc_1 c0 wne fnnsuc_1 fnnsuc_1 cuni wceq w3a fnnsuc_1 df-lim biimpri 3expia sylbird sylan mt3d fnnsuc_1 com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 wrex fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 com wrex wi fnnsuc_1 c0 wne fnnsuc_1 com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 con0 com fnnsuc_1 com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 sup_set_class com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq wa fnnsuc_0 sup_set_class con0 wcel fnnsuc_1 com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 sup_set_class com wcel fnnsuc_1 com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_0 sup_set_class csuc com wcel fnnsuc_0 sup_set_class com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc wceq fnnsuc_1 com wcel fnnsuc_0 sup_set_class csuc com wcel fnnsuc_1 fnnsuc_0 sup_set_class csuc com eleq1 biimpcd fnnsuc_0 sup_set_class peano2b syl6ibr ancrd adantld reximdv2 adantr mpd $.
+	$v x A  $.
+	$d x A  $.
+	f0_nnsuc $f set x $.
+	f1_nnsuc $f class A $.
+	p_nnsuc $p |- ( ( A e. om /\ A =/= (/) ) -> E. x e. om A = suc x ) $= f1_nnsuc p_nnlim f1_nnsuc a_com a_wcel f1_nnsuc a_wlim a_wn f1_nnsuc a_c0 a_wne p_adantr f1_nnsuc p_nnord f0_nnsuc f1_nnsuc p_orduninsuc f1_nnsuc a_word f1_nnsuc f1_nnsuc a_cuni a_wceq f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex a_wn a_wb f1_nnsuc a_c0 a_wne p_adantr f1_nnsuc a_df-lim f1_nnsuc a_wlim f1_nnsuc a_word f1_nnsuc a_c0 a_wne f1_nnsuc f1_nnsuc a_cuni a_wceq a_w3a p_biimpri f1_nnsuc a_word f1_nnsuc a_c0 a_wne f1_nnsuc f1_nnsuc a_cuni a_wceq f1_nnsuc a_wlim p_3expia f1_nnsuc a_word f1_nnsuc a_c0 a_wne a_wa f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex a_wn f1_nnsuc f1_nnsuc a_cuni a_wceq f1_nnsuc a_wlim p_sylbird f1_nnsuc a_com a_wcel f1_nnsuc a_word f1_nnsuc a_c0 a_wne f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex a_wn f1_nnsuc a_wlim a_wi p_sylan f1_nnsuc a_com a_wcel f1_nnsuc a_c0 a_wne a_wa f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex f1_nnsuc a_wlim p_mt3d f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_com p_eleq1 f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f1_nnsuc a_com a_wcel f0_nnsuc a_sup_set_class a_csuc a_com a_wcel p_biimpcd f0_nnsuc a_sup_set_class p_peano2b f1_nnsuc a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_sup_set_class a_csuc a_com a_wcel f0_nnsuc a_sup_set_class a_com a_wcel p_syl6ibr f1_nnsuc a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_sup_set_class a_com a_wcel p_ancrd f1_nnsuc a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_sup_set_class a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq a_wa f0_nnsuc a_sup_set_class a_con0 a_wcel p_adantld f1_nnsuc a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_com p_reximdv2 f1_nnsuc a_com a_wcel f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_com a_wrex a_wi f1_nnsuc a_c0 a_wne p_adantr f1_nnsuc a_com a_wcel f1_nnsuc a_c0 a_wne a_wa f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_con0 a_wrex f1_nnsuc f0_nnsuc a_sup_set_class a_csuc a_wceq f0_nnsuc a_com a_wrex p_mpd $.
 $}
-$( An ordinal subclass of non-limit ordinals is a class of natural
+
+$(An ordinal subclass of non-limit ordinals is a class of natural
        numbers.  Exercise 7 of [TakeutiZaring] p. 42.  (Contributed by NM,
        2-Nov-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$d x A $.
-	fssnlim_0 $f set x $.
-	fssnlim_1 $f class A $.
-	ssnlim $p |- ( ( Ord A /\ A C_ { x e. On | -. Lim x } ) -> A C_ om ) $= fssnlim_1 word fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wss wa fssnlim_1 com wss com fssnlim_1 wcel wn fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wss com fssnlim_1 wcel wn fssnlim_1 word fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wss com fssnlim_1 wcel com wlim limom fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wss com fssnlim_1 wcel com fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wcel com wlim wn fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab com ssel com fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wcel com con0 wcel com wlim wn fssnlim_0 sup_set_class wlim wn com wlim wn fssnlim_0 com con0 fssnlim_0 sup_set_class com wceq fssnlim_0 sup_set_class wlim com wlim fssnlim_0 sup_set_class com limeq notbid elrab simprbi syl6 mt2i adantl fssnlim_1 word fssnlim_1 com wss com fssnlim_1 wcel wn wb fssnlim_1 fssnlim_0 sup_set_class wlim wn fssnlim_0 con0 crab wss fssnlim_1 word com word fssnlim_1 com wss com fssnlim_1 wcel wn wb ordom fssnlim_1 com ordtri1 mpan2 adantr mpbird $.
+	$v x A  $.
+	$d x A  $.
+	f0_ssnlim $f set x $.
+	f1_ssnlim $f class A $.
+	p_ssnlim $p |- ( ( Ord A /\ A C_ { x e. On | -. Lim x } ) -> A C_ om ) $= p_limom f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_com p_ssel f0_ssnlim a_sup_set_class a_com p_limeq f0_ssnlim a_sup_set_class a_com a_wceq f0_ssnlim a_sup_set_class a_wlim a_com a_wlim p_notbid f0_ssnlim a_sup_set_class a_wlim a_wn a_com a_wlim a_wn f0_ssnlim a_com a_con0 p_elrab a_com f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wcel a_com a_con0 a_wcel a_com a_wlim a_wn p_simprbi f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wss a_com f1_ssnlim a_wcel a_com f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wcel a_com a_wlim a_wn p_syl6 f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wss a_com f1_ssnlim a_wcel a_com a_wlim p_mt2i f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wss a_com f1_ssnlim a_wcel a_wn f1_ssnlim a_word p_adantl p_ordom f1_ssnlim a_com p_ordtri1 f1_ssnlim a_word a_com a_word f1_ssnlim a_com a_wss a_com f1_ssnlim a_wcel a_wn a_wb p_mpan2 f1_ssnlim a_word f1_ssnlim a_com a_wss a_com f1_ssnlim a_wcel a_wn a_wb f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wss p_adantr f1_ssnlim a_word f1_ssnlim f0_ssnlim a_sup_set_class a_wlim a_wn f0_ssnlim a_con0 a_crab a_wss a_wa f1_ssnlim a_com a_wss a_com f1_ssnlim a_wcel a_wn p_mpbird $.
 $}
+
 

@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Pre-logic.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Recursively define primitive wffs for propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
+/*If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
      recursive definition of a wff (well-formed formula).  In classical logic
      (which is our logic), a wff is interpreted as either true or false.  So if
      ` ph ` is true, then ` -. ph ` is false; if ` ph ` is false, then
@@ -22,7 +22,7 @@ rule wn (ph : wff) {
 	term : wff = # ¬ ph ;;
 }
 
-/* If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
+/*If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
      ` ps ` ."  Part of the recursive definition of a wff.  The resulting wff
      is (interpreted as) false when ` ph ` is true and ` ps ` is false; it is
      true otherwise.  Think of the truth table for an OR gate with input ` ph `
@@ -62,8 +62,8 @@ rule wi (ph : wff, ps : wff) {
 	term : wff = # ( ph → ps ) ;;
 }
 
-/* Register '-.' and '->' as primitive expressions (lacking definitions). */
+/*Register '-.' and '->' as primitive expressions (lacking definitions). */
 
-/* $j primitive 'wn' 'wi'; */
+/*$j primitive 'wn' 'wi'; */
 
 

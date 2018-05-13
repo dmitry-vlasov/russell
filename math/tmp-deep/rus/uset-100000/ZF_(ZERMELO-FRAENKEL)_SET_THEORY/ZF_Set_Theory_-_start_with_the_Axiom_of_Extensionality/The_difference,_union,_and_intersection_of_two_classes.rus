@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Subclasses_and_subsets.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The difference, union, and intersection of two classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Equality theorem for class difference.  (Contributed by NM,
+/*Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem difeq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -22,7 +22,7 @@ proof of difeq1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for class difference.  (Contributed by NM,
+/*Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem difeq2 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -40,7 +40,7 @@ proof of difeq2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for class difference.  (Contributed by FL,
+/*Equality theorem for class difference.  (Contributed by FL,
      31-Aug-2009.) */
 
 theorem difeq12 (A : class, B : class, C : class, D : class)  {
@@ -54,7 +54,7 @@ proof of difeq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference adding difference to the right in a class equality.
+/*Inference adding difference to the right in a class equality.
        (Contributed by NM, 15-Nov-2002.) */
 
 theorem difeq1i (A : class, B : class, C : class)  {
@@ -69,7 +69,7 @@ proof of difeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding difference to the left in a class equality.
+/*Inference adding difference to the left in a class equality.
        (Contributed by NM, 15-Nov-2002.) */
 
 theorem difeq2i (A : class, B : class, C : class)  {
@@ -84,7 +84,7 @@ proof of difeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for class difference.  (Contributed by NM,
+/*Equality inference for class difference.  (Contributed by NM,
          29-Aug-2004.) */
 
 theorem difeq12i (A : class, B : class, C : class, D : class)  {
@@ -101,7 +101,7 @@ proof of difeq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding difference to the right in a class equality.
+/*Deduction adding difference to the right in a class equality.
        (Contributed by NM, 15-Nov-2002.) */
 
 theorem difeq1d (ph : wff, A : class, B : class, C : class)  {
@@ -116,7 +116,7 @@ proof of difeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding difference to the left in a class equality.
+/*Deduction adding difference to the left in a class equality.
        (Contributed by NM, 15-Nov-2002.) */
 
 theorem difeq2d (ph : wff, A : class, B : class, C : class)  {
@@ -131,7 +131,7 @@ proof of difeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for class difference.  (Contributed by FL,
+/*Equality deduction for class difference.  (Contributed by FL,
        29-May-2014.) */
 
 theorem difeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -148,7 +148,7 @@ proof of difeq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from membership to difference.  (Contributed by NM,
+/*Inference from membership to difference.  (Contributed by NM,
        17-May-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem difeqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -164,7 +164,7 @@ proof of difeqri {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for class difference.  (Contributed by
+/*Bound-variable hypothesis builder for class difference.  (Contributed by
        NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
 
 theorem nfdif (x : set, A : class, B : class) disjointed(x y, y A, y B) {
@@ -184,7 +184,7 @@ proof of nfdif {
 	qed prop 1 = step 5 ;;
 }
 
-/* Implication of membership in a class difference.  (Contributed by NM,
+/*Implication of membership in a class difference.  (Contributed by NM,
      29-Apr-1994.) */
 
 theorem eldifi (A : class, B : class, C : class)  {
@@ -197,7 +197,7 @@ proof of eldifi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implication of membership in a class difference.  (Contributed by NM,
+/*Implication of membership in a class difference.  (Contributed by NM,
      3-May-1994.) */
 
 theorem eldifn (A : class, B : class, C : class)  {
@@ -210,7 +210,7 @@ proof of eldifn {
 	qed prop 1 = step 2 ;;
 }
 
-/* A set does not belong to a class excluding it.  (Contributed by NM,
+/*A set does not belong to a class excluding it.  (Contributed by NM,
      27-Jun-1994.) */
 
 theorem elndif (A : class, B : class, C : class)  {
@@ -223,7 +223,7 @@ proof of elndif {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implication of membership in a class difference.  (Contributed by NM,
+/*Implication of membership in a class difference.  (Contributed by NM,
      28-Jun-1994.) */
 
 theorem neldif (A : class, B : class, C : class)  {
@@ -238,7 +238,7 @@ proof of neldif {
 	qed prop 1 = step 4 ;;
 }
 
-/* Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
+/*Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
        (Contributed by NM, 17-May-1998.) */
 
 theorem difdif (A : class, B : class) disjointed(x A, x B) {
@@ -257,7 +257,7 @@ proof of difdif {
 	qed prop 1 = step 7 ;;
 }
 
-/* Subclass relationship for class difference.  Exercise 14 of
+/*Subclass relationship for class difference.  Exercise 14 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) */
 
 theorem difss (A : class, B : class) disjointed(x A, x B) {
@@ -271,7 +271,7 @@ proof of difss {
 	qed prop 1 = step 2 ;;
 }
 
-/* A difference of two classes is contained in the minuend.  Deduction form
+/*A difference of two classes is contained in the minuend.  Deduction form
      of ~ difss .  (Contributed by David Moews, 1-May-2017.) */
 
 theorem difssd (ph : wff, A : class, B : class)  {
@@ -284,7 +284,7 @@ proof of difssd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is contained in a difference, it is contained in the minuend.
+/*If a class is contained in a difference, it is contained in the minuend.
      (Contributed by David Moews, 1-May-2017.) */
 
 theorem difss2 (A : class, B : class, C : class)  {
@@ -298,7 +298,7 @@ proof of difss2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* If a class is contained in a difference, it is contained in the
+/*If a class is contained in a difference, it is contained in the
        minuend.  Deduction form of ~ difss2 .  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -314,7 +314,7 @@ proof of difss2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Preservation of a subclass relationship by class difference.  (Contributed
+/*Preservation of a subclass relationship by class difference.  (Contributed
      by NM, 15-Feb-2007.) */
 
 theorem ssdifss (A : class, B : class, C : class)  {
@@ -328,7 +328,7 @@ proof of ssdifss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Double complement under universal class.  Exercise 4.10(s) of
+/*Double complement under universal class.  Exercise 4.10(s) of
        [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) */
 
 theorem ddif (A : class) disjointed(x A) {
@@ -348,7 +348,7 @@ proof of ddif {
 	qed prop 1 = step 8 ;;
 }
 
-/* Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) */
+/*Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) */
 
 theorem ssconb (A : class, B : class, C : class) disjointed(x A, x B, x C) {
 	prop 1 : wff = |- ( ( A ⊆ C ∧ B ⊆ C ) → ( A ⊆ ( C ∖ B ) ↔ B ⊆ ( C ∖ A ) ) ) ;;
@@ -378,7 +378,7 @@ proof of ssconb {
 	qed prop 1 = step 19 ;;
 }
 
-/* Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
+/*Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
        (Contributed by NM, 22-Mar-1998.) */
 
 theorem sscon (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -397,7 +397,7 @@ proof of sscon {
 	qed prop 1 = step 7 ;;
 }
 
-/* Difference law for subsets.  (Contributed by NM, 28-May-1998.) */
+/*Difference law for subsets.  (Contributed by NM, 28-May-1998.) */
 
 theorem ssdif (A : class, B : class, C : class) disjointed(x A, x B, x C) {
 	prop 1 : wff = |- ( A ⊆ B → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
@@ -414,7 +414,7 @@ proof of ssdif {
 	qed prop 1 = step 6 ;;
 }
 
-/* If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
+/*If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
        ` ( B \ C ) ` .  Deduction form of ~ ssdif .  (Contributed by David
        Moews, 1-May-2017.) */
 
@@ -430,7 +430,7 @@ proof of ssdifd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
+/*If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
        ` ( C \ A ) ` .  Deduction form of ~ sscon .  (Contributed by David
        Moews, 1-May-2017.) */
 
@@ -446,7 +446,7 @@ proof of sscond {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
+/*If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
        ` B ` .  Deduction form of ~ ssdifss .  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -462,7 +462,7 @@ proof of ssdifssd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
+/*If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
        ` ( A \ D ) ` is contained in ` ( B \ C ) ` .  Deduction form.
        (Contributed by David Moews, 1-May-2017.) */
 
@@ -480,7 +480,7 @@ proof of ssdif2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
+/*Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
        (Contributed by NM, 7-Aug-1994.) */
 
 theorem elun (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -502,7 +502,7 @@ proof of elun {
 	qed prop 1 = step 10 ;;
 }
 
-/* Inference from membership to union.  (Contributed by NM, 5-Aug-1993.) */
+/*Inference from membership to union.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem uneqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
 	hyp 1 : wff = |- ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ C ) ;;
@@ -517,7 +517,7 @@ proof of uneqri {
 	qed prop 1 = step 3 ;;
 }
 
-/* Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
+/*Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem unidm (A : class) disjointed(x A) {
@@ -531,7 +531,7 @@ proof of unidm {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
+/*Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) */
 
@@ -548,7 +548,7 @@ proof of uncom {
 	qed prop 1 = step 4 ;;
 }
 
-/* If a class equals the union of two other classes, then it equals the
+/*If a class equals the union of two other classes, then it equals the
        union of those two classes commuted. ~ equncom was automatically derived
        from ~ equncomVD using the tools program
        translate_without_overwriting.cmd and minimizing.  (Contributed by Alan
@@ -564,7 +564,7 @@ proof of equncom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference form of ~ equncom . ~ equncomi was automatically derived from
+/*Inference form of ~ equncom . ~ equncomi was automatically derived from
        ~ equncomiVD using the tools program translate_without_overwriting.cmd
        and minimizing.  (Contributed by Alan Sare, 18-Feb-2012.) */
 
@@ -580,7 +580,7 @@ proof of equncomi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for union of two classes.  (Contributed by NM,
+/*Equality theorem for union of two classes.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem uneq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -598,7 +598,7 @@ proof of uneq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for the union of two classes.  (Contributed by NM,
+/*Equality theorem for the union of two classes.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem uneq2 (A : class, B : class, C : class)  {
@@ -613,7 +613,7 @@ proof of uneq2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for union of two classes.  (Contributed by NM,
+/*Equality theorem for union of two classes.  (Contributed by NM,
      29-Mar-1998.) */
 
 theorem uneq12 (A : class, B : class, C : class, D : class)  {
@@ -627,7 +627,7 @@ proof of uneq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference adding union to the right in a class equality.  (Contributed
+/*Inference adding union to the right in a class equality.  (Contributed
        by NM, 30-Aug-1993.) */
 
 theorem uneq1i (A : class, B : class, C : class)  {
@@ -642,7 +642,7 @@ proof of uneq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding union to the left in a class equality.  (Contributed by
+/*Inference adding union to the left in a class equality.  (Contributed by
        NM, 30-Aug-1993.) */
 
 theorem uneq2i (A : class, B : class, C : class)  {
@@ -657,7 +657,7 @@ proof of uneq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for union of two classes.  (Contributed by NM,
+/*Equality inference for union of two classes.  (Contributed by NM,
          12-Aug-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
 
 theorem uneq12i (A : class, B : class, C : class, D : class)  {
@@ -673,7 +673,7 @@ proof of uneq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding union to the right in a class equality.  (Contributed
+/*Deduction adding union to the right in a class equality.  (Contributed
        by NM, 29-Mar-1998.) */
 
 theorem uneq1d (ph : wff, A : class, B : class, C : class)  {
@@ -688,7 +688,7 @@ proof of uneq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding union to the left in a class equality.  (Contributed by
+/*Deduction adding union to the left in a class equality.  (Contributed by
        NM, 29-Mar-1998.) */
 
 theorem uneq2d (ph : wff, A : class, B : class, C : class)  {
@@ -703,7 +703,7 @@ proof of uneq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for union of two classes.  (Contributed by NM,
+/*Equality deduction for union of two classes.  (Contributed by NM,
          29-Sep-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem uneq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -719,7 +719,7 @@ proof of uneq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for the union of classes.
+/*Bound-variable hypothesis builder for the union of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) */
 
@@ -741,7 +741,7 @@ proof of nfun {
 	qed prop 1 = step 6 ;;
 }
 
-/* Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
+/*Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 3-May-1994.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) */
 
@@ -763,7 +763,7 @@ proof of unass {
 	qed prop 1 = step 9 ;;
 }
 
-/* A rearrangement of union.  (Contributed by NM, 12-Aug-2004.) */
+/*A rearrangement of union.  (Contributed by NM, 12-Aug-2004.) */
 
 theorem un12 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∪ ( B ∪ C ) ) = ( B ∪ ( A ∪ C ) ) ;;
@@ -778,7 +778,7 @@ proof of un12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A rearrangement of union.  (Contributed by NM, 12-Aug-2004.)  (Proof
+/*A rearrangement of union.  (Contributed by NM, 12-Aug-2004.)  (Proof
      shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem un23 (A : class, B : class, C : class)  {
@@ -793,7 +793,7 @@ proof of un23 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A rearrangement of the union of 4 classes.  (Contributed by NM,
+/*A rearrangement of the union of 4 classes.  (Contributed by NM,
      12-Aug-2004.) */
 
 theorem un4 (A : class, B : class, C : class, D : class)  {
@@ -809,7 +809,7 @@ proof of un4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
+/*Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
 
 theorem unundi (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∪ ( B ∪ C ) ) = ( ( A ∪ B ) ∪ ( A ∪ C ) ) ;;
@@ -823,7 +823,7 @@ proof of unundi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
+/*Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
 
 theorem unundir (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A ∪ B ) ∪ C ) = ( ( A ∪ C ) ∪ ( B ∪ C ) ) ;;
@@ -837,7 +837,7 @@ proof of unundir {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass relationship for union of classes.  Theorem 25 of [Suppes]
+/*Subclass relationship for union of classes.  Theorem 25 of [Suppes]
        p. 27.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem ssun1 (A : class, B : class) disjointed(x A, x B) {
@@ -853,7 +853,7 @@ proof of ssun1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass relationship for union of classes.  (Contributed by NM,
+/*Subclass relationship for union of classes.  (Contributed by NM,
      30-Aug-1993.) */
 
 theorem ssun2 (A : class, B : class)  {
@@ -867,7 +867,7 @@ proof of ssun2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subclass law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
+/*Subclass law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem ssun3 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ⊆ B → A ⊆ ( B ∪ C ) ) ;;
@@ -880,7 +880,7 @@ proof of ssun3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subclass law for union of classes.  (Contributed by NM, 14-Aug-1994.) */
+/*Subclass law for union of classes.  (Contributed by NM, 14-Aug-1994.) */
 
 theorem ssun4 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ⊆ B → A ⊆ ( C ∪ B ) ) ;;
@@ -893,7 +893,7 @@ proof of ssun4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
+/*Membership law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem elun1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∈ B → A ∈ ( B ∪ C ) ) ;;
@@ -905,7 +905,7 @@ proof of elun1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership law for union of classes.  (Contributed by NM, 30-Aug-1993.) */
+/*Membership law for union of classes.  (Contributed by NM, 30-Aug-1993.) */
 
 theorem elun2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∈ B → A ∈ ( C ∪ B ) ) ;;
@@ -917,7 +917,7 @@ proof of elun2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
+/*Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem unss1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -935,11 +935,11 @@ proof of unss1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A relationship between subclass and union.  Theorem 26 of [Suppes]
+/*A relationship between subclass and union.  Theorem 26 of [Suppes]
        p. 27.  (Contributed by NM, 30-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) */
 
-theorem ssequn1 (A : class, B : class) disjointed(x A, x B) {
+theorem ssequn1 (A : class, B : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( A ⊆ B ↔ ( A ∪ B ) = B ) ;;
 }
 
@@ -957,7 +957,7 @@ proof of ssequn1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subclass law for union of classes.  Exercise 7 of [TakeutiZaring] p. 18.
+/*Subclass law for union of classes.  Exercise 7 of [TakeutiZaring] p. 18.
      (Contributed by NM, 14-Oct-1999.) */
 
 theorem unss2 (A : class, B : class, C : class)  {
@@ -972,7 +972,7 @@ proof of unss2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass law for union of classes.  (Contributed by NM, 2-Jun-2004.) */
+/*Subclass law for union of classes.  (Contributed by NM, 2-Jun-2004.) */
 
 theorem unss12 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∪ C ) ⊆ ( B ∪ D ) ) ;;
@@ -985,7 +985,7 @@ proof of unss12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A relationship between subclass and union.  (Contributed by NM,
+/*A relationship between subclass and union.  (Contributed by NM,
      13-Jun-1994.) */
 
 theorem ssequn2 (A : class, B : class)  {
@@ -1000,7 +1000,7 @@ proof of ssequn2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
+/*The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
        and its converse.  (Contributed by NM, 11-Jun-2004.) */
 
 theorem unss (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1024,7 +1024,7 @@ proof of unss {
 	qed prop 1 = step 12 ;;
 }
 
-/* An inference showing the union of two subclasses is a subclass.
+/*An inference showing the union of two subclasses is a subclass.
        (Contributed by Raph Levien, 10-Dec-2002.) */
 
 theorem unssi (A : class, B : class, C : class)  {
@@ -1041,7 +1041,7 @@ proof of unssi {
 	qed prop 1 = step 3 ;;
 }
 
-/* A deduction showing the union of two subclasses is a subclass.
+/*A deduction showing the union of two subclasses is a subclass.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
 
 theorem unssd (ph : wff, A : class, B : class, C : class)  {
@@ -1058,7 +1058,7 @@ proof of unssd {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` ( A u. B ) ` is contained in ` C ` , so is ` A ` .  One-way
+/*If ` ( A u. B ) ` is contained in ` C ` , so is ` A ` .  One-way
        deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
        by David Moews, 1-May-2017.) */
 
@@ -1075,7 +1075,7 @@ proof of unssad {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` ( A u. B ) ` is contained in ` C ` , so is ` B ` .  One-way
+/*If ` ( A u. B ) ` is contained in ` C ` , so is ` B ` .  One-way
        deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
        by David Moews, 1-May-2017.) */
 
@@ -1092,7 +1092,7 @@ proof of unssbd {
 	qed prop 1 = step 3 ;;
 }
 
-/* A condition that implies inclusion in the union of two classes.
+/*A condition that implies inclusion in the union of two classes.
      (Contributed by NM, 23-Nov-2003.) */
 
 theorem ssun (A : class, B : class, C : class)  {
@@ -1106,7 +1106,7 @@ proof of ssun {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted existential quantification over union.  (Contributed by Jeff
+/*Restricted existential quantification over union.  (Contributed by Jeff
      Madsen, 5-Jan-2011.) */
 
 theorem rexun (ph : wff, x : set, A : class, B : class)  {
@@ -1129,7 +1129,7 @@ proof of rexun {
 	qed prop 1 = step 12 ;;
 }
 
-/* Restricted quantification over a union.  (Contributed by Scott Fenton,
+/*Restricted quantification over a union.  (Contributed by Scott Fenton,
      12-Apr-2011.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem ralunb (ph : wff, x : set, A : class, B : class)  {
@@ -1152,7 +1152,7 @@ proof of ralunb {
 	qed prop 1 = step 12 ;;
 }
 
-/* Restricted quantification over union.  (Contributed by Jeff Madsen,
+/*Restricted quantification over union.  (Contributed by Jeff Madsen,
      2-Sep-2009.) */
 
 theorem ralun (ph : wff, x : set, A : class, B : class)  {
@@ -1165,7 +1165,7 @@ proof of ralun {
 	qed prop 1 = step 2 ;;
 }
 
-/* Expansion of membership in an intersection of two classes.  Theorem 12
+/*Expansion of membership in an intersection of two classes.  Theorem 12
        of [Suppes] p. 25.  (Contributed by NM, 29-Apr-1994.) */
 
 theorem elin (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1186,7 +1186,7 @@ proof of elin {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership in a class defined as an intersection.  (Contributed by
+/*Membership in a class defined as an intersection.  (Contributed by
        Stefan O'Rear, 29-Mar-2015.) */
 
 theorem elin2 (A : class, B : class, C : class, X : class)  {
@@ -1202,7 +1202,7 @@ proof of elin2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class defined as a ternary intersection.  (Contributed
+/*Membership in a class defined as a ternary intersection.  (Contributed
        by Stefan O'Rear, 29-Mar-2015.) */
 
 theorem elin3 (A : class, B : class, C : class, D : class, X : class)  {
@@ -1220,7 +1220,7 @@ proof of elin3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Commutative law for intersection of classes.  Exercise 7 of
+/*Commutative law for intersection of classes.  Exercise 7 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem incom (A : class, B : class) disjointed(A x, B x) {
@@ -1237,7 +1237,7 @@ proof of incom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference from membership to intersection.  (Contributed by NM,
+/*Inference from membership to intersection.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem ineqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1253,7 +1253,7 @@ proof of ineqri {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for intersection of two classes.  (Contributed by NM,
+/*Equality theorem for intersection of two classes.  (Contributed by NM,
        14-Dec-1993.) */
 
 theorem ineq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1271,7 +1271,7 @@ proof of ineq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for intersection of two classes.  (Contributed by NM,
+/*Equality theorem for intersection of two classes.  (Contributed by NM,
      26-Dec-1993.) */
 
 theorem ineq2 (A : class, B : class, C : class)  {
@@ -1286,7 +1286,7 @@ proof of ineq2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for intersection of two classes.  (Contributed by NM,
+/*Equality theorem for intersection of two classes.  (Contributed by NM,
      8-May-1994.) */
 
 theorem ineq12 (A : class, B : class, C : class, D : class)  {
@@ -1300,7 +1300,7 @@ proof of ineq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for intersection of two classes.  (Contributed by NM,
+/*Equality inference for intersection of two classes.  (Contributed by NM,
        26-Dec-1993.) */
 
 theorem ineq1i (A : class, B : class, C : class)  {
@@ -1315,7 +1315,7 @@ proof of ineq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for intersection of two classes.  (Contributed by NM,
+/*Equality inference for intersection of two classes.  (Contributed by NM,
        26-Dec-1993.) */
 
 theorem ineq2i (A : class, B : class, C : class)  {
@@ -1330,7 +1330,7 @@ proof of ineq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for intersection of two classes.  (Contributed by
+/*Equality inference for intersection of two classes.  (Contributed by
          NM, 24-Jun-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
 
 theorem ineq12i (A : class, B : class, C : class, D : class)  {
@@ -1346,7 +1346,7 @@ proof of ineq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for intersection of two classes.  (Contributed by NM,
+/*Equality deduction for intersection of two classes.  (Contributed by NM,
        10-Apr-1994.) */
 
 theorem ineq1d (ph : wff, A : class, B : class, C : class)  {
@@ -1361,7 +1361,7 @@ proof of ineq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for intersection of two classes.  (Contributed by NM,
+/*Equality deduction for intersection of two classes.  (Contributed by NM,
        10-Apr-1994.) */
 
 theorem ineq2d (ph : wff, A : class, B : class, C : class)  {
@@ -1376,7 +1376,7 @@ proof of ineq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for intersection of two classes.  (Contributed by
+/*Equality deduction for intersection of two classes.  (Contributed by
          NM, 24-Jun-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem ineq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1392,7 +1392,7 @@ proof of ineq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for intersection of two classes.  (Contributed by
+/*Equality deduction for intersection of two classes.  (Contributed by
          NM, 7-Feb-2007.) */
 
 theorem ineqan12d (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
@@ -1408,7 +1408,7 @@ proof of ineqan12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A frequently-used variant of subclass definition ~ df-ss .  (Contributed
+/*A frequently-used variant of subclass definition ~ df-ss .  (Contributed
      by NM, 10-Jan-2015.) */
 
 theorem dfss1 (A : class, B : class)  {
@@ -1423,7 +1423,7 @@ proof of dfss1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Another definition of subclasshood.  Similar to ~ df-ss , ~ dfss , and
+/*Another definition of subclasshood.  Similar to ~ df-ss , ~ dfss , and
      ~ dfss1 .  (Contributed by David Moews, 1-May-2017.) */
 
 theorem dfss5 (A : class, B : class)  {
@@ -1437,7 +1437,7 @@ proof of dfss5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for the intersection of classes.
+/*Bound-variable hypothesis builder for the intersection of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) */
 
@@ -1457,7 +1457,7 @@ proof of nfin {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribute proper substitution through an intersection relation.
+/*Distribute proper substitution through an intersection relation.
        (Contributed by Alan Sare, 22-Jul-2012.) */
 
 theorem csbing (x : set, A : class, B : class, C : class, D : class) disjointed(A y, C y, D y, x y) {
@@ -1483,7 +1483,7 @@ proof of csbing {
 	qed prop 1 = step 14 ;;
 }
 
-/* Deduction from a wff to a restricted class abstraction.  (Contributed by
+/*Deduction from a wff to a restricted class abstraction.  (Contributed by
        NM, 14-Jan-2014.) */
 
 theorem rabbi2dva (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B) {
@@ -1499,7 +1499,7 @@ proof of rabbi2dva {
 	qed prop 1 = step 3 ;;
 }
 
-/* Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
+/*Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
        p. 26.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem inidm (A : class) disjointed(x A) {
@@ -1513,7 +1513,7 @@ proof of inidm {
 	qed prop 1 = step 2 ;;
 }
 
-/* Associative law for intersection of classes.  Exercise 9 of
+/*Associative law for intersection of classes.  Exercise 9 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 3-May-1994.) */
 
 theorem inass (A : class, B : class, C : class) disjointed(A x, B x, C x) {
@@ -1534,7 +1534,7 @@ proof of inass {
 	qed prop 1 = step 9 ;;
 }
 
-/* A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.) */
+/*A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.) */
 
 theorem in12 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( B ∩ ( A ∩ C ) ) ;;
@@ -1549,7 +1549,7 @@ proof of in12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.)
+/*A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem in32 (A : class, B : class, C : class)  {
@@ -1564,7 +1564,7 @@ proof of in32 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
+/*A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
 
 theorem in13 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( C ∩ ( B ∩ A ) ) ;;
@@ -1578,7 +1578,7 @@ proof of in13 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
+/*A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
 
 theorem in31 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ B ) ∩ A ) ;;
@@ -1592,7 +1592,7 @@ proof of in31 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rotate the intersection of 3 classes.  (Contributed by NM,
+/*Rotate the intersection of 3 classes.  (Contributed by NM,
      27-Aug-2012.) */
 
 theorem inrot (A : class, B : class, C : class)  {
@@ -1606,7 +1606,7 @@ proof of inrot {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rearrangement of intersection of 4 classes.  (Contributed by NM,
+/*Rearrangement of intersection of 4 classes.  (Contributed by NM,
      21-Apr-2001.) */
 
 theorem in4 (A : class, B : class, C : class, D : class)  {
@@ -1622,7 +1622,7 @@ proof of in4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Intersection distributes over itself.  (Contributed by NM, 6-May-1994.) */
+/*Intersection distributes over itself.  (Contributed by NM, 6-May-1994.) */
 
 theorem inindi (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( ( A ∩ B ) ∩ ( A ∩ C ) ) ;;
@@ -1636,7 +1636,7 @@ proof of inindi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Intersection distributes over itself.  (Contributed by NM,
+/*Intersection distributes over itself.  (Contributed by NM,
      17-Aug-2004.) */
 
 theorem inindir (A : class, B : class, C : class)  {
@@ -1651,7 +1651,7 @@ proof of inindir {
 	qed prop 1 = step 4 ;;
 }
 
-/* A relationship between subclass and intersection.  Similar to Exercise 9
+/*A relationship between subclass and intersection.  Similar to Exercise 9
      of [TakeutiZaring] p. 18.  (Contributed by NM, 17-May-1994.) */
 
 theorem sseqin2 (A : class, B : class)  {
@@ -1663,7 +1663,7 @@ proof of sseqin2 {
 	qed prop 1 = step 1 ;;
 }
 
-/* The intersection of two classes is a subset of one of them.  Part of
+/*The intersection of two classes is a subset of one of them.  Part of
        Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
        27-Apr-1994.) */
 
@@ -1679,7 +1679,7 @@ proof of inss1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The intersection of two classes is a subset of one of them.  Part of
+/*The intersection of two classes is a subset of one of them.  Part of
      Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
      27-Apr-1994.) */
 
@@ -1694,7 +1694,7 @@ proof of inss2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
+/*Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
        (Contributed by NM, 15-Jun-2004.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) */
 
@@ -1719,7 +1719,7 @@ proof of ssin {
 	qed prop 1 = step 12 ;;
 }
 
-/* An inference showing that a subclass of two classes is a subclass of
+/*An inference showing that a subclass of two classes is a subclass of
        their intersection.  (Contributed by NM, 24-Nov-2003.) */
 
 theorem ssini (A : class, B : class, C : class)  {
@@ -1736,7 +1736,7 @@ proof of ssini {
 	qed prop 1 = step 3 ;;
 }
 
-/* A deduction showing that a subclass of two classes is a subclass of
+/*A deduction showing that a subclass of two classes is a subclass of
        their intersection.  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
 
 theorem ssind (ph : wff, A : class, B : class, C : class)  {
@@ -1753,7 +1753,7 @@ proof of ssind {
 	qed prop 1 = step 3 ;;
 }
 
-/* Add right intersection to subclass relation.  (Contributed by NM,
+/*Add right intersection to subclass relation.  (Contributed by NM,
        16-Aug-1994.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem ssrin (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1771,10 +1771,10 @@ proof of ssrin {
 	qed prop 1 = step 6 ;;
 }
 
-/* Add left intersection to subclass relation.  (Contributed by NM,
+/*Add left intersection to subclass relation.  (Contributed by NM,
        19-Oct-1999.) */
 
-theorem sslin (A : class, B : class, C : class)  {
+theorem sslin (A : class, B : class, C : class) disjointed(A, B, C) {
 	prop 1 : wff = |- ( A ⊆ B → ( C ∩ A ) ⊆ ( C ∩ B ) ) ;;
 }
 
@@ -1786,7 +1786,7 @@ proof of sslin {
 	qed prop 1 = step 4 ;;
 }
 
-/* Intersection of subclasses.  (Contributed by NM, 5-May-2000.) */
+/*Intersection of subclasses.  (Contributed by NM, 5-May-2000.) */
 
 theorem ss2in (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∩ C ) ⊆ ( B ∩ D ) ) ;;
@@ -1799,7 +1799,7 @@ proof of ss2in {
 	qed prop 1 = step 3 ;;
 }
 
-/* Intersection preserves subclass relationship.  (Contributed by NM,
+/*Intersection preserves subclass relationship.  (Contributed by NM,
      14-Sep-1999.) */
 
 theorem ssinss1 (A : class, B : class, C : class)  {
@@ -1813,7 +1813,7 @@ proof of ssinss1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inclusion of an intersection of two classes.  (Contributed by NM,
+/*Inclusion of an intersection of two classes.  (Contributed by NM,
      30-Oct-2014.) */
 
 theorem inss (A : class, B : class, C : class)  {
@@ -1829,7 +1829,7 @@ proof of inss {
 	qed prop 1 = step 5 ;;
 }
 
-/* Absorption law for union.  (Contributed by NM, 16-Apr-2006.) */
+/*Absorption law for union.  (Contributed by NM, 16-Apr-2006.) */
 
 theorem unabs (A : class, B : class)  {
 	prop 1 : wff = |- ( A ∪ ( A ∩ B ) ) = A ;;
@@ -1842,7 +1842,7 @@ proof of unabs {
 	qed prop 1 = step 3 ;;
 }
 
-/* Absorption law for intersection.  (Contributed by NM, 16-Apr-2006.) */
+/*Absorption law for intersection.  (Contributed by NM, 16-Apr-2006.) */
 
 theorem inabs (A : class, B : class)  {
 	prop 1 : wff = |- ( A ∩ ( A ∪ B ) ) = A ;;
@@ -1855,7 +1855,7 @@ proof of inabs {
 	qed prop 1 = step 3 ;;
 }
 
-/* Negation of subclass expressed in terms of intersection and proper
+/*Negation of subclass expressed in terms of intersection and proper
      subclass.  (Contributed by NM, 30-Jun-2004.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) */
 
@@ -1873,7 +1873,7 @@ proof of nssinpss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Negation of subclass expressed in terms of proper subclass and union.
+/*Negation of subclass expressed in terms of proper subclass and union.
      (Contributed by NM, 15-Sep-2004.) */
 
 theorem nsspssun (A : class, B : class)  {
@@ -1893,7 +1893,7 @@ proof of nsspssun {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subclass defined in terms of class difference.  See comments under
+/*Subclass defined in terms of class difference.  See comments under
        ~ dfun2 .  (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) */
 
@@ -1919,7 +1919,7 @@ proof of dfss4 {
 	qed prop 1 = step 13 ;;
 }
 
-/* An alternate definition of the union of two classes in terms of class
+/*An alternate definition of the union of two classes in terms of class
        difference, requiring no dummy variables.  Along with ~ dfin2 and
        ~ dfss4 it shows we can express union, intersection, and subset directly
        in terms of the single "primitive" operation ` \ ` (class difference).
@@ -1947,7 +1947,7 @@ proof of dfun2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* An alternate definition of the intersection of two classes in terms of
+/*An alternate definition of the intersection of two classes in terms of
        class difference, requiring no dummy variables.  See comments under
        ~ dfun2 .  Another version is given by ~ dfin4 .  (Contributed by NM,
        10-Jun-2004.) */
@@ -1969,7 +1969,7 @@ proof of dfin2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Difference with intersection.  Theorem 33 of [Suppes] p. 29.
+/*Difference with intersection.  Theorem 33 of [Suppes] p. 29.
        (Contributed by NM, 31-Mar-1998.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) */
 
@@ -1992,7 +1992,7 @@ proof of difin {
 	qed prop 1 = step 10 ;;
 }
 
-/* Union defined in terms of intersection (De Morgan's law).  Definition of
+/*Union defined in terms of intersection (De Morgan's law).  Definition of
      union in [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) */
 
 theorem dfun3 (A : class, B : class)  {
@@ -2010,7 +2010,7 @@ proof of dfun3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Intersection defined in terms of union (De Morgan's law.  Similar to
+/*Intersection defined in terms of union (De Morgan's law.  Similar to
      Exercise 4.10(n) of [Mendelson] p. 231.  (Contributed by NM,
      8-Jan-2002.) */
 
@@ -2031,7 +2031,7 @@ proof of dfin3 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Alternate definition of the intersection of two classes.  Exercise 4.10(q)
+/*Alternate definition of the intersection of two classes.  Exercise 4.10(q)
      of [Mendelson] p. 231.  (Contributed by NM, 25-Nov-2003.) */
 
 theorem dfin4 (A : class, B : class)  {
@@ -2048,7 +2048,7 @@ proof of dfin4 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Intersection with universal complement.  Remark in [Stoll] p. 20.
+/*Intersection with universal complement.  Remark in [Stoll] p. 20.
      (Contributed by NM, 17-Aug-2004.) */
 
 theorem invdif (A : class, B : class)  {
@@ -2063,7 +2063,7 @@ proof of invdif {
 	qed prop 1 = step 4 ;;
 }
 
-/* Intersection with class difference.  Theorem 34 of [Suppes] p. 29.
+/*Intersection with class difference.  Theorem 34 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) */
 
 theorem indif (A : class, B : class)  {
@@ -2079,7 +2079,7 @@ proof of indif {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bring an intersection in and out of a class difference.  (Contributed by
+/*Bring an intersection in and out of a class difference.  (Contributed by
      Jeff Hankins, 15-Jul-2009.) */
 
 theorem indif2 (A : class, B : class, C : class)  {
@@ -2095,7 +2095,7 @@ proof of indif2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bring an intersection in and out of a class difference.  (Contributed by
+/*Bring an intersection in and out of a class difference.  (Contributed by
      Mario Carneiro, 15-May-2015.) */
 
 theorem indif1 (A : class, B : class, C : class)  {
@@ -2111,7 +2111,7 @@ proof of indif1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Commutation law for intersection and difference.  (Contributed by Scott
+/*Commutation law for intersection and difference.  (Contributed by Scott
      Fenton, 18-Feb-2013.) */
 
 theorem indifcom (A : class, B : class, C : class)  {
@@ -2127,7 +2127,7 @@ proof of indifcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Distributive law for intersection over union.  Exercise 10 of
+/*Distributive law for intersection over union.  Exercise 10 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) */
 
@@ -2150,7 +2150,7 @@ proof of indi {
 	qed prop 1 = step 10 ;;
 }
 
-/* Distributive law for union over intersection.  Exercise 11 of
+/*Distributive law for union over intersection.  Exercise 11 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) */
 
@@ -2173,7 +2173,7 @@ proof of undi {
 	qed prop 1 = step 10 ;;
 }
 
-/* Distributive law for intersection over union.  Theorem 28 of [Suppes]
+/*Distributive law for intersection over union.  Theorem 28 of [Suppes]
      p. 27.  (Contributed by NM, 30-Sep-2002.) */
 
 theorem indir (A : class, B : class, C : class)  {
@@ -2190,7 +2190,7 @@ proof of indir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distributive law for union over intersection.  Theorem 29 of [Suppes]
+/*Distributive law for union over intersection.  Theorem 29 of [Suppes]
      p. 27.  (Contributed by NM, 30-Sep-2002.) */
 
 theorem undir (A : class, B : class, C : class)  {
@@ -2207,7 +2207,7 @@ proof of undir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Infer equality from equalities of union and intersection.  Exercise 20
+/*Infer equality from equalities of union and intersection.  Exercise 20
        of [Enderton] p. 32 and its converse.  (Contributed by NM,
        10-Aug-2004.) */
 
@@ -2248,7 +2248,7 @@ proof of unineq {
 	qed prop 1 = step 28 ;;
 }
 
-/* Equality of union and intersection implies equality of their arguments.
+/*Equality of union and intersection implies equality of their arguments.
      (Contributed by NM, 16-Apr-2006.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) */
 
@@ -2280,7 +2280,7 @@ proof of uneqin {
 	qed prop 1 = step 20 ;;
 }
 
-/* Distributive law for class difference.  Theorem 39 of [Suppes] p. 29.
+/*Distributive law for class difference.  Theorem 39 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) */
 
 theorem difundi (A : class, B : class, C : class)  {
@@ -2300,7 +2300,7 @@ proof of difundi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for class difference.  (Contributed by NM,
+/*Distributive law for class difference.  (Contributed by NM,
      17-Aug-2004.) */
 
 theorem difundir (A : class, B : class, C : class)  {
@@ -2317,7 +2317,7 @@ proof of difundir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distributive law for class difference.  Theorem 40 of [Suppes] p. 29.
+/*Distributive law for class difference.  Theorem 40 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) */
 
 theorem difindi (A : class, B : class, C : class)  {
@@ -2337,7 +2337,7 @@ proof of difindi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for class difference.  (Contributed by NM,
+/*Distributive law for class difference.  (Contributed by NM,
      17-Aug-2004.) */
 
 theorem difindir (A : class, B : class, C : class)  {
@@ -2354,7 +2354,7 @@ proof of difindir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribute intersection over difference.  (Contributed by Scott Fenton,
+/*Distribute intersection over difference.  (Contributed by Scott Fenton,
        14-Apr-2011.) */
 
 theorem indifdir (A : class, B : class, C : class) disjointed(A x, B x, C x) {
@@ -2389,7 +2389,7 @@ proof of indifdir {
 	qed prop 1 = step 23 ;;
 }
 
-/* De Morgan's law for union.  Theorem 5.2(13) of [Stoll] p. 19.
+/*De Morgan's law for union.  Theorem 5.2(13) of [Stoll] p. 19.
      (Contributed by NM, 18-Aug-2004.) */
 
 theorem undm (A : class, B : class)  {
@@ -2401,7 +2401,7 @@ proof of undm {
 	qed prop 1 = step 1 ;;
 }
 
-/* De Morgan's law for intersection.  Theorem 5.2(13') of [Stoll] p. 19.
+/*De Morgan's law for intersection.  Theorem 5.2(13') of [Stoll] p. 19.
      (Contributed by NM, 18-Aug-2004.) */
 
 theorem indm (A : class, B : class)  {
@@ -2413,7 +2413,7 @@ proof of indm {
 	qed prop 1 = step 1 ;;
 }
 
-/* A relationship involving double difference and union.  (Contributed by NM,
+/*A relationship involving double difference and union.  (Contributed by NM,
      29-Aug-2004.) */
 
 theorem difun1 (A : class, B : class, C : class)  {
@@ -2435,7 +2435,7 @@ proof of difun1 {
 	qed prop 1 = step 11 ;;
 }
 
-/* An equality involving class union and class difference.  The first
+/*An equality involving class union and class difference.  The first
        equality of Exercise 13 of [TakeutiZaring] p. 22.  (Contributed by Alan
        Sare, 17-Apr-2012.) */
 
@@ -2476,7 +2476,7 @@ proof of undif3 {
 	qed prop 1 = step 28 ;;
 }
 
-/* Represent a set difference as an intersection with a larger difference.
+/*Represent a set difference as an intersection with a larger difference.
        (Contributed by Jeff Madsen, 2-Sep-2009.) */
 
 theorem difin2 (A : class, B : class, C : class) disjointed(A x, B x, C x) {
@@ -2501,7 +2501,7 @@ proof of difin2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Swap second and third argument of double difference.  (Contributed by NM,
+/*Swap second and third argument of double difference.  (Contributed by NM,
      18-Aug-2004.) */
 
 theorem dif32 (A : class, B : class, C : class)  {
@@ -2517,7 +2517,7 @@ proof of dif32 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Absorption-like law for class difference: you can remove a class only
+/*Absorption-like law for class difference: you can remove a class only
      once.  (Contributed by FL, 2-Aug-2009.) */
 
 theorem difabs (A : class, B : class)  {
@@ -2532,7 +2532,7 @@ proof of difabs {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to express symmetric difference.  This theorem shows the
+/*Two ways to express symmetric difference.  This theorem shows the
      equivalence of the definition of symmetric difference in [Stoll] p. 13 and
      the restated definition in Example 4.1 of [Stoll] p. 262.  (Contributed by
      NM, 17-Aug-2004.) */
@@ -2553,7 +2553,7 @@ proof of symdif1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Two ways to express symmetric difference.  (Contributed by NM,
+/*Two ways to express symmetric difference.  (Contributed by NM,
        17-Aug-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem symdif2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2571,7 +2571,7 @@ proof of symdif2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Union of two class abstractions.  (Contributed by NM, 29-Sep-2002.)
+/*Union of two class abstractions.  (Contributed by NM, 29-Sep-2002.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem unab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
@@ -2590,7 +2590,7 @@ proof of unab {
 	qed prop 1 = step 7 ;;
 }
 
-/* Intersection of two class abstractions.  (Contributed by NM,
+/*Intersection of two class abstractions.  (Contributed by NM,
        29-Sep-2002.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem inab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
@@ -2609,7 +2609,7 @@ proof of inab {
 	qed prop 1 = step 7 ;;
 }
 
-/* Difference of two class abstractions.  (Contributed by NM,
+/*Difference of two class abstractions.  (Contributed by NM,
        23-Oct-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem difab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
@@ -2631,7 +2631,7 @@ proof of difab {
 	qed prop 1 = step 10 ;;
 }
 
-/* A class builder defined by a negation.  (Contributed by FL,
+/*A class builder defined by a negation.  (Contributed by FL,
      18-Sep-2010.) */
 
 theorem notab (ph : wff, x : set)  {
@@ -2650,7 +2650,7 @@ proof of notab {
 	qed prop 1 = step 8 ;;
 }
 
-/* Union of two restricted class abstractions.  (Contributed by NM,
+/*Union of two restricted class abstractions.  (Contributed by NM,
      25-Mar-2004.) */
 
 theorem unrab (ph : wff, ps : wff, x : set, A : class)  {
@@ -2671,7 +2671,7 @@ proof of unrab {
 	qed prop 1 = step 10 ;;
 }
 
-/* Intersection of two restricted class abstractions.  (Contributed by NM,
+/*Intersection of two restricted class abstractions.  (Contributed by NM,
      1-Sep-2006.) */
 
 theorem inrab (ph : wff, ps : wff, x : set, A : class)  {
@@ -2692,7 +2692,7 @@ proof of inrab {
 	qed prop 1 = step 10 ;;
 }
 
-/* Intersection with a restricted class abstraction.  (Contributed by NM,
+/*Intersection with a restricted class abstraction.  (Contributed by NM,
        19-Nov-2007.) */
 
 theorem inrab2 (ph : wff, x : set, A : class, B : class) disjointed(x B) {
@@ -2717,7 +2717,7 @@ proof of inrab2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Difference of two restricted class abstractions.  (Contributed by NM,
+/*Difference of two restricted class abstractions.  (Contributed by NM,
      23-Oct-2004.) */
 
 theorem difrab (ph : wff, ps : wff, x : set, A : class)  {
@@ -2747,10 +2747,10 @@ proof of difrab {
 	qed prop 1 = step 19 ;;
 }
 
-/* Alternate definition of restricted class abstraction.  (Contributed by
+/*Alternate definition of restricted class abstraction.  (Contributed by
        NM, 20-Sep-2003.) */
 
-theorem dfrab2 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem dfrab2 (ph : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- { x ∈ A | ph } = ( { x | ph } ∩ A ) ;;
 }
 
@@ -2765,10 +2765,10 @@ proof of dfrab2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Alternate definition of restricted class abstraction.  (Contributed by
+/*Alternate definition of restricted class abstraction.  (Contributed by
        Mario Carneiro, 8-Sep-2013.) */
 
-theorem dfrab3 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem dfrab3 (ph : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- { x ∈ A | ph } = ( A ∩ { x | ph } ) ;;
 }
 
@@ -2781,10 +2781,10 @@ proof of dfrab3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Complementation of restricted class abstractions.  (Contributed by Mario
+/*Complementation of restricted class abstractions.  (Contributed by Mario
        Carneiro, 3-Sep-2015.) */
 
-theorem notrab (ph : wff, x : set, A : class) disjointed(x A) {
+theorem notrab (ph : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- ( A ∖ { x ∈ A | ph } ) = { x ∈ A | ¬ ph } ;;
 }
 
@@ -2801,7 +2801,7 @@ proof of notrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted class abstraction with a common superset.  (Contributed by
+/*Restricted class abstraction with a common superset.  (Contributed by
        Stefan O'Rear, 12-Sep-2015.)  (Proof shortened by Mario Carneiro,
        8-Nov-2015.) */
 
@@ -2823,7 +2823,7 @@ proof of dfrab3ss {
 	qed prop 1 = step 10 ;;
 }
 
-/* Abstraction restricted to a union.  (Contributed by Stefan O'Rear,
+/*Abstraction restricted to a union.  (Contributed by Stefan O'Rear,
      5-Feb-2015.) */
 
 theorem rabun2 (ph : wff, x : set, A : class, B : class)  {
@@ -2847,7 +2847,7 @@ proof of rabun2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+/*Transfer uniqueness to a smaller subclass.  (Contributed by NM,
        20-Oct-2005.) */
 
 theorem reuss2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2881,7 +2881,7 @@ proof of reuss2 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+/*Transfer uniqueness to a smaller subclass.  (Contributed by NM,
        21-Aug-1999.) */
 
 theorem reuss (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2897,7 +2897,7 @@ proof of reuss {
 	qed prop 1 = step 5 ;;
 }
 
-/* Transfer uniqueness to a smaller class.  (Contributed by NM,
+/*Transfer uniqueness to a smaller class.  (Contributed by NM,
        21-Oct-2005.) */
 
 theorem reuun1 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2913,7 +2913,7 @@ proof of reuun1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Transfer uniqueness to a smaller or larger class.  (Contributed by NM,
+/*Transfer uniqueness to a smaller or larger class.  (Contributed by NM,
        21-Oct-2005.) */
 
 theorem reuun2 (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2938,7 +2938,7 @@ proof of reuun2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+/*Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        NM, 21-Aug-1999.) */
 
 theorem reupick (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2969,10 +2969,10 @@ proof of reupick {
 	qed prop 1 = step 20 ;;
 }
 
-/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+/*Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        Mario Carneiro, 19-Nov-2016.) */
 
-theorem reupick3 (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
+theorem reupick3 (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ∧ x ∈ A ) → ( ph → ps ) ) ;;
 }
 
@@ -2989,11 +2989,11 @@ proof of reupick3 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+/*Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        Mario Carneiro, 15-Dec-2013.)  (Proof shortened by Mario Carneiro,
        19-Nov-2016.) */
 
-theorem reupick2 (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
+theorem reupick2 (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- ( ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) ∧ x ∈ A ) → ( ph ↔ ps ) ) ;;
 }
 

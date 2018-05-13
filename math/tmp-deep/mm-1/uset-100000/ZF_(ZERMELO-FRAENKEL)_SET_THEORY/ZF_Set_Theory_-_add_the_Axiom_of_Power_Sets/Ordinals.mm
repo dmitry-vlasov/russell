@@ -1,69 +1,96 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Founded_and_well-ordering_relations.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Ordinals
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Introduce new constant symbols. $)
-$c Ord  $.
-$( Ordinal predicate $)
-$c On  $.
-$( The class of ordinal numbers $)
-$c Lim  $.
-$( Limit ordinal predicate $)
-$c suc  $.
-$( Successor function (read:  'successor of') $)
-$( Extend the definition of a wff to include the ordinal predicate. $)
+
+$(Introduce new constant symbols. $)
+
+$c Ord $.
+
+$(Ordinal predicate $)
+
+$c On $.
+
+$(The class of ordinal numbers $)
+
+$c Lim $.
+
+$(Limit ordinal predicate $)
+
+$c suc $.
+
+$(Successor function (read:  'successor of') $)
+
+$(Extend the definition of a wff to include the ordinal predicate. $)
+
 ${
-	$v A $.
-	fword_0 $f class A $.
-	word $a wff Ord A $.
+	$v A  $.
+	f0_word $f class A $.
+	a_word $a wff Ord A $.
 $}
-$( Extend the definition of a class to include the class of all ordinal
+
+$(Extend the definition of a class to include the class of all ordinal
      numbers.  (The 0 in the name prevents creating a file called con.html,
      which causes problems in Windows.) $)
+
 ${
-	con0 $a class On $.
+	$v  $.
+	a_con0 $a class On $.
 $}
-$( Extend the definition of a wff to include the limit ordinal predicate. $)
+
+$(Extend the definition of a wff to include the limit ordinal predicate. $)
+
 ${
-	$v A $.
-	fwlim_0 $f class A $.
-	wlim $a wff Lim A $.
+	$v A  $.
+	f0_wlim $f class A $.
+	a_wlim $a wff Lim A $.
 $}
-$( Extend class notation to include the successor function. $)
+
+$(Extend class notation to include the successor function. $)
+
 ${
-	$v A $.
-	fcsuc_0 $f class A $.
-	csuc $a class suc A $.
+	$v A  $.
+	f0_csuc $f class A $.
+	a_csuc $a class suc A $.
 $}
-$( Define the ordinal predicate, which is true for a class that is transitive
+
+$(Define the ordinal predicate, which is true for a class that is transitive
      and is well-ordered by the epsilon relation.  Variant of definition of
      [BellMachover] p. 468.  (Contributed by NM, 17-Sep-1993.) $)
+
 ${
-	$v A $.
-	fdf-ord_0 $f class A $.
-	df-ord $a |- ( Ord A <-> ( Tr A /\ _E We A ) ) $.
+	$v A  $.
+	f0_df-ord $f class A $.
+	a_df-ord $a |- ( Ord A <-> ( Tr A /\ _E We A ) ) $.
 $}
-$( Define the class of all ordinal numbers.  Definition 7.11 of
+
+$(Define the class of all ordinal numbers.  Definition 7.11 of
      [TakeutiZaring] p. 38.  (Contributed by NM, 5-Jun-1994.) $)
+
 ${
-	$v x $.
-	fdf-on_0 $f set x $.
-	df-on $a |- On = { x | Ord x } $.
+	$v x  $.
+	f0_df-on $f set x $.
+	a_df-on $a |- On = { x | Ord x } $.
 $}
-$( Define the limit ordinal predicate, which is true for a non-empty ordinal
+
+$(Define the limit ordinal predicate, which is true for a non-empty ordinal
      that is not a successor (i.e. that is the union of itself).  Our
      definition combines the definition of Lim of [BellMachover] p. 471 and
      Exercise 1 of [TakeutiZaring] p. 42.  See ~ dflim2 , ~ dflim3 , and dflim4
      for alternate definitions.  (Contributed by NM, 22-Apr-1994.) $)
+
 ${
-	$v A $.
-	fdf-lim_0 $f class A $.
-	df-lim $a |- ( Lim A <-> ( Ord A /\ A =/= (/) /\ A = U. A ) ) $.
+	$v A  $.
+	f0_df-lim $f class A $.
+	a_df-lim $a |- ( Lim A <-> ( Ord A /\ A =/= (/) /\ A = U. A ) ) $.
 $}
-$( Define the successor of a class.  When applied to an ordinal number, the
+
+$(Define the successor of a class.  When applied to an ordinal number, the
      successor means the same thing as "plus 1" (see ~ oa1suc ).  Definition
      7.22 of [TakeutiZaring] p. 41, who use "+ 1" to denote this function.  Our
      definition is a generalization to classes.  Although it is not
@@ -76,1070 +103,1199 @@ $( Define the successor of a class.  When applied to an ordinal number, the
      successor ordinal").  The definition of successor of [Enderton] p. 68
      denotes the operation with a plus-sign superscript.  (Contributed by NM,
      30-Aug-1993.) $)
+
 ${
-	$v A $.
-	fdf-suc_0 $f class A $.
-	df-suc $a |- suc A = ( A u. { A } ) $.
+	$v A  $.
+	f0_df-suc $f class A $.
+	a_df-suc $a |- suc A = ( A u. { A } ) $.
 $}
-$( Equality theorem for the ordinal predicate.  (Contributed by NM,
+
+$(Equality theorem for the ordinal predicate.  (Contributed by NM,
      17-Sep-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordeq_0 $f class A $.
-	fordeq_1 $f class B $.
-	ordeq $p |- ( A = B -> ( Ord A <-> Ord B ) ) $= fordeq_0 fordeq_1 wceq fordeq_0 wtr fordeq_0 cep wwe wa fordeq_1 wtr fordeq_1 cep wwe wa fordeq_0 word fordeq_1 word fordeq_0 fordeq_1 wceq fordeq_0 wtr fordeq_1 wtr fordeq_0 cep wwe fordeq_1 cep wwe fordeq_0 fordeq_1 treq fordeq_0 fordeq_1 cep weeq2 anbi12d fordeq_0 df-ord fordeq_1 df-ord 3bitr4g $.
+	$v A B  $.
+	f0_ordeq $f class A $.
+	f1_ordeq $f class B $.
+	p_ordeq $p |- ( A = B -> ( Ord A <-> Ord B ) ) $= f0_ordeq f1_ordeq p_treq f0_ordeq f1_ordeq a_cep p_weeq2 f0_ordeq f1_ordeq a_wceq f0_ordeq a_wtr f1_ordeq a_wtr f0_ordeq a_cep a_wwe f1_ordeq a_cep a_wwe p_anbi12d f0_ordeq a_df-ord f1_ordeq a_df-ord f0_ordeq f1_ordeq a_wceq f0_ordeq a_wtr f0_ordeq a_cep a_wwe a_wa f1_ordeq a_wtr f1_ordeq a_cep a_wwe a_wa f0_ordeq a_word f1_ordeq a_word p_3bitr4g $.
 $}
-$( An ordinal number is an ordinal set.  (Contributed by NM,
+
+$(An ordinal number is an ordinal set.  (Contributed by NM,
        5-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v V $.
-	$v x $.
-	$d x A $.
-	ielong_0 $f set x $.
-	felong_0 $f class A $.
-	felong_1 $f class V $.
-	elong $p |- ( A e. V -> ( A e. On <-> Ord A ) ) $= ielong_0 sup_set_class word felong_0 word ielong_0 felong_0 con0 felong_1 ielong_0 sup_set_class felong_0 ordeq ielong_0 df-on elab2g $.
+	$v A V  $.
+	$d x A  $.
+	f0_elong $f class A $.
+	f1_elong $f class V $.
+	i0_elong $f set x $.
+	p_elong $p |- ( A e. V -> ( A e. On <-> Ord A ) ) $= i0_elong a_sup_set_class f0_elong p_ordeq i0_elong a_df-on i0_elong a_sup_set_class a_word f0_elong a_word i0_elong f0_elong a_con0 f1_elong p_elab2g $.
 $}
-$( An ordinal number is an ordinal set.  (Contributed by NM,
+
+$(An ordinal number is an ordinal set.  (Contributed by NM,
        5-Jun-1994.) $)
+
 ${
-	$v A $.
-	felon_0 $f class A $.
-	eelon_0 $e |- A e. _V $.
-	elon $p |- ( A e. On <-> Ord A ) $= felon_0 cvv wcel felon_0 con0 wcel felon_0 word wb eelon_0 felon_0 cvv elong ax-mp $.
+	$v A  $.
+	f0_elon $f class A $.
+	e0_elon $e |- A e. _V $.
+	p_elon $p |- ( A e. On <-> Ord A ) $= e0_elon f0_elon a_cvv p_elong f0_elon a_cvv a_wcel f0_elon a_con0 a_wcel f0_elon a_word a_wb a_ax-mp $.
 $}
-$( An ordinal number has the ordinal property.  (Contributed by NM,
+
+$(An ordinal number has the ordinal property.  (Contributed by NM,
      5-Jun-1994.) $)
+
 ${
-	$v A $.
-	feloni_0 $f class A $.
-	eloni $p |- ( A e. On -> Ord A ) $= feloni_0 con0 wcel feloni_0 word feloni_0 con0 elong ibi $.
+	$v A  $.
+	f0_eloni $f class A $.
+	p_eloni $p |- ( A e. On -> Ord A ) $= f0_eloni a_con0 p_elong f0_eloni a_con0 a_wcel f0_eloni a_word p_ibi $.
 $}
-$( An ordinal number is an ordinal set.  (Contributed by NM, 8-Feb-2004.) $)
+
+$(An ordinal number is an ordinal set.  (Contributed by NM, 8-Feb-2004.) $)
+
 ${
-	$v A $.
-	felon2_0 $f class A $.
-	elon2 $p |- ( A e. On <-> ( Ord A /\ A e. _V ) ) $= felon2_0 con0 wcel felon2_0 word felon2_0 cvv wcel wa felon2_0 con0 wcel felon2_0 word felon2_0 cvv wcel felon2_0 eloni felon2_0 con0 elex jca felon2_0 cvv wcel felon2_0 con0 wcel felon2_0 word felon2_0 cvv elong biimparc impbii $.
+	$v A  $.
+	f0_elon2 $f class A $.
+	p_elon2 $p |- ( A e. On <-> ( Ord A /\ A e. _V ) ) $= f0_elon2 p_eloni f0_elon2 a_con0 p_elex f0_elon2 a_con0 a_wcel f0_elon2 a_word f0_elon2 a_cvv a_wcel p_jca f0_elon2 a_cvv p_elong f0_elon2 a_cvv a_wcel f0_elon2 a_con0 a_wcel f0_elon2 a_word p_biimparc f0_elon2 a_con0 a_wcel f0_elon2 a_word f0_elon2 a_cvv a_wcel a_wa p_impbii $.
 $}
-$( Equality theorem for the limit predicate.  (Contributed by NM,
+
+$(Equality theorem for the limit predicate.  (Contributed by NM,
      22-Apr-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	flimeq_0 $f class A $.
-	flimeq_1 $f class B $.
-	limeq $p |- ( A = B -> ( Lim A <-> Lim B ) ) $= flimeq_0 flimeq_1 wceq flimeq_0 word flimeq_0 c0 wne flimeq_0 flimeq_0 cuni wceq w3a flimeq_1 word flimeq_1 c0 wne flimeq_1 flimeq_1 cuni wceq w3a flimeq_0 wlim flimeq_1 wlim flimeq_0 flimeq_1 wceq flimeq_0 word flimeq_1 word flimeq_0 c0 wne flimeq_1 c0 wne flimeq_0 flimeq_0 cuni wceq flimeq_1 flimeq_1 cuni wceq flimeq_0 flimeq_1 ordeq flimeq_0 flimeq_1 c0 neeq1 flimeq_0 flimeq_1 wceq flimeq_0 flimeq_1 flimeq_0 cuni flimeq_1 cuni flimeq_0 flimeq_1 wceq id flimeq_0 flimeq_1 unieq eqeq12d 3anbi123d flimeq_0 df-lim flimeq_1 df-lim 3bitr4g $.
+	$v A B  $.
+	f0_limeq $f class A $.
+	f1_limeq $f class B $.
+	p_limeq $p |- ( A = B -> ( Lim A <-> Lim B ) ) $= f0_limeq f1_limeq p_ordeq f0_limeq f1_limeq a_c0 p_neeq1 f0_limeq f1_limeq a_wceq p_id f0_limeq f1_limeq p_unieq f0_limeq f1_limeq a_wceq f0_limeq f1_limeq f0_limeq a_cuni f1_limeq a_cuni p_eqeq12d f0_limeq f1_limeq a_wceq f0_limeq a_word f1_limeq a_word f0_limeq a_c0 a_wne f1_limeq a_c0 a_wne f0_limeq f0_limeq a_cuni a_wceq f1_limeq f1_limeq a_cuni a_wceq p_3anbi123d f0_limeq a_df-lim f1_limeq a_df-lim f0_limeq f1_limeq a_wceq f0_limeq a_word f0_limeq a_c0 a_wne f0_limeq f0_limeq a_cuni a_wceq a_w3a f1_limeq a_word f1_limeq a_c0 a_wne f1_limeq f1_limeq a_cuni a_wceq a_w3a f0_limeq a_wlim f1_limeq a_wlim p_3bitr4g $.
 $}
-$( Epsilon well-orders every ordinal.  Proposition 7.4 of [TakeutiZaring]
+
+$(Epsilon well-orders every ordinal.  Proposition 7.4 of [TakeutiZaring]
      p. 36.  (Contributed by NM, 3-Apr-1994.) $)
+
 ${
-	$v A $.
-	fordwe_0 $f class A $.
-	ordwe $p |- ( Ord A -> _E We A ) $= fordwe_0 word fordwe_0 wtr fordwe_0 cep wwe fordwe_0 df-ord simprbi $.
+	$v A  $.
+	f0_ordwe $f class A $.
+	p_ordwe $p |- ( Ord A -> _E We A ) $= f0_ordwe a_df-ord f0_ordwe a_word f0_ordwe a_wtr f0_ordwe a_cep a_wwe p_simprbi $.
 $}
-$( An ordinal class is transitive.  (Contributed by NM, 3-Apr-1994.) $)
+
+$(An ordinal class is transitive.  (Contributed by NM, 3-Apr-1994.) $)
+
 ${
-	$v A $.
-	fordtr_0 $f class A $.
-	ordtr $p |- ( Ord A -> Tr A ) $= fordtr_0 word fordtr_0 wtr fordtr_0 cep wwe fordtr_0 df-ord simplbi $.
+	$v A  $.
+	f0_ordtr $f class A $.
+	p_ordtr $p |- ( Ord A -> Tr A ) $= f0_ordtr a_df-ord f0_ordtr a_word f0_ordtr a_wtr f0_ordtr a_cep a_wwe p_simplbi $.
 $}
-$( Epsilon is well-founded on an ordinal class.  (Contributed by NM,
+
+$(Epsilon is well-founded on an ordinal class.  (Contributed by NM,
      22-Apr-1994.) $)
+
 ${
-	$v A $.
-	fordfr_0 $f class A $.
-	ordfr $p |- ( Ord A -> _E Fr A ) $= fordfr_0 word fordfr_0 cep wwe fordfr_0 cep wfr fordfr_0 ordwe fordfr_0 cep wefr syl $.
+	$v A  $.
+	f0_ordfr $f class A $.
+	p_ordfr $p |- ( Ord A -> _E Fr A ) $= f0_ordfr p_ordwe f0_ordfr a_cep p_wefr f0_ordfr a_word f0_ordfr a_cep a_wwe f0_ordfr a_cep a_wfr p_syl $.
 $}
-$( An element of an ordinal class is a subset of it.  (Contributed by NM,
+
+$(An element of an ordinal class is a subset of it.  (Contributed by NM,
      30-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordelss_0 $f class A $.
-	fordelss_1 $f class B $.
-	ordelss $p |- ( ( Ord A /\ B e. A ) -> B C_ A ) $= fordelss_0 word fordelss_0 wtr fordelss_1 fordelss_0 wcel fordelss_1 fordelss_0 wss fordelss_0 ordtr fordelss_0 wtr fordelss_1 fordelss_0 wcel fordelss_1 fordelss_0 wss fordelss_0 fordelss_1 trss imp sylan $.
+	$v A B  $.
+	f0_ordelss $f class A $.
+	f1_ordelss $f class B $.
+	p_ordelss $p |- ( ( Ord A /\ B e. A ) -> B C_ A ) $= f0_ordelss p_ordtr f0_ordelss f1_ordelss p_trss f0_ordelss a_wtr f1_ordelss f0_ordelss a_wcel f1_ordelss f0_ordelss a_wss p_imp f0_ordelss a_word f0_ordelss a_wtr f1_ordelss f0_ordelss a_wcel f1_ordelss f0_ordelss a_wss p_sylan $.
 $}
-$( A transitive subclass of an ordinal class is ordinal.  (Contributed by NM,
+
+$(A transitive subclass of an ordinal class is ordinal.  (Contributed by NM,
      29-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	ftrssord_0 $f class A $.
-	ftrssord_1 $f class B $.
-	trssord $p |- ( ( Tr A /\ A C_ B /\ Ord B ) -> Ord A ) $= ftrssord_0 wtr ftrssord_0 ftrssord_1 wss ftrssord_1 word w3a ftrssord_0 wtr ftrssord_0 cep wwe wa ftrssord_0 word ftrssord_0 wtr ftrssord_0 ftrssord_1 wss ftrssord_1 word ftrssord_0 wtr ftrssord_0 cep wwe wa ftrssord_0 ftrssord_1 wss ftrssord_1 word wa ftrssord_0 cep wwe ftrssord_0 wtr ftrssord_1 word ftrssord_0 ftrssord_1 wss ftrssord_1 cep wwe ftrssord_0 cep wwe ftrssord_1 ordwe ftrssord_0 ftrssord_1 wss ftrssord_1 cep wwe ftrssord_0 cep wwe ftrssord_0 ftrssord_1 cep wess imp sylan2 anim2i 3impb ftrssord_0 df-ord sylibr $.
+	$v A B  $.
+	f0_trssord $f class A $.
+	f1_trssord $f class B $.
+	p_trssord $p |- ( ( Tr A /\ A C_ B /\ Ord B ) -> Ord A ) $= f1_trssord p_ordwe f0_trssord f1_trssord a_cep p_wess f0_trssord f1_trssord a_wss f1_trssord a_cep a_wwe f0_trssord a_cep a_wwe p_imp f1_trssord a_word f0_trssord f1_trssord a_wss f1_trssord a_cep a_wwe f0_trssord a_cep a_wwe p_sylan2 f0_trssord f1_trssord a_wss f1_trssord a_word a_wa f0_trssord a_cep a_wwe f0_trssord a_wtr p_anim2i f0_trssord a_wtr f0_trssord f1_trssord a_wss f1_trssord a_word f0_trssord a_wtr f0_trssord a_cep a_wwe a_wa p_3impb f0_trssord a_df-ord f0_trssord a_wtr f0_trssord f1_trssord a_wss f1_trssord a_word a_w3a f0_trssord a_wtr f0_trssord a_cep a_wwe a_wa f0_trssord a_word p_sylibr $.
 $}
-$( Epsilon irreflexivity of ordinals: no ordinal class is a member of
+
+$(Epsilon irreflexivity of ordinals: no ordinal class is a member of
      itself.  Theorem 2.2(i) of [BellMachover] p. 469, generalized to classes.
      We prove this without invoking the Axiom of Regularity.  (Contributed by
      NM, 2-Jan-1994.) $)
+
 ${
-	$v A $.
-	fordirr_0 $f class A $.
-	ordirr $p |- ( Ord A -> -. A e. A ) $= fordirr_0 word fordirr_0 cep wfr fordirr_0 fordirr_0 wcel wn fordirr_0 ordfr fordirr_0 efrirr syl $.
+	$v A  $.
+	f0_ordirr $f class A $.
+	p_ordirr $p |- ( Ord A -> -. A e. A ) $= f0_ordirr p_ordfr f0_ordirr p_efrirr f0_ordirr a_word f0_ordirr a_cep a_wfr f0_ordirr f0_ordirr a_wcel a_wn p_syl $.
 $}
-$( A member of an ordinal class is not equal to it.  (Contributed by NM,
+
+$(A member of an ordinal class is not equal to it.  (Contributed by NM,
      25-May-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fnordeq_0 $f class A $.
-	fnordeq_1 $f class B $.
-	nordeq $p |- ( ( Ord A /\ B e. A ) -> A =/= B ) $= fnordeq_0 word fnordeq_1 fnordeq_0 wcel fnordeq_0 fnordeq_1 wne fnordeq_0 word fnordeq_1 fnordeq_0 wcel fnordeq_0 fnordeq_1 fnordeq_0 word fnordeq_0 fnordeq_0 wcel wn fnordeq_0 fnordeq_1 wceq fnordeq_1 fnordeq_0 wcel wn fnordeq_0 ordirr fnordeq_0 fnordeq_1 wceq fnordeq_0 fnordeq_0 wcel fnordeq_1 fnordeq_0 wcel fnordeq_0 fnordeq_1 fnordeq_0 eleq1 notbid syl5ibcom necon2ad imp $.
+	$v A B  $.
+	f0_nordeq $f class A $.
+	f1_nordeq $f class B $.
+	p_nordeq $p |- ( ( Ord A /\ B e. A ) -> A =/= B ) $= f0_nordeq p_ordirr f0_nordeq f1_nordeq f0_nordeq p_eleq1 f0_nordeq f1_nordeq a_wceq f0_nordeq f0_nordeq a_wcel f1_nordeq f0_nordeq a_wcel p_notbid f0_nordeq a_word f0_nordeq f0_nordeq a_wcel a_wn f0_nordeq f1_nordeq a_wceq f1_nordeq f0_nordeq a_wcel a_wn p_syl5ibcom f0_nordeq a_word f1_nordeq f0_nordeq a_wcel f0_nordeq f1_nordeq p_necon2ad f0_nordeq a_word f1_nordeq f0_nordeq a_wcel f0_nordeq f1_nordeq a_wne p_imp $.
 $}
-$( An ordinal class cannot an element of one of its members.  Variant of
+
+$(An ordinal class cannot an element of one of its members.  Variant of
      first part of Theorem 2.2(vii) of [BellMachover] p. 469.  (Contributed by
      NM, 3-Apr-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordn2lp_0 $f class A $.
-	fordn2lp_1 $f class B $.
-	ordn2lp $p |- ( Ord A -> -. ( A e. B /\ B e. A ) ) $= fordn2lp_0 word fordn2lp_0 fordn2lp_1 wcel fordn2lp_1 fordn2lp_0 wcel wa fordn2lp_0 fordn2lp_0 wcel fordn2lp_0 ordirr fordn2lp_0 word fordn2lp_0 wtr fordn2lp_0 fordn2lp_1 wcel fordn2lp_1 fordn2lp_0 wcel wa fordn2lp_0 fordn2lp_0 wcel wi fordn2lp_0 ordtr fordn2lp_0 fordn2lp_0 fordn2lp_1 trel syl mtod $.
+	$v A B  $.
+	f0_ordn2lp $f class A $.
+	f1_ordn2lp $f class B $.
+	p_ordn2lp $p |- ( Ord A -> -. ( A e. B /\ B e. A ) ) $= f0_ordn2lp p_ordirr f0_ordn2lp p_ordtr f0_ordn2lp f0_ordn2lp f1_ordn2lp p_trel f0_ordn2lp a_word f0_ordn2lp a_wtr f0_ordn2lp f1_ordn2lp a_wcel f1_ordn2lp f0_ordn2lp a_wcel a_wa f0_ordn2lp f0_ordn2lp a_wcel a_wi p_syl f0_ordn2lp a_word f0_ordn2lp f1_ordn2lp a_wcel f1_ordn2lp f0_ordn2lp a_wcel a_wa f0_ordn2lp f0_ordn2lp a_wcel p_mtod $.
 $}
-$( A subclass (possibly proper) of an ordinal class has a minimal element.
+
+$(A subclass (possibly proper) of an ordinal class has a minimal element.
        Proposition 7.5 of [TakeutiZaring] p. 36.  (Contributed by NM,
        18-Feb-2004.)  (Revised by David Abernethy, 16-Mar-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x B $.
-	ftz7.5_0 $f set x $.
-	ftz7.5_1 $f class A $.
-	ftz7.5_2 $f class B $.
-	tz7.5 $p |- ( ( Ord A /\ B C_ A /\ B =/= (/) ) -> E. x e. B ( B i^i x ) = (/) ) $= ftz7.5_1 word ftz7.5_1 cep wwe ftz7.5_2 ftz7.5_1 wss ftz7.5_2 c0 wne ftz7.5_2 ftz7.5_0 sup_set_class cin c0 wceq ftz7.5_0 ftz7.5_2 wrex ftz7.5_1 ordwe ftz7.5_0 ftz7.5_1 ftz7.5_2 wefrc syl3an1 $.
+	$v x A B  $.
+	$d x B  $.
+	f0_tz7.5 $f set x $.
+	f1_tz7.5 $f class A $.
+	f2_tz7.5 $f class B $.
+	p_tz7.5 $p |- ( ( Ord A /\ B C_ A /\ B =/= (/) ) -> E. x e. B ( B i^i x ) = (/) ) $= f1_tz7.5 p_ordwe f0_tz7.5 f1_tz7.5 f2_tz7.5 p_wefrc f1_tz7.5 a_word f1_tz7.5 a_cep a_wwe f2_tz7.5 f1_tz7.5 a_wss f2_tz7.5 a_c0 a_wne f2_tz7.5 f0_tz7.5 a_sup_set_class a_cin a_c0 a_wceq f0_tz7.5 f2_tz7.5 a_wrex p_syl3an1 $.
 $}
-$( An element of an ordinal class is ordinal.  Proposition 7.6 of
+
+$(An element of an ordinal class is ordinal.  Proposition 7.6 of
        [TakeutiZaring] p. 36.  (Contributed by NM, 23-Apr-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z A $.
-	$d x y z B $.
-	iordelord_0 $f set x $.
-	iordelord_1 $f set y $.
-	iordelord_2 $f set z $.
-	fordelord_0 $f class A $.
-	fordelord_1 $f class B $.
-	ordelord $p |- ( ( Ord A /\ B e. A ) -> Ord B ) $= fordelord_0 word fordelord_1 fordelord_0 wcel fordelord_1 word fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_0 sup_set_class word wi fordelord_0 word fordelord_1 fordelord_0 wcel wa fordelord_1 word wi iordelord_0 fordelord_1 fordelord_0 iordelord_0 sup_set_class fordelord_1 wceq fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa fordelord_0 word fordelord_1 fordelord_0 wcel wa iordelord_0 sup_set_class word fordelord_1 word iordelord_0 sup_set_class fordelord_1 wceq iordelord_0 sup_set_class fordelord_0 wcel fordelord_1 fordelord_0 wcel fordelord_0 word iordelord_0 sup_set_class fordelord_1 fordelord_0 eleq1 anbi2d iordelord_0 sup_set_class fordelord_1 ordeq imbi12d fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_0 sup_set_class wtr iordelord_0 sup_set_class cep wwe iordelord_0 sup_set_class word fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel wi iordelord_1 wal iordelord_2 wal iordelord_0 sup_set_class wtr fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel wi iordelord_2 iordelord_1 fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel wi fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa wa fordelord_0 word iordelord_2 sup_set_class fordelord_0 wcel iordelord_1 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel wi fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa simpll fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa wa iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_0 sup_set_class fordelord_0 wcel w3a fordelord_0 word iordelord_2 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_0 sup_set_class fordelord_0 wcel w3a iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel w3a iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa wa iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel 3anrot iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel 3anass bitr3i fordelord_0 word fordelord_0 wtr iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_0 sup_set_class fordelord_0 wcel w3a iordelord_2 sup_set_class fordelord_0 wcel wi fordelord_0 ordtr fordelord_0 iordelord_2 sup_set_class iordelord_1 sup_set_class iordelord_0 sup_set_class trel3 syl syl5bir impl fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_1 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_1 sup_set_class fordelord_0 wcel fordelord_0 word iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_0 sup_set_class fordelord_0 wcel iordelord_1 sup_set_class fordelord_0 wcel fordelord_0 word fordelord_0 wtr iordelord_1 sup_set_class iordelord_0 sup_set_class wcel iordelord_0 sup_set_class fordelord_0 wcel wa iordelord_1 sup_set_class fordelord_0 wcel wi fordelord_0 ordtr fordelord_0 iordelord_1 sup_set_class iordelord_0 sup_set_class trel syl exp3acom23 imp31 adantrl fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa simplr fordelord_0 word fordelord_0 cep wwe iordelord_2 sup_set_class fordelord_0 wcel iordelord_1 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class fordelord_0 wcel w3a iordelord_2 sup_set_class iordelord_1 sup_set_class wcel iordelord_1 sup_set_class iordelord_0 sup_set_class wcel wa iordelord_2 sup_set_class iordelord_0 sup_set_class wcel wi fordelord_0 ordwe iordelord_2 iordelord_1 iordelord_0 fordelord_0 wetrep sylan syl13anc ex pm2.43d alrimivv iordelord_2 iordelord_1 iordelord_0 sup_set_class dftr2 sylibr fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class cep wwe fordelord_0 word iordelord_0 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class fordelord_0 wss iordelord_0 sup_set_class cep wwe fordelord_0 word fordelord_0 wtr iordelord_0 sup_set_class fordelord_0 wcel iordelord_0 sup_set_class fordelord_0 wss wi fordelord_0 ordtr fordelord_0 iordelord_0 sup_set_class trss syl fordelord_0 word fordelord_0 cep wwe iordelord_0 sup_set_class fordelord_0 wss iordelord_0 sup_set_class cep wwe fordelord_0 ordwe iordelord_0 sup_set_class fordelord_0 cep wess syl5com syld imp iordelord_0 sup_set_class df-ord sylanbrc vtoclg anabsi7 $.
+	$v A B  $.
+	$d x y z A  $.
+	$d x y z B  $.
+	f0_ordelord $f class A $.
+	f1_ordelord $f class B $.
+	i0_ordelord $f set x $.
+	i1_ordelord $f set y $.
+	i2_ordelord $f set z $.
+	p_ordelord $p |- ( ( Ord A /\ B e. A ) -> Ord B ) $= i0_ordelord a_sup_set_class f1_ordelord f0_ordelord p_eleq1 i0_ordelord a_sup_set_class f1_ordelord a_wceq i0_ordelord a_sup_set_class f0_ordelord a_wcel f1_ordelord f0_ordelord a_wcel f0_ordelord a_word p_anbi2d i0_ordelord a_sup_set_class f1_ordelord p_ordeq i0_ordelord a_sup_set_class f1_ordelord a_wceq f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa f0_ordelord a_word f1_ordelord f0_ordelord a_wcel a_wa i0_ordelord a_sup_set_class a_word f1_ordelord a_word p_imbi12d f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa p_simpll i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel p_3anrot i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel p_3anass i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel a_w3a i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_w3a i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa a_wa p_bitr3i f0_ordelord p_ordtr f0_ordelord i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class p_trel3 f0_ordelord a_word f0_ordelord a_wtr i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel a_w3a i2_ordelord a_sup_set_class f0_ordelord a_wcel a_wi p_syl i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel a_w3a f0_ordelord a_word i2_ordelord a_sup_set_class f0_ordelord a_wcel p_syl5bir f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class f0_ordelord a_wcel p_impl f0_ordelord p_ordtr f0_ordelord i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class p_trel f0_ordelord a_word f0_ordelord a_wtr i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i1_ordelord a_sup_set_class f0_ordelord a_wcel a_wi p_syl f0_ordelord a_word i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel i1_ordelord a_sup_set_class f0_ordelord a_wcel p_exp3acom23 f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class f0_ordelord a_wcel p_imp31 f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel p_adantrl f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa p_simplr f0_ordelord p_ordwe i2_ordelord i1_ordelord i0_ordelord f0_ordelord p_wetrep f0_ordelord a_word f0_ordelord a_cep a_wwe i2_ordelord a_sup_set_class f0_ordelord a_wcel i1_ordelord a_sup_set_class f0_ordelord a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel a_w3a i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wi p_sylan f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa a_wa f0_ordelord a_word i2_ordelord a_sup_set_class f0_ordelord a_wcel i1_ordelord a_sup_set_class f0_ordelord a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wcel i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wi p_syl13anc f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wi p_ex f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel p_pm2.43d f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wi i2_ordelord i1_ordelord p_alrimivv i2_ordelord i1_ordelord i0_ordelord a_sup_set_class p_dftr2 f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i2_ordelord a_sup_set_class i1_ordelord a_sup_set_class a_wcel i1_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wa i2_ordelord a_sup_set_class i0_ordelord a_sup_set_class a_wcel a_wi i1_ordelord a_wal i2_ordelord a_wal i0_ordelord a_sup_set_class a_wtr p_sylibr f0_ordelord p_ordtr f0_ordelord i0_ordelord a_sup_set_class p_trss f0_ordelord a_word f0_ordelord a_wtr i0_ordelord a_sup_set_class f0_ordelord a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wss a_wi p_syl f0_ordelord p_ordwe i0_ordelord a_sup_set_class f0_ordelord a_cep p_wess f0_ordelord a_word f0_ordelord a_cep a_wwe i0_ordelord a_sup_set_class f0_ordelord a_wss i0_ordelord a_sup_set_class a_cep a_wwe p_syl5com f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i0_ordelord a_sup_set_class f0_ordelord a_wss i0_ordelord a_sup_set_class a_cep a_wwe p_syld f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel i0_ordelord a_sup_set_class a_cep a_wwe p_imp i0_ordelord a_sup_set_class a_df-ord f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i0_ordelord a_sup_set_class a_wtr i0_ordelord a_sup_set_class a_cep a_wwe i0_ordelord a_sup_set_class a_word p_sylanbrc f0_ordelord a_word i0_ordelord a_sup_set_class f0_ordelord a_wcel a_wa i0_ordelord a_sup_set_class a_word a_wi f0_ordelord a_word f1_ordelord f0_ordelord a_wcel a_wa f1_ordelord a_word a_wi i0_ordelord f1_ordelord f0_ordelord p_vtoclg f0_ordelord a_word f1_ordelord f0_ordelord a_wcel f1_ordelord a_word p_anabsi7 $.
 $}
-$( The class of all ordinal numbers is transitive.  (Contributed by NM,
+
+$(The class of all ordinal numbers is transitive.  (Contributed by NM,
        4-May-2009.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	itron_0 $f set x $.
-	itron_1 $f set y $.
-	tron $p |- Tr On $= con0 wtr itron_0 sup_set_class con0 wss itron_0 con0 itron_0 con0 dftr3 itron_0 sup_set_class con0 wcel itron_1 itron_0 sup_set_class con0 itron_0 sup_set_class con0 wcel itron_1 sup_set_class itron_0 sup_set_class wcel itron_1 sup_set_class word itron_1 sup_set_class con0 wcel itron_0 sup_set_class con0 wcel itron_1 sup_set_class itron_0 sup_set_class wcel itron_1 sup_set_class word itron_0 sup_set_class con0 wcel itron_0 sup_set_class word itron_1 sup_set_class itron_0 sup_set_class wcel itron_1 sup_set_class word itron_0 sup_set_class itron_0 vex elon itron_0 sup_set_class itron_1 sup_set_class ordelord sylanb ex itron_1 sup_set_class itron_1 vex elon syl6ibr ssrdv mprgbir $.
+	$v  $.
+	$d x y  $.
+	i0_tron $f set x $.
+	i1_tron $f set y $.
+	p_tron $p |- Tr On $= i0_tron a_con0 p_dftr3 i0_tron p_vex i0_tron a_sup_set_class p_elon i0_tron a_sup_set_class i1_tron a_sup_set_class p_ordelord i0_tron a_sup_set_class a_con0 a_wcel i0_tron a_sup_set_class a_word i1_tron a_sup_set_class i0_tron a_sup_set_class a_wcel i1_tron a_sup_set_class a_word p_sylanb i0_tron a_sup_set_class a_con0 a_wcel i1_tron a_sup_set_class i0_tron a_sup_set_class a_wcel i1_tron a_sup_set_class a_word p_ex i1_tron p_vex i1_tron a_sup_set_class p_elon i0_tron a_sup_set_class a_con0 a_wcel i1_tron a_sup_set_class i0_tron a_sup_set_class a_wcel i1_tron a_sup_set_class a_word i1_tron a_sup_set_class a_con0 a_wcel p_syl6ibr i0_tron a_sup_set_class a_con0 a_wcel i1_tron i0_tron a_sup_set_class a_con0 p_ssrdv a_con0 a_wtr i0_tron a_sup_set_class a_con0 a_wss i0_tron a_con0 p_mprgbir $.
 $}
-$( An element of an ordinal class is an ordinal number.  (Contributed by NM,
+
+$(An element of an ordinal class is an ordinal number.  (Contributed by NM,
      26-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordelon_0 $f class A $.
-	fordelon_1 $f class B $.
-	ordelon $p |- ( ( Ord A /\ B e. A ) -> B e. On ) $= fordelon_0 word fordelon_1 fordelon_0 wcel wa fordelon_1 con0 wcel fordelon_1 word fordelon_0 fordelon_1 ordelord fordelon_1 fordelon_0 wcel fordelon_1 con0 wcel fordelon_1 word wb fordelon_0 word fordelon_1 fordelon_0 elong adantl mpbird $.
+	$v A B  $.
+	f0_ordelon $f class A $.
+	f1_ordelon $f class B $.
+	p_ordelon $p |- ( ( Ord A /\ B e. A ) -> B e. On ) $= f0_ordelon f1_ordelon p_ordelord f1_ordelon f0_ordelon p_elong f1_ordelon f0_ordelon a_wcel f1_ordelon a_con0 a_wcel f1_ordelon a_word a_wb f0_ordelon a_word p_adantl f0_ordelon a_word f1_ordelon f0_ordelon a_wcel a_wa f1_ordelon a_con0 a_wcel f1_ordelon a_word p_mpbird $.
 $}
-$( An element of an ordinal number is an ordinal number.  Theorem 2.2(iii) of
+
+$(An element of an ordinal number is an ordinal number.  Theorem 2.2(iii) of
      [BellMachover] p. 469.  (Contributed by NM, 26-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonelon_0 $f class A $.
-	fonelon_1 $f class B $.
-	onelon $p |- ( ( A e. On /\ B e. A ) -> B e. On ) $= fonelon_0 con0 wcel fonelon_0 word fonelon_1 fonelon_0 wcel fonelon_1 con0 wcel fonelon_0 eloni fonelon_0 fonelon_1 ordelon sylan $.
+	$v A B  $.
+	f0_onelon $f class A $.
+	f1_onelon $f class B $.
+	p_onelon $p |- ( ( A e. On /\ B e. A ) -> B e. On ) $= f0_onelon p_eloni f0_onelon f1_onelon p_ordelon f0_onelon a_con0 a_wcel f0_onelon a_word f1_onelon f0_onelon a_wcel f1_onelon a_con0 a_wcel p_sylan $.
 $}
-$( Proposition 7.7 of [TakeutiZaring] p. 37.  (Contributed by NM,
+
+$(Proposition 7.7 of [TakeutiZaring] p. 37.  (Contributed by NM,
        5-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	itz7.7_0 $f set x $.
-	itz7.7_1 $f set y $.
-	ftz7.7_0 $f class A $.
-	ftz7.7_1 $f class B $.
-	tz7.7 $p |- ( ( Ord A /\ Tr B ) -> ( B e. A <-> ( B C_ A /\ B =/= A ) ) ) $= ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne wa ftz7.7_0 word ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne wa wi ftz7.7_1 wtr ftz7.7_0 word ftz7.7_0 wtr ftz7.7_0 cep wfr ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne wa wi ftz7.7_0 ordtr ftz7.7_0 ordfr ftz7.7_0 wtr ftz7.7_0 cep wfr ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne wa ftz7.7_0 ftz7.7_1 tz7.2 3exp sylc adantr ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne ftz7.7_1 ftz7.7_0 wcel ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne ftz7.7_1 ftz7.7_0 wcel wi ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wne wa ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_1 ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 pssdifn0 ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_1 ftz7.7_0 wcel wi wi ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_0 word ftz7.7_1 ftz7.7_0 wss ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_1 ftz7.7_0 wcel wi wi ftz7.7_1 wtr ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_0 word ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_1 ftz7.7_0 wcel wi ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss ftz7.7_0 word ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_1 ftz7.7_0 wcel ftz7.7_0 word ftz7.7_0 ftz7.7_1 cdif c0 wne wa ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 ftz7.7_0 ftz7.7_1 cdif wrex ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa ftz7.7_1 ftz7.7_0 wcel ftz7.7_0 word ftz7.7_0 ftz7.7_1 cdif ftz7.7_0 wss ftz7.7_0 ftz7.7_1 cdif c0 wne ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 ftz7.7_0 ftz7.7_1 cdif wrex ftz7.7_0 ftz7.7_1 difss itz7.7_0 ftz7.7_0 ftz7.7_0 ftz7.7_1 cdif tz7.5 mp3an2 ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq ftz7.7_1 ftz7.7_0 wcel itz7.7_0 ftz7.7_0 ftz7.7_1 cdif ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq ftz7.7_1 ftz7.7_0 wcel ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq wa wa itz7.7_0 sup_set_class ftz7.7_1 ftz7.7_0 ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq wa wa itz7.7_0 sup_set_class ftz7.7_1 ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_1 wss ftz7.7_0 word itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_1 wss wi wi ftz7.7_1 wtr ftz7.7_1 ftz7.7_0 wss ftz7.7_0 word ftz7.7_0 wtr itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_1 wss wi wi ftz7.7_0 ordtr itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class ftz7.7_0 wcel ftz7.7_0 wtr itz7.7_0 sup_set_class ftz7.7_0 wss ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_1 wss wi itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 eldifi ftz7.7_0 itz7.7_0 sup_set_class trss ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_0 wss itz7.7_0 sup_set_class ftz7.7_1 wss ftz7.7_0 ftz7.7_1 itz7.7_0 sup_set_class difin0ss com12 syl56 syl ad2antrr imp32 ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_1 itz7.7_0 sup_set_class wss ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa itz7.7_1 ftz7.7_1 itz7.7_0 sup_set_class ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel wi ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa wa itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq wn ftz7.7_0 word ftz7.7_1 wtr wa itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq wn ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq wn itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq itz7.7_0 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_1 wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class ftz7.7_1 eleq1 biimpcd itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 eldifn nsyli imp adantll adantl ftz7.7_1 wtr ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel wn ftz7.7_0 word ftz7.7_1 wtr ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel wn ftz7.7_1 wtr itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel wn wi ftz7.7_1 ftz7.7_0 wss ftz7.7_1 wtr itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel wn wi ftz7.7_1 wtr itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel itz7.7_0 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel ftz7.7_1 wtr itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel itz7.7_0 sup_set_class ftz7.7_1 wcel wi ftz7.7_1 wtr itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel itz7.7_1 sup_set_class ftz7.7_1 wcel itz7.7_0 sup_set_class ftz7.7_1 wcel ftz7.7_1 itz7.7_0 sup_set_class itz7.7_1 sup_set_class trel exp3acom23 imp itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 eldifn nsyli ex adantld imp32 adantll ftz7.7_0 word ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel w3o ftz7.7_1 wtr ftz7.7_0 word ftz7.7_0 cep wwe itz7.7_1 sup_set_class ftz7.7_0 wcel itz7.7_0 sup_set_class ftz7.7_0 wcel wa itz7.7_1 sup_set_class itz7.7_0 sup_set_class wcel itz7.7_1 sup_set_class itz7.7_0 sup_set_class wceq itz7.7_0 sup_set_class itz7.7_1 sup_set_class wcel w3o ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel wa ftz7.7_0 ordwe ftz7.7_1 ftz7.7_0 wss itz7.7_1 sup_set_class ftz7.7_1 wcel wa itz7.7_1 sup_set_class ftz7.7_0 wcel itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class ftz7.7_0 wcel ftz7.7_1 ftz7.7_0 itz7.7_1 sup_set_class ssel2 itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 eldifi anim12i itz7.7_1 itz7.7_0 ftz7.7_0 wecmpep syl2an adantlr ecase23d exp44 com34 imp31 ssrdv adantrr eqssd itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 cdif wcel itz7.7_0 sup_set_class ftz7.7_0 wcel ftz7.7_0 word ftz7.7_1 wtr wa ftz7.7_1 ftz7.7_0 wss wa ftz7.7_0 ftz7.7_1 cdif itz7.7_0 sup_set_class cin c0 wceq itz7.7_0 sup_set_class ftz7.7_0 ftz7.7_1 eldifi ad2antrl eqeltrrd exp32 rexlimdv syl5 exp4b com23 adantrd pm2.43i syl7 exp4a pm2.43d imp3a impbid $.
+	$v A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_tz7.7 $f class A $.
+	f1_tz7.7 $f class B $.
+	i0_tz7.7 $f set x $.
+	i1_tz7.7 $f set y $.
+	p_tz7.7 $p |- ( ( Ord A /\ Tr B ) -> ( B e. A <-> ( B C_ A /\ B =/= A ) ) ) $= f0_tz7.7 p_ordtr f0_tz7.7 p_ordfr f0_tz7.7 f1_tz7.7 p_tz7.2 f0_tz7.7 a_wtr f0_tz7.7 a_cep a_wfr f1_tz7.7 f0_tz7.7 a_wcel f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne a_wa p_3exp f0_tz7.7 a_word f0_tz7.7 a_wtr f0_tz7.7 a_cep a_wfr f1_tz7.7 f0_tz7.7 a_wcel f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne a_wa a_wi p_sylc f0_tz7.7 a_word f1_tz7.7 f0_tz7.7 a_wcel f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne a_wa a_wi f1_tz7.7 a_wtr p_adantr f1_tz7.7 f0_tz7.7 p_pssdifn0 f0_tz7.7 f1_tz7.7 p_difss i0_tz7.7 f0_tz7.7 f0_tz7.7 f1_tz7.7 a_cdif p_tz7.5 f0_tz7.7 a_word f0_tz7.7 f1_tz7.7 a_cdif f0_tz7.7 a_wss f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 f0_tz7.7 f1_tz7.7 a_cdif a_wrex p_mp3an2 f0_tz7.7 p_ordtr i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 p_eldifi f0_tz7.7 i0_tz7.7 a_sup_set_class p_trss f0_tz7.7 f1_tz7.7 i0_tz7.7 a_sup_set_class p_difin0ss f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 a_sup_set_class f0_tz7.7 a_wss i0_tz7.7 a_sup_set_class f1_tz7.7 a_wss p_com12 i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 a_wcel f0_tz7.7 a_wtr i0_tz7.7 a_sup_set_class f0_tz7.7 a_wss f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 a_sup_set_class f1_tz7.7 a_wss a_wi p_syl56 f0_tz7.7 a_word f0_tz7.7 a_wtr i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 a_sup_set_class f1_tz7.7 a_wss a_wi a_wi p_syl f0_tz7.7 a_word i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 a_sup_set_class f1_tz7.7 a_wss a_wi a_wi f1_tz7.7 a_wtr f1_tz7.7 f0_tz7.7 a_wss p_ad2antrr f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 a_sup_set_class f1_tz7.7 a_wss p_imp32 i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class f1_tz7.7 p_eleq1 i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f1_tz7.7 a_wcel p_biimpcd i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 p_eldifn i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq i0_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel p_nsyli i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq a_wn p_imp i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq a_wn f1_tz7.7 f0_tz7.7 a_wss p_adantll f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq a_wn f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa p_adantl f1_tz7.7 i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class p_trel f1_tz7.7 a_wtr i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f1_tz7.7 a_wcel p_exp3acom23 f1_tz7.7 a_wtr i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel i0_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wi p_imp i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 p_eldifn f1_tz7.7 a_wtr i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel i0_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel p_nsyli f1_tz7.7 a_wtr i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_wn a_wi p_ex f1_tz7.7 a_wtr i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_wn a_wi f1_tz7.7 f0_tz7.7 a_wss p_adantld f1_tz7.7 a_wtr f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_wn p_imp32 f1_tz7.7 a_wtr f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_wn f0_tz7.7 a_word p_adantll f0_tz7.7 p_ordwe f1_tz7.7 f0_tz7.7 i1_tz7.7 a_sup_set_class p_ssel2 i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 p_eldifi f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i1_tz7.7 a_sup_set_class f0_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 a_wcel p_anim12i i1_tz7.7 i0_tz7.7 f0_tz7.7 p_wecmpep f0_tz7.7 a_word f0_tz7.7 a_cep a_wwe i1_tz7.7 a_sup_set_class f0_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 a_wcel a_wa i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_w3o f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa p_syl2an f0_tz7.7 a_word f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel a_w3o f1_tz7.7 a_wtr p_adantlr f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa a_wa i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wceq i0_tz7.7 a_sup_set_class i1_tz7.7 a_sup_set_class a_wcel p_ecase23d f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel p_exp44 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel p_com34 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i1_tz7.7 a_sup_set_class f1_tz7.7 a_wcel i1_tz7.7 a_sup_set_class i0_tz7.7 a_sup_set_class a_wcel a_wi p_imp31 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel a_wa i1_tz7.7 f1_tz7.7 i0_tz7.7 a_sup_set_class p_ssrdv f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f1_tz7.7 i0_tz7.7 a_sup_set_class a_wss f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq p_adantrr f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq a_wa a_wa i0_tz7.7 a_sup_set_class f1_tz7.7 p_eqssd i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 p_eldifi i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel i0_tz7.7 a_sup_set_class f0_tz7.7 a_wcel f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq p_ad2antrl f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq a_wa a_wa i0_tz7.7 a_sup_set_class f1_tz7.7 f0_tz7.7 p_eqeltrrd f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa i0_tz7.7 a_sup_set_class f0_tz7.7 f1_tz7.7 a_cdif a_wcel f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq f1_tz7.7 f0_tz7.7 a_wcel p_exp32 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq f1_tz7.7 f0_tz7.7 a_wcel i0_tz7.7 f0_tz7.7 f1_tz7.7 a_cdif p_rexlimdv f0_tz7.7 a_word f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne a_wa f0_tz7.7 f1_tz7.7 a_cdif i0_tz7.7 a_sup_set_class a_cin a_c0 a_wceq i0_tz7.7 f0_tz7.7 f1_tz7.7 a_cdif a_wrex f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss a_wa f1_tz7.7 f0_tz7.7 a_wcel p_syl5 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f0_tz7.7 a_word f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f1_tz7.7 f0_tz7.7 a_wcel p_exp4b f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f0_tz7.7 a_word f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f1_tz7.7 f0_tz7.7 a_wcel a_wi p_com23 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f0_tz7.7 a_word f1_tz7.7 f0_tz7.7 a_wss f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f1_tz7.7 f0_tz7.7 a_wcel a_wi a_wi f1_tz7.7 a_wtr p_adantrd f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f1_tz7.7 f0_tz7.7 a_wcel a_wi a_wi p_pm2.43i f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne a_wa f0_tz7.7 f1_tz7.7 a_cdif a_c0 a_wne f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wcel p_syl7 f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne f1_tz7.7 f0_tz7.7 a_wcel p_exp4a f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne f1_tz7.7 f0_tz7.7 a_wcel a_wi p_pm2.43d f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne f1_tz7.7 f0_tz7.7 a_wcel p_imp3a f0_tz7.7 a_word f1_tz7.7 a_wtr a_wa f1_tz7.7 f0_tz7.7 a_wcel f1_tz7.7 f0_tz7.7 a_wss f1_tz7.7 f0_tz7.7 a_wne a_wa p_impbid $.
 $}
-$( Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+
+$(Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
      25-Nov-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordelssne_0 $f class A $.
-	fordelssne_1 $f class B $.
-	ordelssne $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $= fordelssne_1 word fordelssne_0 word fordelssne_0 fordelssne_1 wcel fordelssne_0 fordelssne_1 wss fordelssne_0 fordelssne_1 wne wa wb fordelssne_0 word fordelssne_1 word fordelssne_0 wtr fordelssne_0 fordelssne_1 wcel fordelssne_0 fordelssne_1 wss fordelssne_0 fordelssne_1 wne wa wb fordelssne_0 ordtr fordelssne_1 fordelssne_0 tz7.7 sylan2 ancoms $.
+	$v A B  $.
+	f0_ordelssne $f class A $.
+	f1_ordelssne $f class B $.
+	p_ordelssne $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $= f0_ordelssne p_ordtr f1_ordelssne f0_ordelssne p_tz7.7 f0_ordelssne a_word f1_ordelssne a_word f0_ordelssne a_wtr f0_ordelssne f1_ordelssne a_wcel f0_ordelssne f1_ordelssne a_wss f0_ordelssne f1_ordelssne a_wne a_wa a_wb p_sylan2 f1_ordelssne a_word f0_ordelssne a_word f0_ordelssne f1_ordelssne a_wcel f0_ordelssne f1_ordelssne a_wss f0_ordelssne f1_ordelssne a_wne a_wa a_wb p_ancoms $.
 $}
-$( Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+
+$(Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
      17-Jun-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordelpss_0 $f class A $.
-	fordelpss_1 $f class B $.
-	ordelpss $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> A C. B ) ) $= fordelpss_0 word fordelpss_1 word wa fordelpss_0 fordelpss_1 wcel fordelpss_0 fordelpss_1 wss fordelpss_0 fordelpss_1 wne wa fordelpss_0 fordelpss_1 wpss fordelpss_0 fordelpss_1 ordelssne fordelpss_0 fordelpss_1 df-pss syl6bbr $.
+	$v A B  $.
+	f0_ordelpss $f class A $.
+	f1_ordelpss $f class B $.
+	p_ordelpss $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> A C. B ) ) $= f0_ordelpss f1_ordelpss p_ordelssne f0_ordelpss f1_ordelpss a_df-pss f0_ordelpss a_word f1_ordelpss a_word a_wa f0_ordelpss f1_ordelpss a_wcel f0_ordelpss f1_ordelpss a_wss f0_ordelpss f1_ordelpss a_wne a_wa f0_ordelpss f1_ordelpss a_wpss p_syl6bbr $.
 $}
-$( For ordinal classes, subclass is equivalent to membership or equality.
+
+$(For ordinal classes, subclass is equivalent to membership or equality.
      (Contributed by NM, 25-Nov-1995.)  (Proof shortened by Andrew Salmon,
      25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordsseleq_0 $f class A $.
-	fordsseleq_1 $f class B $.
-	ordsseleq $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $= fordsseleq_0 word fordsseleq_1 word wa fordsseleq_0 fordsseleq_1 wcel fordsseleq_0 fordsseleq_1 wceq wo fordsseleq_0 fordsseleq_1 wpss fordsseleq_0 fordsseleq_1 wceq wo fordsseleq_0 fordsseleq_1 wss fordsseleq_0 word fordsseleq_1 word wa fordsseleq_0 fordsseleq_1 wcel fordsseleq_0 fordsseleq_1 wpss fordsseleq_0 fordsseleq_1 wceq fordsseleq_0 fordsseleq_1 ordelpss orbi1d fordsseleq_0 fordsseleq_1 sspss syl6rbbr $.
+	$v A B  $.
+	f0_ordsseleq $f class A $.
+	f1_ordsseleq $f class B $.
+	p_ordsseleq $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $= f0_ordsseleq f1_ordsseleq p_ordelpss f0_ordsseleq a_word f1_ordsseleq a_word a_wa f0_ordsseleq f1_ordsseleq a_wcel f0_ordsseleq f1_ordsseleq a_wpss f0_ordsseleq f1_ordsseleq a_wceq p_orbi1d f0_ordsseleq f1_ordsseleq p_sspss f0_ordsseleq a_word f1_ordsseleq a_word a_wa f0_ordsseleq f1_ordsseleq a_wcel f0_ordsseleq f1_ordsseleq a_wceq a_wo f0_ordsseleq f1_ordsseleq a_wpss f0_ordsseleq f1_ordsseleq a_wceq a_wo f0_ordsseleq f1_ordsseleq a_wss p_syl6rbbr $.
 $}
-$( The intersection of two ordinal classes is ordinal.  Proposition 7.9 of
+
+$(The intersection of two ordinal classes is ordinal.  Proposition 7.9 of
      [TakeutiZaring] p. 37.  (Contributed by NM, 9-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordin_0 $f class A $.
-	fordin_1 $f class B $.
-	ordin $p |- ( ( Ord A /\ Ord B ) -> Ord ( A i^i B ) ) $= fordin_0 word fordin_1 word fordin_0 fordin_1 cin wtr fordin_0 fordin_1 cin word fordin_0 word fordin_0 wtr fordin_1 wtr fordin_0 fordin_1 cin wtr fordin_1 word fordin_0 ordtr fordin_1 ordtr fordin_0 fordin_1 trin syl2an fordin_0 fordin_1 cin wtr fordin_0 fordin_1 cin fordin_1 wss fordin_1 word fordin_0 fordin_1 cin word fordin_0 fordin_1 inss2 fordin_0 fordin_1 cin fordin_1 trssord mp3an2 sylancom $.
+	$v A B  $.
+	f0_ordin $f class A $.
+	f1_ordin $f class B $.
+	p_ordin $p |- ( ( Ord A /\ Ord B ) -> Ord ( A i^i B ) ) $= f0_ordin p_ordtr f1_ordin p_ordtr f0_ordin f1_ordin p_trin f0_ordin a_word f0_ordin a_wtr f1_ordin a_wtr f0_ordin f1_ordin a_cin a_wtr f1_ordin a_word p_syl2an f0_ordin f1_ordin p_inss2 f0_ordin f1_ordin a_cin f1_ordin p_trssord f0_ordin f1_ordin a_cin a_wtr f0_ordin f1_ordin a_cin f1_ordin a_wss f1_ordin a_word f0_ordin f1_ordin a_cin a_word p_mp3an2 f0_ordin a_word f1_ordin a_word f0_ordin f1_ordin a_cin a_wtr f0_ordin f1_ordin a_cin a_word p_sylancom $.
 $}
-$( The intersection of two ordinal numbers is an ordinal number.
+
+$(The intersection of two ordinal numbers is an ordinal number.
        (Contributed by NM, 7-Apr-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonin_0 $f class A $.
-	fonin_1 $f class B $.
-	onin $p |- ( ( A e. On /\ B e. On ) -> ( A i^i B ) e. On ) $= fonin_0 con0 wcel fonin_1 con0 wcel wa fonin_0 fonin_1 cin con0 wcel fonin_0 fonin_1 cin word fonin_0 con0 wcel fonin_0 word fonin_1 word fonin_0 fonin_1 cin word fonin_1 con0 wcel fonin_0 eloni fonin_1 eloni fonin_0 fonin_1 ordin syl2an fonin_0 con0 wcel fonin_1 con0 wcel wa fonin_0 con0 wcel fonin_0 fonin_1 cin cvv wcel fonin_0 fonin_1 cin con0 wcel fonin_0 fonin_1 cin word wb fonin_0 con0 wcel fonin_1 con0 wcel simpl fonin_0 fonin_1 con0 inex1g fonin_0 fonin_1 cin cvv elong 3syl mpbird $.
+	$v A B  $.
+	$d A  $.
+	$d B  $.
+	f0_onin $f class A $.
+	f1_onin $f class B $.
+	p_onin $p |- ( ( A e. On /\ B e. On ) -> ( A i^i B ) e. On ) $= f0_onin p_eloni f1_onin p_eloni f0_onin f1_onin p_ordin f0_onin a_con0 a_wcel f0_onin a_word f1_onin a_word f0_onin f1_onin a_cin a_word f1_onin a_con0 a_wcel p_syl2an f0_onin a_con0 a_wcel f1_onin a_con0 a_wcel p_simpl f0_onin f1_onin a_con0 p_inex1g f0_onin f1_onin a_cin a_cvv p_elong f0_onin a_con0 a_wcel f1_onin a_con0 a_wcel a_wa f0_onin a_con0 a_wcel f0_onin f1_onin a_cin a_cvv a_wcel f0_onin f1_onin a_cin a_con0 a_wcel f0_onin f1_onin a_cin a_word a_wb p_3syl f0_onin a_con0 a_wcel f1_onin a_con0 a_wcel a_wa f0_onin f1_onin a_cin a_con0 a_wcel f0_onin f1_onin a_cin a_word p_mpbird $.
 $}
-$( A trichotomy law for ordinals.  Proposition 7.10 of [TakeutiZaring]
+
+$(A trichotomy law for ordinals.  Proposition 7.10 of [TakeutiZaring]
      p. 38.  (Contributed by NM, 10-May-1994.)  (Proof shortened by Andrew
      Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri3or_0 $f class A $.
-	fordtri3or_1 $f class B $.
-	ordtri3or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ A = B \/ B e. A ) ) $= fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 wcel fordtri3or_0 fordtri3or_1 wceq fordtri3or_1 fordtri3or_0 wcel w3o fordtri3or_0 fordtri3or_1 wpss fordtri3or_0 fordtri3or_1 wceq fordtri3or_1 fordtri3or_0 wpss w3o fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 wss fordtri3or_1 fordtri3or_0 wss wo fordtri3or_0 fordtri3or_1 wpss fordtri3or_0 fordtri3or_1 wceq fordtri3or_1 fordtri3or_0 wpss w3o fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel wn fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wn wo fordtri3or_0 fordtri3or_1 wss fordtri3or_1 fordtri3or_0 wss wo fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 fordtri3or_1 cin wcel wn fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel wn fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wn wo fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin word fordtri3or_0 fordtri3or_1 cin fordtri3or_0 fordtri3or_1 cin wcel wn fordtri3or_0 fordtri3or_1 ordin fordtri3or_0 fordtri3or_1 cin ordirr syl fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel wn fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wn wo fordtri3or_0 fordtri3or_1 cin fordtri3or_0 fordtri3or_1 cin wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel ianor fordtri3or_0 fordtri3or_1 cin fordtri3or_0 fordtri3or_1 cin wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_1 wcel wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 fordtri3or_1 elin fordtri3or_0 fordtri3or_1 cin fordtri3or_1 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_1 fordtri3or_0 cin fordtri3or_1 fordtri3or_0 fordtri3or_1 incom eleq1i anbi2i bitri xchnxbir sylib fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel wn fordtri3or_0 fordtri3or_1 wss fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wn fordtri3or_1 fordtri3or_0 wss fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel wn fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wceq fordtri3or_0 fordtri3or_1 wss fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wceq fordtri3or_0 word fordtri3or_1 word fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wceq wo fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 cin word fordtri3or_0 word fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wceq wo fordtri3or_0 fordtri3or_1 ordin fordtri3or_0 fordtri3or_1 cin word fordtri3or_0 word wa fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wss fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wcel fordtri3or_0 fordtri3or_1 cin fordtri3or_0 wceq wo fordtri3or_0 fordtri3or_1 inss1 fordtri3or_0 fordtri3or_1 cin fordtri3or_0 ordsseleq mpbii sylan anabss1 ord fordtri3or_0 fordtri3or_1 df-ss syl6ibr fordtri3or_0 word fordtri3or_1 word wa fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel wn fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wceq fordtri3or_1 fordtri3or_0 wss fordtri3or_0 word fordtri3or_1 word wa fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wceq fordtri3or_0 word fordtri3or_1 word fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wceq wo fordtri3or_1 word fordtri3or_0 word wa fordtri3or_1 fordtri3or_0 cin word fordtri3or_1 word fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wceq wo fordtri3or_1 fordtri3or_0 ordin fordtri3or_1 fordtri3or_0 cin word fordtri3or_1 word wa fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wss fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wcel fordtri3or_1 fordtri3or_0 cin fordtri3or_1 wceq wo fordtri3or_1 fordtri3or_0 inss1 fordtri3or_1 fordtri3or_0 cin fordtri3or_1 ordsseleq mpbii sylan anabss4 ord fordtri3or_1 fordtri3or_0 df-ss syl6ibr orim12d mpd fordtri3or_0 fordtri3or_1 sspsstri sylib fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 wcel fordtri3or_0 fordtri3or_1 wpss fordtri3or_0 fordtri3or_1 wceq fordtri3or_0 fordtri3or_1 wceq fordtri3or_1 fordtri3or_0 wcel fordtri3or_1 fordtri3or_0 wpss fordtri3or_0 fordtri3or_1 ordelpss fordtri3or_0 word fordtri3or_1 word wa fordtri3or_0 fordtri3or_1 wceq biidd fordtri3or_1 word fordtri3or_0 word fordtri3or_1 fordtri3or_0 wcel fordtri3or_1 fordtri3or_0 wpss wb fordtri3or_1 fordtri3or_0 ordelpss ancoms 3orbi123d mpbird $.
+	$v A B  $.
+	f0_ordtri3or $f class A $.
+	f1_ordtri3or $f class B $.
+	p_ordtri3or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ A = B \/ B e. A ) ) $= f0_ordtri3or f1_ordtri3or p_ordin f0_ordtri3or f1_ordtri3or a_cin p_ordirr f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin a_word f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or f1_ordtri3or a_cin a_wcel a_wn p_syl f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel p_ianor f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or f1_ordtri3or p_elin f0_ordtri3or f1_ordtri3or p_incom f0_ordtri3or f1_ordtri3or a_cin f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or p_eleq1i f0_ordtri3or f1_ordtri3or a_cin f1_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel p_anbi2i f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or f1_ordtri3or a_cin a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f1_ordtri3or a_wcel a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wa p_bitri f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel a_wn f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wn a_wo f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or f1_ordtri3or a_cin a_wcel p_xchnxbir f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or f1_ordtri3or a_cin a_wcel a_wn f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel a_wn f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wn a_wo p_sylib f0_ordtri3or f1_ordtri3or p_ordin f0_ordtri3or f1_ordtri3or p_inss1 f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or p_ordsseleq f0_ordtri3or f1_ordtri3or a_cin a_word f0_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wss f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wceq a_wo p_mpbii f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin a_word f0_ordtri3or a_word f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wceq a_wo p_sylan f0_ordtri3or a_word f1_ordtri3or a_word f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wceq a_wo p_anabss1 f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wceq p_ord f0_ordtri3or f1_ordtri3or a_df-ss f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel a_wn f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wceq f0_ordtri3or f1_ordtri3or a_wss p_syl6ibr f1_ordtri3or f0_ordtri3or p_ordin f1_ordtri3or f0_ordtri3or p_inss1 f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or p_ordsseleq f1_ordtri3or f0_ordtri3or a_cin a_word f1_ordtri3or a_word a_wa f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wss f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wceq a_wo p_mpbii f1_ordtri3or a_word f0_ordtri3or a_word a_wa f1_ordtri3or f0_ordtri3or a_cin a_word f1_ordtri3or a_word f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wceq a_wo p_sylan f0_ordtri3or a_word f1_ordtri3or a_word f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wceq a_wo p_anabss4 f0_ordtri3or a_word f1_ordtri3or a_word a_wa f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wceq p_ord f1_ordtri3or f0_ordtri3or a_df-ss f0_ordtri3or a_word f1_ordtri3or a_word a_wa f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wn f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wceq f1_ordtri3or f0_ordtri3or a_wss p_syl6ibr f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel a_wn f0_ordtri3or f1_ordtri3or a_wss f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wn f1_ordtri3or f0_ordtri3or a_wss p_orim12d f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_cin f0_ordtri3or a_wcel a_wn f1_ordtri3or f0_ordtri3or a_cin f1_ordtri3or a_wcel a_wn a_wo f0_ordtri3or f1_ordtri3or a_wss f1_ordtri3or f0_ordtri3or a_wss a_wo p_mpd f0_ordtri3or f1_ordtri3or p_sspsstri f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_wss f1_ordtri3or f0_ordtri3or a_wss a_wo f0_ordtri3or f1_ordtri3or a_wpss f0_ordtri3or f1_ordtri3or a_wceq f1_ordtri3or f0_ordtri3or a_wpss a_w3o p_sylib f0_ordtri3or f1_ordtri3or p_ordelpss f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_wceq p_biidd f1_ordtri3or f0_ordtri3or p_ordelpss f1_ordtri3or a_word f0_ordtri3or a_word f1_ordtri3or f0_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_wpss a_wb p_ancoms f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_wpss f0_ordtri3or f1_ordtri3or a_wceq f0_ordtri3or f1_ordtri3or a_wceq f1_ordtri3or f0_ordtri3or a_wcel f1_ordtri3or f0_ordtri3or a_wpss p_3orbi123d f0_ordtri3or a_word f1_ordtri3or a_word a_wa f0_ordtri3or f1_ordtri3or a_wcel f0_ordtri3or f1_ordtri3or a_wceq f1_ordtri3or f0_ordtri3or a_wcel a_w3o f0_ordtri3or f1_ordtri3or a_wpss f0_ordtri3or f1_ordtri3or a_wceq f1_ordtri3or f0_ordtri3or a_wpss a_w3o p_mpbird $.
 $}
-$( A trichotomy law for ordinals.  (Contributed by NM, 25-Mar-1995.)  (Proof
+
+$(A trichotomy law for ordinals.  (Contributed by NM, 25-Mar-1995.)  (Proof
      shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri1_0 $f class A $.
-	fordtri1_1 $f class B $.
-	ordtri1 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> -. B e. A ) ) $= fordtri1_0 word fordtri1_1 word wa fordtri1_0 fordtri1_1 wss fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq wo fordtri1_1 fordtri1_0 wcel wn fordtri1_0 fordtri1_1 ordsseleq fordtri1_0 word fordtri1_1 word wa fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq wo fordtri1_1 fordtri1_0 wcel wn fordtri1_0 word fordtri1_0 fordtri1_1 wcel fordtri1_1 fordtri1_0 wcel wn fordtri1_1 word fordtri1_0 fordtri1_1 wceq fordtri1_0 word fordtri1_0 fordtri1_1 wcel fordtri1_1 fordtri1_0 wcel wa wn fordtri1_0 fordtri1_1 wcel fordtri1_1 fordtri1_0 wcel wn wi fordtri1_0 fordtri1_1 ordn2lp fordtri1_0 fordtri1_1 wcel fordtri1_1 fordtri1_0 wcel imnan sylibr fordtri1_1 word fordtri1_1 fordtri1_0 wcel wn fordtri1_0 fordtri1_1 wceq fordtri1_1 fordtri1_1 wcel wn fordtri1_1 ordirr fordtri1_0 fordtri1_1 wceq fordtri1_1 fordtri1_0 wcel fordtri1_1 fordtri1_1 wcel fordtri1_0 fordtri1_1 fordtri1_1 eleq2 notbid syl5ibrcom jaao fordtri1_0 word fordtri1_1 word wa fordtri1_1 fordtri1_0 wcel fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq wo fordtri1_0 word fordtri1_1 word wa fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq wo fordtri1_1 fordtri1_0 wcel fordtri1_0 word fordtri1_1 word wa fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq fordtri1_1 fordtri1_0 wcel w3o fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq wo fordtri1_1 fordtri1_0 wcel wo fordtri1_0 fordtri1_1 ordtri3or fordtri1_0 fordtri1_1 wcel fordtri1_0 fordtri1_1 wceq fordtri1_1 fordtri1_0 wcel df-3or sylib orcomd ord impbid bitrd $.
+	$v A B  $.
+	f0_ordtri1 $f class A $.
+	f1_ordtri1 $f class B $.
+	p_ordtri1 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> -. B e. A ) ) $= f0_ordtri1 f1_ordtri1 p_ordsseleq f0_ordtri1 f1_ordtri1 p_ordn2lp f0_ordtri1 f1_ordtri1 a_wcel f1_ordtri1 f0_ordtri1 a_wcel p_imnan f0_ordtri1 a_word f0_ordtri1 f1_ordtri1 a_wcel f1_ordtri1 f0_ordtri1 a_wcel a_wa a_wn f0_ordtri1 f1_ordtri1 a_wcel f1_ordtri1 f0_ordtri1 a_wcel a_wn a_wi p_sylibr f1_ordtri1 p_ordirr f0_ordtri1 f1_ordtri1 f1_ordtri1 p_eleq2 f0_ordtri1 f1_ordtri1 a_wceq f1_ordtri1 f0_ordtri1 a_wcel f1_ordtri1 f1_ordtri1 a_wcel p_notbid f1_ordtri1 a_word f1_ordtri1 f0_ordtri1 a_wcel a_wn f0_ordtri1 f1_ordtri1 a_wceq f1_ordtri1 f1_ordtri1 a_wcel a_wn p_syl5ibrcom f0_ordtri1 a_word f0_ordtri1 f1_ordtri1 a_wcel f1_ordtri1 f0_ordtri1 a_wcel a_wn f1_ordtri1 a_word f0_ordtri1 f1_ordtri1 a_wceq p_jaao f0_ordtri1 f1_ordtri1 p_ordtri3or f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq f1_ordtri1 f0_ordtri1 a_wcel a_df-3or f0_ordtri1 a_word f1_ordtri1 a_word a_wa f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq f1_ordtri1 f0_ordtri1 a_wcel a_w3o f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq a_wo f1_ordtri1 f0_ordtri1 a_wcel a_wo p_sylib f0_ordtri1 a_word f1_ordtri1 a_word a_wa f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq a_wo f1_ordtri1 f0_ordtri1 a_wcel p_orcomd f0_ordtri1 a_word f1_ordtri1 a_word a_wa f1_ordtri1 f0_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq a_wo p_ord f0_ordtri1 a_word f1_ordtri1 a_word a_wa f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq a_wo f1_ordtri1 f0_ordtri1 a_wcel a_wn p_impbid f0_ordtri1 a_word f1_ordtri1 a_word a_wa f0_ordtri1 f1_ordtri1 a_wss f0_ordtri1 f1_ordtri1 a_wcel f0_ordtri1 f1_ordtri1 a_wceq a_wo f1_ordtri1 f0_ordtri1 a_wcel a_wn p_bitrd $.
 $}
-$( A trichotomy law for ordinal numbers.  (Contributed by NM, 6-Nov-2003.) $)
+
+$(A trichotomy law for ordinal numbers.  (Contributed by NM, 6-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fontri1_0 $f class A $.
-	fontri1_1 $f class B $.
-	ontri1 $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> -. B e. A ) ) $= fontri1_0 con0 wcel fontri1_0 word fontri1_1 word fontri1_0 fontri1_1 wss fontri1_1 fontri1_0 wcel wn wb fontri1_1 con0 wcel fontri1_0 eloni fontri1_1 eloni fontri1_0 fontri1_1 ordtri1 syl2an $.
+	$v A B  $.
+	f0_ontri1 $f class A $.
+	f1_ontri1 $f class B $.
+	p_ontri1 $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> -. B e. A ) ) $= f0_ontri1 p_eloni f1_ontri1 p_eloni f0_ontri1 f1_ontri1 p_ordtri1 f0_ontri1 a_con0 a_wcel f0_ontri1 a_word f1_ontri1 a_word f0_ontri1 f1_ontri1 a_wss f1_ontri1 f0_ontri1 a_wcel a_wn a_wb f1_ontri1 a_con0 a_wcel p_syl2an $.
 $}
-$( A trichotomy law for ordinals.  (Contributed by NM, 25-Nov-1995.) $)
+
+$(A trichotomy law for ordinals.  (Contributed by NM, 25-Nov-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri2_0 $f class A $.
-	fordtri2_1 $f class B $.
-	ordtri2 $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> -. ( A = B \/ B e. A ) ) ) $= fordtri2_0 word fordtri2_1 word wa fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel wo fordtri2_0 fordtri2_1 wcel fordtri2_1 word fordtri2_0 word fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel wo fordtri2_0 fordtri2_1 wcel wn wb fordtri2_1 word fordtri2_0 word wa fordtri2_1 fordtri2_0 wss fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel wo fordtri2_0 fordtri2_1 wcel wn fordtri2_1 word fordtri2_0 word wa fordtri2_1 fordtri2_0 wss fordtri2_1 fordtri2_0 wcel fordtri2_1 fordtri2_0 wceq wo fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel wo fordtri2_1 fordtri2_0 ordsseleq fordtri2_1 fordtri2_0 wcel fordtri2_1 fordtri2_0 wceq wo fordtri2_1 fordtri2_0 wcel fordtri2_0 fordtri2_1 wceq wo fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel wo fordtri2_1 fordtri2_0 wceq fordtri2_0 fordtri2_1 wceq fordtri2_1 fordtri2_0 wcel fordtri2_1 fordtri2_0 eqcom orbi2i fordtri2_1 fordtri2_0 wcel fordtri2_0 fordtri2_1 wceq orcom bitri syl6bb fordtri2_1 fordtri2_0 ordtri1 bitr3d ancoms con2bid $.
+	$v A B  $.
+	f0_ordtri2 $f class A $.
+	f1_ordtri2 $f class B $.
+	p_ordtri2 $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> -. ( A = B \/ B e. A ) ) ) $= f1_ordtri2 f0_ordtri2 p_ordsseleq f1_ordtri2 f0_ordtri2 p_eqcom f1_ordtri2 f0_ordtri2 a_wceq f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel p_orbi2i f1_ordtri2 f0_ordtri2 a_wcel f0_ordtri2 f1_ordtri2 a_wceq p_orcom f1_ordtri2 f0_ordtri2 a_wcel f1_ordtri2 f0_ordtri2 a_wceq a_wo f1_ordtri2 f0_ordtri2 a_wcel f0_ordtri2 f1_ordtri2 a_wceq a_wo f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel a_wo p_bitri f1_ordtri2 a_word f0_ordtri2 a_word a_wa f1_ordtri2 f0_ordtri2 a_wss f1_ordtri2 f0_ordtri2 a_wcel f1_ordtri2 f0_ordtri2 a_wceq a_wo f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel a_wo p_syl6bb f1_ordtri2 f0_ordtri2 p_ordtri1 f1_ordtri2 a_word f0_ordtri2 a_word a_wa f1_ordtri2 f0_ordtri2 a_wss f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel a_wo f0_ordtri2 f1_ordtri2 a_wcel a_wn p_bitr3d f1_ordtri2 a_word f0_ordtri2 a_word f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel a_wo f0_ordtri2 f1_ordtri2 a_wcel a_wn a_wb p_ancoms f0_ordtri2 a_word f1_ordtri2 a_word a_wa f0_ordtri2 f1_ordtri2 a_wceq f1_ordtri2 f0_ordtri2 a_wcel a_wo f0_ordtri2 f1_ordtri2 a_wcel p_con2bid $.
 $}
-$( A trichotomy law for ordinals.  (Contributed by NM, 18-Oct-1995.)  (Proof
+
+$(A trichotomy law for ordinals.  (Contributed by NM, 18-Oct-1995.)  (Proof
      shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri3_0 $f class A $.
-	fordtri3_1 $f class B $.
-	ordtri3 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> -. ( A e. B \/ B e. A ) ) ) $= fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wceq fordtri3_0 fordtri3_1 wcel fordtri3_1 fordtri3_0 wcel wo wn fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wceq fordtri3_0 fordtri3_1 wcel wn fordtri3_1 fordtri3_0 wcel wn wa fordtri3_0 fordtri3_1 wcel fordtri3_1 fordtri3_0 wcel wo wn fordtri3_0 fordtri3_1 wceq fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wcel wn fordtri3_1 fordtri3_0 wcel wn wa fordtri3_0 fordtri3_1 wceq fordtri3_0 word fordtri3_0 fordtri3_1 wcel wn fordtri3_1 word fordtri3_1 fordtri3_0 wcel wn fordtri3_0 word fordtri3_0 fordtri3_0 wcel wn fordtri3_0 fordtri3_1 wceq fordtri3_0 fordtri3_1 wcel wn fordtri3_0 ordirr fordtri3_0 fordtri3_1 wceq fordtri3_0 fordtri3_0 wcel fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 fordtri3_0 eleq2 notbid syl5ib fordtri3_1 word fordtri3_1 fordtri3_0 wcel wn fordtri3_0 fordtri3_1 wceq fordtri3_1 fordtri3_1 wcel wn fordtri3_1 ordirr fordtri3_0 fordtri3_1 wceq fordtri3_1 fordtri3_0 wcel fordtri3_1 fordtri3_1 wcel fordtri3_0 fordtri3_1 fordtri3_1 eleq2 notbid syl5ibr anim12d com12 fordtri3_0 fordtri3_1 wcel fordtri3_1 fordtri3_0 wcel pm4.56 syl6ib fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wcel fordtri3_1 fordtri3_0 wcel wo fordtri3_0 fordtri3_1 wceq fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 wceq wo fordtri3_1 fordtri3_0 wcel wo fordtri3_0 fordtri3_1 wcel fordtri3_1 fordtri3_0 wcel wo fordtri3_0 fordtri3_1 wceq wo fordtri3_0 word fordtri3_1 word wa fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 wceq fordtri3_1 fordtri3_0 wcel w3o fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 wceq wo fordtri3_1 fordtri3_0 wcel wo fordtri3_0 fordtri3_1 ordtri3or fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 wceq fordtri3_1 fordtri3_0 wcel df-3or sylib fordtri3_0 fordtri3_1 wcel fordtri3_0 fordtri3_1 wceq fordtri3_1 fordtri3_0 wcel or32 sylib ord impbid $.
+	$v A B  $.
+	f0_ordtri3 $f class A $.
+	f1_ordtri3 $f class B $.
+	p_ordtri3 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> -. ( A e. B \/ B e. A ) ) ) $= f0_ordtri3 p_ordirr f0_ordtri3 f1_ordtri3 f0_ordtri3 p_eleq2 f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 f0_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wcel p_notbid f0_ordtri3 a_word f0_ordtri3 f0_ordtri3 a_wcel a_wn f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 f1_ordtri3 a_wcel a_wn p_syl5ib f1_ordtri3 p_ordirr f0_ordtri3 f1_ordtri3 f1_ordtri3 p_eleq2 f0_ordtri3 f1_ordtri3 a_wceq f1_ordtri3 f0_ordtri3 a_wcel f1_ordtri3 f1_ordtri3 a_wcel p_notbid f1_ordtri3 a_word f1_ordtri3 f0_ordtri3 a_wcel a_wn f0_ordtri3 f1_ordtri3 a_wceq f1_ordtri3 f1_ordtri3 a_wcel a_wn p_syl5ibr f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 a_word f0_ordtri3 f1_ordtri3 a_wcel a_wn f1_ordtri3 a_word f1_ordtri3 f0_ordtri3 a_wcel a_wn p_anim12d f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wcel a_wn f1_ordtri3 f0_ordtri3 a_wcel a_wn a_wa p_com12 f0_ordtri3 f1_ordtri3 a_wcel f1_ordtri3 f0_ordtri3 a_wcel p_pm4.56 f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 f1_ordtri3 a_wcel a_wn f1_ordtri3 f0_ordtri3 a_wcel a_wn a_wa f0_ordtri3 f1_ordtri3 a_wcel f1_ordtri3 f0_ordtri3 a_wcel a_wo a_wn p_syl6ib f0_ordtri3 f1_ordtri3 p_ordtri3or f0_ordtri3 f1_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wceq f1_ordtri3 f0_ordtri3 a_wcel a_df-3or f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wceq f1_ordtri3 f0_ordtri3 a_wcel a_w3o f0_ordtri3 f1_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wceq a_wo f1_ordtri3 f0_ordtri3 a_wcel a_wo p_sylib f0_ordtri3 f1_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wceq f1_ordtri3 f0_ordtri3 a_wcel p_or32 f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wcel f0_ordtri3 f1_ordtri3 a_wceq a_wo f1_ordtri3 f0_ordtri3 a_wcel a_wo f0_ordtri3 f1_ordtri3 a_wcel f1_ordtri3 f0_ordtri3 a_wcel a_wo f0_ordtri3 f1_ordtri3 a_wceq a_wo p_sylib f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wcel f1_ordtri3 f0_ordtri3 a_wcel a_wo f0_ordtri3 f1_ordtri3 a_wceq p_ord f0_ordtri3 a_word f1_ordtri3 a_word a_wa f0_ordtri3 f1_ordtri3 a_wceq f0_ordtri3 f1_ordtri3 a_wcel f1_ordtri3 f0_ordtri3 a_wcel a_wo a_wn p_impbid $.
 $}
-$( A trichotomy law for ordinals.  (Contributed by NM, 1-Nov-2003.)  (Proof
+
+$(A trichotomy law for ordinals.  (Contributed by NM, 1-Nov-2003.)  (Proof
      shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri4_0 $f class A $.
-	fordtri4_1 $f class B $.
-	ordtri4 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> ( A C_ B /\ -. A e. B ) ) ) $= fordtri4_0 fordtri4_1 wceq fordtri4_0 fordtri4_1 wss fordtri4_1 fordtri4_0 wss wa fordtri4_0 word fordtri4_1 word wa fordtri4_0 fordtri4_1 wss fordtri4_0 fordtri4_1 wcel wn wa fordtri4_0 fordtri4_1 eqss fordtri4_0 word fordtri4_1 word wa fordtri4_1 fordtri4_0 wss fordtri4_0 fordtri4_1 wcel wn fordtri4_0 fordtri4_1 wss fordtri4_1 word fordtri4_0 word fordtri4_1 fordtri4_0 wss fordtri4_0 fordtri4_1 wcel wn wb fordtri4_1 fordtri4_0 ordtri1 ancoms anbi2d syl5bb $.
+	$v A B  $.
+	f0_ordtri4 $f class A $.
+	f1_ordtri4 $f class B $.
+	p_ordtri4 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> ( A C_ B /\ -. A e. B ) ) ) $= f0_ordtri4 f1_ordtri4 p_eqss f1_ordtri4 f0_ordtri4 p_ordtri1 f1_ordtri4 a_word f0_ordtri4 a_word f1_ordtri4 f0_ordtri4 a_wss f0_ordtri4 f1_ordtri4 a_wcel a_wn a_wb p_ancoms f0_ordtri4 a_word f1_ordtri4 a_word a_wa f1_ordtri4 f0_ordtri4 a_wss f0_ordtri4 f1_ordtri4 a_wcel a_wn f0_ordtri4 f1_ordtri4 a_wss p_anbi2d f0_ordtri4 f1_ordtri4 a_wceq f0_ordtri4 f1_ordtri4 a_wss f1_ordtri4 f0_ordtri4 a_wss a_wa f0_ordtri4 a_word f1_ordtri4 a_word a_wa f0_ordtri4 f1_ordtri4 a_wss f0_ordtri4 f1_ordtri4 a_wcel a_wn a_wa p_syl5bb $.
 $}
-$( An ordinal class and its singleton are disjoint.  (Contributed by NM,
+
+$(An ordinal class and its singleton are disjoint.  (Contributed by NM,
      19-May-1998.) $)
+
 ${
-	$v A $.
-	forddisj_0 $f class A $.
-	orddisj $p |- ( Ord A -> ( A i^i { A } ) = (/) ) $= forddisj_0 word forddisj_0 forddisj_0 wcel wn forddisj_0 forddisj_0 csn cin c0 wceq forddisj_0 ordirr forddisj_0 forddisj_0 disjsn sylibr $.
+	$v A  $.
+	f0_orddisj $f class A $.
+	p_orddisj $p |- ( Ord A -> ( A i^i { A } ) = (/) ) $= f0_orddisj p_ordirr f0_orddisj f0_orddisj p_disjsn f0_orddisj a_word f0_orddisj f0_orddisj a_wcel a_wn f0_orddisj f0_orddisj a_csn a_cin a_c0 a_wceq p_sylibr $.
 $}
-$( The ordinal class is well-founded.  This lemma is needed for ~ ordon in
+
+$(The ordinal class is well-founded.  This lemma is needed for ~ ordon in
        order to eliminate the need for the Axiom of Regularity.  (Contributed
        by NM, 17-May-1994.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	ionfr_0 $f set x $.
-	ionfr_1 $f set y $.
-	ionfr_2 $f set z $.
-	onfr $p |- _E Fr On $= con0 cep wfr ionfr_0 sup_set_class con0 wss ionfr_0 sup_set_class c0 wne wa ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex wi ionfr_0 ionfr_0 ionfr_2 con0 dfepfr ionfr_0 sup_set_class con0 wss ionfr_0 sup_set_class c0 wne ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_0 sup_set_class c0 wne ionfr_1 sup_set_class ionfr_0 sup_set_class wcel ionfr_1 wex ionfr_0 sup_set_class con0 wss ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_1 ionfr_0 sup_set_class n0 ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_1 ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 ionfr_1 sup_set_class ionfr_0 sup_set_class wcel ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wceq ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_0 sup_set_class con0 wss ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wceq ionfr_2 ionfr_1 sup_set_class ionfr_0 sup_set_class ionfr_2 sup_set_class ionfr_1 sup_set_class wceq ionfr_0 sup_set_class ionfr_2 sup_set_class cin ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 ionfr_2 sup_set_class ionfr_1 sup_set_class ionfr_0 sup_set_class ineq2 eqeq1d rspcev adantll ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wne wa ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wne wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_1 sup_set_class cep wfr ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wne ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_1 sup_set_class word ionfr_1 sup_set_class cep wfr ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_1 sup_set_class con0 wcel ionfr_1 sup_set_class word ionfr_0 sup_set_class con0 ionfr_1 sup_set_class ssel2 ionfr_1 sup_set_class eloni syl ionfr_1 sup_set_class ordfr syl ionfr_1 sup_set_class cep wfr ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_1 sup_set_class wss ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wne ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class ionfr_1 sup_set_class inss2 ionfr_2 ionfr_1 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_0 sup_set_class ionfr_1 sup_set_class ionfr_0 vex inex1 epfrc mp3an2 sylan ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex wb ionfr_0 sup_set_class ionfr_1 sup_set_class cin c0 wne ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin c0 wceq ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_2 sup_set_class cin ionfr_0 sup_set_class ionfr_1 sup_set_class ionfr_2 sup_set_class cin cin ionfr_0 sup_set_class ionfr_2 sup_set_class cin ionfr_0 sup_set_class ionfr_1 sup_set_class ionfr_2 sup_set_class inass ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_1 sup_set_class ionfr_2 sup_set_class cin ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_2 sup_set_class ionfr_1 sup_set_class wss ionfr_1 sup_set_class ionfr_2 sup_set_class cin ionfr_2 sup_set_class wceq ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_1 sup_set_class word ionfr_2 sup_set_class ionfr_1 sup_set_class wcel ionfr_2 sup_set_class ionfr_1 sup_set_class wss ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_1 sup_set_class word ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_1 sup_set_class con0 wcel ionfr_1 sup_set_class word ionfr_0 sup_set_class con0 ionfr_1 sup_set_class ssel2 ionfr_1 sup_set_class eloni syl adantr ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel wa ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_1 sup_set_class ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class inss2 ionfr_0 sup_set_class con0 wss ionfr_1 sup_set_class ionfr_0 sup_set_class wcel wa ionfr_2 sup_set_class ionfr_0 sup_set_class ionfr_1 sup_set_class cin wcel simpr sseldi ionfr_1 sup_set_class ionfr_2 sup_set_class ordelss syl2anc ionfr_2 sup_set_class ionfr_1 sup_set_class dfss1 sylib ineq2d syl5eq eqeq1d rexbidva adantr mpbid ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_0 sup_set_class wss ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin wrex ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class wrex wi ionfr_0 sup_set_class ionfr_1 sup_set_class inss1 ionfr_0 sup_set_class ionfr_2 sup_set_class cin c0 wceq ionfr_2 ionfr_0 sup_set_class ionfr_1 sup_set_class cin ionfr_0 sup_set_class ssrexv ax-mp syl pm2.61dane ex exlimdv syl5bi imp mpgbir $.
+	$v  $.
+	$d x y z  $.
+	i0_onfr $f set x $.
+	i1_onfr $f set y $.
+	i2_onfr $f set z $.
+	p_onfr $p |- _E Fr On $= i0_onfr i2_onfr a_con0 p_dfepfr i1_onfr i0_onfr a_sup_set_class p_n0 i2_onfr a_sup_set_class i1_onfr a_sup_set_class i0_onfr a_sup_set_class p_ineq2 i2_onfr a_sup_set_class i1_onfr a_sup_set_class a_wceq i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 p_eqeq1d i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i1_onfr a_sup_set_class i0_onfr a_sup_set_class p_rspcev i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wceq i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex i0_onfr a_sup_set_class a_con0 a_wss p_adantll i0_onfr a_sup_set_class a_con0 i1_onfr a_sup_set_class p_ssel2 i1_onfr a_sup_set_class p_eloni i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i1_onfr a_sup_set_class a_con0 a_wcel i1_onfr a_sup_set_class a_word p_syl i1_onfr a_sup_set_class p_ordfr i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i1_onfr a_sup_set_class a_word i1_onfr a_sup_set_class a_cep a_wfr p_syl i0_onfr a_sup_set_class i1_onfr a_sup_set_class p_inss2 i0_onfr p_vex i0_onfr a_sup_set_class i1_onfr a_sup_set_class p_inex1 i2_onfr i1_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin p_epfrc i1_onfr a_sup_set_class a_cep a_wfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i1_onfr a_sup_set_class a_wss i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wne i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex p_mp3an2 i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i1_onfr a_sup_set_class a_cep a_wfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wne i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex p_sylan i0_onfr a_sup_set_class i1_onfr a_sup_set_class i2_onfr a_sup_set_class p_inass i0_onfr a_sup_set_class a_con0 i1_onfr a_sup_set_class p_ssel2 i1_onfr a_sup_set_class p_eloni i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i1_onfr a_sup_set_class a_con0 a_wcel i1_onfr a_sup_set_class a_word p_syl i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i1_onfr a_sup_set_class a_word i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel p_adantr i0_onfr a_sup_set_class i1_onfr a_sup_set_class p_inss2 i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel p_simpr i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i1_onfr a_sup_set_class i2_onfr a_sup_set_class p_sseldi i1_onfr a_sup_set_class i2_onfr a_sup_set_class p_ordelss i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i1_onfr a_sup_set_class a_word i2_onfr a_sup_set_class i1_onfr a_sup_set_class a_wcel i2_onfr a_sup_set_class i1_onfr a_sup_set_class a_wss p_syl2anc i2_onfr a_sup_set_class i1_onfr a_sup_set_class p_dfss1 i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i2_onfr a_sup_set_class i1_onfr a_sup_set_class a_wss i1_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_wceq p_sylib i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i1_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class i0_onfr a_sup_set_class p_ineq2d i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin i0_onfr a_sup_set_class i1_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_cin i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin p_syl5eq i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i2_onfr a_sup_set_class i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 p_eqeq1d i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin a_c0 a_wceq i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin p_rexbidva i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex a_wb i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wne p_adantr i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wne a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex p_mpbid i0_onfr a_sup_set_class i1_onfr a_sup_set_class p_inss1 i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i0_onfr a_sup_set_class p_ssrexv i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin i0_onfr a_sup_set_class a_wss i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex a_wi a_ax-mp i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 a_wne a_wa i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_wrex i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex p_syl i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel a_wa i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex i0_onfr a_sup_set_class i1_onfr a_sup_set_class a_cin a_c0 p_pm2.61dane i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex p_ex i0_onfr a_sup_set_class a_con0 a_wss i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex i1_onfr p_exlimdv i0_onfr a_sup_set_class a_c0 a_wne i1_onfr a_sup_set_class i0_onfr a_sup_set_class a_wcel i1_onfr a_wex i0_onfr a_sup_set_class a_con0 a_wss i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex p_syl5bi i0_onfr a_sup_set_class a_con0 a_wss i0_onfr a_sup_set_class a_c0 a_wne i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex p_imp a_con0 a_cep a_wfr i0_onfr a_sup_set_class a_con0 a_wss i0_onfr a_sup_set_class a_c0 a_wne a_wa i0_onfr a_sup_set_class i2_onfr a_sup_set_class a_cin a_c0 a_wceq i2_onfr i0_onfr a_sup_set_class a_wrex a_wi i0_onfr p_mpgbir $.
 $}
-$( Relationship between membership and proper subset of an ordinal number.
+
+$(Relationship between membership and proper subset of an ordinal number.
      (Contributed by NM, 15-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonelpss_0 $f class A $.
-	fonelpss_1 $f class B $.
-	onelpss $p |- ( ( A e. On /\ B e. On ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $= fonelpss_0 con0 wcel fonelpss_0 word fonelpss_1 word fonelpss_0 fonelpss_1 wcel fonelpss_0 fonelpss_1 wss fonelpss_0 fonelpss_1 wne wa wb fonelpss_1 con0 wcel fonelpss_0 eloni fonelpss_1 eloni fonelpss_0 fonelpss_1 ordelssne syl2an $.
+	$v A B  $.
+	f0_onelpss $f class A $.
+	f1_onelpss $f class B $.
+	p_onelpss $p |- ( ( A e. On /\ B e. On ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $= f0_onelpss p_eloni f1_onelpss p_eloni f0_onelpss f1_onelpss p_ordelssne f0_onelpss a_con0 a_wcel f0_onelpss a_word f1_onelpss a_word f0_onelpss f1_onelpss a_wcel f0_onelpss f1_onelpss a_wss f0_onelpss f1_onelpss a_wne a_wa a_wb f1_onelpss a_con0 a_wcel p_syl2an $.
 $}
-$( Relationship between subset and membership of an ordinal number.
+
+$(Relationship between subset and membership of an ordinal number.
      (Contributed by NM, 15-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonsseleq_0 $f class A $.
-	fonsseleq_1 $f class B $.
-	onsseleq $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $= fonsseleq_0 con0 wcel fonsseleq_0 word fonsseleq_1 word fonsseleq_0 fonsseleq_1 wss fonsseleq_0 fonsseleq_1 wcel fonsseleq_0 fonsseleq_1 wceq wo wb fonsseleq_1 con0 wcel fonsseleq_0 eloni fonsseleq_1 eloni fonsseleq_0 fonsseleq_1 ordsseleq syl2an $.
+	$v A B  $.
+	f0_onsseleq $f class A $.
+	f1_onsseleq $f class B $.
+	p_onsseleq $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $= f0_onsseleq p_eloni f1_onsseleq p_eloni f0_onsseleq f1_onsseleq p_ordsseleq f0_onsseleq a_con0 a_wcel f0_onsseleq a_word f1_onsseleq a_word f0_onsseleq f1_onsseleq a_wss f0_onsseleq f1_onsseleq a_wcel f0_onsseleq f1_onsseleq a_wceq a_wo a_wb f1_onsseleq a_con0 a_wcel p_syl2an $.
 $}
-$( An element of an ordinal number is a subset of the number.  (Contributed
+
+$(An element of an ordinal number is a subset of the number.  (Contributed
      by NM, 5-Jun-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonelss_0 $f class A $.
-	fonelss_1 $f class B $.
-	onelss $p |- ( A e. On -> ( B e. A -> B C_ A ) ) $= fonelss_0 con0 wcel fonelss_0 word fonelss_1 fonelss_0 wcel fonelss_1 fonelss_0 wss wi fonelss_0 eloni fonelss_0 word fonelss_1 fonelss_0 wcel fonelss_1 fonelss_0 wss fonelss_0 fonelss_1 ordelss ex syl $.
+	$v A B  $.
+	f0_onelss $f class A $.
+	f1_onelss $f class B $.
+	p_onelss $p |- ( A e. On -> ( B e. A -> B C_ A ) ) $= f0_onelss p_eloni f0_onelss f1_onelss p_ordelss f0_onelss a_word f1_onelss f0_onelss a_wcel f1_onelss f0_onelss a_wss p_ex f0_onelss a_con0 a_wcel f0_onelss a_word f1_onelss f0_onelss a_wcel f1_onelss f0_onelss a_wss a_wi p_syl $.
 $}
-$( Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.) $)
+
+$(Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordtr1_0 $f class A $.
-	fordtr1_1 $f class B $.
-	fordtr1_2 $f class C $.
-	ordtr1 $p |- ( Ord C -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $= fordtr1_2 word fordtr1_2 wtr fordtr1_0 fordtr1_1 wcel fordtr1_1 fordtr1_2 wcel wa fordtr1_0 fordtr1_2 wcel wi fordtr1_2 ordtr fordtr1_2 fordtr1_0 fordtr1_1 trel syl $.
+	$v A B C  $.
+	f0_ordtr1 $f class A $.
+	f1_ordtr1 $f class B $.
+	f2_ordtr1 $f class C $.
+	p_ordtr1 $p |- ( Ord C -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $= f2_ordtr1 p_ordtr f2_ordtr1 f0_ordtr1 f1_ordtr1 p_trel f2_ordtr1 a_word f2_ordtr1 a_wtr f0_ordtr1 f1_ordtr1 a_wcel f1_ordtr1 f2_ordtr1 a_wcel a_wa f0_ordtr1 f2_ordtr1 a_wcel a_wi p_syl $.
 $}
-$( Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.)
+
+$(Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.)
      (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordtr2_0 $f class A $.
-	fordtr2_1 $f class B $.
-	fordtr2_2 $f class C $.
-	ordtr2 $p |- ( ( Ord A /\ Ord C ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $= fordtr2_0 word fordtr2_2 word wa fordtr2_0 fordtr2_1 wss fordtr2_1 fordtr2_2 wcel wa fordtr2_0 fordtr2_2 wpss fordtr2_0 fordtr2_2 wcel fordtr2_2 word fordtr2_0 fordtr2_1 wss fordtr2_1 fordtr2_2 wcel wa fordtr2_0 fordtr2_2 wpss wi fordtr2_0 word fordtr2_2 word fordtr2_0 fordtr2_1 wss fordtr2_1 fordtr2_2 wcel fordtr2_0 fordtr2_2 wpss fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 word wa wa fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 fordtr2_2 wcel fordtr2_1 word wa fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 word fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 word fordtr2_2 fordtr2_1 ordelord ex ancld anc2li fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 word wa wa fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 word fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss wi fordtr2_2 word fordtr2_1 word fordtr2_1 fordtr2_2 wcel fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss wi fordtr2_2 word fordtr2_1 word fordtr2_1 fordtr2_2 wcel fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss wi wi fordtr2_2 word fordtr2_1 word wa fordtr2_1 fordtr2_2 wcel fordtr2_1 fordtr2_2 wpss fordtr2_0 fordtr2_1 wss fordtr2_0 fordtr2_2 wpss wi fordtr2_1 word fordtr2_2 word fordtr2_1 fordtr2_2 wcel fordtr2_1 fordtr2_2 wpss wb fordtr2_1 fordtr2_2 ordelpss ancoms fordtr2_0 fordtr2_1 wss fordtr2_1 fordtr2_2 wpss fordtr2_0 fordtr2_2 wpss fordtr2_0 fordtr2_1 fordtr2_2 sspsstr expcom syl6bi ex com23 imp32 com12 syl9 imp3a adantl fordtr2_0 fordtr2_2 ordelpss sylibrd $.
+	$v A B C  $.
+	f0_ordtr2 $f class A $.
+	f1_ordtr2 $f class B $.
+	f2_ordtr2 $f class C $.
+	p_ordtr2 $p |- ( ( Ord A /\ Ord C ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $= f2_ordtr2 f1_ordtr2 p_ordelord f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word p_ex f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word p_ancld f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word a_wa p_anc2li f1_ordtr2 f2_ordtr2 p_ordelpss f1_ordtr2 a_word f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 f2_ordtr2 a_wpss a_wb p_ancoms f0_ordtr2 f1_ordtr2 f2_ordtr2 p_sspsstr f0_ordtr2 f1_ordtr2 a_wss f1_ordtr2 f2_ordtr2 a_wpss f0_ordtr2 f2_ordtr2 a_wpss p_expcom f2_ordtr2 a_word f1_ordtr2 a_word a_wa f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 f2_ordtr2 a_wpss f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss a_wi p_syl6bi f2_ordtr2 a_word f1_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss a_wi a_wi p_ex f2_ordtr2 a_word f1_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss a_wi p_com23 f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss a_wi p_imp32 f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word a_wa a_wa f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss p_com12 f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f2_ordtr2 a_word f1_ordtr2 f2_ordtr2 a_wcel f1_ordtr2 a_word a_wa a_wa f0_ordtr2 f1_ordtr2 a_wss f0_ordtr2 f2_ordtr2 a_wpss p_syl9 f2_ordtr2 a_word f0_ordtr2 f1_ordtr2 a_wss f1_ordtr2 f2_ordtr2 a_wcel f0_ordtr2 f2_ordtr2 a_wpss p_imp3a f2_ordtr2 a_word f0_ordtr2 f1_ordtr2 a_wss f1_ordtr2 f2_ordtr2 a_wcel a_wa f0_ordtr2 f2_ordtr2 a_wpss a_wi f0_ordtr2 a_word p_adantl f0_ordtr2 f2_ordtr2 p_ordelpss f0_ordtr2 a_word f2_ordtr2 a_word a_wa f0_ordtr2 f1_ordtr2 a_wss f1_ordtr2 f2_ordtr2 a_wcel a_wa f0_ordtr2 f2_ordtr2 a_wpss f0_ordtr2 f2_ordtr2 a_wcel p_sylibrd $.
 $}
-$( Transitive law for ordinal classes.  (Contributed by Mario Carneiro,
+
+$(Transitive law for ordinal classes.  (Contributed by Mario Carneiro,
      30-Dec-2014.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordtr3_0 $f class A $.
-	fordtr3_1 $f class B $.
-	fordtr3_2 $f class C $.
-	ordtr3 $p |- ( ( Ord B /\ Ord C ) -> ( A e. B -> ( A e. C \/ C e. B ) ) ) $= fordtr3_1 word fordtr3_2 word wa fordtr3_0 fordtr3_1 wcel fordtr3_0 fordtr3_2 wcel fordtr3_2 fordtr3_1 wcel wo fordtr3_1 word fordtr3_2 word wa fordtr3_0 fordtr3_1 wcel wa fordtr3_0 fordtr3_2 wcel fordtr3_2 fordtr3_1 wcel fordtr3_1 word fordtr3_2 word wa fordtr3_0 fordtr3_1 wcel wa fordtr3_0 fordtr3_2 wcel wn fordtr3_2 fordtr3_0 wss fordtr3_2 fordtr3_1 wcel fordtr3_1 word fordtr3_2 word wa fordtr3_0 fordtr3_1 wcel wa fordtr3_2 word fordtr3_0 word fordtr3_2 fordtr3_0 wss fordtr3_0 fordtr3_2 wcel wn wb fordtr3_1 word fordtr3_2 word fordtr3_0 fordtr3_1 wcel simplr fordtr3_1 word fordtr3_0 fordtr3_1 wcel fordtr3_0 word fordtr3_2 word fordtr3_1 fordtr3_0 ordelord adantlr fordtr3_2 fordtr3_0 ordtri1 syl2anc fordtr3_1 word fordtr3_2 word wa fordtr3_0 fordtr3_1 wcel fordtr3_2 fordtr3_0 wss fordtr3_2 fordtr3_1 wcel fordtr3_1 word fordtr3_2 word wa fordtr3_2 fordtr3_0 wss fordtr3_0 fordtr3_1 wcel fordtr3_2 fordtr3_1 wcel fordtr3_2 word fordtr3_1 word fordtr3_2 fordtr3_0 wss fordtr3_0 fordtr3_1 wcel wa fordtr3_2 fordtr3_1 wcel wi fordtr3_2 fordtr3_0 fordtr3_1 ordtr2 ancoms ancomsd expdimp sylbird orrd ex $.
+	$v A B C  $.
+	f0_ordtr3 $f class A $.
+	f1_ordtr3 $f class B $.
+	f2_ordtr3 $f class C $.
+	p_ordtr3 $p |- ( ( Ord B /\ Ord C ) -> ( A e. B -> ( A e. C \/ C e. B ) ) ) $= f1_ordtr3 a_word f2_ordtr3 a_word f0_ordtr3 f1_ordtr3 a_wcel p_simplr f1_ordtr3 f0_ordtr3 p_ordelord f1_ordtr3 a_word f0_ordtr3 f1_ordtr3 a_wcel f0_ordtr3 a_word f2_ordtr3 a_word p_adantlr f2_ordtr3 f0_ordtr3 p_ordtri1 f1_ordtr3 a_word f2_ordtr3 a_word a_wa f0_ordtr3 f1_ordtr3 a_wcel a_wa f2_ordtr3 a_word f0_ordtr3 a_word f2_ordtr3 f0_ordtr3 a_wss f0_ordtr3 f2_ordtr3 a_wcel a_wn a_wb p_syl2anc f2_ordtr3 f0_ordtr3 f1_ordtr3 p_ordtr2 f2_ordtr3 a_word f1_ordtr3 a_word f2_ordtr3 f0_ordtr3 a_wss f0_ordtr3 f1_ordtr3 a_wcel a_wa f2_ordtr3 f1_ordtr3 a_wcel a_wi p_ancoms f1_ordtr3 a_word f2_ordtr3 a_word a_wa f2_ordtr3 f0_ordtr3 a_wss f0_ordtr3 f1_ordtr3 a_wcel f2_ordtr3 f1_ordtr3 a_wcel p_ancomsd f1_ordtr3 a_word f2_ordtr3 a_word a_wa f0_ordtr3 f1_ordtr3 a_wcel f2_ordtr3 f0_ordtr3 a_wss f2_ordtr3 f1_ordtr3 a_wcel p_expdimp f1_ordtr3 a_word f2_ordtr3 a_word a_wa f0_ordtr3 f1_ordtr3 a_wcel a_wa f0_ordtr3 f2_ordtr3 a_wcel a_wn f2_ordtr3 f0_ordtr3 a_wss f2_ordtr3 f1_ordtr3 a_wcel p_sylbird f1_ordtr3 a_word f2_ordtr3 a_word a_wa f0_ordtr3 f1_ordtr3 a_wcel a_wa f0_ordtr3 f2_ordtr3 a_wcel f2_ordtr3 f1_ordtr3 a_wcel p_orrd f1_ordtr3 a_word f2_ordtr3 a_word a_wa f0_ordtr3 f1_ordtr3 a_wcel f0_ordtr3 f2_ordtr3 a_wcel f2_ordtr3 f1_ordtr3 a_wcel a_wo p_ex $.
 $}
-$( Transitive law for ordinal numbers.  Theorem 7M(b) of [Enderton] p. 192.
+
+$(Transitive law for ordinal numbers.  Theorem 7M(b) of [Enderton] p. 192.
      (Contributed by NM, 11-Aug-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fontr1_0 $f class A $.
-	fontr1_1 $f class B $.
-	fontr1_2 $f class C $.
-	ontr1 $p |- ( C e. On -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $= fontr1_2 con0 wcel fontr1_2 word fontr1_0 fontr1_1 wcel fontr1_1 fontr1_2 wcel wa fontr1_0 fontr1_2 wcel wi fontr1_2 eloni fontr1_0 fontr1_1 fontr1_2 ordtr1 syl $.
+	$v A B C  $.
+	f0_ontr1 $f class A $.
+	f1_ontr1 $f class B $.
+	f2_ontr1 $f class C $.
+	p_ontr1 $p |- ( C e. On -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $= f2_ontr1 p_eloni f0_ontr1 f1_ontr1 f2_ontr1 p_ordtr1 f2_ontr1 a_con0 a_wcel f2_ontr1 a_word f0_ontr1 f1_ontr1 a_wcel f1_ontr1 f2_ontr1 a_wcel a_wa f0_ontr1 f2_ontr1 a_wcel a_wi p_syl $.
 $}
-$( Transitive law for ordinal numbers.  Exercise 3 of [TakeutiZaring] p. 40.
+
+$(Transitive law for ordinal numbers.  Exercise 3 of [TakeutiZaring] p. 40.
      (Contributed by NM, 6-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fontr2_0 $f class A $.
-	fontr2_1 $f class B $.
-	fontr2_2 $f class C $.
-	ontr2 $p |- ( ( A e. On /\ C e. On ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $= fontr2_0 con0 wcel fontr2_0 word fontr2_2 word fontr2_0 fontr2_1 wss fontr2_1 fontr2_2 wcel wa fontr2_0 fontr2_2 wcel wi fontr2_2 con0 wcel fontr2_0 eloni fontr2_2 eloni fontr2_0 fontr2_1 fontr2_2 ordtr2 syl2an $.
+	$v A B C  $.
+	f0_ontr2 $f class A $.
+	f1_ontr2 $f class B $.
+	f2_ontr2 $f class C $.
+	p_ontr2 $p |- ( ( A e. On /\ C e. On ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $= f0_ontr2 p_eloni f2_ontr2 p_eloni f0_ontr2 f1_ontr2 f2_ontr2 p_ordtr2 f0_ontr2 a_con0 a_wcel f0_ontr2 a_word f2_ontr2 a_word f0_ontr2 f1_ontr2 a_wss f1_ontr2 f2_ontr2 a_wcel a_wa f0_ontr2 f2_ontr2 a_wcel a_wi f2_ontr2 a_con0 a_wcel p_syl2an $.
 $}
-$( The union of an ordinal stays the same if a subset equal to one of its
+
+$(The union of an ordinal stays the same if a subset equal to one of its
        elements is removed.  (Contributed by NM, 10-Dec-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	iordunidif_0 $f set x $.
-	iordunidif_1 $f set y $.
-	fordunidif_0 $f class A $.
-	fordunidif_1 $f class B $.
-	ordunidif $p |- ( ( Ord A /\ B e. A ) -> U. ( A \ B ) = U. A ) $= fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex iordunidif_0 fordunidif_0 wral fordunidif_0 fordunidif_1 cdif cuni fordunidif_0 cuni wceq fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex iordunidif_0 fordunidif_0 fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_1 wcel iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_1 wcel fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class fordunidif_1 wss wa iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_1 wcel fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class fordunidif_1 wss wa wi iordunidif_0 sup_set_class fordunidif_0 wcel fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_1 wcel iordunidif_0 sup_set_class fordunidif_1 wss fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa fordunidif_1 con0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel iordunidif_0 sup_set_class fordunidif_1 wss wi fordunidif_0 fordunidif_1 ordelon fordunidif_1 iordunidif_0 sup_set_class onelss syl fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa fordunidif_1 con0 wcel fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel fordunidif_0 fordunidif_1 ordelon fordunidif_1 fordunidif_0 wcel fordunidif_1 con0 wcel fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel wi fordunidif_0 word fordunidif_1 con0 wcel fordunidif_1 fordunidif_1 wcel wn fordunidif_1 fordunidif_0 wcel fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel fordunidif_1 con0 wcel fordunidif_1 word fordunidif_1 fordunidif_1 wcel wn fordunidif_1 eloni fordunidif_1 ordirr syl fordunidif_1 fordunidif_0 fordunidif_1 cdif wcel fordunidif_1 fordunidif_0 wcel fordunidif_1 fordunidif_1 wcel wn fordunidif_1 fordunidif_0 fordunidif_1 eldif simplbi2 syl5 adantl mpd jctild adantr iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_0 sup_set_class fordunidif_1 wss iordunidif_1 fordunidif_1 fordunidif_0 fordunidif_1 cdif iordunidif_1 sup_set_class fordunidif_1 iordunidif_0 sup_set_class sseq2 rspcev syl6 iordunidif_0 sup_set_class fordunidif_0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel wn iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex wi fordunidif_0 word fordunidif_1 fordunidif_0 wcel wa iordunidif_0 sup_set_class fordunidif_0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel wn iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class iordunidif_0 sup_set_class wss wa iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_1 fordunidif_0 fordunidif_1 cdif wrex iordunidif_0 sup_set_class fordunidif_0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel wn iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class iordunidif_0 sup_set_class wss wa iordunidif_0 sup_set_class fordunidif_0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel wn wa iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class iordunidif_0 sup_set_class wss iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 cdif wcel iordunidif_0 sup_set_class fordunidif_0 wcel iordunidif_0 sup_set_class fordunidif_1 wcel wn wa iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 eldif biimpri iordunidif_0 sup_set_class ssid jctir ex iordunidif_0 sup_set_class iordunidif_1 sup_set_class wss iordunidif_0 sup_set_class iordunidif_0 sup_set_class wss iordunidif_1 iordunidif_0 sup_set_class fordunidif_0 fordunidif_1 cdif iordunidif_1 sup_set_class iordunidif_0 sup_set_class iordunidif_0 sup_set_class sseq2 rspcev syl6 adantl pm2.61d ralrimiva iordunidif_0 iordunidif_1 fordunidif_0 fordunidif_1 unidif syl $.
+	$v A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_ordunidif $f class A $.
+	f1_ordunidif $f class B $.
+	i0_ordunidif $f set x $.
+	i1_ordunidif $f set y $.
+	p_ordunidif $p |- ( ( Ord A /\ B e. A ) -> U. ( A \ B ) = U. A ) $= f0_ordunidif f1_ordunidif p_ordelon f1_ordunidif i0_ordunidif a_sup_set_class p_onelss f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa f1_ordunidif a_con0 a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wss a_wi p_syl f0_ordunidif f1_ordunidif p_ordelon f1_ordunidif p_eloni f1_ordunidif p_ordirr f1_ordunidif a_con0 a_wcel f1_ordunidif a_word f1_ordunidif f1_ordunidif a_wcel a_wn p_syl f1_ordunidif f0_ordunidif f1_ordunidif p_eldif f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel f1_ordunidif f0_ordunidif a_wcel f1_ordunidif f1_ordunidif a_wcel a_wn p_simplbi2 f1_ordunidif a_con0 a_wcel f1_ordunidif f1_ordunidif a_wcel a_wn f1_ordunidif f0_ordunidif a_wcel f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel p_syl5 f1_ordunidif f0_ordunidif a_wcel f1_ordunidif a_con0 a_wcel f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel a_wi f0_ordunidif a_word p_adantl f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa f1_ordunidif a_con0 a_wcel f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel p_mpd f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f1_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wss f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel p_jctild f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f1_ordunidif a_wcel f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wss a_wa a_wi i0_ordunidif a_sup_set_class f0_ordunidif a_wcel p_adantr i1_ordunidif a_sup_set_class f1_ordunidif i0_ordunidif a_sup_set_class p_sseq2 i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i0_ordunidif a_sup_set_class f1_ordunidif a_wss i1_ordunidif f1_ordunidif f0_ordunidif f1_ordunidif a_cdif p_rspcev f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f1_ordunidif a_wcel f1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wss a_wa i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex p_syl6 i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif p_eldif i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class f0_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel a_wn a_wa p_biimpri i0_ordunidif a_sup_set_class p_ssid i0_ordunidif a_sup_set_class f0_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel a_wn a_wa i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class a_wss p_jctir i0_ordunidif a_sup_set_class f0_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel a_wn i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class a_wss a_wa p_ex i1_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class p_sseq2 i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i0_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class a_wss i1_ordunidif i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif a_cdif p_rspcev i0_ordunidif a_sup_set_class f0_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel a_wn i0_ordunidif a_sup_set_class f0_ordunidif f1_ordunidif a_cdif a_wcel i0_ordunidif a_sup_set_class i0_ordunidif a_sup_set_class a_wss a_wa i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex p_syl6 i0_ordunidif a_sup_set_class f0_ordunidif a_wcel i0_ordunidif a_sup_set_class f1_ordunidif a_wcel a_wn i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex a_wi f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa p_adantl f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class f1_ordunidif a_wcel i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex p_pm2.61d f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex i0_ordunidif f0_ordunidif p_ralrimiva i0_ordunidif i1_ordunidif f0_ordunidif f1_ordunidif p_unidif f0_ordunidif a_word f1_ordunidif f0_ordunidif a_wcel a_wa i0_ordunidif a_sup_set_class i1_ordunidif a_sup_set_class a_wss i1_ordunidif f0_ordunidif f1_ordunidif a_cdif a_wrex i0_ordunidif f0_ordunidif a_wral f0_ordunidif f1_ordunidif a_cdif a_cuni f0_ordunidif a_cuni a_wceq p_syl $.
 $}
-$( If ` B ` is smaller than ` A ` , then it equals the intersection of the
+
+$(If ` B ` is smaller than ` A ` , then it equals the intersection of the
        difference.  Exercise 11 in [TakeutiZaring] p. 44.  (Contributed by
        Andrew Salmon, 14-Nov-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	iordintdif_0 $f set x $.
-	fordintdif_0 $f class A $.
-	fordintdif_1 $f class B $.
-	ordintdif $p |- ( ( Ord A /\ Ord B /\ ( A \ B ) =/= (/) ) -> B = |^| ( A \ B ) ) $= fordintdif_0 fordintdif_1 cdif c0 wne fordintdif_0 word fordintdif_1 word fordintdif_0 fordintdif_1 wss wn fordintdif_1 fordintdif_0 fordintdif_1 cdif cint wceq fordintdif_0 fordintdif_1 wss fordintdif_0 fordintdif_1 cdif c0 fordintdif_0 fordintdif_1 ssdif0 necon3bbii fordintdif_0 word fordintdif_1 word fordintdif_0 fordintdif_1 wss wn w3a fordintdif_0 fordintdif_1 cdif cint iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab cint fordintdif_1 fordintdif_0 fordintdif_1 cdif iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab iordintdif_0 fordintdif_0 fordintdif_1 dfdif2 inteqi fordintdif_0 word fordintdif_1 word fordintdif_0 fordintdif_1 wss wn iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab cint fordintdif_1 wceq fordintdif_0 word fordintdif_1 word wa fordintdif_0 fordintdif_1 wss wn fordintdif_1 fordintdif_0 wcel iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab cint fordintdif_1 wceq fordintdif_0 word fordintdif_1 word wa fordintdif_0 fordintdif_1 wss fordintdif_1 fordintdif_0 wcel fordintdif_0 fordintdif_1 ordtri1 con2bid fordintdif_0 word fordintdif_1 word wa fordintdif_1 fordintdif_0 wcel iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab cint fordintdif_1 wceq fordintdif_0 word fordintdif_1 word wa fordintdif_1 fordintdif_0 wcel iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab cint fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 fordintdif_0 crab cint fordintdif_1 fordintdif_0 word fordintdif_1 word wa iordintdif_0 sup_set_class fordintdif_1 wcel wn iordintdif_0 fordintdif_0 crab fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 fordintdif_0 crab fordintdif_0 word fordintdif_1 word wa iordintdif_0 sup_set_class fordintdif_1 wcel wn fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 fordintdif_0 fordintdif_0 word fordintdif_1 word wa iordintdif_0 sup_set_class fordintdif_0 wcel wa fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 sup_set_class fordintdif_1 wcel wn fordintdif_0 word iordintdif_0 sup_set_class fordintdif_0 wcel fordintdif_1 word fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 sup_set_class fordintdif_1 wcel wn wb fordintdif_0 word iordintdif_0 sup_set_class fordintdif_0 wcel wa iordintdif_0 sup_set_class word fordintdif_1 word fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 sup_set_class fordintdif_1 wcel wn wb fordintdif_0 iordintdif_0 sup_set_class ordelord fordintdif_1 word iordintdif_0 sup_set_class word fordintdif_1 iordintdif_0 sup_set_class wss iordintdif_0 sup_set_class fordintdif_1 wcel wn wb fordintdif_1 iordintdif_0 sup_set_class ordtri1 ancoms sylan an32s bicomd rabbidva inteqd iordintdif_0 fordintdif_1 fordintdif_0 intmin sylan9eq ex sylbird 3impia syl5req syl3an3br $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ordintdif $f class A $.
+	f1_ordintdif $f class B $.
+	i0_ordintdif $f set x $.
+	p_ordintdif $p |- ( ( Ord A /\ Ord B /\ ( A \ B ) =/= (/) ) -> B = |^| ( A \ B ) ) $= f0_ordintdif f1_ordintdif p_ssdif0 f0_ordintdif f1_ordintdif a_wss f0_ordintdif f1_ordintdif a_cdif a_c0 p_necon3bbii i0_ordintdif f0_ordintdif f1_ordintdif p_dfdif2 f0_ordintdif f1_ordintdif a_cdif i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab p_inteqi f0_ordintdif f1_ordintdif p_ordtri1 f0_ordintdif a_word f1_ordintdif a_word a_wa f0_ordintdif f1_ordintdif a_wss f1_ordintdif f0_ordintdif a_wcel p_con2bid f0_ordintdif i0_ordintdif a_sup_set_class p_ordelord f1_ordintdif i0_ordintdif a_sup_set_class p_ordtri1 f1_ordintdif a_word i0_ordintdif a_sup_set_class a_word f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn a_wb p_ancoms f0_ordintdif a_word i0_ordintdif a_sup_set_class f0_ordintdif a_wcel a_wa i0_ordintdif a_sup_set_class a_word f1_ordintdif a_word f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn a_wb p_sylan f0_ordintdif a_word i0_ordintdif a_sup_set_class f0_ordintdif a_wcel f1_ordintdif a_word f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn a_wb p_an32s f0_ordintdif a_word f1_ordintdif a_word a_wa i0_ordintdif a_sup_set_class f0_ordintdif a_wcel a_wa f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn p_bicomd f0_ordintdif a_word f1_ordintdif a_word a_wa i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif f0_ordintdif p_rabbidva f0_ordintdif a_word f1_ordintdif a_word a_wa i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif f0_ordintdif a_crab p_inteqd i0_ordintdif f1_ordintdif f0_ordintdif p_intmin f0_ordintdif a_word f1_ordintdif a_word a_wa f1_ordintdif f0_ordintdif a_wcel i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif i0_ordintdif a_sup_set_class a_wss i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif p_sylan9eq f0_ordintdif a_word f1_ordintdif a_word a_wa f1_ordintdif f0_ordintdif a_wcel i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif a_wceq p_ex f0_ordintdif a_word f1_ordintdif a_word a_wa f0_ordintdif f1_ordintdif a_wss a_wn f1_ordintdif f0_ordintdif a_wcel i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif a_wceq p_sylbird f0_ordintdif a_word f1_ordintdif a_word f0_ordintdif f1_ordintdif a_wss a_wn i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif a_wceq p_3impia f0_ordintdif a_word f1_ordintdif a_word f0_ordintdif f1_ordintdif a_wss a_wn a_w3a f0_ordintdif f1_ordintdif a_cdif a_cint i0_ordintdif a_sup_set_class f1_ordintdif a_wcel a_wn i0_ordintdif f0_ordintdif a_crab a_cint f1_ordintdif p_syl5req f0_ordintdif f1_ordintdif a_cdif a_c0 a_wne f0_ordintdif a_word f1_ordintdif a_word f0_ordintdif f1_ordintdif a_wss a_wn f1_ordintdif f0_ordintdif f1_ordintdif a_cdif a_cint a_wceq p_syl3an3br $.
 $}
-$( If a property is true for an ordinal number, then the minimum ordinal
+
+$(If a property is true for an ordinal number, then the minimum ordinal
        number for which it is true is smaller or equal.  Theorem Schema 61 of
        [Suppes] p. 228.  (Contributed by NM, 3-Oct-2003.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$d x ps $.
-	$d x A $.
-	fonintss_0 $f wff ph $.
-	fonintss_1 $f wff ps $.
-	fonintss_2 $f set x $.
-	fonintss_3 $f class A $.
-	eonintss_0 $e |- ( x = A -> ( ph <-> ps ) ) $.
-	onintss $p |- ( A e. On -> ( ps -> |^| { x e. On | ph } C_ A ) ) $= fonintss_3 con0 wcel fonintss_1 fonintss_0 fonintss_2 con0 crab cint fonintss_3 wss fonintss_0 fonintss_1 fonintss_2 fonintss_3 con0 eonintss_0 intminss ex $.
+	$v ph ps x A  $.
+	$d x ps  $.
+	$d x A  $.
+	f0_onintss $f wff ph $.
+	f1_onintss $f wff ps $.
+	f2_onintss $f set x $.
+	f3_onintss $f class A $.
+	e0_onintss $e |- ( x = A -> ( ph <-> ps ) ) $.
+	p_onintss $p |- ( A e. On -> ( ps -> |^| { x e. On | ph } C_ A ) ) $= e0_onintss f0_onintss f1_onintss f2_onintss f3_onintss a_con0 p_intminss f3_onintss a_con0 a_wcel f1_onintss f0_onintss f2_onintss a_con0 a_crab a_cint f3_onintss a_wss p_ex $.
 $}
-$( A way to show that an ordinal number equals the minimum of a collection
+
+$(A way to show that an ordinal number equals the minimum of a collection
        of ordinal numbers: it must be in the collection, and it must not be
        larger than any member of the collection.  (Contributed by NM,
        14-Nov-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	foneqmini_0 $f set x $.
-	foneqmini_1 $f class A $.
-	foneqmini_2 $f class B $.
-	oneqmini $p |- ( B C_ On -> ( ( A e. B /\ A. x e. A -. x e. B ) -> A = |^| B ) ) $= foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral wa foneqmini_1 foneqmini_2 cint wss foneqmini_2 cint foneqmini_1 wss wa foneqmini_1 foneqmini_2 cint wceq foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral wa foneqmini_1 foneqmini_2 cint wss foneqmini_2 cint foneqmini_1 wss foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral foneqmini_1 foneqmini_2 cint wss foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel wa foneqmini_1 foneqmini_2 cint wss foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral foneqmini_1 foneqmini_2 cint wss foneqmini_1 foneqmini_0 sup_set_class wss foneqmini_0 foneqmini_2 wral foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel wa foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral foneqmini_0 foneqmini_1 foneqmini_2 ssint foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel wa foneqmini_1 foneqmini_0 sup_set_class wss foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_2 foneqmini_1 foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel wa foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_1 foneqmini_0 sup_set_class wss wi foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_1 wcel wn wi foneqmini_0 sup_set_class foneqmini_1 wcel foneqmini_0 sup_set_class foneqmini_2 wcel wn wi foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel wa foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_1 foneqmini_0 sup_set_class wss foneqmini_0 sup_set_class foneqmini_1 wcel wn foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_1 foneqmini_0 sup_set_class wss foneqmini_0 sup_set_class foneqmini_1 wcel wn wb foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_2 wcel wa foneqmini_1 con0 wcel foneqmini_0 sup_set_class con0 wcel wa foneqmini_1 foneqmini_0 sup_set_class wss foneqmini_0 sup_set_class foneqmini_1 wcel wn wb foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_1 con0 wcel foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_0 sup_set_class con0 wcel foneqmini_2 con0 foneqmini_1 ssel foneqmini_2 con0 foneqmini_0 sup_set_class ssel anim12d foneqmini_1 foneqmini_0 sup_set_class ontri1 syl6 expdimp pm5.74d foneqmini_0 sup_set_class foneqmini_2 wcel foneqmini_0 sup_set_class foneqmini_1 wcel con2b syl6bb ralbidv2 syl5bb biimprd expimpd foneqmini_2 con0 wss foneqmini_1 foneqmini_2 wcel foneqmini_2 cint foneqmini_1 wss foneqmini_0 sup_set_class foneqmini_2 wcel wn foneqmini_0 foneqmini_1 wral foneqmini_1 foneqmini_2 wcel foneqmini_2 cint foneqmini_1 wss wi foneqmini_2 con0 wss foneqmini_1 foneqmini_2 intss1 a1i adantrd jcad foneqmini_1 foneqmini_2 cint eqss syl6ibr $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_oneqmini $f set x $.
+	f1_oneqmini $f class A $.
+	f2_oneqmini $f class B $.
+	p_oneqmini $p |- ( B C_ On -> ( ( A e. B /\ A. x e. A -. x e. B ) -> A = |^| B ) ) $= f0_oneqmini f1_oneqmini f2_oneqmini p_ssint f2_oneqmini a_con0 f1_oneqmini p_ssel f2_oneqmini a_con0 f0_oneqmini a_sup_set_class p_ssel f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f1_oneqmini a_con0 a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f0_oneqmini a_sup_set_class a_con0 a_wcel p_anim12d f1_oneqmini f0_oneqmini a_sup_set_class p_ontri1 f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wa f1_oneqmini a_con0 a_wcel f0_oneqmini a_sup_set_class a_con0 a_wcel a_wa f1_oneqmini f0_oneqmini a_sup_set_class a_wss f0_oneqmini a_sup_set_class f1_oneqmini a_wcel a_wn a_wb p_syl6 f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f1_oneqmini f0_oneqmini a_sup_set_class a_wss f0_oneqmini a_sup_set_class f1_oneqmini a_wcel a_wn a_wb p_expdimp f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel a_wa f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f1_oneqmini f0_oneqmini a_sup_set_class a_wss f0_oneqmini a_sup_set_class f1_oneqmini a_wcel a_wn p_pm5.74d f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f1_oneqmini a_wcel p_con2b f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel a_wa f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f1_oneqmini f0_oneqmini a_sup_set_class a_wss a_wi f0_oneqmini a_sup_set_class f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f1_oneqmini a_wcel a_wn a_wi f0_oneqmini a_sup_set_class f1_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn a_wi p_syl6bb f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel a_wa f1_oneqmini f0_oneqmini a_sup_set_class a_wss f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f2_oneqmini f1_oneqmini p_ralbidv2 f1_oneqmini f2_oneqmini a_cint a_wss f1_oneqmini f0_oneqmini a_sup_set_class a_wss f0_oneqmini f2_oneqmini a_wral f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel a_wa f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral p_syl5bb f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel a_wa f1_oneqmini f2_oneqmini a_cint a_wss f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral p_biimprd f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral f1_oneqmini f2_oneqmini a_cint a_wss p_expimpd f1_oneqmini f2_oneqmini p_intss1 f1_oneqmini f2_oneqmini a_wcel f2_oneqmini a_cint f1_oneqmini a_wss a_wi f2_oneqmini a_con0 a_wss p_a1i f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f2_oneqmini a_cint f1_oneqmini a_wss f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral p_adantrd f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral a_wa f1_oneqmini f2_oneqmini a_cint a_wss f2_oneqmini a_cint f1_oneqmini a_wss p_jcad f1_oneqmini f2_oneqmini a_cint p_eqss f2_oneqmini a_con0 a_wss f1_oneqmini f2_oneqmini a_wcel f0_oneqmini a_sup_set_class f2_oneqmini a_wcel a_wn f0_oneqmini f1_oneqmini a_wral a_wa f1_oneqmini f2_oneqmini a_cint a_wss f2_oneqmini a_cint f1_oneqmini a_wss a_wa f1_oneqmini f2_oneqmini a_cint a_wceq p_syl6ibr $.
 $}
-$( The empty set is an ordinal class.  (Contributed by NM, 11-May-1994.) $)
+
+$(The empty set is an ordinal class.  (Contributed by NM, 11-May-1994.) $)
+
 ${
-	ord0 $p |- Ord (/) $= c0 word c0 wtr c0 cep wwe tr0 cep we0 c0 df-ord mpbir2an $.
+	$v  $.
+	p_ord0 $p |- Ord (/) $= p_tr0 a_cep p_we0 a_c0 a_df-ord a_c0 a_word a_c0 a_wtr a_c0 a_cep a_wwe p_mpbir2an $.
 $}
-$( The empty set is an ordinal number.  Corollary 7N(b) of [Enderton]
+
+$(The empty set is an ordinal number.  Corollary 7N(b) of [Enderton]
      p. 193.  (Contributed by NM, 17-Sep-1993.) $)
+
 ${
-	0elon $p |- (/) e. On $= c0 con0 wcel c0 word ord0 c0 0ex elon mpbir $.
+	$v  $.
+	p_0elon $p |- (/) e. On $= p_ord0 p_0ex a_c0 p_elon a_c0 a_con0 a_wcel a_c0 a_word p_mpbir $.
 $}
-$( A non-empty ordinal contains the empty set.  (Contributed by NM,
+
+$(A non-empty ordinal contains the empty set.  (Contributed by NM,
      25-Nov-1995.) $)
+
 ${
-	$v A $.
-	ford0eln0_0 $f class A $.
-	ord0eln0 $p |- ( Ord A -> ( (/) e. A <-> A =/= (/) ) ) $= ford0eln0_0 word c0 ford0eln0_0 wcel ford0eln0_0 c0 wne ford0eln0_0 c0 ne0i ford0eln0_0 c0 wne ford0eln0_0 c0 wceq wn ford0eln0_0 word c0 ford0eln0_0 wcel ford0eln0_0 c0 df-ne ford0eln0_0 word ford0eln0_0 c0 wceq c0 ford0eln0_0 wcel ford0eln0_0 word c0 word ford0eln0_0 c0 wceq c0 ford0eln0_0 wcel wo ord0 ford0eln0_0 word c0 word wa ford0eln0_0 c0 wceq c0 ford0eln0_0 wcel wo ford0eln0_0 c0 wcel wn ford0eln0_0 noel ford0eln0_0 word c0 word wa ford0eln0_0 c0 wcel ford0eln0_0 c0 wceq c0 ford0eln0_0 wcel wo ford0eln0_0 c0 ordtri2 con2bid mpbiri mpan2 ord syl5bi impbid2 $.
+	$v A  $.
+	f0_ord0eln0 $f class A $.
+	p_ord0eln0 $p |- ( Ord A -> ( (/) e. A <-> A =/= (/) ) ) $= f0_ord0eln0 a_c0 p_ne0i f0_ord0eln0 a_c0 a_df-ne p_ord0 f0_ord0eln0 p_noel f0_ord0eln0 a_c0 p_ordtri2 f0_ord0eln0 a_word a_c0 a_word a_wa f0_ord0eln0 a_c0 a_wcel f0_ord0eln0 a_c0 a_wceq a_c0 f0_ord0eln0 a_wcel a_wo p_con2bid f0_ord0eln0 a_word a_c0 a_word a_wa f0_ord0eln0 a_c0 a_wceq a_c0 f0_ord0eln0 a_wcel a_wo f0_ord0eln0 a_c0 a_wcel a_wn p_mpbiri f0_ord0eln0 a_word a_c0 a_word f0_ord0eln0 a_c0 a_wceq a_c0 f0_ord0eln0 a_wcel a_wo p_mpan2 f0_ord0eln0 a_word f0_ord0eln0 a_c0 a_wceq a_c0 f0_ord0eln0 a_wcel p_ord f0_ord0eln0 a_c0 a_wne f0_ord0eln0 a_c0 a_wceq a_wn f0_ord0eln0 a_word a_c0 f0_ord0eln0 a_wcel p_syl5bi f0_ord0eln0 a_word a_c0 f0_ord0eln0 a_wcel f0_ord0eln0 a_c0 a_wne p_impbid2 $.
 $}
-$( An ordinal number contains zero iff it is nonzero.  (Contributed by NM,
+
+$(An ordinal number contains zero iff it is nonzero.  (Contributed by NM,
      6-Dec-2004.) $)
+
 ${
-	$v A $.
-	fon0eln0_0 $f class A $.
-	on0eln0 $p |- ( A e. On -> ( (/) e. A <-> A =/= (/) ) ) $= fon0eln0_0 con0 wcel fon0eln0_0 word c0 fon0eln0_0 wcel fon0eln0_0 c0 wne wb fon0eln0_0 eloni fon0eln0_0 ord0eln0 syl $.
+	$v A  $.
+	f0_on0eln0 $f class A $.
+	p_on0eln0 $p |- ( A e. On -> ( (/) e. A <-> A =/= (/) ) ) $= f0_on0eln0 p_eloni f0_on0eln0 p_ord0eln0 f0_on0eln0 a_con0 a_wcel f0_on0eln0 a_word a_c0 f0_on0eln0 a_wcel f0_on0eln0 a_c0 a_wne a_wb p_syl $.
 $}
-$( An alternate definition of a limit ordinal.  (Contributed by NM,
+
+$(An alternate definition of a limit ordinal.  (Contributed by NM,
      4-Nov-2004.) $)
+
 ${
-	$v A $.
-	fdflim2_0 $f class A $.
-	dflim2 $p |- ( Lim A <-> ( Ord A /\ (/) e. A /\ A = U. A ) ) $= fdflim2_0 wlim fdflim2_0 word fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq w3a fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 fdflim2_0 cuni wceq w3a fdflim2_0 df-lim fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 fdflim2_0 cuni wceq wa wa fdflim2_0 word fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq wa wa fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 fdflim2_0 cuni wceq w3a fdflim2_0 word fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq w3a fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 fdflim2_0 cuni wceq wa fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq wa fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq fdflim2_0 ord0eln0 anbi1d pm5.32i fdflim2_0 word c0 fdflim2_0 wcel fdflim2_0 fdflim2_0 cuni wceq 3anass fdflim2_0 word fdflim2_0 c0 wne fdflim2_0 fdflim2_0 cuni wceq 3anass 3bitr4i bitr4i $.
+	$v A  $.
+	f0_dflim2 $f class A $.
+	p_dflim2 $p |- ( Lim A <-> ( Ord A /\ (/) e. A /\ A = U. A ) ) $= f0_dflim2 a_df-lim f0_dflim2 p_ord0eln0 f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq p_anbi1d f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 f0_dflim2 a_cuni a_wceq a_wa f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq a_wa p_pm5.32i f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 f0_dflim2 a_cuni a_wceq p_3anass f0_dflim2 a_word f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq p_3anass f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 f0_dflim2 a_cuni a_wceq a_wa a_wa f0_dflim2 a_word f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq a_wa a_wa f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 f0_dflim2 a_cuni a_wceq a_w3a f0_dflim2 a_word f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq a_w3a p_3bitr4i f0_dflim2 a_wlim f0_dflim2 a_word f0_dflim2 a_c0 a_wne f0_dflim2 f0_dflim2 a_cuni a_wceq a_w3a f0_dflim2 a_word a_c0 f0_dflim2 a_wcel f0_dflim2 f0_dflim2 a_cuni a_wceq a_w3a p_bitr4i $.
 $}
-$( The intersection of the class of ordinal numbers is the empty set.
+
+$(The intersection of the class of ordinal numbers is the empty set.
      (Contributed by NM, 20-Oct-2003.) $)
+
 ${
-	inton $p |- |^| On = (/) $= c0 con0 wcel con0 cint c0 wceq 0elon con0 int0el ax-mp $.
+	$v  $.
+	p_inton $p |- |^| On = (/) $= p_0elon a_con0 p_int0el a_c0 a_con0 a_wcel a_con0 a_cint a_c0 a_wceq a_ax-mp $.
 $}
-$( The empty set is not a limit ordinal.  (Contributed by NM, 24-Mar-1995.)
+
+$(The empty set is not a limit ordinal.  (Contributed by NM, 24-Mar-1995.)
      (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	nlim0 $p |- -. Lim (/) $= c0 wlim c0 word c0 c0 wcel c0 c0 cuni wceq w3a c0 word c0 c0 wcel c0 c0 cuni wceq w3a c0 c0 wcel c0 noel c0 word c0 c0 wcel c0 c0 cuni wceq simp2 mto c0 dflim2 mtbir $.
+	$v  $.
+	p_nlim0 $p |- -. Lim (/) $= a_c0 p_noel a_c0 a_word a_c0 a_c0 a_wcel a_c0 a_c0 a_cuni a_wceq p_simp2 a_c0 a_word a_c0 a_c0 a_wcel a_c0 a_c0 a_cuni a_wceq a_w3a a_c0 a_c0 a_wcel p_mto a_c0 p_dflim2 a_c0 a_wlim a_c0 a_word a_c0 a_c0 a_wcel a_c0 a_c0 a_cuni a_wceq a_w3a p_mtbir $.
 $}
-$( A limit ordinal is ordinal.  (Contributed by NM, 4-May-1995.) $)
+
+$(A limit ordinal is ordinal.  (Contributed by NM, 4-May-1995.) $)
+
 ${
-	$v A $.
-	flimord_0 $f class A $.
-	limord $p |- ( Lim A -> Ord A ) $= flimord_0 wlim flimord_0 word flimord_0 c0 wne flimord_0 flimord_0 cuni wceq flimord_0 df-lim simp1bi $.
+	$v A  $.
+	f0_limord $f class A $.
+	p_limord $p |- ( Lim A -> Ord A ) $= f0_limord a_df-lim f0_limord a_wlim f0_limord a_word f0_limord a_c0 a_wne f0_limord f0_limord a_cuni a_wceq p_simp1bi $.
 $}
-$( A limit ordinal is its own supremum (union).  (Contributed by NM,
+
+$(A limit ordinal is its own supremum (union).  (Contributed by NM,
      4-May-1995.) $)
+
 ${
-	$v A $.
-	flimuni_0 $f class A $.
-	limuni $p |- ( Lim A -> A = U. A ) $= flimuni_0 wlim flimuni_0 word flimuni_0 c0 wne flimuni_0 flimuni_0 cuni wceq flimuni_0 df-lim simp3bi $.
+	$v A  $.
+	f0_limuni $f class A $.
+	p_limuni $p |- ( Lim A -> A = U. A ) $= f0_limuni a_df-lim f0_limuni a_wlim f0_limuni a_word f0_limuni a_c0 a_wne f0_limuni f0_limuni a_cuni a_wceq p_simp3bi $.
 $}
-$( The union of a limit ordinal is a limit ordinal.  (Contributed by NM,
+
+$(The union of a limit ordinal is a limit ordinal.  (Contributed by NM,
      19-Sep-2006.) $)
+
 ${
-	$v A $.
-	flimuni2_0 $f class A $.
-	limuni2 $p |- ( Lim A -> Lim U. A ) $= flimuni2_0 wlim flimuni2_0 cuni wlim flimuni2_0 wlim flimuni2_0 flimuni2_0 cuni wceq flimuni2_0 wlim flimuni2_0 cuni wlim wb flimuni2_0 limuni flimuni2_0 flimuni2_0 cuni limeq syl ibi $.
+	$v A  $.
+	f0_limuni2 $f class A $.
+	p_limuni2 $p |- ( Lim A -> Lim U. A ) $= f0_limuni2 p_limuni f0_limuni2 f0_limuni2 a_cuni p_limeq f0_limuni2 a_wlim f0_limuni2 f0_limuni2 a_cuni a_wceq f0_limuni2 a_wlim f0_limuni2 a_cuni a_wlim a_wb p_syl f0_limuni2 a_wlim f0_limuni2 a_cuni a_wlim p_ibi $.
 $}
-$( A limit ordinal contains the empty set.  (Contributed by NM,
+
+$(A limit ordinal contains the empty set.  (Contributed by NM,
      15-May-1994.) $)
+
 ${
-	$v A $.
-	f0ellim_0 $f class A $.
-	0ellim $p |- ( Lim A -> (/) e. A ) $= f0ellim_0 wlim c0 f0ellim_0 wcel f0ellim_0 c0 wne f0ellim_0 wlim f0ellim_0 c0 f0ellim_0 c0 wceq f0ellim_0 wlim c0 wlim nlim0 f0ellim_0 c0 limeq mtbiri necon2ai f0ellim_0 wlim f0ellim_0 word c0 f0ellim_0 wcel f0ellim_0 c0 wne wb f0ellim_0 limord f0ellim_0 ord0eln0 syl mpbird $.
+	$v A  $.
+	f0_0ellim $f class A $.
+	p_0ellim $p |- ( Lim A -> (/) e. A ) $= p_nlim0 f0_0ellim a_c0 p_limeq f0_0ellim a_c0 a_wceq f0_0ellim a_wlim a_c0 a_wlim p_mtbiri f0_0ellim a_wlim f0_0ellim a_c0 p_necon2ai f0_0ellim p_limord f0_0ellim p_ord0eln0 f0_0ellim a_wlim f0_0ellim a_word a_c0 f0_0ellim a_wcel f0_0ellim a_c0 a_wne a_wb p_syl f0_0ellim a_wlim a_c0 f0_0ellim a_wcel f0_0ellim a_c0 a_wne p_mpbird $.
 $}
-$( A limit ordinal class that is also a set is an ordinal number.
+
+$(A limit ordinal class that is also a set is an ordinal number.
      (Contributed by NM, 26-Apr-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	flimelon_0 $f class A $.
-	flimelon_1 $f class B $.
-	limelon $p |- ( ( A e. B /\ Lim A ) -> A e. On ) $= flimelon_0 flimelon_1 wcel flimelon_0 wlim flimelon_0 con0 wcel flimelon_0 wlim flimelon_0 con0 wcel flimelon_0 flimelon_1 wcel flimelon_0 word flimelon_0 limord flimelon_0 flimelon_1 elong syl5ibr imp $.
+	$v A B  $.
+	f0_limelon $f class A $.
+	f1_limelon $f class B $.
+	p_limelon $p |- ( ( A e. B /\ Lim A ) -> A e. On ) $= f0_limelon p_limord f0_limelon f1_limelon p_elong f0_limelon a_wlim f0_limelon a_con0 a_wcel f0_limelon f1_limelon a_wcel f0_limelon a_word p_syl5ibr f0_limelon f1_limelon a_wcel f0_limelon a_wlim f0_limelon a_con0 a_wcel p_imp $.
 $}
-$( The class of all ordinal numbers in not empty.  (Contributed by NM,
+
+$(The class of all ordinal numbers in not empty.  (Contributed by NM,
      17-Sep-1995.) $)
+
 ${
-	onn0 $p |- On =/= (/) $= c0 con0 wcel con0 c0 wne 0elon con0 c0 ne0i ax-mp $.
+	$v  $.
+	p_onn0 $p |- On =/= (/) $= p_0elon a_con0 a_c0 p_ne0i a_c0 a_con0 a_wcel a_con0 a_c0 a_wne a_ax-mp $.
 $}
-$( Equality of successors.  (Contributed by NM, 30-Aug-1993.)  (Proof
+
+$(Equality of successors.  (Contributed by NM, 30-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fsuceq_0 $f class A $.
-	fsuceq_1 $f class B $.
-	suceq $p |- ( A = B -> suc A = suc B ) $= fsuceq_0 fsuceq_1 wceq fsuceq_0 fsuceq_0 csn cun fsuceq_1 fsuceq_1 csn cun fsuceq_0 csuc fsuceq_1 csuc fsuceq_0 fsuceq_1 wceq fsuceq_0 fsuceq_1 fsuceq_0 csn fsuceq_1 csn fsuceq_0 fsuceq_1 wceq id fsuceq_0 fsuceq_1 sneq uneq12d fsuceq_0 df-suc fsuceq_1 df-suc 3eqtr4g $.
+	$v A B  $.
+	f0_suceq $f class A $.
+	f1_suceq $f class B $.
+	p_suceq $p |- ( A = B -> suc A = suc B ) $= f0_suceq f1_suceq a_wceq p_id f0_suceq f1_suceq p_sneq f0_suceq f1_suceq a_wceq f0_suceq f1_suceq f0_suceq a_csn f1_suceq a_csn p_uneq12d f0_suceq a_df-suc f1_suceq a_df-suc f0_suceq f1_suceq a_wceq f0_suceq f0_suceq a_csn a_cun f1_suceq f1_suceq a_csn a_cun f0_suceq a_csuc f1_suceq a_csuc p_3eqtr4g $.
 $}
-$( Membership in a successor.  This one-way implication does not require that
+
+$(Membership in a successor.  This one-way implication does not require that
      either ` A ` or ` B ` be sets.  (Contributed by NM, 6-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felsuci_0 $f class A $.
-	felsuci_1 $f class B $.
-	elsuci $p |- ( A e. suc B -> ( A e. B \/ A = B ) ) $= felsuci_0 felsuci_1 csuc wcel felsuci_0 felsuci_1 wcel felsuci_0 felsuci_1 csn wcel wo felsuci_0 felsuci_1 wcel felsuci_0 felsuci_1 wceq wo felsuci_0 felsuci_1 csuc wcel felsuci_0 felsuci_1 felsuci_1 csn cun wcel felsuci_0 felsuci_1 wcel felsuci_0 felsuci_1 csn wcel wo felsuci_1 csuc felsuci_1 felsuci_1 csn cun felsuci_0 felsuci_1 df-suc eleq2i felsuci_0 felsuci_1 felsuci_1 csn elun bitri felsuci_0 felsuci_1 csn wcel felsuci_0 felsuci_1 wceq felsuci_0 felsuci_1 wcel felsuci_0 felsuci_1 elsni orim2i sylbi $.
+	$v A B  $.
+	f0_elsuci $f class A $.
+	f1_elsuci $f class B $.
+	p_elsuci $p |- ( A e. suc B -> ( A e. B \/ A = B ) ) $= f1_elsuci a_df-suc f1_elsuci a_csuc f1_elsuci f1_elsuci a_csn a_cun f0_elsuci p_eleq2i f0_elsuci f1_elsuci f1_elsuci a_csn p_elun f0_elsuci f1_elsuci a_csuc a_wcel f0_elsuci f1_elsuci f1_elsuci a_csn a_cun a_wcel f0_elsuci f1_elsuci a_wcel f0_elsuci f1_elsuci a_csn a_wcel a_wo p_bitri f0_elsuci f1_elsuci p_elsni f0_elsuci f1_elsuci a_csn a_wcel f0_elsuci f1_elsuci a_wceq f0_elsuci f1_elsuci a_wcel p_orim2i f0_elsuci f1_elsuci a_csuc a_wcel f0_elsuci f1_elsuci a_wcel f0_elsuci f1_elsuci a_csn a_wcel a_wo f0_elsuci f1_elsuci a_wcel f0_elsuci f1_elsuci a_wceq a_wo p_sylbi $.
 $}
-$( Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+
+$(Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
      (Contributed by NM, 15-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v V $.
-	felsucg_0 $f class A $.
-	felsucg_1 $f class B $.
-	felsucg_2 $f class V $.
-	elsucg $p |- ( A e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $= felsucg_0 felsucg_1 csuc wcel felsucg_0 felsucg_1 wcel felsucg_0 felsucg_1 csn wcel wo felsucg_0 felsucg_2 wcel felsucg_0 felsucg_1 wcel felsucg_0 felsucg_1 wceq wo felsucg_0 felsucg_1 csuc wcel felsucg_0 felsucg_1 felsucg_1 csn cun wcel felsucg_0 felsucg_1 wcel felsucg_0 felsucg_1 csn wcel wo felsucg_1 csuc felsucg_1 felsucg_1 csn cun felsucg_0 felsucg_1 df-suc eleq2i felsucg_0 felsucg_1 felsucg_1 csn elun bitri felsucg_0 felsucg_2 wcel felsucg_0 felsucg_1 csn wcel felsucg_0 felsucg_1 wceq felsucg_0 felsucg_1 wcel felsucg_0 felsucg_1 felsucg_2 elsncg orbi2d syl5bb $.
+	$v A B V  $.
+	f0_elsucg $f class A $.
+	f1_elsucg $f class B $.
+	f2_elsucg $f class V $.
+	p_elsucg $p |- ( A e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $= f1_elsucg a_df-suc f1_elsucg a_csuc f1_elsucg f1_elsucg a_csn a_cun f0_elsucg p_eleq2i f0_elsucg f1_elsucg f1_elsucg a_csn p_elun f0_elsucg f1_elsucg a_csuc a_wcel f0_elsucg f1_elsucg f1_elsucg a_csn a_cun a_wcel f0_elsucg f1_elsucg a_wcel f0_elsucg f1_elsucg a_csn a_wcel a_wo p_bitri f0_elsucg f1_elsucg f2_elsucg p_elsncg f0_elsucg f2_elsucg a_wcel f0_elsucg f1_elsucg a_csn a_wcel f0_elsucg f1_elsucg a_wceq f0_elsucg f1_elsucg a_wcel p_orbi2d f0_elsucg f1_elsucg a_csuc a_wcel f0_elsucg f1_elsucg a_wcel f0_elsucg f1_elsucg a_csn a_wcel a_wo f0_elsucg f2_elsucg a_wcel f0_elsucg f1_elsucg a_wcel f0_elsucg f1_elsucg a_wceq a_wo p_syl5bb $.
 $}
-$( Variant of membership in a successor, requiring that ` B ` rather than
+
+$(Variant of membership in a successor, requiring that ` B ` rather than
      ` A ` be a set.  (Contributed by NM, 28-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v V $.
-	felsuc2g_0 $f class A $.
-	felsuc2g_1 $f class B $.
-	felsuc2g_2 $f class V $.
-	elsuc2g $p |- ( B e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $= felsuc2g_0 felsuc2g_1 csuc wcel felsuc2g_0 felsuc2g_1 felsuc2g_1 csn cun wcel felsuc2g_1 felsuc2g_2 wcel felsuc2g_0 felsuc2g_1 wcel felsuc2g_0 felsuc2g_1 wceq wo felsuc2g_1 csuc felsuc2g_1 felsuc2g_1 csn cun felsuc2g_0 felsuc2g_1 df-suc eleq2i felsuc2g_0 felsuc2g_1 felsuc2g_1 csn cun wcel felsuc2g_0 felsuc2g_1 wcel felsuc2g_0 felsuc2g_1 csn wcel wo felsuc2g_1 felsuc2g_2 wcel felsuc2g_0 felsuc2g_1 wcel felsuc2g_0 felsuc2g_1 wceq wo felsuc2g_0 felsuc2g_1 felsuc2g_1 csn elun felsuc2g_1 felsuc2g_2 wcel felsuc2g_0 felsuc2g_1 csn wcel felsuc2g_0 felsuc2g_1 wceq felsuc2g_0 felsuc2g_1 wcel felsuc2g_0 felsuc2g_1 felsuc2g_2 elsnc2g orbi2d syl5bb syl5bb $.
+	$v A B V  $.
+	f0_elsuc2g $f class A $.
+	f1_elsuc2g $f class B $.
+	f2_elsuc2g $f class V $.
+	p_elsuc2g $p |- ( B e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $= f1_elsuc2g a_df-suc f1_elsuc2g a_csuc f1_elsuc2g f1_elsuc2g a_csn a_cun f0_elsuc2g p_eleq2i f0_elsuc2g f1_elsuc2g f1_elsuc2g a_csn p_elun f0_elsuc2g f1_elsuc2g f2_elsuc2g p_elsnc2g f1_elsuc2g f2_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_csn a_wcel f0_elsuc2g f1_elsuc2g a_wceq f0_elsuc2g f1_elsuc2g a_wcel p_orbi2d f0_elsuc2g f1_elsuc2g f1_elsuc2g a_csn a_cun a_wcel f0_elsuc2g f1_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_csn a_wcel a_wo f1_elsuc2g f2_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_wceq a_wo p_syl5bb f0_elsuc2g f1_elsuc2g a_csuc a_wcel f0_elsuc2g f1_elsuc2g f1_elsuc2g a_csn a_cun a_wcel f1_elsuc2g f2_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_wcel f0_elsuc2g f1_elsuc2g a_wceq a_wo p_syl5bb $.
 $}
-$( Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+
+$(Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 15-Sep-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felsuc_0 $f class A $.
-	felsuc_1 $f class B $.
-	eelsuc_0 $e |- A e. _V $.
-	elsuc $p |- ( A e. suc B <-> ( A e. B \/ A = B ) ) $= felsuc_0 cvv wcel felsuc_0 felsuc_1 csuc wcel felsuc_0 felsuc_1 wcel felsuc_0 felsuc_1 wceq wo wb eelsuc_0 felsuc_0 felsuc_1 cvv elsucg ax-mp $.
+	$v A B  $.
+	f0_elsuc $f class A $.
+	f1_elsuc $f class B $.
+	e0_elsuc $e |- A e. _V $.
+	p_elsuc $p |- ( A e. suc B <-> ( A e. B \/ A = B ) ) $= e0_elsuc f0_elsuc f1_elsuc a_cvv p_elsucg f0_elsuc a_cvv a_wcel f0_elsuc f1_elsuc a_csuc a_wcel f0_elsuc f1_elsuc a_wcel f0_elsuc f1_elsuc a_wceq a_wo a_wb a_ax-mp $.
 $}
-$( Membership in a successor.  (Contributed by NM, 15-Sep-2003.) $)
+
+$(Membership in a successor.  (Contributed by NM, 15-Sep-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felsuc2_0 $f class A $.
-	felsuc2_1 $f class B $.
-	eelsuc2_0 $e |- A e. _V $.
-	elsuc2 $p |- ( B e. suc A <-> ( B e. A \/ B = A ) ) $= felsuc2_0 cvv wcel felsuc2_1 felsuc2_0 csuc wcel felsuc2_1 felsuc2_0 wcel felsuc2_1 felsuc2_0 wceq wo wb eelsuc2_0 felsuc2_1 felsuc2_0 cvv elsuc2g ax-mp $.
+	$v A B  $.
+	f0_elsuc2 $f class A $.
+	f1_elsuc2 $f class B $.
+	e0_elsuc2 $e |- A e. _V $.
+	p_elsuc2 $p |- ( B e. suc A <-> ( B e. A \/ B = A ) ) $= e0_elsuc2 f1_elsuc2 f0_elsuc2 a_cvv p_elsuc2g f0_elsuc2 a_cvv a_wcel f1_elsuc2 f0_elsuc2 a_csuc a_wcel f1_elsuc2 f0_elsuc2 a_wcel f1_elsuc2 f0_elsuc2 a_wceq a_wo a_wb a_ax-mp $.
 $}
-$( Bound-variable hypothesis builder for successor.  (Contributed by NM,
+
+$(Bound-variable hypothesis builder for successor.  (Contributed by NM,
        15-Sep-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	fnfsuc_0 $f set x $.
-	fnfsuc_1 $f class A $.
-	enfsuc_0 $e |- F/_ x A $.
-	nfsuc $p |- F/_ x suc A $= fnfsuc_0 fnfsuc_1 csuc fnfsuc_1 fnfsuc_1 csn cun fnfsuc_1 df-suc fnfsuc_0 fnfsuc_1 fnfsuc_1 csn enfsuc_0 fnfsuc_0 fnfsuc_1 enfsuc_0 nfsn nfun nfcxfr $.
+	$v x A  $.
+	$d A  $.
+	$d x  $.
+	f0_nfsuc $f set x $.
+	f1_nfsuc $f class A $.
+	e0_nfsuc $e |- F/_ x A $.
+	p_nfsuc $p |- F/_ x suc A $= f1_nfsuc a_df-suc e0_nfsuc e0_nfsuc f0_nfsuc f1_nfsuc p_nfsn f0_nfsuc f1_nfsuc f1_nfsuc a_csn p_nfun f0_nfsuc f1_nfsuc a_csuc f1_nfsuc f1_nfsuc a_csn a_cun p_nfcxfr $.
 $}
-$( Membership in a successor.  (Contributed by NM, 20-Jun-1998.) $)
+
+$(Membership in a successor.  (Contributed by NM, 20-Jun-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felelsuc_0 $f class A $.
-	felelsuc_1 $f class B $.
-	elelsuc $p |- ( A e. B -> A e. suc B ) $= felelsuc_0 felelsuc_1 wcel felelsuc_0 felelsuc_1 csuc wcel felelsuc_0 felelsuc_1 wcel felelsuc_0 felelsuc_1 wceq wo felelsuc_0 felelsuc_1 wcel felelsuc_0 felelsuc_1 wceq orc felelsuc_0 felelsuc_1 felelsuc_1 elsucg mpbird $.
+	$v A B  $.
+	f0_elelsuc $f class A $.
+	f1_elelsuc $f class B $.
+	p_elelsuc $p |- ( A e. B -> A e. suc B ) $= f0_elelsuc f1_elelsuc a_wcel f0_elelsuc f1_elelsuc a_wceq p_orc f0_elelsuc f1_elelsuc f1_elelsuc p_elsucg f0_elelsuc f1_elelsuc a_wcel f0_elelsuc f1_elelsuc a_csuc a_wcel f0_elelsuc f1_elelsuc a_wcel f0_elelsuc f1_elelsuc a_wceq a_wo p_mpbird $.
 $}
-$( Membership of a successor in another class.  (Contributed by NM,
+
+$(Membership of a successor in another class.  (Contributed by NM,
        29-Jun-2004.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y A $.
-	$d x B $.
-	fsucel_0 $f set x $.
-	fsucel_1 $f set y $.
-	fsucel_2 $f class A $.
-	fsucel_3 $f class B $.
-	sucel $p |- ( suc A e. B <-> E. x e. B A. y ( y e. x <-> ( y e. A \/ y = A ) ) ) $= fsucel_2 csuc fsucel_3 wcel fsucel_0 sup_set_class fsucel_2 csuc wceq fsucel_0 fsucel_3 wrex fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 wcel fsucel_1 sup_set_class fsucel_2 wceq wo wb fsucel_1 wal fsucel_0 fsucel_3 wrex fsucel_0 fsucel_2 csuc fsucel_3 risset fsucel_0 sup_set_class fsucel_2 csuc wceq fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 wcel fsucel_1 sup_set_class fsucel_2 wceq wo wb fsucel_1 wal fsucel_0 fsucel_3 fsucel_0 sup_set_class fsucel_2 csuc wceq fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 csuc wcel wb fsucel_1 wal fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 wcel fsucel_1 sup_set_class fsucel_2 wceq wo wb fsucel_1 wal fsucel_1 fsucel_0 sup_set_class fsucel_2 csuc dfcleq fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 csuc wcel wb fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 wcel fsucel_1 sup_set_class fsucel_2 wceq wo wb fsucel_1 fsucel_1 sup_set_class fsucel_2 csuc wcel fsucel_1 sup_set_class fsucel_2 wcel fsucel_1 sup_set_class fsucel_2 wceq wo fsucel_1 sup_set_class fsucel_0 sup_set_class wcel fsucel_1 sup_set_class fsucel_2 fsucel_1 vex elsuc bibi2i albii bitri rexbii bitri $.
+	$v x y A B  $.
+	$d x y A  $.
+	$d x B  $.
+	f0_sucel $f set x $.
+	f1_sucel $f set y $.
+	f2_sucel $f class A $.
+	f3_sucel $f class B $.
+	p_sucel $p |- ( suc A e. B <-> E. x e. B A. y ( y e. x <-> ( y e. A \/ y = A ) ) ) $= f0_sucel f2_sucel a_csuc f3_sucel p_risset f1_sucel f0_sucel a_sup_set_class f2_sucel a_csuc p_dfcleq f1_sucel p_vex f1_sucel a_sup_set_class f2_sucel p_elsuc f1_sucel a_sup_set_class f2_sucel a_csuc a_wcel f1_sucel a_sup_set_class f2_sucel a_wcel f1_sucel a_sup_set_class f2_sucel a_wceq a_wo f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel p_bibi2i f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_csuc a_wcel a_wb f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_wcel f1_sucel a_sup_set_class f2_sucel a_wceq a_wo a_wb f1_sucel p_albii f0_sucel a_sup_set_class f2_sucel a_csuc a_wceq f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_csuc a_wcel a_wb f1_sucel a_wal f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_wcel f1_sucel a_sup_set_class f2_sucel a_wceq a_wo a_wb f1_sucel a_wal p_bitri f0_sucel a_sup_set_class f2_sucel a_csuc a_wceq f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_wcel f1_sucel a_sup_set_class f2_sucel a_wceq a_wo a_wb f1_sucel a_wal f0_sucel f3_sucel p_rexbii f2_sucel a_csuc f3_sucel a_wcel f0_sucel a_sup_set_class f2_sucel a_csuc a_wceq f0_sucel f3_sucel a_wrex f1_sucel a_sup_set_class f0_sucel a_sup_set_class a_wcel f1_sucel a_sup_set_class f2_sucel a_wcel f1_sucel a_sup_set_class f2_sucel a_wceq a_wo a_wb f1_sucel a_wal f0_sucel f3_sucel a_wrex p_bitri $.
 $}
-$( The successor of the empty set.  (Contributed by NM, 1-Feb-2005.) $)
+
+$(The successor of the empty set.  (Contributed by NM, 1-Feb-2005.) $)
+
 ${
-	suc0 $p |- suc (/) = { (/) } $= c0 csuc c0 c0 csn cun c0 csn c0 cun c0 csn c0 df-suc c0 c0 csn uncom c0 csn un0 3eqtri $.
+	$v  $.
+	p_suc0 $p |- suc (/) = { (/) } $= a_c0 a_df-suc a_c0 a_c0 a_csn p_uncom a_c0 a_csn p_un0 a_c0 a_csuc a_c0 a_c0 a_csn a_cun a_c0 a_csn a_c0 a_cun a_c0 a_csn p_3eqtri $.
 $}
-$( A proper class is its own successor.  (Contributed by NM, 3-Apr-1995.) $)
+
+$(A proper class is its own successor.  (Contributed by NM, 3-Apr-1995.) $)
+
 ${
-	$v A $.
-	fsucprc_0 $f class A $.
-	sucprc $p |- ( -. A e. _V -> suc A = A ) $= fsucprc_0 cvv wcel wn fsucprc_0 csuc fsucprc_0 c0 cun fsucprc_0 fsucprc_0 cvv wcel wn fsucprc_0 csuc fsucprc_0 fsucprc_0 csn cun fsucprc_0 c0 cun fsucprc_0 df-suc fsucprc_0 cvv wcel wn fsucprc_0 csn c0 wceq fsucprc_0 fsucprc_0 csn cun fsucprc_0 c0 cun wceq fsucprc_0 snprc fsucprc_0 csn c0 fsucprc_0 uneq2 sylbi syl5eq fsucprc_0 un0 syl6eq $.
+	$v A  $.
+	f0_sucprc $f class A $.
+	p_sucprc $p |- ( -. A e. _V -> suc A = A ) $= f0_sucprc a_df-suc f0_sucprc p_snprc f0_sucprc a_csn a_c0 f0_sucprc p_uneq2 f0_sucprc a_cvv a_wcel a_wn f0_sucprc a_csn a_c0 a_wceq f0_sucprc f0_sucprc a_csn a_cun f0_sucprc a_c0 a_cun a_wceq p_sylbi f0_sucprc a_cvv a_wcel a_wn f0_sucprc a_csuc f0_sucprc f0_sucprc a_csn a_cun f0_sucprc a_c0 a_cun p_syl5eq f0_sucprc p_un0 f0_sucprc a_cvv a_wcel a_wn f0_sucprc a_csuc f0_sucprc a_c0 a_cun f0_sucprc p_syl6eq $.
 $}
-$( A transitive class is equal to the union of its successor.  Combines
+
+$(A transitive class is equal to the union of its successor.  Combines
        Theorem 4E of [Enderton] p. 72 and Exercise 6 of [Enderton] p. 73.
        (Contributed by NM, 30-Aug-1993.) $)
+
 ${
-	$v A $.
-	funisuc_0 $f class A $.
-	eunisuc_0 $e |- A e. _V $.
-	unisuc $p |- ( Tr A <-> U. suc A = A ) $= funisuc_0 cuni funisuc_0 wss funisuc_0 cuni funisuc_0 cun funisuc_0 wceq funisuc_0 wtr funisuc_0 csuc cuni funisuc_0 wceq funisuc_0 cuni funisuc_0 ssequn1 funisuc_0 df-tr funisuc_0 csuc cuni funisuc_0 cuni funisuc_0 cun funisuc_0 funisuc_0 csuc cuni funisuc_0 funisuc_0 csn cun cuni funisuc_0 cuni funisuc_0 csn cuni cun funisuc_0 cuni funisuc_0 cun funisuc_0 csuc funisuc_0 funisuc_0 csn cun funisuc_0 df-suc unieqi funisuc_0 funisuc_0 csn uniun funisuc_0 csn cuni funisuc_0 funisuc_0 cuni funisuc_0 eunisuc_0 unisn uneq2i 3eqtri eqeq1i 3bitr4i $.
+	$v A  $.
+	f0_unisuc $f class A $.
+	e0_unisuc $e |- A e. _V $.
+	p_unisuc $p |- ( Tr A <-> U. suc A = A ) $= f0_unisuc a_cuni f0_unisuc p_ssequn1 f0_unisuc a_df-tr f0_unisuc a_df-suc f0_unisuc a_csuc f0_unisuc f0_unisuc a_csn a_cun p_unieqi f0_unisuc f0_unisuc a_csn p_uniun e0_unisuc f0_unisuc p_unisn f0_unisuc a_csn a_cuni f0_unisuc f0_unisuc a_cuni p_uneq2i f0_unisuc a_csuc a_cuni f0_unisuc f0_unisuc a_csn a_cun a_cuni f0_unisuc a_cuni f0_unisuc a_csn a_cuni a_cun f0_unisuc a_cuni f0_unisuc a_cun p_3eqtri f0_unisuc a_csuc a_cuni f0_unisuc a_cuni f0_unisuc a_cun f0_unisuc p_eqeq1i f0_unisuc a_cuni f0_unisuc a_wss f0_unisuc a_cuni f0_unisuc a_cun f0_unisuc a_wceq f0_unisuc a_wtr f0_unisuc a_csuc a_cuni f0_unisuc a_wceq p_3bitr4i $.
 $}
-$( A class is included in its own successor.  Part of Proposition 7.23 of
+
+$(A class is included in its own successor.  Part of Proposition 7.23 of
      [TakeutiZaring] p. 41 (generalized to arbitrary classes).  (Contributed by
      NM, 31-May-1994.) $)
+
 ${
-	$v A $.
-	fsssucid_0 $f class A $.
-	sssucid $p |- A C_ suc A $= fsssucid_0 fsssucid_0 fsssucid_0 csn cun fsssucid_0 csuc fsssucid_0 fsssucid_0 csn ssun1 fsssucid_0 df-suc sseqtr4i $.
+	$v A  $.
+	f0_sssucid $f class A $.
+	p_sssucid $p |- A C_ suc A $= f0_sssucid f0_sssucid a_csn p_ssun1 f0_sssucid a_df-suc f0_sssucid f0_sssucid f0_sssucid a_csn a_cun f0_sssucid a_csuc p_sseqtr4i $.
 $}
-$( Part of Proposition 7.23 of [TakeutiZaring] p. 41 (generalized).
+
+$(Part of Proposition 7.23 of [TakeutiZaring] p. 41 (generalized).
      (Contributed by NM, 25-Mar-1995.)  (Proof shortened by Scott Fenton,
      20-Feb-2012.) $)
+
 ${
-	$v A $.
-	$v V $.
-	fsucidg_0 $f class A $.
-	fsucidg_1 $f class V $.
-	sucidg $p |- ( A e. V -> A e. suc A ) $= fsucidg_0 fsucidg_1 wcel fsucidg_0 fsucidg_0 csuc wcel fsucidg_0 fsucidg_0 wcel fsucidg_0 fsucidg_0 wceq wo fsucidg_0 fsucidg_0 wceq fsucidg_0 fsucidg_0 wcel fsucidg_0 eqid olci fsucidg_0 fsucidg_0 fsucidg_1 elsucg mpbiri $.
+	$v A V  $.
+	f0_sucidg $f class A $.
+	f1_sucidg $f class V $.
+	p_sucidg $p |- ( A e. V -> A e. suc A ) $= f0_sucidg p_eqid f0_sucidg f0_sucidg a_wceq f0_sucidg f0_sucidg a_wcel p_olci f0_sucidg f0_sucidg f1_sucidg p_elsucg f0_sucidg f1_sucidg a_wcel f0_sucidg f0_sucidg a_csuc a_wcel f0_sucidg f0_sucidg a_wcel f0_sucidg f0_sucidg a_wceq a_wo p_mpbiri $.
 $}
-$( A set belongs to its successor.  (Contributed by NM, 22-Jun-1994.)
+
+$(A set belongs to its successor.  (Contributed by NM, 22-Jun-1994.)
        (Proof shortened by Alan Sare, 18-Feb-2012.)  (Proof shortened by Scott
        Fenton, 20-Feb-2012.) $)
+
 ${
-	$v A $.
-	fsucid_0 $f class A $.
-	esucid_0 $e |- A e. _V $.
-	sucid $p |- A e. suc A $= fsucid_0 cvv wcel fsucid_0 fsucid_0 csuc wcel esucid_0 fsucid_0 cvv sucidg ax-mp $.
+	$v A  $.
+	f0_sucid $f class A $.
+	e0_sucid $e |- A e. _V $.
+	p_sucid $p |- A e. suc A $= e0_sucid f0_sucid a_cvv p_sucidg f0_sucid a_cvv a_wcel f0_sucid f0_sucid a_csuc a_wcel a_ax-mp $.
 $}
-$( No successor is empty.  (Contributed by NM, 3-Apr-1995.) $)
+
+$(No successor is empty.  (Contributed by NM, 3-Apr-1995.) $)
+
 ${
-	$v A $.
-	fnsuceq0_0 $f class A $.
-	nsuceq0 $p |- suc A =/= (/) $= fnsuceq0_0 csuc c0 wne fnsuceq0_0 csuc c0 wceq wn fnsuceq0_0 cvv wcel fnsuceq0_0 csuc c0 wceq wn fnsuceq0_0 cvv wcel fnsuceq0_0 csuc c0 wceq fnsuceq0_0 c0 wcel fnsuceq0_0 noel fnsuceq0_0 cvv wcel fnsuceq0_0 fnsuceq0_0 csuc wcel fnsuceq0_0 csuc c0 wceq fnsuceq0_0 c0 wcel fnsuceq0_0 cvv sucidg fnsuceq0_0 csuc c0 fnsuceq0_0 eleq2 syl5ibcom mtoi fnsuceq0_0 cvv wcel wn fnsuceq0_0 csuc c0 wceq wn fnsuceq0_0 cvv wcel wn fnsuceq0_0 csuc c0 wceq fnsuceq0_0 cvv wcel fnsuceq0_0 cvv wcel wn fnsuceq0_0 csuc c0 wceq fnsuceq0_0 c0 wceq fnsuceq0_0 cvv wcel fnsuceq0_0 cvv wcel wn fnsuceq0_0 csuc fnsuceq0_0 c0 fnsuceq0_0 sucprc eqeq1d fnsuceq0_0 c0 wceq fnsuceq0_0 cvv wcel c0 cvv wcel 0ex fnsuceq0_0 c0 cvv eleq1 mpbiri syl6bi con3d pm2.43i pm2.61i fnsuceq0_0 csuc c0 df-ne mpbir $.
+	$v A  $.
+	f0_nsuceq0 $f class A $.
+	p_nsuceq0 $p |- suc A =/= (/) $= f0_nsuceq0 p_noel f0_nsuceq0 a_cvv p_sucidg f0_nsuceq0 a_csuc a_c0 f0_nsuceq0 p_eleq2 f0_nsuceq0 a_cvv a_wcel f0_nsuceq0 f0_nsuceq0 a_csuc a_wcel f0_nsuceq0 a_csuc a_c0 a_wceq f0_nsuceq0 a_c0 a_wcel p_syl5ibcom f0_nsuceq0 a_cvv a_wcel f0_nsuceq0 a_csuc a_c0 a_wceq f0_nsuceq0 a_c0 a_wcel p_mtoi f0_nsuceq0 p_sucprc f0_nsuceq0 a_cvv a_wcel a_wn f0_nsuceq0 a_csuc f0_nsuceq0 a_c0 p_eqeq1d p_0ex f0_nsuceq0 a_c0 a_cvv p_eleq1 f0_nsuceq0 a_c0 a_wceq f0_nsuceq0 a_cvv a_wcel a_c0 a_cvv a_wcel p_mpbiri f0_nsuceq0 a_cvv a_wcel a_wn f0_nsuceq0 a_csuc a_c0 a_wceq f0_nsuceq0 a_c0 a_wceq f0_nsuceq0 a_cvv a_wcel p_syl6bi f0_nsuceq0 a_cvv a_wcel a_wn f0_nsuceq0 a_csuc a_c0 a_wceq f0_nsuceq0 a_cvv a_wcel p_con3d f0_nsuceq0 a_cvv a_wcel a_wn f0_nsuceq0 a_csuc a_c0 a_wceq a_wn p_pm2.43i f0_nsuceq0 a_cvv a_wcel f0_nsuceq0 a_csuc a_c0 a_wceq a_wn p_pm2.61i f0_nsuceq0 a_csuc a_c0 a_df-ne f0_nsuceq0 a_csuc a_c0 a_wne f0_nsuceq0 a_csuc a_c0 a_wceq a_wn p_mpbir $.
 $}
-$( A set belongs to the successor of an equal set.  (Contributed by NM,
+
+$(A set belongs to the successor of an equal set.  (Contributed by NM,
        18-Aug-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqelsuc_0 $f class A $.
-	feqelsuc_1 $f class B $.
-	eeqelsuc_0 $e |- A e. _V $.
-	eqelsuc $p |- ( A = B -> A e. suc B ) $= feqelsuc_0 feqelsuc_1 wceq feqelsuc_0 feqelsuc_0 csuc feqelsuc_1 csuc feqelsuc_0 eeqelsuc_0 sucid feqelsuc_0 feqelsuc_1 suceq syl5eleq $.
+	$v A B  $.
+	f0_eqelsuc $f class A $.
+	f1_eqelsuc $f class B $.
+	e0_eqelsuc $e |- A e. _V $.
+	p_eqelsuc $p |- ( A = B -> A e. suc B ) $= e0_eqelsuc f0_eqelsuc p_sucid f0_eqelsuc f1_eqelsuc p_suceq f0_eqelsuc f1_eqelsuc a_wceq f0_eqelsuc f0_eqelsuc a_csuc f1_eqelsuc a_csuc p_syl5eleq $.
 $}
-$( Inductive definition for the indexed union at a successor.  (Contributed
+
+$(Inductive definition for the indexed union at a successor.  (Contributed
        by Mario Carneiro, 4-Feb-2013.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d A x $.
-	$d C x $.
-	fiunsuc_0 $f set x $.
-	fiunsuc_1 $f class A $.
-	fiunsuc_2 $f class B $.
-	fiunsuc_3 $f class C $.
-	eiunsuc_0 $e |- A e. _V $.
-	eiunsuc_1 $e |- ( x = A -> B = C ) $.
-	iunsuc $p |- U_ x e. suc A B = ( U_ x e. A B u. C ) $= fiunsuc_0 fiunsuc_1 csuc fiunsuc_2 ciun fiunsuc_0 fiunsuc_1 fiunsuc_1 csn cun fiunsuc_2 ciun fiunsuc_0 fiunsuc_1 fiunsuc_2 ciun fiunsuc_0 fiunsuc_1 csn fiunsuc_2 ciun cun fiunsuc_0 fiunsuc_1 fiunsuc_2 ciun fiunsuc_3 cun fiunsuc_1 csuc fiunsuc_1 fiunsuc_1 csn cun wceq fiunsuc_0 fiunsuc_1 csuc fiunsuc_2 ciun fiunsuc_0 fiunsuc_1 fiunsuc_1 csn cun fiunsuc_2 ciun wceq fiunsuc_1 df-suc fiunsuc_0 fiunsuc_1 csuc fiunsuc_1 fiunsuc_1 csn cun fiunsuc_2 iuneq1 ax-mp fiunsuc_0 fiunsuc_1 fiunsuc_1 csn fiunsuc_2 iunxun fiunsuc_0 fiunsuc_1 csn fiunsuc_2 ciun fiunsuc_3 fiunsuc_0 fiunsuc_1 fiunsuc_2 ciun fiunsuc_0 fiunsuc_1 fiunsuc_2 fiunsuc_3 eiunsuc_0 eiunsuc_1 iunxsn uneq2i 3eqtri $.
+	$v x A B C  $.
+	$d A x  $.
+	$d B  $.
+	$d C x  $.
+	f0_iunsuc $f set x $.
+	f1_iunsuc $f class A $.
+	f2_iunsuc $f class B $.
+	f3_iunsuc $f class C $.
+	e0_iunsuc $e |- A e. _V $.
+	e1_iunsuc $e |- ( x = A -> B = C ) $.
+	p_iunsuc $p |- U_ x e. suc A B = ( U_ x e. A B u. C ) $= f1_iunsuc a_df-suc f0_iunsuc f1_iunsuc a_csuc f1_iunsuc f1_iunsuc a_csn a_cun f2_iunsuc p_iuneq1 f1_iunsuc a_csuc f1_iunsuc f1_iunsuc a_csn a_cun a_wceq f0_iunsuc f1_iunsuc a_csuc f2_iunsuc a_ciun f0_iunsuc f1_iunsuc f1_iunsuc a_csn a_cun f2_iunsuc a_ciun a_wceq a_ax-mp f0_iunsuc f1_iunsuc f1_iunsuc a_csn f2_iunsuc p_iunxun e0_iunsuc e1_iunsuc f0_iunsuc f1_iunsuc f2_iunsuc f3_iunsuc p_iunxsn f0_iunsuc f1_iunsuc a_csn f2_iunsuc a_ciun f3_iunsuc f0_iunsuc f1_iunsuc f2_iunsuc a_ciun p_uneq2i f0_iunsuc f1_iunsuc a_csuc f2_iunsuc a_ciun f0_iunsuc f1_iunsuc f1_iunsuc a_csn a_cun f2_iunsuc a_ciun f0_iunsuc f1_iunsuc f2_iunsuc a_ciun f0_iunsuc f1_iunsuc a_csn f2_iunsuc a_ciun a_cun f0_iunsuc f1_iunsuc f2_iunsuc a_ciun f3_iunsuc a_cun p_3eqtri $.
 $}
-$( The successor of a transtive class is transitive.  (Contributed by Alan
+
+$(The successor of a transtive class is transitive.  (Contributed by Alan
        Sare, 11-Apr-2009.) $)
+
 ${
-	$v A $.
-	$v y $.
-	$v z $.
-	$d z y A $.
-	isuctr_0 $f set y $.
-	isuctr_1 $f set z $.
-	fsuctr_0 $f class A $.
-	suctr $p |- ( Tr A -> Tr suc A ) $= fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_0 wal isuctr_1 wal fsuctr_0 csuc wtr fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_1 isuctr_0 fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 wcel isuctr_0 sup_set_class fsuctr_0 wceq wo isuctr_1 sup_set_class fsuctr_0 csuc wcel isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 csuc wcel isuctr_0 sup_set_class fsuctr_0 wcel isuctr_0 sup_set_class fsuctr_0 wceq wo isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel simpr isuctr_0 sup_set_class fsuctr_0 isuctr_0 vex elsuc sylib fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 wceq isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_0 sup_set_class fsuctr_0 wcel isuctr_0 sup_set_class fsuctr_0 wceq wo isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 wceq isuctr_1 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 csuc wcel isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 wceq isuctr_1 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel simpl isuctr_0 sup_set_class fsuctr_0 isuctr_1 sup_set_class eleq2 syl5ibcom isuctr_1 sup_set_class fsuctr_0 elelsuc syl6 fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_0 sup_set_class fsuctr_0 wceq isuctr_1 sup_set_class fsuctr_0 csuc wcel wi isuctr_0 sup_set_class fsuctr_0 wcel isuctr_0 sup_set_class fsuctr_0 wceq wo isuctr_1 sup_set_class fsuctr_0 csuc wcel wi wi fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 csuc wcel wa isuctr_0 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 csuc wcel fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 wcel wi isuctr_0 sup_set_class fsuctr_0 csuc wcel fsuctr_0 wtr isuctr_1 sup_set_class isuctr_0 sup_set_class wcel isuctr_0 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 wcel fsuctr_0 isuctr_1 sup_set_class isuctr_0 sup_set_class trel exp3a adantrd isuctr_1 sup_set_class fsuctr_0 elelsuc syl8 isuctr_0 sup_set_class fsuctr_0 wcel isuctr_1 sup_set_class fsuctr_0 csuc wcel isuctr_0 sup_set_class fsuctr_0 wceq jao syl6 mpdi mpdi alrimivv isuctr_1 isuctr_0 fsuctr_0 csuc dftr2 sylibr $.
+	$v A  $.
+	$d z y A  $.
+	f0_suctr $f class A $.
+	i0_suctr $f set y $.
+	i1_suctr $f set z $.
+	p_suctr $p |- ( Tr A -> Tr suc A ) $= i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_simpr i0_suctr p_vex i0_suctr a_sup_set_class f0_suctr p_elsuc i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel i0_suctr a_sup_set_class f0_suctr a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq a_wo p_sylib i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_simpl i0_suctr a_sup_set_class f0_suctr i1_suctr a_sup_set_class p_eleq2 i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq i1_suctr a_sup_set_class f0_suctr a_wcel p_syl5ibcom i1_suctr a_sup_set_class f0_suctr p_elelsuc i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_wceq i1_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_syl6 f0_suctr i1_suctr a_sup_set_class i0_suctr a_sup_set_class p_trel f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_wcel p_exp3a f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_wcel a_wi i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_adantrd i1_suctr a_sup_set_class f0_suctr p_elelsuc f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_syl8 i0_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq p_jao f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_wcel i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi i0_suctr a_sup_set_class f0_suctr a_wceq i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi i0_suctr a_sup_set_class f0_suctr a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq a_wo i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi a_wi p_syl6 f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_wceq i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi i0_suctr a_sup_set_class f0_suctr a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq a_wo i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi p_mpdi f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i0_suctr a_sup_set_class f0_suctr a_wcel i0_suctr a_sup_set_class f0_suctr a_wceq a_wo i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel p_mpdi f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi i1_suctr i0_suctr p_alrimivv i1_suctr i0_suctr f0_suctr a_csuc p_dftr2 f0_suctr a_wtr i1_suctr a_sup_set_class i0_suctr a_sup_set_class a_wcel i0_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wa i1_suctr a_sup_set_class f0_suctr a_csuc a_wcel a_wi i0_suctr a_wal i1_suctr a_wal f0_suctr a_csuc a_wtr p_sylibr $.
 $}
-$( A set whose successor belongs to a transitive class also belongs.
+
+$(A set whose successor belongs to a transitive class also belongs.
      (Contributed by NM, 5-Sep-2003.)  (Proof shortened by Andrew Salmon,
      12-Aug-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	ftrsuc_0 $f class A $.
-	ftrsuc_1 $f class B $.
-	trsuc $p |- ( ( Tr A /\ suc B e. A ) -> B e. A ) $= ftrsuc_0 wtr ftrsuc_1 csuc ftrsuc_0 wcel ftrsuc_1 ftrsuc_0 wcel ftrsuc_1 csuc ftrsuc_0 wcel ftrsuc_1 ftrsuc_1 csuc wcel ftrsuc_1 csuc ftrsuc_0 wcel wa ftrsuc_0 wtr ftrsuc_1 ftrsuc_0 wcel ftrsuc_1 csuc ftrsuc_0 wcel ftrsuc_1 ftrsuc_1 csuc wcel ftrsuc_1 csuc ftrsuc_0 wcel ftrsuc_1 cvv wcel ftrsuc_1 ftrsuc_1 csuc wcel ftrsuc_1 ftrsuc_1 csuc wss ftrsuc_1 csuc ftrsuc_0 wcel ftrsuc_1 cvv wcel ftrsuc_1 sssucid ftrsuc_1 ftrsuc_1 csuc ftrsuc_0 ssexg mpan ftrsuc_1 cvv sucidg syl ancri ftrsuc_0 ftrsuc_1 ftrsuc_1 csuc trel syl5 imp $.
+	$v A B  $.
+	f0_trsuc $f class A $.
+	f1_trsuc $f class B $.
+	p_trsuc $p |- ( ( Tr A /\ suc B e. A ) -> B e. A ) $= f1_trsuc p_sssucid f1_trsuc f1_trsuc a_csuc f0_trsuc p_ssexg f1_trsuc f1_trsuc a_csuc a_wss f1_trsuc a_csuc f0_trsuc a_wcel f1_trsuc a_cvv a_wcel p_mpan f1_trsuc a_cvv p_sucidg f1_trsuc a_csuc f0_trsuc a_wcel f1_trsuc a_cvv a_wcel f1_trsuc f1_trsuc a_csuc a_wcel p_syl f1_trsuc a_csuc f0_trsuc a_wcel f1_trsuc f1_trsuc a_csuc a_wcel p_ancri f0_trsuc f1_trsuc f1_trsuc a_csuc p_trel f1_trsuc a_csuc f0_trsuc a_wcel f1_trsuc f1_trsuc a_csuc a_wcel f1_trsuc a_csuc f0_trsuc a_wcel a_wa f0_trsuc a_wtr f1_trsuc f0_trsuc a_wcel p_syl5 f0_trsuc a_wtr f1_trsuc a_csuc f0_trsuc a_wcel f1_trsuc f0_trsuc a_wcel p_imp $.
 $}
-$( Obsolete proof of ~ suctr as of 5-Apr-2016.  The successor of a
+
+$(Obsolete proof of ~ suctr as of 5-Apr-2016.  The successor of a
        transitive set is transitive.  (Contributed by Scott Fenton,
        21-Feb-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	itrsuc2OLD_0 $f set x $.
-	itrsuc2OLD_1 $f set y $.
-	ftrsuc2OLD_0 $f class A $.
-	trsuc2OLD $p |- ( Tr A -> Tr suc A ) $= ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo wi itrsuc2OLD_1 wal itrsuc2OLD_0 wal ftrsuc2OLD_0 csuc wtr ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo wi itrsuc2OLD_0 itrsuc2OLD_1 itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wa wo ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel andi ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq wa wo itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wa wo itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq wa wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel wo ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 itrsuc2OLD_0 sup_set_class eleq2 biimpac orim2i ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq wo itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq wo ftrsuc2OLD_0 itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class trel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq orc syl6 itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq wo wi ftrsuc2OLD_0 wtr itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq orc a1i jaod syl5 itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel wa itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wceq itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 ftrsuc2OLD_0 elsn anbi2i orbi2i itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wceq itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 ftrsuc2OLD_0 elsn orbi2i 3imtr4g syl5bi alrimivv ftrsuc2OLD_0 csuc wtr ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wtr itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel wi itrsuc2OLD_1 wal itrsuc2OLD_0 wal itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo wi itrsuc2OLD_1 wal itrsuc2OLD_0 wal ftrsuc2OLD_0 csuc ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wceq ftrsuc2OLD_0 csuc wtr ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wtr wb ftrsuc2OLD_0 df-suc ftrsuc2OLD_0 csuc ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun treq ax-mp itrsuc2OLD_0 itrsuc2OLD_1 ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun dftr2 itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel wi itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo wi itrsuc2OLD_0 itrsuc2OLD_1 itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel wa itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo wa itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 csn wcel wo itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn cun wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 csn wcel wo itrsuc2OLD_0 sup_set_class itrsuc2OLD_1 sup_set_class wcel itrsuc2OLD_1 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn elun anbi2i itrsuc2OLD_0 sup_set_class ftrsuc2OLD_0 ftrsuc2OLD_0 csn elun imbi12i 2albii 3bitri sylibr $.
+	$v A  $.
+	$d x y A  $.
+	f0_trsuc2OLD $f class A $.
+	i0_trsuc2OLD $f set x $.
+	i1_trsuc2OLD $f set y $.
+	p_trsuc2OLD $p |- ( Tr A -> Tr suc A ) $= i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel p_andi i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD i0_trsuc2OLD a_sup_set_class p_eleq2 i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel p_biimpac i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa p_orim2i f0_trsuc2OLD i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class p_trel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq p_orc f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wo p_syl6 i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq p_orc i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wo a_wi f0_trsuc2OLD a_wtr p_a1i f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wo i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel p_jaod i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wa a_wo i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wo f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wo p_syl5 i1_trsuc2OLD f0_trsuc2OLD p_elsn i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel p_anbi2i i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa p_orbi2i i0_trsuc2OLD f0_trsuc2OLD p_elsn i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel p_orbi2i f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wa a_wo i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wceq a_wo i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wa a_wo i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo p_3imtr4g i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wa a_wo f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo p_syl5bi f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wi i0_trsuc2OLD i1_trsuc2OLD p_alrimivv f0_trsuc2OLD a_df-suc f0_trsuc2OLD a_csuc f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun p_treq f0_trsuc2OLD a_csuc f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wceq f0_trsuc2OLD a_csuc a_wtr f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wtr a_wb a_ax-mp i0_trsuc2OLD i1_trsuc2OLD f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun p_dftr2 i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn p_elun i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel p_anbi2i i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn p_elun i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel a_wa i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo p_imbi12i i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel a_wi i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wi i0_trsuc2OLD i1_trsuc2OLD p_2albii f0_trsuc2OLD a_csuc a_wtr f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD f0_trsuc2OLD a_csn a_cun a_wcel a_wi i1_trsuc2OLD a_wal i0_trsuc2OLD a_wal i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wi i1_trsuc2OLD a_wal i0_trsuc2OLD a_wal p_3bitri f0_trsuc2OLD a_wtr i0_trsuc2OLD a_sup_set_class i1_trsuc2OLD a_sup_set_class a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i1_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wa i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_wcel i0_trsuc2OLD a_sup_set_class f0_trsuc2OLD a_csn a_wcel a_wo a_wi i1_trsuc2OLD a_wal i0_trsuc2OLD a_wal f0_trsuc2OLD a_csuc a_wtr p_sylibr $.
 $}
-$( A member of the successor of a transitive class is a subclass of it.
+
+$(A member of the successor of a transitive class is a subclass of it.
      (Contributed by NM, 4-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	ftrsucss_0 $f class A $.
-	ftrsucss_1 $f class B $.
-	trsucss $p |- ( Tr A -> ( B e. suc A -> B C_ A ) ) $= ftrsucss_1 ftrsucss_0 csuc wcel ftrsucss_1 ftrsucss_0 wcel ftrsucss_1 ftrsucss_0 wceq wo ftrsucss_0 wtr ftrsucss_1 ftrsucss_0 wss ftrsucss_1 ftrsucss_0 elsuci ftrsucss_0 wtr ftrsucss_1 ftrsucss_0 wcel ftrsucss_1 ftrsucss_0 wss ftrsucss_1 ftrsucss_0 wceq ftrsucss_0 ftrsucss_1 trss ftrsucss_1 ftrsucss_0 wceq ftrsucss_1 ftrsucss_0 wss wi ftrsucss_0 wtr ftrsucss_1 ftrsucss_0 eqimss a1i jaod syl5 $.
+	$v A B  $.
+	f0_trsucss $f class A $.
+	f1_trsucss $f class B $.
+	p_trsucss $p |- ( Tr A -> ( B e. suc A -> B C_ A ) ) $= f1_trsucss f0_trsucss p_elsuci f0_trsucss f1_trsucss p_trss f1_trsucss f0_trsucss p_eqimss f1_trsucss f0_trsucss a_wceq f1_trsucss f0_trsucss a_wss a_wi f0_trsucss a_wtr p_a1i f0_trsucss a_wtr f1_trsucss f0_trsucss a_wcel f1_trsucss f0_trsucss a_wss f1_trsucss f0_trsucss a_wceq p_jaod f1_trsucss f0_trsucss a_csuc a_wcel f1_trsucss f0_trsucss a_wcel f1_trsucss f0_trsucss a_wceq a_wo f0_trsucss a_wtr f1_trsucss f0_trsucss a_wss p_syl5 $.
 $}
-$( A subset of an ordinal belongs to its successor.  (Contributed by NM,
+
+$(A subset of an ordinal belongs to its successor.  (Contributed by NM,
      28-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordsssuc_0 $f class A $.
-	fordsssuc_1 $f class B $.
-	ordsssuc $p |- ( ( A e. On /\ Ord B ) -> ( A C_ B <-> A e. suc B ) ) $= fordsssuc_0 con0 wcel fordsssuc_1 word wa fordsssuc_0 fordsssuc_1 wss fordsssuc_0 fordsssuc_1 wcel fordsssuc_0 fordsssuc_1 wceq wo fordsssuc_0 fordsssuc_1 csuc wcel fordsssuc_0 con0 wcel fordsssuc_0 word fordsssuc_1 word fordsssuc_0 fordsssuc_1 wss fordsssuc_0 fordsssuc_1 wcel fordsssuc_0 fordsssuc_1 wceq wo wb fordsssuc_0 eloni fordsssuc_0 fordsssuc_1 ordsseleq sylan fordsssuc_0 con0 wcel fordsssuc_0 fordsssuc_1 csuc wcel fordsssuc_0 fordsssuc_1 wcel fordsssuc_0 fordsssuc_1 wceq wo wb fordsssuc_1 word fordsssuc_0 fordsssuc_1 con0 elsucg adantr bitr4d $.
+	$v A B  $.
+	f0_ordsssuc $f class A $.
+	f1_ordsssuc $f class B $.
+	p_ordsssuc $p |- ( ( A e. On /\ Ord B ) -> ( A C_ B <-> A e. suc B ) ) $= f0_ordsssuc p_eloni f0_ordsssuc f1_ordsssuc p_ordsseleq f0_ordsssuc a_con0 a_wcel f0_ordsssuc a_word f1_ordsssuc a_word f0_ordsssuc f1_ordsssuc a_wss f0_ordsssuc f1_ordsssuc a_wcel f0_ordsssuc f1_ordsssuc a_wceq a_wo a_wb p_sylan f0_ordsssuc f1_ordsssuc a_con0 p_elsucg f0_ordsssuc a_con0 a_wcel f0_ordsssuc f1_ordsssuc a_csuc a_wcel f0_ordsssuc f1_ordsssuc a_wcel f0_ordsssuc f1_ordsssuc a_wceq a_wo a_wb f1_ordsssuc a_word p_adantr f0_ordsssuc a_con0 a_wcel f1_ordsssuc a_word a_wa f0_ordsssuc f1_ordsssuc a_wss f0_ordsssuc f1_ordsssuc a_wcel f0_ordsssuc f1_ordsssuc a_wceq a_wo f0_ordsssuc f1_ordsssuc a_csuc a_wcel p_bitr4d $.
 $}
-$( A subset of an ordinal number belongs to its successor.  (Contributed by
+
+$(A subset of an ordinal number belongs to its successor.  (Contributed by
      NM, 15-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonsssuc_0 $f class A $.
-	fonsssuc_1 $f class B $.
-	onsssuc $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $= fonsssuc_1 con0 wcel fonsssuc_0 con0 wcel fonsssuc_1 word fonsssuc_0 fonsssuc_1 wss fonsssuc_0 fonsssuc_1 csuc wcel wb fonsssuc_1 eloni fonsssuc_0 fonsssuc_1 ordsssuc sylan2 $.
+	$v A B  $.
+	f0_onsssuc $f class A $.
+	f1_onsssuc $f class B $.
+	p_onsssuc $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $= f1_onsssuc p_eloni f0_onsssuc f1_onsssuc p_ordsssuc f1_onsssuc a_con0 a_wcel f0_onsssuc a_con0 a_wcel f1_onsssuc a_word f0_onsssuc f1_onsssuc a_wss f0_onsssuc f1_onsssuc a_csuc a_wcel a_wb p_sylan2 $.
 $}
-$( An ordinal subset of an ordinal number belongs to its successor.
+
+$(An ordinal subset of an ordinal number belongs to its successor.
      (Contributed by NM, 1-Feb-2005.)  (Proof shortened by Andrew Salmon,
      12-Aug-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordsssuc2_0 $f class A $.
-	fordsssuc2_1 $f class B $.
-	ordsssuc2 $p |- ( ( Ord A /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $= fordsssuc2_0 cvv wcel fordsssuc2_0 word fordsssuc2_1 con0 wcel wa fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_0 fordsssuc2_1 csuc wcel wb wi fordsssuc2_0 cvv wcel fordsssuc2_0 word fordsssuc2_1 con0 wcel wa fordsssuc2_0 con0 wcel fordsssuc2_1 con0 wcel wa fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_0 fordsssuc2_1 csuc wcel wb fordsssuc2_0 cvv wcel fordsssuc2_0 word fordsssuc2_0 con0 wcel fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel fordsssuc2_0 con0 wcel fordsssuc2_0 word fordsssuc2_0 cvv elong biimprd anim1d fordsssuc2_0 fordsssuc2_1 onsssuc syl6 fordsssuc2_0 cvv wcel wn fordsssuc2_1 con0 wcel fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_0 fordsssuc2_1 csuc wcel wb fordsssuc2_0 word fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel wn fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_0 fordsssuc2_1 csuc wcel wb fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel wn wa fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel wi wn fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_0 fordsssuc2_1 csuc wcel wb fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel annim fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel wi fordsssuc2_0 fordsssuc2_1 csuc wcel fordsssuc2_0 fordsssuc2_1 wss fordsssuc2_1 con0 wcel fordsssuc2_0 cvv wcel fordsssuc2_0 fordsssuc2_1 con0 ssexg ex fordsssuc2_0 fordsssuc2_1 csuc wcel fordsssuc2_0 cvv wcel fordsssuc2_1 con0 wcel fordsssuc2_0 fordsssuc2_1 csuc elex a1d pm5.21ni sylbi expcom adantld pm2.61i $.
+	$v A B  $.
+	f0_ordsssuc2 $f class A $.
+	f1_ordsssuc2 $f class B $.
+	p_ordsssuc2 $p |- ( ( Ord A /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $= f0_ordsssuc2 a_cvv p_elong f0_ordsssuc2 a_cvv a_wcel f0_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_word p_biimprd f0_ordsssuc2 a_cvv a_wcel f0_ordsssuc2 a_word f0_ordsssuc2 a_con0 a_wcel f1_ordsssuc2 a_con0 a_wcel p_anim1d f0_ordsssuc2 f1_ordsssuc2 p_onsssuc f0_ordsssuc2 a_cvv a_wcel f0_ordsssuc2 a_word f1_ordsssuc2 a_con0 a_wcel a_wa f0_ordsssuc2 a_con0 a_wcel f1_ordsssuc2 a_con0 a_wcel a_wa f0_ordsssuc2 f1_ordsssuc2 a_wss f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel a_wb p_syl6 f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel p_annim f0_ordsssuc2 f1_ordsssuc2 a_con0 p_ssexg f0_ordsssuc2 f1_ordsssuc2 a_wss f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel p_ex f0_ordsssuc2 f1_ordsssuc2 a_csuc p_elex f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel f0_ordsssuc2 a_cvv a_wcel f1_ordsssuc2 a_con0 a_wcel p_a1d f0_ordsssuc2 f1_ordsssuc2 a_wss f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel a_wi f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel p_pm5.21ni f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel a_wn a_wa f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel a_wi a_wn f0_ordsssuc2 f1_ordsssuc2 a_wss f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel a_wb p_sylbi f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 a_cvv a_wcel a_wn f0_ordsssuc2 f1_ordsssuc2 a_wss f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel a_wb p_expcom f0_ordsssuc2 a_cvv a_wcel a_wn f1_ordsssuc2 a_con0 a_wcel f0_ordsssuc2 f1_ordsssuc2 a_wss f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel a_wb f0_ordsssuc2 a_word p_adantld f0_ordsssuc2 a_cvv a_wcel f0_ordsssuc2 a_word f1_ordsssuc2 a_con0 a_wcel a_wa f0_ordsssuc2 f1_ordsssuc2 a_wss f0_ordsssuc2 f1_ordsssuc2 a_csuc a_wcel a_wb a_wi p_pm2.61i $.
 $}
-$( When its successor is subtracted from a class of ordinal numbers, an
+
+$(When its successor is subtracted from a class of ordinal numbers, an
        ordinal number is less than the minimum of the resulting subclass.
        (Contributed by NM, 1-Dec-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	ionmindif_0 $f set x $.
-	fonmindif_0 $f class A $.
-	fonmindif_1 $f class B $.
-	onmindif $p |- ( ( A C_ On /\ B e. On ) -> B e. |^| ( A \ suc B ) ) $= fonmindif_0 con0 wss fonmindif_1 con0 wcel wa fonmindif_1 fonmindif_0 fonmindif_1 csuc cdif cint wcel fonmindif_1 ionmindif_0 sup_set_class wcel ionmindif_0 fonmindif_0 fonmindif_1 csuc cdif wral fonmindif_0 con0 wss fonmindif_1 con0 wcel wa fonmindif_1 ionmindif_0 sup_set_class wcel ionmindif_0 fonmindif_0 fonmindif_1 csuc cdif ionmindif_0 sup_set_class fonmindif_0 fonmindif_1 csuc cdif wcel ionmindif_0 sup_set_class fonmindif_0 wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn wa fonmindif_0 con0 wss fonmindif_1 con0 wcel wa fonmindif_1 ionmindif_0 sup_set_class wcel ionmindif_0 sup_set_class fonmindif_0 fonmindif_1 csuc eldif fonmindif_0 con0 wss fonmindif_1 con0 wcel ionmindif_0 sup_set_class fonmindif_0 wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn fonmindif_1 ionmindif_0 sup_set_class wcel fonmindif_0 con0 wss ionmindif_0 sup_set_class fonmindif_0 wcel fonmindif_1 con0 wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn fonmindif_1 ionmindif_0 sup_set_class wcel wi fonmindif_0 con0 wss ionmindif_0 sup_set_class fonmindif_0 wcel fonmindif_1 con0 wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn fonmindif_1 ionmindif_0 sup_set_class wcel wi fonmindif_0 con0 wss ionmindif_0 sup_set_class fonmindif_0 wcel wa fonmindif_1 con0 wcel wa ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn fonmindif_1 ionmindif_0 sup_set_class wcel fonmindif_0 con0 wss ionmindif_0 sup_set_class fonmindif_0 wcel wa ionmindif_0 sup_set_class con0 wcel fonmindif_1 con0 wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel wn fonmindif_1 ionmindif_0 sup_set_class wcel wb fonmindif_0 con0 ionmindif_0 sup_set_class ssel2 ionmindif_0 sup_set_class con0 wcel fonmindif_1 con0 wcel wa fonmindif_1 ionmindif_0 sup_set_class wcel ionmindif_0 sup_set_class fonmindif_1 csuc wcel ionmindif_0 sup_set_class con0 wcel fonmindif_1 con0 wcel wa ionmindif_0 sup_set_class fonmindif_1 wss fonmindif_1 ionmindif_0 sup_set_class wcel wn ionmindif_0 sup_set_class fonmindif_1 csuc wcel ionmindif_0 sup_set_class fonmindif_1 ontri1 ionmindif_0 sup_set_class fonmindif_1 onsssuc bitr3d con1bid sylan biimpd exp31 com23 imp4b syl5bi ralrimiv fonmindif_1 con0 wcel fonmindif_1 fonmindif_0 fonmindif_1 csuc cdif cint wcel fonmindif_1 ionmindif_0 sup_set_class wcel ionmindif_0 fonmindif_0 fonmindif_1 csuc cdif wral wb fonmindif_0 con0 wss ionmindif_0 fonmindif_1 fonmindif_0 fonmindif_1 csuc cdif con0 elintg adantl mpbird $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_onmindif $f class A $.
+	f1_onmindif $f class B $.
+	i0_onmindif $f set x $.
+	p_onmindif $p |- ( ( A C_ On /\ B e. On ) -> B e. |^| ( A \ suc B ) ) $= i0_onmindif a_sup_set_class f0_onmindif f1_onmindif a_csuc p_eldif f0_onmindif a_con0 i0_onmindif a_sup_set_class p_ssel2 i0_onmindif a_sup_set_class f1_onmindif p_ontri1 i0_onmindif a_sup_set_class f1_onmindif p_onsssuc i0_onmindif a_sup_set_class a_con0 a_wcel f1_onmindif a_con0 a_wcel a_wa i0_onmindif a_sup_set_class f1_onmindif a_wss f1_onmindif i0_onmindif a_sup_set_class a_wcel a_wn i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel p_bitr3d i0_onmindif a_sup_set_class a_con0 a_wcel f1_onmindif a_con0 a_wcel a_wa f1_onmindif i0_onmindif a_sup_set_class a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel p_con1bid f0_onmindif a_con0 a_wss i0_onmindif a_sup_set_class f0_onmindif a_wcel a_wa i0_onmindif a_sup_set_class a_con0 a_wcel f1_onmindif a_con0 a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn f1_onmindif i0_onmindif a_sup_set_class a_wcel a_wb p_sylan f0_onmindif a_con0 a_wss i0_onmindif a_sup_set_class f0_onmindif a_wcel a_wa f1_onmindif a_con0 a_wcel a_wa i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn f1_onmindif i0_onmindif a_sup_set_class a_wcel p_biimpd f0_onmindif a_con0 a_wss i0_onmindif a_sup_set_class f0_onmindif a_wcel f1_onmindif a_con0 a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn f1_onmindif i0_onmindif a_sup_set_class a_wcel a_wi p_exp31 f0_onmindif a_con0 a_wss i0_onmindif a_sup_set_class f0_onmindif a_wcel f1_onmindif a_con0 a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn f1_onmindif i0_onmindif a_sup_set_class a_wcel a_wi p_com23 f0_onmindif a_con0 a_wss f1_onmindif a_con0 a_wcel i0_onmindif a_sup_set_class f0_onmindif a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn f1_onmindif i0_onmindif a_sup_set_class a_wcel p_imp4b i0_onmindif a_sup_set_class f0_onmindif f1_onmindif a_csuc a_cdif a_wcel i0_onmindif a_sup_set_class f0_onmindif a_wcel i0_onmindif a_sup_set_class f1_onmindif a_csuc a_wcel a_wn a_wa f0_onmindif a_con0 a_wss f1_onmindif a_con0 a_wcel a_wa f1_onmindif i0_onmindif a_sup_set_class a_wcel p_syl5bi f0_onmindif a_con0 a_wss f1_onmindif a_con0 a_wcel a_wa f1_onmindif i0_onmindif a_sup_set_class a_wcel i0_onmindif f0_onmindif f1_onmindif a_csuc a_cdif p_ralrimiv i0_onmindif f1_onmindif f0_onmindif f1_onmindif a_csuc a_cdif a_con0 p_elintg f1_onmindif a_con0 a_wcel f1_onmindif f0_onmindif f1_onmindif a_csuc a_cdif a_cint a_wcel f1_onmindif i0_onmindif a_sup_set_class a_wcel i0_onmindif f0_onmindif f1_onmindif a_csuc a_cdif a_wral a_wb f0_onmindif a_con0 a_wss p_adantl f0_onmindif a_con0 a_wss f1_onmindif a_con0 a_wcel a_wa f1_onmindif f0_onmindif f1_onmindif a_csuc a_cdif a_cint a_wcel f1_onmindif i0_onmindif a_sup_set_class a_wcel i0_onmindif f0_onmindif f1_onmindif a_csuc a_cdif a_wral p_mpbird $.
 $}
-$( There is no set between an ordinal class and its successor.  Generalized
+
+$(There is no set between an ordinal class and its successor.  Generalized
      Proposition 7.25 of [TakeutiZaring] p. 41.  (Contributed by NM,
      21-Jun-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordnbtwn_0 $f class A $.
-	fordnbtwn_1 $f class B $.
-	ordnbtwn $p |- ( Ord A -> -. ( A e. B /\ B e. suc A ) ) $= fordnbtwn_0 word fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_0 wcel wo fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 csuc wcel wa fordnbtwn_0 word fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa wn fordnbtwn_0 fordnbtwn_0 wcel wn fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_0 wcel wo wn fordnbtwn_0 fordnbtwn_1 ordn2lp fordnbtwn_0 ordirr fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_0 wcel ioran sylanbrc fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 csuc wcel wa fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wceq wa wo fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_0 wcel wo fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 csuc wcel wa fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel fordnbtwn_1 fordnbtwn_0 wceq wo wa fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wceq wa wo fordnbtwn_1 fordnbtwn_0 csuc wcel fordnbtwn_1 fordnbtwn_0 wcel fordnbtwn_1 fordnbtwn_0 wceq wo fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 elsuci anim2i fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel fordnbtwn_1 fordnbtwn_0 wceq andi sylib fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wceq wa fordnbtwn_0 fordnbtwn_0 wcel fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_1 fordnbtwn_0 wcel wa fordnbtwn_1 fordnbtwn_0 wceq fordnbtwn_0 fordnbtwn_1 wcel fordnbtwn_0 fordnbtwn_0 wcel fordnbtwn_1 fordnbtwn_0 fordnbtwn_0 eleq2 biimpac orim2i syl nsyl $.
+	$v A B  $.
+	f0_ordnbtwn $f class A $.
+	f1_ordnbtwn $f class B $.
+	p_ordnbtwn $p |- ( Ord A -> -. ( A e. B /\ B e. suc A ) ) $= f0_ordnbtwn f1_ordnbtwn p_ordn2lp f0_ordnbtwn p_ordirr f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f0_ordnbtwn a_wcel p_ioran f0_ordnbtwn a_word f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa a_wn f0_ordnbtwn f0_ordnbtwn a_wcel a_wn f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f0_ordnbtwn a_wcel a_wo a_wn p_sylanbrc f1_ordnbtwn f0_ordnbtwn p_elsuci f1_ordnbtwn f0_ordnbtwn a_csuc a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq a_wo f0_ordnbtwn f1_ordnbtwn a_wcel p_anim2i f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq p_andi f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_csuc a_wcel a_wa f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq a_wo a_wa f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq a_wa a_wo p_sylib f1_ordnbtwn f0_ordnbtwn f0_ordnbtwn p_eleq2 f1_ordnbtwn f0_ordnbtwn a_wceq f0_ordnbtwn f1_ordnbtwn a_wcel f0_ordnbtwn f0_ordnbtwn a_wcel p_biimpac f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq a_wa f0_ordnbtwn f0_ordnbtwn a_wcel f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa p_orim2i f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_csuc a_wcel a_wa f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wceq a_wa a_wo f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f0_ordnbtwn a_wcel a_wo p_syl f0_ordnbtwn a_word f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_wcel a_wa f0_ordnbtwn f0_ordnbtwn a_wcel a_wo f0_ordnbtwn f1_ordnbtwn a_wcel f1_ordnbtwn f0_ordnbtwn a_csuc a_wcel a_wa p_nsyl $.
 $}
-$( There is no set between an ordinal number and its successor.  Proposition
+
+$(There is no set between an ordinal number and its successor.  Proposition
      7.25 of [TakeutiZaring] p. 41.  (Contributed by NM, 9-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonnbtwn_0 $f class A $.
-	fonnbtwn_1 $f class B $.
-	onnbtwn $p |- ( A e. On -> -. ( A e. B /\ B e. suc A ) ) $= fonnbtwn_0 con0 wcel fonnbtwn_0 word fonnbtwn_0 fonnbtwn_1 wcel fonnbtwn_1 fonnbtwn_0 csuc wcel wa wn fonnbtwn_0 eloni fonnbtwn_0 fonnbtwn_1 ordnbtwn syl $.
+	$v A B  $.
+	f0_onnbtwn $f class A $.
+	f1_onnbtwn $f class B $.
+	p_onnbtwn $p |- ( A e. On -> -. ( A e. B /\ B e. suc A ) ) $= f0_onnbtwn p_eloni f0_onnbtwn f1_onnbtwn p_ordnbtwn f0_onnbtwn a_con0 a_wcel f0_onnbtwn a_word f0_onnbtwn f1_onnbtwn a_wcel f1_onnbtwn f0_onnbtwn a_csuc a_wcel a_wa a_wn p_syl $.
 $}
-$( A set whose successor is a subset of another class is a member of that
+
+$(A set whose successor is a subset of another class is a member of that
      class.  (Contributed by NM, 16-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v V $.
-	fsucssel_0 $f class A $.
-	fsucssel_1 $f class B $.
-	fsucssel_2 $f class V $.
-	sucssel $p |- ( A e. V -> ( suc A C_ B -> A e. B ) ) $= fsucssel_0 fsucssel_2 wcel fsucssel_0 fsucssel_0 csuc wcel fsucssel_0 csuc fsucssel_1 wss fsucssel_0 fsucssel_1 wcel fsucssel_0 fsucssel_2 sucidg fsucssel_0 csuc fsucssel_1 fsucssel_0 ssel syl5com $.
+	$v A B V  $.
+	f0_sucssel $f class A $.
+	f1_sucssel $f class B $.
+	f2_sucssel $f class V $.
+	p_sucssel $p |- ( A e. V -> ( suc A C_ B -> A e. B ) ) $= f0_sucssel f2_sucssel p_sucidg f0_sucssel a_csuc f1_sucssel f0_sucssel p_ssel f0_sucssel f2_sucssel a_wcel f0_sucssel f0_sucssel a_csuc a_wcel f0_sucssel a_csuc f1_sucssel a_wss f0_sucssel f1_sucssel a_wcel p_syl5com $.
 $}
-$( Ordinal derived from its successor.  (Contributed by NM, 20-May-1998.) $)
+
+$(Ordinal derived from its successor.  (Contributed by NM, 20-May-1998.) $)
+
 ${
-	$v A $.
-	forddif_0 $f class A $.
-	orddif $p |- ( Ord A -> A = ( suc A \ { A } ) ) $= forddif_0 word forddif_0 forddif_0 csn cin c0 wceq forddif_0 forddif_0 csuc forddif_0 csn cdif wceq forddif_0 orddisj forddif_0 forddif_0 csn cin c0 wceq forddif_0 forddif_0 forddif_0 csn cdif wceq forddif_0 forddif_0 csuc forddif_0 csn cdif wceq forddif_0 forddif_0 csn disj3 forddif_0 csuc forddif_0 csn cdif forddif_0 forddif_0 csn cdif forddif_0 forddif_0 csuc forddif_0 csn cdif forddif_0 forddif_0 csn cun forddif_0 csn cdif forddif_0 forddif_0 csn cdif forddif_0 csuc forddif_0 forddif_0 csn cun forddif_0 csn forddif_0 df-suc difeq1i forddif_0 forddif_0 csn difun2 eqtri eqeq2i bitr4i sylib $.
+	$v A  $.
+	f0_orddif $f class A $.
+	p_orddif $p |- ( Ord A -> A = ( suc A \ { A } ) ) $= f0_orddif p_orddisj f0_orddif f0_orddif a_csn p_disj3 f0_orddif a_df-suc f0_orddif a_csuc f0_orddif f0_orddif a_csn a_cun f0_orddif a_csn p_difeq1i f0_orddif f0_orddif a_csn p_difun2 f0_orddif a_csuc f0_orddif a_csn a_cdif f0_orddif f0_orddif a_csn a_cun f0_orddif a_csn a_cdif f0_orddif f0_orddif a_csn a_cdif p_eqtri f0_orddif a_csuc f0_orddif a_csn a_cdif f0_orddif f0_orddif a_csn a_cdif f0_orddif p_eqeq2i f0_orddif f0_orddif a_csn a_cin a_c0 a_wceq f0_orddif f0_orddif f0_orddif a_csn a_cdif a_wceq f0_orddif f0_orddif a_csuc f0_orddif a_csn a_cdif a_wceq p_bitr4i f0_orddif a_word f0_orddif f0_orddif a_csn a_cin a_c0 a_wceq f0_orddif f0_orddif a_csuc f0_orddif a_csn a_cdif a_wceq p_sylib $.
 $}
-$( An ordinal class includes its union.  (Contributed by NM, 13-Sep-2003.) $)
+
+$(An ordinal class includes its union.  (Contributed by NM, 13-Sep-2003.) $)
+
 ${
-	$v A $.
-	forduniss_0 $f class A $.
-	orduniss $p |- ( Ord A -> U. A C_ A ) $= forduniss_0 word forduniss_0 wtr forduniss_0 cuni forduniss_0 wss forduniss_0 ordtr forduniss_0 df-tr sylib $.
+	$v A  $.
+	f0_orduniss $f class A $.
+	p_orduniss $p |- ( Ord A -> U. A C_ A ) $= f0_orduniss p_ordtr f0_orduniss a_df-tr f0_orduniss a_word f0_orduniss a_wtr f0_orduniss a_cuni f0_orduniss a_wss p_sylib $.
 $}
-$( A trichotomy law for ordinal classes.  (Contributed by NM, 13-Sep-2003.)
+
+$(A trichotomy law for ordinal classes.  (Contributed by NM, 13-Sep-2003.)
      (Proof shortened by Andrew Salmon, 12-Aug-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri2or_0 $f class A $.
-	fordtri2or_1 $f class B $.
-	ordtri2or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ B C_ A ) ) $= fordtri2or_0 word fordtri2or_1 word wa fordtri2or_0 fordtri2or_1 wcel fordtri2or_1 fordtri2or_0 wss fordtri2or_0 word fordtri2or_1 word wa fordtri2or_1 fordtri2or_0 wss fordtri2or_0 fordtri2or_1 wcel wn fordtri2or_1 word fordtri2or_0 word fordtri2or_1 fordtri2or_0 wss fordtri2or_0 fordtri2or_1 wcel wn wb fordtri2or_1 fordtri2or_0 ordtri1 ancoms biimprd orrd $.
+	$v A B  $.
+	f0_ordtri2or $f class A $.
+	f1_ordtri2or $f class B $.
+	p_ordtri2or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ B C_ A ) ) $= f1_ordtri2or f0_ordtri2or p_ordtri1 f1_ordtri2or a_word f0_ordtri2or a_word f1_ordtri2or f0_ordtri2or a_wss f0_ordtri2or f1_ordtri2or a_wcel a_wn a_wb p_ancoms f0_ordtri2or a_word f1_ordtri2or a_word a_wa f1_ordtri2or f0_ordtri2or a_wss f0_ordtri2or f1_ordtri2or a_wcel a_wn p_biimprd f0_ordtri2or a_word f1_ordtri2or a_word a_wa f0_ordtri2or f1_ordtri2or a_wcel f1_ordtri2or f0_ordtri2or a_wss p_orrd $.
 $}
-$( A trichotomy law for ordinal classes.  (Contributed by NM, 2-Nov-2003.) $)
+
+$(A trichotomy law for ordinal classes.  (Contributed by NM, 2-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri2or2_0 $f class A $.
-	fordtri2or2_1 $f class B $.
-	ordtri2or2 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B \/ B C_ A ) ) $= fordtri2or2_0 word fordtri2or2_1 word wa fordtri2or2_0 fordtri2or2_1 wcel fordtri2or2_1 fordtri2or2_0 wss wo fordtri2or2_0 fordtri2or2_1 wss fordtri2or2_1 fordtri2or2_0 wss wo fordtri2or2_0 fordtri2or2_1 ordtri2or fordtri2or2_1 word fordtri2or2_0 fordtri2or2_1 wcel fordtri2or2_1 fordtri2or2_0 wss wo fordtri2or2_0 fordtri2or2_1 wss fordtri2or2_1 fordtri2or2_0 wss wo wi fordtri2or2_0 word fordtri2or2_1 word fordtri2or2_0 fordtri2or2_1 wcel fordtri2or2_0 fordtri2or2_1 wss fordtri2or2_1 fordtri2or2_0 wss fordtri2or2_1 word fordtri2or2_0 fordtri2or2_1 wcel fordtri2or2_0 fordtri2or2_1 wss fordtri2or2_1 fordtri2or2_0 ordelss ex orim1d adantl mpd $.
+	$v A B  $.
+	f0_ordtri2or2 $f class A $.
+	f1_ordtri2or2 $f class B $.
+	p_ordtri2or2 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B \/ B C_ A ) ) $= f0_ordtri2or2 f1_ordtri2or2 p_ordtri2or f1_ordtri2or2 f0_ordtri2or2 p_ordelss f1_ordtri2or2 a_word f0_ordtri2or2 f1_ordtri2or2 a_wcel f0_ordtri2or2 f1_ordtri2or2 a_wss p_ex f1_ordtri2or2 a_word f0_ordtri2or2 f1_ordtri2or2 a_wcel f0_ordtri2or2 f1_ordtri2or2 a_wss f1_ordtri2or2 f0_ordtri2or2 a_wss p_orim1d f1_ordtri2or2 a_word f0_ordtri2or2 f1_ordtri2or2 a_wcel f1_ordtri2or2 f0_ordtri2or2 a_wss a_wo f0_ordtri2or2 f1_ordtri2or2 a_wss f1_ordtri2or2 f0_ordtri2or2 a_wss a_wo a_wi f0_ordtri2or2 a_word p_adantl f0_ordtri2or2 a_word f1_ordtri2or2 a_word a_wa f0_ordtri2or2 f1_ordtri2or2 a_wcel f1_ordtri2or2 f0_ordtri2or2 a_wss a_wo f0_ordtri2or2 f1_ordtri2or2 a_wss f1_ordtri2or2 f0_ordtri2or2 a_wss a_wo p_mpd $.
 $}
-$( A consequence of total ordering for ordinal classes.  Similar to
+
+$(A consequence of total ordering for ordinal classes.  Similar to
      ~ ordtri2or2 .  (Contributed by David Moews, 1-May-2017.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordtri2or3_0 $f class A $.
-	fordtri2or3_1 $f class B $.
-	ordtri2or3 $p |- ( ( Ord A /\ Ord B ) -> ( A = ( A i^i B ) \/ B = ( A i^i B ) ) ) $= fordtri2or3_0 word fordtri2or3_1 word wa fordtri2or3_0 fordtri2or3_1 wss fordtri2or3_1 fordtri2or3_0 wss wo fordtri2or3_0 fordtri2or3_0 fordtri2or3_1 cin wceq fordtri2or3_1 fordtri2or3_0 fordtri2or3_1 cin wceq wo fordtri2or3_0 fordtri2or3_1 ordtri2or2 fordtri2or3_0 fordtri2or3_1 wss fordtri2or3_0 fordtri2or3_0 fordtri2or3_1 cin wceq fordtri2or3_1 fordtri2or3_0 wss fordtri2or3_1 fordtri2or3_0 fordtri2or3_1 cin wceq fordtri2or3_0 fordtri2or3_1 dfss fordtri2or3_1 fordtri2or3_0 dfss5 orbi12i sylib $.
+	$v A B  $.
+	f0_ordtri2or3 $f class A $.
+	f1_ordtri2or3 $f class B $.
+	p_ordtri2or3 $p |- ( ( Ord A /\ Ord B ) -> ( A = ( A i^i B ) \/ B = ( A i^i B ) ) ) $= f0_ordtri2or3 f1_ordtri2or3 p_ordtri2or2 f0_ordtri2or3 f1_ordtri2or3 p_dfss f1_ordtri2or3 f0_ordtri2or3 p_dfss5 f0_ordtri2or3 f1_ordtri2or3 a_wss f0_ordtri2or3 f0_ordtri2or3 f1_ordtri2or3 a_cin a_wceq f1_ordtri2or3 f0_ordtri2or3 a_wss f1_ordtri2or3 f0_ordtri2or3 f1_ordtri2or3 a_cin a_wceq p_orbi12i f0_ordtri2or3 a_word f1_ordtri2or3 a_word a_wa f0_ordtri2or3 f1_ordtri2or3 a_wss f1_ordtri2or3 f0_ordtri2or3 a_wss a_wo f0_ordtri2or3 f0_ordtri2or3 f1_ordtri2or3 a_cin a_wceq f1_ordtri2or3 f0_ordtri2or3 f1_ordtri2or3 a_cin a_wceq a_wo p_sylib $.
 $}
-$( The intersection of two ordinal classes is an element of a third if and
+
+$(The intersection of two ordinal classes is an element of a third if and
      only if either one of them is.  (Contributed by David Moews,
      1-May-2017.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordelinel_0 $f class A $.
-	fordelinel_1 $f class B $.
-	fordelinel_2 $f class C $.
-	ordelinel $p |- ( ( Ord A /\ Ord B /\ Ord C ) -> ( ( A i^i B ) e. C <-> ( A e. C \/ B e. C ) ) ) $= fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel wo fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_0 fordelinel_1 cin wceq fordelinel_1 fordelinel_0 fordelinel_1 cin wceq wo fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel wo wi fordelinel_0 word fordelinel_1 word fordelinel_0 fordelinel_0 fordelinel_1 cin wceq fordelinel_1 fordelinel_0 fordelinel_1 cin wceq wo fordelinel_2 word fordelinel_0 fordelinel_1 ordtri2or3 3adant3 fordelinel_0 fordelinel_0 fordelinel_1 cin wceq fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel wo wi fordelinel_1 fordelinel_0 fordelinel_1 cin wceq fordelinel_0 fordelinel_0 fordelinel_1 cin wceq fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel wo fordelinel_0 fordelinel_0 fordelinel_1 cin fordelinel_2 eleq1 fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel orc syl6bir fordelinel_1 fordelinel_0 fordelinel_1 cin wceq fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel wo fordelinel_1 fordelinel_0 fordelinel_1 cin fordelinel_2 eleq1 fordelinel_1 fordelinel_2 wcel fordelinel_0 fordelinel_2 wcel olc syl6bir jaoi syl fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_2 wcel fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_1 fordelinel_2 wcel fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_1 cin fordelinel_0 wss fordelinel_0 fordelinel_2 wcel fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_1 inss1 fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_1 cin word fordelinel_2 word wa fordelinel_0 fordelinel_1 cin fordelinel_0 wss fordelinel_0 fordelinel_2 wcel wa fordelinel_0 fordelinel_1 cin fordelinel_2 wcel wi fordelinel_0 word fordelinel_1 word fordelinel_2 word fordelinel_0 fordelinel_1 cin word fordelinel_2 word wa fordelinel_0 word fordelinel_1 word wa fordelinel_0 fordelinel_1 cin word fordelinel_2 word fordelinel_0 fordelinel_1 ordin anim1i 3impa fordelinel_0 fordelinel_1 cin fordelinel_0 fordelinel_2 ordtr2 syl mpani fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_1 cin fordelinel_1 wss fordelinel_1 fordelinel_2 wcel fordelinel_0 fordelinel_1 cin fordelinel_2 wcel fordelinel_0 fordelinel_1 inss2 fordelinel_0 word fordelinel_1 word fordelinel_2 word w3a fordelinel_0 fordelinel_1 cin word fordelinel_2 word wa fordelinel_0 fordelinel_1 cin fordelinel_1 wss fordelinel_1 fordelinel_2 wcel wa fordelinel_0 fordelinel_1 cin fordelinel_2 wcel wi fordelinel_0 word fordelinel_1 word fordelinel_2 word fordelinel_0 fordelinel_1 cin word fordelinel_2 word wa fordelinel_0 word fordelinel_1 word wa fordelinel_0 fordelinel_1 cin word fordelinel_2 word fordelinel_0 fordelinel_1 ordin anim1i 3impa fordelinel_0 fordelinel_1 cin fordelinel_1 fordelinel_2 ordtr2 syl mpani jaod impbid $.
+	$v A B C  $.
+	f0_ordelinel $f class A $.
+	f1_ordelinel $f class B $.
+	f2_ordelinel $f class C $.
+	p_ordelinel $p |- ( ( Ord A /\ Ord B /\ Ord C ) -> ( ( A i^i B ) e. C <-> ( A e. C \/ B e. C ) ) ) $= f0_ordelinel f1_ordelinel p_ordtri2or3 f0_ordelinel a_word f1_ordelinel a_word f0_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq f1_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq a_wo f2_ordelinel a_word p_3adant3 f0_ordelinel f0_ordelinel f1_ordelinel a_cin f2_ordelinel p_eleq1 f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel p_orc f0_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel a_wo p_syl6bir f1_ordelinel f0_ordelinel f1_ordelinel a_cin f2_ordelinel p_eleq1 f1_ordelinel f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel p_olc f1_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel a_wo p_syl6bir f0_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel a_wo a_wi f1_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq p_jaoi f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq f1_ordelinel f0_ordelinel f1_ordelinel a_cin a_wceq a_wo f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel a_wo a_wi p_syl f0_ordelinel f1_ordelinel p_inss1 f0_ordelinel f1_ordelinel p_ordin f0_ordelinel a_word f1_ordelinel a_word a_wa f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word p_anim1i f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word a_wa p_3impa f0_ordelinel f1_ordelinel a_cin f0_ordelinel f2_ordelinel p_ordtr2 f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word a_wa f0_ordelinel f1_ordelinel a_cin f0_ordelinel a_wss f0_ordelinel f2_ordelinel a_wcel a_wa f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel a_wi p_syl f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f1_ordelinel a_cin f0_ordelinel a_wss f0_ordelinel f2_ordelinel a_wcel f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel p_mpani f0_ordelinel f1_ordelinel p_inss2 f0_ordelinel f1_ordelinel p_ordin f0_ordelinel a_word f1_ordelinel a_word a_wa f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word p_anim1i f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word a_wa p_3impa f0_ordelinel f1_ordelinel a_cin f1_ordelinel f2_ordelinel p_ordtr2 f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f1_ordelinel a_cin a_word f2_ordelinel a_word a_wa f0_ordelinel f1_ordelinel a_cin f1_ordelinel a_wss f1_ordelinel f2_ordelinel a_wcel a_wa f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel a_wi p_syl f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f1_ordelinel a_cin f1_ordelinel a_wss f1_ordelinel f2_ordelinel a_wcel f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel p_mpani f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f2_ordelinel a_wcel f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel p_jaod f0_ordelinel a_word f1_ordelinel a_word f2_ordelinel a_word a_w3a f0_ordelinel f1_ordelinel a_cin f2_ordelinel a_wcel f0_ordelinel f2_ordelinel a_wcel f1_ordelinel f2_ordelinel a_wcel a_wo p_impbid $.
 $}
-$( Property of a subclass of the maximum (i.e. union) of two ordinals.
+
+$(Property of a subclass of the maximum (i.e. union) of two ordinals.
      (Contributed by NM, 28-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordssun_0 $f class A $.
-	fordssun_1 $f class B $.
-	fordssun_2 $f class C $.
-	ordssun $p |- ( ( Ord B /\ Ord C ) -> ( A C_ ( B u. C ) <-> ( A C_ B \/ A C_ C ) ) ) $= fordssun_1 word fordssun_2 word wa fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss wo fordssun_1 word fordssun_2 word wa fordssun_1 fordssun_2 wss fordssun_2 fordssun_1 wss wo fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss wo wi fordssun_1 fordssun_2 ordtri2or2 fordssun_1 fordssun_2 wss fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss wo wi fordssun_2 fordssun_1 wss fordssun_1 fordssun_2 wss fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_2 wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss wo fordssun_1 fordssun_2 wss fordssun_1 fordssun_2 cun fordssun_2 wceq fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_2 wss wb fordssun_1 fordssun_2 ssequn1 fordssun_1 fordssun_2 cun fordssun_2 fordssun_0 sseq2 sylbi fordssun_0 fordssun_2 wss fordssun_0 fordssun_1 wss olc syl6bi fordssun_2 fordssun_1 wss fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss wo fordssun_2 fordssun_1 wss fordssun_1 fordssun_2 cun fordssun_1 wceq fordssun_0 fordssun_1 fordssun_2 cun wss fordssun_0 fordssun_1 wss wb fordssun_2 fordssun_1 ssequn2 fordssun_1 fordssun_2 cun fordssun_1 fordssun_0 sseq2 sylbi fordssun_0 fordssun_1 wss fordssun_0 fordssun_2 wss orc syl6bi jaoi syl fordssun_0 fordssun_1 fordssun_2 ssun impbid1 $.
+	$v A B C  $.
+	f0_ordssun $f class A $.
+	f1_ordssun $f class B $.
+	f2_ordssun $f class C $.
+	p_ordssun $p |- ( ( Ord B /\ Ord C ) -> ( A C_ ( B u. C ) <-> ( A C_ B \/ A C_ C ) ) ) $= f1_ordssun f2_ordssun p_ordtri2or2 f1_ordssun f2_ordssun p_ssequn1 f1_ordssun f2_ordssun a_cun f2_ordssun f0_ordssun p_sseq2 f1_ordssun f2_ordssun a_wss f1_ordssun f2_ordssun a_cun f2_ordssun a_wceq f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f2_ordssun a_wss a_wb p_sylbi f0_ordssun f2_ordssun a_wss f0_ordssun f1_ordssun a_wss p_olc f1_ordssun f2_ordssun a_wss f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f2_ordssun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss a_wo p_syl6bi f2_ordssun f1_ordssun p_ssequn2 f1_ordssun f2_ordssun a_cun f1_ordssun f0_ordssun p_sseq2 f2_ordssun f1_ordssun a_wss f1_ordssun f2_ordssun a_cun f1_ordssun a_wceq f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f1_ordssun a_wss a_wb p_sylbi f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss p_orc f2_ordssun f1_ordssun a_wss f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss a_wo p_syl6bi f1_ordssun f2_ordssun a_wss f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss a_wo a_wi f2_ordssun f1_ordssun a_wss p_jaoi f1_ordssun a_word f2_ordssun a_word a_wa f1_ordssun f2_ordssun a_wss f2_ordssun f1_ordssun a_wss a_wo f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss a_wo a_wi p_syl f0_ordssun f1_ordssun f2_ordssun p_ssun f1_ordssun a_word f2_ordssun a_word a_wa f0_ordssun f1_ordssun f2_ordssun a_cun a_wss f0_ordssun f1_ordssun a_wss f0_ordssun f2_ordssun a_wss a_wo p_impbid1 $.
 $}
-$( The maximum (i.e. union) of two ordinals is either one or the other.
+
+$(The maximum (i.e. union) of two ordinals is either one or the other.
      Similar to Exercise 14 of [TakeutiZaring] p. 40.  (Contributed by NM,
      28-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fordequn_0 $f class A $.
-	fordequn_1 $f class B $.
-	fordequn_2 $f class C $.
-	ordequn $p |- ( ( Ord B /\ Ord C ) -> ( A = ( B u. C ) -> ( A = B \/ A = C ) ) ) $= fordequn_1 word fordequn_2 word wa fordequn_1 fordequn_2 wss fordequn_2 fordequn_1 wss wo fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_1 wceq fordequn_0 fordequn_2 wceq wo wi fordequn_1 fordequn_2 ordtri2or2 fordequn_1 fordequn_2 wss fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_1 wceq fordequn_0 fordequn_2 wceq wo wi fordequn_2 fordequn_1 wss fordequn_1 fordequn_2 wss fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_2 wceq fordequn_0 fordequn_1 wceq fordequn_0 fordequn_2 wceq wo fordequn_1 fordequn_2 wss fordequn_1 fordequn_2 cun fordequn_2 wceq fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_2 wceq wb fordequn_1 fordequn_2 ssequn1 fordequn_1 fordequn_2 cun fordequn_2 fordequn_0 eqeq2 sylbi fordequn_0 fordequn_2 wceq fordequn_0 fordequn_1 wceq olc syl6bi fordequn_2 fordequn_1 wss fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_1 wceq fordequn_0 fordequn_1 wceq fordequn_0 fordequn_2 wceq wo fordequn_2 fordequn_1 wss fordequn_1 fordequn_2 cun fordequn_1 wceq fordequn_0 fordequn_1 fordequn_2 cun wceq fordequn_0 fordequn_1 wceq wb fordequn_2 fordequn_1 ssequn2 fordequn_1 fordequn_2 cun fordequn_1 fordequn_0 eqeq2 sylbi fordequn_0 fordequn_1 wceq fordequn_0 fordequn_2 wceq orc syl6bi jaoi syl $.
+	$v A B C  $.
+	f0_ordequn $f class A $.
+	f1_ordequn $f class B $.
+	f2_ordequn $f class C $.
+	p_ordequn $p |- ( ( Ord B /\ Ord C ) -> ( A = ( B u. C ) -> ( A = B \/ A = C ) ) ) $= f1_ordequn f2_ordequn p_ordtri2or2 f1_ordequn f2_ordequn p_ssequn1 f1_ordequn f2_ordequn a_cun f2_ordequn f0_ordequn p_eqeq2 f1_ordequn f2_ordequn a_wss f1_ordequn f2_ordequn a_cun f2_ordequn a_wceq f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f2_ordequn a_wceq a_wb p_sylbi f0_ordequn f2_ordequn a_wceq f0_ordequn f1_ordequn a_wceq p_olc f1_ordequn f2_ordequn a_wss f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f2_ordequn a_wceq f0_ordequn f1_ordequn a_wceq f0_ordequn f2_ordequn a_wceq a_wo p_syl6bi f2_ordequn f1_ordequn p_ssequn2 f1_ordequn f2_ordequn a_cun f1_ordequn f0_ordequn p_eqeq2 f2_ordequn f1_ordequn a_wss f1_ordequn f2_ordequn a_cun f1_ordequn a_wceq f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f1_ordequn a_wceq a_wb p_sylbi f0_ordequn f1_ordequn a_wceq f0_ordequn f2_ordequn a_wceq p_orc f2_ordequn f1_ordequn a_wss f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f1_ordequn a_wceq f0_ordequn f1_ordequn a_wceq f0_ordequn f2_ordequn a_wceq a_wo p_syl6bi f1_ordequn f2_ordequn a_wss f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f1_ordequn a_wceq f0_ordequn f2_ordequn a_wceq a_wo a_wi f2_ordequn f1_ordequn a_wss p_jaoi f1_ordequn a_word f2_ordequn a_word a_wa f1_ordequn f2_ordequn a_wss f2_ordequn f1_ordequn a_wss a_wo f0_ordequn f1_ordequn f2_ordequn a_cun a_wceq f0_ordequn f1_ordequn a_wceq f0_ordequn f2_ordequn a_wceq a_wo a_wi p_syl $.
 $}
-$( The maximum (i.e. union) of two ordinals is ordinal.  Exercise 12 of
+
+$(The maximum (i.e. union) of two ordinals is ordinal.  Exercise 12 of
      [TakeutiZaring] p. 40.  (Contributed by NM, 28-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fordun_0 $f class A $.
-	fordun_1 $f class B $.
-	ordun $p |- ( ( Ord A /\ Ord B ) -> Ord ( A u. B ) ) $= fordun_0 word fordun_1 word wa fordun_0 fordun_1 cun fordun_0 wceq fordun_0 fordun_1 cun fordun_1 wceq wo fordun_0 fordun_1 cun word fordun_0 word fordun_1 word wa fordun_0 fordun_1 cun fordun_0 fordun_1 cun wceq fordun_0 fordun_1 cun fordun_0 wceq fordun_0 fordun_1 cun fordun_1 wceq wo fordun_0 fordun_1 cun eqid fordun_0 fordun_1 cun fordun_0 fordun_1 ordequn mpi fordun_0 word fordun_0 fordun_1 cun fordun_0 wceq fordun_0 fordun_1 cun word fordun_1 word fordun_0 fordun_1 cun fordun_1 wceq fordun_0 fordun_1 cun fordun_0 wceq fordun_0 fordun_1 cun word fordun_0 word fordun_0 fordun_1 cun fordun_0 ordeq biimprcd fordun_0 fordun_1 cun fordun_1 wceq fordun_0 fordun_1 cun word fordun_1 word fordun_0 fordun_1 cun fordun_1 ordeq biimprcd jaao mpd $.
+	$v A B  $.
+	f0_ordun $f class A $.
+	f1_ordun $f class B $.
+	p_ordun $p |- ( ( Ord A /\ Ord B ) -> Ord ( A u. B ) ) $= f0_ordun f1_ordun a_cun p_eqid f0_ordun f1_ordun a_cun f0_ordun f1_ordun p_ordequn f0_ordun a_word f1_ordun a_word a_wa f0_ordun f1_ordun a_cun f0_ordun f1_ordun a_cun a_wceq f0_ordun f1_ordun a_cun f0_ordun a_wceq f0_ordun f1_ordun a_cun f1_ordun a_wceq a_wo p_mpi f0_ordun f1_ordun a_cun f0_ordun p_ordeq f0_ordun f1_ordun a_cun f0_ordun a_wceq f0_ordun f1_ordun a_cun a_word f0_ordun a_word p_biimprcd f0_ordun f1_ordun a_cun f1_ordun p_ordeq f0_ordun f1_ordun a_cun f1_ordun a_wceq f0_ordun f1_ordun a_cun a_word f1_ordun a_word p_biimprcd f0_ordun a_word f0_ordun f1_ordun a_cun f0_ordun a_wceq f0_ordun f1_ordun a_cun a_word f1_ordun a_word f0_ordun f1_ordun a_cun f1_ordun a_wceq p_jaao f0_ordun a_word f1_ordun a_word a_wa f0_ordun f1_ordun a_cun f0_ordun a_wceq f0_ordun f1_ordun a_cun f1_ordun a_wceq a_wo f0_ordun f1_ordun a_cun a_word p_mpd $.
 $}
-$( A subclass relationship for union and successor of ordinal classes.
+
+$(A subclass relationship for union and successor of ordinal classes.
        (Contributed by NM, 28-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	iordunisssuc_0 $f set x $.
-	fordunisssuc_0 $f class A $.
-	fordunisssuc_1 $f class B $.
-	ordunisssuc $p |- ( ( A C_ On /\ Ord B ) -> ( U. A C_ B <-> A C_ suc B ) ) $= fordunisssuc_0 con0 wss fordunisssuc_1 word wa iordunisssuc_0 sup_set_class fordunisssuc_1 wss iordunisssuc_0 fordunisssuc_0 wral iordunisssuc_0 sup_set_class fordunisssuc_1 csuc wcel iordunisssuc_0 fordunisssuc_0 wral fordunisssuc_0 cuni fordunisssuc_1 wss fordunisssuc_0 fordunisssuc_1 csuc wss fordunisssuc_0 con0 wss fordunisssuc_1 word wa iordunisssuc_0 sup_set_class fordunisssuc_1 wss iordunisssuc_0 sup_set_class fordunisssuc_1 csuc wcel iordunisssuc_0 fordunisssuc_0 fordunisssuc_0 con0 wss iordunisssuc_0 sup_set_class fordunisssuc_0 wcel fordunisssuc_1 word iordunisssuc_0 sup_set_class fordunisssuc_1 wss iordunisssuc_0 sup_set_class fordunisssuc_1 csuc wcel wb fordunisssuc_0 con0 wss iordunisssuc_0 sup_set_class fordunisssuc_0 wcel wa iordunisssuc_0 sup_set_class con0 wcel fordunisssuc_1 word iordunisssuc_0 sup_set_class fordunisssuc_1 wss iordunisssuc_0 sup_set_class fordunisssuc_1 csuc wcel wb fordunisssuc_0 con0 iordunisssuc_0 sup_set_class ssel2 iordunisssuc_0 sup_set_class fordunisssuc_1 ordsssuc sylan an32s ralbidva iordunisssuc_0 fordunisssuc_0 fordunisssuc_1 unissb iordunisssuc_0 fordunisssuc_0 fordunisssuc_1 csuc dfss3 3bitr4g $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ordunisssuc $f class A $.
+	f1_ordunisssuc $f class B $.
+	i0_ordunisssuc $f set x $.
+	p_ordunisssuc $p |- ( ( A C_ On /\ Ord B ) -> ( U. A C_ B <-> A C_ suc B ) ) $= f0_ordunisssuc a_con0 i0_ordunisssuc a_sup_set_class p_ssel2 i0_ordunisssuc a_sup_set_class f1_ordunisssuc p_ordsssuc f0_ordunisssuc a_con0 a_wss i0_ordunisssuc a_sup_set_class f0_ordunisssuc a_wcel a_wa i0_ordunisssuc a_sup_set_class a_con0 a_wcel f1_ordunisssuc a_word i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_wss i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_csuc a_wcel a_wb p_sylan f0_ordunisssuc a_con0 a_wss i0_ordunisssuc a_sup_set_class f0_ordunisssuc a_wcel f1_ordunisssuc a_word i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_wss i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_csuc a_wcel a_wb p_an32s f0_ordunisssuc a_con0 a_wss f1_ordunisssuc a_word a_wa i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_wss i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_csuc a_wcel i0_ordunisssuc f0_ordunisssuc p_ralbidva i0_ordunisssuc f0_ordunisssuc f1_ordunisssuc p_unissb i0_ordunisssuc f0_ordunisssuc f1_ordunisssuc a_csuc p_dfss3 f0_ordunisssuc a_con0 a_wss f1_ordunisssuc a_word a_wa i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_wss i0_ordunisssuc f0_ordunisssuc a_wral i0_ordunisssuc a_sup_set_class f1_ordunisssuc a_csuc a_wcel i0_ordunisssuc f0_ordunisssuc a_wral f0_ordunisssuc a_cuni f1_ordunisssuc a_wss f0_ordunisssuc f1_ordunisssuc a_csuc a_wss p_3bitr4g $.
 $}
-$( The successor operation behaves like a one-to-one function.  Compare
+
+$(The successor operation behaves like a one-to-one function.  Compare
      Exercise 16 of [Enderton] p. 194.  (Contributed by NM, 3-Sep-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fsuc11_0 $f class A $.
-	fsuc11_1 $f class B $.
-	suc11 $p |- ( ( A e. On /\ B e. On ) -> ( suc A = suc B <-> A = B ) ) $= fsuc11_0 con0 wcel fsuc11_1 con0 wcel wa fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_0 fsuc11_1 wceq fsuc11_0 con0 wcel fsuc11_1 con0 wcel wa fsuc11_0 fsuc11_1 wcel wn fsuc11_1 fsuc11_0 wcel wn wo fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_0 fsuc11_1 wceq wi fsuc11_0 con0 wcel fsuc11_0 fsuc11_1 wcel wn fsuc11_1 fsuc11_0 wcel wn wo fsuc11_1 con0 wcel fsuc11_0 con0 wcel fsuc11_0 word fsuc11_0 fsuc11_1 wcel wn fsuc11_1 fsuc11_0 wcel wn wo fsuc11_0 eloni fsuc11_0 word fsuc11_0 fsuc11_1 wcel fsuc11_1 fsuc11_0 wcel wa wn fsuc11_0 fsuc11_1 wcel wn fsuc11_1 fsuc11_0 wcel wn wo fsuc11_0 fsuc11_1 ordn2lp fsuc11_0 fsuc11_1 wcel fsuc11_1 fsuc11_0 wcel ianor sylib syl adantr fsuc11_0 con0 wcel fsuc11_0 fsuc11_1 wcel wn fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_0 fsuc11_1 wceq wi fsuc11_1 con0 wcel fsuc11_1 fsuc11_0 wcel wn fsuc11_0 con0 wcel fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_0 fsuc11_1 csuc wcel fsuc11_0 fsuc11_1 wcel wn fsuc11_0 fsuc11_1 wceq fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_0 csuc fsuc11_1 csuc wss fsuc11_0 con0 wcel fsuc11_0 fsuc11_1 csuc wcel fsuc11_0 csuc fsuc11_1 csuc eqimss fsuc11_0 fsuc11_1 csuc con0 sucssel syl5 fsuc11_0 fsuc11_1 csuc wcel fsuc11_0 fsuc11_1 wcel wn fsuc11_0 fsuc11_1 wceq fsuc11_0 fsuc11_1 csuc wcel fsuc11_0 fsuc11_1 wcel fsuc11_0 fsuc11_1 wceq fsuc11_0 fsuc11_1 elsuci ord com12 syl9 fsuc11_1 con0 wcel fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_1 fsuc11_0 csuc wcel fsuc11_1 fsuc11_0 wcel wn fsuc11_0 fsuc11_1 wceq fsuc11_0 csuc fsuc11_1 csuc wceq fsuc11_1 csuc fsuc11_0 csuc wss fsuc11_1 con0 wcel fsuc11_1 fsuc11_0 csuc wcel fsuc11_1 csuc fsuc11_0 csuc eqimss2 fsuc11_1 fsuc11_0 csuc con0 sucssel syl5 fsuc11_1 fsuc11_0 wcel wn fsuc11_1 fsuc11_0 csuc wcel fsuc11_1 fsuc11_0 wceq fsuc11_0 fsuc11_1 wceq fsuc11_1 fsuc11_0 csuc wcel fsuc11_1 fsuc11_0 wcel wn fsuc11_1 fsuc11_0 wceq fsuc11_1 fsuc11_0 csuc wcel fsuc11_1 fsuc11_0 wcel fsuc11_1 fsuc11_0 wceq fsuc11_1 fsuc11_0 elsuci ord com12 fsuc11_1 fsuc11_0 eqcom syl6ib syl9 jaao mpd fsuc11_0 fsuc11_1 suceq impbid1 $.
+	$v A B  $.
+	f0_suc11 $f class A $.
+	f1_suc11 $f class B $.
+	p_suc11 $p |- ( ( A e. On /\ B e. On ) -> ( suc A = suc B <-> A = B ) ) $= f0_suc11 p_eloni f0_suc11 f1_suc11 p_ordn2lp f0_suc11 f1_suc11 a_wcel f1_suc11 f0_suc11 a_wcel p_ianor f0_suc11 a_word f0_suc11 f1_suc11 a_wcel f1_suc11 f0_suc11 a_wcel a_wa a_wn f0_suc11 f1_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_wcel a_wn a_wo p_sylib f0_suc11 a_con0 a_wcel f0_suc11 a_word f0_suc11 f1_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_wcel a_wn a_wo p_syl f0_suc11 a_con0 a_wcel f0_suc11 f1_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_wcel a_wn a_wo f1_suc11 a_con0 a_wcel p_adantr f0_suc11 a_csuc f1_suc11 a_csuc p_eqimss f0_suc11 f1_suc11 a_csuc a_con0 p_sucssel f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f0_suc11 a_csuc f1_suc11 a_csuc a_wss f0_suc11 a_con0 a_wcel f0_suc11 f1_suc11 a_csuc a_wcel p_syl5 f0_suc11 f1_suc11 p_elsuci f0_suc11 f1_suc11 a_csuc a_wcel f0_suc11 f1_suc11 a_wcel f0_suc11 f1_suc11 a_wceq p_ord f0_suc11 f1_suc11 a_csuc a_wcel f0_suc11 f1_suc11 a_wcel a_wn f0_suc11 f1_suc11 a_wceq p_com12 f0_suc11 a_con0 a_wcel f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f0_suc11 f1_suc11 a_csuc a_wcel f0_suc11 f1_suc11 a_wcel a_wn f0_suc11 f1_suc11 a_wceq p_syl9 f1_suc11 a_csuc f0_suc11 a_csuc p_eqimss2 f1_suc11 f0_suc11 a_csuc a_con0 p_sucssel f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f1_suc11 a_csuc f0_suc11 a_csuc a_wss f1_suc11 a_con0 a_wcel f1_suc11 f0_suc11 a_csuc a_wcel p_syl5 f1_suc11 f0_suc11 p_elsuci f1_suc11 f0_suc11 a_csuc a_wcel f1_suc11 f0_suc11 a_wcel f1_suc11 f0_suc11 a_wceq p_ord f1_suc11 f0_suc11 a_csuc a_wcel f1_suc11 f0_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_wceq p_com12 f1_suc11 f0_suc11 p_eqcom f1_suc11 f0_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_csuc a_wcel f1_suc11 f0_suc11 a_wceq f0_suc11 f1_suc11 a_wceq p_syl6ib f1_suc11 a_con0 a_wcel f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f1_suc11 f0_suc11 a_csuc a_wcel f1_suc11 f0_suc11 a_wcel a_wn f0_suc11 f1_suc11 a_wceq p_syl9 f0_suc11 a_con0 a_wcel f0_suc11 f1_suc11 a_wcel a_wn f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f0_suc11 f1_suc11 a_wceq a_wi f1_suc11 a_con0 a_wcel f1_suc11 f0_suc11 a_wcel a_wn p_jaao f0_suc11 a_con0 a_wcel f1_suc11 a_con0 a_wcel a_wa f0_suc11 f1_suc11 a_wcel a_wn f1_suc11 f0_suc11 a_wcel a_wn a_wo f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f0_suc11 f1_suc11 a_wceq a_wi p_mpd f0_suc11 f1_suc11 p_suceq f0_suc11 a_con0 a_wcel f1_suc11 a_con0 a_wcel a_wa f0_suc11 a_csuc f1_suc11 a_csuc a_wceq f0_suc11 f1_suc11 a_wceq p_impbid1 $.
 $}
-$( An ordinal number is an ordinal class.  (Contributed by NM,
+
+$(An ordinal number is an ordinal class.  (Contributed by NM,
        11-Jun-1994.) $)
+
 ${
-	$v A $.
-	fonordi_0 $f class A $.
-	eonordi_0 $e |- A e. On $.
-	onordi $p |- Ord A $= fonordi_0 con0 wcel fonordi_0 word eonordi_0 fonordi_0 eloni ax-mp $.
+	$v A  $.
+	f0_onordi $f class A $.
+	e0_onordi $e |- A e. On $.
+	p_onordi $p |- Ord A $= e0_onordi f0_onordi p_eloni f0_onordi a_con0 a_wcel f0_onordi a_word a_ax-mp $.
 $}
-$( An ordinal number is a transitive class.  (Contributed by NM,
+
+$(An ordinal number is a transitive class.  (Contributed by NM,
        11-Jun-1994.) $)
+
 ${
-	$v A $.
-	fontrci_0 $f class A $.
-	eontrci_0 $e |- A e. On $.
-	ontrci $p |- Tr A $= fontrci_0 word fontrci_0 wtr fontrci_0 eontrci_0 onordi fontrci_0 ordtr ax-mp $.
+	$v A  $.
+	f0_ontrci $f class A $.
+	e0_ontrci $e |- A e. On $.
+	p_ontrci $p |- Tr A $= e0_ontrci f0_ontrci p_onordi f0_ontrci p_ordtr f0_ontrci a_word f0_ontrci a_wtr a_ax-mp $.
 $}
-$( An ordinal number is not a member of itself.  Theorem 7M(c) of
+
+$(An ordinal number is not a member of itself.  Theorem 7M(c) of
        [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) $)
+
 ${
-	$v A $.
-	fonirri_0 $f class A $.
-	eonirri_0 $e |- A e. On $.
-	onirri $p |- -. A e. A $= fonirri_0 word fonirri_0 fonirri_0 wcel wn fonirri_0 eonirri_0 onordi fonirri_0 ordirr ax-mp $.
+	$v A  $.
+	f0_onirri $f class A $.
+	e0_onirri $e |- A e. On $.
+	p_onirri $p |- -. A e. A $= e0_onirri f0_onirri p_onordi f0_onirri p_ordirr f0_onirri a_word f0_onirri f0_onirri a_wcel a_wn a_ax-mp $.
 $}
-$( A member of an ordinal number is an ordinal number.  Theorem 7M(a) of
+
+$(A member of an ordinal number is an ordinal number.  Theorem 7M(a) of
        [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	foneli_0 $f class A $.
-	foneli_1 $f class B $.
-	eoneli_0 $e |- A e. On $.
-	oneli $p |- ( B e. A -> B e. On ) $= foneli_0 con0 wcel foneli_1 foneli_0 wcel foneli_1 con0 wcel eoneli_0 foneli_0 foneli_1 onelon mpan $.
+	$v A B  $.
+	f0_oneli $f class A $.
+	f1_oneli $f class B $.
+	e0_oneli $e |- A e. On $.
+	p_oneli $p |- ( B e. A -> B e. On ) $= e0_oneli f0_oneli f1_oneli p_onelon f0_oneli a_con0 a_wcel f1_oneli f0_oneli a_wcel f1_oneli a_con0 a_wcel p_mpan $.
 $}
-$( A member of an ordinal number is a subset of it.  (Contributed by NM,
+
+$(A member of an ordinal number is a subset of it.  (Contributed by NM,
        11-Aug-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonelssi_0 $f class A $.
-	fonelssi_1 $f class B $.
-	eonelssi_0 $e |- A e. On $.
-	onelssi $p |- ( B e. A -> B C_ A ) $= fonelssi_0 con0 wcel fonelssi_1 fonelssi_0 wcel fonelssi_1 fonelssi_0 wss wi eonelssi_0 fonelssi_0 fonelssi_1 onelss ax-mp $.
+	$v A B  $.
+	f0_onelssi $f class A $.
+	f1_onelssi $f class B $.
+	e0_onelssi $e |- A e. On $.
+	p_onelssi $p |- ( B e. A -> B C_ A ) $= e0_onelssi f0_onelssi f1_onelssi p_onelss f0_onelssi a_con0 a_wcel f1_onelssi f0_onelssi a_wcel f1_onelssi f0_onelssi a_wss a_wi a_ax-mp $.
 $}
-$( An ordering law for ordinal numbers.  (Contributed by NM,
+
+$(An ordering law for ordinal numbers.  (Contributed by NM,
        13-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonssneli_0 $f class A $.
-	fonssneli_1 $f class B $.
-	eonssneli_0 $e |- A e. On $.
-	onssneli $p |- ( A C_ B -> -. B e. A ) $= fonssneli_1 fonssneli_0 wcel fonssneli_0 fonssneli_1 wss fonssneli_1 fonssneli_0 wcel fonssneli_0 fonssneli_1 wss fonssneli_1 fonssneli_1 wcel fonssneli_1 fonssneli_0 wcel fonssneli_1 con0 wcel fonssneli_1 word fonssneli_1 fonssneli_1 wcel wn fonssneli_0 fonssneli_1 eonssneli_0 oneli fonssneli_1 eloni fonssneli_1 ordirr 3syl fonssneli_0 fonssneli_1 wss fonssneli_1 fonssneli_0 wcel fonssneli_1 fonssneli_1 wcel fonssneli_0 fonssneli_1 fonssneli_1 ssel com12 mtod con2i $.
+	$v A B  $.
+	f0_onssneli $f class A $.
+	f1_onssneli $f class B $.
+	e0_onssneli $e |- A e. On $.
+	p_onssneli $p |- ( A C_ B -> -. B e. A ) $= e0_onssneli f0_onssneli f1_onssneli p_oneli f1_onssneli p_eloni f1_onssneli p_ordirr f1_onssneli f0_onssneli a_wcel f1_onssneli a_con0 a_wcel f1_onssneli a_word f1_onssneli f1_onssneli a_wcel a_wn p_3syl f0_onssneli f1_onssneli f1_onssneli p_ssel f0_onssneli f1_onssneli a_wss f1_onssneli f0_onssneli a_wcel f1_onssneli f1_onssneli a_wcel p_com12 f1_onssneli f0_onssneli a_wcel f0_onssneli f1_onssneli a_wss f1_onssneli f1_onssneli a_wcel p_mtod f1_onssneli f0_onssneli a_wcel f0_onssneli f1_onssneli a_wss p_con2i $.
 $}
-$( An ordering law for ordinal numbers.  (Contributed by NM,
+
+$(An ordering law for ordinal numbers.  (Contributed by NM,
        13-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonssnel2i_0 $f class A $.
-	fonssnel2i_1 $f class B $.
-	eonssnel2i_0 $e |- A e. On $.
-	onssnel2i $p |- ( B C_ A -> -. A e. B ) $= fonssnel2i_1 fonssnel2i_0 wss fonssnel2i_0 fonssnel2i_1 wcel fonssnel2i_0 fonssnel2i_0 wcel fonssnel2i_0 eonssnel2i_0 onirri fonssnel2i_1 fonssnel2i_0 fonssnel2i_0 ssel mtoi $.
+	$v A B  $.
+	f0_onssnel2i $f class A $.
+	f1_onssnel2i $f class B $.
+	e0_onssnel2i $e |- A e. On $.
+	p_onssnel2i $p |- ( B C_ A -> -. A e. B ) $= e0_onssnel2i f0_onssnel2i p_onirri f1_onssnel2i f0_onssnel2i f0_onssnel2i p_ssel f1_onssnel2i f0_onssnel2i a_wss f0_onssnel2i f1_onssnel2i a_wcel f0_onssnel2i f0_onssnel2i a_wcel p_mtoi $.
 $}
-$( An element of an ordinal number equals the intersection with it.
+
+$(An element of an ordinal number equals the intersection with it.
        (Contributed by NM, 11-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonelini_0 $f class A $.
-	fonelini_1 $f class B $.
-	eonelini_0 $e |- A e. On $.
-	onelini $p |- ( B e. A -> B = ( B i^i A ) ) $= fonelini_1 fonelini_0 wcel fonelini_1 fonelini_0 wss fonelini_1 fonelini_1 fonelini_0 cin wceq fonelini_0 fonelini_1 eonelini_0 onelssi fonelini_1 fonelini_0 dfss sylib $.
+	$v A B  $.
+	f0_onelini $f class A $.
+	f1_onelini $f class B $.
+	e0_onelini $e |- A e. On $.
+	p_onelini $p |- ( B e. A -> B = ( B i^i A ) ) $= e0_onelini f0_onelini f1_onelini p_onelssi f1_onelini f0_onelini p_dfss f1_onelini f0_onelini a_wcel f1_onelini f0_onelini a_wss f1_onelini f1_onelini f0_onelini a_cin a_wceq p_sylib $.
 $}
-$( An ordinal number equals its union with any element.  (Contributed by
+
+$(An ordinal number equals its union with any element.  (Contributed by
        NM, 13-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	foneluni_0 $f class A $.
-	foneluni_1 $f class B $.
-	eoneluni_0 $e |- A e. On $.
-	oneluni $p |- ( B e. A -> ( A u. B ) = A ) $= foneluni_1 foneluni_0 wcel foneluni_1 foneluni_0 wss foneluni_0 foneluni_1 cun foneluni_0 wceq foneluni_0 foneluni_1 eoneluni_0 onelssi foneluni_1 foneluni_0 ssequn2 sylib $.
+	$v A B  $.
+	f0_oneluni $f class A $.
+	f1_oneluni $f class B $.
+	e0_oneluni $e |- A e. On $.
+	p_oneluni $p |- ( B e. A -> ( A u. B ) = A ) $= e0_oneluni f0_oneluni f1_oneluni p_onelssi f1_oneluni f0_oneluni p_ssequn2 f1_oneluni f0_oneluni a_wcel f1_oneluni f0_oneluni a_wss f0_oneluni f1_oneluni a_cun f0_oneluni a_wceq p_sylib $.
 $}
-$( An ordinal number is equal to the union of its successor.  (Contributed
+
+$(An ordinal number is equal to the union of its successor.  (Contributed
        by NM, 12-Jun-1994.) $)
+
 ${
-	$v A $.
-	fonunisuci_0 $f class A $.
-	eonunisuci_0 $e |- A e. On $.
-	onunisuci $p |- U. suc A = A $= fonunisuci_0 wtr fonunisuci_0 csuc cuni fonunisuci_0 wceq fonunisuci_0 eonunisuci_0 ontrci fonunisuci_0 fonunisuci_0 con0 eonunisuci_0 elexi unisuc mpbi $.
+	$v A  $.
+	f0_onunisuci $f class A $.
+	e0_onunisuci $e |- A e. On $.
+	p_onunisuci $p |- U. suc A = A $= e0_onunisuci f0_onunisuci p_ontrci e0_onunisuci f0_onunisuci a_con0 p_elexi f0_onunisuci p_unisuc f0_onunisuci a_wtr f0_onunisuci a_csuc a_cuni f0_onunisuci a_wceq p_mpbi $.
 $}
-$( Subset is equivalent to membership or equality for ordinal numbers.
+
+$(Subset is equivalent to membership or equality for ordinal numbers.
          (Contributed by NM, 15-Sep-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonsseli_0 $f class A $.
-	fonsseli_1 $f class B $.
-	eonsseli_0 $e |- A e. On $.
-	eonsseli_1 $e |- B e. On $.
-	onsseli $p |- ( A C_ B <-> ( A e. B \/ A = B ) ) $= fonsseli_0 con0 wcel fonsseli_1 con0 wcel fonsseli_0 fonsseli_1 wss fonsseli_0 fonsseli_1 wcel fonsseli_0 fonsseli_1 wceq wo wb eonsseli_0 eonsseli_1 fonsseli_0 fonsseli_1 onsseleq mp2an $.
+	$v A B  $.
+	f0_onsseli $f class A $.
+	f1_onsseli $f class B $.
+	e0_onsseli $e |- A e. On $.
+	e1_onsseli $e |- B e. On $.
+	p_onsseli $p |- ( A C_ B <-> ( A e. B \/ A = B ) ) $= e0_onsseli e1_onsseli f0_onsseli f1_onsseli p_onsseleq f0_onsseli a_con0 a_wcel f1_onsseli a_con0 a_wcel f0_onsseli f1_onsseli a_wss f0_onsseli f1_onsseli a_wcel f0_onsseli f1_onsseli a_wceq a_wo a_wb p_mp2an $.
 $}
-$( The union of two ordinal numbers is an ordinal number.  (Contributed
+
+$(The union of two ordinal numbers is an ordinal number.  (Contributed
          by NM, 13-Jun-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fonun2i_0 $f class A $.
-	fonun2i_1 $f class B $.
-	eonun2i_0 $e |- A e. On $.
-	eonun2i_1 $e |- B e. On $.
-	onun2i $p |- ( A u. B ) e. On $= fonun2i_1 fonun2i_0 wcel fonun2i_0 fonun2i_1 wss wo fonun2i_0 fonun2i_1 cun con0 wcel fonun2i_1 word fonun2i_0 word fonun2i_1 fonun2i_0 wcel fonun2i_0 fonun2i_1 wss wo fonun2i_1 eonun2i_1 onordi fonun2i_0 eonun2i_0 onordi fonun2i_1 fonun2i_0 ordtri2or mp2an fonun2i_1 fonun2i_0 wcel fonun2i_0 fonun2i_1 cun con0 wcel fonun2i_0 fonun2i_1 wss fonun2i_1 fonun2i_0 wcel fonun2i_0 fonun2i_1 cun fonun2i_0 con0 fonun2i_0 fonun2i_1 eonun2i_0 oneluni eonun2i_0 syl6eqel fonun2i_0 fonun2i_1 wss fonun2i_0 fonun2i_1 cun fonun2i_1 wceq fonun2i_0 fonun2i_1 cun con0 wcel fonun2i_0 fonun2i_1 ssequn1 fonun2i_0 fonun2i_1 cun fonun2i_1 wceq fonun2i_0 fonun2i_1 cun con0 wcel fonun2i_1 con0 wcel eonun2i_1 fonun2i_0 fonun2i_1 cun fonun2i_1 con0 eleq1 mpbiri sylbi jaoi ax-mp $.
+	$v A B  $.
+	f0_onun2i $f class A $.
+	f1_onun2i $f class B $.
+	e0_onun2i $e |- A e. On $.
+	e1_onun2i $e |- B e. On $.
+	p_onun2i $p |- ( A u. B ) e. On $= e1_onun2i f1_onun2i p_onordi e0_onun2i f0_onun2i p_onordi f1_onun2i f0_onun2i p_ordtri2or f1_onun2i a_word f0_onun2i a_word f1_onun2i f0_onun2i a_wcel f0_onun2i f1_onun2i a_wss a_wo p_mp2an e0_onun2i f0_onun2i f1_onun2i p_oneluni e0_onun2i f1_onun2i f0_onun2i a_wcel f0_onun2i f1_onun2i a_cun f0_onun2i a_con0 p_syl6eqel f0_onun2i f1_onun2i p_ssequn1 e1_onun2i f0_onun2i f1_onun2i a_cun f1_onun2i a_con0 p_eleq1 f0_onun2i f1_onun2i a_cun f1_onun2i a_wceq f0_onun2i f1_onun2i a_cun a_con0 a_wcel f1_onun2i a_con0 a_wcel p_mpbiri f0_onun2i f1_onun2i a_wss f0_onun2i f1_onun2i a_cun f1_onun2i a_wceq f0_onun2i f1_onun2i a_cun a_con0 a_wcel p_sylbi f1_onun2i f0_onun2i a_wcel f0_onun2i f1_onun2i a_cun a_con0 a_wcel f0_onun2i f1_onun2i a_wss p_jaoi f1_onun2i f0_onun2i a_wcel f0_onun2i f1_onun2i a_wss a_wo f0_onun2i f1_onun2i a_cun a_con0 a_wcel a_ax-mp $.
 $}
-$( An ordinal equal to its own union is either zero or a limit ordinal.
+
+$(An ordinal equal to its own union is either zero or a limit ordinal.
      (Contributed by NM, 1-Oct-2003.) $)
+
 ${
-	$v A $.
-	funizlim_0 $f class A $.
-	unizlim $p |- ( Ord A -> ( A = U. A <-> ( A = (/) \/ Lim A ) ) ) $= funizlim_0 word funizlim_0 funizlim_0 cuni wceq funizlim_0 c0 wceq funizlim_0 wlim wo funizlim_0 word funizlim_0 funizlim_0 cuni wceq funizlim_0 c0 wceq funizlim_0 wlim wo funizlim_0 word funizlim_0 funizlim_0 cuni wceq wa funizlim_0 c0 wceq funizlim_0 wlim funizlim_0 word funizlim_0 funizlim_0 cuni wceq funizlim_0 c0 wceq wn funizlim_0 wlim wi funizlim_0 word funizlim_0 c0 wceq wn funizlim_0 funizlim_0 cuni wceq funizlim_0 wlim funizlim_0 c0 wceq wn funizlim_0 c0 wne funizlim_0 word funizlim_0 funizlim_0 cuni wceq funizlim_0 wlim wi funizlim_0 c0 df-ne funizlim_0 word funizlim_0 c0 wne funizlim_0 funizlim_0 cuni wceq funizlim_0 wlim funizlim_0 wlim funizlim_0 word funizlim_0 c0 wne funizlim_0 funizlim_0 cuni wceq w3a funizlim_0 df-lim biimpri 3exp syl5bir com23 imp orrd ex funizlim_0 c0 wceq funizlim_0 funizlim_0 cuni wceq funizlim_0 wlim funizlim_0 c0 wceq c0 c0 cuni funizlim_0 funizlim_0 cuni c0 cuni c0 uni0 eqcomi funizlim_0 c0 wceq id funizlim_0 c0 unieq 3eqtr4a funizlim_0 limuni jaoi impbid1 $.
+	$v A  $.
+	f0_unizlim $f class A $.
+	p_unizlim $p |- ( Ord A -> ( A = U. A <-> ( A = (/) \/ Lim A ) ) ) $= f0_unizlim a_c0 a_df-ne f0_unizlim a_df-lim f0_unizlim a_wlim f0_unizlim a_word f0_unizlim a_c0 a_wne f0_unizlim f0_unizlim a_cuni a_wceq a_w3a p_biimpri f0_unizlim a_word f0_unizlim a_c0 a_wne f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_wlim p_3exp f0_unizlim a_c0 a_wceq a_wn f0_unizlim a_c0 a_wne f0_unizlim a_word f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_wlim a_wi p_syl5bir f0_unizlim a_word f0_unizlim a_c0 a_wceq a_wn f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_wlim p_com23 f0_unizlim a_word f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_c0 a_wceq a_wn f0_unizlim a_wlim a_wi p_imp f0_unizlim a_word f0_unizlim f0_unizlim a_cuni a_wceq a_wa f0_unizlim a_c0 a_wceq f0_unizlim a_wlim p_orrd f0_unizlim a_word f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_c0 a_wceq f0_unizlim a_wlim a_wo p_ex p_uni0 a_c0 a_cuni a_c0 p_eqcomi f0_unizlim a_c0 a_wceq p_id f0_unizlim a_c0 p_unieq f0_unizlim a_c0 a_wceq a_c0 a_c0 a_cuni f0_unizlim f0_unizlim a_cuni p_3eqtr4a f0_unizlim p_limuni f0_unizlim a_c0 a_wceq f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_wlim p_jaoi f0_unizlim a_word f0_unizlim f0_unizlim a_cuni a_wceq f0_unizlim a_c0 a_wceq f0_unizlim a_wlim a_wo p_impbid1 $.
 $}
-$( An ordinal number either equals zero or contains zero.  (Contributed by
+
+$(An ordinal number either equals zero or contains zero.  (Contributed by
      NM, 1-Jun-2004.) $)
+
 ${
-	$v A $.
-	fon0eqel_0 $f class A $.
-	on0eqel $p |- ( A e. On -> ( A = (/) \/ (/) e. A ) ) $= fon0eqel_0 con0 wcel c0 fon0eqel_0 wcel c0 fon0eqel_0 wceq wo fon0eqel_0 c0 wceq c0 fon0eqel_0 wcel wo fon0eqel_0 con0 wcel c0 fon0eqel_0 wss c0 fon0eqel_0 wcel c0 fon0eqel_0 wceq wo fon0eqel_0 0ss c0 con0 wcel fon0eqel_0 con0 wcel c0 fon0eqel_0 wss c0 fon0eqel_0 wcel c0 fon0eqel_0 wceq wo wb 0elon c0 fon0eqel_0 onsseleq mpan mpbii c0 fon0eqel_0 wcel c0 fon0eqel_0 wceq wo c0 fon0eqel_0 wcel fon0eqel_0 c0 wceq wo fon0eqel_0 c0 wceq c0 fon0eqel_0 wcel wo c0 fon0eqel_0 wceq fon0eqel_0 c0 wceq c0 fon0eqel_0 wcel c0 fon0eqel_0 eqcom orbi2i c0 fon0eqel_0 wcel fon0eqel_0 c0 wceq orcom bitri sylib $.
+	$v A  $.
+	f0_on0eqel $f class A $.
+	p_on0eqel $p |- ( A e. On -> ( A = (/) \/ (/) e. A ) ) $= f0_on0eqel p_0ss p_0elon a_c0 f0_on0eqel p_onsseleq a_c0 a_con0 a_wcel f0_on0eqel a_con0 a_wcel a_c0 f0_on0eqel a_wss a_c0 f0_on0eqel a_wcel a_c0 f0_on0eqel a_wceq a_wo a_wb p_mpan f0_on0eqel a_con0 a_wcel a_c0 f0_on0eqel a_wss a_c0 f0_on0eqel a_wcel a_c0 f0_on0eqel a_wceq a_wo p_mpbii a_c0 f0_on0eqel p_eqcom a_c0 f0_on0eqel a_wceq f0_on0eqel a_c0 a_wceq a_c0 f0_on0eqel a_wcel p_orbi2i a_c0 f0_on0eqel a_wcel f0_on0eqel a_c0 a_wceq p_orcom a_c0 f0_on0eqel a_wcel a_c0 f0_on0eqel a_wceq a_wo a_c0 f0_on0eqel a_wcel f0_on0eqel a_c0 a_wceq a_wo f0_on0eqel a_c0 a_wceq a_c0 f0_on0eqel a_wcel a_wo p_bitri f0_on0eqel a_con0 a_wcel a_c0 f0_on0eqel a_wcel a_c0 f0_on0eqel a_wceq a_wo f0_on0eqel a_c0 a_wceq a_c0 f0_on0eqel a_wcel a_wo p_sylib $.
 $}
-$( The singleton of the singleton of the empty set is not an ordinal (nor a
+
+$(The singleton of the singleton of the empty set is not an ordinal (nor a
      natural number by ~ omsson ).  It can be used to represent an "undefined"
      value for a partial operation on natural or ordinal numbers.  See also
      ~ onxpdisj .  (Contributed by NM, 21-May-2004.)  (Proof shortened by
      Andrew Salmon, 12-Aug-2011.) $)
+
 ${
-	snsn0non $p |- -. { { (/) } } e. On $= c0 csn csn con0 wcel c0 csn csn c0 wceq c0 c0 csn csn wcel wo c0 csn csn c0 wceq c0 c0 csn csn wcel c0 csn c0 csn csn wcel c0 csn csn c0 wceq wn c0 csn p0ex snid c0 csn csn c0 csn n0i ax-mp c0 c0 csn csn wcel c0 c0 csn wceq c0 c0 csn wceq c0 csn c0 wceq c0 c0 csn wcel c0 csn c0 wceq wn c0 0ex snid c0 csn c0 n0i ax-mp c0 c0 csn eqcom mtbir c0 c0 csn 0ex elsnc mtbir pm3.2ni c0 csn csn on0eqel mto $.
+	$v  $.
+	p_snsn0non $p |- -. { { (/) } } e. On $= p_p0ex a_c0 a_csn p_snid a_c0 a_csn a_csn a_c0 a_csn p_n0i a_c0 a_csn a_c0 a_csn a_csn a_wcel a_c0 a_csn a_csn a_c0 a_wceq a_wn a_ax-mp p_0ex a_c0 p_snid a_c0 a_csn a_c0 p_n0i a_c0 a_c0 a_csn a_wcel a_c0 a_csn a_c0 a_wceq a_wn a_ax-mp a_c0 a_c0 a_csn p_eqcom a_c0 a_c0 a_csn a_wceq a_c0 a_csn a_c0 a_wceq p_mtbir p_0ex a_c0 a_c0 a_csn p_elsnc a_c0 a_c0 a_csn a_csn a_wcel a_c0 a_c0 a_csn a_wceq p_mtbir a_c0 a_csn a_csn a_c0 a_wceq a_c0 a_c0 a_csn a_csn a_wcel p_pm3.2ni a_c0 a_csn a_csn p_on0eqel a_c0 a_csn a_csn a_con0 a_wcel a_c0 a_csn a_csn a_c0 a_wceq a_c0 a_c0 a_csn a_csn a_wcel a_wo p_mto $.
 $}
+
 

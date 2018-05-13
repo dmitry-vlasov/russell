@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Class_abstractions_(a_k_a__class_builders).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Class form not-free predicate
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,15 +10,15 @@ constant {
 	symbol F/_ ;;
 }
 
-/* Underlined not-free symbol. */
+/*Underlined not-free symbol. */
 
-/* Extend wff definition to include the not-free predicate for classes. */
+/*Extend wff definition to include the not-free predicate for classes. */
 
 rule wnfc (x : set, A : class) {
 	term : wff = # F/_ x A ;;
 }
 
-/* Justification theorem for ~ df-nfc .  (Contributed by Mario Carneiro,
+/*Justification theorem for ~ df-nfc .  (Contributed by Mario Carneiro,
        13-Oct-2016.) */
 
 theorem nfcjust (x : set, y : set, z : set, A : class) disjointed(x y z, y z A) {
@@ -33,7 +33,7 @@ proof of nfcjust {
 	qed prop 1 = step 4 ;;
 }
 
-/* Define the not-free predicate for classes.  This is read " ` x ` is not
+/*Define the not-free predicate for classes.  This is read " ` x ` is not
        free in ` A ` ".  Not-free means that the value of ` x ` cannot affect
        the value of ` A ` , e.g., any occurrence of ` x ` in ` A ` is
        effectively bound by a "for all" or something that expands to one (such
@@ -48,7 +48,7 @@ definition df-nfc (x : set, y : set, A : class) disjointed(x y, y A) {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Deduce that a class ` A ` does not have ` x ` free in it.
+/*Deduce that a class ` A ` does not have ` x ` free in it.
          (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfci (x : set, y : set, A : class) disjointed(x y, y A) {
@@ -63,7 +63,7 @@ proof of nfci {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce that a class ` A ` does not have ` x ` free in it.
+/*Deduce that a class ` A ` does not have ` x ` free in it.
          (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfcii (x : set, y : set, A : class) disjointed(x y, y A) {
@@ -78,7 +78,7 @@ proof of nfcii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+/*Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem nfcr (x : set, y : set, A : class) disjointed(x y, y A) {
@@ -92,7 +92,7 @@ proof of nfcr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+/*Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem nfcrii (x : set, y : set, A : class) disjointed(x y z, z A) {
@@ -110,11 +110,11 @@ proof of nfcrii {
 	qed prop 1 = step 4 ;;
 }
 
-/* Consequence of the not-free predicate.  (Note that unlike ~ nfcr , this
+/*Consequence of the not-free predicate.  (Note that unlike ~ nfcr , this
        does not require ` y ` and ` A ` to be disjoint.)  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
-theorem nfcri (x : set, y : set, A : class) disjointed(x y) {
+theorem nfcri (x : set, y : set, A : class) disjointed(x y, A) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- F/ x y ∈ A ;;
@@ -126,7 +126,7 @@ proof of nfcri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce that a class ` A ` does not have ` x ` free in it.  (Contributed
+/*Deduce that a class ` A ` does not have ` x ` free in it.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfcd (ph : wff, x : set, y : set, A : class) disjointed(x y, y A) {
@@ -143,7 +143,7 @@ proof of nfcd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for class not-free.  (Contributed by Mario Carneiro,
+/*Equality theorem for class not-free.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem nfceqi (x : set, A : class, B : class) disjointed(x y, y A, y B) {
@@ -163,10 +163,10 @@ proof of nfceqi {
 	qed prop 1 = step 6 ;;
 }
 
-/* A utility lemma to transfer a bound-variable hypothesis builder into a
+/*A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
-theorem nfcxfr (x : set, A : class, B : class)  {
+theorem nfcxfr (x : set, A : class, B : class) disjointed(x, A, B) {
 	hyp 1 : wff = |- A = B ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -179,10 +179,10 @@ proof of nfcxfr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A utility lemma to transfer a bound-variable hypothesis builder into a
+/*A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
-theorem nfcxfrd (ph : wff, x : set, A : class, B : class)  {
+theorem nfcxfrd (ph : wff, x : set, A : class, B : class) disjointed(x, A, B) {
 	hyp 1 : wff = |- A = B ;;
 	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
 	-----------------------
@@ -195,7 +195,7 @@ proof of nfcxfrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality theorem for effectively not free.  (Contributed by Mario
+/*An equality theorem for effectively not free.  (Contributed by Mario
        Carneiro, 14-Oct-2016.) */
 
 theorem nfceqdf (ph : wff, x : set, A : class, B : class) disjointed(x y, A y, B y, ph y) {
@@ -216,7 +216,7 @@ proof of nfceqdf {
 	qed prop 1 = step 6 ;;
 }
 
-/* If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
+/*If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfcv (x : set, A : class) disjointed(x y A) {
@@ -230,7 +230,7 @@ proof of nfcv {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
+/*If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
        (Contributed by Mario Carneiro, 7-Oct-2016.) */
 
 theorem nfcvd (ph : wff, x : set, A : class) disjointed(x A) {
@@ -243,10 +243,10 @@ proof of nfcvd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) */
 
-theorem nfab1 (ph : wff, x : set) disjointed(x y, y ph) {
+theorem nfab1 (ph : wff, x : set) disjointed(x y, y, y ph) {
 	prop 1 : wff = |- F/_ x { x | ph } ;;
 }
 
@@ -257,10 +257,10 @@ proof of nfab1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` x ` is bound in ` F/_ x A ` .  (Contributed by Mario Carneiro,
+/*` x ` is bound in ` F/_ x A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
-theorem nfnfc1 (x : set, A : class) disjointed(x y, y A) {
+theorem nfnfc1 (x : set, A : class) disjointed(x y, y A, y) {
 	prop 1 : wff = |- F/ x F/_ x A ;;
 }
 
@@ -273,7 +273,7 @@ proof of nfnfc1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfab (ph : wff, x : set, y : set) disjointed(x z, y z, z ph) {
@@ -289,7 +289,7 @@ proof of nfab {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 14-Oct-2016.) */
 
 theorem nfaba1 (ph : wff, x : set, y : set)  {
@@ -302,10 +302,10 @@ proof of nfaba1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for ` F/_ y A ` .  (Contributed by Mario Carneiro,
+/*Hypothesis builder for ` F/_ y A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
-theorem nfnfc (x : set, y : set, A : class) disjointed(x z, y z, z A) {
+theorem nfnfc (x : set, y : set, A : class) disjointed(x z, y z, z A, z) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- F/ x F/_ y A ;;
@@ -321,10 +321,10 @@ proof of nfnfc {
 	qed prop 1 = step 5 ;;
 }
 
-/* Hypothesis builder for equality.  (Contributed by Mario Carneiro,
+/*Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
-theorem nfeq (x : set, A : class, B : class) disjointed(x z, z A, z B) {
+theorem nfeq (x : set, A : class, B : class) disjointed(x z, z, z A, z B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -342,10 +342,10 @@ proof of nfeq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
+/*Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
-theorem nfel (x : set, A : class, B : class) disjointed(x z, z A, z B) {
+theorem nfel (x : set, A : class, B : class) disjointed(x z, z, z A, z B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -364,7 +364,7 @@ proof of nfel {
 	qed prop 1 = step 7 ;;
 }
 
-/* Hypothesis builder for equality, special case.  (Contributed by Mario
+/*Hypothesis builder for equality, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) */
 
 theorem nfeq1 (x : set, A : class, B : class) disjointed(x B) {
@@ -379,7 +379,7 @@ proof of nfeq1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for elementhood, special case.  (Contributed by Mario
+/*Hypothesis builder for elementhood, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) */
 
 theorem nfel1 (x : set, A : class, B : class) disjointed(x B) {
@@ -394,7 +394,7 @@ proof of nfel1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for equality, special case.  (Contributed by Mario
+/*Hypothesis builder for equality, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) */
 
 theorem nfeq2 (x : set, A : class, B : class) disjointed(x A) {
@@ -409,7 +409,7 @@ proof of nfeq2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for elementhood, special case.  (Contributed by Mario
+/*Hypothesis builder for elementhood, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) */
 
 theorem nfel2 (x : set, A : class, B : class) disjointed(x A) {
@@ -424,10 +424,10 @@ proof of nfel2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+/*Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
-theorem nfcrd (ph : wff, x : set, y : set, A : class) disjointed(x y, y A) {
+theorem nfcrd (ph : wff, x : set, y : set, A : class) disjointed(x y, y A, y) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → F/ x y ∈ A ) ;;
@@ -439,7 +439,7 @@ proof of nfcrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for equality.  (Contributed by Mario Carneiro,
+/*Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        7-Oct-2016.) */
 
 theorem nfeqd (ph : wff, x : set, A : class, B : class) disjointed(x y, y A, y B, y ph) {
@@ -461,7 +461,7 @@ proof of nfeqd {
 	qed prop 1 = step 7 ;;
 }
 
-/* Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
+/*Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        7-Oct-2016.) */
 
 theorem nfeld (ph : wff, x : set, A : class, B : class) disjointed(x y, y A, y B, y ph) {
@@ -484,10 +484,10 @@ proof of nfeld {
 	qed prop 1 = step 8 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) */
 
-theorem drnfc1 (x : set, y : set, A : class, B : class) disjointed(w x, w y, w A, w B) {
+theorem drnfc1 (x : set, y : set, A : class, B : class) disjointed(w x, w y, w, w A, w B) {
 	hyp 1 : wff = |- ( ∀ x x = y → A = B ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∀ x x = y → ( F/_ x A ↔ F/_ y B ) ) ;;
@@ -504,7 +504,7 @@ proof of drnfc1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) */
 
 theorem drnfc2 (x : set, y : set, z : set, A : class, B : class) disjointed(w x, w y, w z, w A, w B) {
@@ -524,7 +524,7 @@ proof of drnfc2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 8-Oct-2016.) */
 
 theorem nfabd2 (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, z ph, z ps) {
@@ -552,7 +552,7 @@ proof of nfabd2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 8-Oct-2016.) */
 
 theorem nfabd (ph : wff, ps : wff, x : set, y : set)  {
@@ -568,7 +568,7 @@ proof of nfabd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction form of ~ dvelimc .  (Contributed by Mario Carneiro,
+/*Deduction form of ~ dvelimc .  (Contributed by Mario Carneiro,
        8-Oct-2016.) */
 
 theorem dvelimdc (ph : wff, x : set, y : set, z : set, A : class, B : class) disjointed(w x, w y, w z, w A, w B, w ph) {
@@ -595,7 +595,7 @@ proof of dvelimdc {
 	qed prop 1 = step 9 ;;
 }
 
-/* Version of ~ dvelim for classes.  (Contributed by Mario Carneiro,
+/*Version of ~ dvelim for classes.  (Contributed by Mario Carneiro,
        8-Oct-2016.) */
 
 theorem dvelimc (x : set, y : set, z : set, A : class, B : class)  {
@@ -617,7 +617,7 @@ proof of dvelimc {
 	qed prop 1 = step 7 ;;
 }
 
-/* If ` x ` and ` y ` are distinct, then ` x ` is not free in ` y ` .
+/*If ` x ` and ` y ` are distinct, then ` x ` is not free in ` y ` .
        (Contributed by Mario Carneiro, 8-Oct-2016.) */
 
 theorem nfcvf (x : set, y : set) disjointed(x z, y z) {
@@ -633,10 +633,10 @@ proof of nfcvf {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` and ` y ` are distinct, then ` y ` is not free in ` x ` .
+/*If ` x ` and ` y ` are distinct, then ` y ` is not free in ` x ` .
        (Contributed by Mario Carneiro, 5-Dec-2016.) */
 
-theorem nfcvf2 (x : set, y : set)  {
+theorem nfcvf2 (x : set, y : set) disjointed(x, y) {
 	prop 1 : wff = |- ( ¬ ∀ x x = y → F/_ y x ) ;;
 }
 
@@ -646,7 +646,7 @@ proof of nfcvf2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Establish equality between classes, using bound-variable hypotheses
+/*Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
@@ -672,11 +672,11 @@ proof of cleqf {
 	qed prop 1 = step 10 ;;
 }
 
-/* A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
+/*A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
        (Contributed by NM, 5-Sep-2011.)  (Revised by Mario Carneiro,
        7-Oct-2016.) */
 
-theorem abid2f (x : set, A : class)  {
+theorem abid2f (x : set, A : class) disjointed(A, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- { x | x ∈ A } = A ;;
@@ -695,7 +695,7 @@ proof of abid2f {
 	qed prop 1 = step 9 ;;
 }
 
-/* Theorem to move a substitution in and out of a class abstraction.
+/*Theorem to move a substitution in and out of a class abstraction.
        (Contributed by NM, 27-Sep-2003.)  (Revised by Mario Carneiro,
        7-Oct-2016.) */
 

@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_empty_set.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            "Weak deduction theorem" for set theory
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -71,25 +71,25 @@ import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_t
 
 */
 
-/* These lemmas are used to convert hypotheses into antecedents,
+/*These lemmas are used to convert hypotheses into antecedents,
      when there is at least one class making the hypothesis true. */
 
-/* Declare new constant symbols. */
+/*Declare new constant symbols. */
 
 constant {
 	symbol if ;;
 }
 
-/* Conditional operator (was "ded" for "deduction class"). */
+/*Conditional operator (was "ded" for "deduction class"). */
 
-/* Extend class notation to include the conditional operator.  See ~ df-if
+/*Extend class notation to include the conditional operator.  See ~ df-if
      for a description.  (In older databases this was denoted "ded".) */
 
 rule cif (ph : wff, A : class, B : class) {
 	term : class = # if ( ph , A , B ) ;;
 }
 
-/* Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
+/*Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        ` ph ` then ` A ` else ` B ` ."  See ~ iftrue and ~ iffalse for its
        values.  In mathematical literature, this operator is rarely defined
        formally but is implicit in informal definitions such as "let f(x)=0 if
@@ -113,11 +113,11 @@ definition df-if (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A,
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* An alternate definition of the conditional operator ~ df-if with one
+/*An alternate definition of the conditional operator ~ df-if with one
        fewer connectives (but probably less intuitive to understand).
        (Contributed by NM, 30-Jan-2006.) */
 
-theorem dfif2 (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B) {
+theorem dfif2 (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B, x) {
 	prop 1 : wff = |- if ( ph , A , B ) = { x | ( ( x ∈ B → ph ) → ( x ∈ A ∧ ph ) ) } ;;
 }
 
@@ -133,10 +133,10 @@ proof of dfif2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* An alternate definition of the conditional operator ~ df-if as a simple
+/*An alternate definition of the conditional operator ~ df-if as a simple
        class abstraction.  (Contributed by Mario Carneiro, 8-Sep-2013.) */
 
-theorem dfif6 (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B) {
+theorem dfif6 (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B, x) {
 	prop 1 : wff = |- if ( ph , A , B ) = ( { x ∈ A | ph } ∪ { x ∈ B | ¬ ph } ) ;;
 }
 
@@ -150,7 +150,7 @@ proof of dfif6 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for conditional operator.  (Contributed by NM,
+/*Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
 
 theorem ifeq1 (ph : wff, A : class, B : class, C : class) disjointed(x ph, x A, x B, x C) {
@@ -167,7 +167,7 @@ proof of ifeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for conditional operator.  (Contributed by NM,
+/*Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
 
 theorem ifeq2 (ph : wff, A : class, B : class, C : class) disjointed(x ph, x A, x B, x C) {
@@ -184,11 +184,11 @@ proof of ifeq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Value of the conditional operator when its first argument is true.
+/*Value of the conditional operator when its first argument is true.
        (Contributed by NM, 15-May-1999.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) */
 
-theorem iftrue (ph : wff, A : class, B : class) disjointed(x ph, x A, x B) {
+theorem iftrue (ph : wff, A : class, B : class) disjointed(x ph, x A, x B, x) {
 	prop 1 : wff = |- ( ph → if ( ph , A , B ) = A ) ;;
 }
 
@@ -201,10 +201,10 @@ proof of iftrue {
 	qed prop 1 = step 4 ;;
 }
 
-/* Value of the conditional operator when its first argument is false.
+/*Value of the conditional operator when its first argument is false.
        (Contributed by NM, 14-Aug-1999.) */
 
-theorem iffalse (ph : wff, A : class, B : class) disjointed(x ph, x A, x B) {
+theorem iffalse (ph : wff, A : class, B : class) disjointed(x ph, x A, x B, x) {
 	prop 1 : wff = |- ( ¬ ph → if ( ph , A , B ) = B ) ;;
 }
 
@@ -217,7 +217,7 @@ proof of iffalse {
 	qed prop 1 = step 4 ;;
 }
 
-/* When values are unequal, but an "if" condition checks if they are equal,
+/*When values are unequal, but an "if" condition checks if they are equal,
      then the "false" branch results.  This is a simple utility to provide a
      slight shortening and simplification of proofs vs. applying ~ iffalse
      directly in this case.  It happens, e.g., in ~ oevn0 .  (Contributed by
@@ -234,10 +234,10 @@ proof of ifnefalse {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribute a function over an if-clause.  (Contributed by Mario
+/*Distribute a function over an if-clause.  (Contributed by Mario
        Carneiro, 14-Aug-2013.) */
 
-theorem ifsb (ph : wff, A : class, B : class, C : class, D : class, E : class)  {
+theorem ifsb (ph : wff, A : class, B : class, C : class, D : class, E : class) disjointed(A, B, C) {
 	hyp 1 : wff = |- ( if ( ph , A , B ) = A → C = D ) ;;
 	hyp 2 : wff = |- ( if ( ph , A , B ) = B → C = E ) ;;
 	-----------------------
@@ -257,7 +257,7 @@ proof of ifsb {
 	qed prop 1 = step 9 ;;
 }
 
-/* Alternate definition of the conditional operator ~ df-if .  Note that
+/*Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.)  (Revised by Mario Carneiro,
        8-Sep-2013.) */
@@ -291,11 +291,11 @@ proof of dfif3 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Alternate definition of the conditional operator ~ df-if .  Note that
+/*Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.) */
 
-theorem dfif4 (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+theorem dfif4 (ph : wff, x : set, A : class, B : class, C : class) disjointed(A, B, x ph) {
 	hyp 1 : wff = |- C = { x | ph } ;;
 	-----------------------
 	prop 1 : wff = |- if ( ph , A , B ) = ( ( A ∪ B ) ∩ ( ( A ∪ ( _V ∖ C ) ) ∩ ( B ∪ C ) ) ) ;;
@@ -318,11 +318,11 @@ proof of dfif4 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Alternate definition of the conditional operator ~ df-if .  Note that
+/*Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false (see also
        ~ abvor0 ).  (Contributed by G&eacute;rard Lang, 18-Aug-2013.) */
 
-theorem dfif5 (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+theorem dfif5 (ph : wff, x : set, A : class, B : class, C : class) disjointed(A, B, x ph) {
 	hyp 1 : wff = |- C = { x | ph } ;;
 	-----------------------
 	prop 1 : wff = |- if ( ph , A , B ) = ( ( A ∩ B ) ∪ ( ( ( A ∖ B ) ∩ C ) ∪ ( ( B ∖ A ) ∩ ( _V ∖ C ) ) ) ) ;;
@@ -381,7 +381,7 @@ proof of dfif5 {
 	qed prop 1 = step 49 ;;
 }
 
-/* Equality theorem for conditional operators.  (Contributed by NM,
+/*Equality theorem for conditional operators.  (Contributed by NM,
      1-Sep-2004.) */
 
 theorem ifeq12 (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -395,7 +395,7 @@ proof of ifeq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for conditional operator.  (Contributed by NM,
+/*Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) */
 
 theorem ifeq1d (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -410,7 +410,7 @@ proof of ifeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for conditional operator.  (Contributed by NM,
+/*Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) */
 
 theorem ifeq2d (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -425,7 +425,7 @@ proof of ifeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for conditional operator.  (Contributed by NM,
+/*Equality deduction for conditional operator.  (Contributed by NM,
        24-Mar-2015.) */
 
 theorem ifeq12d (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
@@ -442,7 +442,7 @@ proof of ifeq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalence theorem for conditional operators.  (Contributed by Raph
+/*Equivalence theorem for conditional operators.  (Contributed by Raph
      Levien, 15-Jan-2004.) */
 
 theorem ifbi (ph : wff, ps : wff, A : class, B : class)  {
@@ -464,7 +464,7 @@ proof of ifbi {
 	qed prop 1 = step 11 ;;
 }
 
-/* Equivalence deduction for conditional operators.  (Contributed by NM,
+/*Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Apr-2005.) */
 
 theorem ifbid (ph : wff, ps : wff, ch : wff, A : class, B : class)  {
@@ -479,7 +479,7 @@ proof of ifbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equivalence/equality inference for conditional operators.  (Contributed
+/*Equivalence/equality inference for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) */
 
 theorem ifbieq2i (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -498,7 +498,7 @@ proof of ifbieq2i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equivalence/equality deduction for conditional operators.  (Contributed
+/*Equivalence/equality deduction for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) */
 
 theorem ifbieq2d (ph : wff, ps : wff, ch : wff, A : class, B : class, C : class)  {
@@ -515,7 +515,7 @@ proof of ifbieq2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalence deduction for conditional operators.  (Contributed by NM,
+/*Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Mar-2013.) */
 
 theorem ifbieq12i (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
@@ -534,7 +534,7 @@ proof of ifbieq12i {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equivalence deduction for conditional operators.  (Contributed by Jeff
+/*Equivalence deduction for conditional operators.  (Contributed by Jeff
        Madsen, 2-Sep-2009.) */
 
 theorem ifbieq12d (ph : wff, ps : wff, ch : wff, A : class, B : class, C : class, D : class)  {
@@ -552,7 +552,7 @@ proof of ifbieq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
+/*Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 13-Oct-2016.) */
 
 theorem nfifd (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x y, y A, y B, y ph, y ps) {
@@ -577,11 +577,11 @@ proof of nfifd {
 	qed prop 1 = step 9 ;;
 }
 
-/* Bound-variable hypothesis builder for a conditional operator.
+/*Bound-variable hypothesis builder for a conditional operator.
        (Contributed by NM, 16-Feb-2005.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) */
 
-theorem nfif (ph : wff, x : set, A : class, B : class)  {
+theorem nfif (ph : wff, x : set, A : class, B : class) disjointed(x, A, B, ph) {
 	hyp 1 : wff = |- F/ x ph ;;
 	hyp 2 : wff = |- F/_ x A ;;
 	hyp 3 : wff = |- F/_ x B ;;
@@ -598,7 +598,7 @@ proof of nfif {
 	qed prop 1 = step 5 ;;
 }
 
-/* Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
+/*Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
 
 theorem ifeq1da (ph : wff, ps : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → A = B ) ;;
@@ -616,7 +616,7 @@ proof of ifeq1da {
 	qed prop 1 = step 6 ;;
 }
 
-/* Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
+/*Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
 
 theorem ifeq2da (ph : wff, ps : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ( ph ∧ ¬ ps ) → A = B ) ;;
@@ -634,7 +634,7 @@ proof of ifeq2da {
 	qed prop 1 = step 6 ;;
 }
 
-/* Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
+/*Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
 
 theorem ifclda (ph : wff, ps : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → A ∈ C ) ;;
@@ -654,7 +654,7 @@ proof of ifclda {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distribute proper substitution through the conditional operator.
+/*Distribute proper substitution through the conditional operator.
        (Contributed by NM, 24-Feb-2013.)  (Revised by Mario Carneiro,
        14-Nov-2016.) */
 
@@ -684,7 +684,7 @@ proof of csbifg {
 	qed prop 1 = step 17 ;;
 }
 
-/* Elimination of a conditional operator contained in a wff ` ps ` .
+/*Elimination of a conditional operator contained in a wff ` ps ` .
        (Contributed by NM, 15-Feb-2005.) */
 
 theorem elimif (ph : wff, ps : wff, ch : wff, th : wff, A : class, B : class)  {
@@ -709,7 +709,7 @@ proof of elimif {
 	qed prop 1 = step 11 ;;
 }
 
-/* A wff ` th ` containing a conditional operator is true when both of
+/*A wff ` th ` containing a conditional operator is true when both of
          its cases are true.  (Contributed by NM, 15-Feb-2015.) */
 
 theorem ifbothda (ph : wff, ps : wff, ch : wff, th : wff, et : wff, A : class, B : class)  {
@@ -736,7 +736,7 @@ proof of ifbothda {
 	qed prop 1 = step 11 ;;
 }
 
-/* A wff ` th ` containing a conditional operator is true when both of its
+/*A wff ` th ` containing a conditional operator is true when both of its
        cases are true.  (Contributed by NM, 3-Sep-2006.)  (Revised by Mario
        Carneiro, 15-Feb-2015.) */
 
@@ -754,7 +754,7 @@ proof of ifboth {
 	qed prop 1 = step 3 ;;
 }
 
-/* Identical true and false arguments in the conditional operator.
+/*Identical true and false arguments in the conditional operator.
      (Contributed by NM, 18-Apr-2005.) */
 
 theorem ifid (ph : wff, A : class)  {
@@ -768,7 +768,7 @@ proof of ifid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Expansion of an equality with a conditional operator.  (Contributed by NM,
+/*Expansion of an equality with a conditional operator.  (Contributed by NM,
      14-Feb-2005.) */
 
 theorem eqif (ph : wff, A : class, B : class, C : class)  {
@@ -782,7 +782,7 @@ proof of eqif {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a conditional operator.  (Contributed by NM,
+/*Membership in a conditional operator.  (Contributed by NM,
      14-Feb-2005.) */
 
 theorem elif (ph : wff, A : class, B : class, C : class)  {
@@ -796,7 +796,7 @@ proof of elif {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership of a conditional operator.  (Contributed by NM,
+/*Membership of a conditional operator.  (Contributed by NM,
      10-Sep-2005.) */
 
 theorem ifel (ph : wff, A : class, B : class, C : class)  {
@@ -810,7 +810,7 @@ proof of ifel {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership (closure) of a conditional operator.  (Contributed by NM,
+/*Membership (closure) of a conditional operator.  (Contributed by NM,
      4-Apr-2005.) */
 
 theorem ifcl (ph : wff, A : class, B : class, C : class)  {
@@ -824,7 +824,7 @@ proof of ifcl {
 	qed prop 1 = step 3 ;;
 }
 
-/* The possible values of a conditional operator.  (Contributed by NM,
+/*The possible values of a conditional operator.  (Contributed by NM,
      17-Jun-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem ifeqor (ph : wff, A : class, B : class)  {
@@ -840,7 +840,7 @@ proof of ifeqor {
 	qed prop 1 = step 5 ;;
 }
 
-/* Negating the first argument swaps the last two arguments of a conditional
+/*Negating the first argument swaps the last two arguments of a conditional
      operator.  (Contributed by NM, 21-Jun-2007.) */
 
 theorem ifnot (ph : wff, A : class, B : class)  {
@@ -860,7 +860,7 @@ proof of ifnot {
 	qed prop 1 = step 9 ;;
 }
 
-/* Rewrite a conjunction in an if statement as two nested conditionals.
+/*Rewrite a conjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) */
 
 theorem ifan (ph : wff, ps : wff, A : class, B : class)  {
@@ -882,7 +882,7 @@ proof of ifan {
 	qed prop 1 = step 11 ;;
 }
 
-/* Rewrite a disjunction in an if statement as two nested conditionals.
+/*Rewrite a disjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) */
 
 theorem ifor (ph : wff, ps : wff, A : class, B : class)  {
@@ -902,7 +902,7 @@ proof of ifor {
 	qed prop 1 = step 9 ;;
 }
 
-/* Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
+/*Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        become an antecedent.  We assume that a proof exists for ` ph ` when the
        class variable ` A ` is replaced with a specific class ` B ` .  The
        hypothesis ` ch ` should be assigned to the inference, and the
@@ -912,7 +912,7 @@ proof of ifor {
        Theorem ~ http://us.metamath.org/mpeuni/mmdeduction.html .  (Contributed
        by NM, 15-May-1999.) */
 
-theorem dedth (ph : wff, ps : wff, ch : wff, A : class, B : class)  {
+theorem dedth (ph : wff, ps : wff, ch : wff, A : class, B : class) disjointed(A, B, ph) {
 	hyp 1 : wff = |- ( A = if ( ph , A , B ) → ( ps ↔ ch ) ) ;;
 	hyp 2 : wff = |- ch ;;
 	-----------------------
@@ -927,7 +927,7 @@ proof of dedth {
 	qed prop 1 = step 4 ;;
 }
 
-/* Weak deduction theorem eliminating two hypotheses.  This theorem is
+/*Weak deduction theorem eliminating two hypotheses.  This theorem is
        simpler to use than ~ dedth2v but requires that each hypothesis has
        exactly one class variable.  See also comments in ~ dedth .
        (Contributed by NM, 15-May-1999.) */
@@ -948,7 +948,7 @@ proof of dedth2h {
 	qed prop 1 = step 4 ;;
 }
 
-/* Weak deduction theorem eliminating three hypotheses.  See comments in
+/*Weak deduction theorem eliminating three hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 15-May-1999.) */
 
 theorem dedth3h (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -968,7 +968,7 @@ proof of dedth3h {
 	qed prop 1 = step 4 ;;
 }
 
-/* Weak deduction theorem eliminating four hypotheses.  See comments in
+/*Weak deduction theorem eliminating four hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 16-May-1999.) */
 
 theorem dedth4h (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class)  {
@@ -990,7 +990,7 @@ proof of dedth4h {
 	qed prop 1 = step 5 ;;
 }
 
-/* Weak deduction theorem for eliminating a hypothesis with 2 class
+/*Weak deduction theorem for eliminating a hypothesis with 2 class
        variables.  Note: if the hypothesis can be separated into two
        hypotheses, each with one class variable, then ~ dedth2h is simpler to
        use.  See also comments in ~ dedth .  (Contributed by NM, 13-Aug-1999.)
@@ -1010,7 +1010,7 @@ proof of dedth2v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Weak deduction theorem for eliminating a hypothesis with 3 class
+/*Weak deduction theorem for eliminating a hypothesis with 3 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        13-Aug-1999.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) */
 
@@ -1030,7 +1030,7 @@ proof of dedth3v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Weak deduction theorem for eliminating a hypothesis with 4 class
+/*Weak deduction theorem for eliminating a hypothesis with 4 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        21-Apr-2007.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) */
 
@@ -1051,7 +1051,7 @@ proof of dedth4v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Eliminate a hypothesis containing class variable ` A ` when it is known
+/*Eliminate a hypothesis containing class variable ` A ` when it is known
        for a specific class ` B ` .  For more information, see comments in
        ~ dedth .  (Contributed by NM, 15-May-1999.) */
 
@@ -1076,7 +1076,7 @@ proof of elimhyp {
 	qed prop 1 = step 9 ;;
 }
 
-/* Eliminate a hypothesis containing 2 class variables.  (Contributed by
+/*Eliminate a hypothesis containing 2 class variables.  (Contributed by
        NM, 14-Aug-1999.) */
 
 theorem elimhyp2v (ph : wff, ch : wff, th : wff, ta : wff, et : wff, A : class, B : class, C : class, D : class)  {
@@ -1110,7 +1110,7 @@ proof of elimhyp2v {
 	qed prop 1 = step 17 ;;
 }
 
-/* Eliminate a hypothesis containing 3 class variables.  (Contributed by
+/*Eliminate a hypothesis containing 3 class variables.  (Contributed by
        NM, 14-Aug-1999.) */
 
 theorem elimhyp3v (ph : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -1152,7 +1152,7 @@ proof of elimhyp3v {
 	qed prop 1 = step 23 ;;
 }
 
-/* Eliminate a hypothesis containing 4 class variables (for use with the
+/*Eliminate a hypothesis containing 4 class variables (for use with the
        weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) */
 
 theorem elimhyp4v (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class)  {
@@ -1204,7 +1204,7 @@ proof of elimhyp4v {
 	qed prop 1 = step 31 ;;
 }
 
-/* Eliminate a membership hypothesis for weak deduction theorem, when
+/*Eliminate a membership hypothesis for weak deduction theorem, when
        special case ` B e. C ` is provable.  (Contributed by NM,
        15-May-1999.) */
 
@@ -1221,7 +1221,7 @@ proof of elimel {
 	qed prop 1 = step 3 ;;
 }
 
-/* Version of ~ elimhyp where the hypothesis is deduced from the final
+/*Version of ~ elimhyp where the hypothesis is deduced from the final
        antecedent.  See ~ ghomgrplem for an example of its use.  (Contributed
        by Paul Chapman, 25-Mar-2008.) */
 
@@ -1247,7 +1247,7 @@ proof of elimdhyp {
 	qed prop 1 = step 9 ;;
 }
 
-/* Transform a hypothesis ` ps ` that we want to keep (but contains the
+/*Transform a hypothesis ` ps ` that we want to keep (but contains the
        same class variable ` A ` used in the eliminated hypothesis) for use
        with the weak deduction theorem.  (Contributed by NM, 15-May-1999.) */
 
@@ -1266,7 +1266,7 @@ proof of keephyp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Keep a hypothesis containing 2 class variables (for use with the weak
+/*Keep a hypothesis containing 2 class variables (for use with the weak
        deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) */
 
 theorem keephyp2v (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, A : class, B : class, C : class, D : class)  {
@@ -1301,7 +1301,7 @@ proof of keephyp2v {
 	qed prop 1 = step 17 ;;
 }
 
-/* Keep a hypothesis containing 3 class variables.  (Contributed by NM,
+/*Keep a hypothesis containing 3 class variables.  (Contributed by NM,
        27-Sep-1999.) */
 
 theorem keephyp3v (ph : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -1344,7 +1344,7 @@ proof of keephyp3v {
 	qed prop 1 = step 23 ;;
 }
 
-/* Keep a membership hypothesis for weak deduction theorem, when special
+/*Keep a membership hypothesis for weak deduction theorem, when special
        case ` B e. C ` is provable.  (Contributed by NM, 14-Aug-1999.) */
 
 theorem keepel (ph : wff, A : class, B : class, C : class)  {
@@ -1361,7 +1361,7 @@ proof of keepel {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) */
+/*Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) */
 
 theorem ifex (ph : wff, A : class, B : class)  {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -1375,7 +1375,7 @@ proof of ifex {
 	qed prop 1 = step 1 ;;
 }
 
-/* Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) */
+/*Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) */
 
 theorem ifexg (ph : wff, A : class, B : class, V : class, W : class) disjointed(A x y, B y, ph x y) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → if ( ph , A , B ) ∈ _V ) ;;

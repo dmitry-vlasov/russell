@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Russell_s_Paradox.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Proper substitution of classes for sets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,7 +14,7 @@ constant {
 	symbol ]. ;;
 }
 
-/* Extend wff notation to include the proper substitution of a class for a
+/*Extend wff notation to include the proper substitution of a class for a
      set.  Read this notation as "the proper substitution of class ` A ` for
      set variable ` x ` in wff ` ph ` ." */
 
@@ -22,7 +22,7 @@ rule wsbc (ph : wff, x : set, A : class) {
 	term : wff = # [. A / x ]. ph ;;
 }
 
-/* Define the proper substitution of a class for a set.
+/*Define the proper substitution of a class for a set.
 
      When ` A ` is a proper class, our definition evaluates to false.  This is
      somewhat arbitrary: we could have, instead, chosen the conclusion of
@@ -62,9 +62,9 @@ definition df-sbc (ph : wff, x : set, A : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @( Extend wff notation to include the proper substitution of a class for a
+/*@( Extend wff notation to include the proper substitution of a class for a
      set.  This definition "overloads" the previously defined variable
      substitution ~ wsb (where the first argument is a set variable rather
      than a class variable).  We take care to ensure that this new definition
@@ -73,9 +73,9 @@ definition df-sbc (ph : wff, x : set, A : class)  {
   wsbcSBC @a wff [ A / x ] ph @.
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+/*This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, provides us with a weak definition
      of the proper substitution of a class for a set.  Since our ~ df-sbc does
      not result in the same behavior as Quine's for proper classes, if we
@@ -103,7 +103,7 @@ proof of dfsbcq {
 	qed prop 1 = step 4 ;;
 }
 
-/* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+/*This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, relates logic substitution ~ df-sb
      and substitution for class variables ~ df-sbc .  Unlike Quine, we use a
      different syntax for each in order to avoid overloading it.  See remarks
@@ -122,7 +122,7 @@ proof of dfsbcq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
+/*Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
      ~ df-sbc is a set variable.  This theorem lets us reuse theorems based on
      ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
      31-Dec-2016.)  (Proof modification is discouraged.) */
@@ -138,7 +138,7 @@ proof of sbsbc {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for class substitution.  (Contributed by Mario
+/*Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) */
 
 theorem sbceq1d (ph : wff, x : set, A : class, B : class)  {
@@ -153,7 +153,7 @@ proof of sbceq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for class substitution.  (Contributed by Mario
+/*Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) */
 
 theorem sbceq1dd (ph : wff, x : set, A : class, B : class)  {
@@ -169,7 +169,7 @@ proof of sbceq1dd {
 	qed prop 1 = step 2 ;;
 }
 
-/* This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
+/*This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
        (see its comments) and ~ dfsbcq2 .  (Contributed by NM, 18-Nov-2008.)
        (Proof shortened by Andrew Salmon, 29-Jun-2011.)
        (Proof modification is discouraged.) */
@@ -191,7 +191,7 @@ proof of sbc8g {
 	qed prop 1 = step 8 ;;
 }
 
-/* The disjunction of two equivalences for class substitution does not
+/*The disjunction of two equivalences for class substitution does not
        require a class existence hypothesis.  This theorem tells us that there
        are only 2 possibilities for ` [ A / x ] ph ` behavior at proper
        classes, matching the ~ sbc5 (false) and ~ sbc6 (true) conclusions.
@@ -237,7 +237,7 @@ proof of sbc2or {
 	qed prop 1 = step 25 ;;
 }
 
-/* By our definition of proper substitution, it can only be true if the
+/*By our definition of proper substitution, it can only be true if the
      substituted expression is a set.  (Contributed by Mario Carneiro,
      13-Oct-2016.) */
 
@@ -252,7 +252,7 @@ proof of sbcex {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for class substitution.  Class version of ~ sbequ12 .
+/*Equality theorem for class substitution.  Class version of ~ sbequ12 .
      (Contributed by NM, 26-Sep-2003.) */
 
 theorem sbceq1a (ph : wff, x : set, A : class)  {
@@ -266,7 +266,7 @@ proof of sbceq1a {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for class substitution.  Class version of ~ sbequ12r .
+/*Equality theorem for class substitution.  Class version of ~ sbequ12r .
      (Contributed by NM, 4-Jan-2017.) */
 
 theorem sbceq2a (ph : wff, x : set, A : class)  {
@@ -280,7 +280,7 @@ proof of sbceq2a {
 	qed prop 1 = step 3 ;;
 }
 
-/* Specialization: if a formula is true for all sets, it is true for any
+/*Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) */
 
@@ -299,12 +299,12 @@ proof of spsbc {
 	qed prop 1 = step 6 ;;
 }
 
-/* Specialization: if a formula is true for all sets, it is true for any
+/*Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
        9-Feb-2017.) */
 
-theorem spsbcd (ph : wff, ps : wff, x : set, A : class, V : class)  {
+theorem spsbcd (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(ph, A, x) {
 	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
 	hyp 2 : wff = |- ( ph → ∀ x ps ) ;;
 	-----------------------
@@ -317,7 +317,7 @@ proof of spsbcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A substitution into a theorem remains true (when ` A ` is a set).
+/*A substitution into a theorem remains true (when ` A ` is a set).
        (Contributed by NM, 5-Nov-2005.) */
 
 theorem sbcth (ph : wff, x : set, A : class, V : class)  {
@@ -333,7 +333,7 @@ proof of sbcth {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
+/*Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
        (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem sbcthdv (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x ph) {
@@ -349,7 +349,7 @@ proof of sbcthdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
+/*An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
      Carneiro, 18-Feb-2017.) */
 
 theorem sbcid (ph : wff, x : set)  {
@@ -363,7 +363,7 @@ proof of sbcid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
+/*Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
        (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfsbc1d (ph : wff, ps : wff, x : set, A : class)  {
@@ -381,7 +381,7 @@ proof of nfsbc1d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for class substitution.  (Contributed
+/*Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfsbc1 (ph : wff, x : set, A : class)  {
@@ -397,7 +397,7 @@ proof of nfsbc1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for class substitution.  (Contributed
+/*Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfsbc1v (ph : wff, x : set, A : class) disjointed(x A) {
@@ -410,7 +410,7 @@ proof of nfsbc1v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
+/*Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfsbcd (ph : wff, ps : wff, x : set, y : set, A : class)  {
@@ -429,7 +429,7 @@ proof of nfsbcd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for class substitution.  (Contributed
+/*Bound-variable hypothesis builder for class substitution.  (Contributed
        by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfsbc (ph : wff, x : set, y : set, A : class)  {
@@ -448,7 +448,7 @@ proof of nfsbc {
 	qed prop 1 = step 5 ;;
 }
 
-/* A composition law for class substitution.  (Contributed by NM,
+/*A composition law for class substitution.  (Contributed by NM,
        26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
 
 theorem sbcco (ph : wff, x : set, y : set, A : class) disjointed(x z, z A, y z ph) {
@@ -474,7 +474,7 @@ proof of sbcco {
 	qed prop 1 = step 14 ;;
 }
 
-/* A composition law for class substitution.  Importantly, ` x ` may occur
+/*A composition law for class substitution.  Importantly, ` x ` may occur
        free in the class expression substituted for ` A ` .  (Contributed by
        NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
@@ -496,7 +496,7 @@ proof of sbcco2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* An equivalence for class substitution.  (Contributed by NM,
+/*An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem sbc5 (ph : wff, x : set, A : class) disjointed(x y A, y ph) {
@@ -519,7 +519,7 @@ proof of sbc5 {
 	qed prop 1 = step 11 ;;
 }
 
-/* An equivalence for class substitution.  (Contributed by NM,
+/*An equivalence for class substitution.  (Contributed by NM,
        11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem sbc6g (ph : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -535,7 +535,7 @@ proof of sbc6g {
 	qed prop 1 = step 5 ;;
 }
 
-/* An equivalence for class substitution.  (Contributed by NM,
+/*An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) */
 
 theorem sbc6 (ph : wff, x : set, A : class) disjointed(x A) {
@@ -550,7 +550,7 @@ proof of sbc6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equivalence for class substitution in the spirit of ~ df-clab .  Note
+/*An equivalence for class substitution in the spirit of ~ df-clab .  Note
        that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
        18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
 
@@ -565,7 +565,7 @@ proof of sbc7 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Change bound variables in a wff substitution.  (Contributed by Jeff
+/*Change bound variables in a wff substitution.  (Contributed by Jeff
        Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) */
 
@@ -586,7 +586,7 @@ proof of cbvsbc {
 	qed prop 1 = step 5 ;;
 }
 
-/* Change the bound variable of a class substitution using implicit
+/*Change the bound variable of a class substitution using implicit
        substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
        Carneiro, 13-Oct-2016.) */
 
@@ -603,12 +603,12 @@ proof of cbvsbcv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution,
+/*Conversion of implicit substitution to explicit class substitution,
        using a bound-variable hypothesis instead of distinct variables.
        (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
        10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
 
-theorem sbciegft (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A) {
+theorem sbciegft (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A, ps) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph ↔ ps ) ) ;;
 }
 
@@ -638,7 +638,7 @@ proof of sbciegft {
 	qed prop 1 = step 22 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) */
 
@@ -656,7 +656,7 @@ proof of sbciegf {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 10-Nov-2005.) */
 
 theorem sbcieg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A, x ps) {
@@ -673,7 +673,7 @@ proof of sbcieg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) */
 
@@ -694,7 +694,7 @@ proof of sbcie2g {
 	qed prop 1 = step 6 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 4-Sep-2004.) */
 
 theorem sbcie (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
@@ -710,7 +710,7 @@ proof of sbcie {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution,
+/*Conversion of implicit substitution to explicit class substitution,
          deduction form.  (Contributed by NM, 29-Dec-2014.) */
 
 theorem sbciedf (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -730,7 +730,7 @@ proof of sbciedf {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution,
+/*Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) */
 
 theorem sbcied (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A, x ph, x ch) {
@@ -747,7 +747,7 @@ proof of sbcied {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution,
+/*Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) */
 
 theorem sbcied2 (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class) disjointed(x A, x ph, x ch) {
@@ -766,7 +766,7 @@ proof of sbcied2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a restricted class abstraction, expressed with explicit
+/*Membership in a restricted class abstraction, expressed with explicit
        class substitution.  (The variation ~ elrabf has implicit
        substitution).  The hypothesis specifies that ` x ` must not be a free
        variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
@@ -790,7 +790,7 @@ proof of elrabsf {
 	qed prop 1 = step 7 ;;
 }
 
-/* Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
+/*Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
        (Contributed by Andrew Salmon, 29-Jun-2011.) */
 
 theorem eqsbc3 (x : set, A : class, B : class, V : class) disjointed(x y B, y A) {
@@ -808,10 +808,10 @@ proof of eqsbc3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Move negation in and out of class substitution.  (Contributed by NM,
+/*Move negation in and out of class substitution.  (Contributed by NM,
        16-Jan-2004.) */
 
-theorem sbcng (ph : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph) {
+theorem sbcng (ph : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ¬ ph ↔ ¬ [. A / x ]. ph ) ) ;;
 }
 
@@ -825,7 +825,7 @@ proof of sbcng {
 	qed prop 1 = step 5 ;;
 }
 
-/* Distribution of class substitution over implication.  (Contributed by
+/*Distribution of class substitution over implication.  (Contributed by
        NM, 16-Jan-2004.) */
 
 theorem sbcimg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
@@ -843,7 +843,7 @@ proof of sbcimg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribution of class substitution over conjunction.  (Contributed by
+/*Distribution of class substitution over conjunction.  (Contributed by
        NM, 31-Dec-2016.) */
 
 theorem sbcan (ph : wff, ps : wff, x : set, A : class) disjointed(x y, y A, y ph, y ps) {
@@ -865,7 +865,7 @@ proof of sbcan {
 	qed prop 1 = step 10 ;;
 }
 
-/* Distribution of class substitution over conjunction.  (Contributed by
+/*Distribution of class substitution over conjunction.  (Contributed by
        NM, 21-May-2004.) */
 
 theorem sbcang (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
@@ -883,7 +883,7 @@ proof of sbcang {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribution of class substitution over disjunction.  (Contributed by
+/*Distribution of class substitution over disjunction.  (Contributed by
        NM, 31-Dec-2016.) */
 
 theorem sbcor (ph : wff, ps : wff, x : set, A : class) disjointed(x y, y A, y ph, y ps) {
@@ -906,7 +906,7 @@ proof of sbcor {
 	qed prop 1 = step 11 ;;
 }
 
-/* Distribution of class substitution over disjunction.  (Contributed by
+/*Distribution of class substitution over disjunction.  (Contributed by
        NM, 21-May-2004.) */
 
 theorem sbcorg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
@@ -924,7 +924,7 @@ proof of sbcorg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribution of class substitution over biconditional.  (Contributed by
+/*Distribution of class substitution over biconditional.  (Contributed by
        Raph Levien, 10-Apr-2004.) */
 
 theorem sbcbig (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
@@ -942,7 +942,7 @@ proof of sbcbig {
 	qed prop 1 = step 6 ;;
 }
 
-/* Move universal quantifier in and out of class substitution.
+/*Move universal quantifier in and out of class substitution.
        (Contributed by NM, 31-Dec-2016.) */
 
 theorem sbcal (ph : wff, x : set, y : set, A : class) disjointed(x z A, x y z, z ph) {
@@ -963,7 +963,7 @@ proof of sbcal {
 	qed prop 1 = step 9 ;;
 }
 
-/* Move universal quantifier in and out of class substitution.
+/*Move universal quantifier in and out of class substitution.
        (Contributed by NM, 16-Jan-2004.) */
 
 theorem sbcalg (ph : wff, x : set, y : set, A : class, V : class) disjointed(x z A, x y z, z ph) {
@@ -980,7 +980,7 @@ proof of sbcalg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Move existential quantifier in and out of class substitution.
+/*Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) */
 
 theorem sbcex2 (ph : wff, x : set, y : set, A : class) disjointed(x z A, x y z, z ph) {
@@ -1001,7 +1001,7 @@ proof of sbcex2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Move existential quantifier in and out of class substitution.
+/*Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) */
 
 theorem sbcexg (ph : wff, x : set, y : set, A : class, V : class) disjointed(x z A, x y z, z ph) {
@@ -1018,7 +1018,7 @@ proof of sbcexg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
+/*Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
        28-Jun-2011.) */
 
 theorem sbceqal (x : set, A : class, B : class, V : class) disjointed(x B, x A) {
@@ -1039,7 +1039,7 @@ proof of sbceqal {
 	qed prop 1 = step 10 ;;
 }
 
-/* Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
+/*Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
        Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) */
 
 theorem sbeqalb (ph : wff, x : set, A : class, B : class, V : class) disjointed(x A, x B) {
@@ -1056,7 +1056,7 @@ proof of sbeqalb {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building deduction rule for class substitution.  (Contributed by
+/*Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) */
 
 theorem sbcbid (ph : wff, ps : wff, ch : wff, x : set, A : class)  {
@@ -1075,7 +1075,7 @@ proof of sbcbid {
 	qed prop 1 = step 5 ;;
 }
 
-/* Formula-building deduction rule for class substitution.  (Contributed by
+/*Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) */
 
 theorem sbcbidv (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
@@ -1090,7 +1090,7 @@ proof of sbcbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building inference rule for class substitution.  (Contributed by
+/*Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.) */
 
 theorem sbcbii (ph : wff, ps : wff, x : set, A : class)  {
@@ -1106,7 +1106,7 @@ proof of sbcbii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Formula-building inference rule for class substitution.  (Contributed by
+/*Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.)  (New usage is discouraged.) */
 
 theorem sbcbiiOLD (ph : wff, ps : wff, x : set, A : class, V : class)  {
@@ -1121,7 +1121,7 @@ proof of sbcbiiOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* ~ eqsbc3 with set variable on right side of equals sign.  This proof was
+/*~ eqsbc3 with set variable on right side of equals sign.  This proof was
        automatically generated from the virtual deduction proof ~ eqsbc3rVD
        using a translation program.  (Contributed by Alan Sare,
        24-Oct-2011.) */
@@ -1150,7 +1150,7 @@ proof of eqsbc3r {
 	qed prop 1 = step 16 ;;
 }
 
-/* Distribution of class substitution over triple conjunction.
+/*Distribution of class substitution over triple conjunction.
        (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -1170,7 +1170,7 @@ proof of sbc3ang {
 	qed prop 1 = step 7 ;;
 }
 
-/* Class substitution into a membership relation.  (Contributed by NM,
+/*Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem sbcel1gv (x : set, A : class, B : class, V : class) disjointed(y A, x y B) {
@@ -1186,7 +1186,7 @@ proof of sbcel1gv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Class substitution into a membership relation.  (Contributed by NM,
+/*Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem sbcel2gv (x : set, A : class, B : class, V : class) disjointed(y B, x y A) {
@@ -1204,7 +1204,7 @@ proof of sbcel2gv {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
+/*Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
        by NM, 11-Nov-2005.) */
 
 theorem sbcimdv (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x ph) {
@@ -1223,7 +1223,7 @@ proof of sbcimdv {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution for a variable not free in a wff does not affect it.
+/*Substitution for a variable not free in a wff does not affect it.
        (Contributed by Mario Carneiro, 14-Oct-2016.) */
 
 theorem sbctt (ph : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph) {
@@ -1241,11 +1241,11 @@ proof of sbctt {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution for a variable not free in a wff does not affect it.
+/*Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
-theorem sbcgf (ph : wff, x : set, A : class, V : class)  {
+theorem sbcgf (ph : wff, x : set, A : class, V : class) disjointed(A, ph, x) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
@@ -1257,10 +1257,10 @@ proof of sbcgf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution for a variable not free in antecedent affects only the
+/*Substitution for a variable not free in antecedent affects only the
        consequent.  (Contributed by NM, 11-Oct-2004.) */
 
-theorem sbc19.21g (ph : wff, ps : wff, x : set, A : class, V : class)  {
+theorem sbc19.21g (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(A, ph, x) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( ph → [. A / x ]. ps ) ) ) ;;
@@ -1274,7 +1274,7 @@ proof of sbc19.21g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Substitution for a variable not occurring in a wff does not affect it.
+/*Substitution for a variable not occurring in a wff does not affect it.
        Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
        10-Nov-2012.) */
 
@@ -1288,7 +1288,7 @@ proof of sbcg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Dec-2013.) */
 
 theorem sbc2iegf (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, y B, x V, y W) {
@@ -1315,7 +1315,7 @@ proof of sbc2iegf {
 	qed prop 1 = step 11 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
        19-Dec-2013.) */
 
@@ -1336,7 +1336,7 @@ proof of sbc2ie {
 	qed prop 1 = step 5 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
        18-Oct-2016.) */
 
@@ -1357,7 +1357,7 @@ proof of sbc2iedv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
        Carneiro, 29-Dec-2014.) */
 
@@ -1378,10 +1378,10 @@ proof of sbc3ie {
 	qed prop 1 = step 4 ;;
 }
 
-/* Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
+/*Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
        Mario Carneiro, 18-Oct-2016.) */
 
-theorem sbccomlem (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem sbccomlem (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, y, x) {
 	prop 1 : wff = |- ( [. A / x ]. [. B / y ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
 }
 
@@ -1405,7 +1405,7 @@ proof of sbccomlem {
 	qed prop 1 = step 16 ;;
 }
 
-/* Commutative law for double class substitution.  (Contributed by NM,
+/*Commutative law for double class substitution.  (Contributed by NM,
        15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) */
 
 theorem sbccom (ph : wff, x : set, y : set, A : class, B : class) disjointed(w y z A, w x z B, w z ph, x y) {
@@ -1434,7 +1434,7 @@ proof of sbccom {
 	qed prop 1 = step 17 ;;
 }
 
-/* Interchange class substitution and restricted quantifier.  (Contributed
+/*Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) */
 
 theorem sbcralt (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x y z, A z, B x z, V z, ph z) {
@@ -1468,11 +1468,11 @@ proof of sbcralt {
 	qed prop 1 = step 22 ;;
 }
 
-/* Interchange class substitution and restricted existential quantifier.
+/*Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
        13-Oct-2016.) */
 
-theorem sbcrext (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x y, B x) {
+theorem sbcrext (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x y, A, B x, V, ph) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
 }
 
@@ -1501,7 +1501,7 @@ proof of sbcrext {
 	qed prop 1 = step 21 ;;
 }
 
-/* Interchange class substitution and restricted quantifier.  (Contributed
+/*Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -1524,7 +1524,7 @@ proof of sbcralg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Interchange class substitution and restricted existential quantifier.
+/*Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -1547,7 +1547,7 @@ proof of sbcrexg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Interchange class substitution and restricted uniqueness quantifier.
+/*Interchange class substitution and restricted uniqueness quantifier.
        (Contributed by NM, 24-Feb-2013.) */
 
 theorem sbcreug (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x B, x y z, ph z, B z) {
@@ -1569,7 +1569,7 @@ proof of sbcreug {
 	qed prop 1 = step 10 ;;
 }
 
-/* Interchange class substitution and class abstraction.  (Contributed by
+/*Interchange class substitution and class abstraction.  (Contributed by
        NM, 5-Nov-2005.) */
 
 theorem sbcabel (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y w A, w B, w ph, x y, w x) {
@@ -1609,7 +1609,7 @@ proof of sbcabel {
 	qed prop 1 = step 26 ;;
 }
 
-/* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
+/*Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
        provides an axiom for a predicate calculus for a restricted domain.
        This theorem generalizes the unrestricted ~ stdpc4 and ~ spsbc .  See
        also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
@@ -1628,10 +1628,10 @@ proof of rspsbc {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
+/*Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
        (Contributed by NM, 14-Dec-2005.) */
 
-theorem rspsbca (ph : wff, x : set, A : class, B : class) disjointed(x B) {
+theorem rspsbca (ph : wff, x : set, A : class, B : class) disjointed(A, x B, ph) {
 	prop 1 : wff = |- ( ( A ∈ B ∧ ∀ x ∈ B ph ) → [. A / x ]. ph ) ;;
 }
 
@@ -1641,7 +1641,7 @@ proof of rspsbca {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
+/*Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) */
 
 theorem rspesbca (ph : wff, x : set, A : class, B : class) disjointed(y A, x y B, y ph) {
@@ -1657,10 +1657,10 @@ proof of rspesbca {
 	qed prop 1 = step 4 ;;
 }
 
-/* Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
+/*Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
        18-Nov-2016.) */
 
-theorem spesbc (ph : wff, x : set, A : class)  {
+theorem spesbc (ph : wff, x : set, A : class) disjointed(A, x, ph) {
 	prop 1 : wff = |- ( [. A / x ]. ph → ∃ x ph ) ;;
 }
 
@@ -1673,9 +1673,9 @@ proof of spesbc {
 	qed prop 1 = step 5 ;;
 }
 
-/* form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) */
+/*form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) */
 
-theorem spesbcd (ph : wff, ps : wff, x : set, A : class)  {
+theorem spesbcd (ph : wff, ps : wff, x : set, A : class) disjointed(A, x, ph) {
 	hyp 1 : wff = |- ( ph → [. A / x ]. ps ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → ∃ x ps ) ;;
@@ -1687,7 +1687,7 @@ proof of spesbcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
+/*A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) */
 
 theorem sbcth2 (ph : wff, x : set, A : class, B : class) disjointed(x B) {
@@ -1703,7 +1703,7 @@ proof of sbcth2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
+/*Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
        an axiom of a predicate calculus for a restricted domain.  Compare the
        unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) */
 
@@ -1725,7 +1725,7 @@ proof of ra5 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Alternate definition of restricted "at most one."  Note that
+/*Alternate definition of restricted "at most one."  Note that
        ` E* x e. A ph ` is not equivalent to
        ` E. y e. A A. x e. A ( ph -> x = y ) ` (in analogy to ~ reu6 ); to see
        this, let ` A ` be the empty set.  However, one direction of this
@@ -1751,7 +1751,7 @@ proof of rmo2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Condition implying restricted "at most one."  (Contributed by NM,
+/*Condition implying restricted "at most one."  (Contributed by NM,
        17-Jun-2017.) */
 
 theorem rmo2i (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -1767,7 +1767,7 @@ proof of rmo2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted "at most one" using explicit substitution.  (Contributed by
+/*Restricted "at most one" using explicit substitution.  (Contributed by
        NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
 
 theorem rmo3 (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -1805,10 +1805,10 @@ proof of rmo3 {
 	qed prop 1 = step 25 ;;
 }
 
-/* Consequence of "at most one", using implicit substitution.  (Contributed
+/*Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) */
 
-theorem rmob (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch) {
+theorem rmob (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, ph, x ps, x ch) {
 	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = C → ( ph ↔ ch ) ) ;;
 	-----------------------
@@ -1839,10 +1839,10 @@ proof of rmob {
 	qed prop 1 = step 20 ;;
 }
 
-/* Consequence of "at most one", using implicit substitution.  (Contributed
+/*Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
 
-theorem rmoi (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch) {
+theorem rmoi (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, ph, x ps, x ch) {
 	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = C → ( ph ↔ ch ) ) ;;
 	-----------------------

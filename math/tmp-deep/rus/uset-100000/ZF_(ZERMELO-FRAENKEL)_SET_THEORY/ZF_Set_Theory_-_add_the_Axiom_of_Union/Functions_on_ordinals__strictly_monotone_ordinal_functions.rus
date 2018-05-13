@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Undefined_values_and_restricted_iota_(description_binder).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Functions on ordinals; strictly monotone ordinal functions
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The indexed union of a set of ordinal numbers ` B ( x ) ` is an ordinal
+/*The indexed union of a set of ordinal numbers ` B ( x ) ` is an ordinal
        number.  (Contributed by NM, 13-Oct-2003.)  (Revised by Mario Carneiro,
        5-Dec-2016.) */
 
@@ -31,7 +31,7 @@ proof of iunon {
 	qed prop 1 = step 13 ;;
 }
 
-/* The indexed union of a set of ordinal numbers ` B ( x ) ` is an ordinal
+/*The indexed union of a set of ordinal numbers ` B ( x ) ` is an ordinal
        number.  (Contributed by NM, 13-Oct-2003.)  (Revised by Mario Carneiro,
        5-Dec-2016.) */
 
@@ -48,11 +48,11 @@ proof of iunonOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* The nonempty indexed intersection of a class of ordinal numbers
+/*The nonempty indexed intersection of a class of ordinal numbers
        ` B ( x ) ` is an ordinal number.  (Contributed by NM, 13-Oct-2003.)
        (Proof shortened by Mario Carneiro, 5-Dec-2016.) */
 
-theorem iinon (x : set, A : class, B : class) disjointed(x A) {
+theorem iinon (x : set, A : class, B : class) disjointed(x A, B) {
 	prop 1 : wff = |- ( ( ∀ x ∈ A B ∈ On ∧ A ≠ ∅ ) → ⋂_ x ∈ A B ∈ On ) ;;
 }
 
@@ -76,7 +76,7 @@ proof of iinon {
 	qed prop 1 = step 16 ;;
 }
 
-/* A property of functions on ordinal numbers.  Generalization of Theorem
+/*A property of functions on ordinal numbers.  Generalization of Theorem
        Schema 8E of [Enderton] p. 218.  (Contributed by Eric Schmidt,
        26-May-2009.) */
 
@@ -213,10 +213,10 @@ proof of onfununi {
 	qed prop 1 = step 122 ;;
 }
 
-/* A variant of ~ onfununi for operations.  (Contributed by Eric Schmidt,
+/*A variant of ~ onfununi for operations.  (Contributed by Eric Schmidt,
          26-May-2009.)  (Revised by Mario Carneiro, 11-Sep-2015.) */
 
-theorem onovuni (x : set, y : set, A : class, S : class, T : class, F : class) disjointed(x y z A, x y z F, x y z, x y, x y z S, x T) {
+theorem onovuni (x : set, y : set, A : class, S : class, T : class, F : class) disjointed(x y z A, x y z F, x y z, x y, x y z S, T, x T) {
 	hyp 1 : wff = |- ( Lim y → ( A F y ) = ⋃_ x ∈ y ( A F x ) ) ;;
 	hyp 2 : wff = |- ( ( x ∈ On ∧ y ∈ On ∧ x ⊆ y ) → ( A F x ) ⊆ ( A F y ) ) ;;
 	-----------------------
@@ -274,7 +274,7 @@ proof of onovuni {
 	qed prop 1 = step 46 ;;
 }
 
-/* A variant of ~ onovuni with indexed unions.  (Contributed by Eric
+/*A variant of ~ onovuni with indexed unions.  (Contributed by Eric
        Schmidt, 26-May-2009.)  (Proof shortened by Mario Carneiro,
        5-Dec-2016.) */
 
@@ -322,7 +322,7 @@ proof of onoviun {
 	qed prop 1 = step 32 ;;
 }
 
-/* There are no length ` om ` decreasing sequences in the ordinals.  See
+/*There are no length ` om ` decreasing sequences in the ordinals.  See
        also ~ noinfep for a stronger version assuming Regularity.  (Contributed
        by Mario Carneiro, 19-May-2015.) */
 
@@ -432,14 +432,14 @@ constant {
 	symbol Smo ;;
 }
 
-/* Introduce the strictly monotone ordinal function.  A strictly monotone
+/*Introduce the strictly monotone ordinal function.  A strictly monotone
      function is one that is constantly increasing across the ordinals. */
 
 rule wsmo (A : class) {
 	term : wff = # Smo A ;;
 }
 
-/* Definition of a strictly monotone ordinal function.  Definition 7.46 in
+/*Definition of a strictly monotone ordinal function.  Definition 7.46 in
        [TakeutiZaring] p. 50.  (Contributed by Andrew Salmon, 15-Nov-2011.) */
 
 definition df-smo (x : set, y : set, A : class) disjointed(x y A) {
@@ -449,7 +449,7 @@ definition df-smo (x : set, y : set, A : class) disjointed(x y A) {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Alternate definition of a strictly monotone ordinal function.
+/*Alternate definition of a strictly monotone ordinal function.
        (Contributed by Mario Carneiro, 4-Mar-2013.) */
 
 theorem dfsmo2 (x : set, y : set, F : class) disjointed(F x y) {
@@ -482,7 +482,7 @@ proof of dfsmo2 {
 	qed prop 1 = step 22 ;;
 }
 
-/* Conditions for which ` A ` is a strictly monotone ordinal function.
+/*Conditions for which ` A ` is a strictly monotone ordinal function.
        (Contributed by Andrew Salmon, 15-Nov-2011.) */
 
 theorem issmo (x : set, y : set, A : class, B : class) disjointed(x y A) {
@@ -509,7 +509,7 @@ proof of issmo {
 	qed prop 1 = step 11 ;;
 }
 
-/* Alternative definition of a strictly monotone ordinal function.
+/*Alternative definition of a strictly monotone ordinal function.
        (Contributed by Mario Carneiro, 12-Mar-2013.) */
 
 theorem issmo2 (x : set, y : set, A : class, B : class, F : class) disjointed(A x, F x y) {
@@ -535,7 +535,7 @@ proof of issmo2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Equality theorem for strictly monotone functions.  (Contributed by
+/*Equality theorem for strictly monotone functions.  (Contributed by
        Andrew Salmon, 16-Nov-2011.) */
 
 theorem smoeq (A : class, B : class) disjointed(x y A, x y B) {
@@ -568,7 +568,7 @@ proof of smoeq {
 	qed prop 1 = step 21 ;;
 }
 
-/* The domain of a strictly monotone function is an ordinal.  (Contributed
+/*The domain of a strictly monotone function is an ordinal.  (Contributed
        by Andrew Salmon, 16-Nov-2011.) */
 
 theorem smodm (A : class) disjointed(x y A, x y) {
@@ -582,7 +582,7 @@ proof of smodm {
 	qed prop 1 = step 2 ;;
 }
 
-/* A strictly monotone function restricted to an ordinal remains strictly
+/*A strictly monotone function restricted to an ordinal remains strictly
        monotone.  (Contributed by Andrew Salmon, 16-Nov-2011.)  (Proof
        shortened by Mario Carneiro, 5-Dec-2016.) */
 
@@ -655,10 +655,10 @@ proof of smores {
 	qed prop 1 = step 60 ;;
 }
 
-/* A strictly monotone function restricted to an ordinal remains strictly
+/*A strictly monotone function restricted to an ordinal remains strictly
        monotone.  (Contributed by Andrew Salmon, 19-Nov-2011.) */
 
-theorem smores3 (A : class, B : class, C : class)  {
+theorem smores3 (A : class, B : class, C : class) disjointed(A, B) {
 	prop 1 : wff = |- ( ( Smo ( A ↾ B ) ∧ C ∈ ( dom A ∩ B ) ∧ Ord B ) → Smo ( A ↾ C ) ) ;;
 }
 
@@ -683,7 +683,7 @@ proof of smores3 {
 	qed prop 1 = step 17 ;;
 }
 
-/* A strictly monotone ordinal function restricted to an ordinal is still
+/*A strictly monotone ordinal function restricted to an ordinal is still
        monotone.  (Contributed by Mario Carneiro, 15-Mar-2013.) */
 
 theorem smores2 (A : class, F : class) disjointed(A x y, F x y) {
@@ -762,7 +762,7 @@ proof of smores2 {
 	qed prop 1 = step 67 ;;
 }
 
-/* The domain of a strictly monotone ordinal function is an ordinal.
+/*The domain of a strictly monotone ordinal function is an ordinal.
      (Contributed by Mario Carneiro, 12-Mar-2013.) */
 
 theorem smodm2 (A : class, F : class)  {
@@ -779,7 +779,7 @@ proof of smodm2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* The function values of a strictly monotone ordinal function are
+/*The function values of a strictly monotone ordinal function are
        ordinals.  (Contributed by Mario Carneiro, 12-Mar-2013.) */
 
 theorem smofvon2 (B : class, F : class) disjointed(F x y) {
@@ -801,7 +801,7 @@ proof of smofvon2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* The identity relation restricted to the ordinals is a strictly monotone
+/*The identity relation restricted to the ordinals is a strictly monotone
        function.  (Contributed by Andrew Salmon, 16-Nov-2011.) */
 
 theorem iordsmo (A : class) disjointed(x y A) {
@@ -830,7 +830,7 @@ proof of iordsmo {
 	qed prop 1 = step 15 ;;
 }
 
-/* The null set is a strictly monotone ordinal function.  (Contributed by
+/*The null set is a strictly monotone ordinal function.  (Contributed by
        Andrew Salmon, 20-Nov-2011.) */
 
 theorem smo0 ()  {
@@ -847,7 +847,7 @@ proof of smo0 {
 	qed prop 1 = step 6 ;;
 }
 
-/* If ` B ` is a strictly monotone ordinal function, and ` A ` is in the
+/*If ` B ` is a strictly monotone ordinal function, and ` A ` is in the
        domain of ` B ` , then the value of the function at ` A ` is an
        ordinal.  (Contributed by Andrew Salmon, 20-Nov-2011.) */
 
@@ -864,7 +864,7 @@ proof of smofvon {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is less than ` y ` then a strictly monotone function's value
+/*If ` x ` is less than ` y ` then a strictly monotone function's value
        will be strictly less at ` x ` than at ` y ` .  (Contributed by Andrew
        Salmon, 22-Nov-2011.) */
 
@@ -900,7 +900,7 @@ proof of smoel {
 	qed prop 1 = step 23 ;;
 }
 
-/* The value of a strictly monotone ordinal function contains its indexed
+/*The value of a strictly monotone ordinal function contains its indexed
        union.  (Contributed by Andrew Salmon, 22-Nov-2011.) */
 
 theorem smoiun (x : set, A : class, B : class) disjointed(x y A, x y B, x y, x y) {
@@ -922,7 +922,7 @@ proof of smoiun {
 	qed prop 1 = step 10 ;;
 }
 
-/* If ` F ` is an isomorphism from an ordinal ` A ` onto ` B ` , which is a
+/*If ` F ` is an isomorphism from an ordinal ` A ` onto ` B ` , which is a
        subset of the ordinals, then ` F ` is a strictly monotonic function.
        Exercise 3 in [TakeutiZaring] p. 50.  (Contributed by Andrew Salmon,
        24-Nov-2011.) */
@@ -974,10 +974,10 @@ proof of smoiso {
 	qed prop 1 = step 38 ;;
 }
 
-/* A strictly monotone ordinal function preserves the epsilon relation.
+/*A strictly monotone ordinal function preserves the epsilon relation.
        (Contributed by Mario Carneiro, 12-Mar-2013.) */
 
-theorem smoel2 (A : class, B : class, C : class, F : class)  {
+theorem smoel2 (A : class, B : class, C : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( ( ( F Fn A ∧ Smo F ) ∧ ( B ∈ A ∧ C ∈ B ) ) → ( F ` C ) ∈ ( F ` B ) ) ;;
 }
 
@@ -993,7 +993,7 @@ proof of smoel2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* A strictly monotone ordinal function is one-to-one.  (Contributed by
+/*A strictly monotone ordinal function is one-to-one.  (Contributed by
        Mario Carneiro, 28-Feb-2013.) */
 
 theorem smo11 (A : class, B : class, F : class) disjointed(A w x y z, F w x y z) {
@@ -1085,7 +1085,7 @@ proof of smo11 {
 	qed prop 1 = step 80 ;;
 }
 
-/* A strictly monotone ordinal function preserves strict ordering.
+/*A strictly monotone ordinal function preserves strict ordering.
        (Contributed by Mario Carneiro, 4-Mar-2013.) */
 
 theorem smoord (A : class, C : class, D : class, F : class)  {
@@ -1166,7 +1166,7 @@ proof of smoord {
 	qed prop 1 = step 70 ;;
 }
 
-/* A strictly monotone ordinal function preserves weak ordering.
+/*A strictly monotone ordinal function preserves weak ordering.
        (Contributed by Mario Carneiro, 4-Mar-2013.) */
 
 theorem smoword (A : class, C : class, D : class, F : class)  {
@@ -1203,7 +1203,7 @@ proof of smoword {
 	qed prop 1 = step 26 ;;
 }
 
-/* A strictly monotone ordinal function is greater than or equal to its
+/*A strictly monotone ordinal function is greater than or equal to its
        argument.  Exercise 1 in [TakeutiZaring] p. 50.  (Contributed by Andrew
        Salmon, 23-Nov-2011.)  (Revised by Mario Carneiro, 28-Feb-2013.) */
 
@@ -1282,7 +1282,7 @@ proof of smogt {
 	qed prop 1 = step 66 ;;
 }
 
-/* The range of a strictly monotone ordinal function dominates the domain.
+/*The range of a strictly monotone ordinal function dominates the domain.
        (Contributed by Mario Carneiro, 13-Mar-2013.) */
 
 theorem smorndom (A : class, B : class, F : class) disjointed(A x, B x, F x) {
@@ -1317,7 +1317,7 @@ proof of smorndom {
 	qed prop 1 = step 23 ;;
 }
 
-/* The strictly monotone ordinal functions are also epsilon isomorphisms of
+/*The strictly monotone ordinal functions are also epsilon isomorphisms of
        subclasses of ` On ` .  (Contributed by Mario Carneiro, 20-Mar-2013.) */
 
 theorem smoiso2 (A : class, B : class, F : class) disjointed(A x y, B x y, F x y) {

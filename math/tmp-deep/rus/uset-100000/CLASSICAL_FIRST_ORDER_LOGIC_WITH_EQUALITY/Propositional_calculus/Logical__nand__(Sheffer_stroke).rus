@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Abbreviated_conjunction_and_disjunction_of_three_wff_s.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical 'nand' (Sheffer stroke)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare connective for alternative denial ('nand'). */
+/*Declare connective for alternative denial ('nand'). */
 
 constant {
 	symbol ⊼ ;;
@@ -14,15 +14,15 @@ constant {
 	latex \bar{\wedge} ;;
 }
 
-/* Overlined 'wedge' (read:  'nand') */
+/*Overlined 'wedge' (read:  'nand') */
 
-/* Extend wff definition to include alternative denial ('nand'). */
+/*Extend wff definition to include alternative denial ('nand'). */
 
 rule wnan (ph : wff, ps : wff) {
 	term : wff = # ( ph ⊼ ps ) ;;
 }
 
-/* Define incompatibility, or alternative denial ('not-and' or 'nand').  This
+/*Define incompatibility, or alternative denial ('not-and' or 'nand').  This
      is also called the Sheffer stroke, represented by a vertical bar, but we
      use a different symbol to avoid ambiguity with other uses of the vertical
      bar.  In the second edition of Principia Mathematica (1927), Russell and
@@ -44,7 +44,7 @@ definition df-nan (ph : wff, ps : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Write 'and' in terms of 'nand'.  (Contributed by Mario Carneiro,
+/*Write 'and' in terms of 'nand'.  (Contributed by Mario Carneiro,
      9-May-2015.) */
 
 theorem nanan (ph : wff, ps : wff)  {
@@ -57,7 +57,7 @@ proof of nanan {
 	qed prop 1 = step 2 ;;
 }
 
-/* The 'nand' operator commutes.  (Contributed by Mario Carneiro,
+/*The 'nand' operator commutes.  (Contributed by Mario Carneiro,
      9-May-2015.) */
 
 theorem nancom (ph : wff, ps : wff)  {
@@ -73,7 +73,7 @@ proof of nancom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Lemma for handling nested 'nand's.  (Contributed by Jeff Hoffman,
+/*Lemma for handling nested 'nand's.  (Contributed by Jeff Hoffman,
      19-Nov-2007.) */
 
 theorem nannan (ph : wff, ps : wff, ch : wff)  {
@@ -90,7 +90,7 @@ proof of nannan {
 	qed prop 1 = step 6 ;;
 }
 
-/* Show equivalence between implication and the Nicod version.  To derive
+/*Show equivalence between implication and the Nicod version.  To derive
      ~ nic-dfim , apply ~ nanbi .  (Contributed by Jeff Hoffman,
      19-Nov-2007.) */
 
@@ -105,7 +105,7 @@ proof of nanim {
 	qed prop 1 = step 3 ;;
 }
 
-/* Show equivalence between negation and the Nicod version.  To derive
+/*Show equivalence between negation and the Nicod version.  To derive
      ~ nic-dfneg , apply ~ nanbi .  (Contributed by Jeff Hoffman,
      19-Nov-2007.) */
 
@@ -121,7 +121,7 @@ proof of nannot {
 	qed prop 1 = step 4 ;;
 }
 
-/* Show equivalence between the bidirectional and the Nicod version.
+/*Show equivalence between the bidirectional and the Nicod version.
      (Contributed by Jeff Hoffman, 19-Nov-2007.) */
 
 theorem nanbi (ph : wff, ps : wff)  {

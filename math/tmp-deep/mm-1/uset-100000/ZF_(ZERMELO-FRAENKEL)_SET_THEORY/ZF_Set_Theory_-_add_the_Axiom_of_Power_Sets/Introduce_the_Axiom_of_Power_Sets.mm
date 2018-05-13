@@ -1,158 +1,171 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             Introduce the Axiom of Power Sets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Axiom of Power Sets.  An axiom of Zermelo-Fraenkel set theory.  It
+
+$(Axiom of Power Sets.  An axiom of Zermelo-Fraenkel set theory.  It
        states that a set ` y ` exists that includes the power set of a given
        set ` x ` i.e. contains every subset of ` x ` .  The variant ~ axpow2
        uses explicit subset notation.  A version using class notation is
        ~ pwex .  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	fax-pow_0 $f set x $.
-	fax-pow_1 $f set y $.
-	fax-pow_2 $f set z $.
-	fax-pow_3 $f set w $.
-	ax-pow $a |- E. y A. z ( A. w ( w e. z -> w e. x ) -> z e. y ) $.
+	$v x y z w  $.
+	$d x y z w  $.
+	f0_ax-pow $f set x $.
+	f1_ax-pow $f set y $.
+	f2_ax-pow $f set z $.
+	f3_ax-pow $f set w $.
+	a_ax-pow $a |- E. y A. z ( A. w ( w e. z -> w e. x ) -> z e. y ) $.
 $}
-$( Axiom of Power Sets expressed with the fewest number of different
+
+$(Axiom of Power Sets expressed with the fewest number of different
        variables.  (Contributed by NM, 14-Aug-2003.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	izfpow_0 $f set w $.
-	fzfpow_0 $f set x $.
-	fzfpow_1 $f set y $.
-	fzfpow_2 $f set z $.
-	zfpow $p |- E. x A. y ( A. x ( x e. y -> x e. z ) -> y e. x ) $= izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi izfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_1 wal fzfpow_0 wex fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi fzfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_1 wal fzfpow_0 wex fzfpow_2 fzfpow_0 fzfpow_1 izfpow_0 ax-pow izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi izfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_1 wal fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi fzfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_1 wal fzfpow_0 izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi izfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi fzfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel wi fzfpow_1 izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi izfpow_0 wal fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi fzfpow_0 wal fzfpow_1 sup_set_class fzfpow_0 sup_set_class wcel izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel wi izfpow_0 fzfpow_0 izfpow_0 sup_set_class fzfpow_0 sup_set_class wceq izfpow_0 sup_set_class fzfpow_1 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_1 sup_set_class wcel izfpow_0 sup_set_class fzfpow_2 sup_set_class wcel fzfpow_0 sup_set_class fzfpow_2 sup_set_class wcel izfpow_0 fzfpow_0 fzfpow_1 elequ1 izfpow_0 fzfpow_0 fzfpow_2 elequ1 imbi12d cbvalv imbi1i albii exbii mpbi $.
+	$v x y z  $.
+	$d x y z w  $.
+	f0_zfpow $f set x $.
+	f1_zfpow $f set y $.
+	f2_zfpow $f set z $.
+	i0_zfpow $f set w $.
+	p_zfpow $p |- E. x A. y ( A. x ( x e. y -> x e. z ) -> y e. x ) $= f2_zfpow f0_zfpow f1_zfpow i0_zfpow a_ax-pow i0_zfpow f0_zfpow f1_zfpow p_elequ1 i0_zfpow f0_zfpow f2_zfpow p_elequ1 i0_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wceq i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel p_imbi12d i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi i0_zfpow f0_zfpow p_cbvalv i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi i0_zfpow a_wal f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel p_imbi1i i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi i0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f1_zfpow p_albii i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi i0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f1_zfpow a_wal f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f1_zfpow a_wal f0_zfpow p_exbii i0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel i0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi i0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f1_zfpow a_wal f0_zfpow a_wex f0_zfpow a_sup_set_class f1_zfpow a_sup_set_class a_wcel f0_zfpow a_sup_set_class f2_zfpow a_sup_set_class a_wcel a_wi f0_zfpow a_wal f1_zfpow a_sup_set_class f0_zfpow a_sup_set_class a_wcel a_wi f1_zfpow a_wal f0_zfpow a_wex p_mpbi $.
 $}
-$( A variant of the Axiom of Power Sets ~ ax-pow using subset notation.
+
+$(A variant of the Axiom of Power Sets ~ ax-pow using subset notation.
        Problem in {BellMachover] p. 466.  (Contributed by NM, 4-Jun-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	iaxpow2_0 $f set w $.
-	faxpow2_0 $f set x $.
-	faxpow2_1 $f set y $.
-	faxpow2_2 $f set z $.
-	axpow2 $p |- E. y A. z ( z C_ x -> z e. y ) $= faxpow2_2 sup_set_class faxpow2_0 sup_set_class wss faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi faxpow2_2 wal faxpow2_1 wex iaxpow2_0 sup_set_class faxpow2_2 sup_set_class wcel iaxpow2_0 sup_set_class faxpow2_0 sup_set_class wcel wi iaxpow2_0 wal faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi faxpow2_2 wal faxpow2_1 wex faxpow2_0 faxpow2_1 faxpow2_2 iaxpow2_0 ax-pow faxpow2_2 sup_set_class faxpow2_0 sup_set_class wss faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi faxpow2_2 wal iaxpow2_0 sup_set_class faxpow2_2 sup_set_class wcel iaxpow2_0 sup_set_class faxpow2_0 sup_set_class wcel wi iaxpow2_0 wal faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi faxpow2_2 wal faxpow2_1 faxpow2_2 sup_set_class faxpow2_0 sup_set_class wss faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi iaxpow2_0 sup_set_class faxpow2_2 sup_set_class wcel iaxpow2_0 sup_set_class faxpow2_0 sup_set_class wcel wi iaxpow2_0 wal faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel wi faxpow2_2 faxpow2_2 sup_set_class faxpow2_0 sup_set_class wss iaxpow2_0 sup_set_class faxpow2_2 sup_set_class wcel iaxpow2_0 sup_set_class faxpow2_0 sup_set_class wcel wi iaxpow2_0 wal faxpow2_2 sup_set_class faxpow2_1 sup_set_class wcel iaxpow2_0 faxpow2_2 sup_set_class faxpow2_0 sup_set_class dfss2 imbi1i albii exbii mpbir $.
+	$v x y z  $.
+	$d x y z w  $.
+	f0_axpow2 $f set x $.
+	f1_axpow2 $f set y $.
+	f2_axpow2 $f set z $.
+	i0_axpow2 $f set w $.
+	p_axpow2 $p |- E. y A. z ( z C_ x -> z e. y ) $= f0_axpow2 f1_axpow2 f2_axpow2 i0_axpow2 a_ax-pow i0_axpow2 f2_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class p_dfss2 f2_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wss i0_axpow2 a_sup_set_class f2_axpow2 a_sup_set_class a_wcel i0_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wcel a_wi i0_axpow2 a_wal f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel p_imbi1i f2_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wss f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi i0_axpow2 a_sup_set_class f2_axpow2 a_sup_set_class a_wcel i0_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wcel a_wi i0_axpow2 a_wal f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi f2_axpow2 p_albii f2_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wss f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi f2_axpow2 a_wal i0_axpow2 a_sup_set_class f2_axpow2 a_sup_set_class a_wcel i0_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wcel a_wi i0_axpow2 a_wal f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi f2_axpow2 a_wal f1_axpow2 p_exbii f2_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wss f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi f2_axpow2 a_wal f1_axpow2 a_wex i0_axpow2 a_sup_set_class f2_axpow2 a_sup_set_class a_wcel i0_axpow2 a_sup_set_class f0_axpow2 a_sup_set_class a_wcel a_wi i0_axpow2 a_wal f2_axpow2 a_sup_set_class f1_axpow2 a_sup_set_class a_wcel a_wi f2_axpow2 a_wal f1_axpow2 a_wex p_mpbir $.
 $}
-$( A variant of the Axiom of Power Sets ~ ax-pow .  For any set ` x ` ,
+
+$(A variant of the Axiom of Power Sets ~ ax-pow .  For any set ` x ` ,
        there exists a set ` y ` whose members are exactly the subsets of ` x `
        i.e. the power set of ` x ` .  Axiom Pow of [BellMachover] p. 466.
        (Contributed by NM, 4-Jun-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	faxpow3_0 $f set x $.
-	faxpow3_1 $f set y $.
-	faxpow3_2 $f set z $.
-	axpow3 $p |- E. y A. z ( z C_ x <-> z e. y ) $= faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel wb faxpow3_2 wal faxpow3_1 wex faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss wb faxpow3_2 wal faxpow3_1 wex faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss faxpow3_1 faxpow3_2 faxpow3_0 faxpow3_1 faxpow3_2 axpow2 bm1.3ii faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel wb faxpow3_2 wal faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss wb faxpow3_2 wal faxpow3_1 faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel wb faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss wb faxpow3_2 faxpow3_2 sup_set_class faxpow3_0 sup_set_class wss faxpow3_2 sup_set_class faxpow3_1 sup_set_class wcel bicom albii exbii mpbir $.
+	$v x y z  $.
+	$d x y z  $.
+	f0_axpow3 $f set x $.
+	f1_axpow3 $f set y $.
+	f2_axpow3 $f set z $.
+	p_axpow3 $p |- E. y A. z ( z C_ x <-> z e. y ) $= f0_axpow3 f1_axpow3 f2_axpow3 p_axpow2 f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss f1_axpow3 f2_axpow3 p_bm1.3ii f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel p_bicom f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel a_wb f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss a_wb f2_axpow3 p_albii f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel a_wb f2_axpow3 a_wal f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss a_wb f2_axpow3 a_wal f1_axpow3 p_exbii f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel a_wb f2_axpow3 a_wal f1_axpow3 a_wex f2_axpow3 a_sup_set_class f1_axpow3 a_sup_set_class a_wcel f2_axpow3 a_sup_set_class f0_axpow3 a_sup_set_class a_wss a_wb f2_axpow3 a_wal f1_axpow3 a_wex p_mpbir $.
 $}
-$( Every set is an element of some other set.  See ~ elALT for a shorter
+
+$(Every set is an element of some other set.  See ~ elALT for a shorter
        proof using more axioms.  (Contributed by NM, 4-Jan-2002.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	iel_0 $f set z $.
-	fel_0 $f set x $.
-	fel_1 $f set y $.
-	el $p |- E. y x e. y $= fel_1 sup_set_class iel_0 sup_set_class wcel fel_1 sup_set_class fel_0 sup_set_class wcel wi fel_1 wal iel_0 sup_set_class fel_1 sup_set_class wcel wi iel_0 wal fel_1 wex fel_0 sup_set_class fel_1 sup_set_class wcel fel_1 wex fel_1 iel_0 fel_0 zfpow fel_1 sup_set_class iel_0 sup_set_class wcel fel_1 sup_set_class fel_0 sup_set_class wcel wi fel_1 wal iel_0 sup_set_class fel_1 sup_set_class wcel wi iel_0 wal fel_0 sup_set_class fel_1 sup_set_class wcel fel_1 fel_1 sup_set_class iel_0 sup_set_class wcel fel_1 sup_set_class fel_0 sup_set_class wcel wi fel_1 wal iel_0 sup_set_class fel_1 sup_set_class wcel wi fel_0 sup_set_class fel_1 sup_set_class wcel iel_0 fel_0 iel_0 sup_set_class fel_0 sup_set_class wceq fel_1 sup_set_class iel_0 sup_set_class wcel fel_1 sup_set_class fel_0 sup_set_class wcel wi fel_1 wal iel_0 sup_set_class fel_1 sup_set_class wcel fel_0 sup_set_class fel_1 sup_set_class wcel iel_0 sup_set_class fel_0 sup_set_class wceq fel_1 sup_set_class iel_0 sup_set_class wcel fel_1 sup_set_class fel_0 sup_set_class wcel wi fel_1 iel_0 fel_0 fel_1 ax-14 alrimiv iel_0 fel_0 fel_1 ax-13 embantd spimv eximi ax-mp $.
+	$v x y  $.
+	$d x y z  $.
+	f0_el $f set x $.
+	f1_el $f set y $.
+	i0_el $f set z $.
+	p_el $p |- E. y x e. y $= f1_el i0_el f0_el p_zfpow i0_el f0_el f1_el a_ax-14 i0_el a_sup_set_class f0_el a_sup_set_class a_wceq f1_el a_sup_set_class i0_el a_sup_set_class a_wcel f1_el a_sup_set_class f0_el a_sup_set_class a_wcel a_wi f1_el p_alrimiv i0_el f0_el f1_el a_ax-13 i0_el a_sup_set_class f0_el a_sup_set_class a_wceq f1_el a_sup_set_class i0_el a_sup_set_class a_wcel f1_el a_sup_set_class f0_el a_sup_set_class a_wcel a_wi f1_el a_wal i0_el a_sup_set_class f1_el a_sup_set_class a_wcel f0_el a_sup_set_class f1_el a_sup_set_class a_wcel p_embantd f1_el a_sup_set_class i0_el a_sup_set_class a_wcel f1_el a_sup_set_class f0_el a_sup_set_class a_wcel a_wi f1_el a_wal i0_el a_sup_set_class f1_el a_sup_set_class a_wcel a_wi f0_el a_sup_set_class f1_el a_sup_set_class a_wcel i0_el f0_el p_spimv f1_el a_sup_set_class i0_el a_sup_set_class a_wcel f1_el a_sup_set_class f0_el a_sup_set_class a_wcel a_wi f1_el a_wal i0_el a_sup_set_class f1_el a_sup_set_class a_wcel a_wi i0_el a_wal f0_el a_sup_set_class f1_el a_sup_set_class a_wcel f1_el p_eximi f1_el a_sup_set_class i0_el a_sup_set_class a_wcel f1_el a_sup_set_class f0_el a_sup_set_class a_wcel a_wi f1_el a_wal i0_el a_sup_set_class f1_el a_sup_set_class a_wcel a_wi i0_el a_wal f1_el a_wex f0_el a_sup_set_class f1_el a_sup_set_class a_wcel f1_el a_wex a_ax-mp $.
 $}
-$( Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
+
+$(Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d A x y z $.
-	ipwex_0 $f set x $.
-	ipwex_1 $f set y $.
-	ipwex_2 $f set z $.
-	fpwex_0 $f class A $.
-	epwex_0 $e |- A e. _V $.
-	pwex $p |- ~P A e. _V $= ipwex_2 sup_set_class cpw cvv wcel fpwex_0 cpw cvv wcel ipwex_2 fpwex_0 epwex_0 ipwex_2 sup_set_class fpwex_0 wceq ipwex_2 sup_set_class cpw fpwex_0 cpw cvv ipwex_2 sup_set_class fpwex_0 pweq eleq1d ipwex_2 sup_set_class cpw ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_1 cab cvv ipwex_1 ipwex_2 sup_set_class df-pw ipwex_0 ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_1 cab ipwex_0 sup_set_class ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_1 cab wceq ipwex_0 wex ipwex_1 sup_set_class ipwex_0 sup_set_class wcel ipwex_1 sup_set_class ipwex_2 sup_set_class wss wb ipwex_1 wal ipwex_0 wex ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_0 ipwex_1 ipwex_2 ipwex_0 ipwex_1 axpow2 bm1.3ii ipwex_0 sup_set_class ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_1 cab wceq ipwex_1 sup_set_class ipwex_0 sup_set_class wcel ipwex_1 sup_set_class ipwex_2 sup_set_class wss wb ipwex_1 wal ipwex_0 ipwex_1 sup_set_class ipwex_2 sup_set_class wss ipwex_1 ipwex_0 sup_set_class abeq2 exbii mpbir issetri eqeltri vtocl $.
+	$v A  $.
+	$d A x y z  $.
+	f0_pwex $f class A $.
+	i0_pwex $f set x $.
+	i1_pwex $f set y $.
+	i2_pwex $f set z $.
+	e0_pwex $e |- A e. _V $.
+	p_pwex $p |- ~P A e. _V $= e0_pwex i2_pwex a_sup_set_class f0_pwex p_pweq i2_pwex a_sup_set_class f0_pwex a_wceq i2_pwex a_sup_set_class a_cpw f0_pwex a_cpw a_cvv p_eleq1d i1_pwex i2_pwex a_sup_set_class a_df-pw i2_pwex i0_pwex i1_pwex p_axpow2 i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i0_pwex i1_pwex p_bm1.3ii i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i1_pwex i0_pwex a_sup_set_class p_abeq2 i0_pwex a_sup_set_class i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i1_pwex a_cab a_wceq i1_pwex a_sup_set_class i0_pwex a_sup_set_class a_wcel i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss a_wb i1_pwex a_wal i0_pwex p_exbii i0_pwex a_sup_set_class i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i1_pwex a_cab a_wceq i0_pwex a_wex i1_pwex a_sup_set_class i0_pwex a_sup_set_class a_wcel i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss a_wb i1_pwex a_wal i0_pwex a_wex p_mpbir i0_pwex i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i1_pwex a_cab p_issetri i2_pwex a_sup_set_class a_cpw i1_pwex a_sup_set_class i2_pwex a_sup_set_class a_wss i1_pwex a_cab a_cvv p_eqeltri i2_pwex a_sup_set_class a_cpw a_cvv a_wcel f0_pwex a_cpw a_cvv a_wcel i2_pwex f0_pwex p_vtocl $.
 $}
-$( Power set axiom expressed in class notation, with the sethood
+
+$(Power set axiom expressed in class notation, with the sethood
        requirement as an antecedent.  Axiom 4 of [TakeutiZaring] p. 17.
        (Contributed by NM, 30-Oct-2003.) $)
+
 ${
-	$v A $.
-	$v V $.
-	$v x $.
-	$d x A $.
-	ipwexg_0 $f set x $.
-	fpwexg_0 $f class A $.
-	fpwexg_1 $f class V $.
-	pwexg $p |- ( A e. V -> ~P A e. _V ) $= ipwexg_0 sup_set_class cpw cvv wcel fpwexg_0 cpw cvv wcel ipwexg_0 fpwexg_0 fpwexg_1 ipwexg_0 sup_set_class fpwexg_0 wceq ipwexg_0 sup_set_class cpw fpwexg_0 cpw cvv ipwexg_0 sup_set_class fpwexg_0 pweq eleq1d ipwexg_0 sup_set_class ipwexg_0 vex pwex vtoclg $.
+	$v A V  $.
+	$d x A  $.
+	f0_pwexg $f class A $.
+	f1_pwexg $f class V $.
+	i0_pwexg $f set x $.
+	p_pwexg $p |- ( A e. V -> ~P A e. _V ) $= i0_pwexg a_sup_set_class f0_pwexg p_pweq i0_pwexg a_sup_set_class f0_pwexg a_wceq i0_pwexg a_sup_set_class a_cpw f0_pwexg a_cpw a_cvv p_eleq1d i0_pwexg p_vex i0_pwexg a_sup_set_class p_pwex i0_pwexg a_sup_set_class a_cpw a_cvv a_wcel f0_pwexg a_cpw a_cvv a_wcel i0_pwexg f0_pwexg f1_pwexg p_vtoclg $.
 $}
-$( Existence of a class of subsets.  (Contributed by NM, 15-Jul-2006.)
+
+$(Existence of a class of subsets.  (Contributed by NM, 15-Jul-2006.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	fabssexg_0 $f wff ph $.
-	fabssexg_1 $f set x $.
-	fabssexg_2 $f class A $.
-	fabssexg_3 $f class V $.
-	abssexg $p |- ( A e. V -> { x | ( x C_ A /\ ph ) } e. _V ) $= fabssexg_2 fabssexg_3 wcel fabssexg_2 cpw cvv wcel fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 cab cvv wcel fabssexg_2 fabssexg_3 pwexg fabssexg_2 cpw cvv wcel fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 cab cvv wcel fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 cab cvv wcel fabssexg_2 cpw fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 cab cvv fabssexg_1 fabssexg_2 df-pw eleq1i fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 cab fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 cab wss fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 cab cvv wcel fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 cab cvv wcel fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 simpl ss2abi fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_0 wa fabssexg_1 cab fabssexg_1 sup_set_class fabssexg_2 wss fabssexg_1 cab cvv ssexg mpan sylbi syl $.
+	$v ph x A V  $.
+	$d x A  $.
+	f0_abssexg $f wff ph $.
+	f1_abssexg $f set x $.
+	f2_abssexg $f class A $.
+	f3_abssexg $f class V $.
+	p_abssexg $p |- ( A e. V -> { x | ( x C_ A /\ ph ) } e. _V ) $= f2_abssexg f3_abssexg p_pwexg f1_abssexg f2_abssexg a_df-pw f2_abssexg a_cpw f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg a_cab a_cvv p_eleq1i f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg p_simpl f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg p_ss2abi f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_cab f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg a_cab a_cvv p_ssexg f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_cab f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg a_cab a_wss f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg a_cab a_cvv a_wcel f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_cab a_cvv a_wcel p_mpan f2_abssexg a_cpw a_cvv a_wcel f1_abssexg a_sup_set_class f2_abssexg a_wss f1_abssexg a_cab a_cvv a_wcel f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_cab a_cvv a_wcel p_sylbi f2_abssexg f3_abssexg a_wcel f2_abssexg a_cpw a_cvv a_wcel f1_abssexg a_sup_set_class f2_abssexg a_wss f0_abssexg a_wa f1_abssexg a_cab a_cvv a_wcel p_syl $.
 $}
-$( A singleton is a set.  Theorem 7.13 of [Quine] p. 51, but proved using
+
+$(A singleton is a set.  Theorem 7.13 of [Quine] p. 51, but proved using
        only Extensionality, Power Set, and Separation.  Unlike the proof of
        ~ zfpair , Replacement is not needed.  (Contributed by NM, 7-Aug-1994.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.)  See also ~ snex .
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
+
 ${
-	$v A $.
-	fsnexALT_0 $f class A $.
-	snexALT $p |- { A } e. _V $= fsnexALT_0 cpw cvv wcel fsnexALT_0 csn cvv wcel fsnexALT_0 csn fsnexALT_0 cpw wss fsnexALT_0 cpw cvv wcel fsnexALT_0 csn cvv wcel fsnexALT_0 snsspw fsnexALT_0 csn fsnexALT_0 cpw cvv ssexg mpan fsnexALT_0 cpw cvv wcel wn fsnexALT_0 cvv wcel wn fsnexALT_0 csn cvv wcel fsnexALT_0 cvv wcel fsnexALT_0 cpw cvv wcel fsnexALT_0 cvv pwexg con3i fsnexALT_0 cvv wcel wn fsnexALT_0 csn c0 cvv fsnexALT_0 cvv wcel wn fsnexALT_0 csn c0 wceq fsnexALT_0 snprc biimpi 0ex syl6eqel syl pm2.61i $.
+	$v A  $.
+	$d A  $.
+	f0_snexALT $f class A $.
+	p_snexALT $p |- { A } e. _V $= f0_snexALT p_snsspw f0_snexALT a_csn f0_snexALT a_cpw a_cvv p_ssexg f0_snexALT a_csn f0_snexALT a_cpw a_wss f0_snexALT a_cpw a_cvv a_wcel f0_snexALT a_csn a_cvv a_wcel p_mpan f0_snexALT a_cvv p_pwexg f0_snexALT a_cvv a_wcel f0_snexALT a_cpw a_cvv a_wcel p_con3i f0_snexALT p_snprc f0_snexALT a_cvv a_wcel a_wn f0_snexALT a_csn a_c0 a_wceq p_biimpi p_0ex f0_snexALT a_cvv a_wcel a_wn f0_snexALT a_csn a_c0 a_cvv p_syl6eqel f0_snexALT a_cpw a_cvv a_wcel a_wn f0_snexALT a_cvv a_wcel a_wn f0_snexALT a_csn a_cvv a_wcel p_syl f0_snexALT a_cpw a_cvv a_wcel f0_snexALT a_csn a_cvv a_wcel p_pm2.61i $.
 $}
-$( The power set of the empty set (the ordinal 1) is a set.  See also
+
+$(The power set of the empty set (the ordinal 1) is a set.  See also
      ~ p0exALT .  (Contributed by NM, 23-Dec-1993.) $)
+
 ${
-	p0ex $p |- { (/) } e. _V $= c0 cpw c0 csn cvv pw0 c0 0ex pwex eqeltrri $.
+	$v  $.
+	p_p0ex $p |- { (/) } e. _V $= p_pw0 p_0ex a_c0 p_pwex a_c0 a_cpw a_c0 a_csn a_cvv p_eqeltrri $.
 $}
-$( The power set of the empty set (the ordinal 1) is a set.  Alternate proof
+
+$(The power set of the empty set (the ordinal 1) is a set.  Alternate proof
      which is longer and quite different from the proof of ~ p0ex if ~ snexALT
      is expanded.  (Contributed by NM, 23-Dec-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
+
 ${
-	p0exALT $p |- { (/) } e. _V $= c0 snexALT $.
+	$v  $.
+	p_p0exALT $p |- { (/) } e. _V $= a_c0 p_snexALT $.
 $}
-$( The power set of the power set of the empty set (the ordinal 2) is a set.
+
+$(The power set of the power set of the empty set (the ordinal 2) is a set.
      (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	pp0ex $p |- { (/) , { (/) } } e. _V $= c0 csn cpw c0 c0 csn cpr cvv pwpw0 c0 csn p0ex pwex eqeltrri $.
+	$v  $.
+	p_pp0ex $p |- { (/) , { (/) } } e. _V $= p_pwpw0 p_p0ex a_c0 a_csn p_pwex a_c0 a_csn a_cpw a_c0 a_c0 a_csn a_cpr a_cvv p_eqeltrri $.
 $}
-$( The ordinal number 3 is a set, proved without the Axiom of Union
+
+$(The ordinal number 3 is a set, proved without the Axiom of Union
      ~ ax-un .  (Contributed by NM, 2-May-2009.) $)
+
 ${
-	ord3ex $p |- { (/) , { (/) } , { (/) , { (/) } } } e. _V $= c0 c0 csn c0 c0 csn cpr ctp c0 c0 csn cpr c0 c0 csn cpr csn cun cvv c0 c0 csn c0 c0 csn cpr df-tp c0 c0 csn cpr c0 c0 csn cpr csn cun c0 c0 csn cpr c0 csn csn c0 c0 csn cpr cpr cun c0 c0 csn cpr cpw c0 c0 csn cpr c0 csn csn c0 c0 csn cpr cpr cun cvv c0 c0 csn pwpr c0 c0 csn cpr pp0ex pwex eqeltrri c0 c0 csn cpr csn c0 csn csn c0 c0 csn cpr cpr wss c0 c0 csn cpr c0 c0 csn cpr csn cun c0 c0 csn cpr c0 csn csn c0 c0 csn cpr cpr cun wss c0 csn csn c0 c0 csn cpr snsspr2 c0 c0 csn cpr csn c0 csn csn c0 c0 csn cpr cpr c0 c0 csn cpr unss2 ax-mp ssexi eqeltri $.
+	$v  $.
+	p_ord3ex $p |- { (/) , { (/) } , { (/) , { (/) } } } e. _V $= a_c0 a_c0 a_csn a_c0 a_c0 a_csn a_cpr a_df-tp a_c0 a_c0 a_csn p_pwpr p_pp0ex a_c0 a_c0 a_csn a_cpr p_pwex a_c0 a_c0 a_csn a_cpr a_cpw a_c0 a_c0 a_csn a_cpr a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr a_cpr a_cun a_cvv p_eqeltrri a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr p_snsspr2 a_c0 a_c0 a_csn a_cpr a_csn a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr a_cpr a_c0 a_c0 a_csn a_cpr p_unss2 a_c0 a_c0 a_csn a_cpr a_csn a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr a_cpr a_wss a_c0 a_c0 a_csn a_cpr a_c0 a_c0 a_csn a_cpr a_csn a_cun a_c0 a_c0 a_csn a_cpr a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr a_cpr a_cun a_wss a_ax-mp a_c0 a_c0 a_csn a_cpr a_c0 a_c0 a_csn a_cpr a_csn a_cun a_c0 a_c0 a_csn a_cpr a_c0 a_csn a_csn a_c0 a_c0 a_csn a_cpr a_cpr a_cun p_ssexi a_c0 a_c0 a_csn a_c0 a_c0 a_csn a_cpr a_ctp a_c0 a_c0 a_csn a_cpr a_c0 a_c0 a_csn a_cpr a_csn a_cun a_cvv p_eqeltri $.
 $}
-$( At least two sets exist (or in terms of first-order logic, the universe
+
+$(At least two sets exist (or in terms of first-order logic, the universe
        of discourse has two or more objects).  Note that we may not substitute
        the same variable for both ` x ` and ` y ` (as indicated by the distinct
        variable requirement), for otherwise we would contradict ~ stdpc6 .
@@ -168,85 +181,87 @@ $( At least two sets exist (or in terms of first-order logic, the universe
        requirement is made explicitly in the set.mm source file, it is implicit
        on the web page (i.e. doesn't appear in the "Distinct variable group").
        (Contributed by NM, 7-Nov-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d w x y z $.
-	idtru_0 $f set z $.
-	idtru_1 $f set w $.
-	fdtru_0 $f set x $.
-	fdtru_1 $f set y $.
-	dtru $p |- -. A. x x = y $= fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex fdtru_0 sup_set_class fdtru_1 sup_set_class wceq fdtru_0 wal wn idtru_1 sup_set_class idtru_0 sup_set_class wceq wn idtru_0 wex idtru_1 wex fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex fdtru_0 sup_set_class idtru_1 sup_set_class wcel fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn wa idtru_0 wex idtru_1 wex idtru_1 sup_set_class idtru_0 sup_set_class wceq wn idtru_0 wex idtru_1 wex fdtru_0 sup_set_class idtru_1 sup_set_class wcel fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn wa idtru_0 wex idtru_1 wex fdtru_0 sup_set_class idtru_1 sup_set_class wcel idtru_1 wex fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn idtru_0 wex fdtru_0 idtru_1 el fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn fdtru_0 wal idtru_0 wex fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn idtru_0 wex idtru_0 fdtru_0 ax-nul fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn fdtru_0 wal fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn idtru_0 fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn fdtru_0 sp eximi ax-mp fdtru_0 sup_set_class idtru_1 sup_set_class wcel fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn idtru_1 idtru_0 eeanv mpbir2an fdtru_0 sup_set_class idtru_1 sup_set_class wcel fdtru_0 sup_set_class idtru_0 sup_set_class wcel wn wa idtru_1 sup_set_class idtru_0 sup_set_class wceq wn idtru_1 idtru_0 fdtru_0 sup_set_class idtru_1 sup_set_class wcel idtru_1 sup_set_class idtru_0 sup_set_class wceq fdtru_0 sup_set_class idtru_0 sup_set_class wcel idtru_1 sup_set_class idtru_0 sup_set_class wceq fdtru_0 sup_set_class idtru_1 sup_set_class wcel fdtru_0 sup_set_class idtru_0 sup_set_class wcel idtru_1 idtru_0 fdtru_0 ax-14 com12 con3and 2eximi ax-mp idtru_1 sup_set_class idtru_0 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex idtru_1 idtru_0 idtru_0 sup_set_class fdtru_1 sup_set_class wceq idtru_1 sup_set_class idtru_0 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex wi idtru_0 sup_set_class fdtru_1 sup_set_class wceq idtru_1 sup_set_class idtru_0 sup_set_class wceq wn idtru_1 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex idtru_0 sup_set_class fdtru_1 sup_set_class wceq idtru_1 sup_set_class idtru_0 sup_set_class wceq idtru_1 sup_set_class fdtru_1 sup_set_class wceq idtru_0 fdtru_1 idtru_1 equequ2 notbid idtru_1 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 idtru_1 fdtru_0 sup_set_class idtru_1 sup_set_class wceq fdtru_0 sup_set_class fdtru_1 sup_set_class wceq idtru_1 sup_set_class fdtru_1 sup_set_class wceq fdtru_0 idtru_1 fdtru_1 ax-8 con3d spimev syl6bi idtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 wex idtru_1 sup_set_class idtru_0 sup_set_class wceq wn idtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 sup_set_class fdtru_1 sup_set_class wceq wn fdtru_0 idtru_0 fdtru_0 sup_set_class idtru_0 sup_set_class wceq fdtru_0 sup_set_class fdtru_1 sup_set_class wceq idtru_0 sup_set_class fdtru_1 sup_set_class wceq fdtru_0 idtru_0 fdtru_1 ax-8 con3d spimev a1d pm2.61i exlimivv ax-mp fdtru_0 sup_set_class fdtru_1 sup_set_class wceq fdtru_0 exnal mpbi $.
+	$v x y  $.
+	$d w x y z  $.
+	f0_dtru $f set x $.
+	f1_dtru $f set y $.
+	i0_dtru $f set z $.
+	i1_dtru $f set w $.
+	p_dtru $p |- -. A. x x = y $= f0_dtru i1_dtru p_el i0_dtru f0_dtru a_ax-nul f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn f0_dtru p_sp f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn f0_dtru a_wal f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn i0_dtru p_eximi f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn f0_dtru a_wal i0_dtru a_wex f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn i0_dtru a_wex a_ax-mp f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn i1_dtru i0_dtru p_eeanv f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn a_wa i0_dtru a_wex i1_dtru a_wex f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel i1_dtru a_wex f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn i0_dtru a_wex p_mpbir2an i1_dtru i0_dtru f0_dtru a_ax-14 i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel p_com12 f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel p_con3and f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn a_wa i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn i1_dtru i0_dtru p_2eximi f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wcel f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wcel a_wn a_wa i0_dtru a_wex i1_dtru a_wex i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn i0_dtru a_wex i1_dtru a_wex a_ax-mp i0_dtru f1_dtru i1_dtru p_equequ2 i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq i1_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq p_notbid f0_dtru i1_dtru f1_dtru a_ax-8 f0_dtru a_sup_set_class i1_dtru a_sup_set_class a_wceq f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq i1_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq p_con3d i1_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru i1_dtru p_spimev i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn i1_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex p_syl6bi f0_dtru i0_dtru f1_dtru a_ax-8 f0_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq p_con3d i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru i0_dtru p_spimev i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn p_a1d i0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex a_wi p_pm2.61i i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex i1_dtru i0_dtru p_exlimivv i1_dtru a_sup_set_class i0_dtru a_sup_set_class a_wceq a_wn i0_dtru a_wex i1_dtru a_wex f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex a_ax-mp f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq f0_dtru p_exnal f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq a_wn f0_dtru a_wex f0_dtru a_sup_set_class f1_dtru a_sup_set_class a_wceq f0_dtru a_wal a_wn p_mpbi $.
 $}
-$( This theorem shows that axiom ~ ax-16 is redundant in the presence of
+
+$(This theorem shows that axiom ~ ax-16 is redundant in the presence of
        theorem ~ dtru , which states simply that at least two things exist.
        This justifies the remark at
        ~ http://us.metamath.org/mpeuni/mmzfcnd.html#twoness (which links to
        this theorem).  (Contributed by NM, 7-Nov-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$d x y $.
-	fax16b_0 $f wff ph $.
-	fax16b_1 $f set x $.
-	fax16b_2 $f set y $.
-	ax16b $p |- ( A. x x = y -> ( ph -> A. x ph ) ) $= fax16b_1 sup_set_class fax16b_2 sup_set_class wceq fax16b_1 wal fax16b_0 fax16b_0 fax16b_1 wal wi fax16b_1 fax16b_2 dtru pm2.21i $.
+	$v ph x y  $.
+	$d x y  $.
+	f0_ax16b $f wff ph $.
+	f1_ax16b $f set x $.
+	f2_ax16b $f set y $.
+	p_ax16b $p |- ( A. x x = y -> ( ph -> A. x ph ) ) $= f1_ax16b f2_ax16b p_dtru f1_ax16b a_sup_set_class f2_ax16b a_sup_set_class a_wceq f1_ax16b a_wal f0_ax16b f0_ax16b f1_ax16b a_wal a_wi p_pm2.21i $.
 $}
-$( Existential uniqueness implies there is a value for which the wff
+
+$(Existential uniqueness implies there is a value for which the wff
        argument is false.  (Contributed by NM, 24-Oct-2010.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$d x y $.
-	$d y ph $.
-	ieunex_0 $f set y $.
-	feunex_0 $f wff ph $.
-	feunex_1 $f set x $.
-	eunex $p |- ( E! x ph -> E. x -. ph ) $= feunex_0 feunex_1 wex feunex_0 feunex_1 sup_set_class ieunex_0 sup_set_class wceq wi feunex_1 wal ieunex_0 wex wa feunex_0 feunex_1 wal wn feunex_0 feunex_1 weu feunex_0 wn feunex_1 wex feunex_0 feunex_1 sup_set_class ieunex_0 sup_set_class wceq wi feunex_1 wal ieunex_0 wex feunex_0 feunex_1 wal wn feunex_0 feunex_1 wex feunex_0 feunex_1 sup_set_class ieunex_0 sup_set_class wceq wi feunex_1 wal feunex_0 feunex_1 wal wn ieunex_0 feunex_0 feunex_1 sup_set_class ieunex_0 sup_set_class wceq wi feunex_1 wal feunex_0 feunex_1 wal feunex_1 sup_set_class ieunex_0 sup_set_class wceq feunex_1 wal feunex_1 ieunex_0 dtru feunex_0 feunex_1 sup_set_class ieunex_0 sup_set_class wceq feunex_1 alim mtoi exlimiv adantl feunex_0 feunex_1 ieunex_0 feunex_0 ieunex_0 nfv eu3 feunex_0 feunex_1 exnal 3imtr4i $.
+	$v ph x  $.
+	$d x y  $.
+	$d y ph  $.
+	f0_eunex $f wff ph $.
+	f1_eunex $f set x $.
+	i0_eunex $f set y $.
+	p_eunex $p |- ( E! x ph -> E. x -. ph ) $= f1_eunex i0_eunex p_dtru f0_eunex f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq f1_eunex p_alim f0_eunex f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq a_wi f1_eunex a_wal f0_eunex f1_eunex a_wal f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq f1_eunex a_wal p_mtoi f0_eunex f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq a_wi f1_eunex a_wal f0_eunex f1_eunex a_wal a_wn i0_eunex p_exlimiv f0_eunex f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq a_wi f1_eunex a_wal i0_eunex a_wex f0_eunex f1_eunex a_wal a_wn f0_eunex f1_eunex a_wex p_adantl f0_eunex i0_eunex p_nfv f0_eunex f1_eunex i0_eunex p_eu3 f0_eunex f1_eunex p_exnal f0_eunex f1_eunex a_wex f0_eunex f1_eunex a_sup_set_class i0_eunex a_sup_set_class a_wceq a_wi f1_eunex a_wal i0_eunex a_wex a_wa f0_eunex f1_eunex a_wal a_wn f0_eunex f1_eunex a_weu f0_eunex a_wn f1_eunex a_wex p_3imtr4i $.
 $}
-$( A set variable is not free from itself.  The proof relies on ~ dtru ,
+
+$(A set variable is not free from itself.  The proof relies on ~ dtru ,
        that is, it is not true in a one-element domain.  (Contributed by Mario
        Carneiro, 8-Oct-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d w x y z $.
-	infnid_0 $f set y $.
-	infnid_1 $f set z $.
-	infnid_2 $f set w $.
-	fnfnid_0 $f set x $.
-	nfnid $p |- -. F/_ x x $= fnfnid_0 fnfnid_0 sup_set_class wnfc infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 wal infnid_2 wal infnid_1 wal infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 wal infnid_2 wal infnid_1 wal infnid_1 sup_set_class infnid_2 sup_set_class wceq infnid_1 wal infnid_1 infnid_2 dtru infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 wal infnid_2 wal infnid_1 sup_set_class infnid_2 sup_set_class wceq infnid_1 infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 wal infnid_1 sup_set_class infnid_2 sup_set_class wceq infnid_2 infnid_1 infnid_2 infnid_0 ax-ext sps alimi mto fnfnid_0 fnfnid_0 sup_set_class wnfc infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 wnf infnid_0 wal infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_2 wal infnid_1 wal infnid_0 wal infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 wal infnid_2 wal infnid_1 wal fnfnid_0 infnid_0 fnfnid_0 sup_set_class df-nfc infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 wnf infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_2 wal infnid_1 wal infnid_0 infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 wnf infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_1 wsb infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_2 wsb wb infnid_2 wal infnid_1 wal infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_2 wal infnid_1 wal infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_1 infnid_2 sbnf2 infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_1 wsb infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_2 wsb wb infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_1 infnid_2 infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_1 wsb infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class fnfnid_0 sup_set_class wcel fnfnid_0 infnid_2 wsb infnid_0 sup_set_class infnid_2 sup_set_class wcel infnid_1 fnfnid_0 infnid_0 elsb4 infnid_2 fnfnid_0 infnid_0 elsb4 bibi12i 2albii bitri albii infnid_0 sup_set_class infnid_1 sup_set_class wcel infnid_0 sup_set_class infnid_2 sup_set_class wcel wb infnid_0 infnid_1 infnid_2 alrot3 3bitri mtbir $.
+	$v x  $.
+	$d w x y z  $.
+	f0_nfnid $f set x $.
+	i0_nfnid $f set y $.
+	i1_nfnid $f set z $.
+	i2_nfnid $f set w $.
+	p_nfnid $p |- -. F/_ x x $= i1_nfnid i2_nfnid p_dtru i1_nfnid i2_nfnid i0_nfnid a_ax-ext i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid a_wal i1_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wceq i2_nfnid p_sps i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid a_wal i2_nfnid a_wal i1_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wceq i1_nfnid p_alimi i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid a_wal i2_nfnid a_wal i1_nfnid a_wal i1_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wceq i1_nfnid a_wal p_mto f0_nfnid i0_nfnid f0_nfnid a_sup_set_class a_df-nfc i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i1_nfnid i2_nfnid p_sbnf2 i1_nfnid f0_nfnid i0_nfnid p_elsb4 i2_nfnid f0_nfnid i0_nfnid p_elsb4 i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i1_nfnid a_wsb i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i2_nfnid a_wsb i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel p_bibi12i i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i1_nfnid a_wsb i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i2_nfnid a_wsb a_wb i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i1_nfnid i2_nfnid p_2albii i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid a_wnf i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i1_nfnid a_wsb i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid i2_nfnid a_wsb a_wb i2_nfnid a_wal i1_nfnid a_wal i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i2_nfnid a_wal i1_nfnid a_wal p_bitri i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid a_wnf i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i2_nfnid a_wal i1_nfnid a_wal i0_nfnid p_albii i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid i1_nfnid i2_nfnid p_alrot3 f0_nfnid f0_nfnid a_sup_set_class a_wnfc i0_nfnid a_sup_set_class f0_nfnid a_sup_set_class a_wcel f0_nfnid a_wnf i0_nfnid a_wal i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i2_nfnid a_wal i1_nfnid a_wal i0_nfnid a_wal i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid a_wal i2_nfnid a_wal i1_nfnid a_wal p_3bitri f0_nfnid f0_nfnid a_sup_set_class a_wnfc i0_nfnid a_sup_set_class i1_nfnid a_sup_set_class a_wcel i0_nfnid a_sup_set_class i2_nfnid a_sup_set_class a_wcel a_wb i0_nfnid a_wal i2_nfnid a_wal i1_nfnid a_wal p_mtbir $.
 $}
-$( The "distinctor" expression ` -. A. x x = y ` , stating that ` x ` and
+
+$(The "distinctor" expression ` -. A. x x = y ` , stating that ` x ` and
        ` y ` are not the same variable, can be written in terms of ` F/ ` in
        the obvious way.  This theorem is not true in a one-element domain,
        because then ` F/_ x y ` and ` A. x x = y ` will both be true.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	fnfcvb_0 $f set x $.
-	fnfcvb_1 $f set y $.
-	nfcvb $p |- ( F/_ x y <-> -. A. x x = y ) $= fnfcvb_0 fnfcvb_1 sup_set_class wnfc fnfcvb_0 sup_set_class fnfcvb_1 sup_set_class wceq fnfcvb_0 wal wn fnfcvb_0 sup_set_class fnfcvb_1 sup_set_class wceq fnfcvb_0 wal fnfcvb_0 fnfcvb_1 sup_set_class wnfc fnfcvb_0 sup_set_class fnfcvb_1 sup_set_class wceq fnfcvb_0 wal fnfcvb_0 fnfcvb_1 sup_set_class wnfc fnfcvb_1 fnfcvb_1 sup_set_class wnfc fnfcvb_1 nfnid fnfcvb_0 fnfcvb_1 fnfcvb_1 sup_set_class fnfcvb_1 sup_set_class fnfcvb_0 sup_set_class fnfcvb_1 sup_set_class wceq fnfcvb_0 wal fnfcvb_1 sup_set_class eqidd drnfc1 mtbiri con2i fnfcvb_0 fnfcvb_1 nfcvf impbii $.
+	$v x y  $.
+	$d x y  $.
+	$d x  $.
+	$d y  $.
+	f0_nfcvb $f set x $.
+	f1_nfcvb $f set y $.
+	p_nfcvb $p |- ( F/_ x y <-> -. A. x x = y ) $= f1_nfcvb p_nfnid f0_nfcvb a_sup_set_class f1_nfcvb a_sup_set_class a_wceq f0_nfcvb a_wal f1_nfcvb a_sup_set_class p_eqidd f0_nfcvb f1_nfcvb f1_nfcvb a_sup_set_class f1_nfcvb a_sup_set_class p_drnfc1 f0_nfcvb a_sup_set_class f1_nfcvb a_sup_set_class a_wceq f0_nfcvb a_wal f0_nfcvb f1_nfcvb a_sup_set_class a_wnfc f1_nfcvb f1_nfcvb a_sup_set_class a_wnfc p_mtbiri f0_nfcvb a_sup_set_class f1_nfcvb a_sup_set_class a_wceq f0_nfcvb a_wal f0_nfcvb f1_nfcvb a_sup_set_class a_wnfc p_con2i f0_nfcvb f1_nfcvb p_nfcvf f0_nfcvb f1_nfcvb a_sup_set_class a_wnfc f0_nfcvb a_sup_set_class f1_nfcvb a_sup_set_class a_wceq f0_nfcvb a_wal a_wn p_impbii $.
 $}
-$( A class is a subclass of the power class of its union.  Exercise 6(b) of
+
+$(A class is a subclass of the power class of its union.  Exercise 6(b) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d A x $.
-	ipwuni_0 $f set x $.
-	fpwuni_0 $f class A $.
-	pwuni $p |- A C_ ~P U. A $= ipwuni_0 fpwuni_0 fpwuni_0 cuni cpw ipwuni_0 sup_set_class fpwuni_0 wcel ipwuni_0 sup_set_class fpwuni_0 cuni wss ipwuni_0 sup_set_class fpwuni_0 cuni cpw wcel ipwuni_0 sup_set_class fpwuni_0 elssuni ipwuni_0 sup_set_class fpwuni_0 cuni ipwuni_0 vex elpw sylibr ssriv $.
+	$v A  $.
+	$d A x  $.
+	f0_pwuni $f class A $.
+	i0_pwuni $f set x $.
+	p_pwuni $p |- A C_ ~P U. A $= i0_pwuni a_sup_set_class f0_pwuni p_elssuni i0_pwuni p_vex i0_pwuni a_sup_set_class f0_pwuni a_cuni p_elpw i0_pwuni a_sup_set_class f0_pwuni a_wcel i0_pwuni a_sup_set_class f0_pwuni a_cuni a_wss i0_pwuni a_sup_set_class f0_pwuni a_cuni a_cpw a_wcel p_sylibr i0_pwuni f0_pwuni f0_pwuni a_cuni a_cpw p_ssriv $.
 $}
-$( A version of ~ dtru ("two things exist") with a shorter proof that uses
+
+$(A version of ~ dtru ("two things exist") with a shorter proof that uses
        more axioms but may be easier to understand.
 
        Assuming that ZF set theory is consistent, we cannot prove this theorem
@@ -259,68 +274,70 @@ $( A version of ~ dtru ("two things exist") with a shorter proof that uses
        a detailed explanation of the distinct variable violation.  (Contributed
        by NM, 15-Jul-1994.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	fdtruALT_0 $f set x $.
-	fdtruALT_1 $f set y $.
-	dtruALT $p |- -. A. x x = y $= fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_0 wex fdtruALT_0 sup_set_class fdtruALT_1 sup_set_class wceq fdtruALT_0 wal wn fdtruALT_1 sup_set_class c0 wceq fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_0 wex fdtruALT_1 sup_set_class c0 wceq fdtruALT_1 sup_set_class c0 csn wceq wn fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_0 wex fdtruALT_1 sup_set_class 0inp0 fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_1 sup_set_class c0 csn wceq wn fdtruALT_0 c0 csn p0ex fdtruALT_0 sup_set_class c0 csn wceq fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq fdtruALT_1 sup_set_class c0 csn wceq fdtruALT_0 sup_set_class c0 csn fdtruALT_1 sup_set_class eqeq2 notbid spcev syl fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_1 sup_set_class c0 wceq wn fdtruALT_0 c0 0ex fdtruALT_0 sup_set_class c0 wceq fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq fdtruALT_1 sup_set_class c0 wceq fdtruALT_0 sup_set_class c0 fdtruALT_1 sup_set_class eqeq2 notbid spcev pm2.61i fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq wn fdtruALT_0 wex fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq fdtruALT_0 wal fdtruALT_0 sup_set_class fdtruALT_1 sup_set_class wceq fdtruALT_0 wal fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq fdtruALT_0 exnal fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class wceq fdtruALT_0 sup_set_class fdtruALT_1 sup_set_class wceq fdtruALT_0 fdtruALT_1 sup_set_class fdtruALT_0 sup_set_class eqcom albii xchbinx mpbi $.
+	$v x y  $.
+	$d x y  $.
+	f0_dtruALT $f set x $.
+	f1_dtruALT $f set y $.
+	p_dtruALT $p |- -. A. x x = y $= f1_dtruALT a_sup_set_class p_0inp0 p_p0ex f0_dtruALT a_sup_set_class a_c0 a_csn f1_dtruALT a_sup_set_class p_eqeq2 f0_dtruALT a_sup_set_class a_c0 a_csn a_wceq f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq f1_dtruALT a_sup_set_class a_c0 a_csn a_wceq p_notbid f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f1_dtruALT a_sup_set_class a_c0 a_csn a_wceq a_wn f0_dtruALT a_c0 a_csn p_spcev f1_dtruALT a_sup_set_class a_c0 a_wceq f1_dtruALT a_sup_set_class a_c0 a_csn a_wceq a_wn f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f0_dtruALT a_wex p_syl p_0ex f0_dtruALT a_sup_set_class a_c0 f1_dtruALT a_sup_set_class p_eqeq2 f0_dtruALT a_sup_set_class a_c0 a_wceq f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq f1_dtruALT a_sup_set_class a_c0 a_wceq p_notbid f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f1_dtruALT a_sup_set_class a_c0 a_wceq a_wn f0_dtruALT a_c0 p_spcev f1_dtruALT a_sup_set_class a_c0 a_wceq f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f0_dtruALT a_wex p_pm2.61i f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq f0_dtruALT p_exnal f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class p_eqcom f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq f0_dtruALT a_sup_set_class f1_dtruALT a_sup_set_class a_wceq f0_dtruALT p_albii f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f0_dtruALT a_wex f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq f0_dtruALT a_wal f0_dtruALT a_sup_set_class f1_dtruALT a_sup_set_class a_wceq f0_dtruALT a_wal p_xchbinx f1_dtruALT a_sup_set_class f0_dtruALT a_sup_set_class a_wceq a_wn f0_dtruALT a_wex f0_dtruALT a_sup_set_class f1_dtruALT a_sup_set_class a_wceq f0_dtruALT a_wal a_wn p_mpbi $.
 $}
-$( Corollary of ~ dtru .  This example illustrates the danger of blindly
+
+$(Corollary of ~ dtru .  This example illustrates the danger of blindly
        trusting the standard Deduction Theorem without accounting for free
        variables: the theorem form of this deduction is not valid, as shown by
        ~ dtrucor2 .  (Contributed by NM, 27-Jun-2002.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	fdtrucor_0 $f set x $.
-	fdtrucor_1 $f set y $.
-	edtrucor_0 $e |- x = y $.
-	dtrucor $p |- x =/= y $= fdtrucor_0 sup_set_class fdtrucor_1 sup_set_class wceq fdtrucor_0 sup_set_class fdtrucor_1 sup_set_class wne fdtrucor_0 fdtrucor_0 sup_set_class fdtrucor_1 sup_set_class wceq fdtrucor_0 wal fdtrucor_0 sup_set_class fdtrucor_1 sup_set_class wne fdtrucor_0 fdtrucor_1 dtru pm2.21i edtrucor_0 mpg $.
+	$v x y  $.
+	$d x y  $.
+	f0_dtrucor $f set x $.
+	f1_dtrucor $f set y $.
+	e0_dtrucor $e |- x = y $.
+	p_dtrucor $p |- x =/= y $= f0_dtrucor f1_dtrucor p_dtru f0_dtrucor a_sup_set_class f1_dtrucor a_sup_set_class a_wceq f0_dtrucor a_wal f0_dtrucor a_sup_set_class f1_dtrucor a_sup_set_class a_wne p_pm2.21i e0_dtrucor f0_dtrucor a_sup_set_class f1_dtrucor a_sup_set_class a_wceq f0_dtrucor a_sup_set_class f1_dtrucor a_sup_set_class a_wne f0_dtrucor p_mpg $.
 $}
-$( The theorem form of the deduction ~ dtrucor leads to a contradiction, as
+
+$(The theorem form of the deduction ~ dtrucor leads to a contradiction, as
        mentioned in the "Wrong!" example at
        ~ http://us.metamath.org/mpeuni/mmdeduction.html#bad .  (Contributed by
        NM, 20-Oct-2007.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fdtrucor2_0 $f wff ph $.
-	fdtrucor2_1 $f set x $.
-	fdtrucor2_2 $f set y $.
-	edtrucor2_0 $e |- ( x = y -> x =/= y ) $.
-	dtrucor2 $p |- ( ph /\ -. ph ) $= fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq fdtrucor2_1 wex fdtrucor2_0 fdtrucor2_0 wn wa fdtrucor2_1 fdtrucor2_2 a9e fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq fdtrucor2_1 fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq wn wi fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq wn fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class edtrucor2_0 necon2bi fdtrucor2_1 sup_set_class fdtrucor2_2 sup_set_class wceq pm2.01 ax-mp nex pm2.24ii $.
+	$v ph x y  $.
+	f0_dtrucor2 $f wff ph $.
+	f1_dtrucor2 $f set x $.
+	f2_dtrucor2 $f set y $.
+	e0_dtrucor2 $e |- ( x = y -> x =/= y ) $.
+	p_dtrucor2 $p |- ( ph /\ -. ph ) $= f1_dtrucor2 f2_dtrucor2 p_a9e e0_dtrucor2 f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class p_necon2bi f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq p_pm2.01 f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq a_wn a_wi f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq a_wn a_ax-mp f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq f1_dtrucor2 p_nex f1_dtrucor2 a_sup_set_class f2_dtrucor2 a_sup_set_class a_wceq f1_dtrucor2 a_wex f0_dtrucor2 f0_dtrucor2 a_wn a_wa p_pm2.24ii $.
 $}
-$( Demonstration of a theorem (scheme) that requires (meta)variables ` x `
+
+$(Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        and ` y ` to be distinct, but no others.  It bundles the theorem schemes
        ` E. x ( x = y -> x e. x ) ` and ` E. x ( x = y -> y e. x ) ` .  Compare
        ~ dvdemo2 .  ("Bundles" is a term introduced by Raph Levien.)
        (Contributed by NM, 1-Dec-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y $.
-	fdvdemo1_0 $f set x $.
-	fdvdemo1_1 $f set y $.
-	fdvdemo1_2 $f set z $.
-	dvdemo1 $p |- E. x ( x = y -> z e. x ) $= fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq wn fdvdemo1_0 wex fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq fdvdemo1_2 sup_set_class fdvdemo1_0 sup_set_class wcel wi fdvdemo1_0 wex fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq wn fdvdemo1_0 wex fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq fdvdemo1_0 wal wn fdvdemo1_0 fdvdemo1_1 dtru fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq fdvdemo1_0 exnal mpbir fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq wn fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq fdvdemo1_2 sup_set_class fdvdemo1_0 sup_set_class wcel wi fdvdemo1_0 fdvdemo1_0 sup_set_class fdvdemo1_1 sup_set_class wceq fdvdemo1_2 sup_set_class fdvdemo1_0 sup_set_class wcel pm2.21 eximi ax-mp $.
+	$v x y z  $.
+	$d x y  $.
+	f0_dvdemo1 $f set x $.
+	f1_dvdemo1 $f set y $.
+	f2_dvdemo1 $f set z $.
+	p_dvdemo1 $p |- E. x ( x = y -> z e. x ) $= f0_dvdemo1 f1_dvdemo1 p_dtru f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq f0_dvdemo1 p_exnal f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq a_wn f0_dvdemo1 a_wex f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq f0_dvdemo1 a_wal a_wn p_mpbir f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq f2_dvdemo1 a_sup_set_class f0_dvdemo1 a_sup_set_class a_wcel p_pm2.21 f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq a_wn f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq f2_dvdemo1 a_sup_set_class f0_dvdemo1 a_sup_set_class a_wcel a_wi f0_dvdemo1 p_eximi f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq a_wn f0_dvdemo1 a_wex f0_dvdemo1 a_sup_set_class f1_dvdemo1 a_sup_set_class a_wceq f2_dvdemo1 a_sup_set_class f0_dvdemo1 a_sup_set_class a_wcel a_wi f0_dvdemo1 a_wex a_ax-mp $.
 $}
-$( Demonstration of a theorem (scheme) that requires (meta)variables ` x `
+
+$(Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        and ` z ` to be distinct, but no others.  It bundles the theorem schemes
        ` E. x ( x = x -> z e. x ) ` and ` E. x ( x = y -> y e. x ) ` .  Compare
        ~ dvdemo1 .  (Contributed by NM, 1-Dec-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	fdvdemo2_0 $f set x $.
-	fdvdemo2_1 $f set y $.
-	fdvdemo2_2 $f set z $.
-	dvdemo2 $p |- E. x ( x = y -> z e. x ) $= fdvdemo2_2 sup_set_class fdvdemo2_0 sup_set_class wcel fdvdemo2_0 wex fdvdemo2_0 sup_set_class fdvdemo2_1 sup_set_class wceq fdvdemo2_2 sup_set_class fdvdemo2_0 sup_set_class wcel wi fdvdemo2_0 wex fdvdemo2_2 fdvdemo2_0 el fdvdemo2_2 sup_set_class fdvdemo2_0 sup_set_class wcel fdvdemo2_0 sup_set_class fdvdemo2_1 sup_set_class wceq fdvdemo2_2 sup_set_class fdvdemo2_0 sup_set_class wcel wi fdvdemo2_0 fdvdemo2_2 sup_set_class fdvdemo2_0 sup_set_class wcel fdvdemo2_0 sup_set_class fdvdemo2_1 sup_set_class wceq ax-1 eximi ax-mp $.
+	$v x y z  $.
+	$d x z  $.
+	f0_dvdemo2 $f set x $.
+	f1_dvdemo2 $f set y $.
+	f2_dvdemo2 $f set z $.
+	p_dvdemo2 $p |- E. x ( x = y -> z e. x ) $= f2_dvdemo2 f0_dvdemo2 p_el f2_dvdemo2 a_sup_set_class f0_dvdemo2 a_sup_set_class a_wcel f0_dvdemo2 a_sup_set_class f1_dvdemo2 a_sup_set_class a_wceq a_ax-1 f2_dvdemo2 a_sup_set_class f0_dvdemo2 a_sup_set_class a_wcel f0_dvdemo2 a_sup_set_class f1_dvdemo2 a_sup_set_class a_wceq f2_dvdemo2 a_sup_set_class f0_dvdemo2 a_sup_set_class a_wcel a_wi f0_dvdemo2 p_eximi f2_dvdemo2 a_sup_set_class f0_dvdemo2 a_sup_set_class a_wcel f0_dvdemo2 a_wex f0_dvdemo2 a_sup_set_class f1_dvdemo2 a_sup_set_class a_wceq f2_dvdemo2 a_sup_set_class f0_dvdemo2 a_sup_set_class a_wcel a_wi f0_dvdemo2 a_wex a_ax-mp $.
 $}
+
 

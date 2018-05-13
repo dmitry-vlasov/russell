@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_axioms_from_Nicod_s_axiom.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Derive Nicod's Axiom from Lukasiewicz's First Sheffer Stroke Axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* This alternative axiom for propositional calculus using the Sheffer Stroke
+/*This alternative axiom for propositional calculus using the Sheffer Stroke
      was offered by Lukasiewicz in his Selected Works.  It improves on Nicod's
      axiom by reducing its number of variables by one.
 
@@ -25,7 +25,7 @@ proof of lukshef-ax1 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
+/*Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem lukshefth1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -43,7 +43,7 @@ proof of lukshefth1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
+/*Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem lukshefth2 (th : wff, ta : wff)  {
@@ -66,7 +66,7 @@ proof of lukshefth2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* A rederivation of ~ nic-ax from ~ lukshef-ax1 , proving that ~ lukshef-ax1
+/*A rederivation of ~ nic-ax from ~ lukshef-ax1 , proving that ~ lukshef-ax1
      with ~ nic-mp can be used as a complete axiomatization of propositional
      calculus.  (Contributed by Anthony Hart, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */

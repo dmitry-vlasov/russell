@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_universal_class.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Conditional equality (experimental)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,265 +46,252 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   ~ cdeqab .
 
 $)
-$c CondEq  $.
-$( conditional equality $)
-$( Extend wff notation to include conditional equality.  This is a technical
+
+$c CondEq $.
+
+$(conditional equality $)
+
+$(Extend wff notation to include conditional equality.  This is a technical
      device used in the proof that ` F/ ` is the not-free predicate, and that
      definitions are conservative as a result. $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fwcdeq_0 $f wff ph $.
-	fwcdeq_1 $f set x $.
-	fwcdeq_2 $f set y $.
-	wcdeq $a wff CondEq ( x = y -> ph ) $.
+	$v ph x y  $.
+	f0_wcdeq $f wff ph $.
+	f1_wcdeq $f set x $.
+	f2_wcdeq $f set y $.
+	a_wcdeq $a wff CondEq ( x = y -> ph ) $.
 $}
-$( Define conditional equality.  All the notation to the left of the ` <-> `
+
+$(Define conditional equality.  All the notation to the left of the ` <-> `
      is fake; the parentheses and arrows are all part of the notation, which
      could equally well be written ` CondEq x y ph ` .  On the right side is
      the actual implication arrow.  The reason for this definition is to
      "flatten" the structure on the right side (whose tree structure is
      something like (wi (wceq (cv vx) (cv vy)) wph) ) into just (wcdeq vx vy
      wph).  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fdf-cdeq_0 $f wff ph $.
-	fdf-cdeq_1 $f set x $.
-	fdf-cdeq_2 $f set y $.
-	df-cdeq $a |- ( CondEq ( x = y -> ph ) <-> ( x = y -> ph ) ) $.
+	$v ph x y  $.
+	f0_df-cdeq $f wff ph $.
+	f1_df-cdeq $f set x $.
+	f2_df-cdeq $f set y $.
+	a_df-cdeq $a |- ( CondEq ( x = y -> ph ) <-> ( x = y -> ph ) ) $.
 $}
-$( Deduce conditional equality.  (Contributed by Mario Carneiro,
+
+$(Deduce conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fcdeqi_0 $f wff ph $.
-	fcdeqi_1 $f set x $.
-	fcdeqi_2 $f set y $.
-	ecdeqi_0 $e |- ( x = y -> ph ) $.
-	cdeqi $p |- CondEq ( x = y -> ph ) $= fcdeqi_0 fcdeqi_1 fcdeqi_2 wcdeq fcdeqi_1 sup_set_class fcdeqi_2 sup_set_class wceq fcdeqi_0 wi ecdeqi_0 fcdeqi_0 fcdeqi_1 fcdeqi_2 df-cdeq mpbir $.
+	$v ph x y  $.
+	f0_cdeqi $f wff ph $.
+	f1_cdeqi $f set x $.
+	f2_cdeqi $f set y $.
+	e0_cdeqi $e |- ( x = y -> ph ) $.
+	p_cdeqi $p |- CondEq ( x = y -> ph ) $= e0_cdeqi f0_cdeqi f1_cdeqi f2_cdeqi a_df-cdeq f0_cdeqi f1_cdeqi f2_cdeqi a_wcdeq f1_cdeqi a_sup_set_class f2_cdeqi a_sup_set_class a_wceq f0_cdeqi a_wi p_mpbir $.
 $}
-$( Property of conditional equality.  (Contributed by Mario Carneiro,
+
+$(Property of conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fcdeqri_0 $f wff ph $.
-	fcdeqri_1 $f set x $.
-	fcdeqri_2 $f set y $.
-	ecdeqri_0 $e |- CondEq ( x = y -> ph ) $.
-	cdeqri $p |- ( x = y -> ph ) $= fcdeqri_0 fcdeqri_1 fcdeqri_2 wcdeq fcdeqri_1 sup_set_class fcdeqri_2 sup_set_class wceq fcdeqri_0 wi ecdeqri_0 fcdeqri_0 fcdeqri_1 fcdeqri_2 df-cdeq mpbi $.
+	$v ph x y  $.
+	f0_cdeqri $f wff ph $.
+	f1_cdeqri $f set x $.
+	f2_cdeqri $f set y $.
+	e0_cdeqri $e |- CondEq ( x = y -> ph ) $.
+	p_cdeqri $p |- ( x = y -> ph ) $= e0_cdeqri f0_cdeqri f1_cdeqri f2_cdeqri a_df-cdeq f0_cdeqri f1_cdeqri f2_cdeqri a_wcdeq f1_cdeqri a_sup_set_class f2_cdeqri a_sup_set_class a_wceq f0_cdeqri a_wi p_mpbi $.
 $}
-$( Deduce conditional equality from a theorem.  (Contributed by Mario
+
+$(Deduce conditional equality from a theorem.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fcdeqth_0 $f wff ph $.
-	fcdeqth_1 $f set x $.
-	fcdeqth_2 $f set y $.
-	ecdeqth_0 $e |- ph $.
-	cdeqth $p |- CondEq ( x = y -> ph ) $= fcdeqth_0 fcdeqth_1 fcdeqth_2 fcdeqth_0 fcdeqth_1 sup_set_class fcdeqth_2 sup_set_class wceq ecdeqth_0 a1i cdeqi $.
+	$v ph x y  $.
+	f0_cdeqth $f wff ph $.
+	f1_cdeqth $f set x $.
+	f2_cdeqth $f set y $.
+	e0_cdeqth $e |- ph $.
+	p_cdeqth $p |- CondEq ( x = y -> ph ) $= e0_cdeqth f0_cdeqth f1_cdeqth a_sup_set_class f2_cdeqth a_sup_set_class a_wceq p_a1i f0_cdeqth f1_cdeqth f2_cdeqth p_cdeqi $.
 $}
-$( Distribute conditional equality over negation.  (Contributed by Mario
+
+$(Distribute conditional equality over negation.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	fcdeqnot_0 $f wff ph $.
-	fcdeqnot_1 $f wff ps $.
-	fcdeqnot_2 $f set x $.
-	fcdeqnot_3 $f set y $.
-	ecdeqnot_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	cdeqnot $p |- CondEq ( x = y -> ( -. ph <-> -. ps ) ) $= fcdeqnot_0 wn fcdeqnot_1 wn wb fcdeqnot_2 fcdeqnot_3 fcdeqnot_2 sup_set_class fcdeqnot_3 sup_set_class wceq fcdeqnot_0 fcdeqnot_1 fcdeqnot_0 fcdeqnot_1 wb fcdeqnot_2 fcdeqnot_3 ecdeqnot_0 cdeqri notbid cdeqi $.
+	$v ph ps x y  $.
+	f0_cdeqnot $f wff ph $.
+	f1_cdeqnot $f wff ps $.
+	f2_cdeqnot $f set x $.
+	f3_cdeqnot $f set y $.
+	e0_cdeqnot $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_cdeqnot $p |- CondEq ( x = y -> ( -. ph <-> -. ps ) ) $= e0_cdeqnot f0_cdeqnot f1_cdeqnot a_wb f2_cdeqnot f3_cdeqnot p_cdeqri f2_cdeqnot a_sup_set_class f3_cdeqnot a_sup_set_class a_wceq f0_cdeqnot f1_cdeqnot p_notbid f0_cdeqnot a_wn f1_cdeqnot a_wn a_wb f2_cdeqnot f3_cdeqnot p_cdeqi $.
 $}
-$( Distribute conditional equality over quantification.  (Contributed by
+
+$(Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	fcdeqal_0 $f wff ph $.
-	fcdeqal_1 $f wff ps $.
-	fcdeqal_2 $f set x $.
-	fcdeqal_3 $f set y $.
-	fcdeqal_4 $f set z $.
-	ecdeqal_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	cdeqal $p |- CondEq ( x = y -> ( A. z ph <-> A. z ps ) ) $= fcdeqal_0 fcdeqal_4 wal fcdeqal_1 fcdeqal_4 wal wb fcdeqal_2 fcdeqal_3 fcdeqal_2 sup_set_class fcdeqal_3 sup_set_class wceq fcdeqal_0 fcdeqal_1 fcdeqal_4 fcdeqal_0 fcdeqal_1 wb fcdeqal_2 fcdeqal_3 ecdeqal_0 cdeqri albidv cdeqi $.
+	$v ph ps x y z  $.
+	$d x z  $.
+	$d y z  $.
+	f0_cdeqal $f wff ph $.
+	f1_cdeqal $f wff ps $.
+	f2_cdeqal $f set x $.
+	f3_cdeqal $f set y $.
+	f4_cdeqal $f set z $.
+	e0_cdeqal $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_cdeqal $p |- CondEq ( x = y -> ( A. z ph <-> A. z ps ) ) $= e0_cdeqal f0_cdeqal f1_cdeqal a_wb f2_cdeqal f3_cdeqal p_cdeqri f2_cdeqal a_sup_set_class f3_cdeqal a_sup_set_class a_wceq f0_cdeqal f1_cdeqal f4_cdeqal p_albidv f0_cdeqal f4_cdeqal a_wal f1_cdeqal f4_cdeqal a_wal a_wb f2_cdeqal f3_cdeqal p_cdeqi $.
 $}
-$( Distribute conditional equality over abstraction.  (Contributed by
+
+$(Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	fcdeqab_0 $f wff ph $.
-	fcdeqab_1 $f wff ps $.
-	fcdeqab_2 $f set x $.
-	fcdeqab_3 $f set y $.
-	fcdeqab_4 $f set z $.
-	ecdeqab_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	cdeqab $p |- CondEq ( x = y -> { z | ph } = { z | ps } ) $= fcdeqab_0 fcdeqab_4 cab fcdeqab_1 fcdeqab_4 cab wceq fcdeqab_2 fcdeqab_3 fcdeqab_2 sup_set_class fcdeqab_3 sup_set_class wceq fcdeqab_0 fcdeqab_1 fcdeqab_4 fcdeqab_0 fcdeqab_1 wb fcdeqab_2 fcdeqab_3 ecdeqab_0 cdeqri abbidv cdeqi $.
+	$v ph ps x y z  $.
+	$d x z  $.
+	$d y z  $.
+	f0_cdeqab $f wff ph $.
+	f1_cdeqab $f wff ps $.
+	f2_cdeqab $f set x $.
+	f3_cdeqab $f set y $.
+	f4_cdeqab $f set z $.
+	e0_cdeqab $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_cdeqab $p |- CondEq ( x = y -> { z | ph } = { z | ps } ) $= e0_cdeqab f0_cdeqab f1_cdeqab a_wb f2_cdeqab f3_cdeqab p_cdeqri f2_cdeqab a_sup_set_class f3_cdeqab a_sup_set_class a_wceq f0_cdeqab f1_cdeqab f4_cdeqab p_abbidv f0_cdeqab f4_cdeqab a_cab f1_cdeqab f4_cdeqab a_cab a_wceq f2_cdeqab f3_cdeqab p_cdeqi $.
 $}
-$( Distribute conditional equality over quantification.  (Contributed by
+
+$(Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$d x ps $.
-	$d y ph $.
-	fcdeqal1_0 $f wff ph $.
-	fcdeqal1_1 $f wff ps $.
-	fcdeqal1_2 $f set x $.
-	fcdeqal1_3 $f set y $.
-	ecdeqal1_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	cdeqal1 $p |- CondEq ( x = y -> ( A. x ph <-> A. y ps ) ) $= fcdeqal1_0 fcdeqal1_2 wal fcdeqal1_1 fcdeqal1_3 wal wb fcdeqal1_2 fcdeqal1_3 fcdeqal1_0 fcdeqal1_2 wal fcdeqal1_1 fcdeqal1_3 wal wb fcdeqal1_2 sup_set_class fcdeqal1_3 sup_set_class wceq fcdeqal1_0 fcdeqal1_1 fcdeqal1_2 fcdeqal1_3 fcdeqal1_0 fcdeqal1_1 wb fcdeqal1_2 fcdeqal1_3 ecdeqal1_0 cdeqri cbvalv a1i cdeqi $.
+	$v ph ps x y  $.
+	$d x ps  $.
+	$d y ph  $.
+	f0_cdeqal1 $f wff ph $.
+	f1_cdeqal1 $f wff ps $.
+	f2_cdeqal1 $f set x $.
+	f3_cdeqal1 $f set y $.
+	e0_cdeqal1 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_cdeqal1 $p |- CondEq ( x = y -> ( A. x ph <-> A. y ps ) ) $= e0_cdeqal1 f0_cdeqal1 f1_cdeqal1 a_wb f2_cdeqal1 f3_cdeqal1 p_cdeqri f0_cdeqal1 f1_cdeqal1 f2_cdeqal1 f3_cdeqal1 p_cbvalv f0_cdeqal1 f2_cdeqal1 a_wal f1_cdeqal1 f3_cdeqal1 a_wal a_wb f2_cdeqal1 a_sup_set_class f3_cdeqal1 a_sup_set_class a_wceq p_a1i f0_cdeqal1 f2_cdeqal1 a_wal f1_cdeqal1 f3_cdeqal1 a_wal a_wb f2_cdeqal1 f3_cdeqal1 p_cdeqi $.
 $}
-$( Distribute conditional equality over abstraction.  (Contributed by
+
+$(Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$d x ps $.
-	$d y ph $.
-	fcdeqab1_0 $f wff ph $.
-	fcdeqab1_1 $f wff ps $.
-	fcdeqab1_2 $f set x $.
-	fcdeqab1_3 $f set y $.
-	ecdeqab1_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	cdeqab1 $p |- CondEq ( x = y -> { x | ph } = { y | ps } ) $= fcdeqab1_0 fcdeqab1_2 cab fcdeqab1_1 fcdeqab1_3 cab wceq fcdeqab1_2 fcdeqab1_3 fcdeqab1_0 fcdeqab1_2 cab fcdeqab1_1 fcdeqab1_3 cab wceq fcdeqab1_2 sup_set_class fcdeqab1_3 sup_set_class wceq fcdeqab1_0 fcdeqab1_1 fcdeqab1_2 fcdeqab1_3 fcdeqab1_0 fcdeqab1_1 wb fcdeqab1_2 fcdeqab1_3 ecdeqab1_0 cdeqri cbvabv a1i cdeqi $.
+	$v ph ps x y  $.
+	$d x ps  $.
+	$d y ph  $.
+	f0_cdeqab1 $f wff ph $.
+	f1_cdeqab1 $f wff ps $.
+	f2_cdeqab1 $f set x $.
+	f3_cdeqab1 $f set y $.
+	e0_cdeqab1 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_cdeqab1 $p |- CondEq ( x = y -> { x | ph } = { y | ps } ) $= e0_cdeqab1 f0_cdeqab1 f1_cdeqab1 a_wb f2_cdeqab1 f3_cdeqab1 p_cdeqri f0_cdeqab1 f1_cdeqab1 f2_cdeqab1 f3_cdeqab1 p_cbvabv f0_cdeqab1 f2_cdeqab1 a_cab f1_cdeqab1 f3_cdeqab1 a_cab a_wceq f2_cdeqab1 a_sup_set_class f3_cdeqab1 a_sup_set_class a_wceq p_a1i f0_cdeqab1 f2_cdeqab1 a_cab f1_cdeqab1 f3_cdeqab1 a_cab a_wceq f2_cdeqab1 f3_cdeqab1 p_cdeqi $.
 $}
-$( Distribute conditional equality over implication.  (Contributed by Mario
+
+$(Distribute conditional equality over implication.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v x $.
-	$v y $.
-	fcdeqim_0 $f wff ph $.
-	fcdeqim_1 $f wff ps $.
-	fcdeqim_2 $f wff ch $.
-	fcdeqim_3 $f wff th $.
-	fcdeqim_4 $f set x $.
-	fcdeqim_5 $f set y $.
-	ecdeqim_0 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	ecdeqim_1 $e |- CondEq ( x = y -> ( ch <-> th ) ) $.
-	cdeqim $p |- CondEq ( x = y -> ( ( ph -> ch ) <-> ( ps -> th ) ) ) $= fcdeqim_0 fcdeqim_2 wi fcdeqim_1 fcdeqim_3 wi wb fcdeqim_4 fcdeqim_5 fcdeqim_4 sup_set_class fcdeqim_5 sup_set_class wceq fcdeqim_0 fcdeqim_1 fcdeqim_2 fcdeqim_3 fcdeqim_0 fcdeqim_1 wb fcdeqim_4 fcdeqim_5 ecdeqim_0 cdeqri fcdeqim_2 fcdeqim_3 wb fcdeqim_4 fcdeqim_5 ecdeqim_1 cdeqri imbi12d cdeqi $.
+	$v ph ps ch th x y  $.
+	f0_cdeqim $f wff ph $.
+	f1_cdeqim $f wff ps $.
+	f2_cdeqim $f wff ch $.
+	f3_cdeqim $f wff th $.
+	f4_cdeqim $f set x $.
+	f5_cdeqim $f set y $.
+	e0_cdeqim $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	e1_cdeqim $e |- CondEq ( x = y -> ( ch <-> th ) ) $.
+	p_cdeqim $p |- CondEq ( x = y -> ( ( ph -> ch ) <-> ( ps -> th ) ) ) $= e0_cdeqim f0_cdeqim f1_cdeqim a_wb f4_cdeqim f5_cdeqim p_cdeqri e1_cdeqim f2_cdeqim f3_cdeqim a_wb f4_cdeqim f5_cdeqim p_cdeqri f4_cdeqim a_sup_set_class f5_cdeqim a_sup_set_class a_wceq f0_cdeqim f1_cdeqim f2_cdeqim f3_cdeqim p_imbi12d f0_cdeqim f2_cdeqim a_wi f1_cdeqim f3_cdeqim a_wi a_wb f4_cdeqim f5_cdeqim p_cdeqi $.
 $}
-$( Conditional equality for set-to-class promotion.  (Contributed by Mario
+
+$(Conditional equality for set-to-class promotion.  (Contributed by Mario
      Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	fcdeqcv_0 $f set x $.
-	fcdeqcv_1 $f set y $.
-	cdeqcv $p |- CondEq ( x = y -> x = y ) $= fcdeqcv_0 sup_set_class fcdeqcv_1 sup_set_class wceq fcdeqcv_0 fcdeqcv_1 fcdeqcv_0 sup_set_class fcdeqcv_1 sup_set_class wceq id cdeqi $.
+	$v x y  $.
+	f0_cdeqcv $f set x $.
+	f1_cdeqcv $f set y $.
+	p_cdeqcv $p |- CondEq ( x = y -> x = y ) $= f0_cdeqcv a_sup_set_class f1_cdeqcv a_sup_set_class a_wceq p_id f0_cdeqcv a_sup_set_class f1_cdeqcv a_sup_set_class a_wceq f0_cdeqcv f1_cdeqcv p_cdeqi $.
 $}
-$( Distribute conditional equality over equality.  (Contributed by Mario
+
+$(Distribute conditional equality over equality.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fcdeqeq_0 $f set x $.
-	fcdeqeq_1 $f set y $.
-	fcdeqeq_2 $f class A $.
-	fcdeqeq_3 $f class B $.
-	fcdeqeq_4 $f class C $.
-	fcdeqeq_5 $f class D $.
-	ecdeqeq_0 $e |- CondEq ( x = y -> A = B ) $.
-	ecdeqeq_1 $e |- CondEq ( x = y -> C = D ) $.
-	cdeqeq $p |- CondEq ( x = y -> ( A = C <-> B = D ) ) $= fcdeqeq_2 fcdeqeq_4 wceq fcdeqeq_3 fcdeqeq_5 wceq wb fcdeqeq_0 fcdeqeq_1 fcdeqeq_0 sup_set_class fcdeqeq_1 sup_set_class wceq fcdeqeq_2 fcdeqeq_3 fcdeqeq_4 fcdeqeq_5 fcdeqeq_2 fcdeqeq_3 wceq fcdeqeq_0 fcdeqeq_1 ecdeqeq_0 cdeqri fcdeqeq_4 fcdeqeq_5 wceq fcdeqeq_0 fcdeqeq_1 ecdeqeq_1 cdeqri eqeq12d cdeqi $.
+	$v x y A B C D  $.
+	f0_cdeqeq $f set x $.
+	f1_cdeqeq $f set y $.
+	f2_cdeqeq $f class A $.
+	f3_cdeqeq $f class B $.
+	f4_cdeqeq $f class C $.
+	f5_cdeqeq $f class D $.
+	e0_cdeqeq $e |- CondEq ( x = y -> A = B ) $.
+	e1_cdeqeq $e |- CondEq ( x = y -> C = D ) $.
+	p_cdeqeq $p |- CondEq ( x = y -> ( A = C <-> B = D ) ) $= e0_cdeqeq f2_cdeqeq f3_cdeqeq a_wceq f0_cdeqeq f1_cdeqeq p_cdeqri e1_cdeqeq f4_cdeqeq f5_cdeqeq a_wceq f0_cdeqeq f1_cdeqeq p_cdeqri f0_cdeqeq a_sup_set_class f1_cdeqeq a_sup_set_class a_wceq f2_cdeqeq f3_cdeqeq f4_cdeqeq f5_cdeqeq p_eqeq12d f2_cdeqeq f4_cdeqeq a_wceq f3_cdeqeq f5_cdeqeq a_wceq a_wb f0_cdeqeq f1_cdeqeq p_cdeqi $.
 $}
-$( Distribute conditional equality over elementhood.  (Contributed by Mario
+
+$(Distribute conditional equality over elementhood.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fcdeqel_0 $f set x $.
-	fcdeqel_1 $f set y $.
-	fcdeqel_2 $f class A $.
-	fcdeqel_3 $f class B $.
-	fcdeqel_4 $f class C $.
-	fcdeqel_5 $f class D $.
-	ecdeqel_0 $e |- CondEq ( x = y -> A = B ) $.
-	ecdeqel_1 $e |- CondEq ( x = y -> C = D ) $.
-	cdeqel $p |- CondEq ( x = y -> ( A e. C <-> B e. D ) ) $= fcdeqel_2 fcdeqel_4 wcel fcdeqel_3 fcdeqel_5 wcel wb fcdeqel_0 fcdeqel_1 fcdeqel_0 sup_set_class fcdeqel_1 sup_set_class wceq fcdeqel_2 fcdeqel_3 fcdeqel_4 fcdeqel_5 fcdeqel_2 fcdeqel_3 wceq fcdeqel_0 fcdeqel_1 ecdeqel_0 cdeqri fcdeqel_4 fcdeqel_5 wceq fcdeqel_0 fcdeqel_1 ecdeqel_1 cdeqri eleq12d cdeqi $.
+	$v x y A B C D  $.
+	f0_cdeqel $f set x $.
+	f1_cdeqel $f set y $.
+	f2_cdeqel $f class A $.
+	f3_cdeqel $f class B $.
+	f4_cdeqel $f class C $.
+	f5_cdeqel $f class D $.
+	e0_cdeqel $e |- CondEq ( x = y -> A = B ) $.
+	e1_cdeqel $e |- CondEq ( x = y -> C = D ) $.
+	p_cdeqel $p |- CondEq ( x = y -> ( A e. C <-> B e. D ) ) $= e0_cdeqel f2_cdeqel f3_cdeqel a_wceq f0_cdeqel f1_cdeqel p_cdeqri e1_cdeqel f4_cdeqel f5_cdeqel a_wceq f0_cdeqel f1_cdeqel p_cdeqri f0_cdeqel a_sup_set_class f1_cdeqel a_sup_set_class a_wceq f2_cdeqel f3_cdeqel f4_cdeqel f5_cdeqel p_eleq12d f2_cdeqel f4_cdeqel a_wcel f3_cdeqel f5_cdeqel a_wcel a_wb f0_cdeqel f1_cdeqel p_cdeqi $.
 $}
-$( If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
+
+$(If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
        and ` ps ` is ` ph ( y ) ` , and ` ph ( x ) ` in fact does not have
        ` x ` free in it according to ` F/ ` , then ` ph ( x ) <-> ph ( y ) `
        unconditionally.  This proves that ` F/ x ph ` is actually a not-free
        predicate.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$d x ps $.
-	$d y ph $.
-	fnfcdeq_0 $f wff ph $.
-	fnfcdeq_1 $f wff ps $.
-	fnfcdeq_2 $f set x $.
-	fnfcdeq_3 $f set y $.
-	enfcdeq_0 $e |- F/ x ph $.
-	enfcdeq_1 $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
-	nfcdeq $p |- ( ph <-> ps ) $= fnfcdeq_0 fnfcdeq_0 fnfcdeq_2 fnfcdeq_3 wsb fnfcdeq_1 fnfcdeq_0 fnfcdeq_2 fnfcdeq_3 enfcdeq_0 sbf fnfcdeq_0 fnfcdeq_1 fnfcdeq_2 fnfcdeq_3 fnfcdeq_1 fnfcdeq_2 nfv fnfcdeq_0 fnfcdeq_1 wb fnfcdeq_2 fnfcdeq_3 enfcdeq_1 cdeqri sbie bitr3i $.
+	$v ph ps x y  $.
+	$d x ps  $.
+	$d y ph  $.
+	f0_nfcdeq $f wff ph $.
+	f1_nfcdeq $f wff ps $.
+	f2_nfcdeq $f set x $.
+	f3_nfcdeq $f set y $.
+	e0_nfcdeq $e |- F/ x ph $.
+	e1_nfcdeq $e |- CondEq ( x = y -> ( ph <-> ps ) ) $.
+	p_nfcdeq $p |- ( ph <-> ps ) $= e0_nfcdeq f0_nfcdeq f2_nfcdeq f3_nfcdeq p_sbf f1_nfcdeq f2_nfcdeq p_nfv e1_nfcdeq f0_nfcdeq f1_nfcdeq a_wb f2_nfcdeq f3_nfcdeq p_cdeqri f0_nfcdeq f1_nfcdeq f2_nfcdeq f3_nfcdeq p_sbie f0_nfcdeq f0_nfcdeq f2_nfcdeq f3_nfcdeq a_wsb f1_nfcdeq p_bitr3i $.
 $}
-$( Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
+
+$(Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d x z B $.
-	$d y z A $.
-	infccdeq_0 $f set z $.
-	fnfccdeq_0 $f set x $.
-	fnfccdeq_1 $f set y $.
-	fnfccdeq_2 $f class A $.
-	fnfccdeq_3 $f class B $.
-	enfccdeq_0 $e |- F/_ x A $.
-	enfccdeq_1 $e |- CondEq ( x = y -> A = B ) $.
-	nfccdeq $p |- A = B $= infccdeq_0 fnfccdeq_2 fnfccdeq_3 infccdeq_0 sup_set_class fnfccdeq_2 wcel infccdeq_0 sup_set_class fnfccdeq_3 wcel fnfccdeq_0 fnfccdeq_1 fnfccdeq_0 infccdeq_0 fnfccdeq_2 enfccdeq_0 nfcri fnfccdeq_0 fnfccdeq_1 infccdeq_0 sup_set_class infccdeq_0 sup_set_class fnfccdeq_2 fnfccdeq_3 infccdeq_0 sup_set_class infccdeq_0 sup_set_class wceq fnfccdeq_0 fnfccdeq_1 infccdeq_0 equid cdeqth enfccdeq_1 cdeqel nfcdeq eqriv $.
+	$v x y A B  $.
+	$d x z B  $.
+	$d y z A  $.
+	f0_nfccdeq $f set x $.
+	f1_nfccdeq $f set y $.
+	f2_nfccdeq $f class A $.
+	f3_nfccdeq $f class B $.
+	i0_nfccdeq $f set z $.
+	e0_nfccdeq $e |- F/_ x A $.
+	e1_nfccdeq $e |- CondEq ( x = y -> A = B ) $.
+	p_nfccdeq $p |- A = B $= e0_nfccdeq f0_nfccdeq i0_nfccdeq f2_nfccdeq p_nfcri i0_nfccdeq p_equid i0_nfccdeq a_sup_set_class i0_nfccdeq a_sup_set_class a_wceq f0_nfccdeq f1_nfccdeq p_cdeqth e1_nfccdeq f0_nfccdeq f1_nfccdeq i0_nfccdeq a_sup_set_class i0_nfccdeq a_sup_set_class f2_nfccdeq f3_nfccdeq p_cdeqel i0_nfccdeq a_sup_set_class f2_nfccdeq a_wcel i0_nfccdeq a_sup_set_class f3_nfccdeq a_wcel f0_nfccdeq f1_nfccdeq p_nfcdeq i0_nfccdeq f2_nfccdeq f3_nfccdeq p_eqriv $.
 $}
-$( Let the computer know the theorems to look for to prove the metatheorem $)
-$( $j
+
+$(Let the computer know the theorems to look for to prove the metatheorem $)
+
+$($j
     condequality 'wcdeq' from 'cdeqth';
     condcongruence 'cdeqnot' 'cdeqim' 'cdeqal1' 'cdeqal' 'cdeqcv' 'cdeqeq'
       'cdeqel' 'cdeqab1' 'cdeqab';
     notfree 'wnf' from 'nfcdeq';
     notfree 'wnfc' from 'nfccdeq';
   $)
+
 

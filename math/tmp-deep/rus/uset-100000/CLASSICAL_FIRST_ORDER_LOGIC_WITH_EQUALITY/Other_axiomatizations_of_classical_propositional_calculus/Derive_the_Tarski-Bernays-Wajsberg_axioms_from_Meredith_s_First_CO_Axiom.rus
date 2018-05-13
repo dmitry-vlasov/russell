@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_Axioms_from_the_Tarski-Bernays-Wajsberg_Axioms.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Derive the Tarski-Bernays-Wajsberg axioms from Meredith's First CO Axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* A single axiom for propositional calculus offered by Meredith.
+/*A single axiom for propositional calculus offered by Meredith.
 
      This axiom is worthy of note, due to it having only 19 symbols, not
      counting parentheses.  The more well-known ~ meredith has 21 symbols, sans
@@ -32,7 +32,7 @@ proof of merco1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -67,7 +67,7 @@ proof of merco1lem1 {
 	qed prop 1 = step 23 ;;
 }
 
-/* ~ tbw-ax4 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+/*~ tbw-ax4 rederived from ~ merco1 .  (Contributed by Anthony Hart,
      17-Sep-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -82,7 +82,7 @@ proof of retbwax4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* ~ tbw-ax2 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+/*~ tbw-ax2 rederived from ~ merco1 .  (Contributed by Anthony Hart,
      17-Sep-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -109,7 +109,7 @@ proof of retbwax2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -126,7 +126,7 @@ proof of merco1lem2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -149,7 +149,7 @@ proof of merco1lem3 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -166,7 +166,7 @@ proof of merco1lem4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -181,7 +181,7 @@ proof of merco1lem5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -202,7 +202,7 @@ proof of merco1lem6 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -219,7 +219,7 @@ proof of merco1lem7 {
 	qed prop 1 = step 5 ;;
 }
 
-/* ~ tbw-ax3 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+/*~ tbw-ax3 rederived from ~ merco1 .  (Contributed by Anthony Hart,
      17-Sep-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -234,7 +234,7 @@ proof of retbwax3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 17-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -249,7 +249,7 @@ proof of merco1lem8 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -264,7 +264,7 @@ proof of merco1lem9 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -281,7 +281,7 @@ proof of merco1lem10 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -306,7 +306,7 @@ proof of merco1lem11 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -327,7 +327,7 @@ proof of merco1lem12 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -346,7 +346,7 @@ proof of merco1lem13 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -369,7 +369,7 @@ proof of merco1lem14 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -384,7 +384,7 @@ proof of merco1lem15 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -401,7 +401,7 @@ proof of merco1lem16 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -437,7 +437,7 @@ proof of merco1lem17 {
 	qed prop 1 = step 24 ;;
 }
 
-/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+/*Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
      (Contributed by Anthony Hart, 18-Sep-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -468,7 +468,7 @@ proof of merco1lem18 {
 	qed prop 1 = step 19 ;;
 }
 
-/* ~ tbw-ax1 rederived from ~ merco1 .
+/*~ tbw-ax1 rederived from ~ merco1 .
 
      This theorem, along with ~ retbwax2 , ~ retbwax3 , and ~ retbwax4 , shows
      that ~ merco1 with ~ ax-mp can be used as a complete axiomatization of

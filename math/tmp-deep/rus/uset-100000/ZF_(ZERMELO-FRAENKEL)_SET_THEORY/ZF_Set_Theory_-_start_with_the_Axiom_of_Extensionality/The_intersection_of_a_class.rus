@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_union_of_a_class.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The intersection of a class
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare class intersection symbol. */
+/*Declare class intersection symbol. */
 
 constant {
 	symbol ⋂ ;;
@@ -14,16 +14,16 @@ constant {
 	latex \bigcap ;;
 }
 
-/* Big cap */
+/*Big cap */
 
-/* Extend class notation to include the intersection of a class (read:
+/*Extend class notation to include the intersection of a class (read:
      'intersect ` A ` '). */
 
 rule cint (A : class) {
 	term : class = # ⋂ A ;;
 }
 
-/* Define the intersection of a class.  Definition 7.35 of [TakeutiZaring]
+/*Define the intersection of a class.  Definition 7.35 of [TakeutiZaring]
        p. 44.  For example, ` |^| { { 1 , 3 } , { 1 , 8 } } = { 1 } ` .
        Compare this with the intersection of two classes, ~ df-in .
        (Contributed by NM, 18-Aug-1993.) */
@@ -35,7 +35,7 @@ definition df-int (x : set, y : set, A : class) disjointed(x y A) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate definition of class intersection.  (Contributed by NM,
+/*Alternate definition of class intersection.  (Contributed by NM,
        28-Jun-1998.) */
 
 theorem dfint2 (x : set, y : set, A : class) disjointed(x y A) {
@@ -50,7 +50,7 @@ proof of dfint2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality law for intersection.  (Contributed by NM, 13-Sep-1999.) */
+/*Equality law for intersection.  (Contributed by NM, 13-Sep-1999.) */
 
 theorem inteq (A : class, B : class) disjointed(x y A, x y B) {
 	prop 1 : wff = |- ( A = B → ⋂ A = ⋂ B ) ;;
@@ -66,7 +66,7 @@ proof of inteq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality inference for class intersection.  (Contributed by NM,
+/*Equality inference for class intersection.  (Contributed by NM,
        2-Sep-2003.) */
 
 theorem inteqi (A : class, B : class)  {
@@ -81,7 +81,7 @@ proof of inteqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for class intersection.  (Contributed by NM,
+/*Equality deduction for class intersection.  (Contributed by NM,
        2-Sep-2003.) */
 
 theorem inteqd (ph : wff, A : class, B : class)  {
@@ -96,7 +96,7 @@ proof of inteqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in class intersection.  (Contributed by NM, 21-May-1994.) */
+/*Membership in class intersection.  (Contributed by NM, 21-May-1994.) */
 
 theorem elint (x : set, A : class, B : class) disjointed(x A y, x B y) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -114,7 +114,7 @@ proof of elint {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in class intersection.  (Contributed by NM, 14-Oct-1999.) */
+/*Membership in class intersection.  (Contributed by NM, 14-Oct-1999.) */
 
 theorem elint2 (x : set, A : class, B : class) disjointed(x A, x B) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -129,7 +129,7 @@ proof of elint2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in class intersection, with the sethood requirement expressed
+/*Membership in class intersection, with the sethood requirement expressed
        as an antecedent.  (Contributed by NM, 20-Nov-2003.) */
 
 theorem elintg (x : set, A : class, B : class, V : class) disjointed(x y A, x y B) {
@@ -147,7 +147,7 @@ proof of elintg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in class intersection.  (Contributed by NM, 14-Oct-1999.)
+/*Membership in class intersection.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem elinti (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -164,7 +164,7 @@ proof of elinti {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for intersection.  (Contributed by NM,
+/*Bound-variable hypothesis builder for intersection.  (Contributed by NM,
        2-Feb-1997.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) */
 
 theorem nfint (x : set, A : class) disjointed(y z A, x y z) {
@@ -183,7 +183,7 @@ proof of nfint {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in the intersection of a class abstraction.  (Contributed by
+/*Membership in the intersection of a class abstraction.  (Contributed by
        NM, 30-Aug-1993.) */
 
 theorem elintab (ph : wff, x : set, A : class) disjointed(A x y, ph y) {
@@ -209,10 +209,10 @@ proof of elintab {
 	qed prop 1 = step 12 ;;
 }
 
-/* Membership in the intersection of a class abstraction.  (Contributed by
+/*Membership in the intersection of a class abstraction.  (Contributed by
        NM, 17-Oct-1999.) */
 
-theorem elintrab (ph : wff, x : set, A : class, B : class) disjointed(A x) {
+theorem elintrab (ph : wff, x : set, A : class, B : class) disjointed(A x, ph) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ ⋂ { x ∈ B | ph } ↔ ∀ x ∈ B ( ph → A ∈ x ) ) ;;
@@ -231,7 +231,7 @@ proof of elintrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership in the intersection of a class abstraction.  (Contributed by
+/*Membership in the intersection of a class abstraction.  (Contributed by
        NM, 17-Feb-2007.) */
 
 theorem elintrabg (ph : wff, x : set, A : class, B : class, V : class) disjointed(x y A, y B, y ph) {
@@ -250,10 +250,10 @@ proof of elintrabg {
 	qed prop 1 = step 7 ;;
 }
 
-/* The intersection of the empty set is the universal class.  Exercise 2 of
+/*The intersection of the empty set is the universal class.  Exercise 2 of
        [TakeutiZaring] p. 44.  (Contributed by NM, 18-Aug-1993.) */
 
-theorem int0 () disjointed(x y) {
+theorem int0 () disjointed(x y, y, y) {
 	prop 1 : wff = |- ⋂ ∅ = _V ;;
 }
 
@@ -271,11 +271,11 @@ proof of int0 {
 	qed prop 1 = step 9 ;;
 }
 
-/* An element of a class includes the intersection of the class.  Exercise
+/*An element of a class includes the intersection of the class.  Exercise
        4 of [TakeutiZaring] p. 44 (with correction), generalized to classes.
        (Contributed by NM, 18-Nov-1995.) */
 
-theorem intss1 (A : class, B : class) disjointed(x y A, x y B) {
+theorem intss1 (A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- ( A ∈ B → ⋂ B ⊆ A ) ;;
 }
 
@@ -293,10 +293,10 @@ proof of intss1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subclass of a class intersection.  Theorem 5.11(viii) of [Monk1] p. 52
+/*Subclass of a class intersection.  Theorem 5.11(viii) of [Monk1] p. 52
        and its converse.  (Contributed by NM, 14-Oct-1999.) */
 
-theorem ssint (x : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem ssint (x : set, A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- ( A ⊆ ⋂ B ↔ ∀ x ∈ B A ⊆ x ) ;;
 }
 
@@ -314,7 +314,7 @@ proof of ssint {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subclass of the intersection of a class abstraction.  (Contributed by
+/*Subclass of the intersection of a class abstraction.  (Contributed by
        NM, 31-Jul-2006.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem ssintab (ph : wff, x : set, A : class) disjointed(x y A, x y, y ph) {
@@ -330,9 +330,9 @@ proof of ssintab {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass of the least upper bound.  (Contributed by NM, 8-Aug-2000.) */
+/*Subclass of the least upper bound.  (Contributed by NM, 8-Aug-2000.) */
 
-theorem ssintub (x : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem ssintub (x : set, A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- A ⊆ ⋂ { x ∈ B | A ⊆ x } ;;
 }
 
@@ -346,10 +346,10 @@ proof of ssintub {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subclass of the minimum value of class of supersets.  (Contributed by
+/*Subclass of the minimum value of class of supersets.  (Contributed by
        NM, 10-Aug-2006.) */
 
-theorem ssmin (ph : wff, x : set, A : class) disjointed(x A) {
+theorem ssmin (ph : wff, x : set, A : class) disjointed(x A, x, ph) {
 	prop 1 : wff = |- A ⊆ ⋂ { x | ( A ⊆ x ∧ ph ) } ;;
 }
 
@@ -360,11 +360,11 @@ proof of ssmin {
 	qed prop 1 = step 3 ;;
 }
 
-/* Any member of a class is the smallest of those members that include it.
+/*Any member of a class is the smallest of those members that include it.
        (Contributed by NM, 13-Aug-2002.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
-theorem intmin (x : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem intmin (x : set, A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- ( A ∈ B → ⋂ { x ∈ B | A ⊆ x } = A ) ;;
 }
 
@@ -386,9 +386,9 @@ proof of intmin {
 	qed prop 1 = step 13 ;;
 }
 
-/* Intersection of subclasses.  (Contributed by NM, 14-Oct-1999.) */
+/*Intersection of subclasses.  (Contributed by NM, 14-Oct-1999.) */
 
-theorem intss (A : class, B : class) disjointed(x y A, x y B) {
+theorem intss (A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- ( A ⊆ B → ⋂ B ⊆ ⋂ A ) ;;
 }
 
@@ -408,10 +408,10 @@ proof of intss {
 	qed prop 1 = step 11 ;;
 }
 
-/* The intersection of a nonempty set is a subclass of its union.
+/*The intersection of a nonempty set is a subclass of its union.
        (Contributed by NM, 29-Jul-2006.) */
 
-theorem intssuni (A : class) disjointed(x y A, x y) {
+theorem intssuni (A : class) disjointed(x y A, x y, y) {
 	prop 1 : wff = |- ( A ≠ ∅ → ⋂ A ⊆ ⋃ A ) ;;
 }
 
@@ -427,7 +427,7 @@ proof of intssuni {
 	qed prop 1 = step 7 ;;
 }
 
-/* Subclass of the intersection of a restricted class builder.
+/*Subclass of the intersection of a restricted class builder.
        (Contributed by NM, 30-Jan-2015.) */
 
 theorem ssintrab (ph : wff, x : set, A : class, B : class) disjointed(x A) {
@@ -447,7 +447,7 @@ proof of ssintrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* If the union of a class is included in its intersection, the class is
+/*If the union of a class is included in its intersection, the class is
      either the empty set or a singleton ( ~ uniintsn ).  (Contributed by NM,
      30-Oct-2010.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -475,7 +475,7 @@ proof of unissint {
 	qed prop 1 = step 16 ;;
 }
 
-/* Subclass relationship for intersection and union.  (Contributed by NM,
+/*Subclass relationship for intersection and union.  (Contributed by NM,
      29-Jul-2006.) */
 
 theorem intssuni2 (A : class, B : class)  {
@@ -489,7 +489,7 @@ proof of intssuni2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Under subset ordering, the intersection of a restricted class
+/*Under subset ordering, the intersection of a restricted class
        abstraction is less than or equal to any of its members.  (Contributed
        by NM, 7-Sep-2013.) */
 
@@ -506,7 +506,7 @@ proof of intminss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Any set is the smallest of all sets that include it.  (Contributed by
+/*Any set is the smallest of all sets that include it.  (Contributed by
        NM, 20-Sep-2003.) */
 
 theorem intmin2 (x : set, A : class) disjointed(x A) {
@@ -524,7 +524,7 @@ proof of intmin2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Under subset ordering, the intersection of a class abstraction is less
+/*Under subset ordering, the intersection of a class abstraction is less
        than or equal to any of its members.  (Contributed by NM,
        3-Jul-2005.) */
 
@@ -543,7 +543,7 @@ proof of intmin3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Elimination of a conjunct in a class intersection.  (Contributed by NM,
+/*Elimination of a conjunct in a class intersection.  (Contributed by NM,
        31-Jul-2006.) */
 
 theorem intmin4 (ph : wff, x : set, A : class) disjointed(x y A, y ph) {
@@ -570,7 +570,7 @@ proof of intmin4 {
 	qed prop 1 = step 15 ;;
 }
 
-/* The intersection of a special case of a class abstraction. ` y ` may be
+/*The intersection of a special case of a class abstraction. ` y ` may be
        free in ` ph ` and ` A ` , which can be thought of a ` ph ( y ) ` and
        ` A ( y ) ` .  Typically, ~ abrexex2 or ~ abexssex can be used to
        satisfy the second hypothesis.  (Contributed by NM, 28-Jul-2006.)
@@ -629,7 +629,7 @@ proof of intab {
 	qed prop 1 = step 41 ;;
 }
 
-/* The intersection of a class containing the empty set is empty.
+/*The intersection of a class containing the empty set is empty.
      (Contributed by NM, 24-Apr-2004.) */
 
 theorem int0el (A : class)  {
@@ -644,7 +644,7 @@ proof of int0el {
 	qed prop 1 = step 4 ;;
 }
 
-/* The class intersection of the union of two classes.  Theorem 78 of
+/*The class intersection of the union of two classes.  Theorem 78 of
        [Suppes] p. 42.  (Contributed by NM, 22-Sep-2002.) */
 
 theorem intun (A : class, B : class) disjointed(x y A, x y B) {
@@ -673,7 +673,7 @@ proof of intun {
 	qed prop 1 = step 17 ;;
 }
 
-/* The intersection of a pair is the intersection of its members.  Theorem
+/*The intersection of a pair is the intersection of its members.  Theorem
        71 of [Suppes] p. 42.  (Contributed by NM, 14-Oct-1999.) */
 
 theorem intpr (A : class, B : class) disjointed(x y A, x y B) {
@@ -704,7 +704,7 @@ proof of intpr {
 	qed prop 1 = step 16 ;;
 }
 
-/* The intersection of a pair is the intersection of its members.  Closed
+/*The intersection of a pair is the intersection of its members.  Closed
        form of ~ intpr .  Theorem 71 of [Suppes] p. 42.  (Contributed by FL,
        27-Apr-2008.) */
 
@@ -729,7 +729,7 @@ proof of intprg {
 	qed prop 1 = step 12 ;;
 }
 
-/* Intersection of a singleton.  (Contributed by Stefan O'Rear,
+/*Intersection of a singleton.  (Contributed by Stefan O'Rear,
      22-Feb-2015.) */
 
 theorem intsng (A : class, V : class)  {
@@ -747,7 +747,7 @@ proof of intsng {
 	qed prop 1 = step 7 ;;
 }
 
-/* The intersection of a singleton is its member.  Theorem 70 of [Suppes]
+/*The intersection of a singleton is its member.  Theorem 70 of [Suppes]
        p. 41.  (Contributed by NM, 29-Sep-2002.) */
 
 theorem intsn (A : class)  {
@@ -762,10 +762,10 @@ proof of intsn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two ways to express " ` A ` is a singleton."  See also ~ en1 , ~ en1b ,
+/*Two ways to express " ` A ` is a singleton."  See also ~ en1 , ~ en1b ,
        ~ card1 , and ~ eusn .  (Contributed by NM, 2-Aug-2010.) */
 
-theorem uniintsn (x : set, A : class) disjointed(x y A) {
+theorem uniintsn (x : set, A : class) disjointed(x y A, y) {
 	prop 1 : wff = |- ( ⋃ A = ⋂ A ↔ ∃ x A = { x } ) ;;
 }
 
@@ -838,7 +838,7 @@ proof of uniintsn {
 	qed prop 1 = step 64 ;;
 }
 
-/* The union and the intersection of a class abstraction are equal exactly
+/*The union and the intersection of a class abstraction are equal exactly
        when there is a unique satisfying value of ` ph ( x ) ` .  (Contributed
        by Mario Carneiro, 24-Dec-2016.) */
 
@@ -854,7 +854,7 @@ proof of uniintab {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem joining a singleton to an intersection.  (Contributed by NM,
+/*Theorem joining a singleton to an intersection.  (Contributed by NM,
        29-Sep-2002.) */
 
 theorem intunsn (A : class, B : class)  {
@@ -871,7 +871,7 @@ proof of intunsn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Relative intersection of an empty set.  (Contributed by Stefan O'Rear,
+/*Relative intersection of an empty set.  (Contributed by Stefan O'Rear,
      3-Apr-2015.) */
 
 theorem rint0 (A : class, X : class)  {
@@ -889,7 +889,7 @@ proof of rint0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
+/*Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
        3-Apr-2015.) */
 
 theorem elrint (y : set, A : class, B : class, X : class) disjointed(B y, X y) {
@@ -904,7 +904,7 @@ proof of elrint {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
+/*Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
        3-Apr-2015.) */
 
 theorem elrint2 (y : set, A : class, B : class, X : class) disjointed(B y, X y) {

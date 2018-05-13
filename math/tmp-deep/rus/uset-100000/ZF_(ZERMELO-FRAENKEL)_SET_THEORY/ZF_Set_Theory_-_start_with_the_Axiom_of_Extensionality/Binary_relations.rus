@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Disjointness.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                      Binary relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Extend wff notation to include the general binary relation predicate.
+/*Extend wff notation to include the general binary relation predicate.
      Note that the syntax is simply three class symbols in a row.  Since binary
      relations are the only possible wff expressions consisting of three class
      expressions in a row, the syntax is unambiguous.  (For an example of how
@@ -17,7 +17,7 @@ rule wbr (A : class, B : class, R : class) {
 	term : wff = # A R B ;;
 }
 
-/* Define a general binary relation.  Note that the syntax is simply three
+/*Define a general binary relation.  Note that the syntax is simply three
      class symbols in a row.  Definition 6.18 of [TakeutiZaring] p. 29
      generalized to arbitrary classes.  Class ` R ` often denotes a relation
      such as " ` < ` " that compares two classes ` A ` and ` B ` , which might
@@ -38,7 +38,7 @@ definition df-br (A : class, B : class, R : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Equality theorem for binary relations.  (Contributed by NM,
+/*Equality theorem for binary relations.  (Contributed by NM,
      4-Jun-1995.) */
 
 theorem breq (A : class, B : class, R : class, S : class)  {
@@ -53,7 +53,7 @@ proof of breq {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for a binary relation.  (Contributed by NM,
+/*Equality theorem for a binary relation.  (Contributed by NM,
      31-Dec-1993.) */
 
 theorem breq1 (A : class, B : class, C : class, R : class)  {
@@ -69,7 +69,7 @@ proof of breq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for a binary relation.  (Contributed by NM,
+/*Equality theorem for a binary relation.  (Contributed by NM,
      31-Dec-1993.) */
 
 theorem breq2 (A : class, B : class, C : class, R : class)  {
@@ -85,7 +85,7 @@ proof of breq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for a binary relation.  (Contributed by NM,
+/*Equality theorem for a binary relation.  (Contributed by NM,
      8-Feb-1996.) */
 
 theorem breq12 (A : class, B : class, C : class, D : class, R : class)  {
@@ -99,7 +99,7 @@ proof of breq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for binary relations.  (Contributed by NM,
+/*Equality inference for binary relations.  (Contributed by NM,
        19-Feb-2005.) */
 
 theorem breqi (A : class, B : class, R : class, S : class)  {
@@ -114,7 +114,7 @@ proof of breqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for a binary relation.  (Contributed by NM,
+/*Equality inference for a binary relation.  (Contributed by NM,
        8-Feb-1996.) */
 
 theorem breq1i (A : class, B : class, C : class, R : class)  {
@@ -129,7 +129,7 @@ proof of breq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for a binary relation.  (Contributed by NM,
+/*Equality inference for a binary relation.  (Contributed by NM,
        8-Feb-1996.) */
 
 theorem breq2i (A : class, B : class, C : class, R : class)  {
@@ -144,7 +144,7 @@ proof of breq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for a binary relation.  (Contributed by NM,
+/*Equality inference for a binary relation.  (Contributed by NM,
          8-Feb-1996.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) */
 
 theorem breq12i (A : class, B : class, C : class, D : class, R : class)  {
@@ -160,7 +160,7 @@ proof of breq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
        8-Feb-1996.) */
 
 theorem breq1d (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -175,7 +175,7 @@ proof of breq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
        29-Oct-2011.) */
 
 theorem breqd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -190,7 +190,7 @@ proof of breqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
        8-Feb-1996.) */
 
 theorem breq2d (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -205,7 +205,7 @@ proof of breq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem breq12d (ph : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -221,7 +221,7 @@ proof of breq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
          29-Oct-2011.) */
 
 theorem breq123d (ph : wff, A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -239,7 +239,7 @@ proof of breq123d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.) */
 
 theorem breqan12d (ph : wff, ps : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -255,7 +255,7 @@ proof of breqan12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for a binary relation.  (Contributed by NM,
+/*Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.) */
 
 theorem breqan12rd (ph : wff, ps : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -271,7 +271,7 @@ proof of breqan12rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two classes are different if they don't have the same relationship to a
+/*Two classes are different if they don't have the same relationship to a
      third class.  (Contributed by NM, 3-Jun-2012.) */
 
 theorem nbrne1 (A : class, B : class, C : class, R : class)  {
@@ -286,7 +286,7 @@ proof of nbrne1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two classes are different if they don't have the same relationship to a
+/*Two classes are different if they don't have the same relationship to a
      third class.  (Contributed by NM, 3-Jun-2012.) */
 
 theorem nbrne2 (A : class, B : class, C : class, R : class)  {
@@ -301,7 +301,7 @@ proof of nbrne2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqbrtri (A : class, B : class, C : class, R : class)  {
@@ -317,7 +317,7 @@ proof of eqbrtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 8-Oct-1999.) */
 
 theorem eqbrtrd (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -333,7 +333,7 @@ proof of eqbrtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqbrtrri (A : class, B : class, C : class, R : class)  {
@@ -349,7 +349,7 @@ proof of eqbrtrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) */
 
 theorem eqbrtrrd (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -365,7 +365,7 @@ proof of eqbrtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem breqtri (A : class, B : class, C : class, R : class)  {
@@ -381,7 +381,7 @@ proof of breqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) */
 
 theorem breqtrd (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -397,7 +397,7 @@ proof of breqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem breqtrri (A : class, B : class, C : class, R : class)  {
@@ -413,7 +413,7 @@ proof of breqtrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a binary relation.  (Contributed by
+/*Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) */
 
 theorem breqtrrd (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -429,7 +429,7 @@ proof of breqtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 11-Aug-1999.) */
 
 theorem 3brtr3i (A : class, B : class, C : class, D : class, R : class)  {
@@ -446,7 +446,7 @@ proof of 3brtr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 11-Aug-1999.) */
 
 theorem 3brtr4i (A : class, B : class, C : class, D : class, R : class)  {
@@ -463,7 +463,7 @@ proof of 3brtr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 18-Oct-1999.) */
 
 theorem 3brtr3d (ph : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -480,7 +480,7 @@ proof of 3brtr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 21-Feb-2005.) */
 
 theorem 3brtr4d (ph : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -497,7 +497,7 @@ proof of 3brtr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 16-Jan-1997.) */
 
 theorem 3brtr3g (ph : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -514,7 +514,7 @@ proof of 3brtr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a binary relation.
+/*Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 16-Jan-1997.) */
 
 theorem 3brtr4g (ph : wff, A : class, B : class, C : class, D : class, R : class)  {
@@ -531,7 +531,7 @@ proof of 3brtr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained equality inference for a binary relation.  (Contributed by NM,
+/*B chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) */
 
 theorem syl5eqbr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -547,7 +547,7 @@ proof of syl5eqbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained equality inference for a binary relation.  (Contributed by NM,
+/*B chained equality inference for a binary relation.  (Contributed by NM,
        17-Sep-2004.) */
 
 theorem syl5eqbrr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -563,7 +563,7 @@ proof of syl5eqbrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained equality inference for a binary relation.  (Contributed by NM,
+/*B chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) */
 
 theorem syl5breq (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -579,7 +579,7 @@ proof of syl5breq {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained equality inference for a binary relation.  (Contributed by NM,
+/*B chained equality inference for a binary relation.  (Contributed by NM,
        24-Apr-2005.) */
 
 theorem syl5breqr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -595,7 +595,7 @@ proof of syl5breqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference for a binary relation.  (Contributed by NM,
+/*A chained equality inference for a binary relation.  (Contributed by NM,
        12-Oct-1999.) */
 
 theorem syl6eqbr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -611,7 +611,7 @@ proof of syl6eqbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference for a binary relation.  (Contributed by NM,
+/*A chained equality inference for a binary relation.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl6eqbrr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -627,7 +627,7 @@ proof of syl6eqbrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference for a binary relation.  (Contributed by NM,
+/*A chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) */
 
 theorem syl6breq (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -643,7 +643,7 @@ proof of syl6breq {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference for a binary relation.  (Contributed by NM,
+/*A chained equality inference for a binary relation.  (Contributed by NM,
        24-Apr-2005.) */
 
 theorem syl6breqr (ph : wff, A : class, B : class, C : class, R : class)  {
@@ -659,7 +659,7 @@ proof of syl6breqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from a subclass relationship of binary relations.
+/*Deduction from a subclass relationship of binary relations.
        (Contributed by NM, 30-Apr-2004.) */
 
 theorem ssbrd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -676,7 +676,7 @@ proof of ssbrd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference from a subclass relationship of binary relations.
+/*Inference from a subclass relationship of binary relations.
        (Contributed by NM, 28-Mar-2007.)  (Revised by Mario Carneiro,
        8-Feb-2015.) */
 
@@ -693,11 +693,11 @@ proof of ssbri {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of bound-variable hypothesis builder ~ nfbr .
+/*Deduction version of bound-variable hypothesis builder ~ nfbr .
        (Contributed by NM, 13-Dec-2005.)  (Revised by Mario Carneiro,
        14-Oct-2016.) */
 
-theorem nfbrd (ph : wff, x : set, A : class, B : class, R : class)  {
+theorem nfbrd (ph : wff, x : set, A : class, B : class, R : class) disjointed(A, B, R, x, ph) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
 	hyp 2 : wff = |- ( ph → F/_ x R ) ;;
 	hyp 3 : wff = |- ( ph → F/_ x B ) ;;
@@ -713,10 +713,10 @@ proof of nfbrd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for binary relation.  (Contributed by
+/*Bound-variable hypothesis builder for binary relation.  (Contributed by
        NM, 1-Sep-1999.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
 
-theorem nfbr (x : set, A : class, B : class, R : class)  {
+theorem nfbr (x : set, A : class, B : class, R : class) disjointed(A, B, R, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x R ;;
 	hyp 3 : wff = |- F/_ x B ;;
@@ -733,7 +733,7 @@ proof of nfbr {
 	qed prop 1 = step 5 ;;
 }
 
-/* Relationship between a binary relation and a class abstraction.
+/*Relationship between a binary relation and a class abstraction.
        (Contributed by Andrew Salmon, 8-Jul-2011.) */
 
 theorem brab1 (x : set, z : set, A : class, R : class) disjointed(x y, y z A, y z R) {
@@ -752,7 +752,7 @@ proof of brab1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* The union of two binary relations.  (Contributed by NM, 21-Dec-2008.) */
+/*The union of two binary relations.  (Contributed by NM, 21-Dec-2008.) */
 
 theorem brun (A : class, B : class, R : class, S : class)  {
 	prop 1 : wff = |- ( A ( R ∪ S ) B ↔ ( A R B ∨ A S B ) ) ;;
@@ -768,7 +768,7 @@ proof of brun {
 	qed prop 1 = step 6 ;;
 }
 
-/* The intersection of two relations.  (Contributed by FL, 7-Oct-2008.) */
+/*The intersection of two relations.  (Contributed by FL, 7-Oct-2008.) */
 
 theorem brin (A : class, B : class, R : class, S : class)  {
 	prop 1 : wff = |- ( A ( R ∩ S ) B ↔ ( A R B ∧ A S B ) ) ;;
@@ -784,7 +784,7 @@ proof of brin {
 	qed prop 1 = step 6 ;;
 }
 
-/* The difference of two binary relations.  (Contributed by Scott Fenton,
+/*The difference of two binary relations.  (Contributed by Scott Fenton,
      11-Apr-2011.) */
 
 theorem brdif (A : class, B : class, R : class, S : class)  {
@@ -802,7 +802,7 @@ proof of brdif {
 	qed prop 1 = step 7 ;;
 }
 
-/* Move substitution in and out of a binary relation.  (Contributed by NM,
+/*Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem sbcbrg (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(y A, y B, y C, y D, y R, x y) {
@@ -829,10 +829,10 @@ proof of sbcbrg {
 	qed prop 1 = step 15 ;;
 }
 
-/* Move substitution in and out of a binary relation.  (Contributed by NM,
+/*Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) */
 
-theorem sbcbr12g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(x R) {
+theorem sbcbr12g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(A, C, D, x R) {
 	prop 1 : wff = |- ( A ∈ D → ( [. A / x ]. B R C ↔ [_ A / x ]_ B R [_ A / x ]_ C ) ) ;;
 }
 
@@ -844,10 +844,10 @@ proof of sbcbr12g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move substitution in and out of a binary relation.  (Contributed by NM,
+/*Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) */
 
-theorem sbcbr1g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(x C, x R) {
+theorem sbcbr1g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(A, x C, D, x R) {
 	prop 1 : wff = |- ( A ∈ D → ( [. A / x ]. B R C ↔ [_ A / x ]_ B R C ) ) ;;
 }
 
@@ -859,10 +859,10 @@ proof of sbcbr1g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move substitution in and out of a binary relation.  (Contributed by NM,
+/*Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) */
 
-theorem sbcbr2g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(x B, x R) {
+theorem sbcbr2g (x : set, A : class, B : class, C : class, D : class, R : class) disjointed(A, x B, D, x R) {
 	prop 1 : wff = |- ( A ∈ D → ( [. A / x ]. B R C ↔ B R [_ A / x ]_ C ) ) ;;
 }
 

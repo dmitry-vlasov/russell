@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Introduce_the_Axiom_of_Replacement.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Derive the Axiom of Separation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Separation Scheme, which is an axiom scheme of Zermelo's original
+/*Separation Scheme, which is an axiom scheme of Zermelo's original
        theory.  Scheme Sep of [BellMachover] p. 463.  As we show here, it is
        redundant if we assume Replacement in the form of ~ ax-rep .  Some
        textbooks present Separation as a separate axiom scheme in order to show
@@ -71,7 +71,7 @@ proof of axsep {
 	qed prop 1 = step 21 ;;
 }
 
-/* The Axiom of Separation of ZF set theory.  See ~ axsep for more
+/*The Axiom of Separation of ZF set theory.  See ~ axsep for more
        information.  It was derived as ~ axsep above and is therefore
        redundant, but we state it as a separate axiom here so that its uses can
        be identified more easily.  (Contributed by NM, 11-Sep-2006.) */
@@ -80,7 +80,7 @@ axiom ax-sep (ph : wff, x : set, y : set, z : set) disjointed(x y z, y z ph) {
 	prop 1 : wff = |- ∃ y ∀ x ( x ∈ y ↔ ( x ∈ z ∧ ph ) ) ;;
 }
 
-/* A less restrictive version of the Separation Scheme ~ axsep , where
+/*A less restrictive version of the Separation Scheme ~ axsep , where
        variables ` x ` and ` z ` can both appear free in the wff ` ph ` , which
        can therefore be thought of as ` ph ( x , z ) ` .  This version was
        derived from the more restrictive ~ ax-sep with no additional set theory
@@ -105,7 +105,7 @@ proof of axsep2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Separation Scheme (Aussonderung) using a class variable.  To derive this
+/*Separation Scheme (Aussonderung) using a class variable.  To derive this
        from ~ ax-sep , we invoke the Axiom of Extensionality (indirectly via
        ~ vtocl ), which is needed for the justification of class variable
        notation.
@@ -132,7 +132,7 @@ proof of zfauscl {
 	qed prop 1 = step 7 ;;
 }
 
-/* Convert implication to equivalence using the Separation Scheme
+/*Convert implication to equivalence using the Separation Scheme
        (Aussonderung) ~ ax-sep .  Similar to Theorem 1.3ii of [BellMachover]
        p. 463.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -162,7 +162,7 @@ proof of bm1.3ii {
 	qed prop 1 = step 15 ;;
 }
 
-/* Derive a weakened version of ~ ax9 ( i.e. ~ ax9v ), where ` x ` and
+/*Derive a weakened version of ~ ax9 ( i.e. ~ ax9v ), where ` x ` and
        ` y ` must be distinct, from Separation ~ ax-sep and Extensionality
        ~ ax-ext .  See ~ ax9 for the derivation of ~ ax9 from ~ ax9v .
        (Contributed by NM, 12-Nov-2013.)  (Proof modification is discouraged.)

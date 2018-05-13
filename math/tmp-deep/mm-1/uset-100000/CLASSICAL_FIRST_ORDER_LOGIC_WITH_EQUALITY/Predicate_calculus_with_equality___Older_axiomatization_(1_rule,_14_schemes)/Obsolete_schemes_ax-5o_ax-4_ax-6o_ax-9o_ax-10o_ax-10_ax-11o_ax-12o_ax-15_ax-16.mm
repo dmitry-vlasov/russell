@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Auxiliary_axiom_schemes_(4_schemes).mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  Obsolete schemes ax-5o ax-4 ax-6o ax-9o ax-10o ax-10 ax-11o ax-12o ax-15 ax-16
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,7 +12,8 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   ~ ax10o , ~ ax10 , ~ ax11o , ~ ax12o , ~ ax15 , and ~ ax16 .
 
 $)
-$( Axiom of Specialization.  A quantified wff implies the wff without a
+
+$(Axiom of Specialization.  A quantified wff implies the wff without a
      quantifier (i.e. an instance, or special case, of the generalized wff).
      In other words if something is true for all ` x ` , it is true for any
      specific ` x ` (that would typically occur as a free variable in the wff
@@ -38,14 +41,15 @@ $( Axiom of Specialization.  A quantified wff implies the wff without a
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ sp .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fax-4_0 $f wff ph $.
-	fax-4_1 $f set x $.
-	ax-4 $a |- ( A. x ph -> ph ) $.
+	$v ph x  $.
+	f0_ax-4 $f wff ph $.
+	f1_ax-4 $f set x $.
+	a_ax-4 $a |- ( A. x ph -> ph ) $.
 $}
-$( Axiom of Quantified Implication.  This axiom moves a quantifier from
+
+$(Axiom of Quantified Implication.  This axiom moves a quantifier from
      outside to inside an implication, quantifying ` ps ` .  Notice that ` x `
      must not be a free variable in the antecedent of the quantified
      implication, and we express this by binding ` ph ` to "protect" the axiom
@@ -57,16 +61,16 @@ $( Axiom of Quantified Implication.  This axiom moves a quantifier from
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax5o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fax-5o_0 $f wff ph $.
-	fax-5o_1 $f wff ps $.
-	fax-5o_2 $f set x $.
-	ax-5o $a |- ( A. x ( A. x ph -> ps ) -> ( A. x ph -> A. x ps ) ) $.
+	$v ph ps x  $.
+	f0_ax-5o $f wff ph $.
+	f1_ax-5o $f wff ps $.
+	f2_ax-5o $f set x $.
+	a_ax-5o $a |- ( A. x ( A. x ph -> ps ) -> ( A. x ph -> A. x ps ) ) $.
 $}
-$( Axiom of Quantified Negation.  This axiom is used to manipulate negated
+
+$(Axiom of Quantified Negation.  This axiom is used to manipulate negated
      quantifiers.  One of the 4 axioms of pure predicate calculus.  Equivalent
      to axiom scheme C7' in [Megill] p. 448 (p. 16 of the preprint).  An
      alternate axiomatization could use ~ ax467 in place of ~ ax-4 , ~ ax-6o ,
@@ -75,29 +79,30 @@ $( Axiom of Quantified Negation.  This axiom is used to manipulate negated
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax6o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fax-6o_0 $f wff ph $.
-	fax-6o_1 $f set x $.
-	ax-6o $a |- ( -. A. x -. A. x ph -> ph ) $.
+	$v ph x  $.
+	f0_ax-6o $f wff ph $.
+	f1_ax-6o $f set x $.
+	a_ax-6o $a |- ( -. A. x -. A. x ph -> ph ) $.
 $}
-$( A variant of ~ ax9 .  Axiom scheme C10' in [Megill] p. 448 (p. 16 of the
+
+$(A variant of ~ ax9 .  Axiom scheme C10' in [Megill] p. 448 (p. 16 of the
      preprint).
 
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax9o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fax-9o_0 $f wff ph $.
-	fax-9o_1 $f set x $.
-	fax-9o_2 $f set y $.
-	ax-9o $a |- ( A. x ( x = y -> A. x ph ) -> ph ) $.
+	$v ph x y  $.
+	f0_ax-9o $f wff ph $.
+	f1_ax-9o $f set x $.
+	f2_ax-9o $f set y $.
+	a_ax-9o $a |- ( A. x ( x = y -> A. x ph ) -> ph ) $.
 $}
-$( Axiom ~ ax-10o ("o" for "old") was the original version of ~ ax-10 ,
+
+$(Axiom ~ ax-10o ("o" for "old") was the original version of ~ ax-10 ,
      before it was discovered (in May 2008) that the shorter ~ ax-10 could
      replace it.  It appears as Axiom scheme C11' in [Megill] p. 448 (p. 16 of
      the preprint).
@@ -105,16 +110,16 @@ $( Axiom ~ ax-10o ("o" for "old") was the original version of ~ ax-10 ,
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax10o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fax-10o_0 $f wff ph $.
-	fax-10o_1 $f set x $.
-	fax-10o_2 $f set y $.
-	ax-10o $a |- ( A. x x = y -> ( A. x ph -> A. y ph ) ) $.
+	$v ph x y  $.
+	f0_ax-10o $f wff ph $.
+	f1_ax-10o $f set x $.
+	f2_ax-10o $f set y $.
+	a_ax-10o $a |- ( A. x x = y -> ( A. x ph -> A. y ph ) ) $.
 $}
-$( Axiom of Quantifier Substitution.  One of the equality and substitution
+
+$(Axiom of Quantifier Substitution.  One of the equality and substitution
      axioms of predicate calculus with equality.  Appears as Lemma L12 in
      [Megill] p. 445 (p. 12 of the preprint).
 
@@ -128,14 +133,15 @@ $( Axiom of Quantifier Substitution.  One of the equality and substitution
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax10 .  (Contributed by NM, 16-May-2008.)
      (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	fax-10_0 $f set x $.
-	fax-10_1 $f set y $.
-	ax-10 $a |- ( A. x x = y -> A. y y = x ) $.
+	$v x y  $.
+	f0_ax-10 $f set x $.
+	f1_ax-10 $f set y $.
+	a_ax-10 $a |- ( A. x x = y -> A. y y = x ) $.
 $}
-$( Axiom ~ ax-11o ("o" for "old") was the original version of ~ ax-11 ,
+
+$(Axiom ~ ax-11o ("o" for "old") was the original version of ~ ax-11 ,
      before it was discovered (in Jan. 2007) that the shorter ~ ax-11 could
      replace it.  It appears as Axiom scheme C15' in [Megill] p. 448 (p. 16 of
      the preprint).  It is based on Lemma 16 of [Tarski] p. 70 and Axiom C8 of
@@ -161,16 +167,16 @@ $( Axiom ~ ax-11o ("o" for "old") was the original version of ~ ax-11 ,
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax11o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fax-11o_0 $f wff ph $.
-	fax-11o_1 $f set x $.
-	fax-11o_2 $f set y $.
-	ax-11o $a |- ( -. A. x x = y -> ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) ) $.
+	$v ph x y  $.
+	f0_ax-11o $f wff ph $.
+	f1_ax-11o $f set x $.
+	f2_ax-11o $f set y $.
+	a_ax-11o $a |- ( -. A. x x = y -> ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) ) $.
 $}
-$( Axiom of Quantifier Introduction.  One of the equality and substitution
+
+$(Axiom of Quantifier Introduction.  One of the equality and substitution
      axioms of predicate calculus with equality.  Informally, it says that
      whenever ` z ` is distinct from ` x ` and ` y ` , and ` x = y ` is true,
      then ` x = y ` quantified with ` z ` is also true.  In other words, ` z `
@@ -182,16 +188,16 @@ $( Axiom of Quantifier Introduction.  One of the equality and substitution
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax12o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	fax-12o_0 $f set x $.
-	fax-12o_1 $f set y $.
-	fax-12o_2 $f set z $.
-	ax-12o $a |- ( -. A. z z = x -> ( -. A. z z = y -> ( x = y -> A. z x = y ) ) ) $.
+	$v x y z  $.
+	f0_ax-12o $f set x $.
+	f1_ax-12o $f set y $.
+	f2_ax-12o $f set z $.
+	a_ax-12o $a |- ( -. A. z z = x -> ( -. A. z z = y -> ( x = y -> A. z x = y ) ) ) $.
 $}
-$( Axiom of Quantifier Introduction.  One of the equality and substitution
+
+$(Axiom of Quantifier Introduction.  One of the equality and substitution
      axioms for a non-logical predicate in our predicate calculus with
      equality.  Axiom scheme C14' in [Megill] p. 448 (p. 16 of the preprint).
      It is redundant if we include ~ ax-17 ; see theorem ~ ax15 .  Alternately,
@@ -204,16 +210,16 @@ $( Axiom of Quantifier Introduction.  One of the equality and substitution
      This axiom is obsolete and should no longer be used.  It is proved above
      as theorem ~ ax15 .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	fax-15_0 $f set x $.
-	fax-15_1 $f set y $.
-	fax-15_2 $f set z $.
-	ax-15 $a |- ( -. A. z z = x -> ( -. A. z z = y -> ( x e. y -> A. z x e. y ) ) ) $.
+	$v x y z  $.
+	f0_ax-15 $f set x $.
+	f1_ax-15 $f set y $.
+	f2_ax-15 $f set z $.
+	a_ax-15 $a |- ( -. A. z z = x -> ( -. A. z z = y -> ( x e. y -> A. z x e. y ) ) ) $.
 $}
-$( Axiom of Distinct Variables.  The only axiom of predicate calculus
+
+$(Axiom of Distinct Variables.  The only axiom of predicate calculus
        requiring that variables be distinct (if we consider ~ ax-17 to be a
        metatheorem and not an axiom).  Axiom scheme C16' in [Megill] p. 448 (p.
        16 of the preprint).  It apparently does not otherwise appear in the
@@ -234,14 +240,14 @@ $( Axiom of Distinct Variables.  The only axiom of predicate calculus
        This axiom is obsolete and should no longer be used.  It is proved above
        as theorem ~ ax16 .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$d x y $.
-	fax-16_0 $f wff ph $.
-	fax-16_1 $f set x $.
-	fax-16_2 $f set y $.
-	ax-16 $a |- ( A. x x = y -> ( ph -> A. x ph ) ) $.
+	$v ph x y  $.
+	$d x y  $.
+	f0_ax-16 $f wff ph $.
+	f1_ax-16 $f set x $.
+	f2_ax-16 $f set y $.
+	a_ax-16 $a |- ( A. x x = y -> ( ph -> A. x ph ) ) $.
 $}
+
 

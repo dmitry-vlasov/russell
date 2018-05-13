@@ -1,35 +1,40 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Binary_relations.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Ordered-pair class abstractions (class builders)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$c |->  $.
-$( Maps-to symbol $)
-$( Extend class notation to include ordered-pair class abstraction (class
+
+$c |-> $.
+
+$(Maps-to symbol $)
+
+$(Extend class notation to include ordered-pair class abstraction (class
      builder). $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fcopab_0 $f wff ph $.
-	fcopab_1 $f set x $.
-	fcopab_2 $f set y $.
-	copab $a class { <. x , y >. | ph } $.
+	$v ph x y  $.
+	f0_copab $f wff ph $.
+	f1_copab $f set x $.
+	f2_copab $f set y $.
+	a_copab $a class { <. x , y >. | ph } $.
 $}
-$( Extend the definition of a class to include maps-to notation for defining
+
+$(Extend the definition of a class to include maps-to notation for defining
      a function via a rule. $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	fcmpt_0 $f set x $.
-	fcmpt_1 $f class A $.
-	fcmpt_2 $f class B $.
-	cmpt $a class ( x e. A |-> B ) $.
+	$v x A B  $.
+	f0_cmpt $f set x $.
+	f1_cmpt $f class A $.
+	f2_cmpt $f class B $.
+	a_cmpt $a class ( x e. A |-> B ) $.
 $}
-$( Define the class abstraction of a collection of ordered pairs.
+
+$(Define the class abstraction of a collection of ordered pairs.
        Definition 3.3 of [Monk1] p. 34.  Usually ` x ` and ` y ` are distinct,
        although the definition doesn't strictly require it (see ~ dfid2 for a
        case where they are not distinct).  The brace notation is called "class
@@ -38,679 +43,616 @@ $( Define the class abstraction of a collection of ordered pairs.
        existential quantifiers is shown by ~ dfopab2 .  For example,
 ` R = { <. x , y >. | ( x e. CC /\ y e. CC /\ ( x + 1 ) = y ) } -> 3 R 4 `
        ( ~ ex-opab ).  (Contributed by NM, 4-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d z ph $.
-	fdf-opab_0 $f wff ph $.
-	fdf-opab_1 $f set x $.
-	fdf-opab_2 $f set y $.
-	fdf-opab_3 $f set z $.
-	df-opab $a |- { <. x , y >. | ph } = { z | E. x E. y ( z = <. x , y >. /\ ph ) } $.
+	$v ph x y z  $.
+	$d x z  $.
+	$d y z  $.
+	$d z ph  $.
+	f0_df-opab $f wff ph $.
+	f1_df-opab $f set x $.
+	f2_df-opab $f set y $.
+	f3_df-opab $f set z $.
+	a_df-opab $a |- { <. x , y >. | ph } = { z | E. x E. y ( z = <. x , y >. /\ ph ) } $.
 $}
-$( Define maps-to notation for defining a function via a rule.  Read as
+
+$(Define maps-to notation for defining a function via a rule.  Read as
        "the function defined by the map from ` x ` (in ` A ` ) to
        ` B ( x ) ` ."  The class expression ` B ` is the value of the function
        at ` x ` and normally contains the variable ` x ` .  An example is the
        square function for complex numbers, ` ( x e. CC |-> ( x ^ 2 ) ) ` .
        Similar to the definition of mapping in [ChoquetDD] p. 2.  (Contributed
        by NM, 17-Feb-2008.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	fdf-mpt_0 $f set x $.
-	fdf-mpt_1 $f set y $.
-	fdf-mpt_2 $f class A $.
-	fdf-mpt_3 $f class B $.
-	df-mpt $a |- ( x e. A |-> B ) = { <. x , y >. | ( x e. A /\ y = B ) } $.
+	$v x y A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	f0_df-mpt $f set x $.
+	f1_df-mpt $f set y $.
+	f2_df-mpt $f class A $.
+	f3_df-mpt $f class B $.
+	a_df-mpt $a |- ( x e. A |-> B ) = { <. x , y >. | ( x e. A /\ y = B ) } $.
 $}
-$( The collection of ordered pairs in a class is a subclass of it.
+
+$(The collection of ordered pairs in a class is a subclass of it.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v R $.
-	$v z $.
-	$d x z R $.
-	$d y z R $.
-	iopabss_0 $f set z $.
-	fopabss_0 $f set x $.
-	fopabss_1 $f set y $.
-	fopabss_2 $f class R $.
-	opabss $p |- { <. x , y >. | x R y } C_ R $= fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr fopabss_0 fopabss_1 copab iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop wceq fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr wa fopabss_1 wex fopabss_0 wex iopabss_0 cab fopabss_2 fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr fopabss_0 fopabss_1 iopabss_0 df-opab iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop wceq fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr wa fopabss_1 wex fopabss_0 wex iopabss_0 fopabss_2 iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop wceq fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr wa iopabss_0 sup_set_class fopabss_2 wcel fopabss_0 fopabss_1 fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 wbr iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop wceq fopabss_0 sup_set_class fopabss_1 sup_set_class cop fopabss_2 wcel iopabss_0 sup_set_class fopabss_2 wcel fopabss_0 sup_set_class fopabss_1 sup_set_class fopabss_2 df-br iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop wceq iopabss_0 sup_set_class fopabss_2 wcel fopabss_0 sup_set_class fopabss_1 sup_set_class cop fopabss_2 wcel iopabss_0 sup_set_class fopabss_0 sup_set_class fopabss_1 sup_set_class cop fopabss_2 eleq1 biimpar sylan2b exlimivv abssi eqsstri $.
+	$v x y R  $.
+	$d x z R  $.
+	$d y z R  $.
+	f0_opabss $f set x $.
+	f1_opabss $f set y $.
+	f2_opabss $f class R $.
+	i0_opabss $f set z $.
+	p_opabss $p |- { <. x , y >. | x R y } C_ R $= f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr f0_opabss f1_opabss i0_opabss a_df-opab f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_df-br i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop f2_opabss p_eleq1 i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop a_wceq i0_opabss a_sup_set_class f2_opabss a_wcel f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop f2_opabss a_wcel p_biimpar f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop a_wceq f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop f2_opabss a_wcel i0_opabss a_sup_set_class f2_opabss a_wcel p_sylan2b i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop a_wceq f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr a_wa i0_opabss a_sup_set_class f2_opabss a_wcel f0_opabss f1_opabss p_exlimivv i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop a_wceq f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr a_wa f1_opabss a_wex f0_opabss a_wex i0_opabss f2_opabss p_abssi f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr f0_opabss f1_opabss a_copab i0_opabss a_sup_set_class f0_opabss a_sup_set_class f1_opabss a_sup_set_class a_cop a_wceq f0_opabss a_sup_set_class f1_opabss a_sup_set_class f2_opabss a_wbr a_wa f1_opabss a_wex f0_opabss a_wex i0_opabss a_cab f2_opabss p_eqsstri $.
 $}
-$( Equivalent wff's yield equal ordered-pair class abstractions (deduction
+
+$(Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.)  (Proof shortened by Andrew
        Salmon, 9-Jul-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d z ph $.
-	$d z ps $.
-	$d z ch $.
-	iopabbid_0 $f set z $.
-	fopabbid_0 $f wff ph $.
-	fopabbid_1 $f wff ps $.
-	fopabbid_2 $f wff ch $.
-	fopabbid_3 $f set x $.
-	fopabbid_4 $f set y $.
-	eopabbid_0 $e |- F/ x ph $.
-	eopabbid_1 $e |- F/ y ph $.
-	eopabbid_2 $e |- ( ph -> ( ps <-> ch ) ) $.
-	opabbid $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $= fopabbid_0 iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_1 wa fopabbid_4 wex fopabbid_3 wex iopabbid_0 cab iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_2 wa fopabbid_4 wex fopabbid_3 wex iopabbid_0 cab fopabbid_1 fopabbid_3 fopabbid_4 copab fopabbid_2 fopabbid_3 fopabbid_4 copab fopabbid_0 iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_1 wa fopabbid_4 wex fopabbid_3 wex iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_2 wa fopabbid_4 wex fopabbid_3 wex iopabbid_0 fopabbid_0 iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_1 wa fopabbid_4 wex iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_2 wa fopabbid_4 wex fopabbid_3 eopabbid_0 fopabbid_0 iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_1 wa iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq fopabbid_2 wa fopabbid_4 eopabbid_1 fopabbid_0 fopabbid_1 fopabbid_2 iopabbid_0 sup_set_class fopabbid_3 sup_set_class fopabbid_4 sup_set_class cop wceq eopabbid_2 anbi2d exbid exbid abbidv fopabbid_1 fopabbid_3 fopabbid_4 iopabbid_0 df-opab fopabbid_2 fopabbid_3 fopabbid_4 iopabbid_0 df-opab 3eqtr4g $.
+	$v ph ps ch x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d z ph  $.
+	$d z ps  $.
+	$d z ch  $.
+	f0_opabbid $f wff ph $.
+	f1_opabbid $f wff ps $.
+	f2_opabbid $f wff ch $.
+	f3_opabbid $f set x $.
+	f4_opabbid $f set y $.
+	i0_opabbid $f set z $.
+	e0_opabbid $e |- F/ x ph $.
+	e1_opabbid $e |- F/ y ph $.
+	e2_opabbid $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_opabbid $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $= e0_opabbid e1_opabbid e2_opabbid f0_opabbid f1_opabbid f2_opabbid i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq p_anbi2d f0_opabbid i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f1_opabbid a_wa i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f2_opabbid a_wa f4_opabbid p_exbid f0_opabbid i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f1_opabbid a_wa f4_opabbid a_wex i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f2_opabbid a_wa f4_opabbid a_wex f3_opabbid p_exbid f0_opabbid i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f1_opabbid a_wa f4_opabbid a_wex f3_opabbid a_wex i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f2_opabbid a_wa f4_opabbid a_wex f3_opabbid a_wex i0_opabbid p_abbidv f1_opabbid f3_opabbid f4_opabbid i0_opabbid a_df-opab f2_opabbid f3_opabbid f4_opabbid i0_opabbid a_df-opab f0_opabbid i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f1_opabbid a_wa f4_opabbid a_wex f3_opabbid a_wex i0_opabbid a_cab i0_opabbid a_sup_set_class f3_opabbid a_sup_set_class f4_opabbid a_sup_set_class a_cop a_wceq f2_opabbid a_wa f4_opabbid a_wex f3_opabbid a_wex i0_opabbid a_cab f1_opabbid f3_opabbid f4_opabbid a_copab f2_opabbid f3_opabbid f4_opabbid a_copab p_3eqtr4g $.
 $}
-$( Equivalent wff's yield equal ordered-pair class abstractions (deduction
+
+$(Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 15-May-1995.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v y $.
-	$d x ph $.
-	$d y ph $.
-	fopabbidv_0 $f wff ph $.
-	fopabbidv_1 $f wff ps $.
-	fopabbidv_2 $f wff ch $.
-	fopabbidv_3 $f set x $.
-	fopabbidv_4 $f set y $.
-	eopabbidv_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	opabbidv $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $= fopabbidv_0 fopabbidv_1 fopabbidv_2 fopabbidv_3 fopabbidv_4 fopabbidv_0 fopabbidv_3 nfv fopabbidv_0 fopabbidv_4 nfv eopabbidv_0 opabbid $.
+	$v ph ps ch x y  $.
+	$d x ph  $.
+	$d y ph  $.
+	$d ps  $.
+	$d ch  $.
+	f0_opabbidv $f wff ph $.
+	f1_opabbidv $f wff ps $.
+	f2_opabbidv $f wff ch $.
+	f3_opabbidv $f set x $.
+	f4_opabbidv $f set y $.
+	e0_opabbidv $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_opabbidv $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $= f0_opabbidv f3_opabbidv p_nfv f0_opabbidv f4_opabbidv p_nfv e0_opabbidv f0_opabbidv f1_opabbidv f2_opabbidv f3_opabbidv f4_opabbidv p_opabbid $.
 $}
-$( Equivalent wff's yield equal class abstractions.  (Contributed by NM,
+
+$(Equivalent wff's yield equal class abstractions.  (Contributed by NM,
        15-May-1995.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d z ph $.
-	$d z ps $.
-	iopabbii_0 $f set z $.
-	fopabbii_0 $f wff ph $.
-	fopabbii_1 $f wff ps $.
-	fopabbii_2 $f set x $.
-	fopabbii_3 $f set y $.
-	eopabbii_0 $e |- ( ph <-> ps ) $.
-	opabbii $p |- { <. x , y >. | ph } = { <. x , y >. | ps } $= iopabbii_0 sup_set_class iopabbii_0 sup_set_class wceq fopabbii_0 fopabbii_2 fopabbii_3 copab fopabbii_1 fopabbii_2 fopabbii_3 copab wceq iopabbii_0 sup_set_class eqid iopabbii_0 sup_set_class iopabbii_0 sup_set_class wceq fopabbii_0 fopabbii_1 fopabbii_2 fopabbii_3 fopabbii_0 fopabbii_1 wb iopabbii_0 sup_set_class iopabbii_0 sup_set_class wceq eopabbii_0 a1i opabbidv ax-mp $.
+	$v ph ps x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d z ph  $.
+	$d z ps  $.
+	f0_opabbii $f wff ph $.
+	f1_opabbii $f wff ps $.
+	f2_opabbii $f set x $.
+	f3_opabbii $f set y $.
+	i0_opabbii $f set z $.
+	e0_opabbii $e |- ( ph <-> ps ) $.
+	p_opabbii $p |- { <. x , y >. | ph } = { <. x , y >. | ps } $= i0_opabbii a_sup_set_class p_eqid e0_opabbii f0_opabbii f1_opabbii a_wb i0_opabbii a_sup_set_class i0_opabbii a_sup_set_class a_wceq p_a1i i0_opabbii a_sup_set_class i0_opabbii a_sup_set_class a_wceq f0_opabbii f1_opabbii f2_opabbii f3_opabbii p_opabbidv i0_opabbii a_sup_set_class i0_opabbii a_sup_set_class a_wceq f0_opabbii f2_opabbii f3_opabbii a_copab f1_opabbii f2_opabbii f3_opabbii a_copab a_wceq a_ax-mp $.
 $}
-$( Bound-variable hypothesis builder for class abstraction.  (Contributed
+
+$(Bound-variable hypothesis builder for class abstraction.  (Contributed
        by NM, 1-Sep-1999.)  (Unnecessary distinct variable restrictions were
        removed by Andrew Salmon, 11-Jul-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x z w $.
-	$d y z w $.
-	$d ph w $.
-	infopab_0 $f set w $.
-	fnfopab_0 $f wff ph $.
-	fnfopab_1 $f set x $.
-	fnfopab_2 $f set y $.
-	fnfopab_3 $f set z $.
-	enfopab_0 $e |- F/ z ph $.
-	nfopab $p |- F/_ z { <. x , y >. | ph } $= fnfopab_3 fnfopab_0 fnfopab_1 fnfopab_2 copab infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_0 wa fnfopab_2 wex fnfopab_1 wex infopab_0 cab fnfopab_0 fnfopab_1 fnfopab_2 infopab_0 df-opab infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_0 wa fnfopab_2 wex fnfopab_1 wex fnfopab_3 infopab_0 infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_0 wa fnfopab_2 wex fnfopab_3 fnfopab_1 infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_0 wa fnfopab_3 fnfopab_2 infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_0 fnfopab_3 infopab_0 sup_set_class fnfopab_1 sup_set_class fnfopab_2 sup_set_class cop wceq fnfopab_3 nfv enfopab_0 nfan nfex nfex nfab nfcxfr $.
+	$v ph x y z  $.
+	$d x z w  $.
+	$d y z w  $.
+	$d ph w  $.
+	f0_nfopab $f wff ph $.
+	f1_nfopab $f set x $.
+	f2_nfopab $f set y $.
+	f3_nfopab $f set z $.
+	i0_nfopab $f set w $.
+	e0_nfopab $e |- F/ z ph $.
+	p_nfopab $p |- F/_ z { <. x , y >. | ph } $= f0_nfopab f1_nfopab f2_nfopab i0_nfopab a_df-opab i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f3_nfopab p_nfv e0_nfopab i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f0_nfopab f3_nfopab p_nfan i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f0_nfopab a_wa f3_nfopab f2_nfopab p_nfex i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f0_nfopab a_wa f2_nfopab a_wex f3_nfopab f1_nfopab p_nfex i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f0_nfopab a_wa f2_nfopab a_wex f1_nfopab a_wex f3_nfopab i0_nfopab p_nfab f3_nfopab f0_nfopab f1_nfopab f2_nfopab a_copab i0_nfopab a_sup_set_class f1_nfopab a_sup_set_class f2_nfopab a_sup_set_class a_cop a_wceq f0_nfopab a_wa f2_nfopab a_wex f1_nfopab a_wex i0_nfopab a_cab p_nfcxfr $.
 $}
-$( The first abstraction variable in an ordered-pair class abstraction
+
+$(The first abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d z ph $.
-	infopab1_0 $f set z $.
-	fnfopab1_0 $f wff ph $.
-	fnfopab1_1 $f set x $.
-	fnfopab1_2 $f set y $.
-	nfopab1 $p |- F/_ x { <. x , y >. | ph } $= fnfopab1_1 fnfopab1_0 fnfopab1_1 fnfopab1_2 copab infopab1_0 sup_set_class fnfopab1_1 sup_set_class fnfopab1_2 sup_set_class cop wceq fnfopab1_0 wa fnfopab1_2 wex fnfopab1_1 wex infopab1_0 cab fnfopab1_0 fnfopab1_1 fnfopab1_2 infopab1_0 df-opab infopab1_0 sup_set_class fnfopab1_1 sup_set_class fnfopab1_2 sup_set_class cop wceq fnfopab1_0 wa fnfopab1_2 wex fnfopab1_1 wex fnfopab1_1 infopab1_0 infopab1_0 sup_set_class fnfopab1_1 sup_set_class fnfopab1_2 sup_set_class cop wceq fnfopab1_0 wa fnfopab1_2 wex fnfopab1_1 nfe1 nfab nfcxfr $.
+	$v ph x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d z ph  $.
+	f0_nfopab1 $f wff ph $.
+	f1_nfopab1 $f set x $.
+	f2_nfopab1 $f set y $.
+	i0_nfopab1 $f set z $.
+	p_nfopab1 $p |- F/_ x { <. x , y >. | ph } $= f0_nfopab1 f1_nfopab1 f2_nfopab1 i0_nfopab1 a_df-opab i0_nfopab1 a_sup_set_class f1_nfopab1 a_sup_set_class f2_nfopab1 a_sup_set_class a_cop a_wceq f0_nfopab1 a_wa f2_nfopab1 a_wex f1_nfopab1 p_nfe1 i0_nfopab1 a_sup_set_class f1_nfopab1 a_sup_set_class f2_nfopab1 a_sup_set_class a_cop a_wceq f0_nfopab1 a_wa f2_nfopab1 a_wex f1_nfopab1 a_wex f1_nfopab1 i0_nfopab1 p_nfab f1_nfopab1 f0_nfopab1 f1_nfopab1 f2_nfopab1 a_copab i0_nfopab1 a_sup_set_class f1_nfopab1 a_sup_set_class f2_nfopab1 a_sup_set_class a_cop a_wceq f0_nfopab1 a_wa f2_nfopab1 a_wex f1_nfopab1 a_wex i0_nfopab1 a_cab p_nfcxfr $.
 $}
-$( The second abstraction variable in an ordered-pair class abstraction
+
+$(The second abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d z ph $.
-	infopab2_0 $f set z $.
-	fnfopab2_0 $f wff ph $.
-	fnfopab2_1 $f set x $.
-	fnfopab2_2 $f set y $.
-	nfopab2 $p |- F/_ y { <. x , y >. | ph } $= fnfopab2_2 fnfopab2_0 fnfopab2_1 fnfopab2_2 copab infopab2_0 sup_set_class fnfopab2_1 sup_set_class fnfopab2_2 sup_set_class cop wceq fnfopab2_0 wa fnfopab2_2 wex fnfopab2_1 wex infopab2_0 cab fnfopab2_0 fnfopab2_1 fnfopab2_2 infopab2_0 df-opab infopab2_0 sup_set_class fnfopab2_1 sup_set_class fnfopab2_2 sup_set_class cop wceq fnfopab2_0 wa fnfopab2_2 wex fnfopab2_1 wex fnfopab2_2 infopab2_0 infopab2_0 sup_set_class fnfopab2_1 sup_set_class fnfopab2_2 sup_set_class cop wceq fnfopab2_0 wa fnfopab2_2 wex fnfopab2_2 fnfopab2_1 infopab2_0 sup_set_class fnfopab2_1 sup_set_class fnfopab2_2 sup_set_class cop wceq fnfopab2_0 wa fnfopab2_2 nfe1 nfex nfab nfcxfr $.
+	$v ph x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d z ph  $.
+	f0_nfopab2 $f wff ph $.
+	f1_nfopab2 $f set x $.
+	f2_nfopab2 $f set y $.
+	i0_nfopab2 $f set z $.
+	p_nfopab2 $p |- F/_ y { <. x , y >. | ph } $= f0_nfopab2 f1_nfopab2 f2_nfopab2 i0_nfopab2 a_df-opab i0_nfopab2 a_sup_set_class f1_nfopab2 a_sup_set_class f2_nfopab2 a_sup_set_class a_cop a_wceq f0_nfopab2 a_wa f2_nfopab2 p_nfe1 i0_nfopab2 a_sup_set_class f1_nfopab2 a_sup_set_class f2_nfopab2 a_sup_set_class a_cop a_wceq f0_nfopab2 a_wa f2_nfopab2 a_wex f2_nfopab2 f1_nfopab2 p_nfex i0_nfopab2 a_sup_set_class f1_nfopab2 a_sup_set_class f2_nfopab2 a_sup_set_class a_cop a_wceq f0_nfopab2 a_wa f2_nfopab2 a_wex f1_nfopab2 a_wex f2_nfopab2 i0_nfopab2 p_nfab f2_nfopab2 f0_nfopab2 f1_nfopab2 f2_nfopab2 a_copab i0_nfopab2 a_sup_set_class f1_nfopab2 a_sup_set_class f2_nfopab2 a_sup_set_class a_cop a_wceq f0_nfopab2 a_wa f2_nfopab2 a_wex f1_nfopab2 a_wex i0_nfopab2 a_cab p_nfcxfr $.
 $}
-$( Rule used to change bound variables in an ordered-pair class
+
+$(Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        14-Sep-2003.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$v v $.
-	$d x y z w v $.
-	$d v ph $.
-	$d v ps $.
-	icbvopab_0 $f set v $.
-	fcbvopab_0 $f wff ph $.
-	fcbvopab_1 $f wff ps $.
-	fcbvopab_2 $f set x $.
-	fcbvopab_3 $f set y $.
-	fcbvopab_4 $f set z $.
-	fcbvopab_5 $f set w $.
-	ecbvopab_0 $e |- F/ z ph $.
-	ecbvopab_1 $e |- F/ w ph $.
-	ecbvopab_2 $e |- F/ x ps $.
-	ecbvopab_3 $e |- F/ y ps $.
-	ecbvopab_4 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
-	cbvopab $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $= icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_0 wa fcbvopab_3 wex fcbvopab_2 wex icbvopab_0 cab icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_1 wa fcbvopab_5 wex fcbvopab_4 wex icbvopab_0 cab fcbvopab_0 fcbvopab_2 fcbvopab_3 copab fcbvopab_1 fcbvopab_4 fcbvopab_5 copab icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_0 wa fcbvopab_3 wex fcbvopab_2 wex icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_1 wa fcbvopab_5 wex fcbvopab_4 wex icbvopab_0 icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_0 wa icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_1 wa fcbvopab_2 fcbvopab_3 fcbvopab_4 fcbvopab_5 icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_0 fcbvopab_4 icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_4 nfv ecbvopab_0 nfan icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_0 fcbvopab_5 icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq fcbvopab_5 nfv ecbvopab_1 nfan icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_1 fcbvopab_2 icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_2 nfv ecbvopab_2 nfan icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_1 fcbvopab_3 icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_3 nfv ecbvopab_3 nfan fcbvopab_2 sup_set_class fcbvopab_4 sup_set_class wceq fcbvopab_3 sup_set_class fcbvopab_5 sup_set_class wceq wa icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop wceq icbvopab_0 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop wceq fcbvopab_0 fcbvopab_1 fcbvopab_2 sup_set_class fcbvopab_4 sup_set_class wceq fcbvopab_3 sup_set_class fcbvopab_5 sup_set_class wceq wa fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class cop fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class cop icbvopab_0 sup_set_class fcbvopab_2 sup_set_class fcbvopab_3 sup_set_class fcbvopab_4 sup_set_class fcbvopab_5 sup_set_class opeq12 eqeq2d ecbvopab_4 anbi12d cbvex2 abbii fcbvopab_0 fcbvopab_2 fcbvopab_3 icbvopab_0 df-opab fcbvopab_1 fcbvopab_4 fcbvopab_5 icbvopab_0 df-opab 3eqtr4i $.
+	$v ph ps x y z w  $.
+	$d x y z w v  $.
+	$d v ph  $.
+	$d v ps  $.
+	f0_cbvopab $f wff ph $.
+	f1_cbvopab $f wff ps $.
+	f2_cbvopab $f set x $.
+	f3_cbvopab $f set y $.
+	f4_cbvopab $f set z $.
+	f5_cbvopab $f set w $.
+	i0_cbvopab $f set v $.
+	e0_cbvopab $e |- F/ z ph $.
+	e1_cbvopab $e |- F/ w ph $.
+	e2_cbvopab $e |- F/ x ps $.
+	e3_cbvopab $e |- F/ y ps $.
+	e4_cbvopab $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
+	p_cbvopab $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $= i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f4_cbvopab p_nfv e0_cbvopab i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab f4_cbvopab p_nfan i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f5_cbvopab p_nfv e1_cbvopab i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab f5_cbvopab p_nfan i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f2_cbvopab p_nfv e2_cbvopab i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f1_cbvopab f2_cbvopab p_nfan i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f3_cbvopab p_nfv e3_cbvopab i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f1_cbvopab f3_cbvopab p_nfan f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class p_opeq12 f2_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class a_wceq f3_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_wceq a_wa f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop i0_cbvopab a_sup_set_class p_eqeq2d e4_cbvopab f2_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class a_wceq f3_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_wceq a_wa i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab f1_cbvopab p_anbi12d i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab a_wa i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f1_cbvopab a_wa f2_cbvopab f3_cbvopab f4_cbvopab f5_cbvopab p_cbvex2 i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab a_wa f3_cbvopab a_wex f2_cbvopab a_wex i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f1_cbvopab a_wa f5_cbvopab a_wex f4_cbvopab a_wex i0_cbvopab p_abbii f0_cbvopab f2_cbvopab f3_cbvopab i0_cbvopab a_df-opab f1_cbvopab f4_cbvopab f5_cbvopab i0_cbvopab a_df-opab i0_cbvopab a_sup_set_class f2_cbvopab a_sup_set_class f3_cbvopab a_sup_set_class a_cop a_wceq f0_cbvopab a_wa f3_cbvopab a_wex f2_cbvopab a_wex i0_cbvopab a_cab i0_cbvopab a_sup_set_class f4_cbvopab a_sup_set_class f5_cbvopab a_sup_set_class a_cop a_wceq f1_cbvopab a_wa f5_cbvopab a_wex f4_cbvopab a_wex i0_cbvopab a_cab f0_cbvopab f2_cbvopab f3_cbvopab a_copab f1_cbvopab f4_cbvopab f5_cbvopab a_copab p_3eqtr4i $.
 $}
-$( Rule used to change bound variables in an ordered-pair class
+
+$(Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        15-Oct-1996.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	$d z w ph $.
-	$d x y ps $.
-	fcbvopabv_0 $f wff ph $.
-	fcbvopabv_1 $f wff ps $.
-	fcbvopabv_2 $f set x $.
-	fcbvopabv_3 $f set y $.
-	fcbvopabv_4 $f set z $.
-	fcbvopabv_5 $f set w $.
-	ecbvopabv_0 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
-	cbvopabv $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $= fcbvopabv_0 fcbvopabv_1 fcbvopabv_2 fcbvopabv_3 fcbvopabv_4 fcbvopabv_5 fcbvopabv_0 fcbvopabv_4 nfv fcbvopabv_0 fcbvopabv_5 nfv fcbvopabv_1 fcbvopabv_2 nfv fcbvopabv_1 fcbvopabv_3 nfv ecbvopabv_0 cbvopab $.
+	$v ph ps x y z w  $.
+	$d x y z w  $.
+	$d z w ph  $.
+	$d x y ps  $.
+	f0_cbvopabv $f wff ph $.
+	f1_cbvopabv $f wff ps $.
+	f2_cbvopabv $f set x $.
+	f3_cbvopabv $f set y $.
+	f4_cbvopabv $f set z $.
+	f5_cbvopabv $f set w $.
+	e0_cbvopabv $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
+	p_cbvopabv $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $= f0_cbvopabv f4_cbvopabv p_nfv f0_cbvopabv f5_cbvopabv p_nfv f1_cbvopabv f2_cbvopabv p_nfv f1_cbvopabv f3_cbvopabv p_nfv e0_cbvopabv f0_cbvopabv f1_cbvopabv f2_cbvopabv f3_cbvopabv f4_cbvopabv f5_cbvopabv p_cbvopab $.
 $}
-$( Change first bound variable in an ordered-pair class abstraction, using
+
+$(Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 6-Oct-2004.)  (Revised by
        Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$v v $.
-	$d v w x y $.
-	$d v w y z $.
-	$d v w ph $.
-	$d v w ps $.
-	icbvopab1_0 $f set w $.
-	icbvopab1_1 $f set v $.
-	fcbvopab1_0 $f wff ph $.
-	fcbvopab1_1 $f wff ps $.
-	fcbvopab1_2 $f set x $.
-	fcbvopab1_3 $f set y $.
-	fcbvopab1_4 $f set z $.
-	ecbvopab1_0 $e |- F/ z ph $.
-	ecbvopab1_1 $e |- F/ x ps $.
-	ecbvopab1_2 $e |- ( x = z -> ( ph <-> ps ) ) $.
-	cbvopab1 $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $= icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa fcbvopab1_3 wex fcbvopab1_2 wex icbvopab1_0 cab icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 wex fcbvopab1_4 wex icbvopab1_0 cab fcbvopab1_0 fcbvopab1_2 fcbvopab1_3 copab fcbvopab1_1 fcbvopab1_4 fcbvopab1_3 copab icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa fcbvopab1_3 wex fcbvopab1_2 wex icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 wex fcbvopab1_4 wex icbvopab1_0 icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa fcbvopab1_3 wex fcbvopab1_2 wex icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_3 wex icbvopab1_1 wex icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 wex fcbvopab1_4 wex icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa fcbvopab1_3 wex icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_3 wex fcbvopab1_2 icbvopab1_1 icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa fcbvopab1_3 wex icbvopab1_1 nfv icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_2 fcbvopab1_3 icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb fcbvopab1_2 icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_2 nfv fcbvopab1_0 fcbvopab1_2 icbvopab1_1 nfs1v nfan nfex fcbvopab1_2 sup_set_class icbvopab1_1 sup_set_class wceq icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 wa icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_3 fcbvopab1_2 sup_set_class icbvopab1_1 sup_set_class wceq icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop wceq icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb fcbvopab1_2 sup_set_class icbvopab1_1 sup_set_class wceq fcbvopab1_2 sup_set_class fcbvopab1_3 sup_set_class cop icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop icbvopab1_0 sup_set_class fcbvopab1_2 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class opeq1 eqeq2d fcbvopab1_0 fcbvopab1_2 icbvopab1_1 sbequ12 anbi12d exbidv cbvex icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_3 wex icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 wex icbvopab1_1 fcbvopab1_4 icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa fcbvopab1_4 fcbvopab1_3 icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb fcbvopab1_4 icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_4 nfv fcbvopab1_0 fcbvopab1_2 icbvopab1_1 fcbvopab1_4 ecbvopab1_0 nfsb nfan nfex icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 wex icbvopab1_1 nfv icbvopab1_1 sup_set_class fcbvopab1_4 sup_set_class wceq icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb wa icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_1 wa fcbvopab1_3 icbvopab1_1 sup_set_class fcbvopab1_4 sup_set_class wceq icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop wceq icbvopab1_0 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb fcbvopab1_1 icbvopab1_1 sup_set_class fcbvopab1_4 sup_set_class wceq icbvopab1_1 sup_set_class fcbvopab1_3 sup_set_class cop fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class cop icbvopab1_0 sup_set_class icbvopab1_1 sup_set_class fcbvopab1_4 sup_set_class fcbvopab1_3 sup_set_class opeq1 eqeq2d icbvopab1_1 sup_set_class fcbvopab1_4 sup_set_class wceq fcbvopab1_0 fcbvopab1_2 icbvopab1_1 wsb fcbvopab1_0 fcbvopab1_2 fcbvopab1_4 wsb fcbvopab1_1 fcbvopab1_0 icbvopab1_1 fcbvopab1_4 fcbvopab1_2 sbequ fcbvopab1_0 fcbvopab1_1 fcbvopab1_2 fcbvopab1_4 ecbvopab1_1 ecbvopab1_2 sbie syl6bb anbi12d exbidv cbvex bitri abbii fcbvopab1_0 fcbvopab1_2 fcbvopab1_3 icbvopab1_0 df-opab fcbvopab1_1 fcbvopab1_4 fcbvopab1_3 icbvopab1_0 df-opab 3eqtr4i $.
+	$v ph ps x y z  $.
+	$d v w x y  $.
+	$d v w y z  $.
+	$d v w ph  $.
+	$d v w ps  $.
+	f0_cbvopab1 $f wff ph $.
+	f1_cbvopab1 $f wff ps $.
+	f2_cbvopab1 $f set x $.
+	f3_cbvopab1 $f set y $.
+	f4_cbvopab1 $f set z $.
+	i0_cbvopab1 $f set w $.
+	i1_cbvopab1 $f set v $.
+	e0_cbvopab1 $e |- F/ z ph $.
+	e1_cbvopab1 $e |- F/ x ps $.
+	e2_cbvopab1 $e |- ( x = z -> ( ph <-> ps ) ) $.
+	p_cbvopab1 $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $= i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa f3_cbvopab1 a_wex i1_cbvopab1 p_nfv i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f2_cbvopab1 p_nfv f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 p_nfs1v i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb f2_cbvopab1 p_nfan i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f2_cbvopab1 f3_cbvopab1 p_nfex f2_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class p_opeq1 f2_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class a_wceq f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop i0_cbvopab1 a_sup_set_class p_eqeq2d f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 p_sbequ12 f2_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class a_wceq i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb p_anbi12d f2_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class a_wceq i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f3_cbvopab1 p_exbidv i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa f3_cbvopab1 a_wex i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f3_cbvopab1 a_wex f2_cbvopab1 i1_cbvopab1 p_cbvex i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f4_cbvopab1 p_nfv e0_cbvopab1 f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 f4_cbvopab1 p_nfsb i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb f4_cbvopab1 p_nfan i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f4_cbvopab1 f3_cbvopab1 p_nfex i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 a_wex i1_cbvopab1 p_nfv i1_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class p_opeq1 i1_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class a_wceq i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop i0_cbvopab1 a_sup_set_class p_eqeq2d f0_cbvopab1 i1_cbvopab1 f4_cbvopab1 f2_cbvopab1 p_sbequ e1_cbvopab1 e2_cbvopab1 f0_cbvopab1 f1_cbvopab1 f2_cbvopab1 f4_cbvopab1 p_sbie i1_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb f0_cbvopab1 f2_cbvopab1 f4_cbvopab1 a_wsb f1_cbvopab1 p_syl6bb i1_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class a_wceq i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb f1_cbvopab1 p_anbi12d i1_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class a_wceq i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 p_exbidv i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f3_cbvopab1 a_wex i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 a_wex i1_cbvopab1 f4_cbvopab1 p_cbvex i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa f3_cbvopab1 a_wex f2_cbvopab1 a_wex i0_cbvopab1 a_sup_set_class i1_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 f2_cbvopab1 i1_cbvopab1 a_wsb a_wa f3_cbvopab1 a_wex i1_cbvopab1 a_wex i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 a_wex f4_cbvopab1 a_wex p_bitri i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa f3_cbvopab1 a_wex f2_cbvopab1 a_wex i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 a_wex f4_cbvopab1 a_wex i0_cbvopab1 p_abbii f0_cbvopab1 f2_cbvopab1 f3_cbvopab1 i0_cbvopab1 a_df-opab f1_cbvopab1 f4_cbvopab1 f3_cbvopab1 i0_cbvopab1 a_df-opab i0_cbvopab1 a_sup_set_class f2_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f0_cbvopab1 a_wa f3_cbvopab1 a_wex f2_cbvopab1 a_wex i0_cbvopab1 a_cab i0_cbvopab1 a_sup_set_class f4_cbvopab1 a_sup_set_class f3_cbvopab1 a_sup_set_class a_cop a_wceq f1_cbvopab1 a_wa f3_cbvopab1 a_wex f4_cbvopab1 a_wex i0_cbvopab1 a_cab f0_cbvopab1 f2_cbvopab1 f3_cbvopab1 a_copab f1_cbvopab1 f4_cbvopab1 f3_cbvopab1 a_copab p_3eqtr4i $.
 $}
-$( Change second bound variable in an ordered-pair class abstraction, using
+
+$(Change second bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 22-Aug-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d w x y z $.
-	$d w ph $.
-	$d w ps $.
-	icbvopab2_0 $f set w $.
-	fcbvopab2_0 $f wff ph $.
-	fcbvopab2_1 $f wff ps $.
-	fcbvopab2_2 $f set x $.
-	fcbvopab2_3 $f set y $.
-	fcbvopab2_4 $f set z $.
-	ecbvopab2_0 $e |- F/ z ph $.
-	ecbvopab2_1 $e |- F/ y ps $.
-	ecbvopab2_2 $e |- ( y = z -> ( ph <-> ps ) ) $.
-	cbvopab2 $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $= icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_0 wa fcbvopab2_3 wex fcbvopab2_2 wex icbvopab2_0 cab icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_1 wa fcbvopab2_4 wex fcbvopab2_2 wex icbvopab2_0 cab fcbvopab2_0 fcbvopab2_2 fcbvopab2_3 copab fcbvopab2_1 fcbvopab2_2 fcbvopab2_4 copab icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_0 wa fcbvopab2_3 wex fcbvopab2_2 wex icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_1 wa fcbvopab2_4 wex fcbvopab2_2 wex icbvopab2_0 icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_0 wa fcbvopab2_3 wex icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_1 wa fcbvopab2_4 wex fcbvopab2_2 icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_0 wa icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_1 wa fcbvopab2_3 fcbvopab2_4 icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_0 fcbvopab2_4 icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq fcbvopab2_4 nfv ecbvopab2_0 nfan icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_1 fcbvopab2_3 icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_3 nfv ecbvopab2_1 nfan fcbvopab2_3 sup_set_class fcbvopab2_4 sup_set_class wceq icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop wceq icbvopab2_0 sup_set_class fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop wceq fcbvopab2_0 fcbvopab2_1 fcbvopab2_3 sup_set_class fcbvopab2_4 sup_set_class wceq fcbvopab2_2 sup_set_class fcbvopab2_3 sup_set_class cop fcbvopab2_2 sup_set_class fcbvopab2_4 sup_set_class cop icbvopab2_0 sup_set_class fcbvopab2_3 sup_set_class fcbvopab2_4 sup_set_class fcbvopab2_2 sup_set_class opeq2 eqeq2d ecbvopab2_2 anbi12d cbvex exbii abbii fcbvopab2_0 fcbvopab2_2 fcbvopab2_3 icbvopab2_0 df-opab fcbvopab2_1 fcbvopab2_2 fcbvopab2_4 icbvopab2_0 df-opab 3eqtr4i $.
+	$v ph ps x y z  $.
+	$d w x y z  $.
+	$d w ph  $.
+	$d w ps  $.
+	f0_cbvopab2 $f wff ph $.
+	f1_cbvopab2 $f wff ps $.
+	f2_cbvopab2 $f set x $.
+	f3_cbvopab2 $f set y $.
+	f4_cbvopab2 $f set z $.
+	i0_cbvopab2 $f set w $.
+	e0_cbvopab2 $e |- F/ z ph $.
+	e1_cbvopab2 $e |- F/ y ps $.
+	e2_cbvopab2 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	p_cbvopab2 $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $= i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f4_cbvopab2 p_nfv e0_cbvopab2 i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 f4_cbvopab2 p_nfan i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f3_cbvopab2 p_nfv e1_cbvopab2 i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f1_cbvopab2 f3_cbvopab2 p_nfan f3_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class p_opeq2 f3_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_wceq f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop i0_cbvopab2 a_sup_set_class p_eqeq2d e2_cbvopab2 f3_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_wceq i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 f1_cbvopab2 p_anbi12d i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 a_wa i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f1_cbvopab2 a_wa f3_cbvopab2 f4_cbvopab2 p_cbvex i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 a_wa f3_cbvopab2 a_wex i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f1_cbvopab2 a_wa f4_cbvopab2 a_wex f2_cbvopab2 p_exbii i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 a_wa f3_cbvopab2 a_wex f2_cbvopab2 a_wex i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f1_cbvopab2 a_wa f4_cbvopab2 a_wex f2_cbvopab2 a_wex i0_cbvopab2 p_abbii f0_cbvopab2 f2_cbvopab2 f3_cbvopab2 i0_cbvopab2 a_df-opab f1_cbvopab2 f2_cbvopab2 f4_cbvopab2 i0_cbvopab2 a_df-opab i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f3_cbvopab2 a_sup_set_class a_cop a_wceq f0_cbvopab2 a_wa f3_cbvopab2 a_wex f2_cbvopab2 a_wex i0_cbvopab2 a_cab i0_cbvopab2 a_sup_set_class f2_cbvopab2 a_sup_set_class f4_cbvopab2 a_sup_set_class a_cop a_wceq f1_cbvopab2 a_wa f4_cbvopab2 a_wex f2_cbvopab2 a_wex i0_cbvopab2 a_cab f0_cbvopab2 f2_cbvopab2 f3_cbvopab2 a_copab f1_cbvopab2 f2_cbvopab2 f4_cbvopab2 a_copab p_3eqtr4i $.
 $}
-$( Change first bound variable in an ordered-pair class abstraction, using
+
+$(Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 31-Jul-2003.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	$d z w ph $.
-	icbvopab1s_0 $f set w $.
-	fcbvopab1s_0 $f wff ph $.
-	fcbvopab1s_1 $f set x $.
-	fcbvopab1s_2 $f set y $.
-	fcbvopab1s_3 $f set z $.
-	cbvopab1s $p |- { <. x , y >. | ph } = { <. z , y >. | [ z / x ] ph } $= icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 wa fcbvopab1s_2 wex fcbvopab1s_1 wex icbvopab1s_0 cab icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb wa fcbvopab1s_2 wex fcbvopab1s_3 wex icbvopab1s_0 cab fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_2 copab fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb fcbvopab1s_3 fcbvopab1s_2 copab icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 wa fcbvopab1s_2 wex fcbvopab1s_1 wex icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb wa fcbvopab1s_2 wex fcbvopab1s_3 wex icbvopab1s_0 icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 wa fcbvopab1s_2 wex icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb wa fcbvopab1s_2 wex fcbvopab1s_1 fcbvopab1s_3 icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 wa fcbvopab1s_2 wex fcbvopab1s_3 nfv icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb wa fcbvopab1s_1 fcbvopab1s_2 icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb fcbvopab1s_1 icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_1 nfv fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 nfs1v nfan nfex fcbvopab1s_1 sup_set_class fcbvopab1s_3 sup_set_class wceq icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 wa icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb wa fcbvopab1s_2 fcbvopab1s_1 sup_set_class fcbvopab1s_3 sup_set_class wceq icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop wceq icbvopab1s_0 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop wceq fcbvopab1s_0 fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb fcbvopab1s_1 sup_set_class fcbvopab1s_3 sup_set_class wceq fcbvopab1s_1 sup_set_class fcbvopab1s_2 sup_set_class cop fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class cop icbvopab1s_0 sup_set_class fcbvopab1s_1 sup_set_class fcbvopab1s_3 sup_set_class fcbvopab1s_2 sup_set_class opeq1 eqeq2d fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 sbequ12 anbi12d exbidv cbvex abbii fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_2 icbvopab1s_0 df-opab fcbvopab1s_0 fcbvopab1s_1 fcbvopab1s_3 wsb fcbvopab1s_3 fcbvopab1s_2 icbvopab1s_0 df-opab 3eqtr4i $.
+	$v ph x y z  $.
+	$d x y z w  $.
+	$d z w ph  $.
+	f0_cbvopab1s $f wff ph $.
+	f1_cbvopab1s $f set x $.
+	f2_cbvopab1s $f set y $.
+	f3_cbvopab1s $f set z $.
+	i0_cbvopab1s $f set w $.
+	p_cbvopab1s $p |- { <. x , y >. | ph } = { <. z , y >. | [ z / x ] ph } $= i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s a_wa f2_cbvopab1s a_wex f3_cbvopab1s p_nfv i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f1_cbvopab1s p_nfv f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s p_nfs1v i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb f1_cbvopab1s p_nfan i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb a_wa f1_cbvopab1s f2_cbvopab1s p_nfex f1_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class p_opeq1 f1_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class a_wceq f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop i0_cbvopab1s a_sup_set_class p_eqeq2d f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s p_sbequ12 f1_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class a_wceq i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb p_anbi12d f1_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class a_wceq i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s a_wa i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb a_wa f2_cbvopab1s p_exbidv i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s a_wa f2_cbvopab1s a_wex i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb a_wa f2_cbvopab1s a_wex f1_cbvopab1s f3_cbvopab1s p_cbvex i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s a_wa f2_cbvopab1s a_wex f1_cbvopab1s a_wex i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb a_wa f2_cbvopab1s a_wex f3_cbvopab1s a_wex i0_cbvopab1s p_abbii f0_cbvopab1s f1_cbvopab1s f2_cbvopab1s i0_cbvopab1s a_df-opab f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb f3_cbvopab1s f2_cbvopab1s i0_cbvopab1s a_df-opab i0_cbvopab1s a_sup_set_class f1_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s a_wa f2_cbvopab1s a_wex f1_cbvopab1s a_wex i0_cbvopab1s a_cab i0_cbvopab1s a_sup_set_class f3_cbvopab1s a_sup_set_class f2_cbvopab1s a_sup_set_class a_cop a_wceq f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb a_wa f2_cbvopab1s a_wex f3_cbvopab1s a_wex i0_cbvopab1s a_cab f0_cbvopab1s f1_cbvopab1s f2_cbvopab1s a_copab f0_cbvopab1s f1_cbvopab1s f3_cbvopab1s a_wsb f3_cbvopab1s f2_cbvopab1s a_copab p_3eqtr4i $.
 $}
-$( Rule used to change the first bound variable in an ordered pair
+
+$(Rule used to change the first bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        31-Jul-2003.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y $.
-	$d y z $.
-	$d z ph $.
-	$d x ps $.
-	fcbvopab1v_0 $f wff ph $.
-	fcbvopab1v_1 $f wff ps $.
-	fcbvopab1v_2 $f set x $.
-	fcbvopab1v_3 $f set y $.
-	fcbvopab1v_4 $f set z $.
-	ecbvopab1v_0 $e |- ( x = z -> ( ph <-> ps ) ) $.
-	cbvopab1v $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $= fcbvopab1v_0 fcbvopab1v_1 fcbvopab1v_2 fcbvopab1v_3 fcbvopab1v_4 fcbvopab1v_0 fcbvopab1v_4 nfv fcbvopab1v_1 fcbvopab1v_2 nfv ecbvopab1v_0 cbvopab1 $.
+	$v ph ps x y z  $.
+	$d x y  $.
+	$d y z  $.
+	$d z ph  $.
+	$d x ps  $.
+	f0_cbvopab1v $f wff ph $.
+	f1_cbvopab1v $f wff ps $.
+	f2_cbvopab1v $f set x $.
+	f3_cbvopab1v $f set y $.
+	f4_cbvopab1v $f set z $.
+	e0_cbvopab1v $e |- ( x = z -> ( ph <-> ps ) ) $.
+	p_cbvopab1v $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $= f0_cbvopab1v f4_cbvopab1v p_nfv f1_cbvopab1v f2_cbvopab1v p_nfv e0_cbvopab1v f0_cbvopab1v f1_cbvopab1v f2_cbvopab1v f3_cbvopab1v f4_cbvopab1v p_cbvopab1 $.
 $}
-$( Rule used to change the second bound variable in an ordered pair
+
+$(Rule used to change the second bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        2-Sep-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	$d z w ph $.
-	$d y w ps $.
-	icbvopab2v_0 $f set w $.
-	fcbvopab2v_0 $f wff ph $.
-	fcbvopab2v_1 $f wff ps $.
-	fcbvopab2v_2 $f set x $.
-	fcbvopab2v_3 $f set y $.
-	fcbvopab2v_4 $f set z $.
-	ecbvopab2v_0 $e |- ( y = z -> ( ph <-> ps ) ) $.
-	cbvopab2v $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $= icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop wceq fcbvopab2v_0 wa fcbvopab2v_3 wex fcbvopab2v_2 wex icbvopab2v_0 cab icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop wceq fcbvopab2v_1 wa fcbvopab2v_4 wex fcbvopab2v_2 wex icbvopab2v_0 cab fcbvopab2v_0 fcbvopab2v_2 fcbvopab2v_3 copab fcbvopab2v_1 fcbvopab2v_2 fcbvopab2v_4 copab icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop wceq fcbvopab2v_0 wa fcbvopab2v_3 wex fcbvopab2v_2 wex icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop wceq fcbvopab2v_1 wa fcbvopab2v_4 wex fcbvopab2v_2 wex icbvopab2v_0 icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop wceq fcbvopab2v_0 wa fcbvopab2v_3 wex icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop wceq fcbvopab2v_1 wa fcbvopab2v_4 wex fcbvopab2v_2 icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop wceq fcbvopab2v_0 wa icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop wceq fcbvopab2v_1 wa fcbvopab2v_3 fcbvopab2v_4 fcbvopab2v_3 sup_set_class fcbvopab2v_4 sup_set_class wceq icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop wceq icbvopab2v_0 sup_set_class fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop wceq fcbvopab2v_0 fcbvopab2v_1 fcbvopab2v_3 sup_set_class fcbvopab2v_4 sup_set_class wceq fcbvopab2v_2 sup_set_class fcbvopab2v_3 sup_set_class cop fcbvopab2v_2 sup_set_class fcbvopab2v_4 sup_set_class cop icbvopab2v_0 sup_set_class fcbvopab2v_3 sup_set_class fcbvopab2v_4 sup_set_class fcbvopab2v_2 sup_set_class opeq2 eqeq2d ecbvopab2v_0 anbi12d cbvexv exbii abbii fcbvopab2v_0 fcbvopab2v_2 fcbvopab2v_3 icbvopab2v_0 df-opab fcbvopab2v_1 fcbvopab2v_2 fcbvopab2v_4 icbvopab2v_0 df-opab 3eqtr4i $.
+	$v ph ps x y z  $.
+	$d x y z w  $.
+	$d z w ph  $.
+	$d y w ps  $.
+	f0_cbvopab2v $f wff ph $.
+	f1_cbvopab2v $f wff ps $.
+	f2_cbvopab2v $f set x $.
+	f3_cbvopab2v $f set y $.
+	f4_cbvopab2v $f set z $.
+	i0_cbvopab2v $f set w $.
+	e0_cbvopab2v $e |- ( y = z -> ( ph <-> ps ) ) $.
+	p_cbvopab2v $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $= f3_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class p_opeq2 f3_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_wceq f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop i0_cbvopab2v a_sup_set_class p_eqeq2d e0_cbvopab2v f3_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_wceq i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop a_wceq i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop a_wceq f0_cbvopab2v f1_cbvopab2v p_anbi12d i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop a_wceq f0_cbvopab2v a_wa i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop a_wceq f1_cbvopab2v a_wa f3_cbvopab2v f4_cbvopab2v p_cbvexv i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop a_wceq f0_cbvopab2v a_wa f3_cbvopab2v a_wex i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop a_wceq f1_cbvopab2v a_wa f4_cbvopab2v a_wex f2_cbvopab2v p_exbii i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop a_wceq f0_cbvopab2v a_wa f3_cbvopab2v a_wex f2_cbvopab2v a_wex i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop a_wceq f1_cbvopab2v a_wa f4_cbvopab2v a_wex f2_cbvopab2v a_wex i0_cbvopab2v p_abbii f0_cbvopab2v f2_cbvopab2v f3_cbvopab2v i0_cbvopab2v a_df-opab f1_cbvopab2v f2_cbvopab2v f4_cbvopab2v i0_cbvopab2v a_df-opab i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f3_cbvopab2v a_sup_set_class a_cop a_wceq f0_cbvopab2v a_wa f3_cbvopab2v a_wex f2_cbvopab2v a_wex i0_cbvopab2v a_cab i0_cbvopab2v a_sup_set_class f2_cbvopab2v a_sup_set_class f4_cbvopab2v a_sup_set_class a_cop a_wceq f1_cbvopab2v a_wa f4_cbvopab2v a_wex f2_cbvopab2v a_wex i0_cbvopab2v a_cab f0_cbvopab2v f2_cbvopab2v f3_cbvopab2v a_copab f1_cbvopab2v f2_cbvopab2v f4_cbvopab2v a_copab p_3eqtr4i $.
 $}
-$( Move substitution into a class abstraction.  (Contributed by NM,
+
+$(Move substitution into a class abstraction.  (Contributed by NM,
        6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v V $.
-	$v w $.
-	$d w y z A $.
-	$d w ph $.
-	$d w x y z $.
-	icsbopabg_0 $f set w $.
-	fcsbopabg_0 $f wff ph $.
-	fcsbopabg_1 $f set x $.
-	fcsbopabg_2 $f set y $.
-	fcsbopabg_3 $f set z $.
-	fcsbopabg_4 $f class A $.
-	fcsbopabg_5 $f class V $.
-	csbopabg $p |- ( A e. V -> [_ A / x ]_ { <. y , z >. | ph } = { <. y , z >. | [. A / x ]. ph } ) $= fcsbopabg_1 icsbopabg_0 sup_set_class fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab csb fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_2 fcsbopabg_3 copab wceq fcsbopabg_1 fcsbopabg_4 fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab csb fcsbopabg_0 fcsbopabg_1 fcsbopabg_4 wsbc fcsbopabg_2 fcsbopabg_3 copab wceq icsbopabg_0 fcsbopabg_4 fcsbopabg_5 icsbopabg_0 sup_set_class fcsbopabg_4 wceq fcsbopabg_1 icsbopabg_0 sup_set_class fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab csb fcsbopabg_1 fcsbopabg_4 fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab csb fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_2 fcsbopabg_3 copab fcsbopabg_0 fcsbopabg_1 fcsbopabg_4 wsbc fcsbopabg_2 fcsbopabg_3 copab fcsbopabg_1 icsbopabg_0 sup_set_class fcsbopabg_4 fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab csbeq1 icsbopabg_0 sup_set_class fcsbopabg_4 wceq fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_0 fcsbopabg_1 fcsbopabg_4 wsbc fcsbopabg_2 fcsbopabg_3 fcsbopabg_0 fcsbopabg_1 icsbopabg_0 fcsbopabg_4 dfsbcq2 opabbidv eqeq12d fcsbopabg_1 icsbopabg_0 sup_set_class fcsbopabg_0 fcsbopabg_2 fcsbopabg_3 copab fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_2 fcsbopabg_3 copab icsbopabg_0 vex fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_2 fcsbopabg_3 fcsbopabg_1 fcsbopabg_0 fcsbopabg_1 icsbopabg_0 nfs1v nfopab fcsbopabg_1 sup_set_class icsbopabg_0 sup_set_class wceq fcsbopabg_0 fcsbopabg_0 fcsbopabg_1 icsbopabg_0 wsb fcsbopabg_2 fcsbopabg_3 fcsbopabg_0 fcsbopabg_1 icsbopabg_0 sbequ12 opabbidv csbief vtoclg $.
+	$v ph x y z A V  $.
+	$d w y z A  $.
+	$d w ph  $.
+	$d w x y z  $.
+	f0_csbopabg $f wff ph $.
+	f1_csbopabg $f set x $.
+	f2_csbopabg $f set y $.
+	f3_csbopabg $f set z $.
+	f4_csbopabg $f class A $.
+	f5_csbopabg $f class V $.
+	i0_csbopabg $f set w $.
+	p_csbopabg $p |- ( A e. V -> [_ A / x ]_ { <. y , z >. | ph } = { <. y , z >. | [. A / x ]. ph } ) $= f1_csbopabg i0_csbopabg a_sup_set_class f4_csbopabg f0_csbopabg f2_csbopabg f3_csbopabg a_copab p_csbeq1 f0_csbopabg f1_csbopabg i0_csbopabg f4_csbopabg p_dfsbcq2 i0_csbopabg a_sup_set_class f4_csbopabg a_wceq f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f0_csbopabg f1_csbopabg f4_csbopabg a_wsbc f2_csbopabg f3_csbopabg p_opabbidv i0_csbopabg a_sup_set_class f4_csbopabg a_wceq f1_csbopabg i0_csbopabg a_sup_set_class f0_csbopabg f2_csbopabg f3_csbopabg a_copab a_csb f1_csbopabg f4_csbopabg f0_csbopabg f2_csbopabg f3_csbopabg a_copab a_csb f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f2_csbopabg f3_csbopabg a_copab f0_csbopabg f1_csbopabg f4_csbopabg a_wsbc f2_csbopabg f3_csbopabg a_copab p_eqeq12d i0_csbopabg p_vex f0_csbopabg f1_csbopabg i0_csbopabg p_nfs1v f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f2_csbopabg f3_csbopabg f1_csbopabg p_nfopab f0_csbopabg f1_csbopabg i0_csbopabg p_sbequ12 f1_csbopabg a_sup_set_class i0_csbopabg a_sup_set_class a_wceq f0_csbopabg f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f2_csbopabg f3_csbopabg p_opabbidv f1_csbopabg i0_csbopabg a_sup_set_class f0_csbopabg f2_csbopabg f3_csbopabg a_copab f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f2_csbopabg f3_csbopabg a_copab p_csbief f1_csbopabg i0_csbopabg a_sup_set_class f0_csbopabg f2_csbopabg f3_csbopabg a_copab a_csb f0_csbopabg f1_csbopabg i0_csbopabg a_wsb f2_csbopabg f3_csbopabg a_copab a_wceq f1_csbopabg f4_csbopabg f0_csbopabg f2_csbopabg f3_csbopabg a_copab a_csb f0_csbopabg f1_csbopabg f4_csbopabg a_wsbc f2_csbopabg f3_csbopabg a_copab a_wceq i0_csbopabg f4_csbopabg f5_csbopabg p_vtoclg $.
 $}
-$( Union of two ordered pair class abstractions.  (Contributed by NM,
+
+$(Union of two ordered pair class abstractions.  (Contributed by NM,
        30-Sep-2002.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d ph z $.
-	$d ps z $.
-	iunopab_0 $f set z $.
-	funopab_0 $f wff ph $.
-	funopab_1 $f wff ps $.
-	funopab_2 $f set x $.
-	funopab_3 $f set y $.
-	unopab $p |- ( { <. x , y >. | ph } u. { <. x , y >. | ps } ) = { <. x , y >. | ( ph \/ ps ) } $= iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 cab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex iunopab_0 cab cun iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex funopab_2 wex iunopab_0 cab funopab_0 funopab_2 funopab_3 copab funopab_1 funopab_2 funopab_3 copab cun funopab_0 funopab_1 wo funopab_2 funopab_3 copab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 cab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex iunopab_0 cab cun iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex wo iunopab_0 cab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex funopab_2 wex iunopab_0 cab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex iunopab_0 unab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex wo iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex funopab_2 wex iunopab_0 iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex wo iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex wo funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex funopab_2 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 19.43 iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex wo iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex funopab_2 iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa wo funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex wo iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 wo wa iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa wo funopab_3 iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 funopab_1 andi exbii iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 19.43 bitr2i exbii bitr3i abbii eqtri funopab_0 funopab_2 funopab_3 copab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_0 wa funopab_3 wex funopab_2 wex iunopab_0 cab funopab_1 funopab_2 funopab_3 copab iunopab_0 sup_set_class funopab_2 sup_set_class funopab_3 sup_set_class cop wceq funopab_1 wa funopab_3 wex funopab_2 wex iunopab_0 cab funopab_0 funopab_2 funopab_3 iunopab_0 df-opab funopab_1 funopab_2 funopab_3 iunopab_0 df-opab uneq12i funopab_0 funopab_1 wo funopab_2 funopab_3 iunopab_0 df-opab 3eqtr4i $.
+	$v ph ps x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d ph z  $.
+	$d ps z  $.
+	f0_unopab $f wff ph $.
+	f1_unopab $f wff ps $.
+	f2_unopab $f set x $.
+	f3_unopab $f set y $.
+	i0_unopab $f set z $.
+	p_unopab $p |- ( { <. x , y >. | ph } u. { <. x , y >. | ps } ) = { <. x , y >. | ( ph \/ ps ) } $= i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab p_unab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab p_19.43 i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab p_andi i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa a_wo f3_unopab p_exbii i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab p_19.43 i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa a_wo f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex a_wo p_bitr2i i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex a_wo i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex f2_unopab p_exbii i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex a_wo i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex a_wo f2_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex f2_unopab a_wex p_bitr3i i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex a_wo i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab p_abbii i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab a_cun i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex a_wo i0_unopab a_cab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab p_eqtri f0_unopab f2_unopab f3_unopab i0_unopab a_df-opab f1_unopab f2_unopab f3_unopab i0_unopab a_df-opab f0_unopab f2_unopab f3_unopab a_copab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab f1_unopab f2_unopab f3_unopab a_copab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab p_uneq12i f0_unopab f1_unopab a_wo f2_unopab f3_unopab i0_unopab a_df-opab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f1_unopab a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab a_cun i0_unopab a_sup_set_class f2_unopab a_sup_set_class f3_unopab a_sup_set_class a_cop a_wceq f0_unopab f1_unopab a_wo a_wa f3_unopab a_wex f2_unopab a_wex i0_unopab a_cab f0_unopab f2_unopab f3_unopab a_copab f1_unopab f2_unopab f3_unopab a_copab a_cun f0_unopab f1_unopab a_wo f2_unopab f3_unopab a_copab p_3eqtr4i $.
 $}
-$( An equality theorem for the maps to notation.  (Contributed by Mario
+
+$(An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	$d y D $.
-	impteq12f_0 $f set y $.
-	fmpteq12f_0 $f set x $.
-	fmpteq12f_1 $f class A $.
-	fmpteq12f_2 $f class B $.
-	fmpteq12f_3 $f class C $.
-	fmpteq12f_4 $f class D $.
-	mpteq12f $p |- ( ( A. x A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral wa fmpteq12f_0 sup_set_class fmpteq12f_1 wcel impteq12f_0 sup_set_class fmpteq12f_2 wceq wa fmpteq12f_0 impteq12f_0 copab fmpteq12f_0 sup_set_class fmpteq12f_3 wcel impteq12f_0 sup_set_class fmpteq12f_4 wceq wa fmpteq12f_0 impteq12f_0 copab fmpteq12f_0 fmpteq12f_1 fmpteq12f_2 cmpt fmpteq12f_0 fmpteq12f_3 fmpteq12f_4 cmpt fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral wa fmpteq12f_0 sup_set_class fmpteq12f_1 wcel impteq12f_0 sup_set_class fmpteq12f_2 wceq wa fmpteq12f_0 sup_set_class fmpteq12f_3 wcel impteq12f_0 sup_set_class fmpteq12f_4 wceq wa fmpteq12f_0 impteq12f_0 fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral fmpteq12f_0 fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 nfa1 fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 nfra1 nfan fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral wa impteq12f_0 nfv fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral fmpteq12f_0 sup_set_class fmpteq12f_1 wcel impteq12f_0 sup_set_class fmpteq12f_2 wceq wa fmpteq12f_0 sup_set_class fmpteq12f_1 wcel impteq12f_0 sup_set_class fmpteq12f_4 wceq wa fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_0 sup_set_class fmpteq12f_3 wcel impteq12f_0 sup_set_class fmpteq12f_4 wceq wa fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral fmpteq12f_0 sup_set_class fmpteq12f_1 wcel impteq12f_0 sup_set_class fmpteq12f_2 wceq impteq12f_0 sup_set_class fmpteq12f_4 wceq fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral fmpteq12f_0 sup_set_class fmpteq12f_1 wcel wa fmpteq12f_2 fmpteq12f_4 impteq12f_0 sup_set_class fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 wral fmpteq12f_0 sup_set_class fmpteq12f_1 wcel fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_2 fmpteq12f_4 wceq fmpteq12f_0 fmpteq12f_1 rsp imp eqeq2d pm5.32da fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_0 sup_set_class fmpteq12f_1 wcel fmpteq12f_0 sup_set_class fmpteq12f_3 wcel impteq12f_0 sup_set_class fmpteq12f_4 wceq fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 wal fmpteq12f_1 fmpteq12f_3 fmpteq12f_0 sup_set_class fmpteq12f_1 fmpteq12f_3 wceq fmpteq12f_0 sp eleq2d anbi1d sylan9bbr opabbid fmpteq12f_0 impteq12f_0 fmpteq12f_1 fmpteq12f_2 df-mpt fmpteq12f_0 impteq12f_0 fmpteq12f_3 fmpteq12f_4 df-mpt 3eqtr4g $.
+	$v x A B C D  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	$d y D  $.
+	f0_mpteq12f $f set x $.
+	f1_mpteq12f $f class A $.
+	f2_mpteq12f $f class B $.
+	f3_mpteq12f $f class C $.
+	f4_mpteq12f $f class D $.
+	i0_mpteq12f $f set y $.
+	p_mpteq12f $p |- ( ( A. x A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f p_nfa1 f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f p_nfra1 f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral f0_mpteq12f p_nfan f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral a_wa i0_mpteq12f p_nfv f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f p_rsp f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel f2_mpteq12f f4_mpteq12f a_wceq p_imp f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel a_wa f2_mpteq12f f4_mpteq12f i0_mpteq12f a_sup_set_class p_eqeq2d f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f2_mpteq12f a_wceq i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq p_pm5.32da f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f p_sp f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f1_mpteq12f f3_mpteq12f f0_mpteq12f a_sup_set_class p_eleq2d f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel f0_mpteq12f a_sup_set_class f3_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq p_anbi1d f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f2_mpteq12f a_wceq a_wa f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq a_wa f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f0_mpteq12f a_sup_set_class f3_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq a_wa p_sylan9bbr f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral a_wa f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f2_mpteq12f a_wceq a_wa f0_mpteq12f a_sup_set_class f3_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq a_wa f0_mpteq12f i0_mpteq12f p_opabbid f0_mpteq12f i0_mpteq12f f1_mpteq12f f2_mpteq12f a_df-mpt f0_mpteq12f i0_mpteq12f f3_mpteq12f f4_mpteq12f a_df-mpt f1_mpteq12f f3_mpteq12f a_wceq f0_mpteq12f a_wal f2_mpteq12f f4_mpteq12f a_wceq f0_mpteq12f f1_mpteq12f a_wral a_wa f0_mpteq12f a_sup_set_class f1_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f2_mpteq12f a_wceq a_wa f0_mpteq12f i0_mpteq12f a_copab f0_mpteq12f a_sup_set_class f3_mpteq12f a_wcel i0_mpteq12f a_sup_set_class f4_mpteq12f a_wceq a_wa f0_mpteq12f i0_mpteq12f a_copab f0_mpteq12f f1_mpteq12f f2_mpteq12f a_cmpt f0_mpteq12f f3_mpteq12f f4_mpteq12f a_cmpt p_3eqtr4g $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by Mario
+
+$(An equality inference for the maps to notation.  (Contributed by Mario
          Carneiro, 26-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x ph $.
-	fmpteq12dva_0 $f wff ph $.
-	fmpteq12dva_1 $f set x $.
-	fmpteq12dva_2 $f class A $.
-	fmpteq12dva_3 $f class B $.
-	fmpteq12dva_4 $f class C $.
-	fmpteq12dva_5 $f class D $.
-	empteq12dva_0 $e |- ( ph -> A = C ) $.
-	empteq12dva_1 $e |- ( ( ph /\ x e. A ) -> B = D ) $.
-	mpteq12dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= fmpteq12dva_0 fmpteq12dva_2 fmpteq12dva_4 wceq fmpteq12dva_1 wal fmpteq12dva_3 fmpteq12dva_5 wceq fmpteq12dva_1 fmpteq12dva_2 wral fmpteq12dva_1 fmpteq12dva_2 fmpteq12dva_3 cmpt fmpteq12dva_1 fmpteq12dva_4 fmpteq12dva_5 cmpt wceq fmpteq12dva_0 fmpteq12dva_2 fmpteq12dva_4 wceq fmpteq12dva_1 empteq12dva_0 alrimiv fmpteq12dva_0 fmpteq12dva_3 fmpteq12dva_5 wceq fmpteq12dva_1 fmpteq12dva_2 empteq12dva_1 ralrimiva fmpteq12dva_1 fmpteq12dva_2 fmpteq12dva_3 fmpteq12dva_4 fmpteq12dva_5 mpteq12f syl2anc $.
+	$v ph x A B C D  $.
+	$d x ph  $.
+	$d A  $.
+	$d B  $.
+	$d C  $.
+	$d D  $.
+	f0_mpteq12dva $f wff ph $.
+	f1_mpteq12dva $f set x $.
+	f2_mpteq12dva $f class A $.
+	f3_mpteq12dva $f class B $.
+	f4_mpteq12dva $f class C $.
+	f5_mpteq12dva $f class D $.
+	e0_mpteq12dva $e |- ( ph -> A = C ) $.
+	e1_mpteq12dva $e |- ( ( ph /\ x e. A ) -> B = D ) $.
+	p_mpteq12dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= e0_mpteq12dva f0_mpteq12dva f2_mpteq12dva f4_mpteq12dva a_wceq f1_mpteq12dva p_alrimiv e1_mpteq12dva f0_mpteq12dva f3_mpteq12dva f5_mpteq12dva a_wceq f1_mpteq12dva f2_mpteq12dva p_ralrimiva f1_mpteq12dva f2_mpteq12dva f3_mpteq12dva f4_mpteq12dva f5_mpteq12dva p_mpteq12f f0_mpteq12dva f2_mpteq12dva f4_mpteq12dva a_wceq f1_mpteq12dva a_wal f3_mpteq12dva f5_mpteq12dva a_wceq f1_mpteq12dva f2_mpteq12dva a_wral f1_mpteq12dva f2_mpteq12dva f3_mpteq12dva a_cmpt f1_mpteq12dva f4_mpteq12dva f5_mpteq12dva a_cmpt a_wceq p_syl2anc $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by NM,
+
+$(An equality inference for the maps to notation.  (Contributed by NM,
        24-Aug-2011.)  (Revised by Mario Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x ph $.
-	fmpteq12dv_0 $f wff ph $.
-	fmpteq12dv_1 $f set x $.
-	fmpteq12dv_2 $f class A $.
-	fmpteq12dv_3 $f class B $.
-	fmpteq12dv_4 $f class C $.
-	fmpteq12dv_5 $f class D $.
-	empteq12dv_0 $e |- ( ph -> A = C ) $.
-	empteq12dv_1 $e |- ( ph -> B = D ) $.
-	mpteq12dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= fmpteq12dv_0 fmpteq12dv_1 fmpteq12dv_2 fmpteq12dv_3 fmpteq12dv_4 fmpteq12dv_5 empteq12dv_0 fmpteq12dv_0 fmpteq12dv_3 fmpteq12dv_5 wceq fmpteq12dv_1 sup_set_class fmpteq12dv_2 wcel empteq12dv_1 adantr mpteq12dva $.
+	$v ph x A B C D  $.
+	$d x ph  $.
+	$d A  $.
+	$d B  $.
+	$d C  $.
+	$d D  $.
+	f0_mpteq12dv $f wff ph $.
+	f1_mpteq12dv $f set x $.
+	f2_mpteq12dv $f class A $.
+	f3_mpteq12dv $f class B $.
+	f4_mpteq12dv $f class C $.
+	f5_mpteq12dv $f class D $.
+	e0_mpteq12dv $e |- ( ph -> A = C ) $.
+	e1_mpteq12dv $e |- ( ph -> B = D ) $.
+	p_mpteq12dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= e0_mpteq12dv e1_mpteq12dv f0_mpteq12dv f3_mpteq12dv f5_mpteq12dv a_wceq f1_mpteq12dv a_sup_set_class f2_mpteq12dv a_wcel p_adantr f0_mpteq12dv f1_mpteq12dv f2_mpteq12dv f3_mpteq12dv f4_mpteq12dv f5_mpteq12dv p_mpteq12dva $.
 $}
-$( An equality theorem for the maps to notation.  (Contributed by NM,
+
+$(An equality theorem for the maps to notation.  (Contributed by NM,
        16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x A $.
-	$d x C $.
-	fmpteq12_0 $f set x $.
-	fmpteq12_1 $f class A $.
-	fmpteq12_2 $f class B $.
-	fmpteq12_3 $f class C $.
-	fmpteq12_4 $f class D $.
-	mpteq12 $p |- ( ( A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= fmpteq12_1 fmpteq12_3 wceq fmpteq12_1 fmpteq12_3 wceq fmpteq12_0 wal fmpteq12_2 fmpteq12_4 wceq fmpteq12_0 fmpteq12_1 wral fmpteq12_0 fmpteq12_1 fmpteq12_2 cmpt fmpteq12_0 fmpteq12_3 fmpteq12_4 cmpt wceq fmpteq12_1 fmpteq12_3 wceq fmpteq12_0 ax-17 fmpteq12_0 fmpteq12_1 fmpteq12_2 fmpteq12_3 fmpteq12_4 mpteq12f sylan $.
+	$v x A B C D  $.
+	$d x A  $.
+	$d x C  $.
+	f0_mpteq12 $f set x $.
+	f1_mpteq12 $f class A $.
+	f2_mpteq12 $f class B $.
+	f3_mpteq12 $f class C $.
+	f4_mpteq12 $f class D $.
+	p_mpteq12 $p |- ( ( A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $= f1_mpteq12 f3_mpteq12 a_wceq f0_mpteq12 a_ax-17 f0_mpteq12 f1_mpteq12 f2_mpteq12 f3_mpteq12 f4_mpteq12 p_mpteq12f f1_mpteq12 f3_mpteq12 a_wceq f1_mpteq12 f3_mpteq12 a_wceq f0_mpteq12 a_wal f2_mpteq12 f4_mpteq12 a_wceq f0_mpteq12 f1_mpteq12 a_wral f0_mpteq12 f1_mpteq12 f2_mpteq12 a_cmpt f0_mpteq12 f3_mpteq12 f4_mpteq12 a_cmpt a_wceq p_sylan $.
 $}
-$( An equality theorem for the maps to notation.  (Contributed by Mario
+
+$(An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	fmpteq1_0 $f set x $.
-	fmpteq1_1 $f class A $.
-	fmpteq1_2 $f class B $.
-	fmpteq1_3 $f class C $.
-	mpteq1 $p |- ( A = B -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $= fmpteq1_1 fmpteq1_2 wceq fmpteq1_3 fmpteq1_3 wceq fmpteq1_0 fmpteq1_1 wral fmpteq1_0 fmpteq1_1 fmpteq1_3 cmpt fmpteq1_0 fmpteq1_2 fmpteq1_3 cmpt wceq fmpteq1_3 fmpteq1_3 wceq fmpteq1_0 fmpteq1_1 fmpteq1_0 sup_set_class fmpteq1_1 wcel fmpteq1_3 eqidd rgen fmpteq1_0 fmpteq1_1 fmpteq1_3 fmpteq1_2 fmpteq1_3 mpteq12 mpan2 $.
+	$v x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	f0_mpteq1 $f set x $.
+	f1_mpteq1 $f class A $.
+	f2_mpteq1 $f class B $.
+	f3_mpteq1 $f class C $.
+	p_mpteq1 $p |- ( A = B -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $= f0_mpteq1 a_sup_set_class f1_mpteq1 a_wcel f3_mpteq1 p_eqidd f3_mpteq1 f3_mpteq1 a_wceq f0_mpteq1 f1_mpteq1 p_rgen f0_mpteq1 f1_mpteq1 f3_mpteq1 f2_mpteq1 f3_mpteq1 p_mpteq12 f1_mpteq1 f2_mpteq1 a_wceq f3_mpteq1 f3_mpteq1 a_wceq f0_mpteq1 f1_mpteq1 a_wral f0_mpteq1 f1_mpteq1 f3_mpteq1 a_cmpt f0_mpteq1 f2_mpteq1 f3_mpteq1 a_cmpt a_wceq p_mpan2 $.
 $}
-$( An equality theorem for the maps to notation.  (Contributed by Mario
+
+$(An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 11-Jun-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	fmpteq1d_0 $f wff ph $.
-	fmpteq1d_1 $f set x $.
-	fmpteq1d_2 $f class A $.
-	fmpteq1d_3 $f class B $.
-	fmpteq1d_4 $f class C $.
-	empteq1d_0 $e |- ( ph -> A = B ) $.
-	mpteq1d $p |- ( ph -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $= fmpteq1d_0 fmpteq1d_2 fmpteq1d_3 wceq fmpteq1d_1 fmpteq1d_2 fmpteq1d_4 cmpt fmpteq1d_1 fmpteq1d_3 fmpteq1d_4 cmpt wceq empteq1d_0 fmpteq1d_1 fmpteq1d_2 fmpteq1d_3 fmpteq1d_4 mpteq1 syl $.
+	$v ph x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	f0_mpteq1d $f wff ph $.
+	f1_mpteq1d $f set x $.
+	f2_mpteq1d $f class A $.
+	f3_mpteq1d $f class B $.
+	f4_mpteq1d $f class C $.
+	e0_mpteq1d $e |- ( ph -> A = B ) $.
+	p_mpteq1d $p |- ( ph -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $= e0_mpteq1d f1_mpteq1d f2_mpteq1d f3_mpteq1d f4_mpteq1d p_mpteq1 f0_mpteq1d f2_mpteq1d f3_mpteq1d a_wceq f1_mpteq1d f2_mpteq1d f4_mpteq1d a_cmpt f1_mpteq1d f3_mpteq1d f4_mpteq1d a_cmpt a_wceq p_syl $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by Mario
+
+$(An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fmpteq2ia_0 $f set x $.
-	fmpteq2ia_1 $f class A $.
-	fmpteq2ia_2 $f class B $.
-	fmpteq2ia_3 $f class C $.
-	empteq2ia_0 $e |- ( x e. A -> B = C ) $.
-	mpteq2ia $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $= fmpteq2ia_1 fmpteq2ia_1 wceq fmpteq2ia_0 wal fmpteq2ia_2 fmpteq2ia_3 wceq fmpteq2ia_0 fmpteq2ia_1 wral fmpteq2ia_0 fmpteq2ia_1 fmpteq2ia_2 cmpt fmpteq2ia_0 fmpteq2ia_1 fmpteq2ia_3 cmpt wceq fmpteq2ia_1 fmpteq2ia_1 wceq fmpteq2ia_0 fmpteq2ia_1 eqid ax-gen fmpteq2ia_2 fmpteq2ia_3 wceq fmpteq2ia_0 fmpteq2ia_1 empteq2ia_0 rgen fmpteq2ia_0 fmpteq2ia_1 fmpteq2ia_2 fmpteq2ia_1 fmpteq2ia_3 mpteq12f mp2an $.
+	$v x A B C  $.
+	f0_mpteq2ia $f set x $.
+	f1_mpteq2ia $f class A $.
+	f2_mpteq2ia $f class B $.
+	f3_mpteq2ia $f class C $.
+	e0_mpteq2ia $e |- ( x e. A -> B = C ) $.
+	p_mpteq2ia $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $= f1_mpteq2ia p_eqid f1_mpteq2ia f1_mpteq2ia a_wceq f0_mpteq2ia a_ax-gen e0_mpteq2ia f2_mpteq2ia f3_mpteq2ia a_wceq f0_mpteq2ia f1_mpteq2ia p_rgen f0_mpteq2ia f1_mpteq2ia f2_mpteq2ia f1_mpteq2ia f3_mpteq2ia p_mpteq12f f1_mpteq2ia f1_mpteq2ia a_wceq f0_mpteq2ia a_wal f2_mpteq2ia f3_mpteq2ia a_wceq f0_mpteq2ia f1_mpteq2ia a_wral f0_mpteq2ia f1_mpteq2ia f2_mpteq2ia a_cmpt f0_mpteq2ia f1_mpteq2ia f3_mpteq2ia a_cmpt a_wceq p_mp2an $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by Mario
+
+$(An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fmpteq2i_0 $f set x $.
-	fmpteq2i_1 $f class A $.
-	fmpteq2i_2 $f class B $.
-	fmpteq2i_3 $f class C $.
-	empteq2i_0 $e |- B = C $.
-	mpteq2i $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $= fmpteq2i_0 fmpteq2i_1 fmpteq2i_2 fmpteq2i_3 fmpteq2i_2 fmpteq2i_3 wceq fmpteq2i_0 sup_set_class fmpteq2i_1 wcel empteq2i_0 a1i mpteq2ia $.
+	$v x A B C  $.
+	f0_mpteq2i $f set x $.
+	f1_mpteq2i $f class A $.
+	f2_mpteq2i $f class B $.
+	f3_mpteq2i $f class C $.
+	e0_mpteq2i $e |- B = C $.
+	p_mpteq2i $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $= e0_mpteq2i f2_mpteq2i f3_mpteq2i a_wceq f0_mpteq2i a_sup_set_class f1_mpteq2i a_wcel p_a1i f0_mpteq2i f1_mpteq2i f2_mpteq2i f3_mpteq2i p_mpteq2ia $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by Scott
+
+$(An equality inference for the maps to notation.  (Contributed by Scott
        Fenton, 27-Oct-2010.)  (Revised by Mario Carneiro, 16-Dec-2013.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fmpteq12i_0 $f set x $.
-	fmpteq12i_1 $f class A $.
-	fmpteq12i_2 $f class B $.
-	fmpteq12i_3 $f class C $.
-	fmpteq12i_4 $f class D $.
-	empteq12i_0 $e |- A = C $.
-	empteq12i_1 $e |- B = D $.
-	mpteq12i $p |- ( x e. A |-> B ) = ( x e. C |-> D ) $= fmpteq12i_0 fmpteq12i_1 fmpteq12i_2 cmpt fmpteq12i_0 fmpteq12i_3 fmpteq12i_4 cmpt wceq wtru fmpteq12i_0 fmpteq12i_1 fmpteq12i_2 fmpteq12i_3 fmpteq12i_4 fmpteq12i_1 fmpteq12i_3 wceq wtru empteq12i_0 a1i fmpteq12i_2 fmpteq12i_4 wceq wtru empteq12i_1 a1i mpteq12dv trud $.
+	$v x A B C D  $.
+	f0_mpteq12i $f set x $.
+	f1_mpteq12i $f class A $.
+	f2_mpteq12i $f class B $.
+	f3_mpteq12i $f class C $.
+	f4_mpteq12i $f class D $.
+	e0_mpteq12i $e |- A = C $.
+	e1_mpteq12i $e |- B = D $.
+	p_mpteq12i $p |- ( x e. A |-> B ) = ( x e. C |-> D ) $= e0_mpteq12i f1_mpteq12i f3_mpteq12i a_wceq a_wtru p_a1i e1_mpteq12i f2_mpteq12i f4_mpteq12i a_wceq a_wtru p_a1i a_wtru f0_mpteq12i f1_mpteq12i f2_mpteq12i f3_mpteq12i f4_mpteq12i p_mpteq12dv f0_mpteq12i f1_mpteq12i f2_mpteq12i a_cmpt f0_mpteq12i f3_mpteq12i f4_mpteq12i a_cmpt a_wceq p_trud $.
 $}
-$( Slightly more general equality inference for the maps to notation.
+
+$(Slightly more general equality inference for the maps to notation.
        (Contributed by FL, 14-Sep-2013.)  (Revised by Mario Carneiro,
        16-Dec-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fmpteq2da_0 $f wff ph $.
-	fmpteq2da_1 $f set x $.
-	fmpteq2da_2 $f class A $.
-	fmpteq2da_3 $f class B $.
-	fmpteq2da_4 $f class C $.
-	empteq2da_0 $e |- F/ x ph $.
-	empteq2da_1 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
-	mpteq2da $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= fmpteq2da_0 fmpteq2da_2 fmpteq2da_2 wceq fmpteq2da_1 wal fmpteq2da_3 fmpteq2da_4 wceq fmpteq2da_1 fmpteq2da_2 wral fmpteq2da_1 fmpteq2da_2 fmpteq2da_3 cmpt fmpteq2da_1 fmpteq2da_2 fmpteq2da_4 cmpt wceq fmpteq2da_2 fmpteq2da_2 wceq fmpteq2da_1 fmpteq2da_2 eqid ax-gen fmpteq2da_0 fmpteq2da_3 fmpteq2da_4 wceq fmpteq2da_1 fmpteq2da_2 empteq2da_0 fmpteq2da_0 fmpteq2da_1 sup_set_class fmpteq2da_2 wcel fmpteq2da_3 fmpteq2da_4 wceq empteq2da_1 ex ralrimi fmpteq2da_1 fmpteq2da_2 fmpteq2da_3 fmpteq2da_2 fmpteq2da_4 mpteq12f sylancr $.
+	$v ph x A B C  $.
+	f0_mpteq2da $f wff ph $.
+	f1_mpteq2da $f set x $.
+	f2_mpteq2da $f class A $.
+	f3_mpteq2da $f class B $.
+	f4_mpteq2da $f class C $.
+	e0_mpteq2da $e |- F/ x ph $.
+	e1_mpteq2da $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	p_mpteq2da $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= f2_mpteq2da p_eqid f2_mpteq2da f2_mpteq2da a_wceq f1_mpteq2da a_ax-gen e0_mpteq2da e1_mpteq2da f0_mpteq2da f1_mpteq2da a_sup_set_class f2_mpteq2da a_wcel f3_mpteq2da f4_mpteq2da a_wceq p_ex f0_mpteq2da f3_mpteq2da f4_mpteq2da a_wceq f1_mpteq2da f2_mpteq2da p_ralrimi f1_mpteq2da f2_mpteq2da f3_mpteq2da f2_mpteq2da f4_mpteq2da p_mpteq12f f0_mpteq2da f2_mpteq2da f2_mpteq2da a_wceq f1_mpteq2da a_wal f3_mpteq2da f4_mpteq2da a_wceq f1_mpteq2da f2_mpteq2da a_wral f1_mpteq2da f2_mpteq2da f3_mpteq2da a_cmpt f1_mpteq2da f2_mpteq2da f4_mpteq2da a_cmpt a_wceq p_sylancr $.
 $}
-$( Slightly more general equality inference for the maps to notation.
+
+$(Slightly more general equality inference for the maps to notation.
        (Contributed by Scott Fenton, 25-Apr-2012.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fmpteq2dva_0 $f wff ph $.
-	fmpteq2dva_1 $f set x $.
-	fmpteq2dva_2 $f class A $.
-	fmpteq2dva_3 $f class B $.
-	fmpteq2dva_4 $f class C $.
-	empteq2dva_0 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
-	mpteq2dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= fmpteq2dva_0 fmpteq2dva_1 fmpteq2dva_2 fmpteq2dva_3 fmpteq2dva_4 fmpteq2dva_0 fmpteq2dva_1 nfv empteq2dva_0 mpteq2da $.
+	$v ph x A B C  $.
+	$d x ph  $.
+	f0_mpteq2dva $f wff ph $.
+	f1_mpteq2dva $f set x $.
+	f2_mpteq2dva $f class A $.
+	f3_mpteq2dva $f class B $.
+	f4_mpteq2dva $f class C $.
+	e0_mpteq2dva $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	p_mpteq2dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= f0_mpteq2dva f1_mpteq2dva p_nfv e0_mpteq2dva f0_mpteq2dva f1_mpteq2dva f2_mpteq2dva f3_mpteq2dva f4_mpteq2dva p_mpteq2da $.
 $}
-$( An equality inference for the maps to notation.  (Contributed by Mario
+
+$(An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 23-Aug-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fmpteq2dv_0 $f wff ph $.
-	fmpteq2dv_1 $f set x $.
-	fmpteq2dv_2 $f class A $.
-	fmpteq2dv_3 $f class B $.
-	fmpteq2dv_4 $f class C $.
-	empteq2dv_0 $e |- ( ph -> B = C ) $.
-	mpteq2dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= fmpteq2dv_0 fmpteq2dv_1 fmpteq2dv_2 fmpteq2dv_3 fmpteq2dv_4 fmpteq2dv_0 fmpteq2dv_3 fmpteq2dv_4 wceq fmpteq2dv_1 sup_set_class fmpteq2dv_2 wcel empteq2dv_0 adantr mpteq2dva $.
+	$v ph x A B C  $.
+	$d x ph  $.
+	f0_mpteq2dv $f wff ph $.
+	f1_mpteq2dv $f set x $.
+	f2_mpteq2dv $f class A $.
+	f3_mpteq2dv $f class B $.
+	f4_mpteq2dv $f class C $.
+	e0_mpteq2dv $e |- ( ph -> B = C ) $.
+	p_mpteq2dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $= e0_mpteq2dv f0_mpteq2dv f3_mpteq2dv f4_mpteq2dv a_wceq f1_mpteq2dv a_sup_set_class f2_mpteq2dv a_wcel p_adantr f0_mpteq2dv f1_mpteq2dv f2_mpteq2dv f3_mpteq2dv f4_mpteq2dv p_mpteq2dva $.
 $}
-$( Bound-variable hypothesis builder for the maps-to notation.
+
+$(Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d z A $.
-	$d z B $.
-	$d x y z $.
-	infmpt_0 $f set z $.
-	fnfmpt_0 $f set x $.
-	fnfmpt_1 $f set y $.
-	fnfmpt_2 $f class A $.
-	fnfmpt_3 $f class B $.
-	enfmpt_0 $e |- F/_ x A $.
-	enfmpt_1 $e |- F/_ x B $.
-	nfmpt $p |- F/_ x ( y e. A |-> B ) $= fnfmpt_0 fnfmpt_1 fnfmpt_2 fnfmpt_3 cmpt fnfmpt_1 sup_set_class fnfmpt_2 wcel infmpt_0 sup_set_class fnfmpt_3 wceq wa fnfmpt_1 infmpt_0 copab fnfmpt_1 infmpt_0 fnfmpt_2 fnfmpt_3 df-mpt fnfmpt_1 sup_set_class fnfmpt_2 wcel infmpt_0 sup_set_class fnfmpt_3 wceq wa fnfmpt_1 infmpt_0 fnfmpt_0 fnfmpt_1 sup_set_class fnfmpt_2 wcel infmpt_0 sup_set_class fnfmpt_3 wceq fnfmpt_0 fnfmpt_0 fnfmpt_1 fnfmpt_2 enfmpt_0 nfcri fnfmpt_0 infmpt_0 sup_set_class fnfmpt_3 enfmpt_1 nfeq2 nfan nfopab nfcxfr $.
+	$v x y A B  $.
+	$d z A  $.
+	$d z B  $.
+	$d x y z  $.
+	f0_nfmpt $f set x $.
+	f1_nfmpt $f set y $.
+	f2_nfmpt $f class A $.
+	f3_nfmpt $f class B $.
+	i0_nfmpt $f set z $.
+	e0_nfmpt $e |- F/_ x A $.
+	e1_nfmpt $e |- F/_ x B $.
+	p_nfmpt $p |- F/_ x ( y e. A |-> B ) $= f1_nfmpt i0_nfmpt f2_nfmpt f3_nfmpt a_df-mpt e0_nfmpt f0_nfmpt f1_nfmpt f2_nfmpt p_nfcri e1_nfmpt f0_nfmpt i0_nfmpt a_sup_set_class f3_nfmpt p_nfeq2 f1_nfmpt a_sup_set_class f2_nfmpt a_wcel i0_nfmpt a_sup_set_class f3_nfmpt a_wceq f0_nfmpt p_nfan f1_nfmpt a_sup_set_class f2_nfmpt a_wcel i0_nfmpt a_sup_set_class f3_nfmpt a_wceq a_wa f1_nfmpt i0_nfmpt f0_nfmpt p_nfopab f0_nfmpt f1_nfmpt f2_nfmpt f3_nfmpt a_cmpt f1_nfmpt a_sup_set_class f2_nfmpt a_wcel i0_nfmpt a_sup_set_class f3_nfmpt a_wceq a_wa f1_nfmpt i0_nfmpt a_copab p_nfcxfr $.
 $}
-$( Bound-variable hypothesis builder for the maps-to notation.
+
+$(Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by FL, 17-Feb-2008.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d A z $.
-	$d B z $.
-	$d x z $.
-	infmpt1_0 $f set z $.
-	fnfmpt1_0 $f set x $.
-	fnfmpt1_1 $f class A $.
-	fnfmpt1_2 $f class B $.
-	nfmpt1 $p |- F/_ x ( x e. A |-> B ) $= fnfmpt1_0 fnfmpt1_0 fnfmpt1_1 fnfmpt1_2 cmpt fnfmpt1_0 sup_set_class fnfmpt1_1 wcel infmpt1_0 sup_set_class fnfmpt1_2 wceq wa fnfmpt1_0 infmpt1_0 copab fnfmpt1_0 infmpt1_0 fnfmpt1_1 fnfmpt1_2 df-mpt fnfmpt1_0 sup_set_class fnfmpt1_1 wcel infmpt1_0 sup_set_class fnfmpt1_2 wceq wa fnfmpt1_0 infmpt1_0 nfopab1 nfcxfr $.
+	$v x A B  $.
+	$d A z  $.
+	$d B z  $.
+	$d x  $.
+	$d x z  $.
+	f0_nfmpt1 $f set x $.
+	f1_nfmpt1 $f class A $.
+	f2_nfmpt1 $f class B $.
+	i0_nfmpt1 $f set z $.
+	p_nfmpt1 $p |- F/_ x ( x e. A |-> B ) $= f0_nfmpt1 i0_nfmpt1 f1_nfmpt1 f2_nfmpt1 a_df-mpt f0_nfmpt1 a_sup_set_class f1_nfmpt1 a_wcel i0_nfmpt1 a_sup_set_class f2_nfmpt1 a_wceq a_wa f0_nfmpt1 i0_nfmpt1 p_nfopab1 f0_nfmpt1 f0_nfmpt1 f1_nfmpt1 f2_nfmpt1 a_cmpt f0_nfmpt1 a_sup_set_class f1_nfmpt1 a_wcel i0_nfmpt1 a_sup_set_class f2_nfmpt1 a_wceq a_wa f0_nfmpt1 i0_nfmpt1 a_copab p_nfcxfr $.
 $}
-$( Rule to change the bound variable in a maps-to function, using implicit
+
+$(Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$v w $.
-	$d w z x A $.
-	$d w z y A $.
-	$d w z B $.
-	$d w z C $.
-	icbvmpt_0 $f set z $.
-	icbvmpt_1 $f set w $.
-	fcbvmpt_0 $f set x $.
-	fcbvmpt_1 $f set y $.
-	fcbvmpt_2 $f class A $.
-	fcbvmpt_3 $f class B $.
-	fcbvmpt_4 $f class C $.
-	ecbvmpt_0 $e |- F/_ y B $.
-	ecbvmpt_1 $e |- F/_ x C $.
-	ecbvmpt_2 $e |- ( x = y -> B = C ) $.
-	cbvmpt $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $= fcbvmpt_0 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq wa fcbvmpt_0 icbvmpt_0 copab fcbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_4 wceq wa fcbvmpt_1 icbvmpt_0 copab fcbvmpt_0 fcbvmpt_2 fcbvmpt_3 cmpt fcbvmpt_1 fcbvmpt_2 fcbvmpt_4 cmpt fcbvmpt_0 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq wa fcbvmpt_0 icbvmpt_0 copab icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb wa icbvmpt_1 icbvmpt_0 copab fcbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_4 wceq wa fcbvmpt_1 icbvmpt_0 copab fcbvmpt_0 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq wa icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb wa fcbvmpt_0 icbvmpt_0 icbvmpt_1 fcbvmpt_0 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq wa icbvmpt_1 nfv icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb fcbvmpt_0 icbvmpt_1 sup_set_class fcbvmpt_2 wcel fcbvmpt_0 nfv icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 nfs1v nfan fcbvmpt_0 sup_set_class icbvmpt_1 sup_set_class wceq fcbvmpt_0 sup_set_class fcbvmpt_2 wcel icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb fcbvmpt_0 sup_set_class icbvmpt_1 sup_set_class fcbvmpt_2 eleq1 icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 sbequ12 anbi12d cbvopab1 icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb wa fcbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_4 wceq wa icbvmpt_1 icbvmpt_0 fcbvmpt_1 icbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb fcbvmpt_1 icbvmpt_1 sup_set_class fcbvmpt_2 wcel fcbvmpt_1 nfv icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 fcbvmpt_1 fcbvmpt_1 icbvmpt_0 sup_set_class fcbvmpt_3 ecbvmpt_0 nfeq2 nfsb nfan fcbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_4 wceq wa icbvmpt_1 nfv icbvmpt_1 sup_set_class fcbvmpt_1 sup_set_class wceq icbvmpt_1 sup_set_class fcbvmpt_2 wcel fcbvmpt_1 sup_set_class fcbvmpt_2 wcel icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb icbvmpt_0 sup_set_class fcbvmpt_4 wceq icbvmpt_1 sup_set_class fcbvmpt_1 sup_set_class fcbvmpt_2 eleq1 icbvmpt_1 sup_set_class fcbvmpt_1 sup_set_class wceq icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 icbvmpt_1 wsb icbvmpt_0 sup_set_class fcbvmpt_3 wceq fcbvmpt_0 fcbvmpt_1 wsb icbvmpt_0 sup_set_class fcbvmpt_4 wceq icbvmpt_0 sup_set_class fcbvmpt_3 wceq icbvmpt_1 fcbvmpt_1 fcbvmpt_0 sbequ icbvmpt_0 sup_set_class fcbvmpt_3 wceq icbvmpt_0 sup_set_class fcbvmpt_4 wceq fcbvmpt_0 fcbvmpt_1 fcbvmpt_0 icbvmpt_0 sup_set_class fcbvmpt_4 ecbvmpt_1 nfeq2 fcbvmpt_0 sup_set_class fcbvmpt_1 sup_set_class wceq fcbvmpt_3 fcbvmpt_4 icbvmpt_0 sup_set_class ecbvmpt_2 eqeq2d sbie syl6bb anbi12d cbvopab1 eqtri fcbvmpt_0 icbvmpt_0 fcbvmpt_2 fcbvmpt_3 df-mpt fcbvmpt_1 icbvmpt_0 fcbvmpt_2 fcbvmpt_4 df-mpt 3eqtr4i $.
+	$v x y A B C  $.
+	$d w z x A  $.
+	$d w z y A  $.
+	$d w z B  $.
+	$d w z C  $.
+	f0_cbvmpt $f set x $.
+	f1_cbvmpt $f set y $.
+	f2_cbvmpt $f class A $.
+	f3_cbvmpt $f class B $.
+	f4_cbvmpt $f class C $.
+	i0_cbvmpt $f set z $.
+	i1_cbvmpt $f set w $.
+	e0_cbvmpt $e |- F/_ y B $.
+	e1_cbvmpt $e |- F/_ x C $.
+	e2_cbvmpt $e |- ( x = y -> B = C ) $.
+	p_cbvmpt $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $= f0_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq a_wa i1_cbvmpt p_nfv i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel f0_cbvmpt p_nfv i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt p_nfs1v i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb f0_cbvmpt p_nfan f0_cbvmpt a_sup_set_class i1_cbvmpt a_sup_set_class f2_cbvmpt p_eleq1 i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt p_sbequ12 f0_cbvmpt a_sup_set_class i1_cbvmpt a_sup_set_class a_wceq f0_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb p_anbi12d f0_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq a_wa i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb a_wa f0_cbvmpt i0_cbvmpt i1_cbvmpt p_cbvopab1 i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel f1_cbvmpt p_nfv e0_cbvmpt f1_cbvmpt i0_cbvmpt a_sup_set_class f3_cbvmpt p_nfeq2 i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt f1_cbvmpt p_nfsb i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb f1_cbvmpt p_nfan f1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq a_wa i1_cbvmpt p_nfv i1_cbvmpt a_sup_set_class f1_cbvmpt a_sup_set_class f2_cbvmpt p_eleq1 i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq i1_cbvmpt f1_cbvmpt f0_cbvmpt p_sbequ e1_cbvmpt f0_cbvmpt i0_cbvmpt a_sup_set_class f4_cbvmpt p_nfeq2 e2_cbvmpt f0_cbvmpt a_sup_set_class f1_cbvmpt a_sup_set_class a_wceq f3_cbvmpt f4_cbvmpt i0_cbvmpt a_sup_set_class p_eqeq2d i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq f0_cbvmpt f1_cbvmpt p_sbie i1_cbvmpt a_sup_set_class f1_cbvmpt a_sup_set_class a_wceq i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt f1_cbvmpt a_wsb i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq p_syl6bb i1_cbvmpt a_sup_set_class f1_cbvmpt a_sup_set_class a_wceq i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel f1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq p_anbi12d i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb a_wa f1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq a_wa i1_cbvmpt i0_cbvmpt f1_cbvmpt p_cbvopab1 f0_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq a_wa f0_cbvmpt i0_cbvmpt a_copab i1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq f0_cbvmpt i1_cbvmpt a_wsb a_wa i1_cbvmpt i0_cbvmpt a_copab f1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq a_wa f1_cbvmpt i0_cbvmpt a_copab p_eqtri f0_cbvmpt i0_cbvmpt f2_cbvmpt f3_cbvmpt a_df-mpt f1_cbvmpt i0_cbvmpt f2_cbvmpt f4_cbvmpt a_df-mpt f0_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f3_cbvmpt a_wceq a_wa f0_cbvmpt i0_cbvmpt a_copab f1_cbvmpt a_sup_set_class f2_cbvmpt a_wcel i0_cbvmpt a_sup_set_class f4_cbvmpt a_wceq a_wa f1_cbvmpt i0_cbvmpt a_copab f0_cbvmpt f2_cbvmpt f3_cbvmpt a_cmpt f1_cbvmpt f2_cbvmpt f4_cbvmpt a_cmpt p_3eqtr4i $.
 $}
-$( Rule to change the bound variable in a maps-to function, using implicit
+
+$(Rule to change the bound variable in a maps-to function, using implicit
        substitution.  (Contributed by Mario Carneiro, 19-Feb-2013.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d A x $.
-	$d A y $.
-	$d B y $.
-	$d C x $.
-	fcbvmptv_0 $f set x $.
-	fcbvmptv_1 $f set y $.
-	fcbvmptv_2 $f class A $.
-	fcbvmptv_3 $f class B $.
-	fcbvmptv_4 $f class C $.
-	ecbvmptv_0 $e |- ( x = y -> B = C ) $.
-	cbvmptv $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $= fcbvmptv_0 fcbvmptv_1 fcbvmptv_2 fcbvmptv_3 fcbvmptv_4 fcbvmptv_1 fcbvmptv_3 nfcv fcbvmptv_0 fcbvmptv_4 nfcv ecbvmptv_0 cbvmpt $.
+	$v x y A B C  $.
+	$d A x  $.
+	$d A y  $.
+	$d B y  $.
+	$d C x  $.
+	f0_cbvmptv $f set x $.
+	f1_cbvmptv $f set y $.
+	f2_cbvmptv $f class A $.
+	f3_cbvmptv $f class B $.
+	f4_cbvmptv $f class C $.
+	e0_cbvmptv $e |- ( x = y -> B = C ) $.
+	p_cbvmptv $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $= f1_cbvmptv f3_cbvmptv p_nfcv f0_cbvmptv f4_cbvmptv p_nfcv e0_cbvmptv f0_cbvmptv f1_cbvmptv f2_cbvmptv f3_cbvmptv f4_cbvmptv p_cbvmpt $.
 $}
-$( Function with universal domain in maps-to notation.  (Contributed by NM,
+
+$(Function with universal domain in maps-to notation.  (Contributed by NM,
        16-Aug-2013.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v B $.
-	$d x y $.
-	$d y B $.
-	fmptv_0 $f set x $.
-	fmptv_1 $f set y $.
-	fmptv_2 $f class B $.
-	mptv $p |- ( x e. _V |-> B ) = { <. x , y >. | y = B } $= fmptv_0 cvv fmptv_2 cmpt fmptv_0 sup_set_class cvv wcel fmptv_1 sup_set_class fmptv_2 wceq wa fmptv_0 fmptv_1 copab fmptv_1 sup_set_class fmptv_2 wceq fmptv_0 fmptv_1 copab fmptv_0 fmptv_1 cvv fmptv_2 df-mpt fmptv_1 sup_set_class fmptv_2 wceq fmptv_0 sup_set_class cvv wcel fmptv_1 sup_set_class fmptv_2 wceq wa fmptv_0 fmptv_1 fmptv_0 sup_set_class cvv wcel fmptv_1 sup_set_class fmptv_2 wceq fmptv_0 vex biantrur opabbii eqtr4i $.
+	$v x y B  $.
+	$d x y  $.
+	$d y B  $.
+	f0_mptv $f set x $.
+	f1_mptv $f set y $.
+	f2_mptv $f class B $.
+	p_mptv $p |- ( x e. _V |-> B ) = { <. x , y >. | y = B } $= f0_mptv f1_mptv a_cvv f2_mptv a_df-mpt f0_mptv p_vex f0_mptv a_sup_set_class a_cvv a_wcel f1_mptv a_sup_set_class f2_mptv a_wceq p_biantrur f1_mptv a_sup_set_class f2_mptv a_wceq f0_mptv a_sup_set_class a_cvv a_wcel f1_mptv a_sup_set_class f2_mptv a_wceq a_wa f0_mptv f1_mptv p_opabbii f0_mptv a_cvv f2_mptv a_cmpt f0_mptv a_sup_set_class a_cvv a_wcel f1_mptv a_sup_set_class f2_mptv a_wceq a_wa f0_mptv f1_mptv a_copab f1_mptv a_sup_set_class f2_mptv a_wceq f0_mptv f1_mptv a_copab p_eqtr4i $.
 $}
+
 

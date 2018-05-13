@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_axioms_from_the_The_Russell-Bernays_Axioms.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Stoic logic indemonstrables (Chrysippus of Soli)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -43,60 +45,72 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   This set of indemonstrables is not the entire system of Stoic logic.
 
 $)
-$( Minor premise for modus ponendo tollens 1. $)
-$( Major premise for modus ponendo tollens 1. $)
-$( Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
+
+$(Minor premise for modus ponendo tollens 1. $)
+
+$(Major premise for modus ponendo tollens 1. $)
+
+$(Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
        See rule 1 on [Lopez-Astorga] p. 12 , rule 1 on [Sanford] p. 40, and
        rule A3 in [Hitchcock] p. 5.  Sanford describes this rule second (after
        ~ mpto2 ) as a "safer, and these days much more common" version of modus
        ponendo tollens because it avoids confusion between inclusive-or and
        exclusive-or.  (Contributed by David A. Wheeler, 3-Jul-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmpto1_0 $f wff ph $.
-	fmpto1_1 $f wff ps $.
-	empto1_0 $e |- ph $.
-	empto1_1 $e |- -. ( ph /\ ps ) $.
-	mpto1 $p |- -. ps $= fmpto1_0 fmpto1_1 wn empto1_0 fmpto1_0 fmpto1_1 empto1_1 imnani ax-mp $.
+	$v ph ps  $.
+	f0_mpto1 $f wff ph $.
+	f1_mpto1 $f wff ps $.
+	e0_mpto1 $e |- ph $.
+	e1_mpto1 $e |- -. ( ph /\ ps ) $.
+	p_mpto1 $p |- -. ps $= e0_mpto1 e1_mpto1 f0_mpto1 f1_mpto1 p_imnani f0_mpto1 f1_mpto1 a_wn a_ax-mp $.
 $}
-$( Minor premise for modus ponendo tollens 2. $)
-$( Major premise for modus ponendo tollens 2. $)
-$( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+
+$(Minor premise for modus ponendo tollens 2. $)
+
+$(Major premise for modus ponendo tollens 2. $)
+
+$(Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (Proof shortened by Wolf Lammen, 12-Nov-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmpto2_0 $f wff ph $.
-	fmpto2_1 $f wff ps $.
-	empto2_0 $e |- ph $.
-	empto2_1 $e |- ( ph \/_ ps ) $.
-	mpto2 $p |- -. ps $= fmpto2_0 fmpto2_1 wn empto2_0 fmpto2_0 fmpto2_1 wb wn fmpto2_0 fmpto2_1 wn wb fmpto2_0 fmpto2_1 wxo fmpto2_0 fmpto2_1 wb wn empto2_1 fmpto2_0 fmpto2_1 df-xor mpbi fmpto2_0 fmpto2_1 xor3 mpbi mpbi $.
+	$v ph ps  $.
+	f0_mpto2 $f wff ph $.
+	f1_mpto2 $f wff ps $.
+	e0_mpto2 $e |- ph $.
+	e1_mpto2 $e |- ( ph \/_ ps ) $.
+	p_mpto2 $p |- -. ps $= e0_mpto2 e1_mpto2 f0_mpto2 f1_mpto2 a_df-xor f0_mpto2 f1_mpto2 a_wxo f0_mpto2 f1_mpto2 a_wb a_wn p_mpbi f0_mpto2 f1_mpto2 p_xor3 f0_mpto2 f1_mpto2 a_wb a_wn f0_mpto2 f1_mpto2 a_wn a_wb p_mpbi f0_mpto2 f1_mpto2 a_wn p_mpbi $.
 $}
-$( Minor premise for modus ponendo tollens 2. $)
-$( Major premise for modus ponendo tollens 2. $)
-$( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+
+$(Minor premise for modus ponendo tollens 2. $)
+
+$(Major premise for modus ponendo tollens 2. $)
+
+$(Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (New usage is discouraged.)  (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmpto2OLD_0 $f wff ph $.
-	fmpto2OLD_1 $f wff ps $.
-	empto2OLD_0 $e |- ph $.
-	empto2OLD_1 $e |- ( ph \/_ ps ) $.
-	mpto2OLD $p |- -. ps $= fmpto2OLD_1 wn fmpto2OLD_0 empto2OLD_0 fmpto2OLD_0 fmpto2OLD_1 fmpto2OLD_0 wn fmpto2OLD_1 wb fmpto2OLD_0 fmpto2OLD_1 wb wn fmpto2OLD_0 fmpto2OLD_1 wxo fmpto2OLD_0 fmpto2OLD_1 wb wn empto2OLD_1 fmpto2OLD_0 fmpto2OLD_1 df-xor mpbi fmpto2OLD_0 fmpto2OLD_1 nbbn mpbir con1bii mpbir $.
+	$v ph ps  $.
+	f0_mpto2OLD $f wff ph $.
+	f1_mpto2OLD $f wff ps $.
+	e0_mpto2OLD $e |- ph $.
+	e1_mpto2OLD $e |- ( ph \/_ ps ) $.
+	p_mpto2OLD $p |- -. ps $= e0_mpto2OLD e1_mpto2OLD f0_mpto2OLD f1_mpto2OLD a_df-xor f0_mpto2OLD f1_mpto2OLD a_wxo f0_mpto2OLD f1_mpto2OLD a_wb a_wn p_mpbi f0_mpto2OLD f1_mpto2OLD p_nbbn f0_mpto2OLD a_wn f1_mpto2OLD a_wb f0_mpto2OLD f1_mpto2OLD a_wb a_wn p_mpbir f0_mpto2OLD f1_mpto2OLD p_con1bii f1_mpto2OLD a_wn f0_mpto2OLD p_mpbir $.
 $}
-$( Minor premise for modus tollendo ponens (original exclusive-or version).
+
+$(Minor premise for modus tollendo ponens (original exclusive-or version).
     $)
-$( Major premise for modus tollendo ponens (original exclusive-or version).
+
+$(Major premise for modus tollendo ponens (original exclusive-or version).
     $)
-$( Modus tollendo ponens (original exclusive-or version), aka disjunctive
+
+$(Modus tollendo ponens (original exclusive-or version), aka disjunctive
        syllogism, one of the five "indemonstrables" in Stoic logic.  The rule
        says, "if ` ph ` is not true, and either ` ph ` or ` ps ` (exclusively)
        are true, then ` ps ` must be true."  Today the name "modus tollendo
@@ -108,30 +122,34 @@ $( Modus tollendo ponens (original exclusive-or version), aka disjunctive
        in [Hitchcock] p. 5 (exclusive-or is expressly used).  (Contributed by
        David A. Wheeler, 4-Jul-2016.)  (Proof shortened by Wolf Lammen,
        11-Nov-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmtp-xor_0 $f wff ph $.
-	fmtp-xor_1 $f wff ps $.
-	emtp-xor_0 $e |- -. ph $.
-	emtp-xor_1 $e |- ( ph \/_ ps ) $.
-	mtp-xor $p |- ps $= fmtp-xor_1 fmtp-xor_0 wn fmtp-xor_1 wn emtp-xor_0 fmtp-xor_0 wn fmtp-xor_1 wn wxo fmtp-xor_0 fmtp-xor_1 wxo emtp-xor_1 fmtp-xor_0 fmtp-xor_1 xorneg mpbir mpto2 notnotri $.
+	$v ph ps  $.
+	f0_mtp-xor $f wff ph $.
+	f1_mtp-xor $f wff ps $.
+	e0_mtp-xor $e |- -. ph $.
+	e1_mtp-xor $e |- ( ph \/_ ps ) $.
+	p_mtp-xor $p |- ps $= e0_mtp-xor e1_mtp-xor f0_mtp-xor f1_mtp-xor p_xorneg f0_mtp-xor a_wn f1_mtp-xor a_wn a_wxo f0_mtp-xor f1_mtp-xor a_wxo p_mpbir f0_mtp-xor a_wn f1_mtp-xor a_wn p_mpto2 f1_mtp-xor p_notnotri $.
 $}
-$( Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
+
+$(Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 4-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmtp-xorOLD_0 $f wff ph $.
-	fmtp-xorOLD_1 $f wff ps $.
-	emtp-xorOLD_0 $e |- -. ph $.
-	emtp-xorOLD_1 $e |- ( ph \/_ ps ) $.
-	mtp-xorOLD $p |- ps $= fmtp-xorOLD_1 fmtp-xorOLD_0 wn emtp-xorOLD_0 fmtp-xorOLD_1 fmtp-xorOLD_0 wb wn fmtp-xorOLD_1 fmtp-xorOLD_0 wn wb fmtp-xorOLD_0 fmtp-xorOLD_1 wb fmtp-xorOLD_1 fmtp-xorOLD_0 wb fmtp-xorOLD_0 fmtp-xorOLD_1 wxo fmtp-xorOLD_0 fmtp-xorOLD_1 wb wn emtp-xorOLD_1 fmtp-xorOLD_0 fmtp-xorOLD_1 df-xor mpbi fmtp-xorOLD_0 fmtp-xorOLD_1 bicom mtbi fmtp-xorOLD_1 fmtp-xorOLD_0 xor3 mpbi mpbir $.
+	$v ph ps  $.
+	f0_mtp-xorOLD $f wff ph $.
+	f1_mtp-xorOLD $f wff ps $.
+	e0_mtp-xorOLD $e |- -. ph $.
+	e1_mtp-xorOLD $e |- ( ph \/_ ps ) $.
+	p_mtp-xorOLD $p |- ps $= e0_mtp-xorOLD e1_mtp-xorOLD f0_mtp-xorOLD f1_mtp-xorOLD a_df-xor f0_mtp-xorOLD f1_mtp-xorOLD a_wxo f0_mtp-xorOLD f1_mtp-xorOLD a_wb a_wn p_mpbi f0_mtp-xorOLD f1_mtp-xorOLD p_bicom f0_mtp-xorOLD f1_mtp-xorOLD a_wb f1_mtp-xorOLD f0_mtp-xorOLD a_wb p_mtbi f1_mtp-xorOLD f0_mtp-xorOLD p_xor3 f1_mtp-xorOLD f0_mtp-xorOLD a_wb a_wn f1_mtp-xorOLD f0_mtp-xorOLD a_wn a_wb p_mpbi f1_mtp-xorOLD f0_mtp-xorOLD a_wn p_mpbir $.
 $}
-$( Minor premise for modus tollendo ponens (inclusive-or version). $)
-$( Major premise for modus tollendo ponens (inclusive-or version). $)
-$( Modus tollendo ponens (inclusive-or version), aka disjunctive
+
+$(Minor premise for modus tollendo ponens (inclusive-or version). $)
+
+$(Major premise for modus tollendo ponens (inclusive-or version). $)
+
+$(Modus tollendo ponens (inclusive-or version), aka disjunctive
        syllogism.  This is similar to ~ mtp-xor , one of the five original
        "indemonstrables" in Stoic logic.  However, in Stoic logic this rule
        used exclusive-or, while the name modus tollendo ponens often refers to
@@ -142,25 +160,27 @@ $( Modus tollendo ponens (inclusive-or version), aka disjunctive
        truth." -- Sherlock Holmes (Sir Arthur Conan Doyle, 1890:  The Sign of
        the Four, ch. 6).  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (Proof shortened by Wolf Lammen, 11-Nov-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmtp-or_0 $f wff ph $.
-	fmtp-or_1 $f wff ps $.
-	emtp-or_0 $e |- -. ph $.
-	emtp-or_1 $e |- ( ph \/ ps ) $.
-	mtp-or $p |- ps $= fmtp-or_0 wn fmtp-or_1 emtp-or_0 fmtp-or_0 fmtp-or_1 emtp-or_1 ori ax-mp $.
+	$v ph ps  $.
+	f0_mtp-or $f wff ph $.
+	f1_mtp-or $f wff ps $.
+	e0_mtp-or $e |- -. ph $.
+	e1_mtp-or $e |- ( ph \/ ps ) $.
+	p_mtp-or $p |- ps $= e0_mtp-or e1_mtp-or f0_mtp-or f1_mtp-or p_ori f0_mtp-or a_wn f1_mtp-or a_ax-mp $.
 $}
-$( Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
+
+$(Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 3-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fmtp-orOLD_0 $f wff ph $.
-	fmtp-orOLD_1 $f wff ps $.
-	emtp-orOLD_0 $e |- -. ph $.
-	emtp-orOLD_1 $e |- ( ph \/ ps ) $.
-	mtp-orOLD $p |- ps $= fmtp-orOLD_0 wn fmtp-orOLD_1 emtp-orOLD_0 fmtp-orOLD_0 fmtp-orOLD_1 wo fmtp-orOLD_0 wn fmtp-orOLD_1 wi emtp-orOLD_1 fmtp-orOLD_0 fmtp-orOLD_1 pm2.53 ax-mp ax-mp $.
+	$v ph ps  $.
+	f0_mtp-orOLD $f wff ph $.
+	f1_mtp-orOLD $f wff ps $.
+	e0_mtp-orOLD $e |- -. ph $.
+	e1_mtp-orOLD $e |- ( ph \/ ps ) $.
+	p_mtp-orOLD $p |- ps $= e0_mtp-orOLD e1_mtp-orOLD f0_mtp-orOLD f1_mtp-orOLD p_pm2.53 f0_mtp-orOLD f1_mtp-orOLD a_wo f0_mtp-orOLD a_wn f1_mtp-orOLD a_wi a_ax-mp f0_mtp-orOLD a_wn f1_mtp-orOLD a_ax-mp $.
 $}
+
 

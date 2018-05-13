@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Introduce_the_Axiom_of_Replacement.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Derive the Axiom of Separation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Separation Scheme, which is an axiom scheme of Zermelo's original
+
+$(Separation Scheme, which is an axiom scheme of Zermelo's original
        theory.  Scheme Sep of [BellMachover] p. 463.  As we show here, it is
        redundant if we assume Replacement in the form of ~ ax-rep .  Some
        textbooks present Separation as a separate axiom scheme in order to show
@@ -39,61 +42,56 @@ $( Separation Scheme, which is an axiom scheme of Zermelo's original
        ~ ax-sep below so that the uses of the Axiom of Separation can be more
        easily identified.  (Contributed by NM, 11-Sep-2006.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	$d y z ph w $.
-	iaxsep_0 $f set w $.
-	faxsep_0 $f wff ph $.
-	faxsep_1 $f set x $.
-	faxsep_2 $f set y $.
-	faxsep_3 $f set z $.
-	axsep $p |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $= faxsep_1 sup_set_class faxsep_2 sup_set_class wcel iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex wb faxsep_1 wal faxsep_2 wex faxsep_1 sup_set_class faxsep_2 sup_set_class wcel faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa wb faxsep_1 wal faxsep_2 wex iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa faxsep_1 sup_set_class faxsep_2 sup_set_class wceq wi faxsep_1 wal faxsep_2 wex wi faxsep_1 sup_set_class faxsep_2 sup_set_class wcel iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex wb faxsep_1 wal faxsep_2 wex iaxsep_0 iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa iaxsep_0 faxsep_1 faxsep_2 faxsep_3 iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa faxsep_2 nfv axrep5 iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa faxsep_1 sup_set_class faxsep_2 sup_set_class wceq wi faxsep_1 wal faxsep_2 iaxsep_0 faxsep_2 sup_set_class iaxsep_0 sup_set_class wceq iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa faxsep_1 sup_set_class faxsep_2 sup_set_class wceq wi faxsep_1 wal iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_2 sup_set_class iaxsep_0 sup_set_class wceq iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa faxsep_1 sup_set_class faxsep_2 sup_set_class wceq wi faxsep_1 faxsep_2 sup_set_class iaxsep_0 sup_set_class wceq iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_1 sup_set_class faxsep_2 sup_set_class wceq faxsep_0 faxsep_2 sup_set_class iaxsep_0 sup_set_class wceq iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_2 sup_set_class faxsep_1 sup_set_class wceq faxsep_1 sup_set_class faxsep_2 sup_set_class wceq faxsep_2 iaxsep_0 faxsep_1 equtr faxsep_2 faxsep_1 equcomi syl6 adantrd alrimiv a1d spimev mpg faxsep_1 sup_set_class faxsep_2 sup_set_class wcel iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex wb faxsep_1 wal faxsep_1 sup_set_class faxsep_2 sup_set_class wcel faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa wb faxsep_1 wal faxsep_2 faxsep_1 sup_set_class faxsep_2 sup_set_class wcel iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex wb faxsep_1 sup_set_class faxsep_2 sup_set_class wcel faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa wb faxsep_1 iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa faxsep_1 sup_set_class faxsep_2 sup_set_class wcel iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 wex iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa wa iaxsep_0 wex faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa wa iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq faxsep_0 wa wa iaxsep_0 iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 an12 exbii iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa iaxsep_0 faxsep_1 faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 wa iaxsep_0 nfv iaxsep_0 sup_set_class faxsep_1 sup_set_class wceq iaxsep_0 sup_set_class faxsep_3 sup_set_class wcel faxsep_1 sup_set_class faxsep_3 sup_set_class wcel faxsep_0 iaxsep_0 faxsep_1 faxsep_3 elequ1 anbi1d equsex bitr3i bibi2i albii exbii mpbi $.
+	$v ph x y z  $.
+	$d x y z w  $.
+	$d y z ph w  $.
+	f0_axsep $f wff ph $.
+	f1_axsep $f set x $.
+	f2_axsep $f set y $.
+	f3_axsep $f set z $.
+	i0_axsep $f set w $.
+	p_axsep $p |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $= i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa f2_axsep p_nfv i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa i0_axsep f1_axsep f2_axsep f3_axsep p_axrep5 f2_axsep i0_axsep f1_axsep p_equtr f2_axsep f1_axsep p_equcomi f2_axsep a_sup_set_class i0_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f2_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq p_syl6 f2_axsep a_sup_set_class i0_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq f0_axsep p_adantrd f2_axsep a_sup_set_class i0_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq a_wi f1_axsep p_alrimiv f2_axsep a_sup_set_class i0_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq a_wi f1_axsep a_wal i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel p_a1d i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq a_wi f1_axsep a_wal f2_axsep i0_axsep p_spimev i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wceq a_wi f1_axsep a_wal f2_axsep a_wex a_wi f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex a_wb f1_axsep a_wal f2_axsep a_wex i0_axsep p_mpg i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep p_an12 i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa a_wa i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep p_exbii f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa i0_axsep p_nfv i0_axsep f1_axsep f3_axsep p_elequ1 i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep p_anbi1d i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa i0_axsep f1_axsep p_equsex i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa a_wa i0_axsep a_wex f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa p_bitr3i i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel p_bibi2i f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex a_wb f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa a_wb f1_axsep p_albii f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex a_wb f1_axsep a_wal f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa a_wb f1_axsep a_wal f2_axsep p_exbii f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel i0_axsep a_sup_set_class f1_axsep a_sup_set_class a_wceq f0_axsep a_wa a_wa i0_axsep a_wex a_wb f1_axsep a_wal f2_axsep a_wex f1_axsep a_sup_set_class f2_axsep a_sup_set_class a_wcel f1_axsep a_sup_set_class f3_axsep a_sup_set_class a_wcel f0_axsep a_wa a_wb f1_axsep a_wal f2_axsep a_wex p_mpbi $.
 $}
-$( The Axiom of Separation of ZF set theory.  See ~ axsep for more
+
+$(The Axiom of Separation of ZF set theory.  See ~ axsep for more
        information.  It was derived as ~ axsep above and is therefore
        redundant, but we state it as a separate axiom here so that its uses can
        be identified more easily.  (Contributed by NM, 11-Sep-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	$d y z ph $.
-	fax-sep_0 $f wff ph $.
-	fax-sep_1 $f set x $.
-	fax-sep_2 $f set y $.
-	fax-sep_3 $f set z $.
-	ax-sep $a |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $.
+	$v ph x y z  $.
+	$d x y z  $.
+	$d y z ph  $.
+	f0_ax-sep $f wff ph $.
+	f1_ax-sep $f set x $.
+	f2_ax-sep $f set y $.
+	f3_ax-sep $f set z $.
+	a_ax-sep $a |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $.
 $}
-$( A less restrictive version of the Separation Scheme ~ axsep , where
+
+$(A less restrictive version of the Separation Scheme ~ axsep , where
        variables ` x ` and ` z ` can both appear free in the wff ` ph ` , which
        can therefore be thought of as ` ph ( x , z ) ` .  This version was
        derived from the more restrictive ~ ax-sep with no additional set theory
        axioms.  (Contributed by NM, 10-Dec-2006.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v w $.
-	$d x y z w $.
-	$d y ph w $.
-	$d z w $.
-	iaxsep2_0 $f set w $.
-	faxsep2_0 $f wff ph $.
-	faxsep2_1 $f set x $.
-	faxsep2_2 $f set y $.
-	faxsep2_3 $f set z $.
-	axsep2 $p |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $= faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa wb faxsep2_1 wal faxsep2_2 wex faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wb faxsep2_1 wal faxsep2_2 wex iaxsep2_0 faxsep2_3 iaxsep2_0 sup_set_class faxsep2_3 sup_set_class wceq faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa wb faxsep2_1 wal faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wb faxsep2_1 wal faxsep2_2 iaxsep2_0 sup_set_class faxsep2_3 sup_set_class wceq faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa wb faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wb faxsep2_1 iaxsep2_0 sup_set_class faxsep2_3 sup_set_class wceq faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa faxsep2_1 sup_set_class faxsep2_2 sup_set_class wcel iaxsep2_0 sup_set_class faxsep2_3 sup_set_class wceq faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa wa faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa iaxsep2_0 sup_set_class faxsep2_3 sup_set_class wceq faxsep2_1 sup_set_class iaxsep2_0 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa iaxsep2_0 sup_set_class faxsep2_3 sup_set_class faxsep2_1 sup_set_class eleq2 anbi1d faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 anabs5 syl6bb bibi2d albidv exbidv faxsep2_1 sup_set_class faxsep2_3 sup_set_class wcel faxsep2_0 wa faxsep2_1 faxsep2_2 iaxsep2_0 ax-sep chvarv $.
+	$v ph x y z  $.
+	$d x y z w  $.
+	$d y ph w  $.
+	$d z w  $.
+	f0_axsep2 $f wff ph $.
+	f1_axsep2 $f set x $.
+	f2_axsep2 $f set y $.
+	f3_axsep2 $f set z $.
+	i0_axsep2 $f set w $.
+	p_axsep2 $p |- E. y A. x ( x e. y <-> ( x e. z /\ ph ) ) $= i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class f1_axsep2 a_sup_set_class p_eleq2 i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wceq f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa p_anbi1d f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 p_anabs5 i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wceq f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa p_syl6bb i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wceq f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel p_bibi2d i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wceq f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa a_wb f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wb f1_axsep2 p_albidv i0_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wceq f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa a_wb f1_axsep2 a_wal f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wb f1_axsep2 a_wal f2_axsep2 p_exbidv f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa f1_axsep2 f2_axsep2 i0_axsep2 a_ax-sep f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class i0_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wa a_wb f1_axsep2 a_wal f2_axsep2 a_wex f1_axsep2 a_sup_set_class f2_axsep2 a_sup_set_class a_wcel f1_axsep2 a_sup_set_class f3_axsep2 a_sup_set_class a_wcel f0_axsep2 a_wa a_wb f1_axsep2 a_wal f2_axsep2 a_wex i0_axsep2 f3_axsep2 p_chvarv $.
 $}
-$( Separation Scheme (Aussonderung) using a class variable.  To derive this
+
+$(Separation Scheme (Aussonderung) using a class variable.  To derive this
        from ~ ax-sep , we invoke the Axiom of Extensionality (indirectly via
        ~ vtocl ), which is needed for the justification of class variable
        notation.
@@ -101,52 +99,49 @@ $( Separation Scheme (Aussonderung) using a class variable.  To derive this
        If we omit the requirement that ` y ` not occur in ` ph ` , we can
        derive a contradiction, as ~ notzfaus shows.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v z $.
-	$d x y A z $.
-	$d y ph z $.
-	izfauscl_0 $f set z $.
-	fzfauscl_0 $f wff ph $.
-	fzfauscl_1 $f set x $.
-	fzfauscl_2 $f set y $.
-	fzfauscl_3 $f class A $.
-	ezfauscl_0 $e |- A e. _V $.
-	zfauscl $p |- E. y A. x ( x e. y <-> ( x e. A /\ ph ) ) $= fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class izfauscl_0 sup_set_class wcel fzfauscl_0 wa wb fzfauscl_1 wal fzfauscl_2 wex fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class fzfauscl_3 wcel fzfauscl_0 wa wb fzfauscl_1 wal fzfauscl_2 wex izfauscl_0 fzfauscl_3 ezfauscl_0 izfauscl_0 sup_set_class fzfauscl_3 wceq fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class izfauscl_0 sup_set_class wcel fzfauscl_0 wa wb fzfauscl_1 wal fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class fzfauscl_3 wcel fzfauscl_0 wa wb fzfauscl_1 wal fzfauscl_2 izfauscl_0 sup_set_class fzfauscl_3 wceq fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class izfauscl_0 sup_set_class wcel fzfauscl_0 wa wb fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel fzfauscl_1 sup_set_class fzfauscl_3 wcel fzfauscl_0 wa wb fzfauscl_1 izfauscl_0 sup_set_class fzfauscl_3 wceq fzfauscl_1 sup_set_class izfauscl_0 sup_set_class wcel fzfauscl_0 wa fzfauscl_1 sup_set_class fzfauscl_3 wcel fzfauscl_0 wa fzfauscl_1 sup_set_class fzfauscl_2 sup_set_class wcel izfauscl_0 sup_set_class fzfauscl_3 wceq fzfauscl_1 sup_set_class izfauscl_0 sup_set_class wcel fzfauscl_1 sup_set_class fzfauscl_3 wcel fzfauscl_0 izfauscl_0 sup_set_class fzfauscl_3 fzfauscl_1 sup_set_class eleq2 anbi1d bibi2d albidv exbidv fzfauscl_0 fzfauscl_1 fzfauscl_2 izfauscl_0 ax-sep vtocl $.
+	$v ph x y A  $.
+	$d x y A z  $.
+	$d y ph z  $.
+	f0_zfauscl $f wff ph $.
+	f1_zfauscl $f set x $.
+	f2_zfauscl $f set y $.
+	f3_zfauscl $f class A $.
+	i0_zfauscl $f set z $.
+	e0_zfauscl $e |- A e. _V $.
+	p_zfauscl $p |- E. y A. x ( x e. y <-> ( x e. A /\ ph ) ) $= e0_zfauscl i0_zfauscl a_sup_set_class f3_zfauscl f1_zfauscl a_sup_set_class p_eleq2 i0_zfauscl a_sup_set_class f3_zfauscl a_wceq f1_zfauscl a_sup_set_class i0_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class f3_zfauscl a_wcel f0_zfauscl p_anbi1d i0_zfauscl a_sup_set_class f3_zfauscl a_wceq f1_zfauscl a_sup_set_class i0_zfauscl a_sup_set_class a_wcel f0_zfauscl a_wa f1_zfauscl a_sup_set_class f3_zfauscl a_wcel f0_zfauscl a_wa f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel p_bibi2d i0_zfauscl a_sup_set_class f3_zfauscl a_wceq f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class i0_zfauscl a_sup_set_class a_wcel f0_zfauscl a_wa a_wb f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class f3_zfauscl a_wcel f0_zfauscl a_wa a_wb f1_zfauscl p_albidv i0_zfauscl a_sup_set_class f3_zfauscl a_wceq f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class i0_zfauscl a_sup_set_class a_wcel f0_zfauscl a_wa a_wb f1_zfauscl a_wal f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class f3_zfauscl a_wcel f0_zfauscl a_wa a_wb f1_zfauscl a_wal f2_zfauscl p_exbidv f0_zfauscl f1_zfauscl f2_zfauscl i0_zfauscl a_ax-sep f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class i0_zfauscl a_sup_set_class a_wcel f0_zfauscl a_wa a_wb f1_zfauscl a_wal f2_zfauscl a_wex f1_zfauscl a_sup_set_class f2_zfauscl a_sup_set_class a_wcel f1_zfauscl a_sup_set_class f3_zfauscl a_wcel f0_zfauscl a_wa a_wb f1_zfauscl a_wal f2_zfauscl a_wex i0_zfauscl f3_zfauscl p_vtocl $.
 $}
-$( Convert implication to equivalence using the Separation Scheme
+
+$(Convert implication to equivalence using the Separation Scheme
        (Aussonderung) ~ ax-sep .  Similar to Theorem 1.3ii of [BellMachover]
        p. 463.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x ph z $.
-	$d x y z $.
-	ibm1.3ii_0 $f set z $.
-	fbm1.3ii_0 $f wff ph $.
-	fbm1.3ii_1 $f set x $.
-	fbm1.3ii_2 $f set y $.
-	ebm1.3ii_0 $e |- E. x A. y ( ph -> y e. x ) $.
-	bm1.3ii $p |- E. x A. y ( y e. x <-> ph ) $= fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 wex wa ibm1.3ii_0 wex fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_0 wb fbm1.3ii_2 wal fbm1.3ii_1 wex fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 wex ibm1.3ii_0 fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal ibm1.3ii_0 wex fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 wex fbm1.3ii_0 fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_1 wex fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal ibm1.3ii_0 wex ebm1.3ii_0 fbm1.3ii_0 fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_1 ibm1.3ii_0 fbm1.3ii_1 sup_set_class ibm1.3ii_0 sup_set_class wceq fbm1.3ii_0 fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel wi fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 fbm1.3ii_1 sup_set_class ibm1.3ii_0 sup_set_class wceq fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 fbm1.3ii_1 ibm1.3ii_0 fbm1.3ii_2 elequ2 imbi2d albidv cbvexv mpbi fbm1.3ii_0 fbm1.3ii_2 fbm1.3ii_1 ibm1.3ii_0 ax-sep pm3.2i exan fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 wex wa fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_0 wb fbm1.3ii_2 wal fbm1.3ii_1 wex ibm1.3ii_0 fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 wex wa fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal wa fbm1.3ii_1 wex fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_0 wb fbm1.3ii_2 wal fbm1.3ii_1 wex fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal fbm1.3ii_1 19.42v fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 wal fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 wal wa fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_0 wb fbm1.3ii_2 wal fbm1.3ii_1 fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel wi fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_0 wa wb fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel fbm1.3ii_0 wb fbm1.3ii_2 fbm1.3ii_0 fbm1.3ii_2 sup_set_class ibm1.3ii_0 sup_set_class wcel fbm1.3ii_2 sup_set_class fbm1.3ii_1 sup_set_class wcel bimsc1 alanimi eximi sylbir exlimiv ax-mp $.
+	$v ph x y  $.
+	$d x ph z  $.
+	$d x y z  $.
+	f0_bm1.3ii $f wff ph $.
+	f1_bm1.3ii $f set x $.
+	f2_bm1.3ii $f set y $.
+	i0_bm1.3ii $f set z $.
+	e0_bm1.3ii $e |- E. x A. y ( ph -> y e. x ) $.
+	p_bm1.3ii $p |- E. x A. y ( y e. x <-> ph ) $= e0_bm1.3ii f1_bm1.3ii i0_bm1.3ii f2_bm1.3ii p_elequ2 f1_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wceq f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii p_imbi2d f1_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wceq f0_bm1.3ii f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel a_wi f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii p_albidv f0_bm1.3ii f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f1_bm1.3ii i0_bm1.3ii p_cbvexv f0_bm1.3ii f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f1_bm1.3ii a_wex f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal i0_bm1.3ii a_wex p_mpbi f0_bm1.3ii f2_bm1.3ii f1_bm1.3ii i0_bm1.3ii a_ax-sep f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal i0_bm1.3ii a_wex f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex p_pm3.2i f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex i0_bm1.3ii p_exan f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii p_19.42v f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel p_bimsc1 f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wb f2_bm1.3ii p_alanimi f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal a_wa f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wb f2_bm1.3ii a_wal f1_bm1.3ii p_eximi f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex a_wa f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal a_wa f1_bm1.3ii a_wex f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex p_sylbir f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex a_wa f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex i0_bm1.3ii p_exlimiv f0_bm1.3ii f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel a_wi f2_bm1.3ii a_wal f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f2_bm1.3ii a_sup_set_class i0_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wa a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex a_wa i0_bm1.3ii a_wex f2_bm1.3ii a_sup_set_class f1_bm1.3ii a_sup_set_class a_wcel f0_bm1.3ii a_wb f2_bm1.3ii a_wal f1_bm1.3ii a_wex a_ax-mp $.
 $}
-$( Derive a weakened version of ~ ax9 ( i.e. ~ ax9v ), where ` x ` and
+
+$(Derive a weakened version of ~ ax9 ( i.e. ~ ax9v ), where ` x ` and
        ` y ` must be distinct, from Separation ~ ax-sep and Extensionality
        ~ ax-ext .  See ~ ax9 for the derivation of ~ ax9 from ~ ax9v .
        (Contributed by NM, 12-Nov-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	iax9vsep_0 $f set z $.
-	fax9vsep_0 $f set x $.
-	fax9vsep_1 $f set y $.
-	ax9vsep $p |- -. A. x -. x = y $= fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq fax9vsep_0 wex fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq wn fax9vsep_0 wal wn iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa wb iax9vsep_0 wal fax9vsep_0 wex fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq fax9vsep_0 wex iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi iax9vsep_0 fax9vsep_0 fax9vsep_1 ax-sep iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa wb iax9vsep_0 wal fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq fax9vsep_0 iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa wb iax9vsep_0 wal iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel wb iax9vsep_0 wal fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa wb iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel wb iax9vsep_0 iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel wb iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa wb iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi wa iax9vsep_0 sup_set_class fax9vsep_0 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq wi iax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wcel iax9vsep_0 sup_set_class iax9vsep_0 sup_set_class wceq id biantru bibi2i biimpri alimi fax9vsep_0 fax9vsep_1 iax9vsep_0 ax-ext syl eximi ax-mp fax9vsep_0 sup_set_class fax9vsep_1 sup_set_class wceq fax9vsep_0 df-ex mpbi $.
+	$v x y  $.
+	$d x y z  $.
+	f0_ax9vsep $f set x $.
+	f1_ax9vsep $f set y $.
+	i0_ax9vsep $f set z $.
+	p_ax9vsep $p |- -. A. x -. x = y $= i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi i0_ax9vsep f0_ax9vsep f1_ax9vsep a_ax-sep i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq p_id i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel p_biantru i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel p_bibi2i i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel a_wb i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa a_wb p_biimpri i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa a_wb i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel a_wb i0_ax9vsep p_alimi f0_ax9vsep f1_ax9vsep i0_ax9vsep a_ax-ext i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa a_wb i0_ax9vsep a_wal i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel a_wb i0_ax9vsep a_wal f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq p_syl i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa a_wb i0_ax9vsep a_wal f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq f0_ax9vsep p_eximi i0_ax9vsep a_sup_set_class f0_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wcel i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq i0_ax9vsep a_sup_set_class i0_ax9vsep a_sup_set_class a_wceq a_wi a_wa a_wb i0_ax9vsep a_wal f0_ax9vsep a_wex f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq f0_ax9vsep a_wex a_ax-mp f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq f0_ax9vsep a_df-ex f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq f0_ax9vsep a_wex f0_ax9vsep a_sup_set_class f1_ax9vsep a_sup_set_class a_wceq a_wn f0_ax9vsep a_wal a_wn p_mpbi $.
 $}
+
 

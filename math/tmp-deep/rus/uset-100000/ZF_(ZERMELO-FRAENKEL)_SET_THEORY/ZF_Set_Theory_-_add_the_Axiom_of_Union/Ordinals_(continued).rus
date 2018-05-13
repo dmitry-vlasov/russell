@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Introduce_the_Axiom_of_Union.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Ordinals (continued)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The class of all ordinal numbers is ordinal.  Proposition 7.12 of
+/*The class of all ordinal numbers is ordinal.  Proposition 7.12 of
        [TakeutiZaring] p. 38, but without using the Axiom of Regularity.
        (Contributed by NM, 17-May-1994.) */
 
@@ -35,7 +35,7 @@ proof of ordon {
 	qed prop 1 = step 16 ;;
 }
 
-/* The epsilon relation well-orders the class of ordinal numbers.
+/*The epsilon relation well-orders the class of ordinal numbers.
      Proposition 4.8(g) of [Mendelson] p. 244.  (Contributed by NM,
      1-Nov-2003.) */
 
@@ -50,7 +50,7 @@ proof of epweon {
 	qed prop 1 = step 3 ;;
 }
 
-/* No set contains all ordinal numbers.  Proposition 7.13 of [TakeutiZaring]
+/*No set contains all ordinal numbers.  Proposition 7.13 of [TakeutiZaring]
      p. 38, but without using the Axiom of Regularity.  This is also known as
      the Burali-Forti paradox (remark in [Enderton] p. 194).  In 1897, Cesare
      Burali-Forti noticed that since the "set" of all ordinal numbers is an
@@ -75,7 +75,7 @@ proof of onprc {
 	qed prop 1 = step 7 ;;
 }
 
-/* The union of a class of ordinal numbers is ordinal.  Proposition 7.19 of
+/*The union of a class of ordinal numbers is ordinal.  Proposition 7.19 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 30-May-1994.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) */
 
@@ -114,7 +114,7 @@ proof of ssorduni {
 	qed prop 1 = step 26 ;;
 }
 
-/* The union of a set of ordinal numbers is an ordinal number.  Theorem 9 of
+/*The union of a set of ordinal numbers is an ordinal number.  Theorem 9 of
      [Suppes] p. 132.  (Contributed by NM, 1-Nov-2003.) */
 
 theorem ssonuni (A : class, V : class)  {
@@ -130,7 +130,7 @@ proof of ssonuni {
 	qed prop 1 = step 5 ;;
 }
 
-/* The union of a set of ordinal numbers is an ordinal number.  Corollary
+/*The union of a set of ordinal numbers is an ordinal number.  Corollary
        7N(d) of [Enderton] p. 193.  (Contributed by NM, 20-Sep-2003.) */
 
 theorem ssonunii (A : class)  {
@@ -145,7 +145,7 @@ proof of ssonunii {
 	qed prop 1 = step 2 ;;
 }
 
-/* A way to express the ordinal property of a class in terms of the class of
+/*A way to express the ordinal property of a class in terms of the class of
      ordinal numbers.  Corollary 7.14 of [TakeutiZaring] p. 38 and its
      converse.  (Contributed by NM, 1-Jun-2003.) */
 
@@ -173,7 +173,7 @@ proof of ordeleqon {
 	qed prop 1 = step 16 ;;
 }
 
-/* Any ordinal class is a subclass of the class of ordinal numbers.
+/*Any ordinal class is a subclass of the class of ordinal numbers.
      Corollary 7.15 of [TakeutiZaring] p. 38.  (Contributed by NM,
      18-May-1994.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) */
 
@@ -192,7 +192,7 @@ proof of ordsson {
 	qed prop 1 = step 7 ;;
 }
 
-/* An ordinal number is a subset of the class of ordinal numbers.
+/*An ordinal number is a subset of the class of ordinal numbers.
      (Contributed by NM, 5-Jun-1994.) */
 
 theorem onss (A : class)  {
@@ -206,7 +206,7 @@ proof of onss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways of saying a class of ordinals is unbounded.  (Contributed by
+/*Two ways of saying a class of ordinals is unbounded.  (Contributed by
      Mario Carneiro, 8-Jun-2013.) */
 
 theorem ssonprc (A : class)  {
@@ -235,7 +235,7 @@ proof of ssonprc {
 	qed prop 1 = step 18 ;;
 }
 
-/* The union of an ordinal number is an ordinal number.  (Contributed by NM,
+/*The union of an ordinal number is an ordinal number.  (Contributed by NM,
      29-Sep-2006.) */
 
 theorem onuni (A : class)  {
@@ -249,7 +249,7 @@ proof of onuni {
 	qed prop 1 = step 3 ;;
 }
 
-/* The union of an ordinal class is ordinal.  (Contributed by NM,
+/*The union of an ordinal class is ordinal.  (Contributed by NM,
      12-Sep-2003.) */
 
 theorem orduni (A : class)  {
@@ -263,7 +263,7 @@ proof of orduni {
 	qed prop 1 = step 3 ;;
 }
 
-/* The intersection (infimum) of a non-empty class of ordinal numbers
+/*The intersection (infimum) of a non-empty class of ordinal numbers
        belongs to the class.  Compare Exercise 4 of [TakeutiZaring] p. 45.
        (Contributed by NM, 31-Jan-1997.) */
 
@@ -310,7 +310,7 @@ proof of onint {
 	qed prop 1 = step 34 ;;
 }
 
-/* The intersection of a class of ordinal numbers is zero iff the class
+/*The intersection of a class of ordinal numbers is zero iff the class
      contains zero.  (Contributed by NM, 24-Apr-2004.) */
 
 theorem onint0 (A : class)  {
@@ -334,7 +334,7 @@ proof of onint0 {
 	qed prop 1 = step 13 ;;
 }
 
-/* A non-empty class of ordinal numbers has the smallest member.  Exercise
+/*A non-empty class of ordinal numbers has the smallest member.  Exercise
        9 of [TakeutiZaring] p. 40.  (Contributed by NM, 3-Oct-2003.) */
 
 theorem onssmin (x : set, y : set, A : class) disjointed(x y A) {
@@ -352,11 +352,11 @@ proof of onssmin {
 	qed prop 1 = step 7 ;;
 }
 
-/* If a property is true for some ordinal number, it is true for a minimal
+/*If a property is true for some ordinal number, it is true for a minimal
        ordinal number.  This version uses explicit substitution.  Theorem
        Schema 62 of [Suppes] p. 228.  (Contributed by NM, 29-Sep-2003.) */
 
-theorem onminesb (ph : wff, x : set)  {
+theorem onminesb (ph : wff, x : set) disjointed(x) {
 	prop 1 : wff = |- ( ∃ x ∈ On ph → [. ⋂ { x ∈ On | ph } / x ]. ph ) ;;
 }
 
@@ -373,11 +373,11 @@ proof of onminesb {
 	qed prop 1 = step 9 ;;
 }
 
-/* If a property is true for some ordinal number, it is true for a minimal
+/*If a property is true for some ordinal number, it is true for a minimal
        ordinal number.  This version uses implicit substitution.  Theorem
        Schema 62 of [Suppes] p. 228.  (Contributed by NM, 3-Oct-2003.) */
 
-theorem onminsb (ph : wff, ps : wff, x : set)  {
+theorem onminsb (ph : wff, ps : wff, x : set) disjointed(x, ph) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- ( x = ⋂ { x ∈ On | ph } → ( ph ↔ ps ) ) ;;
 	-----------------------
@@ -399,7 +399,7 @@ proof of onminsb {
 	qed prop 1 = step 11 ;;
 }
 
-/* The intersection of a non-empty collection of ordinal numbers is an
+/*The intersection of a non-empty collection of ordinal numbers is an
      ordinal number.  Compare Exercise 6 of [TakeutiZaring] p. 44.
      (Contributed by NM, 29-Jan-1997.) */
 
@@ -416,7 +416,7 @@ proof of oninton {
 	qed prop 1 = step 5 ;;
 }
 
-/* The intersection of a class of ordinal numbers exists iff it is an ordinal
+/*The intersection of a class of ordinal numbers exists iff it is an ordinal
      number.  (Contributed by NM, 6-Nov-2003.) */
 
 theorem onintrab (ph : wff, x : set)  {
@@ -434,7 +434,7 @@ proof of onintrab {
 	qed prop 1 = step 7 ;;
 }
 
-/* An existence condition equivalent to an intersection's being an ordinal
+/*An existence condition equivalent to an intersection's being an ordinal
      number.  (Contributed by NM, 6-Nov-2003.) */
 
 theorem onintrab2 (ph : wff, x : set)  {
@@ -448,7 +448,7 @@ proof of onintrab2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* No member of a set of ordinal numbers belongs to its minimum.
+/*No member of a set of ordinal numbers belongs to its minimum.
      (Contributed by NM, 2-Feb-1997.) */
 
 theorem onnmin (A : class, B : class)  {
@@ -468,7 +468,7 @@ proof of onnmin {
 	qed prop 1 = step 9 ;;
 }
 
-/* An ordinal number smaller than the minimum of a set of ordinal numbers
+/*An ordinal number smaller than the minimum of a set of ordinal numbers
        does not have the property determining that set. ` ps ` is the wff
        resulting from the substitution of ` A ` for ` x ` in wff ` ph ` .
        (Contributed by NM, 9-Nov-2003.) */
@@ -490,7 +490,7 @@ proof of onnminsb {
 	qed prop 1 = step 7 ;;
 }
 
-/* A way to show that an ordinal number equals the minimum of a non-empty
+/*A way to show that an ordinal number equals the minimum of a non-empty
        collection of ordinal numbers: it must be in the collection, and it must
        not be larger than any member of the collection.  (Contributed by NM,
        14-Nov-2003.) */
@@ -518,7 +518,7 @@ proof of oneqmin {
 	qed prop 1 = step 15 ;;
 }
 
-/* Problem 2.5(ii) of [BellMachover] p. 471.  (Contributed by NM,
+/*Problem 2.5(ii) of [BellMachover] p. 471.  (Contributed by NM,
        20-Sep-2003.) */
 
 theorem bm2.5ii (x : set, y : set, A : class) disjointed(x y A) {
@@ -539,7 +539,7 @@ proof of bm2.5ii {
 	qed prop 1 = step 8 ;;
 }
 
-/* If a wff is true for an ordinal number, there is the smallest ordinal
+/*If a wff is true for an ordinal number, there is the smallest ordinal
        number for which it is true.  (Contributed by NM, 2-Feb-1997.)  (Proof
        shortened by Mario Carneiro, 20-Nov-2016.) */
 
@@ -585,7 +585,7 @@ proof of onminex {
 	qed prop 1 = step 31 ;;
 }
 
-/* The class of all ordinal numbers is its own successor.  (Contributed by
+/*The class of all ordinal numbers is its own successor.  (Contributed by
      NM, 12-Sep-2003.) */
 
 theorem sucon ()  {
@@ -599,7 +599,7 @@ proof of sucon {
 	qed prop 1 = step 3 ;;
 }
 
-/* A successor exists iff its class argument exists.  (Contributed by NM,
+/*A successor exists iff its class argument exists.  (Contributed by NM,
      22-Jun-1998.) */
 
 theorem sucexb (A : class)  {
@@ -616,7 +616,7 @@ proof of sucexb {
 	qed prop 1 = step 6 ;;
 }
 
-/* The successor of a set is a set (generalization).  (Contributed by NM,
+/*The successor of a set is a set (generalization).  (Contributed by NM,
      5-Jun-1994.) */
 
 theorem sucexg (A : class, V : class)  {
@@ -630,7 +630,7 @@ proof of sucexg {
 	qed prop 1 = step 3 ;;
 }
 
-/* The successor of a set is a set.  (Contributed by NM, 30-Aug-1993.) */
+/*The successor of a set is a set.  (Contributed by NM, 30-Aug-1993.) */
 
 theorem sucex (A : class)  {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -644,7 +644,7 @@ proof of sucex {
 	qed prop 1 = step 2 ;;
 }
 
-/* The minimum of a class of ordinal numbers is less than the minimum of
+/*The minimum of a class of ordinal numbers is less than the minimum of
        that class with its minimum removed.  (Contributed by NM,
        20-Nov-2003.) */
 
@@ -681,7 +681,7 @@ proof of onmindif2 {
 	qed prop 1 = step 24 ;;
 }
 
-/* The successor of an ordinal number is an ordinal number.  Proposition
+/*The successor of an ordinal number is an ordinal number.  Proposition
        7.24 of [TakeutiZaring] p. 41.  (Contributed by NM, 6-Jun-1994.) */
 
 theorem suceloni (A : class) disjointed(x A) {
@@ -725,7 +725,7 @@ proof of suceloni {
 	qed prop 1 = step 32 ;;
 }
 
-/* The successor of an ordinal class is ordinal.  (Contributed by NM,
+/*The successor of an ordinal class is ordinal.  (Contributed by NM,
      3-Apr-1995.) */
 
 theorem ordsuc (A : class)  {
@@ -751,7 +751,7 @@ proof of ordsuc {
 	qed prop 1 = step 15 ;;
 }
 
-/* The collection of ordinals in the power class of an ordinal is its
+/*The collection of ordinals in the power class of an ordinal is its
        successor.  (Contributed by NM, 30-Jan-2005.) */
 
 theorem ordpwsuc (A : class) disjointed(x A) {
@@ -781,10 +781,10 @@ proof of ordpwsuc {
 	qed prop 1 = step 18 ;;
 }
 
-/* The collection of ordinal numbers in the power set of an ordinal number
+/*The collection of ordinal numbers in the power set of an ordinal number
        is its successor.  (Contributed by NM, 19-Oct-2004.) */
 
-theorem onpwsuc (A : class)  {
+theorem onpwsuc (A : class) disjointed(A) {
 	prop 1 : wff = |- ( A ∈ On → ( Pow A ∩ On ) = suc A ) ;;
 }
 
@@ -795,7 +795,7 @@ proof of onpwsuc {
 	qed prop 1 = step 3 ;;
 }
 
-/* The successor of an ordinal number is an ordinal number.  (Contributed by
+/*The successor of an ordinal number is an ordinal number.  (Contributed by
      NM, 9-Sep-2003.) */
 
 theorem sucelon (A : class)  {
@@ -812,7 +812,7 @@ proof of sucelon {
 	qed prop 1 = step 6 ;;
 }
 
-/* The successor of an element of an ordinal class is a subset of it.
+/*The successor of an element of an ordinal class is a subset of it.
      (Contributed by NM, 21-Jun-1998.) */
 
 theorem ordsucss (A : class, B : class)  {
@@ -836,7 +836,7 @@ proof of ordsucss {
 	qed prop 1 = step 13 ;;
 }
 
-/* An ordinal number is a proper subset of its successor.  (Contributed by
+/*An ordinal number is a proper subset of its successor.  (Contributed by
      Stefan O'Rear, 18-Nov-2014.) */
 
 theorem onpsssuc (A : class)  {
@@ -855,7 +855,7 @@ proof of onpsssuc {
 	qed prop 1 = step 8 ;;
 }
 
-/* A set belongs to an ordinal iff its successor is a subset of the ordinal.
+/*A set belongs to an ordinal iff its successor is a subset of the ordinal.
      Exercise 8 of [TakeutiZaring] p. 42 and its converse.  (Contributed by NM,
      29-Nov-2003.) */
 
@@ -872,7 +872,7 @@ proof of ordelsuc {
 	qed prop 1 = step 5 ;;
 }
 
-/* The successor of an ordinal number is the smallest larger ordinal
+/*The successor of an ordinal number is the smallest larger ordinal
        number.  (Contributed by NM, 28-Nov-2003.) */
 
 theorem onsucmin (x : set, A : class) disjointed(x A) {
@@ -892,7 +892,7 @@ proof of onsucmin {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership is inherited by successors.  Generalization of Exercise 9 of
+/*Membership is inherited by successors.  Generalization of Exercise 9 of
      [TakeutiZaring] p. 42.  (Contributed by NM, 22-Jun-1998.)  (Proof
      shortened by Andrew Salmon, 12-Aug-2011.) */
 
@@ -938,7 +938,7 @@ proof of ordsucelsuc {
 	qed prop 1 = step 34 ;;
 }
 
-/* The subclass relationship between two ordinal classes is inherited by
+/*The subclass relationship between two ordinal classes is inherited by
      their successors.  (Contributed by NM, 4-Oct-2003.) */
 
 theorem ordsucsssuc (A : class, B : class)  {
@@ -958,7 +958,7 @@ proof of ordsucsssuc {
 	qed prop 1 = step 9 ;;
 }
 
-/* Given an element ` A ` of the union of an ordinal ` B ` , ` suc A ` is an
+/*Given an element ` A ` of the union of an ordinal ` B ` , ` suc A ` is an
      element of ` B ` itself.  (Contributed by Scott Fenton, 28-Mar-2012.)
      (Proof shortened by Mario Carneiro, 29-May-2015.) */
 
@@ -991,7 +991,7 @@ proof of ordsucuniel {
 	qed prop 1 = step 21 ;;
 }
 
-/* The successor of the maximum (i.e. union) of two ordinals is the maximum
+/*The successor of the maximum (i.e. union) of two ordinals is the maximum
        of their successors.  (Contributed by NM, 28-Nov-2003.) */
 
 theorem ordsucun (A : class, B : class) disjointed(x A, x B) {
@@ -1032,7 +1032,7 @@ proof of ordsucun {
 	qed prop 1 = step 29 ;;
 }
 
-/* The maximum of two ordinals is equal to one of them.  (Contributed by
+/*The maximum of two ordinals is equal to one of them.  (Contributed by
      Mario Carneiro, 25-Jun-2015.) */
 
 theorem ordunpr (B : class, C : class)  {
@@ -1056,7 +1056,7 @@ proof of ordunpr {
 	qed prop 1 = step 13 ;;
 }
 
-/* The maximum of two ordinals belongs to a third if each of them do.
+/*The maximum of two ordinals belongs to a third if each of them do.
      (Contributed by NM, 18-Sep-2006.)  (Revised by Mario Carneiro,
      25-Jun-2015.) */
 
@@ -1077,7 +1077,7 @@ proof of ordunel {
 	qed prop 1 = step 9 ;;
 }
 
-/* A class of ordinal numbers is a subclass of the successor of its union.
+/*A class of ordinal numbers is a subclass of the successor of its union.
      Similar to Proposition 7.26 of [TakeutiZaring] p. 41.  (Contributed by NM,
      19-Sep-2003.) */
 
@@ -1094,7 +1094,7 @@ proof of onsucuni {
 	qed prop 1 = step 5 ;;
 }
 
-/* An ordinal class is a subclass of the successor of its union.
+/*An ordinal class is a subclass of the successor of its union.
      (Contributed by NM, 12-Sep-2003.) */
 
 theorem ordsucuni (A : class)  {
@@ -1108,7 +1108,7 @@ proof of ordsucuni {
 	qed prop 1 = step 3 ;;
 }
 
-/* An ordinal class is either its union or the successor of its union.  If we
+/*An ordinal class is either its union or the successor of its union.  If we
      adopt the view that zero is a limit ordinal, this means every ordinal
      class is either a limit or a successor.  (Contributed by NM,
      13-Sep-2003.) */
@@ -1137,7 +1137,7 @@ proof of orduniorsuc {
 	qed prop 1 = step 16 ;;
 }
 
-/* The class of all ordinal numbers is its own union.  Exercise 11 of
+/*The class of all ordinal numbers is its own union.  Exercise 11 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 12-Nov-2003.) */
 
 theorem unon () disjointed(x y) {
@@ -1160,7 +1160,7 @@ proof of unon {
 	qed prop 1 = step 11 ;;
 }
 
-/* An ordinal class is equal to the union of its successor.  (Contributed
+/*An ordinal class is equal to the union of its successor.  (Contributed
        by NM, 10-Dec-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
 
@@ -1195,7 +1195,7 @@ proof of ordunisuc {
 	qed prop 1 = step 22 ;;
 }
 
-/* The union of the ordinal subsets of an ordinal number is that number.
+/*The union of the ordinal subsets of an ordinal number is that number.
        (Contributed by NM, 30-Jan-2005.) */
 
 theorem orduniss2 (x : set, A : class) disjointed(x A) {
@@ -1220,7 +1220,7 @@ proof of orduniss2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* A successor ordinal is the successor of its union.  (Contributed by NM,
+/*A successor ordinal is the successor of its union.  (Contributed by NM,
      10-Dec-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem onsucuni2 (A : class, B : class)  {
@@ -1255,7 +1255,7 @@ proof of onsucuni2 {
 	qed prop 1 = step 24 ;;
 }
 
-/* The successor of an ordinal class contains the empty set.  (Contributed by
+/*The successor of an ordinal class contains the empty set.  (Contributed by
      NM, 4-Apr-1995.) */
 
 theorem 0elsuc (A : class)  {
@@ -1271,7 +1271,7 @@ proof of 0elsuc {
 	qed prop 1 = step 5 ;;
 }
 
-/* The class of ordinal numbers is a limit ordinal.  (Contributed by NM,
+/*The class of ordinal numbers is a limit ordinal.  (Contributed by NM,
      24-Mar-1995.) */
 
 theorem limon ()  {
@@ -1288,7 +1288,7 @@ proof of limon {
 	qed prop 1 = step 6 ;;
 }
 
-/* An ordinal number is a subset of ` On ` .  (Contributed by NM,
+/*An ordinal number is a subset of ` On ` .  (Contributed by NM,
        11-Aug-1994.) */
 
 theorem onssi (A : class)  {
@@ -1303,7 +1303,7 @@ proof of onssi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The successor of an ordinal number is an ordinal number.  Corollary
+/*The successor of an ordinal number is an ordinal number.  Corollary
        7N(c) of [Enderton] p. 193.  (Contributed by NM, 12-Jun-1994.) */
 
 theorem onsuci (A : class)  {
@@ -1318,7 +1318,7 @@ proof of onsuci {
 	qed prop 1 = step 2 ;;
 }
 
-/* An ordinal number is either its own union (if zero or a limit ordinal)
+/*An ordinal number is either its own union (if zero or a limit ordinal)
        or the successor of its union.  (Contributed by NM, 13-Jun-1994.) */
 
 theorem onuniorsuci (A : class)  {
@@ -1334,7 +1334,7 @@ proof of onuniorsuci {
 	qed prop 1 = step 3 ;;
 }
 
-/* A limit ordinal is not a successor ordinal.  (Contributed by NM,
+/*A limit ordinal is not a successor ordinal.  (Contributed by NM,
          18-Feb-2004.) */
 
 theorem onuninsuci (x : set, A : class) disjointed(x A) {
@@ -1393,7 +1393,7 @@ proof of onuninsuci {
 	qed prop 1 = step 46 ;;
 }
 
-/* A set belongs to an ordinal number iff its successor is a subset of
+/*A set belongs to an ordinal number iff its successor is a subset of
          the ordinal number.  Exercise 8 of [TakeutiZaring] p. 42 and its
          converse.  (Contributed by NM, 16-Sep-1995.) */
 
@@ -1411,7 +1411,7 @@ proof of onsucssi {
 	qed prop 1 = step 3 ;;
 }
 
-/* A successor is not a limit ordinal.  (Contributed by NM, 25-Mar-1995.)
+/*A successor is not a limit ordinal.  (Contributed by NM, 25-Mar-1995.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem nlimsucg (A : class, V : class)  {
@@ -1438,7 +1438,7 @@ proof of nlimsucg {
 	qed prop 1 = step 16 ;;
 }
 
-/* An ordinal equal to its union is not a successor.  (Contributed by NM,
+/*An ordinal equal to its union is not a successor.  (Contributed by NM,
        18-Feb-2004.) */
 
 theorem orduninsuc (x : set, A : class) disjointed(x A) {
@@ -1482,7 +1482,7 @@ proof of orduninsuc {
 	qed prop 1 = step 33 ;;
 }
 
-/* An ordinal equal to its union contains the successor of each of its
+/*An ordinal equal to its union contains the successor of each of its
        members.  (Contributed by NM, 1-Feb-2005.) */
 
 theorem ordunisuc2 (x : set, A : class) disjointed(x A) {
@@ -1539,7 +1539,7 @@ proof of ordunisuc2 {
 	qed prop 1 = step 46 ;;
 }
 
-/* An ordinal is zero, a successor ordinal, or a limit ordinal.
+/*An ordinal is zero, a successor ordinal, or a limit ordinal.
        (Contributed by NM, 1-Oct-2003.) */
 
 theorem ordzsl (x : set, A : class) disjointed(x A) {
@@ -1571,7 +1571,7 @@ proof of ordzsl {
 	qed prop 1 = step 21 ;;
 }
 
-/* An ordinal number is zero, a successor ordinal, or a limit ordinal
+/*An ordinal number is zero, a successor ordinal, or a limit ordinal
        number.  (Contributed by NM, 1-Oct-2003.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -1604,7 +1604,7 @@ proof of onzsl {
 	qed prop 1 = step 21 ;;
 }
 
-/* An alternate definition of a limit ordinal, which is any ordinal that is
+/*An alternate definition of a limit ordinal, which is any ordinal that is
        neither zero nor a successor.  (Contributed by NM, 1-Nov-2004.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -1626,7 +1626,7 @@ proof of dflim3 {
 	qed prop 1 = step 10 ;;
 }
 
-/* An alternate definition of a limit ordinal.  (Contributed by NM,
+/*An alternate definition of a limit ordinal.  (Contributed by NM,
        1-Feb-2005.) */
 
 theorem dflim4 (x : set, A : class) disjointed(x A) {
@@ -1645,7 +1645,7 @@ proof of dflim4 {
 	qed prop 1 = step 8 ;;
 }
 
-/* The successor of a member of a limit ordinal is also a member.
+/*The successor of a member of a limit ordinal is also a member.
        (Contributed by NM, 3-Sep-2003.) */
 
 theorem limsuc (A : class, B : class) disjointed(x A, x B) {
@@ -1669,7 +1669,7 @@ proof of limsuc {
 	qed prop 1 = step 12 ;;
 }
 
-/* A class includes a limit ordinal iff the successor of the class includes
+/*A class includes a limit ordinal iff the successor of the class includes
        it.  (Contributed by NM, 30-Oct-2003.) */
 
 theorem limsssuc (A : class, B : class) disjointed(x A, x B) {
@@ -1717,7 +1717,7 @@ proof of limsssuc {
 	qed prop 1 = step 36 ;;
 }
 
-/* Two ways to express the class of non-limit ordinal numbers.  Part of
+/*Two ways to express the class of non-limit ordinal numbers.  Part of
        Definition 7.27 of [TakeutiZaring] p. 42, who use the symbol K_I for
        this class.  (Contributed by NM, 1-Nov-2004.) */
 
@@ -1735,7 +1735,7 @@ proof of nlimon {
 	qed prop 1 = step 6 ;;
 }
 
-/* The union of a nonempty class of limit ordinals is a limit ordinal.
+/*The union of a nonempty class of limit ordinals is a limit ordinal.
        (Contributed by NM, 1-Feb-2005.) */
 
 theorem limuni3 (x : set, A : class) disjointed(x y z A) {

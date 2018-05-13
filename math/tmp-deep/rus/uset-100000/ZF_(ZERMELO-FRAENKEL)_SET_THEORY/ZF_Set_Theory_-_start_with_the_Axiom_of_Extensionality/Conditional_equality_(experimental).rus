@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_universal_class.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Conditional equality (experimental)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -49,9 +49,9 @@ constant {
 	symbol CondEq ;;
 }
 
-/* conditional equality */
+/*conditional equality */
 
-/* Extend wff notation to include conditional equality.  This is a technical
+/*Extend wff notation to include conditional equality.  This is a technical
      device used in the proof that ` F/ ` is the not-free predicate, and that
      definitions are conservative as a result. */
 
@@ -59,7 +59,7 @@ rule wcdeq (ph : wff, x : set, y : set) {
 	term : wff = # CondEq ( x = y → ph ) ;;
 }
 
-/* Define conditional equality.  All the notation to the left of the ` <-> `
+/*Define conditional equality.  All the notation to the left of the ` <-> `
      is fake; the parentheses and arrows are all part of the notation, which
      could equally well be written ` CondEq x y ph ` .  On the right side is
      the actual implication arrow.  The reason for this definition is to
@@ -74,7 +74,7 @@ definition df-cdeq (ph : wff, x : set, y : set)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Deduce conditional equality.  (Contributed by Mario Carneiro,
+/*Deduce conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem cdeqi (ph : wff, x : set, y : set)  {
@@ -89,7 +89,7 @@ proof of cdeqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Property of conditional equality.  (Contributed by Mario Carneiro,
+/*Property of conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem cdeqri (ph : wff, x : set, y : set)  {
@@ -104,7 +104,7 @@ proof of cdeqri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce conditional equality from a theorem.  (Contributed by Mario
+/*Deduce conditional equality from a theorem.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem cdeqth (ph : wff, x : set, y : set)  {
@@ -119,7 +119,7 @@ proof of cdeqth {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribute conditional equality over negation.  (Contributed by Mario
+/*Distribute conditional equality over negation.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem cdeqnot (ph : wff, ps : wff, x : set, y : set)  {
@@ -135,7 +135,7 @@ proof of cdeqnot {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribute conditional equality over quantification.  (Contributed by
+/*Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) */
 
 theorem cdeqal (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, y z) {
@@ -151,7 +151,7 @@ proof of cdeqal {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribute conditional equality over abstraction.  (Contributed by
+/*Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) */
 
 theorem cdeqab (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, y z) {
@@ -167,7 +167,7 @@ proof of cdeqab {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribute conditional equality over quantification.  (Contributed by
+/*Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) */
 
 theorem cdeqal1 (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph) {
@@ -184,7 +184,7 @@ proof of cdeqal1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribute conditional equality over abstraction.  (Contributed by
+/*Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) */
 
 theorem cdeqab1 (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph) {
@@ -201,7 +201,7 @@ proof of cdeqab1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribute conditional equality over implication.  (Contributed by Mario
+/*Distribute conditional equality over implication.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem cdeqim (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set)  {
@@ -219,7 +219,7 @@ proof of cdeqim {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conditional equality for set-to-class promotion.  (Contributed by Mario
+/*Conditional equality for set-to-class promotion.  (Contributed by Mario
      Carneiro, 11-Aug-2016.) */
 
 theorem cdeqcv (x : set, y : set)  {
@@ -232,7 +232,7 @@ proof of cdeqcv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribute conditional equality over equality.  (Contributed by Mario
+/*Distribute conditional equality over equality.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem cdeqeq (x : set, y : set, A : class, B : class, C : class, D : class)  {
@@ -250,7 +250,7 @@ proof of cdeqeq {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribute conditional equality over elementhood.  (Contributed by Mario
+/*Distribute conditional equality over elementhood.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem cdeqel (x : set, y : set, A : class, B : class, C : class, D : class)  {
@@ -268,7 +268,7 @@ proof of cdeqel {
 	qed prop 1 = step 4 ;;
 }
 
-/* If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
+/*If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
        and ` ps ` is ` ph ( y ) ` , and ` ph ( x ) ` in fact does not have
        ` x ` free in it according to ` F/ ` , then ` ph ( x ) <-> ph ( y ) `
        unconditionally.  This proves that ` F/ x ph ` is actually a not-free
@@ -290,7 +290,7 @@ proof of nfcdeq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
+/*Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
 theorem nfccdeq (x : set, y : set, A : class, B : class) disjointed(x z B, y z A) {
@@ -311,9 +311,9 @@ proof of nfccdeq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Let the computer know the theorems to look for to prove the metatheorem */
+/*Let the computer know the theorems to look for to prove the metatheorem */
 
-/* $j
+/*$j
     condequality 'wcdeq' from 'cdeqth';
     condcongruence 'cdeqnot' 'cdeqim' 'cdeqal1' 'cdeqal' 'cdeqcv' 'cdeqeq'
       'cdeqel' 'cdeqab1' 'cdeqab';

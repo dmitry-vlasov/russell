@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Operations.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         "Maps to" notation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* If a two-parameter class is not empty, constrain the implicit pair.
+/*If a two-parameter class is not empty, constrain the implicit pair.
        (Contributed by Stefan O'Rear, 7-Mar-2015.) */
 
 theorem elmpt2cl (x : set, y : set, A : class, B : class, C : class, S : class, T : class, F : class, X : class) disjointed(A x y z, B x y z, C z) {
@@ -31,11 +31,11 @@ proof of elmpt2cl {
 	qed prop 1 = step 11 ;;
 }
 
-/* If a two-parameter class is not empty, the first argument is in its
+/*If a two-parameter class is not empty, the first argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) */
 
-theorem elmpt2cl1 (x : set, y : set, A : class, B : class, C : class, S : class, T : class, F : class, X : class) disjointed(A x y, B x y) {
+theorem elmpt2cl1 (x : set, y : set, A : class, B : class, C : class, S : class, T : class, F : class, X : class) disjointed(A x y, B x y, C) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( X ∈ ( S F T ) → S ∈ A ) ;;
@@ -47,11 +47,11 @@ proof of elmpt2cl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a two-parameter class is not empty, the second argument is in its
+/*If a two-parameter class is not empty, the second argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) */
 
-theorem elmpt2cl2 (x : set, y : set, A : class, B : class, C : class, S : class, T : class, F : class, X : class) disjointed(A x y, B x y) {
+theorem elmpt2cl2 (x : set, y : set, A : class, B : class, C : class, S : class, T : class, F : class, X : class) disjointed(A x y, B x y, C) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( X ∈ ( S F T ) → T ∈ B ) ;;
@@ -63,7 +63,7 @@ proof of elmpt2cl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Utility lemma for two-parameter classes.
+/*Utility lemma for two-parameter classes.
 
        _EDITORIAL_: can simplify ~ isghm , ~ islmhm .  (Contributed by Stefan
        O'Rear, 21-Jan-2015.) */
@@ -91,11 +91,11 @@ proof of elovmpt2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Any function to sets of ordered pairs produces a relation on function
+/*Any function to sets of ordered pairs produces a relation on function
        value unconditionally.  (Contributed by Mario Carneiro, 7-Aug-2014.)
        (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
 
-theorem relmptopab (ph : wff, x : set, y : set, z : set, A : class, B : class, F : class) disjointed(x A) {
+theorem relmptopab (ph : wff, x : set, y : set, z : set, A : class, B : class, F : class) disjointed(x A, B, F) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ { 〈 y , z 〉 | ph } ) ;;
 	-----------------------
 	prop 1 : wff = |- Rel ( F ` B ) ;;
@@ -113,7 +113,7 @@ proof of relmptopab {
 	qed prop 1 = step 8 ;;
 }
 
-/* Describe an implicit one-to-one onto function.  (Contributed by Mario
+/*Describe an implicit one-to-one onto function.  (Contributed by Mario
          Carneiro, 30-Apr-2015.) */
 
 theorem f1ocnvd (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, F : class, W : class, X : class) disjointed(x y A, x y B, y C, x D, x y ph) {
@@ -157,7 +157,7 @@ proof of f1ocnvd {
 	qed prop 1 = step 28 ;;
 }
 
-/* Describe an implicit one-to-one onto function.  (Contributed by Mario
+/*Describe an implicit one-to-one onto function.  (Contributed by Mario
          Carneiro, 12-May-2014.) */
 
 theorem f1od (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, F : class, W : class, X : class) disjointed(x y A, x y B, y C, x D, x y ph) {
@@ -175,7 +175,7 @@ proof of f1od {
 	qed prop 1 = step 2 ;;
 }
 
-/* Describe an implicit one-to-one onto function.  (Contributed by Mario
+/*Describe an implicit one-to-one onto function.  (Contributed by Mario
        Carneiro, 30-Apr-2015.) */
 
 theorem f1ocnv2d (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y A, x y B, y C, x D, x y ph) {
@@ -210,7 +210,7 @@ proof of f1ocnv2d {
 	qed prop 1 = step 19 ;;
 }
 
-/* Describe an implicit one-to-one onto function.  (Contributed by Mario
+/*Describe an implicit one-to-one onto function.  (Contributed by Mario
        Carneiro, 12-May-2014.) */
 
 theorem f1o2d (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y A, x y B, y C, x D, x y ph) {
@@ -228,7 +228,7 @@ proof of f1o2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* The cross product of two sets is a set.  Proposition 6.2 of
+/*The cross product of two sets is a set.  Proposition 6.2 of
        [TakeutiZaring] p. 23.  This version is proven using Replacement; see
        ~ xpexg for a version that uses the Power Set axiom instead.
        (Contributed by Mario Carneiro, 20-May-2013.)
@@ -255,7 +255,7 @@ proof of xpexgALT {
 	qed prop 1 = step 12 ;;
 }
 
-/* A one-to-one mapping induces a one-to-one mapping on power sets.  This
+/*A one-to-one mapping induces a one-to-one mapping on power sets.  This
        version of ~ f1opw avoids the Axiom of Replacement.  (Contributed by
        Mario Carneiro, 26-Jun-2015.) */
 
@@ -314,7 +314,7 @@ proof of f1opw2 {
 	qed prop 1 = step 43 ;;
 }
 
-/* A one-to-one mapping induces a one-to-one mapping on power sets.
+/*A one-to-one mapping induces a one-to-one mapping on power sets.
        (Contributed by Stefan O'Rear, 18-Nov-2014.)  (Revised by Mario
        Carneiro, 26-Jun-2015.) */
 
@@ -338,11 +338,11 @@ proof of f1opw {
 	qed prop 1 = step 11 ;;
 }
 
-/* Show that the support of a function is contained in a set.  (Contributed
+/*Show that the support of a function is contained in a set.  (Contributed
        by Mario Carneiro, 19-Dec-2014.)  (Revised by Mario Carneiro,
        22-Mar-2015.) */
 
-theorem suppss2 (ph : wff, A : class, B : class, k : set, W : class, Z : class) disjointed(k A, k ph, k W, k Z) {
+theorem suppss2 (ph : wff, A : class, B : class, k : set, W : class, Z : class) disjointed(k A, B, k ph, k W, k Z) {
 	hyp 1 : wff = |- ( ( ph ∧ k ∈ ( A ∖ W ) ) → B = Z ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → ( ⁻¹ ( k ∈ A ↦ B ) " ( _V ∖ { Z } ) ) ⊆ W ) ;;
@@ -363,7 +363,7 @@ proof of suppss2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Formula building theorem for support restriction, on a function which
+/*Formula building theorem for support restriction, on a function which
        preserves zero.  (Contributed by Stefan O'Rear, 9-Mar-2015.) */
 
 theorem suppssfv (ph : wff, x : set, A : class, D : class, F : class, L : class, V : class, Y : class, Z : class) disjointed(ph x, Y x, Z x) {
@@ -399,7 +399,7 @@ proof of suppssfv {
 	qed prop 1 = step 21 ;;
 }
 
-/* Formula building theorem for support restrictions: operator with left
+/*Formula building theorem for support restrictions: operator with left
        annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) */
 
 theorem suppssov1 (ph : wff, x : set, v : set, A : class, B : class, D : class, R : class, L : class, O : class, V : class, Y : class, Z : class) disjointed(ph v, ph x, B v, O v, R v, Y v, Y x, Z v, Z x) {

@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_equivalence.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical disjunction and conjunction
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -11,7 +11,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
 
 */
 
-/* Declare connectives for disjunction ('or') and conjunction ('and'). */
+/*Declare connectives for disjunction ('or') and conjunction ('and'). */
 
 constant {
 	symbol ∨ ;;
@@ -19,7 +19,7 @@ constant {
 	latex \lor ;;
 }
 
-/* Vee (read:  'or') */
+/*Vee (read:  'or') */
 
 constant {
 	symbol ∧ ;;
@@ -27,21 +27,21 @@ constant {
 	latex \land ;;
 }
 
-/* Wedge (read:  'and') */
+/*Wedge (read:  'and') */
 
-/* Extend wff definition to include disjunction ('or'). */
+/*Extend wff definition to include disjunction ('or'). */
 
 rule wo (ph : wff, ps : wff) {
 	term : wff = # ( ph ∨ ps ) ;;
 }
 
-/* Extend wff definition to include conjunction ('and'). */
+/*Extend wff definition to include conjunction ('and'). */
 
 rule wa (ph : wff, ps : wff) {
 	term : wff = # ( ph ∧ ps ) ;;
 }
 
-/* Define disjunction (logical 'or').  Definition of [Margaris] p. 49.  When
+/*Define disjunction (logical 'or').  Definition of [Margaris] p. 49.  When
      the left operand, right operand, or both are true, the result is true;
      when both sides are false, the result is false.  For example, it is true
      that ` ( 2 = 3 \/ 4 = 4 ) ` ( ~ ex-or ).  After we define the constant
@@ -70,7 +70,7 @@ definition df-or (ph : wff, ps : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define conjunction (logical 'and').  Definition of [Margaris] p. 49.  When
+/*Define conjunction (logical 'and').  Definition of [Margaris] p. 49.  When
      both the left and right operand are true, the result is true; when either
      is false, the result is false.  For example, it is true that
      ` ( 2 = 2 /\ 3 = 3 ) ` .  After we define the constant true ` T. `
@@ -90,7 +90,7 @@ definition df-an (ph : wff, ps : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Theorem *4.64 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.64 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.64 (ph : wff, ps : wff)  {
@@ -103,7 +103,7 @@ proof of pm4.64 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.53 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.53 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.53 (ph : wff, ps : wff)  {
@@ -116,7 +116,7 @@ proof of pm2.53 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.54 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.54 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.54 (ph : wff, ps : wff)  {
@@ -129,7 +129,7 @@ proof of pm2.54 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from disjunction.  (Contributed by NM,
+/*Infer implication from disjunction.  (Contributed by NM,
        11-Jun-1994.) */
 
 theorem ori (ph : wff, ps : wff)  {
@@ -144,7 +144,7 @@ proof of ori {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from disjunction.  (Contributed by NM,
+/*Infer implication from disjunction.  (Contributed by NM,
        11-Jun-1994.) */
 
 theorem orri (ph : wff, ps : wff)  {
@@ -159,7 +159,7 @@ proof of orri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce implication from disjunction.  (Contributed by NM,
+/*Deduce implication from disjunction.  (Contributed by NM,
        18-May-1994.) */
 
 theorem ord (ph : wff, ps : wff, ch : wff)  {
@@ -174,7 +174,7 @@ proof of ord {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce implication from disjunction.  (Contributed by NM,
+/*Deduce implication from disjunction.  (Contributed by NM,
        27-Nov-1995.) */
 
 theorem orrd (ph : wff, ps : wff, ch : wff)  {
@@ -189,7 +189,7 @@ proof of orrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference disjoining the antecedents of two implications.  (Contributed
+/*Inference disjoining the antecedents of two implications.  (Contributed
        by NM, 5-Apr-1994.) */
 
 theorem jaoi (ph : wff, ps : wff, ch : wff)  {
@@ -206,7 +206,7 @@ proof of jaoi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction disjoining the antecedents of two implications.  (Contributed
+/*Deduction disjoining the antecedents of two implications.  (Contributed
        by NM, 18-Aug-1994.) */
 
 theorem jaod (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -224,7 +224,7 @@ proof of jaod {
 	qed prop 1 = step 4 ;;
 }
 
-/* Eliminate a disjunction in a deduction.  (Contributed by Mario Carneiro,
+/*Eliminate a disjunction in a deduction.  (Contributed by Mario Carneiro,
        29-May-2016.) */
 
 theorem mpjaod (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -241,7 +241,7 @@ proof of mpjaod {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of disjunction by denial of a disjunct.  Theorem *2.55 of
+/*Elimination of disjunction by denial of a disjunct.  Theorem *2.55 of
      [WhiteheadRussell] p. 107.  (Contributed by NM, 12-Aug-1994.)  (Proof
      shortened by Wolf Lammen, 21-Jul-2012.) */
 
@@ -255,7 +255,7 @@ proof of orel1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of disjunction by denial of a disjunct.  Theorem *2.56 of
+/*Elimination of disjunction by denial of a disjunct.  Theorem *2.56 of
      [WhiteheadRussell] p. 107.  (Contributed by NM, 12-Aug-1994.)  (Proof
      shortened by Wolf Lammen, 5-Apr-2013.) */
 
@@ -270,7 +270,7 @@ proof of orel2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction of a disjunct.  Axiom *1.3 of [WhiteheadRussell] p. 96.
+/*Introduction of a disjunct.  Axiom *1.3 of [WhiteheadRussell] p. 96.
      (Contributed by NM, 30-Aug-1993.) */
 
 theorem olc (ph : wff, ps : wff)  {
@@ -283,7 +283,7 @@ proof of olc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of a disjunct.  Theorem *2.2 of [WhiteheadRussell] p. 104.
+/*Introduction of a disjunct.  Theorem *2.2 of [WhiteheadRussell] p. 104.
      (Contributed by NM, 30-Aug-1993.) */
 
 theorem orc (ph : wff, ps : wff)  {
@@ -296,7 +296,7 @@ proof of orc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Axiom *1.4 of [WhiteheadRussell] p. 96.  (Contributed by NM,
+/*Axiom *1.4 of [WhiteheadRussell] p. 96.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm1.4 (ph : wff, ps : wff)  {
@@ -310,7 +310,7 @@ proof of pm1.4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative law for disjunction.  Theorem *4.31 of [WhiteheadRussell]
+/*Commutative law for disjunction.  Theorem *4.31 of [WhiteheadRussell]
      p. 118.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 15-Nov-2012.) */
 
@@ -325,7 +325,7 @@ proof of orcom {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation of disjuncts in consequent.  (Contributed by NM,
+/*Commutation of disjuncts in consequent.  (Contributed by NM,
        2-Dec-2010.) */
 
 theorem orcomd (ph : wff, ps : wff, ch : wff)  {
@@ -340,7 +340,7 @@ proof of orcomd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of disjuncts in antecedent.  (Contributed by NM,
+/*Commutation of disjuncts in antecedent.  (Contributed by NM,
        2-Dec-2012.) */
 
 theorem orcoms (ph : wff, ps : wff, ch : wff)  {
@@ -355,7 +355,7 @@ proof of orcoms {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing a disjunct.  (Contributed by NM, 19-Jan-2008.)
+/*Deduction introducing a disjunct.  (Contributed by NM, 19-Jan-2008.)
        (Proof shortened by Wolf Lammen, 14-Nov-2012.) */
 
 theorem orci (ph : wff, ps : wff)  {
@@ -370,7 +370,7 @@ proof of orci {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing a disjunct.  (Contributed by NM, 19-Jan-2008.)
+/*Deduction introducing a disjunct.  (Contributed by NM, 19-Jan-2008.)
        (Proof shortened by Wolf Lammen, 14-Nov-2012.) */
 
 theorem olci (ph : wff, ps : wff)  {
@@ -385,7 +385,7 @@ proof of olci {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing a disjunct.  A translation of natural deduction
+/*Deduction introducing a disjunct.  A translation of natural deduction
        rule ` \/ ` IR ( ` \/ ` insertion right), see ~ natded .  (Contributed
        by NM, 20-Sep-2007.) */
 
@@ -401,7 +401,7 @@ proof of orcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing a disjunct.  A translation of natural deduction
+/*Deduction introducing a disjunct.  A translation of natural deduction
        rule ` \/ ` IL ( ` \/ ` insertion left), see ~ natded .  (Contributed by
        NM, 11-Apr-2008.)  (Proof shortened by Wolf Lammen, 3-Oct-2013.) */
 
@@ -417,7 +417,7 @@ proof of olcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating disjunct. _Notational convention_:  We sometimes
+/*Deduction eliminating disjunct. _Notational convention_:  We sometimes
        suffix with "s" the label of an inference that manipulates an
        antecedent, leaving the consequent unchanged.  The "s" means that the
        inference eliminates the need for a syllogism ( ~ syl ) -type inference
@@ -435,7 +435,7 @@ proof of orcs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating disjunct.  (Contributed by NM, 21-Jun-1994.)
+/*Deduction eliminating disjunct.  (Contributed by NM, 21-Jun-1994.)
        (Proof shortened by Wolf Lammen, 3-Oct-2013.) */
 
 theorem olcs (ph : wff, ps : wff, ch : wff)  {
@@ -450,7 +450,7 @@ proof of olcs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.07 of [WhiteheadRussell] p. 101.  (Contributed by NM,
+/*Theorem *2.07 of [WhiteheadRussell] p. 101.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.07 (ph : wff)  {
@@ -462,7 +462,7 @@ proof of pm2.07 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *2.45 of [WhiteheadRussell] p. 106.  (Contributed by NM,
+/*Theorem *2.45 of [WhiteheadRussell] p. 106.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.45 (ph : wff, ps : wff)  {
@@ -475,7 +475,7 @@ proof of pm2.45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.46 of [WhiteheadRussell] p. 106.  (Contributed by NM,
+/*Theorem *2.46 of [WhiteheadRussell] p. 106.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.46 (ph : wff, ps : wff)  {
@@ -488,7 +488,7 @@ proof of pm2.46 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.47 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.47 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.47 (ph : wff, ps : wff)  {
@@ -501,7 +501,7 @@ proof of pm2.47 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.48 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.48 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.48 (ph : wff, ps : wff)  {
@@ -514,7 +514,7 @@ proof of pm2.48 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.49 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.49 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.49 (ph : wff, ps : wff)  {
@@ -527,7 +527,7 @@ proof of pm2.49 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Slight generalization of Theorem *2.67 of [WhiteheadRussell] p. 107.
+/*Slight generalization of Theorem *2.67 of [WhiteheadRussell] p. 107.
      (Contributed by NM, 3-Jan-2005.) */
 
 theorem pm2.67-2 (ph : wff, ps : wff, ch : wff)  {
@@ -540,7 +540,7 @@ proof of pm2.67-2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.67 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.67 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.67 (ph : wff, ps : wff)  {
@@ -552,7 +552,7 @@ proof of pm2.67 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *2.25 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+/*Theorem *2.25 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.25 (ph : wff, ps : wff)  {
@@ -565,7 +565,7 @@ proof of pm2.25 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff is equivalent to its disjunction with falsehood.  Theorem *4.74 of
+/*A wff is equivalent to its disjunction with falsehood.  Theorem *4.74 of
      [WhiteheadRussell] p. 121.  (Contributed by NM, 23-Mar-1995.)  (Proof
      shortened by Wolf Lammen, 18-Nov-2012.) */
 
@@ -580,7 +580,7 @@ proof of biorf {
 	qed prop 1 = step 3 ;;
 }
 
-/* A wff is equivalent to its negated disjunction with falsehood.
+/*A wff is equivalent to its negated disjunction with falsehood.
      (Contributed by NM, 9-Jul-2012.) */
 
 theorem biortn (ph : wff, ps : wff)  {
@@ -594,7 +594,7 @@ proof of biortn {
 	qed prop 1 = step 3 ;;
 }
 
-/* A wff is equivalent to its disjunction with falsehood.  (Contributed by
+/*A wff is equivalent to its disjunction with falsehood.  (Contributed by
        NM, 23-Mar-1995.) */
 
 theorem biorfi (ph : wff, ps : wff)  {
@@ -611,7 +611,7 @@ proof of biorfi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *2.621 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.621 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.621 (ph : wff, ps : wff)  {
@@ -625,7 +625,7 @@ proof of pm2.621 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.62 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.62 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 13-Dec-2013.) */
 
 theorem pm2.62 (ph : wff, ps : wff)  {
@@ -638,7 +638,7 @@ proof of pm2.62 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.68 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.68 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.68 (ph : wff, ps : wff)  {
@@ -651,7 +651,7 @@ proof of pm2.68 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Logical 'or' expressed in terms of implication only.  Theorem *5.25 of
+/*Logical 'or' expressed in terms of implication only.  Theorem *5.25 of
      [WhiteheadRussell] p. 124.  (Contributed by NM, 12-Aug-2004.)  (Proof
      shortened by Wolf Lammen, 20-Oct-2012.) */
 
@@ -666,7 +666,7 @@ proof of dfor2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implication in terms of disjunction.  Theorem *4.6 of [WhiteheadRussell]
+/*Implication in terms of disjunction.  Theorem *4.6 of [WhiteheadRussell]
      p. 120.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem imor (ph : wff, ps : wff)  {
@@ -681,7 +681,7 @@ proof of imor {
 	qed prop 1 = step 4 ;;
 }
 
-/* Infer disjunction from implication.  (Contributed by NM,
+/*Infer disjunction from implication.  (Contributed by NM,
        12-Mar-2012.) */
 
 theorem imori (ph : wff, ps : wff)  {
@@ -696,7 +696,7 @@ proof of imori {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from disjunction.  (Contributed by Jonathan Ben-Naim,
+/*Infer implication from disjunction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) */
 
 theorem imorri (ph : wff, ps : wff)  {
@@ -711,7 +711,7 @@ proof of imorri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Law of excluded middle, also called the principle of _tertium non datur_.
+/*Law of excluded middle, also called the principle of _tertium non datur_.
      Theorem *2.11 of [WhiteheadRussell] p. 101.  It says that something is
      either true or not true; there are no in-between values of truth.  This is
      an essential distinction of our classical logic and is not a theorem of
@@ -727,7 +727,7 @@ proof of exmid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Law of excluded middle in a context.  (Contributed by Mario Carneiro,
+/*Law of excluded middle in a context.  (Contributed by Mario Carneiro,
      9-Feb-2017.) */
 
 theorem exmidd (ph : wff, ps : wff)  {
@@ -740,7 +740,7 @@ proof of exmidd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.1 of [WhiteheadRussell] p. 101.  (Contributed by NM,
+/*Theorem *2.1 of [WhiteheadRussell] p. 101.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 23-Nov-2012.) */
 
 theorem pm2.1 (ph : wff)  {
@@ -753,7 +753,7 @@ proof of pm2.1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.13 of [WhiteheadRussell] p. 101.  (Contributed by NM,
+/*Theorem *2.13 of [WhiteheadRussell] p. 101.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.13 (ph : wff)  {
@@ -766,7 +766,7 @@ proof of pm2.13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.62 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.62 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.62 (ph : wff, ps : wff)  {
@@ -778,7 +778,7 @@ proof of pm4.62 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *4.66 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.66 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.66 (ph : wff, ps : wff)  {
@@ -790,7 +790,7 @@ proof of pm4.66 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *4.63 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.63 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.63 (ph : wff, ps : wff)  {
@@ -803,7 +803,7 @@ proof of pm4.63 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Express implication in terms of conjunction.  (Contributed by NM,
+/*Express implication in terms of conjunction.  (Contributed by NM,
      9-Apr-1994.) */
 
 theorem imnan (ph : wff, ps : wff)  {
@@ -816,7 +816,7 @@ proof of imnan {
 	qed prop 1 = step 2 ;;
 }
 
-/* Express implication in terms of conjunction.  (Contributed by Mario
+/*Express implication in terms of conjunction.  (Contributed by Mario
        Carneiro, 28-Sep-2015.) */
 
 theorem imnani (ph : wff, ps : wff)  {
@@ -831,7 +831,7 @@ proof of imnani {
 	qed prop 1 = step 2 ;;
 }
 
-/* Express implication in terms of conjunction.  Theorem 3.4(27) of [Stoll]
+/*Express implication in terms of conjunction.  Theorem 3.4(27) of [Stoll]
      p. 176.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 30-Oct-2012.) */
 
@@ -847,7 +847,7 @@ proof of iman {
 	qed prop 1 = step 4 ;;
 }
 
-/* Express conjunction in terms of implication.  (Contributed by NM,
+/*Express conjunction in terms of implication.  (Contributed by NM,
      2-Aug-1994.) */
 
 theorem annim (ph : wff, ps : wff)  {
@@ -860,7 +860,7 @@ proof of annim {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.61 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.61 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.61 (ph : wff, ps : wff)  {
@@ -873,7 +873,7 @@ proof of pm4.61 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.65 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.65 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.65 (ph : wff, ps : wff)  {
@@ -885,7 +885,7 @@ proof of pm4.65 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *4.67 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.67 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.67 (ph : wff, ps : wff)  {
@@ -897,7 +897,7 @@ proof of pm4.67 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Eric Schmidt, 22-Dec-2006.) */
 
 theorem imp (ph : wff, ps : wff, ch : wff)  {
@@ -913,7 +913,7 @@ proof of imp {
 	qed prop 1 = step 3 ;;
 }
 
-/* Importation inference with commuted antecedents.  (Contributed by NM,
+/*Importation inference with commuted antecedents.  (Contributed by NM,
        25-May-2005.) */
 
 theorem impcom (ph : wff, ps : wff, ch : wff)  {
@@ -928,7 +928,7 @@ proof of impcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation deduction.  (Contributed by NM, 31-Mar-1994.) */
+/*Importation deduction.  (Contributed by NM, 31-Mar-1994.) */
 
 theorem imp3a (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → th ) ) ) ;;
@@ -943,7 +943,7 @@ proof of imp3a {
 	qed prop 1 = step 3 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp31 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → th ) ) ) ;;
@@ -957,7 +957,7 @@ proof of imp31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp32 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → th ) ) ) ;;
@@ -971,7 +971,7 @@ proof of imp32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation inference.  (This theorem used to be labeled "exp" but was
+/*Exportation inference.  (This theorem used to be labeled "exp" but was
        changed to "ex" so as not to conflict with the math token "exp", per the
        June 2006 Metamath spec change.)  A translation of natural deduction
        rule ` -> ` I ( ` -> ` introduction), see ~ natded .  (Contributed by
@@ -990,7 +990,7 @@ proof of ex {
 	qed prop 1 = step 3 ;;
 }
 
-/* Exportation inference with commuted antecedents.  (Contributed by NM,
+/*Exportation inference with commuted antecedents.  (Contributed by NM,
        25-May-2005.) */
 
 theorem expcom (ph : wff, ps : wff, ch : wff)  {
@@ -1005,7 +1005,7 @@ proof of expcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation deduction.  (Contributed by NM, 20-Aug-1993.) */
+/*Exportation deduction.  (Contributed by NM, 20-Aug-1993.) */
 
 theorem exp3a (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ps ∧ ch ) → th ) ) ;;
@@ -1020,7 +1020,7 @@ proof of exp3a {
 	qed prop 1 = step 3 ;;
 }
 
-/* A deduction version of exportation, followed by importation.
+/*A deduction version of exportation, followed by importation.
        (Contributed by NM, 6-Sep-2008.) */
 
 theorem expdimp (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1035,7 +1035,7 @@ proof of expdimp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Mixed importation/commutation inference.  (Contributed by NM,
+/*Mixed importation/commutation inference.  (Contributed by NM,
        22-Jun-2013.) */
 
 theorem impancom (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1051,7 +1051,7 @@ proof of impancom {
 	qed prop 1 = step 3 ;;
 }
 
-/* Variant of ~ con3d with importation.  (Contributed by Jonathan Ben-Naim,
+/*Variant of ~ con3d with importation.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) */
 
 theorem con3and (ph : wff, ps : wff, ch : wff)  {
@@ -1066,7 +1066,7 @@ proof of con3and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction based on reductio ad absurdum.  (Contributed by Mario
+/*Deduction based on reductio ad absurdum.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) */
 
 theorem pm2.01da (ph : wff, ps : wff)  {
@@ -1081,7 +1081,7 @@ proof of pm2.01da {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction based on reductio ad absurdum.  (Contributed by Mario
+/*Deduction based on reductio ad absurdum.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) */
 
 theorem pm2.18da (ph : wff, ps : wff)  {
@@ -1096,7 +1096,7 @@ proof of pm2.18da {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.3 (Exp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
+/*Theorem *3.3 (Exp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 24-Mar-2013.) */
 
 theorem pm3.3 (ph : wff, ps : wff, ch : wff)  {
@@ -1109,7 +1109,7 @@ proof of pm3.3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.31 (Imp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
+/*Theorem *3.31 (Imp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 24-Mar-2013.) */
 
 theorem pm3.31 (ph : wff, ps : wff, ch : wff)  {
@@ -1122,7 +1122,7 @@ proof of pm3.31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Import-export theorem.  Part of Theorem *4.87 of [WhiteheadRussell]
+/*Import-export theorem.  Part of Theorem *4.87 of [WhiteheadRussell]
      p. 122.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 24-Mar-2013.) */
 
@@ -1137,7 +1137,7 @@ proof of impexp {
 	qed prop 1 = step 3 ;;
 }
 
-/* Join antecedents with conjunction.  Theorem *3.2 of [WhiteheadRussell]
+/*Join antecedents with conjunction.  Theorem *3.2 of [WhiteheadRussell]
      p. 111.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 12-Nov-2012.) */
 
@@ -1151,7 +1151,7 @@ proof of pm3.2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Join antecedents with conjunction.  Theorem *3.21 of [WhiteheadRussell]
+/*Join antecedents with conjunction.  Theorem *3.21 of [WhiteheadRussell]
      p. 111.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pm3.21 (ph : wff, ps : wff)  {
@@ -1164,7 +1164,7 @@ proof of pm3.21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.22 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.22 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 13-Nov-2012.) */
 
 theorem pm3.22 (ph : wff, ps : wff)  {
@@ -1177,7 +1177,7 @@ proof of pm3.22 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutative law for conjunction.  Theorem *4.3 of [WhiteheadRussell]
+/*Commutative law for conjunction.  Theorem *4.3 of [WhiteheadRussell]
      p. 118.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Wolf
      Lammen, 4-Nov-2012.) */
 
@@ -1192,7 +1192,7 @@ proof of ancom {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation of conjuncts in consequent.  (Contributed by Jeff Hankins,
+/*Commutation of conjuncts in consequent.  (Contributed by Jeff Hankins,
        14-Aug-2009.) */
 
 theorem ancomd (ph : wff, ps : wff, ch : wff)  {
@@ -1207,7 +1207,7 @@ proof of ancomd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference commuting conjunction in antecedent.  (Contributed by NM,
+/*Inference commuting conjunction in antecedent.  (Contributed by NM,
        21-Apr-1994.) */
 
 theorem ancoms (ph : wff, ps : wff, ch : wff)  {
@@ -1222,7 +1222,7 @@ proof of ancoms {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction commuting conjunction in antecedent.  (Contributed by NM,
+/*Deduction commuting conjunction in antecedent.  (Contributed by NM,
        12-Dec-2004.) */
 
 theorem ancomsd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1237,7 +1237,7 @@ proof of ancomsd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer conjunction of premises.  (Contributed by NM, 5-Aug-1993.) */
+/*Infer conjunction of premises.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pm3.2i (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ph ;;
@@ -1252,7 +1252,7 @@ proof of pm3.2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nested conjunction of antecedents.  (Contributed by NM, 5-Aug-1993.) */
+/*Nested conjunction of antecedents.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pm3.43i (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph → ps ) → ( ( ph → ch ) → ( ph → ( ps ∧ ch ) ) ) ) ;;
@@ -1264,7 +1264,7 @@ proof of pm3.43i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of a conjunct.  Theorem *3.26 (Simp) of [WhiteheadRussell]
+/*Elimination of a conjunct.  Theorem *3.26 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 13-Nov-2012.) */
 
@@ -1278,7 +1278,7 @@ proof of simpl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating a conjunct.  (Contributed by NM, 15-Jun-1994.) */
+/*Inference eliminating a conjunct.  (Contributed by NM, 15-Jun-1994.) */
 
 theorem simpli (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ( ph ∧ ps ) ;;
@@ -1292,7 +1292,7 @@ proof of simpli {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  A translation of natural deduction
+/*Deduction eliminating a conjunct.  A translation of natural deduction
        rule ` /\ ` EL ( ` /\ ` elimination left), see ~ natded .  (Contributed
        by NM, 5-Aug-1993.) */
 
@@ -1308,7 +1308,7 @@ proof of simpld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  (Contributed by NM, 27-May-1998.) */
+/*Deduction eliminating a conjunct.  (Contributed by NM, 27-May-1998.) */
 
 theorem simplbi (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
@@ -1322,7 +1322,7 @@ proof of simplbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of a conjunct.  Theorem *3.27 (Simp) of [WhiteheadRussell]
+/*Elimination of a conjunct.  Theorem *3.27 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 13-Nov-2012.) */
 
@@ -1336,7 +1336,7 @@ proof of simpr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating a conjunct.  (Contributed by NM, 15-Jun-1994.) */
+/*Inference eliminating a conjunct.  (Contributed by NM, 15-Jun-1994.) */
 
 theorem simpri (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ( ph ∧ ps ) ;;
@@ -1350,7 +1350,7 @@ proof of simpri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  (Contributed by NM, 5-Aug-1993.)  A
+/*Deduction eliminating a conjunct.  (Contributed by NM, 5-Aug-1993.)  A
        translation of natural deduction rule ` /\ ` ER ( ` /\ ` elimination
        right), see ~ natded .  (Proof shortened by Wolf Lammen, 3-Oct-2013.) */
 
@@ -1366,7 +1366,7 @@ proof of simprd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  (Contributed by NM, 27-May-1998.) */
+/*Deduction eliminating a conjunct.  (Contributed by NM, 27-May-1998.) */
 
 theorem simprbi (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
@@ -1380,7 +1380,7 @@ proof of simprbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding a conjunct to the right of an antecedent.  (Contributed
+/*Inference adding a conjunct to the right of an antecedent.  (Contributed
        by NM, 30-Aug-1993.) */
 
 theorem adantr (ph : wff, ps : wff, ch : wff)  {
@@ -1395,7 +1395,7 @@ proof of adantr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding a conjunct to the left of an antecedent.  (Contributed
+/*Inference adding a conjunct to the left of an antecedent.  (Contributed
        by NM, 30-Aug-1993.)  (Proof shortened by Wolf Lammen, 23-Nov-2012.) */
 
 theorem adantl (ph : wff, ps : wff, ch : wff)  {
@@ -1410,7 +1410,7 @@ proof of adantl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to the left of an antecedent.  (Contributed
+/*Deduction adding a conjunct to the left of an antecedent.  (Contributed
        by NM, 4-May-1994.)  (Proof shortened by Wolf Lammen, 20-Dec-2012.) */
 
 theorem adantld (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1425,7 +1425,7 @@ proof of adantld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to the right of an antecedent.  (Contributed
+/*Deduction adding a conjunct to the right of an antecedent.  (Contributed
        by NM, 4-May-1994.) */
 
 theorem adantrd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1440,7 +1440,7 @@ proof of adantrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens conjoining dissimilar antecedents.  (Contributed by NM,
+/*Modus ponens conjoining dissimilar antecedents.  (Contributed by NM,
        1-Feb-2008.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem mpan9 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1456,7 +1456,7 @@ proof of mpan9 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction with conjoined antecedents.  (Contributed by NM,
+/*A syllogism deduction with conjoined antecedents.  (Contributed by NM,
        24-Feb-2005.)  (Proof shortened by Wolf Lammen, 6-Apr-2013.) */
 
 theorem syldan (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1473,7 +1473,7 @@ proof of syldan {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 21-Apr-1994.)  (Proof
+/*A syllogism inference.  (Contributed by NM, 21-Apr-1994.)  (Proof
        shortened by Wolf Lammen, 22-Nov-2012.) */
 
 theorem sylan (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1489,7 +1489,7 @@ proof of sylan {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 18-May-1994.) */
+/*A syllogism inference.  (Contributed by NM, 18-May-1994.) */
 
 theorem sylanb (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ps ) ;;
@@ -1504,7 +1504,7 @@ proof of sylanb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 18-May-1994.) */
+/*A syllogism inference.  (Contributed by NM, 18-May-1994.) */
 
 theorem sylanbr (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ps ↔ ph ) ;;
@@ -1519,7 +1519,7 @@ proof of sylanbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 21-Apr-1994.)  (Proof
+/*A syllogism inference.  (Contributed by NM, 21-Apr-1994.)  (Proof
        shortened by Wolf Lammen, 22-Nov-2012.) */
 
 theorem sylan2 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1535,7 +1535,7 @@ proof of sylan2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 21-Apr-1994.) */
+/*A syllogism inference.  (Contributed by NM, 21-Apr-1994.) */
 
 theorem sylan2b (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ch ) ;;
@@ -1550,7 +1550,7 @@ proof of sylan2b {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 21-Apr-1994.) */
+/*A syllogism inference.  (Contributed by NM, 21-Apr-1994.) */
 
 theorem sylan2br (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ch ↔ ph ) ;;
@@ -1565,7 +1565,7 @@ proof of sylan2br {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double syllogism inference.  (Contributed by NM, 31-Jan-1997.) */
+/*A double syllogism inference.  (Contributed by NM, 31-Jan-1997.) */
 
 theorem syl2an (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -1581,7 +1581,7 @@ proof of syl2an {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double syllogism inference.  (Contributed by NM, 17-Sep-2013.) */
+/*A double syllogism inference.  (Contributed by NM, 17-Sep-2013.) */
 
 theorem syl2anr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -1597,7 +1597,7 @@ proof of syl2anr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double syllogism inference.  (Contributed by NM, 29-Jul-1999.) */
+/*A double syllogism inference.  (Contributed by NM, 29-Jul-1999.) */
 
 theorem syl2anb (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ps ) ;;
@@ -1613,7 +1613,7 @@ proof of syl2anb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double syllogism inference.  (Contributed by NM, 29-Jul-1999.) */
+/*A double syllogism inference.  (Contributed by NM, 29-Jul-1999.) */
 
 theorem syl2anbr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ps ↔ ph ) ;;
@@ -1629,7 +1629,7 @@ proof of syl2anbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
+/*A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
 
 theorem syland (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -1645,7 +1645,7 @@ proof of syland {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
+/*A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
 
 theorem sylan2d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -1661,7 +1661,7 @@ proof of sylan2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
+/*A syllogism deduction.  (Contributed by NM, 15-Dec-2004.) */
 
 theorem syl2and (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -1677,7 +1677,7 @@ proof of syl2and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from a logical equivalence.  (Contributed by NM,
+/*Inference from a logical equivalence.  (Contributed by NM,
        3-May-1994.) */
 
 theorem biimpa (ph : wff, ps : wff, ch : wff)  {
@@ -1692,7 +1692,7 @@ proof of biimpa {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from a logical equivalence.  (Contributed by NM,
+/*Inference from a logical equivalence.  (Contributed by NM,
        3-May-1994.) */
 
 theorem biimpar (ph : wff, ps : wff, ch : wff)  {
@@ -1707,7 +1707,7 @@ proof of biimpar {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from a logical equivalence.  (Contributed by NM,
+/*Inference from a logical equivalence.  (Contributed by NM,
        3-May-1994.) */
 
 theorem biimpac (ph : wff, ps : wff, ch : wff)  {
@@ -1722,7 +1722,7 @@ proof of biimpac {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from a logical equivalence.  (Contributed by NM,
+/*Inference from a logical equivalence.  (Contributed by NM,
        3-May-1994.) */
 
 theorem biimparc (ph : wff, ps : wff, ch : wff)  {
@@ -1737,7 +1737,7 @@ proof of biimparc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Negated conjunction in terms of disjunction (De Morgan's law).  Theorem
+/*Negated conjunction in terms of disjunction (De Morgan's law).  Theorem
      *4.51 of [WhiteheadRussell] p. 120.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 13-May-2011.) */
 
@@ -1752,7 +1752,7 @@ proof of ianor {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conjunction in terms of disjunction (De Morgan's law).  Theorem *4.5 of
+/*Conjunction in terms of disjunction (De Morgan's law).  Theorem *4.5 of
      [WhiteheadRussell] p. 120.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 3-Nov-2012.) */
 
@@ -1767,7 +1767,7 @@ proof of anor {
 	qed prop 1 = step 3 ;;
 }
 
-/* Negated disjunction in terms of conjunction (De Morgan's law).  Compare
+/*Negated disjunction in terms of conjunction (De Morgan's law).  Compare
      Theorem *4.56 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      5-Aug-1993.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
@@ -1782,7 +1782,7 @@ proof of ioran {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.52 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.52 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 5-Nov-2012.) */
 
 theorem pm4.52 (ph : wff, ps : wff)  {
@@ -1796,7 +1796,7 @@ proof of pm4.52 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.53 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.53 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.53 (ph : wff, ps : wff)  {
@@ -1810,7 +1810,7 @@ proof of pm4.53 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.54 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.54 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 5-Nov-2012.) */
 
 theorem pm4.54 (ph : wff, ps : wff)  {
@@ -1824,7 +1824,7 @@ proof of pm4.54 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.55 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.55 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.55 (ph : wff, ps : wff)  {
@@ -1838,7 +1838,7 @@ proof of pm4.55 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.56 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.56 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.56 (ph : wff, ps : wff)  {
@@ -1851,7 +1851,7 @@ proof of pm4.56 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjunction in terms of conjunction (De Morgan's law).  Compare Theorem
+/*Disjunction in terms of conjunction (De Morgan's law).  Compare Theorem
      *4.57 of [WhiteheadRussell] p. 120.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
@@ -1865,7 +1865,7 @@ proof of oran {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.57 of [WhiteheadRussell] p. 120.  (Contributed by NM,
+/*Theorem *4.57 of [WhiteheadRussell] p. 120.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.57 (ph : wff, ps : wff)  {
@@ -1878,7 +1878,7 @@ proof of pm4.57 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.1 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.1 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.1 (ph : wff, ps : wff)  {
@@ -1891,7 +1891,7 @@ proof of pm3.1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.11 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.11 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.11 (ph : wff, ps : wff)  {
@@ -1904,7 +1904,7 @@ proof of pm3.11 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.12 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.12 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.12 (ph : wff, ps : wff)  {
@@ -1917,7 +1917,7 @@ proof of pm3.12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.13 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.13 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.13 (ph : wff, ps : wff)  {
@@ -1930,7 +1930,7 @@ proof of pm3.13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.14 of [WhiteheadRussell] p. 111.  (Contributed by NM,
+/*Theorem *3.14 of [WhiteheadRussell] p. 111.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.14 (ph : wff, ps : wff)  {
@@ -1943,7 +1943,7 @@ proof of pm3.14 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of antecedent as conjunct.  Theorem *4.73 of
+/*Introduction of antecedent as conjunct.  Theorem *4.73 of
      [WhiteheadRussell] p. 121.  (Contributed by NM, 30-Mar-1994.) */
 
 theorem iba (ph : wff, ps : wff)  {
@@ -1957,7 +1957,7 @@ proof of iba {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction of antecedent as conjunct.  (Contributed by NM,
+/*Introduction of antecedent as conjunct.  (Contributed by NM,
      5-Dec-1995.) */
 
 theorem ibar (ph : wff, ps : wff)  {
@@ -1971,7 +1971,7 @@ proof of ibar {
 	qed prop 1 = step 3 ;;
 }
 
-/* A wff is equivalent to its conjunction with truth.  (Contributed by NM,
+/*A wff is equivalent to its conjunction with truth.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem biantru (ph : wff, ps : wff)  {
@@ -1986,7 +1986,7 @@ proof of biantru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff is equivalent to its conjunction with truth.  (Contributed by NM,
+/*A wff is equivalent to its conjunction with truth.  (Contributed by NM,
        3-Aug-1994.) */
 
 theorem biantrur (ph : wff, ps : wff)  {
@@ -2001,7 +2001,7 @@ proof of biantrur {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff is equivalent to its conjunction with truth.  (Contributed by NM,
+/*A wff is equivalent to its conjunction with truth.  (Contributed by NM,
        2-Aug-1994.)  (Proof shortened by Wolf Lammen, 23-Oct-2013.) */
 
 theorem biantrud (ph : wff, ps : wff, ch : wff)  {
@@ -2016,7 +2016,7 @@ proof of biantrud {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff is equivalent to its conjunction with truth.  (Contributed by NM,
+/*A wff is equivalent to its conjunction with truth.  (Contributed by NM,
        1-May-1995.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem biantrurd (ph : wff, ps : wff, ch : wff)  {
@@ -2031,7 +2031,7 @@ proof of biantrurd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference conjoining and disjoining the antecedents of two
+/*Inference conjoining and disjoining the antecedents of two
        implications.  (Contributed by NM, 30-Sep-1999.) */
 
 theorem jaao (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2048,7 +2048,7 @@ proof of jaao {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference disjoining and conjoining the antecedents of two
+/*Inference disjoining and conjoining the antecedents of two
        implications.  (Contributed by Stefan Allan, 1-Nov-2008.) */
 
 theorem jaoa (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2065,7 +2065,7 @@ proof of jaoa {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *3.44 of [WhiteheadRussell] p. 113.  (Contributed by NM,
+/*Theorem *3.44 of [WhiteheadRussell] p. 113.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 3-Oct-2013.) */
 
 theorem pm3.44 (ph : wff, ps : wff, ch : wff)  {
@@ -2079,7 +2079,7 @@ proof of pm3.44 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Disjunction of antecedents.  Compare Theorem *3.44 of [WhiteheadRussell]
+/*Disjunction of antecedents.  Compare Theorem *3.44 of [WhiteheadRussell]
      p. 113.  (Contributed by NM, 5-Apr-1994.)  (Proof shortened by Wolf
      Lammen, 4-Apr-2013.) */
 
@@ -2093,7 +2093,7 @@ proof of jao {
 	qed prop 1 = step 2 ;;
 }
 
-/* Axiom *1.2 of [WhiteheadRussell] p. 96, which they call "Taut".
+/*Axiom *1.2 of [WhiteheadRussell] p. 96, which they call "Taut".
      (Contributed by NM, 3-Jan-2005.) */
 
 theorem pm1.2 (ph : wff)  {
@@ -2107,7 +2107,7 @@ proof of pm1.2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Idempotent law for disjunction.  Theorem *4.25 of [WhiteheadRussell]
+/*Idempotent law for disjunction.  Theorem *4.25 of [WhiteheadRussell]
      p. 117.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
      Salmon, 16-Apr-2011.)  (Proof shortened by Wolf Lammen, 10-Mar-2013.) */
 
@@ -2122,7 +2122,7 @@ proof of oridm {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.25 of [WhiteheadRussell] p. 117.  (Contributed by NM,
+/*Theorem *4.25 of [WhiteheadRussell] p. 117.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.25 (ph : wff)  {
@@ -2135,7 +2135,7 @@ proof of pm4.25 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjoin antecedents and consequents of two premises.  (Contributed by
+/*Disjoin antecedents and consequents of two premises.  (Contributed by
        NM, 6-Jun-1994.)  (Proof shortened by Wolf Lammen, 25-Jul-2012.) */
 
 theorem orim12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2152,7 +2152,7 @@ proof of orim12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduce disjunct to both sides of an implication.  (Contributed by NM,
+/*Introduce disjunct to both sides of an implication.  (Contributed by NM,
        6-Jun-1994.) */
 
 theorem orim1i (ph : wff, ps : wff, ch : wff)  {
@@ -2167,7 +2167,7 @@ proof of orim1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce disjunct to both sides of an implication.  (Contributed by NM,
+/*Introduce disjunct to both sides of an implication.  (Contributed by NM,
        6-Jun-1994.) */
 
 theorem orim2i (ph : wff, ps : wff, ch : wff)  {
@@ -2182,7 +2182,7 @@ proof of orim2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding a left disjunct to both sides of a logical
+/*Inference adding a left disjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
        Lammen, 12-Dec-2012.) */
 
@@ -2201,7 +2201,7 @@ proof of orbi2i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference adding a right disjunct to both sides of a logical
+/*Inference adding a right disjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem orbi1i (ph : wff, ps : wff, ch : wff)  {
@@ -2218,7 +2218,7 @@ proof of orbi1i {
 	qed prop 1 = step 4 ;;
 }
 
-/* Infer the disjunction of two equivalences.  (Contributed by NM,
+/*Infer the disjunction of two equivalences.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem orbi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2235,7 +2235,7 @@ proof of orbi12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Axiom *1.5 (Assoc) of [WhiteheadRussell] p. 96.  (Contributed by NM,
+/*Axiom *1.5 (Assoc) of [WhiteheadRussell] p. 96.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm1.5 (ph : wff, ps : wff, ch : wff)  {
@@ -2251,7 +2251,7 @@ proof of pm1.5 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Swap two disjuncts.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
+/*Swap two disjuncts.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
      Wolf Lammen, 14-Nov-2012.) */
 
 theorem or12 (ph : wff, ps : wff, ch : wff)  {
@@ -2265,7 +2265,7 @@ proof of or12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Associative law for disjunction.  Theorem *4.33 of [WhiteheadRussell]
+/*Associative law for disjunction.  Theorem *4.33 of [WhiteheadRussell]
      p. 118.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) */
 
@@ -2282,7 +2282,7 @@ proof of orass {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *2.31 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+/*Theorem *2.31 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.31 (ph : wff, ps : wff, ch : wff)  {
@@ -2295,7 +2295,7 @@ proof of pm2.31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.32 of [WhiteheadRussell] p. 105.  (Contributed by NM,
+/*Theorem *2.32 of [WhiteheadRussell] p. 105.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.32 (ph : wff, ps : wff, ch : wff)  {
@@ -2308,7 +2308,7 @@ proof of pm2.32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A rearrangement of disjuncts.  (Contributed by NM, 18-Oct-1995.)  (Proof
+/*A rearrangement of disjuncts.  (Contributed by NM, 18-Oct-1995.)  (Proof
      shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem or32 (ph : wff, ps : wff, ch : wff)  {
@@ -2323,7 +2323,7 @@ proof of or32 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rearrangement of 4 disjuncts.  (Contributed by NM, 12-Aug-1994.) */
+/*Rearrangement of 4 disjuncts.  (Contributed by NM, 12-Aug-1994.) */
 
 theorem or4 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∨ ps ) ∨ ( ch ∨ th ) ) ↔ ( ( ph ∨ ch ) ∨ ( ps ∨ th ) ) ) ;;
@@ -2338,7 +2338,7 @@ proof of or4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrangement of 4 disjuncts.  (Contributed by NM, 10-Jan-2005.) */
+/*Rearrangement of 4 disjuncts.  (Contributed by NM, 10-Jan-2005.) */
 
 theorem or42 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∨ ps ) ∨ ( ch ∨ th ) ) ↔ ( ( ph ∨ ch ) ∨ ( th ∨ ps ) ) ) ;;
@@ -2352,7 +2352,7 @@ proof of or42 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of disjunction over disjunction.  (Contributed by NM,
+/*Distribution of disjunction over disjunction.  (Contributed by NM,
      25-Feb-1995.) */
 
 theorem orordi (ph : wff, ps : wff, ch : wff)  {
@@ -2367,7 +2367,7 @@ proof of orordi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of disjunction over disjunction.  (Contributed by NM,
+/*Distribution of disjunction over disjunction.  (Contributed by NM,
      25-Feb-1995.) */
 
 theorem orordir (ph : wff, ps : wff, ch : wff)  {
@@ -2382,7 +2382,7 @@ proof of orordir {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduce conjunction of the consequents of two implications ("join
+/*Deduce conjunction of the consequents of two implications ("join
        consequents with 'and'").  Equivalent to the natural deduction rule
        ` /\ ` I ( ` /\ ` introduction), see ~ natded .  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Oct-2012.) */
@@ -2400,7 +2400,7 @@ proof of jca {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining the consequents of two implications.  (Contributed
+/*Deduction conjoining the consequents of two implications.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
 
 theorem jcad (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2416,7 +2416,7 @@ proof of jcad {
 	qed prop 1 = step 2 ;;
 }
 
-/* Join three consequents.  (Contributed by Jeff Hankins, 1-Aug-2009.) */
+/*Join three consequents.  (Contributed by Jeff Hankins, 1-Aug-2009.) */
 
 theorem jca31 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -2432,7 +2432,7 @@ proof of jca31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Join three consequents.  (Contributed by FL, 1-Aug-2009.) */
+/*Join three consequents.  (Contributed by FL, 1-Aug-2009.) */
 
 theorem jca32 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -2448,7 +2448,7 @@ proof of jca32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction replacing implication with conjunction.  (Contributed by NM,
+/*Deduction replacing implication with conjunction.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem jcai (ph : wff, ps : wff, ch : wff)  {
@@ -2464,7 +2464,7 @@ proof of jcai {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference conjoining a theorem to left of consequent in an implication.
+/*Inference conjoining a theorem to left of consequent in an implication.
        (Contributed by NM, 31-Dec-1993.) */
 
 theorem jctil (ph : wff, ps : wff, ch : wff)  {
@@ -2480,7 +2480,7 @@ proof of jctil {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference conjoining a theorem to right of consequent in an
+/*Inference conjoining a theorem to right of consequent in an
        implication.  (Contributed by NM, 31-Dec-1993.) */
 
 theorem jctir (ph : wff, ps : wff, ch : wff)  {
@@ -2496,7 +2496,7 @@ proof of jctir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference conjoining a theorem to the left of a consequent.
+/*Inference conjoining a theorem to the left of a consequent.
        (Contributed by NM, 31-Dec-1993.)  (Proof shortened by Wolf Lammen,
        24-Oct-2012.) */
 
@@ -2512,7 +2512,7 @@ proof of jctl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference conjoining a theorem to the right of a consequent.
+/*Inference conjoining a theorem to the right of a consequent.
        (Contributed by NM, 18-Aug-1993.)  (Proof shortened by Wolf Lammen,
        24-Oct-2012.) */
 
@@ -2528,7 +2528,7 @@ proof of jctr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining a theorem to left of consequent in an implication.
+/*Deduction conjoining a theorem to left of consequent in an implication.
        (Contributed by NM, 21-Apr-2005.) */
 
 theorem jctild (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2544,7 +2544,7 @@ proof of jctild {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining a theorem to right of consequent in an
+/*Deduction conjoining a theorem to right of consequent in an
        implication.  (Contributed by NM, 21-Apr-2005.) */
 
 theorem jctird (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2560,7 +2560,7 @@ proof of jctird {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedent to left of consequent.  (Contributed by NM,
+/*Conjoin antecedent to left of consequent.  (Contributed by NM,
      15-Aug-1994.) */
 
 theorem ancl (ph : wff, ps : wff)  {
@@ -2573,7 +2573,7 @@ proof of ancl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedent to left of consequent.  Theorem *4.7 of
+/*Conjoin antecedent to left of consequent.  Theorem *4.7 of
      [WhiteheadRussell] p. 120.  (Contributed by NM, 25-Jul-1999.)  (Proof
      shortened by Wolf Lammen, 24-Mar-2013.) */
 
@@ -2587,7 +2587,7 @@ proof of anclb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.42 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.42 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.42 (ph : wff, ps : wff, ch : wff)  {
@@ -2601,7 +2601,7 @@ proof of pm5.42 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conjoin antecedent to right of consequent.  (Contributed by NM,
+/*Conjoin antecedent to right of consequent.  (Contributed by NM,
      15-Aug-1994.) */
 
 theorem ancr (ph : wff, ps : wff)  {
@@ -2614,7 +2614,7 @@ proof of ancr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedent to right of consequent.  (Contributed by NM,
+/*Conjoin antecedent to right of consequent.  (Contributed by NM,
      25-Jul-1999.)  (Proof shortened by Wolf Lammen, 24-Mar-2013.) */
 
 theorem ancrb (ph : wff, ps : wff)  {
@@ -2627,7 +2627,7 @@ proof of ancrb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining antecedent to left of consequent.  (Contributed by
+/*Deduction conjoining antecedent to left of consequent.  (Contributed by
        NM, 12-Aug-1993.) */
 
 theorem ancli (ph : wff, ps : wff)  {
@@ -2642,7 +2642,7 @@ proof of ancli {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining antecedent to right of consequent.  (Contributed by
+/*Deduction conjoining antecedent to right of consequent.  (Contributed by
        NM, 15-Aug-1994.) */
 
 theorem ancri (ph : wff, ps : wff)  {
@@ -2657,7 +2657,7 @@ proof of ancri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining antecedent to left of consequent in nested
+/*Deduction conjoining antecedent to left of consequent in nested
        implication.  (Contributed by NM, 15-Aug-1994.)  (Proof shortened by
        Wolf Lammen, 1-Nov-2012.) */
 
@@ -2673,7 +2673,7 @@ proof of ancld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining antecedent to right of consequent in nested
+/*Deduction conjoining antecedent to right of consequent in nested
        implication.  (Contributed by NM, 15-Aug-1994.)  (Proof shortened by
        Wolf Lammen, 1-Nov-2012.) */
 
@@ -2689,7 +2689,7 @@ proof of ancrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedent to left of consequent in nested implication.
+/*Conjoin antecedent to left of consequent in nested implication.
      (Contributed by NM, 10-Aug-1994.)  (Proof shortened by Wolf Lammen,
      14-Jul-2013.) */
 
@@ -2703,7 +2703,7 @@ proof of anc2l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedent to right of consequent in nested implication.
+/*Conjoin antecedent to right of consequent in nested implication.
      (Contributed by NM, 15-Aug-1994.) */
 
 theorem anc2r (ph : wff, ps : wff, ch : wff)  {
@@ -2717,7 +2717,7 @@ proof of anc2r {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction conjoining antecedent to left of consequent in nested
+/*Deduction conjoining antecedent to left of consequent in nested
        implication.  (Contributed by NM, 10-Aug-1994.)  (Proof shortened by
        Wolf Lammen, 7-Dec-2012.) */
 
@@ -2733,7 +2733,7 @@ proof of anc2li {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining antecedent to right of consequent in nested
+/*Deduction conjoining antecedent to right of consequent in nested
        implication.  (Contributed by NM, 15-Aug-1994.)  (Proof shortened by
        Wolf Lammen, 7-Dec-2012.) */
 
@@ -2749,7 +2749,7 @@ proof of anc2ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.41 of [WhiteheadRussell] p. 113.  (Contributed by NM,
+/*Theorem *3.41 of [WhiteheadRussell] p. 113.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.41 (ph : wff, ps : wff, ch : wff)  {
@@ -2762,7 +2762,7 @@ proof of pm3.41 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.42 of [WhiteheadRussell] p. 113.  (Contributed by NM,
+/*Theorem *3.42 of [WhiteheadRussell] p. 113.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.42 (ph : wff, ps : wff, ch : wff)  {
@@ -2775,7 +2775,7 @@ proof of pm3.42 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjunction implies implication.  Theorem *3.4 of [WhiteheadRussell]
+/*Conjunction implies implication.  Theorem *3.4 of [WhiteheadRussell]
      p. 113.  (Contributed by NM, 31-Jul-1995.) */
 
 theorem pm3.4 (ph : wff, ps : wff)  {
@@ -2788,7 +2788,7 @@ proof of pm3.4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjunction with implication.  Compare Theorem *4.45 of [WhiteheadRussell]
+/*Conjunction with implication.  Compare Theorem *4.45 of [WhiteheadRussell]
      p. 119.  (Contributed by NM, 17-May-1998.) */
 
 theorem pm4.45im (ph : wff, ps : wff)  {
@@ -2803,7 +2803,7 @@ proof of pm4.45im {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conjoin antecedents and consequents in a deduction.  (Contributed by NM,
+/*Conjoin antecedents and consequents in a deduction.  (Contributed by NM,
        3-Apr-1994.)  (Proof shortened by Wolf Lammen, 18-Dec-2013.) */
 
 theorem anim12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2819,7 +2819,7 @@ proof of anim12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Add a conjunct to right of antecedent and consequent in a deduction.
+/*Add a conjunct to right of antecedent and consequent in a deduction.
        (Contributed by NM, 3-Apr-1994.) */
 
 theorem anim1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2834,7 +2834,7 @@ proof of anim1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Add a conjunct to left of antecedent and consequent in a deduction.
+/*Add a conjunct to left of antecedent and consequent in a deduction.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem anim2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2849,7 +2849,7 @@ proof of anim2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedents and consequents of two premises.  (Contributed by
+/*Conjoin antecedents and consequents of two premises.  (Contributed by
        NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 14-Dec-2013.) */
 
 theorem anim12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2865,7 +2865,7 @@ proof of anim12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Variant of ~ anim12i with commutation.  (Contributed by Jonathan
+/*Variant of ~ anim12i with commutation.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem anim12ci (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2881,7 +2881,7 @@ proof of anim12ci {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce conjunct to both sides of an implication.  (Contributed by NM,
+/*Introduce conjunct to both sides of an implication.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem anim1i (ph : wff, ps : wff, ch : wff)  {
@@ -2896,7 +2896,7 @@ proof of anim1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce conjunct to both sides of an implication.  (Contributed by NM,
+/*Introduce conjunct to both sides of an implication.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem anim2i (ph : wff, ps : wff, ch : wff)  {
@@ -2911,7 +2911,7 @@ proof of anim2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedents and consequents in a deduction.  (Contributed by NM,
+/*Conjoin antecedents and consequents in a deduction.  (Contributed by NM,
        11-Nov-2007.)  (Proof shortened by Wolf Lammen, 19-Jul-2013.) */
 
 theorem anim12ii (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2928,7 +2928,7 @@ proof of anim12ii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conjoin antecedents and consequents of two premises.  This is the closed
+/*Conjoin antecedents and consequents of two premises.  This is the closed
      theorem form of ~ anim12d .  Theorem *3.47 of [WhiteheadRussell] p. 113.
      It was proved by Leibniz, and it evidently pleased him enough to call it
      _praeclarum theorema_ (splendid theorem).  (Contributed by NM,
@@ -2945,7 +2945,7 @@ proof of prth {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.3 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+/*Theorem *2.3 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.3 (ph : wff, ps : wff, ch : wff)  {
@@ -2958,7 +2958,7 @@ proof of pm2.3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.41 of [WhiteheadRussell] p. 106.  (Contributed by NM,
+/*Theorem *2.41 of [WhiteheadRussell] p. 106.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.41 (ph : wff, ps : wff)  {
@@ -2972,7 +2972,7 @@ proof of pm2.41 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.42 of [WhiteheadRussell] p. 106.  (Contributed by NM,
+/*Theorem *2.42 of [WhiteheadRussell] p. 106.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.42 (ph : wff, ps : wff)  {
@@ -2986,7 +2986,7 @@ proof of pm2.42 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.4 of [WhiteheadRussell] p. 106.  (Contributed by NM,
+/*Theorem *2.4 of [WhiteheadRussell] p. 106.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.4 (ph : wff, ps : wff)  {
@@ -3000,7 +3000,7 @@ proof of pm2.4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction rule for proof by contradiction.  (Contributed by NM,
+/*Deduction rule for proof by contradiction.  (Contributed by NM,
        12-Jun-2014.) */
 
 theorem pm2.65da (ph : wff, ps : wff, ch : wff)  {
@@ -3017,7 +3017,7 @@ proof of pm2.65da {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.44 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+/*Theorem *4.44 of [WhiteheadRussell] p. 119.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.44 (ph : wff, ps : wff)  {
@@ -3033,7 +3033,7 @@ proof of pm4.44 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *4.14 of [WhiteheadRussell] p. 117.  (Contributed by NM,
+/*Theorem *4.14 of [WhiteheadRussell] p. 117.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 23-Oct-2012.) */
 
 theorem pm4.14 (ph : wff, ps : wff, ch : wff)  {
@@ -3049,7 +3049,7 @@ proof of pm4.14 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *3.37 (Transp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
+/*Theorem *3.37 (Transp) of [WhiteheadRussell] p. 112.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 23-Oct-2012.) */
 
 theorem pm3.37 (ph : wff, ps : wff, ch : wff)  {
@@ -3062,7 +3062,7 @@ proof of pm3.37 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem to move a conjunct in and out of a negation.  (Contributed by NM,
+/*Theorem to move a conjunct in and out of a negation.  (Contributed by NM,
      9-Nov-2003.) */
 
 theorem nan (ph : wff, ps : wff, ch : wff)  {
@@ -3077,7 +3077,7 @@ proof of nan {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *4.15 of [WhiteheadRussell] p. 117.  (Contributed by NM,
+/*Theorem *4.15 of [WhiteheadRussell] p. 117.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 18-Nov-2012.) */
 
 theorem pm4.15 (ph : wff, ps : wff, ch : wff)  {
@@ -3091,7 +3091,7 @@ proof of pm4.15 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.78 of [WhiteheadRussell] p. 121.  (Contributed by NM,
+/*Theorem *4.78 of [WhiteheadRussell] p. 121.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 19-Nov-2012.) */
 
 theorem pm4.78 (ph : wff, ps : wff, ch : wff)  {
@@ -3108,7 +3108,7 @@ proof of pm4.78 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *4.79 of [WhiteheadRussell] p. 121.  (Contributed by NM,
+/*Theorem *4.79 of [WhiteheadRussell] p. 121.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 27-Jun-2013.) */
 
 theorem pm4.79 (ph : wff, ps : wff, ch : wff)  {
@@ -3127,7 +3127,7 @@ proof of pm4.79 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Theorem *4.87 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.87 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Eric Schmidt, 26-Oct-2006.) */
 
 theorem pm4.87 (ph : wff, ps : wff, ch : wff)  {
@@ -3144,7 +3144,7 @@ proof of pm4.87 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *3.33 (Syll) of [WhiteheadRussell] p. 112.  (Contributed by NM,
+/*Theorem *3.33 (Syll) of [WhiteheadRussell] p. 112.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.33 (ph : wff, ps : wff, ch : wff)  {
@@ -3157,7 +3157,7 @@ proof of pm3.33 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.34 (Syll) of [WhiteheadRussell] p. 112.  (Contributed by NM,
+/*Theorem *3.34 (Syll) of [WhiteheadRussell] p. 112.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.34 (ph : wff, ps : wff, ch : wff)  {
@@ -3170,7 +3170,7 @@ proof of pm3.34 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjunctive detachment.  Theorem *3.35 of [WhiteheadRussell] p. 112.
+/*Conjunctive detachment.  Theorem *3.35 of [WhiteheadRussell] p. 112.
      (Contributed by NM, 14-Dec-2002.) */
 
 theorem pm3.35 (ph : wff, ps : wff)  {
@@ -3183,7 +3183,7 @@ proof of pm3.35 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.31 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.31 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.31 (ph : wff, ps : wff, ch : wff)  {
@@ -3197,7 +3197,7 @@ proof of pm5.31 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp4a (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3211,7 +3211,7 @@ proof of imp4a {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp4b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3225,7 +3225,7 @@ proof of imp4b {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp4c (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3239,7 +3239,7 @@ proof of imp4c {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp4d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3253,7 +3253,7 @@ proof of imp4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp41 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3267,7 +3267,7 @@ proof of imp41 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp42 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3281,7 +3281,7 @@ proof of imp42 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp43 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3295,7 +3295,7 @@ proof of imp43 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp44 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3309,7 +3309,7 @@ proof of imp44 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An importation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem imp45 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ta ) ) ) ) ;;
@@ -3323,7 +3323,7 @@ proof of imp45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem imp5a (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ( ta → et ) ) ) ) ) ;;
@@ -3337,7 +3337,7 @@ proof of imp5a {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem imp5d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ( ta → et ) ) ) ) ) ;;
@@ -3351,7 +3351,7 @@ proof of imp5d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem imp5g (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ( ta → et ) ) ) ) ) ;;
@@ -3365,7 +3365,7 @@ proof of imp5g {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem imp55 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ( ta → et ) ) ) ) ) ;;
@@ -3379,7 +3379,7 @@ proof of imp55 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An importation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem imp511 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → ( th → ( ta → et ) ) ) ) ) ;;
@@ -3393,7 +3393,7 @@ proof of imp511 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation followed by a deduction version of importation.
+/*Exportation followed by a deduction version of importation.
        (Contributed by NM, 6-Sep-2008.) */
 
 theorem expimpd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3408,7 +3408,7 @@ proof of expimpd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp31 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ) → th ) ;;
@@ -3422,7 +3422,7 @@ proof of exp31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp32 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ) → th ) ;;
@@ -3436,7 +3436,7 @@ proof of exp32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp4a (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ( ch ∧ th ) → ta ) ) ) ;;
@@ -3450,7 +3450,7 @@ proof of exp4a {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.)  (Proof
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.)  (Proof
        shortened by Wolf Lammen, 23-Nov-2012.) */
 
 theorem exp4b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3465,7 +3465,7 @@ proof of exp4b {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp4c (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ( ps ∧ ch ) ∧ th ) → ta ) ) ;;
@@ -3479,7 +3479,7 @@ proof of exp4c {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp4d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ps ∧ ( ch ∧ th ) ) → ta ) ) ;;
@@ -3493,7 +3493,7 @@ proof of exp4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp41 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ) ∧ th ) → ta ) ;;
@@ -3507,7 +3507,7 @@ proof of exp41 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp42 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ( ps ∧ ch ) ) ∧ th ) → ta ) ;;
@@ -3521,7 +3521,7 @@ proof of exp42 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp43 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) → ta ) ;;
@@ -3535,7 +3535,7 @@ proof of exp43 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp44 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ( ( ps ∧ ch ) ∧ th ) ) → ta ) ;;
@@ -3549,7 +3549,7 @@ proof of exp44 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
+/*An exportation inference.  (Contributed by NM, 26-Apr-1994.) */
 
 theorem exp45 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ( ps ∧ ( ch ∧ th ) ) ) → ta ) ;;
@@ -3563,7 +3563,7 @@ proof of exp45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Export a wff from a right conjunct.  (Contributed by Jeff Hankins,
+/*Export a wff from a right conjunct.  (Contributed by Jeff Hankins,
        30-Aug-2009.) */
 
 theorem expr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3578,7 +3578,7 @@ proof of expr {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
+/*An exportation inference.  (Contributed by Jeff Hankins, 7-Jul-2009.) */
 
 theorem exp5c (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ps ∧ ch ) → ( ( th ∧ ta ) → et ) ) ) ;;
@@ -3592,7 +3592,7 @@ proof of exp5c {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by Jeff Hankins,
+/*An exportation inference.  (Contributed by Jeff Hankins,
        30-Aug-2009.) */
 
 theorem exp53 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3607,7 +3607,7 @@ proof of exp53 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Export a wff from a left conjunct.  (Contributed by Jeff Hankins,
+/*Export a wff from a left conjunct.  (Contributed by Jeff Hankins,
        28-Aug-2009.) */
 
 theorem expl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3622,7 +3622,7 @@ proof of expl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Import a wff into a right conjunct.  (Contributed by Jeff Hankins,
+/*Import a wff into a right conjunct.  (Contributed by Jeff Hankins,
        30-Aug-2009.) */
 
 theorem impr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3637,7 +3637,7 @@ proof of impr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Export a wff from a left conjunct.  (Contributed by Mario Carneiro,
+/*Export a wff from a left conjunct.  (Contributed by Mario Carneiro,
        9-Jul-2014.) */
 
 theorem impl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3652,7 +3652,7 @@ proof of impl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation with conjunction in consequent.  (Contributed by NM,
+/*Importation with conjunction in consequent.  (Contributed by NM,
        9-Aug-1994.) */
 
 theorem impac (ph : wff, ps : wff, ch : wff)  {
@@ -3667,7 +3667,7 @@ proof of impac {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference form of ~ exbir .  This proof is ~ exbiriVD automatically
+/*Inference form of ~ exbir .  This proof is ~ exbiriVD automatically
        translated and minimized.  (Contributed by Alan Sare, 31-Dec-2011.)
        (Proof shortened by Wolf Lammen, 27-Jan-2013.) */
 
@@ -3683,7 +3683,7 @@ proof of exbiri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  (Contributed by NM, 22-Oct-2007.) */
+/*Deduction eliminating a conjunct.  (Contributed by NM, 22-Oct-2007.) */
 
 theorem simprbda (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ( ch ∧ th ) ) ) ;;
@@ -3697,7 +3697,7 @@ proof of simprbda {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  (Contributed by NM, 22-Oct-2007.) */
+/*Deduction eliminating a conjunct.  (Contributed by NM, 22-Oct-2007.) */
 
 theorem simplbda (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ( ch ∧ th ) ) ) ;;
@@ -3711,7 +3711,7 @@ proof of simplbda {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating a conjunct.  Automatically derived from
+/*Deduction eliminating a conjunct.  Automatically derived from
        ~ simplbi2VD .  (Contributed by Alan Sare, 31-Dec-2011.) */
 
 theorem simplbi2 (ph : wff, ps : wff, ch : wff)  {
@@ -3726,7 +3726,7 @@ proof of simplbi2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A theorem similar to the standard definition of the biconditional.
+/*A theorem similar to the standard definition of the biconditional.
      Definition of [Margaris] p. 49.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem dfbi2 (ph : wff, ps : wff)  {
@@ -3740,7 +3740,7 @@ proof of dfbi2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Definition ~ df-bi rewritten in an abbreviated form to help intuitive
+/*Definition ~ df-bi rewritten in an abbreviated form to help intuitive
      understanding of that definition.  Note that it is a conjunction of two
      implications; one which asserts properties that follow from the
      biconditional and one which asserts properties that imply the
@@ -3759,7 +3759,7 @@ proof of dfbi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Implication in terms of biconditional and conjunction.  Theorem *4.71 of
+/*Implication in terms of biconditional and conjunction.  Theorem *4.71 of
      [WhiteheadRussell] p. 120.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 2-Dec-2012.) */
 
@@ -3776,7 +3776,7 @@ proof of pm4.71 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Implication in terms of biconditional and conjunction.  Theorem *4.71 of
+/*Implication in terms of biconditional and conjunction.  Theorem *4.71 of
      [WhiteheadRussell] p. 120 (with conjunct reversed).  (Contributed by NM,
      25-Jul-1999.) */
 
@@ -3792,7 +3792,7 @@ proof of pm4.71r {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference converting an implication to a biconditional with
+/*Inference converting an implication to a biconditional with
        conjunction.  Inference from Theorem *4.71 of [WhiteheadRussell]
        p. 120.  (Contributed by NM, 4-Jan-2004.) */
 
@@ -3808,7 +3808,7 @@ proof of pm4.71i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference converting an implication to a biconditional with
+/*Inference converting an implication to a biconditional with
        conjunction.  Inference from Theorem *4.71 of [WhiteheadRussell] p. 120
        (with conjunct reversed).  (Contributed by NM, 1-Dec-2003.) */
 
@@ -3824,7 +3824,7 @@ proof of pm4.71ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction converting an implication to a biconditional with
+/*Deduction converting an implication to a biconditional with
        conjunction.  Deduction from Theorem *4.71 of [WhiteheadRussell]
        p. 120.  (Contributed by Mario Carneiro, 25-Dec-2016.) */
 
@@ -3840,7 +3840,7 @@ proof of pm4.71d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction converting an implication to a biconditional with
+/*Deduction converting an implication to a biconditional with
        conjunction.  Deduction from Theorem *4.71 of [WhiteheadRussell]
        p. 120.  (Contributed by NM, 10-Feb-2005.) */
 
@@ -3856,7 +3856,7 @@ proof of pm4.71rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional.  Theorem *5.32 of
+/*Distribution of implication over biconditional.  Theorem *5.32 of
      [WhiteheadRussell] p. 125.  (Contributed by NM, 1-Aug-1994.) */
 
 theorem pm5.32 (ph : wff, ps : wff, ch : wff)  {
@@ -3876,7 +3876,7 @@ proof of pm5.32 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distribution of implication over biconditional (inference rule).
+/*Distribution of implication over biconditional (inference rule).
        (Contributed by NM, 1-Aug-1994.) */
 
 theorem pm5.32i (ph : wff, ps : wff, ch : wff)  {
@@ -3891,7 +3891,7 @@ proof of pm5.32i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (inference rule).
+/*Distribution of implication over biconditional (inference rule).
        (Contributed by NM, 12-Mar-1995.) */
 
 theorem pm5.32ri (ph : wff, ps : wff, ch : wff)  {
@@ -3908,7 +3908,7 @@ proof of pm5.32ri {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 29-Oct-1996.) */
 
 theorem pm5.32d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3923,7 +3923,7 @@ proof of pm5.32d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 25-Dec-2004.) */
 
 theorem pm5.32rd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3940,7 +3940,7 @@ proof of pm5.32rd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 9-Dec-2006.) */
 
 theorem pm5.32da (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3955,7 +3955,7 @@ proof of pm5.32da {
 	qed prop 1 = step 2 ;;
 }
 
-/* Add a conjunction to an equivalence.  (Contributed by Jeff Madsen,
+/*Add a conjunction to an equivalence.  (Contributed by Jeff Madsen,
        20-Jun-2011.) */
 
 theorem biadan2 (ph : wff, ps : wff, ch : wff)  {
@@ -3972,7 +3972,7 @@ proof of biadan2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.24 of [WhiteheadRussell] p. 117.  (Contributed by NM,
+/*Theorem *4.24 of [WhiteheadRussell] p. 117.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.24 (ph : wff)  {
@@ -3985,7 +3985,7 @@ proof of pm4.24 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Idempotent law for conjunction.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Idempotent law for conjunction.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 14-Mar-2014.) */
 
 theorem anidm (ph : wff)  {
@@ -3998,7 +3998,7 @@ proof of anidm {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from idempotent law for conjunction.  (Contributed by NM,
+/*Inference from idempotent law for conjunction.  (Contributed by NM,
        15-Jun-1994.) */
 
 theorem anidms (ph : wff, ps : wff)  {
@@ -4013,7 +4013,7 @@ proof of anidms {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjunction idempotence with antecedent.  (Contributed by Roy F. Longton,
+/*Conjunction idempotence with antecedent.  (Contributed by Roy F. Longton,
      8-Aug-2005.) */
 
 theorem anidmdbi (ph : wff, ps : wff)  {
@@ -4026,7 +4026,7 @@ proof of anidmdbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Associative law for conjunction applied to antecedent (eliminates
+/*Associative law for conjunction applied to antecedent (eliminates
        syllogism).  (Contributed by NM, 15-Nov-2002.) */
 
 theorem anasss (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4041,7 +4041,7 @@ proof of anasss {
 	qed prop 1 = step 2 ;;
 }
 
-/* Associative law for conjunction applied to antecedent (eliminates
+/*Associative law for conjunction applied to antecedent (eliminates
        syllogism).  (Contributed by NM, 15-Nov-2002.) */
 
 theorem anassrs (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4056,7 +4056,7 @@ proof of anassrs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Associative law for conjunction.  Theorem *4.32 of [WhiteheadRussell]
+/*Associative law for conjunction.  Theorem *4.32 of [WhiteheadRussell]
      p. 118.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 24-Nov-2012.) */
 
@@ -4073,7 +4073,7 @@ proof of anass {
 	qed prop 1 = step 5 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 10-Mar-2005.) */
+/*A syllogism inference.  (Contributed by NM, 10-Mar-2005.) */
 
 theorem sylanl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4088,7 +4088,7 @@ proof of sylanl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 1-Jan-2005.) */
+/*A syllogism inference.  (Contributed by NM, 1-Jan-2005.) */
 
 theorem sylanl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4103,7 +4103,7 @@ proof of sylanl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 9-Apr-2005.) */
+/*A syllogism inference.  (Contributed by NM, 9-Apr-2005.) */
 
 theorem sylanr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4118,7 +4118,7 @@ proof of sylanr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 9-Apr-2005.) */
+/*A syllogism inference.  (Contributed by NM, 9-Apr-2005.) */
 
 theorem sylanr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -4133,7 +4133,7 @@ proof of sylanr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 2-May-1996.) */
+/*A syllogism inference.  (Contributed by NM, 2-May-1996.) */
 
 theorem sylani (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4148,7 +4148,7 @@ proof of sylani {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 1-Aug-1994.) */
+/*A syllogism inference.  (Contributed by NM, 1-Aug-1994.) */
 
 theorem sylan2i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -4163,7 +4163,7 @@ proof of sylan2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 3-Aug-1999.) */
+/*A syllogism inference.  (Contributed by NM, 3-Aug-1999.) */
 
 theorem syl2ani (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4179,7 +4179,7 @@ proof of syl2ani {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nested syllogism inference conjoining dissimilar antecedents.
+/*Nested syllogism inference conjoining dissimilar antecedents.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        7-May-2011.) */
 
@@ -4196,7 +4196,7 @@ proof of sylan9 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nested syllogism inference conjoining dissimilar antecedents.
+/*Nested syllogism inference conjoining dissimilar antecedents.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem sylan9r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4212,7 +4212,7 @@ proof of sylan9r {
 	qed prop 1 = step 2 ;;
 }
 
-/* A modus tollens deduction.  (Contributed by Jeff Hankins,
+/*A modus tollens deduction.  (Contributed by Jeff Hankins,
        19-Aug-2009.) */
 
 theorem mtand (ph : wff, ps : wff, ch : wff)  {
@@ -4228,7 +4228,7 @@ proof of mtand {
 	qed prop 1 = step 2 ;;
 }
 
-/* A modus tollens deduction involving disjunction.  (Contributed by Jeff
+/*A modus tollens deduction involving disjunction.  (Contributed by Jeff
        Hankins, 15-Jul-2009.) */
 
 theorem mtord (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4247,7 +4247,7 @@ proof of mtord {
 	qed prop 1 = step 4 ;;
 }
 
-/* Syllogism inference combined with contraction.  (Contributed by NM,
+/*Syllogism inference combined with contraction.  (Contributed by NM,
        16-Mar-2012.) */
 
 theorem syl2anc (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4264,7 +4264,7 @@ proof of syl2anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference combined with modus ponens.  (Contributed by Jeff
+/*Syllogism inference combined with modus ponens.  (Contributed by Jeff
        Madsen, 2-Sep-2009.) */
 
 theorem sylancl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4281,7 +4281,7 @@ proof of sylancl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference combined with modus ponens.  (Contributed by Jeff
+/*Syllogism inference combined with modus ponens.  (Contributed by Jeff
        Madsen, 2-Sep-2009.) */
 
 theorem sylancr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4298,7 +4298,7 @@ proof of sylancr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
+/*Syllogism inference.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
 
 theorem sylanbrc (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4314,7 +4314,7 @@ proof of sylanbrc {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference combined with contraction.  (Contributed by NM,
+/*A syllogism inference combined with contraction.  (Contributed by NM,
        3-Sep-2004.) */
 
 theorem sylancb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4331,7 +4331,7 @@ proof of sylancb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference combined with contraction.  (Contributed by NM,
+/*A syllogism inference combined with contraction.  (Contributed by NM,
        3-Sep-2004.) */
 
 theorem sylancbr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4348,7 +4348,7 @@ proof of sylancbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference with commutation of antecedents.  (Contributed by
+/*Syllogism inference with commutation of antecedents.  (Contributed by
        NM, 2-Jul-2008.) */
 
 theorem sylancom (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4364,7 +4364,7 @@ proof of sylancom {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 23-May-1999.)
+/*An inference based on modus ponens.  (Contributed by NM, 23-May-1999.)
        (Proof shortened by Wolf Lammen, 22-Nov-2012.) */
 
 theorem mpdan (ph : wff, ps : wff, ch : wff)  {
@@ -4380,7 +4380,7 @@ proof of mpdan {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens with commutation of antecedents.
+/*An inference based on modus ponens with commutation of antecedents.
        (Contributed by NM, 28-Oct-2003.)  (Proof shortened by Wolf Lammen,
        7-Apr-2013.) */
 
@@ -4397,7 +4397,7 @@ proof of mpancom {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 30-Aug-1993.)
+/*An inference based on modus ponens.  (Contributed by NM, 30-Aug-1993.)
        (Proof shortened by Wolf Lammen, 7-Apr-2013.) */
 
 theorem mpan (ph : wff, ps : wff, ch : wff)  {
@@ -4413,7 +4413,7 @@ proof of mpan {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 16-Sep-1993.)
+/*An inference based on modus ponens.  (Contributed by NM, 16-Sep-1993.)
        (Proof shortened by Wolf Lammen, 19-Nov-2012.) */
 
 theorem mpan2 (ph : wff, ps : wff, ch : wff)  {
@@ -4429,7 +4429,7 @@ proof of mpan2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        13-Apr-1995.) */
 
 theorem mp2an (ph : wff, ps : wff, ch : wff)  {
@@ -4446,7 +4446,7 @@ proof of mp2an {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by Jeff Madsen,
+/*An inference based on modus ponens.  (Contributed by Jeff Madsen,
        15-Jun-2010.) */
 
 theorem mp4an (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4466,7 +4466,7 @@ proof of mp4an {
 	qed prop 1 = step 3 ;;
 }
 
-/* A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.) */
+/*A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.) */
 
 theorem mpan2d (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4481,7 +4481,7 @@ proof of mpan2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.)
+/*A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.)
        (Proof shortened by Wolf Lammen, 7-Apr-2013.) */
 
 theorem mpand (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4497,7 +4497,7 @@ proof of mpand {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 10-Apr-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 10-Apr-1994.)
        (Proof shortened by Wolf Lammen, 19-Nov-2012.) */
 
 theorem mpani (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4513,7 +4513,7 @@ proof of mpani {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 10-Apr-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 10-Apr-1994.)
        (Proof shortened by Wolf Lammen, 19-Nov-2012.) */
 
 theorem mpan2i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4529,7 +4529,7 @@ proof of mpan2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        12-Dec-2004.) */
 
 theorem mp2ani (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4546,7 +4546,7 @@ proof of mp2ani {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.) */
+/*A deduction based on modus ponens.  (Contributed by NM, 12-Dec-2004.) */
 
 theorem mp2and (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4562,7 +4562,7 @@ proof of mp2and {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 16-Aug-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 16-Aug-1994.)
        (Proof shortened by Wolf Lammen, 7-Apr-2013.) */
 
 theorem mpanl1 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4578,7 +4578,7 @@ proof of mpanl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 16-Aug-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 16-Aug-1994.)
        (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem mpanl2 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4594,7 +4594,7 @@ proof of mpanl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        13-Jul-2005.) */
 
 theorem mpanl12 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4611,7 +4611,7 @@ proof of mpanl12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 3-May-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 3-May-1994.)
        (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem mpanr1 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4627,7 +4627,7 @@ proof of mpanr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 3-May-1994.)
+/*An inference based on modus ponens.  (Contributed by NM, 3-May-1994.)
        (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof shortened by
        Wolf Lammen, 7-Apr-2013.) */
 
@@ -4644,7 +4644,7 @@ proof of mpanr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        24-Jul-2009.) */
 
 theorem mpanr12 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4661,7 +4661,7 @@ proof of mpanr12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 30-Dec-2004.)
+/*An inference based on modus ponens.  (Contributed by NM, 30-Dec-2004.)
        (Proof shortened by Wolf Lammen, 7-Apr-2013.) */
 
 theorem mpanlr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4677,7 +4677,7 @@ proof of mpanlr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 4-May-2007.) */
 
 theorem pm5.74da (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4692,7 +4692,7 @@ proof of pm5.74da {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.45 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+/*Theorem *4.45 of [WhiteheadRussell] p. 119.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.45 (ph : wff, ps : wff)  {
@@ -4705,7 +4705,7 @@ proof of pm4.45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication with conjunction.  (Contributed by NM,
+/*Distribution of implication with conjunction.  (Contributed by NM,
      31-May-1999.)  (Proof shortened by Wolf Lammen, 6-Dec-2012.) */
 
 theorem imdistan (ph : wff, ps : wff, ch : wff)  {
@@ -4719,7 +4719,7 @@ proof of imdistan {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribution of implication with conjunction.  (Contributed by NM,
+/*Distribution of implication with conjunction.  (Contributed by NM,
        1-Aug-1994.) */
 
 theorem imdistani (ph : wff, ps : wff, ch : wff)  {
@@ -4734,7 +4734,7 @@ proof of imdistani {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication with conjunction.  (Contributed by NM,
+/*Distribution of implication with conjunction.  (Contributed by NM,
        8-Jan-2002.) */
 
 theorem imdistanri (ph : wff, ps : wff, ch : wff)  {
@@ -4749,7 +4749,7 @@ proof of imdistanri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication with conjunction (deduction rule).
+/*Distribution of implication with conjunction (deduction rule).
        (Contributed by NM, 27-Aug-2004.) */
 
 theorem imdistand (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4764,7 +4764,7 @@ proof of imdistand {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication with conjunction (deduction version with
+/*Distribution of implication with conjunction (deduction version with
        conjoined antecedent).  (Contributed by Jeff Madsen, 19-Jun-2011.) */
 
 theorem imdistanda (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4779,7 +4779,7 @@ proof of imdistanda {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce a left conjunct to both sides of a logical equivalence.
+/*Introduce a left conjunct to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        16-Nov-2013.) */
 
@@ -4795,7 +4795,7 @@ proof of anbi2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce a right conjunct to both sides of a logical equivalence.
+/*Introduce a right conjunct to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        16-Nov-2013.) */
 
@@ -4811,7 +4811,7 @@ proof of anbi1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Variant of ~ anbi2i with commutation.  (Contributed by Jonathan
+/*Variant of ~ anbi2i with commutation.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) */
 
@@ -4828,7 +4828,7 @@ proof of anbi2ci {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conjoin both sides of two equivalences.  (Contributed by NM,
+/*Conjoin both sides of two equivalences.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem anbi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4845,7 +4845,7 @@ proof of anbi12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Variant of ~ anbi12i with commutation.  (Contributed by Jonathan
+/*Variant of ~ anbi12i with commutation.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem anbi12ci (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4862,7 +4862,7 @@ proof of anbi12ci {
 	qed prop 1 = step 3 ;;
 }
 
-/* Nested syllogism inference conjoining dissimilar antecedents.
+/*Nested syllogism inference conjoining dissimilar antecedents.
        (Contributed by NM, 4-Mar-1995.) */
 
 theorem sylan9bb (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4879,7 +4879,7 @@ proof of sylan9bb {
 	qed prop 1 = step 3 ;;
 }
 
-/* Nested syllogism inference conjoining dissimilar antecedents.
+/*Nested syllogism inference conjoining dissimilar antecedents.
        (Contributed by NM, 4-Mar-1995.) */
 
 theorem sylan9bbr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4895,7 +4895,7 @@ proof of sylan9bbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a left disjunct to both sides of a logical
+/*Deduction adding a left disjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem orbi2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4912,7 +4912,7 @@ proof of orbi2d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction adding a right disjunct to both sides of a logical
+/*Deduction adding a right disjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem orbi1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4929,7 +4929,7 @@ proof of orbi1d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction adding a left conjunct to both sides of a logical
+/*Deduction adding a left conjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
        Lammen, 16-Nov-2013.) */
 
@@ -4945,7 +4945,7 @@ proof of anbi2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a right conjunct to both sides of a logical
+/*Deduction adding a right conjunct to both sides of a logical
        equivalence.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
        Lammen, 16-Nov-2013.) */
 
@@ -4961,7 +4961,7 @@ proof of anbi1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.37 of [WhiteheadRussell] p. 118.  (Contributed by NM,
+/*Theorem *4.37 of [WhiteheadRussell] p. 118.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem orbi1 (ph : wff, ps : wff, ch : wff)  {
@@ -4974,7 +4974,7 @@ proof of orbi1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce a right conjunct to both sides of a logical equivalence.
+/*Introduce a right conjunct to both sides of a logical equivalence.
      Theorem *4.36 of [WhiteheadRussell] p. 118.  (Contributed by NM,
      3-Jan-2005.) */
 
@@ -4988,7 +4988,7 @@ proof of anbi1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce a left conjunct to both sides of a logical equivalence.
+/*Introduce a left conjunct to both sides of a logical equivalence.
      (Contributed by NM, 16-Nov-2013.) */
 
 theorem anbi2 (ph : wff, ps : wff, ch : wff)  {
@@ -5001,7 +5001,7 @@ proof of anbi2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.22 of [WhiteheadRussell] p. 117.  (Contributed by NM,
+/*Theorem *4.22 of [WhiteheadRussell] p. 117.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem bitr (ph : wff, ps : wff, ch : wff)  {
@@ -5014,7 +5014,7 @@ proof of bitr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of disjunctions.
+/*Deduction joining two equivalences to form equivalence of disjunctions.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem orbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5031,7 +5031,7 @@ proof of orbi12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of conjunctions.
+/*Deduction joining two equivalences to form equivalence of conjunctions.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem anbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5048,7 +5048,7 @@ proof of anbi12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.3 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.3 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem pm5.3 (ph : wff, ps : wff, ch : wff)  {
@@ -5062,7 +5062,7 @@ proof of pm5.3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.61 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.61 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 30-Jun-2013.) */
 
 theorem pm5.61 (ph : wff, ps : wff)  {
@@ -5077,7 +5077,7 @@ proof of pm5.61 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        4-May-1994.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem adantll (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5092,7 +5092,7 @@ proof of adantll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        4-May-1994.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem adantlr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5107,7 +5107,7 @@ proof of adantlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        4-May-1994.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem adantrl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5122,7 +5122,7 @@ proof of adantrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        4-May-1994.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem adantrr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5137,7 +5137,7 @@ proof of adantrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 2-Dec-2012.) */
 
 theorem adantlll (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5152,7 +5152,7 @@ proof of adantlll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantllr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5167,7 +5167,7 @@ proof of adantllr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantlrl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5182,7 +5182,7 @@ proof of adantlrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantlrr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5197,7 +5197,7 @@ proof of adantlrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantrll (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5212,7 +5212,7 @@ proof of adantrll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantrlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5227,7 +5227,7 @@ proof of adantrlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantrrl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5242,7 +5242,7 @@ proof of adantrrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        26-Dec-2004.)  (Proof shortened by Wolf Lammen, 4-Dec-2012.) */
 
 theorem adantrrr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5257,7 +5257,7 @@ proof of adantrrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        19-Oct-1999.)  (Proof shortened by Wolf Lammen, 20-Nov-2012.) */
 
 theorem ad2antrr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5272,7 +5272,7 @@ proof of ad2antrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        19-Oct-1999.)  (Proof shortened by Wolf Lammen, 20-Nov-2012.) */
 
 theorem ad2antlr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5287,7 +5287,7 @@ proof of ad2antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        19-Oct-1999.) */
 
 theorem ad2antrl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5302,7 +5302,7 @@ proof of ad2antrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        19-Oct-1999.) */
 
 theorem ad2antll (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5317,7 +5317,7 @@ proof of ad2antll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding three conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding three conjuncts to antecedent.  (Contributed by NM,
        28-Jul-2012.) */
 
 theorem ad3antrrr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5332,7 +5332,7 @@ proof of ad3antrrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding three conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding three conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad3antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5347,7 +5347,7 @@ proof of ad3antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 4 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 4 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad4antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -5362,7 +5362,7 @@ proof of ad4antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 4 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 4 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad4antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -5377,7 +5377,7 @@ proof of ad4antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 5 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 5 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad5antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -5392,7 +5392,7 @@ proof of ad5antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 5 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 5 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad5antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -5407,7 +5407,7 @@ proof of ad5antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 6 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 6 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad6antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -5422,7 +5422,7 @@ proof of ad6antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 6 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 6 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad6antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -5437,7 +5437,7 @@ proof of ad6antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 7 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 7 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad7antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -5452,7 +5452,7 @@ proof of ad7antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 7 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 7 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad7antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -5467,7 +5467,7 @@ proof of ad7antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 8 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 8 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad8antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -5482,7 +5482,7 @@ proof of ad8antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 8 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 8 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad8antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -5497,7 +5497,7 @@ proof of ad8antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 9 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 9 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad9antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff)  {
@@ -5512,7 +5512,7 @@ proof of ad9antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 9 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 9 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad9antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff)  {
@@ -5527,7 +5527,7 @@ proof of ad9antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 10 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 10 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 4-Jan-2017.) */
 
 theorem ad10antr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff, ka : wff)  {
@@ -5542,7 +5542,7 @@ proof of ad10antr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding 10 conjuncts to antecedent.  (Contributed by Mario
+/*Deduction adding 10 conjuncts to antecedent.  (Contributed by Mario
        Carneiro, 5-Jan-2017.) */
 
 theorem ad10antlr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff, ka : wff)  {
@@ -5557,7 +5557,7 @@ proof of ad10antlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem ad2ant2l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5572,7 +5572,7 @@ proof of ad2ant2l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem ad2ant2r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5587,7 +5587,7 @@ proof of ad2ant2r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        23-Nov-2007.) */
 
 theorem ad2ant2lr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5602,7 +5602,7 @@ proof of ad2ant2lr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding two conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding two conjuncts to antecedent.  (Contributed by NM,
        24-Nov-2007.) */
 
 theorem ad2ant2rl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5617,7 +5617,7 @@ proof of ad2ant2rl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by NM, 18-Mar-2007.) */
+/*Simplification of a conjunction.  (Contributed by NM, 18-Mar-2007.) */
 
 theorem simpll (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ) → ph ) ;;
@@ -5629,7 +5629,7 @@ proof of simpll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by NM, 20-Mar-2007.) */
+/*Simplification of a conjunction.  (Contributed by NM, 20-Mar-2007.) */
 
 theorem simplr (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ) → ps ) ;;
@@ -5641,7 +5641,7 @@ proof of simplr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by NM, 21-Mar-2007.) */
+/*Simplification of a conjunction.  (Contributed by NM, 21-Mar-2007.) */
 
 theorem simprl (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ) → ps ) ;;
@@ -5653,7 +5653,7 @@ proof of simprl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by NM, 21-Mar-2007.) */
+/*Simplification of a conjunction.  (Contributed by NM, 21-Mar-2007.) */
 
 theorem simprr (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ) → ch ) ;;
@@ -5665,7 +5665,7 @@ proof of simprr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simplll (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5678,7 +5678,7 @@ proof of simplll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simpllr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5691,7 +5691,7 @@ proof of simpllr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simplrl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5704,7 +5704,7 @@ proof of simplrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simplrr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5717,7 +5717,7 @@ proof of simplrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simprll (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5730,7 +5730,7 @@ proof of simprll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simprlr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5743,7 +5743,7 @@ proof of simprlr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simprrl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5756,7 +5756,7 @@ proof of simprrl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Jeff Hankins,
+/*Simplification of a conjunction.  (Contributed by Jeff Hankins,
      28-Jul-2009.) */
 
 theorem simprrr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5769,7 +5769,7 @@ proof of simprrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-4l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5782,7 +5782,7 @@ proof of simp-4l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-4r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5795,7 +5795,7 @@ proof of simp-4r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-5l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -5808,7 +5808,7 @@ proof of simp-5l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-5r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -5821,7 +5821,7 @@ proof of simp-5r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-6l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -5834,7 +5834,7 @@ proof of simp-6l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-6r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -5847,7 +5847,7 @@ proof of simp-6r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-7l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -5860,7 +5860,7 @@ proof of simp-7l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-7r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -5873,7 +5873,7 @@ proof of simp-7r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-8l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -5886,7 +5886,7 @@ proof of simp-8l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-8r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -5899,7 +5899,7 @@ proof of simp-8r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-9l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -5912,7 +5912,7 @@ proof of simp-9l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-9r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -5925,7 +5925,7 @@ proof of simp-9r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-10l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff)  {
@@ -5938,7 +5938,7 @@ proof of simp-10l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-10r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff)  {
@@ -5951,7 +5951,7 @@ proof of simp-10r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-11l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff, ka : wff)  {
@@ -5964,7 +5964,7 @@ proof of simp-11l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of a conjunction.  (Contributed by Mario Carneiro,
+/*Simplification of a conjunction.  (Contributed by Mario Carneiro,
      4-Jan-2017.) */
 
 theorem simp-11r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff, ka : wff)  {
@@ -5977,7 +5977,7 @@ proof of simp-11r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjunction of antecedents.  Compare Theorem *4.77 of [WhiteheadRussell]
+/*Disjunction of antecedents.  Compare Theorem *4.77 of [WhiteheadRussell]
      p. 121.  (Contributed by NM, 30-May-1994.)  (Proof shortened by Wolf
      Lammen, 9-Dec-2012.) */
 
@@ -5995,7 +5995,7 @@ proof of jaob {
 	qed prop 1 = step 6 ;;
 }
 
-/* Inference disjoining the antecedents of two implications.  (Contributed
+/*Inference disjoining the antecedents of two implications.  (Contributed
        by NM, 23-Oct-2005.) */
 
 theorem jaoian (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6013,7 +6013,7 @@ proof of jaoian {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction disjoining the antecedents of two implications.  (Contributed
+/*Deduction disjoining the antecedents of two implications.  (Contributed
        by NM, 14-Oct-2005.) */
 
 theorem jaodan (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6031,7 +6031,7 @@ proof of jaodan {
 	qed prop 1 = step 4 ;;
 }
 
-/* Eliminate a disjunction in a deduction.  A translation of natural
+/*Eliminate a disjunction in a deduction.  A translation of natural
        deduction rule ` \/ ` E ( ` \/ ` elimination), see ~ natded .
        (Contributed by Mario Carneiro, 29-May-2016.) */
 
@@ -6049,7 +6049,7 @@ proof of mpjaodan {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.77 of [WhiteheadRussell] p. 121.  (Contributed by NM,
+/*Theorem *4.77 of [WhiteheadRussell] p. 121.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.77 (ph : wff, ps : wff, ch : wff)  {
@@ -6062,7 +6062,7 @@ proof of pm4.77 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.63 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.63 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.63 (ph : wff, ps : wff)  {
@@ -6076,7 +6076,7 @@ proof of pm2.63 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.64 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.64 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.64 (ph : wff, ps : wff)  {
@@ -6091,7 +6091,7 @@ proof of pm2.64 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Elimination of an antecedent.  (Contributed by NM, 1-Jan-2005.) */
+/*Elimination of an antecedent.  (Contributed by NM, 1-Jan-2005.) */
 
 theorem pm2.61ian (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
@@ -6107,7 +6107,7 @@ proof of pm2.61ian {
 	qed prop 1 = step 3 ;;
 }
 
-/* Elimination of an antecedent.  (Contributed by NM, 1-Jan-2005.) */
+/*Elimination of an antecedent.  (Contributed by NM, 1-Jan-2005.) */
 
 theorem pm2.61dan (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
@@ -6123,7 +6123,7 @@ proof of pm2.61dan {
 	qed prop 1 = step 3 ;;
 }
 
-/* Elimination of two antecedents.  (Contributed by NM, 9-Jul-2013.) */
+/*Elimination of two antecedents.  (Contributed by NM, 9-Jul-2013.) */
 
 theorem pm2.61ddan (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → th ) ;;
@@ -6141,7 +6141,7 @@ proof of pm2.61ddan {
 	qed prop 1 = step 4 ;;
 }
 
-/* Elimination of two antecedents.  (Contributed by NM, 9-Jul-2013.) */
+/*Elimination of two antecedents.  (Contributed by NM, 9-Jul-2013.) */
 
 theorem pm2.61dda (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ¬ ps ) → th ) ;;
@@ -6159,7 +6159,7 @@ proof of pm2.61dda {
 	qed prop 1 = step 4 ;;
 }
 
-/* Proof by contradiction.  (Contributed by NM, 9-Feb-2006.)  (Proof
+/*Proof by contradiction.  (Contributed by NM, 9-Feb-2006.)  (Proof
        shortened by Wolf Lammen, 19-Jun-2014.) */
 
 theorem condan (ph : wff, ps : wff, ch : wff)  {
@@ -6176,7 +6176,7 @@ proof of condan {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduce one conjunct as an antecedent to the other.  "abai" stands for
+/*Introduce one conjunct as an antecedent to the other.  "abai" stands for
      "and, biconditional, and, implication".  (Contributed by NM,
      12-Aug-1993.)  (Proof shortened by Wolf Lammen, 7-Dec-2012.) */
 
@@ -6190,7 +6190,7 @@ proof of abai {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.53 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.53 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.53 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6205,7 +6205,7 @@ proof of pm5.53 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Swap two conjuncts.  Note that the first digit (1) in the label refers to
+/*Swap two conjuncts.  Note that the first digit (1) in the label refers to
      the outer conjunct position, and the next digit (2) to the inner conjunct
      position.  (Contributed by NM, 12-Mar-1995.) */
 
@@ -6222,7 +6222,7 @@ proof of an12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A rearrangement of conjuncts.  (Contributed by NM, 12-Mar-1995.)  (Proof
+/*A rearrangement of conjuncts.  (Contributed by NM, 12-Mar-1995.)  (Proof
      shortened by Wolf Lammen, 25-Dec-2012.) */
 
 theorem an32 (ph : wff, ps : wff, ch : wff)  {
@@ -6237,7 +6237,7 @@ proof of an32 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A rearrangement of conjuncts.  (Contributed by NM, 24-Jun-2012.)  (Proof
+/*A rearrangement of conjuncts.  (Contributed by NM, 24-Jun-2012.)  (Proof
      shortened by Wolf Lammen, 31-Dec-2012.) */
 
 theorem an13 (ph : wff, ps : wff, ch : wff)  {
@@ -6252,7 +6252,7 @@ proof of an13 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A rearrangement of conjuncts.  (Contributed by NM, 24-Jun-2012.)  (Proof
+/*A rearrangement of conjuncts.  (Contributed by NM, 24-Jun-2012.)  (Proof
      shortened by Wolf Lammen, 31-Dec-2012.) */
 
 theorem an31 (ph : wff, ps : wff, ch : wff)  {
@@ -6267,7 +6267,7 @@ proof of an31 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Swap two conjuncts in antecedent.  The label suffix "s" means that
+/*Swap two conjuncts in antecedent.  The label suffix "s" means that
        ~ an12 is combined with ~ syl (or a variant).  (Contributed by NM,
        13-Mar-1996.) */
 
@@ -6283,7 +6283,7 @@ proof of an12s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference commuting a nested conjunction in antecedent.  (Contributed by
+/*Inference commuting a nested conjunction in antecedent.  (Contributed by
        NM, 24-May-2006.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem ancom2s (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6298,7 +6298,7 @@ proof of ancom2s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Swap two conjuncts in antecedent.  (Contributed by NM, 31-May-2006.) */
+/*Swap two conjuncts in antecedent.  (Contributed by NM, 31-May-2006.) */
 
 theorem an13s (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ) → th ) ;;
@@ -6313,7 +6313,7 @@ proof of an13s {
 	qed prop 1 = step 3 ;;
 }
 
-/* Swap two conjuncts in antecedent.  (Contributed by NM, 13-Mar-1996.) */
+/*Swap two conjuncts in antecedent.  (Contributed by NM, 13-Mar-1996.) */
 
 theorem an32s (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ) → th ) ;;
@@ -6327,7 +6327,7 @@ proof of an32s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference commuting a nested conjunction in antecedent.  (Contributed by
+/*Inference commuting a nested conjunction in antecedent.  (Contributed by
        NM, 24-May-2006.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem ancom1s (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6342,7 +6342,7 @@ proof of ancom1s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Swap two conjuncts in antecedent.  (Contributed by NM, 31-May-2006.) */
+/*Swap two conjuncts in antecedent.  (Contributed by NM, 31-May-2006.) */
 
 theorem an31s (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ) → th ) ;;
@@ -6357,7 +6357,7 @@ proof of an31s {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative-associative law for conjunction in an antecedent.
+/*Commutative-associative law for conjunction in an antecedent.
        (Contributed by Jeff Madsen, 19-Jun-2011.) */
 
 theorem anass1rs (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6372,7 +6372,7 @@ proof of anass1rs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption into embedded conjunct.  (Contributed by NM, 4-Sep-1995.)
+/*Absorption into embedded conjunct.  (Contributed by NM, 4-Sep-1995.)
      (Proof shortened by Wolf Lammen, 16-Nov-2013.) */
 
 theorem anabs1 (ph : wff, ps : wff)  {
@@ -6386,7 +6386,7 @@ proof of anabs1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Absorption into embedded conjunct.  (Contributed by NM, 20-Jul-1996.)
+/*Absorption into embedded conjunct.  (Contributed by NM, 20-Jul-1996.)
      (Proof shortened by Wolf Lammen, 9-Dec-2012.) */
 
 theorem anabs5 (ph : wff, ps : wff)  {
@@ -6400,7 +6400,7 @@ proof of anabs5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Absorption into embedded conjunct.  (Contributed by NM, 20-Jul-1996.)
+/*Absorption into embedded conjunct.  (Contributed by NM, 20-Jul-1996.)
      (Proof shortened by Wolf Lammen, 17-Nov-2013.) */
 
 theorem anabs7 (ph : wff, ps : wff)  {
@@ -6414,7 +6414,7 @@ proof of anabs7 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Absorption of antecedent with conjunction.  (Contributed by NM,
+/*Absorption of antecedent with conjunction.  (Contributed by NM,
        24-Mar-1996.) */
 
 theorem anabsan (ph : wff, ps : wff, ch : wff)  {
@@ -6429,7 +6429,7 @@ proof of anabsan {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        20-Jul-1996.)  (Proof shortened by Wolf Lammen, 31-Dec-2012.) */
 
 theorem anabss1 (ph : wff, ps : wff, ch : wff)  {
@@ -6444,7 +6444,7 @@ proof of anabss1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        20-Jul-1996.) */
 
 theorem anabss4 (ph : wff, ps : wff, ch : wff)  {
@@ -6459,7 +6459,7 @@ proof of anabss4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        10-May-1994.)  (Proof shortened by Wolf Lammen, 1-Jan-2013.) */
 
 theorem anabss5 (ph : wff, ps : wff, ch : wff)  {
@@ -6474,7 +6474,7 @@ proof of anabss5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        11-Jun-1995.)  (Proof shortened by Wolf Lammen, 18-Nov-2013.) */
 
 theorem anabsi5 (ph : wff, ps : wff, ch : wff)  {
@@ -6489,7 +6489,7 @@ proof of anabsi5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        14-Aug-2000.) */
 
 theorem anabsi6 (ph : wff, ps : wff, ch : wff)  {
@@ -6504,7 +6504,7 @@ proof of anabsi6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        20-Jul-1996.)  (Proof shortened by Wolf Lammen, 18-Nov-2013.) */
 
 theorem anabsi7 (ph : wff, ps : wff, ch : wff)  {
@@ -6519,7 +6519,7 @@ proof of anabsi7 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        26-Sep-1999.) */
 
 theorem anabsi8 (ph : wff, ps : wff, ch : wff)  {
@@ -6534,7 +6534,7 @@ proof of anabsi8 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        20-Jul-1996.)  (Proof shortened by Wolf Lammen, 19-Nov-2013.) */
 
 theorem anabss7 (ph : wff, ps : wff, ch : wff)  {
@@ -6549,7 +6549,7 @@ proof of anabss7 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent with conjunction.  (Contributed by NM,
+/*Absorption of antecedent with conjunction.  (Contributed by NM,
        10-May-2004.) */
 
 theorem anabsan2 (ph : wff, ps : wff, ch : wff)  {
@@ -6564,7 +6564,7 @@ proof of anabsan2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of antecedent into conjunction.  (Contributed by NM,
+/*Absorption of antecedent into conjunction.  (Contributed by NM,
        20-Jul-1996.)  (Proof shortened by Wolf Lammen, 1-Jan-2013.) */
 
 theorem anabss3 (ph : wff, ps : wff, ch : wff)  {
@@ -6579,7 +6579,7 @@ proof of anabss3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Rearrangement of 4 conjuncts.  (Contributed by NM, 10-Jul-1994.) */
+/*Rearrangement of 4 conjuncts.  (Contributed by NM, 10-Jul-1994.) */
 
 theorem an4 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ) ;;
@@ -6594,7 +6594,7 @@ proof of an4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrangement of 4 conjuncts.  (Contributed by NM, 7-Feb-1996.) */
+/*Rearrangement of 4 conjuncts.  (Contributed by NM, 7-Feb-1996.) */
 
 theorem an42 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ( ph ∧ ch ) ∧ ( th ∧ ps ) ) ) ;;
@@ -6608,7 +6608,7 @@ proof of an42 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference rearranging 4 conjuncts in antecedent.  (Contributed by NM,
+/*Inference rearranging 4 conjuncts in antecedent.  (Contributed by NM,
        10-Aug-1995.) */
 
 theorem an4s (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -6623,7 +6623,7 @@ proof of an4s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference rearranging 4 conjuncts in antecedent.  (Contributed by NM,
+/*Inference rearranging 4 conjuncts in antecedent.  (Contributed by NM,
        10-Aug-1995.) */
 
 theorem an42s (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -6638,7 +6638,7 @@ proof of an42s {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of conjunction over conjunction.  (Contributed by NM,
+/*Distribution of conjunction over conjunction.  (Contributed by NM,
      14-Aug-1995.) */
 
 theorem anandi (ph : wff, ps : wff, ch : wff)  {
@@ -6653,7 +6653,7 @@ proof of anandi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of conjunction over conjunction.  (Contributed by NM,
+/*Distribution of conjunction over conjunction.  (Contributed by NM,
      24-Aug-1995.) */
 
 theorem anandir (ph : wff, ps : wff, ch : wff)  {
@@ -6668,7 +6668,7 @@ proof of anandir {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference that undistributes conjunction in the antecedent.
+/*Inference that undistributes conjunction in the antecedent.
        (Contributed by NM, 7-Jun-2004.) */
 
 theorem anandis (ph : wff, ps : wff, ch : wff, ta : wff)  {
@@ -6683,7 +6683,7 @@ proof of anandis {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference that undistributes conjunction in the antecedent.
+/*Inference that undistributes conjunction in the antecedent.
        (Contributed by NM, 7-Jun-2004.) */
 
 theorem anandirs (ph : wff, ps : wff, ch : wff, ta : wff)  {
@@ -6698,7 +6698,7 @@ proof of anandirs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce an equivalence from two implications.  (Contributed by NM,
+/*Deduce an equivalence from two implications.  (Contributed by NM,
        17-Feb-2007.) */
 
 theorem impbida (ph : wff, ps : wff, ch : wff)  {
@@ -6715,7 +6715,7 @@ proof of impbida {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *3.48 of [WhiteheadRussell] p. 114.  (Contributed by NM,
+/*Theorem *3.48 of [WhiteheadRussell] p. 114.  (Contributed by NM,
      28-Jan-1997.) */
 
 theorem pm3.48 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6731,7 +6731,7 @@ proof of pm3.48 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *3.45 (Fact) of [WhiteheadRussell] p. 113.  (Contributed by NM,
+/*Theorem *3.45 (Fact) of [WhiteheadRussell] p. 113.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.45 (ph : wff, ps : wff, ch : wff)  {
@@ -6744,7 +6744,7 @@ proof of pm3.45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction joining nested implications to form implication of
+/*Deduction joining nested implications to form implication of
        conjunctions.  (Contributed by NM, 29-Feb-1996.) */
 
 theorem im2anan9 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -6761,7 +6761,7 @@ proof of im2anan9 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining nested implications to form implication of
+/*Deduction joining nested implications to form implication of
        conjunctions.  (Contributed by NM, 29-Feb-1996.) */
 
 theorem im2anan9r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -6777,7 +6777,7 @@ proof of im2anan9r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjoin antecedents and consequents in a deduction.  (Contributed by
+/*Conjoin antecedents and consequents in a deduction.  (Contributed by
        Mario Carneiro, 12-May-2014.) */
 
 theorem anim12dan (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -6795,7 +6795,7 @@ proof of anim12dan {
 	qed prop 1 = step 4 ;;
 }
 
-/* Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
+/*Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
        10-May-1994.) */
 
 theorem orim12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -6811,7 +6811,7 @@ proof of orim12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
+/*Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
        23-Apr-1995.) */
 
 theorem orim1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6826,7 +6826,7 @@ proof of orim1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
+/*Disjoin antecedents and consequents in a deduction.  (Contributed by NM,
        23-Apr-1995.) */
 
 theorem orim2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6841,7 +6841,7 @@ proof of orim2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Axiom *1.6 (Sum) of [WhiteheadRussell] p. 97.  (Contributed by NM,
+/*Axiom *1.6 (Sum) of [WhiteheadRussell] p. 97.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem orim2 (ph : wff, ps : wff, ch : wff)  {
@@ -6854,7 +6854,7 @@ proof of orim2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.38 of [WhiteheadRussell] p. 105.  (Contributed by NM,
+/*Theorem *2.38 of [WhiteheadRussell] p. 105.  (Contributed by NM,
      6-Mar-2008.) */
 
 theorem pm2.38 (ph : wff, ps : wff, ch : wff)  {
@@ -6867,7 +6867,7 @@ proof of pm2.38 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.36 of [WhiteheadRussell] p. 105.  (Contributed by NM,
+/*Theorem *2.36 of [WhiteheadRussell] p. 105.  (Contributed by NM,
      6-Mar-2008.) */
 
 theorem pm2.36 (ph : wff, ps : wff, ch : wff)  {
@@ -6881,7 +6881,7 @@ proof of pm2.36 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.37 of [WhiteheadRussell] p. 105.  (Contributed by NM,
+/*Theorem *2.37 of [WhiteheadRussell] p. 105.  (Contributed by NM,
      6-Mar-2008.) */
 
 theorem pm2.37 (ph : wff, ps : wff, ch : wff)  {
@@ -6895,7 +6895,7 @@ proof of pm2.37 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.73 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.73 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.73 (ph : wff, ps : wff, ch : wff)  {
@@ -6908,7 +6908,7 @@ proof of pm2.73 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.74 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.74 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem pm2.74 (ph : wff, ps : wff, ch : wff)  {
@@ -6923,7 +6923,7 @@ proof of pm2.74 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Disjunction distributes over implication.  (Contributed by Wolf Lammen,
+/*Disjunction distributes over implication.  (Contributed by Wolf Lammen,
      5-Jan-2013.) */
 
 theorem orimdi (ph : wff, ps : wff, ch : wff)  {
@@ -6940,7 +6940,7 @@ proof of orimdi {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *2.76 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.76 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.76 (ph : wff, ps : wff, ch : wff)  {
@@ -6953,7 +6953,7 @@ proof of pm2.76 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.75 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.75 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 4-Jan-2013.) */
 
 theorem pm2.75 (ph : wff, ps : wff, ch : wff)  {
@@ -6966,7 +6966,7 @@ proof of pm2.75 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.8 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.8 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) */
 
 theorem pm2.8 (ph : wff, ps : wff, ch : wff)  {
@@ -6980,7 +6980,7 @@ proof of pm2.8 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.81 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.81 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.81 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -6994,7 +6994,7 @@ proof of pm2.81 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.82 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.82 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.82 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -7010,7 +7010,7 @@ proof of pm2.82 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *2.85 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.85 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) */
 
 theorem pm2.85 (ph : wff, ps : wff, ch : wff)  {
@@ -7023,7 +7023,7 @@ proof of pm2.85 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer negated disjunction of negated premises.  (Contributed by NM,
+/*Infer negated disjunction of negated premises.  (Contributed by NM,
        4-Apr-1995.) */
 
 theorem pm3.2ni (ph : wff, ps : wff)  {
@@ -7041,7 +7041,7 @@ proof of pm3.2ni {
 	qed prop 1 = step 4 ;;
 }
 
-/* Absorption of redundant internal disjunct.  Compare Theorem *4.45 of
+/*Absorption of redundant internal disjunct.  Compare Theorem *4.45 of
      [WhiteheadRussell] p. 119.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 28-Feb-2014.) */
 
@@ -7055,7 +7055,7 @@ proof of orabs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorb a disjunct into a conjunct.  (Contributed by Roy F. Longton,
+/*Absorb a disjunct into a conjunct.  (Contributed by Roy F. Longton,
      23-Jun-2005.)  (Proof shortened by Wolf Lammen, 10-Nov-2013.) */
 
 theorem oranabs (ph : wff, ps : wff)  {
@@ -7070,7 +7070,7 @@ proof of oranabs {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two propositions are equivalent if they are both true.  Theorem *5.1 of
+/*Two propositions are equivalent if they are both true.  Theorem *5.1 of
      [WhiteheadRussell] p. 123.  (Contributed by NM, 21-May-1994.) */
 
 theorem pm5.1 (ph : wff, ps : wff)  {
@@ -7083,7 +7083,7 @@ proof of pm5.1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two propositions are equivalent if they are both false.  Theorem *5.21 of
+/*Two propositions are equivalent if they are both false.  Theorem *5.21 of
      [WhiteheadRussell] p. 124.  (Contributed by NM, 21-May-1994.) */
 
 theorem pm5.21 (ph : wff, ps : wff)  {
@@ -7096,7 +7096,7 @@ proof of pm5.21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.43 (Comp) of [WhiteheadRussell] p. 113.  (Contributed by NM,
+/*Theorem *3.43 (Comp) of [WhiteheadRussell] p. 113.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm3.43 (ph : wff, ps : wff, ch : wff)  {
@@ -7109,7 +7109,7 @@ proof of pm3.43 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distributive law for implication over conjunction.  Compare Theorem *4.76
+/*Distributive law for implication over conjunction.  Compare Theorem *4.76
      of [WhiteheadRussell] p. 121.  (Contributed by NM, 3-Apr-1994.)  (Proof
      shortened by Wolf Lammen, 27-Nov-2013.) */
 
@@ -7128,7 +7128,7 @@ proof of jcab {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distributive law for disjunction.  Theorem *4.41 of [WhiteheadRussell]
+/*Distributive law for disjunction.  Theorem *4.41 of [WhiteheadRussell]
      p. 119.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
      Salmon, 7-May-2011.)  (Proof shortened by Wolf Lammen, 28-Nov-2013.) */
 
@@ -7146,7 +7146,7 @@ proof of ordi {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distributive law for disjunction.  (Contributed by NM, 12-Aug-1994.) */
+/*Distributive law for disjunction.  (Contributed by NM, 12-Aug-1994.) */
 
 theorem ordir (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∨ ch ) ↔ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ;;
@@ -7162,7 +7162,7 @@ proof of ordir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *4.76 of [WhiteheadRussell] p. 121.  (Contributed by NM,
+/*Theorem *4.76 of [WhiteheadRussell] p. 121.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.76 (ph : wff, ps : wff, ch : wff)  {
@@ -7175,7 +7175,7 @@ proof of pm4.76 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distributive law for conjunction.  Theorem *4.4 of [WhiteheadRussell]
+/*Distributive law for conjunction.  Theorem *4.4 of [WhiteheadRussell]
      p. 118.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 5-Jan-2013.) */
 
@@ -7196,7 +7196,7 @@ proof of andi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for conjunction.  (Contributed by NM, 12-Aug-1994.) */
+/*Distributive law for conjunction.  (Contributed by NM, 12-Aug-1994.) */
 
 theorem andir (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
@@ -7212,7 +7212,7 @@ proof of andir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Double distributive law for disjunction.  (Contributed by NM,
+/*Double distributive law for disjunction.  (Contributed by NM,
      12-Aug-1994.) */
 
 theorem orddi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -7228,7 +7228,7 @@ proof of orddi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Double distributive law for conjunction.  (Contributed by NM,
+/*Double distributive law for conjunction.  (Contributed by NM,
      12-Aug-1994.) */
 
 theorem anddi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -7244,9 +7244,9 @@ proof of anddi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Prove formula-building rules for the biconditional connective. */
+/*Prove formula-building rules for the biconditional connective. */
 
-/* Theorem *4.39 of [WhiteheadRussell] p. 118.  (Contributed by NM,
+/*Theorem *4.39 of [WhiteheadRussell] p. 118.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.39 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -7260,7 +7260,7 @@ proof of pm4.39 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.38 of [WhiteheadRussell] p. 118.  (Contributed by NM,
+/*Theorem *4.38 of [WhiteheadRussell] p. 118.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.38 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -7274,7 +7274,7 @@ proof of pm4.38 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of conjunctions.
+/*Deduction joining two equivalences to form equivalence of conjunctions.
        (Contributed by NM, 31-Jul-1995.) */
 
 theorem bi2anan9 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -7291,7 +7291,7 @@ proof of bi2anan9 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of conjunctions.
+/*Deduction joining two equivalences to form equivalence of conjunctions.
        (Contributed by NM, 19-Feb-1996.) */
 
 theorem bi2anan9r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -7307,7 +7307,7 @@ proof of bi2anan9r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction joining two biconditionals with different antecedents.
+/*Deduction joining two biconditionals with different antecedents.
        (Contributed by NM, 12-May-2004.) */
 
 theorem bi2bian9 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -7324,7 +7324,7 @@ proof of bi2bian9 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implication in terms of biconditional and disjunction.  Theorem *4.72 of
+/*Implication in terms of biconditional and disjunction.  Theorem *4.72 of
      [WhiteheadRussell] p. 121.  (Contributed by NM, 30-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 30-Jan-2013.) */
 
@@ -7343,7 +7343,7 @@ proof of pm4.72 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Simplify an implication between implications.  (Contributed by Paul
+/*Simplify an implication between implications.  (Contributed by Paul
      Chapman, 17-Nov-2012.)  (Proof shortened by Wolf Lammen, 3-Apr-2013.) */
 
 theorem imimorb (ph : wff, ps : wff, ch : wff)  {
@@ -7358,7 +7358,7 @@ proof of imimorb {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *5.33 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.33 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.33 (ph : wff, ps : wff, ch : wff)  {
@@ -7372,7 +7372,7 @@ proof of pm5.33 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.36 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.36 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.36 (ph : wff, ps : wff)  {
@@ -7385,7 +7385,7 @@ proof of pm5.36 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorb a hypothesis into the second member of a biconditional.
+/*Absorb a hypothesis into the second member of a biconditional.
        (Contributed by FL, 15-Feb-2007.) */
 
 theorem bianabs (ph : wff, ps : wff, ch : wff)  {
@@ -7400,7 +7400,7 @@ proof of bianabs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of disjunction into equivalence.  (Contributed by NM,
+/*Absorption of disjunction into equivalence.  (Contributed by NM,
      6-Aug-1995.)  (Proof shortened by Wolf Lammen, 3-Nov-2013.) */
 
 theorem oibabs (ph : wff, ps : wff)  {
@@ -7418,7 +7418,7 @@ proof of oibabs {
 	qed prop 1 = step 7 ;;
 }
 
-/* Law of noncontradiction.  Theorem *3.24 of [WhiteheadRussell] p. 111 (who
+/*Law of noncontradiction.  Theorem *3.24 of [WhiteheadRussell] p. 111 (who
      call it the "law of contradiction").  (Contributed by NM, 16-Sep-1993.)
      (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
@@ -7433,7 +7433,7 @@ proof of pm3.24 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.26 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+/*Theorem *2.26 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 23-Nov-2012.) */
 
 theorem pm2.26 (ph : wff, ps : wff)  {
@@ -7446,7 +7446,7 @@ proof of pm2.26 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.11 of [WhiteheadRussell] p. 123.  (Contributed by NM,
+/*Theorem *5.11 of [WhiteheadRussell] p. 123.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.11 (ph : wff, ps : wff)  {
@@ -7459,7 +7459,7 @@ proof of pm5.11 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.12 of [WhiteheadRussell] p. 123.  (Contributed by NM,
+/*Theorem *5.12 of [WhiteheadRussell] p. 123.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.12 (ph : wff, ps : wff)  {
@@ -7472,7 +7472,7 @@ proof of pm5.12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.14 of [WhiteheadRussell] p. 123.  (Contributed by NM,
+/*Theorem *5.14 of [WhiteheadRussell] p. 123.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.14 (ph : wff, ps : wff, ch : wff)  {
@@ -7487,7 +7487,7 @@ proof of pm5.14 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *5.13 of [WhiteheadRussell] p. 123.  (Contributed by NM,
+/*Theorem *5.13 of [WhiteheadRussell] p. 123.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 14-Nov-2012.) */
 
 theorem pm5.13 (ph : wff, ps : wff)  {
@@ -7499,7 +7499,7 @@ proof of pm5.13 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem *5.17 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+/*Theorem *5.17 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 3-Jan-2013.) */
 
 theorem pm5.17 (ph : wff, ps : wff)  {
@@ -7518,7 +7518,7 @@ proof of pm5.17 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Theorem *5.15 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+/*Theorem *5.15 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 15-Oct-2013.) */
 
 theorem pm5.15 (ph : wff, ps : wff)  {
@@ -7532,7 +7532,7 @@ proof of pm5.15 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.16 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+/*Theorem *5.16 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 17-Oct-2013.) */
 
 theorem pm5.16 (ph : wff, ps : wff)  {
@@ -7547,7 +7547,7 @@ proof of pm5.16 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to express "exclusive or."  Theorem *5.22 of [WhiteheadRussell]
+/*Two ways to express "exclusive or."  Theorem *5.22 of [WhiteheadRussell]
      p. 124.  (Contributed by NM, 3-Jan-2005.)  (Proof shortened by Wolf
      Lammen, 22-Jan-2013.) */
 
@@ -7566,7 +7566,7 @@ proof of xor {
 	qed prop 1 = step 7 ;;
 }
 
-/* Two ways to express "exclusive or."  (Contributed by NM, 3-Jan-2005.)
+/*Two ways to express "exclusive or."  (Contributed by NM, 3-Jan-2005.)
      (Proof shortened by Wolf Lammen, 24-Jan-2013.) */
 
 theorem nbi2 (ph : wff, ps : wff)  {
@@ -7580,7 +7580,7 @@ proof of nbi2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An alternate definition of the biconditional.  Theorem *5.23 of
+/*An alternate definition of the biconditional.  Theorem *5.23 of
      [WhiteheadRussell] p. 124.  (Contributed by NM, 27-Jun-2002.)  (Proof
      shortened by Wolf Lammen, 3-Nov-2013.) */
 
@@ -7599,7 +7599,7 @@ proof of dfbi3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Theorem *5.24 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+/*Theorem *5.24 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.24 (ph : wff, ps : wff)  {
@@ -7613,7 +7613,7 @@ proof of pm5.24 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conjunction distributes over exclusive-or, using ` -. ( ph <-> ps ) ` to
+/*Conjunction distributes over exclusive-or, using ` -. ( ph <-> ps ) ` to
      express exclusive-or.  This is one way to interpret the distributive law
      of multiplication over addition in modulo 2 arithmetic.  (Contributed by
      NM, 3-Oct-2008.) */
@@ -7629,7 +7629,7 @@ proof of xordi {
 	qed prop 1 = step 3 ;;
 }
 
-/* A wff disjoined with truth is true.  (Contributed by NM, 23-May-1999.) */
+/*A wff disjoined with truth is true.  (Contributed by NM, 23-May-1999.) */
 
 theorem biort (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ph → ( ph ↔ ( ph ∨ ps ) ) ) ;;
@@ -7642,7 +7642,7 @@ proof of biort {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.55 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.55 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 20-Jan-2013.) */
 
 theorem pm5.55 (ph : wff, ps : wff)  {

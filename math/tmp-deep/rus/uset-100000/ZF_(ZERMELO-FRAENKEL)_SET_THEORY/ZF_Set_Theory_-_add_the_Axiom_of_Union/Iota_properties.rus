@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Proper_subset_relation.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                             Iota properties
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The value of a function that is expressed as an ordered pair
+/*The value of a function that is expressed as an ordered pair
        abstraction.  (Contributed by NM, 19-Feb-2006.)  (Revised by Mario
        Carneiro, 11-Sep-2015.) */
 
@@ -51,7 +51,7 @@ proof of fvopab5 {
 	qed prop 1 = step 29 ;;
 }
 
-/* The property of a uniquely specified ordered pair.  (Contributed by
+/*The property of a uniquely specified ordered pair.  (Contributed by
        Mario Carneiro, 21-May-2015.) */
 
 theorem opiota (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, I : class, X : class, Y : class) disjointed(x y z A, x y z B, x y z C, y ch, z ph, x y z D, x ps) {
@@ -129,7 +129,7 @@ proof of opiota {
 	qed prop 1 = step 61 ;;
 }
 
-/* Define a function whose value is "the unique ` y ` such that
+/*Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 19-May-2015.) */
 
 theorem opabiotafun (ph : wff, x : set, y : set, F : class) disjointed(x y z, x y z F, z ph, x z) {
@@ -160,10 +160,10 @@ proof of opabiotafun {
 	qed prop 1 = step 17 ;;
 }
 
-/* Define a function whose value is "the unique ` y ` such that
+/*Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) */
 
-theorem opabiotadm (ph : wff, x : set, y : set, F : class) disjointed(x y, x y F) {
+theorem opabiotadm (ph : wff, x : set, y : set, F : class) disjointed(x y, x y F, ph, x) {
 	hyp 1 : wff = |- F = { 〈 x , y 〉 | { y | ph } = { y } } ;;
 	-----------------------
 	prop 1 : wff = |- dom F = { x | ∃! y ph } ;;
@@ -178,10 +178,10 @@ proof of opabiotadm {
 	qed prop 1 = step 5 ;;
 }
 
-/* Define a function whose value is "the unique ` y ` such that
+/*Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) */
 
-theorem opabiota (ph : wff, ps : wff, x : set, y : set, B : class, F : class) disjointed(x y B, x y F, x ps) {
+theorem opabiota (ph : wff, ps : wff, x : set, y : set, B : class, F : class) disjointed(x y B, x y F, ph, x ps) {
 	hyp 1 : wff = |- F = { 〈 x , y 〉 | { y | ph } = { y } } ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
 	-----------------------

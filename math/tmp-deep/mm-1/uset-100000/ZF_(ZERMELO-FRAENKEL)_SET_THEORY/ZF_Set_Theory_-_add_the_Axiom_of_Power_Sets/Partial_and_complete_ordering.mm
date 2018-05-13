@@ -1,649 +1,589 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Epsilon_and_identity_relations.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                   Partial and complete ordering
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( We have not yet defined relations ( ~ df-rel ), but here we introduce a
+
+$(We have not yet defined relations ( ~ df-rel ), but here we introduce a
 few related notions we will use to develop ordinals.  The class variable
 ` R ` is no different from other class variables, but it reminds us that
 normally it represents what we will later call a "relation."
 $)
-$( Declare new constant symbols. $)
-$c Po  $.
-$( Partial ordering predicate symbol (read: 'partial ordering'). $)
-$c Or  $.
-$( Strict complete ordering predicate symbol (read: 'orders'). $)
-$( Extend wff notation to include the strict partial ordering predicate.
+
+$(Declare new constant symbols. $)
+
+$c Po $.
+
+$(Partial ordering predicate symbol (read: 'partial ordering'). $)
+
+$c Or $.
+
+$(Strict complete ordering predicate symbol (read: 'orders'). $)
+
+$(Extend wff notation to include the strict partial ordering predicate.
      Read:  ' ` R ` is a partial order on ` A ` .' $)
+
 ${
-	$v A $.
-	$v R $.
-	fwpo_0 $f class A $.
-	fwpo_1 $f class R $.
-	wpo $a wff R Po A $.
+	$v A R  $.
+	f0_wpo $f class A $.
+	f1_wpo $f class R $.
+	a_wpo $a wff R Po A $.
 $}
-$( Extend wff notation to include the strict complete ordering predicate.
+
+$(Extend wff notation to include the strict complete ordering predicate.
      Read:  ' ` R ` orders ` A ` .' $)
+
 ${
-	$v A $.
-	$v R $.
-	fwor_0 $f class A $.
-	fwor_1 $f class R $.
-	wor $a wff R Or A $.
+	$v A R  $.
+	f0_wor $f class A $.
+	f1_wor $f class R $.
+	a_wor $a wff R Or A $.
 $}
-$( Define the strict partial order predicate.  Definition of [Enderton]
+
+$(Define the strict partial order predicate.  Definition of [Enderton]
        p. 168.  The expression ` R Po A ` means ` R ` is a partial order on
        ` A ` .  For example, ` < Po RR ` is true, while ` <_ Po RR ` is false
        ( ~ ex-po ).  (Contributed by NM, 16-Mar-1997.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$d x y z R $.
-	$d x y z A $.
-	fdf-po_0 $f set x $.
-	fdf-po_1 $f set y $.
-	fdf-po_2 $f set z $.
-	fdf-po_3 $f class A $.
-	fdf-po_4 $f class R $.
-	df-po $a |- ( R Po A <-> A. x e. A A. y e. A A. z e. A ( -. x R x /\ ( ( x R y /\ y R z ) -> x R z ) ) ) $.
+	$v x y z A R  $.
+	$d x y z R  $.
+	$d x y z A  $.
+	f0_df-po $f set x $.
+	f1_df-po $f set y $.
+	f2_df-po $f set z $.
+	f3_df-po $f class A $.
+	f4_df-po $f class R $.
+	a_df-po $a |- ( R Po A <-> A. x e. A A. y e. A A. z e. A ( -. x R x /\ ( ( x R y /\ y R z ) -> x R z ) ) ) $.
 $}
-$( Define the strict complete (linear) order predicate.  The expression
+
+$(Define the strict complete (linear) order predicate.  The expression
        ` R Or A ` is true if relationship ` R ` orders ` A ` .  For example,
        ` < Or RR ` is true ( ~ ltso ).  Equivalent to Definition 6.19(1) of
        [TakeutiZaring] p. 29.  (Contributed by NM, 21-Jan-1996.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v R $.
-	$d x y R $.
-	$d x y A $.
-	fdf-so_0 $f set x $.
-	fdf-so_1 $f set y $.
-	fdf-so_2 $f class A $.
-	fdf-so_3 $f class R $.
-	df-so $a |- ( R Or A <-> ( R Po A /\ A. x e. A A. y e. A ( x R y \/ x = y \/ y R x ) ) ) $.
+	$v x y A R  $.
+	$d x y R  $.
+	$d x y A  $.
+	f0_df-so $f set x $.
+	f1_df-so $f set y $.
+	f2_df-so $f class A $.
+	f3_df-so $f class R $.
+	a_df-so $a |- ( R Or A <-> ( R Po A /\ A. x e. A A. y e. A ( x R y \/ x = y \/ y R x ) ) ) $.
 $}
-$( Subset theorem for the partial ordering predicate.  (Contributed by NM,
+
+$(Subset theorem for the partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.)  (Proof shortened by Mario Carneiro, 18-Nov-2016.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z R $.
-	$d x y z A $.
-	$d x y z B $.
-	iposs_0 $f set x $.
-	iposs_1 $f set y $.
-	iposs_2 $f set z $.
-	fposs_0 $f class A $.
-	fposs_1 $f class B $.
-	fposs_2 $f class R $.
-	poss $p |- ( A C_ B -> ( R Po B -> R Po A ) ) $= fposs_0 fposs_1 wss iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 fposs_1 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 wral iposs_1 fposs_0 wral iposs_0 fposs_0 wral fposs_1 fposs_2 wpo fposs_0 fposs_2 wpo fposs_0 fposs_1 wss iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 fposs_1 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 fposs_0 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 wral iposs_1 fposs_0 wral iposs_0 fposs_0 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 fposs_0 fposs_1 ssralv fposs_0 fposs_1 wss iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 wral iposs_1 fposs_0 wral iposs_0 fposs_0 fposs_0 fposs_1 wss iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_1 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_0 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 wral iposs_1 fposs_0 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_1 fposs_0 fposs_1 ssralv fposs_0 fposs_1 wss iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_1 wral iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 wral iposs_1 fposs_0 iposs_0 sup_set_class iposs_0 sup_set_class fposs_2 wbr wn iposs_0 sup_set_class iposs_1 sup_set_class fposs_2 wbr iposs_1 sup_set_class iposs_2 sup_set_class fposs_2 wbr wa iposs_0 sup_set_class iposs_2 sup_set_class fposs_2 wbr wi wa iposs_2 fposs_0 fposs_1 ssralv ralimdv syld ralimdv syld iposs_0 iposs_1 iposs_2 fposs_1 fposs_2 df-po iposs_0 iposs_1 iposs_2 fposs_0 fposs_2 df-po 3imtr4g $.
+	$v A B R  $.
+	$d x y z R  $.
+	$d x y z A  $.
+	$d x y z B  $.
+	f0_poss $f class A $.
+	f1_poss $f class B $.
+	f2_poss $f class R $.
+	i0_poss $f set x $.
+	i1_poss $f set y $.
+	i2_poss $f set z $.
+	p_poss $p |- ( A C_ B -> ( R Po B -> R Po A ) ) $= i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss f0_poss f1_poss p_ssralv i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f0_poss f1_poss p_ssralv i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss f1_poss p_ssralv f0_poss f1_poss a_wss i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss a_wral i1_poss f0_poss p_ralimdv f0_poss f1_poss a_wss i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f0_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss a_wral i1_poss f0_poss a_wral p_syld f0_poss f1_poss a_wss i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss a_wral i1_poss f0_poss a_wral i0_poss f0_poss p_ralimdv f0_poss f1_poss a_wss i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss f1_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss f0_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss a_wral i1_poss f0_poss a_wral i0_poss f0_poss a_wral p_syld i0_poss i1_poss i2_poss f1_poss f2_poss a_df-po i0_poss i1_poss i2_poss f0_poss f2_poss a_df-po f0_poss f1_poss a_wss i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f1_poss a_wral i1_poss f1_poss a_wral i0_poss f1_poss a_wral i0_poss a_sup_set_class i0_poss a_sup_set_class f2_poss a_wbr a_wn i0_poss a_sup_set_class i1_poss a_sup_set_class f2_poss a_wbr i1_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wa i0_poss a_sup_set_class i2_poss a_sup_set_class f2_poss a_wbr a_wi a_wa i2_poss f0_poss a_wral i1_poss f0_poss a_wral i0_poss f0_poss a_wral f1_poss f2_poss a_wpo f0_poss f2_poss a_wpo p_3imtr4g $.
 $}
-$( Equality theorem for partial ordering predicate.  (Contributed by NM,
+
+$(Equality theorem for partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v R $.
-	$v S $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z R $.
-	$d x y z S $.
-	$d x y z A $.
-	ipoeq1_0 $f set x $.
-	ipoeq1_1 $f set y $.
-	ipoeq1_2 $f set z $.
-	fpoeq1_0 $f class A $.
-	fpoeq1_1 $f class R $.
-	fpoeq1_2 $f class S $.
-	poeq1 $p |- ( R = S -> ( R Po A <-> S Po A ) ) $= fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wi wa ipoeq1_2 fpoeq1_0 wral ipoeq1_1 fpoeq1_0 wral ipoeq1_0 fpoeq1_0 wral ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_2 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wi wa ipoeq1_2 fpoeq1_0 wral ipoeq1_1 fpoeq1_0 wral ipoeq1_0 fpoeq1_0 wral fpoeq1_0 fpoeq1_1 wpo fpoeq1_0 fpoeq1_2 wpo fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wi wa ipoeq1_2 fpoeq1_0 wral ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_2 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wi wa ipoeq1_2 fpoeq1_0 wral ipoeq1_0 ipoeq1_1 fpoeq1_0 fpoeq1_0 fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wi wa ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_2 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wi wa ipoeq1_2 fpoeq1_0 fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 wbr wn ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_2 wbr wn ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wi ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wi fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 wbr ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_2 wbr ipoeq1_0 sup_set_class ipoeq1_0 sup_set_class fpoeq1_1 fpoeq1_2 breq notbid fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr wa ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr wa ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr fpoeq1_1 fpoeq1_2 wceq ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 wbr ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_2 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 wbr ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_2 wbr ipoeq1_0 sup_set_class ipoeq1_1 sup_set_class fpoeq1_1 fpoeq1_2 breq ipoeq1_1 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 fpoeq1_2 breq anbi12d ipoeq1_0 sup_set_class ipoeq1_2 sup_set_class fpoeq1_1 fpoeq1_2 breq imbi12d anbi12d ralbidv 2ralbidv ipoeq1_0 ipoeq1_1 ipoeq1_2 fpoeq1_0 fpoeq1_1 df-po ipoeq1_0 ipoeq1_1 ipoeq1_2 fpoeq1_0 fpoeq1_2 df-po 3bitr4g $.
+	$v A R S  $.
+	$d x y z R  $.
+	$d x y z S  $.
+	$d x y z A  $.
+	f0_poeq1 $f class A $.
+	f1_poeq1 $f class R $.
+	f2_poeq1 $f class S $.
+	i0_poeq1 $f set x $.
+	i1_poeq1 $f set y $.
+	i2_poeq1 $f set z $.
+	p_poeq1 $p |- ( R = S -> ( R Po A <-> S Po A ) ) $= i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 f2_poeq1 p_breq f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 a_wbr i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f2_poeq1 a_wbr p_notbid i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 f2_poeq1 p_breq i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 f2_poeq1 p_breq f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr p_anbi12d i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 f2_poeq1 p_breq f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr p_imbi12d f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wi i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wi p_anbi12d f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wi a_wa i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wi a_wa i2_poeq1 f0_poeq1 p_ralbidv f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wi a_wa i2_poeq1 f0_poeq1 a_wral i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wi a_wa i2_poeq1 f0_poeq1 a_wral i0_poeq1 i1_poeq1 f0_poeq1 f0_poeq1 p_2ralbidv i0_poeq1 i1_poeq1 i2_poeq1 f0_poeq1 f1_poeq1 a_df-po i0_poeq1 i1_poeq1 i2_poeq1 f0_poeq1 f2_poeq1 a_df-po f1_poeq1 f2_poeq1 a_wceq i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f1_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f1_poeq1 a_wbr a_wi a_wa i2_poeq1 f0_poeq1 a_wral i1_poeq1 f0_poeq1 a_wral i0_poeq1 f0_poeq1 a_wral i0_poeq1 a_sup_set_class i0_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wn i0_poeq1 a_sup_set_class i1_poeq1 a_sup_set_class f2_poeq1 a_wbr i1_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wa i0_poeq1 a_sup_set_class i2_poeq1 a_sup_set_class f2_poeq1 a_wbr a_wi a_wa i2_poeq1 f0_poeq1 a_wral i1_poeq1 f0_poeq1 a_wral i0_poeq1 f0_poeq1 a_wral f0_poeq1 f1_poeq1 a_wpo f0_poeq1 f2_poeq1 a_wpo p_3bitr4g $.
 $}
-$( Equality theorem for partial ordering predicate.  (Contributed by NM,
+
+$(Equality theorem for partial ordering predicate.  (Contributed by NM,
      27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	fpoeq2_0 $f class A $.
-	fpoeq2_1 $f class B $.
-	fpoeq2_2 $f class R $.
-	poeq2 $p |- ( A = B -> ( R Po A <-> R Po B ) ) $= fpoeq2_0 fpoeq2_1 wceq fpoeq2_0 fpoeq2_2 wpo fpoeq2_1 fpoeq2_2 wpo fpoeq2_0 fpoeq2_1 wceq fpoeq2_1 fpoeq2_0 wss fpoeq2_0 fpoeq2_2 wpo fpoeq2_1 fpoeq2_2 wpo wi fpoeq2_1 fpoeq2_0 eqimss2 fpoeq2_1 fpoeq2_0 fpoeq2_2 poss syl fpoeq2_0 fpoeq2_1 wceq fpoeq2_0 fpoeq2_1 wss fpoeq2_1 fpoeq2_2 wpo fpoeq2_0 fpoeq2_2 wpo wi fpoeq2_0 fpoeq2_1 eqimss fpoeq2_0 fpoeq2_1 fpoeq2_2 poss syl impbid $.
+	$v A B R  $.
+	f0_poeq2 $f class A $.
+	f1_poeq2 $f class B $.
+	f2_poeq2 $f class R $.
+	p_poeq2 $p |- ( A = B -> ( R Po A <-> R Po B ) ) $= f1_poeq2 f0_poeq2 p_eqimss2 f1_poeq2 f0_poeq2 f2_poeq2 p_poss f0_poeq2 f1_poeq2 a_wceq f1_poeq2 f0_poeq2 a_wss f0_poeq2 f2_poeq2 a_wpo f1_poeq2 f2_poeq2 a_wpo a_wi p_syl f0_poeq2 f1_poeq2 p_eqimss f0_poeq2 f1_poeq2 f2_poeq2 p_poss f0_poeq2 f1_poeq2 a_wceq f0_poeq2 f1_poeq2 a_wss f1_poeq2 f2_poeq2 a_wpo f0_poeq2 f2_poeq2 a_wpo a_wi p_syl f0_poeq2 f1_poeq2 a_wceq f0_poeq2 f2_poeq2 a_wpo f1_poeq2 f2_poeq2 a_wpo p_impbid $.
 $}
-$( Bound-variable hypothesis builder for partial orders.  (Contributed by
+
+$(Bound-variable hypothesis builder for partial orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v R $.
-	$v a $.
-	$v b $.
-	$v c $.
-	$d R a b c $.
-	$d A a b c $.
-	$d x a b c $.
-	infpo_0 $f set a $.
-	infpo_1 $f set b $.
-	infpo_2 $f set c $.
-	fnfpo_0 $f set x $.
-	fnfpo_1 $f class A $.
-	fnfpo_2 $f class R $.
-	enfpo_0 $e |- F/_ x R $.
-	enfpo_1 $e |- F/_ x A $.
-	nfpo $p |- F/ x R Po A $= fnfpo_1 fnfpo_2 wpo infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr wn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wi wa infpo_2 fnfpo_1 wral infpo_1 fnfpo_1 wral infpo_0 fnfpo_1 wral fnfpo_0 infpo_0 infpo_1 infpo_2 fnfpo_1 fnfpo_2 df-po infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr wn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wi wa infpo_2 fnfpo_1 wral infpo_1 fnfpo_1 wral fnfpo_0 infpo_0 fnfpo_1 enfpo_1 infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr wn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wi wa infpo_2 fnfpo_1 wral fnfpo_0 infpo_1 fnfpo_1 enfpo_1 infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr wn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wi wa fnfpo_0 infpo_2 fnfpo_1 enfpo_1 infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr wn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wi fnfpo_0 infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 wbr fnfpo_0 fnfpo_0 infpo_0 sup_set_class infpo_0 sup_set_class fnfpo_2 fnfpo_0 infpo_0 sup_set_class nfcv enfpo_0 fnfpo_0 infpo_0 sup_set_class nfcv nfbr nfn infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr wa infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr fnfpo_0 infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 wbr infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 wbr fnfpo_0 fnfpo_0 infpo_0 sup_set_class infpo_1 sup_set_class fnfpo_2 fnfpo_0 infpo_0 sup_set_class nfcv enfpo_0 fnfpo_0 infpo_1 sup_set_class nfcv nfbr fnfpo_0 infpo_1 sup_set_class infpo_2 sup_set_class fnfpo_2 fnfpo_0 infpo_1 sup_set_class nfcv enfpo_0 fnfpo_0 infpo_2 sup_set_class nfcv nfbr nfan fnfpo_0 infpo_0 sup_set_class infpo_2 sup_set_class fnfpo_2 fnfpo_0 infpo_0 sup_set_class nfcv enfpo_0 fnfpo_0 infpo_2 sup_set_class nfcv nfbr nfim nfan nfral nfral nfral nfxfr $.
+	$v x A R  $.
+	$d R a b c  $.
+	$d A a b c  $.
+	$d x a b c  $.
+	f0_nfpo $f set x $.
+	f1_nfpo $f class A $.
+	f2_nfpo $f class R $.
+	i0_nfpo $f set a $.
+	i1_nfpo $f set b $.
+	i2_nfpo $f set c $.
+	e0_nfpo $e |- F/_ x R $.
+	e1_nfpo $e |- F/_ x A $.
+	p_nfpo $p |- F/ x R Po A $= i0_nfpo i1_nfpo i2_nfpo f1_nfpo f2_nfpo a_df-po e1_nfpo e1_nfpo e1_nfpo f0_nfpo i0_nfpo a_sup_set_class p_nfcv e0_nfpo f0_nfpo i0_nfpo a_sup_set_class p_nfcv f0_nfpo i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo p_nfbr i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr f0_nfpo p_nfn f0_nfpo i0_nfpo a_sup_set_class p_nfcv e0_nfpo f0_nfpo i1_nfpo a_sup_set_class p_nfcv f0_nfpo i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo p_nfbr f0_nfpo i1_nfpo a_sup_set_class p_nfcv e0_nfpo f0_nfpo i2_nfpo a_sup_set_class p_nfcv f0_nfpo i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo p_nfbr i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr f0_nfpo p_nfan f0_nfpo i0_nfpo a_sup_set_class p_nfcv e0_nfpo f0_nfpo i2_nfpo a_sup_set_class p_nfcv f0_nfpo i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo p_nfbr i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr f0_nfpo p_nfim i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr a_wn i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wi f0_nfpo p_nfan i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr a_wn i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wi a_wa f0_nfpo i2_nfpo f1_nfpo p_nfral i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr a_wn i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wi a_wa i2_nfpo f1_nfpo a_wral f0_nfpo i1_nfpo f1_nfpo p_nfral i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr a_wn i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wi a_wa i2_nfpo f1_nfpo a_wral i1_nfpo f1_nfpo a_wral f0_nfpo i0_nfpo f1_nfpo p_nfral f1_nfpo f2_nfpo a_wpo i0_nfpo a_sup_set_class i0_nfpo a_sup_set_class f2_nfpo a_wbr a_wn i0_nfpo a_sup_set_class i1_nfpo a_sup_set_class f2_nfpo a_wbr i1_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wa i0_nfpo a_sup_set_class i2_nfpo a_sup_set_class f2_nfpo a_wbr a_wi a_wa i2_nfpo f1_nfpo a_wral i1_nfpo f1_nfpo a_wral i0_nfpo f1_nfpo a_wral f0_nfpo p_nfxfr $.
 $}
-$( Bound-variable hypothesis builder for total orders.  (Contributed by
+
+$(Bound-variable hypothesis builder for total orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v R $.
-	$v a $.
-	$v b $.
-	$d R a b $.
-	$d A a b $.
-	$d x a b $.
-	infso_0 $f set a $.
-	infso_1 $f set b $.
-	fnfso_0 $f set x $.
-	fnfso_1 $f class A $.
-	fnfso_2 $f class R $.
-	enfso_0 $e |- F/_ x R $.
-	enfso_1 $e |- F/_ x A $.
-	nfso $p |- F/ x R Or A $= fnfso_1 fnfso_2 wor fnfso_1 fnfso_2 wpo infso_0 sup_set_class infso_1 sup_set_class fnfso_2 wbr infso_0 sup_set_class infso_1 sup_set_class wceq infso_1 sup_set_class infso_0 sup_set_class fnfso_2 wbr w3o infso_1 fnfso_1 wral infso_0 fnfso_1 wral wa fnfso_0 infso_0 infso_1 fnfso_1 fnfso_2 df-so fnfso_1 fnfso_2 wpo infso_0 sup_set_class infso_1 sup_set_class fnfso_2 wbr infso_0 sup_set_class infso_1 sup_set_class wceq infso_1 sup_set_class infso_0 sup_set_class fnfso_2 wbr w3o infso_1 fnfso_1 wral infso_0 fnfso_1 wral fnfso_0 fnfso_0 fnfso_1 fnfso_2 enfso_0 enfso_1 nfpo infso_0 sup_set_class infso_1 sup_set_class fnfso_2 wbr infso_0 sup_set_class infso_1 sup_set_class wceq infso_1 sup_set_class infso_0 sup_set_class fnfso_2 wbr w3o infso_1 fnfso_1 wral fnfso_0 infso_0 fnfso_1 enfso_1 infso_0 sup_set_class infso_1 sup_set_class fnfso_2 wbr infso_0 sup_set_class infso_1 sup_set_class wceq infso_1 sup_set_class infso_0 sup_set_class fnfso_2 wbr w3o fnfso_0 infso_1 fnfso_1 enfso_1 infso_0 sup_set_class infso_1 sup_set_class fnfso_2 wbr infso_0 sup_set_class infso_1 sup_set_class wceq infso_1 sup_set_class infso_0 sup_set_class fnfso_2 wbr fnfso_0 fnfso_0 infso_0 sup_set_class infso_1 sup_set_class fnfso_2 fnfso_0 infso_0 sup_set_class nfcv enfso_0 fnfso_0 infso_1 sup_set_class nfcv nfbr infso_0 sup_set_class infso_1 sup_set_class wceq fnfso_0 nfv fnfso_0 infso_1 sup_set_class infso_0 sup_set_class fnfso_2 fnfso_0 infso_1 sup_set_class nfcv enfso_0 fnfso_0 infso_0 sup_set_class nfcv nfbr nf3or nfral nfral nfan nfxfr $.
+	$v x A R  $.
+	$d R a b  $.
+	$d A a b  $.
+	$d x a b  $.
+	f0_nfso $f set x $.
+	f1_nfso $f class A $.
+	f2_nfso $f class R $.
+	i0_nfso $f set a $.
+	i1_nfso $f set b $.
+	e0_nfso $e |- F/_ x R $.
+	e1_nfso $e |- F/_ x A $.
+	p_nfso $p |- F/ x R Or A $= i0_nfso i1_nfso f1_nfso f2_nfso a_df-so e0_nfso e1_nfso f0_nfso f1_nfso f2_nfso p_nfpo e1_nfso e1_nfso f0_nfso i0_nfso a_sup_set_class p_nfcv e0_nfso f0_nfso i1_nfso a_sup_set_class p_nfcv f0_nfso i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso p_nfbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq f0_nfso p_nfv f0_nfso i1_nfso a_sup_set_class p_nfcv e0_nfso f0_nfso i0_nfso a_sup_set_class p_nfcv f0_nfso i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso p_nfbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso a_wbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso a_wbr f0_nfso p_nf3or i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso a_wbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso a_wbr a_w3o f0_nfso i1_nfso f1_nfso p_nfral i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso a_wbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso a_wbr a_w3o i1_nfso f1_nfso a_wral f0_nfso i0_nfso f1_nfso p_nfral f1_nfso f2_nfso a_wpo i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso a_wbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso a_wbr a_w3o i1_nfso f1_nfso a_wral i0_nfso f1_nfso a_wral f0_nfso p_nfan f1_nfso f2_nfso a_wor f1_nfso f2_nfso a_wpo i0_nfso a_sup_set_class i1_nfso a_sup_set_class f2_nfso a_wbr i0_nfso a_sup_set_class i1_nfso a_sup_set_class a_wceq i1_nfso a_sup_set_class i0_nfso a_sup_set_class f2_nfso a_wbr a_w3o i1_nfso f1_nfso a_wral i0_nfso f1_nfso a_wral a_wa f0_nfso p_nfxfr $.
 $}
-$( Properties of partial order relation in class notation.  (Contributed by
+
+$(Properties of partial order relation in class notation.  (Contributed by
        NM, 27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z R $.
-	$d x y z A $.
-	$d x y z B $.
-	$d x y z C $.
-	$d x y z D $.
-	ipocl_0 $f set x $.
-	ipocl_1 $f set y $.
-	ipocl_2 $f set z $.
-	fpocl_0 $f class A $.
-	fpocl_1 $f class B $.
-	fpocl_2 $f class C $.
-	fpocl_3 $f class D $.
-	fpocl_4 $f class R $.
-	pocl $p |- ( R Po A -> ( ( B e. A /\ C e. A /\ D e. A ) -> ( -. B R B /\ ( ( B R C /\ C R D ) -> B R D ) ) ) ) $= fpocl_1 fpocl_0 wcel fpocl_2 fpocl_0 wcel fpocl_3 fpocl_0 wcel w3a fpocl_0 fpocl_4 wpo fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr wa fpocl_1 fpocl_3 fpocl_4 wbr wi wa fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa wi fpocl_0 fpocl_4 wpo fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa wi fpocl_0 fpocl_4 wpo fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa wi fpocl_0 fpocl_4 wpo fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr wa fpocl_1 fpocl_3 fpocl_4 wbr wi wa wi ipocl_0 ipocl_1 ipocl_2 fpocl_1 fpocl_2 fpocl_3 fpocl_0 fpocl_0 fpocl_0 ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn fpocl_1 fpocl_1 fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr fpocl_1 fpocl_1 fpocl_4 wbr ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class fpocl_1 ipocl_0 sup_set_class fpocl_1 fpocl_4 ipocl_0 sup_set_class fpocl_1 wceq id ipocl_0 sup_set_class fpocl_1 wceq id breq12d notbid ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr ipocl_0 sup_set_class fpocl_1 wceq ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr ipocl_0 sup_set_class fpocl_1 ipocl_1 sup_set_class fpocl_4 breq1 anbi1d ipocl_0 sup_set_class fpocl_1 ipocl_2 sup_set_class fpocl_4 breq1 imbi12d anbi12d imbi2d ipocl_1 sup_set_class fpocl_2 wceq fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_0 fpocl_4 wpo ipocl_1 sup_set_class fpocl_2 wceq fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi fpocl_1 fpocl_1 fpocl_4 wbr wn ipocl_1 sup_set_class fpocl_2 wceq fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class fpocl_2 wceq fpocl_1 ipocl_1 sup_set_class fpocl_4 wbr fpocl_1 fpocl_2 fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class fpocl_2 fpocl_1 fpocl_4 breq2 ipocl_1 sup_set_class fpocl_2 ipocl_2 sup_set_class fpocl_4 breq1 anbi12d imbi1d anbi2d imbi2d ipocl_2 sup_set_class fpocl_3 wceq fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_1 fpocl_1 fpocl_4 wbr wn fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr wa fpocl_1 fpocl_3 fpocl_4 wbr wi wa fpocl_0 fpocl_4 wpo ipocl_2 sup_set_class fpocl_3 wceq fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr wi fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr wa fpocl_1 fpocl_3 fpocl_4 wbr wi fpocl_1 fpocl_1 fpocl_4 wbr wn ipocl_2 sup_set_class fpocl_3 wceq fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr wa fpocl_1 fpocl_2 fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr wa fpocl_1 ipocl_2 sup_set_class fpocl_4 wbr fpocl_1 fpocl_3 fpocl_4 wbr ipocl_2 sup_set_class fpocl_3 wceq fpocl_2 ipocl_2 sup_set_class fpocl_4 wbr fpocl_2 fpocl_3 fpocl_4 wbr fpocl_1 fpocl_2 fpocl_4 wbr ipocl_2 sup_set_class fpocl_3 fpocl_2 fpocl_4 breq2 anbi2d ipocl_2 sup_set_class fpocl_3 fpocl_1 fpocl_4 breq2 imbi12d anbi2d imbi2d fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class fpocl_0 wcel ipocl_1 sup_set_class fpocl_0 wcel ipocl_2 sup_set_class fpocl_0 wcel w3a ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class fpocl_0 wcel ipocl_1 sup_set_class fpocl_0 wcel ipocl_2 sup_set_class fpocl_0 wcel w3a ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa wi ipocl_2 fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class fpocl_0 wcel ipocl_1 sup_set_class fpocl_0 wcel ipocl_2 sup_set_class fpocl_0 wcel w3a ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa wi ipocl_2 wal ipocl_0 ipocl_1 fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class fpocl_0 wcel ipocl_1 sup_set_class fpocl_0 wcel ipocl_2 sup_set_class fpocl_0 wcel w3a ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa wi ipocl_2 wal ipocl_1 wal ipocl_0 wal fpocl_0 fpocl_4 wpo ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa ipocl_2 fpocl_0 wral ipocl_1 fpocl_0 wral ipocl_0 fpocl_0 wral ipocl_0 sup_set_class fpocl_0 wcel ipocl_1 sup_set_class fpocl_0 wcel ipocl_2 sup_set_class fpocl_0 wcel w3a ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa wi ipocl_2 wal ipocl_1 wal ipocl_0 wal ipocl_0 ipocl_1 ipocl_2 fpocl_0 fpocl_4 df-po ipocl_0 sup_set_class ipocl_0 sup_set_class fpocl_4 wbr wn ipocl_0 sup_set_class ipocl_1 sup_set_class fpocl_4 wbr ipocl_1 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wa ipocl_0 sup_set_class ipocl_2 sup_set_class fpocl_4 wbr wi wa ipocl_0 ipocl_1 ipocl_2 fpocl_0 fpocl_0 fpocl_0 r3al bitri biimpi 19.21bbi 19.21bi com12 vtocl3ga com12 $.
+	$v A B C D R  $.
+	$d x y z R  $.
+	$d x y z A  $.
+	$d x y z B  $.
+	$d x y z C  $.
+	$d x y z D  $.
+	f0_pocl $f class A $.
+	f1_pocl $f class B $.
+	f2_pocl $f class C $.
+	f3_pocl $f class D $.
+	f4_pocl $f class R $.
+	i0_pocl $f set x $.
+	i1_pocl $f set y $.
+	i2_pocl $f set z $.
+	p_pocl $p |- ( R Po A -> ( ( B e. A /\ C e. A /\ D e. A ) -> ( -. B R B /\ ( ( B R C /\ C R D ) -> B R D ) ) ) ) $= i0_pocl a_sup_set_class f1_pocl a_wceq p_id i0_pocl a_sup_set_class f1_pocl a_wceq p_id i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class f1_pocl i0_pocl a_sup_set_class f1_pocl f4_pocl p_breq12d i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr f1_pocl f1_pocl f4_pocl a_wbr p_notbid i0_pocl a_sup_set_class f1_pocl i1_pocl a_sup_set_class f4_pocl p_breq1 i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr p_anbi1d i0_pocl a_sup_set_class f1_pocl i2_pocl a_sup_set_class f4_pocl p_breq1 i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr p_imbi12d i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn f1_pocl f1_pocl f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi p_anbi12d i0_pocl a_sup_set_class f1_pocl a_wceq i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa f0_pocl f4_pocl a_wpo p_imbi2d i1_pocl a_sup_set_class f2_pocl f1_pocl f4_pocl p_breq2 i1_pocl a_sup_set_class f2_pocl i2_pocl a_sup_set_class f4_pocl p_breq1 i1_pocl a_sup_set_class f2_pocl a_wceq f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr f1_pocl f2_pocl f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr p_anbi12d i1_pocl a_sup_set_class f2_pocl a_wceq f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr p_imbi1d i1_pocl a_sup_set_class f2_pocl a_wceq f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi f1_pocl f1_pocl f4_pocl a_wbr a_wn p_anbi2d i1_pocl a_sup_set_class f2_pocl a_wceq f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa f0_pocl f4_pocl a_wpo p_imbi2d i2_pocl a_sup_set_class f3_pocl f2_pocl f4_pocl p_breq2 i2_pocl a_sup_set_class f3_pocl a_wceq f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr f1_pocl f2_pocl f4_pocl a_wbr p_anbi2d i2_pocl a_sup_set_class f3_pocl f1_pocl f4_pocl p_breq2 i2_pocl a_sup_set_class f3_pocl a_wceq f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl f2_pocl f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr f1_pocl f3_pocl f4_pocl a_wbr p_imbi12d i2_pocl a_sup_set_class f3_pocl a_wceq f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi f1_pocl f2_pocl f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr a_wa f1_pocl f3_pocl f4_pocl a_wbr a_wi f1_pocl f1_pocl f4_pocl a_wbr a_wn p_anbi2d i2_pocl a_sup_set_class f3_pocl a_wceq f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr a_wa f1_pocl f3_pocl f4_pocl a_wbr a_wi a_wa f0_pocl f4_pocl a_wpo p_imbi2d i0_pocl i1_pocl i2_pocl f0_pocl f4_pocl a_df-po i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa i0_pocl i1_pocl i2_pocl f0_pocl f0_pocl f0_pocl p_r3al f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa i2_pocl f0_pocl a_wral i1_pocl f0_pocl a_wral i0_pocl f0_pocl a_wral i0_pocl a_sup_set_class f0_pocl a_wcel i1_pocl a_sup_set_class f0_pocl a_wcel i2_pocl a_sup_set_class f0_pocl a_wcel a_w3a i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi i2_pocl a_wal i1_pocl a_wal i0_pocl a_wal p_bitri f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class f0_pocl a_wcel i1_pocl a_sup_set_class f0_pocl a_wcel i2_pocl a_sup_set_class f0_pocl a_wcel a_w3a i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi i2_pocl a_wal i1_pocl a_wal i0_pocl a_wal p_biimpi f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class f0_pocl a_wcel i1_pocl a_sup_set_class f0_pocl a_wcel i2_pocl a_sup_set_class f0_pocl a_wcel a_w3a i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi i2_pocl a_wal i0_pocl i1_pocl p_19.21bbi f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class f0_pocl a_wcel i1_pocl a_sup_set_class f0_pocl a_wcel i2_pocl a_sup_set_class f0_pocl a_wcel a_w3a i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi i2_pocl p_19.21bi f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class f0_pocl a_wcel i1_pocl a_sup_set_class f0_pocl a_wcel i2_pocl a_sup_set_class f0_pocl a_wcel a_w3a i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa p_com12 f0_pocl f4_pocl a_wpo i0_pocl a_sup_set_class i0_pocl a_sup_set_class f4_pocl a_wbr a_wn i0_pocl a_sup_set_class i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa i0_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi f0_pocl f4_pocl a_wpo f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl i1_pocl a_sup_set_class f4_pocl a_wbr i1_pocl a_sup_set_class i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi f0_pocl f4_pocl a_wpo f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wa f1_pocl i2_pocl a_sup_set_class f4_pocl a_wbr a_wi a_wa a_wi f0_pocl f4_pocl a_wpo f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr a_wa f1_pocl f3_pocl f4_pocl a_wbr a_wi a_wa a_wi i0_pocl i1_pocl i2_pocl f1_pocl f2_pocl f3_pocl f0_pocl f0_pocl f0_pocl p_vtocl3ga f1_pocl f0_pocl a_wcel f2_pocl f0_pocl a_wcel f3_pocl f0_pocl a_wcel a_w3a f0_pocl f4_pocl a_wpo f1_pocl f1_pocl f4_pocl a_wbr a_wn f1_pocl f2_pocl f4_pocl a_wbr f2_pocl f3_pocl f4_pocl a_wbr a_wa f1_pocl f3_pocl f4_pocl a_wbr a_wi a_wa p_com12 $.
 $}
-$( Sufficient conditions for a partial order.  (Contributed by NM,
+
+$(Sufficient conditions for a partial order.  (Contributed by NM,
        9-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$d x y z A $.
-	$d x y z R $.
-	$d x y z ph $.
-	fispod_0 $f wff ph $.
-	fispod_1 $f set x $.
-	fispod_2 $f set y $.
-	fispod_3 $f set z $.
-	fispod_4 $f class A $.
-	fispod_5 $f class R $.
-	eispod_0 $e |- ( ( ph /\ x e. A ) -> -. x R x ) $.
-	eispod_1 $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
-	ispod $p |- ( ph -> R Po A ) $= fispod_0 fispod_1 sup_set_class fispod_1 sup_set_class fispod_5 wbr wn fispod_1 sup_set_class fispod_2 sup_set_class fispod_5 wbr fispod_2 sup_set_class fispod_3 sup_set_class fispod_5 wbr wa fispod_1 sup_set_class fispod_3 sup_set_class fispod_5 wbr wi wa fispod_3 fispod_4 wral fispod_2 fispod_4 wral fispod_1 fispod_4 wral fispod_4 fispod_5 wpo fispod_0 fispod_1 sup_set_class fispod_1 sup_set_class fispod_5 wbr wn fispod_1 sup_set_class fispod_2 sup_set_class fispod_5 wbr fispod_2 sup_set_class fispod_3 sup_set_class fispod_5 wbr wa fispod_1 sup_set_class fispod_3 sup_set_class fispod_5 wbr wi wa fispod_1 fispod_2 fispod_3 fispod_4 fispod_4 fispod_4 fispod_0 fispod_1 sup_set_class fispod_4 wcel fispod_2 sup_set_class fispod_4 wcel fispod_3 sup_set_class fispod_4 wcel w3a wa fispod_1 sup_set_class fispod_1 sup_set_class fispod_5 wbr wn fispod_1 sup_set_class fispod_2 sup_set_class fispod_5 wbr fispod_2 sup_set_class fispod_3 sup_set_class fispod_5 wbr wa fispod_1 sup_set_class fispod_3 sup_set_class fispod_5 wbr wi fispod_0 fispod_2 sup_set_class fispod_4 wcel fispod_1 sup_set_class fispod_4 wcel fispod_1 sup_set_class fispod_1 sup_set_class fispod_5 wbr wn fispod_3 sup_set_class fispod_4 wcel eispod_0 3ad2antr1 eispod_1 jca ralrimivvva fispod_1 fispod_2 fispod_3 fispod_4 fispod_5 df-po sylibr $.
+	$v ph x y z A R  $.
+	$d x y z A  $.
+	$d x y z R  $.
+	$d x y z ph  $.
+	f0_ispod $f wff ph $.
+	f1_ispod $f set x $.
+	f2_ispod $f set y $.
+	f3_ispod $f set z $.
+	f4_ispod $f class A $.
+	f5_ispod $f class R $.
+	e0_ispod $e |- ( ( ph /\ x e. A ) -> -. x R x ) $.
+	e1_ispod $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
+	p_ispod $p |- ( ph -> R Po A ) $= e0_ispod f0_ispod f2_ispod a_sup_set_class f4_ispod a_wcel f1_ispod a_sup_set_class f4_ispod a_wcel f1_ispod a_sup_set_class f1_ispod a_sup_set_class f5_ispod a_wbr a_wn f3_ispod a_sup_set_class f4_ispod a_wcel p_3ad2antr1 e1_ispod f0_ispod f1_ispod a_sup_set_class f4_ispod a_wcel f2_ispod a_sup_set_class f4_ispod a_wcel f3_ispod a_sup_set_class f4_ispod a_wcel a_w3a a_wa f1_ispod a_sup_set_class f1_ispod a_sup_set_class f5_ispod a_wbr a_wn f1_ispod a_sup_set_class f2_ispod a_sup_set_class f5_ispod a_wbr f2_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wa f1_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wi p_jca f0_ispod f1_ispod a_sup_set_class f1_ispod a_sup_set_class f5_ispod a_wbr a_wn f1_ispod a_sup_set_class f2_ispod a_sup_set_class f5_ispod a_wbr f2_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wa f1_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wi a_wa f1_ispod f2_ispod f3_ispod f4_ispod f4_ispod f4_ispod p_ralrimivvva f1_ispod f2_ispod f3_ispod f4_ispod f5_ispod a_df-po f0_ispod f1_ispod a_sup_set_class f1_ispod a_sup_set_class f5_ispod a_wbr a_wn f1_ispod a_sup_set_class f2_ispod a_sup_set_class f5_ispod a_wbr f2_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wa f1_ispod a_sup_set_class f3_ispod a_sup_set_class f5_ispod a_wbr a_wi a_wa f3_ispod f4_ispod a_wral f2_ispod f4_ispod a_wral f1_ispod f4_ispod a_wral f4_ispod f5_ispod a_wpo p_sylibr $.
 $}
-$( Perform the substitutions into the strict weak ordering law.
+
+$(Perform the substitutions into the strict weak ordering law.
        (Contributed by Mario Carneiro, 31-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$v X $.
-	$v Y $.
-	$v Z $.
-	$d x y z A $.
-	$d x y z ph $.
-	$d x y z R $.
-	$d x y z X $.
-	$d y z Y $.
-	$d z Z $.
-	fswopolem_0 $f wff ph $.
-	fswopolem_1 $f set x $.
-	fswopolem_2 $f set y $.
-	fswopolem_3 $f set z $.
-	fswopolem_4 $f class A $.
-	fswopolem_5 $f class R $.
-	fswopolem_6 $f class X $.
-	fswopolem_7 $f class Y $.
-	fswopolem_8 $f class Z $.
-	eswopolem_0 $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( x R y -> ( x R z \/ z R y ) ) ) $.
-	swopolem $p |- ( ( ph /\ ( X e. A /\ Y e. A /\ Z e. A ) ) -> ( X R Y -> ( X R Z \/ Z R Y ) ) ) $= fswopolem_0 fswopolem_1 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_1 sup_set_class fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo wi fswopolem_3 fswopolem_4 wral fswopolem_2 fswopolem_4 wral fswopolem_1 fswopolem_4 wral fswopolem_6 fswopolem_4 wcel fswopolem_7 fswopolem_4 wcel fswopolem_8 fswopolem_4 wcel w3a fswopolem_6 fswopolem_7 fswopolem_5 wbr fswopolem_6 fswopolem_8 fswopolem_5 wbr fswopolem_8 fswopolem_7 fswopolem_5 wbr wo wi fswopolem_0 fswopolem_1 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_1 sup_set_class fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo wi fswopolem_1 fswopolem_2 fswopolem_3 fswopolem_4 fswopolem_4 fswopolem_4 eswopolem_0 ralrimivvva fswopolem_1 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_1 sup_set_class fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo wi fswopolem_6 fswopolem_7 fswopolem_5 wbr fswopolem_6 fswopolem_8 fswopolem_5 wbr fswopolem_8 fswopolem_7 fswopolem_5 wbr wo wi fswopolem_6 fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo wi fswopolem_6 fswopolem_7 fswopolem_5 wbr fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_7 fswopolem_5 wbr wo wi fswopolem_1 fswopolem_2 fswopolem_3 fswopolem_6 fswopolem_7 fswopolem_8 fswopolem_4 fswopolem_4 fswopolem_4 fswopolem_1 sup_set_class fswopolem_6 wceq fswopolem_1 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_6 fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_1 sup_set_class fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo fswopolem_1 sup_set_class fswopolem_6 fswopolem_2 sup_set_class fswopolem_5 breq1 fswopolem_1 sup_set_class fswopolem_6 wceq fswopolem_1 sup_set_class fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_1 sup_set_class fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 breq1 orbi1d imbi12d fswopolem_2 sup_set_class fswopolem_7 wceq fswopolem_6 fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_6 fswopolem_7 fswopolem_5 wbr fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr wo fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_7 fswopolem_5 wbr wo fswopolem_2 sup_set_class fswopolem_7 fswopolem_6 fswopolem_5 breq2 fswopolem_2 sup_set_class fswopolem_7 wceq fswopolem_3 sup_set_class fswopolem_2 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_7 fswopolem_5 wbr fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_2 sup_set_class fswopolem_7 fswopolem_3 sup_set_class fswopolem_5 breq2 orbi2d imbi12d fswopolem_3 sup_set_class fswopolem_8 wceq fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_7 fswopolem_5 wbr wo fswopolem_6 fswopolem_8 fswopolem_5 wbr fswopolem_8 fswopolem_7 fswopolem_5 wbr wo fswopolem_6 fswopolem_7 fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_8 wceq fswopolem_6 fswopolem_3 sup_set_class fswopolem_5 wbr fswopolem_6 fswopolem_8 fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_7 fswopolem_5 wbr fswopolem_8 fswopolem_7 fswopolem_5 wbr fswopolem_3 sup_set_class fswopolem_8 fswopolem_6 fswopolem_5 breq2 fswopolem_3 sup_set_class fswopolem_8 fswopolem_7 fswopolem_5 breq1 orbi12d imbi2d rspc3v mpan9 $.
+	$v ph x y z A R X Y Z  $.
+	$d x y z A  $.
+	$d x y z ph  $.
+	$d x y z R  $.
+	$d x y z X  $.
+	$d y z Y  $.
+	$d z Z  $.
+	f0_swopolem $f wff ph $.
+	f1_swopolem $f set x $.
+	f2_swopolem $f set y $.
+	f3_swopolem $f set z $.
+	f4_swopolem $f class A $.
+	f5_swopolem $f class R $.
+	f6_swopolem $f class X $.
+	f7_swopolem $f class Y $.
+	f8_swopolem $f class Z $.
+	e0_swopolem $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( x R y -> ( x R z \/ z R y ) ) ) $.
+	p_swopolem $p |- ( ( ph /\ ( X e. A /\ Y e. A /\ Z e. A ) ) -> ( X R Y -> ( X R Z \/ Z R Y ) ) ) $= e0_swopolem f0_swopolem f1_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr f1_swopolem a_sup_set_class f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo a_wi f1_swopolem f2_swopolem f3_swopolem f4_swopolem f4_swopolem f4_swopolem p_ralrimivvva f1_swopolem a_sup_set_class f6_swopolem f2_swopolem a_sup_set_class f5_swopolem p_breq1 f1_swopolem a_sup_set_class f6_swopolem f3_swopolem a_sup_set_class f5_swopolem p_breq1 f1_swopolem a_sup_set_class f6_swopolem a_wceq f1_swopolem a_sup_set_class f3_swopolem a_sup_set_class f5_swopolem a_wbr f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr p_orbi1d f1_swopolem a_sup_set_class f6_swopolem a_wceq f1_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr f6_swopolem f2_swopolem a_sup_set_class f5_swopolem a_wbr f1_swopolem a_sup_set_class f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo p_imbi12d f2_swopolem a_sup_set_class f7_swopolem f6_swopolem f5_swopolem p_breq2 f2_swopolem a_sup_set_class f7_swopolem f3_swopolem a_sup_set_class f5_swopolem p_breq2 f2_swopolem a_sup_set_class f7_swopolem a_wceq f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f7_swopolem f5_swopolem a_wbr f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr p_orbi2d f2_swopolem a_sup_set_class f7_swopolem a_wceq f6_swopolem f2_swopolem a_sup_set_class f5_swopolem a_wbr f6_swopolem f7_swopolem f5_swopolem a_wbr f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f7_swopolem f5_swopolem a_wbr a_wo p_imbi12d f3_swopolem a_sup_set_class f8_swopolem f6_swopolem f5_swopolem p_breq2 f3_swopolem a_sup_set_class f8_swopolem f7_swopolem f5_swopolem p_breq1 f3_swopolem a_sup_set_class f8_swopolem a_wceq f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f6_swopolem f8_swopolem f5_swopolem a_wbr f3_swopolem a_sup_set_class f7_swopolem f5_swopolem a_wbr f8_swopolem f7_swopolem f5_swopolem a_wbr p_orbi12d f3_swopolem a_sup_set_class f8_swopolem a_wceq f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f7_swopolem f5_swopolem a_wbr a_wo f6_swopolem f8_swopolem f5_swopolem a_wbr f8_swopolem f7_swopolem f5_swopolem a_wbr a_wo f6_swopolem f7_swopolem f5_swopolem a_wbr p_imbi2d f1_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr f1_swopolem a_sup_set_class f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo a_wi f6_swopolem f7_swopolem f5_swopolem a_wbr f6_swopolem f8_swopolem f5_swopolem a_wbr f8_swopolem f7_swopolem f5_swopolem a_wbr a_wo a_wi f6_swopolem f2_swopolem a_sup_set_class f5_swopolem a_wbr f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo a_wi f6_swopolem f7_swopolem f5_swopolem a_wbr f6_swopolem f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f7_swopolem f5_swopolem a_wbr a_wo a_wi f1_swopolem f2_swopolem f3_swopolem f6_swopolem f7_swopolem f8_swopolem f4_swopolem f4_swopolem f4_swopolem p_rspc3v f0_swopolem f1_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr f1_swopolem a_sup_set_class f3_swopolem a_sup_set_class f5_swopolem a_wbr f3_swopolem a_sup_set_class f2_swopolem a_sup_set_class f5_swopolem a_wbr a_wo a_wi f3_swopolem f4_swopolem a_wral f2_swopolem f4_swopolem a_wral f1_swopolem f4_swopolem a_wral f6_swopolem f4_swopolem a_wcel f7_swopolem f4_swopolem a_wcel f8_swopolem f4_swopolem a_wcel a_w3a f6_swopolem f7_swopolem f5_swopolem a_wbr f6_swopolem f8_swopolem f5_swopolem a_wbr f8_swopolem f7_swopolem f5_swopolem a_wbr a_wo a_wi p_mpan9 $.
 $}
-$( A strict weak order is a partial order.  (Contributed by Mario Carneiro,
+
+$(A strict weak order is a partial order.  (Contributed by Mario Carneiro,
        9-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$d x y z A $.
-	$d x y z R $.
-	$d x y z ph $.
-	fswopo_0 $f wff ph $.
-	fswopo_1 $f set x $.
-	fswopo_2 $f set y $.
-	fswopo_3 $f set z $.
-	fswopo_4 $f class A $.
-	fswopo_5 $f class R $.
-	eswopo_0 $e |- ( ( ph /\ ( y e. A /\ z e. A ) ) -> ( y R z -> -. z R y ) ) $.
-	eswopo_1 $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( x R y -> ( x R z \/ z R y ) ) ) $.
-	swopo $p |- ( ph -> R Po A ) $= fswopo_0 fswopo_1 fswopo_2 fswopo_3 fswopo_4 fswopo_5 fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel wa fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_4 wcel fswopo_1 sup_set_class fswopo_4 wcel fswopo_1 sup_set_class fswopo_4 wcel wa fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn wi fswopo_3 fswopo_4 wral fswopo_2 fswopo_4 wral fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn wi fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_1 sup_set_class fswopo_4 wcel fswopo_1 sup_set_class fswopo_4 wcel id ancli fswopo_0 fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn wi fswopo_2 fswopo_3 fswopo_4 fswopo_4 eswopo_0 ralrimivva fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn wi fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn wi fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn wi fswopo_2 fswopo_3 fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_4 fswopo_4 fswopo_2 sup_set_class fswopo_1 sup_set_class wceq fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn fswopo_2 sup_set_class fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 breq1 fswopo_2 sup_set_class fswopo_1 sup_set_class wceq fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_2 sup_set_class fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 breq2 notbid imbi12d fswopo_3 sup_set_class fswopo_1 sup_set_class wceq fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr wn fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 breq2 fswopo_3 sup_set_class fswopo_1 sup_set_class wceq fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_1 sup_set_class fswopo_1 sup_set_class fswopo_5 breq1 notbid imbi12d rspc2va syl2anr pm2.01d fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel w3a wa fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn fswopo_1 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_0 fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn wi fswopo_1 sup_set_class fswopo_4 wcel eswopo_0 3adantr1 fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel w3a wa fswopo_1 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wn fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel w3a wa fswopo_1 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wa fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel w3a wa fswopo_1 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wa fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_0 fswopo_1 sup_set_class fswopo_4 wcel fswopo_2 sup_set_class fswopo_4 wcel fswopo_3 sup_set_class fswopo_4 wcel w3a wa fswopo_1 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr fswopo_1 sup_set_class fswopo_3 sup_set_class fswopo_5 wbr fswopo_3 sup_set_class fswopo_2 sup_set_class fswopo_5 wbr wo eswopo_1 imp orcomd ord expimpd sylan2d ispod $.
+	$v ph x y z A R  $.
+	$d x y z A  $.
+	$d x y z R  $.
+	$d x y z ph  $.
+	f0_swopo $f wff ph $.
+	f1_swopo $f set x $.
+	f2_swopo $f set y $.
+	f3_swopo $f set z $.
+	f4_swopo $f class A $.
+	f5_swopo $f class R $.
+	e0_swopo $e |- ( ( ph /\ ( y e. A /\ z e. A ) ) -> ( y R z -> -. z R y ) ) $.
+	e1_swopo $e |- ( ( ph /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( x R y -> ( x R z \/ z R y ) ) ) $.
+	p_swopo $p |- ( ph -> R Po A ) $= f1_swopo a_sup_set_class f4_swopo a_wcel p_id f1_swopo a_sup_set_class f4_swopo a_wcel f1_swopo a_sup_set_class f4_swopo a_wcel p_ancli e0_swopo f0_swopo f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f2_swopo f3_swopo f4_swopo f4_swopo p_ralrimivva f2_swopo a_sup_set_class f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo p_breq1 f2_swopo a_sup_set_class f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo p_breq2 f2_swopo a_sup_set_class f1_swopo a_sup_set_class a_wceq f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr p_notbid f2_swopo a_sup_set_class f1_swopo a_sup_set_class a_wceq f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn f3_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn p_imbi12d f3_swopo a_sup_set_class f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo p_breq2 f3_swopo a_sup_set_class f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo p_breq1 f3_swopo a_sup_set_class f1_swopo a_sup_set_class a_wceq f3_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr p_notbid f3_swopo a_sup_set_class f1_swopo a_sup_set_class a_wceq f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn p_imbi12d f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f2_swopo f3_swopo f1_swopo a_sup_set_class f1_swopo a_sup_set_class f4_swopo f4_swopo p_rspc2va f1_swopo a_sup_set_class f4_swopo a_wcel f1_swopo a_sup_set_class f4_swopo a_wcel f1_swopo a_sup_set_class f4_swopo a_wcel a_wa f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f3_swopo f4_swopo a_wral f2_swopo f4_swopo a_wral f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f0_swopo p_syl2anr f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel a_wa f1_swopo a_sup_set_class f1_swopo a_sup_set_class f5_swopo a_wbr p_pm2.01d e0_swopo f0_swopo f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn a_wi f1_swopo a_sup_set_class f4_swopo a_wcel p_3adantr1 e1_swopo f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel a_w3a a_wa f1_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wo p_imp f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel a_w3a a_wa f1_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wa f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr p_orcomd f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel a_w3a a_wa f1_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wa f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr p_ord f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel a_w3a a_wa f1_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr p_expimpd f0_swopo f1_swopo a_sup_set_class f4_swopo a_wcel f2_swopo a_sup_set_class f4_swopo a_wcel f3_swopo a_sup_set_class f4_swopo a_wcel a_w3a a_wa f2_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr f3_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr a_wn f1_swopo a_sup_set_class f2_swopo a_sup_set_class f5_swopo a_wbr f1_swopo a_sup_set_class f3_swopo a_sup_set_class f5_swopo a_wbr p_sylan2d f0_swopo f1_swopo f2_swopo f3_swopo f4_swopo f5_swopo p_ispod $.
 $}
-$( A partial order relation is irreflexive.  (Contributed by NM,
+
+$(A partial order relation is irreflexive.  (Contributed by NM,
      27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	fpoirr_0 $f class A $.
-	fpoirr_1 $f class B $.
-	fpoirr_2 $f class R $.
-	poirr $p |- ( ( R Po A /\ B e. A ) -> -. B R B ) $= fpoirr_1 fpoirr_0 wcel fpoirr_0 fpoirr_2 wpo fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel w3a fpoirr_1 fpoirr_1 fpoirr_2 wbr wn fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel w3a fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel wa fpoirr_1 fpoirr_0 wcel wa fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel wa fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel df-3an fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel anabs1 fpoirr_1 fpoirr_0 wcel anidm 3bitrri fpoirr_0 fpoirr_2 wpo fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel w3a wa fpoirr_1 fpoirr_1 fpoirr_2 wbr wn fpoirr_1 fpoirr_1 fpoirr_2 wbr fpoirr_1 fpoirr_1 fpoirr_2 wbr wa fpoirr_1 fpoirr_1 fpoirr_2 wbr wi fpoirr_0 fpoirr_2 wpo fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel fpoirr_1 fpoirr_0 wcel w3a fpoirr_1 fpoirr_1 fpoirr_2 wbr wn fpoirr_1 fpoirr_1 fpoirr_2 wbr fpoirr_1 fpoirr_1 fpoirr_2 wbr wa fpoirr_1 fpoirr_1 fpoirr_2 wbr wi wa fpoirr_0 fpoirr_1 fpoirr_1 fpoirr_1 fpoirr_2 pocl imp simpld sylan2b $.
+	$v A B R  $.
+	f0_poirr $f class A $.
+	f1_poirr $f class B $.
+	f2_poirr $f class R $.
+	p_poirr $p |- ( ( R Po A /\ B e. A ) -> -. B R B ) $= f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_df-3an f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel p_anabs1 f1_poirr f0_poirr a_wcel p_anidm f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_w3a f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_wa f1_poirr f0_poirr a_wcel a_wa f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_wa f1_poirr f0_poirr a_wcel p_3bitrri f0_poirr f1_poirr f1_poirr f1_poirr f2_poirr p_pocl f0_poirr f2_poirr a_wpo f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_w3a f1_poirr f1_poirr f2_poirr a_wbr a_wn f1_poirr f1_poirr f2_poirr a_wbr f1_poirr f1_poirr f2_poirr a_wbr a_wa f1_poirr f1_poirr f2_poirr a_wbr a_wi a_wa p_imp f0_poirr f2_poirr a_wpo f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_w3a a_wa f1_poirr f1_poirr f2_poirr a_wbr a_wn f1_poirr f1_poirr f2_poirr a_wbr f1_poirr f1_poirr f2_poirr a_wbr a_wa f1_poirr f1_poirr f2_poirr a_wbr a_wi p_simpld f1_poirr f0_poirr a_wcel f0_poirr f2_poirr a_wpo f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel f1_poirr f0_poirr a_wcel a_w3a f1_poirr f1_poirr f2_poirr a_wbr a_wn p_sylan2b $.
 $}
-$( A partial order relation is a transitive relation.  (Contributed by NM,
+
+$(A partial order relation is a transitive relation.  (Contributed by NM,
      27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	fpotr_0 $f class A $.
-	fpotr_1 $f class B $.
-	fpotr_2 $f class C $.
-	fpotr_3 $f class D $.
-	fpotr_4 $f class R $.
-	potr $p |- ( ( R Po A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( B R C /\ C R D ) -> B R D ) ) $= fpotr_0 fpotr_4 wpo fpotr_1 fpotr_0 wcel fpotr_2 fpotr_0 wcel fpotr_3 fpotr_0 wcel w3a wa fpotr_1 fpotr_1 fpotr_4 wbr wn fpotr_1 fpotr_2 fpotr_4 wbr fpotr_2 fpotr_3 fpotr_4 wbr wa fpotr_1 fpotr_3 fpotr_4 wbr wi fpotr_0 fpotr_4 wpo fpotr_1 fpotr_0 wcel fpotr_2 fpotr_0 wcel fpotr_3 fpotr_0 wcel w3a fpotr_1 fpotr_1 fpotr_4 wbr wn fpotr_1 fpotr_2 fpotr_4 wbr fpotr_2 fpotr_3 fpotr_4 wbr wa fpotr_1 fpotr_3 fpotr_4 wbr wi wa fpotr_0 fpotr_1 fpotr_2 fpotr_3 fpotr_4 pocl imp simprd $.
+	$v A B C D R  $.
+	f0_potr $f class A $.
+	f1_potr $f class B $.
+	f2_potr $f class C $.
+	f3_potr $f class D $.
+	f4_potr $f class R $.
+	p_potr $p |- ( ( R Po A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( B R C /\ C R D ) -> B R D ) ) $= f0_potr f1_potr f2_potr f3_potr f4_potr p_pocl f0_potr f4_potr a_wpo f1_potr f0_potr a_wcel f2_potr f0_potr a_wcel f3_potr f0_potr a_wcel a_w3a f1_potr f1_potr f4_potr a_wbr a_wn f1_potr f2_potr f4_potr a_wbr f2_potr f3_potr f4_potr a_wbr a_wa f1_potr f3_potr f4_potr a_wbr a_wi a_wa p_imp f0_potr f4_potr a_wpo f1_potr f0_potr a_wcel f2_potr f0_potr a_wcel f3_potr f0_potr a_wcel a_w3a a_wa f1_potr f1_potr f4_potr a_wbr a_wn f1_potr f2_potr f4_potr a_wbr f2_potr f3_potr f4_potr a_wbr a_wa f1_potr f3_potr f4_potr a_wbr a_wi p_simprd $.
 $}
-$( A partial order relation has no 2-cycle loops.  (Contributed by NM,
+
+$(A partial order relation has no 2-cycle loops.  (Contributed by NM,
      27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	fpo2nr_0 $f class A $.
-	fpo2nr_1 $f class B $.
-	fpo2nr_2 $f class C $.
-	fpo2nr_3 $f class R $.
-	po2nr $p |- ( ( R Po A /\ ( B e. A /\ C e. A ) ) -> -. ( B R C /\ C R B ) ) $= fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_2 fpo2nr_0 wcel wa wa fpo2nr_1 fpo2nr_2 fpo2nr_3 wbr fpo2nr_2 fpo2nr_1 fpo2nr_3 wbr wa fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr wn fpo2nr_2 fpo2nr_0 wcel fpo2nr_0 fpo2nr_1 fpo2nr_3 poirr adantrr fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_2 fpo2nr_0 wcel fpo2nr_1 fpo2nr_2 fpo2nr_3 wbr fpo2nr_2 fpo2nr_1 fpo2nr_3 wbr wa fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr wi fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_2 fpo2nr_0 wcel fpo2nr_1 fpo2nr_2 fpo2nr_3 wbr fpo2nr_2 fpo2nr_1 fpo2nr_3 wbr wa fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr wi wi fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_2 fpo2nr_0 wcel fpo2nr_1 fpo2nr_0 wcel fpo2nr_1 fpo2nr_2 fpo2nr_3 wbr fpo2nr_2 fpo2nr_1 fpo2nr_3 wbr wa fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr wi fpo2nr_0 fpo2nr_3 wpo fpo2nr_1 fpo2nr_0 wcel fpo2nr_2 fpo2nr_0 wcel fpo2nr_1 fpo2nr_0 wcel fpo2nr_1 fpo2nr_2 fpo2nr_3 wbr fpo2nr_2 fpo2nr_1 fpo2nr_3 wbr wa fpo2nr_1 fpo2nr_1 fpo2nr_3 wbr wi fpo2nr_0 fpo2nr_1 fpo2nr_2 fpo2nr_1 fpo2nr_3 potr 3exp2 com34 pm2.43d imp32 mtod $.
+	$v A B C R  $.
+	f0_po2nr $f class A $.
+	f1_po2nr $f class B $.
+	f2_po2nr $f class C $.
+	f3_po2nr $f class R $.
+	p_po2nr $p |- ( ( R Po A /\ ( B e. A /\ C e. A ) ) -> -. ( B R C /\ C R B ) ) $= f0_po2nr f1_po2nr f3_po2nr p_poirr f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f1_po2nr f1_po2nr f3_po2nr a_wbr a_wn f2_po2nr f0_po2nr a_wcel p_adantrr f0_po2nr f1_po2nr f2_po2nr f1_po2nr f3_po2nr p_potr f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f2_po2nr f0_po2nr a_wcel f1_po2nr f0_po2nr a_wcel f1_po2nr f2_po2nr f3_po2nr a_wbr f2_po2nr f1_po2nr f3_po2nr a_wbr a_wa f1_po2nr f1_po2nr f3_po2nr a_wbr a_wi p_3exp2 f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f2_po2nr f0_po2nr a_wcel f1_po2nr f0_po2nr a_wcel f1_po2nr f2_po2nr f3_po2nr a_wbr f2_po2nr f1_po2nr f3_po2nr a_wbr a_wa f1_po2nr f1_po2nr f3_po2nr a_wbr a_wi p_com34 f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f2_po2nr f0_po2nr a_wcel f1_po2nr f2_po2nr f3_po2nr a_wbr f2_po2nr f1_po2nr f3_po2nr a_wbr a_wa f1_po2nr f1_po2nr f3_po2nr a_wbr a_wi a_wi p_pm2.43d f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f2_po2nr f0_po2nr a_wcel f1_po2nr f2_po2nr f3_po2nr a_wbr f2_po2nr f1_po2nr f3_po2nr a_wbr a_wa f1_po2nr f1_po2nr f3_po2nr a_wbr a_wi p_imp32 f0_po2nr f3_po2nr a_wpo f1_po2nr f0_po2nr a_wcel f2_po2nr f0_po2nr a_wcel a_wa a_wa f1_po2nr f2_po2nr f3_po2nr a_wbr f2_po2nr f1_po2nr f3_po2nr a_wbr a_wa f1_po2nr f1_po2nr f3_po2nr a_wbr p_mtod $.
 $}
-$( A partial order relation has no 3-cycle loops.  (Contributed by NM,
+
+$(A partial order relation has no 3-cycle loops.  (Contributed by NM,
      27-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	fpo3nr_0 $f class A $.
-	fpo3nr_1 $f class B $.
-	fpo3nr_2 $f class C $.
-	fpo3nr_3 $f class D $.
-	fpo3nr_4 $f class R $.
-	po3nr $p |- ( ( R Po A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B R C /\ C R D /\ D R B ) ) $= fpo3nr_0 fpo3nr_4 wpo fpo3nr_1 fpo3nr_0 wcel fpo3nr_2 fpo3nr_0 wcel fpo3nr_3 fpo3nr_0 wcel w3a wa fpo3nr_1 fpo3nr_2 fpo3nr_4 wbr fpo3nr_2 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr w3a fpo3nr_1 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr wa fpo3nr_0 fpo3nr_4 wpo fpo3nr_1 fpo3nr_0 wcel fpo3nr_3 fpo3nr_0 wcel fpo3nr_1 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr wa wn fpo3nr_2 fpo3nr_0 wcel fpo3nr_0 fpo3nr_1 fpo3nr_3 fpo3nr_4 po2nr 3adantr2 fpo3nr_1 fpo3nr_2 fpo3nr_4 wbr fpo3nr_2 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr w3a fpo3nr_1 fpo3nr_2 fpo3nr_4 wbr fpo3nr_2 fpo3nr_3 fpo3nr_4 wbr wa fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr wa fpo3nr_0 fpo3nr_4 wpo fpo3nr_1 fpo3nr_0 wcel fpo3nr_2 fpo3nr_0 wcel fpo3nr_3 fpo3nr_0 wcel w3a wa fpo3nr_1 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr wa fpo3nr_1 fpo3nr_2 fpo3nr_4 wbr fpo3nr_2 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr df-3an fpo3nr_0 fpo3nr_4 wpo fpo3nr_1 fpo3nr_0 wcel fpo3nr_2 fpo3nr_0 wcel fpo3nr_3 fpo3nr_0 wcel w3a wa fpo3nr_1 fpo3nr_2 fpo3nr_4 wbr fpo3nr_2 fpo3nr_3 fpo3nr_4 wbr wa fpo3nr_1 fpo3nr_3 fpo3nr_4 wbr fpo3nr_3 fpo3nr_1 fpo3nr_4 wbr fpo3nr_0 fpo3nr_1 fpo3nr_2 fpo3nr_3 fpo3nr_4 potr anim1d syl5bi mtod $.
+	$v A B C D R  $.
+	f0_po3nr $f class A $.
+	f1_po3nr $f class B $.
+	f2_po3nr $f class C $.
+	f3_po3nr $f class D $.
+	f4_po3nr $f class R $.
+	p_po3nr $p |- ( ( R Po A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B R C /\ C R D /\ D R B ) ) $= f0_po3nr f1_po3nr f3_po3nr f4_po3nr p_po2nr f0_po3nr f4_po3nr a_wpo f1_po3nr f0_po3nr a_wcel f3_po3nr f0_po3nr a_wcel f1_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_wa a_wn f2_po3nr f0_po3nr a_wcel p_3adantr2 f1_po3nr f2_po3nr f4_po3nr a_wbr f2_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_df-3an f0_po3nr f1_po3nr f2_po3nr f3_po3nr f4_po3nr p_potr f0_po3nr f4_po3nr a_wpo f1_po3nr f0_po3nr a_wcel f2_po3nr f0_po3nr a_wcel f3_po3nr f0_po3nr a_wcel a_w3a a_wa f1_po3nr f2_po3nr f4_po3nr a_wbr f2_po3nr f3_po3nr f4_po3nr a_wbr a_wa f1_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr p_anim1d f1_po3nr f2_po3nr f4_po3nr a_wbr f2_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_w3a f1_po3nr f2_po3nr f4_po3nr a_wbr f2_po3nr f3_po3nr f4_po3nr a_wbr a_wa f3_po3nr f1_po3nr f4_po3nr a_wbr a_wa f0_po3nr f4_po3nr a_wpo f1_po3nr f0_po3nr a_wcel f2_po3nr f0_po3nr a_wcel f3_po3nr f0_po3nr a_wcel a_w3a a_wa f1_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_wa p_syl5bi f0_po3nr f4_po3nr a_wpo f1_po3nr f0_po3nr a_wcel f2_po3nr f0_po3nr a_wcel f3_po3nr f0_po3nr a_wcel a_w3a a_wa f1_po3nr f2_po3nr f4_po3nr a_wbr f2_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_w3a f1_po3nr f3_po3nr f4_po3nr a_wbr f3_po3nr f1_po3nr f4_po3nr a_wbr a_wa p_mtod $.
 $}
-$( Any relation is a partial ordering of the empty set.  (Contributed by
+
+$(Any relation is a partial ordering of the empty set.  (Contributed by
        NM, 28-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v R $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z R $.
-	ipo0_0 $f set x $.
-	ipo0_1 $f set y $.
-	ipo0_2 $f set z $.
-	fpo0_0 $f class R $.
-	po0 $p |- R Po (/) $= c0 fpo0_0 wpo ipo0_0 sup_set_class ipo0_0 sup_set_class fpo0_0 wbr wn ipo0_0 sup_set_class ipo0_1 sup_set_class fpo0_0 wbr ipo0_1 sup_set_class ipo0_2 sup_set_class fpo0_0 wbr wa ipo0_0 sup_set_class ipo0_2 sup_set_class fpo0_0 wbr wi wa ipo0_2 c0 wral ipo0_1 c0 wral ipo0_0 c0 wral ipo0_0 sup_set_class ipo0_0 sup_set_class fpo0_0 wbr wn ipo0_0 sup_set_class ipo0_1 sup_set_class fpo0_0 wbr ipo0_1 sup_set_class ipo0_2 sup_set_class fpo0_0 wbr wa ipo0_0 sup_set_class ipo0_2 sup_set_class fpo0_0 wbr wi wa ipo0_2 c0 wral ipo0_1 c0 wral ipo0_0 ral0 ipo0_0 ipo0_1 ipo0_2 c0 fpo0_0 df-po mpbir $.
+	$v R  $.
+	$d x y z R  $.
+	f0_po0 $f class R $.
+	i0_po0 $f set x $.
+	i1_po0 $f set y $.
+	i2_po0 $f set z $.
+	p_po0 $p |- R Po (/) $= i0_po0 a_sup_set_class i0_po0 a_sup_set_class f0_po0 a_wbr a_wn i0_po0 a_sup_set_class i1_po0 a_sup_set_class f0_po0 a_wbr i1_po0 a_sup_set_class i2_po0 a_sup_set_class f0_po0 a_wbr a_wa i0_po0 a_sup_set_class i2_po0 a_sup_set_class f0_po0 a_wbr a_wi a_wa i2_po0 a_c0 a_wral i1_po0 a_c0 a_wral i0_po0 p_ral0 i0_po0 i1_po0 i2_po0 a_c0 f0_po0 a_df-po a_c0 f0_po0 a_wpo i0_po0 a_sup_set_class i0_po0 a_sup_set_class f0_po0 a_wbr a_wn i0_po0 a_sup_set_class i1_po0 a_sup_set_class f0_po0 a_wbr i1_po0 a_sup_set_class i2_po0 a_sup_set_class f0_po0 a_wbr a_wa i0_po0 a_sup_set_class i2_po0 a_sup_set_class f0_po0 a_wbr a_wi a_wa i2_po0 a_c0 a_wral i1_po0 a_c0 a_wral i0_po0 a_c0 a_wral p_mpbir $.
 $}
-$( A function preserves a partial order relation.  (Contributed by Jeff
+
+$(A function preserves a partial order relation.  (Contributed by Jeff
        Madsen, 18-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v S $.
-	$v X $.
-	$v Y $.
-	$v z $.
-	$v w $.
-	$v v $.
-	$d R v w x y z $.
-	$d S v w z $.
-	$d X v w y z $.
-	$d Y x z $.
-	$d A v w x z $.
-	$d B v w x z $.
-	ipofun_0 $f set z $.
-	ipofun_1 $f set w $.
-	ipofun_2 $f set v $.
-	fpofun_0 $f set x $.
-	fpofun_1 $f set y $.
-	fpofun_2 $f class A $.
-	fpofun_3 $f class B $.
-	fpofun_4 $f class R $.
-	fpofun_5 $f class S $.
-	fpofun_6 $f class X $.
-	fpofun_7 $f class Y $.
-	epofun_0 $e |- S = { <. x , y >. | X R Y } $.
-	epofun_1 $e |- ( x = y -> X = Y ) $.
-	pofun $p |- ( ( R Po B /\ A. x e. A X e. B ) -> S Po A ) $= fpofun_3 fpofun_4 wpo fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral wa ipofun_2 ipofun_1 ipofun_0 fpofun_2 fpofun_5 fpofun_3 fpofun_4 wpo fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral ipofun_2 sup_set_class fpofun_2 wcel ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_5 wbr wn fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral ipofun_2 sup_set_class fpofun_2 wcel wa fpofun_3 fpofun_4 wpo fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_5 wbr wn ipofun_2 sup_set_class fpofun_2 wcel fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_6 fpofun_3 wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_2 sup_set_class fpofun_2 fpofun_0 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 nfcsb1v nfel1 fpofun_0 sup_set_class ipofun_2 sup_set_class wceq fpofun_6 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 csbeq1a eleq1d rspc impcom fpofun_3 fpofun_4 wpo fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel wa fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_5 wbr fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 poirr ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_5 wbr ipofun_2 sup_set_class ipofun_2 sup_set_class cop fpofun_5 wcel ipofun_2 sup_set_class ipofun_2 sup_set_class cop fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_5 df-br fpofun_5 fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab ipofun_2 sup_set_class ipofun_2 sup_set_class cop epofun_0 eleq2i fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_0 fpofun_1 ipofun_2 sup_set_class ipofun_2 sup_set_class fpofun_0 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 nfcsb1v fpofun_0 fpofun_4 nfcv fpofun_0 fpofun_7 nfcv nfbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_1 nfv ipofun_2 vex ipofun_2 vex fpofun_0 sup_set_class ipofun_2 sup_set_class wceq fpofun_6 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 csbeq1a breq1d fpofun_1 sup_set_class ipofun_2 sup_set_class wceq fpofun_7 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 fpofun_1 sup_set_class ipofun_2 sup_set_class wceq fpofun_7 fpofun_0 fpofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 fpofun_1 sup_set_class fpofun_6 fpofun_7 fpofun_1 vex fpofun_0 fpofun_7 nfcv epofun_1 csbief fpofun_0 fpofun_1 sup_set_class ipofun_2 sup_set_class fpofun_6 csbeq1 syl5eqr breq2d opelopabf 3bitri sylnibr sylan2 anassrs fpofun_3 fpofun_4 wpo fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral wa ipofun_2 sup_set_class fpofun_2 wcel ipofun_1 sup_set_class fpofun_2 wcel ipofun_0 sup_set_class fpofun_2 wcel w3a fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel w3a ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr wa ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr wi fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral ipofun_2 sup_set_class fpofun_2 wcel ipofun_1 sup_set_class fpofun_2 wcel ipofun_0 sup_set_class fpofun_2 wcel w3a fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel w3a fpofun_3 fpofun_4 wpo fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral ipofun_2 sup_set_class fpofun_2 wcel ipofun_1 sup_set_class fpofun_2 wcel ipofun_0 sup_set_class fpofun_2 wcel w3a fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel w3a fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral ipofun_2 sup_set_class fpofun_2 wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel ipofun_1 sup_set_class fpofun_2 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel ipofun_0 sup_set_class fpofun_2 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel ipofun_2 sup_set_class fpofun_2 wcel fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_6 fpofun_3 wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_2 sup_set_class fpofun_2 fpofun_0 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 nfcsb1v nfel1 fpofun_0 sup_set_class ipofun_2 sup_set_class wceq fpofun_6 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 csbeq1a eleq1d rspc com12 ipofun_1 sup_set_class fpofun_2 wcel fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_6 fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_2 fpofun_0 fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_1 sup_set_class fpofun_6 nfcsb1v nfel1 fpofun_0 sup_set_class ipofun_1 sup_set_class wceq fpofun_6 fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_1 sup_set_class fpofun_6 csbeq1a eleq1d rspc com12 ipofun_0 sup_set_class fpofun_2 wcel fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_6 fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_2 fpofun_0 fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_0 sup_set_class fpofun_6 nfcsb1v nfel1 fpofun_0 sup_set_class ipofun_0 sup_set_class wceq fpofun_6 fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 fpofun_0 ipofun_0 sup_set_class fpofun_6 csbeq1a eleq1d rspc com12 3anim123d imp adantll fpofun_3 fpofun_4 wpo fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel w3a ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr wa ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr wi fpofun_6 fpofun_3 wcel fpofun_0 fpofun_2 wral fpofun_3 fpofun_4 wpo fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_3 wcel fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_3 wcel w3a wa fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr wa fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr wa ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr fpofun_3 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 potr ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 wbr ipofun_2 sup_set_class ipofun_1 sup_set_class cop fpofun_5 wcel ipofun_2 sup_set_class ipofun_1 sup_set_class cop fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_5 df-br fpofun_5 fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab ipofun_2 sup_set_class ipofun_1 sup_set_class cop epofun_0 eleq2i fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_0 fpofun_1 ipofun_2 sup_set_class ipofun_1 sup_set_class fpofun_0 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 nfcsb1v fpofun_0 fpofun_4 nfcv fpofun_0 fpofun_7 nfcv nfbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_1 nfv ipofun_2 vex ipofun_1 vex fpofun_0 sup_set_class ipofun_2 sup_set_class wceq fpofun_6 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 csbeq1a breq1d fpofun_1 sup_set_class ipofun_1 sup_set_class wceq fpofun_7 fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 fpofun_1 sup_set_class ipofun_1 sup_set_class wceq fpofun_7 fpofun_0 fpofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 fpofun_1 sup_set_class fpofun_6 fpofun_7 fpofun_1 vex fpofun_0 fpofun_7 nfcv epofun_1 csbief fpofun_0 fpofun_1 sup_set_class ipofun_1 sup_set_class fpofun_6 csbeq1 syl5eqr breq2d opelopabf 3bitri ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class cop fpofun_5 wcel ipofun_1 sup_set_class ipofun_0 sup_set_class cop fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab wcel fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_5 df-br fpofun_5 fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab ipofun_1 sup_set_class ipofun_0 sup_set_class cop epofun_0 eleq2i fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 wbr fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_0 fpofun_1 ipofun_1 sup_set_class ipofun_0 sup_set_class fpofun_0 fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_1 sup_set_class fpofun_6 nfcsb1v fpofun_0 fpofun_4 nfcv fpofun_0 fpofun_7 nfcv nfbr fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_1 nfv ipofun_1 vex ipofun_0 vex fpofun_0 sup_set_class ipofun_1 sup_set_class wceq fpofun_6 fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_1 sup_set_class fpofun_6 csbeq1a breq1d fpofun_1 sup_set_class ipofun_0 sup_set_class wceq fpofun_7 fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_0 ipofun_1 sup_set_class fpofun_6 csb fpofun_4 fpofun_1 sup_set_class ipofun_0 sup_set_class wceq fpofun_7 fpofun_0 fpofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_0 fpofun_1 sup_set_class fpofun_6 fpofun_7 fpofun_1 vex fpofun_0 fpofun_7 nfcv epofun_1 csbief fpofun_0 fpofun_1 sup_set_class ipofun_0 sup_set_class fpofun_6 csbeq1 syl5eqr breq2d opelopabf 3bitri anbi12i ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_5 wbr ipofun_2 sup_set_class ipofun_0 sup_set_class cop fpofun_5 wcel ipofun_2 sup_set_class ipofun_0 sup_set_class cop fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab wcel fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_5 df-br fpofun_5 fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 fpofun_1 copab ipofun_2 sup_set_class ipofun_0 sup_set_class cop epofun_0 eleq2i fpofun_6 fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 wbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_0 fpofun_1 ipofun_2 sup_set_class ipofun_0 sup_set_class fpofun_0 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 nfcsb1v fpofun_0 fpofun_4 nfcv fpofun_0 fpofun_7 nfcv nfbr fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_4 wbr fpofun_1 nfv ipofun_2 vex ipofun_0 vex fpofun_0 sup_set_class ipofun_2 sup_set_class wceq fpofun_6 fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_7 fpofun_4 fpofun_0 ipofun_2 sup_set_class fpofun_6 csbeq1a breq1d fpofun_1 sup_set_class ipofun_0 sup_set_class wceq fpofun_7 fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_0 ipofun_2 sup_set_class fpofun_6 csb fpofun_4 fpofun_1 sup_set_class ipofun_0 sup_set_class wceq fpofun_7 fpofun_0 fpofun_1 sup_set_class fpofun_6 csb fpofun_0 ipofun_0 sup_set_class fpofun_6 csb fpofun_0 fpofun_1 sup_set_class fpofun_6 fpofun_7 fpofun_1 vex fpofun_0 fpofun_7 nfcv epofun_1 csbief fpofun_0 fpofun_1 sup_set_class ipofun_0 sup_set_class fpofun_6 csbeq1 syl5eqr breq2d opelopabf 3bitri 3imtr4g adantlr syldan ispod $.
+	$v x y A B R S X Y  $.
+	$d R v w x y z  $.
+	$d S v w z  $.
+	$d X v w y z  $.
+	$d Y x z  $.
+	$d A v w x z  $.
+	$d B v w x z  $.
+	f0_pofun $f set x $.
+	f1_pofun $f set y $.
+	f2_pofun $f class A $.
+	f3_pofun $f class B $.
+	f4_pofun $f class R $.
+	f5_pofun $f class S $.
+	f6_pofun $f class X $.
+	f7_pofun $f class Y $.
+	i0_pofun $f set z $.
+	i1_pofun $f set w $.
+	i2_pofun $f set v $.
+	e0_pofun $e |- S = { <. x , y >. | X R Y } $.
+	e1_pofun $e |- ( x = y -> X = Y ) $.
+	p_pofun $p |- ( ( R Po B /\ A. x e. A X e. B ) -> S Po A ) $= f0_pofun i2_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_nfel1 f0_pofun i2_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_eleq1d f6_pofun f3_pofun a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i2_pofun a_sup_set_class f2_pofun p_rspc i2_pofun a_sup_set_class f2_pofun a_wcel f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel p_impcom f3_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_poirr i2_pofun a_sup_set_class i2_pofun a_sup_set_class f5_pofun a_df-br e0_pofun f5_pofun f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab i2_pofun a_sup_set_class i2_pofun a_sup_set_class a_cop p_eleq2i f0_pofun i2_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f4_pofun p_nfcv f0_pofun f7_pofun p_nfcv f0_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_nfbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f1_pofun p_nfv i2_pofun p_vex i2_pofun p_vex f0_pofun i2_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_breq1d f1_pofun p_vex f0_pofun f7_pofun p_nfcv e1_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun f7_pofun p_csbief f0_pofun f1_pofun a_sup_set_class i2_pofun a_sup_set_class f6_pofun p_csbeq1 f1_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f7_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb p_syl5eqr f1_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f7_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_breq2d f6_pofun f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f0_pofun f1_pofun i2_pofun a_sup_set_class i2_pofun a_sup_set_class p_opelopabf i2_pofun a_sup_set_class i2_pofun a_sup_set_class f5_pofun a_wbr i2_pofun a_sup_set_class i2_pofun a_sup_set_class a_cop f5_pofun a_wcel i2_pofun a_sup_set_class i2_pofun a_sup_set_class a_cop f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr p_3bitri f3_pofun f4_pofun a_wpo f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_wa f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr i2_pofun a_sup_set_class i2_pofun a_sup_set_class f5_pofun a_wbr p_sylnibr f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral i2_pofun a_sup_set_class f2_pofun a_wcel a_wa f3_pofun f4_pofun a_wpo f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel i2_pofun a_sup_set_class i2_pofun a_sup_set_class f5_pofun a_wbr a_wn p_sylan2 f3_pofun f4_pofun a_wpo f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral i2_pofun a_sup_set_class f2_pofun a_wcel i2_pofun a_sup_set_class i2_pofun a_sup_set_class f5_pofun a_wbr a_wn p_anassrs f0_pofun i2_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_nfel1 f0_pofun i2_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_eleq1d f6_pofun f3_pofun a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i2_pofun a_sup_set_class f2_pofun p_rspc i2_pofun a_sup_set_class f2_pofun a_wcel f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel p_com12 f0_pofun i1_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_nfel1 f0_pofun i1_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i1_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_eleq1d f6_pofun f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f2_pofun p_rspc i1_pofun a_sup_set_class f2_pofun a_wcel f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel p_com12 f0_pofun i0_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_nfel1 f0_pofun i0_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i0_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun p_eleq1d f6_pofun f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f2_pofun p_rspc i0_pofun a_sup_set_class f2_pofun a_wcel f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel p_com12 f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral i2_pofun a_sup_set_class f2_pofun a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel i1_pofun a_sup_set_class f2_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel i0_pofun a_sup_set_class f2_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel p_3anim123d f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral i2_pofun a_sup_set_class f2_pofun a_wcel i1_pofun a_sup_set_class f2_pofun a_wcel i0_pofun a_sup_set_class f2_pofun a_wcel a_w3a f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_w3a p_imp f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral i2_pofun a_sup_set_class f2_pofun a_wcel i1_pofun a_sup_set_class f2_pofun a_wcel i0_pofun a_sup_set_class f2_pofun a_wcel a_w3a f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_w3a f3_pofun f4_pofun a_wpo p_adantll f3_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_potr i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_df-br e0_pofun f5_pofun f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab i2_pofun a_sup_set_class i1_pofun a_sup_set_class a_cop p_eleq2i f0_pofun i2_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f4_pofun p_nfcv f0_pofun f7_pofun p_nfcv f0_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_nfbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f1_pofun p_nfv i2_pofun p_vex i1_pofun p_vex f0_pofun i2_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_breq1d f1_pofun p_vex f0_pofun f7_pofun p_nfcv e1_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun f7_pofun p_csbief f0_pofun f1_pofun a_sup_set_class i1_pofun a_sup_set_class f6_pofun p_csbeq1 f1_pofun a_sup_set_class i1_pofun a_sup_set_class a_wceq f7_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb p_syl5eqr f1_pofun a_sup_set_class i1_pofun a_sup_set_class a_wceq f7_pofun f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_breq2d f6_pofun f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f0_pofun f1_pofun i2_pofun a_sup_set_class i1_pofun a_sup_set_class p_opelopabf i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_wbr i2_pofun a_sup_set_class i1_pofun a_sup_set_class a_cop f5_pofun a_wcel i2_pofun a_sup_set_class i1_pofun a_sup_set_class a_cop f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr p_3bitri i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_df-br e0_pofun f5_pofun f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab i1_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop p_eleq2i f0_pofun i1_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f4_pofun p_nfcv f0_pofun f7_pofun p_nfcv f0_pofun f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_nfbr f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f1_pofun p_nfv i1_pofun p_vex i0_pofun p_vex f0_pofun i1_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i1_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_breq1d f1_pofun p_vex f0_pofun f7_pofun p_nfcv e1_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun f7_pofun p_csbief f0_pofun f1_pofun a_sup_set_class i0_pofun a_sup_set_class f6_pofun p_csbeq1 f1_pofun a_sup_set_class i0_pofun a_sup_set_class a_wceq f7_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb p_syl5eqr f1_pofun a_sup_set_class i0_pofun a_sup_set_class a_wceq f7_pofun f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_breq2d f6_pofun f7_pofun f4_pofun a_wbr f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun a_wbr f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f0_pofun f1_pofun i1_pofun a_sup_set_class i0_pofun a_sup_set_class p_opelopabf i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr i1_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop f5_pofun a_wcel i1_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr p_3bitri i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr p_anbi12i i2_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_df-br e0_pofun f5_pofun f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab i2_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop p_eleq2i f0_pofun i2_pofun a_sup_set_class f6_pofun p_nfcsb1v f0_pofun f4_pofun p_nfcv f0_pofun f7_pofun p_nfcv f0_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_nfbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f1_pofun p_nfv i2_pofun p_vex i0_pofun p_vex f0_pofun i2_pofun a_sup_set_class f6_pofun p_csbeq1a f0_pofun a_sup_set_class i2_pofun a_sup_set_class a_wceq f6_pofun f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun p_breq1d f1_pofun p_vex f0_pofun f7_pofun p_nfcv e1_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun f7_pofun p_csbief f0_pofun f1_pofun a_sup_set_class i0_pofun a_sup_set_class f6_pofun p_csbeq1 f1_pofun a_sup_set_class i0_pofun a_sup_set_class a_wceq f7_pofun f0_pofun f1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb p_syl5eqr f1_pofun a_sup_set_class i0_pofun a_sup_set_class a_wceq f7_pofun f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f4_pofun p_breq2d f6_pofun f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f7_pofun f4_pofun a_wbr f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f0_pofun f1_pofun i2_pofun a_sup_set_class i0_pofun a_sup_set_class p_opelopabf i2_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr i2_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop f5_pofun a_wcel i2_pofun a_sup_set_class i0_pofun a_sup_set_class a_cop f6_pofun f7_pofun f4_pofun a_wbr f0_pofun f1_pofun a_copab a_wcel f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr p_3bitri f3_pofun f4_pofun a_wpo f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_w3a a_wa f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr a_wa f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f4_pofun a_wbr i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_wbr i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr a_wa i2_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr p_3imtr4g f3_pofun f4_pofun a_wpo f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_w3a i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_wbr i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr a_wa i2_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr a_wi f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral p_adantlr f3_pofun f4_pofun a_wpo f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral a_wa i2_pofun a_sup_set_class f2_pofun a_wcel i1_pofun a_sup_set_class f2_pofun a_wcel i0_pofun a_sup_set_class f2_pofun a_wcel a_w3a f0_pofun i2_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i1_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel f0_pofun i0_pofun a_sup_set_class f6_pofun a_csb f3_pofun a_wcel a_w3a i2_pofun a_sup_set_class i1_pofun a_sup_set_class f5_pofun a_wbr i1_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr a_wa i2_pofun a_sup_set_class i0_pofun a_sup_set_class f5_pofun a_wbr a_wi p_syldan f3_pofun f4_pofun a_wpo f6_pofun f3_pofun a_wcel f0_pofun f2_pofun a_wral a_wa i2_pofun i1_pofun i0_pofun f2_pofun f5_pofun p_ispod $.
 $}
-$( A strict linear order is a strict partial order.  (Contributed by NM,
+
+$(A strict linear order is a strict partial order.  (Contributed by NM,
        28-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v R $.
-	$v x $.
-	$v y $.
-	$d x y R $.
-	$d x y A $.
-	isopo_0 $f set x $.
-	isopo_1 $f set y $.
-	fsopo_0 $f class A $.
-	fsopo_1 $f class R $.
-	sopo $p |- ( R Or A -> R Po A ) $= fsopo_0 fsopo_1 wor fsopo_0 fsopo_1 wpo isopo_0 sup_set_class isopo_1 sup_set_class fsopo_1 wbr isopo_0 sup_set_class isopo_1 sup_set_class wceq isopo_1 sup_set_class isopo_0 sup_set_class fsopo_1 wbr w3o isopo_1 fsopo_0 wral isopo_0 fsopo_0 wral isopo_0 isopo_1 fsopo_0 fsopo_1 df-so simplbi $.
+	$v A R  $.
+	$d x y R  $.
+	$d x y A  $.
+	f0_sopo $f class A $.
+	f1_sopo $f class R $.
+	i0_sopo $f set x $.
+	i1_sopo $f set y $.
+	p_sopo $p |- ( R Or A -> R Po A ) $= i0_sopo i1_sopo f0_sopo f1_sopo a_df-so f0_sopo f1_sopo a_wor f0_sopo f1_sopo a_wpo i0_sopo a_sup_set_class i1_sopo a_sup_set_class f1_sopo a_wbr i0_sopo a_sup_set_class i1_sopo a_sup_set_class a_wceq i1_sopo a_sup_set_class i0_sopo a_sup_set_class f1_sopo a_wbr a_w3o i1_sopo f0_sopo a_wral i0_sopo f0_sopo a_wral p_simplbi $.
 $}
-$( Subset theorem for the strict ordering predicate.  (Contributed by NM,
+
+$(Subset theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	$v x $.
-	$v y $.
-	$d x y R $.
-	$d x y A $.
-	$d x y B $.
-	isoss_0 $f set x $.
-	isoss_1 $f set y $.
-	fsoss_0 $f class A $.
-	fsoss_1 $f class B $.
-	fsoss_2 $f class R $.
-	soss $p |- ( A C_ B -> ( R Or B -> R Or A ) ) $= fsoss_0 fsoss_1 wss fsoss_1 fsoss_2 wpo isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_1 wral isoss_0 fsoss_1 wral wa fsoss_0 fsoss_2 wpo isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_0 wral isoss_0 fsoss_0 wral wa fsoss_1 fsoss_2 wor fsoss_0 fsoss_2 wor fsoss_0 fsoss_1 wss fsoss_1 fsoss_2 wpo fsoss_0 fsoss_2 wpo isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_1 wral isoss_0 fsoss_1 wral isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_0 wral isoss_0 fsoss_0 wral fsoss_0 fsoss_1 fsoss_2 poss fsoss_0 fsoss_1 wss isoss_0 sup_set_class fsoss_1 wcel isoss_1 sup_set_class fsoss_1 wcel wa isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o wi isoss_1 wal isoss_0 wal isoss_0 sup_set_class fsoss_0 wcel isoss_1 sup_set_class fsoss_0 wcel wa isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o wi isoss_1 wal isoss_0 wal isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_1 wral isoss_0 fsoss_1 wral isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_1 fsoss_0 wral isoss_0 fsoss_0 wral fsoss_0 fsoss_1 wss isoss_0 sup_set_class fsoss_1 wcel isoss_1 sup_set_class fsoss_1 wcel wa isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o wi isoss_0 sup_set_class fsoss_0 wcel isoss_1 sup_set_class fsoss_0 wcel wa isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o wi isoss_0 isoss_1 fsoss_0 fsoss_1 wss isoss_0 sup_set_class fsoss_0 wcel isoss_1 sup_set_class fsoss_0 wcel wa isoss_0 sup_set_class fsoss_1 wcel isoss_1 sup_set_class fsoss_1 wcel wa isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o fsoss_0 fsoss_1 wss isoss_0 sup_set_class fsoss_0 wcel isoss_0 sup_set_class fsoss_1 wcel isoss_1 sup_set_class fsoss_0 wcel isoss_1 sup_set_class fsoss_1 wcel fsoss_0 fsoss_1 isoss_0 sup_set_class ssel fsoss_0 fsoss_1 isoss_1 sup_set_class ssel anim12d imim1d 2alimdv isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_0 isoss_1 fsoss_1 fsoss_1 r2al isoss_0 sup_set_class isoss_1 sup_set_class fsoss_2 wbr isoss_0 sup_set_class isoss_1 sup_set_class wceq isoss_1 sup_set_class isoss_0 sup_set_class fsoss_2 wbr w3o isoss_0 isoss_1 fsoss_0 fsoss_0 r2al 3imtr4g anim12d isoss_0 isoss_1 fsoss_1 fsoss_2 df-so isoss_0 isoss_1 fsoss_0 fsoss_2 df-so 3imtr4g $.
+	$v A B R  $.
+	$d x y R  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_soss $f class A $.
+	f1_soss $f class B $.
+	f2_soss $f class R $.
+	i0_soss $f set x $.
+	i1_soss $f set y $.
+	p_soss $p |- ( A C_ B -> ( R Or B -> R Or A ) ) $= f0_soss f1_soss f2_soss p_poss f0_soss f1_soss i0_soss a_sup_set_class p_ssel f0_soss f1_soss i1_soss a_sup_set_class p_ssel f0_soss f1_soss a_wss i0_soss a_sup_set_class f0_soss a_wcel i0_soss a_sup_set_class f1_soss a_wcel i1_soss a_sup_set_class f0_soss a_wcel i1_soss a_sup_set_class f1_soss a_wcel p_anim12d f0_soss f1_soss a_wss i0_soss a_sup_set_class f0_soss a_wcel i1_soss a_sup_set_class f0_soss a_wcel a_wa i0_soss a_sup_set_class f1_soss a_wcel i1_soss a_sup_set_class f1_soss a_wcel a_wa i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o p_imim1d f0_soss f1_soss a_wss i0_soss a_sup_set_class f1_soss a_wcel i1_soss a_sup_set_class f1_soss a_wcel a_wa i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o a_wi i0_soss a_sup_set_class f0_soss a_wcel i1_soss a_sup_set_class f0_soss a_wcel a_wa i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o a_wi i0_soss i1_soss p_2alimdv i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i0_soss i1_soss f1_soss f1_soss p_r2al i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i0_soss i1_soss f0_soss f0_soss p_r2al f0_soss f1_soss a_wss i0_soss a_sup_set_class f1_soss a_wcel i1_soss a_sup_set_class f1_soss a_wcel a_wa i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o a_wi i1_soss a_wal i0_soss a_wal i0_soss a_sup_set_class f0_soss a_wcel i1_soss a_sup_set_class f0_soss a_wcel a_wa i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o a_wi i1_soss a_wal i0_soss a_wal i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f1_soss a_wral i0_soss f1_soss a_wral i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f0_soss a_wral i0_soss f0_soss a_wral p_3imtr4g f0_soss f1_soss a_wss f1_soss f2_soss a_wpo f0_soss f2_soss a_wpo i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f1_soss a_wral i0_soss f1_soss a_wral i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f0_soss a_wral i0_soss f0_soss a_wral p_anim12d i0_soss i1_soss f1_soss f2_soss a_df-so i0_soss i1_soss f0_soss f2_soss a_df-so f0_soss f1_soss a_wss f1_soss f2_soss a_wpo i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f1_soss a_wral i0_soss f1_soss a_wral a_wa f0_soss f2_soss a_wpo i0_soss a_sup_set_class i1_soss a_sup_set_class f2_soss a_wbr i0_soss a_sup_set_class i1_soss a_sup_set_class a_wceq i1_soss a_sup_set_class i0_soss a_sup_set_class f2_soss a_wbr a_w3o i1_soss f0_soss a_wral i0_soss f0_soss a_wral a_wa f1_soss f2_soss a_wor f0_soss f2_soss a_wor p_3imtr4g $.
 $}
-$( Equality theorem for the strict ordering predicate.  (Contributed by NM,
+
+$(Equality theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v R $.
-	$v S $.
-	$v x $.
-	$v y $.
-	$d x y R $.
-	$d x y S $.
-	$d x y A $.
-	isoeq1_0 $f set x $.
-	isoeq1_1 $f set y $.
-	fsoeq1_0 $f class A $.
-	fsoeq1_1 $f class R $.
-	fsoeq1_2 $f class S $.
-	soeq1 $p |- ( R = S -> ( R Or A <-> S Or A ) ) $= fsoeq1_1 fsoeq1_2 wceq fsoeq1_0 fsoeq1_1 wpo isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_1 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_1 wbr w3o isoeq1_1 fsoeq1_0 wral isoeq1_0 fsoeq1_0 wral wa fsoeq1_0 fsoeq1_2 wpo isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_2 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_2 wbr w3o isoeq1_1 fsoeq1_0 wral isoeq1_0 fsoeq1_0 wral wa fsoeq1_0 fsoeq1_1 wor fsoeq1_0 fsoeq1_2 wor fsoeq1_1 fsoeq1_2 wceq fsoeq1_0 fsoeq1_1 wpo fsoeq1_0 fsoeq1_2 wpo isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_1 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_1 wbr w3o isoeq1_1 fsoeq1_0 wral isoeq1_0 fsoeq1_0 wral isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_2 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_2 wbr w3o isoeq1_1 fsoeq1_0 wral isoeq1_0 fsoeq1_0 wral fsoeq1_0 fsoeq1_1 fsoeq1_2 poeq1 fsoeq1_1 fsoeq1_2 wceq isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_1 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_1 wbr w3o isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_2 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_2 wbr w3o isoeq1_0 isoeq1_1 fsoeq1_0 fsoeq1_0 fsoeq1_1 fsoeq1_2 wceq isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_1 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_2 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_1 wbr isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_2 wbr isoeq1_0 sup_set_class isoeq1_1 sup_set_class fsoeq1_1 fsoeq1_2 breq fsoeq1_1 fsoeq1_2 wceq isoeq1_0 sup_set_class isoeq1_1 sup_set_class wceq biidd isoeq1_1 sup_set_class isoeq1_0 sup_set_class fsoeq1_1 fsoeq1_2 breq 3orbi123d 2ralbidv anbi12d isoeq1_0 isoeq1_1 fsoeq1_0 fsoeq1_1 df-so isoeq1_0 isoeq1_1 fsoeq1_0 fsoeq1_2 df-so 3bitr4g $.
+	$v A R S  $.
+	$d x y R  $.
+	$d x y S  $.
+	$d x y A  $.
+	f0_soeq1 $f class A $.
+	f1_soeq1 $f class R $.
+	f2_soeq1 $f class S $.
+	i0_soeq1 $f set x $.
+	i1_soeq1 $f set y $.
+	p_soeq1 $p |- ( R = S -> ( R Or A <-> S Or A ) ) $= f0_soeq1 f1_soeq1 f2_soeq1 p_poeq1 i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f1_soeq1 f2_soeq1 p_breq f1_soeq1 f2_soeq1 a_wceq i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq p_biidd i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f1_soeq1 f2_soeq1 p_breq f1_soeq1 f2_soeq1 a_wceq i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f1_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f2_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f1_soeq1 a_wbr i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f2_soeq1 a_wbr p_3orbi123d f1_soeq1 f2_soeq1 a_wceq i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f1_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f1_soeq1 a_wbr a_w3o i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f2_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f2_soeq1 a_wbr a_w3o i0_soeq1 i1_soeq1 f0_soeq1 f0_soeq1 p_2ralbidv f1_soeq1 f2_soeq1 a_wceq f0_soeq1 f1_soeq1 a_wpo f0_soeq1 f2_soeq1 a_wpo i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f1_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f1_soeq1 a_wbr a_w3o i1_soeq1 f0_soeq1 a_wral i0_soeq1 f0_soeq1 a_wral i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f2_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f2_soeq1 a_wbr a_w3o i1_soeq1 f0_soeq1 a_wral i0_soeq1 f0_soeq1 a_wral p_anbi12d i0_soeq1 i1_soeq1 f0_soeq1 f1_soeq1 a_df-so i0_soeq1 i1_soeq1 f0_soeq1 f2_soeq1 a_df-so f1_soeq1 f2_soeq1 a_wceq f0_soeq1 f1_soeq1 a_wpo i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f1_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f1_soeq1 a_wbr a_w3o i1_soeq1 f0_soeq1 a_wral i0_soeq1 f0_soeq1 a_wral a_wa f0_soeq1 f2_soeq1 a_wpo i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class f2_soeq1 a_wbr i0_soeq1 a_sup_set_class i1_soeq1 a_sup_set_class a_wceq i1_soeq1 a_sup_set_class i0_soeq1 a_sup_set_class f2_soeq1 a_wbr a_w3o i1_soeq1 f0_soeq1 a_wral i0_soeq1 f0_soeq1 a_wral a_wa f0_soeq1 f1_soeq1 a_wor f0_soeq1 f2_soeq1 a_wor p_3bitr4g $.
 $}
-$( Equality theorem for the strict ordering predicate.  (Contributed by NM,
+
+$(Equality theorem for the strict ordering predicate.  (Contributed by NM,
      16-Mar-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	fsoeq2_0 $f class A $.
-	fsoeq2_1 $f class B $.
-	fsoeq2_2 $f class R $.
-	soeq2 $p |- ( A = B -> ( R Or A <-> R Or B ) ) $= fsoeq2_0 fsoeq2_1 wceq fsoeq2_1 fsoeq2_2 wor fsoeq2_0 fsoeq2_2 wor fsoeq2_0 fsoeq2_1 wss fsoeq2_1 fsoeq2_0 wss wa fsoeq2_1 fsoeq2_2 wor fsoeq2_0 fsoeq2_2 wor wi fsoeq2_0 fsoeq2_2 wor fsoeq2_1 fsoeq2_2 wor wi wa fsoeq2_0 fsoeq2_1 wceq fsoeq2_1 fsoeq2_2 wor fsoeq2_0 fsoeq2_2 wor wb fsoeq2_0 fsoeq2_1 wss fsoeq2_1 fsoeq2_2 wor fsoeq2_0 fsoeq2_2 wor wi fsoeq2_1 fsoeq2_0 wss fsoeq2_0 fsoeq2_2 wor fsoeq2_1 fsoeq2_2 wor wi fsoeq2_0 fsoeq2_1 fsoeq2_2 soss fsoeq2_1 fsoeq2_0 fsoeq2_2 soss anim12i fsoeq2_0 fsoeq2_1 eqss fsoeq2_1 fsoeq2_2 wor fsoeq2_0 fsoeq2_2 wor dfbi2 3imtr4i bicomd $.
+	$v A B R  $.
+	f0_soeq2 $f class A $.
+	f1_soeq2 $f class B $.
+	f2_soeq2 $f class R $.
+	p_soeq2 $p |- ( A = B -> ( R Or A <-> R Or B ) ) $= f0_soeq2 f1_soeq2 f2_soeq2 p_soss f1_soeq2 f0_soeq2 f2_soeq2 p_soss f0_soeq2 f1_soeq2 a_wss f1_soeq2 f2_soeq2 a_wor f0_soeq2 f2_soeq2 a_wor a_wi f1_soeq2 f0_soeq2 a_wss f0_soeq2 f2_soeq2 a_wor f1_soeq2 f2_soeq2 a_wor a_wi p_anim12i f0_soeq2 f1_soeq2 p_eqss f1_soeq2 f2_soeq2 a_wor f0_soeq2 f2_soeq2 a_wor p_dfbi2 f0_soeq2 f1_soeq2 a_wss f1_soeq2 f0_soeq2 a_wss a_wa f1_soeq2 f2_soeq2 a_wor f0_soeq2 f2_soeq2 a_wor a_wi f0_soeq2 f2_soeq2 a_wor f1_soeq2 f2_soeq2 a_wor a_wi a_wa f0_soeq2 f1_soeq2 a_wceq f1_soeq2 f2_soeq2 a_wor f0_soeq2 f2_soeq2 a_wor a_wb p_3imtr4i f0_soeq2 f1_soeq2 a_wceq f1_soeq2 f2_soeq2 a_wor f0_soeq2 f2_soeq2 a_wor p_bicomd $.
 $}
-$( A strict order relation is irreflexive.  (Contributed by NM,
+
+$(A strict order relation is irreflexive.  (Contributed by NM,
      24-Nov-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	fsonr_0 $f class A $.
-	fsonr_1 $f class B $.
-	fsonr_2 $f class R $.
-	sonr $p |- ( ( R Or A /\ B e. A ) -> -. B R B ) $= fsonr_0 fsonr_2 wor fsonr_0 fsonr_2 wpo fsonr_1 fsonr_0 wcel fsonr_1 fsonr_1 fsonr_2 wbr wn fsonr_0 fsonr_2 sopo fsonr_0 fsonr_1 fsonr_2 poirr sylan $.
+	$v A B R  $.
+	f0_sonr $f class A $.
+	f1_sonr $f class B $.
+	f2_sonr $f class R $.
+	p_sonr $p |- ( ( R Or A /\ B e. A ) -> -. B R B ) $= f0_sonr f2_sonr p_sopo f0_sonr f1_sonr f2_sonr p_poirr f0_sonr f2_sonr a_wor f0_sonr f2_sonr a_wpo f1_sonr f0_sonr a_wcel f1_sonr f1_sonr f2_sonr a_wbr a_wn p_sylan $.
 $}
-$( A strict order relation is a transitive relation.  (Contributed by NM,
+
+$(A strict order relation is a transitive relation.  (Contributed by NM,
      21-Jan-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	fsotr_0 $f class A $.
-	fsotr_1 $f class B $.
-	fsotr_2 $f class C $.
-	fsotr_3 $f class D $.
-	fsotr_4 $f class R $.
-	sotr $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( B R C /\ C R D ) -> B R D ) ) $= fsotr_0 fsotr_4 wor fsotr_0 fsotr_4 wpo fsotr_1 fsotr_0 wcel fsotr_2 fsotr_0 wcel fsotr_3 fsotr_0 wcel w3a fsotr_1 fsotr_2 fsotr_4 wbr fsotr_2 fsotr_3 fsotr_4 wbr wa fsotr_1 fsotr_3 fsotr_4 wbr wi fsotr_0 fsotr_4 sopo fsotr_0 fsotr_1 fsotr_2 fsotr_3 fsotr_4 potr sylan $.
+	$v A B C D R  $.
+	f0_sotr $f class A $.
+	f1_sotr $f class B $.
+	f2_sotr $f class C $.
+	f3_sotr $f class D $.
+	f4_sotr $f class R $.
+	p_sotr $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( B R C /\ C R D ) -> B R D ) ) $= f0_sotr f4_sotr p_sopo f0_sotr f1_sotr f2_sotr f3_sotr f4_sotr p_potr f0_sotr f4_sotr a_wor f0_sotr f4_sotr a_wpo f1_sotr f0_sotr a_wcel f2_sotr f0_sotr a_wcel f3_sotr f0_sotr a_wcel a_w3a f1_sotr f2_sotr f4_sotr a_wbr f2_sotr f3_sotr f4_sotr a_wbr a_wa f1_sotr f3_sotr f4_sotr a_wbr a_wi p_sylan $.
 $}
-$( A strict order relation is linear (satisfies trichotomy).  (Contributed
+
+$(A strict order relation is linear (satisfies trichotomy).  (Contributed
        by NM, 21-Jan-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d x y C $.
-	$d x y R $.
-	isolin_0 $f set x $.
-	isolin_1 $f set y $.
-	fsolin_0 $f class A $.
-	fsolin_1 $f class B $.
-	fsolin_2 $f class C $.
-	fsolin_3 $f class R $.
-	solin $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B R C \/ B = C \/ C R B ) ) $= fsolin_1 fsolin_0 wcel fsolin_2 fsolin_0 wcel wa fsolin_0 fsolin_3 wor fsolin_1 fsolin_2 fsolin_3 wbr fsolin_1 fsolin_2 wceq fsolin_2 fsolin_1 fsolin_3 wbr w3o fsolin_0 fsolin_3 wor isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o wi fsolin_0 fsolin_3 wor fsolin_1 isolin_1 sup_set_class fsolin_3 wbr fsolin_1 isolin_1 sup_set_class wceq isolin_1 sup_set_class fsolin_1 fsolin_3 wbr w3o wi fsolin_0 fsolin_3 wor fsolin_1 fsolin_2 fsolin_3 wbr fsolin_1 fsolin_2 wceq fsolin_2 fsolin_1 fsolin_3 wbr w3o wi isolin_0 isolin_1 fsolin_1 fsolin_2 fsolin_0 fsolin_0 isolin_0 sup_set_class fsolin_1 wceq isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o fsolin_1 isolin_1 sup_set_class fsolin_3 wbr fsolin_1 isolin_1 sup_set_class wceq isolin_1 sup_set_class fsolin_1 fsolin_3 wbr w3o fsolin_0 fsolin_3 wor isolin_0 sup_set_class fsolin_1 wceq isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr fsolin_1 isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq fsolin_1 isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr isolin_1 sup_set_class fsolin_1 fsolin_3 wbr isolin_0 sup_set_class fsolin_1 isolin_1 sup_set_class fsolin_3 breq1 isolin_0 sup_set_class fsolin_1 isolin_1 sup_set_class eqeq1 isolin_0 sup_set_class fsolin_1 isolin_1 sup_set_class fsolin_3 breq2 3orbi123d imbi2d isolin_1 sup_set_class fsolin_2 wceq fsolin_1 isolin_1 sup_set_class fsolin_3 wbr fsolin_1 isolin_1 sup_set_class wceq isolin_1 sup_set_class fsolin_1 fsolin_3 wbr w3o fsolin_1 fsolin_2 fsolin_3 wbr fsolin_1 fsolin_2 wceq fsolin_2 fsolin_1 fsolin_3 wbr w3o fsolin_0 fsolin_3 wor isolin_1 sup_set_class fsolin_2 wceq fsolin_1 isolin_1 sup_set_class fsolin_3 wbr fsolin_1 fsolin_2 fsolin_3 wbr fsolin_1 isolin_1 sup_set_class wceq fsolin_1 fsolin_2 wceq isolin_1 sup_set_class fsolin_1 fsolin_3 wbr fsolin_2 fsolin_1 fsolin_3 wbr isolin_1 sup_set_class fsolin_2 fsolin_1 fsolin_3 breq2 isolin_1 sup_set_class fsolin_2 fsolin_1 eqeq2 isolin_1 sup_set_class fsolin_2 fsolin_1 fsolin_3 breq1 3orbi123d imbi2d fsolin_0 fsolin_3 wor isolin_0 sup_set_class fsolin_0 wcel isolin_1 sup_set_class fsolin_0 wcel wa isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o fsolin_0 fsolin_3 wor fsolin_0 fsolin_3 wpo isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o isolin_1 fsolin_0 wral isolin_0 fsolin_0 wral wa isolin_0 sup_set_class fsolin_0 wcel isolin_1 sup_set_class fsolin_0 wcel wa isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o wi isolin_0 isolin_1 fsolin_0 fsolin_3 df-so isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o isolin_1 fsolin_0 wral isolin_0 fsolin_0 wral isolin_0 sup_set_class fsolin_0 wcel isolin_1 sup_set_class fsolin_0 wcel wa isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o wi fsolin_0 fsolin_3 wpo isolin_0 sup_set_class isolin_1 sup_set_class fsolin_3 wbr isolin_0 sup_set_class isolin_1 sup_set_class wceq isolin_1 sup_set_class isolin_0 sup_set_class fsolin_3 wbr w3o isolin_0 isolin_1 fsolin_0 fsolin_0 rsp2 adantl sylbi com12 vtocl2ga impcom $.
+	$v A B C R  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d x y C  $.
+	$d x y R  $.
+	f0_solin $f class A $.
+	f1_solin $f class B $.
+	f2_solin $f class C $.
+	f3_solin $f class R $.
+	i0_solin $f set x $.
+	i1_solin $f set y $.
+	p_solin $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B R C \/ B = C \/ C R B ) ) $= i0_solin a_sup_set_class f1_solin i1_solin a_sup_set_class f3_solin p_breq1 i0_solin a_sup_set_class f1_solin i1_solin a_sup_set_class p_eqeq1 i0_solin a_sup_set_class f1_solin i1_solin a_sup_set_class f3_solin p_breq2 i0_solin a_sup_set_class f1_solin a_wceq i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr f1_solin i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq f1_solin i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr i1_solin a_sup_set_class f1_solin f3_solin a_wbr p_3orbi123d i0_solin a_sup_set_class f1_solin a_wceq i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o f1_solin i1_solin a_sup_set_class f3_solin a_wbr f1_solin i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class f1_solin f3_solin a_wbr a_w3o f0_solin f3_solin a_wor p_imbi2d i1_solin a_sup_set_class f2_solin f1_solin f3_solin p_breq2 i1_solin a_sup_set_class f2_solin f1_solin p_eqeq2 i1_solin a_sup_set_class f2_solin f1_solin f3_solin p_breq1 i1_solin a_sup_set_class f2_solin a_wceq f1_solin i1_solin a_sup_set_class f3_solin a_wbr f1_solin f2_solin f3_solin a_wbr f1_solin i1_solin a_sup_set_class a_wceq f1_solin f2_solin a_wceq i1_solin a_sup_set_class f1_solin f3_solin a_wbr f2_solin f1_solin f3_solin a_wbr p_3orbi123d i1_solin a_sup_set_class f2_solin a_wceq f1_solin i1_solin a_sup_set_class f3_solin a_wbr f1_solin i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class f1_solin f3_solin a_wbr a_w3o f1_solin f2_solin f3_solin a_wbr f1_solin f2_solin a_wceq f2_solin f1_solin f3_solin a_wbr a_w3o f0_solin f3_solin a_wor p_imbi2d i0_solin i1_solin f0_solin f3_solin a_df-so i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o i0_solin i1_solin f0_solin f0_solin p_rsp2 i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o i1_solin f0_solin a_wral i0_solin f0_solin a_wral i0_solin a_sup_set_class f0_solin a_wcel i1_solin a_sup_set_class f0_solin a_wcel a_wa i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o a_wi f0_solin f3_solin a_wpo p_adantl f0_solin f3_solin a_wor f0_solin f3_solin a_wpo i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o i1_solin f0_solin a_wral i0_solin f0_solin a_wral a_wa i0_solin a_sup_set_class f0_solin a_wcel i1_solin a_sup_set_class f0_solin a_wcel a_wa i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o a_wi p_sylbi f0_solin f3_solin a_wor i0_solin a_sup_set_class f0_solin a_wcel i1_solin a_sup_set_class f0_solin a_wcel a_wa i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o p_com12 f0_solin f3_solin a_wor i0_solin a_sup_set_class i1_solin a_sup_set_class f3_solin a_wbr i0_solin a_sup_set_class i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class i0_solin a_sup_set_class f3_solin a_wbr a_w3o a_wi f0_solin f3_solin a_wor f1_solin i1_solin a_sup_set_class f3_solin a_wbr f1_solin i1_solin a_sup_set_class a_wceq i1_solin a_sup_set_class f1_solin f3_solin a_wbr a_w3o a_wi f0_solin f3_solin a_wor f1_solin f2_solin f3_solin a_wbr f1_solin f2_solin a_wceq f2_solin f1_solin f3_solin a_wbr a_w3o a_wi i0_solin i1_solin f1_solin f2_solin f0_solin f0_solin p_vtocl2ga f1_solin f0_solin a_wcel f2_solin f0_solin a_wcel a_wa f0_solin f3_solin a_wor f1_solin f2_solin f3_solin a_wbr f1_solin f2_solin a_wceq f2_solin f1_solin f3_solin a_wbr a_w3o p_impcom $.
 $}
-$( A strict order relation has no 2-cycle loops.  (Contributed by NM,
+
+$(A strict order relation has no 2-cycle loops.  (Contributed by NM,
      21-Jan-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	fso2nr_0 $f class A $.
-	fso2nr_1 $f class B $.
-	fso2nr_2 $f class C $.
-	fso2nr_3 $f class R $.
-	so2nr $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> -. ( B R C /\ C R B ) ) $= fso2nr_0 fso2nr_3 wor fso2nr_0 fso2nr_3 wpo fso2nr_1 fso2nr_0 wcel fso2nr_2 fso2nr_0 wcel wa fso2nr_1 fso2nr_2 fso2nr_3 wbr fso2nr_2 fso2nr_1 fso2nr_3 wbr wa wn fso2nr_0 fso2nr_3 sopo fso2nr_0 fso2nr_1 fso2nr_2 fso2nr_3 po2nr sylan $.
+	$v A B C R  $.
+	f0_so2nr $f class A $.
+	f1_so2nr $f class B $.
+	f2_so2nr $f class C $.
+	f3_so2nr $f class R $.
+	p_so2nr $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> -. ( B R C /\ C R B ) ) $= f0_so2nr f3_so2nr p_sopo f0_so2nr f1_so2nr f2_so2nr f3_so2nr p_po2nr f0_so2nr f3_so2nr a_wor f0_so2nr f3_so2nr a_wpo f1_so2nr f0_so2nr a_wcel f2_so2nr f0_so2nr a_wcel a_wa f1_so2nr f2_so2nr f3_so2nr a_wbr f2_so2nr f1_so2nr f3_so2nr a_wbr a_wa a_wn p_sylan $.
 $}
-$( A strict order relation has no 3-cycle loops.  (Contributed by NM,
+
+$(A strict order relation has no 3-cycle loops.  (Contributed by NM,
      21-Jan-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	fso3nr_0 $f class A $.
-	fso3nr_1 $f class B $.
-	fso3nr_2 $f class C $.
-	fso3nr_3 $f class D $.
-	fso3nr_4 $f class R $.
-	so3nr $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B R C /\ C R D /\ D R B ) ) $= fso3nr_0 fso3nr_4 wor fso3nr_0 fso3nr_4 wpo fso3nr_1 fso3nr_0 wcel fso3nr_2 fso3nr_0 wcel fso3nr_3 fso3nr_0 wcel w3a fso3nr_1 fso3nr_2 fso3nr_4 wbr fso3nr_2 fso3nr_3 fso3nr_4 wbr fso3nr_3 fso3nr_1 fso3nr_4 wbr w3a wn fso3nr_0 fso3nr_4 sopo fso3nr_0 fso3nr_1 fso3nr_2 fso3nr_3 fso3nr_4 po3nr sylan $.
+	$v A B C D R  $.
+	f0_so3nr $f class A $.
+	f1_so3nr $f class B $.
+	f2_so3nr $f class C $.
+	f3_so3nr $f class D $.
+	f4_so3nr $f class R $.
+	p_so3nr $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B R C /\ C R D /\ D R B ) ) $= f0_so3nr f4_so3nr p_sopo f0_so3nr f1_so3nr f2_so3nr f3_so3nr f4_so3nr p_po3nr f0_so3nr f4_so3nr a_wor f0_so3nr f4_so3nr a_wpo f1_so3nr f0_so3nr a_wcel f2_so3nr f0_so3nr a_wcel f3_so3nr f0_so3nr a_wcel a_w3a f1_so3nr f2_so3nr f4_so3nr a_wbr f2_so3nr f3_so3nr f4_so3nr a_wbr f3_so3nr f1_so3nr f4_so3nr a_wbr a_w3a a_wn p_sylan $.
 $}
-$( A strict order relation satisfies strict trichotomy.  (Contributed by NM,
+
+$(A strict order relation satisfies strict trichotomy.  (Contributed by NM,
      19-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	fsotric_0 $f class A $.
-	fsotric_1 $f class B $.
-	fsotric_2 $f class C $.
-	fsotric_3 $f class R $.
-	sotric $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B R C <-> -. ( B = C \/ C R B ) ) ) $= fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo fsotric_1 fsotric_2 fsotric_3 wbr fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo fsotric_1 fsotric_2 fsotric_3 wbr wn fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 wceq fsotric_1 fsotric_2 fsotric_3 wbr wn fsotric_2 fsotric_1 fsotric_3 wbr fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_1 fsotric_2 wceq fsotric_1 fsotric_2 fsotric_3 wbr wn wi fsotric_2 fsotric_0 wcel fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel wa fsotric_1 fsotric_1 fsotric_3 wbr wn fsotric_1 fsotric_2 wceq fsotric_1 fsotric_2 fsotric_3 wbr wn fsotric_0 fsotric_1 fsotric_3 sonr fsotric_1 fsotric_2 wceq fsotric_1 fsotric_1 fsotric_3 wbr fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 fsotric_1 fsotric_3 breq2 notbid syl5ibcom adantrr fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 fsotric_3 wbr fsotric_2 fsotric_1 fsotric_3 wbr fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 fsotric_3 wbr fsotric_2 fsotric_1 fsotric_3 wbr wa wn fsotric_1 fsotric_2 fsotric_3 wbr fsotric_2 fsotric_1 fsotric_3 wbr wn wi fsotric_0 fsotric_1 fsotric_2 fsotric_3 so2nr fsotric_1 fsotric_2 fsotric_3 wbr fsotric_2 fsotric_1 fsotric_3 wbr imnan sylibr con2d jaod fsotric_0 fsotric_3 wor fsotric_1 fsotric_0 wcel fsotric_2 fsotric_0 wcel wa wa fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr w3o fsotric_1 fsotric_2 fsotric_3 wbr wn fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo wi fsotric_0 fsotric_1 fsotric_2 fsotric_3 solin fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr w3o fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo wo fsotric_1 fsotric_2 fsotric_3 wbr wn fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo wi fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr 3orass fsotric_1 fsotric_2 fsotric_3 wbr fsotric_1 fsotric_2 wceq fsotric_2 fsotric_1 fsotric_3 wbr wo df-or bitri sylib impbid con2bid $.
+	$v A B C R  $.
+	f0_sotric $f class A $.
+	f1_sotric $f class B $.
+	f2_sotric $f class C $.
+	f3_sotric $f class R $.
+	p_sotric $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B R C <-> -. ( B = C \/ C R B ) ) ) $= f0_sotric f1_sotric f3_sotric p_sonr f1_sotric f2_sotric f1_sotric f3_sotric p_breq2 f1_sotric f2_sotric a_wceq f1_sotric f1_sotric f3_sotric a_wbr f1_sotric f2_sotric f3_sotric a_wbr p_notbid f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel a_wa f1_sotric f1_sotric f3_sotric a_wbr a_wn f1_sotric f2_sotric a_wceq f1_sotric f2_sotric f3_sotric a_wbr a_wn p_syl5ibcom f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f1_sotric f2_sotric a_wceq f1_sotric f2_sotric f3_sotric a_wbr a_wn a_wi f2_sotric f0_sotric a_wcel p_adantrr f0_sotric f1_sotric f2_sotric f3_sotric p_so2nr f1_sotric f2_sotric f3_sotric a_wbr f2_sotric f1_sotric f3_sotric a_wbr p_imnan f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric f3_sotric a_wbr f2_sotric f1_sotric f3_sotric a_wbr a_wa a_wn f1_sotric f2_sotric f3_sotric a_wbr f2_sotric f1_sotric f3_sotric a_wbr a_wn a_wi p_sylibr f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric f3_sotric a_wbr f2_sotric f1_sotric f3_sotric a_wbr p_con2d f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric a_wceq f1_sotric f2_sotric f3_sotric a_wbr a_wn f2_sotric f1_sotric f3_sotric a_wbr p_jaod f0_sotric f1_sotric f2_sotric f3_sotric p_solin f1_sotric f2_sotric f3_sotric a_wbr f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr p_3orass f1_sotric f2_sotric f3_sotric a_wbr f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo a_df-or f1_sotric f2_sotric f3_sotric a_wbr f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_w3o f1_sotric f2_sotric f3_sotric a_wbr f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo a_wo f1_sotric f2_sotric f3_sotric a_wbr a_wn f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo a_wi p_bitri f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric f3_sotric a_wbr f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_w3o f1_sotric f2_sotric f3_sotric a_wbr a_wn f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo a_wi p_sylib f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo f1_sotric f2_sotric f3_sotric a_wbr a_wn p_impbid f0_sotric f3_sotric a_wor f1_sotric f0_sotric a_wcel f2_sotric f0_sotric a_wcel a_wa a_wa f1_sotric f2_sotric a_wceq f2_sotric f1_sotric f3_sotric a_wbr a_wo f1_sotric f2_sotric f3_sotric a_wbr p_con2bid $.
 $}
-$( Trichotomy law for strict order relation.  (Contributed by NM,
+
+$(Trichotomy law for strict order relation.  (Contributed by NM,
      9-Apr-1996.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	fsotrieq_0 $f class A $.
-	fsotrieq_1 $f class B $.
-	fsotrieq_2 $f class C $.
-	fsotrieq_3 $f class R $.
-	sotrieq $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B = C <-> -. ( B R C \/ C R B ) ) ) $= fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_1 fsotrieq_2 wceq fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_1 fsotrieq_2 wceq wn fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr wo wn fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo wn fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr wn fsotrieq_2 fsotrieq_0 wcel fsotrieq_0 fsotrieq_1 fsotrieq_3 sonr adantrr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr pm1.2 nsyl fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_1 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 fsotrieq_1 fsotrieq_3 breq2 fsotrieq_1 fsotrieq_2 fsotrieq_1 fsotrieq_3 breq1 orbi12d notbid syl5ibcom con2d fsotrieq_0 fsotrieq_3 wor fsotrieq_1 fsotrieq_0 wcel fsotrieq_2 fsotrieq_0 wcel wa wa fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 wceq fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr w3o fsotrieq_1 fsotrieq_2 wceq wn fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo wi fsotrieq_0 fsotrieq_1 fsotrieq_2 fsotrieq_3 solin fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 wceq fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr w3o fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 wceq fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo wo fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo wo fsotrieq_1 fsotrieq_2 wceq wn fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo wi fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 wceq fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr 3orass fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_1 fsotrieq_2 wceq fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr or12 fsotrieq_1 fsotrieq_2 wceq fsotrieq_1 fsotrieq_2 fsotrieq_3 wbr fsotrieq_2 fsotrieq_1 fsotrieq_3 wbr wo df-or 3bitri sylib impbid con2bid $.
+	$v A B C R  $.
+	f0_sotrieq $f class A $.
+	f1_sotrieq $f class B $.
+	f2_sotrieq $f class C $.
+	f3_sotrieq $f class R $.
+	p_sotrieq $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B = C <-> -. ( B R C \/ C R B ) ) ) $= f0_sotrieq f1_sotrieq f3_sotrieq p_sonr f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f1_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wn f2_sotrieq f0_sotrieq a_wcel p_adantrr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr p_pm1.2 f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo p_nsyl f1_sotrieq f2_sotrieq f1_sotrieq f3_sotrieq p_breq2 f1_sotrieq f2_sotrieq f1_sotrieq f3_sotrieq p_breq1 f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr p_orbi12d f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo p_notbid f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f1_sotrieq f3_sotrieq a_wbr f1_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wn f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wn p_syl5ibcom f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo p_con2d f0_sotrieq f1_sotrieq f2_sotrieq f3_sotrieq p_solin f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq a_wceq f2_sotrieq f1_sotrieq f3_sotrieq a_wbr p_3orass f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq a_wceq f2_sotrieq f1_sotrieq f3_sotrieq a_wbr p_or12 f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_df-or f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq a_wceq f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_w3o f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq a_wceq f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wo f1_sotrieq f2_sotrieq a_wceq f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wo f1_sotrieq f2_sotrieq a_wceq a_wn f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wi p_3bitri f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f1_sotrieq f2_sotrieq a_wceq f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_w3o f1_sotrieq f2_sotrieq a_wceq a_wn f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo a_wi p_sylib f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo f1_sotrieq f2_sotrieq a_wceq a_wn p_impbid f0_sotrieq f3_sotrieq a_wor f1_sotrieq f0_sotrieq a_wcel f2_sotrieq f0_sotrieq a_wcel a_wa a_wa f1_sotrieq f2_sotrieq f3_sotrieq a_wbr f2_sotrieq f1_sotrieq f3_sotrieq a_wbr a_wo f1_sotrieq f2_sotrieq a_wceq p_con2bid $.
 $}
-$( Trichotomy law for strict order relation.  (Contributed by NM,
+
+$(Trichotomy law for strict order relation.  (Contributed by NM,
      5-May-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	fsotrieq2_0 $f class A $.
-	fsotrieq2_1 $f class B $.
-	fsotrieq2_2 $f class C $.
-	fsotrieq2_3 $f class R $.
-	sotrieq2 $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B = C <-> ( -. B R C /\ -. C R B ) ) ) $= fsotrieq2_0 fsotrieq2_3 wor fsotrieq2_1 fsotrieq2_0 wcel fsotrieq2_2 fsotrieq2_0 wcel wa wa fsotrieq2_1 fsotrieq2_2 wceq fsotrieq2_1 fsotrieq2_2 fsotrieq2_3 wbr fsotrieq2_2 fsotrieq2_1 fsotrieq2_3 wbr wo wn fsotrieq2_1 fsotrieq2_2 fsotrieq2_3 wbr wn fsotrieq2_2 fsotrieq2_1 fsotrieq2_3 wbr wn wa fsotrieq2_0 fsotrieq2_1 fsotrieq2_2 fsotrieq2_3 sotrieq fsotrieq2_1 fsotrieq2_2 fsotrieq2_3 wbr fsotrieq2_2 fsotrieq2_1 fsotrieq2_3 wbr ioran syl6bb $.
+	$v A B C R  $.
+	f0_sotrieq2 $f class A $.
+	f1_sotrieq2 $f class B $.
+	f2_sotrieq2 $f class C $.
+	f3_sotrieq2 $f class R $.
+	p_sotrieq2 $p |- ( ( R Or A /\ ( B e. A /\ C e. A ) ) -> ( B = C <-> ( -. B R C /\ -. C R B ) ) ) $= f0_sotrieq2 f1_sotrieq2 f2_sotrieq2 f3_sotrieq2 p_sotrieq f1_sotrieq2 f2_sotrieq2 f3_sotrieq2 a_wbr f2_sotrieq2 f1_sotrieq2 f3_sotrieq2 a_wbr p_ioran f0_sotrieq2 f3_sotrieq2 a_wor f1_sotrieq2 f0_sotrieq2 a_wcel f2_sotrieq2 f0_sotrieq2 a_wcel a_wa a_wa f1_sotrieq2 f2_sotrieq2 a_wceq f1_sotrieq2 f2_sotrieq2 f3_sotrieq2 a_wbr f2_sotrieq2 f1_sotrieq2 f3_sotrieq2 a_wbr a_wo a_wn f1_sotrieq2 f2_sotrieq2 f3_sotrieq2 a_wbr a_wn f2_sotrieq2 f1_sotrieq2 f3_sotrieq2 a_wbr a_wn a_wa p_syl6bb $.
 $}
-$( A transitivity relation.  (Read ` B <_ C ` and ` C < D ` implies
+
+$(A transitivity relation.  (Read ` B <_ C ` and ` C < D ` implies
      ` B < D ` .)  (Contributed by Mario Carneiro, 10-May-2013.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	fsotr2_0 $f class A $.
-	fsotr2_1 $f class B $.
-	fsotr2_2 $f class C $.
-	fsotr2_3 $f class D $.
-	fsotr2_4 $f class R $.
-	sotr2 $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( -. C R B /\ C R D ) -> B R D ) ) $= fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_2 fsotr2_1 fsotr2_4 wbr wn fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_2 fsotr2_1 fsotr2_4 wbr wn fsotr2_2 fsotr2_1 wceq fsotr2_1 fsotr2_2 fsotr2_4 wbr wo fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr wi fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_2 fsotr2_1 fsotr2_4 wbr fsotr2_2 fsotr2_1 wceq fsotr2_1 fsotr2_2 fsotr2_4 wbr wo fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_2 fsotr2_1 fsotr2_4 wbr fsotr2_2 fsotr2_1 wceq fsotr2_1 fsotr2_2 fsotr2_4 wbr wo wn wb fsotr2_3 fsotr2_0 wcel fsotr2_0 fsotr2_4 wor fsotr2_2 fsotr2_0 wcel fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_1 fsotr2_4 wbr fsotr2_2 fsotr2_1 wceq fsotr2_1 fsotr2_2 fsotr2_4 wbr wo wn wb fsotr2_0 fsotr2_2 fsotr2_1 fsotr2_4 sotric ancom2s 3adantr3 con2bid fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_2 fsotr2_1 wceq fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr wi fsotr2_1 fsotr2_2 fsotr2_4 wbr fsotr2_2 fsotr2_1 wceq fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr wi wi fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_2 fsotr2_1 wceq fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr fsotr2_2 fsotr2_1 fsotr2_3 fsotr2_4 breq1 biimpd a1i fsotr2_0 fsotr2_4 wor fsotr2_1 fsotr2_0 wcel fsotr2_2 fsotr2_0 wcel fsotr2_3 fsotr2_0 wcel w3a wa fsotr2_1 fsotr2_2 fsotr2_4 wbr fsotr2_2 fsotr2_3 fsotr2_4 wbr fsotr2_1 fsotr2_3 fsotr2_4 wbr fsotr2_0 fsotr2_1 fsotr2_2 fsotr2_3 fsotr2_4 sotr exp3a jaod sylbird imp3a $.
+	$v A B C D R  $.
+	f0_sotr2 $f class A $.
+	f1_sotr2 $f class B $.
+	f2_sotr2 $f class C $.
+	f3_sotr2 $f class D $.
+	f4_sotr2 $f class R $.
+	p_sotr2 $p |- ( ( R Or A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> ( ( -. C R B /\ C R D ) -> B R D ) ) $= f0_sotr2 f2_sotr2 f1_sotr2 f4_sotr2 p_sotric f0_sotr2 f4_sotr2 a_wor f2_sotr2 f0_sotr2 a_wcel f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f1_sotr2 f4_sotr2 a_wbr f2_sotr2 f1_sotr2 a_wceq f1_sotr2 f2_sotr2 f4_sotr2 a_wbr a_wo a_wn a_wb p_ancom2s f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f2_sotr2 f1_sotr2 f4_sotr2 a_wbr f2_sotr2 f1_sotr2 a_wceq f1_sotr2 f2_sotr2 f4_sotr2 a_wbr a_wo a_wn a_wb f3_sotr2 f0_sotr2 a_wcel p_3adantr3 f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa f2_sotr2 f1_sotr2 f4_sotr2 a_wbr f2_sotr2 f1_sotr2 a_wceq f1_sotr2 f2_sotr2 f4_sotr2 a_wbr a_wo p_con2bid f2_sotr2 f1_sotr2 f3_sotr2 f4_sotr2 p_breq1 f2_sotr2 f1_sotr2 a_wceq f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr p_biimpd f2_sotr2 f1_sotr2 a_wceq f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr a_wi a_wi f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa p_a1i f0_sotr2 f1_sotr2 f2_sotr2 f3_sotr2 f4_sotr2 p_sotr f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa f1_sotr2 f2_sotr2 f4_sotr2 a_wbr f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr p_exp3a f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa f2_sotr2 f1_sotr2 a_wceq f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr a_wi f1_sotr2 f2_sotr2 f4_sotr2 a_wbr p_jaod f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa f2_sotr2 f1_sotr2 f4_sotr2 a_wbr a_wn f2_sotr2 f1_sotr2 a_wceq f1_sotr2 f2_sotr2 f4_sotr2 a_wbr a_wo f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr a_wi p_sylbird f0_sotr2 f4_sotr2 a_wor f1_sotr2 f0_sotr2 a_wcel f2_sotr2 f0_sotr2 a_wcel f3_sotr2 f0_sotr2 a_wcel a_w3a a_wa f2_sotr2 f1_sotr2 f4_sotr2 a_wbr a_wn f2_sotr2 f3_sotr2 f4_sotr2 a_wbr f1_sotr2 f3_sotr2 f4_sotr2 a_wbr p_imp3a $.
 $}
-$( An irreflexive, transitive, linear relation is a strict ordering.
+
+$(An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v R $.
-	$d x y R $.
-	$d x y A $.
-	$d x y ph $.
-	fissod_0 $f wff ph $.
-	fissod_1 $f set x $.
-	fissod_2 $f set y $.
-	fissod_3 $f class A $.
-	fissod_4 $f class R $.
-	eissod_0 $e |- ( ph -> R Po A ) $.
-	eissod_1 $e |- ( ( ph /\ ( x e. A /\ y e. A ) ) -> ( x R y \/ x = y \/ y R x ) ) $.
-	issod $p |- ( ph -> R Or A ) $= fissod_0 fissod_3 fissod_4 wpo fissod_1 sup_set_class fissod_2 sup_set_class fissod_4 wbr fissod_1 sup_set_class fissod_2 sup_set_class wceq fissod_2 sup_set_class fissod_1 sup_set_class fissod_4 wbr w3o fissod_2 fissod_3 wral fissod_1 fissod_3 wral fissod_3 fissod_4 wor eissod_0 fissod_0 fissod_1 sup_set_class fissod_2 sup_set_class fissod_4 wbr fissod_1 sup_set_class fissod_2 sup_set_class wceq fissod_2 sup_set_class fissod_1 sup_set_class fissod_4 wbr w3o fissod_1 fissod_2 fissod_3 fissod_3 eissod_1 ralrimivva fissod_1 fissod_2 fissod_3 fissod_4 df-so sylanbrc $.
+	$v ph x y A R  $.
+	$d x y R  $.
+	$d x y A  $.
+	$d x y ph  $.
+	f0_issod $f wff ph $.
+	f1_issod $f set x $.
+	f2_issod $f set y $.
+	f3_issod $f class A $.
+	f4_issod $f class R $.
+	e0_issod $e |- ( ph -> R Po A ) $.
+	e1_issod $e |- ( ( ph /\ ( x e. A /\ y e. A ) ) -> ( x R y \/ x = y \/ y R x ) ) $.
+	p_issod $p |- ( ph -> R Or A ) $= e0_issod e1_issod f0_issod f1_issod a_sup_set_class f2_issod a_sup_set_class f4_issod a_wbr f1_issod a_sup_set_class f2_issod a_sup_set_class a_wceq f2_issod a_sup_set_class f1_issod a_sup_set_class f4_issod a_wbr a_w3o f1_issod f2_issod f3_issod f3_issod p_ralrimivva f1_issod f2_issod f3_issod f4_issod a_df-so f0_issod f3_issod f4_issod a_wpo f1_issod a_sup_set_class f2_issod a_sup_set_class f4_issod a_wbr f1_issod a_sup_set_class f2_issod a_sup_set_class a_wceq f2_issod a_sup_set_class f1_issod a_sup_set_class f4_issod a_wbr a_w3o f2_issod f3_issod a_wral f1_issod f3_issod a_wral f3_issod f4_issod a_wor p_sylanbrc $.
 $}
-$( An irreflexive, transitive, linear relation is a strict ordering.
+
+$(An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$d x y z R $.
-	$d x y z A $.
-	fissoi_0 $f set x $.
-	fissoi_1 $f set y $.
-	fissoi_2 $f set z $.
-	fissoi_3 $f class A $.
-	fissoi_4 $f class R $.
-	eissoi_0 $e |- ( x e. A -> -. x R x ) $.
-	eissoi_1 $e |- ( ( x e. A /\ y e. A /\ z e. A ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
-	eissoi_2 $e |- ( ( x e. A /\ y e. A ) -> ( x R y \/ x = y \/ y R x ) ) $.
-	issoi $p |- R Or A $= fissoi_3 fissoi_4 wor wtru fissoi_0 fissoi_1 fissoi_3 fissoi_4 wtru fissoi_0 fissoi_1 fissoi_2 fissoi_3 fissoi_4 fissoi_0 sup_set_class fissoi_3 wcel fissoi_0 sup_set_class fissoi_0 sup_set_class fissoi_4 wbr wn wtru eissoi_0 adantl fissoi_0 sup_set_class fissoi_3 wcel fissoi_1 sup_set_class fissoi_3 wcel fissoi_2 sup_set_class fissoi_3 wcel w3a fissoi_0 sup_set_class fissoi_1 sup_set_class fissoi_4 wbr fissoi_1 sup_set_class fissoi_2 sup_set_class fissoi_4 wbr wa fissoi_0 sup_set_class fissoi_2 sup_set_class fissoi_4 wbr wi wtru eissoi_1 adantl ispod fissoi_0 sup_set_class fissoi_3 wcel fissoi_1 sup_set_class fissoi_3 wcel wa fissoi_0 sup_set_class fissoi_1 sup_set_class fissoi_4 wbr fissoi_0 sup_set_class fissoi_1 sup_set_class wceq fissoi_1 sup_set_class fissoi_0 sup_set_class fissoi_4 wbr w3o wtru eissoi_2 adantl issod trud $.
+	$v x y z A R  $.
+	$d x y z R  $.
+	$d x y z A  $.
+	f0_issoi $f set x $.
+	f1_issoi $f set y $.
+	f2_issoi $f set z $.
+	f3_issoi $f class A $.
+	f4_issoi $f class R $.
+	e0_issoi $e |- ( x e. A -> -. x R x ) $.
+	e1_issoi $e |- ( ( x e. A /\ y e. A /\ z e. A ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
+	e2_issoi $e |- ( ( x e. A /\ y e. A ) -> ( x R y \/ x = y \/ y R x ) ) $.
+	p_issoi $p |- R Or A $= e0_issoi f0_issoi a_sup_set_class f3_issoi a_wcel f0_issoi a_sup_set_class f0_issoi a_sup_set_class f4_issoi a_wbr a_wn a_wtru p_adantl e1_issoi f0_issoi a_sup_set_class f3_issoi a_wcel f1_issoi a_sup_set_class f3_issoi a_wcel f2_issoi a_sup_set_class f3_issoi a_wcel a_w3a f0_issoi a_sup_set_class f1_issoi a_sup_set_class f4_issoi a_wbr f1_issoi a_sup_set_class f2_issoi a_sup_set_class f4_issoi a_wbr a_wa f0_issoi a_sup_set_class f2_issoi a_sup_set_class f4_issoi a_wbr a_wi a_wtru p_adantl a_wtru f0_issoi f1_issoi f2_issoi f3_issoi f4_issoi p_ispod e2_issoi f0_issoi a_sup_set_class f3_issoi a_wcel f1_issoi a_sup_set_class f3_issoi a_wcel a_wa f0_issoi a_sup_set_class f1_issoi a_sup_set_class f4_issoi a_wbr f0_issoi a_sup_set_class f1_issoi a_sup_set_class a_wceq f1_issoi a_sup_set_class f0_issoi a_sup_set_class f4_issoi a_wbr a_w3o a_wtru p_adantl a_wtru f0_issoi f1_issoi f3_issoi f4_issoi p_issod f3_issoi f4_issoi a_wor p_trud $.
 $}
-$( Deduce strict ordering from its properties.  (Contributed by NM,
+
+$(Deduce strict ordering from its properties.  (Contributed by NM,
        29-Jan-1996.)  (Revised by Mario Carneiro, 9-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$d x y z R $.
-	$d x y z A $.
-	fisso2i_0 $f set x $.
-	fisso2i_1 $f set y $.
-	fisso2i_2 $f set z $.
-	fisso2i_3 $f class A $.
-	fisso2i_4 $f class R $.
-	eisso2i_0 $e |- ( ( x e. A /\ y e. A ) -> ( x R y <-> -. ( x = y \/ y R x ) ) ) $.
-	eisso2i_1 $e |- ( ( x e. A /\ y e. A /\ z e. A ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
-	isso2i $p |- R Or A $= fisso2i_0 fisso2i_1 fisso2i_2 fisso2i_3 fisso2i_4 fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class eqid orci fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn wb wi fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wn wb wi fisso2i_1 fisso2i_0 fisso2i_1 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn wb fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wn wb fisso2i_1 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_3 eleq1 anbi2d fisso2i_1 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wn fisso2i_1 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_0 sup_set_class eqeq2 fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 breq1 orbi12d fisso2i_1 sup_set_class fisso2i_0 sup_set_class wceq fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_0 sup_set_class fisso2i_4 breq2 notbid bibi12d imbi12d fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo eisso2i_0 con2bid chvarv mpbii anidms eisso2i_1 fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo wi fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr w3o fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_3 wcel fisso2i_1 sup_set_class fisso2i_3 wcel wa fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo eisso2i_0 con2bid biimprd fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr w3o fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo wo fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr wn fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo wi fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr 3orass fisso2i_0 sup_set_class fisso2i_1 sup_set_class fisso2i_4 wbr fisso2i_0 sup_set_class fisso2i_1 sup_set_class wceq fisso2i_1 sup_set_class fisso2i_0 sup_set_class fisso2i_4 wbr wo df-or bitri sylibr issoi $.
+	$v x y z A R  $.
+	$d x y z R  $.
+	$d x y z A  $.
+	f0_isso2i $f set x $.
+	f1_isso2i $f set y $.
+	f2_isso2i $f set z $.
+	f3_isso2i $f class A $.
+	f4_isso2i $f class R $.
+	e0_isso2i $e |- ( ( x e. A /\ y e. A ) -> ( x R y <-> -. ( x = y \/ y R x ) ) ) $.
+	e1_isso2i $e |- ( ( x e. A /\ y e. A /\ z e. A ) -> ( ( x R y /\ y R z ) -> x R z ) ) $.
+	p_isso2i $p |- R Or A $= f0_isso2i a_sup_set_class p_eqid f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr p_orci f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f3_isso2i p_eleq1 f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f3_isso2i a_wcel p_anbi2d f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class p_eqeq2 f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i p_breq1 f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr p_orbi12d f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i p_breq2 f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr p_notbid f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wn p_bibi12d f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn a_wb f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wn a_wb p_imbi12d e0_isso2i f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo p_con2bid f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn a_wb a_wi f0_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wn a_wb a_wi f1_isso2i f0_isso2i p_chvarv f0_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class a_wceq f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wn p_mpbii f0_isso2i a_sup_set_class f3_isso2i a_wcel f0_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wn p_anidms e1_isso2i e0_isso2i f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo p_con2bid f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn p_biimprd f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr p_3orass f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo a_df-or f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_w3o f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo a_wo f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo a_wi p_bitri f0_isso2i a_sup_set_class f3_isso2i a_wcel f1_isso2i a_sup_set_class f3_isso2i a_wcel a_wa f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr a_wn f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_wo a_wi f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class f4_isso2i a_wbr f0_isso2i a_sup_set_class f1_isso2i a_sup_set_class a_wceq f1_isso2i a_sup_set_class f0_isso2i a_sup_set_class f4_isso2i a_wbr a_w3o p_sylibr f0_isso2i f1_isso2i f2_isso2i f3_isso2i f4_isso2i p_issoi $.
 $}
-$( Any relation is a strict ordering of the empty set.  (Contributed by NM,
+
+$(Any relation is a strict ordering of the empty set.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v R $.
-	$v x $.
-	$v y $.
-	$d x y R $.
-	iso0_0 $f set x $.
-	iso0_1 $f set y $.
-	fso0_0 $f class R $.
-	so0 $p |- R Or (/) $= c0 fso0_0 wor c0 fso0_0 wpo iso0_0 sup_set_class iso0_1 sup_set_class fso0_0 wbr iso0_0 sup_set_class iso0_1 sup_set_class wceq iso0_1 sup_set_class iso0_0 sup_set_class fso0_0 wbr w3o iso0_1 c0 wral iso0_0 c0 wral fso0_0 po0 iso0_0 sup_set_class iso0_1 sup_set_class fso0_0 wbr iso0_0 sup_set_class iso0_1 sup_set_class wceq iso0_1 sup_set_class iso0_0 sup_set_class fso0_0 wbr w3o iso0_1 c0 wral iso0_0 ral0 iso0_0 iso0_1 c0 fso0_0 df-so mpbir2an $.
+	$v R  $.
+	$d x y R  $.
+	f0_so0 $f class R $.
+	i0_so0 $f set x $.
+	i1_so0 $f set y $.
+	p_so0 $p |- R Or (/) $= f0_so0 p_po0 i0_so0 a_sup_set_class i1_so0 a_sup_set_class f0_so0 a_wbr i0_so0 a_sup_set_class i1_so0 a_sup_set_class a_wceq i1_so0 a_sup_set_class i0_so0 a_sup_set_class f0_so0 a_wbr a_w3o i1_so0 a_c0 a_wral i0_so0 p_ral0 i0_so0 i1_so0 a_c0 f0_so0 a_df-so a_c0 f0_so0 a_wor a_c0 f0_so0 a_wpo i0_so0 a_sup_set_class i1_so0 a_sup_set_class f0_so0 a_wbr i0_so0 a_sup_set_class i1_so0 a_sup_set_class a_wceq i1_so0 a_sup_set_class i0_so0 a_sup_set_class f0_so0 a_wbr a_w3o i1_so0 a_c0 a_wral i0_so0 a_c0 a_wral p_mpbir2an $.
 $}
-$( A totally ordered set has at most one minimal element.  (Contributed by
+
+$(A totally ordered set has at most one minimal element.  (Contributed by
        Mario Carneiro, 24-Jun-2015.)  (Revised by NM, 16-Jun-2017.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v R $.
-	$v z $.
-	$d x y z A $.
-	$d x y z R $.
-	isomo_0 $f set z $.
-	fsomo_0 $f set x $.
-	fsomo_1 $f set y $.
-	fsomo_2 $f class A $.
-	fsomo_3 $f class R $.
-	somo $p |- ( R Or A -> E* x e. A A. y e. A -. y R x ) $= fsomo_2 fsomo_3 wor fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq wi isomo_0 fsomo_2 wral fsomo_0 fsomo_2 wral fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_0 fsomo_2 wrmo fsomo_2 fsomo_3 wor fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq wi fsomo_0 isomo_0 fsomo_2 fsomo_2 fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq wi fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa wa fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn wa fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral wa fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn wa fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn wa fsomo_0 sup_set_class fsomo_2 wcel fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_2 wcel fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_0 sup_set_class fsomo_2 fsomo_1 sup_set_class fsomo_0 sup_set_class wceq fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_1 sup_set_class fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 breq1 notbid rspcv fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 isomo_0 sup_set_class fsomo_2 fsomo_1 sup_set_class isomo_0 sup_set_class wceq fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 breq1 notbid rspcv im2anan9 ancomsd imp fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn wa fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wo wn fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa wa fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr ioran fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa wa fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wo fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_2 fsomo_3 wor fsomo_0 sup_set_class fsomo_2 wcel isomo_0 sup_set_class fsomo_2 wcel wa wa fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class wceq isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr w3o fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wo fsomo_0 sup_set_class isomo_0 sup_set_class wceq wo fsomo_2 fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 solin fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class wceq isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr w3o fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class wceq wo isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wo fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wo fsomo_0 sup_set_class isomo_0 sup_set_class wceq wo fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class wceq isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr df-3or fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class wceq isomo_0 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr or32 bitri sylib ord syl5bir syl5 exp4b pm2.43d ralrimivv fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 wral fsomo_0 isomo_0 fsomo_2 fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr wn fsomo_1 fsomo_2 fsomo_0 sup_set_class isomo_0 sup_set_class wceq fsomo_1 sup_set_class fsomo_0 sup_set_class fsomo_3 wbr fsomo_1 sup_set_class isomo_0 sup_set_class fsomo_3 wbr fsomo_0 sup_set_class isomo_0 sup_set_class fsomo_1 sup_set_class fsomo_3 breq2 notbid ralbidv rmo4 sylibr $.
+	$v x y A R  $.
+	$d x y z A  $.
+	$d x y z R  $.
+	f0_somo $f set x $.
+	f1_somo $f set y $.
+	f2_somo $f class A $.
+	f3_somo $f class R $.
+	i0_somo $f set z $.
+	p_somo $p |- ( R Or A -> E* x e. A A. y e. A -. y R x ) $= f1_somo a_sup_set_class f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo p_breq1 f1_somo a_sup_set_class f0_somo a_sup_set_class a_wceq f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr p_notbid f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f0_somo a_sup_set_class f2_somo p_rspcv f1_somo a_sup_set_class i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo p_breq1 f1_somo a_sup_set_class i0_somo a_sup_set_class a_wceq f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr p_notbid f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo i0_somo a_sup_set_class f2_somo p_rspcv f0_somo a_sup_set_class f2_somo a_wcel f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f2_somo a_wcel f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn p_im2anan9 f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn a_wa p_ancomsd f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn a_wa p_imp f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr p_ioran f2_somo f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo p_solin f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_df-3or f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr p_or32 f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_w3o f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wo i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wo f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wo f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wo p_bitri f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_w3o f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wo f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wo p_sylib f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wo f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq p_ord f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wo a_wn f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq p_syl5bir f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn i0_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn a_wa f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq p_syl5 f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq p_exp4b f2_somo f3_somo a_wor f0_somo a_sup_set_class f2_somo a_wcel i0_somo a_sup_set_class f2_somo a_wcel a_wa f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wi p_pm2.43d f2_somo f3_somo a_wor f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wi f0_somo i0_somo f2_somo f2_somo p_ralrimivv f0_somo a_sup_set_class i0_somo a_sup_set_class f1_somo a_sup_set_class f3_somo p_breq2 f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr p_notbid f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo p_ralbidv f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f0_somo i0_somo f2_somo p_rmo4 f2_somo f3_somo a_wor f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f1_somo a_sup_set_class i0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral a_wa f0_somo a_sup_set_class i0_somo a_sup_set_class a_wceq a_wi i0_somo f2_somo a_wral f0_somo f2_somo a_wral f1_somo a_sup_set_class f0_somo a_sup_set_class f3_somo a_wbr a_wn f1_somo f2_somo a_wral f0_somo f2_somo a_wrmo p_sylibr $.
 $}
+
 

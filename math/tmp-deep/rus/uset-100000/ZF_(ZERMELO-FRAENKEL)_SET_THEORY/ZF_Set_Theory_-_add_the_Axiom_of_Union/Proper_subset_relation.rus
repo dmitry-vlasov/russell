@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Curry_and_uncurry.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Proper subset relation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,13 +10,13 @@ constant {
 	symbol [C.] ;;
 }
 
-/* Extend class notation to include the reified proper subset relation. */
+/*Extend class notation to include the reified proper subset relation. */
 
 rule crpss () {
 	term : class = # [C.] ;;
 }
 
-/* Define a relation which corresponds to proper subsethood ~ df-pss on
+/*Define a relation which corresponds to proper subsethood ~ df-pss on
        sets.  This allows us to use proper subsethood with general concepts
        that require relations, such as strict ordering, see ~ sorpss .
        (Contributed by Stefan O'Rear, 2-Nov-2014.) */
@@ -28,7 +28,7 @@ definition df-rpss (x : set, y : set) disjointed(x y, x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* The proper subset relation is a relation.  (Contributed by Stefan
+/*The proper subset relation is a relation.  (Contributed by Stefan
        O'Rear, 2-Nov-2014.) */
 
 theorem relrpss () disjointed(x y, x y) {
@@ -42,7 +42,7 @@ proof of relrpss {
 	qed prop 1 = step 2 ;;
 }
 
-/* The proper subset relation on sets is the same as class proper
+/*The proper subset relation on sets is the same as class proper
        subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
 theorem brrpssg (A : class, B : class, V : class) disjointed(x y A, x y B) {
@@ -71,7 +71,7 @@ proof of brrpssg {
 	qed prop 1 = step 17 ;;
 }
 
-/* The proper subset relation on sets is the same as class proper
+/*The proper subset relation on sets is the same as class proper
        subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
 theorem brrpss (A : class, B : class)  {
@@ -86,7 +86,7 @@ proof of brrpss {
 	qed prop 1 = step 2 ;;
 }
 
-/* Every class is partially ordered by proper subsets.  (Contributed by
+/*Every class is partially ordered by proper subsets.  (Contributed by
        Stefan O'Rear, 2-Nov-2014.) */
 
 theorem porpss (A : class) disjointed(x y z A) {
@@ -117,7 +117,7 @@ proof of porpss {
 	qed prop 1 = step 19 ;;
 }
 
-/* Express strict ordering under proper subsets, i.e. the notion of a chain
+/*Express strict ordering under proper subsets, i.e. the notion of a chain
        of sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
 theorem sorpss (x : set, y : set, A : class) disjointed(x y A) {
@@ -141,7 +141,7 @@ proof of sorpss {
 	qed prop 1 = step 13 ;;
 }
 
-/* Property of a chain of sets.  (Contributed by Stefan O'Rear,
+/*Property of a chain of sets.  (Contributed by Stefan O'Rear,
      2-Nov-2014.) */
 
 theorem sorpssi (A : class, B : class, C : class)  {
@@ -166,7 +166,7 @@ proof of sorpssi {
 	qed prop 1 = step 14 ;;
 }
 
-/* A chain of sets is closed under binary union.  (Contributed by Mario
+/*A chain of sets is closed under binary union.  (Contributed by Mario
      Carneiro, 16-May-2015.) */
 
 theorem sorpssun (A : class, B : class, C : class)  {
@@ -189,7 +189,7 @@ proof of sorpssun {
 	qed prop 1 = step 12 ;;
 }
 
-/* A chain of sets is closed under binary intersection.  (Contributed by
+/*A chain of sets is closed under binary intersection.  (Contributed by
      Mario Carneiro, 16-May-2015.) */
 
 theorem sorpssin (A : class, B : class, C : class)  {
@@ -212,7 +212,7 @@ proof of sorpssin {
 	qed prop 1 = step 12 ;;
 }
 
-/* In a chain of sets, a maximal element is the union of the chain.
+/*In a chain of sets, a maximal element is the union of the chain.
        (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
 theorem sorpssuni (v : set, u : set, Y : class) disjointed(Y u v) {
@@ -253,7 +253,7 @@ proof of sorpssuni {
 	qed prop 1 = step 30 ;;
 }
 
-/* In a chain of sets, a minimal element is the intersection of the chain.
+/*In a chain of sets, a minimal element is the intersection of the chain.
        (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
 theorem sorpssint (v : set, u : set, Y : class) disjointed(Y u v) {
@@ -294,10 +294,10 @@ proof of sorpssint {
 	qed prop 1 = step 30 ;;
 }
 
-/* The componentwise complement of a chain of sets is also a chain of
+/*The componentwise complement of a chain of sets is also a chain of
        sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
 
-theorem sorpsscmpl (u : set, A : class, Y : class) disjointed(Y x y, A x y, Y u, A u, u x y) {
+theorem sorpsscmpl (u : set, A : class, Y : class) disjointed(Y, Y x y, Y, A, A x y, Y u, A u, u x y) {
 	prop 1 : wff = |- ( [C.] Or Y → [C.] Or { u ∈ Pow A | ( A ∖ u ) ∈ Y } ) ;;
 }
 

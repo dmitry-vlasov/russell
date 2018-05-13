@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Finite_induction_(for_finite_ordinals).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Introduce new constant symbols. */
+/*Introduce new constant symbols. */
 
 constant {
 	symbol × ;;
@@ -14,7 +14,7 @@ constant {
 	latex \times ;;
 }
 
-/* Times symbol (cross product symbol) (read: 'cross') */
+/*Times symbol (cross product symbol) (read: 'cross') */
 
 constant {
 	symbol ⁻¹ ;;
@@ -22,19 +22,19 @@ constant {
 	latex {}^{-1} ;;
 }
 
-/* Small elevated smiley (converse operation) */
+/*Small elevated smiley (converse operation) */
 
 constant {
 	symbol dom ;;
 }
 
-/* Domain */
+/*Domain */
 
 constant {
 	symbol ran ;;
 }
 
-/* Range */
+/*Range */
 
 constant {
 	symbol ↾ ;;
@@ -42,7 +42,7 @@ constant {
 	latex \upharpoonright ;;
 }
 
-/* Right hook (restriction symbol) */
+/*Right hook (restriction symbol) */
 
 constant {
 	symbol " ;;
@@ -50,7 +50,7 @@ constant {
 	latex `` ;;
 }
 
-/* Left quote (image symbol) */
+/*Left quote (image symbol) */
 
 constant {
 	symbol ∘ ;;
@@ -58,67 +58,67 @@ constant {
 	latex \circ ;;
 }
 
-/* Small circle (composition symbol) */
+/*Small circle (composition symbol) */
 
 constant {
 	symbol Rel ;;
 }
 
-/* Relation predicate */
+/*Relation predicate */
 
-/* Extend the definition of a class to include the cross product. */
+/*Extend the definition of a class to include the cross product. */
 
 rule cxp (A : class, B : class) {
 	term : class = # ( A × B ) ;;
 }
 
-/* Extend the definition of a class to include the converse of a class. */
+/*Extend the definition of a class to include the converse of a class. */
 
 rule ccnv (A : class) {
 	term : class = # ⁻¹ A ;;
 }
 
-/* Extend the definition of a class to include the domain of a class. */
+/*Extend the definition of a class to include the domain of a class. */
 
 rule cdm (A : class) {
 	term : class = # dom A ;;
 }
 
-/* Extend the definition of a class to include the range of a class. */
+/*Extend the definition of a class to include the range of a class. */
 
 rule crn (A : class) {
 	term : class = # ran A ;;
 }
 
-/* Extend the definition of a class to include the restriction of a class.
+/*Extend the definition of a class to include the restriction of a class.
      (Read:  The restriction of ` A ` to ` B ` .) */
 
 rule cres (A : class, B : class) {
 	term : class = # ( A ↾ B ) ;;
 }
 
-/* Extend the definition of a class to include the image of a class.  (Read:
+/*Extend the definition of a class to include the image of a class.  (Read:
      The image of ` B ` under ` A ` .) */
 
 rule cima (A : class, B : class) {
 	term : class = # ( A " B ) ;;
 }
 
-/* Extend the definition of a class to include the composition of two
+/*Extend the definition of a class to include the composition of two
      classes.  (Read:  The composition of ` A ` and ` B ` .) */
 
 rule ccom (A : class, B : class) {
 	term : class = # ( A ∘ B ) ;;
 }
 
-/* Extend the definition of a wff to include the relation predicate.  (Read:
+/*Extend the definition of a wff to include the relation predicate.  (Read:
      ` A ` is a relation.) */
 
 rule wrel (A : class) {
 	term : wff = # Rel A ;;
 }
 
-/* Define the cross product of two classes.  Definition 9.11 of [Quine]
+/*Define the cross product of two classes.  Definition 9.11 of [Quine]
        p. 64.  For example, ` ( { 1 , 5 } X. { 2 , 7 } ) = `
        ` ( { <. 1 , 2 >. , <. 1 , 7 >. } u. { <. 5 , 2 >. , <. 5 , 7 >. } ) `
        ( ~ ex-xp ).  Another example is that the set of rational numbers are
@@ -134,18 +134,18 @@ definition df-xp (x : set, y : set, A : class, B : class) disjointed(x y A, x y 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the relation predicate.  Definition 6.4(1) of [TakeutiZaring]
+/*Define the relation predicate.  Definition 6.4(1) of [TakeutiZaring]
        p. 23.  For alternate definitions, see ~ dfrel2 and ~ dfrel3 .
        (Contributed by NM, 1-Aug-1994.) */
 
-definition df-rel (A : class)  {
+definition df-rel (A : class) disjointed(A) {
 	defiendum : wff = # Rel A ;;
 	definiens : wff = # A ⊆ ( _V × _V ) ;;
 	-----------------------
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define the converse of a class.  Definition 9.12 of [Quine] p. 64.  The
+/*Define the converse of a class.  Definition 9.12 of [Quine] p. 64.  The
        converse of a binary relation swaps its arguments, i.e., if ` A e. _V `
        and ` B e. _V ` then ` ( A ``' R B <-> B R A ) ` , as proven in ~ brcnv
        (see ~ df-br and ~ df-rel for more on relations).  For example,
@@ -164,7 +164,7 @@ definition df-cnv (x : set, y : set, A : class) disjointed(x y A, x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the composition of two classes.  Definition 6.6(3) of
+/*Define the composition of two classes.  Definition 6.6(3) of
        [TakeutiZaring] p. 24.  For example, ` ( ( exp o. cos ) `` 0 ) = _e `
        ( ~ ex-co ) because ` ( cos `` 0 ) = 1 ` (see ~ cos0 ) and
        ` ( exp `` 1 ) = _e ` (see ~ df-e ).  Note that Definition 7 of [Suppes]
@@ -179,7 +179,7 @@ definition df-co (x : set, y : set, z : set, A : class, B : class) disjointed(x 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the domain of a class.  Definition 3 of [Suppes] p. 59.  For
+/*Define the domain of a class.  Definition 3 of [Suppes] p. 59.  For
        example, ` F = { <. 2 , 6 >. , <. 3 , 9 >. } -> dom F = { 2 , 3 } `
        ( ~ ex-dm ).  Another example is the domain of the complex arctangent,
        ` ( A e. dom arctan <-> ( A e. CC /\ A =/= -u _i /\ A =/= _i ) ) ` (for
@@ -195,21 +195,21 @@ definition df-dm (x : set, y : set, A : class) disjointed(x y A, x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the range of a class.  For example,
+/*Define the range of a class.  For example,
        ` F = { <. 2 , 6 >. , <. 3 , 9 >. } -> ran F = { 6 , 9 } ` ( ~ ex-rn ).
        Contrast with domain (defined in ~ df-dm ).  For alternate definitions,
        see ~ dfrn2 , ~ dfrn3 , and ~ dfrn4 .  The notation " ` ran ` " is used
        by Enderton; other authors sometimes use script R or script W.
        (Contributed by NM, 1-Aug-1994.) */
 
-definition df-rn (A : class)  {
+definition df-rn (A : class) disjointed(A) {
 	defiendum : class = # ran A ;;
 	definiens : class = # dom ⁻¹ A ;;
 	-----------------------
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the restriction of a class.  Definition 6.6(1) of [TakeutiZaring]
+/*Define the restriction of a class.  Definition 6.6(1) of [TakeutiZaring]
        p. 24.  For example, the expression ` ( exp |`` RR ) ` (used in
        ~ reeff1 ) means "the exponential function e to the x, but the exponent
        x must be in the reals" ( ~ df-ef defines the exponential function,
@@ -218,28 +218,28 @@ definition df-rn (A : class)  {
        ` /\ B = { 1 , 2 } ) -> ( F |`` B ) = { <. 2 , 6 >. } ` ( ~ ex-res ).
        (Contributed by NM, 2-Aug-1994.) */
 
-definition df-res (A : class, B : class)  {
+definition df-res (A : class, B : class) disjointed(A, B) {
 	defiendum : class = # ( A ↾ B ) ;;
 	definiens : class = # ( A ∩ ( B × _V ) ) ;;
 	-----------------------
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the image of a class (as restricted by another class).
+/*Define the image of a class (as restricted by another class).
        Definition 6.6(2) of [TakeutiZaring] p. 24.  For example,
 ` ( F = { <. 2 , 6 >. , <. 3 , 9 >. } /\ B = { 1 , 2 } ) -> ( F " B ) = { 6 } `
        ( ~ ex-ima ).  Contrast with restriction ( ~ df-res ) and range
        ( ~ df-rn ).  For an alternate definition, see ~ dfima2 .  (Contributed
        by NM, 2-Aug-1994.) */
 
-definition df-ima (A : class, B : class)  {
+definition df-ima (A : class, B : class) disjointed(A, B) {
 	defiendum : class = # ( A " B ) ;;
 	definiens : class = # ran ( A ↾ B ) ;;
 	-----------------------
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for cross product.  (Contributed by NM, 4-Jul-1994.) */
+/*Equality theorem for cross product.  (Contributed by NM, 4-Jul-1994.) */
 
 theorem xpeq1 (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
 	prop 1 : wff = |- ( A = B → ( A × C ) = ( B × C ) ) ;;
@@ -256,7 +256,7 @@ proof of xpeq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for cross product.  (Contributed by NM, 5-Jul-1994.) */
+/*Equality theorem for cross product.  (Contributed by NM, 5-Jul-1994.) */
 
 theorem xpeq2 (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
 	prop 1 : wff = |- ( A = B → ( C × A ) = ( C × B ) ) ;;
@@ -273,7 +273,7 @@ proof of xpeq2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in a cross product.  Uses fewer axioms than ~ elxp .
+/*Membership in a cross product.  Uses fewer axioms than ~ elxp .
        (Contributed by NM, 4-Jul-1994.) */
 
 theorem elxpi (x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -294,7 +294,7 @@ proof of elxpi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership in a cross product.  (Contributed by NM, 4-Jul-1994.) */
+/*Membership in a cross product.  (Contributed by NM, 4-Jul-1994.) */
 
 theorem elxp (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
 	prop 1 : wff = |- ( A ∈ ( B × C ) ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ( x ∈ B ∧ y ∈ C ) ) ) ;;
@@ -308,7 +308,7 @@ proof of elxp {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a cross product.  (Contributed by NM, 23-Feb-2004.) */
+/*Membership in a cross product.  (Contributed by NM, 23-Feb-2004.) */
 
 theorem elxp2 (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
 	prop 1 : wff = |- ( A ∈ ( B × C ) ↔ ∃ x ∈ B ∃ y ∈ C A = 〈 x , y 〉 ) ;;
@@ -327,7 +327,7 @@ proof of elxp2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for cross product.  (Contributed by FL, 31-Aug-2009.) */
+/*Equality theorem for cross product.  (Contributed by FL, 31-Aug-2009.) */
 
 theorem xpeq12 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A = B ∧ C = D ) → ( A × C ) = ( B × D ) ) ;;
@@ -340,7 +340,7 @@ proof of xpeq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for cross product.  (Contributed by NM,
+/*Equality inference for cross product.  (Contributed by NM,
        21-Dec-2008.) */
 
 theorem xpeq1i (A : class, B : class, C : class)  {
@@ -355,7 +355,7 @@ proof of xpeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for cross product.  (Contributed by NM,
+/*Equality inference for cross product.  (Contributed by NM,
        21-Dec-2008.) */
 
 theorem xpeq2i (A : class, B : class, C : class)  {
@@ -370,7 +370,7 @@ proof of xpeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for cross product.  (Contributed by FL,
+/*Equality inference for cross product.  (Contributed by FL,
        31-Aug-2009.) */
 
 theorem xpeq12i (A : class, B : class, C : class, D : class)  {
@@ -386,7 +386,7 @@ proof of xpeq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for cross product.  (Contributed by Jeff Madsen,
+/*Equality deduction for cross product.  (Contributed by Jeff Madsen,
        17-Jun-2010.) */
 
 theorem xpeq1d (ph : wff, A : class, B : class, C : class)  {
@@ -401,7 +401,7 @@ proof of xpeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for cross product.  (Contributed by Jeff Madsen,
+/*Equality deduction for cross product.  (Contributed by Jeff Madsen,
        17-Jun-2010.) */
 
 theorem xpeq2d (ph : wff, A : class, B : class, C : class)  {
@@ -416,7 +416,7 @@ proof of xpeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for cross product.  (Contributed by NM,
+/*Equality deduction for cross product.  (Contributed by NM,
        8-Dec-2013.) */
 
 theorem xpeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -432,7 +432,7 @@ proof of xpeq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for cross product.  (Contributed by
+/*Bound-variable hypothesis builder for cross product.  (Contributed by
        NM, 15-Sep-2003.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem nfxp (x : set, A : class, B : class) disjointed(y z A, y z B, x y z) {
@@ -453,7 +453,7 @@ proof of nfxp {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribute proper substitution through the cross product of two
+/*Distribute proper substitution through the cross product of two
        classes.  (Contributed by Alan Sare, 10-Nov-2012.) */
 
 theorem csbxpg (x : set, A : class, B : class, C : class, D : class) disjointed(A w y z, B w y z, C w y z, D w y z, w x y z) {
@@ -491,7 +491,7 @@ proof of csbxpg {
 	qed prop 1 = step 26 ;;
 }
 
-/* The empty set is not a member of a cross product.  (Contributed by NM,
+/*The empty set is not a member of a cross product.  (Contributed by NM,
        2-May-1996.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem 0nelxp (A : class, B : class) disjointed(x y A, x y B, x y) {
@@ -514,7 +514,7 @@ proof of 0nelxp {
 	qed prop 1 = step 11 ;;
 }
 
-/* A member of a cross product (ordered pair) doesn't contain the empty
+/*A member of a cross product (ordered pair) doesn't contain the empty
        set.  (Contributed by NM, 15-Dec-2008.) */
 
 theorem 0nelelxp (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -533,7 +533,7 @@ proof of 0nelelxp {
 	qed prop 1 = step 7 ;;
 }
 
-/* Ordered pair membership in a cross product.  (Contributed by NM,
+/*Ordered pair membership in a cross product.  (Contributed by NM,
        15-Nov-1994.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.)
        (Revised by Mario Carneiro, 26-Apr-2015.) */
 
@@ -565,10 +565,10 @@ proof of opelxp {
 	qed prop 1 = step 19 ;;
 }
 
-/* Binary relation on a cross product.  (Contributed by NM,
+/*Binary relation on a cross product.  (Contributed by NM,
        22-Apr-2004.) */
 
-theorem brxp (A : class, B : class, C : class, D : class)  {
+theorem brxp (A : class, B : class, C : class, D : class) disjointed(A, B, C, D) {
 	prop 1 : wff = |- ( A ( C × D ) B ↔ ( A ∈ C ∧ B ∈ D ) ) ;;
 }
 
@@ -579,7 +579,7 @@ proof of brxp {
 	qed prop 1 = step 3 ;;
 }
 
-/* Ordered pair membership in a cross product (implication).  (Contributed by
+/*Ordered pair membership in a cross product (implication).  (Contributed by
      NM, 28-May-1995.) */
 
 theorem opelxpi (A : class, B : class, C : class, D : class)  {
@@ -592,7 +592,7 @@ proof of opelxpi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The first member of an ordered pair of classes in a cross product belongs
+/*The first member of an ordered pair of classes in a cross product belongs
      to first cross product argument.  (Contributed by NM, 28-May-2008.)
      (Revised by Mario Carneiro, 26-Apr-2015.) */
 
@@ -606,7 +606,7 @@ proof of opelxp1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The second member of an ordered pair of classes in a cross product belongs
+/*The second member of an ordered pair of classes in a cross product belongs
      to second cross product argument.  (Contributed by Mario Carneiro,
      26-Apr-2015.) */
 
@@ -620,7 +620,7 @@ proof of opelxp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The first member of an ordered triple of classes in a cross product
+/*The first member of an ordered triple of classes in a cross product
      belongs to first cross product argument.  (Contributed by NM,
      28-May-2008.) */
 
@@ -635,7 +635,7 @@ proof of otelxp1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class builder restricted to a cross product.
+/*Membership in a class builder restricted to a cross product.
        (Contributed by NM, 20-Feb-2014.) */
 
 theorem rabxp (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class) disjointed(x y z A, x y z B, y z ph, x ps) {
@@ -663,7 +663,7 @@ proof of rabxp {
 	qed prop 1 = step 15 ;;
 }
 
-/* A true binary relation on a relation implies the arguments are sets.
+/*A true binary relation on a relation implies the arguments are sets.
      (This is a property of our ordered pair definition.)  (Contributed by
      Mario Carneiro, 26-Apr-2015.) */
 
@@ -681,7 +681,7 @@ proof of brrelex12 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A true binary relation on a relation implies the first argument is a set.
+/*A true binary relation on a relation implies the first argument is a set.
      (This is a property of our ordered pair definition.)  (Contributed by NM,
      18-May-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
@@ -695,7 +695,7 @@ proof of brrelex {
 	qed prop 1 = step 2 ;;
 }
 
-/* A true binary relation on a relation implies the second argument is a
+/*A true binary relation on a relation implies the second argument is a
      set.  (This is a property of our ordered pair definition.)  (Contributed
      by Mario Carneiro, 26-Apr-2015.) */
 
@@ -709,7 +709,7 @@ proof of brrelex2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The first argument of a binary relation exists.  (An artifact of our
+/*The first argument of a binary relation exists.  (An artifact of our
        ordered pair definition.)  (Contributed by NM, 4-Jun-1998.) */
 
 theorem brrelexi (A : class, B : class, R : class)  {
@@ -724,7 +724,7 @@ proof of brrelexi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The second argument of a binary relation exists.  (An artifact of our
+/*The second argument of a binary relation exists.  (An artifact of our
        ordered pair definition.)  (Contributed by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -740,7 +740,7 @@ proof of brrelex2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* No proper class is related to anything via any relation.  (Contributed
+/*No proper class is related to anything via any relation.  (Contributed
        by Roy F. Longton, 30-Jul-2005.) */
 
 theorem nprrel (A : class, B : class, R : class)  {
@@ -756,7 +756,7 @@ proof of nprrel {
 	qed prop 1 = step 2 ;;
 }
 
-/* Representation of a constant function using the mapping operation.
+/*Representation of a constant function using the mapping operation.
        (Note that ` x ` cannot appear free in ` B ` .)  (Contributed by NM,
        12-Oct-1999.)  (Revised by Mario Carneiro, 16-Nov-2013.) */
 
@@ -775,7 +775,7 @@ proof of fconstmpt {
 	qed prop 1 = step 6 ;;
 }
 
-/* Variable to class conversion of transitive relation.  (Contributed by
+/*Variable to class conversion of transitive relation.  (Contributed by
        NM, 9-Jun-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem vtoclr (x : set, y : set, z : set, A : class, B : class, C : class, R : class) disjointed(x y A, y B, x y z C, x y z R) {
@@ -812,7 +812,7 @@ proof of vtoclr {
 	qed prop 1 = step 23 ;;
 }
 
-/* Ordered pair membership in the universal class of ordered pairs.
+/*Ordered pair membership in the universal class of ordered pairs.
      (Contributed by Mario Carneiro, 3-May-2015.) */
 
 theorem opelvvg (A : class, B : class, V : class, W : class)  {
@@ -827,7 +827,7 @@ proof of opelvvg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Ordered pair membership in the universal class of ordered pairs.
+/*Ordered pair membership in the universal class of ordered pairs.
        (Contributed by NM, 22-Aug-2013.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -844,7 +844,7 @@ proof of opelvv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Justification theorem for an ordered pair definition that works for any
+/*Justification theorem for an ordered pair definition that works for any
        classes, including proper classes.  This is a possible definition
        implied by the footnote in [Jech] p. 78, which says, "The sophisticated
        reader will not object to our use of a pair of classes."  (Contributed
@@ -957,7 +957,7 @@ proof of opthprc {
 	qed prop 1 = step 98 ;;
 }
 
-/* Two things in a binary relation belong to the relation's domain.
+/*Two things in a binary relation belong to the relation's domain.
        (Contributed by NM, 17-May-1996.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -974,7 +974,7 @@ proof of brel {
 	qed prop 1 = step 3 ;;
 }
 
-/* Ordered pair membership in an ordered pair class abstraction.
+/*Ordered pair membership in an ordered pair class abstraction.
        (Contributed by Mario Carneiro, 9-Nov-2015.) */
 
 theorem brab2a (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class) disjointed(x y A, x y B, x y C, x y D, x y ps) {
@@ -999,7 +999,7 @@ proof of brab2a {
 	qed prop 1 = step 11 ;;
 }
 
-/* Membership in a cross product.  (Contributed by NM, 5-Mar-1995.) */
+/*Membership in a cross product.  (Contributed by NM, 5-Mar-1995.) */
 
 theorem elxp3 (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
 	prop 1 : wff = |- ( A ∈ ( B × C ) ↔ ∃ x ∃ y ( 〈 x , y 〉 = A ∧ 〈 x , y 〉 ∈ ( B × C ) ) ) ;;
@@ -1015,7 +1015,7 @@ proof of elxp3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in a union of cross products.  (Contributed by Mario
+/*Membership in a union of cross products.  (Contributed by Mario
        Carneiro, 29-Dec-2014.)  (Revised by Mario Carneiro, 1-Jan-2017.) */
 
 theorem opeliunxp (x : set, A : class, B : class, C : class) disjointed(y z A, y z B, y z C, x y z) {
@@ -1070,7 +1070,7 @@ proof of opeliunxp {
 	qed prop 1 = step 43 ;;
 }
 
-/* Distributive law for cross product over union.  Theorem 103 of [Suppes]
+/*Distributive law for cross product over union.  Theorem 103 of [Suppes]
        p. 52.  (Contributed by NM, 12-Aug-2004.) */
 
 theorem xpundi (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -1095,7 +1095,7 @@ proof of xpundi {
 	qed prop 1 = step 13 ;;
 }
 
-/* Distributive law for cross product over union.  Similar to Theorem 103
+/*Distributive law for cross product over union.  Similar to Theorem 103
        of [Suppes] p. 52.  (Contributed by NM, 30-Sep-2002.) */
 
 theorem xpundir (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -1120,10 +1120,10 @@ proof of xpundir {
 	qed prop 1 = step 13 ;;
 }
 
-/* Distributive law for cross product over indexed union.  (Contributed by
+/*Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) */
 
-theorem xpiundi (x : set, A : class, B : class, C : class) disjointed(w y z A, w y z B, w x y z C) {
+theorem xpiundi (x : set, A : class, B : class, C : class) disjointed(w y z A, w y z B, w x y z C, x) {
 	prop 1 : wff = |- ( C × ⋃_ x ∈ A B ) = ⋃_ x ∈ A ( C × B ) ;;
 }
 
@@ -1152,10 +1152,10 @@ proof of xpiundi {
 	qed prop 1 = step 20 ;;
 }
 
-/* Distributive law for cross product over indexed union.  (Contributed by
+/*Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) */
 
-theorem xpiundir (x : set, A : class, B : class, C : class) disjointed(w y z A, w y z B, w x y z C) {
+theorem xpiundir (x : set, A : class, B : class, C : class) disjointed(w y z A, w y z B, w x y z C, x) {
 	prop 1 : wff = |- ( ⋃_ x ∈ A B × C ) = ⋃_ x ∈ A ( B × C ) ;;
 }
 
@@ -1181,12 +1181,12 @@ proof of xpiundir {
 	qed prop 1 = step 17 ;;
 }
 
-/* Obsolete proof of ~ resiun2 as of 5-Apr-2016.  Distributive law for
+/*Obsolete proof of ~ resiun2 as of 5-Apr-2016.  Distributive law for
        cross product over restriction.  (Contributed by Mario Carneiro,
        11-Nov-2014.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
-theorem resiundiOLD (x : set, A : class, B : class, F : class) disjointed(x F) {
+theorem resiundiOLD (x : set, A : class, B : class, F : class) disjointed(A, B, x, x F) {
 	prop 1 : wff = |- ( F ↾ ⋃_ x ∈ A B ) = ⋃_ x ∈ A ( F ↾ B ) ;;
 }
 
@@ -1203,7 +1203,7 @@ proof of resiundiOLD {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership in a union of cross products when the second factor is
+/*Membership in a union of cross products when the second factor is
        constant.  (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
 theorem iunxpconst (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1218,7 +1218,7 @@ proof of iunxpconst {
 	qed prop 1 = step 4 ;;
 }
 
-/* The cross product of two unions.  (Contributed by NM, 12-Aug-2004.) */
+/*The cross product of two unions.  (Contributed by NM, 12-Aug-2004.) */
 
 theorem xpun (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A ∪ B ) × ( C ∪ D ) ) = ( ( ( A × C ) ∪ ( A × D ) ) ∪ ( ( B × C ) ∪ ( B × D ) ) ) ;;
@@ -1234,7 +1234,7 @@ proof of xpun {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in universal class of ordered pairs.  (Contributed by NM,
+/*Membership in universal class of ordered pairs.  (Contributed by NM,
        4-Jul-1994.) */
 
 theorem elvv (x : set, y : set, A : class) disjointed(x y A) {
@@ -1252,7 +1252,7 @@ proof of elvv {
 	qed prop 1 = step 7 ;;
 }
 
-/* Membership in universal class of ordered triples.  (Contributed by NM,
+/*Membership in universal class of ordered triples.  (Contributed by NM,
        17-Dec-2008.) */
 
 theorem elvvv (x : set, y : set, z : set, A : class) disjointed(w x y z A) {
@@ -1289,7 +1289,7 @@ proof of elvvv {
 	qed prop 1 = step 25 ;;
 }
 
-/* An ordered pair contains its union.  (Contributed by NM,
+/*An ordered pair contains its union.  (Contributed by NM,
        16-Sep-2006.) */
 
 theorem elvvuni (A : class) disjointed(x y A) {
@@ -1315,7 +1315,7 @@ proof of elvvuni {
 	qed prop 1 = step 14 ;;
 }
 
-/* Intersection of binary relation with cross product.  (Contributed by NM,
+/*Intersection of binary relation with cross product.  (Contributed by NM,
      3-Mar-2007.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem brinxp2 (A : class, B : class, C : class, D : class, R : class)  {
@@ -1333,7 +1333,7 @@ proof of brinxp2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Intersection of binary relation with cross product.  (Contributed by NM,
+/*Intersection of binary relation with cross product.  (Contributed by NM,
      9-Mar-1997.) */
 
 theorem brinxp (A : class, B : class, C : class, D : class, R : class)  {
@@ -1348,7 +1348,7 @@ proof of brinxp {
 	qed prop 1 = step 4 ;;
 }
 
-/* Intersection of partial order with cross product of its field.
+/*Intersection of partial order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) */
 
 theorem poinxp (A : class, R : class) disjointed(x y z A, x y z R) {
@@ -1380,7 +1380,7 @@ proof of poinxp {
 	qed prop 1 = step 20 ;;
 }
 
-/* Intersection of total order with cross product of its field.
+/*Intersection of total order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) */
 
 theorem soinxp (A : class, R : class) disjointed(x y A, x y R) {
@@ -1404,7 +1404,7 @@ proof of soinxp {
 	qed prop 1 = step 12 ;;
 }
 
-/* Intersection of well-founded relation with cross product of its field.
+/*Intersection of well-founded relation with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) */
 
 theorem frinxp (A : class, R : class) disjointed(x y z A, x y z R) {
@@ -1432,7 +1432,7 @@ proof of frinxp {
 	qed prop 1 = step 16 ;;
 }
 
-/* Intersection of set-like relation with cross product of its field.
+/*Intersection of set-like relation with cross product of its field.
        (Contributed by Mario Carneiro, 22-Jun-2015.) */
 
 theorem seinxp (A : class, R : class) disjointed(x y A, x y R) {
@@ -1452,11 +1452,11 @@ proof of seinxp {
 	qed prop 1 = step 8 ;;
 }
 
-/* Intersection of well-ordering with cross product of its field.
+/*Intersection of well-ordering with cross product of its field.
        (Contributed by NM, 9-Mar-1997.)  (Revised by Mario Carneiro,
        10-Jul-2014.) */
 
-theorem weinxp (A : class, R : class)  {
+theorem weinxp (A : class, R : class) disjointed(A, R) {
 	prop 1 : wff = |- ( R We A ↔ ( R ∩ ( A × A ) ) We A ) ;;
 }
 
@@ -1470,7 +1470,7 @@ proof of weinxp {
 	qed prop 1 = step 6 ;;
 }
 
-/* Partial ordering of a singleton.  (Contributed by NM, 27-Apr-2009.)
+/*Partial ordering of a singleton.  (Contributed by NM, 27-Apr-2009.)
        (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem posn (A : class, R : class) disjointed(x y z A, x y z R) {
@@ -1516,7 +1516,7 @@ proof of posn {
 	qed prop 1 = step 34 ;;
 }
 
-/* Strict ordering on a singleton.  (Contributed by Mario Carneiro,
+/*Strict ordering on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) */
 
 theorem sosn (A : class, R : class) disjointed(x y A, x y R) {
@@ -1539,7 +1539,7 @@ proof of sosn {
 	qed prop 1 = step 11 ;;
 }
 
-/* Founded relation on a singleton.  (Contributed by Mario Carneiro,
+/*Founded relation on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem frsn (A : class, R : class) disjointed(x y z A, x y z R) {
@@ -1596,10 +1596,10 @@ proof of frsn {
 	qed prop 1 = step 45 ;;
 }
 
-/* Well-ordering of a singleton.  (Contributed by Mario Carneiro,
+/*Well-ordering of a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) */
 
-theorem wesn (A : class, R : class)  {
+theorem wesn (A : class, R : class) disjointed(A, R) {
 	prop 1 : wff = |- ( Rel R → ( R We { A } ↔ ¬ A R A ) ) ;;
 }
 
@@ -1613,7 +1613,7 @@ proof of wesn {
 	qed prop 1 = step 6 ;;
 }
 
-/* An abstraction relation is a subset of a related cross product.
+/*An abstraction relation is a subset of a related cross product.
        (Contributed by NM, 16-Jul-1995.) */
 
 theorem opabssxp (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -1628,7 +1628,7 @@ proof of opabssxp {
 	qed prop 1 = step 4 ;;
 }
 
-/* The law of concretion for a binary relation.  See ~ brab2a for alternate
+/*The law of concretion for a binary relation.  See ~ brab2a for alternate
        proof.  TODO: should one of them be deleted?  (Contributed by Mario
        Carneiro, 28-Apr-2015.)  (Proof modification is discouraged.) */
 
@@ -1652,7 +1652,7 @@ proof of brab2ga {
 	qed prop 1 = step 9 ;;
 }
 
-/* Implicit substitution of class for ordered pair.  (Contributed by NM,
+/*Implicit substitution of class for ordered pair.  (Contributed by NM,
        5-Mar-1995.) */
 
 theorem optocl (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, x y C, x y ps) {
@@ -1675,7 +1675,7 @@ proof of optocl {
 	qed prop 1 = step 8 ;;
 }
 
-/* Implicit substitution of classes for ordered pairs.  (Contributed by NM,
+/*Implicit substitution of classes for ordered pairs.  (Contributed by NM,
        12-Mar-1995.) */
 
 theorem 2optocl (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, R : class) disjointed(x y z w A, z w B, x y z w C, x y z w D, x y ps, z w ch, z w R) {
@@ -1698,7 +1698,7 @@ proof of 2optocl {
 	qed prop 1 = step 7 ;;
 }
 
-/* Implicit substitution of classes for ordered pairs.  (Contributed by NM,
+/*Implicit substitution of classes for ordered pairs.  (Contributed by NM,
        12-Mar-1995.) */
 
 theorem 3optocl (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, C : class, D : class, R : class, F : class) disjointed(x y z w v u A, z w v u B, v u C, x y z w v u D, x y z w v u F, z w v u R, x y ps, z w ch, v u th) {
@@ -1724,7 +1724,7 @@ proof of 3optocl {
 	qed prop 1 = step 9 ;;
 }
 
-/* Ordered pair membership in a relation.  Special case.  (Contributed by
+/*Ordered pair membership in a relation.  Special case.  (Contributed by
        NM, 5-Aug-1995.) */
 
 theorem opbrop (ph : wff, ps : wff, x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y z w v u A, x y z w v u B, x y z w v u C, x y z w v u D, x y z w v u S, x y ph, z w v u ps) {
@@ -1763,7 +1763,7 @@ proof of opbrop {
 	qed prop 1 = step 25 ;;
 }
 
-/* The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
+/*The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
        of [Monk1] p. 37.  (Contributed by NM, 4-Jul-1994.) */
 
 theorem xp0r (A : class) disjointed(x y z A) {
@@ -1785,13 +1785,13 @@ proof of xp0r {
 	qed prop 1 = step 10 ;;
 }
 
-/* Ordinal numbers and ordered pairs are disjoint collections.  This
+/*Ordinal numbers and ordered pairs are disjoint collections.  This
        theorem can be used if we want to extend a set of ordinal numbers or
        ordered pairs with disjoint elements.  See also ~ snsn0non .
        (Contributed by NM, 1-Jun-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
 
-theorem onxpdisj ()  {
+theorem onxpdisj () disjointed(x) {
 	prop 1 : wff = |- ( On ∩ ( _V × _V ) ) = ∅ ;;
 }
 
@@ -1810,7 +1810,7 @@ proof of onxpdisj {
 	qed prop 1 = step 10 ;;
 }
 
-/* The class of ordinal numbers is not equal to the universe.  (Contributed
+/*The class of ordinal numbers is not equal to the universe.  (Contributed
      by NM, 16-Jun-2007.)  (Proof shortened by Mario Carneiro, 10-Jan-2013.) */
 
 theorem onnev ()  {
@@ -1827,7 +1827,7 @@ proof of onnev {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for the relation predicate.  (Contributed by NM,
+/*Equality theorem for the relation predicate.  (Contributed by NM,
      1-Aug-1994.) */
 
 theorem releq (A : class, B : class)  {
@@ -1842,7 +1842,7 @@ proof of releq {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality inference for the relation predicate.  (Contributed by NM,
+/*Equality inference for the relation predicate.  (Contributed by NM,
        8-Dec-2006.) */
 
 theorem releqi (A : class, B : class)  {
@@ -1857,7 +1857,7 @@ proof of releqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for the relation predicate.  (Contributed by NM,
+/*Equality deduction for the relation predicate.  (Contributed by NM,
        8-Mar-2014.) */
 
 theorem releqd (ph : wff, A : class, B : class)  {
@@ -1872,10 +1872,10 @@ proof of releqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for a relation.  (Contributed by NM,
+/*Bound-variable hypothesis builder for a relation.  (Contributed by NM,
        31-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
-theorem nfrel (x : set, A : class)  {
+theorem nfrel (x : set, A : class) disjointed(A, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- F/ x Rel A ;;
@@ -1889,7 +1889,7 @@ proof of nfrel {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass theorem for relation predicate.  Theorem 2 of [Suppes] p. 58.
+/*Subclass theorem for relation predicate.  Theorem 2 of [Suppes] p. 58.
      (Contributed by NM, 15-Aug-1994.) */
 
 theorem relss (A : class, B : class)  {
@@ -1904,7 +1904,7 @@ proof of relss {
 	qed prop 1 = step 4 ;;
 }
 
-/* A subclass relationship depends only on a relation's ordered pairs.
+/*A subclass relationship depends only on a relation's ordered pairs.
        Theorem 3.2(i) of [Monk1] p. 33.  (Contributed by NM, 2-Aug-1994.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -1939,7 +1939,7 @@ proof of ssrel {
 	qed prop 1 = step 22 ;;
 }
 
-/* Extensionality principle for relations.  Theorem 3.2(ii) of [Monk1]
+/*Extensionality principle for relations.  Theorem 3.2(ii) of [Monk1]
        p. 33.  (Contributed by NM, 2-Aug-1994.) */
 
 theorem eqrel (x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -1956,7 +1956,7 @@ proof of eqrel {
 	qed prop 1 = step 6 ;;
 }
 
-/* Inference from subclass principle for relations.  (Contributed by NM,
+/*Inference from subclass principle for relations.  (Contributed by NM,
        31-Mar-1998.) */
 
 theorem relssi (x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -1974,7 +1974,7 @@ proof of relssi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction from subclass principle for relations.  (Contributed by NM,
+/*Deduction from subclass principle for relations.  (Contributed by NM,
        11-Sep-2004.) */
 
 theorem relssdv (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x y ph) {
@@ -1992,7 +1992,7 @@ proof of relssdv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference from extensionality principle for relations.  (Contributed by
+/*Inference from extensionality principle for relations.  (Contributed by
        FL, 15-Oct-2012.) */
 
 theorem eqrelriv (x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -2008,7 +2008,7 @@ proof of eqrelriv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from extensionality principle for relations.  (Contributed by
+/*Inference from extensionality principle for relations.  (Contributed by
        NM, 17-Mar-1995.) */
 
 theorem eqrelriiv (x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -2025,7 +2025,7 @@ proof of eqrelriiv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from extensionality principle for relations.  (Contributed by
+/*Inference from extensionality principle for relations.  (Contributed by
        NM, 12-Dec-2006.) */
 
 theorem eqbrriv (x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -2044,7 +2044,7 @@ proof of eqbrriv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduce equality of relations from equivalence of membership.
+/*Deduce equality of relations from equivalence of membership.
        (Contributed by Rodolfo Medina, 10-Oct-2010.) */
 
 theorem eqrelrdv (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ph x, ph y) {
@@ -2063,7 +2063,7 @@ proof of eqrelrdv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction from extensionality principle for relations.  (Contributed by
+/*Deduction from extensionality principle for relations.  (Contributed by
        Mario Carneiro, 3-Jan-2017.) */
 
 theorem eqbrrdv (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ph x, ph y) {
@@ -2085,7 +2085,7 @@ proof of eqbrrdv {
 	qed prop 1 = step 7 ;;
 }
 
-/* Deduction from extensionality principle for relations.  (Contributed by
+/*Deduction from extensionality principle for relations.  (Contributed by
        Rodolfo Medina, 10-Oct-2010.) */
 
 theorem eqbrrdiv (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ph x, ph y) {
@@ -2104,7 +2104,7 @@ proof of eqbrrdiv {
 	qed prop 1 = step 4 ;;
 }
 
-/* A version of ~ eqrelrdv .  (Contributed by Rodolfo Medina,
+/*A version of ~ eqrelrdv .  (Contributed by Rodolfo Medina,
        10-Oct-2010.) */
 
 theorem eqrelrdv2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ph x, ph y) {
@@ -2122,7 +2122,7 @@ proof of eqrelrdv2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A subclass relationship determined by ordered triples.  Use ~ relrelss
+/*A subclass relationship determined by ordered triples.  Use ~ relrelss
        to express the antecedent in terms of the relation predicate.
        (Contributed by NM, 17-Dec-2008.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
@@ -2159,7 +2159,7 @@ proof of ssrelrel {
 	qed prop 1 = step 23 ;;
 }
 
-/* Extensionality principle for ordered triples (used by 2-place operations
+/*Extensionality principle for ordered triples (used by 2-place operations
        ~ df-oprab ), analogous to ~ eqrel .  Use ~ relrelss to express the
        antecedent in terms of the relation predicate.  (Contributed by NM,
        17-Dec-2008.) */
@@ -2183,7 +2183,7 @@ proof of eqrelrel {
 	qed prop 1 = step 11 ;;
 }
 
-/* A member of a relation is an ordered pair.  (Contributed by NM,
+/*A member of a relation is an ordered pair.  (Contributed by NM,
        17-Sep-2006.) */
 
 theorem elrel (x : set, y : set, A : class, R : class) disjointed(x y A) {
@@ -2199,7 +2199,7 @@ proof of elrel {
 	qed prop 1 = step 5 ;;
 }
 
-/* A singleton is a relation iff it is an ordered pair.  (Contributed by
+/*A singleton is a relation iff it is an ordered pair.  (Contributed by
        NM, 24-Sep-2013.) */
 
 theorem relsn (A : class)  {
@@ -2215,7 +2215,7 @@ proof of relsn {
 	qed prop 1 = step 3 ;;
 }
 
-/* A singleton of an ordered pair is a relation.  (Contributed by NM,
+/*A singleton of an ordered pair is a relation.  (Contributed by NM,
        17-May-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem relsnop (A : class, B : class)  {
@@ -2233,7 +2233,7 @@ proof of relsnop {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subset theorem for cross product.  Generalization of Theorem 101 of
+/*Subset theorem for cross product.  Generalization of Theorem 101 of
        [Suppes] p. 52.  (Contributed by NM, 26-Aug-1995.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) */
 
@@ -2253,10 +2253,10 @@ proof of xpss12 {
 	qed prop 1 = step 7 ;;
 }
 
-/* A cross product is included in the ordered pair universe.  Exercise 3 of
+/*A cross product is included in the ordered pair universe.  Exercise 3 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 2-Aug-1994.) */
 
-theorem xpss (A : class, B : class)  {
+theorem xpss (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- ( A × B ) ⊆ ( _V × _V ) ;;
 }
 
@@ -2268,7 +2268,7 @@ proof of xpss {
 	qed prop 1 = step 4 ;;
 }
 
-/* A cross product is a relation.  Theorem 3.13(i) of [Monk1] p. 37.
+/*A cross product is a relation.  Theorem 3.13(i) of [Monk1] p. 37.
      (Contributed by NM, 2-Aug-1994.) */
 
 theorem relxp (A : class, B : class)  {
@@ -2282,7 +2282,7 @@ proof of relxp {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subset relation for cross product.  (Contributed by Jeff Hankins,
+/*Subset relation for cross product.  (Contributed by Jeff Hankins,
      30-Aug-2009.) */
 
 theorem xpss1 (A : class, B : class, C : class)  {
@@ -2296,7 +2296,7 @@ proof of xpss1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subset relation for cross product.  (Contributed by Jeff Hankins,
+/*Subset relation for cross product.  (Contributed by Jeff Hankins,
      30-Aug-2009.) */
 
 theorem xpss2 (A : class, B : class, C : class)  {
@@ -2310,7 +2310,7 @@ proof of xpss2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A cross product is included in the power of the power of the union of
+/*A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.) */
 
 theorem xpsspw (A : class, B : class) disjointed(A x y z, B x y z) {
@@ -2362,7 +2362,7 @@ proof of xpsspw {
 	qed prop 1 = step 40 ;;
 }
 
-/* A cross product is included in the power of the power of the union of
+/*A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -2412,7 +2412,7 @@ proof of xpsspwOLD {
 	qed prop 1 = step 37 ;;
 }
 
-/* The double class union of a cross product is included in the union of its
+/*The double class union of a cross product is included in the union of its
      arguments.  (Contributed by NM, 16-Sep-2006.) */
 
 theorem unixpss (A : class, B : class)  {
@@ -2432,7 +2432,7 @@ proof of unixpss {
 	qed prop 1 = step 9 ;;
 }
 
-/* The cross product of two sets is a set.  Proposition 6.2 of
+/*The cross product of two sets is a set.  Proposition 6.2 of
      [TakeutiZaring] p. 23.  See also ~ xpexgALT .  (Contributed by NM,
      14-Aug-1994.) */
 
@@ -2451,7 +2451,7 @@ proof of xpexg {
 	qed prop 1 = step 7 ;;
 }
 
-/* The cross product of two sets is a set.  Proposition 6.2 of
+/*The cross product of two sets is a set.  Proposition 6.2 of
        [TakeutiZaring] p. 23.  (Contributed by NM, 14-Aug-1994.) */
 
 theorem xpex (A : class, B : class)  {
@@ -2467,7 +2467,7 @@ proof of xpex {
 	qed prop 1 = step 2 ;;
 }
 
-/* The union of two relations is a relation.  Compare Exercise 5 of
+/*The union of two relations is a relation.  Compare Exercise 5 of
      [TakeutiZaring] p. 25.  (Contributed by NM, 12-Aug-1994.) */
 
 theorem relun (A : class, B : class)  {
@@ -2484,7 +2484,7 @@ proof of relun {
 	qed prop 1 = step 6 ;;
 }
 
-/* The intersection with a relation is a relation.  (Contributed by NM,
+/*The intersection with a relation is a relation.  (Contributed by NM,
      16-Aug-1994.) */
 
 theorem relin1 (A : class, B : class)  {
@@ -2498,7 +2498,7 @@ proof of relin1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The intersection with a relation is a relation.  (Contributed by NM,
+/*The intersection with a relation is a relation.  (Contributed by NM,
      17-Jan-2006.) */
 
 theorem relin2 (A : class, B : class)  {
@@ -2512,7 +2512,7 @@ proof of relin2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A difference cutting down a relation is a relation.  (Contributed by NM,
+/*A difference cutting down a relation is a relation.  (Contributed by NM,
      31-Mar-1998.) */
 
 theorem reldif (A : class, B : class)  {
@@ -2526,7 +2526,7 @@ proof of reldif {
 	qed prop 1 = step 3 ;;
 }
 
-/* An indexed union is a relation iff each member of its indexed family is
+/*An indexed union is a relation iff each member of its indexed family is
        a relation.  (Contributed by NM, 19-Dec-2008.) */
 
 theorem reliun (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -2552,7 +2552,7 @@ proof of reliun {
 	qed prop 1 = step 14 ;;
 }
 
-/* An indexed intersection is a relation if at least one of the member of the
+/*An indexed intersection is a relation if at least one of the member of the
      indexed family is a relation.  (Contributed by NM, 8-Mar-2014.) */
 
 theorem reliin (x : set, A : class, B : class)  {
@@ -2568,7 +2568,7 @@ proof of reliin {
 	qed prop 1 = step 5 ;;
 }
 
-/* The union of a class is a relation iff any member is a relation.
+/*The union of a class is a relation iff any member is a relation.
        Exercise 6 of [TakeutiZaring] p. 25 and its converse.  (Contributed by
        NM, 13-Aug-2004.) */
 
@@ -2584,7 +2584,7 @@ proof of reluni {
 	qed prop 1 = step 4 ;;
 }
 
-/* The intersection of a class is a relation if at least one member is a
+/*The intersection of a class is a relation if at least one member is a
        relation.  (Contributed by NM, 8-Mar-2014.) */
 
 theorem relint (x : set, A : class) disjointed(x A) {
@@ -2599,7 +2599,7 @@ proof of relint {
 	qed prop 1 = step 4 ;;
 }
 
-/* The empty set is a relation.  (Contributed by NM, 26-Apr-1998.) */
+/*The empty set is a relation.  (Contributed by NM, 26-Apr-1998.) */
 
 theorem rel0 ()  {
 	prop 1 : wff = |- Rel ∅ ;;
@@ -2612,7 +2612,7 @@ proof of rel0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A class of ordered pairs is a relation.  (Contributed by Mario Carneiro,
+/*A class of ordered pairs is a relation.  (Contributed by Mario Carneiro,
        21-Dec-2013.) */
 
 theorem relopabi (ph : wff, x : set, y : set, A : class) disjointed(ph z, x z, y z) {
@@ -2639,7 +2639,7 @@ proof of relopabi {
 	qed prop 1 = step 13 ;;
 }
 
-/* A class of ordered pairs is a relation.  (Contributed by NM, 8-Mar-1995.)
+/*A class of ordered pairs is a relation.  (Contributed by NM, 8-Mar-1995.)
      (Unnecessary distinct variable restrictions were removed by Alan Sare,
      9-Jul-2013.)  (Proof shortened by Mario Carneiro, 21-Dec-2013.) */
 
@@ -2653,7 +2653,7 @@ proof of relopab {
 	qed prop 1 = step 2 ;;
 }
 
-/* The identity relation is a relation.  Part of Exercise 4.12(p) of
+/*The identity relation is a relation.  Part of Exercise 4.12(p) of
        [Mendelson] p. 235.  (Contributed by NM, 26-Apr-1998.)  (Revised by
        Mario Carneiro, 21-Dec-2013.) */
 
@@ -2668,7 +2668,7 @@ proof of reli {
 	qed prop 1 = step 2 ;;
 }
 
-/* The membership relation is a relation.  (Contributed by NM,
+/*The membership relation is a relation.  (Contributed by NM,
        26-Apr-1998.)  (Revised by Mario Carneiro, 21-Dec-2013.) */
 
 theorem rele () disjointed(x y, x y, x y, x y) {
@@ -2682,7 +2682,7 @@ proof of rele {
 	qed prop 1 = step 2 ;;
 }
 
-/* A relation expressed as an ordered pair abstraction.  (Contributed by
+/*A relation expressed as an ordered pair abstraction.  (Contributed by
        NM, 11-Dec-2006.) */
 
 theorem opabid2 (x : set, y : set, A : class) disjointed(w x y z A, x y, x y, x y, z w, z w) {
@@ -2706,7 +2706,7 @@ proof of opabid2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Intersection of two ordered pair class abstractions.  (Contributed by
+/*Intersection of two ordered pair class abstractions.  (Contributed by
        NM, 30-Sep-2002.) */
 
 theorem inopab (ph : wff, ps : wff, x : set, y : set) disjointed(w x y z, x y, x y, x y, ph z w, ps z w) {
@@ -2733,7 +2733,7 @@ proof of inopab {
 	qed prop 1 = step 15 ;;
 }
 
-/* The difference of two ordered-pair abstractions.  (Contributed by Stefan
+/*The difference of two ordered-pair abstractions.  (Contributed by Stefan
        O'Rear, 17-Jan-2015.) */
 
 theorem difopab (ph : wff, ps : wff, x : set, y : set) disjointed(w x y z, x y, x y, x y, ph z w, ps z w) {
@@ -2769,7 +2769,7 @@ proof of difopab {
 	qed prop 1 = step 24 ;;
 }
 
-/* The intersection of two cross products.  Exercise 9 of [TakeutiZaring]
+/*The intersection of two cross products.  Exercise 9 of [TakeutiZaring]
        p. 25.  (Contributed by NM, 3-Aug-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -2795,10 +2795,10 @@ proof of inxp {
 	qed prop 1 = step 13 ;;
 }
 
-/* Distributive law for cross product over intersection.  Theorem 102 of
+/*Distributive law for cross product over intersection.  Theorem 102 of
        [Suppes] p. 52.  (Contributed by NM, 26-Sep-2004.) */
 
-theorem xpindi (A : class, B : class, C : class)  {
+theorem xpindi (A : class, B : class, C : class) disjointed(A, B, C) {
 	prop 1 : wff = |- ( A × ( B ∩ C ) ) = ( ( A × B ) ∩ ( A × C ) ) ;;
 }
 
@@ -2810,10 +2810,10 @@ proof of xpindi {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distributive law for cross product over intersection.  Similar to
+/*Distributive law for cross product over intersection.  Similar to
        Theorem 102 of [Suppes] p. 52.  (Contributed by NM, 26-Sep-2004.) */
 
-theorem xpindir (A : class, B : class, C : class)  {
+theorem xpindir (A : class, B : class, C : class) disjointed(A, B, C) {
 	prop 1 : wff = |- ( ( A ∩ B ) × C ) = ( ( A × C ) ∩ ( B × C ) ) ;;
 }
 
@@ -2825,7 +2825,7 @@ proof of xpindir {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distributive law for cross product over indexed intersection.
+/*Distributive law for cross product over indexed intersection.
        (Contributed by Mario Carneiro, 21-Mar-2015.) */
 
 theorem xpiindi (x : set, A : class, B : class, C : class) disjointed(x y z A, x y z C, y z B) {
@@ -2861,10 +2861,10 @@ proof of xpiindi {
 	qed prop 1 = step 24 ;;
 }
 
-/* Distributive law for cross product over relativized indexed
+/*Distributive law for cross product over relativized indexed
        intersection.  (Contributed by Mario Carneiro, 21-Mar-2015.) */
 
-theorem xpriindi (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C) {
+theorem xpriindi (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C, B) {
 	prop 1 : wff = |- ( C × ( D ∩ ⋂_ x ∈ A B ) ) = ( ( C × D ) ∩ ⋂_ x ∈ A ( C × B ) ) ;;
 }
 
@@ -2891,11 +2891,11 @@ proof of xpriindi {
 	qed prop 1 = step 19 ;;
 }
 
-/* Membership in a union of cross products.  Analogue of ~ elxp for
+/*Membership in a union of cross products.  Analogue of ~ elxp for
        nonconstant ` B ( x ) ` .  (Contributed by Mario Carneiro,
        29-Dec-2014.) */
 
-theorem eliunxp (x : set, y : set, A : class, B : class, C : class) disjointed(y A, y B, x y C, x y) {
+theorem eliunxp (x : set, y : set, A : class, B : class, C : class) disjointed(y A, y B, x y C, x y, x, x) {
 	prop 1 : wff = |- ( C ∈ ⋃_ x ∈ A ( { x } × B ) ↔ ∃ x ∃ y ( C = 〈 x , y 〉 ∧ ( x ∈ A ∧ y ∈ B ) ) ) ;;
 }
 
@@ -2922,10 +2922,10 @@ proof of eliunxp {
 	qed prop 1 = step 19 ;;
 }
 
-/* Membership in a union of cross products.  (Contributed by Mario
+/*Membership in a union of cross products.  (Contributed by Mario
        Carneiro, 14-Feb-2015.) */
 
-theorem opeliunxp2 (x : set, A : class, B : class, C : class, D : class, E : class) disjointed(x C, x D, x E, x A) {
+theorem opeliunxp2 (x : set, A : class, B : class, C : class, D : class, E : class) disjointed(A, B, x C, x D, x E, x, x A) {
 	hyp 1 : wff = |- ( x = C → B = E ) ;;
 	-----------------------
 	prop 1 : wff = |- ( 〈 C , D 〉 ∈ ⋃_ x ∈ A ( { x } × B ) ↔ ( C ∈ A ∧ D ∈ E ) ) ;;
@@ -2958,7 +2958,7 @@ proof of opeliunxp2 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Write a double restricted quantification as one universal quantifier.
+/*Write a double restricted quantification as one universal quantifier.
        In this version of ~ ralxp , ` B ( y ) ` is not assumed to be constant.
        (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
@@ -2990,7 +2990,7 @@ proof of raliunxp {
 	qed prop 1 = step 18 ;;
 }
 
-/* Write a double restricted quantification as one universal quantifier.
+/*Write a double restricted quantification as one universal quantifier.
        In this version of ~ rexxp , ` B ( y ) ` is not assumed to be constant.
        (Contributed by Mario Carneiro, 14-Feb-2015.) */
 
@@ -3013,7 +3013,7 @@ proof of rexiunxp {
 	qed prop 1 = step 9 ;;
 }
 
-/* Universal quantification restricted to a cross product is equivalent to
+/*Universal quantification restricted to a cross product is equivalent to
        a double restricted quantification.  The hypothesis specifies an
        implicit substitution.  (Contributed by NM, 7-Feb-2004.)  (Revised by
        Mario Carneiro, 29-Dec-2014.) */
@@ -3032,7 +3032,7 @@ proof of ralxp {
 	qed prop 1 = step 4 ;;
 }
 
-/* Existential quantification restricted to a cross product is equivalent
+/*Existential quantification restricted to a cross product is equivalent
        to a double restricted quantification.  (Contributed by NM,
        11-Nov-1995.)  (Revised by Mario Carneiro, 14-Feb-2015.) */
 
@@ -3050,7 +3050,7 @@ proof of rexxp {
 	qed prop 1 = step 4 ;;
 }
 
-/* Disjoint union is a subset of a cross product.  (Contributed by Stefan
+/*Disjoint union is a subset of a cross product.  (Contributed by Stefan
        O'Rear, 21-Nov-2014.) */
 
 theorem djussxp (x : set, A : class, B : class) disjointed(x A) {
@@ -3067,7 +3067,7 @@ proof of djussxp {
 	qed prop 1 = step 6 ;;
 }
 
-/* Version of ~ ralxp with bound-variable hypotheses.  (Contributed by NM,
+/*Version of ~ ralxp with bound-variable hypotheses.  (Contributed by NM,
        18-Aug-2006.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem ralxpf (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class) disjointed(u v w x y A, u v w x y z B, u v w ph, u v w ps) {
@@ -3119,10 +3119,10 @@ proof of ralxpf {
 	qed prop 1 = step 35 ;;
 }
 
-/* Version of ~ rexxp with bound-variable hypotheses.  (Contributed by NM,
+/*Version of ~ rexxp with bound-variable hypotheses.  (Contributed by NM,
        19-Dec-2008.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
-theorem rexxpf (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class) disjointed(x y A, x y z B) {
+theorem rexxpf (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class) disjointed(x y A, x y z B, ph, ps) {
 	hyp 1 : wff = |- F/ y ph ;;
 	hyp 2 : wff = |- F/ z ph ;;
 	hyp 3 : wff = |- F/ x ps ;;
@@ -3147,7 +3147,7 @@ proof of rexxpf {
 	qed prop 1 = step 12 ;;
 }
 
-/* Indexed union on a cross product is equals a double indexed union.  The
+/*Indexed union on a cross product is equals a double indexed union.  The
        hypothesis specifies an implicit substitution.  (Contributed by NM,
        19-Dec-2008.) */
 
@@ -3177,7 +3177,7 @@ proof of iunxpf {
 	qed prop 1 = step 12 ;;
 }
 
-/* Deduce equality of a relation and an ordered-pair class builder.
+/*Deduce equality of a relation and an ordered-pair class builder.
        Compare ~ abbi2dv .  (Contributed by NM, 24-Feb-2014.) */
 
 theorem opabbi2dv (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, x y ph) {
@@ -3195,7 +3195,7 @@ proof of opabbi2dv {
 	qed prop 1 = step 4 ;;
 }
 
-/* A necessary and sufficient condition for a Kuratowski ordered pair to be
+/*A necessary and sufficient condition for a Kuratowski ordered pair to be
        a relation.  (Contributed by NM, 3-Jun-2008.) */
 
 theorem relop (x : set, y : set, A : class, B : class) disjointed(v w x y z A, v w x y z B) {
@@ -3331,7 +3331,7 @@ proof of relop {
 	qed prop 1 = step 121 ;;
 }
 
-/* For sets, the identity relation is the same as equality.  (Contributed
+/*For sets, the identity relation is the same as equality.  (Contributed
        by NM, 30-Apr-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
 
@@ -3360,7 +3360,7 @@ proof of ideqg {
 	qed prop 1 = step 16 ;;
 }
 
-/* For sets, the identity relation is the same as equality.  (Contributed
+/*For sets, the identity relation is the same as equality.  (Contributed
        by NM, 13-Aug-1995.) */
 
 theorem ideq (A : class, B : class)  {
@@ -3375,10 +3375,10 @@ proof of ideq {
 	qed prop 1 = step 2 ;;
 }
 
-/* A set is identical to itself.  (Contributed by NM, 28-May-2008.)  (Proof
+/*A set is identical to itself.  (Contributed by NM, 28-May-2008.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
-theorem ididg (A : class, V : class)  {
+theorem ididg (A : class, V : class) disjointed(A) {
 	prop 1 : wff = |- ( A ∈ V → A _I A ) ;;
 }
 
@@ -3389,7 +3389,7 @@ proof of ididg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways of expressing set existence.  (Contributed by NM, 16-Feb-2008.)
+/*Two ways of expressing set existence.  (Contributed by NM, 16-Feb-2008.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) */
 
@@ -3405,7 +3405,7 @@ proof of issetid {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass theorem for composition.  (Contributed by FL, 30-Dec-2010.) */
+/*Subclass theorem for composition.  (Contributed by FL, 30-Dec-2010.) */
 
 theorem coss1 (A : class, B : class, C : class) disjointed(A x y z, B x y z, C x y z) {
 	prop 1 : wff = |- ( A ⊆ B → ( A ∘ C ) ⊆ ( B ∘ C ) ) ;;
@@ -3424,7 +3424,7 @@ proof of coss1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Subclass theorem for composition.  (Contributed by NM, 5-Apr-2013.) */
+/*Subclass theorem for composition.  (Contributed by NM, 5-Apr-2013.) */
 
 theorem coss2 (A : class, B : class, C : class) disjointed(A x y z, B x y z, C x y z) {
 	prop 1 : wff = |- ( A ⊆ B → ( C ∘ A ) ⊆ ( C ∘ B ) ) ;;
@@ -3443,7 +3443,7 @@ proof of coss2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for composition of two classes.  (Contributed by NM,
+/*Equality theorem for composition of two classes.  (Contributed by NM,
      3-Jan-1997.) */
 
 theorem coeq1 (A : class, B : class, C : class)  {
@@ -3460,7 +3460,7 @@ proof of coeq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for composition of two classes.  (Contributed by NM,
+/*Equality theorem for composition of two classes.  (Contributed by NM,
      3-Jan-1997.) */
 
 theorem coeq2 (A : class, B : class, C : class)  {
@@ -3477,7 +3477,7 @@ proof of coeq2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality inference for composition of two classes.  (Contributed by NM,
+/*Equality inference for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) */
 
 theorem coeq1i (A : class, B : class, C : class)  {
@@ -3492,7 +3492,7 @@ proof of coeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for composition of two classes.  (Contributed by NM,
+/*Equality inference for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) */
 
 theorem coeq2i (A : class, B : class, C : class)  {
@@ -3507,7 +3507,7 @@ proof of coeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for composition of two classes.  (Contributed by NM,
+/*Equality deduction for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) */
 
 theorem coeq1d (ph : wff, A : class, B : class, C : class)  {
@@ -3522,7 +3522,7 @@ proof of coeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for composition of two classes.  (Contributed by NM,
+/*Equality deduction for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) */
 
 theorem coeq2d (ph : wff, A : class, B : class, C : class)  {
@@ -3537,7 +3537,7 @@ proof of coeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for composition of two classes.  (Contributed by FL,
+/*Equality inference for composition of two classes.  (Contributed by FL,
        7-Jun-2012.) */
 
 theorem coeq12i (A : class, B : class, C : class, D : class)  {
@@ -3554,7 +3554,7 @@ proof of coeq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for composition of two classes.  (Contributed by FL,
+/*Equality deduction for composition of two classes.  (Contributed by FL,
        7-Jun-2012.) */
 
 theorem coeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -3571,7 +3571,7 @@ proof of coeq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for function value.  (Contributed by
+/*Bound-variable hypothesis builder for function value.  (Contributed by
        NM, 1-Sep-1999.) */
 
 theorem nfco (x : set, A : class, B : class) disjointed(w x y z, y z w A, y z w B) {
@@ -3597,7 +3597,7 @@ proof of nfco {
 	qed prop 1 = step 11 ;;
 }
 
-/* Ordered pair membership in a composition.  (Contributed by NM,
+/*Ordered pair membership in a composition.  (Contributed by NM,
        24-Feb-2015.) */
 
 theorem brcog (x : set, A : class, B : class, C : class, D : class, V : class, W : class) disjointed(x y z A, x y z B, x y z C, x y z D) {
@@ -3615,7 +3615,7 @@ proof of brcog {
 	qed prop 1 = step 6 ;;
 }
 
-/* Ordered pair membership in a composition.  (Contributed by NM,
+/*Ordered pair membership in a composition.  (Contributed by NM,
        27-Jan-1997.)  (Revised by Mario Carneiro, 24-Feb-2015.) */
 
 theorem opelco2g (x : set, A : class, B : class, C : class, D : class, V : class, W : class) disjointed(x A, x B, x C, x D) {
@@ -3633,7 +3633,7 @@ proof of opelco2g {
 	qed prop 1 = step 7 ;;
 }
 
-/* Binary relation on a composition.  (Contributed by NM, 21-Sep-2004.)
+/*Binary relation on a composition.  (Contributed by NM, 21-Sep-2004.)
        (Revised by Mario Carneiro, 24-Feb-2015.) */
 
 theorem brco (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x C, x D) {
@@ -3649,7 +3649,7 @@ proof of brco {
 	qed prop 1 = step 2 ;;
 }
 
-/* Ordered pair membership in a composition.  (Contributed by NM,
+/*Ordered pair membership in a composition.  (Contributed by NM,
        27-Dec-1996.)  (Revised by Mario Carneiro, 24-Feb-2015.) */
 
 theorem opelco (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x C, x D) {
@@ -3666,7 +3666,7 @@ proof of opelco {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subset theorem for converse.  (Contributed by NM, 22-Mar-1998.) */
+/*Subset theorem for converse.  (Contributed by NM, 22-Mar-1998.) */
 
 theorem cnvss (A : class, B : class) disjointed(x y A, x y B) {
 	prop 1 : wff = |- ( A ⊆ B → ⁻¹ A ⊆ ⁻¹ B ) ;;
@@ -3685,7 +3685,7 @@ proof of cnvss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for converse.  (Contributed by NM, 13-Aug-1995.) */
+/*Equality theorem for converse.  (Contributed by NM, 13-Aug-1995.) */
 
 theorem cnveq (A : class, B : class)  {
 	prop 1 : wff = |- ( A = B → ⁻¹ A = ⁻¹ B ) ;;
@@ -3701,7 +3701,7 @@ proof of cnveq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality inference for converse.  (Contributed by NM, 23-Dec-2008.) */
+/*Equality inference for converse.  (Contributed by NM, 23-Dec-2008.) */
 
 theorem cnveqi (A : class, B : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -3715,7 +3715,7 @@ proof of cnveqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for converse.  (Contributed by NM, 6-Dec-2013.) */
+/*Equality deduction for converse.  (Contributed by NM, 6-Dec-2013.) */
 
 theorem cnveqd (ph : wff, A : class, B : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -3729,7 +3729,7 @@ proof of cnveqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
+/*Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
        by NM, 24-Mar-1998.) */
 
 theorem elcnv (x : set, y : set, A : class, R : class) disjointed(x y A, x y R) {
@@ -3744,7 +3744,7 @@ proof of elcnv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
+/*Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
        by NM, 11-Aug-2004.) */
 
 theorem elcnv2 (x : set, y : set, A : class, R : class) disjointed(x y A, x y R) {
@@ -3760,7 +3760,7 @@ proof of elcnv2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for converse.  (Contributed by NM,
+/*Bound-variable hypothesis builder for converse.  (Contributed by NM,
        31-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem nfcnv (x : set, A : class) disjointed(y z A, x y z) {
@@ -3780,7 +3780,7 @@ proof of nfcnv {
 	qed prop 1 = step 6 ;;
 }
 
-/* Ordered-pair membership in converse.  (Contributed by NM, 13-May-1999.)
+/*Ordered-pair membership in converse.  (Contributed by NM, 13-May-1999.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem opelcnvg (A : class, B : class, C : class, D : class, R : class) disjointed(x y A, x y B, x y R) {
@@ -3799,7 +3799,7 @@ proof of opelcnvg {
 	qed prop 1 = step 7 ;;
 }
 
-/* The converse of a binary relation swaps arguments.  Theorem 11 of [Suppes]
+/*The converse of a binary relation swaps arguments.  Theorem 11 of [Suppes]
      p. 61.  (Contributed by NM, 10-Oct-2005.) */
 
 theorem brcnvg (A : class, B : class, C : class, D : class, R : class)  {
@@ -3814,7 +3814,7 @@ proof of brcnvg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Ordered-pair membership in converse.  (Contributed by NM,
+/*Ordered-pair membership in converse.  (Contributed by NM,
        13-Aug-1995.) */
 
 theorem opelcnv (A : class, B : class, R : class)  {
@@ -3830,7 +3830,7 @@ proof of opelcnv {
 	qed prop 1 = step 2 ;;
 }
 
-/* The converse of a binary relation swaps arguments.  Theorem 11 of
+/*The converse of a binary relation swaps arguments.  Theorem 11 of
        [Suppes] p. 61.  (Contributed by NM, 13-Aug-1995.) */
 
 theorem brcnv (A : class, B : class, R : class)  {
@@ -3846,7 +3846,7 @@ proof of brcnv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distributive law of converse over class composition.  Theorem 26 of
+/*Distributive law of converse over class composition.  Theorem 26 of
        [Suppes] p. 64.  (Contributed by NM, 19-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) */
 
@@ -3876,7 +3876,7 @@ proof of cnvco {
 	qed prop 1 = step 17 ;;
 }
 
-/* The converse of a class union is the (indexed) union of the converses of
+/*The converse of a class union is the (indexed) union of the converses of
        its members.  (Contributed by NM, 11-Aug-2004.) */
 
 theorem cnvuni (x : set, A : class) disjointed(x y z w A) {
@@ -3904,7 +3904,7 @@ proof of cnvuni {
 	qed prop 1 = step 16 ;;
 }
 
-/* Alternate definition of domain.  Definition 6.5(1) of [TakeutiZaring]
+/*Alternate definition of domain.  Definition 6.5(1) of [TakeutiZaring]
        p. 24.  (Contributed by NM, 28-Dec-1996.) */
 
 theorem dfdm3 (x : set, y : set, A : class) disjointed(x y A) {
@@ -3920,7 +3920,7 @@ proof of dfdm3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Alternate definition of range.  Definition 4 of [Suppes] p. 60.
+/*Alternate definition of range.  Definition 4 of [Suppes] p. 60.
        (Contributed by NM, 27-Dec-1996.) */
 
 theorem dfrn2 (x : set, y : set, A : class) disjointed(x y A) {
@@ -3939,7 +3939,7 @@ proof of dfrn2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Alternate definition of range.  Definition 6.5(2) of [TakeutiZaring]
+/*Alternate definition of range.  Definition 6.5(2) of [TakeutiZaring]
        p. 24.  (Contributed by NM, 28-Dec-1996.) */
 
 theorem dfrn3 (x : set, y : set, A : class) disjointed(x y A) {
@@ -3955,7 +3955,7 @@ proof of dfrn3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) */
+/*Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) */
 
 theorem elrn2g (x : set, A : class, B : class, V : class) disjointed(A x y, B x y) {
 	prop 1 : wff = |- ( A ∈ V → ( A ∈ ran B ↔ ∃ x 〈 x , A 〉 ∈ B ) ) ;;
@@ -3971,7 +3971,7 @@ proof of elrn2g {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) */
+/*Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) */
 
 theorem elrng (x : set, A : class, B : class, V : class) disjointed(A x, B x) {
 	prop 1 : wff = |- ( A ∈ V → ( A ∈ ran B ↔ ∃ x x B A ) ) ;;
@@ -3985,7 +3985,7 @@ proof of elrng {
 	qed prop 1 = step 4 ;;
 }
 
-/* Alternate definition of domain.  (Contributed by NM, 28-Dec-1996.) */
+/*Alternate definition of domain.  (Contributed by NM, 28-Dec-1996.) */
 
 theorem dfdm4 (A : class) disjointed(x y A) {
 	prop 1 : wff = |- dom A = ran ⁻¹ A ;;
@@ -4004,7 +4004,7 @@ proof of dfdm4 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Definition of domain, using bound-variable hypotheses instead of
+/*Definition of domain, using bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 8-Mar-1995.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
 
@@ -4037,7 +4037,7 @@ proof of dfdmf {
 	qed prop 1 = step 17 ;;
 }
 
-/* Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by Mario
+/*Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by Mario
        Carneiro, 9-Jul-2014.) */
 
 theorem eldmg (y : set, A : class, B : class, V : class) disjointed(x y A, x y B) {
@@ -4053,7 +4053,7 @@ proof of eldmg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by NM,
+/*Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by NM,
        27-Jan-1997.)  (Revised by Mario Carneiro, 9-Jul-2014.) */
 
 theorem eldm2g (y : set, A : class, B : class, V : class) disjointed(y A, y B) {
@@ -4068,7 +4068,7 @@ proof of eldm2g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
+/*Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
        NM, 2-Apr-2004.) */
 
 theorem eldm (y : set, A : class, B : class) disjointed(y A, y B) {
@@ -4083,7 +4083,7 @@ proof of eldm {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
+/*Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
        NM, 1-Aug-1994.) */
 
 theorem eldm2 (y : set, A : class, B : class) disjointed(y A, y B) {
@@ -4098,7 +4098,7 @@ proof of eldm2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subset theorem for domain.  (Contributed by NM, 11-Aug-1994.) */
+/*Subset theorem for domain.  (Contributed by NM, 11-Aug-1994.) */
 
 theorem dmss (A : class, B : class) disjointed(x y A, x y B) {
 	prop 1 : wff = |- ( A ⊆ B → dom A ⊆ dom B ) ;;
@@ -4117,7 +4117,7 @@ proof of dmss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for domain.  (Contributed by NM, 11-Aug-1994.) */
+/*Equality theorem for domain.  (Contributed by NM, 11-Aug-1994.) */
 
 theorem dmeq (A : class, B : class)  {
 	prop 1 : wff = |- ( A = B → dom A = dom B ) ;;
@@ -4133,7 +4133,7 @@ proof of dmeq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality inference for domain.  (Contributed by NM, 4-Mar-2004.) */
+/*Equality inference for domain.  (Contributed by NM, 4-Mar-2004.) */
 
 theorem dmeqi (A : class, B : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -4147,7 +4147,7 @@ proof of dmeqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for domain.  (Contributed by NM, 4-Mar-2004.) */
+/*Equality deduction for domain.  (Contributed by NM, 4-Mar-2004.) */
 
 theorem dmeqd (ph : wff, A : class, B : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -4161,7 +4161,7 @@ proof of dmeqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership of first of an ordered pair in a domain.  (Contributed by NM,
+/*Membership of first of an ordered pair in a domain.  (Contributed by NM,
        30-Jul-1995.) */
 
 theorem opeldm (A : class, B : class, C : class) disjointed(y A, y B, y C) {
@@ -4181,10 +4181,10 @@ proof of opeldm {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership of first of a binary relation in a domain.  (Contributed by
+/*Membership of first of a binary relation in a domain.  (Contributed by
        NM, 30-Jul-1995.) */
 
-theorem breldm (A : class, B : class, R : class)  {
+theorem breldm (A : class, B : class, R : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -4198,7 +4198,7 @@ proof of breldm {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership of first of a binary relation in a domain.  (Contributed by
+/*Membership of first of a binary relation in a domain.  (Contributed by
        NM, 21-Mar-2007.) */
 
 theorem breldmg (A : class, B : class, C : class, D : class, R : class) disjointed(x A, x B, x R) {
@@ -4217,11 +4217,11 @@ proof of breldmg {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain of a union is the union of domains.  Exercise 56(a) of
+/*The domain of a union is the union of domains.  Exercise 56(a) of
        [Enderton] p. 65.  (Contributed by NM, 12-Aug-1994.)  (Proof shortened
        by Andrew Salmon, 27-Aug-2011.) */
 
-theorem dmun (A : class, B : class) disjointed(x y A, x y B) {
+theorem dmun (A : class, B : class) disjointed(x y A, x y B, x) {
 	prop 1 : wff = |- dom ( A ∪ B ) = ( dom A ∪ dom B ) ;;
 }
 
@@ -4242,10 +4242,10 @@ proof of dmun {
 	qed prop 1 = step 12 ;;
 }
 
-/* The domain of an intersection belong to the intersection of domains.
+/*The domain of an intersection belong to the intersection of domains.
        Theorem 6 of [Suppes] p. 60.  (Contributed by NM, 15-Sep-2004.) */
 
-theorem dmin (A : class, B : class) disjointed(x y A, x y B) {
+theorem dmin (A : class, B : class) disjointed(x y A, x y B, x) {
 	prop 1 : wff = |- dom ( A ∩ B ) ⊆ ( dom A ∩ dom B ) ;;
 }
 
@@ -4269,7 +4269,7 @@ proof of dmin {
 	qed prop 1 = step 15 ;;
 }
 
-/* The domain of an indexed union.  (Contributed by Mario Carneiro,
+/*The domain of an indexed union.  (Contributed by Mario Carneiro,
        26-Apr-2016.) */
 
 theorem dmiun (x : set, A : class, B : class) disjointed(x y z, y z A, y z B) {
@@ -4293,7 +4293,7 @@ proof of dmiun {
 	qed prop 1 = step 12 ;;
 }
 
-/* The domain of a union.  Part of Exercise 8 of [Enderton] p. 41.
+/*The domain of a union.  Part of Exercise 8 of [Enderton] p. 41.
        (Contributed by NM, 3-Feb-2004.) */
 
 theorem dmuni (x : set, A : class) disjointed(x y z, y z A, y z, x A) {
@@ -4323,10 +4323,10 @@ proof of dmuni {
 	qed prop 1 = step 18 ;;
 }
 
-/* The domain of a class of ordered pairs.  (Contributed by NM,
+/*The domain of a class of ordered pairs.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 4-Dec-2016.) */
 
-theorem dmopab (ph : wff, x : set, y : set) disjointed(x y) {
+theorem dmopab (ph : wff, x : set, y : set) disjointed(x y, ph) {
 	prop 1 : wff = |- dom { 〈 x , y 〉 | ph } = { x | ∃ y ph } ;;
 }
 
@@ -4343,7 +4343,7 @@ proof of dmopab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Upper bound for the domain of a restricted class of ordered pairs.
+/*Upper bound for the domain of a restricted class of ordered pairs.
        (Contributed by NM, 31-Jan-2004.) */
 
 theorem dmopabss (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -4360,7 +4360,7 @@ proof of dmopabss {
 	qed prop 1 = step 6 ;;
 }
 
-/* The domain of a restricted class of ordered pairs.  (Contributed by NM,
+/*The domain of a restricted class of ordered pairs.  (Contributed by NM,
        31-Jan-2004.) */
 
 theorem dmopab3 (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -4383,7 +4383,7 @@ proof of dmopab3 {
 	qed prop 1 = step 12 ;;
 }
 
-/* The domain of the empty set is empty.  Part of Theorem 3.8(v) of [Monk1]
+/*The domain of the empty set is empty.  Part of Theorem 3.8(v) of [Monk1]
        p. 36.  (Contributed by NM, 4-Jul-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -4403,7 +4403,7 @@ proof of dm0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain of the identity relation is the universe.  (Contributed by
+/*The domain of the identity relation is the universe.  (Contributed by
        NM, 30-Apr-1998.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem dmi () disjointed(x y) {
@@ -4427,7 +4427,7 @@ proof of dmi {
 	qed prop 1 = step 12 ;;
 }
 
-/* The domain of the universe is the universe.  (Contributed by NM,
+/*The domain of the universe is the universe.  (Contributed by NM,
        8-Aug-2003.) */
 
 theorem dmv ()  {
@@ -4445,7 +4445,7 @@ proof of dmv {
 	qed prop 1 = step 7 ;;
 }
 
-/* An empty domain implies an empty range.  (Contributed by NM,
+/*An empty domain implies an empty range.  (Contributed by NM,
        21-May-1998.) */
 
 theorem dm0rn0 (A : class) disjointed(x y A) {
@@ -4477,7 +4477,7 @@ proof of dm0rn0 {
 	qed prop 1 = step 20 ;;
 }
 
-/* A relation is empty iff its domain is empty.  (Contributed by NM,
+/*A relation is empty iff its domain is empty.  (Contributed by NM,
        15-Sep-2004.) */
 
 theorem reldm0 (A : class) disjointed(x y A) {
@@ -4504,7 +4504,7 @@ proof of reldm0 {
 	qed prop 1 = step 15 ;;
 }
 
-/* The domain of a cross product.  Part of Theorem 3.13(x) of [Monk1]
+/*The domain of a cross product.  Part of Theorem 3.13(x) of [Monk1]
        p. 37.  (Contributed by NM, 28-Jul-1995.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -4525,7 +4525,7 @@ proof of dmxp {
 	qed prop 1 = step 8 ;;
 }
 
-/* The domain of a square cross product.  (Contributed by NM,
+/*The domain of a square cross product.  (Contributed by NM,
      28-Jul-1995.) */
 
 theorem dmxpid (A : class)  {
@@ -4545,7 +4545,7 @@ proof of dmxpid {
 	qed prop 1 = step 9 ;;
 }
 
-/* The domain of the intersection of two square cross products.  Unlike
+/*The domain of the intersection of two square cross products.  Unlike
      ~ dmin , equality holds.  (Contributed by NM, 29-Jan-2008.) */
 
 theorem dmxpin (A : class, B : class)  {
@@ -4560,7 +4560,7 @@ proof of dmxpin {
 	qed prop 1 = step 4 ;;
 }
 
-/* The cross product of a class with itself is one-to-one.  (Contributed by
+/*The cross product of a class with itself is one-to-one.  (Contributed by
      NM, 5-Nov-2006.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem xpid11 (A : class, B : class)  {
@@ -4578,7 +4578,7 @@ proof of xpid11 {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain of the double converse of a class (which doesn't have to be a
+/*The domain of the double converse of a class (which doesn't have to be a
      relation as in ~ dfrel2 ).  (Contributed by NM, 8-Apr-2007.) */
 
 theorem dmcnvcnv (A : class)  {
@@ -4592,7 +4592,7 @@ proof of dmcnvcnv {
 	qed prop 1 = step 3 ;;
 }
 
-/* The range of the double converse of a class.  (Contributed by NM,
+/*The range of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.) */
 
 theorem rncnvcnv (A : class)  {
@@ -4606,7 +4606,7 @@ proof of rncnvcnv {
 	qed prop 1 = step 3 ;;
 }
 
-/* The first member of an ordered pair in a relation belongs to the domain
+/*The first member of an ordered pair in a relation belongs to the domain
        of the relation.  (Contributed by NM, 28-Jul-2004.) */
 
 theorem elreldm (A : class, B : class) disjointed(x y A, x y B) {
@@ -4639,7 +4639,7 @@ proof of elreldm {
 	qed prop 1 = step 21 ;;
 }
 
-/* Equality theorem for range.  (Contributed by NM, 29-Dec-1996.) */
+/*Equality theorem for range.  (Contributed by NM, 29-Dec-1996.) */
 
 theorem rneq (A : class, B : class)  {
 	prop 1 : wff = |- ( A = B → ran A = ran B ) ;;
@@ -4654,7 +4654,7 @@ proof of rneq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality inference for range.  (Contributed by NM, 4-Mar-2004.) */
+/*Equality inference for range.  (Contributed by NM, 4-Mar-2004.) */
 
 theorem rneqi (A : class, B : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -4668,7 +4668,7 @@ proof of rneqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for range.  (Contributed by NM, 4-Mar-2004.) */
+/*Equality deduction for range.  (Contributed by NM, 4-Mar-2004.) */
 
 theorem rneqd (ph : wff, A : class, B : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -4682,7 +4682,7 @@ proof of rneqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subset theorem for range.  (Contributed by NM, 22-Mar-1998.) */
+/*Subset theorem for range.  (Contributed by NM, 22-Mar-1998.) */
 
 theorem rnss (A : class, B : class)  {
 	prop 1 : wff = |- ( A ⊆ B → ran A ⊆ ran B ) ;;
@@ -4698,7 +4698,7 @@ proof of rnss {
 	qed prop 1 = step 6 ;;
 }
 
-/* The second argument of a binary relation belongs to its range.
+/*The second argument of a binary relation belongs to its range.
      (Contributed by NM, 29-Jun-2008.) */
 
 theorem brelrng (A : class, B : class, C : class, F : class, G : class)  {
@@ -4717,7 +4717,7 @@ proof of brelrng {
 	qed prop 1 = step 8 ;;
 }
 
-/* The second argument of a binary relation belongs to its range.
+/*The second argument of a binary relation belongs to its range.
        (Contributed by NM, 13-Aug-2004.) */
 
 theorem brelrn (A : class, B : class, C : class)  {
@@ -4733,7 +4733,7 @@ proof of brelrn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership of second member of an ordered pair in a range.  (Contributed
+/*Membership of second member of an ordered pair in a range.  (Contributed
        by NM, 23-Feb-1997.) */
 
 theorem opelrn (A : class, B : class, C : class)  {
@@ -4750,7 +4750,7 @@ proof of opelrn {
 	qed prop 1 = step 3 ;;
 }
 
-/* The first argument of a binary relation belongs to its domain.
+/*The first argument of a binary relation belongs to its domain.
      (Contributed by NM, 2-Jul-2008.) */
 
 theorem releldm (A : class, B : class, R : class)  {
@@ -4766,7 +4766,7 @@ proof of releldm {
 	qed prop 1 = step 5 ;;
 }
 
-/* The second argument of a binary relation belongs to its range.
+/*The second argument of a binary relation belongs to its range.
      (Contributed by NM, 2-Jul-2008.) */
 
 theorem relelrn (A : class, B : class, R : class)  {
@@ -4782,7 +4782,7 @@ proof of relelrn {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a domain.  (Contributed by Mario Carneiro, 5-Nov-2015.) */
+/*Membership in a domain.  (Contributed by Mario Carneiro, 5-Nov-2015.) */
 
 theorem releldmb (x : set, A : class, R : class) disjointed(x A, x R) {
 	prop 1 : wff = |- ( Rel R → ( A ∈ dom R ↔ ∃ x A R x ) ) ;;
@@ -4798,7 +4798,7 @@ proof of releldmb {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in a range.  (Contributed by Mario Carneiro, 5-Nov-2015.) */
+/*Membership in a range.  (Contributed by Mario Carneiro, 5-Nov-2015.) */
 
 theorem relelrnb (x : set, A : class, R : class) disjointed(x A, x R) {
 	prop 1 : wff = |- ( Rel R → ( A ∈ ran R ↔ ∃ x x R A ) ) ;;
@@ -4814,7 +4814,7 @@ proof of relelrnb {
 	qed prop 1 = step 6 ;;
 }
 
-/* The first argument of a binary relation belongs to its domain.
+/*The first argument of a binary relation belongs to its domain.
        (Contributed by NM, 28-Apr-2015.) */
 
 theorem releldmi (A : class, B : class, R : class)  {
@@ -4829,7 +4829,7 @@ proof of releldmi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The second argument of a binary relation belongs to its range.
+/*The second argument of a binary relation belongs to its range.
        (Contributed by NM, 28-Apr-2015.) */
 
 theorem relelrni (A : class, B : class, R : class)  {
@@ -4844,7 +4844,7 @@ proof of relelrni {
 	qed prop 1 = step 2 ;;
 }
 
-/* Definition of range, using bound-variable hypotheses instead of distinct
+/*Definition of range, using bound-variable hypotheses instead of distinct
        variable conditions.  (Contributed by NM, 14-Aug-1995.)  (Revised by
        Mario Carneiro, 15-Oct-2016.) */
 
@@ -4877,7 +4877,7 @@ proof of dfrnf {
 	qed prop 1 = step 17 ;;
 }
 
-/* Membership in a range.  (Contributed by NM, 10-Jul-1994.) */
+/*Membership in a range.  (Contributed by NM, 10-Jul-1994.) */
 
 theorem elrn2 (x : set, A : class, B : class) disjointed(x y A, x y B) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -4895,7 +4895,7 @@ proof of elrn2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a range.  (Contributed by NM, 2-Apr-2004.) */
+/*Membership in a range.  (Contributed by NM, 2-Apr-2004.) */
 
 theorem elrn (x : set, A : class, B : class) disjointed(x A, x B) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -4911,7 +4911,7 @@ proof of elrn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for domain.  (Contributed by NM,
+/*Bound-variable hypothesis builder for domain.  (Contributed by NM,
        30-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem nfdm (x : set, A : class) disjointed(x y z, y z A) {
@@ -4932,10 +4932,10 @@ proof of nfdm {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bound-variable hypothesis builder for range.  (Contributed by NM,
+/*Bound-variable hypothesis builder for range.  (Contributed by NM,
        1-Sep-1999.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
-theorem nfrn (x : set, A : class)  {
+theorem nfrn (x : set, A : class) disjointed(x, A) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- F/_ x ran A ;;
@@ -4949,9 +4949,9 @@ proof of nfrn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Domain of an intersection.  (Contributed by FL, 15-Oct-2012.) */
+/*Domain of an intersection.  (Contributed by FL, 15-Oct-2012.) */
 
-theorem dmiin (x : set, A : class, B : class)  {
+theorem dmiin (x : set, A : class, B : class) disjointed(A, B, x) {
 	prop 1 : wff = |- dom ⋂_ x ∈ A B ⊆ ⋂_ x ∈ A dom B ;;
 }
 
@@ -4966,7 +4966,7 @@ proof of dmiin {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distribute proper substitution through the range of a class.
+/*Distribute proper substitution through the range of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) */
 
 theorem csbrng (x : set, A : class, B : class, V : class) disjointed(A w y, B w y, V w y, x w y) {
@@ -4989,10 +4989,10 @@ proof of csbrng {
 	qed prop 1 = step 11 ;;
 }
 
-/* The range of a class of ordered pairs.  (Contributed by NM,
+/*The range of a class of ordered pairs.  (Contributed by NM,
        14-Aug-1995.)  (Revised by Mario Carneiro, 4-Dec-2016.) */
 
-theorem rnopab (ph : wff, x : set, y : set) disjointed(x y) {
+theorem rnopab (ph : wff, x : set, y : set) disjointed(x y, ph) {
 	prop 1 : wff = |- ran { 〈 x , y 〉 | ph } = { y | ∃ x ph } ;;
 }
 
@@ -5009,7 +5009,7 @@ proof of rnopab {
 	qed prop 1 = step 9 ;;
 }
 
-/* The range of a function in maps-to notation.  (Contributed by Scott
+/*The range of a function in maps-to notation.  (Contributed by Scott
        Fenton, 21-Mar-2011.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem rnmpt (x : set, y : set, A : class, B : class, F : class) disjointed(y A, y B, x y) {
@@ -5029,7 +5029,7 @@ proof of rnmpt {
 	qed prop 1 = step 7 ;;
 }
 
-/* The range of a function in maps-to notation.  (Contributed by Mario
+/*The range of a function in maps-to notation.  (Contributed by Mario
        Carneiro, 20-Feb-2015.) */
 
 theorem elrnmpt (x : set, A : class, B : class, C : class, F : class, V : class) disjointed(y A, y B, x y C) {
@@ -5047,10 +5047,10 @@ proof of elrnmpt {
 	qed prop 1 = step 4 ;;
 }
 
-/* Elementhood in an image set.  (Contributed by Mario Carneiro,
+/*Elementhood in an image set.  (Contributed by Mario Carneiro,
          12-Sep-2015.) */
 
-theorem elrnmpt1s (x : set, A : class, B : class, C : class, D : class, F : class, V : class) disjointed(x C, x A, x D) {
+theorem elrnmpt1s (x : set, A : class, B : class, C : class, D : class, F : class, V : class) disjointed(A, B, x C, x A, x D) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	hyp 2 : wff = |- ( x = D → B = C ) ;;
 	-----------------------
@@ -5068,7 +5068,7 @@ proof of elrnmpt1s {
 	qed prop 1 = step 7 ;;
 }
 
-/* Elementhood in an image set.  (Contributed by Mario Carneiro,
+/*Elementhood in an image set.  (Contributed by Mario Carneiro,
        31-Aug-2015.) */
 
 theorem elrnmpt1 (x : set, A : class, B : class, F : class, V : class) disjointed(y z A, y z B, x y z) {
@@ -5114,7 +5114,7 @@ proof of elrnmpt1 {
 	qed prop 1 = step 32 ;;
 }
 
-/* Membership in the range of a function.  (Contributed by NM,
+/*Membership in the range of a function.  (Contributed by NM,
        27-Aug-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem elrnmptg (x : set, A : class, B : class, C : class, F : class, V : class) disjointed(y A, y B, x y C) {
@@ -5143,10 +5143,10 @@ proof of elrnmptg {
 	qed prop 1 = step 15 ;;
 }
 
-/* Membership in the range of a function.  (Contributed by NM,
+/*Membership in the range of a function.  (Contributed by NM,
        30-Aug-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
-theorem elrnmpti (x : set, A : class, B : class, C : class, F : class) disjointed(x C) {
+theorem elrnmpti (x : set, A : class, B : class, C : class, F : class) disjointed(A, B, x C) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -5160,10 +5160,10 @@ proof of elrnmpti {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of indexed union when ` B ` is a set.  (Contributed
+/*Alternate definition of indexed union when ` B ` is a set.  (Contributed
        by Mario Carneiro, 31-Aug-2015.) */
 
-theorem dfiun3g (x : set, A : class, B : class, C : class) disjointed(y A, y B, x y) {
+theorem dfiun3g (x : set, A : class, B : class, C : class) disjointed(y A, y B, C, x y) {
 	prop 1 : wff = |- ( ∀ x ∈ A B ∈ C → ⋃_ x ∈ A B = ⋃ ran ( x ∈ A ↦ B ) ) ;;
 }
 
@@ -5177,10 +5177,10 @@ proof of dfiun3g {
 	qed prop 1 = step 5 ;;
 }
 
-/* Alternate definition of indexed intersection when ` B ` is a set.
+/*Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Mario Carneiro, 31-Aug-2015.) */
 
-theorem dfiin3g (x : set, A : class, B : class, C : class) disjointed(y A, y B, x y) {
+theorem dfiin3g (x : set, A : class, B : class, C : class) disjointed(y A, y B, C, x y) {
 	prop 1 : wff = |- ( ∀ x ∈ A B ∈ C → ⋂_ x ∈ A B = ⋂ ran ( x ∈ A ↦ B ) ) ;;
 }
 
@@ -5194,7 +5194,7 @@ proof of dfiin3g {
 	qed prop 1 = step 5 ;;
 }
 
-/* Alternate definition of indexed union when ` B ` is a set.  (Contributed
+/*Alternate definition of indexed union when ` B ` is a set.  (Contributed
        by Mario Carneiro, 31-Aug-2015.) */
 
 theorem dfiun3 (x : set, A : class, B : class)  {
@@ -5210,7 +5210,7 @@ proof of dfiun3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of indexed intersection when ` B ` is a set.
+/*Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Mario Carneiro, 31-Aug-2015.) */
 
 theorem dfiin3 (x : set, A : class, B : class)  {
@@ -5226,10 +5226,10 @@ proof of dfiin3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Express a relative indexed intersection as an intersection.
+/*Express a relative indexed intersection as an intersection.
        (Contributed by Stefan O'Rear, 22-Feb-2015.) */
 
-theorem riinint (S : class, k : set, I : class, V : class, X : class) disjointed(V k, X k) {
+theorem riinint (S : class, k : set, I : class, V : class, X : class) disjointed(I, S, V k, X k, k) {
 	prop 1 : wff = |- ( ( X ∈ V ∧ ∀ k ∈ I S ⊆ X ) → ( X ∩ ⋂_ k ∈ I S ) = ⋂ ( { X } ∪ ran ( k ∈ I ↦ S ) ) ) ;;
 }
 
@@ -5250,7 +5250,7 @@ proof of riinint {
 	qed prop 1 = step 13 ;;
 }
 
-/* The range of the empty set is empty.  Part of Theorem 3.8(v) of [Monk1]
+/*The range of the empty set is empty.  Part of Theorem 3.8(v) of [Monk1]
      p. 36.  (Contributed by NM, 4-Jul-1994.) */
 
 theorem rn0 ()  {
@@ -5264,10 +5264,10 @@ proof of rn0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A relation is empty iff its range is empty.  (Contributed by NM,
+/*A relation is empty iff its range is empty.  (Contributed by NM,
        15-Sep-2004.) */
 
-theorem relrn0 (A : class)  {
+theorem relrn0 (A : class) disjointed(A) {
 	prop 1 : wff = |- ( Rel A → ( A = ∅ ↔ ran A = ∅ ) ) ;;
 }
 
@@ -5278,7 +5278,7 @@ proof of relrn0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The domain and range of a class are included in its double union.
+/*The domain and range of a class are included in its double union.
        (Contributed by NM, 13-May-2008.) */
 
 theorem dmrnssfld (A : class) disjointed(x y A) {
@@ -5327,7 +5327,7 @@ proof of dmrnssfld {
 	qed prop 1 = step 37 ;;
 }
 
-/* The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring] p. 26.
+/*The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring] p. 26.
      (Contributed by NM, 7-Apr-1995.) */
 
 theorem dmexg (A : class, V : class)  {
@@ -5346,7 +5346,7 @@ proof of dmexg {
 	qed prop 1 = step 8 ;;
 }
 
-/* The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring] p. 26.
+/*The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring] p. 26.
      Similar to Lemma 3D of [Enderton] p. 41.  (Contributed by NM,
      31-Mar-1995.) */
 
@@ -5366,7 +5366,7 @@ proof of rnexg {
 	qed prop 1 = step 8 ;;
 }
 
-/* The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring]
+/*The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring]
        p. 26.  (Contributed by NM, 7-Jul-2008.) */
 
 theorem dmex (A : class)  {
@@ -5381,7 +5381,7 @@ proof of dmex {
 	qed prop 1 = step 2 ;;
 }
 
-/* The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring]
+/*The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring]
        p. 26.  Similar to Lemma 3D of [Enderton] p. 41.  (Contributed by NM,
        7-Jul-2008.) */
 
@@ -5397,7 +5397,7 @@ proof of rnex {
 	qed prop 1 = step 2 ;;
 }
 
-/* The identity function is a proper class.  This means, for example, that we
+/*The identity function is a proper class.  This means, for example, that we
      cannot use it as a member of the class of continuous functions unless it
      is restricted to a set, as in ~ idcn .  (Contributed by NM,
      1-Jan-2007.) */
@@ -5416,7 +5416,7 @@ proof of iprc {
 	qed prop 1 = step 6 ;;
 }
 
-/* Domain of a composition.  Theorem 21 of [Suppes] p. 63.  (Contributed by
+/*Domain of a composition.  Theorem 21 of [Suppes] p. 63.  (Contributed by
        NM, 19-Mar-1998.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem dmcoss (A : class, B : class) disjointed(x y z A, x y z B) {
@@ -5443,7 +5443,7 @@ proof of dmcoss {
 	qed prop 1 = step 15 ;;
 }
 
-/* Range of a composition.  (Contributed by NM, 19-Mar-1998.) */
+/*Range of a composition.  (Contributed by NM, 19-Mar-1998.) */
 
 theorem rncoss (A : class, B : class)  {
 	prop 1 : wff = |- ran ( A ∘ B ) ⊆ ran A ;;
@@ -5460,7 +5460,7 @@ proof of rncoss {
 	qed prop 1 = step 7 ;;
 }
 
-/* Domain of a composition.  (Contributed by NM, 28-May-1998.)  (Proof
+/*Domain of a composition.  (Contributed by NM, 28-May-1998.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem dmcosseq (A : class, B : class) disjointed(x y z A, x y z B) {
@@ -5502,9 +5502,9 @@ proof of dmcosseq {
 	qed prop 1 = step 30 ;;
 }
 
-/* Domain of a composition.  (Contributed by NM, 19-Mar-1998.) */
+/*Domain of a composition.  (Contributed by NM, 19-Mar-1998.) */
 
-theorem dmcoeq (A : class, B : class)  {
+theorem dmcoeq (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- ( dom A = ran B → dom ( A ∘ B ) = dom B ) ;;
 }
 
@@ -5515,7 +5515,7 @@ proof of dmcoeq {
 	qed prop 1 = step 3 ;;
 }
 
-/* Range of a composition.  (Contributed by NM, 19-Mar-1998.) */
+/*Range of a composition.  (Contributed by NM, 19-Mar-1998.) */
 
 theorem rncoeq (A : class, B : class)  {
 	prop 1 : wff = |- ( dom A = ran B → ran ( A ∘ B ) = ran A ) ;;
@@ -5538,7 +5538,7 @@ proof of rncoeq {
 	qed prop 1 = step 13 ;;
 }
 
-/* Equality theorem for restrictions.  (Contributed by NM, 7-Aug-1994.) */
+/*Equality theorem for restrictions.  (Contributed by NM, 7-Aug-1994.) */
 
 theorem reseq1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( A ↾ C ) = ( B ↾ C ) ) ;;
@@ -5552,7 +5552,7 @@ proof of reseq1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for restrictions.  (Contributed by NM, 8-Aug-1994.) */
+/*Equality theorem for restrictions.  (Contributed by NM, 8-Aug-1994.) */
 
 theorem reseq2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( C ↾ A ) = ( C ↾ B ) ) ;;
@@ -5567,7 +5567,7 @@ proof of reseq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality inference for restrictions.  (Contributed by NM,
+/*Equality inference for restrictions.  (Contributed by NM,
        21-Oct-2014.) */
 
 theorem reseq1i (A : class, B : class, C : class)  {
@@ -5582,7 +5582,7 @@ proof of reseq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for restrictions.  (Contributed by Paul Chapman,
+/*Equality inference for restrictions.  (Contributed by Paul Chapman,
        22-Jun-2011.) */
 
 theorem reseq2i (A : class, B : class, C : class)  {
@@ -5597,7 +5597,7 @@ proof of reseq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for restrictions.  (Contributed by NM,
+/*Equality inference for restrictions.  (Contributed by NM,
        21-Oct-2014.) */
 
 theorem reseq12i (A : class, B : class, C : class, D : class)  {
@@ -5614,7 +5614,7 @@ proof of reseq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for restrictions.  (Contributed by NM,
+/*Equality deduction for restrictions.  (Contributed by NM,
        21-Oct-2014.) */
 
 theorem reseq1d (ph : wff, A : class, B : class, C : class)  {
@@ -5629,7 +5629,7 @@ proof of reseq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for restrictions.  (Contributed by Paul Chapman,
+/*Equality deduction for restrictions.  (Contributed by Paul Chapman,
        22-Jun-2011.) */
 
 theorem reseq2d (ph : wff, A : class, B : class, C : class)  {
@@ -5644,7 +5644,7 @@ proof of reseq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for restrictions.  (Contributed by NM,
+/*Equality deduction for restrictions.  (Contributed by NM,
        21-Oct-2014.) */
 
 theorem reseq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -5661,10 +5661,10 @@ proof of reseq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for restriction.  (Contributed by NM,
+/*Bound-variable hypothesis builder for restriction.  (Contributed by NM,
        15-Sep-2003.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
-theorem nfres (x : set, A : class, B : class)  {
+theorem nfres (x : set, A : class, B : class) disjointed(B, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -5680,7 +5680,7 @@ proof of nfres {
 	qed prop 1 = step 5 ;;
 }
 
-/* Distribute proper substitution through the restriction of a class.
+/*Distribute proper substitution through the restriction of a class.
      ~ csbresg is derived from the virtual deduction proof ~ csbresgVD .
      (Contributed by Alan Sare, 10-Nov-2012.) */
 
@@ -5703,7 +5703,7 @@ proof of csbresg {
 	qed prop 1 = step 11 ;;
 }
 
-/* A restriction to the empty set is empty.  (Contributed by NM,
+/*A restriction to the empty set is empty.  (Contributed by NM,
      12-Nov-1994.) */
 
 theorem res0 (A : class)  {
@@ -5719,7 +5719,7 @@ proof of res0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Ordered pair membership in a restriction.  Exercise 13 of
+/*Ordered pair membership in a restriction.  Exercise 13 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 13-Nov-1995.) */
 
 theorem opelres (A : class, B : class, C : class, D : class)  {
@@ -5739,7 +5739,7 @@ proof of opelres {
 	qed prop 1 = step 7 ;;
 }
 
-/* Binary relation on a restriction.  (Contributed by NM, 12-Dec-2006.) */
+/*Binary relation on a restriction.  (Contributed by NM, 12-Dec-2006.) */
 
 theorem brres (A : class, B : class, C : class, D : class)  {
 	hyp 1 : wff = |- B ∈ _V ;;
@@ -5756,7 +5756,7 @@ proof of brres {
 	qed prop 1 = step 5 ;;
 }
 
-/* Ordered pair membership in a restriction.  Exercise 13 of
+/*Ordered pair membership in a restriction.  Exercise 13 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 14-Oct-2005.) */
 
 theorem opelresg (A : class, B : class, C : class, D : class, V : class) disjointed(y A, y B, y C, y D) {
@@ -5776,10 +5776,10 @@ proof of opelresg {
 	qed prop 1 = step 8 ;;
 }
 
-/* Binary relation on a restriction.  (Contributed by Mario Carneiro,
+/*Binary relation on a restriction.  (Contributed by Mario Carneiro,
        4-Nov-2015.) */
 
-theorem brresg (A : class, B : class, C : class, D : class, V : class)  {
+theorem brresg (A : class, B : class, C : class, D : class, V : class) disjointed(A, B, C, D) {
 	prop 1 : wff = |- ( B ∈ V → ( A ( C ↾ D ) B ↔ ( A C B ∧ A ∈ D ) ) ) ;;
 }
 
@@ -5792,7 +5792,7 @@ proof of brresg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Ordered pair membership in a restriction when the first member belongs
+/*Ordered pair membership in a restriction when the first member belongs
        to the restricting class.  (Contributed by NM, 30-Apr-2004.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -5808,7 +5808,7 @@ proof of opres {
 	qed prop 1 = step 2 ;;
 }
 
-/* A restricted identity relation is equivalent to equality in its domain.
+/*A restricted identity relation is equivalent to equality in its domain.
        (Contributed by NM, 30-Apr-2004.) */
 
 theorem resieq (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -5834,7 +5834,7 @@ proof of resieq {
 	qed prop 1 = step 14 ;;
 }
 
-/* ` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
+/*` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
      belongs to the restricting class.  (Contributed by FL, 27-Oct-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -5852,7 +5852,7 @@ proof of opelresiOLD {
 	qed prop 1 = step 6 ;;
 }
 
-/* ` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
+/*` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
      belongs to the restricting class.  (Contributed by FL, 27-Oct-2008.)
      (Revised by NM, 30-Mar-2016.) */
 
@@ -5870,7 +5870,7 @@ proof of opelresi {
 	qed prop 1 = step 6 ;;
 }
 
-/* The restriction of a restriction.  (Contributed by NM, 27-Mar-2008.) */
+/*The restriction of a restriction.  (Contributed by NM, 27-Mar-2008.) */
 
 theorem resres (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A ↾ B ) ↾ C ) = ( A ↾ ( B ∩ C ) ) ;;
@@ -5889,7 +5889,7 @@ proof of resres {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for restriction over union.  Theorem 31 of [Suppes]
+/*Distributive law for restriction over union.  Theorem 31 of [Suppes]
      p. 65.  (Contributed by NM, 30-Sep-2002.) */
 
 theorem resundi (A : class, B : class, C : class)  {
@@ -5909,7 +5909,7 @@ proof of resundi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for restriction over union.  (Contributed by NM,
+/*Distributive law for restriction over union.  (Contributed by NM,
      23-Sep-2004.) */
 
 theorem resundir (A : class, B : class, C : class)  {
@@ -5926,7 +5926,7 @@ proof of resundir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Class restriction distributes over intersection.  (Contributed by FL,
+/*Class restriction distributes over intersection.  (Contributed by FL,
      6-Oct-2008.) */
 
 theorem resindi (A : class, B : class, C : class)  {
@@ -5946,7 +5946,7 @@ proof of resindi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Class restriction distributes over intersection.  (Contributed by NM,
+/*Class restriction distributes over intersection.  (Contributed by NM,
      18-Dec-2008.) */
 
 theorem resindir (A : class, B : class, C : class)  {
@@ -5963,7 +5963,7 @@ proof of resindir {
 	qed prop 1 = step 6 ;;
 }
 
-/* Move intersection into class restriction.  (Contributed by NM,
+/*Move intersection into class restriction.  (Contributed by NM,
      18-Dec-2008.) */
 
 theorem inres (A : class, B : class, C : class)  {
@@ -5979,7 +5979,7 @@ proof of inres {
 	qed prop 1 = step 5 ;;
 }
 
-/* Distribution of restriction over indexed union.  (Contributed by Mario
+/*Distribution of restriction over indexed union.  (Contributed by Mario
        Carneiro, 29-May-2015.) */
 
 theorem resiun1 (x : set, A : class, B : class, C : class) disjointed(x C) {
@@ -6000,7 +6000,7 @@ proof of resiun1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Distribution of restriction over indexed union.  (Contributed by Mario
+/*Distribution of restriction over indexed union.  (Contributed by Mario
        Carneiro, 29-May-2015.) */
 
 theorem resiun2 (x : set, A : class, B : class, C : class) disjointed(x C) {
@@ -6021,7 +6021,7 @@ proof of resiun2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* The domain of a restriction.  Exercise 14 of [TakeutiZaring] p. 25.
+/*The domain of a restriction.  Exercise 14 of [TakeutiZaring] p. 25.
        (Contributed by NM, 1-Aug-1994.) */
 
 theorem dmres (A : class, B : class) disjointed(x y A, x y B) {
@@ -6047,7 +6047,7 @@ proof of dmres {
 	qed prop 1 = step 14 ;;
 }
 
-/* A domain restricted to a subclass equals the subclass.  (Contributed by
+/*A domain restricted to a subclass equals the subclass.  (Contributed by
      NM, 2-Mar-1997.) */
 
 theorem ssdmres (A : class, B : class)  {
@@ -6062,7 +6062,7 @@ proof of ssdmres {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of a restriction to a set exists.  (Contributed by NM,
+/*The domain of a restriction to a set exists.  (Contributed by NM,
      7-Apr-1995.) */
 
 theorem dmresexg (A : class, B : class, V : class)  {
@@ -6076,7 +6076,7 @@ proof of dmresexg {
 	qed prop 1 = step 3 ;;
 }
 
-/* A class includes its restriction.  Exercise 15 of [TakeutiZaring] p. 25.
+/*A class includes its restriction.  Exercise 15 of [TakeutiZaring] p. 25.
      (Contributed by NM, 2-Aug-1994.) */
 
 theorem resss (A : class, B : class)  {
@@ -6090,7 +6090,7 @@ proof of resss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative law for restriction.  (Contributed by NM, 27-Mar-1998.) */
+/*Commutative law for restriction.  (Contributed by NM, 27-Mar-1998.) */
 
 theorem rescom (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A ↾ B ) ↾ C ) = ( ( A ↾ C ) ↾ B ) ;;
@@ -6105,7 +6105,7 @@ proof of rescom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subclass theorem for restriction.  (Contributed by NM, 16-Aug-1994.) */
+/*Subclass theorem for restriction.  (Contributed by NM, 16-Aug-1994.) */
 
 theorem ssres (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ⊆ B → ( A ↾ C ) ⊆ ( B ↾ C ) ) ;;
@@ -6119,7 +6119,7 @@ proof of ssres {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass theorem for restriction.  (Contributed by NM, 22-Mar-1998.)
+/*Subclass theorem for restriction.  (Contributed by NM, 22-Mar-1998.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem ssres2 (A : class, B : class, C : class)  {
@@ -6136,7 +6136,7 @@ proof of ssres2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A restriction is a relation.  Exercise 12 of [TakeutiZaring] p. 25.
+/*A restriction is a relation.  Exercise 12 of [TakeutiZaring] p. 25.
      (Contributed by NM, 2-Aug-1994.)  (Proof shortened by Andrew Salmon,
      27-Aug-2011.) */
 
@@ -6154,7 +6154,7 @@ proof of relres {
 	qed prop 1 = step 6 ;;
 }
 
-/* Absorption law for restriction.  Exercise 17 of [TakeutiZaring] p. 25.
+/*Absorption law for restriction.  Exercise 17 of [TakeutiZaring] p. 25.
      (Contributed by NM, 9-Aug-1994.) */
 
 theorem resabs1 (A : class, B : class, C : class)  {
@@ -6170,7 +6170,7 @@ proof of resabs1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Absorption law for restriction.  (Contributed by NM, 27-Mar-1998.) */
+/*Absorption law for restriction.  (Contributed by NM, 27-Mar-1998.) */
 
 theorem resabs2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( B ⊆ C → ( ( A ↾ B ) ↾ C ) = ( A ↾ B ) ) ;;
@@ -6183,7 +6183,7 @@ proof of resabs2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Idempotent law for restriction.  (Contributed by NM, 27-Mar-1998.) */
+/*Idempotent law for restriction.  (Contributed by NM, 27-Mar-1998.) */
 
 theorem residm (A : class, B : class)  {
 	prop 1 : wff = |- ( ( A ↾ B ) ↾ B ) = ( A ↾ B ) ;;
@@ -6196,7 +6196,7 @@ proof of residm {
 	qed prop 1 = step 3 ;;
 }
 
-/* A restriction to an image.  (Contributed by NM, 29-Sep-2004.) */
+/*A restriction to an image.  (Contributed by NM, 29-Sep-2004.) */
 
 theorem resima (A : class, B : class)  {
 	prop 1 : wff = |- ( ( A ↾ B ) " B ) = ( A " B ) ;;
@@ -6211,7 +6211,7 @@ proof of resima {
 	qed prop 1 = step 5 ;;
 }
 
-/* Image under a restricted class.  (Contributed by FL, 31-Aug-2009.) */
+/*Image under a restricted class.  (Contributed by FL, 31-Aug-2009.) */
 
 theorem resima2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( B ⊆ C → ( ( A ↾ C ) " B ) = ( A " B ) ) ;;
@@ -6237,7 +6237,7 @@ proof of resima2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Restriction of a constant function (or other cross product).  (Contributed
+/*Restriction of a constant function (or other cross product).  (Contributed
      by Stefan O'Rear, 24-Jan-2015.) */
 
 theorem xpssres (A : class, B : class, C : class)  {
@@ -6258,7 +6258,7 @@ proof of xpssres {
 	qed prop 1 = step 10 ;;
 }
 
-/* Membership in a restriction.  (Contributed by Scott Fenton,
+/*Membership in a restriction.  (Contributed by Scott Fenton,
        17-Mar-2011.) */
 
 theorem elres (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -6300,7 +6300,7 @@ proof of elres {
 	qed prop 1 = step 31 ;;
 }
 
-/* Memebership in restriction to a singleton.  (Contributed by Scott
+/*Memebership in restriction to a singleton.  (Contributed by Scott
          Fenton, 17-Mar-2011.) */
 
 theorem elsnres (y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -6324,7 +6324,7 @@ proof of elsnres {
 	qed prop 1 = step 10 ;;
 }
 
-/* Simplification law for restriction.  (Contributed by NM,
+/*Simplification law for restriction.  (Contributed by NM,
        16-Aug-1994.) */
 
 theorem relssres (A : class, B : class) disjointed(x y A, x y B, x y) {
@@ -6352,7 +6352,7 @@ proof of relssres {
 	qed prop 1 = step 16 ;;
 }
 
-/* A relation restricted to its domain equals itself.  (Contributed by NM,
+/*A relation restricted to its domain equals itself.  (Contributed by NM,
      12-Dec-2006.) */
 
 theorem resdm (A : class)  {
@@ -6366,7 +6366,7 @@ proof of resdm {
 	qed prop 1 = step 3 ;;
 }
 
-/* The restriction of a set is a set.  (Contributed by NM, 28-Mar-1998.)
+/*The restriction of a set is a set.  (Contributed by NM, 28-Mar-1998.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem resexg (A : class, B : class, V : class)  {
@@ -6380,7 +6380,7 @@ proof of resexg {
 	qed prop 1 = step 3 ;;
 }
 
-/* The restriction of a set is a set.  (Contributed by Jeff Madsen,
+/*The restriction of a set is a set.  (Contributed by Jeff Madsen,
        19-Jun-2011.) */
 
 theorem resex (A : class, B : class)  {
@@ -6395,7 +6395,7 @@ proof of resex {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restriction of a class abstraction of ordered pairs.  (Contributed by
+/*Restriction of a class abstraction of ordered pairs.  (Contributed by
        NM, 5-Nov-2002.) */
 
 theorem resopab (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -6418,7 +6418,7 @@ proof of resopab {
 	qed prop 1 = step 12 ;;
 }
 
-/* The existence of a restricted identity function, proved without using
+/*The existence of a restricted identity function, proved without using
        the Axiom of Replacement (unlike ~ resfunexg ).  (Contributed by NM,
        13-Jan-2007.) */
 
@@ -6451,7 +6451,7 @@ proof of resiexg {
 	qed prop 1 = step 20 ;;
 }
 
-/* A subclass of the identity function is the identity function restricted
+/*A subclass of the identity function is the identity function restricted
        to its domain.  (Contributed by NM, 13-Dec-2003.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) */
 
@@ -6510,10 +6510,10 @@ proof of iss {
 	qed prop 1 = step 46 ;;
 }
 
-/* Restriction of a class abstraction of ordered pairs.  (Contributed by
+/*Restriction of a class abstraction of ordered pairs.  (Contributed by
        NM, 24-Aug-2007.) */
 
-theorem resopab2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem resopab2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, y) {
 	prop 1 : wff = |- ( A ⊆ B → ( { 〈 x , y 〉 | ( x ∈ B ∧ ph ) } ↾ A ) = { 〈 x , y 〉 | ( x ∈ A ∧ ph ) } ) ;;
 }
 
@@ -6529,7 +6529,7 @@ proof of resopab2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Restriction of the mapping operation.  (Contributed by Mario Carneiro,
+/*Restriction of the mapping operation.  (Contributed by Mario Carneiro,
        15-Jul-2013.) */
 
 theorem resmpt (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
@@ -6546,11 +6546,11 @@ proof of resmpt {
 	qed prop 1 = step 5 ;;
 }
 
-/* Unconditional restriction of the mapping operation.  (Contributed by
+/*Unconditional restriction of the mapping operation.  (Contributed by
        Stefan O'Rear, 24-Jan-2015.)  (Proof shortened by Mario Carneiro,
        22-Mar-2015.) */
 
-theorem resmpt3 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+theorem resmpt3 (x : set, A : class, B : class, C : class) disjointed(x A, x B, C) {
 	prop 1 : wff = |- ( ( x ∈ A ↦ C ) ↾ B ) = ( x ∈ ( A ∩ B ) ↦ C ) ;;
 }
 
@@ -6567,7 +6567,7 @@ proof of resmpt3 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Alternate definition of the restriction operation.  (Contributed by
+/*Alternate definition of the restriction operation.  (Contributed by
        Mario Carneiro, 5-Nov-2013.) */
 
 theorem dfres2 (x : set, y : set, A : class, R : class) disjointed(w x y z A, w x y z R) {
@@ -6596,7 +6596,7 @@ proof of dfres2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* The restricted identity expressed with the class builder.  (Contributed
+/*The restricted identity expressed with the class builder.  (Contributed
        by FL, 25-Apr-2012.) */
 
 theorem opabresid (x : set, y : set, A : class) disjointed(A x y) {
@@ -6614,7 +6614,7 @@ proof of opabresid {
 	qed prop 1 = step 7 ;;
 }
 
-/* The restricted identity expressed with the "maps to" notation.
+/*The restricted identity expressed with the "maps to" notation.
        (Contributed by FL, 25-Apr-2012.) */
 
 theorem mptresid (x : set, A : class) disjointed(A x y) {
@@ -6629,7 +6629,7 @@ proof of mptresid {
 	qed prop 1 = step 3 ;;
 }
 
-/* The domain of a restricted identity function.  (Contributed by NM,
+/*The domain of a restricted identity function.  (Contributed by NM,
      27-Aug-2004.) */
 
 theorem dmresi (A : class)  {
@@ -6645,9 +6645,9 @@ proof of dmresi {
 	qed prop 1 = step 5 ;;
 }
 
-/* TODO - delete this and replace w/ dfres3 (in FL's mathbox) */
+/*TODO - delete this and replace w/ dfres3 (in FL's mathbox) */
 
-/* Any relation restricted to the universe is itself.  (Contributed by NM,
+/*Any relation restricted to the universe is itself.  (Contributed by NM,
      16-Mar-2004.) */
 
 theorem resid (A : class)  {
@@ -6661,7 +6661,7 @@ proof of resid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) */
+/*Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) */
 
 theorem imaeq1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( A " C ) = ( B " C ) ) ;;
@@ -6676,7 +6676,7 @@ proof of imaeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) */
+/*Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) */
 
 theorem imaeq2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( C " A ) = ( C " B ) ) ;;
@@ -6691,7 +6691,7 @@ proof of imaeq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) */
+/*Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) */
 
 theorem imaeq1i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -6705,7 +6705,7 @@ proof of imaeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) */
+/*Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) */
 
 theorem imaeq2i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -6719,7 +6719,7 @@ proof of imaeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) */
+/*Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) */
 
 theorem imaeq1d (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -6733,7 +6733,7 @@ proof of imaeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) */
+/*Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) */
 
 theorem imaeq2d (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -6747,7 +6747,7 @@ proof of imaeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for image.  (Contributed by Mario Carneiro,
+/*Equality theorem for image.  (Contributed by Mario Carneiro,
        4-Dec-2016.) */
 
 theorem imaeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -6764,7 +6764,7 @@ proof of imaeq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of image.  Compare definition (d) of [Enderton]
+/*Alternate definition of image.  Compare definition (d) of [Enderton]
        p. 44.  (Contributed by NM, 19-Apr-2004.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -6787,7 +6787,7 @@ proof of dfima2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Alternate definition of image.  Compare definition (d) of [Enderton]
+/*Alternate definition of image.  Compare definition (d) of [Enderton]
        p. 44.  (Contributed by NM, 14-Aug-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -6806,7 +6806,7 @@ proof of dfima3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
+/*Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 20-Jan-2007.) */
 
 theorem elimag (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, x y B, x y C) {
@@ -6822,7 +6822,7 @@ proof of elimag {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
+/*Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 19-Apr-2004.) */
 
 theorem elima (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -6837,7 +6837,7 @@ proof of elima {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
+/*Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 11-Aug-2004.) */
 
 theorem elima2 (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -6853,7 +6853,7 @@ proof of elima2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
+/*Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 14-Aug-1994.) */
 
 theorem elima3 (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -6871,10 +6871,10 @@ proof of elima3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for image.  (Contributed by NM,
+/*Bound-variable hypothesis builder for image.  (Contributed by NM,
        30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
-theorem nfima (x : set, A : class, B : class)  {
+theorem nfima (x : set, A : class, B : class) disjointed(A, B, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -6889,11 +6889,11 @@ proof of nfima {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction version of bound-variable hypothesis builder ~ nfima .
+/*Deduction version of bound-variable hypothesis builder ~ nfima .
        (Contributed by FL, 15-Dec-2006.)  (Revised by Mario Carneiro,
        15-Oct-2016.) */
 
-theorem nfimad (ph : wff, x : set, A : class, B : class) disjointed(x z, B z, A z) {
+theorem nfimad (ph : wff, x : set, A : class, B : class) disjointed(x z, B z, A z, ph) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
 	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
 	-----------------------
@@ -6919,7 +6919,7 @@ proof of nfimad {
 	qed prop 1 = step 14 ;;
 }
 
-/* Move class substitution in and out of the image of a function.
+/*Move class substitution in and out of the image of a function.
        (Contributed by FL, 15-Dec-2006.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) */
 
@@ -6946,7 +6946,7 @@ proof of csbima12g {
 	qed prop 1 = step 14 ;;
 }
 
-/* Move class substitution in and out of the image of a function.  (This is
+/*Move class substitution in and out of the image of a function.  (This is
      ~ csbima12g with a shortened proof, shortened by Alan Sare, 10-Nov-2012.)
      The proof is derived from the virtual deduction proof ~ csbima12gALTVD .
      Although the proof is shorter, the total number of steps of all theorems
@@ -6969,7 +6969,7 @@ proof of csbima12gALT {
 	qed prop 1 = step 8 ;;
 }
 
-/* The image of the domain of a class is the range of the class.
+/*The image of the domain of a class is the range of the class.
        (Contributed by NM, 14-Aug-1994.) */
 
 theorem imadmrn (A : class) disjointed(x y A, x y) {
@@ -6992,7 +6992,7 @@ proof of imadmrn {
 	qed prop 1 = step 11 ;;
 }
 
-/* The image of a class is a subset of its range.  Theorem 3.16(xi) of
+/*The image of a class is a subset of its range.  Theorem 3.16(xi) of
        [Monk1] p. 39.  (Contributed by NM, 31-Mar-1995.) */
 
 theorem imassrn (A : class, B : class) disjointed(x y A, x y B) {
@@ -7010,7 +7010,7 @@ proof of imassrn {
 	qed prop 1 = step 6 ;;
 }
 
-/* The image of a set is a set.  Theorem 3.17 of [Monk1] p. 39.  (Contributed
+/*The image of a set is a set.  Theorem 3.17 of [Monk1] p. 39.  (Contributed
      by NM, 24-Jul-1995.) */
 
 theorem imaexg (A : class, B : class, V : class)  {
@@ -7025,7 +7025,7 @@ proof of imaexg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Image under the identity relation.  Theorem 3.16(viii) of [Monk1]
+/*Image under the identity relation.  Theorem 3.16(viii) of [Monk1]
        p. 38.  (Contributed by NM, 30-Apr-1998.) */
 
 theorem imai (A : class) disjointed(x y A) {
@@ -7053,7 +7053,7 @@ proof of imai {
 	qed prop 1 = step 16 ;;
 }
 
-/* The range of the restricted identity function.  (Contributed by NM,
+/*The range of the restricted identity function.  (Contributed by NM,
      27-Aug-2004.) */
 
 theorem rnresi (A : class)  {
@@ -7067,7 +7067,7 @@ proof of rnresi {
 	qed prop 1 = step 3 ;;
 }
 
-/* The image of a restriction of the identity function.  (Contributed by FL,
+/*The image of a restriction of the identity function.  (Contributed by FL,
      31-Dec-2006.) */
 
 theorem resiima (A : class, B : class)  {
@@ -7085,7 +7085,7 @@ proof of resiima {
 	qed prop 1 = step 7 ;;
 }
 
-/* Image of the empty set.  Theorem 3.16(ii) of [Monk1] p. 38.  (Contributed
+/*Image of the empty set.  Theorem 3.16(ii) of [Monk1] p. 38.  (Contributed
      by NM, 20-May-1998.) */
 
 theorem ima0 (A : class)  {
@@ -7101,7 +7101,7 @@ proof of ima0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Image under the empty relation.  (Contributed by FL, 11-Jan-2007.) */
+/*Image under the empty relation.  (Contributed by FL, 11-Jan-2007.) */
 
 theorem 0ima (A : class)  {
 	prop 1 : wff = |- ( ∅ " A ) = ∅ ;;
@@ -7116,7 +7116,7 @@ proof of 0ima {
 	qed prop 1 = step 5 ;;
 }
 
-/* A class whose image under another is empty is disjoint with the other's
+/*A class whose image under another is empty is disjoint with the other's
      domain.  (Contributed by FL, 24-Jan-2007.) */
 
 theorem imadisj (A : class, B : class)  {
@@ -7135,7 +7135,7 @@ proof of imadisj {
 	qed prop 1 = step 8 ;;
 }
 
-/* A preimage under any class is included in the domain of the class.
+/*A preimage under any class is included in the domain of the class.
      (Contributed by FL, 29-Jan-2007.) */
 
 theorem cnvimass (A : class, B : class)  {
@@ -7149,7 +7149,7 @@ proof of cnvimass {
 	qed prop 1 = step 3 ;;
 }
 
-/* The preimage of the range of a class is the domain of the class.
+/*The preimage of the range of a class is the domain of the class.
      (Contributed by Jeff Hankins, 15-Jul-2009.) */
 
 theorem cnvimarndm (A : class)  {
@@ -7165,7 +7165,7 @@ proof of cnvimarndm {
 	qed prop 1 = step 5 ;;
 }
 
-/* The image of a singleton.  (Contributed by NM, 8-May-2005.) */
+/*The image of a singleton.  (Contributed by NM, 8-May-2005.) */
 
 theorem imasng (y : set, A : class, B : class, R : class) disjointed(x y A, x B, x y R) {
 	prop 1 : wff = |- ( A ∈ B → ( R " { A } ) = { y | A R y } ) ;;
@@ -7183,7 +7183,7 @@ proof of imasng {
 	qed prop 1 = step 7 ;;
 }
 
-/* The image of a singleton.  (Contributed by NM, 20-May-1998.) */
+/*The image of a singleton.  (Contributed by NM, 20-May-1998.) */
 
 theorem relimasn (y : set, A : class, R : class) disjointed(y A, y R) {
 	prop 1 : wff = |- ( Rel R → ( R " { A } ) = { y | A R y } ) ;;
@@ -7210,7 +7210,7 @@ proof of relimasn {
 	qed prop 1 = step 17 ;;
 }
 
-/* Elementhood in the image of a singleton.  (Contributed by Mario
+/*Elementhood in the image of a singleton.  (Contributed by Mario
        Carneiro, 3-Nov-2015.) */
 
 theorem elrelimasn (A : class, B : class, R : class) disjointed(x A, x B, x R) {
@@ -7230,7 +7230,7 @@ proof of elrelimasn {
 	qed prop 1 = step 8 ;;
 }
 
-/* Membership in an image of a singleton.  (Contributed by NM,
+/*Membership in an image of a singleton.  (Contributed by NM,
        15-Mar-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem elimasn (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -7251,7 +7251,7 @@ proof of elimasn {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in an image of a singleton.  (Contributed by Raph Levien,
+/*Membership in an image of a singleton.  (Contributed by Raph Levien,
        21-Oct-2006.) */
 
 theorem elimasng (A : class, B : class, C : class, V : class, W : class) disjointed(A y z, B y z, C y z) {
@@ -7277,7 +7277,7 @@ proof of elimasng {
 	qed prop 1 = step 14 ;;
 }
 
-/* Membership in an image of a singleton.  (Contributed by NM,
+/*Membership in an image of a singleton.  (Contributed by NM,
      5-Aug-2010.) */
 
 theorem elimasni (A : class, B : class, C : class)  {
@@ -7304,7 +7304,7 @@ proof of elimasni {
 	qed prop 1 = step 16 ;;
 }
 
-/* Two ways to express the class of unique-valued arguments of ` F ` ,
+/*Two ways to express the class of unique-valued arguments of ` F ` ,
        which is the same as the domain of ` F ` whenever ` F ` is a function.
        The left-hand side of the equality is from Definition 10.2 of [Quine]
        p. 65.  Quine uses the notation "arg ` F ` " for this class (for which
@@ -7328,12 +7328,12 @@ proof of args {
 	qed prop 1 = step 8 ;;
 }
 
-/* Membership in an initial segment.  The idiom ` ( ``' A " { B } ) ` ,
+/*Membership in an initial segment.  The idiom ` ( ``' A " { B } ) ` ,
        meaning ` { x | x A B } ` , is used to specify an initial segment in
        (for example) Definition 6.21 of [TakeutiZaring] p. 30.  (Contributed by
        NM, 28-Apr-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
-theorem eliniseg (A : class, B : class, C : class, V : class)  {
+theorem eliniseg (A : class, B : class, C : class, V : class) disjointed(A, B, C) {
 	hyp 1 : wff = |- C ∈ _V ;;
 	-----------------------
 	prop 1 : wff = |- ( B ∈ V → ( C ∈ ( ⁻¹ A " { B } ) ↔ C A B ) ) ;;
@@ -7349,7 +7349,7 @@ proof of eliniseg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Any set is equal to its preimage under the converse epsilon relation.
+/*Any set is equal to its preimage under the converse epsilon relation.
        (Contributed by Mario Carneiro, 9-Mar-2013.) */
 
 theorem epini (A : class) disjointed(A x) {
@@ -7369,7 +7369,7 @@ proof of epini {
 	qed prop 1 = step 6 ;;
 }
 
-/* An idiom that signifies an initial segment of an ordering, used, for
+/*An idiom that signifies an initial segment of an ordering, used, for
        example, in Definition 6.21 of [TakeutiZaring] p. 30.  (Contributed by
        NM, 28-Apr-2004.) */
 
@@ -7386,7 +7386,7 @@ proof of iniseg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Alternate definition of well-founded relation.  Definition 6.21 of
+/*Alternate definition of well-founded relation.  Definition 6.21 of
        [TakeutiZaring] p. 30.  (Contributed by NM, 23-Apr-2004.)  (Revised by
        Mario Carneiro, 23-Jun-2015.) */
 
@@ -7411,10 +7411,10 @@ proof of dffr3 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Alternate definition of set-like relation.  (Contributed by Mario
+/*Alternate definition of set-like relation.  (Contributed by Mario
        Carneiro, 23-Jun-2015.) */
 
-theorem dfse2 (x : set, A : class, R : class) disjointed(x y A, x y R) {
+theorem dfse2 (x : set, A : class, R : class) disjointed(x y A, x y R, x) {
 	prop 1 : wff = |- ( R Se A ↔ ∀ x ∈ A ( A ∩ ( ⁻¹ R " { x } ) ) ∈ _V ) ;;
 }
 
@@ -7433,7 +7433,7 @@ proof of dfse2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Any set relation is set-like.  (Contributed by Mario Carneiro,
+/*Any set relation is set-like.  (Contributed by Mario Carneiro,
        22-Jun-2015.) */
 
 theorem exse2 (A : class, R : class, V : class) disjointed(x y A, x y R, x V) {
@@ -7458,7 +7458,7 @@ proof of exse2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Subset theorem for image.  (Contributed by NM, 16-Mar-2004.) */
+/*Subset theorem for image.  (Contributed by NM, 16-Mar-2004.) */
 
 theorem imass1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ⊆ B → ( A " C ) ⊆ ( B " C ) ) ;;
@@ -7474,7 +7474,7 @@ proof of imass1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Subset theorem for image.  Exercise 22(a) of [Enderton] p. 53.
+/*Subset theorem for image.  Exercise 22(a) of [Enderton] p. 53.
      (Contributed by NM, 22-Mar-1998.) */
 
 theorem imass2 (A : class, B : class, C : class)  {
@@ -7491,7 +7491,7 @@ proof of imass2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* The image of a singleton outside the domain is empty.  (Contributed by NM,
+/*The image of a singleton outside the domain is empty.  (Contributed by NM,
      22-May-1998.) */
 
 theorem ndmima (A : class, B : class)  {
@@ -7512,7 +7512,7 @@ proof of ndmima {
 	qed prop 1 = step 10 ;;
 }
 
-/* A converse is a relation.  Theorem 12 of [Suppes] p. 62.  (Contributed
+/*A converse is a relation.  Theorem 12 of [Suppes] p. 62.  (Contributed
        by NM, 29-Oct-1996.) */
 
 theorem relcnv (A : class) disjointed(x y A) {
@@ -7526,7 +7526,7 @@ proof of relcnv {
 	qed prop 1 = step 2 ;;
 }
 
-/* When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
+/*When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
        omitted.  (Contributed by Mario Carneiro, 28-Apr-2015.) */
 
 theorem relbrcnvg (A : class, B : class, R : class)  {
@@ -7547,7 +7547,7 @@ proof of relbrcnvg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Eliminate the class existence constraint in ~ eliniseg .  (Contributed
+/*Eliminate the class existence constraint in ~ eliniseg .  (Contributed
        by Mario Carneiro, 5-Dec-2014.)  (Revised by Mario Carneiro,
        17-Nov-2015.) */
 
@@ -7564,7 +7564,7 @@ proof of eliniseg2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
+/*When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
        omitted.  (Contributed by Mario Carneiro, 28-Apr-2015.) */
 
 theorem relbrcnv (A : class, B : class, R : class)  {
@@ -7579,7 +7579,7 @@ proof of relbrcnv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two ways of saying a relation is transitive.  Definition of transitivity
+/*Two ways of saying a relation is transitive.  Definition of transitivity
        in [Schechter] p. 51.  (Contributed by NM, 27-Dec-1996.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -7608,10 +7608,10 @@ proof of cotr {
 	qed prop 1 = step 17 ;;
 }
 
-/* Two ways to state a relation is reflexive.  Adapted from Tarski.
+/*Two ways to state a relation is reflexive.  Adapted from Tarski.
        (Contributed by FL, 15-Jan-2012.)  (Revised by NM, 30-Mar-2016.) */
 
-theorem issref (x : set, A : class, R : class) disjointed(x y z A, x y z, x y z R, x y z) {
+theorem issref (x : set, A : class, R : class) disjointed(x y z A, x y z, x y z R, x y z, z, z) {
 	prop 1 : wff = |- ( ( _I ↾ A ) ⊆ R ↔ ∀ x ∈ A x R x ) ;;
 }
 
@@ -7681,7 +7681,7 @@ proof of issref {
 	qed prop 1 = step 61 ;;
 }
 
-/* Two ways of saying a relation is symmetric.  Similar to definition of
+/*Two ways of saying a relation is symmetric.  Similar to definition of
        symmetry in [Schechter] p. 51.  (Contributed by NM, 28-Dec-1996.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -7706,7 +7706,7 @@ proof of cnvsym {
 	qed prop 1 = step 13 ;;
 }
 
-/* Two ways of saying a relation is antisymmetric.  Definition of
+/*Two ways of saying a relation is antisymmetric.  Definition of
        antisymmetry in [Schechter] p. 51.  (Contributed by NM, 9-Sep-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -7738,7 +7738,7 @@ proof of intasym {
 	qed prop 1 = step 20 ;;
 }
 
-/* Two ways of saying a relation is antisymmetric and reflexive.
+/*Two ways of saying a relation is antisymmetric and reflexive.
        ` U. U. R ` is the field of a relation by ~ relfld .  (Contributed by
        NM, 6-May-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -7791,7 +7791,7 @@ proof of asymref {
 	qed prop 1 = step 41 ;;
 }
 
-/* Two ways of saying a relation is antisymmetric and reflexive.
+/*Two ways of saying a relation is antisymmetric and reflexive.
        (Contributed by NM, 6-May-2008.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) */
 
@@ -7840,7 +7840,7 @@ proof of asymref2 {
 	qed prop 1 = step 37 ;;
 }
 
-/* Two ways of saying a relation is irreflexive.  Definition of
+/*Two ways of saying a relation is irreflexive.  Definition of
        irreflexivity in [Schechter] p. 51.  (Contributed by NM, 9-Sep-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -7879,10 +7879,10 @@ proof of intirr {
 	qed prop 1 = step 26 ;;
 }
 
-/* Two ways of saying that two elements have an upper bound.  (Contributed
+/*Two ways of saying that two elements have an upper bound.  (Contributed
        by Mario Carneiro, 3-Nov-2015.) */
 
-theorem brcodir (z : set, A : class, B : class, R : class, V : class, W : class) disjointed(z A, z B, z R, z V, z W) {
+theorem brcodir (z : set, A : class, B : class, R : class, V : class, W : class) disjointed(z A, z B, z R, z, z V, z W) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( A ( ⁻¹ R ∘ R ) B ↔ ∃ z ( A R z ∧ B R z ) ) ) ;;
 }
 
@@ -7898,10 +7898,10 @@ proof of brcodir {
 	qed prop 1 = step 8 ;;
 }
 
-/* Two ways of saying a relation is directed.  (Contributed by Mario
+/*Two ways of saying a relation is directed.  (Contributed by Mario
        Carneiro, 22-Nov-2013.) */
 
-theorem codir (x : set, y : set, z : set, A : class, B : class, R : class) disjointed(x y z A, x y z B, x y z R, x y z) {
+theorem codir (x : set, y : set, z : set, A : class, B : class, R : class) disjointed(x y z A, x y z B, x y z R, x y z, z, z) {
 	prop 1 : wff = |- ( ( A × B ) ⊆ ( ⁻¹ R ∘ R ) ↔ ∀ x ∈ A ∀ y ∈ B ∃ z ( x R z ∧ y R z ) ) ;;
 }
 
@@ -7923,7 +7923,7 @@ proof of codir {
 	qed prop 1 = step 14 ;;
 }
 
-/* A quantifier-free way of expressing the total order predicate.
+/*A quantifier-free way of expressing the total order predicate.
        (Contributed by Mario Carneiro, 22-Nov-2013.) */
 
 theorem qfto (x : set, y : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y R, x y) {
@@ -7949,10 +7949,10 @@ proof of qfto {
 	qed prop 1 = step 15 ;;
 }
 
-/* A square cross product ` ( A X. A ) ` is a transitive relation.
+/*A square cross product ` ( A X. A ) ` is a transitive relation.
        (Contributed by FL, 31-Jul-2009.) */
 
-theorem xpidtr (A : class) disjointed(x y z A, x y z, x y z, x y z) {
+theorem xpidtr (A : class) disjointed(x y z A, x y z, x y z, x y z, z, z) {
 	prop 1 : wff = |- ( ( A × A ) ∘ ( A × A ) ) ⊆ ( A × A ) ;;
 }
 
@@ -7975,10 +7975,10 @@ proof of xpidtr {
 	qed prop 1 = step 14 ;;
 }
 
-/* The intersection of two transitive classes is transitive.  (Contributed
+/*The intersection of two transitive classes is transitive.  (Contributed
        by FL, 31-Jul-2009.) */
 
-theorem trin2 (R : class, S : class) disjointed(x y z, x y z, x y z R, x y z S) {
+theorem trin2 (R : class, S : class) disjointed(x y z, x y z, x y z R, x y z S, z, z) {
 	prop 1 : wff = |- ( ( ( R ∘ R ) ⊆ R ∧ ( S ∘ S ) ⊆ S ) → ( ( R ∩ S ) ∘ ( R ∩ S ) ) ⊆ ( R ∩ S ) ) ;;
 }
 
@@ -8010,7 +8010,7 @@ proof of trin2 {
 	qed prop 1 = step 23 ;;
 }
 
-/* A partial order relation is irreflexive.  (Contributed by Mario
+/*A partial order relation is irreflexive.  (Contributed by Mario
        Carneiro, 2-Nov-2015.) */
 
 theorem poirr2 (A : class, R : class) disjointed(x y A, x y, x y R, x y) {
@@ -8048,7 +8048,7 @@ proof of poirr2 {
 	qed prop 1 = step 26 ;;
 }
 
-/* The relation induced by a transitive relation on a part of its field is
+/*The relation induced by a transitive relation on a part of its field is
      transitive.  (Taking the intersection of a relation with a square cross
      product is a way to restrict it to a subset of its field.)  (Contributed
      by FL, 31-Jul-2009.) */
@@ -8064,7 +8064,7 @@ proof of trinxp {
 	qed prop 1 = step 3 ;;
 }
 
-/* A strict order relation is irreflexive.  (Contributed by NM,
+/*A strict order relation is irreflexive.  (Contributed by NM,
        10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) */
 
 theorem soirri (A : class, R : class, S : class)  {
@@ -8084,10 +8084,10 @@ proof of soirri {
 	qed prop 1 = step 6 ;;
 }
 
-/* A strict order relation is a transitive relation.  (Contributed by NM,
+/*A strict order relation is a transitive relation.  (Contributed by NM,
          10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) */
 
-theorem sotri (A : class, B : class, C : class, R : class, S : class)  {
+theorem sotri (A : class, B : class, C : class, R : class, S : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- R Or S ;;
 	hyp 2 : wff = |- R ⊆ ( S × S ) ;;
 	-----------------------
@@ -8106,10 +8106,10 @@ proof of sotri {
 	qed prop 1 = step 8 ;;
 }
 
-/* A strict order relation has no 2-cycle loops.  (Contributed by NM,
+/*A strict order relation has no 2-cycle loops.  (Contributed by NM,
          10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) */
 
-theorem son2lpi (A : class, B : class, R : class, S : class)  {
+theorem son2lpi (A : class, B : class, R : class, S : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- R Or S ;;
 	hyp 2 : wff = |- R ⊆ ( S × S ) ;;
 	-----------------------
@@ -8123,10 +8123,10 @@ proof of son2lpi {
 	qed prop 1 = step 3 ;;
 }
 
-/* A transitivity relation.  (Read ` A <_ B ` and ` B < C ` implies
+/*A transitivity relation.  (Read ` A <_ B ` and ` B < C ` implies
          ` A < C ` .)  (Contributed by Mario Carneiro, 10-May-2013.) */
 
-theorem sotri2 (A : class, B : class, C : class, R : class, S : class)  {
+theorem sotri2 (A : class, B : class, C : class, R : class, S : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- R Or S ;;
 	hyp 2 : wff = |- R ⊆ ( S × S ) ;;
 	-----------------------
@@ -8152,10 +8152,10 @@ proof of sotri2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* A transitivity relation.  (Read ` A < B ` and ` B <_ C ` implies
+/*A transitivity relation.  (Read ` A < B ` and ` B <_ C ` implies
          ` A < C ` .)  (Contributed by Mario Carneiro, 10-May-2013.) */
 
-theorem sotri3 (A : class, B : class, C : class, R : class, S : class)  {
+theorem sotri3 (A : class, B : class, C : class, R : class, S : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- R Or S ;;
 	hyp 2 : wff = |- R ⊆ ( S × S ) ;;
 	-----------------------
@@ -8181,7 +8181,7 @@ proof of sotri3 {
 	qed prop 1 = step 15 ;;
 }
 
-/* A strict order relation is irreflexive.  (Contributed by NM,
+/*A strict order relation is irreflexive.  (Contributed by NM,
        10-Feb-1996.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -8203,7 +8203,7 @@ proof of soirriOLD {
 	qed prop 1 = step 6 ;;
 }
 
-/* A strict order relation is a transitive relation.  (Contributed by NM,
+/*A strict order relation is a transitive relation.  (Contributed by NM,
          10-Feb-1996.)  (Proof modification is discouraged.)
          (New usage is discouraged.) */
 
@@ -8231,7 +8231,7 @@ proof of sotriOLD {
 	qed prop 1 = step 10 ;;
 }
 
-/* A strict order relation has no 2-cycle loops.  (Contributed by NM,
+/*A strict order relation has no 2-cycle loops.  (Contributed by NM,
          10-Feb-1996.)  (Proof modification is discouraged.)
          (New usage is discouraged.) */
 
@@ -8251,7 +8251,7 @@ proof of son2lpiOLD {
 	qed prop 1 = step 3 ;;
 }
 
-/* Express "less than or equals" for general strict orders.  (Contributed by
+/*Express "less than or equals" for general strict orders.  (Contributed by
      Stefan O'Rear, 17-Jan-2015.) */
 
 theorem poleloe (A : class, B : class, R : class, V : class)  {
@@ -8266,7 +8266,7 @@ proof of poleloe {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transitive law for general strict orders.  (Contributed by Stefan O'Rear,
+/*Transitive law for general strict orders.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) */
 
 theorem poltletr (A : class, B : class, C : class, R : class, X : class)  {
@@ -8289,7 +8289,7 @@ proof of poltletr {
 	qed prop 1 = step 12 ;;
 }
 
-/* Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
+/*Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) */
 
 theorem somin1 (A : class, B : class, R : class, X : class)  {
@@ -8323,7 +8323,7 @@ proof of somin1 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Commutativity of minimum in a total order.  (Contributed by Stefan O'Rear,
+/*Commutativity of minimum in a total order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) */
 
 theorem somincom (A : class, B : class, R : class, X : class)  {
@@ -8357,7 +8357,7 @@ proof of somincom {
 	qed prop 1 = step 23 ;;
 }
 
-/* Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
+/*Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) */
 
 theorem somin2 (A : class, B : class, R : class, X : class)  {
@@ -8372,7 +8372,7 @@ proof of somin2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Being less than a minimum, for a general total order.  (Contributed by
+/*Being less than a minimum, for a general total order.  (Contributed by
      Stefan O'Rear, 17-Jan-2015.) */
 
 theorem soltmin (A : class, B : class, C : class, R : class, X : class)  {
@@ -8425,7 +8425,7 @@ proof of soltmin {
 	qed prop 1 = step 42 ;;
 }
 
-/* The converse of a class abstraction of ordered pairs.  (Contributed by
+/*The converse of a class abstraction of ordered pairs.  (Contributed by
        NM, 11-Dec-2003.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem cnvopab (ph : wff, x : set, y : set) disjointed(x y z w, z w ph) {
@@ -8448,7 +8448,7 @@ proof of cnvopab {
 	qed prop 1 = step 11 ;;
 }
 
-/* The converse of the empty set.  (Contributed by NM, 6-Apr-1998.) */
+/*The converse of the empty set.  (Contributed by NM, 6-Apr-1998.) */
 
 theorem cnv0 () disjointed(x y) {
 	prop 1 : wff = |- ⁻¹ ∅ = ∅ ;;
@@ -8469,7 +8469,7 @@ proof of cnv0 {
 	qed prop 1 = step 10 ;;
 }
 
-/* The converse of the identity relation.  Theorem 3.7(ii) of [Monk1]
+/*The converse of the identity relation.  Theorem 3.7(ii) of [Monk1]
        p. 36.  (Contributed by NM, 26-Apr-1998.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) */
 
@@ -8490,7 +8490,7 @@ proof of cnvi {
 	qed prop 1 = step 8 ;;
 }
 
-/* The converse of a union is the union of converses.  Theorem 16 of
+/*The converse of a union is the union of converses.  Theorem 16 of
        [Suppes] p. 62.  (Contributed by NM, 25-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) */
 
@@ -8513,7 +8513,7 @@ proof of cnvun {
 	qed prop 1 = step 10 ;;
 }
 
-/* Distributive law for converse over set difference.  (Contributed by
+/*Distributive law for converse over set difference.  (Contributed by
        Mario Carneiro, 26-Jun-2014.) */
 
 theorem cnvdif (A : class, B : class) disjointed(x y A, x y B) {
@@ -8546,11 +8546,11 @@ proof of cnvdif {
 	qed prop 1 = step 21 ;;
 }
 
-/* Distributive law for converse over intersection.  Theorem 15 of [Suppes]
+/*Distributive law for converse over intersection.  Theorem 15 of [Suppes]
        p. 62.  (Contributed by NM, 25-Mar-1998.)  (Revised by Mario Carneiro,
        26-Jun-2014.) */
 
-theorem cnvin (A : class, B : class)  {
+theorem cnvin (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- ⁻¹ ( A ∩ B ) = ( ⁻¹ A ∩ ⁻¹ B ) ;;
 }
 
@@ -8566,7 +8566,7 @@ proof of cnvin {
 	qed prop 1 = step 8 ;;
 }
 
-/* Distributive law for range over union.  Theorem 8 of [Suppes] p. 60.
+/*Distributive law for range over union.  Theorem 8 of [Suppes] p. 60.
      (Contributed by NM, 24-Mar-1998.) */
 
 theorem rnun (A : class, B : class)  {
@@ -8586,7 +8586,7 @@ proof of rnun {
 	qed prop 1 = step 9 ;;
 }
 
-/* The range of an intersection belongs the intersection of ranges.  Theorem
+/*The range of an intersection belongs the intersection of ranges.  Theorem
      9 of [Suppes] p. 60.  (Contributed by NM, 15-Sep-2004.) */
 
 theorem rnin (A : class, B : class)  {
@@ -8606,7 +8606,7 @@ proof of rnin {
 	qed prop 1 = step 9 ;;
 }
 
-/* The range of an indexed union.  (Contributed by Mario Carneiro,
+/*The range of an indexed union.  (Contributed by Mario Carneiro,
        29-May-2015.) */
 
 theorem rniun (x : set, A : class, B : class) disjointed(x y z, y z A, y z B) {
@@ -8630,11 +8630,11 @@ proof of rniun {
 	qed prop 1 = step 12 ;;
 }
 
-/* The range of a union.  Part of Exercise 8 of [Enderton] p. 41.
+/*The range of a union.  Part of Exercise 8 of [Enderton] p. 41.
        (Contributed by NM, 17-Mar-2004.)  (Revised by Mario Carneiro,
        29-May-2015.) */
 
-theorem rnuni (x : set, A : class) disjointed(x A) {
+theorem rnuni (x : set, A : class) disjointed(x, A, x A) {
 	prop 1 : wff = |- ran ⋃ A = ⋃_ x ∈ A ran x ;;
 }
 
@@ -8646,7 +8646,7 @@ proof of rnuni {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distributive law for image over union.  Theorem 35 of [Suppes] p. 65.
+/*Distributive law for image over union.  Theorem 35 of [Suppes] p. 65.
      (Contributed by NM, 30-Sep-2002.) */
 
 theorem imaundi (A : class, B : class, C : class)  {
@@ -8666,7 +8666,7 @@ proof of imaundi {
 	qed prop 1 = step 9 ;;
 }
 
-/* The image of a union.  (Contributed by Jeff Hoffman, 17-Feb-2008.) */
+/*The image of a union.  (Contributed by Jeff Hoffman, 17-Feb-2008.) */
 
 theorem imaundir (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A ∪ B ) " C ) = ( ( A " C ) ∪ ( B " C ) ) ;;
@@ -8685,7 +8685,7 @@ proof of imaundir {
 	qed prop 1 = step 9 ;;
 }
 
-/* An upper bound for intersection with a domain.  Theorem 40 of [Suppes]
+/*An upper bound for intersection with a domain.  Theorem 40 of [Suppes]
        p. 66, who calls it "somewhat surprising."  (Contributed by NM,
        11-Aug-2004.) */
 
@@ -8720,7 +8720,7 @@ proof of dminss {
 	qed prop 1 = step 22 ;;
 }
 
-/* An upper bound for intersection with an image.  Theorem 41 of [Suppes]
+/*An upper bound for intersection with an image.  Theorem 41 of [Suppes]
        p. 66.  (Contributed by NM, 11-Aug-2004.) */
 
 theorem imainss (A : class, B : class, R : class) disjointed(x y A, x y B, x y R) {
@@ -8760,7 +8760,7 @@ proof of imainss {
 	qed prop 1 = step 28 ;;
 }
 
-/* The converse of a cross product.  Exercise 11 of [Suppes] p. 67.
+/*The converse of a cross product.  Exercise 11 of [Suppes] p. 67.
        (Contributed by NM, 14-Aug-1999.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
 
@@ -8781,7 +8781,7 @@ proof of cnvxp {
 	qed prop 1 = step 8 ;;
 }
 
-/* The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
+/*The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
      of [Monk1] p. 37.  (Contributed by NM, 12-Apr-2004.) */
 
 theorem xp0 (A : class)  {
@@ -8797,7 +8797,7 @@ proof of xp0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The cross product of nonempty classes is nonempty.  (Variation of a
+/*The cross product of nonempty classes is nonempty.  (Variation of a
        theorem contributed by Raph Levien, 30-Jun-2006.)  (Contributed by NM,
        30-Jun-2006.) */
 
@@ -8834,7 +8834,7 @@ proof of xpnz {
 	qed prop 1 = step 24 ;;
 }
 
-/* At least one member of an empty cross product is empty.  (Contributed by
+/*At least one member of an empty cross product is empty.  (Contributed by
      NM, 27-Aug-2006.) */
 
 theorem xpeq0 (A : class, B : class)  {
@@ -8852,7 +8852,7 @@ proof of xpeq0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Cross products with disjoint sets are disjoint.  (Contributed by NM,
+/*Cross products with disjoint sets are disjoint.  (Contributed by NM,
      13-Sep-2004.) */
 
 theorem xpdisj1 (A : class, B : class, C : class, D : class)  {
@@ -8868,7 +8868,7 @@ proof of xpdisj1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Cross products with disjoint sets are disjoint.  (Contributed by NM,
+/*Cross products with disjoint sets are disjoint.  (Contributed by NM,
      13-Sep-2004.) */
 
 theorem xpdisj2 (A : class, B : class, C : class, D : class)  {
@@ -8884,7 +8884,7 @@ proof of xpdisj2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Cross products with two different singletons are disjoint.  (Contributed
+/*Cross products with two different singletons are disjoint.  (Contributed
      by NM, 28-Jul-2004.) */
 
 theorem xpsndisj (A : class, B : class, C : class, D : class)  {
@@ -8898,7 +8898,7 @@ proof of xpsndisj {
 	qed prop 1 = step 3 ;;
 }
 
-/* Disjoint unions with disjoint index sets are disjoint.  (Contributed by
+/*Disjoint unions with disjoint index sets are disjoint.  (Contributed by
        Stefan O'Rear, 21-Nov-2014.) */
 
 theorem djudisj (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x A, y B) {
@@ -8920,7 +8920,7 @@ proof of djudisj {
 	qed prop 1 = step 11 ;;
 }
 
-/* A double restriction to disjoint classes is the empty set.  (Contributed
+/*A double restriction to disjoint classes is the empty set.  (Contributed
      by NM, 7-Oct-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem resdisj (A : class, B : class, C : class)  {
@@ -8936,7 +8936,7 @@ proof of resdisj {
 	qed prop 1 = step 5 ;;
 }
 
-/* The range of a cross product.  Part of Theorem 3.13(x) of [Monk1] p. 37.
+/*The range of a cross product.  Part of Theorem 3.13(x) of [Monk1] p. 37.
      (Contributed by NM, 12-Apr-2004.) */
 
 theorem rnxp (A : class, B : class)  {
@@ -8953,7 +8953,7 @@ proof of rnxp {
 	qed prop 1 = step 6 ;;
 }
 
-/* The domain of a cross product is a subclass of the first factor.
+/*The domain of a cross product is a subclass of the first factor.
      (Contributed by NM, 19-Mar-2007.) */
 
 theorem dmxpss (A : class, B : class)  {
@@ -8977,7 +8977,7 @@ proof of dmxpss {
 	qed prop 1 = step 13 ;;
 }
 
-/* The range of a cross product is a subclass of the second factor.
+/*The range of a cross product is a subclass of the second factor.
      (Contributed by NM, 16-Jan-2006.)  (Proof shortened by Andrew Salmon,
      27-Aug-2011.) */
 
@@ -8995,7 +8995,7 @@ proof of rnxpss {
 	qed prop 1 = step 6 ;;
 }
 
-/* The range of a square cross product.  (Contributed by FL, 17-May-2010.) */
+/*The range of a square cross product.  (Contributed by FL, 17-May-2010.) */
 
 theorem rnxpid (A : class)  {
 	prop 1 : wff = |- ran ( A × A ) = A ;;
@@ -9014,7 +9014,7 @@ proof of rnxpid {
 	qed prop 1 = step 9 ;;
 }
 
-/* A cross-product subclass relationship is equivalent to the relationship
+/*A cross-product subclass relationship is equivalent to the relationship
      for it components.  (Contributed by NM, 17-Dec-2008.) */
 
 theorem ssxpb (A : class, B : class, C : class, D : class)  {
@@ -9049,7 +9049,7 @@ proof of ssxpb {
 	qed prop 1 = step 24 ;;
 }
 
-/* The cross product of non-empty classes is one-to-one.  (Contributed by NM,
+/*The cross product of non-empty classes is one-to-one.  (Contributed by NM,
      31-May-2008.) */
 
 theorem xp11 (A : class, B : class, C : class, D : class)  {
@@ -9083,7 +9083,7 @@ proof of xp11 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) */
+/*Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) */
 
 theorem xpcan (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( C ≠ ∅ → ( ( C × A ) = ( C × B ) ↔ A = B ) ) ;;
@@ -9119,7 +9119,7 @@ proof of xpcan {
 	qed prop 1 = step 26 ;;
 }
 
-/* Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) */
+/*Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) */
 
 theorem xpcan2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( C ≠ ∅ → ( ( A × C ) = ( B × C ) ↔ A = B ) ) ;;
@@ -9155,7 +9155,7 @@ proof of xpcan2 {
 	qed prop 1 = step 26 ;;
 }
 
-/* If a cross product is a set, one of its components must be a set.
+/*If a cross product is a set, one of its components must be a set.
      (Contributed by NM, 27-Aug-2006.) */
 
 theorem xpexr (A : class, B : class, C : class)  {
@@ -9178,7 +9178,7 @@ proof of xpexr {
 	qed prop 1 = step 12 ;;
 }
 
-/* If a nonempty cross product is a set, so are both of its components.
+/*If a nonempty cross product is a set, so are both of its components.
      (Contributed by NM, 27-Aug-2006.) */
 
 theorem xpexr2 (A : class, B : class, C : class)  {
@@ -9203,7 +9203,7 @@ proof of xpexr2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Subset of the range of a restriction.  (Contributed by NM,
+/*Subset of the range of a restriction.  (Contributed by NM,
        16-Jan-2006.) */
 
 theorem ssrnres (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -9257,7 +9257,7 @@ proof of ssrnres {
 	qed prop 1 = step 42 ;;
 }
 
-/* Range of the intersection with a cross product.  (Contributed by NM,
+/*Range of the intersection with a cross product.  (Contributed by NM,
        17-Jan-2006.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem rninxp (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, y B, x y C) {
@@ -9277,7 +9277,7 @@ proof of rninxp {
 	qed prop 1 = step 9 ;;
 }
 
-/* Domain of the intersection with a cross product.  (Contributed by NM,
+/*Domain of the intersection with a cross product.  (Contributed by NM,
        17-Jan-2006.) */
 
 theorem dminxp (x : set, y : set, A : class, B : class, C : class) disjointed(x A, x y B, x y C) {
@@ -9303,7 +9303,7 @@ proof of dminxp {
 	qed prop 1 = step 15 ;;
 }
 
-/* Image of a relation restricted to a rectangular region.  (Contributed by
+/*Image of a relation restricted to a rectangular region.  (Contributed by
      Stefan O'Rear, 19-Feb-2015.) */
 
 theorem imainrect (A : class, B : class, G : class, Y : class)  {
@@ -9356,11 +9356,11 @@ proof of imainrect {
 	qed prop 1 = step 42 ;;
 }
 
-/* The base set of a strict order is contained in the field of the
+/*The base set of a strict order is contained in the field of the
        relation, except possibly for one element (note that
        ` (/) Or { B } ` ).  (Contributed by Mario Carneiro, 27-Apr-2015.) */
 
-theorem sossfld (A : class, B : class, R : class) disjointed(x A, x B, x R) {
+theorem sossfld (A : class, B : class, R : class) disjointed(x A, x B, x R, x) {
 	prop 1 : wff = |- ( ( R Or A ∧ B ∈ A ) → ( A ∖ { B } ) ⊆ ( dom R ∪ ran R ) ) ;;
 }
 
@@ -9387,10 +9387,10 @@ proof of sossfld {
 	qed prop 1 = step 18 ;;
 }
 
-/* The base set of a nonempty strict order is the same as the field of the
+/*The base set of a nonempty strict order is the same as the field of the
        relation.  (Contributed by Mario Carneiro, 15-May-2015.) */
 
-theorem sofld (A : class, R : class) disjointed(x y A, x y R) {
+theorem sofld (A : class, R : class) disjointed(x y A, x, x y R, x) {
 	prop 1 : wff = |- ( ( R Or A ∧ R ⊆ ( A × A ) ∧ R ≠ ∅ ) → A = ( dom R ∪ ran R ) ) ;;
 }
 
@@ -9451,10 +9451,10 @@ proof of sofld {
 	qed prop 1 = step 52 ;;
 }
 
-/* If the relation in a strict order is a set, then the base field is also
+/*If the relation in a strict order is a set, then the base field is also
        a set.  (Contributed by Mario Carneiro, 27-Apr-2015.) */
 
-theorem soex (A : class, R : class, V : class) disjointed(x A, x R, x V) {
+theorem soex (A : class, R : class, V : class) disjointed(x A, x, x R, x V) {
 	prop 1 : wff = |- ( ( R Or A ∧ R ∈ V ) → A ∈ _V ) ;;
 }
 
@@ -9486,7 +9486,7 @@ proof of soex {
 	qed prop 1 = step 23 ;;
 }
 
-/* The set of all ordered pairs in a class is the same as the double
+/*The set of all ordered pairs in a class is the same as the double
        converse.  (Contributed by Mario Carneiro, 16-Aug-2015.) */
 
 theorem cnvcnv3 (x : set, y : set, R : class) disjointed(x y R) {
@@ -9503,7 +9503,7 @@ proof of cnvcnv3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Alternate definition of relation.  Exercise 2 of [TakeutiZaring] p. 25.
+/*Alternate definition of relation.  Exercise 2 of [TakeutiZaring] p. 25.
        (Contributed by NM, 29-Dec-1996.) */
 
 theorem dfrel2 (R : class) disjointed(x y R) {
@@ -9529,7 +9529,7 @@ proof of dfrel2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* A relation can be expressed as the set of ordered pairs in it.  An
+/*A relation can be expressed as the set of ordered pairs in it.  An
        analogue of ~ dffn5 for relations.  (Contributed by Mario Carneiro,
        16-Aug-2015.) */
 
@@ -9546,7 +9546,7 @@ proof of dfrel4v {
 	qed prop 1 = step 5 ;;
 }
 
-/* The double converse of a class strips out all elements that are not
+/*The double converse of a class strips out all elements that are not
      ordered pairs.  (Contributed by NM, 8-Dec-2003.) */
 
 theorem cnvcnv (A : class)  {
@@ -9576,7 +9576,7 @@ proof of cnvcnv {
 	qed prop 1 = step 19 ;;
 }
 
-/* The double converse of a class equals its restriction to the universe.
+/*The double converse of a class equals its restriction to the universe.
      (Contributed by NM, 8-Oct-2007.) */
 
 theorem cnvcnv2 (A : class)  {
@@ -9590,7 +9590,7 @@ proof of cnvcnv2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The double converse of a class is a subclass.  Exercise 2 of
+/*The double converse of a class is a subclass.  Exercise 2 of
      [TakeutiZaring] p. 25.  (Contributed by NM, 23-Jul-2004.) */
 
 theorem cnvcnvss (A : class)  {
@@ -9604,7 +9604,7 @@ proof of cnvcnvss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for converse.  (Contributed by FL, 19-Sep-2011.) */
+/*Equality theorem for converse.  (Contributed by FL, 19-Sep-2011.) */
 
 theorem cnveqb (A : class, B : class)  {
 	prop 1 : wff = |- ( ( Rel A ∧ Rel B ) → ( A = B ↔ ⁻¹ A = ⁻¹ B ) ) ;;
@@ -9629,7 +9629,7 @@ proof of cnveqb {
 	qed prop 1 = step 15 ;;
 }
 
-/* A relation empty iff its converse is empty.  (Contributed by FL,
+/*A relation empty iff its converse is empty.  (Contributed by FL,
      19-Sep-2011.) */
 
 theorem cnveq0 (A : class)  {
@@ -9649,9 +9649,9 @@ proof of cnveq0 {
 	qed prop 1 = step 9 ;;
 }
 
-/* [19-Sep-2011] */
+/*[19-Sep-2011] */
 
-/* Alternate definition of relation.  (Contributed by NM, 14-May-2008.) */
+/*Alternate definition of relation.  (Contributed by NM, 14-May-2008.) */
 
 theorem dfrel3 (R : class)  {
 	prop 1 : wff = |- ( Rel R ↔ ( R ↾ _V ) = R ) ;;
@@ -9665,7 +9665,7 @@ proof of dfrel3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of a universal restriction.  (Contributed by NM,
+/*The domain of a universal restriction.  (Contributed by NM,
      14-May-2008.) */
 
 theorem dmresv (A : class)  {
@@ -9680,7 +9680,7 @@ proof of dmresv {
 	qed prop 1 = step 4 ;;
 }
 
-/* The range of a universal restriction.  (Contributed by NM,
+/*The range of a universal restriction.  (Contributed by NM,
      14-May-2008.) */
 
 theorem rnresv (A : class)  {
@@ -9695,7 +9695,7 @@ proof of rnresv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Range defined in terms of image.  (Contributed by NM, 14-May-2008.) */
+/*Range defined in terms of image.  (Contributed by NM, 14-May-2008.) */
 
 theorem dfrn4 (A : class)  {
 	prop 1 : wff = |- ran A = ( A " _V ) ;;
@@ -9708,7 +9708,7 @@ proof of dfrn4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The restriction of the double converse of a class.  (Contributed by NM,
+/*The restriction of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem rescnvcnv (A : class, B : class)  {
@@ -9727,7 +9727,7 @@ proof of rescnvcnv {
 	qed prop 1 = step 8 ;;
 }
 
-/* The double converse of the restriction of a class.  (Contributed by NM,
+/*The double converse of the restriction of a class.  (Contributed by NM,
      3-Jun-2007.) */
 
 theorem cnvcnvres (A : class, B : class)  {
@@ -9743,7 +9743,7 @@ proof of cnvcnvres {
 	qed prop 1 = step 5 ;;
 }
 
-/* The image of the double converse of a class.  (Contributed by NM,
+/*The image of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.) */
 
 theorem imacnvcnv (A : class, B : class)  {
@@ -9759,7 +9759,7 @@ proof of imacnvcnv {
 	qed prop 1 = step 5 ;;
 }
 
-/* The domain of a singleton is nonzero iff the singleton argument is an
+/*The domain of a singleton is nonzero iff the singleton argument is an
        ordered pair.  (Contributed by NM, 14-Dec-2008.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) */
 
@@ -9785,7 +9785,7 @@ proof of dmsnn0 {
 	qed prop 1 = step 13 ;;
 }
 
-/* The range of a singleton is nonzero iff the singleton argument is an
+/*The range of a singleton is nonzero iff the singleton argument is an
      ordered pair.  (Contributed by NM, 14-Dec-2008.) */
 
 theorem rnsnn0 (A : class)  {
@@ -9800,7 +9800,7 @@ proof of rnsnn0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of the singleton of the empty set is empty.  (Contributed by
+/*The domain of the singleton of the empty set is empty.  (Contributed by
      NM, 30-Jan-2004.) */
 
 theorem dmsn0 ()  {
@@ -9815,7 +9815,7 @@ proof of dmsn0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The converse of the singleton of the empty set is empty.  (Contributed by
+/*The converse of the singleton of the empty set is empty.  (Contributed by
      Mario Carneiro, 30-Aug-2015.) */
 
 theorem cnvsn0 ()  {
@@ -9833,7 +9833,7 @@ proof of cnvsn0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain of a singleton is empty if the singleton's argument contains
+/*The domain of a singleton is empty if the singleton's argument contains
      the empty set.  (Contributed by NM, 15-Dec-2008.) */
 
 theorem dmsn0el (A : class)  {
@@ -9848,7 +9848,7 @@ proof of dmsn0el {
 	qed prop 1 = step 4 ;;
 }
 
-/* A singleton is a relation iff it has a nonempty domain.  (Contributed by
+/*A singleton is a relation iff it has a nonempty domain.  (Contributed by
        NM, 25-Sep-2013.) */
 
 theorem relsn2 (A : class)  {
@@ -9864,7 +9864,7 @@ proof of relsn2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The domain of a singleton of an ordered pair is the singleton of the
+/*The domain of a singleton of an ordered pair is the singleton of the
        first member.  (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
 theorem dmsnopg (A : class, B : class, V : class) disjointed(x y A, x y B, x V) {
@@ -9895,11 +9895,11 @@ proof of dmsnopg {
 	qed prop 1 = step 19 ;;
 }
 
-/* The domain of a singleton of an ordered pair is a subset of the
+/*The domain of a singleton of an ordered pair is a subset of the
        singleton of the first member (with no sethood assumptions on ` B ` ).
        (Contributed by Mario Carneiro, 30-Apr-2015.) */
 
-theorem dmsnopss (A : class, B : class)  {
+theorem dmsnopss (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- dom { 〈 A , B 〉 } ⊆ { A } ;;
 }
 
@@ -9919,10 +9919,10 @@ proof of dmsnopss {
 	qed prop 1 = step 12 ;;
 }
 
-/* The domain of an unordered pair of ordered pairs.  (Contributed by Mario
+/*The domain of an unordered pair of ordered pairs.  (Contributed by Mario
        Carneiro, 26-Apr-2015.) */
 
-theorem dmpropg (A : class, B : class, C : class, D : class, V : class, W : class)  {
+theorem dmpropg (A : class, B : class, C : class, D : class, V : class, W : class) disjointed(A, B, V) {
 	prop 1 : wff = |- ( ( B ∈ V ∧ D ∈ W ) → dom { 〈 A , B 〉 , 〈 C , D 〉 } = { A , C } ) ;;
 }
 
@@ -9940,12 +9940,12 @@ proof of dmpropg {
 	qed prop 1 = step 10 ;;
 }
 
-/* The domain of a singleton of an ordered pair is the singleton of the
+/*The domain of a singleton of an ordered pair is the singleton of the
        first member.  (Contributed by NM, 30-Jan-2004.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
-theorem dmsnop (A : class, B : class)  {
+theorem dmsnop (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- B ∈ _V ;;
 	-----------------------
 	prop 1 : wff = |- dom { 〈 A , B 〉 } = { A } ;;
@@ -9957,10 +9957,10 @@ proof of dmsnop {
 	qed prop 1 = step 2 ;;
 }
 
-/* The domain of an unordered pair of ordered pairs.  (Contributed by NM,
+/*The domain of an unordered pair of ordered pairs.  (Contributed by NM,
        13-Sep-2011.) */
 
-theorem dmprop (A : class, B : class, C : class, D : class)  {
+theorem dmprop (A : class, B : class, C : class, D : class) disjointed(A, B) {
 	hyp 1 : wff = |- B ∈ _V ;;
 	hyp 2 : wff = |- D ∈ _V ;;
 	-----------------------
@@ -9973,10 +9973,10 @@ proof of dmprop {
 	qed prop 1 = step 2 ;;
 }
 
-/* The domain of an unordered triple of ordered pairs.  (Contributed by NM,
+/*The domain of an unordered triple of ordered pairs.  (Contributed by NM,
        14-Sep-2011.) */
 
-theorem dmtpop (A : class, B : class, C : class, D : class, E : class, F : class)  {
+theorem dmtpop (A : class, B : class, C : class, D : class, E : class, F : class) disjointed(A, B) {
 	hyp 1 : wff = |- B ∈ _V ;;
 	hyp 2 : wff = |- D ∈ _V ;;
 	hyp 3 : wff = |- F ∈ _V ;;
@@ -9997,7 +9997,7 @@ proof of dmtpop {
 	qed prop 1 = step 9 ;;
 }
 
-/* Double converse of a singleton of an ordered pair.  (Unlike ~ cnvsn ,
+/*Double converse of a singleton of an ordered pair.  (Unlike ~ cnvsn ,
        this does not need any sethood assumptions on ` A ` and ` B ` .)
        (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
@@ -10037,11 +10037,11 @@ proof of cnvcnvsn {
 	qed prop 1 = step 27 ;;
 }
 
-/* The domain of the singleton of the singleton of a singleton.
+/*The domain of the singleton of the singleton of a singleton.
        (Contributed by NM, 15-Sep-2004.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
-theorem dmsnsnsn (A : class) disjointed(x A) {
+theorem dmsnsnsn (A : class) disjointed(x A, x) {
 	prop 1 : wff = |- dom { { { A } } } = { A } ;;
 }
 
@@ -10075,7 +10075,7 @@ proof of dmsnsnsn {
 	qed prop 1 = step 25 ;;
 }
 
-/* The range of a singleton of an ordered pair is the singleton of the second
+/*The range of a singleton of an ordered pair is the singleton of the second
      member.  (Contributed by NM, 24-Jul-2004.)  (Revised by Mario Carneiro,
      30-Apr-2015.) */
 
@@ -10096,11 +10096,11 @@ proof of rnsnopg {
 	qed prop 1 = step 9 ;;
 }
 
-/* The range of a singleton of an ordered pair is the singleton of the
+/*The range of a singleton of an ordered pair is the singleton of the
        second member.  (Contributed by NM, 24-Jul-2004.)  (Revised by Mario
        Carneiro, 26-Apr-2015.) */
 
-theorem rnsnop (A : class, B : class)  {
+theorem rnsnop (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	-----------------------
 	prop 1 : wff = |- ran { 〈 A , B 〉 } = { B } ;;
@@ -10112,11 +10112,11 @@ proof of rnsnop {
 	qed prop 1 = step 2 ;;
 }
 
-/* Extract the first member of an ordered pair.  (See ~ op2nda to extract
+/*Extract the first member of an ordered pair.  (See ~ op2nda to extract
        the second member, ~ op1stb for an alternate version, and ~ op1st for
        the preferred version.)  (Contributed by Raph Levien, 4-Dec-2003.) */
 
-theorem op1sta (A : class, B : class)  {
+theorem op1sta (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -10131,10 +10131,10 @@ proof of op1sta {
 	qed prop 1 = step 4 ;;
 }
 
-/* Converse of a singleton of an ordered pair.  (Contributed by NM,
+/*Converse of a singleton of an ordered pair.  (Contributed by NM,
        11-May-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
-theorem cnvsn (A : class, B : class)  {
+theorem cnvsn (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -10150,12 +10150,12 @@ proof of cnvsn {
 	qed prop 1 = step 5 ;;
 }
 
-/* Extract the second member of an ordered pair.  Theorem 5.12(ii) of
+/*Extract the second member of an ordered pair.  Theorem 5.12(ii) of
        [Monk1] p. 52.  (See ~ op1stb to extract the first member, ~ op2nda for
        an alternate version, and ~ op2nd for the preferred version.)
        (Contributed by NM, 25-Nov-2003.) */
 
-theorem op2ndb (A : class, B : class)  {
+theorem op2ndb (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -10175,12 +10175,12 @@ proof of op2ndb {
 	qed prop 1 = step 9 ;;
 }
 
-/* Extract the second member of an ordered pair.  (See ~ op1sta to extract
+/*Extract the second member of an ordered pair.  (See ~ op1sta to extract
        the first member, ~ op2ndb for an alternate version, and ~ op2nd for the
        preferred version.)  (Contributed by NM, 17-Feb-2004.)  (Proof shortened
        by Andrew Salmon, 27-Aug-2011.) */
 
-theorem op2nda (A : class, B : class)  {
+theorem op2nda (A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -10195,7 +10195,7 @@ proof of op2nda {
 	qed prop 1 = step 4 ;;
 }
 
-/* Converse of a singleton of an ordered pair.  (Contributed by NM,
+/*Converse of a singleton of an ordered pair.  (Contributed by NM,
        23-Jan-2015.) */
 
 theorem cnvsng (A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y) {
@@ -10223,10 +10223,10 @@ proof of cnvsng {
 	qed prop 1 = step 16 ;;
 }
 
-/* Swap the members of an ordered pair.  (Contributed by NM, 14-Dec-2008.)
+/*Swap the members of an ordered pair.  (Contributed by NM, 14-Dec-2008.)
        (Revised by Mario Carneiro, 30-Aug-2015.) */
 
-theorem opswap (A : class, B : class)  {
+theorem opswap (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- ⋃ ⁻¹ { 〈 A , B 〉 } = 〈 B , A 〉 ;;
 }
 
@@ -10251,7 +10251,7 @@ proof of opswap {
 	qed prop 1 = step 17 ;;
 }
 
-/* Membership in a cross product.  This version requires no quantifiers or
+/*Membership in a cross product.  This version requires no quantifiers or
        dummy variables.  See also ~ elxp5 , ~ elxp6 , and ~ elxp7 .
        (Contributed by NM, 17-Feb-2004.) */
 
@@ -10311,7 +10311,7 @@ proof of elxp4 {
 	qed prop 1 = step 47 ;;
 }
 
-/* Membership in a cross product requiring no quantifiers or dummy
+/*Membership in a cross product requiring no quantifiers or dummy
        variables.  Provides a slightly shorter version of ~ elxp4 when the
        double intersection does not create class existence problems (caused by
        ~ int0 ).  (Contributed by NM, 1-Aug-2004.) */
@@ -10376,7 +10376,7 @@ proof of elxp5 {
 	qed prop 1 = step 51 ;;
 }
 
-/* An image under the converse of a restriction.  (Contributed by Jeff
+/*An image under the converse of a restriction.  (Contributed by Jeff
        Hankins, 12-Jul-2009.) */
 
 theorem cnvresima (A : class, B : class, F : class) disjointed(s t A, s t B, s t F) {
@@ -10414,7 +10414,7 @@ proof of cnvresima {
 	qed prop 1 = step 26 ;;
 }
 
-/* A class restricted to its domain equals its double converse.  (Contributed
+/*A class restricted to its domain equals its double converse.  (Contributed
      by NM, 8-Apr-2007.) */
 
 theorem resdm2 (A : class)  {
@@ -10432,7 +10432,7 @@ proof of resdm2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restriction to the domain of a restriction.  (Contributed by NM,
+/*Restriction to the domain of a restriction.  (Contributed by NM,
      8-Apr-2007.) */
 
 theorem resdmres (A : class, B : class)  {
@@ -10461,7 +10461,7 @@ proof of resdmres {
 	qed prop 1 = step 18 ;;
 }
 
-/* The image of the domain of a restriction.  (Contributed by NM,
+/*The image of the domain of a restriction.  (Contributed by NM,
      8-Apr-2007.) */
 
 theorem imadmres (A : class, B : class)  {
@@ -10477,10 +10477,10 @@ proof of imadmres {
 	qed prop 1 = step 5 ;;
 }
 
-/* The preimage of a function in maps-to notation.  (Contributed by Stefan
+/*The preimage of a function in maps-to notation.  (Contributed by Stefan
        O'Rear, 25-Jan-2015.) */
 
-theorem mptpreima (x : set, A : class, B : class, C : class, F : class) disjointed(x y C, y A, y B, y F) {
+theorem mptpreima (x : set, A : class, B : class, C : class, F : class) disjointed(x y C, y A, y B, y F, x) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ⁻¹ F " C ) = { x ∈ A | B ∈ C } ;;
@@ -10517,10 +10517,10 @@ proof of mptpreima {
 	qed prop 1 = step 26 ;;
 }
 
-/* Converse singleton image of a function defined by maps-to.  (Contributed
+/*Converse singleton image of a function defined by maps-to.  (Contributed
        by Stefan O'Rear, 25-Jan-2015.) */
 
-theorem mptiniseg (x : set, A : class, B : class, C : class, F : class, V : class) disjointed(x C, x V) {
+theorem mptiniseg (x : set, A : class, B : class, C : class, F : class, V : class) disjointed(x C, A, B, F, x V) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	-----------------------
 	prop 1 : wff = |- ( C ∈ V → ( ⁻¹ F " { C } ) = { x ∈ A | B = C } ) ;;
@@ -10534,10 +10534,10 @@ proof of mptiniseg {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of the mapping operation in general.  (Contributed by NM,
+/*The domain of the mapping operation in general.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 22-Mar-2015.) */
 
-theorem dmmpt (x : set, A : class, B : class, F : class)  {
+theorem dmmpt (x : set, A : class, B : class, F : class) disjointed(x, A, B, F, x) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	-----------------------
 	prop 1 : wff = |- dom F = { x ∈ A | B ∈ _V } ;;
@@ -10551,10 +10551,10 @@ proof of dmmpt {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of a mapping is a subset of its base class.  (Contributed by
+/*The domain of a mapping is a subset of its base class.  (Contributed by
        Scott Fenton, 17-Jun-2013.) */
 
-theorem dmmptss (x : set, A : class, B : class, F : class) disjointed(x A) {
+theorem dmmptss (x : set, A : class, B : class, F : class) disjointed(x, A, B, F, x, x A) {
 	hyp 1 : wff = |- F = ( x ∈ A ↦ B ) ;;
 	-----------------------
 	prop 1 : wff = |- dom F ⊆ A ;;
@@ -10567,11 +10567,11 @@ proof of dmmptss {
 	qed prop 1 = step 3 ;;
 }
 
-/* The domain of the mapping operation is the stated domain, if the
+/*The domain of the mapping operation is the stated domain, if the
        function value is always a set.  (Contributed by Mario Carneiro,
        9-Feb-2013.)  (Revised by Mario Carneiro, 14-Sep-2013.) */
 
-theorem dmmptg (x : set, A : class, B : class, V : class) disjointed(A x) {
+theorem dmmptg (x : set, A : class, B : class, V : class) disjointed(A x, B) {
 	prop 1 : wff = |- ( ∀ x ∈ A B ∈ V → dom ( x ∈ A ↦ B ) = A ) ;;
 }
 
@@ -10586,7 +10586,7 @@ proof of dmmptg {
 	qed prop 1 = step 7 ;;
 }
 
-/* A composition is a relation.  Exercise 24 of [TakeutiZaring] p. 25.
+/*A composition is a relation.  Exercise 24 of [TakeutiZaring] p. 25.
        (Contributed by NM, 26-Jan-1997.) */
 
 theorem relco (A : class, B : class) disjointed(x y z A, x y z B, x y z) {
@@ -10600,7 +10600,7 @@ proof of relco {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate definition of a class composition, using only one bound
+/*Alternate definition of a class composition, using only one bound
        variable.  (Contributed by NM, 19-Dec-2008.) */
 
 theorem dfco2 (x : set, A : class, B : class) disjointed(x y z A, x y z B, x y z) {
@@ -10640,7 +10640,7 @@ proof of dfco2 {
 	qed prop 1 = step 28 ;;
 }
 
-/* Generalization of ~ dfco2 , where ` C ` can have any value between
+/*Generalization of ~ dfco2 , where ` C ` can have any value between
        ` dom A i^i ran B ` and ` _V ` .  (Contributed by NM, 21-Dec-2008.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
@@ -10687,7 +10687,7 @@ proof of dfco2a {
 	qed prop 1 = step 34 ;;
 }
 
-/* Class composition distributes over union.  (Contributed by NM,
+/*Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem coundi (A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -10714,7 +10714,7 @@ proof of coundi {
 	qed prop 1 = step 15 ;;
 }
 
-/* Class composition distributes over union.  (Contributed by NM,
+/*Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem coundir (A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -10741,7 +10741,7 @@ proof of coundir {
 	qed prop 1 = step 15 ;;
 }
 
-/* Restricted first member of a class composition.  (Contributed by NM,
+/*Restricted first member of a class composition.  (Contributed by NM,
        12-Oct-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem cores (A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -10767,7 +10767,7 @@ proof of cores {
 	qed prop 1 = step 14 ;;
 }
 
-/* Associative law for the restriction of a composition.  (Contributed by
+/*Associative law for the restriction of a composition.  (Contributed by
        NM, 12-Dec-2006.) */
 
 theorem resco (A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -10800,7 +10800,7 @@ proof of resco {
 	qed prop 1 = step 21 ;;
 }
 
-/* Image of the composition of two classes.  (Contributed by Jason
+/*Image of the composition of two classes.  (Contributed by Jason
        Orendorff, 12-Dec-2006.) */
 
 theorem imaco (A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C) {
@@ -10833,7 +10833,7 @@ proof of imaco {
 	qed prop 1 = step 21 ;;
 }
 
-/* The range of the composition of two classes.  (Contributed by NM,
+/*The range of the composition of two classes.  (Contributed by NM,
        12-Dec-2006.) */
 
 theorem rnco (A : class, B : class) disjointed(x y z A, x y z B, x y z) {
@@ -10867,7 +10867,7 @@ proof of rnco {
 	qed prop 1 = step 22 ;;
 }
 
-/* The range of the composition of two classes.  (Contributed by NM,
+/*The range of the composition of two classes.  (Contributed by NM,
      27-Mar-2008.) */
 
 theorem rnco2 (A : class, B : class)  {
@@ -10881,7 +10881,7 @@ proof of rnco2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The domain of a composition.  Exercise 27 of [Enderton] p. 53.
+/*The domain of a composition.  Exercise 27 of [Enderton] p. 53.
      (Contributed by NM, 4-Feb-2004.) */
 
 theorem dmco (A : class, B : class)  {
@@ -10900,7 +10900,7 @@ proof of dmco {
 	qed prop 1 = step 8 ;;
 }
 
-/* Composition with an indexed union.  (Contributed by NM, 21-Dec-2008.) */
+/*Composition with an indexed union.  (Contributed by NM, 21-Dec-2008.) */
 
 theorem coiun (x : set, A : class, B : class, C : class) disjointed(w x y z A, w y z B, w y z C) {
 	prop 1 : wff = |- ( A ∘ ⋃_ x ∈ C B ) = ⋃_ x ∈ C ( A ∘ B ) ;;
@@ -10938,7 +10938,7 @@ proof of coiun {
 	qed prop 1 = step 27 ;;
 }
 
-/* A composition is not affected by a double converse of its first argument.
+/*A composition is not affected by a double converse of its first argument.
      (Contributed by NM, 8-Oct-2007.) */
 
 theorem cocnvcnv1 (A : class, B : class)  {
@@ -10955,7 +10955,7 @@ proof of cocnvcnv1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A composition is not affected by a double converse of its second
+/*A composition is not affected by a double converse of its second
      argument.  (Contributed by NM, 8-Oct-2007.) */
 
 theorem cocnvcnv2 (A : class, B : class)  {
@@ -10973,7 +10973,7 @@ proof of cocnvcnv2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Absorption of a reverse (preimage) restriction of the second member of a
+/*Absorption of a reverse (preimage) restriction of the second member of a
      class composition.  (Contributed by NM, 11-Dec-2006.) */
 
 theorem cores2 (A : class, B : class, C : class)  {
@@ -11001,7 +11001,7 @@ proof of cores2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Composition with the empty set.  Theorem 20 of [Suppes] p. 63.
+/*Composition with the empty set.  Theorem 20 of [Suppes] p. 63.
        (Contributed by NM, 24-Apr-2004.) */
 
 theorem co02 (A : class) disjointed(x y z A) {
@@ -11027,9 +11027,9 @@ proof of co02 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Composition with the empty set.  (Contributed by NM, 24-Apr-2004.) */
+/*Composition with the empty set.  (Contributed by NM, 24-Apr-2004.) */
 
-theorem co01 (A : class)  {
+theorem co01 (A : class) disjointed(A) {
 	prop 1 : wff = |- ( ∅ ∘ A ) = ∅ ;;
 }
 
@@ -11052,7 +11052,7 @@ proof of co01 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Composition with the identity relation.  Part of Theorem 3.7(i) of
+/*Composition with the identity relation.  Part of Theorem 3.7(i) of
        [Monk1] p. 36.  (Contributed by NM, 22-Apr-2004.) */
 
 theorem coi1 (A : class) disjointed(x y z A) {
@@ -11083,10 +11083,10 @@ proof of coi1 {
 	qed prop 1 = step 19 ;;
 }
 
-/* Composition with the identity relation.  Part of Theorem 3.7(i) of
+/*Composition with the identity relation.  Part of Theorem 3.7(i) of
        [Monk1] p. 36.  (Contributed by NM, 22-Apr-2004.) */
 
-theorem coi2 (A : class)  {
+theorem coi2 (A : class) disjointed(A) {
 	prop 1 : wff = |- ( Rel A → ( _I ∘ A ) = A ) ;;
 }
 
@@ -11110,7 +11110,7 @@ proof of coi2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Composition with a restricted identity relation.  (Contributed by FL,
+/*Composition with a restricted identity relation.  (Contributed by FL,
      19-Jun-2011.)  (Revised by Stefan O'Rear, 7-Mar-2015.) */
 
 theorem coires1 (A : class, B : class)  {
@@ -11131,7 +11131,7 @@ proof of coires1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Associative law for class composition.  Theorem 27 of [Suppes] p. 64.
+/*Associative law for class composition.  Theorem 27 of [Suppes] p. 64.
        Also Exercise 21 of [Enderton] p. 53.  Interestingly, this law holds for
        any classes whatsoever, not just functions or even relations.
        (Contributed by NM, 27-Jan-1997.) */
@@ -11174,7 +11174,7 @@ proof of coass {
 	qed prop 1 = step 29 ;;
 }
 
-/* A relation is transitive iff its converse is transitive.  (Contributed by
+/*A relation is transitive iff its converse is transitive.  (Contributed by
      FL, 19-Sep-2011.) */
 
 theorem relcnvtr (R : class)  {
@@ -11204,7 +11204,7 @@ proof of relcnvtr {
 	qed prop 1 = step 19 ;;
 }
 
-/* A relation is included in the cross product of its domain and range.
+/*A relation is included in the cross product of its domain and range.
        Exercise 4.12(t) of [Mendelson] p. 235.  (Contributed by NM,
        3-Aug-1994.) */
 
@@ -11230,7 +11230,7 @@ proof of relssdmrn {
 	qed prop 1 = step 13 ;;
 }
 
-/* The converse is a subset of the cartesian product of range and domain.
+/*The converse is a subset of the cartesian product of range and domain.
      (Contributed by Mario Carneiro, 2-Jan-2017.) */
 
 theorem cnvssrndm (A : class)  {
@@ -11248,7 +11248,7 @@ proof of cnvssrndm {
 	qed prop 1 = step 7 ;;
 }
 
-/* Composition as a subset of the cross product of factors.  (Contributed by
+/*Composition as a subset of the cross product of factors.  (Contributed by
      Mario Carneiro, 12-Jan-2017.) */
 
 theorem cossxp (A : class, B : class)  {
@@ -11267,7 +11267,7 @@ proof of cossxp {
 	qed prop 1 = step 8 ;;
 }
 
-/* Two ways to describe the structure of a two-place operation.  (Contributed
+/*Two ways to describe the structure of a two-place operation.  (Contributed
      by NM, 17-Dec-2008.) */
 
 theorem relrelss (A : class)  {
@@ -11298,7 +11298,7 @@ proof of relrelss {
 	qed prop 1 = step 20 ;;
 }
 
-/* The membership relation for a relation is inherited by class union.
+/*The membership relation for a relation is inherited by class union.
        (Contributed by NM, 17-Sep-2006.) */
 
 theorem unielrel (A : class, R : class) disjointed(x y A, x y R) {
@@ -11322,7 +11322,7 @@ proof of unielrel {
 	qed prop 1 = step 12 ;;
 }
 
-/* The double union of a relation is its field.  (Contributed by NM,
+/*The double union of a relation is its field.  (Contributed by NM,
      17-Sep-2006.) */
 
 theorem relfld (R : class)  {
@@ -11342,7 +11342,7 @@ proof of relfld {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restriction of a relation to its field.  (Contributed by FL,
+/*Restriction of a relation to its field.  (Contributed by FL,
      15-Apr-2012.) */
 
 theorem relresfld (R : class)  {
@@ -11371,7 +11371,7 @@ proof of relresfld {
 	qed prop 1 = step 18 ;;
 }
 
-/* Composition with the identity relation restricted to a relation's field.
+/*Composition with the identity relation restricted to a relation's field.
      (Contributed by FL, 2-May-2011.) */
 
 theorem relcoi2 (R : class)  {
@@ -11391,7 +11391,7 @@ proof of relcoi2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Composition with the identity relation restricted to a relation's field.
+/*Composition with the identity relation restricted to a relation's field.
      (Contributed by FL, 8-May-2011.) */
 
 theorem relcoi1 (R : class)  {
@@ -11459,7 +11459,7 @@ proof of relcoi1 {
 	qed prop 1 = step 57 ;;
 }
 
-/* The double union of the converse of a class is its field.  (Contributed by
+/*The double union of the converse of a class is its field.  (Contributed by
      NM, 4-Jun-2008.) */
 
 theorem unidmrn (A : class)  {
@@ -11478,7 +11478,7 @@ proof of unidmrn {
 	qed prop 1 = step 8 ;;
 }
 
-/* if ` R ` is a relation, its double union equals the double union of its
+/*if ` R ` is a relation, its double union equals the double union of its
      converse.  (Contributed by FL, 5-Jan-2009.) */
 
 theorem relcnvfld (R : class)  {
@@ -11492,7 +11492,7 @@ proof of relcnvfld {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of domain ~ df-dm that doesn't require dummy
+/*Alternate definition of domain ~ df-dm that doesn't require dummy
      variables.  (Contributed by NM, 2-Aug-2010.) */
 
 theorem dfdm2 (A : class)  {
@@ -11523,7 +11523,7 @@ proof of dfdm2 {
 	qed prop 1 = step 20 ;;
 }
 
-/* The double class union of a non-empty cross product is the union of it
+/*The double class union of a non-empty cross product is the union of it
      members.  (Contributed by NM, 17-Sep-2006.) */
 
 theorem unixp (A : class, B : class)  {
@@ -11551,7 +11551,7 @@ proof of unixp {
 	qed prop 1 = step 17 ;;
 }
 
-/* A cross product is empty iff its union is empty.  (Contributed by NM,
+/*A cross product is empty iff its union is empty.  (Contributed by NM,
        20-Sep-2006.) */
 
 theorem unixp0 (A : class, B : class) disjointed(x y z A, x y z B) {
@@ -11581,7 +11581,7 @@ proof of unixp0 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Field of a square cross product.  (Contributed by FL, 10-Oct-2009.) */
+/*Field of a square cross product.  (Contributed by FL, 10-Oct-2009.) */
 
 theorem unixpid (A : class)  {
 	prop 1 : wff = |- ⋃ ⋃ ( A × A ) = A ;;
@@ -11616,7 +11616,7 @@ proof of unixpid {
 	qed prop 1 = step 25 ;;
 }
 
-/* The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
+/*The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
      p. 26.  (Contributed by NM, 17-Mar-1998.) */
 
 theorem cnvexg (A : class, V : class)  {
@@ -11640,7 +11640,7 @@ proof of cnvexg {
 	qed prop 1 = step 13 ;;
 }
 
-/* The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
+/*The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
        p. 26.  (Contributed by NM, 19-Dec-2003.) */
 
 theorem cnvex (A : class)  {
@@ -11655,7 +11655,7 @@ proof of cnvex {
 	qed prop 1 = step 2 ;;
 }
 
-/* A relation is a set iff its converse is a set.  (Contributed by FL,
+/*A relation is a set iff its converse is a set.  (Contributed by FL,
      3-Mar-2007.) */
 
 theorem relcnvexb (R : class)  {
@@ -11673,7 +11673,7 @@ proof of relcnvexb {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restriction of a class to a singleton.  (Contributed by Mario Carneiro,
+/*Restriction of a class to a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) */
 
 theorem ressn (A : class, B : class) disjointed(x y A, x y B) {
@@ -11703,7 +11703,7 @@ proof of ressn {
 	qed prop 1 = step 18 ;;
 }
 
-/* The converse of an intersection is the intersection of the converse.
+/*The converse of an intersection is the intersection of the converse.
        (Contributed by FL, 15-Oct-2012.) */
 
 theorem cnviin (x : set, A : class, B : class) disjointed(A a b x, B a b) {
@@ -11744,7 +11744,7 @@ proof of cnviin {
 	qed prop 1 = step 29 ;;
 }
 
-/* The converse of a partial order relation is a partial order relation.
+/*The converse of a partial order relation is a partial order relation.
        (Contributed by NM, 15-Jun-2005.) */
 
 theorem cnvpo (A : class, R : class) disjointed(x y z A, x y z R) {
@@ -11806,7 +11806,7 @@ proof of cnvpo {
 	qed prop 1 = step 50 ;;
 }
 
-/* The converse of a strict order relation is a strict order relation.
+/*The converse of a strict order relation is a strict order relation.
        (Contributed by NM, 15-Jun-2005.) */
 
 theorem cnvso (A : class, R : class) disjointed(x y A, x y R) {
@@ -11834,7 +11834,7 @@ proof of cnvso {
 	qed prop 1 = step 16 ;;
 }
 
-/* The composition of two sets is a set.  (Contributed by NM,
+/*The composition of two sets is a set.  (Contributed by NM,
      19-Mar-1998.) */
 
 theorem coexg (A : class, B : class, V : class, W : class)  {
@@ -11859,7 +11859,7 @@ proof of coexg {
 	qed prop 1 = step 14 ;;
 }
 
-/* The composition of two sets is a set.  (Contributed by NM,
+/*The composition of two sets is a set.  (Contributed by NM,
        15-Dec-2003.) */
 
 theorem coex (A : class, B : class)  {

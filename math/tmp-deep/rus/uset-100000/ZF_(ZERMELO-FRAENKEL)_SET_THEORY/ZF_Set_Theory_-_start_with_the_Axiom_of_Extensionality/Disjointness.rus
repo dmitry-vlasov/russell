@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Indexed_union_and_intersection.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                      Disjointness
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,14 +10,14 @@ constant {
 	symbol Disj_ ;;
 }
 
-/* Extend wff notation to include the statement that a family of classes
+/*Extend wff notation to include the statement that a family of classes
      ` B ( x ) ` , for ` x e. A ` , is a disjoint family. */
 
 rule wdisj (x : set, A : class, B : class) {
 	term : wff = # Disj_ x ∈ A B ;;
 }
 
-/* A collection of classes ` B ( x ) ` is disjoint when for each element
+/*A collection of classes ` B ( x ) ` is disjoint when for each element
        ` y ` , it is in ` B ( x ) ` for at most one ` x ` .  (Contributed by
        Mario Carneiro, 14-Nov-2016.)  (Revised by NM, 16-Jun-2017.) */
 
@@ -28,7 +28,7 @@ definition df-disj (x : set, y : set, A : class, B : class) disjointed(x y, y A,
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Alternate definition for disjoint classes.  (Contributed by NM,
+/*Alternate definition for disjoint classes.  (Contributed by NM,
        17-Jun-2017.) */
 
 theorem dfdisj2 (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
@@ -43,7 +43,7 @@ proof of dfdisj2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* If each element of a collection is contained in a disjoint collection,
+/*If each element of a collection is contained in a disjoint collection,
        the original collection is also disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
@@ -64,7 +64,7 @@ proof of disjss2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for disjoint collection.  (Contributed by Mario Carneiro,
+/*Equality theorem for disjoint collection.  (Contributed by Mario Carneiro,
      14-Nov-2016.) */
 
 theorem disjeq2 (x : set, A : class, B : class, C : class)  {
@@ -84,7 +84,7 @@ proof of disjeq2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality deduction for disjoint collection.  (Contributed by Mario
+/*Equality deduction for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
 theorem disjeq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -100,7 +100,7 @@ proof of disjeq2dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* A subset of a disjoint collection is disjoint.  (Contributed by Mario
+/*A subset of a disjoint collection is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
 theorem disjss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
@@ -121,10 +121,10 @@ proof of disjss1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for disjoint collection.  (Contributed by Mario
+/*Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
-theorem disjeq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+theorem disjeq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B, C) {
 	prop 1 : wff = |- ( A = B → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
 }
 
@@ -139,10 +139,10 @@ proof of disjeq1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for disjoint collection.  (Contributed by Mario
+/*Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
-theorem disjeq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+theorem disjeq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, C) {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
@@ -154,10 +154,10 @@ proof of disjeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for disjoint collection.  (Contributed by Mario
+/*Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
-theorem disjeq12d (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ph) {
+theorem disjeq12d (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, C, x ph) {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
 	hyp 2 : wff = |- ( ph → C = D ) ;;
 	-----------------------
@@ -172,7 +172,7 @@ proof of disjeq12d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Change bound variables in a disjoint collection.  (Contributed by Mario
+/*Change bound variables in a disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
 theorem cbvdisj (x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, z B, z C) {
@@ -196,7 +196,7 @@ proof of cbvdisj {
 	qed prop 1 = step 8 ;;
 }
 
-/* Change bound variables in a disjoint collection.  (Contributed by Mario
+/*Change bound variables in a disjoint collection.  (Contributed by Mario
        Carneiro, 11-Dec-2016.) */
 
 theorem cbvdisjv (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, y B, x C) {
@@ -212,7 +212,7 @@ proof of cbvdisjv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for disjoint collection.  (Contributed
+/*Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) */
 
 theorem nfdisj (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
@@ -243,7 +243,7 @@ proof of nfdisj {
 	qed prop 1 = step 16 ;;
 }
 
-/* Bound-variable hypothesis builder for disjoint collection.  (Contributed
+/*Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) */
 
 theorem nfdisj1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -259,7 +259,7 @@ proof of nfdisj1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+/*Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by
        Mario Carneiro, 14-Nov-2016.) */
 
@@ -295,7 +295,7 @@ proof of disjor {
 	qed prop 1 = step 21 ;;
 }
 
-/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+/*Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)
        (New usage is discouraged.) */
 
@@ -312,7 +312,7 @@ proof of disjmoOLD {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+/*Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 14-Nov-2016.) */
 
 theorem disjors (x : set, A : class, B : class, i : set, j : set) disjointed(i j x A, i j B) {
@@ -330,7 +330,7 @@ proof of disjors {
 	qed prop 1 = step 7 ;;
 }
 
-/* Property of a disjoint collection: if ` B ( X ) = C ` and
+/*Property of a disjoint collection: if ` B ( X ) = C ` and
        ` B ( Y ) = D ` , and ` X =/= Y ` , then ` C ` and ` D ` are disjoint.
        (Contributed by Mario Carneiro, 14-Nov-2016.) */
 
@@ -368,11 +368,11 @@ proof of disji2 {
 	qed prop 1 = step 22 ;;
 }
 
-/* Property of a disjoint collection: if ` B ( X ) = C ` and
+/*Property of a disjoint collection: if ` B ( X ) = C ` and
        ` B ( Y ) = D ` have a common element ` Z ` , then ` X = Y ` .
        (Contributed by Mario Carneiro, 14-Nov-2016.) */
 
-theorem disji (x : set, A : class, B : class, C : class, D : class, X : class, Y : class, Z : class) disjointed(x A, x C, x D, x X, x Y) {
+theorem disji (x : set, A : class, B : class, C : class, D : class, X : class, Y : class, Z : class) disjointed(x A, B, x C, x D, x X, x Y) {
 	hyp 1 : wff = |- ( x = X → B = C ) ;;
 	hyp 2 : wff = |- ( x = Y → B = D ) ;;
 	-----------------------
@@ -389,7 +389,7 @@ proof of disji {
 	qed prop 1 = step 6 ;;
 }
 
-/* If there is a function ` C ( y ) ` such that ` C ( y ) = x ` for all
+/*If there is a function ` C ( y ) ` such that ` C ( y ) = x ` for all
        ` y e. B ( x ) ` , then the sets ` B ( x ) ` for distinct ` x e. A ` are
        disjoint.  (Contributed by Mario Carneiro, 10-Dec-2016.) */
 
@@ -418,7 +418,7 @@ proof of invdisj {
 	qed prop 1 = step 17 ;;
 }
 
-/* A disjoint collection yields disjoint indexed unions for disjoint index
+/*A disjoint collection yields disjoint indexed unions for disjoint index
        sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by Mario
        Carneiro, 14-Nov-2016.) */
 
@@ -481,7 +481,7 @@ proof of disjiun {
 	qed prop 1 = step 50 ;;
 }
 
-/* A disjoint collection yields disjoint indexed unions for disjoint index
+/*A disjoint collection yields disjoint indexed unions for disjoint index
        sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)
        (New usage is discouraged.) */
 
@@ -496,7 +496,7 @@ proof of disjiunOLD {
 	qed prop 1 = step 3 ;;
 }
 
-/* Any collection of singletons is disjoint.  (Contributed by Mario
+/*Any collection of singletons is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
 theorem sndisj (x : set, A : class) disjointed(x y, y A) {
@@ -517,7 +517,7 @@ proof of sndisj {
 	qed prop 1 = step 9 ;;
 }
 
-/* Any collection of empty sets is disjoint.  (Contributed by Mario Carneiro,
+/*Any collection of empty sets is disjoint.  (Contributed by Mario Carneiro,
      14-Nov-2016.) */
 
 theorem 0disj (x : set, A : class)  {
@@ -533,7 +533,7 @@ proof of 0disj {
 	qed prop 1 = step 5 ;;
 }
 
-/* A singleton collection is disjoint.  (Contributed by Mario Carneiro,
+/*A singleton collection is disjoint.  (Contributed by Mario Carneiro,
        14-Nov-2016.) */
 
 theorem disjxsn (x : set, A : class, B : class) disjointed(x y A, y B) {
@@ -552,10 +552,10 @@ proof of disjxsn {
 	qed prop 1 = step 7 ;;
 }
 
-/* An empty collection is disjoint.  (Contributed by Mario Carneiro,
+/*An empty collection is disjoint.  (Contributed by Mario Carneiro,
        14-Nov-2016.) */
 
-theorem disjx0 (x : set, B : class)  {
+theorem disjx0 (x : set, B : class) disjointed(x, B) {
 	prop 1 : wff = |- Disj_ x ∈ ∅ B ;;
 }
 
@@ -567,7 +567,7 @@ proof of disjx0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A pair collection is disjoint iff the two sets in the family have empty
+/*A pair collection is disjoint iff the two sets in the family have empty
        intersection.  (Contributed by Mario Carneiro, 14-Nov-2016.) */
 
 theorem disjprg (x : set, A : class, B : class, C : class, D : class, E : class, V : class) disjointed(x y z A, x y z B, y z C, x y z D, x y z E) {
@@ -653,7 +653,7 @@ proof of disjprg {
 	qed prop 1 = step 71 ;;
 }
 
-/* An indexed union of a disjoint collection of disjoint collections is
+/*An indexed union of a disjoint collection of disjoint collections is
        disjoint if each component is disjoint, and the disjoint unions in the
        collection are also disjoint.  Note that ` B ( y ) ` and ` C ( x ) ` may
        have the displayed free variables.  (Contributed by Mario Carneiro,
@@ -826,7 +826,7 @@ proof of disjxiun {
 	qed prop 1 = step 158 ;;
 }
 
-/* The union of two disjoint collections.  (Contributed by Mario Carneiro,
+/*The union of two disjoint collections.  (Contributed by Mario Carneiro,
        14-Nov-2016.) */
 
 theorem disjxun (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(w x y z A, w x y z B, w y z C, w x z D) {
@@ -939,7 +939,7 @@ proof of disjxun {
 	qed prop 1 = step 99 ;;
 }
 
-/* Expand a disjoint collection with any number of empty sets.
+/*Expand a disjoint collection with any number of empty sets.
        (Contributed by Mario Carneiro, 15-Nov-2016.) */
 
 theorem disjss3 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {

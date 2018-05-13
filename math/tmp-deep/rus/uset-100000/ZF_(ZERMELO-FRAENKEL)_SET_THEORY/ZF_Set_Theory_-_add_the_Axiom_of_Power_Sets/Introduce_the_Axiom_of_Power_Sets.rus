@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             Introduce the Axiom of Power Sets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Power Sets.  An axiom of Zermelo-Fraenkel set theory.  It
+/*Axiom of Power Sets.  An axiom of Zermelo-Fraenkel set theory.  It
        states that a set ` y ` exists that includes the power set of a given
        set ` x ` i.e. contains every subset of ` x ` .  The variant ~ axpow2
        uses explicit subset notation.  A version using class notation is
@@ -16,7 +16,7 @@ axiom ax-pow (x : set, y : set, z : set, w : set) disjointed(x y z w) {
 	prop 1 : wff = |- ∃ y ∀ z ( ∀ w ( w ∈ z → w ∈ x ) → z ∈ y ) ;;
 }
 
-/* Axiom of Power Sets expressed with the fewest number of different
+/*Axiom of Power Sets expressed with the fewest number of different
        variables.  (Contributed by NM, 14-Aug-2003.) */
 
 theorem zfpow (x : set, y : set, z : set) disjointed(x y z w) {
@@ -37,7 +37,7 @@ proof of zfpow {
 	qed prop 1 = step 9 ;;
 }
 
-/* A variant of the Axiom of Power Sets ~ ax-pow using subset notation.
+/*A variant of the Axiom of Power Sets ~ ax-pow using subset notation.
        Problem in {BellMachover] p. 466.  (Contributed by NM, 4-Jun-2006.) */
 
 theorem axpow2 (x : set, y : set, z : set) disjointed(x y z w) {
@@ -55,7 +55,7 @@ proof of axpow2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A variant of the Axiom of Power Sets ~ ax-pow .  For any set ` x ` ,
+/*A variant of the Axiom of Power Sets ~ ax-pow .  For any set ` x ` ,
        there exists a set ` y ` whose members are exactly the subsets of ` x `
        i.e. the power set of ` x ` .  Axiom Pow of [BellMachover] p. 466.
        (Contributed by NM, 4-Jun-2006.) */
@@ -74,7 +74,7 @@ proof of axpow3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Every set is an element of some other set.  See ~ elALT for a shorter
+/*Every set is an element of some other set.  See ~ elALT for a shorter
        proof using more axioms.  (Contributed by NM, 4-Jan-2002.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -95,7 +95,7 @@ proof of el {
 	qed prop 1 = step 8 ;;
 }
 
-/* Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
+/*Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) */
 
@@ -121,7 +121,7 @@ proof of pwex {
 	qed prop 1 = step 11 ;;
 }
 
-/* Power set axiom expressed in class notation, with the sethood
+/*Power set axiom expressed in class notation, with the sethood
        requirement as an antecedent.  Axiom 4 of [TakeutiZaring] p. 17.
        (Contributed by NM, 30-Oct-2003.) */
 
@@ -139,7 +139,7 @@ proof of pwexg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existence of a class of subsets.  (Contributed by NM, 15-Jul-2006.)
+/*Existence of a class of subsets.  (Contributed by NM, 15-Jul-2006.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem abssexg (ph : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -159,13 +159,13 @@ proof of abssexg {
 	qed prop 1 = step 9 ;;
 }
 
-/* A singleton is a set.  Theorem 7.13 of [Quine] p. 51, but proved using
+/*A singleton is a set.  Theorem 7.13 of [Quine] p. 51, but proved using
        only Extensionality, Power Set, and Separation.  Unlike the proof of
        ~ zfpair , Replacement is not needed.  (Contributed by NM, 7-Aug-1994.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.)  See also ~ snex .
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
-theorem snexALT (A : class)  {
+theorem snexALT (A : class) disjointed(A) {
 	prop 1 : wff = |- { A } ∈ _V ;;
 }
 
@@ -184,7 +184,7 @@ proof of snexALT {
 	qed prop 1 = step 11 ;;
 }
 
-/* The power set of the empty set (the ordinal 1) is a set.  See also
+/*The power set of the empty set (the ordinal 1) is a set.  See also
      ~ p0exALT .  (Contributed by NM, 23-Dec-1993.) */
 
 theorem p0ex ()  {
@@ -199,7 +199,7 @@ proof of p0ex {
 	qed prop 1 = step 4 ;;
 }
 
-/* The power set of the empty set (the ordinal 1) is a set.  Alternate proof
+/*The power set of the empty set (the ordinal 1) is a set.  Alternate proof
      which is longer and quite different from the proof of ~ p0ex if ~ snexALT
      is expanded.  (Contributed by NM, 23-Dec-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -213,7 +213,7 @@ proof of p0exALT {
 	qed prop 1 = step 1 ;;
 }
 
-/* The power set of the power set of the empty set (the ordinal 2) is a set.
+/*The power set of the power set of the empty set (the ordinal 2) is a set.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem pp0ex ()  {
@@ -228,7 +228,7 @@ proof of pp0ex {
 	qed prop 1 = step 4 ;;
 }
 
-/* The ordinal number 3 is a set, proved without the Axiom of Union
+/*The ordinal number 3 is a set, proved without the Axiom of Union
      ~ ax-un .  (Contributed by NM, 2-May-2009.) */
 
 theorem ord3ex ()  {
@@ -249,7 +249,7 @@ proof of ord3ex {
 	qed prop 1 = step 10 ;;
 }
 
-/* At least two sets exist (or in terms of first-order logic, the universe
+/*At least two sets exist (or in terms of first-order logic, the universe
        of discourse has two or more objects).  Note that we may not substitute
        the same variable for both ` x ` and ` y ` (as indicated by the distinct
        variable requirement), for otherwise we would contradict ~ stdpc6 .
@@ -302,7 +302,7 @@ proof of dtru {
 	qed prop 1 = step 27 ;;
 }
 
-/* This theorem shows that axiom ~ ax-16 is redundant in the presence of
+/*This theorem shows that axiom ~ ax-16 is redundant in the presence of
        theorem ~ dtru , which states simply that at least two things exist.
        This justifies the remark at
        ~ http://us.metamath.org/mpeuni/mmzfcnd.html#twoness (which links to
@@ -318,7 +318,7 @@ proof of ax16b {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existential uniqueness implies there is a value for which the wff
+/*Existential uniqueness implies there is a value for which the wff
        argument is false.  (Contributed by NM, 24-Oct-2010.) */
 
 theorem eunex (ph : wff, x : set) disjointed(x y, y ph) {
@@ -339,7 +339,7 @@ proof of eunex {
 	qed prop 1 = step 9 ;;
 }
 
-/* A set variable is not free from itself.  The proof relies on ~ dtru ,
+/*A set variable is not free from itself.  The proof relies on ~ dtru ,
        that is, it is not true in a one-element domain.  (Contributed by Mario
        Carneiro, 8-Oct-2016.) */
 
@@ -368,13 +368,13 @@ proof of nfnid {
 	qed prop 1 = step 16 ;;
 }
 
-/* The "distinctor" expression ` -. A. x x = y ` , stating that ` x ` and
+/*The "distinctor" expression ` -. A. x x = y ` , stating that ` x ` and
        ` y ` are not the same variable, can be written in terms of ` F/ ` in
        the obvious way.  This theorem is not true in a one-element domain,
        because then ` F/_ x y ` and ` A. x x = y ` will both be true.
        (Contributed by Mario Carneiro, 8-Oct-2016.) */
 
-theorem nfcvb (x : set, y : set) disjointed(x y) {
+theorem nfcvb (x : set, y : set) disjointed(x y, x, y) {
 	prop 1 : wff = |- ( F/_ x y ↔ ¬ ∀ x x = y ) ;;
 }
 
@@ -389,7 +389,7 @@ proof of nfcvb {
 	qed prop 1 = step 7 ;;
 }
 
-/* A class is a subclass of the power class of its union.  Exercise 6(b) of
+/*A class is a subclass of the power class of its union.  Exercise 6(b) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.) */
 
 theorem pwuni (A : class) disjointed(A x) {
@@ -406,7 +406,7 @@ proof of pwuni {
 	qed prop 1 = step 5 ;;
 }
 
-/* A version of ~ dtru ("two things exist") with a shorter proof that uses
+/*A version of ~ dtru ("two things exist") with a shorter proof that uses
        more axioms but may be easier to understand.
 
        Assuming that ZF set theory is consistent, we cannot prove this theorem
@@ -444,7 +444,7 @@ proof of dtruALT {
 	qed prop 1 = step 16 ;;
 }
 
-/* Corollary of ~ dtru .  This example illustrates the danger of blindly
+/*Corollary of ~ dtru .  This example illustrates the danger of blindly
        trusting the standard Deduction Theorem without accounting for free
        variables: the theorem form of this deduction is not valid, as shown by
        ~ dtrucor2 .  (Contributed by NM, 27-Jun-2002.) */
@@ -462,7 +462,7 @@ proof of dtrucor {
 	qed prop 1 = step 3 ;;
 }
 
-/* The theorem form of the deduction ~ dtrucor leads to a contradiction, as
+/*The theorem form of the deduction ~ dtrucor leads to a contradiction, as
        mentioned in the "Wrong!" example at
        ~ http://us.metamath.org/mpeuni/mmdeduction.html#bad .  (Contributed by
        NM, 20-Oct-2007.) */
@@ -483,7 +483,7 @@ proof of dtrucor2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Demonstration of a theorem (scheme) that requires (meta)variables ` x `
+/*Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        and ` y ` to be distinct, but no others.  It bundles the theorem schemes
        ` E. x ( x = y -> x e. x ) ` and ` E. x ( x = y -> y e. x ) ` .  Compare
        ~ dvdemo2 .  ("Bundles" is a term introduced by Raph Levien.)
@@ -503,7 +503,7 @@ proof of dvdemo1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Demonstration of a theorem (scheme) that requires (meta)variables ` x `
+/*Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        and ` z ` to be distinct, but no others.  It bundles the theorem schemes
        ` E. x ( x = x -> z e. x ) ` and ` E. x ( x = y -> y e. x ) ` .  Compare
        ~ dvdemo1 .  (Contributed by NM, 1-Dec-2006.) */

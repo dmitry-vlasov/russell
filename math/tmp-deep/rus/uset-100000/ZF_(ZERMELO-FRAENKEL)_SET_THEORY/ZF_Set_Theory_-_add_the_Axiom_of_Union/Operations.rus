@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Functions.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Operations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Extend class notation to include the value of an operation ` F ` (such as
+/*Extend class notation to include the value of an operation ` F ` (such as
      ` + ` ) for two arguments ` A ` and ` B ` .  Note that the syntax is
      simply three class symbols in a row surrounded by parentheses.  Since
      operation values are the only possible class expressions consisting of
@@ -18,21 +18,21 @@ rule co (A : class, B : class, F : class) {
 	term : class = # ( A F B ) ;;
 }
 
-/* Extend class notation to include class abstraction (class builder) of
+/*Extend class notation to include class abstraction (class builder) of
      nested ordered pairs. */
 
 rule coprab (ph : wff, x : set, y : set, z : set) {
 	term : class = # { 〈 〈 x , y 〉 , z 〉 | ph } ;;
 }
 
-/* Extend the definition of a class to include maps-to notation for defining
+/*Extend the definition of a class to include maps-to notation for defining
      an operation via a rule. */
 
 rule cmpt2 (x : set, y : set, A : class, B : class, C : class) {
 	term : class = # ( x ∈ A , y ∈ B ↦ C ) ;;
 }
 
-/* Define the value of an operation.  Definition of operation value in
+/*Define the value of an operation.  Definition of operation value in
      [Enderton] p. 79.  Note that the syntax is simply three class expressions
      in a row bracketed by parentheses.  There are no restrictions of any kind
      on what those class expressions may be, although only certain kinds of
@@ -54,7 +54,7 @@ definition df-ov (A : class, B : class, F : class)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the class abstraction (class builder) of a collection of nested
+/*Define the class abstraction (class builder) of a collection of nested
        ordered pairs (for use in defining operations).  This is a special case
        of Definition 4.16 of [TakeutiZaring] p. 14.  Normally ` x ` , ` y ` ,
        and ` z ` are distinct, although the definition doesn't strictly require
@@ -70,7 +70,7 @@ definition df-oprab (ph : wff, x : set, y : set, z : set, w : set) disjointed(x 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define maps-to notation for defining an operation via a rule.  Read as
+/*Define maps-to notation for defining an operation via a rule.  Read as
        "the operation defined by the map from ` x , y ` (in ` A X. B ` ) to
        ` B ( x , y ) ` ."  An extension of ~ df-mpt for two arguments.
        (Contributed by NM, 17-Feb-2008.) */
@@ -82,7 +82,7 @@ definition df-mpt2 (x : set, y : set, z : set, A : class, B : class, C : class) 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for operation value.  (Contributed by NM,
+/*Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) */
 
 theorem oveq (A : class, B : class, F : class, G : class)  {
@@ -97,7 +97,7 @@ proof of oveq {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for operation value.  (Contributed by NM,
+/*Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) */
 
 theorem oveq1 (A : class, B : class, C : class, F : class)  {
@@ -113,7 +113,7 @@ proof of oveq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for operation value.  (Contributed by NM,
+/*Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) */
 
 theorem oveq2 (A : class, B : class, C : class, F : class)  {
@@ -129,7 +129,7 @@ proof of oveq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for operation value.  (Contributed by NM,
+/*Equality theorem for operation value.  (Contributed by NM,
      16-Jul-1995.) */
 
 theorem oveq12 (A : class, B : class, C : class, D : class, F : class)  {
@@ -143,7 +143,7 @@ proof of oveq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for operation value.  (Contributed by NM,
+/*Equality inference for operation value.  (Contributed by NM,
        28-Feb-1995.) */
 
 theorem oveq1i (A : class, B : class, C : class, F : class)  {
@@ -158,7 +158,7 @@ proof of oveq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for operation value.  (Contributed by NM,
+/*Equality inference for operation value.  (Contributed by NM,
        28-Feb-1995.) */
 
 theorem oveq2i (A : class, B : class, C : class, F : class)  {
@@ -173,7 +173,7 @@ proof of oveq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for operation value.  (Contributed by NM,
+/*Equality inference for operation value.  (Contributed by NM,
          28-Feb-1995.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) */
 
 theorem oveq12i (A : class, B : class, C : class, D : class, F : class)  {
@@ -189,7 +189,7 @@ proof of oveq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for operation value.  (Contributed by NM,
+/*Equality inference for operation value.  (Contributed by NM,
        24-Nov-2007.) */
 
 theorem oveqi (A : class, B : class, C : class, D : class)  {
@@ -204,7 +204,7 @@ proof of oveqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for operation value.  (Contributed by FL,
+/*Equality inference for operation value.  (Contributed by FL,
        11-Jul-2010.) */
 
 theorem oveq123i (A : class, B : class, C : class, D : class, F : class, G : class)  {
@@ -222,7 +222,7 @@ proof of oveq123i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
        13-Mar-1995.) */
 
 theorem oveq1d (ph : wff, A : class, B : class, C : class, F : class)  {
@@ -237,7 +237,7 @@ proof of oveq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
        13-Mar-1995.) */
 
 theorem oveq2d (ph : wff, A : class, B : class, C : class, F : class)  {
@@ -252,7 +252,7 @@ proof of oveq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
        9-Sep-2006.) */
 
 theorem oveqd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -267,7 +267,7 @@ proof of oveqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
          13-Mar-1995.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) */
 
 theorem oveq12d (ph : wff, A : class, B : class, C : class, D : class, F : class)  {
@@ -283,7 +283,7 @@ proof of oveq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
          10-Aug-1995.) */
 
 theorem oveqan12d (ph : wff, ps : wff, A : class, B : class, C : class, D : class, F : class)  {
@@ -299,7 +299,7 @@ proof of oveqan12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by NM,
+/*Equality deduction for operation value.  (Contributed by NM,
          10-Aug-1995.) */
 
 theorem oveqan12rd (ph : wff, ps : wff, A : class, B : class, C : class, D : class, F : class)  {
@@ -315,7 +315,7 @@ proof of oveqan12rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for operation value.  (Contributed by FL,
+/*Equality deduction for operation value.  (Contributed by FL,
        22-Dec-2008.) */
 
 theorem oveq123d (ph : wff, A : class, B : class, C : class, D : class, F : class, G : class)  {
@@ -333,7 +333,7 @@ proof of oveq123d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of bound-variable hypothesis builder ~ nfov .
+/*Deduction version of bound-variable hypothesis builder ~ nfov .
        (Contributed by NM, 13-Dec-2005.)  (Proof shortened by Andrew Salmon,
        22-Oct-2011.) */
 
@@ -353,7 +353,7 @@ proof of nfovd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for operation value.  (Contributed by
+/*Bound-variable hypothesis builder for operation value.  (Contributed by
        NM, 4-May-2004.) */
 
 theorem nfov (x : set, A : class, B : class, F : class)  {
@@ -373,7 +373,7 @@ proof of nfov {
 	qed prop 1 = step 5 ;;
 }
 
-/* The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
+/*The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
        (Contributed by Mario Carneiro, 20-Mar-2013.) */
 
 theorem oprabid (ph : wff, x : set, y : set, z : set) disjointed(a ph r s t w, a r s t w x, a r s t w y, a r s t w z) {
@@ -478,7 +478,7 @@ proof of oprabid {
 	qed prop 1 = step 93 ;;
 }
 
-/* The result of an operation is a set.  (Contributed by NM, 13-Mar-1995.) */
+/*The result of an operation is a set.  (Contributed by NM, 13-Mar-1995.) */
 
 theorem ovex (A : class, B : class, F : class)  {
 	prop 1 : wff = |- ( A F B ) ∈ _V ;;
@@ -491,7 +491,7 @@ proof of ovex {
 	qed prop 1 = step 3 ;;
 }
 
-/* The result of an operation value is always a subset of the union of the
+/*The result of an operation value is always a subset of the union of the
      range.  (Contributed by Mario Carneiro, 12-Jan-2017.) */
 
 theorem ovssunirn (F : class, X : class, Y : class)  {
@@ -505,7 +505,7 @@ proof of ovssunirn {
 	qed prop 1 = step 3 ;;
 }
 
-/* The value of an operation when the one of the arguments is a proper
+/*The value of an operation when the one of the arguments is a proper
        class.  Note: this theorem is dependent on our particular definitions of
        operation value, function value, and ordered pair.  (Contributed by
        Mario Carneiro, 26-Apr-2015.) */
@@ -529,7 +529,7 @@ proof of ovprc {
 	qed prop 1 = step 9 ;;
 }
 
-/* The value of an operation when the first argument is a proper class.
+/*The value of an operation when the first argument is a proper class.
        (Contributed by NM, 16-Jun-2004.) */
 
 theorem ovprc1 (A : class, B : class, F : class)  {
@@ -546,7 +546,7 @@ proof of ovprc1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The value of an operation when the second argument is a proper class.
+/*The value of an operation when the second argument is a proper class.
        (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
 theorem ovprc2 (A : class, B : class, F : class)  {
@@ -563,7 +563,7 @@ proof of ovprc2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Reverse closure for an operation value.  (Contributed by Mario Carneiro,
+/*Reverse closure for an operation value.  (Contributed by Mario Carneiro,
        5-May-2015.) */
 
 theorem ovrcl (A : class, B : class, C : class, F : class)  {
@@ -579,7 +579,7 @@ proof of ovrcl {
 	qed prop 1 = step 3 ;;
 }
 
-/* Move class substitution in and out of an operation.  (Contributed by NM,
+/*Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.)  (Proof shortened by Mario Carneiro, 5-Dec-2016.) */
 
 theorem csbovg (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(y A, y B, y C, y D, y F, x y) {
@@ -608,10 +608,10 @@ proof of csbovg {
 	qed prop 1 = step 17 ;;
 }
 
-/* Move class substitution in and out of an operation.  (Contributed by NM,
+/*Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) */
 
-theorem csbov12g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(x F) {
+theorem csbov12g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(A, C, D, x F) {
 	prop 1 : wff = |- ( A ∈ D → [_ A / x ]_ ( B F C ) = ( [_ A / x ]_ B F [_ A / x ]_ C ) ) ;;
 }
 
@@ -623,10 +623,10 @@ proof of csbov12g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move class substitution in and out of an operation.  (Contributed by NM,
+/*Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) */
 
-theorem csbov1g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(x C, x F) {
+theorem csbov1g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(A, x C, D, x F) {
 	prop 1 : wff = |- ( A ∈ D → [_ A / x ]_ ( B F C ) = ( [_ A / x ]_ B F C ) ) ;;
 }
 
@@ -638,10 +638,10 @@ proof of csbov1g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move class substitution in and out of an operation.  (Contributed by NM,
+/*Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) */
 
-theorem csbov2g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(x B, x F) {
+theorem csbov2g (x : set, A : class, B : class, C : class, D : class, F : class) disjointed(A, x B, D, x F) {
 	prop 1 : wff = |- ( A ∈ D → [_ A / x ]_ ( B F C ) = ( B F [_ A / x ]_ C ) ) ;;
 }
 
@@ -653,7 +653,7 @@ proof of csbov2g {
 	qed prop 1 = step 4 ;;
 }
 
-/* A frequently used special case of ~ rspc2ev for operation values.
+/*A frequently used special case of ~ rspc2ev for operation values.
        (Contributed by NM, 21-Mar-2007.) */
 
 theorem rspceov (x : set, y : set, A : class, B : class, C : class, D : class, S : class, F : class) disjointed(x A, x y B, x y C, y D, x y F, x y S) {
@@ -669,7 +669,7 @@ proof of rspceov {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equivalence of operation value and ordered triple membership, analogous
+/*Equivalence of operation value and ordered triple membership, analogous
        to ~ fnopfvb .  (Contributed by NM, 17-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
@@ -690,7 +690,7 @@ proof of fnotovb {
 	qed prop 1 = step 9 ;;
 }
 
-/* Class abstraction for operations in terms of class abstraction of
+/*Class abstraction for operations in terms of class abstraction of
        ordered pairs.  (Contributed by NM, 12-Mar-1995.) */
 
 theorem dfoprab2 (ph : wff, x : set, y : set, z : set, w : set) disjointed(x z w v, y z w v, w ph v) {
@@ -726,7 +726,7 @@ proof of dfoprab2 {
 	qed prop 1 = step 24 ;;
 }
 
-/* An operation class abstraction is a relation.  (Contributed by NM,
+/*An operation class abstraction is a relation.  (Contributed by NM,
        16-Jun-2004.) */
 
 theorem reloprab (ph : wff, x : set, y : set, z : set) disjointed(x z w, y z w, w ph) {
@@ -740,7 +740,7 @@ proof of reloprab {
 	qed prop 1 = step 2 ;;
 }
 
-/* @{
+/*@{
     @d x y z w v @.  @d ph v @.
     dfoprab2f.1 @e |- ( ph -> A. w ph ) @.
     @( Class abstraction for operations in terms of class abstraction of
@@ -756,7 +756,7 @@ proof of reloprab {
   @}
 */
 
-/* The abstraction variables in an operation class abstraction are not
+/*The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 25-Apr-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) */
 
@@ -773,7 +773,7 @@ proof of nfoprab1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The abstraction variables in an operation class abstraction are not
+/*The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 25-Apr-1995.)  (Revised by David Abernethy,
        30-Jul-2012.) */
 
@@ -791,7 +791,7 @@ proof of nfoprab2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The abstraction variables in an operation class abstraction are not
+/*The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 22-Aug-2013.) */
 
 theorem nfoprab3 (ph : wff, x : set, y : set, z : set) disjointed(w x, w y, w z, w ph) {
@@ -809,7 +809,7 @@ proof of nfoprab3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Bound-variable hypothesis builder for an operation class abstraction.
+/*Bound-variable hypothesis builder for an operation class abstraction.
        (Contributed by NM, 22-Aug-2013.) */
 
 theorem nfoprab (ph : wff, x : set, y : set, z : set, w : set) disjointed(v w x, v w y, v w z, v ph) {
@@ -831,7 +831,7 @@ proof of nfoprab {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equivalent wff's yield equal operation class abstractions (deduction
+/*Equivalent wff's yield equal operation class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.)  (Revised by Mario Carneiro,
        24-Jun-2014.) */
 
@@ -857,10 +857,10 @@ proof of oprabbid {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equivalent wff's yield equal operation class abstractions (deduction
+/*Equivalent wff's yield equal operation class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.) */
 
-theorem oprabbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(x z ph, y z ph) {
+theorem oprabbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(x z ph, y z ph, ps, ch) {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → { 〈 〈 x , y 〉 , z 〉 | ps } = { 〈 〈 x , y 〉 , z 〉 | ch } ) ;;
@@ -874,7 +874,7 @@ proof of oprabbidv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equivalent wff's yield equal operation class abstractions.  (Contributed
+/*Equivalent wff's yield equal operation class abstractions.  (Contributed
        by NM, 28-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
 theorem oprabbii (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z w, y z w, w ph, w ps) {
@@ -892,7 +892,7 @@ proof of oprabbii {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equivalence of ordered pair abstraction subclass and implication.
+/*Equivalence of ordered pair abstraction subclass and implication.
        Compare ~ ssopab2 .  (Contributed by FL, 6-Nov-2013.)  (Proof shortened
        by Mario Carneiro, 11-Dec-2016.) */
 
@@ -920,7 +920,7 @@ proof of ssoprab2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Equivalence of ordered pair abstraction subclass and implication.  Compare
+/*Equivalence of ordered pair abstraction subclass and implication.  Compare
      ~ ssopab2b .  (Contributed by FL, 6-Nov-2013.)  (Proof shortened by Mario
      Carneiro, 11-Dec-2016.) */
 
@@ -950,7 +950,7 @@ proof of ssoprab2b {
 	qed prop 1 = step 18 ;;
 }
 
-/* Equivalence of ordered pair abstraction subclass and biconditional.
+/*Equivalence of ordered pair abstraction subclass and biconditional.
      Compare ~ eqopab2b .  (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem eqoprab2b (ph : wff, ps : wff, x : set, y : set, z : set)  {
@@ -970,7 +970,7 @@ proof of eqoprab2b {
 	qed prop 1 = step 9 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by Mario
+/*An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.)  (Revised by Mario Carneiro, 19-Mar-2015.) */
 
 theorem mpt2eq123 (x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(x y z A, y z B, x y z D, y z E, z C, z F) {
@@ -1013,7 +1013,7 @@ proof of mpt2eq123 {
 	qed prop 1 = step 31 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by Mario
+/*An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpt2eq12 (x : set, y : set, A : class, B : class, C : class, D : class, E : class) disjointed(x y A, x y B, x y C, x y D) {
@@ -1030,7 +1030,7 @@ proof of mpt2eq12 {
 	qed prop 1 = step 6 ;;
 }
 
-/* An equality deduction for the maps to notation.  (Contributed by Mario
+/*An equality deduction for the maps to notation.  (Contributed by Mario
          Carneiro, 26-Jan-2017.) */
 
 theorem mpt2eq123dva (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(z A, z B, z C, z D, z E, x z ph, z F, y z ph) {
@@ -1059,10 +1059,10 @@ proof of mpt2eq123dva {
 	qed prop 1 = step 13 ;;
 }
 
-/* An equality deduction for the maps to notation.  (Contributed by NM,
+/*An equality deduction for the maps to notation.  (Contributed by NM,
        12-Sep-2011.) */
 
-theorem mpt2eq123dv (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(x ph, y ph) {
+theorem mpt2eq123dv (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(A, B, C, D, E, x ph, F, y ph) {
 	hyp 1 : wff = |- ( ph → A = D ) ;;
 	hyp 2 : wff = |- ( ph → B = E ) ;;
 	hyp 3 : wff = |- ( ph → C = F ) ;;
@@ -1077,7 +1077,7 @@ proof of mpt2eq123dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by NM,
+/*An equality inference for the maps to notation.  (Contributed by NM,
        15-Jul-2013.) */
 
 theorem mpt2eq123i (x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class)  {
@@ -1097,7 +1097,7 @@ proof of mpt2eq123i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Slightly more general equality inference for the maps to notation.
+/*Slightly more general equality inference for the maps to notation.
        (Contributed by NM, 17-Oct-2013.) */
 
 theorem mpt2eq3dva (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x z ph, y z ph, z A, z B, z C, z D) {
@@ -1118,7 +1118,7 @@ proof of mpt2eq3dva {
 	qed prop 1 = step 7 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Mario
+/*An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpt2eq3ia (x : set, y : set, A : class, B : class, C : class, D : class)  {
@@ -1134,7 +1134,7 @@ proof of mpt2eq3ia {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for an operation in maps-to notation.
+/*Bound-variable hypothesis builder for an operation in maps-to notation.
        (Contributed by NM, 27-Aug-2013.) */
 
 theorem nfmpt21 (x : set, y : set, A : class, B : class, C : class) disjointed(z A, z B, z C, z x, z y) {
@@ -1149,7 +1149,7 @@ proof of nfmpt21 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for an operation in maps-to notation.
+/*Bound-variable hypothesis builder for an operation in maps-to notation.
        (Contributed by NM, 27-Aug-2013.) */
 
 theorem nfmpt22 (x : set, y : set, A : class, B : class, C : class) disjointed(z A, z B, z C, z x, z y) {
@@ -1164,7 +1164,7 @@ proof of nfmpt22 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for the maps-to notation.
+/*Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) */
 
 theorem nfmpt2 (x : set, y : set, z : set, A : class, B : class, C : class) disjointed(w x z, w y z, w A, w B, w C) {
@@ -1188,7 +1188,7 @@ proof of nfmpt2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Two ways to state the domain of an operation.  (Contributed by FL,
+/*Two ways to state the domain of an operation.  (Contributed by FL,
        24-Jan-2010.) */
 
 theorem oprab4 (ph : wff, x : set, y : set, z : set, A : class, B : class) disjointed(x y z) {
@@ -1202,7 +1202,7 @@ proof of oprab4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change first bound variable in an operation abstraction,
+/*Rule used to change first bound variable in an operation abstraction,
        using implicit substitution.  (Contributed by NM, 20-Dec-2008.)
        (Revised by Mario Carneiro, 5-Dec-2016.) */
 
@@ -1234,7 +1234,7 @@ proof of cbvoprab1 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Change the second bound variable in an operation abstraction.
+/*Change the second bound variable in an operation abstraction.
        (Contributed by Jeff Madsen, 11-Jun-2010.)  (Revised by Mario Carneiro,
        11-Dec-2016.) */
 
@@ -1268,7 +1268,7 @@ proof of cbvoprab2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Rule used to change first two bound variables in an operation
+/*Rule used to change first two bound variables in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        21-Feb-2004.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) */
 
@@ -1303,7 +1303,7 @@ proof of cbvoprab12 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Rule used to change first two bound variables in an operation
+/*Rule used to change first two bound variables in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        8-Oct-2004.) */
 
@@ -1322,7 +1322,7 @@ proof of cbvoprab12v {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule used to change the third bound variable in an operation
+/*Rule used to change the third bound variable in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        22-Aug-2013.) */
 
@@ -1353,7 +1353,7 @@ proof of cbvoprab3 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Rule used to change the third bound variable in an operation
+/*Rule used to change the third bound variable in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        8-Oct-2004.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
@@ -1370,7 +1370,7 @@ proof of cbvoprab3v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule to change the bound variable in a maps-to function, using implicit
+/*Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version of ~ cbvmpt2 allows ` B ` to be a function
        of ` x ` .  (Contributed by NM, 29-Dec-2014.) */
 
@@ -1423,7 +1423,7 @@ proof of cbvmpt2x {
 	qed prop 1 = step 31 ;;
 }
 
-/* Rule to change the bound variable in a maps-to function, using implicit
+/*Rule to change the bound variable in a maps-to function, using implicit
        substitution.  (Contributed by NM, 17-Dec-2013.) */
 
 theorem cbvmpt2 (x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class) disjointed(w x y z A, w x y z B) {
@@ -1444,7 +1444,7 @@ proof of cbvmpt2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rule to change the bound variable in a maps-to function, using implicit
+/*Rule to change the bound variable in a maps-to function, using implicit
        substitution.  With a longer proof analogous to ~ cbvmpt , some distinct
        variable requirements could be eliminated.  (Contributed by NM,
        11-Jun-2013.) */
@@ -1466,7 +1466,7 @@ proof of cbvmpt2v {
 	qed prop 1 = step 6 ;;
 }
 
-/* Eliminate a hypothesis which is a predicate expressing membership in the
+/*Eliminate a hypothesis which is a predicate expressing membership in the
        result of an operator (deduction version).  See ~ ghomgrplem for an
        example of its use.  (Contributed by Paul Chapman, 25-Mar-2008.) */
 
@@ -1494,7 +1494,7 @@ proof of elimdelov {
 	qed prop 1 = step 13 ;;
 }
 
-/* The domain of an operation class abstraction.  (Contributed by NM,
+/*The domain of an operation class abstraction.  (Contributed by NM,
        17-Mar-1995.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
 theorem dmoprab (ph : wff, x : set, y : set, z : set) disjointed(x z w, y z w, w ph) {
@@ -1517,7 +1517,7 @@ proof of dmoprab {
 	qed prop 1 = step 11 ;;
 }
 
-/* The domain of an operation class abstraction.  (Contributed by NM,
+/*The domain of an operation class abstraction.  (Contributed by NM,
        24-Aug-1995.) */
 
 theorem dmoprabss (ph : wff, x : set, y : set, z : set, A : class, B : class) disjointed(x y z A, x y z B) {
@@ -1534,7 +1534,7 @@ proof of dmoprabss {
 	qed prop 1 = step 6 ;;
 }
 
-/* The range of an operation class abstraction.  (Contributed by NM,
+/*The range of an operation class abstraction.  (Contributed by NM,
        30-Aug-2004.)  (Revised by David Abernethy, 19-Apr-2013.) */
 
 theorem rnoprab (ph : wff, x : set, y : set, z : set) disjointed(x z w, y z w, w ph) {
@@ -1558,7 +1558,7 @@ proof of rnoprab {
 	qed prop 1 = step 12 ;;
 }
 
-/* The range of a restricted operation class abstraction.  (Contributed by
+/*The range of a restricted operation class abstraction.  (Contributed by
        Scott Fenton, 21-Mar-2012.) */
 
 theorem rnoprab2 (ph : wff, x : set, y : set, z : set, A : class, B : class) disjointed(A y, x y z) {
@@ -1573,7 +1573,7 @@ proof of rnoprab2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The domain of an operation class abstraction is a relation.
+/*The domain of an operation class abstraction is a relation.
        (Contributed by NM, 17-Mar-1995.) */
 
 theorem reldmoprab (ph : wff, x : set, y : set, z : set) disjointed(x y z) {
@@ -1586,7 +1586,7 @@ proof of reldmoprab {
 	qed prop 1 = step 2 ;;
 }
 
-/* Structure of an operation class abstraction.  (Contributed by NM,
+/*Structure of an operation class abstraction.  (Contributed by NM,
        28-Nov-2006.) */
 
 theorem oprabss (ph : wff, x : set, y : set, z : set) disjointed(x y z) {
@@ -1607,7 +1607,7 @@ proof of oprabss {
 	qed prop 1 = step 10 ;;
 }
 
-/* The law of concretion for operation class abstraction.  Compare
+/*The law of concretion for operation class abstraction.  Compare
        ~ elopab .  (Contributed by NM, 14-Sep-1999.)  (Unnecessary distinct
        variable restrictions were removed by David Abernethy, 19-Jun-2012.)
        (Revised by Mario Carneiro, 19-Dec-2013.) */
@@ -1661,11 +1661,11 @@ proof of eloprabga {
 	qed prop 1 = step 38 ;;
 }
 
-/* The law of concretion for operation class abstraction.  Compare
+/*The law of concretion for operation class abstraction.  Compare
        ~ elopab .  (Contributed by NM, 14-Sep-1999.)  (Revised by David
        Abernethy, 19-Jun-2012.) */
 
-theorem eloprabg (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x y z A, x y z B, x y z C, x y z th) {
+theorem eloprabg (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x y z A, x y z B, x y z C, ph, x y z th) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( y = B → ( ps ↔ ch ) ) ;;
 	hyp 3 : wff = |- ( z = C → ( ch ↔ th ) ) ;;
@@ -1679,7 +1679,7 @@ proof of eloprabg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference of operation class abstraction subclass from implication.
+/*Inference of operation class abstraction subclass from implication.
        (Contributed by NM, 11-Nov-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) */
 
@@ -1700,7 +1700,7 @@ proof of ssoprab2i {
 	qed prop 1 = step 6 ;;
 }
 
-/* Operation with universal domain in maps-to notation.  (Contributed by
+/*Operation with universal domain in maps-to notation.  (Contributed by
        NM, 16-Aug-2013.) */
 
 theorem mpt2v (x : set, y : set, z : set, C : class) disjointed(x z, y z, z C) {
@@ -1718,7 +1718,7 @@ proof of mpt2v {
 	qed prop 1 = step 7 ;;
 }
 
-/* Express a two-argument function as a one-argument function, or
+/*Express a two-argument function as a one-argument function, or
        vice-versa.  In this version ` B ( x ) ` is not assumed to be constant
        w.r.t ` x ` .  (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
@@ -1750,7 +1750,7 @@ proof of mpt2mptx {
 	qed prop 1 = step 17 ;;
 }
 
-/* Express a two-argument function as a one-argument function, or
+/*Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 17-Dec-2013.)  (Revised by
        Mario Carneiro, 29-Dec-2014.) */
 
@@ -1769,7 +1769,7 @@ proof of mpt2mpt {
 	qed prop 1 = step 5 ;;
 }
 
-/* Restriction of an operation class abstraction.  (Contributed by NM,
+/*Restriction of an operation class abstraction.  (Contributed by NM,
        10-Feb-2007.) */
 
 theorem resoprab (ph : wff, x : set, y : set, z : set, A : class, B : class) disjointed(w x y z A, w x y z B, w ph) {
@@ -1798,10 +1798,10 @@ proof of resoprab {
 	qed prop 1 = step 17 ;;
 }
 
-/* Restriction of an operator abstraction.  (Contributed by Jeff Madsen,
+/*Restriction of an operator abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) */
 
-theorem resoprab2 (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class) disjointed(A x y z, B x y z, C x y z, D x y z) {
+theorem resoprab2 (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class) disjointed(A x y z, B x y z, C x y z, D x y z, z) {
 	prop 1 : wff = |- ( ( C ⊆ A ∧ D ⊆ B ) → ( { 〈 〈 x , y 〉 , z 〉 | ( ( x ∈ A ∧ y ∈ B ) ∧ ph ) } ↾ ( C × D ) ) = { 〈 〈 x , y 〉 , z 〉 | ( ( x ∈ C ∧ y ∈ D ) ∧ ph ) } ) ;;
 }
 
@@ -1824,7 +1824,7 @@ proof of resoprab2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Restriction of the mapping operation.  (Contributed by Mario Carneiro,
+/*Restriction of the mapping operation.  (Contributed by Mario Carneiro,
        17-Dec-2013.) */
 
 theorem resmpt2 (x : set, y : set, A : class, B : class, C : class, D : class, E : class) disjointed(A x y z, B x y z, C x y z, D x y z, E z) {
@@ -1841,7 +1841,7 @@ proof of resmpt2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* "At most one" is a sufficient condition for an operation class
+/*"At most one" is a sufficient condition for an operation class
        abstraction to be a function.  (Contributed by NM, 28-Aug-2007.) */
 
 theorem funoprabg (ph : wff, x : set, y : set, z : set) disjointed(x y z w, w ph) {
@@ -1860,10 +1860,10 @@ proof of funoprabg {
 	qed prop 1 = step 7 ;;
 }
 
-/* "At most one" is a sufficient condition for an operation class
+/*"At most one" is a sufficient condition for an operation class
        abstraction to be a function.  (Contributed by NM, 17-Mar-1995.) */
 
-theorem funoprab (ph : wff, x : set, y : set, z : set) disjointed(x y z) {
+theorem funoprab (ph : wff, x : set, y : set, z : set) disjointed(x y z, ph) {
 	hyp 1 : wff = |- ∃* z ph ;;
 	-----------------------
 	prop 1 : wff = |- Fun { 〈 〈 x , y 〉 , z 〉 | ph } ;;
@@ -1876,7 +1876,7 @@ proof of funoprab {
 	qed prop 1 = step 3 ;;
 }
 
-/* Functionality and domain of an operation class abstraction.
+/*Functionality and domain of an operation class abstraction.
        (Contributed by NM, 28-Aug-2007.) */
 
 theorem fnoprabg (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x y z, z ph) {
@@ -1911,7 +1911,7 @@ proof of fnoprabg {
 	qed prop 1 = step 24 ;;
 }
 
-/* The maps-to notation for an operation is always a function.
+/*The maps-to notation for an operation is always a function.
        (Contributed by Scott Fenton, 21-Mar-2012.) */
 
 theorem mpt2fun (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(A w z, B w z, C w z, x y w z) {
@@ -1937,7 +1937,7 @@ proof of mpt2fun {
 	qed prop 1 = step 12 ;;
 }
 
-/* Functionality and domain of an operation class abstraction.
+/*Functionality and domain of an operation class abstraction.
        (Contributed by NM, 15-May-1995.) */
 
 theorem fnoprab (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x y z, z ph) {
@@ -1953,7 +1953,7 @@ proof of fnoprab {
 	qed prop 1 = step 3 ;;
 }
 
-/* An operation maps to a class to which all values belong.  (Contributed
+/*An operation maps to a class to which all values belong.  (Contributed
        by NM, 7-Feb-2004.) */
 
 theorem ffnov (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(x y w A, x y w B, x y w C, x y w F) {
@@ -1973,7 +1973,7 @@ proof of ffnov {
 	qed prop 1 = step 8 ;;
 }
 
-/* Closure law for an operation.  (Contributed by NM, 19-Apr-2007.) */
+/*Closure law for an operation.  (Contributed by NM, 19-Apr-2007.) */
 
 theorem fovcl (A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y A, y B, x y C, x y F, x y R, x y S) {
 	hyp 1 : wff = |- F : ( R × S ) ⟶ C ;;
@@ -1995,7 +1995,7 @@ proof of fovcl {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality of two operations is determined by their values.  (Contributed
+/*Equality of two operations is determined by their values.  (Contributed
        by NM, 1-Sep-2005.) */
 
 theorem eqfnov (x : set, y : set, A : class, B : class, C : class, D : class, F : class, G : class) disjointed(x y z A, x y z B, z C, z D, x y z F, x y z G) {
@@ -2018,7 +2018,7 @@ proof of eqfnov {
 	qed prop 1 = step 11 ;;
 }
 
-/* Two operators with the same domain are equal iff their values at each
+/*Two operators with the same domain are equal iff their values at each
        point in the domain are equal.  (Contributed by Jeff Madsen,
        7-Jun-2010.) */
 
@@ -2036,7 +2036,7 @@ proof of eqfnov2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Representation of a function in terms of its values.  (Contributed by
+/*Representation of a function in terms of its values.  (Contributed by
        NM, 7-Feb-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem fnov (x : set, y : set, A : class, B : class, F : class) disjointed(x y z A, x y z B, x y z F) {
@@ -2055,7 +2055,7 @@ proof of fnov {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bidirectional equality theorem for a mapping abstraction.  Equivalent to
+/*Bidirectional equality theorem for a mapping abstraction.  Equivalent to
        ~ eqfnov2 .  (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem mpt22eqb (x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y z A, y z B, z C, z D) {
@@ -2087,10 +2087,10 @@ proof of mpt22eqb {
 	qed prop 1 = step 20 ;;
 }
 
-/* The range of an operation given by the "maps to" notation.  (Contributed
+/*The range of an operation given by the "maps to" notation.  (Contributed
        by FL, 20-Jun-2011.) */
 
-theorem rnmpt2 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(y z A, z B, z C, z F, x y z, x y) {
+theorem rnmpt2 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x, y z A, z B, z C, z F, z, x y z, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ran F = { z | ∃ x ∈ A ∃ y ∈ B z = C } ;;
@@ -2105,10 +2105,10 @@ proof of rnmpt2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The domain of an operation defined by maps-to notation is a relation.
+/*The domain of an operation defined by maps-to notation is a relation.
        (Contributed by Stefan O'Rear, 27-Nov-2014.) */
 
-theorem reldmmpt2 (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(y z A, z B, z C, z F, x y z, x y) {
+theorem reldmmpt2 (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(x, y z A, z B, z C, z F, z, x y z, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- Rel dom F ;;
@@ -2125,10 +2125,10 @@ proof of reldmmpt2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in the range of an operation class abstraction.  (Contributed
+/*Membership in the range of an operation class abstraction.  (Contributed
        by NM, 27-Aug-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
-theorem elrnmpt2g (x : set, y : set, A : class, B : class, C : class, D : class, F : class, V : class) disjointed(y z A, z B, z C, z F, x y z D, x y) {
+theorem elrnmpt2g (x : set, y : set, A : class, B : class, C : class, D : class, F : class, V : class) disjointed(x, y z A, z B, z C, z F, z, x y z D, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( D ∈ V → ( D ∈ ran F ↔ ∃ x ∈ A ∃ y ∈ B D = C ) ) ;;
@@ -2143,11 +2143,11 @@ proof of elrnmpt2g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in the range of an operation class abstraction.
+/*Membership in the range of an operation class abstraction.
          (Contributed by NM, 1-Aug-2004.)  (Revised by Mario Carneiro,
          31-Aug-2015.) */
 
-theorem elrnmpt2 (x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(y z A, z B, z C, z F, x y z D, x y) {
+theorem elrnmpt2 (x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(x, y z A, z B, z C, z F, z, x y z D, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	hyp 2 : wff = |- C ∈ _V ;;
 	-----------------------
@@ -2169,7 +2169,7 @@ proof of elrnmpt2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* A restricted quantifier over an image set.  (Contributed by Mario
+/*A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 1-Sep-2015.) */
 
 theorem ralrnmpt2 (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, F : class, V : class) disjointed(w x, w y z A, w z B, w z C, w z F, z ps, x y z, x y ph) {
@@ -2208,10 +2208,10 @@ proof of ralrnmpt2 {
 	qed prop 1 = step 24 ;;
 }
 
-/* A restricted quantifier over an image set.  (Contributed by Mario
+/*A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 1-Sep-2015.) */
 
-theorem rexrnmpt2 (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, F : class, V : class) disjointed(y z A, z B, z C, z F, z ps, x y z, x y ph) {
+theorem rexrnmpt2 (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, F : class, V : class) disjointed(x, y z A, z B, z C, z F, z ps, x y z, x y ph) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	hyp 2 : wff = |- ( z = C → ( ph ↔ ps ) ) ;;
 	-----------------------
@@ -2231,7 +2231,7 @@ proof of rexrnmpt2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Existence of an operator abstraction.  (Contributed by Jeff Madsen,
+/*Existence of an operator abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) */
 
 theorem oprabexd (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, F : class) disjointed(A x y z, B x y z, ph x y z) {
@@ -2261,7 +2261,7 @@ proof of oprabexd {
 	qed prop 1 = step 14 ;;
 }
 
-/* Existence of an operation class abstraction.  (Contributed by NM,
+/*Existence of an operation class abstraction.  (Contributed by NM,
        19-Oct-2004.) */
 
 theorem oprabex (ph : wff, x : set, y : set, z : set, A : class, B : class, F : class) disjointed(x y z A, x y z B) {
@@ -2286,7 +2286,7 @@ proof of oprabex {
 	qed prop 1 = step 9 ;;
 }
 
-/* Existence of an operation class abstraction (special case).
+/*Existence of an operation class abstraction (special case).
        (Contributed by NM, 19-Oct-2004.) */
 
 theorem oprabex3 (x : set, y : set, z : set, w : set, v : set, u : set, R : class, f : set, F : class, H : class) disjointed(x y z w v u f, x y z w v u f, x y z w v u f, x y z w v u f, x y z w v u f H, x y z R, x y z w v u f) {
@@ -2314,7 +2314,7 @@ proof of oprabex3 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Existence of an existentially restricted operation abstraction.
+/*Existence of an existentially restricted operation abstraction.
        (Contributed by Jeff Madsen, 11-Jun-2010.) */
 
 theorem oprabrexex2 (ph : wff, x : set, y : set, z : set, w : set, A : class) disjointed(A v x y z w, ph v) {
@@ -2346,7 +2346,7 @@ proof of oprabrexex2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* The value of an operation class abstraction.  (Contributed by NM,
+/*The value of an operation class abstraction.  (Contributed by NM,
        16-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
 theorem ovid (ph : wff, x : set, y : set, z : set, R : class, S : class, F : class) disjointed(x y z, z R, z S) {
@@ -2375,7 +2375,7 @@ proof of ovid {
 	qed prop 1 = step 15 ;;
 }
 
-/* The value of an operation class abstraction.  Compare ~ ovidi .  The
+/*The value of an operation class abstraction.  Compare ~ ovidi .  The
        condition ` ( x e. R /\ y e. S ) ` is been removed.  (Contributed by
        Mario Carneiro, 29-Dec-2014.) */
 
@@ -2400,7 +2400,7 @@ proof of ovidig {
 	qed prop 1 = step 10 ;;
 }
 
-/* The value of an operation class abstraction (weak version).
+/*The value of an operation class abstraction (weak version).
        (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
 theorem ovidi (ph : wff, x : set, y : set, z : set, R : class, S : class, F : class) disjointed(x y z, z R, z S) {
@@ -2418,7 +2418,7 @@ proof of ovidi {
 	qed prop 1 = step 4 ;;
 }
 
-/* The value of an operation class abstraction.  (Contributed by NM,
+/*The value of an operation class abstraction.  (Contributed by NM,
        16-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
 theorem ov (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z R, x y z S, x y z th) {
@@ -2461,7 +2461,7 @@ proof of ov {
 	qed prop 1 = step 25 ;;
 }
 
-/* The value of an operation class abstraction.  Compare ~ ovig .  The
+/*The value of an operation class abstraction.  Compare ~ ovig .  The
        condition ` ( x e. R /\ y e. S ) ` is been removed.  (Contributed by FL,
        24-Mar-2007.)  (Revised by Mario Carneiro, 19-Dec-2013.) */
 
@@ -2486,7 +2486,7 @@ proof of ovigg {
 	qed prop 1 = step 9 ;;
 }
 
-/* The value of an operation class abstraction (weak version).
+/*The value of an operation class abstraction (weak version).
        (Unnecessary distinct variable restrictions were removed by David
        Abernethy, 19-Jun-2012.)  (Contributed by NM, 14-Sep-1999.)  (Revised by
        Mario Carneiro, 19-Dec-2013.) */
@@ -2513,7 +2513,7 @@ proof of ovig {
 	qed prop 1 = step 10 ;;
 }
 
-/* Value of a function given by the "maps to" notation.  (This is the
+/*Value of a function given by the "maps to" notation.  (This is the
        operation analog of ~ fvmpt2 .)  (Contributed by NM, 21-Feb-2004.)
        (Revised by Mario Carneiro, 1-Sep-2015.) */
 
@@ -2539,10 +2539,10 @@ proof of ovmpt4g {
 	qed prop 1 = step 11 ;;
 }
 
-/* Value of a function given by the "maps to" notation, expressed using
+/*Value of a function given by the "maps to" notation, expressed using
        explicit substitution.  (Contributed by Mario Carneiro, 30-Apr-2015.) */
 
-theorem ovmpt2s (x : set, y : set, A : class, B : class, C : class, D : class, R : class, F : class, V : class) disjointed(x y A, x y B, x y C, x y D) {
+theorem ovmpt2s (x : set, y : set, A : class, B : class, C : class, D : class, R : class, F : class, V : class) disjointed(x y A, x y B, x y C, x y D, F, R) {
 	hyp 1 : wff = |- F = ( x ∈ C , y ∈ D ↦ R ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( A ∈ C ∧ B ∈ D ∧ [_ A / x ]_ [_ B / y ]_ R ∈ V ) → ( A F B ) = [_ A / x ]_ [_ B / y ]_ R ) ;;
@@ -2598,11 +2598,11 @@ proof of ovmpt2s {
 	qed prop 1 = step 46 ;;
 }
 
-/* The value of an operation class abstraction.  A version of ~ ovmpt2g
+/*The value of an operation class abstraction.  A version of ~ ovmpt2g
        using bound-variable hypotheses.  (Contributed by NM, 17-Aug-2006.)
        (Revised by Mario Carneiro, 19-Dec-2013.) */
 
-theorem ov2gf (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, H : class) disjointed(x y C, x y D) {
+theorem ov2gf (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, H : class) disjointed(A, B, x y C, R, x y D, F, G, S) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ y A ;;
 	hyp 3 : wff = |- F/_ y B ;;
@@ -2646,10 +2646,10 @@ proof of ov2gf {
 	qed prop 1 = step 27 ;;
 }
 
-/* Value of an operation given by a maps-to rule, deduction form.
+/*Value of an operation given by a maps-to rule, deduction form.
          (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
-theorem ovmpt2dxf (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, L : class, X : class) disjointed(x y, x A, y B) {
+theorem ovmpt2dxf (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, L : class, X : class) disjointed(x y, x A, y B, C, D, R, S) {
 	hyp 1 : wff = |- ( ph → F = ( x ∈ C , y ∈ D ↦ R ) ) ;;
 	hyp 2 : wff = |- ( ( ph ∧ ( x = A ∧ y = B ) ) → R = S ) ;;
 	hyp 3 : wff = |- ( ( ph ∧ x = A ) → D = L ) ;;
@@ -2718,10 +2718,10 @@ proof of ovmpt2dxf {
 	qed prop 1 = step 48 ;;
 }
 
-/* Value of an operation given by a maps-to rule, deduction form.
+/*Value of an operation given by a maps-to rule, deduction form.
        (Contributed by Mario Carneiro, 29-Dec-2014.) */
 
-theorem ovmpt2dx (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, L : class, X : class) disjointed(x y, x A, y B, y A, x B, x y S, x y ph) {
+theorem ovmpt2dx (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, L : class, X : class) disjointed(x y, x A, y B, C, D, R, S, y A, x B, x y S, x y ph) {
 	hyp 1 : wff = |- ( ph → F = ( x ∈ C , y ∈ D ↦ R ) ) ;;
 	hyp 2 : wff = |- ( ( ph ∧ ( x = A ∧ y = B ) ) → R = S ) ;;
 	hyp 3 : wff = |- ( ( ph ∧ x = A ) → D = L ) ;;
@@ -2743,7 +2743,7 @@ proof of ovmpt2dx {
 	qed prop 1 = step 7 ;;
 }
 
-/* Value of an operation given by a maps-to rule, deduction form.
+/*Value of an operation given by a maps-to rule, deduction form.
        (Contributed by Mario Carneiro, 7-Dec-2014.) */
 
 theorem ovmpt2d (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, X : class) disjointed(x y A, x y B, x y S, x y ph) {
@@ -2762,7 +2762,7 @@ proof of ovmpt2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* The value of an operation class abstraction.  Variant of ~ ovmpt2ga
+/*The value of an operation class abstraction.  Variant of ~ ovmpt2ga
        which does not require ` D ` and ` x ` to be distinct.  (Contributed by
        Jeff Madsen, 10-Jun-2010.)  (Revised by Mario Carneiro, 20-Dec-2013.) */
 
@@ -2787,7 +2787,7 @@ proof of ovmpt2x {
 	qed prop 1 = step 9 ;;
 }
 
-/* Value of an operation given by a maps-to rule.  (Contributed by Mario
+/*Value of an operation given by a maps-to rule.  (Contributed by Mario
        Carneiro, 19-Dec-2013.) */
 
 theorem ovmpt2ga (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, H : class) disjointed(x y A, x y B, x y C, x y D, x y S) {
@@ -2809,7 +2809,7 @@ proof of ovmpt2ga {
 	qed prop 1 = step 8 ;;
 }
 
-/* Value of an operation given by a maps-to rule.  (Contributed by NM,
+/*Value of an operation given by a maps-to rule.  (Contributed by NM,
        19-Dec-2013.) */
 
 theorem ovmpt2a (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class) disjointed(x y A, x y B, x y C, x y D, x y S) {
@@ -2826,7 +2826,7 @@ proof of ovmpt2a {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate deduction version of ~ ovmpt2 , suitable for iteration.
+/*Alternate deduction version of ~ ovmpt2 , suitable for iteration.
          (Contributed by Mario Carneiro, 7-Jan-2017.) */
 
 theorem ovmpt2df (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, F : class, V : class) disjointed(x y A, y B, x y ph) {
@@ -2885,7 +2885,7 @@ proof of ovmpt2df {
 	qed prop 1 = step 39 ;;
 }
 
-/* Alternate deduction version of ~ ovmpt2 , suitable for iteration.
+/*Alternate deduction version of ~ ovmpt2 , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) */
 
 theorem ovmpt2dv (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, F : class, V : class) disjointed(x y A, y B, x y ph, x y F, x y ps) {
@@ -2906,7 +2906,7 @@ proof of ovmpt2dv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Alternate deduction version of ~ ovmpt2 , suitable for iteration.
+/*Alternate deduction version of ~ ovmpt2 , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) */
 
 theorem ovmpt2dv2 (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, V : class) disjointed(x y A, x y B, x y ph, x y S) {
@@ -2942,7 +2942,7 @@ proof of ovmpt2dv2 {
 	qed prop 1 = step 20 ;;
 }
 
-/* Value of an operation given by a maps-to rule.  Special case.
+/*Value of an operation given by a maps-to rule.  Special case.
        (Contributed by NM, 14-Sep-1999.)  (Revised by David Abernethy,
        19-Jun-2012.) */
 
@@ -2960,7 +2960,7 @@ proof of ovmpt2g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Value of an operation given by a maps-to rule.  Special case.
+/*Value of an operation given by a maps-to rule.  Special case.
        (Contributed by NM, 16-May-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) */
 
@@ -2979,11 +2979,11 @@ proof of ovmpt2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The value of an operation class abstraction.  Special case.
+/*The value of an operation class abstraction.  Special case.
        (Contributed by NM, 28-May-1995.)  (Revised by Mario Carneiro,
        29-Dec-2014.) */
 
-theorem ov3 (x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, C : class, D : class, R : class, S : class, f : set, F : class, H : class) disjointed(f u v w x y z A, f u v w x y z B, x y z R, f u v w y z C, f u v w y z D, f u v w x y z H, f u v w z S) {
+theorem ov3 (x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, C : class, D : class, R : class, S : class, f : set, F : class, H : class) disjointed(f u v w x y z A, f u v w x y z B, F, x y z R, f u v w y z C, f u v w y z D, f u v w x y z H, f u v w z S) {
 	hyp 1 : wff = |- S ∈ _V ;;
 	hyp 2 : wff = |- ( ( ( w = A ∧ v = B ) ∧ ( u = C ∧ f = D ) ) → R = S ) ;;
 	hyp 3 : wff = |- F = { 〈 〈 x , y 〉 , z 〉 | ( ( x ∈ ( H × H ) ∧ y ∈ ( H × H ) ) ∧ ∃ w ∃ v ∃ u ∃ f ( ( x = 〈 w , v 〉 ∧ y = 〈 u , f 〉 ) ∧ z = R ) ) } ;;
@@ -3059,7 +3059,7 @@ proof of ov3 {
 	qed prop 1 = step 64 ;;
 }
 
-/* The value of an operation class abstraction.  Special case.
+/*The value of an operation class abstraction.  Special case.
        (Contributed by NM, 13-Nov-2006.) */
 
 theorem ov6g (x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class, G : class, H : class, J : class) disjointed(w x y z A, w x y z B, w x y z C, w z R, w x y z S) {
@@ -3109,7 +3109,7 @@ proof of ov6g {
 	qed prop 1 = step 35 ;;
 }
 
-/* The value of an operation class abstraction.  (Contributed by Jeff
+/*The value of an operation class abstraction.  (Contributed by Jeff
        Madsen, 10-Jun-2010.) */
 
 theorem ovg (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class) disjointed(ph c, ps x, ch x y, th x y z, ta x y c, R x y z c, S x y z c, A x y z c, B x y z c, C x y z c) {
@@ -3168,7 +3168,7 @@ proof of ovg {
 	qed prop 1 = step 41 ;;
 }
 
-/* The value of a restricted operation.  (Contributed by FL, 10-Nov-2006.) */
+/*The value of a restricted operation.  (Contributed by FL, 10-Nov-2006.) */
 
 theorem ovres (A : class, B : class, C : class, D : class, F : class)  {
 	prop 1 : wff = |- ( ( A ∈ C ∧ B ∈ D ) → ( A ( F ↾ ( C × D ) ) B ) = ( A F B ) ) ;;
@@ -3184,7 +3184,7 @@ proof of ovres {
 	qed prop 1 = step 6 ;;
 }
 
-/* Lemma for converting metric theorems to metric space theorems.
+/*Lemma for converting metric theorems to metric space theorems.
        (Contributed by Mario Carneiro, 2-Oct-2015.) */
 
 theorem ovresd (ph : wff, A : class, B : class, D : class, X : class)  {
@@ -3200,7 +3200,7 @@ proof of ovresd {
 	qed prop 1 = step 2 ;;
 }
 
-/* The value of a member of the domain of a subclass of an operation.
+/*The value of a member of the domain of a subclass of an operation.
      (Contributed by NM, 23-Aug-2007.) */
 
 theorem oprssov (A : class, B : class, C : class, D : class, F : class, G : class)  {
@@ -3222,7 +3222,7 @@ proof of oprssov {
 	qed prop 1 = step 11 ;;
 }
 
-/* An operation's value belongs to its codomain.  (Contributed by NM,
+/*An operation's value belongs to its codomain.  (Contributed by NM,
      27-Aug-2006.) */
 
 theorem fovrn (A : class, B : class, C : class, R : class, S : class, F : class)  {
@@ -3239,7 +3239,7 @@ proof of fovrn {
 	qed prop 1 = step 6 ;;
 }
 
-/* An operation's value belongs to its codomain.  (Contributed by Mario
+/*An operation's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) */
 
 theorem fovrnda (ph : wff, A : class, B : class, C : class, R : class, S : class, F : class)  {
@@ -3255,7 +3255,7 @@ proof of fovrnda {
 	qed prop 1 = step 3 ;;
 }
 
-/* An operation's value belongs to its codomain.  (Contributed by Mario
+/*An operation's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) */
 
 theorem fovrnd (ph : wff, A : class, B : class, C : class, R : class, S : class, F : class)  {
@@ -3272,7 +3272,7 @@ proof of fovrnd {
 	qed prop 1 = step 2 ;;
 }
 
-/* The range of an operation expressed as a collection of the operation's
+/*The range of an operation expressed as a collection of the operation's
        values.  (Contributed by NM, 29-Oct-2006.) */
 
 theorem fnrnov (x : set, y : set, z : set, A : class, B : class, F : class) disjointed(w x y z A, w x y z B, w z, w x y z F) {
@@ -3292,7 +3292,7 @@ proof of fnrnov {
 	qed prop 1 = step 8 ;;
 }
 
-/* An onto mapping of an operation expressed in terms of operation values.
+/*An onto mapping of an operation expressed in terms of operation values.
        (Contributed by NM, 29-Oct-2006.) */
 
 theorem foov (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(w x y z A, w x y z B, w z C, w x y z F) {
@@ -3313,7 +3313,7 @@ proof of foov {
 	qed prop 1 = step 9 ;;
 }
 
-/* An operation's value belongs to its range.  (Contributed by NM,
+/*An operation's value belongs to its range.  (Contributed by NM,
      10-Feb-2007.) */
 
 theorem fnovrn (A : class, B : class, C : class, D : class, F : class)  {
@@ -3330,7 +3330,7 @@ proof of fnovrn {
 	qed prop 1 = step 6 ;;
 }
 
-/* A member of an operation's range is a value of the operation.
+/*A member of an operation's range is a value of the operation.
        (Contributed by NM, 7-Feb-2007.)  (Revised by Mario Carneiro,
        30-Jan-2014.) */
 
@@ -3354,7 +3354,7 @@ proof of ovelrn {
 	qed prop 1 = step 11 ;;
 }
 
-/* Membership relation for the values of a function whose image is a
+/*Membership relation for the values of a function whose image is a
        subclass.  (Contributed by Mario Carneiro, 23-Dec-2013.) */
 
 theorem funimassov (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z F) {
@@ -3373,7 +3373,7 @@ proof of funimassov {
 	qed prop 1 = step 7 ;;
 }
 
-/* Operation value in an image.  (Contributed by Mario Carneiro,
+/*Operation value in an image.  (Contributed by Mario Carneiro,
        23-Dec-2013.)  (Revised by Mario Carneiro, 29-Jan-2014.) */
 
 theorem ovelimab (x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z F) {
@@ -3394,7 +3394,7 @@ proof of ovelimab {
 	qed prop 1 = step 9 ;;
 }
 
-/* The value of a constant operation.  (Contributed by NM, 5-Nov-2006.) */
+/*The value of a constant operation.  (Contributed by NM, 5-Nov-2006.) */
 
 theorem ovconst2 (A : class, B : class, C : class, R : class, S : class)  {
 	hyp 1 : wff = |- C ∈ _V ;;
@@ -3411,7 +3411,7 @@ proof of ovconst2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existence of a class abstraction of existentially restricted sets.
+/*Existence of a class abstraction of existentially restricted sets.
        Variables ` x ` and ` y ` are normally free-variable parameters in the
        class expression substituted for ` C ` , which can be thought of as
        ` C ( x , y ) ` .  See comments for ~ abrexex .  (Contributed by NM,
@@ -3430,7 +3430,7 @@ proof of ab2rexex {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existence of an existentially restricted class abstraction. ` ph ` is
+/*Existence of an existentially restricted class abstraction. ` ph ` is
        normally has free-variable parameters ` x ` , ` y ` , and ` z ` .
        Compare ~ abrexex2 .  (Contributed by NM, 20-Sep-2011.) */
 
@@ -3448,7 +3448,7 @@ proof of ab2rexex2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Domain of closure of an operation.  (Contributed by NM, 24-Aug-1995.) */
+/*Domain of closure of an operation.  (Contributed by NM, 24-Aug-1995.) */
 
 theorem oprssdm (x : set, y : set, S : class, F : class) disjointed(x y S, x y F) {
 	hyp 1 : wff = |- ¬ ∅ ∈ S ;;
@@ -3472,7 +3472,7 @@ proof of oprssdm {
 	qed prop 1 = step 11 ;;
 }
 
-/* The value of an operation outside its domain.  (Contributed by NM,
+/*The value of an operation outside its domain.  (Contributed by NM,
      28-Mar-2008.) */
 
 theorem ndmovg (A : class, B : class, R : class, S : class, F : class)  {
@@ -3492,7 +3492,7 @@ proof of ndmovg {
 	qed prop 1 = step 9 ;;
 }
 
-/* The value of an operation outside its domain.  (Contributed by NM,
+/*The value of an operation outside its domain.  (Contributed by NM,
        24-Aug-1995.) */
 
 theorem ndmov (A : class, B : class, S : class, F : class)  {
@@ -3507,7 +3507,7 @@ proof of ndmov {
 	qed prop 1 = step 2 ;;
 }
 
-/* The closure of an operation outside its domain, when the domain
+/*The closure of an operation outside its domain, when the domain
          includes the empty set.  This technical lemma can make the operation
          more convenient to work in some cases.  It is dependent on our
          particular definitions of operation value, function value, and ordered
@@ -3528,7 +3528,7 @@ proof of ndmovcl {
 	qed prop 1 = step 3 ;;
 }
 
-/* Reverse closure law, when an operation's domain doesn't contain the
+/*Reverse closure law, when an operation's domain doesn't contain the
          empty set.  (Contributed by NM, 3-Feb-1996.) */
 
 theorem ndmovrcl (A : class, B : class, S : class, F : class)  {
@@ -3546,7 +3546,7 @@ proof of ndmovrcl {
 	qed prop 1 = step 4 ;;
 }
 
-/* Any operation is commutative outside its domain.  (Contributed by NM,
+/*Any operation is commutative outside its domain.  (Contributed by NM,
        24-Aug-1995.) */
 
 theorem ndmovcom (A : class, B : class, S : class, F : class)  {
@@ -3564,7 +3564,7 @@ proof of ndmovcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Any operation is associative outside its domain, if the domain doesn't
+/*Any operation is associative outside its domain, if the domain doesn't
          contain the empty set.  (Contributed by NM, 24-Aug-1995.) */
 
 theorem ndmovass (A : class, B : class, C : class, S : class, F : class)  {
@@ -3593,7 +3593,7 @@ proof of ndmovass {
 	qed prop 1 = step 15 ;;
 }
 
-/* Any operation is distributive outside its domain, if the domain
+/*Any operation is distributive outside its domain, if the domain
          doesn't contain the empty set.  (Contributed by NM, 24-Aug-1995.) */
 
 theorem ndmovdistr (A : class, B : class, C : class, S : class, F : class, G : class)  {
@@ -3626,7 +3626,7 @@ proof of ndmovdistr {
 	qed prop 1 = step 18 ;;
 }
 
-/* Elimination of redundant antecedents in an ordering law.  (Contributed
+/*Elimination of redundant antecedents in an ordering law.  (Contributed
        by NM, 7-Mar-1996.) */
 
 theorem ndmovord (A : class, B : class, C : class, R : class, S : class, F : class)  {
@@ -3654,7 +3654,7 @@ proof of ndmovord {
 	qed prop 1 = step 12 ;;
 }
 
-/* Elimination of redundant antecedent in an ordering law.  (Contributed by
+/*Elimination of redundant antecedent in an ordering law.  (Contributed by
        NM, 25-Jun-1998.) */
 
 theorem ndmovordi (A : class, B : class, C : class, R : class, S : class, F : class)  {
@@ -3677,7 +3677,7 @@ proof of ndmovordi {
 	qed prop 1 = step 7 ;;
 }
 
-/* Convert an operation closure law to class notation.  (Contributed by
+/*Convert an operation closure law to class notation.  (Contributed by
        Mario Carneiro, 26-May-2014.) */
 
 theorem caovclg (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(x y A, y B, x y C, x y D, x y E, x y ph, x y F) {
@@ -3697,7 +3697,7 @@ proof of caovclg {
 	qed prop 1 = step 7 ;;
 }
 
-/* Convert an operation closure law to class notation.  (Contributed by
+/*Convert an operation closure law to class notation.  (Contributed by
        Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovcld (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(x y A, y B, x y C, x y D, x y E, x y ph, x y F) {
@@ -3715,7 +3715,7 @@ proof of caovcld {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation closure law to class notation.  (Contributed by NM,
+/*Convert an operation closure law to class notation.  (Contributed by NM,
        4-Aug-1995.)  (Revised by Mario Carneiro, 26-May-2014.) */
 
 theorem caovcl (x : set, y : set, A : class, B : class, S : class, F : class) disjointed(x y A, y B, x y F, x y, x y S) {
@@ -3732,9 +3732,9 @@ proof of caovcl {
 	qed prop 1 = step 4 ;;
 }
 
-/* General laws for commutative, associative, distributive operations. */
+/*General laws for commutative, associative, distributive operations. */
 
-/* Convert an operation commutative law to class notation.  (Contributed
+/*Convert an operation commutative law to class notation.  (Contributed
          by Mario Carneiro, 1-Jun-2013.) */
 
 theorem caovcomg (ph : wff, x : set, y : set, A : class, B : class, S : class, F : class) disjointed(x y A, x y B, x y, x y, x y ph, x y F, x y, x y, x y, x y, x y S, x y) {
@@ -3756,7 +3756,7 @@ proof of caovcomg {
 	qed prop 1 = step 9 ;;
 }
 
-/* Convert an operation commutative law to class notation.  (Contributed
+/*Convert an operation commutative law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovcomd (ph : wff, x : set, y : set, A : class, B : class, S : class, F : class) disjointed(x y A, x y B, x y, x y, x y ph, x y F, x y, x y, x y, x y, x y S, x y) {
@@ -3774,7 +3774,7 @@ proof of caovcomd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation commutative law to class notation.  (Contributed
+/*Convert an operation commutative law to class notation.  (Contributed
          by NM, 26-Aug-1995.)  (Revised by Mario Carneiro, 1-Jun-2013.) */
 
 theorem caovcom (x : set, y : set, A : class, B : class, F : class) disjointed(x y A, x y B, x y, x y, x y, x y F, x y, x y, x y, x y, x y, x y) {
@@ -3793,7 +3793,7 @@ proof of caovcom {
 	qed prop 1 = step 4 ;;
 }
 
-/* Convert an operation associative law to class notation.  (Contributed
+/*Convert an operation associative law to class notation.  (Contributed
          by Mario Carneiro, 1-Jun-2013.)  (Revised by Mario Carneiro,
          26-May-2014.) */
 
@@ -3823,7 +3823,7 @@ proof of caovassg {
 	qed prop 1 = step 16 ;;
 }
 
-/* Convert an operation associative law to class notation.  (Contributed
+/*Convert an operation associative law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovassd (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z, x y z S, x y z) {
@@ -3842,7 +3842,7 @@ proof of caovassd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation associative law to class notation.  (Contributed
+/*Convert an operation associative law to class notation.  (Contributed
          by NM, 26-Aug-1995.)  (Revised by Mario Carneiro, 26-May-2014.) */
 
 theorem caovass (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -3863,7 +3863,7 @@ proof of caovass {
 	qed prop 1 = step 5 ;;
 }
 
-/* Convert an operation cancellation law to class notation.  (Contributed
+/*Convert an operation cancellation law to class notation.  (Contributed
          by NM, 20-Aug-1995.)  (Revised by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovcang (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, T : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z, x y z S, x y z T) {
@@ -3891,7 +3891,7 @@ proof of caovcang {
 	qed prop 1 = step 15 ;;
 }
 
-/* Convert an operation cancellation law to class notation.  (Contributed
+/*Convert an operation cancellation law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovcand (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, T : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z, x y z S, x y z T) {
@@ -3910,7 +3910,7 @@ proof of caovcand {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commute the arguments of an operation cancellation law.  (Contributed
+/*Commute the arguments of an operation cancellation law.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovcanrd (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, T : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z, x y z S, x y z T) {
@@ -3933,7 +3933,7 @@ proof of caovcanrd {
 	qed prop 1 = step 5 ;;
 }
 
-/* Convert an operation cancellation law to class notation.  (Contributed
+/*Convert an operation cancellation law to class notation.  (Contributed
          by NM, 20-Aug-1995.) */
 
 theorem caovcan (x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z S, x y z) {
@@ -3962,7 +3962,7 @@ proof of caovcan {
 	qed prop 1 = step 15 ;;
 }
 
-/* Convert an operation ordering law to class notation.  (Contributed by
+/*Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 31-Dec-2014.) */
 
 theorem caovordig (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -3990,7 +3990,7 @@ proof of caovordig {
 	qed prop 1 = step 15 ;;
 }
 
-/* Convert an operation ordering law to class notation.  (Contributed by
+/*Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 31-Dec-2014.) */
 
 theorem caovordid (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4009,7 +4009,7 @@ proof of caovordid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation ordering law to class notation.  (Contributed by
+/*Convert an operation ordering law to class notation.  (Contributed by
          NM, 19-Feb-1996.)  (Revised by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovordg (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4037,7 +4037,7 @@ proof of caovordg {
 	qed prop 1 = step 15 ;;
 }
 
-/* Convert an operation ordering law to class notation.  (Contributed by
+/*Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovordd (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4056,7 +4056,7 @@ proof of caovordd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Operation ordering law with commuted arguments.  (Contributed by Mario
+/*Operation ordering law with commuted arguments.  (Contributed by Mario
          Carneiro, 30-Dec-2014.) */
 
 theorem caovord2d (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4078,7 +4078,7 @@ proof of caovord2d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Ordering law.  (Contributed by Mario Carneiro, 30-Dec-2014.) */
+/*Ordering law.  (Contributed by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovord3d (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z ph, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
 	hyp 1 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ∧ z ∈ S ) ) → ( x R y ↔ ( z F x ) R ( z F y ) ) ) ;;
@@ -4100,7 +4100,7 @@ proof of caovord3d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Convert an operation ordering law to class notation.  (Contributed by
+/*Convert an operation ordering law to class notation.  (Contributed by
          NM, 19-Feb-1996.) */
 
 theorem caovord (x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4131,9 +4131,9 @@ proof of caovord {
 	qed prop 1 = step 16 ;;
 }
 
-/* (We don't bother to eliminate this redundant hypothesis.) */
+/*(We don't bother to eliminate this redundant hypothesis.) */
 
-/* Operation ordering law with commuted arguments.  (Contributed by NM,
+/*Operation ordering law with commuted arguments.  (Contributed by NM,
          27-Feb-1996.) */
 
 theorem caovord2 (x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
@@ -4155,9 +4155,9 @@ proof of caovord2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* (We don't bother to eliminate redundant hypotheses.) */
+/*(We don't bother to eliminate redundant hypotheses.) */
 
-/* Ordering law.  (Contributed by NM, 29-Feb-1996.) */
+/*Ordering law.  (Contributed by NM, 29-Feb-1996.) */
 
 theorem caovord3 (x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z, x y z, x y z, x y z R, x y z S, x y z) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -4181,7 +4181,7 @@ proof of caovord3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Convert an operation distributive law to class notation.  (Contributed
+/*Convert an operation distributive law to class notation.  (Contributed
          by NM, 25-Aug-1995.)  (Revised by Mario Carneiro, 26-Jul-2014.) */
 
 theorem caovdig (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class, G : class, H : class, K : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z G, x y z H, x y z K, x y z, x y z S, x y z) {
@@ -4212,7 +4212,7 @@ proof of caovdig {
 	qed prop 1 = step 18 ;;
 }
 
-/* Convert an operation distributive law to class notation.  (Contributed
+/*Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovdid (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class, G : class, H : class, K : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z G, x y z H, x y z K, x y z, x y z S, x y z) {
@@ -4231,7 +4231,7 @@ proof of caovdid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation distributive law to class notation.  (Contributed
+/*Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovdir2d (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class, G : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z G, x y z, x y z, x y z, x y z S, x y z) {
@@ -4256,7 +4256,7 @@ proof of caovdir2d {
 	qed prop 1 = step 7 ;;
 }
 
-/* Convert an operation reverse distributive law to class notation.
+/*Convert an operation reverse distributive law to class notation.
          (Contributed by Mario Carneiro, 19-Oct-2014.) */
 
 theorem caovdirg (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class, G : class, H : class, K : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z G, x y z H, x y z K, x y z, x y z S, x y z) {
@@ -4287,7 +4287,7 @@ proof of caovdirg {
 	qed prop 1 = step 18 ;;
 }
 
-/* Convert an operation distributive law to class notation.  (Contributed
+/*Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) */
 
 theorem caovdird (ph : wff, x : set, y : set, z : set, A : class, B : class, C : class, S : class, F : class, G : class, H : class, K : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z ph, x y z F, x y z G, x y z H, x y z K, x y z, x y z S, x y z) {
@@ -4306,7 +4306,7 @@ proof of caovdird {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert an operation distributive law to class notation.  (Contributed
+/*Convert an operation distributive law to class notation.  (Contributed
          by NM, 25-Aug-1995.)  (Revised by Mario Carneiro, 28-Jun-2013.) */
 
 theorem caovdi (x : set, y : set, z : set, A : class, B : class, C : class, F : class, G : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z G, x y z, x y z, x y z, x y z, x y z) {
@@ -4327,7 +4327,7 @@ proof of caovdi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) */
 
@@ -4350,7 +4350,7 @@ proof of caov32d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) */
 
@@ -4373,7 +4373,7 @@ proof of caov12d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) */
 
@@ -4396,7 +4396,7 @@ proof of caov31d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) */
 
@@ -4418,7 +4418,7 @@ proof of caov13d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) */
 
@@ -4445,7 +4445,7 @@ proof of caov4d {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) */
 
@@ -4471,7 +4471,7 @@ proof of caov411d {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) */
 
@@ -4495,7 +4495,7 @@ proof of caov42d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov32 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4517,7 +4517,7 @@ proof of caov32 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov12 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4539,7 +4539,7 @@ proof of caov12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov31 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4564,7 +4564,7 @@ proof of caov31 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov13 (x : set, y : set, z : set, A : class, B : class, C : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4585,7 +4585,7 @@ proof of caov13 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov4 (x : set, y : set, z : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4610,7 +4610,7 @@ proof of caov4 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov411 (x : set, y : set, z : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4635,7 +4635,7 @@ proof of caov411 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rearrange arguments in a commutative, associative operation.
+/*Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) */
 
 theorem caov42 (x : set, y : set, z : set, A : class, B : class, C : class, D : class, F : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z, x y z, x y z, x y z, x y z, x y z) {
@@ -4657,7 +4657,7 @@ proof of caov42 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Reverse distributive law.  (Contributed by NM, 26-Aug-1995.) */
+/*Reverse distributive law.  (Contributed by NM, 26-Aug-1995.) */
 
 theorem caovdir (x : set, y : set, z : set, A : class, B : class, C : class, F : class, G : class) disjointed(x y z A, x y z B, x y z C, x y z, x y z, x y z F, x y z G, x y z, x y z, x y z, x y z, x y z) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -4680,7 +4680,7 @@ proof of caovdir {
 	qed prop 1 = step 7 ;;
 }
 
-/* Lemma used by real number construction.  (Contributed by NM,
+/*Lemma used by real number construction.  (Contributed by NM,
          26-Aug-1995.) */
 
 theorem caovdilem (x : set, y : set, z : set, A : class, B : class, C : class, D : class, F : class, G : class, H : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z G, x y z H, x y z, x y z, x y z, x y z, x y z H, x y z) {
@@ -4707,7 +4707,7 @@ proof of caovdilem {
 	qed prop 1 = step 7 ;;
 }
 
-/* Lemma used in real number construction.  (Contributed by NM,
+/*Lemma used in real number construction.  (Contributed by NM,
          26-Aug-1995.) */
 
 theorem caovlem2 (x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, F : class, G : class, H : class) disjointed(x y z A, x y z B, x y z C, x y z D, x y z, x y z F, x y z G, x y z H, x y z, x y z R, x y z, x y z, x y z H, x y z R) {
@@ -4746,9 +4746,9 @@ proof of caovlem2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Identity element. */
+/*Identity element. */
 
-/* Uniqueness of inverse element in commutative, associative operation
+/*Uniqueness of inverse element in commutative, associative operation
          with identity.  Remark in proof of Proposition 9-2.4 of [Gleason]
          p. 119.  (Contributed by NM, 4-Mar-1996.) */
 
@@ -4826,7 +4826,7 @@ proof of caovmo {
 	qed prop 1 = step 58 ;;
 }
 
-/* Lemma for ~ grprinvd .  (Contributed by NM, 9-Aug-2013.) */
+/*Lemma for ~ grprinvd .  (Contributed by NM, 9-Aug-2013.) */
 
 theorem grprinvlem (ph : wff, ps : wff, x : set, y : set, z : set, B : class, .+ : class, O : class, X : class) disjointed(u v w x y z B, u v w x y z O, u v w x y z ph, u v w y z, u v w x y z .+, u v w y z X, u v w y ps) {
 	hyp 1 : wff = |- ( ( ph ∧ x ∈ B ∧ y ∈ B ) → ( x .+ y ) ∈ B ) ;;
@@ -4887,7 +4887,7 @@ proof of grprinvlem {
 	qed prop 1 = step 42 ;;
 }
 
-/* Deduce right inverse from left inverse and left identity in an
+/*Deduce right inverse from left inverse and left identity in an
          associative structure (such as a group).  (Contributed by NM,
          10-Aug-2013.)  (Proof shortened by Mario Carneiro, 6-Jan-2015.) */
 
@@ -4940,7 +4940,7 @@ proof of grprinvd {
 	qed prop 1 = step 31 ;;
 }
 
-/* Deduce right identity from left inverse and left identity in an
+/*Deduce right identity from left inverse and left identity in an
        associative structure (such as a group).  (Contributed by NM,
        10-Aug-2013.)  (Proof shortened by Mario Carneiro, 6-Jan-2015.) */
 

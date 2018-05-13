@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Recursively_define_primitive_wffs_for_propositional_calculus.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The axioms of propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -33,7 +33,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
 
 */
 
-/* Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
+/*Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  The 3 axioms are also given as Definition 2.1 of
      [Hamilton] p. 28.  This axiom is called _Simp_ or "the principle of
      simplification" in _Principia Mathematica_ (Theorem *2.02 of
@@ -45,7 +45,7 @@ axiom ax-1 (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ph → ( ps → ph ) ) ;;
 }
 
-/* Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
+/*Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It "distributes" an antecedent over two
      consequents.  This axiom was part of Frege's original system and is known
      as _Frege_ in the literature.  It is also proved as Theorem *2.77 of
@@ -57,7 +57,7 @@ axiom ax-2 (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph → ( ps → ch ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) ;;
 }
 
-/* Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
+/*Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It swaps or "transposes" the order of the
      consequents when negation is removed.  An informal example is that the
      statement "if there are no clouds in the sky, it is not raining" implies
@@ -72,14 +72,14 @@ axiom ax-3 (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ( ¬ ph → ¬ ps ) → ( ps → ph ) ) ;;
 }
 
-/* Postulate the modus ponens rule of inference.
+/*Postulate the modus ponens rule of inference.
   */
 
-/* Minor premise for modus ponens. */
+/*Minor premise for modus ponens. */
 
-/* Major premise for modus ponens. */
+/*Major premise for modus ponens. */
 
-/* Rule of Modus Ponens.  The postulated inference rule of propositional
+/*Rule of Modus Ponens.  The postulated inference rule of propositional
        calculus.  See e.g.  Rule 1 of [Hamilton] p. 73.  The rule says, "if
        ` ph ` is true, and ` ph ` implies ` ps ` , then ` ps ` must also be
        true."  This rule is sometimes called "detachment," since it detaches

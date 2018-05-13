@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_related_to_classical_predicate_calculus/Predicate_calculus_with_all_distinct_variables.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                Aristotelian logic: Assertic syllogisms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -131,13 +133,17 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   (as well as set theory since it discusses membership in groups),
   while Stoic logic is essentially the forerunner of propositional calculus.
 $)
-$( Figure 1.  Aristotelian syllogisms are grouped by "figures",
+
+$(Figure 1.  Aristotelian syllogisms are grouped by "figures",
      which doesn't matter for our purposes but is a reasonable way
      to order them. $)
-$( Major premise for the Aristotelian syllogism "Barbara", e.g.,
+
+$(Major premise for the Aristotelian syllogism "Barbara", e.g.,
        "All men are mortal". By convention, the major premise is first. $)
-$( Minor premise for Barbara, e.g., "Socrates is a man". $)
-$( "Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
+
+$(Minor premise for Barbara, e.g., "Socrates is a man". $)
+
+$("Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
        ` ph ` is ` ps ` , and all ` ch ` is ` ph ` , therefore all ` ch ` is
        ` ps ` .  (In Aristotelian notation, AAA-1:  MaP and SaM therefore SaP.)
        For example, given "All men are mortal" and "Socrates is a man", we can
@@ -153,69 +159,72 @@ $( "Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
        ~ http://plato.stanford.edu/entries/aristotle-logic/ , and
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fbarbara_0 $f wff ph $.
-	fbarbara_1 $f wff ps $.
-	fbarbara_2 $f wff ch $.
-	fbarbara_3 $f set x $.
-	ebarbara_0 $e |- A. x ( ph -> ps ) $.
-	ebarbara_1 $e |- A. x ( ch -> ph ) $.
-	barbara $p |- A. x ( ch -> ps ) $= fbarbara_2 fbarbara_0 wi fbarbara_3 wal fbarbara_0 fbarbara_1 wi fbarbara_3 wal fbarbara_2 fbarbara_1 wi fbarbara_3 wal ebarbara_1 ebarbara_0 fbarbara_2 fbarbara_0 fbarbara_1 fbarbara_3 alsyl mp2an $.
+	$v ph ps ch x  $.
+	f0_barbara $f wff ph $.
+	f1_barbara $f wff ps $.
+	f2_barbara $f wff ch $.
+	f3_barbara $f set x $.
+	e0_barbara $e |- A. x ( ph -> ps ) $.
+	e1_barbara $e |- A. x ( ch -> ph ) $.
+	p_barbara $p |- A. x ( ch -> ps ) $= e1_barbara e0_barbara f2_barbara f0_barbara f1_barbara f3_barbara p_alsyl f2_barbara f0_barbara a_wi f3_barbara a_wal f0_barbara f1_barbara a_wi f3_barbara a_wal f2_barbara f1_barbara a_wi f3_barbara a_wal p_mp2an $.
 $}
-$( Major premise for the Aristotelian syllogism "Celarent", e.g.,
+
+$(Major premise for the Aristotelian syllogism "Celarent", e.g.,
        "No reptiles have fur". $)
-$( Minor premise for Celarent, e.g., "All snakes are reptiles". $)
-$( "Celarent", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Minor premise for Celarent, e.g., "All snakes are reptiles". $)
+
+$("Celarent", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and all ` ch ` is ` ph ` , therefore no ` ch ` is ` ps ` .  (In
        Aristotelian notation, EAE-1:  MeP and SaM therefore SeP.) For example,
        given the "No reptiles have fur" and "All snakes are reptiles",
        therefore "No snakes have fur".  Example from
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcelarent_0 $f wff ph $.
-	fcelarent_1 $f wff ps $.
-	fcelarent_2 $f wff ch $.
-	fcelarent_3 $f set x $.
-	ecelarent_0 $e |- A. x ( ph -> -. ps ) $.
-	ecelarent_1 $e |- A. x ( ch -> ph ) $.
-	celarent $p |- A. x ( ch -> -. ps ) $= fcelarent_0 fcelarent_1 wn fcelarent_2 fcelarent_3 ecelarent_0 ecelarent_1 barbara $.
+	$v ph ps ch x  $.
+	f0_celarent $f wff ph $.
+	f1_celarent $f wff ps $.
+	f2_celarent $f wff ch $.
+	f3_celarent $f set x $.
+	e0_celarent $e |- A. x ( ph -> -. ps ) $.
+	e1_celarent $e |- A. x ( ch -> ph ) $.
+	p_celarent $p |- A. x ( ch -> -. ps ) $= e0_celarent e1_celarent f0_celarent f1_celarent a_wn f2_celarent f3_celarent p_barbara $.
 $}
-$( Major premise for the Aristotelian syllogism "Darii", e.g.,
+
+$(Major premise for the Aristotelian syllogism "Darii", e.g.,
        "All rabbits have fur". $)
-$( Minor premise for Darii, e.g., "Some pets are rabbits." $)
-$( "Darii", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Minor premise for Darii, e.g., "Some pets are rabbits." $)
+
+$("Darii", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ch ` is ` ph ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, AII-1:  MaP and SiM therefore SiP.) For
        example, given "All rabbits have fur" and "Some pets are rabbits",
        therefore "Some pets have fur".  Example from
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fdarii_0 $f wff ph $.
-	fdarii_1 $f wff ps $.
-	fdarii_2 $f wff ch $.
-	fdarii_3 $f set x $.
-	edarii_0 $e |- A. x ( ph -> ps ) $.
-	edarii_1 $e |- E. x ( ch /\ ph ) $.
-	darii $p |- E. x ( ch /\ ps ) $= fdarii_2 fdarii_0 wa fdarii_3 wex fdarii_2 fdarii_1 wa fdarii_3 wex edarii_1 fdarii_2 fdarii_0 wa fdarii_2 fdarii_1 wa fdarii_3 fdarii_0 fdarii_1 fdarii_2 fdarii_0 fdarii_1 wi fdarii_3 edarii_0 spi anim2i eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_darii $f wff ph $.
+	f1_darii $f wff ps $.
+	f2_darii $f wff ch $.
+	f3_darii $f set x $.
+	e0_darii $e |- A. x ( ph -> ps ) $.
+	e1_darii $e |- E. x ( ch /\ ph ) $.
+	p_darii $p |- E. x ( ch /\ ps ) $= e1_darii e0_darii f0_darii f1_darii a_wi f3_darii p_spi f0_darii f1_darii f2_darii p_anim2i f2_darii f0_darii a_wa f2_darii f1_darii a_wa f3_darii p_eximi f2_darii f0_darii a_wa f3_darii a_wex f2_darii f1_darii a_wa f3_darii a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Ferio" ("Ferioque"),
+
+$(Major premise for the Aristotelian syllogism "Ferio" ("Ferioque"),
        e.g., "No homework is fun". $)
-$( Minor premise for Ferio, e.g., "Some reading is homework." $)
-$( "Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
+
+$(Minor premise for Ferio, e.g., "Some reading is homework." $)
+
+$("Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
        ` ph ` is ` ps ` , and some ` ch ` is ` ph ` , therefore some ` ch ` is
        not ` ps ` .  (In Aristotelian notation, EIO-1:  MeP and SiM therefore
        SoP.) For example, given "No homework is fun" and "Some reading is
@@ -223,24 +232,26 @@ $( "Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
        logical axiom in Aristotelian logic.  Example from
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fferio_0 $f wff ph $.
-	fferio_1 $f wff ps $.
-	fferio_2 $f wff ch $.
-	fferio_3 $f set x $.
-	eferio_0 $e |- A. x ( ph -> -. ps ) $.
-	eferio_1 $e |- E. x ( ch /\ ph ) $.
-	ferio $p |- E. x ( ch /\ -. ps ) $= fferio_0 fferio_1 wn fferio_2 fferio_3 eferio_0 eferio_1 darii $.
+	$v ph ps ch x  $.
+	f0_ferio $f wff ph $.
+	f1_ferio $f wff ps $.
+	f2_ferio $f wff ch $.
+	f3_ferio $f set x $.
+	e0_ferio $e |- A. x ( ph -> -. ps ) $.
+	e1_ferio $e |- E. x ( ch /\ ph ) $.
+	p_ferio $p |- E. x ( ch /\ -. ps ) $= e0_ferio e1_ferio f0_ferio f1_ferio a_wn f2_ferio f3_ferio p_darii $.
 $}
-$( Major premise for the Aristotelian syllogism "Barbari", e.g.,
+
+$(Major premise for the Aristotelian syllogism "Barbari", e.g.,
        e.g., "All men are mortal". $)
-$( Minor premise for Barbari, e.g., "All Greeks are men." $)
-$( Existence premise for Barbari, e.g., "Greeks exist." $)
-$( "Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Minor premise for Barbari, e.g., "All Greeks are men." $)
+
+$(Existence premise for Barbari, e.g., "Greeks exist." $)
+
+$("Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ch ` is ` ph ` , and some ` ch ` exist, therefore some
        ` ch ` is ` ps ` .  (In Aristotelian notation, AAI-1:  MaP and SaM
        therefore SiP.) For example, given "All men are mortal", "All Greeks are
@@ -249,25 +260,27 @@ $( "Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        from ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David
        A. Wheeler, 27-Aug-2016.)  (Revised by David A. Wheeler,
        30-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fbarbari_0 $f wff ph $.
-	fbarbari_1 $f wff ps $.
-	fbarbari_2 $f wff ch $.
-	fbarbari_3 $f set x $.
-	ebarbari_0 $e |- A. x ( ph -> ps ) $.
-	ebarbari_1 $e |- A. x ( ch -> ph ) $.
-	ebarbari_2 $e |- E. x ch $.
-	barbari $p |- E. x ( ch /\ ps ) $= fbarbari_2 fbarbari_3 wex fbarbari_2 fbarbari_1 wa fbarbari_3 wex ebarbari_2 fbarbari_2 fbarbari_2 fbarbari_1 wa fbarbari_3 fbarbari_2 fbarbari_1 fbarbari_2 fbarbari_1 wi fbarbari_3 fbarbari_0 fbarbari_1 fbarbari_2 fbarbari_3 ebarbari_0 ebarbari_1 barbara spi ancli eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_barbari $f wff ph $.
+	f1_barbari $f wff ps $.
+	f2_barbari $f wff ch $.
+	f3_barbari $f set x $.
+	e0_barbari $e |- A. x ( ph -> ps ) $.
+	e1_barbari $e |- A. x ( ch -> ph ) $.
+	e2_barbari $e |- E. x ch $.
+	p_barbari $p |- E. x ( ch /\ ps ) $= e2_barbari e0_barbari e1_barbari f0_barbari f1_barbari f2_barbari f3_barbari p_barbara f2_barbari f1_barbari a_wi f3_barbari p_spi f2_barbari f1_barbari p_ancli f2_barbari f2_barbari f1_barbari a_wa f3_barbari p_eximi f2_barbari f3_barbari a_wex f2_barbari f1_barbari a_wa f3_barbari a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Celaront", e.g.,
+
+$(Major premise for the Aristotelian syllogism "Celaront", e.g.,
        e.g., "No reptiles have fur". $)
-$( Minor premise for Celaront, e.g., "All Snakes are reptiles." $)
-$( Existence premise for Celaront, e.g., "Snakes exist." $)
-$( "Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Minor premise for Celaront, e.g., "All Snakes are reptiles." $)
+
+$(Existence premise for Celaront, e.g., "Snakes exist." $)
+
+$("Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ch ` is ` ph ` , and some ` ch ` exist, therefore some
        ` ch ` is not ` ps ` .  (In Aristotelian notation, EAO-1:  MeP and SaM
        therefore SoP.) For example, given "No reptiles have fur", "All snakes
@@ -275,401 +288,428 @@ $( "Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        Note the existence hypothesis.  Example from
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 27-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcelaront_0 $f wff ph $.
-	fcelaront_1 $f wff ps $.
-	fcelaront_2 $f wff ch $.
-	fcelaront_3 $f set x $.
-	ecelaront_0 $e |- A. x ( ph -> -. ps ) $.
-	ecelaront_1 $e |- A. x ( ch -> ph ) $.
-	ecelaront_2 $e |- E. x ch $.
-	celaront $p |- E. x ( ch /\ -. ps ) $= fcelaront_0 fcelaront_1 wn fcelaront_2 fcelaront_3 ecelaront_0 ecelaront_1 ecelaront_2 barbari $.
+	$v ph ps ch x  $.
+	f0_celaront $f wff ph $.
+	f1_celaront $f wff ps $.
+	f2_celaront $f wff ch $.
+	f3_celaront $f set x $.
+	e0_celaront $e |- A. x ( ph -> -. ps ) $.
+	e1_celaront $e |- A. x ( ch -> ph ) $.
+	e2_celaront $e |- E. x ch $.
+	p_celaront $p |- E. x ( ch /\ -. ps ) $= e0_celaront e1_celaront e2_celaront f0_celaront f1_celaront a_wn f2_celaront f3_celaront p_barbari $.
 $}
-$( Figure 2 $)
-$( Major premise for the Aristotelian syllogism "Cesare" $)
-$( Minor premise for Cesare $)
-$( "Cesare", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Figure 2 $)
+
+$(Major premise for the Aristotelian syllogism "Cesare" $)
+
+$(Minor premise for Cesare $)
+
+$("Cesare", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and all ` ch ` is ` ps ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, EAE-2:  PeM and SaM therefore SeP.) Related to
        ~ celarent .  (Contributed by David A. Wheeler, 27-Aug-2016.)  (Revised
        by David A. Wheeler, 13-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcesare_0 $f wff ph $.
-	fcesare_1 $f wff ps $.
-	fcesare_2 $f wff ch $.
-	fcesare_3 $f set x $.
-	ecesare_0 $e |- A. x ( ph -> -. ps ) $.
-	ecesare_1 $e |- A. x ( ch -> ps ) $.
-	cesare $p |- A. x ( ch -> -. ph ) $= fcesare_2 fcesare_0 wn wi fcesare_3 fcesare_0 fcesare_1 fcesare_2 fcesare_0 fcesare_1 wn wi fcesare_3 ecesare_0 spi fcesare_2 fcesare_1 wi fcesare_3 ecesare_1 spi nsyl3 ax-gen $.
+	$v ph ps ch x  $.
+	f0_cesare $f wff ph $.
+	f1_cesare $f wff ps $.
+	f2_cesare $f wff ch $.
+	f3_cesare $f set x $.
+	e0_cesare $e |- A. x ( ph -> -. ps ) $.
+	e1_cesare $e |- A. x ( ch -> ps ) $.
+	p_cesare $p |- A. x ( ch -> -. ph ) $= e0_cesare f0_cesare f1_cesare a_wn a_wi f3_cesare p_spi e1_cesare f2_cesare f1_cesare a_wi f3_cesare p_spi f0_cesare f1_cesare f2_cesare p_nsyl3 f2_cesare f0_cesare a_wn a_wi f3_cesare a_ax-gen $.
 $}
-$( Major premise for the Aristotelian syllogism "Camestres" $)
-$( Minor premise for Camestres $)
-$( "Camestres", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Camestres" $)
+
+$(Minor premise for Camestres $)
+
+$("Camestres", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and no ` ch ` is ` ps ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, AEE-2:  PaM and SeM therefore SeP.) (Contributed
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcamestres_0 $f wff ph $.
-	fcamestres_1 $f wff ps $.
-	fcamestres_2 $f wff ch $.
-	fcamestres_3 $f set x $.
-	ecamestres_0 $e |- A. x ( ph -> ps ) $.
-	ecamestres_1 $e |- A. x ( ch -> -. ps ) $.
-	camestres $p |- A. x ( ch -> -. ph ) $= fcamestres_2 fcamestres_0 wn wi fcamestres_3 fcamestres_2 fcamestres_1 fcamestres_0 fcamestres_2 fcamestres_1 wn wi fcamestres_3 ecamestres_1 spi fcamestres_0 fcamestres_1 wi fcamestres_3 ecamestres_0 spi nsyl ax-gen $.
+	$v ph ps ch x  $.
+	f0_camestres $f wff ph $.
+	f1_camestres $f wff ps $.
+	f2_camestres $f wff ch $.
+	f3_camestres $f set x $.
+	e0_camestres $e |- A. x ( ph -> ps ) $.
+	e1_camestres $e |- A. x ( ch -> -. ps ) $.
+	p_camestres $p |- A. x ( ch -> -. ph ) $= e1_camestres f2_camestres f1_camestres a_wn a_wi f3_camestres p_spi e0_camestres f0_camestres f1_camestres a_wi f3_camestres p_spi f2_camestres f1_camestres f0_camestres p_nsyl f2_camestres f0_camestres a_wn a_wi f3_camestres a_ax-gen $.
 $}
-$( Major premise for the Aristotelian syllogism "Festino" $)
-$( Minor premise for Festino $)
-$( "Festino", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Festino" $)
+
+$(Minor premise for Festino $)
+
+$("Festino", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and some ` ch ` is ` ps ` , therefore some ` ch ` is not
        ` ph ` .  (In Aristotelian notation, EIO-2:  PeM and SiM therefore SoP.)
        (Contributed by David A. Wheeler, 25-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	ffestino_0 $f wff ph $.
-	ffestino_1 $f wff ps $.
-	ffestino_2 $f wff ch $.
-	ffestino_3 $f set x $.
-	efestino_0 $e |- A. x ( ph -> -. ps ) $.
-	efestino_1 $e |- E. x ( ch /\ ps ) $.
-	festino $p |- E. x ( ch /\ -. ph ) $= ffestino_2 ffestino_1 wa ffestino_3 wex ffestino_2 ffestino_0 wn wa ffestino_3 wex efestino_1 ffestino_2 ffestino_1 wa ffestino_2 ffestino_0 wn wa ffestino_3 ffestino_1 ffestino_0 wn ffestino_2 ffestino_0 ffestino_1 ffestino_0 ffestino_1 wn wi ffestino_3 efestino_0 spi con2i anim2i eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_festino $f wff ph $.
+	f1_festino $f wff ps $.
+	f2_festino $f wff ch $.
+	f3_festino $f set x $.
+	e0_festino $e |- A. x ( ph -> -. ps ) $.
+	e1_festino $e |- E. x ( ch /\ ps ) $.
+	p_festino $p |- E. x ( ch /\ -. ph ) $= e1_festino e0_festino f0_festino f1_festino a_wn a_wi f3_festino p_spi f0_festino f1_festino p_con2i f1_festino f0_festino a_wn f2_festino p_anim2i f2_festino f1_festino a_wa f2_festino f0_festino a_wn a_wa f3_festino p_eximi f2_festino f1_festino a_wa f3_festino a_wex f2_festino f0_festino a_wn a_wa f3_festino a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Baroco" $)
-$( Minor premise for Baroco $)
-$( "Baroco", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Baroco" $)
+
+$(Minor premise for Baroco $)
+
+$("Baroco", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ch ` is not ` ps ` , therefore some ` ch ` is not
        ` ph ` .  (In Aristotelian notation, AOO-2:  PaM and SoM therefore SoP.)
        For example, "All informative things are useful", "Some websites are not
        useful", therefore "Some websites are not informative."  (Contributed by
        David A. Wheeler, 28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fbaroco_0 $f wff ph $.
-	fbaroco_1 $f wff ps $.
-	fbaroco_2 $f wff ch $.
-	fbaroco_3 $f set x $.
-	ebaroco_0 $e |- A. x ( ph -> ps ) $.
-	ebaroco_1 $e |- E. x ( ch /\ -. ps ) $.
-	baroco $p |- E. x ( ch /\ -. ph ) $= fbaroco_2 fbaroco_1 wn wa fbaroco_3 wex fbaroco_2 fbaroco_0 wn wa fbaroco_3 wex ebaroco_1 fbaroco_2 fbaroco_1 wn wa fbaroco_2 fbaroco_0 wn wa fbaroco_3 fbaroco_1 wn fbaroco_0 wn fbaroco_2 fbaroco_0 fbaroco_1 fbaroco_0 fbaroco_1 wi fbaroco_3 ebaroco_0 spi con3i anim2i eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_baroco $f wff ph $.
+	f1_baroco $f wff ps $.
+	f2_baroco $f wff ch $.
+	f3_baroco $f set x $.
+	e0_baroco $e |- A. x ( ph -> ps ) $.
+	e1_baroco $e |- E. x ( ch /\ -. ps ) $.
+	p_baroco $p |- E. x ( ch /\ -. ph ) $= e1_baroco e0_baroco f0_baroco f1_baroco a_wi f3_baroco p_spi f0_baroco f1_baroco p_con3i f1_baroco a_wn f0_baroco a_wn f2_baroco p_anim2i f2_baroco f1_baroco a_wn a_wa f2_baroco f0_baroco a_wn a_wa f3_baroco p_eximi f2_baroco f1_baroco a_wn a_wa f3_baroco a_wex f2_baroco f0_baroco a_wn a_wa f3_baroco a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Cesaro" $)
-$( Minor premise for Cesaro $)
-$( Existence premise for Cesaro $)
-$( "Cesaro", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Cesaro" $)
+
+$(Minor premise for Cesaro $)
+
+$(Existence premise for Cesaro $)
+
+$("Cesaro", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ch ` is ` ps ` , and ` ch ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, EAO-2:  PeM and SaM
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcesaro_0 $f wff ph $.
-	fcesaro_1 $f wff ps $.
-	fcesaro_2 $f wff ch $.
-	fcesaro_3 $f set x $.
-	ecesaro_0 $e |- A. x ( ph -> -. ps ) $.
-	ecesaro_1 $e |- A. x ( ch -> ps ) $.
-	ecesaro_2 $e |- E. x ch $.
-	cesaro $p |- E. x ( ch /\ -. ph ) $= fcesaro_2 fcesaro_3 wex fcesaro_2 fcesaro_0 wn wa fcesaro_3 wex ecesaro_2 fcesaro_2 fcesaro_2 fcesaro_0 wn wa fcesaro_3 fcesaro_2 fcesaro_0 wn fcesaro_0 fcesaro_1 fcesaro_2 fcesaro_0 fcesaro_1 wn wi fcesaro_3 ecesaro_0 spi fcesaro_2 fcesaro_1 wi fcesaro_3 ecesaro_1 spi nsyl3 ancli eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_cesaro $f wff ph $.
+	f1_cesaro $f wff ps $.
+	f2_cesaro $f wff ch $.
+	f3_cesaro $f set x $.
+	e0_cesaro $e |- A. x ( ph -> -. ps ) $.
+	e1_cesaro $e |- A. x ( ch -> ps ) $.
+	e2_cesaro $e |- E. x ch $.
+	p_cesaro $p |- E. x ( ch /\ -. ph ) $= e2_cesaro e0_cesaro f0_cesaro f1_cesaro a_wn a_wi f3_cesaro p_spi e1_cesaro f2_cesaro f1_cesaro a_wi f3_cesaro p_spi f0_cesaro f1_cesaro f2_cesaro p_nsyl3 f2_cesaro f0_cesaro a_wn p_ancli f2_cesaro f2_cesaro f0_cesaro a_wn a_wa f3_cesaro p_eximi f2_cesaro f3_cesaro a_wex f2_cesaro f0_cesaro a_wn a_wa f3_cesaro a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Camestros" $)
-$( Minor premise for  $)
-$( Existence premise for Camestros $)
-$( "Camestros", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Camestros" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Camestros $)
+
+$("Camestros", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , no ` ch ` is ` ps ` , and ` ch ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, AEO-2:  PaM and SeM
        therefore SoP.) For example, "All horses have hooves", "No humans have
        hooves", and humans exist, therefore "Some humans are not horses".
        (Contributed by David A. Wheeler, 28-Aug-2016.)  (Revised by David A.
        Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcamestros_0 $f wff ph $.
-	fcamestros_1 $f wff ps $.
-	fcamestros_2 $f wff ch $.
-	fcamestros_3 $f set x $.
-	ecamestros_0 $e |- A. x ( ph -> ps ) $.
-	ecamestros_1 $e |- A. x ( ch -> -. ps ) $.
-	ecamestros_2 $e |- E. x ch $.
-	camestros $p |- E. x ( ch /\ -. ph ) $= fcamestros_2 fcamestros_3 wex fcamestros_2 fcamestros_0 wn wa fcamestros_3 wex ecamestros_2 fcamestros_2 fcamestros_2 fcamestros_0 wn wa fcamestros_3 fcamestros_2 fcamestros_0 wn fcamestros_2 fcamestros_1 fcamestros_0 fcamestros_2 fcamestros_1 wn wi fcamestros_3 ecamestros_1 spi fcamestros_0 fcamestros_1 wi fcamestros_3 ecamestros_0 spi nsyl ancli eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_camestros $f wff ph $.
+	f1_camestros $f wff ps $.
+	f2_camestros $f wff ch $.
+	f3_camestros $f set x $.
+	e0_camestros $e |- A. x ( ph -> ps ) $.
+	e1_camestros $e |- A. x ( ch -> -. ps ) $.
+	e2_camestros $e |- E. x ch $.
+	p_camestros $p |- E. x ( ch /\ -. ph ) $= e2_camestros e1_camestros f2_camestros f1_camestros a_wn a_wi f3_camestros p_spi e0_camestros f0_camestros f1_camestros a_wi f3_camestros p_spi f2_camestros f1_camestros f0_camestros p_nsyl f2_camestros f0_camestros a_wn p_ancli f2_camestros f2_camestros f0_camestros a_wn a_wa f3_camestros p_eximi f2_camestros f3_camestros a_wex f2_camestros f0_camestros a_wn a_wa f3_camestros a_wex a_ax-mp $.
 $}
-$( Figure 3 $)
-$( Major premise for the Aristotelian syllogism "Datisi" $)
-$( Minor premise for  $)
-$( "Datisi", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Figure 3 $)
+
+$(Major premise for the Aristotelian syllogism "Datisi" $)
+
+$(Minor premise for  $)
+
+$("Datisi", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ph ` is ` ch ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, AII-3:  MaP and MiS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fdatisi_0 $f wff ph $.
-	fdatisi_1 $f wff ps $.
-	fdatisi_2 $f wff ch $.
-	fdatisi_3 $f set x $.
-	edatisi_0 $e |- A. x ( ph -> ps ) $.
-	edatisi_1 $e |- E. x ( ph /\ ch ) $.
-	datisi $p |- E. x ( ch /\ ps ) $= fdatisi_0 fdatisi_2 wa fdatisi_3 wex fdatisi_2 fdatisi_1 wa fdatisi_3 wex edatisi_1 fdatisi_0 fdatisi_2 wa fdatisi_2 fdatisi_1 wa fdatisi_3 fdatisi_0 fdatisi_2 wa fdatisi_2 fdatisi_1 fdatisi_0 fdatisi_2 simpr fdatisi_0 fdatisi_1 fdatisi_2 fdatisi_0 fdatisi_1 wi fdatisi_3 edatisi_0 spi adantr jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_datisi $f wff ph $.
+	f1_datisi $f wff ps $.
+	f2_datisi $f wff ch $.
+	f3_datisi $f set x $.
+	e0_datisi $e |- A. x ( ph -> ps ) $.
+	e1_datisi $e |- E. x ( ph /\ ch ) $.
+	p_datisi $p |- E. x ( ch /\ ps ) $= e1_datisi f0_datisi f2_datisi p_simpr e0_datisi f0_datisi f1_datisi a_wi f3_datisi p_spi f0_datisi f1_datisi f2_datisi p_adantr f0_datisi f2_datisi a_wa f2_datisi f1_datisi p_jca f0_datisi f2_datisi a_wa f2_datisi f1_datisi a_wa f3_datisi p_eximi f0_datisi f2_datisi a_wa f3_datisi a_wex f2_datisi f1_datisi a_wa f3_datisi a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Disamis" $)
-$( Minor premise for  $)
-$( "Disamis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Disamis" $)
+
+$(Minor premise for  $)
+
+$("Disamis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        ` ps ` , and all ` ph ` is ` ch ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, IAI-3:  MiP and MaS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fdisamis_0 $f wff ph $.
-	fdisamis_1 $f wff ps $.
-	fdisamis_2 $f wff ch $.
-	fdisamis_3 $f set x $.
-	edisamis_0 $e |- E. x ( ph /\ ps ) $.
-	edisamis_1 $e |- A. x ( ph -> ch ) $.
-	disamis $p |- E. x ( ch /\ ps ) $= fdisamis_0 fdisamis_1 wa fdisamis_3 wex fdisamis_2 fdisamis_1 wa fdisamis_3 wex edisamis_0 fdisamis_0 fdisamis_1 wa fdisamis_2 fdisamis_1 wa fdisamis_3 fdisamis_0 fdisamis_2 fdisamis_1 fdisamis_0 fdisamis_2 wi fdisamis_3 edisamis_1 spi anim1i eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_disamis $f wff ph $.
+	f1_disamis $f wff ps $.
+	f2_disamis $f wff ch $.
+	f3_disamis $f set x $.
+	e0_disamis $e |- E. x ( ph /\ ps ) $.
+	e1_disamis $e |- A. x ( ph -> ch ) $.
+	p_disamis $p |- E. x ( ch /\ ps ) $= e0_disamis e1_disamis f0_disamis f2_disamis a_wi f3_disamis p_spi f0_disamis f2_disamis f1_disamis p_anim1i f0_disamis f1_disamis a_wa f2_disamis f1_disamis a_wa f3_disamis p_eximi f0_disamis f1_disamis a_wa f3_disamis a_wex f2_disamis f1_disamis a_wa f3_disamis a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Ferison" $)
-$( Minor premise for  $)
-$( "Ferison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Ferison" $)
+
+$(Minor premise for  $)
+
+$("Ferison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and some ` ph ` is ` ch ` , therefore some ` ch ` is not
        ` ps ` .  (In Aristotelian notation, EIO-3:  MeP and MiS therefore SoP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.)  (Revised by David A.
        Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fferison_0 $f wff ph $.
-	fferison_1 $f wff ps $.
-	fferison_2 $f wff ch $.
-	fferison_3 $f set x $.
-	eferison_0 $e |- A. x ( ph -> -. ps ) $.
-	eferison_1 $e |- E. x ( ph /\ ch ) $.
-	ferison $p |- E. x ( ch /\ -. ps ) $= fferison_0 fferison_1 wn fferison_2 fferison_3 eferison_0 eferison_1 datisi $.
+	$v ph ps ch x  $.
+	f0_ferison $f wff ph $.
+	f1_ferison $f wff ps $.
+	f2_ferison $f wff ch $.
+	f3_ferison $f set x $.
+	e0_ferison $e |- A. x ( ph -> -. ps ) $.
+	e1_ferison $e |- E. x ( ph /\ ch ) $.
+	p_ferison $p |- E. x ( ch /\ -. ps ) $= e0_ferison e1_ferison f0_ferison f1_ferison a_wn f2_ferison f3_ferison p_datisi $.
 $}
-$( Major premise for the Aristotelian syllogism "Bocardo" $)
-$( Minor premise for  $)
-$( "Bocardo", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Bocardo" $)
+
+$(Minor premise for  $)
+
+$("Bocardo", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        not ` ps ` , and all ` ph ` is ` ch ` , therefore some ` ch ` is not
        ` ps ` .  (In Aristotelian notation, OAO-3:  MoP and MaS therefore SoP.)
        For example, "Some cats have no tails", "All cats are mammals",
        therefore "Some mammals have no tails".  A reorder of ~ disamis ; prefer
        using that instead.  (Contributed by David A. Wheeler, 28-Aug-2016.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fbocardo_0 $f wff ph $.
-	fbocardo_1 $f wff ps $.
-	fbocardo_2 $f wff ch $.
-	fbocardo_3 $f set x $.
-	ebocardo_0 $e |- E. x ( ph /\ -. ps ) $.
-	ebocardo_1 $e |- A. x ( ph -> ch ) $.
-	bocardo $p |- E. x ( ch /\ -. ps ) $= fbocardo_0 fbocardo_1 wn fbocardo_2 fbocardo_3 ebocardo_0 ebocardo_1 disamis $.
+	$v ph ps ch x  $.
+	f0_bocardo $f wff ph $.
+	f1_bocardo $f wff ps $.
+	f2_bocardo $f wff ch $.
+	f3_bocardo $f set x $.
+	e0_bocardo $e |- E. x ( ph /\ -. ps ) $.
+	e1_bocardo $e |- A. x ( ph -> ch ) $.
+	p_bocardo $p |- E. x ( ch /\ -. ps ) $= e0_bocardo e1_bocardo f0_bocardo f1_bocardo a_wn f2_bocardo f3_bocardo p_disamis $.
 $}
-$( Major premise for the Aristotelian syllogism "Felapton" $)
-$( Minor premise for  $)
-$( Existence premise for Felapton $)
-$( "Felapton", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Felapton" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Felapton $)
+
+$("Felapton", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ph ` is ` ch ` , and some ` ph ` exist, therefore some
        ` ch ` is not ` ps ` .  (In Aristotelian notation, EAO-3:  MeP and MaS
        therefore SoP.) For example, "No flowers are animals" and "All flowers
        are plants", therefore "Some plants are not animals".  (Contributed by
        David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	ffelapton_0 $f wff ph $.
-	ffelapton_1 $f wff ps $.
-	ffelapton_2 $f wff ch $.
-	ffelapton_3 $f set x $.
-	efelapton_0 $e |- A. x ( ph -> -. ps ) $.
-	efelapton_1 $e |- A. x ( ph -> ch ) $.
-	efelapton_2 $e |- E. x ph $.
-	felapton $p |- E. x ( ch /\ -. ps ) $= ffelapton_0 ffelapton_3 wex ffelapton_2 ffelapton_1 wn wa ffelapton_3 wex efelapton_2 ffelapton_0 ffelapton_2 ffelapton_1 wn wa ffelapton_3 ffelapton_0 ffelapton_2 ffelapton_1 wn ffelapton_0 ffelapton_2 wi ffelapton_3 efelapton_1 spi ffelapton_0 ffelapton_1 wn wi ffelapton_3 efelapton_0 spi jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_felapton $f wff ph $.
+	f1_felapton $f wff ps $.
+	f2_felapton $f wff ch $.
+	f3_felapton $f set x $.
+	e0_felapton $e |- A. x ( ph -> -. ps ) $.
+	e1_felapton $e |- A. x ( ph -> ch ) $.
+	e2_felapton $e |- E. x ph $.
+	p_felapton $p |- E. x ( ch /\ -. ps ) $= e2_felapton e1_felapton f0_felapton f2_felapton a_wi f3_felapton p_spi e0_felapton f0_felapton f1_felapton a_wn a_wi f3_felapton p_spi f0_felapton f2_felapton f1_felapton a_wn p_jca f0_felapton f2_felapton f1_felapton a_wn a_wa f3_felapton p_eximi f0_felapton f3_felapton a_wex f2_felapton f1_felapton a_wn a_wa f3_felapton a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Darapti" $)
-$( Minor premise for  $)
-$( Existence premise for Darapti $)
-$( "Darapti", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Darapti" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Darapti $)
+
+$("Darapti", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ph ` is ` ch ` , and some ` ph ` exist, therefore some
        ` ch ` is ` ps ` .  (In Aristotelian notation, AAI-3:  MaP and MaS
        therefore SiP.) For example, "All squares are rectangles" and "All
        squares are rhombuses", therefore "Some rhombuses are rectangles".
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fdarapti_0 $f wff ph $.
-	fdarapti_1 $f wff ps $.
-	fdarapti_2 $f wff ch $.
-	fdarapti_3 $f set x $.
-	edarapti_0 $e |- A. x ( ph -> ps ) $.
-	edarapti_1 $e |- A. x ( ph -> ch ) $.
-	edarapti_2 $e |- E. x ph $.
-	darapti $p |- E. x ( ch /\ ps ) $= fdarapti_0 fdarapti_3 wex fdarapti_2 fdarapti_1 wa fdarapti_3 wex edarapti_2 fdarapti_0 fdarapti_2 fdarapti_1 wa fdarapti_3 fdarapti_0 fdarapti_2 fdarapti_1 fdarapti_0 fdarapti_2 wi fdarapti_3 edarapti_1 spi fdarapti_0 fdarapti_1 wi fdarapti_3 edarapti_0 spi jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_darapti $f wff ph $.
+	f1_darapti $f wff ps $.
+	f2_darapti $f wff ch $.
+	f3_darapti $f set x $.
+	e0_darapti $e |- A. x ( ph -> ps ) $.
+	e1_darapti $e |- A. x ( ph -> ch ) $.
+	e2_darapti $e |- E. x ph $.
+	p_darapti $p |- E. x ( ch /\ ps ) $= e2_darapti e1_darapti f0_darapti f2_darapti a_wi f3_darapti p_spi e0_darapti f0_darapti f1_darapti a_wi f3_darapti p_spi f0_darapti f2_darapti f1_darapti p_jca f0_darapti f2_darapti f1_darapti a_wa f3_darapti p_eximi f0_darapti f3_darapti a_wex f2_darapti f1_darapti a_wa f3_darapti a_wex a_ax-mp $.
 $}
-$( Figure 4 $)
-$( Major premise for the Aristotelian syllogism "Calemes" $)
-$( Minor premise for  $)
-$( "Calemes", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Figure 4 $)
+
+$(Major premise for the Aristotelian syllogism "Calemes" $)
+
+$(Minor premise for  $)
+
+$("Calemes", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and no ` ps ` is ` ch ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, AEE-4:  PaM and MeS therefore SeP.) (Contributed
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcalemes_0 $f wff ph $.
-	fcalemes_1 $f wff ps $.
-	fcalemes_2 $f wff ch $.
-	fcalemes_3 $f set x $.
-	ecalemes_0 $e |- A. x ( ph -> ps ) $.
-	ecalemes_1 $e |- A. x ( ps -> -. ch ) $.
-	calemes $p |- A. x ( ch -> -. ph ) $= fcalemes_2 fcalemes_0 wn wi fcalemes_3 fcalemes_2 fcalemes_1 fcalemes_0 fcalemes_1 fcalemes_2 fcalemes_1 fcalemes_2 wn wi fcalemes_3 ecalemes_1 spi con2i fcalemes_0 fcalemes_1 wi fcalemes_3 ecalemes_0 spi nsyl ax-gen $.
+	$v ph ps ch x  $.
+	f0_calemes $f wff ph $.
+	f1_calemes $f wff ps $.
+	f2_calemes $f wff ch $.
+	f3_calemes $f set x $.
+	e0_calemes $e |- A. x ( ph -> ps ) $.
+	e1_calemes $e |- A. x ( ps -> -. ch ) $.
+	p_calemes $p |- A. x ( ch -> -. ph ) $= e1_calemes f1_calemes f2_calemes a_wn a_wi f3_calemes p_spi f1_calemes f2_calemes p_con2i e0_calemes f0_calemes f1_calemes a_wi f3_calemes p_spi f2_calemes f1_calemes f0_calemes p_nsyl f2_calemes f0_calemes a_wn a_wi f3_calemes a_ax-gen $.
 $}
-$( Major premise for the Aristotelian syllogism "Dimatis" $)
-$( Minor premise for  $)
-$( "Dimatis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Dimatis" $)
+
+$(Minor premise for  $)
+
+$("Dimatis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        ` ps ` , and all ` ps ` is ` ch ` , therefore some ` ch ` is ` ph ` .
        (In Aristotelian notation, IAI-4:  PiM and MaS therefore SiP.) For
        example, "Some pets are rabbits.", "All rabbits have fur", therefore
        "Some fur bearing animals are pets".  Like ~ darii with positions
        interchanged.  (Contributed by David A. Wheeler, 28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fdimatis_0 $f wff ph $.
-	fdimatis_1 $f wff ps $.
-	fdimatis_2 $f wff ch $.
-	fdimatis_3 $f set x $.
-	edimatis_0 $e |- E. x ( ph /\ ps ) $.
-	edimatis_1 $e |- A. x ( ps -> ch ) $.
-	dimatis $p |- E. x ( ch /\ ph ) $= fdimatis_0 fdimatis_1 wa fdimatis_3 wex fdimatis_2 fdimatis_0 wa fdimatis_3 wex edimatis_0 fdimatis_0 fdimatis_1 wa fdimatis_2 fdimatis_0 wa fdimatis_3 fdimatis_0 fdimatis_1 wa fdimatis_2 fdimatis_0 fdimatis_1 fdimatis_2 fdimatis_0 fdimatis_1 fdimatis_2 wi fdimatis_3 edimatis_1 spi adantl fdimatis_0 fdimatis_1 simpl jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_dimatis $f wff ph $.
+	f1_dimatis $f wff ps $.
+	f2_dimatis $f wff ch $.
+	f3_dimatis $f set x $.
+	e0_dimatis $e |- E. x ( ph /\ ps ) $.
+	e1_dimatis $e |- A. x ( ps -> ch ) $.
+	p_dimatis $p |- E. x ( ch /\ ph ) $= e0_dimatis e1_dimatis f1_dimatis f2_dimatis a_wi f3_dimatis p_spi f1_dimatis f2_dimatis f0_dimatis p_adantl f0_dimatis f1_dimatis p_simpl f0_dimatis f1_dimatis a_wa f2_dimatis f0_dimatis p_jca f0_dimatis f1_dimatis a_wa f2_dimatis f0_dimatis a_wa f3_dimatis p_eximi f0_dimatis f1_dimatis a_wa f3_dimatis a_wex f2_dimatis f0_dimatis a_wa f3_dimatis a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Fresison" $)
-$( Minor premise for  $)
-$( "Fresison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Fresison" $)
+
+$(Minor premise for  $)
+
+$("Fresison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` (PeM), and some ` ps ` is ` ch ` (MiS), therefore some ` ch ` is
        not ` ph ` (SoP).  (In Aristotelian notation, EIO-4:  PeM and MiS
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	ffresison_0 $f wff ph $.
-	ffresison_1 $f wff ps $.
-	ffresison_2 $f wff ch $.
-	ffresison_3 $f set x $.
-	efresison_0 $e |- A. x ( ph -> -. ps ) $.
-	efresison_1 $e |- E. x ( ps /\ ch ) $.
-	fresison $p |- E. x ( ch /\ -. ph ) $= ffresison_1 ffresison_2 wa ffresison_3 wex ffresison_2 ffresison_0 wn wa ffresison_3 wex efresison_1 ffresison_1 ffresison_2 wa ffresison_2 ffresison_0 wn wa ffresison_3 ffresison_1 ffresison_2 wa ffresison_2 ffresison_0 wn ffresison_1 ffresison_2 simpr ffresison_1 ffresison_0 wn ffresison_2 ffresison_0 ffresison_1 ffresison_0 ffresison_1 wn wi ffresison_3 efresison_0 spi con2i adantr jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_fresison $f wff ph $.
+	f1_fresison $f wff ps $.
+	f2_fresison $f wff ch $.
+	f3_fresison $f set x $.
+	e0_fresison $e |- A. x ( ph -> -. ps ) $.
+	e1_fresison $e |- E. x ( ps /\ ch ) $.
+	p_fresison $p |- E. x ( ch /\ -. ph ) $= e1_fresison f1_fresison f2_fresison p_simpr e0_fresison f0_fresison f1_fresison a_wn a_wi f3_fresison p_spi f0_fresison f1_fresison p_con2i f1_fresison f0_fresison a_wn f2_fresison p_adantr f1_fresison f2_fresison a_wa f2_fresison f0_fresison a_wn p_jca f1_fresison f2_fresison a_wa f2_fresison f0_fresison a_wn a_wa f3_fresison p_eximi f1_fresison f2_fresison a_wa f3_fresison a_wex f2_fresison f0_fresison a_wn a_wa f3_fresison a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Calemos" $)
-$( Minor premise for  $)
-$( Existence premise for Calemos $)
-$( "Calemos", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Calemos" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Calemos $)
+
+$("Calemos", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` (PaM), no ` ps ` is ` ch ` (MeS), and ` ch ` exist, therefore
        some ` ch ` is not ` ph ` (SoP).  (In Aristotelian notation, AEO-4:  PaM
        and MeS therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fcalemos_0 $f wff ph $.
-	fcalemos_1 $f wff ps $.
-	fcalemos_2 $f wff ch $.
-	fcalemos_3 $f set x $.
-	ecalemos_0 $e |- A. x ( ph -> ps ) $.
-	ecalemos_1 $e |- A. x ( ps -> -. ch ) $.
-	ecalemos_2 $e |- E. x ch $.
-	calemos $p |- E. x ( ch /\ -. ph ) $= fcalemos_2 fcalemos_3 wex fcalemos_2 fcalemos_0 wn wa fcalemos_3 wex ecalemos_2 fcalemos_2 fcalemos_2 fcalemos_0 wn wa fcalemos_3 fcalemos_2 fcalemos_0 wn fcalemos_2 fcalemos_1 fcalemos_0 fcalemos_1 fcalemos_2 fcalemos_1 fcalemos_2 wn wi fcalemos_3 ecalemos_1 spi con2i fcalemos_0 fcalemos_1 wi fcalemos_3 ecalemos_0 spi nsyl ancli eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_calemos $f wff ph $.
+	f1_calemos $f wff ps $.
+	f2_calemos $f wff ch $.
+	f3_calemos $f set x $.
+	e0_calemos $e |- A. x ( ph -> ps ) $.
+	e1_calemos $e |- A. x ( ps -> -. ch ) $.
+	e2_calemos $e |- E. x ch $.
+	p_calemos $p |- E. x ( ch /\ -. ph ) $= e2_calemos e1_calemos f1_calemos f2_calemos a_wn a_wi f3_calemos p_spi f1_calemos f2_calemos p_con2i e0_calemos f0_calemos f1_calemos a_wi f3_calemos p_spi f2_calemos f1_calemos f0_calemos p_nsyl f2_calemos f0_calemos a_wn p_ancli f2_calemos f2_calemos f0_calemos a_wn a_wa f3_calemos p_eximi f2_calemos f3_calemos a_wex f2_calemos f0_calemos a_wn a_wa f3_calemos a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Fesapo" $)
-$( Minor premise for  $)
-$( Existence premise for Fesapo $)
-$( "Fesapo", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Fesapo" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Fesapo $)
+
+$("Fesapo", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ps ` is ` ch ` , and ` ps ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, EAO-4:  PeM and MaS
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	ffesapo_0 $f wff ph $.
-	ffesapo_1 $f wff ps $.
-	ffesapo_2 $f wff ch $.
-	ffesapo_3 $f set x $.
-	efesapo_0 $e |- A. x ( ph -> -. ps ) $.
-	efesapo_1 $e |- A. x ( ps -> ch ) $.
-	efesapo_2 $e |- E. x ps $.
-	fesapo $p |- E. x ( ch /\ -. ph ) $= ffesapo_1 ffesapo_3 wex ffesapo_2 ffesapo_0 wn wa ffesapo_3 wex efesapo_2 ffesapo_1 ffesapo_2 ffesapo_0 wn wa ffesapo_3 ffesapo_1 ffesapo_2 ffesapo_0 wn ffesapo_1 ffesapo_2 wi ffesapo_3 efesapo_1 spi ffesapo_0 ffesapo_1 ffesapo_0 ffesapo_1 wn wi ffesapo_3 efesapo_0 spi con2i jca eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_fesapo $f wff ph $.
+	f1_fesapo $f wff ps $.
+	f2_fesapo $f wff ch $.
+	f3_fesapo $f set x $.
+	e0_fesapo $e |- A. x ( ph -> -. ps ) $.
+	e1_fesapo $e |- A. x ( ps -> ch ) $.
+	e2_fesapo $e |- E. x ps $.
+	p_fesapo $p |- E. x ( ch /\ -. ph ) $= e2_fesapo e1_fesapo f1_fesapo f2_fesapo a_wi f3_fesapo p_spi e0_fesapo f0_fesapo f1_fesapo a_wn a_wi f3_fesapo p_spi f0_fesapo f1_fesapo p_con2i f1_fesapo f2_fesapo f0_fesapo a_wn p_jca f1_fesapo f2_fesapo f0_fesapo a_wn a_wa f3_fesapo p_eximi f1_fesapo f3_fesapo a_wex f2_fesapo f0_fesapo a_wn a_wa f3_fesapo a_wex a_ax-mp $.
 $}
-$( Major premise for the Aristotelian syllogism "Bamalip" $)
-$( Minor premise for  $)
-$( Existence premise for Bamalip $)
-$( "Bamalip", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+
+$(Major premise for the Aristotelian syllogism "Bamalip" $)
+
+$(Minor premise for  $)
+
+$(Existence premise for Bamalip $)
+
+$("Bamalip", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ps ` is ` ch ` , and ` ph ` exist, therefore some ` ch `
        is ` ph ` .  (In Aristotelian notation, AAI-4:  PaM and MaS therefore
        SiP.) Like ~ barbari .  (Contributed by David A. Wheeler,
        28-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fbamalip_0 $f wff ph $.
-	fbamalip_1 $f wff ps $.
-	fbamalip_2 $f wff ch $.
-	fbamalip_3 $f set x $.
-	ebamalip_0 $e |- A. x ( ph -> ps ) $.
-	ebamalip_1 $e |- A. x ( ps -> ch ) $.
-	ebamalip_2 $e |- E. x ph $.
-	bamalip $p |- E. x ( ch /\ ph ) $= fbamalip_0 fbamalip_3 wex fbamalip_2 fbamalip_0 wa fbamalip_3 wex ebamalip_2 fbamalip_0 fbamalip_2 fbamalip_0 wa fbamalip_3 fbamalip_0 fbamalip_2 fbamalip_0 fbamalip_1 fbamalip_2 fbamalip_0 fbamalip_1 wi fbamalip_3 ebamalip_0 spi fbamalip_1 fbamalip_2 wi fbamalip_3 ebamalip_1 spi syl ancri eximi ax-mp $.
+	$v ph ps ch x  $.
+	f0_bamalip $f wff ph $.
+	f1_bamalip $f wff ps $.
+	f2_bamalip $f wff ch $.
+	f3_bamalip $f set x $.
+	e0_bamalip $e |- A. x ( ph -> ps ) $.
+	e1_bamalip $e |- A. x ( ps -> ch ) $.
+	e2_bamalip $e |- E. x ph $.
+	p_bamalip $p |- E. x ( ch /\ ph ) $= e2_bamalip e0_bamalip f0_bamalip f1_bamalip a_wi f3_bamalip p_spi e1_bamalip f1_bamalip f2_bamalip a_wi f3_bamalip p_spi f0_bamalip f1_bamalip f2_bamalip p_syl f0_bamalip f2_bamalip p_ancri f0_bamalip f2_bamalip f0_bamalip a_wa f3_bamalip p_eximi f0_bamalip f3_bamalip a_wex f2_bamalip f0_bamalip a_wa f3_bamalip a_wex a_ax-mp $.
 $}
+
 

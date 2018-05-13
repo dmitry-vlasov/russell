@@ -1,26 +1,26 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical__nand__(Sheffer_stroke).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical 'xor'
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare connective for exclusive disjunction ('xor'). */
+/*Declare connective for exclusive disjunction ('xor'). */
 
 constant {
 	symbol \/_ ;;
 }
 
-/* Underlined 'vee' (read:  'xor') */
+/*Underlined 'vee' (read:  'xor') */
 
-/* Extend wff definition to include exclusive disjunction ('xor'). */
+/*Extend wff definition to include exclusive disjunction ('xor'). */
 
 rule wxo (ph : wff, ps : wff) {
 	term : wff = # ( ph \/_ ps ) ;;
 }
 
-/* Define exclusive disjunction (logical 'xor').  Return true if either the
+/*Define exclusive disjunction (logical 'xor').  Return true if either the
      left or right, but not both, are true.  After we define the constant true
      ` T. ` ( ~ df-tru ) and the constant false ` F. ` ( ~ df-fal ), we will be
      able to prove these truth table values: ` ( ( T. \/_ T. ) <-> F. ) `
@@ -37,7 +37,7 @@ definition df-xor (ph : wff, ps : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Two ways to write XNOR. (Contributed by Mario Carneiro, 4-Sep-2016.) */
+/*Two ways to write XNOR. (Contributed by Mario Carneiro, 4-Sep-2016.) */
 
 theorem xnor (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ( ph ↔ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
@@ -49,7 +49,7 @@ proof of xnor {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` \/_ ` is commutative.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+/*` \/_ ` is commutative.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
 
 theorem xorcom (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
@@ -64,7 +64,7 @@ proof of xorcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* ` \/_ ` is associative.  (Contributed by FL, 22-Nov-2010.)  (Proof
+/*` \/_ ` is associative.  (Contributed by FL, 22-Nov-2010.)  (Proof
      shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem xorass (ph : wff, ps : wff, ch : wff)  {
@@ -90,7 +90,7 @@ proof of xorass {
 	qed prop 1 = step 15 ;;
 }
 
-/* This tautology shows that xor is really exclusive.  (Contributed by FL,
+/*This tautology shows that xor is really exclusive.  (Contributed by FL,
      22-Nov-2010.) */
 
 theorem excxor (ph : wff, ps : wff)  {
@@ -106,7 +106,7 @@ proof of excxor {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways to express "exclusive or."  (Contributed by Mario Carneiro,
+/*Two ways to express "exclusive or."  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem xor2 (ph : wff, ps : wff)  {
@@ -120,7 +120,7 @@ proof of xor2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+/*` \/_ ` is negated under negation of one argument.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) */
 
 theorem xorneg1 (ph : wff, ps : wff)  {
@@ -136,7 +136,7 @@ proof of xorneg1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+/*` \/_ ` is negated under negation of one argument.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) */
 
 theorem xorneg2 (ph : wff, ps : wff)  {
@@ -152,7 +152,7 @@ proof of xorneg2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* ` \/_ ` is unchanged under negation of both arguments.  (Contributed by
+/*` \/_ ` is unchanged under negation of both arguments.  (Contributed by
      Mario Carneiro, 4-Sep-2016.) */
 
 theorem xorneg (ph : wff, ps : wff)  {
@@ -167,7 +167,7 @@ proof of xorneg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality property for XOR. (Contributed by Mario Carneiro,
+/*Equality property for XOR. (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem xorbi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -186,7 +186,7 @@ proof of xorbi12i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality property for XOR. (Contributed by Mario Carneiro,
+/*Equality property for XOR. (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem xorbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {

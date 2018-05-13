@@ -1,46 +1,46 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Epsilon_and_identity_relations.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                   Partial and complete ordering
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* We have not yet defined relations ( ~ df-rel ), but here we introduce a
+/*We have not yet defined relations ( ~ df-rel ), but here we introduce a
 few related notions we will use to develop ordinals.  The class variable
 ` R ` is no different from other class variables, but it reminds us that
 normally it represents what we will later call a "relation."
 */
 
-/* Declare new constant symbols. */
+/*Declare new constant symbols. */
 
 constant {
 	symbol Po ;;
 }
 
-/* Partial ordering predicate symbol (read: 'partial ordering'). */
+/*Partial ordering predicate symbol (read: 'partial ordering'). */
 
 constant {
 	symbol Or ;;
 }
 
-/* Strict complete ordering predicate symbol (read: 'orders'). */
+/*Strict complete ordering predicate symbol (read: 'orders'). */
 
-/* Extend wff notation to include the strict partial ordering predicate.
+/*Extend wff notation to include the strict partial ordering predicate.
      Read:  ' ` R ` is a partial order on ` A ` .' */
 
 rule wpo (A : class, R : class) {
 	term : wff = # R Po A ;;
 }
 
-/* Extend wff notation to include the strict complete ordering predicate.
+/*Extend wff notation to include the strict complete ordering predicate.
      Read:  ' ` R ` orders ` A ` .' */
 
 rule wor (A : class, R : class) {
 	term : wff = # R Or A ;;
 }
 
-/* Define the strict partial order predicate.  Definition of [Enderton]
+/*Define the strict partial order predicate.  Definition of [Enderton]
        p. 168.  The expression ` R Po A ` means ` R ` is a partial order on
        ` A ` .  For example, ` < Po RR ` is true, while ` <_ Po RR ` is false
        ( ~ ex-po ).  (Contributed by NM, 16-Mar-1997.) */
@@ -52,7 +52,7 @@ definition df-po (x : set, y : set, z : set, A : class, R : class) disjointed(x 
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define the strict complete (linear) order predicate.  The expression
+/*Define the strict complete (linear) order predicate.  The expression
        ` R Or A ` is true if relationship ` R ` orders ` A ` .  For example,
        ` < Or RR ` is true ( ~ ltso ).  Equivalent to Definition 6.19(1) of
        [TakeutiZaring] p. 29.  (Contributed by NM, 21-Jan-1996.) */
@@ -64,7 +64,7 @@ definition df-so (x : set, y : set, A : class, R : class) disjointed(x y R, x y 
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Subset theorem for the partial ordering predicate.  (Contributed by NM,
+/*Subset theorem for the partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.)  (Proof shortened by Mario Carneiro, 18-Nov-2016.) */
 
 theorem poss (A : class, B : class, R : class) disjointed(x y z R, x y z A, x y z B) {
@@ -86,7 +86,7 @@ proof of poss {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equality theorem for partial ordering predicate.  (Contributed by NM,
+/*Equality theorem for partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.) */
 
 theorem poeq1 (A : class, R : class, S : class) disjointed(x y z R, x y z S, x y z A) {
@@ -111,7 +111,7 @@ proof of poeq1 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Equality theorem for partial ordering predicate.  (Contributed by NM,
+/*Equality theorem for partial ordering predicate.  (Contributed by NM,
      27-Mar-1997.) */
 
 theorem poeq2 (A : class, B : class, R : class)  {
@@ -129,7 +129,7 @@ proof of poeq2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bound-variable hypothesis builder for partial orders.  (Contributed by
+/*Bound-variable hypothesis builder for partial orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) */
 
 theorem nfpo (x : set, A : class, R : class) disjointed(R a b c, A a b c, x a b c) {
@@ -165,7 +165,7 @@ proof of nfpo {
 	qed prop 1 = step 21 ;;
 }
 
-/* Bound-variable hypothesis builder for total orders.  (Contributed by
+/*Bound-variable hypothesis builder for total orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) */
 
 theorem nfso (x : set, A : class, R : class) disjointed(R a b, A a b, x a b) {
@@ -194,7 +194,7 @@ proof of nfso {
 	qed prop 1 = step 14 ;;
 }
 
-/* Properties of partial order relation in class notation.  (Contributed by
+/*Properties of partial order relation in class notation.  (Contributed by
        NM, 27-Mar-1997.) */
 
 theorem pocl (A : class, B : class, C : class, D : class, R : class) disjointed(x y z R, x y z A, x y z B, x y z C, x y z D) {
@@ -237,7 +237,7 @@ proof of pocl {
 	qed prop 1 = step 31 ;;
 }
 
-/* Sufficient conditions for a partial order.  (Contributed by NM,
+/*Sufficient conditions for a partial order.  (Contributed by NM,
        9-Jul-2014.) */
 
 theorem ispod (ph : wff, x : set, y : set, z : set, A : class, R : class) disjointed(x y z A, x y z R, x y z ph) {
@@ -256,7 +256,7 @@ proof of ispod {
 	qed prop 1 = step 5 ;;
 }
 
-/* Perform the substitutions into the strict weak ordering law.
+/*Perform the substitutions into the strict weak ordering law.
        (Contributed by Mario Carneiro, 31-Dec-2014.) */
 
 theorem swopolem (ph : wff, x : set, y : set, z : set, A : class, R : class, X : class, Y : class, Z : class) disjointed(x y z A, x y z ph, x y z R, x y z X, y z Y, z Z) {
@@ -284,7 +284,7 @@ proof of swopolem {
 	qed prop 1 = step 15 ;;
 }
 
-/* A strict weak order is a partial order.  (Contributed by Mario Carneiro,
+/*A strict weak order is a partial order.  (Contributed by Mario Carneiro,
        9-Jul-2014.) */
 
 theorem swopo (ph : wff, x : set, y : set, z : set, A : class, R : class) disjointed(x y z A, x y z R, x y z ph) {
@@ -319,7 +319,7 @@ proof of swopo {
 	qed prop 1 = step 21 ;;
 }
 
-/* A partial order relation is irreflexive.  (Contributed by NM,
+/*A partial order relation is irreflexive.  (Contributed by NM,
      27-Mar-1997.) */
 
 theorem poirr (A : class, B : class, R : class)  {
@@ -338,7 +338,7 @@ proof of poirr {
 	qed prop 1 = step 8 ;;
 }
 
-/* A partial order relation is a transitive relation.  (Contributed by NM,
+/*A partial order relation is a transitive relation.  (Contributed by NM,
      27-Mar-1997.) */
 
 theorem potr (A : class, B : class, C : class, D : class, R : class)  {
@@ -352,7 +352,7 @@ proof of potr {
 	qed prop 1 = step 3 ;;
 }
 
-/* A partial order relation has no 2-cycle loops.  (Contributed by NM,
+/*A partial order relation has no 2-cycle loops.  (Contributed by NM,
      27-Mar-1997.) */
 
 theorem po2nr (A : class, B : class, C : class, R : class)  {
@@ -371,7 +371,7 @@ proof of po2nr {
 	qed prop 1 = step 8 ;;
 }
 
-/* A partial order relation has no 3-cycle loops.  (Contributed by NM,
+/*A partial order relation has no 3-cycle loops.  (Contributed by NM,
      27-Mar-1997.) */
 
 theorem po3nr (A : class, B : class, C : class, D : class, R : class)  {
@@ -389,7 +389,7 @@ proof of po3nr {
 	qed prop 1 = step 7 ;;
 }
 
-/* Any relation is a partial ordering of the empty set.  (Contributed by
+/*Any relation is a partial ordering of the empty set.  (Contributed by
        NM, 28-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem po0 (R : class) disjointed(x y z R) {
@@ -404,7 +404,7 @@ proof of po0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A function preserves a partial order relation.  (Contributed by Jeff
+/*A function preserves a partial order relation.  (Contributed by Jeff
        Madsen, 18-Jun-2011.) */
 
 theorem pofun (x : set, y : set, A : class, B : class, R : class, S : class, X : class, Y : class) disjointed(R v w x y z, S v w z, X v w y z, Y x z, A v w x z, B v w x z) {
@@ -532,7 +532,7 @@ proof of pofun {
 	qed prop 1 = step 113 ;;
 }
 
-/* A strict linear order is a strict partial order.  (Contributed by NM,
+/*A strict linear order is a strict partial order.  (Contributed by NM,
        28-Mar-1997.) */
 
 theorem sopo (A : class, R : class) disjointed(x y R, x y A) {
@@ -546,7 +546,7 @@ proof of sopo {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subset theorem for the strict ordering predicate.  (Contributed by NM,
+/*Subset theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem soss (A : class, B : class, R : class) disjointed(x y R, x y A, x y B) {
@@ -571,7 +571,7 @@ proof of soss {
 	qed prop 1 = step 13 ;;
 }
 
-/* Equality theorem for the strict ordering predicate.  (Contributed by NM,
+/*Equality theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.) */
 
 theorem soeq1 (A : class, R : class, S : class) disjointed(x y R, x y S, x y A) {
@@ -593,7 +593,7 @@ proof of soeq1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equality theorem for the strict ordering predicate.  (Contributed by NM,
+/*Equality theorem for the strict ordering predicate.  (Contributed by NM,
      16-Mar-1997.) */
 
 theorem soeq2 (A : class, B : class, R : class)  {
@@ -611,7 +611,7 @@ proof of soeq2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* A strict order relation is irreflexive.  (Contributed by NM,
+/*A strict order relation is irreflexive.  (Contributed by NM,
      24-Nov-1995.) */
 
 theorem sonr (A : class, B : class, R : class)  {
@@ -625,7 +625,7 @@ proof of sonr {
 	qed prop 1 = step 3 ;;
 }
 
-/* A strict order relation is a transitive relation.  (Contributed by NM,
+/*A strict order relation is a transitive relation.  (Contributed by NM,
      21-Jan-1996.) */
 
 theorem sotr (A : class, B : class, C : class, D : class, R : class)  {
@@ -639,7 +639,7 @@ proof of sotr {
 	qed prop 1 = step 3 ;;
 }
 
-/* A strict order relation is linear (satisfies trichotomy).  (Contributed
+/*A strict order relation is linear (satisfies trichotomy).  (Contributed
        by NM, 21-Jan-1996.) */
 
 theorem solin (A : class, B : class, C : class, R : class) disjointed(x y A, x y B, x y C, x y R) {
@@ -668,7 +668,7 @@ proof of solin {
 	qed prop 1 = step 17 ;;
 }
 
-/* A strict order relation has no 2-cycle loops.  (Contributed by NM,
+/*A strict order relation has no 2-cycle loops.  (Contributed by NM,
      21-Jan-1996.) */
 
 theorem so2nr (A : class, B : class, C : class, R : class)  {
@@ -682,7 +682,7 @@ proof of so2nr {
 	qed prop 1 = step 3 ;;
 }
 
-/* A strict order relation has no 3-cycle loops.  (Contributed by NM,
+/*A strict order relation has no 3-cycle loops.  (Contributed by NM,
      21-Jan-1996.) */
 
 theorem so3nr (A : class, B : class, C : class, D : class, R : class)  {
@@ -696,7 +696,7 @@ proof of so3nr {
 	qed prop 1 = step 3 ;;
 }
 
-/* A strict order relation satisfies strict trichotomy.  (Contributed by NM,
+/*A strict order relation satisfies strict trichotomy.  (Contributed by NM,
      19-Feb-1996.) */
 
 theorem sotric (A : class, B : class, C : class, R : class)  {
@@ -724,7 +724,7 @@ proof of sotric {
 	qed prop 1 = step 17 ;;
 }
 
-/* Trichotomy law for strict order relation.  (Contributed by NM,
+/*Trichotomy law for strict order relation.  (Contributed by NM,
      9-Apr-1996.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem sotrieq (A : class, B : class, C : class, R : class)  {
@@ -753,7 +753,7 @@ proof of sotrieq {
 	qed prop 1 = step 18 ;;
 }
 
-/* Trichotomy law for strict order relation.  (Contributed by NM,
+/*Trichotomy law for strict order relation.  (Contributed by NM,
      5-May-1999.) */
 
 theorem sotrieq2 (A : class, B : class, C : class, R : class)  {
@@ -767,7 +767,7 @@ proof of sotrieq2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A transitivity relation.  (Read ` B <_ C ` and ` C < D ` implies
+/*A transitivity relation.  (Read ` B <_ C ` and ` C < D ` implies
      ` B < D ` .)  (Contributed by Mario Carneiro, 10-May-2013.) */
 
 theorem sotr2 (A : class, B : class, C : class, D : class, R : class)  {
@@ -790,7 +790,7 @@ proof of sotr2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* An irreflexive, transitive, linear relation is a strict ordering.
+/*An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) */
 
@@ -808,7 +808,7 @@ proof of issod {
 	qed prop 1 = step 3 ;;
 }
 
-/* An irreflexive, transitive, linear relation is a strict ordering.
+/*An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) */
 
@@ -830,7 +830,7 @@ proof of issoi {
 	qed prop 1 = step 6 ;;
 }
 
-/* Deduce strict ordering from its properties.  (Contributed by NM,
+/*Deduce strict ordering from its properties.  (Contributed by NM,
        29-Jan-1996.)  (Revised by Mario Carneiro, 9-Jul-2014.) */
 
 theorem isso2i (x : set, y : set, z : set, A : class, R : class) disjointed(x y z R, x y z A) {
@@ -866,7 +866,7 @@ proof of isso2i {
 	qed prop 1 = step 22 ;;
 }
 
-/* Any relation is a strict ordering of the empty set.  (Contributed by NM,
+/*Any relation is a strict ordering of the empty set.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem so0 (R : class) disjointed(x y R) {
@@ -882,7 +882,7 @@ proof of so0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A totally ordered set has at most one minimal element.  (Contributed by
+/*A totally ordered set has at most one minimal element.  (Contributed by
        Mario Carneiro, 24-Jun-2015.)  (Revised by NM, 16-Jun-2017.) */
 
 theorem somo (x : set, y : set, A : class, R : class) disjointed(x y z A, x y z R) {

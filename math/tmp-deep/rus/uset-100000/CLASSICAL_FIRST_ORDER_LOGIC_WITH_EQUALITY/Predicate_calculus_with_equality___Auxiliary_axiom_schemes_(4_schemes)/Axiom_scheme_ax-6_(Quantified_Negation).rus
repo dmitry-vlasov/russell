@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
               Axiom scheme ax-6 (Quantified Negation)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Quantified Negation.  Axiom C5-2 of [Monk2] p. 113.  This axiom
+/*Axiom of Quantified Negation.  Axiom C5-2 of [Monk2] p. 113.  This axiom
      scheme is logically redundant (see ~ ax6w ) but is used as an auxiliary
      axiom to achieve metalogical completeness.  (Contributed by NM,
      5-Aug-1993.) */
@@ -15,7 +15,7 @@ axiom ax-6 (ph : wff, x : set)  {
 	prop 1 : wff = |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
 }
 
-/* ` x ` is not free in ` -. A. x ph ` .  (Contributed by NM, 5-Aug-1993.)
+/*` x ` is not free in ` -. A. x ph ` .  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Wolf Lammen, 18-Aug-2014.) */
 
 theorem hbn1 (ph : wff, x : set)  {
@@ -27,7 +27,7 @@ proof of hbn1 {
 	qed prop 1 = step 1 ;;
 }
 
-/* ` x ` is not free in ` E. x ph ` .  (Contributed by NM, 5-Aug-1993.) */
+/*` x ` is not free in ` E. x ph ` .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbe1 (ph : wff, x : set)  {
 	prop 1 : wff = |- ( ∃ x ph → ∀ x ∃ x ph ) ;;
@@ -40,7 +40,7 @@ proof of hbe1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` x ` is not free in ` E. x ph ` .  (Contributed by Mario Carneiro,
+/*` x ` is not free in ` E. x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.) */
 
 theorem nfe1 (ph : wff, x : set)  {
@@ -53,7 +53,7 @@ proof of nfe1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The analog in our "pure" predicate calculus of axiom 5 of modal logic S5.
+/*The analog in our "pure" predicate calculus of axiom 5 of modal logic S5.
      (Contributed by NM, 5-Oct-2005.) */
 
 theorem modal-5 (ph : wff, x : set)  {

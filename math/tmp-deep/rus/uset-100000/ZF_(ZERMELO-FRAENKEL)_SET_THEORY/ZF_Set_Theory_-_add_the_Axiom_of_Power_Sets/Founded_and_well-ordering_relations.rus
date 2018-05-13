@@ -1,53 +1,53 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Partial_and_complete_ordering.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Founded and well-ordering relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new constant symbols. */
+/*Declare new constant symbols. */
 
 constant {
 	symbol Fr ;;
 }
 
-/* Well-founded predicate symbol (read: 'well-founded'). */
+/*Well-founded predicate symbol (read: 'well-founded'). */
 
 constant {
 	symbol Se ;;
 }
 
-/* Set-like predicate symbol (read: 'set-like'). */
+/*Set-like predicate symbol (read: 'set-like'). */
 
 constant {
 	symbol We ;;
 }
 
-/* Well-ordering predicate symbol (read: 'well-orders') */
+/*Well-ordering predicate symbol (read: 'well-orders') */
 
-/* Extend wff notation to include the well-founded predicate.  Read:  ' ` R `
+/*Extend wff notation to include the well-founded predicate.  Read:  ' ` R `
      is a well-founded relation on ` A ` .' */
 
 rule wfr (A : class, R : class) {
 	term : wff = # R Fr A ;;
 }
 
-/* Extend wff notation to include the set-like predicate.  Read:  ' ` R ` is
+/*Extend wff notation to include the set-like predicate.  Read:  ' ` R ` is
      set-like on ` A ` .' */
 
 rule wse (A : class, R : class) {
 	term : wff = # R Se A ;;
 }
 
-/* Extend wff notation to include the well-ordering predicate.
+/*Extend wff notation to include the well-ordering predicate.
      Read:  ' ` R ` well-orders ` A ` .' */
 
 rule wwe (A : class, R : class) {
 	term : wff = # R We A ;;
 }
 
-/* Define the well-founded relation predicate.  Definition 6.24(1) of
+/*Define the well-founded relation predicate.  Definition 6.24(1) of
        [TakeutiZaring] p. 30.  For alternate definitions, see ~ dffr2 and
        ~ dffr3 .  (Contributed by NM, 3-Apr-1994.) */
 
@@ -58,7 +58,7 @@ definition df-fr (x : set, y : set, z : set, A : class, R : class) disjointed(x 
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define the set-like predicate.  (Contributed by Mario Carneiro,
+/*Define the set-like predicate.  (Contributed by Mario Carneiro,
        19-Nov-2014.) */
 
 definition df-se (x : set, y : set, A : class, R : class) disjointed(x y R, x y A) {
@@ -68,7 +68,7 @@ definition df-se (x : set, y : set, A : class, R : class) disjointed(x y R, x y 
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define the well-ordering predicate.  For an alternate definition, see
+/*Define the well-ordering predicate.  For an alternate definition, see
      ~ dfwe2 .  (Contributed by NM, 3-Apr-1994.) */
 
 definition df-we (A : class, R : class)  {
@@ -78,7 +78,7 @@ definition df-we (A : class, R : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Property of well-founded relation (one direction of definition).
+/*Property of well-founded relation (one direction of definition).
        (Contributed by NM, 18-Mar-1997.) */
 
 theorem fri (x : set, y : set, A : class, B : class, C : class, R : class) disjointed(x y z A, x y z B, x y z R, x y) {
@@ -100,7 +100,7 @@ proof of fri {
 	qed prop 1 = step 10 ;;
 }
 
-/* The ` R ` -preimage of an element of the base set in a set-like relation
+/*The ` R ` -preimage of an element of the base set in a set-like relation
        is a set.  (Contributed by Mario Carneiro, 19-Nov-2014.) */
 
 theorem seex (x : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y R, x y) {
@@ -118,7 +118,7 @@ proof of seex {
 	qed prop 1 = step 6 ;;
 }
 
-/* Any relation on a set is set-like on it.  (Contributed by Mario
+/*Any relation on a set is set-like on it.  (Contributed by Mario
        Carneiro, 22-Jun-2015.) */
 
 theorem exse (A : class, R : class, V : class) disjointed(x y A, x y, x y R, x y V) {
@@ -134,7 +134,7 @@ proof of exse {
 	qed prop 1 = step 4 ;;
 }
 
-/* Alternate definition of well-founded relation.  Similar to Definition
+/*Alternate definition of well-founded relation.  Similar to Definition
        6.21 of [TakeutiZaring] p. 30.  (Contributed by NM, 17-Feb-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Proof shortened by
        Mario Carneiro, 23-Jun-2015.) */
@@ -153,7 +153,7 @@ proof of dffr2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Property of well-founded relation (one direction of definition using
+/*Property of well-founded relation (one direction of definition using
        class variables).  (Contributed by NM, 17-Feb-2004.)  (Revised by Mario
        Carneiro, 19-Nov-2014.) */
 
@@ -173,7 +173,7 @@ proof of frc {
 	qed prop 1 = step 6 ;;
 }
 
-/* Subset theorem for the well-founded predicate.  Exercise 1 of
+/*Subset theorem for the well-founded predicate.  Exercise 1 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 3-Apr-1994.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -194,7 +194,7 @@ proof of frss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Subset theorem for the set-like predicate.  (Contributed by Mario
+/*Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) */
 
 theorem sess1 (A : class, R : class, S : class) disjointed(x y A, x y, x y R, x y S) {
@@ -216,7 +216,7 @@ proof of sess1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Subset theorem for the set-like predicate.  (Contributed by Mario
+/*Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) */
 
 theorem sess2 (A : class, B : class, R : class) disjointed(x y A, x y B, x y R, x y) {
@@ -238,7 +238,7 @@ proof of sess2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equality theorem for the well-founded predicate.  (Contributed by NM,
+/*Equality theorem for the well-founded predicate.  (Contributed by NM,
        9-Mar-1997.) */
 
 theorem freq1 (A : class, R : class, S : class) disjointed(x y z R, x y z S, x y z A) {
@@ -258,7 +258,7 @@ proof of freq1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for the well-founded predicate.  (Contributed by NM,
+/*Equality theorem for the well-founded predicate.  (Contributed by NM,
      3-Apr-1994.) */
 
 theorem freq2 (A : class, B : class, R : class)  {
@@ -276,7 +276,7 @@ proof of freq2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for the set-like predicate.  (Contributed by Mario
+/*Equality theorem for the set-like predicate.  (Contributed by Mario
      Carneiro, 24-Jun-2015.) */
 
 theorem seeq1 (A : class, R : class, S : class)  {
@@ -294,7 +294,7 @@ proof of seeq1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for the set-like predicate.  (Contributed by Mario
+/*Equality theorem for the set-like predicate.  (Contributed by Mario
      Carneiro, 24-Jun-2015.) */
 
 theorem seeq2 (A : class, B : class, R : class)  {
@@ -312,7 +312,7 @@ proof of seeq2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bound-variable hypothesis builder for well-founded relations.
+/*Bound-variable hypothesis builder for well-founded relations.
        (Contributed by Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario
        Carneiro, 14-Oct-2016.) */
 
@@ -344,7 +344,7 @@ proof of nffr {
 	qed prop 1 = step 16 ;;
 }
 
-/* Bound-variable hypothesis builder for set-like relations.  (Contributed
+/*Bound-variable hypothesis builder for set-like relations.  (Contributed
        by Mario Carneiro, 24-Jun-2015.)  (Revised by Mario Carneiro,
        14-Oct-2016.) */
 
@@ -368,11 +368,11 @@ proof of nfse {
 	qed prop 1 = step 8 ;;
 }
 
-/* Bound-variable hypothesis builder for well-orderings.  (Contributed by
+/*Bound-variable hypothesis builder for well-orderings.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario Carneiro,
        14-Oct-2016.) */
 
-theorem nfwe (x : set, A : class, R : class)  {
+theorem nfwe (x : set, A : class, R : class) disjointed(R, A, x) {
 	hyp 1 : wff = |- F/_ x R ;;
 	hyp 2 : wff = |- F/_ x A ;;
 	-----------------------
@@ -388,7 +388,7 @@ proof of nfwe {
 	qed prop 1 = step 5 ;;
 }
 
-/* A well-founded relation is irreflexive.  Special case of Proposition
+/*A well-founded relation is irreflexive.  Special case of Proposition
        6.23 of [TakeutiZaring] p. 30.  (Contributed by NM, 2-Jan-1994.)
        (Revised by Mario Carneiro, 22-Jun-2015.) */
 
@@ -421,7 +421,7 @@ proof of frirr {
 	qed prop 1 = step 20 ;;
 }
 
-/* A well-founded relation has no 2-cycle loops.  Special case of
+/*A well-founded relation has no 2-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        30-May-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
 
@@ -469,7 +469,7 @@ proof of fr2nr {
 	qed prop 1 = step 35 ;;
 }
 
-/* Any relation is well-founded on the empty set.  (Contributed by NM,
+/*Any relation is well-founded on the empty set.  (Contributed by NM,
        17-Sep-1993.) */
 
 theorem fr0 (R : class) disjointed(x y z R) {
@@ -487,7 +487,7 @@ proof of fr0 {
 	qed prop 1 = step 6 ;;
 }
 
-/* If an element of a well-founded set satisfies a property ` ph ` , then
+/*If an element of a well-founded set satisfies a property ` ph ` , then
        there is a minimal element that satisfies ` ph ` .  (Contributed by Jeff
        Madsen, 18-Jun-2010.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) */
@@ -521,11 +521,11 @@ proof of frminex {
 	qed prop 1 = step 17 ;;
 }
 
-/* Irreflexivity of the epsilon relation: a class founded by epsilon is not
+/*Irreflexivity of the epsilon relation: a class founded by epsilon is not
        a member of itself.  (Contributed by NM, 18-Apr-1994.)  (Revised by
        Mario Carneiro, 22-Jun-2015.) */
 
-theorem efrirr (A : class)  {
+theorem efrirr (A : class) disjointed(A) {
 	prop 1 : wff = |- ( 𝛜 Fr A → ¬ A ∈ A ) ;;
 }
 
@@ -539,7 +539,7 @@ proof of efrirr {
 	qed prop 1 = step 6 ;;
 }
 
-/* A set founded by epsilon contains no 2-cycle loops.  (Contributed by NM,
+/*A set founded by epsilon contains no 2-cycle loops.  (Contributed by NM,
      19-Apr-1994.) */
 
 theorem efrn2lp (A : class, B : class, C : class)  {
@@ -556,7 +556,7 @@ proof of efrn2lp {
 	qed prop 1 = step 6 ;;
 }
 
-/* The epsilon relation is set-like on any class.  (This is the origin of
+/*The epsilon relation is set-like on any class.  (This is the origin of
        the term "set-like": a set-like relation "acts like" the epsilon
        relation of sets and their elements.)  (Contributed by Mario Carneiro,
        22-Jun-2015.) */
@@ -582,7 +582,7 @@ proof of epse {
 	qed prop 1 = step 12 ;;
 }
 
-/* Similar to Theorem 7.2 of [TakeutiZaring] p. 35, of except that the Axiom
+/*Similar to Theorem 7.2 of [TakeutiZaring] p. 35, of except that the Axiom
      of Regularity is not required due to antecedent ` _E Fr A ` .
      (Contributed by NM, 4-May-1994.) */
 
@@ -602,7 +602,7 @@ proof of tz7.2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* An alternate way of saying that the epsilon relation is well-founded.
+/*An alternate way of saying that the epsilon relation is well-founded.
        (Contributed by NM, 17-Feb-2004.)  (Revised by Mario Carneiro,
        23-Jun-2015.) */
 
@@ -626,7 +626,7 @@ proof of dfepfr {
 	qed prop 1 = step 11 ;;
 }
 
-/* A subset of an epsilon-founded class has a minimal element.
+/*A subset of an epsilon-founded class has a minimal element.
        (Contributed by NM, 17-Feb-2004.)  (Revised by David Abernethy,
        22-Feb-2011.) */
 
@@ -650,7 +650,7 @@ proof of epfrc {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subset theorem for the well-ordering predicate.  Exercise 4 of
+/*Subset theorem for the well-ordering predicate.  Exercise 4 of
      [TakeutiZaring] p. 31.  (Contributed by NM, 19-Apr-1994.) */
 
 theorem wess (A : class, B : class, R : class)  {
@@ -667,7 +667,7 @@ proof of wess {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for the well-ordering predicate.  (Contributed by NM,
+/*Equality theorem for the well-ordering predicate.  (Contributed by NM,
      9-Mar-1997.) */
 
 theorem weeq1 (A : class, R : class, S : class)  {
@@ -684,7 +684,7 @@ proof of weeq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for the well-ordering predicate.  (Contributed by NM,
+/*Equality theorem for the well-ordering predicate.  (Contributed by NM,
      3-Apr-1994.) */
 
 theorem weeq2 (A : class, B : class, R : class)  {
@@ -701,7 +701,7 @@ proof of weeq2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A well-ordering is well-founded.  (Contributed by NM, 22-Apr-1994.) */
+/*A well-ordering is well-founded.  (Contributed by NM, 22-Apr-1994.) */
 
 theorem wefr (A : class, R : class)  {
 	prop 1 : wff = |- ( R We A → R Fr A ) ;;
@@ -713,7 +713,7 @@ proof of wefr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A well-ordering is a strict ordering.  (Contributed by NM,
+/*A well-ordering is a strict ordering.  (Contributed by NM,
      16-Mar-1997.) */
 
 theorem weso (A : class, R : class)  {
@@ -726,7 +726,7 @@ proof of weso {
 	qed prop 1 = step 2 ;;
 }
 
-/* The elements of an epsilon well-ordering are comparable.  (Contributed by
+/*The elements of an epsilon well-ordering are comparable.  (Contributed by
      NM, 17-May-1994.) */
 
 theorem wecmpep (x : set, y : set, A : class)  {
@@ -745,7 +745,7 @@ proof of wecmpep {
 	qed prop 1 = step 8 ;;
 }
 
-/* An epsilon well-ordering is a transitive relation.  (Contributed by NM,
+/*An epsilon well-ordering is a transitive relation.  (Contributed by NM,
      22-Apr-1994.) */
 
 theorem wetrep (x : set, y : set, z : set, A : class)  {
@@ -764,7 +764,7 @@ proof of wetrep {
 	qed prop 1 = step 8 ;;
 }
 
-/* A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
+/*A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
        has a minimal element.  Special case of Proposition 6.26 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 17-Feb-2004.) */
 
@@ -834,7 +834,7 @@ proof of wefrc {
 	qed prop 1 = step 57 ;;
 }
 
-/* Any relation is a well-ordering of the empty set.  (Contributed by NM,
+/*Any relation is a well-ordering of the empty set.  (Contributed by NM,
      16-Mar-1997.) */
 
 theorem we0 (R : class)  {
@@ -849,7 +849,7 @@ proof of we0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A subset of a well-ordered set has a unique minimal element.
+/*A subset of a well-ordered set has a unique minimal element.
        (Contributed by NM, 18-Mar-1997.)  (Revised by Mario Carneiro,
        28-Apr-2015.) */
 
@@ -876,7 +876,7 @@ proof of wereu {
 	qed prop 1 = step 15 ;;
 }
 
-/* All nonempty (possibly proper) subclasses of ` A ` , which has a
+/*All nonempty (possibly proper) subclasses of ` A ` , which has a
        well-founded relation ` R ` , have ` R `-minimal elements.  Proposition
        6.26 of [TakeutiZaring] p. 31.  (Contributed by Scott Fenton,
        29-Jan-2011.)  (Revised by Mario Carneiro, 24-Jun-2015.) */

@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_related_to_classical_predicate_calculus/Predicate_calculus_with_all_distinct_variables.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                Aristotelian logic: Assertic syllogisms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -132,16 +132,16 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizatio
   while Stoic logic is essentially the forerunner of propositional calculus.
 */
 
-/* Figure 1.  Aristotelian syllogisms are grouped by "figures",
+/*Figure 1.  Aristotelian syllogisms are grouped by "figures",
      which doesn't matter for our purposes but is a reasonable way
      to order them. */
 
-/* Major premise for the Aristotelian syllogism "Barbara", e.g.,
+/*Major premise for the Aristotelian syllogism "Barbara", e.g.,
        "All men are mortal". By convention, the major premise is first. */
 
-/* Minor premise for Barbara, e.g., "Socrates is a man". */
+/*Minor premise for Barbara, e.g., "Socrates is a man". */
 
-/* "Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
+/*"Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
        ` ph ` is ` ps ` , and all ` ch ` is ` ph ` , therefore all ` ch ` is
        ` ps ` .  (In Aristotelian notation, AAA-1:  MaP and SaM therefore SaP.)
        For example, given "All men are mortal" and "Socrates is a man", we can
@@ -171,12 +171,12 @@ proof of barbara {
 	qed prop 1 = step 2 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Celarent", e.g.,
+/*Major premise for the Aristotelian syllogism "Celarent", e.g.,
        "No reptiles have fur". */
 
-/* Minor premise for Celarent, e.g., "All snakes are reptiles". */
+/*Minor premise for Celarent, e.g., "All snakes are reptiles". */
 
-/* "Celarent", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Celarent", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and all ` ch ` is ` ph ` , therefore no ` ch ` is ` ps ` .  (In
        Aristotelian notation, EAE-1:  MeP and SaM therefore SeP.) For example,
        given the "No reptiles have fur" and "All snakes are reptiles",
@@ -196,12 +196,12 @@ proof of celarent {
 	qed prop 1 = step 1 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Darii", e.g.,
+/*Major premise for the Aristotelian syllogism "Darii", e.g.,
        "All rabbits have fur". */
 
-/* Minor premise for Darii, e.g., "Some pets are rabbits." */
+/*Minor premise for Darii, e.g., "Some pets are rabbits." */
 
-/* "Darii", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Darii", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ch ` is ` ph ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, AII-1:  MaP and SiM therefore SiP.) For
        example, given "All rabbits have fur" and "Some pets are rabbits",
@@ -224,12 +224,12 @@ proof of darii {
 	qed prop 1 = step 4 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Ferio" ("Ferioque"),
+/*Major premise for the Aristotelian syllogism "Ferio" ("Ferioque"),
        e.g., "No homework is fun". */
 
-/* Minor premise for Ferio, e.g., "Some reading is homework." */
+/*Minor premise for Ferio, e.g., "Some reading is homework." */
 
-/* "Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
+/*"Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
        ` ph ` is ` ps ` , and some ` ch ` is ` ph ` , therefore some ` ch ` is
        not ` ps ` .  (In Aristotelian notation, EIO-1:  MeP and SiM therefore
        SoP.) For example, given "No homework is fun" and "Some reading is
@@ -250,14 +250,14 @@ proof of ferio {
 	qed prop 1 = step 1 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Barbari", e.g.,
+/*Major premise for the Aristotelian syllogism "Barbari", e.g.,
        e.g., "All men are mortal". */
 
-/* Minor premise for Barbari, e.g., "All Greeks are men." */
+/*Minor premise for Barbari, e.g., "All Greeks are men." */
 
-/* Existence premise for Barbari, e.g., "Greeks exist." */
+/*Existence premise for Barbari, e.g., "Greeks exist." */
 
-/* "Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ch ` is ` ph ` , and some ` ch ` exist, therefore some
        ` ch ` is ` ps ` .  (In Aristotelian notation, AAI-1:  MaP and SaM
        therefore SiP.) For example, given "All men are mortal", "All Greeks are
@@ -284,14 +284,14 @@ proof of barbari {
 	qed prop 1 = step 5 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Celaront", e.g.,
+/*Major premise for the Aristotelian syllogism "Celaront", e.g.,
        e.g., "No reptiles have fur". */
 
-/* Minor premise for Celaront, e.g., "All Snakes are reptiles." */
+/*Minor premise for Celaront, e.g., "All Snakes are reptiles." */
 
-/* Existence premise for Celaront, e.g., "Snakes exist." */
+/*Existence premise for Celaront, e.g., "Snakes exist." */
 
-/* "Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ch ` is ` ph ` , and some ` ch ` exist, therefore some
        ` ch ` is not ` ps ` .  (In Aristotelian notation, EAO-1:  MeP and SaM
        therefore SoP.) For example, given "No reptiles have fur", "All snakes
@@ -313,13 +313,13 @@ proof of celaront {
 	qed prop 1 = step 1 ;;
 }
 
-/* Figure 2 */
+/*Figure 2 */
 
-/* Major premise for the Aristotelian syllogism "Cesare" */
+/*Major premise for the Aristotelian syllogism "Cesare" */
 
-/* Minor premise for Cesare */
+/*Minor premise for Cesare */
 
-/* "Cesare", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Cesare", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and all ` ch ` is ` ps ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, EAE-2:  PeM and SaM therefore SeP.) Related to
        ~ celarent .  (Contributed by David A. Wheeler, 27-Aug-2016.)  (Revised
@@ -340,11 +340,11 @@ proof of cesare {
 	qed prop 1 = step 4 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Camestres" */
+/*Major premise for the Aristotelian syllogism "Camestres" */
 
-/* Minor premise for Camestres */
+/*Minor premise for Camestres */
 
-/* "Camestres", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Camestres", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and no ` ch ` is ` ps ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, AEE-2:  PaM and SeM therefore SeP.) (Contributed
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
@@ -365,11 +365,11 @@ proof of camestres {
 	qed prop 1 = step 4 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Festino" */
+/*Major premise for the Aristotelian syllogism "Festino" */
 
-/* Minor premise for Festino */
+/*Minor premise for Festino */
 
-/* "Festino", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Festino", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and some ` ch ` is ` ps ` , therefore some ` ch ` is not
        ` ph ` .  (In Aristotelian notation, EIO-2:  PeM and SiM therefore SoP.)
        (Contributed by David A. Wheeler, 25-Nov-2016.) */
@@ -390,11 +390,11 @@ proof of festino {
 	qed prop 1 = step 5 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Baroco" */
+/*Major premise for the Aristotelian syllogism "Baroco" */
 
-/* Minor premise for Baroco */
+/*Minor premise for Baroco */
 
-/* "Baroco", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Baroco", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ch ` is not ` ps ` , therefore some ` ch ` is not
        ` ph ` .  (In Aristotelian notation, AOO-2:  PaM and SoM therefore SoP.)
        For example, "All informative things are useful", "Some websites are not
@@ -417,13 +417,13 @@ proof of baroco {
 	qed prop 1 = step 5 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Cesaro" */
+/*Major premise for the Aristotelian syllogism "Cesaro" */
 
-/* Minor premise for Cesaro */
+/*Minor premise for Cesaro */
 
-/* Existence premise for Cesaro */
+/*Existence premise for Cesaro */
 
-/* "Cesaro", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Cesaro", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ch ` is ` ps ` , and ` ch ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, EAO-2:  PeM and SaM
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
@@ -447,13 +447,13 @@ proof of cesaro {
 	qed prop 1 = step 6 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Camestros" */
+/*Major premise for the Aristotelian syllogism "Camestros" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Camestros */
+/*Existence premise for Camestros */
 
-/* "Camestros", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Camestros", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , no ` ch ` is ` ps ` , and ` ch ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, AEO-2:  PaM and SeM
        therefore SoP.) For example, "All horses have hooves", "No humans have
@@ -479,13 +479,13 @@ proof of camestros {
 	qed prop 1 = step 6 ;;
 }
 
-/* Figure 3 */
+/*Figure 3 */
 
-/* Major premise for the Aristotelian syllogism "Datisi" */
+/*Major premise for the Aristotelian syllogism "Datisi" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Datisi", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Datisi", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and some ` ph ` is ` ch ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, AII-3:  MaP and MiS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) */
@@ -507,11 +507,11 @@ proof of datisi {
 	qed prop 1 = step 6 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Disamis" */
+/*Major premise for the Aristotelian syllogism "Disamis" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Disamis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+/*"Disamis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        ` ps ` , and all ` ph ` is ` ch ` , therefore some ` ch ` is ` ps ` .
        (In Aristotelian notation, IAI-3:  MiP and MaS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) */
@@ -531,11 +531,11 @@ proof of disamis {
 	qed prop 1 = step 4 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Ferison" */
+/*Major premise for the Aristotelian syllogism "Ferison" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Ferison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Ferison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , and some ` ph ` is ` ch ` , therefore some ` ch ` is not
        ` ps ` .  (In Aristotelian notation, EIO-3:  MeP and MiS therefore SoP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.)  (Revised by David A.
@@ -553,11 +553,11 @@ proof of ferison {
 	qed prop 1 = step 1 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Bocardo" */
+/*Major premise for the Aristotelian syllogism "Bocardo" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Bocardo", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+/*"Bocardo", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        not ` ps ` , and all ` ph ` is ` ch ` , therefore some ` ch ` is not
        ` ps ` .  (In Aristotelian notation, OAO-3:  MoP and MaS therefore SoP.)
        For example, "Some cats have no tails", "All cats are mammals",
@@ -577,13 +577,13 @@ proof of bocardo {
 	qed prop 1 = step 1 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Felapton" */
+/*Major premise for the Aristotelian syllogism "Felapton" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Felapton */
+/*Existence premise for Felapton */
 
-/* "Felapton", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Felapton", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ph ` is ` ch ` , and some ` ph ` exist, therefore some
        ` ch ` is not ` ps ` .  (In Aristotelian notation, EAO-3:  MeP and MaS
        therefore SoP.) For example, "No flowers are animals" and "All flowers
@@ -608,13 +608,13 @@ proof of felapton {
 	qed prop 1 = step 5 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Darapti" */
+/*Major premise for the Aristotelian syllogism "Darapti" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Darapti */
+/*Existence premise for Darapti */
 
-/* "Darapti", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Darapti", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ph ` is ` ch ` , and some ` ph ` exist, therefore some
        ` ch ` is ` ps ` .  (In Aristotelian notation, AAI-3:  MaP and MaS
        therefore SiP.) For example, "All squares are rectangles" and "All
@@ -638,13 +638,13 @@ proof of darapti {
 	qed prop 1 = step 5 ;;
 }
 
-/* Figure 4 */
+/*Figure 4 */
 
-/* Major premise for the Aristotelian syllogism "Calemes" */
+/*Major premise for the Aristotelian syllogism "Calemes" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Calemes", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Calemes", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , and no ` ps ` is ` ch ` , therefore no ` ch ` is ` ph ` .  (In
        Aristotelian notation, AEE-4:  PaM and MeS therefore SeP.) (Contributed
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
@@ -666,11 +666,11 @@ proof of calemes {
 	qed prop 1 = step 5 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Dimatis" */
+/*Major premise for the Aristotelian syllogism "Dimatis" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Dimatis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
+/*"Dimatis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        ` ps ` , and all ` ps ` is ` ch ` , therefore some ` ch ` is ` ph ` .
        (In Aristotelian notation, IAI-4:  PiM and MaS therefore SiP.) For
        example, "Some pets are rabbits.", "All rabbits have fur", therefore
@@ -694,11 +694,11 @@ proof of dimatis {
 	qed prop 1 = step 6 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Fresison" */
+/*Major premise for the Aristotelian syllogism "Fresison" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* "Fresison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Fresison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` (PeM), and some ` ps ` is ` ch ` (MiS), therefore some ` ch ` is
        not ` ph ` (SoP).  (In Aristotelian notation, EIO-4:  PeM and MiS
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
@@ -722,13 +722,13 @@ proof of fresison {
 	qed prop 1 = step 7 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Calemos" */
+/*Major premise for the Aristotelian syllogism "Calemos" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Calemos */
+/*Existence premise for Calemos */
 
-/* "Calemos", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Calemos", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` (PaM), no ` ps ` is ` ch ` (MeS), and ` ch ` exist, therefore
        some ` ch ` is not ` ph ` (SoP).  (In Aristotelian notation, AEO-4:  PaM
        and MeS therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
@@ -753,13 +753,13 @@ proof of calemos {
 	qed prop 1 = step 7 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Fesapo" */
+/*Major premise for the Aristotelian syllogism "Fesapo" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Fesapo */
+/*Existence premise for Fesapo */
 
-/* "Fesapo", one of the syllogisms of Aristotelian logic.  No ` ph ` is
+/*"Fesapo", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ps ` , all ` ps ` is ` ch ` , and ` ps ` exist, therefore some ` ch `
        is not ` ph ` .  (In Aristotelian notation, EAO-4:  PeM and MaS
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
@@ -783,13 +783,13 @@ proof of fesapo {
 	qed prop 1 = step 6 ;;
 }
 
-/* Major premise for the Aristotelian syllogism "Bamalip" */
+/*Major premise for the Aristotelian syllogism "Bamalip" */
 
-/* Minor premise for  */
+/*Minor premise for  */
 
-/* Existence premise for Bamalip */
+/*Existence premise for Bamalip */
 
-/* "Bamalip", one of the syllogisms of Aristotelian logic.  All ` ph ` is
+/*"Bamalip", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ` ps ` , all ` ps ` is ` ch ` , and ` ph ` exist, therefore some ` ch `
        is ` ph ` .  (In Aristotelian notation, AAI-4:  PaM and MaS therefore
        SiP.) Like ~ barbari .  (Contributed by David A. Wheeler,

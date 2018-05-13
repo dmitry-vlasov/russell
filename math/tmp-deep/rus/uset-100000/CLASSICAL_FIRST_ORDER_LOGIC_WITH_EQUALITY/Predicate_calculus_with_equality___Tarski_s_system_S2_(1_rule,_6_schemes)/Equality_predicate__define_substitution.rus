@@ -1,18 +1,18 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-17_(Distinctness)_-_first_use_of__d.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Equality predicate; define substitution
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* --- Start of patch to prevent connective overloading */
+/*--- Start of patch to prevent connective overloading */
 
-/* Add 'class' as a typecode. */
+/*Add 'class' as a typecode. */
 
-/* $j syntax 'class'; */
+/*$j syntax 'class'; */
 
-/* This syntax construction states that a variable ` x ` , which has been
+/*This syntax construction states that a variable ` x ` , which has been
      declared to be a set variable by $f statement vx, is also a class
      expression.  This can be justified informally as follows.  We know that
      the class builder ` { y | y e. x } ` is a class by ~ cab .  Since (when
@@ -37,25 +37,25 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_
      ` = ` connective with two syntax definitions.  This is done to prevent
      ambiguity that would complicate some Metamath parsers.) */
 
-/* --- End of patch to prevent connective overloading */
+/*--- End of patch to prevent connective overloading */
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* (None - the above patch had no old code.) */
+/*(None - the above patch had no old code.) */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* Declare the equality predicate symbol. */
+/*Declare the equality predicate symbol. */
 
 constant {
 	symbol = ;;
 }
 
-/* Equal sign (read:  'is equal to') */
+/*Equal sign (read:  'is equal to') */
 
-/* --- Start of patch to prevent connective overloading */
+/*--- Start of patch to prevent connective overloading */
 
-/* Extend wff definition to include class equality.
+/*Extend wff definition to include class equality.
 
        For a general discussion of the theory of classes, see
        ~ http://us.metamath.org/mpeuni/mmset.html#class .
@@ -77,7 +77,7 @@ rule wceq (A : class, B : class) {
 	term : wff = # A = B ;;
 }
 
-/* Extend wff definition to include atomic formulas using the equality
+/*Extend wff definition to include atomic formulas using the equality
      predicate.
 
      (Instead of introducing ~ weq as an axiomatic statement, as was done in an
@@ -90,11 +90,11 @@ rule wceq (A : class, B : class) {
      proof weq /all" in the Metamath program.)  (Contributed by NM,
      24-Jan-2006.) */
 
-/* --- End of patch to prevent connective overloading */
+/*--- End of patch to prevent connective overloading */
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @( Extend wff definition to include atomic formulas using the equality
+/*@( Extend wff definition to include atomic formulas using the equality
      predicate.
 
      After we introduce ~ cv and ~ wceq in set theory, this syntax construction
@@ -103,9 +103,9 @@ rule wceq (A : class, B : class) {
   weq @a wff x = y @.
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* Lemma used in proofs of substitution properties.  (Contributed by NM,
+/*Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem equs3 (ph : wff, x : set, y : set)  {
@@ -118,7 +118,7 @@ proof of equs3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Specialization, with additional weakening to allow bundling of ` x ` and
+/*Specialization, with additional weakening to allow bundling of ` x ` and
        ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
        23-Apr-2017.)  (Proof shortened by Wolf Lammen, 5-Aug-2017.) */
 
@@ -136,7 +136,7 @@ proof of speimfw {
 	qed prop 1 = step 4 ;;
 }
 
-/* Specialization, with additional weakening to allow bundling of ` x ` and
+/*Specialization, with additional weakening to allow bundling of ` x ` and
        ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
        23-Apr-1017.)  (Proof shortened by Wolf Lammen, 7-Aug-2017.) */
 
@@ -156,7 +156,7 @@ proof of spimfw {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference that has ~ ax-11 (without ` A. y ` ) as its conclusion.  Uses
+/*Inference that has ~ ax-11 (without ` A. y ` ) as its conclusion.  Uses
        only Tarski's FOL axiom schemes.  The hypotheses may be eliminable
        without one or more of these axioms in special cases.  Proof similar to
        Lemma 16 of [Tarski] p. 70.  (Contributed by NM, 20-May-2008.) */
@@ -179,21 +179,21 @@ constant {
 	symbol [ ;;
 }
 
-/* Left bracket */
+/*Left bracket */
 
 constant {
 	symbol / ;;
 }
 
-/* Slash. */
+/*Slash. */
 
 constant {
 	symbol ] ;;
 }
 
-/* Right bracket */
+/*Right bracket */
 
-/* Extend wff definition to include proper substitution (read "the wff that
+/*Extend wff definition to include proper substitution (read "the wff that
      results when ` y ` is properly substituted for ` x ` in wff ` ph ` ").
      (Contributed by NM, 24-Jan-2006.) */
 
@@ -201,7 +201,7 @@ rule wsb (ph : wff, x : set, y : set) {
 	term : wff = # [ y / x ] ph ;;
 }
 
-/* Define proper substitution.  Remark 9.1 in [Megill] p. 447 (p. 15 of the
+/*Define proper substitution.  Remark 9.1 in [Megill] p. 447 (p. 15 of the
      preprint).  For our notation, we use ` [ y / x ] ph ` to mean "the wff
      that results from the proper substitution of ` y ` for ` x ` in the wff
      ` ph ` ."  We can also use ` [ y / x ] ph ` in place of the "free for"
@@ -243,7 +243,7 @@ definition df-sb (ph : wff, x : set, y : set)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequ2 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( x = y → ( [ y / x ] ph → ph ) ) ;;
@@ -257,7 +257,7 @@ proof of sbequ2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* One direction of a simplified definition of substitution.  (Contributed by
+/*One direction of a simplified definition of substitution.  (Contributed by
      NM, 5-Aug-1993.) */
 
 theorem sb1 (ph : wff, x : set, y : set)  {
@@ -270,7 +270,7 @@ proof of sb1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer substitution into antecedent and consequent of an implication.
+/*Infer substitution into antecedent and consequent of an implication.
        (Contributed by NM, 25-Jun-1998.) */
 
 theorem sbimi (ph : wff, ps : wff, x : set, y : set)  {
@@ -290,7 +290,7 @@ proof of sbimi {
 	qed prop 1 = step 7 ;;
 }
 
-/* Infer substitution into both sides of a logical equivalence.
+/*Infer substitution into both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbbii (ph : wff, ps : wff, x : set, y : set)  {

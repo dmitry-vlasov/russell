@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Transfinite_induction.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The natural numbers (i.e. finite ordinals)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new symbol. */
+/*Declare new symbol. */
 
 constant {
 	symbol ω ;;
@@ -14,15 +14,15 @@ constant {
 	latex \omega ;;
 }
 
-/* Greek letter omega */
+/*Greek letter omega */
 
-/* Extend class notation to include the class of natural numbers. */
+/*Extend class notation to include the class of natural numbers. */
 
 rule com () {
 	term : class = # ω ;;
 }
 
-/* Define the class of natural numbers, which are all ordinal numbers that
+/*Define the class of natural numbers, which are all ordinal numbers that
        are less than every limit ordinal, i.e. all finite ordinals.  Our
        definition is a variant of the Definition of N of [BellMachover]
        p. 471.  See ~ dfom2 for an alternate definition.  Later, when we assume
@@ -43,7 +43,7 @@ definition df-om (x : set, y : set) disjointed(x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* An alternate definition of the set of natural numbers ` om ` .
+/*An alternate definition of the set of natural numbers ` om ` .
        Definition 7.28 of [TakeutiZaring] p. 42, who use the symbol K_I for the
        inner class builder of non-limit ordinal numbers (see ~ nlimon ).
        (Contributed by NM, 1-Nov-2004.) */
@@ -97,7 +97,7 @@ proof of dfom2 {
 	qed prop 1 = step 40 ;;
 }
 
-/* Membership in omega.  The left conjunct can be eliminated if we assume
+/*Membership in omega.  The left conjunct can be eliminated if we assume
        the Axiom of Infinity; see ~ elom3 .  (Contributed by NM,
        15-May-1994.) */
 
@@ -115,7 +115,7 @@ proof of elom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
+/*Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem omsson () disjointed(x y) {
@@ -130,7 +130,7 @@ proof of omsson {
 	qed prop 1 = step 3 ;;
 }
 
-/* The class of natural numbers is a subclass of any (infinite) limit
+/*The class of natural numbers is a subclass of any (infinite) limit
        ordinal.  Exercise 1 of [TakeutiZaring] p. 44.  Remarkably, our proof
        does not require the Axiom of Infinity.  (Contributed by NM,
        30-Oct-2003.) */
@@ -164,7 +164,7 @@ proof of limomss {
 	qed prop 1 = step 20 ;;
 }
 
-/* A natural number is an ordinal number.  (Contributed by NM,
+/*A natural number is an ordinal number.  (Contributed by NM,
      27-Jun-1994.) */
 
 theorem nnon (A : class)  {
@@ -177,7 +177,7 @@ proof of nnon {
 	qed prop 1 = step 2 ;;
 }
 
-/* A natural number is an ordinal number.  (Contributed by NM,
+/*A natural number is an ordinal number.  (Contributed by NM,
        27-Jun-1994.) */
 
 theorem nnoni (A : class)  {
@@ -192,7 +192,7 @@ proof of nnoni {
 	qed prop 1 = step 2 ;;
 }
 
-/* A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) */
+/*A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) */
 
 theorem nnord (A : class)  {
 	prop 1 : wff = |- ( A ∈ ω → Ord A ) ;;
@@ -205,7 +205,7 @@ proof of nnord {
 	qed prop 1 = step 3 ;;
 }
 
-/* Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
+/*Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) */
 
@@ -240,7 +240,7 @@ proof of ordom {
 	qed prop 1 = step 22 ;;
 }
 
-/* A member of a natural number is a natural number.  (Contributed by NM,
+/*A member of a natural number is a natural number.  (Contributed by NM,
      21-Jun-1998.) */
 
 theorem elnn (A : class, B : class)  {
@@ -255,7 +255,7 @@ proof of elnn {
 	qed prop 1 = step 4 ;;
 }
 
-/* The class of natural numbers ` om ` is either an ordinal number (if we
+/*The class of natural numbers ` om ` is either an ordinal number (if we
      accept the Axiom of Infinity) or the proper class of all ordinal numbers
      (if we deny the Axiom of Infinity).  Remark in [TakeutiZaring] p. 43.
      (Contributed by NM, 10-May-1998.) */
@@ -271,7 +271,7 @@ proof of omon {
 	qed prop 1 = step 3 ;;
 }
 
-/* Omega is an ordinal number.  (Contributed by Mario Carneiro,
+/*Omega is an ordinal number.  (Contributed by Mario Carneiro,
        30-Jan-2013.) */
 
 theorem omelon2 ()  {
@@ -289,7 +289,7 @@ proof of omelon2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* A natural number is not a limit ordinal.  (Contributed by NM,
+/*A natural number is not a limit ordinal.  (Contributed by NM,
        18-Oct-1995.) */
 
 theorem nnlim (A : class) disjointed(x A) {
@@ -312,11 +312,11 @@ proof of nnlim {
 	qed prop 1 = step 11 ;;
 }
 
-/* The class of natural numbers is a subclass of the class of non-limit
+/*The class of natural numbers is a subclass of the class of non-limit
        ordinal numbers.  Exercise 4 of [TakeutiZaring] p. 42.  (Contributed by
        NM, 2-Nov-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
-theorem omssnlim (x : set)  {
+theorem omssnlim (x : set) disjointed(x) {
 	prop 1 : wff = |- ω ⊆ { x ∈ On | ¬ Lim x } ;;
 }
 
@@ -329,7 +329,7 @@ proof of omssnlim {
 	qed prop 1 = step 5 ;;
 }
 
-/* Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
+/*Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
      proof, however, does not require the Axiom of Infinity.  (Contributed by
      NM, 26-Mar-1995.)  (Proof shortened by Mario Carneiro, 2-Sep-2015.) */
 
@@ -370,7 +370,7 @@ proof of limom {
 	qed prop 1 = step 28 ;;
 }
 
-/* A class belongs to omega iff its successor does.  (Contributed by NM,
+/*A class belongs to omega iff its successor does.  (Contributed by NM,
      3-Dec-1995.) */
 
 theorem peano2b (A : class)  {
@@ -384,7 +384,7 @@ proof of peano2b {
 	qed prop 1 = step 3 ;;
 }
 
-/* A nonzero natural number is a successor.  (Contributed by NM,
+/*A nonzero natural number is a successor.  (Contributed by NM,
        18-Feb-2004.) */
 
 theorem nnsuc (x : set, A : class) disjointed(x A) {
@@ -415,7 +415,7 @@ proof of nnsuc {
 	qed prop 1 = step 20 ;;
 }
 
-/* An ordinal subclass of non-limit ordinals is a class of natural
+/*An ordinal subclass of non-limit ordinals is a class of natural
        numbers.  Exercise 7 of [TakeutiZaring] p. 42.  (Contributed by NM,
        2-Nov-2004.) */
 

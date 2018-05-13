@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_empty_set.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            "Weak deduction theorem" for set theory
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -70,23 +72,28 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     |- Ord A -> Tr A                                               (Q.E.D.)
 
 $)
-$( These lemmas are used to convert hypotheses into antecedents,
+
+$(These lemmas are used to convert hypotheses into antecedents,
      when there is at least one class making the hypothesis true. $)
-$( Declare new constant symbols. $)
-$c if  $.
-$( Conditional operator (was "ded" for "deduction class"). $)
-$( Extend class notation to include the conditional operator.  See ~ df-if
+
+$(Declare new constant symbols. $)
+
+$c if $.
+
+$(Conditional operator (was "ded" for "deduction class"). $)
+
+$(Extend class notation to include the conditional operator.  See ~ df-if
      for a description.  (In older databases this was denoted "ded".) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fcif_0 $f wff ph $.
-	fcif_1 $f class A $.
-	fcif_2 $f class B $.
-	cif $a class if ( ph , A , B ) $.
+	$v ph A B  $.
+	f0_cif $f wff ph $.
+	f1_cif $f class A $.
+	f2_cif $f class B $.
+	a_cif $a class if ( ph , A , B ) $.
 $}
-$( Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
+
+$(Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        ` ph ` then ` A ` else ` B ` ."  See ~ iftrue and ~ iffalse for its
        values.  In mathematical literature, this operator is rarely defined
        formally but is implicit in informal definitions such as "let f(x)=0 if
@@ -102,676 +109,618 @@ $( Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        keep a hypothesis.  See the Deduction Theorem link on the Metamath Proof
        Explorer Home Page for a description of the weak deduction theorem.
        (Contributed by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	fdf-if_0 $f wff ph $.
-	fdf-if_1 $f set x $.
-	fdf-if_2 $f class A $.
-	fdf-if_3 $f class B $.
-	df-if $a |- if ( ph , A , B ) = { x | ( ( x e. A /\ ph ) \/ ( x e. B /\ -. ph ) ) } $.
+	$v ph x A B  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	f0_df-if $f wff ph $.
+	f1_df-if $f set x $.
+	f2_df-if $f class A $.
+	f3_df-if $f class B $.
+	a_df-if $a |- if ( ph , A , B ) = { x | ( ( x e. A /\ ph ) \/ ( x e. B /\ -. ph ) ) } $.
 $}
-$( An alternate definition of the conditional operator ~ df-if with one
+
+$(An alternate definition of the conditional operator ~ df-if with one
        fewer connectives (but probably less intuitive to understand).
        (Contributed by NM, 30-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	fdfif2_0 $f wff ph $.
-	fdfif2_1 $f set x $.
-	fdfif2_2 $f class A $.
-	fdfif2_3 $f class B $.
-	dfif2 $p |- if ( ph , A , B ) = { x | ( ( x e. B -> ph ) -> ( x e. A /\ ph ) ) } $= fdfif2_0 fdfif2_2 fdfif2_3 cif fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa wo fdfif2_1 cab fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wi fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa wi fdfif2_1 cab fdfif2_0 fdfif2_1 fdfif2_2 fdfif2_3 df-if fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa wo fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wi fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa wi fdfif2_1 fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa wo fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa wn fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa wi fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa wo fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wi fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa wi fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa df-or fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa orcom fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wi fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 wn wa wn fdfif2_1 sup_set_class fdfif2_2 wcel fdfif2_0 wa fdfif2_1 sup_set_class fdfif2_3 wcel fdfif2_0 iman imbi1i 3bitr4i abbii eqtri $.
+	$v ph x A B  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x  $.
+	f0_dfif2 $f wff ph $.
+	f1_dfif2 $f set x $.
+	f2_dfif2 $f class A $.
+	f3_dfif2 $f class B $.
+	p_dfif2 $p |- if ( ph , A , B ) = { x | ( ( x e. B -> ph ) -> ( x e. A /\ ph ) ) } $= f0_dfif2 f1_dfif2 f2_dfif2 f3_dfif2 a_df-if f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_df-or f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa p_orcom f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 p_iman f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wi f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa a_wn f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa p_imbi1i f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_wo f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa a_wn f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_wi f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa a_wo f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wi f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_wi p_3bitr4i f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa a_wo f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wi f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_wi f1_dfif2 p_abbii f0_dfif2 f2_dfif2 f3_dfif2 a_cif f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wn a_wa a_wo f1_dfif2 a_cab f1_dfif2 a_sup_set_class f3_dfif2 a_wcel f0_dfif2 a_wi f1_dfif2 a_sup_set_class f2_dfif2 a_wcel f0_dfif2 a_wa a_wi f1_dfif2 a_cab p_eqtri $.
 $}
-$( An alternate definition of the conditional operator ~ df-if as a simple
+
+$(An alternate definition of the conditional operator ~ df-if as a simple
        class abstraction.  (Contributed by Mario Carneiro, 8-Sep-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	fdfif6_0 $f wff ph $.
-	fdfif6_1 $f set x $.
-	fdfif6_2 $f class A $.
-	fdfif6_3 $f class B $.
-	dfif6 $p |- if ( ph , A , B ) = ( { x e. A | ph } u. { x e. B | -. ph } ) $= fdfif6_1 sup_set_class fdfif6_2 wcel fdfif6_0 wa fdfif6_1 cab fdfif6_1 sup_set_class fdfif6_3 wcel fdfif6_0 wn wa fdfif6_1 cab cun fdfif6_1 sup_set_class fdfif6_2 wcel fdfif6_0 wa fdfif6_1 sup_set_class fdfif6_3 wcel fdfif6_0 wn wa wo fdfif6_1 cab fdfif6_0 fdfif6_1 fdfif6_2 crab fdfif6_0 wn fdfif6_1 fdfif6_3 crab cun fdfif6_0 fdfif6_2 fdfif6_3 cif fdfif6_1 sup_set_class fdfif6_2 wcel fdfif6_0 wa fdfif6_1 sup_set_class fdfif6_3 wcel fdfif6_0 wn wa fdfif6_1 unab fdfif6_0 fdfif6_1 fdfif6_2 crab fdfif6_1 sup_set_class fdfif6_2 wcel fdfif6_0 wa fdfif6_1 cab fdfif6_0 wn fdfif6_1 fdfif6_3 crab fdfif6_1 sup_set_class fdfif6_3 wcel fdfif6_0 wn wa fdfif6_1 cab fdfif6_0 fdfif6_1 fdfif6_2 df-rab fdfif6_0 wn fdfif6_1 fdfif6_3 df-rab uneq12i fdfif6_0 fdfif6_1 fdfif6_2 fdfif6_3 df-if 3eqtr4ri $.
+	$v ph x A B  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x  $.
+	f0_dfif6 $f wff ph $.
+	f1_dfif6 $f set x $.
+	f2_dfif6 $f class A $.
+	f3_dfif6 $f class B $.
+	p_dfif6 $p |- if ( ph , A , B ) = ( { x e. A | ph } u. { x e. B | -. ph } ) $= f1_dfif6 a_sup_set_class f2_dfif6 a_wcel f0_dfif6 a_wa f1_dfif6 a_sup_set_class f3_dfif6 a_wcel f0_dfif6 a_wn a_wa f1_dfif6 p_unab f0_dfif6 f1_dfif6 f2_dfif6 a_df-rab f0_dfif6 a_wn f1_dfif6 f3_dfif6 a_df-rab f0_dfif6 f1_dfif6 f2_dfif6 a_crab f1_dfif6 a_sup_set_class f2_dfif6 a_wcel f0_dfif6 a_wa f1_dfif6 a_cab f0_dfif6 a_wn f1_dfif6 f3_dfif6 a_crab f1_dfif6 a_sup_set_class f3_dfif6 a_wcel f0_dfif6 a_wn a_wa f1_dfif6 a_cab p_uneq12i f0_dfif6 f1_dfif6 f2_dfif6 f3_dfif6 a_df-if f1_dfif6 a_sup_set_class f2_dfif6 a_wcel f0_dfif6 a_wa f1_dfif6 a_cab f1_dfif6 a_sup_set_class f3_dfif6 a_wcel f0_dfif6 a_wn a_wa f1_dfif6 a_cab a_cun f1_dfif6 a_sup_set_class f2_dfif6 a_wcel f0_dfif6 a_wa f1_dfif6 a_sup_set_class f3_dfif6 a_wcel f0_dfif6 a_wn a_wa a_wo f1_dfif6 a_cab f0_dfif6 f1_dfif6 f2_dfif6 a_crab f0_dfif6 a_wn f1_dfif6 f3_dfif6 a_crab a_cun f0_dfif6 f2_dfif6 f3_dfif6 a_cif p_3eqtr4ri $.
 $}
-$( Equality theorem for conditional operator.  (Contributed by NM,
+
+$(Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	iifeq1_0 $f set x $.
-	fifeq1_0 $f wff ph $.
-	fifeq1_1 $f class A $.
-	fifeq1_2 $f class B $.
-	fifeq1_3 $f class C $.
-	ifeq1 $p |- ( A = B -> if ( ph , A , C ) = if ( ph , B , C ) ) $= fifeq1_1 fifeq1_2 wceq fifeq1_0 iifeq1_0 fifeq1_1 crab fifeq1_0 wn iifeq1_0 fifeq1_3 crab cun fifeq1_0 iifeq1_0 fifeq1_2 crab fifeq1_0 wn iifeq1_0 fifeq1_3 crab cun fifeq1_0 fifeq1_1 fifeq1_3 cif fifeq1_0 fifeq1_2 fifeq1_3 cif fifeq1_1 fifeq1_2 wceq fifeq1_0 iifeq1_0 fifeq1_1 crab fifeq1_0 iifeq1_0 fifeq1_2 crab fifeq1_0 wn iifeq1_0 fifeq1_3 crab fifeq1_0 iifeq1_0 fifeq1_1 fifeq1_2 rabeq uneq1d fifeq1_0 iifeq1_0 fifeq1_1 fifeq1_3 dfif6 fifeq1_0 iifeq1_0 fifeq1_2 fifeq1_3 dfif6 3eqtr4g $.
+	$v ph A B C  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_ifeq1 $f wff ph $.
+	f1_ifeq1 $f class A $.
+	f2_ifeq1 $f class B $.
+	f3_ifeq1 $f class C $.
+	i0_ifeq1 $f set x $.
+	p_ifeq1 $p |- ( A = B -> if ( ph , A , C ) = if ( ph , B , C ) ) $= f0_ifeq1 i0_ifeq1 f1_ifeq1 f2_ifeq1 p_rabeq f1_ifeq1 f2_ifeq1 a_wceq f0_ifeq1 i0_ifeq1 f1_ifeq1 a_crab f0_ifeq1 i0_ifeq1 f2_ifeq1 a_crab f0_ifeq1 a_wn i0_ifeq1 f3_ifeq1 a_crab p_uneq1d f0_ifeq1 i0_ifeq1 f1_ifeq1 f3_ifeq1 p_dfif6 f0_ifeq1 i0_ifeq1 f2_ifeq1 f3_ifeq1 p_dfif6 f1_ifeq1 f2_ifeq1 a_wceq f0_ifeq1 i0_ifeq1 f1_ifeq1 a_crab f0_ifeq1 a_wn i0_ifeq1 f3_ifeq1 a_crab a_cun f0_ifeq1 i0_ifeq1 f2_ifeq1 a_crab f0_ifeq1 a_wn i0_ifeq1 f3_ifeq1 a_crab a_cun f0_ifeq1 f1_ifeq1 f3_ifeq1 a_cif f0_ifeq1 f2_ifeq1 f3_ifeq1 a_cif p_3eqtr4g $.
 $}
-$( Equality theorem for conditional operator.  (Contributed by NM,
+
+$(Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	iifeq2_0 $f set x $.
-	fifeq2_0 $f wff ph $.
-	fifeq2_1 $f class A $.
-	fifeq2_2 $f class B $.
-	fifeq2_3 $f class C $.
-	ifeq2 $p |- ( A = B -> if ( ph , C , A ) = if ( ph , C , B ) ) $= fifeq2_1 fifeq2_2 wceq fifeq2_0 iifeq2_0 fifeq2_3 crab fifeq2_0 wn iifeq2_0 fifeq2_1 crab cun fifeq2_0 iifeq2_0 fifeq2_3 crab fifeq2_0 wn iifeq2_0 fifeq2_2 crab cun fifeq2_0 fifeq2_3 fifeq2_1 cif fifeq2_0 fifeq2_3 fifeq2_2 cif fifeq2_1 fifeq2_2 wceq fifeq2_0 wn iifeq2_0 fifeq2_1 crab fifeq2_0 wn iifeq2_0 fifeq2_2 crab fifeq2_0 iifeq2_0 fifeq2_3 crab fifeq2_0 wn iifeq2_0 fifeq2_1 fifeq2_2 rabeq uneq2d fifeq2_0 iifeq2_0 fifeq2_3 fifeq2_1 dfif6 fifeq2_0 iifeq2_0 fifeq2_3 fifeq2_2 dfif6 3eqtr4g $.
+	$v ph A B C  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_ifeq2 $f wff ph $.
+	f1_ifeq2 $f class A $.
+	f2_ifeq2 $f class B $.
+	f3_ifeq2 $f class C $.
+	i0_ifeq2 $f set x $.
+	p_ifeq2 $p |- ( A = B -> if ( ph , C , A ) = if ( ph , C , B ) ) $= f0_ifeq2 a_wn i0_ifeq2 f1_ifeq2 f2_ifeq2 p_rabeq f1_ifeq2 f2_ifeq2 a_wceq f0_ifeq2 a_wn i0_ifeq2 f1_ifeq2 a_crab f0_ifeq2 a_wn i0_ifeq2 f2_ifeq2 a_crab f0_ifeq2 i0_ifeq2 f3_ifeq2 a_crab p_uneq2d f0_ifeq2 i0_ifeq2 f3_ifeq2 f1_ifeq2 p_dfif6 f0_ifeq2 i0_ifeq2 f3_ifeq2 f2_ifeq2 p_dfif6 f1_ifeq2 f2_ifeq2 a_wceq f0_ifeq2 i0_ifeq2 f3_ifeq2 a_crab f0_ifeq2 a_wn i0_ifeq2 f1_ifeq2 a_crab a_cun f0_ifeq2 i0_ifeq2 f3_ifeq2 a_crab f0_ifeq2 a_wn i0_ifeq2 f2_ifeq2 a_crab a_cun f0_ifeq2 f3_ifeq2 f1_ifeq2 a_cif f0_ifeq2 f3_ifeq2 f2_ifeq2 a_cif p_3eqtr4g $.
 $}
-$( Value of the conditional operator when its first argument is true.
+
+$(Value of the conditional operator when its first argument is true.
        (Contributed by NM, 15-May-1999.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	iiftrue_0 $f set x $.
-	fiftrue_0 $f wff ph $.
-	fiftrue_1 $f class A $.
-	fiftrue_2 $f class B $.
-	iftrue $p |- ( ph -> if ( ph , A , B ) = A ) $= fiftrue_0 fiftrue_1 iiftrue_0 sup_set_class fiftrue_2 wcel fiftrue_0 wi iiftrue_0 sup_set_class fiftrue_1 wcel fiftrue_0 wa wi iiftrue_0 cab fiftrue_0 fiftrue_1 fiftrue_2 cif fiftrue_0 iiftrue_0 sup_set_class fiftrue_2 wcel fiftrue_0 wi iiftrue_0 sup_set_class fiftrue_1 wcel fiftrue_0 wa wi iiftrue_0 fiftrue_1 fiftrue_0 iiftrue_0 sup_set_class fiftrue_1 wcel iiftrue_0 sup_set_class fiftrue_2 wcel dedlem0a abbi2dv fiftrue_0 iiftrue_0 fiftrue_1 fiftrue_2 dfif2 syl6reqr $.
+	$v ph A B  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x  $.
+	f0_iftrue $f wff ph $.
+	f1_iftrue $f class A $.
+	f2_iftrue $f class B $.
+	i0_iftrue $f set x $.
+	p_iftrue $p |- ( ph -> if ( ph , A , B ) = A ) $= f0_iftrue i0_iftrue a_sup_set_class f1_iftrue a_wcel i0_iftrue a_sup_set_class f2_iftrue a_wcel p_dedlem0a f0_iftrue i0_iftrue a_sup_set_class f2_iftrue a_wcel f0_iftrue a_wi i0_iftrue a_sup_set_class f1_iftrue a_wcel f0_iftrue a_wa a_wi i0_iftrue f1_iftrue p_abbi2dv f0_iftrue i0_iftrue f1_iftrue f2_iftrue p_dfif2 f0_iftrue f1_iftrue i0_iftrue a_sup_set_class f2_iftrue a_wcel f0_iftrue a_wi i0_iftrue a_sup_set_class f1_iftrue a_wcel f0_iftrue a_wa a_wi i0_iftrue a_cab f0_iftrue f1_iftrue f2_iftrue a_cif p_syl6reqr $.
 $}
-$( Value of the conditional operator when its first argument is false.
+
+$(Value of the conditional operator when its first argument is false.
        (Contributed by NM, 14-Aug-1999.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x ph $.
-	$d x A $.
-	$d x B $.
-	iiffalse_0 $f set x $.
-	fiffalse_0 $f wff ph $.
-	fiffalse_1 $f class A $.
-	fiffalse_2 $f class B $.
-	iffalse $p |- ( -. ph -> if ( ph , A , B ) = B ) $= fiffalse_0 wn fiffalse_2 iiffalse_0 sup_set_class fiffalse_1 wcel fiffalse_0 wa iiffalse_0 sup_set_class fiffalse_2 wcel fiffalse_0 wn wa wo iiffalse_0 cab fiffalse_0 fiffalse_1 fiffalse_2 cif fiffalse_0 wn iiffalse_0 sup_set_class fiffalse_1 wcel fiffalse_0 wa iiffalse_0 sup_set_class fiffalse_2 wcel fiffalse_0 wn wa wo iiffalse_0 fiffalse_2 fiffalse_0 iiffalse_0 sup_set_class fiffalse_1 wcel iiffalse_0 sup_set_class fiffalse_2 wcel dedlemb abbi2dv fiffalse_0 iiffalse_0 fiffalse_1 fiffalse_2 df-if syl6reqr $.
+	$v ph A B  $.
+	$d x ph  $.
+	$d x A  $.
+	$d x B  $.
+	$d x  $.
+	f0_iffalse $f wff ph $.
+	f1_iffalse $f class A $.
+	f2_iffalse $f class B $.
+	i0_iffalse $f set x $.
+	p_iffalse $p |- ( -. ph -> if ( ph , A , B ) = B ) $= f0_iffalse i0_iffalse a_sup_set_class f1_iffalse a_wcel i0_iffalse a_sup_set_class f2_iffalse a_wcel p_dedlemb f0_iffalse a_wn i0_iffalse a_sup_set_class f1_iffalse a_wcel f0_iffalse a_wa i0_iffalse a_sup_set_class f2_iffalse a_wcel f0_iffalse a_wn a_wa a_wo i0_iffalse f2_iffalse p_abbi2dv f0_iffalse i0_iffalse f1_iffalse f2_iffalse a_df-if f0_iffalse a_wn f2_iffalse i0_iffalse a_sup_set_class f1_iffalse a_wcel f0_iffalse a_wa i0_iffalse a_sup_set_class f2_iffalse a_wcel f0_iffalse a_wn a_wa a_wo i0_iffalse a_cab f0_iffalse f1_iffalse f2_iffalse a_cif p_syl6reqr $.
 $}
-$( When values are unequal, but an "if" condition checks if they are equal,
+
+$(When values are unequal, but an "if" condition checks if they are equal,
      then the "false" branch results.  This is a simple utility to provide a
      slight shortening and simplification of proofs vs. applying ~ iffalse
      directly in this case.  It happens, e.g., in ~ oevn0 .  (Contributed by
      David A. Wheeler, 15-May-2015.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fifnefalse_0 $f class A $.
-	fifnefalse_1 $f class B $.
-	fifnefalse_2 $f class C $.
-	fifnefalse_3 $f class D $.
-	ifnefalse $p |- ( A =/= B -> if ( A = B , C , D ) = D ) $= fifnefalse_0 fifnefalse_1 wne fifnefalse_0 fifnefalse_1 wceq wn fifnefalse_0 fifnefalse_1 wceq fifnefalse_2 fifnefalse_3 cif fifnefalse_3 wceq fifnefalse_0 fifnefalse_1 df-ne fifnefalse_0 fifnefalse_1 wceq fifnefalse_2 fifnefalse_3 iffalse sylbi $.
+	$v A B C D  $.
+	f0_ifnefalse $f class A $.
+	f1_ifnefalse $f class B $.
+	f2_ifnefalse $f class C $.
+	f3_ifnefalse $f class D $.
+	p_ifnefalse $p |- ( A =/= B -> if ( A = B , C , D ) = D ) $= f0_ifnefalse f1_ifnefalse a_df-ne f0_ifnefalse f1_ifnefalse a_wceq f2_ifnefalse f3_ifnefalse p_iffalse f0_ifnefalse f1_ifnefalse a_wne f0_ifnefalse f1_ifnefalse a_wceq a_wn f0_ifnefalse f1_ifnefalse a_wceq f2_ifnefalse f3_ifnefalse a_cif f3_ifnefalse a_wceq p_sylbi $.
 $}
-$( Distribute a function over an if-clause.  (Contributed by Mario
+
+$(Distribute a function over an if-clause.  (Contributed by Mario
        Carneiro, 14-Aug-2013.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v E $.
-	fifsb_0 $f wff ph $.
-	fifsb_1 $f class A $.
-	fifsb_2 $f class B $.
-	fifsb_3 $f class C $.
-	fifsb_4 $f class D $.
-	fifsb_5 $f class E $.
-	eifsb_0 $e |- ( if ( ph , A , B ) = A -> C = D ) $.
-	eifsb_1 $e |- ( if ( ph , A , B ) = B -> C = E ) $.
-	ifsb $p |- C = if ( ph , D , E ) $= fifsb_0 fifsb_3 fifsb_0 fifsb_4 fifsb_5 cif wceq fifsb_0 fifsb_3 fifsb_4 fifsb_0 fifsb_4 fifsb_5 cif fifsb_0 fifsb_0 fifsb_1 fifsb_2 cif fifsb_1 wceq fifsb_3 fifsb_4 wceq fifsb_0 fifsb_1 fifsb_2 iftrue eifsb_0 syl fifsb_0 fifsb_4 fifsb_5 iftrue eqtr4d fifsb_0 wn fifsb_3 fifsb_5 fifsb_0 fifsb_4 fifsb_5 cif fifsb_0 wn fifsb_0 fifsb_1 fifsb_2 cif fifsb_2 wceq fifsb_3 fifsb_5 wceq fifsb_0 fifsb_1 fifsb_2 iffalse eifsb_1 syl fifsb_0 fifsb_4 fifsb_5 iffalse eqtr4d pm2.61i $.
+	$v ph A B C D E  $.
+	$d A  $.
+	$d B  $.
+	$d C  $.
+	f0_ifsb $f wff ph $.
+	f1_ifsb $f class A $.
+	f2_ifsb $f class B $.
+	f3_ifsb $f class C $.
+	f4_ifsb $f class D $.
+	f5_ifsb $f class E $.
+	e0_ifsb $e |- ( if ( ph , A , B ) = A -> C = D ) $.
+	e1_ifsb $e |- ( if ( ph , A , B ) = B -> C = E ) $.
+	p_ifsb $p |- C = if ( ph , D , E ) $= f0_ifsb f1_ifsb f2_ifsb p_iftrue e0_ifsb f0_ifsb f0_ifsb f1_ifsb f2_ifsb a_cif f1_ifsb a_wceq f3_ifsb f4_ifsb a_wceq p_syl f0_ifsb f4_ifsb f5_ifsb p_iftrue f0_ifsb f3_ifsb f4_ifsb f0_ifsb f4_ifsb f5_ifsb a_cif p_eqtr4d f0_ifsb f1_ifsb f2_ifsb p_iffalse e1_ifsb f0_ifsb a_wn f0_ifsb f1_ifsb f2_ifsb a_cif f2_ifsb a_wceq f3_ifsb f5_ifsb a_wceq p_syl f0_ifsb f4_ifsb f5_ifsb p_iffalse f0_ifsb a_wn f3_ifsb f5_ifsb f0_ifsb f4_ifsb f5_ifsb a_cif p_eqtr4d f0_ifsb f3_ifsb f0_ifsb f4_ifsb f5_ifsb a_cif a_wceq p_pm2.61i $.
 $}
-$( Alternate definition of the conditional operator ~ df-if .  Note that
+
+$(Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d x y ph $.
-	idfif3_0 $f set y $.
-	fdfif3_0 $f wff ph $.
-	fdfif3_1 $f set x $.
-	fdfif3_2 $f class A $.
-	fdfif3_3 $f class B $.
-	fdfif3_4 $f class C $.
-	edfif3_0 $e |- C = { x | ph } $.
-	dfif3 $p |- if ( ph , A , B ) = ( ( A i^i C ) u. ( B i^i ( _V \ C ) ) ) $= fdfif3_0 fdfif3_2 fdfif3_3 cif fdfif3_0 idfif3_0 fdfif3_2 crab fdfif3_0 wn idfif3_0 fdfif3_3 crab cun fdfif3_2 fdfif3_4 cin fdfif3_3 cvv fdfif3_4 cdif cin cun fdfif3_0 idfif3_0 fdfif3_2 fdfif3_3 dfif6 fdfif3_2 fdfif3_4 cin fdfif3_0 idfif3_0 fdfif3_2 crab fdfif3_3 cvv fdfif3_4 cdif cin fdfif3_0 wn idfif3_0 fdfif3_3 crab fdfif3_2 fdfif3_4 cin fdfif3_2 fdfif3_0 idfif3_0 cab cin fdfif3_0 idfif3_0 fdfif3_2 crab fdfif3_4 fdfif3_0 idfif3_0 cab fdfif3_2 fdfif3_4 fdfif3_0 fdfif3_1 cab fdfif3_0 idfif3_0 cab edfif3_0 fdfif3_0 fdfif3_0 fdfif3_1 idfif3_0 fdfif3_1 sup_set_class idfif3_0 sup_set_class wceq fdfif3_0 biidd cbvabv eqtri ineq2i fdfif3_0 idfif3_0 fdfif3_2 dfrab3 eqtr4i fdfif3_0 wn idfif3_0 fdfif3_3 crab fdfif3_3 fdfif3_0 wn idfif3_0 cab cin fdfif3_3 cvv fdfif3_4 cdif cin fdfif3_0 wn idfif3_0 fdfif3_3 dfrab3 fdfif3_0 wn idfif3_0 cab cvv fdfif3_4 cdif fdfif3_3 fdfif3_0 wn idfif3_0 cab cvv fdfif3_0 idfif3_0 cab cdif cvv fdfif3_4 cdif fdfif3_0 idfif3_0 notab fdfif3_4 fdfif3_0 idfif3_0 cab cvv fdfif3_4 fdfif3_0 fdfif3_1 cab fdfif3_0 idfif3_0 cab edfif3_0 fdfif3_0 fdfif3_0 fdfif3_1 idfif3_0 fdfif3_1 sup_set_class idfif3_0 sup_set_class wceq fdfif3_0 biidd cbvabv eqtri difeq2i eqtr4i ineq2i eqtr2i uneq12i eqtr4i $.
+	$v ph x A B C  $.
+	$d y A  $.
+	$d y B  $.
+	$d x y ph  $.
+	f0_dfif3 $f wff ph $.
+	f1_dfif3 $f set x $.
+	f2_dfif3 $f class A $.
+	f3_dfif3 $f class B $.
+	f4_dfif3 $f class C $.
+	i0_dfif3 $f set y $.
+	e0_dfif3 $e |- C = { x | ph } $.
+	p_dfif3 $p |- if ( ph , A , B ) = ( ( A i^i C ) u. ( B i^i ( _V \ C ) ) ) $= f0_dfif3 i0_dfif3 f2_dfif3 f3_dfif3 p_dfif6 e0_dfif3 f1_dfif3 a_sup_set_class i0_dfif3 a_sup_set_class a_wceq f0_dfif3 p_biidd f0_dfif3 f0_dfif3 f1_dfif3 i0_dfif3 p_cbvabv f4_dfif3 f0_dfif3 f1_dfif3 a_cab f0_dfif3 i0_dfif3 a_cab p_eqtri f4_dfif3 f0_dfif3 i0_dfif3 a_cab f2_dfif3 p_ineq2i f0_dfif3 i0_dfif3 f2_dfif3 p_dfrab3 f2_dfif3 f4_dfif3 a_cin f2_dfif3 f0_dfif3 i0_dfif3 a_cab a_cin f0_dfif3 i0_dfif3 f2_dfif3 a_crab p_eqtr4i f0_dfif3 a_wn i0_dfif3 f3_dfif3 p_dfrab3 f0_dfif3 i0_dfif3 p_notab e0_dfif3 f1_dfif3 a_sup_set_class i0_dfif3 a_sup_set_class a_wceq f0_dfif3 p_biidd f0_dfif3 f0_dfif3 f1_dfif3 i0_dfif3 p_cbvabv f4_dfif3 f0_dfif3 f1_dfif3 a_cab f0_dfif3 i0_dfif3 a_cab p_eqtri f4_dfif3 f0_dfif3 i0_dfif3 a_cab a_cvv p_difeq2i f0_dfif3 a_wn i0_dfif3 a_cab a_cvv f0_dfif3 i0_dfif3 a_cab a_cdif a_cvv f4_dfif3 a_cdif p_eqtr4i f0_dfif3 a_wn i0_dfif3 a_cab a_cvv f4_dfif3 a_cdif f3_dfif3 p_ineq2i f0_dfif3 a_wn i0_dfif3 f3_dfif3 a_crab f3_dfif3 f0_dfif3 a_wn i0_dfif3 a_cab a_cin f3_dfif3 a_cvv f4_dfif3 a_cdif a_cin p_eqtr2i f2_dfif3 f4_dfif3 a_cin f0_dfif3 i0_dfif3 f2_dfif3 a_crab f3_dfif3 a_cvv f4_dfif3 a_cdif a_cin f0_dfif3 a_wn i0_dfif3 f3_dfif3 a_crab p_uneq12i f0_dfif3 f2_dfif3 f3_dfif3 a_cif f0_dfif3 i0_dfif3 f2_dfif3 a_crab f0_dfif3 a_wn i0_dfif3 f3_dfif3 a_crab a_cun f2_dfif3 f4_dfif3 a_cin f3_dfif3 a_cvv f4_dfif3 a_cdif a_cin a_cun p_eqtr4i $.
 $}
-$( Alternate definition of the conditional operator ~ df-if .  Note that
+
+$(Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fdfif4_0 $f wff ph $.
-	fdfif4_1 $f set x $.
-	fdfif4_2 $f class A $.
-	fdfif4_3 $f class B $.
-	fdfif4_4 $f class C $.
-	edfif4_0 $e |- C = { x | ph } $.
-	dfif4 $p |- if ( ph , A , B ) = ( ( A u. B ) i^i ( ( A u. ( _V \ C ) ) i^i ( B u. C ) ) ) $= fdfif4_0 fdfif4_2 fdfif4_3 cif fdfif4_2 fdfif4_4 cin fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_2 fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif cin cun cin fdfif4_2 fdfif4_3 cun fdfif4_2 cvv fdfif4_4 cdif cun fdfif4_3 fdfif4_4 cun cin cin fdfif4_0 fdfif4_1 fdfif4_2 fdfif4_3 fdfif4_4 edfif4_0 dfif3 fdfif4_2 fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif cin undir fdfif4_2 fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif cin cun cin fdfif4_2 fdfif4_3 cun fdfif4_2 cvv fdfif4_4 cdif cun cin fdfif4_3 fdfif4_4 cun cin fdfif4_2 fdfif4_3 cun fdfif4_2 cvv fdfif4_4 cdif cun fdfif4_3 fdfif4_4 cun cin cin fdfif4_2 fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_2 fdfif4_3 cun fdfif4_2 cvv fdfif4_4 cdif cun cin fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_3 fdfif4_4 cun fdfif4_2 fdfif4_3 cvv fdfif4_4 cdif undi fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif cin cun fdfif4_4 fdfif4_3 cun fdfif4_4 cvv fdfif4_4 cdif cun cin fdfif4_3 fdfif4_4 cun cvv cin fdfif4_3 fdfif4_4 cun fdfif4_4 fdfif4_3 cvv fdfif4_4 cdif undi fdfif4_4 fdfif4_3 cun fdfif4_3 fdfif4_4 cun fdfif4_4 cvv fdfif4_4 cdif cun cvv fdfif4_4 fdfif4_3 uncom fdfif4_4 undifv ineq12i fdfif4_3 fdfif4_4 cun inv1 3eqtri ineq12i fdfif4_2 fdfif4_3 cun fdfif4_2 cvv fdfif4_4 cdif cun fdfif4_3 fdfif4_4 cun inass eqtri 3eqtri $.
+	$v ph x A B C  $.
+	$d A  $.
+	$d B  $.
+	$d x ph  $.
+	f0_dfif4 $f wff ph $.
+	f1_dfif4 $f set x $.
+	f2_dfif4 $f class A $.
+	f3_dfif4 $f class B $.
+	f4_dfif4 $f class C $.
+	e0_dfif4 $e |- C = { x | ph } $.
+	p_dfif4 $p |- if ( ph , A , B ) = ( ( A u. B ) i^i ( ( A u. ( _V \ C ) ) i^i ( B u. C ) ) ) $= e0_dfif4 f0_dfif4 f1_dfif4 f2_dfif4 f3_dfif4 f4_dfif4 p_dfif3 f2_dfif4 f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin p_undir f2_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif p_undi f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif p_undi f4_dfif4 f3_dfif4 p_uncom f4_dfif4 p_undifv f4_dfif4 f3_dfif4 a_cun f3_dfif4 f4_dfif4 a_cun f4_dfif4 a_cvv f4_dfif4 a_cdif a_cun a_cvv p_ineq12i f3_dfif4 f4_dfif4 a_cun p_inv1 f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f4_dfif4 f3_dfif4 a_cun f4_dfif4 a_cvv f4_dfif4 a_cdif a_cun a_cin f3_dfif4 f4_dfif4 a_cun a_cvv a_cin f3_dfif4 f4_dfif4 a_cun p_3eqtri f2_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f2_dfif4 f3_dfif4 a_cun f2_dfif4 a_cvv f4_dfif4 a_cdif a_cun a_cin f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f3_dfif4 f4_dfif4 a_cun p_ineq12i f2_dfif4 f3_dfif4 a_cun f2_dfif4 a_cvv f4_dfif4 a_cdif a_cun f3_dfif4 f4_dfif4 a_cun p_inass f2_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun a_cin f2_dfif4 f3_dfif4 a_cun f2_dfif4 a_cvv f4_dfif4 a_cdif a_cun a_cin f3_dfif4 f4_dfif4 a_cun a_cin f2_dfif4 f3_dfif4 a_cun f2_dfif4 a_cvv f4_dfif4 a_cdif a_cun f3_dfif4 f4_dfif4 a_cun a_cin a_cin p_eqtri f0_dfif4 f2_dfif4 f3_dfif4 a_cif f2_dfif4 f4_dfif4 a_cin f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f2_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun f4_dfif4 f3_dfif4 a_cvv f4_dfif4 a_cdif a_cin a_cun a_cin f2_dfif4 f3_dfif4 a_cun f2_dfif4 a_cvv f4_dfif4 a_cdif a_cun f3_dfif4 f4_dfif4 a_cun a_cin a_cin p_3eqtri $.
 $}
-$( Alternate definition of the conditional operator ~ df-if .  Note that
+
+$(Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false (see also
        ~ abvor0 ).  (Contributed by G&eacute;rard Lang, 18-Aug-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fdfif5_0 $f wff ph $.
-	fdfif5_1 $f set x $.
-	fdfif5_2 $f class A $.
-	fdfif5_3 $f class B $.
-	fdfif5_4 $f class C $.
-	edfif5_0 $e |- C = { x | ph } $.
-	dfif5 $p |- if ( ph , A , B ) = ( ( A i^i B ) u. ( ( ( A \ B ) i^i C ) u. ( ( B \ A ) i^i ( _V \ C ) ) ) ) $= fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun fdfif5_3 fdfif5_4 cun cin cin fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 cun cin cin fdfif5_0 fdfif5_2 fdfif5_3 cif fdfif5_2 fdfif5_3 cin fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun fdfif5_3 fdfif5_4 cun inindi fdfif5_0 fdfif5_1 fdfif5_2 fdfif5_3 fdfif5_4 edfif5_0 dfif4 fdfif5_2 fdfif5_3 cin fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun cin fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 cun cin cin fdfif5_2 fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun undir fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 cun cin fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_2 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_2 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_2 cun fdfif5_3 cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_2 cun fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin fdfif5_2 unidm uneq1i fdfif5_2 fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin unass fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif undi 3eqtr3ri fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_2 fdfif5_2 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_2 fdfif5_2 fdfif5_3 cdif cun fdfif5_2 fdfif5_4 cun cin fdfif5_2 fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 undi fdfif5_2 fdfif5_2 fdfif5_3 cdif cun fdfif5_2 fdfif5_4 cun cin fdfif5_2 fdfif5_2 fdfif5_4 cun cin fdfif5_2 fdfif5_2 fdfif5_2 fdfif5_3 cdif cun fdfif5_2 fdfif5_2 fdfif5_4 cun fdfif5_2 fdfif5_3 undifabs ineq1i fdfif5_2 fdfif5_4 inabs eqtri eqtri fdfif5_2 fdfif5_3 fdfif5_2 cdif cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun cin fdfif5_2 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_3 fdfif5_2 cdif cun fdfif5_2 fdfif5_3 cun fdfif5_2 cvv fdfif5_4 cdif cun fdfif5_2 fdfif5_3 undif2 ineq1i fdfif5_2 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif undi fdfif5_2 fdfif5_3 cvv fdfif5_4 cdif undi 3eqtr4i uneq12i eqtr4i fdfif5_2 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin unundi eqtr4i fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_3 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 cun cin fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 cun fdfif5_2 fdfif5_4 cin fdfif5_3 fdfif5_3 cun cun fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_3 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun cun fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_2 fdfif5_4 cin fdfif5_3 fdfif5_3 unass fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_3 fdfif5_3 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 fdfif5_2 fdfif5_3 cdif cun fdfif5_3 fdfif5_4 cun cin fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin cun fdfif5_3 fdfif5_2 fdfif5_4 cin cun fdfif5_3 fdfif5_2 cun fdfif5_3 fdfif5_4 cun cin fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 fdfif5_2 fdfif5_3 cdif cun fdfif5_3 fdfif5_4 cun cin fdfif5_3 fdfif5_2 fdfif5_4 undi fdfif5_2 fdfif5_4 cin fdfif5_3 uncom fdfif5_3 fdfif5_2 fdfif5_3 cdif cun fdfif5_3 fdfif5_2 cun fdfif5_3 fdfif5_4 cun fdfif5_3 fdfif5_2 undif2 ineq1i 3eqtr4i fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 undi eqtr4i fdfif5_3 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin cun fdfif5_3 fdfif5_3 fdfif5_2 cdif cun fdfif5_3 cvv fdfif5_4 cdif cun cin fdfif5_3 fdfif5_3 cvv fdfif5_4 cdif cun cin fdfif5_3 fdfif5_3 fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif undi fdfif5_3 fdfif5_3 fdfif5_2 cdif cun fdfif5_3 fdfif5_3 cvv fdfif5_4 cdif cun fdfif5_3 fdfif5_2 undifabs ineq1i fdfif5_3 cvv fdfif5_4 cdif inabs 3eqtrri uneq12i fdfif5_3 fdfif5_3 cun fdfif5_3 fdfif5_2 fdfif5_4 cin fdfif5_3 unidm uneq2i 3eqtr3ri fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 cun cin fdfif5_2 fdfif5_3 cun fdfif5_4 fdfif5_3 cun cin fdfif5_2 fdfif5_4 cin fdfif5_3 cun fdfif5_3 fdfif5_4 cun fdfif5_4 fdfif5_3 cun fdfif5_2 fdfif5_3 cun fdfif5_3 fdfif5_4 uncom ineq2i fdfif5_2 fdfif5_4 fdfif5_3 undir eqtr4i fdfif5_3 fdfif5_2 fdfif5_3 cdif fdfif5_4 cin fdfif5_3 fdfif5_2 cdif cvv fdfif5_4 cdif cin unundi 3eqtr4i ineq12i eqtr4i 3eqtr4i $.
+	$v ph x A B C  $.
+	$d A  $.
+	$d B  $.
+	$d x ph  $.
+	f0_dfif5 $f wff ph $.
+	f1_dfif5 $f set x $.
+	f2_dfif5 $f class A $.
+	f3_dfif5 $f class B $.
+	f4_dfif5 $f class C $.
+	e0_dfif5 $e |- C = { x | ph } $.
+	p_dfif5 $p |- if ( ph , A , B ) = ( ( A i^i B ) u. ( ( ( A \ B ) i^i C ) u. ( ( B \ A ) i^i ( _V \ C ) ) ) ) $= f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun f3_dfif5 f4_dfif5 a_cun p_inindi e0_dfif5 f0_dfif5 f1_dfif5 f2_dfif5 f3_dfif5 f4_dfif5 p_dfif4 f2_dfif5 f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun p_undir f2_dfif5 p_unidm f2_dfif5 f2_dfif5 a_cun f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin p_uneq1i f2_dfif5 f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin p_unass f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif p_undi f2_dfif5 f2_dfif5 a_cun f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun f2_dfif5 f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin p_3eqtr3ri f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 p_undi f2_dfif5 f3_dfif5 p_undifabs f2_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f2_dfif5 f2_dfif5 f4_dfif5 a_cun p_ineq1i f2_dfif5 f4_dfif5 p_inabs f2_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f2_dfif5 f4_dfif5 a_cun a_cin f2_dfif5 f2_dfif5 f4_dfif5 a_cun a_cin f2_dfif5 p_eqtri f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f2_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f2_dfif5 f4_dfif5 a_cun a_cin f2_dfif5 p_eqtri f2_dfif5 f3_dfif5 p_undif2 f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cun f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun p_ineq1i f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif p_undi f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif p_undi f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun p_3eqtr4i f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f2_dfif5 f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun p_uneq12i f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f2_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun p_eqtr4i f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin p_unundi f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f2_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun p_eqtr4i f2_dfif5 f4_dfif5 a_cin f3_dfif5 f3_dfif5 p_unass f3_dfif5 f2_dfif5 f4_dfif5 p_undi f2_dfif5 f4_dfif5 a_cin f3_dfif5 p_uncom f3_dfif5 f2_dfif5 p_undif2 f3_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f3_dfif5 f2_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun p_ineq1i f3_dfif5 f2_dfif5 f4_dfif5 a_cin a_cun f3_dfif5 f2_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f3_dfif5 f4_dfif5 a_cun a_cin p_3eqtr4i f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 p_undi f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif a_cun f3_dfif5 f4_dfif5 a_cun a_cin f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun p_eqtr4i f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif p_undi f3_dfif5 f2_dfif5 p_undifabs f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cun f3_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cun p_ineq1i f3_dfif5 a_cvv f4_dfif5 a_cdif p_inabs f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cun f3_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f3_dfif5 f3_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f3_dfif5 p_3eqtrri f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f3_dfif5 f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun p_uneq12i f3_dfif5 p_unidm f3_dfif5 f3_dfif5 a_cun f3_dfif5 f2_dfif5 f4_dfif5 a_cin p_uneq2i f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun f3_dfif5 a_cun f2_dfif5 f4_dfif5 a_cin f3_dfif5 f3_dfif5 a_cun a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun p_3eqtr3ri f3_dfif5 f4_dfif5 p_uncom f3_dfif5 f4_dfif5 a_cun f4_dfif5 f3_dfif5 a_cun f2_dfif5 f3_dfif5 a_cun p_ineq2i f2_dfif5 f4_dfif5 f3_dfif5 p_undir f2_dfif5 f3_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin f2_dfif5 f3_dfif5 a_cun f4_dfif5 f3_dfif5 a_cun a_cin f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun p_eqtr4i f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin p_unundi f2_dfif5 f4_dfif5 a_cin f3_dfif5 a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin a_cun f3_dfif5 f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f3_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun p_3eqtr4i f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f3_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun p_ineq12i f2_dfif5 f3_dfif5 a_cin f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f2_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun f3_dfif5 f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun a_cin f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f3_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin a_cin p_eqtr4i f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun f3_dfif5 f4_dfif5 a_cun a_cin a_cin f2_dfif5 f3_dfif5 a_cun f2_dfif5 a_cvv f4_dfif5 a_cdif a_cun a_cin f2_dfif5 f3_dfif5 a_cun f3_dfif5 f4_dfif5 a_cun a_cin a_cin f0_dfif5 f2_dfif5 f3_dfif5 a_cif f2_dfif5 f3_dfif5 a_cin f2_dfif5 f3_dfif5 a_cdif f4_dfif5 a_cin f3_dfif5 f2_dfif5 a_cdif a_cvv f4_dfif5 a_cdif a_cin a_cun a_cun p_3eqtr4i $.
 $}
-$( Equality theorem for conditional operators.  (Contributed by NM,
+
+$(Equality theorem for conditional operators.  (Contributed by NM,
      1-Sep-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fifeq12_0 $f wff ph $.
-	fifeq12_1 $f class A $.
-	fifeq12_2 $f class B $.
-	fifeq12_3 $f class C $.
-	fifeq12_4 $f class D $.
-	ifeq12 $p |- ( ( A = B /\ C = D ) -> if ( ph , A , C ) = if ( ph , B , D ) ) $= fifeq12_1 fifeq12_2 wceq fifeq12_3 fifeq12_4 wceq fifeq12_0 fifeq12_1 fifeq12_3 cif fifeq12_0 fifeq12_2 fifeq12_3 cif fifeq12_0 fifeq12_2 fifeq12_4 cif fifeq12_0 fifeq12_1 fifeq12_2 fifeq12_3 ifeq1 fifeq12_0 fifeq12_3 fifeq12_4 fifeq12_2 ifeq2 sylan9eq $.
+	$v ph A B C D  $.
+	f0_ifeq12 $f wff ph $.
+	f1_ifeq12 $f class A $.
+	f2_ifeq12 $f class B $.
+	f3_ifeq12 $f class C $.
+	f4_ifeq12 $f class D $.
+	p_ifeq12 $p |- ( ( A = B /\ C = D ) -> if ( ph , A , C ) = if ( ph , B , D ) ) $= f0_ifeq12 f1_ifeq12 f2_ifeq12 f3_ifeq12 p_ifeq1 f0_ifeq12 f3_ifeq12 f4_ifeq12 f2_ifeq12 p_ifeq2 f1_ifeq12 f2_ifeq12 a_wceq f3_ifeq12 f4_ifeq12 a_wceq f0_ifeq12 f1_ifeq12 f3_ifeq12 a_cif f0_ifeq12 f2_ifeq12 f3_ifeq12 a_cif f0_ifeq12 f2_ifeq12 f4_ifeq12 a_cif p_sylan9eq $.
 $}
-$( Equality deduction for conditional operator.  (Contributed by NM,
+
+$(Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifeq1d_0 $f wff ph $.
-	fifeq1d_1 $f wff ps $.
-	fifeq1d_2 $f class A $.
-	fifeq1d_3 $f class B $.
-	fifeq1d_4 $f class C $.
-	eifeq1d_0 $e |- ( ph -> A = B ) $.
-	ifeq1d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $= fifeq1d_0 fifeq1d_2 fifeq1d_3 wceq fifeq1d_1 fifeq1d_2 fifeq1d_4 cif fifeq1d_1 fifeq1d_3 fifeq1d_4 cif wceq eifeq1d_0 fifeq1d_1 fifeq1d_2 fifeq1d_3 fifeq1d_4 ifeq1 syl $.
+	$v ph ps A B C  $.
+	f0_ifeq1d $f wff ph $.
+	f1_ifeq1d $f wff ps $.
+	f2_ifeq1d $f class A $.
+	f3_ifeq1d $f class B $.
+	f4_ifeq1d $f class C $.
+	e0_ifeq1d $e |- ( ph -> A = B ) $.
+	p_ifeq1d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $= e0_ifeq1d f1_ifeq1d f2_ifeq1d f3_ifeq1d f4_ifeq1d p_ifeq1 f0_ifeq1d f2_ifeq1d f3_ifeq1d a_wceq f1_ifeq1d f2_ifeq1d f4_ifeq1d a_cif f1_ifeq1d f3_ifeq1d f4_ifeq1d a_cif a_wceq p_syl $.
 $}
-$( Equality deduction for conditional operator.  (Contributed by NM,
+
+$(Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifeq2d_0 $f wff ph $.
-	fifeq2d_1 $f wff ps $.
-	fifeq2d_2 $f class A $.
-	fifeq2d_3 $f class B $.
-	fifeq2d_4 $f class C $.
-	eifeq2d_0 $e |- ( ph -> A = B ) $.
-	ifeq2d $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $= fifeq2d_0 fifeq2d_2 fifeq2d_3 wceq fifeq2d_1 fifeq2d_4 fifeq2d_2 cif fifeq2d_1 fifeq2d_4 fifeq2d_3 cif wceq eifeq2d_0 fifeq2d_1 fifeq2d_2 fifeq2d_3 fifeq2d_4 ifeq2 syl $.
+	$v ph ps A B C  $.
+	f0_ifeq2d $f wff ph $.
+	f1_ifeq2d $f wff ps $.
+	f2_ifeq2d $f class A $.
+	f3_ifeq2d $f class B $.
+	f4_ifeq2d $f class C $.
+	e0_ifeq2d $e |- ( ph -> A = B ) $.
+	p_ifeq2d $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $= e0_ifeq2d f1_ifeq2d f2_ifeq2d f3_ifeq2d f4_ifeq2d p_ifeq2 f0_ifeq2d f2_ifeq2d f3_ifeq2d a_wceq f1_ifeq2d f4_ifeq2d f2_ifeq2d a_cif f1_ifeq2d f4_ifeq2d f3_ifeq2d a_cif a_wceq p_syl $.
 $}
-$( Equality deduction for conditional operator.  (Contributed by NM,
+
+$(Equality deduction for conditional operator.  (Contributed by NM,
        24-Mar-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fifeq12d_0 $f wff ph $.
-	fifeq12d_1 $f wff ps $.
-	fifeq12d_2 $f class A $.
-	fifeq12d_3 $f class B $.
-	fifeq12d_4 $f class C $.
-	fifeq12d_5 $f class D $.
-	eifeq12d_0 $e |- ( ph -> A = B ) $.
-	eifeq12d_1 $e |- ( ph -> C = D ) $.
-	ifeq12d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , D ) ) $= fifeq12d_0 fifeq12d_1 fifeq12d_2 fifeq12d_4 cif fifeq12d_1 fifeq12d_3 fifeq12d_4 cif fifeq12d_1 fifeq12d_3 fifeq12d_5 cif fifeq12d_0 fifeq12d_1 fifeq12d_2 fifeq12d_3 fifeq12d_4 eifeq12d_0 ifeq1d fifeq12d_0 fifeq12d_1 fifeq12d_4 fifeq12d_5 fifeq12d_3 eifeq12d_1 ifeq2d eqtrd $.
+	$v ph ps A B C D  $.
+	f0_ifeq12d $f wff ph $.
+	f1_ifeq12d $f wff ps $.
+	f2_ifeq12d $f class A $.
+	f3_ifeq12d $f class B $.
+	f4_ifeq12d $f class C $.
+	f5_ifeq12d $f class D $.
+	e0_ifeq12d $e |- ( ph -> A = B ) $.
+	e1_ifeq12d $e |- ( ph -> C = D ) $.
+	p_ifeq12d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , D ) ) $= e0_ifeq12d f0_ifeq12d f1_ifeq12d f2_ifeq12d f3_ifeq12d f4_ifeq12d p_ifeq1d e1_ifeq12d f0_ifeq12d f1_ifeq12d f4_ifeq12d f5_ifeq12d f3_ifeq12d p_ifeq2d f0_ifeq12d f1_ifeq12d f2_ifeq12d f4_ifeq12d a_cif f1_ifeq12d f3_ifeq12d f4_ifeq12d a_cif f1_ifeq12d f3_ifeq12d f5_ifeq12d a_cif p_eqtrd $.
 $}
-$( Equivalence theorem for conditional operators.  (Contributed by Raph
+
+$(Equivalence theorem for conditional operators.  (Contributed by Raph
      Levien, 15-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	fifbi_0 $f wff ph $.
-	fifbi_1 $f wff ps $.
-	fifbi_2 $f class A $.
-	fifbi_3 $f class B $.
-	ifbi $p |- ( ( ph <-> ps ) -> if ( ph , A , B ) = if ( ps , A , B ) ) $= fifbi_0 fifbi_1 wb fifbi_0 fifbi_1 wa fifbi_0 wn fifbi_1 wn wa wo fifbi_0 fifbi_2 fifbi_3 cif fifbi_1 fifbi_2 fifbi_3 cif wceq fifbi_0 fifbi_1 dfbi3 fifbi_0 fifbi_1 wa fifbi_0 fifbi_2 fifbi_3 cif fifbi_1 fifbi_2 fifbi_3 cif wceq fifbi_0 wn fifbi_1 wn wa fifbi_0 fifbi_1 fifbi_0 fifbi_2 fifbi_3 cif fifbi_2 fifbi_1 fifbi_2 fifbi_3 cif fifbi_0 fifbi_2 fifbi_3 iftrue fifbi_1 fifbi_1 fifbi_2 fifbi_3 cif fifbi_2 fifbi_1 fifbi_2 fifbi_3 iftrue eqcomd sylan9eq fifbi_0 wn fifbi_1 wn fifbi_0 fifbi_2 fifbi_3 cif fifbi_3 fifbi_1 fifbi_2 fifbi_3 cif fifbi_0 fifbi_2 fifbi_3 iffalse fifbi_1 wn fifbi_1 fifbi_2 fifbi_3 cif fifbi_3 fifbi_1 fifbi_2 fifbi_3 iffalse eqcomd sylan9eq jaoi sylbi $.
+	$v ph ps A B  $.
+	f0_ifbi $f wff ph $.
+	f1_ifbi $f wff ps $.
+	f2_ifbi $f class A $.
+	f3_ifbi $f class B $.
+	p_ifbi $p |- ( ( ph <-> ps ) -> if ( ph , A , B ) = if ( ps , A , B ) ) $= f0_ifbi f1_ifbi p_dfbi3 f0_ifbi f2_ifbi f3_ifbi p_iftrue f1_ifbi f2_ifbi f3_ifbi p_iftrue f1_ifbi f1_ifbi f2_ifbi f3_ifbi a_cif f2_ifbi p_eqcomd f0_ifbi f1_ifbi f0_ifbi f2_ifbi f3_ifbi a_cif f2_ifbi f1_ifbi f2_ifbi f3_ifbi a_cif p_sylan9eq f0_ifbi f2_ifbi f3_ifbi p_iffalse f1_ifbi f2_ifbi f3_ifbi p_iffalse f1_ifbi a_wn f1_ifbi f2_ifbi f3_ifbi a_cif f3_ifbi p_eqcomd f0_ifbi a_wn f1_ifbi a_wn f0_ifbi f2_ifbi f3_ifbi a_cif f3_ifbi f1_ifbi f2_ifbi f3_ifbi a_cif p_sylan9eq f0_ifbi f1_ifbi a_wa f0_ifbi f2_ifbi f3_ifbi a_cif f1_ifbi f2_ifbi f3_ifbi a_cif a_wceq f0_ifbi a_wn f1_ifbi a_wn a_wa p_jaoi f0_ifbi f1_ifbi a_wb f0_ifbi f1_ifbi a_wa f0_ifbi a_wn f1_ifbi a_wn a_wa a_wo f0_ifbi f2_ifbi f3_ifbi a_cif f1_ifbi f2_ifbi f3_ifbi a_cif a_wceq p_sylbi $.
 $}
-$( Equivalence deduction for conditional operators.  (Contributed by NM,
+
+$(Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v A $.
-	$v B $.
-	fifbid_0 $f wff ph $.
-	fifbid_1 $f wff ps $.
-	fifbid_2 $f wff ch $.
-	fifbid_3 $f class A $.
-	fifbid_4 $f class B $.
-	eifbid_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	ifbid $p |- ( ph -> if ( ps , A , B ) = if ( ch , A , B ) ) $= fifbid_0 fifbid_1 fifbid_2 wb fifbid_1 fifbid_3 fifbid_4 cif fifbid_2 fifbid_3 fifbid_4 cif wceq eifbid_0 fifbid_1 fifbid_2 fifbid_3 fifbid_4 ifbi syl $.
+	$v ph ps ch A B  $.
+	f0_ifbid $f wff ph $.
+	f1_ifbid $f wff ps $.
+	f2_ifbid $f wff ch $.
+	f3_ifbid $f class A $.
+	f4_ifbid $f class B $.
+	e0_ifbid $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_ifbid $p |- ( ph -> if ( ps , A , B ) = if ( ch , A , B ) ) $= e0_ifbid f1_ifbid f2_ifbid f3_ifbid f4_ifbid p_ifbi f0_ifbid f1_ifbid f2_ifbid a_wb f1_ifbid f3_ifbid f4_ifbid a_cif f2_ifbid f3_ifbid f4_ifbid a_cif a_wceq p_syl $.
 $}
-$( Equivalence/equality inference for conditional operators.  (Contributed
+
+$(Equivalence/equality inference for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifbieq2i_0 $f wff ph $.
-	fifbieq2i_1 $f wff ps $.
-	fifbieq2i_2 $f class A $.
-	fifbieq2i_3 $f class B $.
-	fifbieq2i_4 $f class C $.
-	eifbieq2i_0 $e |- ( ph <-> ps ) $.
-	eifbieq2i_1 $e |- A = B $.
-	ifbieq2i $p |- if ( ph , C , A ) = if ( ps , C , B ) $= fifbieq2i_0 fifbieq2i_4 fifbieq2i_2 cif fifbieq2i_1 fifbieq2i_4 fifbieq2i_2 cif fifbieq2i_1 fifbieq2i_4 fifbieq2i_3 cif fifbieq2i_0 fifbieq2i_1 wb fifbieq2i_0 fifbieq2i_4 fifbieq2i_2 cif fifbieq2i_1 fifbieq2i_4 fifbieq2i_2 cif wceq eifbieq2i_0 fifbieq2i_0 fifbieq2i_1 fifbieq2i_4 fifbieq2i_2 ifbi ax-mp fifbieq2i_2 fifbieq2i_3 wceq fifbieq2i_1 fifbieq2i_4 fifbieq2i_2 cif fifbieq2i_1 fifbieq2i_4 fifbieq2i_3 cif wceq eifbieq2i_1 fifbieq2i_1 fifbieq2i_2 fifbieq2i_3 fifbieq2i_4 ifeq2 ax-mp eqtri $.
+	$v ph ps A B C  $.
+	f0_ifbieq2i $f wff ph $.
+	f1_ifbieq2i $f wff ps $.
+	f2_ifbieq2i $f class A $.
+	f3_ifbieq2i $f class B $.
+	f4_ifbieq2i $f class C $.
+	e0_ifbieq2i $e |- ( ph <-> ps ) $.
+	e1_ifbieq2i $e |- A = B $.
+	p_ifbieq2i $p |- if ( ph , C , A ) = if ( ps , C , B ) $= e0_ifbieq2i f0_ifbieq2i f1_ifbieq2i f4_ifbieq2i f2_ifbieq2i p_ifbi f0_ifbieq2i f1_ifbieq2i a_wb f0_ifbieq2i f4_ifbieq2i f2_ifbieq2i a_cif f1_ifbieq2i f4_ifbieq2i f2_ifbieq2i a_cif a_wceq a_ax-mp e1_ifbieq2i f1_ifbieq2i f2_ifbieq2i f3_ifbieq2i f4_ifbieq2i p_ifeq2 f2_ifbieq2i f3_ifbieq2i a_wceq f1_ifbieq2i f4_ifbieq2i f2_ifbieq2i a_cif f1_ifbieq2i f4_ifbieq2i f3_ifbieq2i a_cif a_wceq a_ax-mp f0_ifbieq2i f4_ifbieq2i f2_ifbieq2i a_cif f1_ifbieq2i f4_ifbieq2i f2_ifbieq2i a_cif f1_ifbieq2i f4_ifbieq2i f3_ifbieq2i a_cif p_eqtri $.
 $}
-$( Equivalence/equality deduction for conditional operators.  (Contributed
+
+$(Equivalence/equality deduction for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifbieq2d_0 $f wff ph $.
-	fifbieq2d_1 $f wff ps $.
-	fifbieq2d_2 $f wff ch $.
-	fifbieq2d_3 $f class A $.
-	fifbieq2d_4 $f class B $.
-	fifbieq2d_5 $f class C $.
-	eifbieq2d_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	eifbieq2d_1 $e |- ( ph -> A = B ) $.
-	ifbieq2d $p |- ( ph -> if ( ps , C , A ) = if ( ch , C , B ) ) $= fifbieq2d_0 fifbieq2d_1 fifbieq2d_5 fifbieq2d_3 cif fifbieq2d_2 fifbieq2d_5 fifbieq2d_3 cif fifbieq2d_2 fifbieq2d_5 fifbieq2d_4 cif fifbieq2d_0 fifbieq2d_1 fifbieq2d_2 fifbieq2d_5 fifbieq2d_3 eifbieq2d_0 ifbid fifbieq2d_0 fifbieq2d_2 fifbieq2d_3 fifbieq2d_4 fifbieq2d_5 eifbieq2d_1 ifeq2d eqtrd $.
+	$v ph ps ch A B C  $.
+	f0_ifbieq2d $f wff ph $.
+	f1_ifbieq2d $f wff ps $.
+	f2_ifbieq2d $f wff ch $.
+	f3_ifbieq2d $f class A $.
+	f4_ifbieq2d $f class B $.
+	f5_ifbieq2d $f class C $.
+	e0_ifbieq2d $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1_ifbieq2d $e |- ( ph -> A = B ) $.
+	p_ifbieq2d $p |- ( ph -> if ( ps , C , A ) = if ( ch , C , B ) ) $= e0_ifbieq2d f0_ifbieq2d f1_ifbieq2d f2_ifbieq2d f5_ifbieq2d f3_ifbieq2d p_ifbid e1_ifbieq2d f0_ifbieq2d f2_ifbieq2d f3_ifbieq2d f4_ifbieq2d f5_ifbieq2d p_ifeq2d f0_ifbieq2d f1_ifbieq2d f5_ifbieq2d f3_ifbieq2d a_cif f2_ifbieq2d f5_ifbieq2d f3_ifbieq2d a_cif f2_ifbieq2d f5_ifbieq2d f4_ifbieq2d a_cif p_eqtrd $.
 $}
-$( Equivalence deduction for conditional operators.  (Contributed by NM,
+
+$(Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Mar-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fifbieq12i_0 $f wff ph $.
-	fifbieq12i_1 $f wff ps $.
-	fifbieq12i_2 $f class A $.
-	fifbieq12i_3 $f class B $.
-	fifbieq12i_4 $f class C $.
-	fifbieq12i_5 $f class D $.
-	eifbieq12i_0 $e |- ( ph <-> ps ) $.
-	eifbieq12i_1 $e |- A = C $.
-	eifbieq12i_2 $e |- B = D $.
-	ifbieq12i $p |- if ( ph , A , B ) = if ( ps , C , D ) $= fifbieq12i_0 fifbieq12i_2 fifbieq12i_3 cif fifbieq12i_0 fifbieq12i_4 fifbieq12i_3 cif fifbieq12i_1 fifbieq12i_4 fifbieq12i_5 cif fifbieq12i_2 fifbieq12i_4 wceq fifbieq12i_0 fifbieq12i_2 fifbieq12i_3 cif fifbieq12i_0 fifbieq12i_4 fifbieq12i_3 cif wceq eifbieq12i_1 fifbieq12i_0 fifbieq12i_2 fifbieq12i_4 fifbieq12i_3 ifeq1 ax-mp fifbieq12i_0 fifbieq12i_1 fifbieq12i_3 fifbieq12i_5 fifbieq12i_4 eifbieq12i_0 eifbieq12i_2 ifbieq2i eqtri $.
+	$v ph ps A B C D  $.
+	f0_ifbieq12i $f wff ph $.
+	f1_ifbieq12i $f wff ps $.
+	f2_ifbieq12i $f class A $.
+	f3_ifbieq12i $f class B $.
+	f4_ifbieq12i $f class C $.
+	f5_ifbieq12i $f class D $.
+	e0_ifbieq12i $e |- ( ph <-> ps ) $.
+	e1_ifbieq12i $e |- A = C $.
+	e2_ifbieq12i $e |- B = D $.
+	p_ifbieq12i $p |- if ( ph , A , B ) = if ( ps , C , D ) $= e1_ifbieq12i f0_ifbieq12i f2_ifbieq12i f4_ifbieq12i f3_ifbieq12i p_ifeq1 f2_ifbieq12i f4_ifbieq12i a_wceq f0_ifbieq12i f2_ifbieq12i f3_ifbieq12i a_cif f0_ifbieq12i f4_ifbieq12i f3_ifbieq12i a_cif a_wceq a_ax-mp e0_ifbieq12i e2_ifbieq12i f0_ifbieq12i f1_ifbieq12i f3_ifbieq12i f5_ifbieq12i f4_ifbieq12i p_ifbieq2i f0_ifbieq12i f2_ifbieq12i f3_ifbieq12i a_cif f0_ifbieq12i f4_ifbieq12i f3_ifbieq12i a_cif f1_ifbieq12i f4_ifbieq12i f5_ifbieq12i a_cif p_eqtri $.
 $}
-$( Equivalence deduction for conditional operators.  (Contributed by Jeff
+
+$(Equivalence deduction for conditional operators.  (Contributed by Jeff
        Madsen, 2-Sep-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fifbieq12d_0 $f wff ph $.
-	fifbieq12d_1 $f wff ps $.
-	fifbieq12d_2 $f wff ch $.
-	fifbieq12d_3 $f class A $.
-	fifbieq12d_4 $f class B $.
-	fifbieq12d_5 $f class C $.
-	fifbieq12d_6 $f class D $.
-	eifbieq12d_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	eifbieq12d_1 $e |- ( ph -> A = C ) $.
-	eifbieq12d_2 $e |- ( ph -> B = D ) $.
-	ifbieq12d $p |- ( ph -> if ( ps , A , B ) = if ( ch , C , D ) ) $= fifbieq12d_0 fifbieq12d_1 fifbieq12d_3 fifbieq12d_4 cif fifbieq12d_2 fifbieq12d_3 fifbieq12d_4 cif fifbieq12d_2 fifbieq12d_5 fifbieq12d_6 cif fifbieq12d_0 fifbieq12d_1 fifbieq12d_2 fifbieq12d_3 fifbieq12d_4 eifbieq12d_0 ifbid fifbieq12d_0 fifbieq12d_2 fifbieq12d_3 fifbieq12d_5 fifbieq12d_4 fifbieq12d_6 eifbieq12d_1 eifbieq12d_2 ifeq12d eqtrd $.
+	$v ph ps ch A B C D  $.
+	f0_ifbieq12d $f wff ph $.
+	f1_ifbieq12d $f wff ps $.
+	f2_ifbieq12d $f wff ch $.
+	f3_ifbieq12d $f class A $.
+	f4_ifbieq12d $f class B $.
+	f5_ifbieq12d $f class C $.
+	f6_ifbieq12d $f class D $.
+	e0_ifbieq12d $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1_ifbieq12d $e |- ( ph -> A = C ) $.
+	e2_ifbieq12d $e |- ( ph -> B = D ) $.
+	p_ifbieq12d $p |- ( ph -> if ( ps , A , B ) = if ( ch , C , D ) ) $= e0_ifbieq12d f0_ifbieq12d f1_ifbieq12d f2_ifbieq12d f3_ifbieq12d f4_ifbieq12d p_ifbid e1_ifbieq12d e2_ifbieq12d f0_ifbieq12d f2_ifbieq12d f3_ifbieq12d f5_ifbieq12d f4_ifbieq12d f6_ifbieq12d p_ifeq12d f0_ifbieq12d f1_ifbieq12d f3_ifbieq12d f4_ifbieq12d a_cif f2_ifbieq12d f3_ifbieq12d f4_ifbieq12d a_cif f2_ifbieq12d f5_ifbieq12d f6_ifbieq12d a_cif p_eqtrd $.
 $}
-$( Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
+
+$(Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y ph $.
-	$d y ps $.
-	infifd_0 $f set y $.
-	fnfifd_0 $f wff ph $.
-	fnfifd_1 $f wff ps $.
-	fnfifd_2 $f set x $.
-	fnfifd_3 $f class A $.
-	fnfifd_4 $f class B $.
-	enfifd_0 $e |- ( ph -> F/ x ps ) $.
-	enfifd_1 $e |- ( ph -> F/_ x A ) $.
-	enfifd_2 $e |- ( ph -> F/_ x B ) $.
-	nfifd $p |- ( ph -> F/_ x if ( ps , A , B ) ) $= fnfifd_0 fnfifd_2 fnfifd_1 fnfifd_3 fnfifd_4 cif infifd_0 sup_set_class fnfifd_4 wcel fnfifd_1 wi infifd_0 sup_set_class fnfifd_3 wcel fnfifd_1 wa wi infifd_0 cab fnfifd_1 infifd_0 fnfifd_3 fnfifd_4 dfif2 fnfifd_0 infifd_0 sup_set_class fnfifd_4 wcel fnfifd_1 wi infifd_0 sup_set_class fnfifd_3 wcel fnfifd_1 wa wi fnfifd_2 infifd_0 fnfifd_0 infifd_0 nfv fnfifd_0 infifd_0 sup_set_class fnfifd_4 wcel fnfifd_1 wi infifd_0 sup_set_class fnfifd_3 wcel fnfifd_1 wa fnfifd_2 fnfifd_0 infifd_0 sup_set_class fnfifd_4 wcel fnfifd_1 fnfifd_2 fnfifd_0 fnfifd_2 infifd_0 fnfifd_4 enfifd_2 nfcrd enfifd_0 nfimd fnfifd_0 infifd_0 sup_set_class fnfifd_3 wcel fnfifd_1 fnfifd_2 fnfifd_0 fnfifd_2 infifd_0 fnfifd_3 enfifd_1 nfcrd enfifd_0 nfand nfimd nfabd nfcxfrd $.
+	$v ph ps x A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_nfifd $f wff ph $.
+	f1_nfifd $f wff ps $.
+	f2_nfifd $f set x $.
+	f3_nfifd $f class A $.
+	f4_nfifd $f class B $.
+	i0_nfifd $f set y $.
+	e0_nfifd $e |- ( ph -> F/ x ps ) $.
+	e1_nfifd $e |- ( ph -> F/_ x A ) $.
+	e2_nfifd $e |- ( ph -> F/_ x B ) $.
+	p_nfifd $p |- ( ph -> F/_ x if ( ps , A , B ) ) $= f1_nfifd i0_nfifd f3_nfifd f4_nfifd p_dfif2 f0_nfifd i0_nfifd p_nfv e2_nfifd f0_nfifd f2_nfifd i0_nfifd f4_nfifd p_nfcrd e0_nfifd f0_nfifd i0_nfifd a_sup_set_class f4_nfifd a_wcel f1_nfifd f2_nfifd p_nfimd e1_nfifd f0_nfifd f2_nfifd i0_nfifd f3_nfifd p_nfcrd e0_nfifd f0_nfifd i0_nfifd a_sup_set_class f3_nfifd a_wcel f1_nfifd f2_nfifd p_nfand f0_nfifd i0_nfifd a_sup_set_class f4_nfifd a_wcel f1_nfifd a_wi i0_nfifd a_sup_set_class f3_nfifd a_wcel f1_nfifd a_wa f2_nfifd p_nfimd f0_nfifd i0_nfifd a_sup_set_class f4_nfifd a_wcel f1_nfifd a_wi i0_nfifd a_sup_set_class f3_nfifd a_wcel f1_nfifd a_wa a_wi f2_nfifd i0_nfifd p_nfabd f0_nfifd f2_nfifd f1_nfifd f3_nfifd f4_nfifd a_cif i0_nfifd a_sup_set_class f4_nfifd a_wcel f1_nfifd a_wi i0_nfifd a_sup_set_class f3_nfifd a_wcel f1_nfifd a_wa a_wi i0_nfifd a_cab p_nfcxfrd $.
 $}
-$( Bound-variable hypothesis builder for a conditional operator.
+
+$(Bound-variable hypothesis builder for a conditional operator.
        (Contributed by NM, 16-Feb-2005.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	fnfif_0 $f wff ph $.
-	fnfif_1 $f set x $.
-	fnfif_2 $f class A $.
-	fnfif_3 $f class B $.
-	enfif_0 $e |- F/ x ph $.
-	enfif_1 $e |- F/_ x A $.
-	enfif_2 $e |- F/_ x B $.
-	nfif $p |- F/_ x if ( ph , A , B ) $= fnfif_1 fnfif_0 fnfif_2 fnfif_3 cif wnfc wtru fnfif_0 fnfif_1 fnfif_2 fnfif_3 fnfif_0 fnfif_1 wnf wtru enfif_0 a1i fnfif_1 fnfif_2 wnfc wtru enfif_1 a1i fnfif_1 fnfif_3 wnfc wtru enfif_2 a1i nfifd trud $.
+	$v ph x A B  $.
+	$d x  $.
+	$d A  $.
+	$d B  $.
+	$d ph  $.
+	f0_nfif $f wff ph $.
+	f1_nfif $f set x $.
+	f2_nfif $f class A $.
+	f3_nfif $f class B $.
+	e0_nfif $e |- F/ x ph $.
+	e1_nfif $e |- F/_ x A $.
+	e2_nfif $e |- F/_ x B $.
+	p_nfif $p |- F/_ x if ( ph , A , B ) $= e0_nfif f0_nfif f1_nfif a_wnf a_wtru p_a1i e1_nfif f1_nfif f2_nfif a_wnfc a_wtru p_a1i e2_nfif f1_nfif f3_nfif a_wnfc a_wtru p_a1i a_wtru f0_nfif f1_nfif f2_nfif f3_nfif p_nfifd f1_nfif f0_nfif f2_nfif f3_nfif a_cif a_wnfc p_trud $.
 $}
-$( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
+$(Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifeq1da_0 $f wff ph $.
-	fifeq1da_1 $f wff ps $.
-	fifeq1da_2 $f class A $.
-	fifeq1da_3 $f class B $.
-	fifeq1da_4 $f class C $.
-	eifeq1da_0 $e |- ( ( ph /\ ps ) -> A = B ) $.
-	ifeq1da $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $= fifeq1da_0 fifeq1da_1 fifeq1da_1 fifeq1da_2 fifeq1da_4 cif fifeq1da_1 fifeq1da_3 fifeq1da_4 cif wceq fifeq1da_0 fifeq1da_1 wa fifeq1da_1 fifeq1da_2 fifeq1da_3 fifeq1da_4 eifeq1da_0 ifeq1d fifeq1da_1 wn fifeq1da_1 fifeq1da_2 fifeq1da_4 cif fifeq1da_1 fifeq1da_3 fifeq1da_4 cif wceq fifeq1da_0 fifeq1da_1 wn fifeq1da_1 fifeq1da_2 fifeq1da_4 cif fifeq1da_4 fifeq1da_1 fifeq1da_3 fifeq1da_4 cif fifeq1da_1 fifeq1da_2 fifeq1da_4 iffalse fifeq1da_1 fifeq1da_3 fifeq1da_4 iffalse eqtr4d adantl pm2.61dan $.
+	$v ph ps A B C  $.
+	f0_ifeq1da $f wff ph $.
+	f1_ifeq1da $f wff ps $.
+	f2_ifeq1da $f class A $.
+	f3_ifeq1da $f class B $.
+	f4_ifeq1da $f class C $.
+	e0_ifeq1da $e |- ( ( ph /\ ps ) -> A = B ) $.
+	p_ifeq1da $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $= e0_ifeq1da f0_ifeq1da f1_ifeq1da a_wa f1_ifeq1da f2_ifeq1da f3_ifeq1da f4_ifeq1da p_ifeq1d f1_ifeq1da f2_ifeq1da f4_ifeq1da p_iffalse f1_ifeq1da f3_ifeq1da f4_ifeq1da p_iffalse f1_ifeq1da a_wn f1_ifeq1da f2_ifeq1da f4_ifeq1da a_cif f4_ifeq1da f1_ifeq1da f3_ifeq1da f4_ifeq1da a_cif p_eqtr4d f1_ifeq1da a_wn f1_ifeq1da f2_ifeq1da f4_ifeq1da a_cif f1_ifeq1da f3_ifeq1da f4_ifeq1da a_cif a_wceq f0_ifeq1da p_adantl f0_ifeq1da f1_ifeq1da f1_ifeq1da f2_ifeq1da f4_ifeq1da a_cif f1_ifeq1da f3_ifeq1da f4_ifeq1da a_cif a_wceq p_pm2.61dan $.
 $}
-$( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
+$(Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifeq2da_0 $f wff ph $.
-	fifeq2da_1 $f wff ps $.
-	fifeq2da_2 $f class A $.
-	fifeq2da_3 $f class B $.
-	fifeq2da_4 $f class C $.
-	eifeq2da_0 $e |- ( ( ph /\ -. ps ) -> A = B ) $.
-	ifeq2da $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $= fifeq2da_0 fifeq2da_1 fifeq2da_1 fifeq2da_4 fifeq2da_2 cif fifeq2da_1 fifeq2da_4 fifeq2da_3 cif wceq fifeq2da_1 fifeq2da_1 fifeq2da_4 fifeq2da_2 cif fifeq2da_1 fifeq2da_4 fifeq2da_3 cif wceq fifeq2da_0 fifeq2da_1 fifeq2da_1 fifeq2da_4 fifeq2da_2 cif fifeq2da_4 fifeq2da_1 fifeq2da_4 fifeq2da_3 cif fifeq2da_1 fifeq2da_4 fifeq2da_2 iftrue fifeq2da_1 fifeq2da_4 fifeq2da_3 iftrue eqtr4d adantl fifeq2da_0 fifeq2da_1 wn wa fifeq2da_1 fifeq2da_2 fifeq2da_3 fifeq2da_4 eifeq2da_0 ifeq2d pm2.61dan $.
+	$v ph ps A B C  $.
+	f0_ifeq2da $f wff ph $.
+	f1_ifeq2da $f wff ps $.
+	f2_ifeq2da $f class A $.
+	f3_ifeq2da $f class B $.
+	f4_ifeq2da $f class C $.
+	e0_ifeq2da $e |- ( ( ph /\ -. ps ) -> A = B ) $.
+	p_ifeq2da $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $= f1_ifeq2da f4_ifeq2da f2_ifeq2da p_iftrue f1_ifeq2da f4_ifeq2da f3_ifeq2da p_iftrue f1_ifeq2da f1_ifeq2da f4_ifeq2da f2_ifeq2da a_cif f4_ifeq2da f1_ifeq2da f4_ifeq2da f3_ifeq2da a_cif p_eqtr4d f1_ifeq2da f1_ifeq2da f4_ifeq2da f2_ifeq2da a_cif f1_ifeq2da f4_ifeq2da f3_ifeq2da a_cif a_wceq f0_ifeq2da p_adantl e0_ifeq2da f0_ifeq2da f1_ifeq2da a_wn a_wa f1_ifeq2da f2_ifeq2da f3_ifeq2da f4_ifeq2da p_ifeq2d f0_ifeq2da f1_ifeq2da f1_ifeq2da f4_ifeq2da f2_ifeq2da a_cif f1_ifeq2da f4_ifeq2da f3_ifeq2da a_cif a_wceq p_pm2.61dan $.
 $}
-$( Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
+$(Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifclda_0 $f wff ph $.
-	fifclda_1 $f wff ps $.
-	fifclda_2 $f class A $.
-	fifclda_3 $f class B $.
-	fifclda_4 $f class C $.
-	eifclda_0 $e |- ( ( ph /\ ps ) -> A e. C ) $.
-	eifclda_1 $e |- ( ( ph /\ -. ps ) -> B e. C ) $.
-	ifclda $p |- ( ph -> if ( ps , A , B ) e. C ) $= fifclda_0 fifclda_1 fifclda_1 fifclda_2 fifclda_3 cif fifclda_4 wcel fifclda_0 fifclda_1 wa fifclda_1 fifclda_2 fifclda_3 cif fifclda_2 fifclda_4 fifclda_1 fifclda_1 fifclda_2 fifclda_3 cif fifclda_2 wceq fifclda_0 fifclda_1 fifclda_2 fifclda_3 iftrue adantl eifclda_0 eqeltrd fifclda_0 fifclda_1 wn wa fifclda_1 fifclda_2 fifclda_3 cif fifclda_3 fifclda_4 fifclda_1 wn fifclda_1 fifclda_2 fifclda_3 cif fifclda_3 wceq fifclda_0 fifclda_1 fifclda_2 fifclda_3 iffalse adantl eifclda_1 eqeltrd pm2.61dan $.
+	$v ph ps A B C  $.
+	f0_ifclda $f wff ph $.
+	f1_ifclda $f wff ps $.
+	f2_ifclda $f class A $.
+	f3_ifclda $f class B $.
+	f4_ifclda $f class C $.
+	e0_ifclda $e |- ( ( ph /\ ps ) -> A e. C ) $.
+	e1_ifclda $e |- ( ( ph /\ -. ps ) -> B e. C ) $.
+	p_ifclda $p |- ( ph -> if ( ps , A , B ) e. C ) $= f1_ifclda f2_ifclda f3_ifclda p_iftrue f1_ifclda f1_ifclda f2_ifclda f3_ifclda a_cif f2_ifclda a_wceq f0_ifclda p_adantl e0_ifclda f0_ifclda f1_ifclda a_wa f1_ifclda f2_ifclda f3_ifclda a_cif f2_ifclda f4_ifclda p_eqeltrd f1_ifclda f2_ifclda f3_ifclda p_iffalse f1_ifclda a_wn f1_ifclda f2_ifclda f3_ifclda a_cif f3_ifclda a_wceq f0_ifclda p_adantl e1_ifclda f0_ifclda f1_ifclda a_wn a_wa f1_ifclda f2_ifclda f3_ifclda a_cif f3_ifclda f4_ifclda p_eqeltrd f0_ifclda f1_ifclda f1_ifclda f2_ifclda f3_ifclda a_cif f4_ifclda a_wcel p_pm2.61dan $.
 $}
-$( Distribute proper substitution through the conditional operator.
+
+$(Distribute proper substitution through the conditional operator.
        (Contributed by NM, 24-Feb-2013.)  (Revised by Mario Carneiro,
        14-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v V $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	$d y ph $.
-	$d x y $.
-	icsbifg_0 $f set y $.
-	fcsbifg_0 $f wff ph $.
-	fcsbifg_1 $f set x $.
-	fcsbifg_2 $f class A $.
-	fcsbifg_3 $f class B $.
-	fcsbifg_4 $f class C $.
-	fcsbifg_5 $f class V $.
-	csbifg $p |- ( A e. V -> [_ A / x ]_ if ( ph , B , C ) = if ( [. A / x ]. ph , [_ A / x ]_ B , [_ A / x ]_ C ) ) $= fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_0 fcsbifg_3 fcsbifg_4 cif csb fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb cif wceq fcsbifg_1 fcsbifg_2 fcsbifg_0 fcsbifg_3 fcsbifg_4 cif csb fcsbifg_0 fcsbifg_1 fcsbifg_2 wsbc fcsbifg_1 fcsbifg_2 fcsbifg_3 csb fcsbifg_1 fcsbifg_2 fcsbifg_4 csb cif wceq icsbifg_0 fcsbifg_2 fcsbifg_5 icsbifg_0 sup_set_class fcsbifg_2 wceq fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_0 fcsbifg_3 fcsbifg_4 cif csb fcsbifg_1 fcsbifg_2 fcsbifg_0 fcsbifg_3 fcsbifg_4 cif csb fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb cif fcsbifg_0 fcsbifg_1 fcsbifg_2 wsbc fcsbifg_1 fcsbifg_2 fcsbifg_3 csb fcsbifg_1 fcsbifg_2 fcsbifg_4 csb cif fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_2 fcsbifg_0 fcsbifg_3 fcsbifg_4 cif csbeq1 icsbifg_0 sup_set_class fcsbifg_2 wceq fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_0 fcsbifg_1 fcsbifg_2 wsbc fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb fcsbifg_1 fcsbifg_2 fcsbifg_3 csb fcsbifg_1 fcsbifg_2 fcsbifg_4 csb fcsbifg_0 fcsbifg_1 icsbifg_0 fcsbifg_2 dfsbcq2 fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_2 fcsbifg_3 csbeq1 fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_2 fcsbifg_4 csbeq1 ifbieq12d eqeq12d fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_0 fcsbifg_3 fcsbifg_4 cif fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb cif icsbifg_0 vex fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_1 fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb fcsbifg_0 fcsbifg_1 icsbifg_0 nfs1v fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 nfcsb1v fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 nfcsb1v nfif fcsbifg_1 sup_set_class icsbifg_0 sup_set_class wceq fcsbifg_0 fcsbifg_0 fcsbifg_1 icsbifg_0 wsb fcsbifg_3 fcsbifg_4 fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csb fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csb fcsbifg_0 fcsbifg_1 icsbifg_0 sbequ12 fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_3 csbeq1a fcsbifg_1 icsbifg_0 sup_set_class fcsbifg_4 csbeq1a ifbieq12d csbief vtoclg $.
+	$v ph x A B C V  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	$d y ph  $.
+	$d x y  $.
+	f0_csbifg $f wff ph $.
+	f1_csbifg $f set x $.
+	f2_csbifg $f class A $.
+	f3_csbifg $f class B $.
+	f4_csbifg $f class C $.
+	f5_csbifg $f class V $.
+	i0_csbifg $f set y $.
+	p_csbifg $p |- ( A e. V -> [_ A / x ]_ if ( ph , B , C ) = if ( [. A / x ]. ph , [_ A / x ]_ B , [_ A / x ]_ C ) ) $= f1_csbifg i0_csbifg a_sup_set_class f2_csbifg f0_csbifg f3_csbifg f4_csbifg a_cif p_csbeq1 f0_csbifg f1_csbifg i0_csbifg f2_csbifg p_dfsbcq2 f1_csbifg i0_csbifg a_sup_set_class f2_csbifg f3_csbifg p_csbeq1 f1_csbifg i0_csbifg a_sup_set_class f2_csbifg f4_csbifg p_csbeq1 i0_csbifg a_sup_set_class f2_csbifg a_wceq f0_csbifg f1_csbifg i0_csbifg a_wsb f0_csbifg f1_csbifg f2_csbifg a_wsbc f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb f1_csbifg f2_csbifg f3_csbifg a_csb f1_csbifg f2_csbifg f4_csbifg a_csb p_ifbieq12d i0_csbifg a_sup_set_class f2_csbifg a_wceq f1_csbifg i0_csbifg a_sup_set_class f0_csbifg f3_csbifg f4_csbifg a_cif a_csb f1_csbifg f2_csbifg f0_csbifg f3_csbifg f4_csbifg a_cif a_csb f0_csbifg f1_csbifg i0_csbifg a_wsb f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb a_cif f0_csbifg f1_csbifg f2_csbifg a_wsbc f1_csbifg f2_csbifg f3_csbifg a_csb f1_csbifg f2_csbifg f4_csbifg a_csb a_cif p_eqeq12d i0_csbifg p_vex f0_csbifg f1_csbifg i0_csbifg p_nfs1v f1_csbifg i0_csbifg a_sup_set_class f3_csbifg p_nfcsb1v f1_csbifg i0_csbifg a_sup_set_class f4_csbifg p_nfcsb1v f0_csbifg f1_csbifg i0_csbifg a_wsb f1_csbifg f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb p_nfif f0_csbifg f1_csbifg i0_csbifg p_sbequ12 f1_csbifg i0_csbifg a_sup_set_class f3_csbifg p_csbeq1a f1_csbifg i0_csbifg a_sup_set_class f4_csbifg p_csbeq1a f1_csbifg a_sup_set_class i0_csbifg a_sup_set_class a_wceq f0_csbifg f0_csbifg f1_csbifg i0_csbifg a_wsb f3_csbifg f4_csbifg f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb p_ifbieq12d f1_csbifg i0_csbifg a_sup_set_class f0_csbifg f3_csbifg f4_csbifg a_cif f0_csbifg f1_csbifg i0_csbifg a_wsb f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb a_cif p_csbief f1_csbifg i0_csbifg a_sup_set_class f0_csbifg f3_csbifg f4_csbifg a_cif a_csb f0_csbifg f1_csbifg i0_csbifg a_wsb f1_csbifg i0_csbifg a_sup_set_class f3_csbifg a_csb f1_csbifg i0_csbifg a_sup_set_class f4_csbifg a_csb a_cif a_wceq f1_csbifg f2_csbifg f0_csbifg f3_csbifg f4_csbifg a_cif a_csb f0_csbifg f1_csbifg f2_csbifg a_wsbc f1_csbifg f2_csbifg f3_csbifg a_csb f1_csbifg f2_csbifg f4_csbifg a_csb a_cif a_wceq i0_csbifg f2_csbifg f5_csbifg p_vtoclg $.
 $}
-$( Elimination of a conditional operator contained in a wff ` ps ` .
+
+$(Elimination of a conditional operator contained in a wff ` ps ` .
        (Contributed by NM, 15-Feb-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v A $.
-	$v B $.
-	felimif_0 $f wff ph $.
-	felimif_1 $f wff ps $.
-	felimif_2 $f wff ch $.
-	felimif_3 $f wff th $.
-	felimif_4 $f class A $.
-	felimif_5 $f class B $.
-	eelimif_0 $e |- ( if ( ph , A , B ) = A -> ( ps <-> ch ) ) $.
-	eelimif_1 $e |- ( if ( ph , A , B ) = B -> ( ps <-> th ) ) $.
-	elimif $p |- ( ps <-> ( ( ph /\ ch ) \/ ( -. ph /\ th ) ) ) $= felimif_1 felimif_0 felimif_0 wn wo felimif_1 wa felimif_0 felimif_1 wa felimif_0 wn felimif_1 wa wo felimif_0 felimif_2 wa felimif_0 wn felimif_3 wa wo felimif_0 felimif_0 wn wo felimif_1 felimif_0 exmid biantrur felimif_0 felimif_0 wn felimif_1 andir felimif_0 felimif_1 wa felimif_0 felimif_2 wa felimif_0 wn felimif_1 wa felimif_0 wn felimif_3 wa felimif_0 felimif_1 felimif_2 felimif_0 felimif_0 felimif_4 felimif_5 cif felimif_4 wceq felimif_1 felimif_2 wb felimif_0 felimif_4 felimif_5 iftrue eelimif_0 syl pm5.32i felimif_0 wn felimif_1 felimif_3 felimif_0 wn felimif_0 felimif_4 felimif_5 cif felimif_5 wceq felimif_1 felimif_3 wb felimif_0 felimif_4 felimif_5 iffalse eelimif_1 syl pm5.32i orbi12i 3bitri $.
+	$v ph ps ch th A B  $.
+	f0_elimif $f wff ph $.
+	f1_elimif $f wff ps $.
+	f2_elimif $f wff ch $.
+	f3_elimif $f wff th $.
+	f4_elimif $f class A $.
+	f5_elimif $f class B $.
+	e0_elimif $e |- ( if ( ph , A , B ) = A -> ( ps <-> ch ) ) $.
+	e1_elimif $e |- ( if ( ph , A , B ) = B -> ( ps <-> th ) ) $.
+	p_elimif $p |- ( ps <-> ( ( ph /\ ch ) \/ ( -. ph /\ th ) ) ) $= f0_elimif p_exmid f0_elimif f0_elimif a_wn a_wo f1_elimif p_biantrur f0_elimif f0_elimif a_wn f1_elimif p_andir f0_elimif f4_elimif f5_elimif p_iftrue e0_elimif f0_elimif f0_elimif f4_elimif f5_elimif a_cif f4_elimif a_wceq f1_elimif f2_elimif a_wb p_syl f0_elimif f1_elimif f2_elimif p_pm5.32i f0_elimif f4_elimif f5_elimif p_iffalse e1_elimif f0_elimif a_wn f0_elimif f4_elimif f5_elimif a_cif f5_elimif a_wceq f1_elimif f3_elimif a_wb p_syl f0_elimif a_wn f1_elimif f3_elimif p_pm5.32i f0_elimif f1_elimif a_wa f0_elimif f2_elimif a_wa f0_elimif a_wn f1_elimif a_wa f0_elimif a_wn f3_elimif a_wa p_orbi12i f1_elimif f0_elimif f0_elimif a_wn a_wo f1_elimif a_wa f0_elimif f1_elimif a_wa f0_elimif a_wn f1_elimif a_wa a_wo f0_elimif f2_elimif a_wa f0_elimif a_wn f3_elimif a_wa a_wo p_3bitri $.
 $}
-$( A wff ` th ` containing a conditional operator is true when both of
+
+$(A wff ` th ` containing a conditional operator is true when both of
          its cases are true.  (Contributed by NM, 15-Feb-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v et $.
-	$v A $.
-	$v B $.
-	fifbothda_0 $f wff ph $.
-	fifbothda_1 $f wff ps $.
-	fifbothda_2 $f wff ch $.
-	fifbothda_3 $f wff th $.
-	fifbothda_4 $f wff et $.
-	fifbothda_5 $f class A $.
-	fifbothda_6 $f class B $.
-	eifbothda_0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
-	eifbothda_1 $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
-	eifbothda_2 $e |- ( ( et /\ ph ) -> ps ) $.
-	eifbothda_3 $e |- ( ( et /\ -. ph ) -> ch ) $.
-	ifbothda $p |- ( et -> th ) $= fifbothda_4 fifbothda_0 fifbothda_3 fifbothda_4 fifbothda_0 wa fifbothda_1 fifbothda_3 eifbothda_2 fifbothda_0 fifbothda_1 fifbothda_3 wb fifbothda_4 fifbothda_0 fifbothda_5 fifbothda_0 fifbothda_5 fifbothda_6 cif wceq fifbothda_1 fifbothda_3 wb fifbothda_0 fifbothda_0 fifbothda_5 fifbothda_6 cif fifbothda_5 fifbothda_0 fifbothda_5 fifbothda_6 iftrue eqcomd eifbothda_0 syl adantl mpbid fifbothda_4 fifbothda_0 wn wa fifbothda_2 fifbothda_3 eifbothda_3 fifbothda_0 wn fifbothda_2 fifbothda_3 wb fifbothda_4 fifbothda_0 wn fifbothda_6 fifbothda_0 fifbothda_5 fifbothda_6 cif wceq fifbothda_2 fifbothda_3 wb fifbothda_0 wn fifbothda_0 fifbothda_5 fifbothda_6 cif fifbothda_6 fifbothda_0 fifbothda_5 fifbothda_6 iffalse eqcomd eifbothda_1 syl adantl mpbid pm2.61dan $.
+	$v ph ps ch th et A B  $.
+	f0_ifbothda $f wff ph $.
+	f1_ifbothda $f wff ps $.
+	f2_ifbothda $f wff ch $.
+	f3_ifbothda $f wff th $.
+	f4_ifbothda $f wff et $.
+	f5_ifbothda $f class A $.
+	f6_ifbothda $f class B $.
+	e0_ifbothda $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
+	e1_ifbothda $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
+	e2_ifbothda $e |- ( ( et /\ ph ) -> ps ) $.
+	e3_ifbothda $e |- ( ( et /\ -. ph ) -> ch ) $.
+	p_ifbothda $p |- ( et -> th ) $= e2_ifbothda f0_ifbothda f5_ifbothda f6_ifbothda p_iftrue f0_ifbothda f0_ifbothda f5_ifbothda f6_ifbothda a_cif f5_ifbothda p_eqcomd e0_ifbothda f0_ifbothda f5_ifbothda f0_ifbothda f5_ifbothda f6_ifbothda a_cif a_wceq f1_ifbothda f3_ifbothda a_wb p_syl f0_ifbothda f1_ifbothda f3_ifbothda a_wb f4_ifbothda p_adantl f4_ifbothda f0_ifbothda a_wa f1_ifbothda f3_ifbothda p_mpbid e3_ifbothda f0_ifbothda f5_ifbothda f6_ifbothda p_iffalse f0_ifbothda a_wn f0_ifbothda f5_ifbothda f6_ifbothda a_cif f6_ifbothda p_eqcomd e1_ifbothda f0_ifbothda a_wn f6_ifbothda f0_ifbothda f5_ifbothda f6_ifbothda a_cif a_wceq f2_ifbothda f3_ifbothda a_wb p_syl f0_ifbothda a_wn f2_ifbothda f3_ifbothda a_wb f4_ifbothda p_adantl f4_ifbothda f0_ifbothda a_wn a_wa f2_ifbothda f3_ifbothda p_mpbid f4_ifbothda f0_ifbothda f3_ifbothda p_pm2.61dan $.
 $}
-$( A wff ` th ` containing a conditional operator is true when both of its
+
+$(A wff ` th ` containing a conditional operator is true when both of its
        cases are true.  (Contributed by NM, 3-Sep-2006.)  (Revised by Mario
        Carneiro, 15-Feb-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v A $.
-	$v B $.
-	fifboth_0 $f wff ph $.
-	fifboth_1 $f wff ps $.
-	fifboth_2 $f wff ch $.
-	fifboth_3 $f wff th $.
-	fifboth_4 $f class A $.
-	fifboth_5 $f class B $.
-	eifboth_0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
-	eifboth_1 $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
-	ifboth $p |- ( ( ps /\ ch ) -> th ) $= fifboth_0 fifboth_1 fifboth_2 fifboth_3 fifboth_1 fifboth_2 wa fifboth_4 fifboth_5 eifboth_0 eifboth_1 fifboth_1 fifboth_2 fifboth_0 simpll fifboth_1 fifboth_2 fifboth_0 wn simplr ifbothda $.
+	$v ph ps ch th A B  $.
+	f0_ifboth $f wff ph $.
+	f1_ifboth $f wff ps $.
+	f2_ifboth $f wff ch $.
+	f3_ifboth $f wff th $.
+	f4_ifboth $f class A $.
+	f5_ifboth $f class B $.
+	e0_ifboth $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
+	e1_ifboth $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
+	p_ifboth $p |- ( ( ps /\ ch ) -> th ) $= e0_ifboth e1_ifboth f1_ifboth f2_ifboth f0_ifboth p_simpll f1_ifboth f2_ifboth f0_ifboth a_wn p_simplr f0_ifboth f1_ifboth f2_ifboth f3_ifboth f1_ifboth f2_ifboth a_wa f4_ifboth f5_ifboth p_ifbothda $.
 $}
-$( Identical true and false arguments in the conditional operator.
+
+$(Identical true and false arguments in the conditional operator.
      (Contributed by NM, 18-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	fifid_0 $f wff ph $.
-	fifid_1 $f class A $.
-	ifid $p |- if ( ph , A , A ) = A $= fifid_0 fifid_0 fifid_1 fifid_1 cif fifid_1 wceq fifid_0 fifid_1 fifid_1 iftrue fifid_0 fifid_1 fifid_1 iffalse pm2.61i $.
+	$v ph A  $.
+	f0_ifid $f wff ph $.
+	f1_ifid $f class A $.
+	p_ifid $p |- if ( ph , A , A ) = A $= f0_ifid f1_ifid f1_ifid p_iftrue f0_ifid f1_ifid f1_ifid p_iffalse f0_ifid f0_ifid f1_ifid f1_ifid a_cif f1_ifid a_wceq p_pm2.61i $.
 $}
-$( Expansion of an equality with a conditional operator.  (Contributed by NM,
+
+$(Expansion of an equality with a conditional operator.  (Contributed by NM,
      14-Feb-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqif_0 $f wff ph $.
-	feqif_1 $f class A $.
-	feqif_2 $f class B $.
-	feqif_3 $f class C $.
-	eqif $p |- ( A = if ( ph , B , C ) <-> ( ( ph /\ A = B ) \/ ( -. ph /\ A = C ) ) ) $= feqif_0 feqif_1 feqif_0 feqif_2 feqif_3 cif wceq feqif_1 feqif_2 wceq feqif_1 feqif_3 wceq feqif_2 feqif_3 feqif_0 feqif_2 feqif_3 cif feqif_2 feqif_1 eqeq2 feqif_0 feqif_2 feqif_3 cif feqif_3 feqif_1 eqeq2 elimif $.
+	$v ph A B C  $.
+	f0_eqif $f wff ph $.
+	f1_eqif $f class A $.
+	f2_eqif $f class B $.
+	f3_eqif $f class C $.
+	p_eqif $p |- ( A = if ( ph , B , C ) <-> ( ( ph /\ A = B ) \/ ( -. ph /\ A = C ) ) ) $= f0_eqif f2_eqif f3_eqif a_cif f2_eqif f1_eqif p_eqeq2 f0_eqif f2_eqif f3_eqif a_cif f3_eqif f1_eqif p_eqeq2 f0_eqif f1_eqif f0_eqif f2_eqif f3_eqif a_cif a_wceq f1_eqif f2_eqif a_wceq f1_eqif f3_eqif a_wceq f2_eqif f3_eqif p_elimif $.
 $}
-$( Membership in a conditional operator.  (Contributed by NM,
+
+$(Membership in a conditional operator.  (Contributed by NM,
      14-Feb-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	felif_0 $f wff ph $.
-	felif_1 $f class A $.
-	felif_2 $f class B $.
-	felif_3 $f class C $.
-	elif $p |- ( A e. if ( ph , B , C ) <-> ( ( ph /\ A e. B ) \/ ( -. ph /\ A e. C ) ) ) $= felif_0 felif_1 felif_0 felif_2 felif_3 cif wcel felif_1 felif_2 wcel felif_1 felif_3 wcel felif_2 felif_3 felif_0 felif_2 felif_3 cif felif_2 felif_1 eleq2 felif_0 felif_2 felif_3 cif felif_3 felif_1 eleq2 elimif $.
+	$v ph A B C  $.
+	f0_elif $f wff ph $.
+	f1_elif $f class A $.
+	f2_elif $f class B $.
+	f3_elif $f class C $.
+	p_elif $p |- ( A e. if ( ph , B , C ) <-> ( ( ph /\ A e. B ) \/ ( -. ph /\ A e. C ) ) ) $= f0_elif f2_elif f3_elif a_cif f2_elif f1_elif p_eleq2 f0_elif f2_elif f3_elif a_cif f3_elif f1_elif p_eleq2 f0_elif f1_elif f0_elif f2_elif f3_elif a_cif a_wcel f1_elif f2_elif a_wcel f1_elif f3_elif a_wcel f2_elif f3_elif p_elimif $.
 $}
-$( Membership of a conditional operator.  (Contributed by NM,
+
+$(Membership of a conditional operator.  (Contributed by NM,
      10-Sep-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifel_0 $f wff ph $.
-	fifel_1 $f class A $.
-	fifel_2 $f class B $.
-	fifel_3 $f class C $.
-	ifel $p |- ( if ( ph , A , B ) e. C <-> ( ( ph /\ A e. C ) \/ ( -. ph /\ B e. C ) ) ) $= fifel_0 fifel_0 fifel_1 fifel_2 cif fifel_3 wcel fifel_1 fifel_3 wcel fifel_2 fifel_3 wcel fifel_1 fifel_2 fifel_0 fifel_1 fifel_2 cif fifel_1 fifel_3 eleq1 fifel_0 fifel_1 fifel_2 cif fifel_2 fifel_3 eleq1 elimif $.
+	$v ph A B C  $.
+	f0_ifel $f wff ph $.
+	f1_ifel $f class A $.
+	f2_ifel $f class B $.
+	f3_ifel $f class C $.
+	p_ifel $p |- ( if ( ph , A , B ) e. C <-> ( ( ph /\ A e. C ) \/ ( -. ph /\ B e. C ) ) ) $= f0_ifel f1_ifel f2_ifel a_cif f1_ifel f3_ifel p_eleq1 f0_ifel f1_ifel f2_ifel a_cif f2_ifel f3_ifel p_eleq1 f0_ifel f0_ifel f1_ifel f2_ifel a_cif f3_ifel a_wcel f1_ifel f3_ifel a_wcel f2_ifel f3_ifel a_wcel f1_ifel f2_ifel p_elimif $.
 $}
-$( Membership (closure) of a conditional operator.  (Contributed by NM,
+
+$(Membership (closure) of a conditional operator.  (Contributed by NM,
      4-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fifcl_0 $f wff ph $.
-	fifcl_1 $f class A $.
-	fifcl_2 $f class B $.
-	fifcl_3 $f class C $.
-	ifcl $p |- ( ( A e. C /\ B e. C ) -> if ( ph , A , B ) e. C ) $= fifcl_0 fifcl_1 fifcl_3 wcel fifcl_2 fifcl_3 wcel fifcl_0 fifcl_1 fifcl_2 cif fifcl_3 wcel fifcl_1 fifcl_2 fifcl_1 fifcl_0 fifcl_1 fifcl_2 cif fifcl_3 eleq1 fifcl_2 fifcl_0 fifcl_1 fifcl_2 cif fifcl_3 eleq1 ifboth $.
+	$v ph A B C  $.
+	f0_ifcl $f wff ph $.
+	f1_ifcl $f class A $.
+	f2_ifcl $f class B $.
+	f3_ifcl $f class C $.
+	p_ifcl $p |- ( ( A e. C /\ B e. C ) -> if ( ph , A , B ) e. C ) $= f1_ifcl f0_ifcl f1_ifcl f2_ifcl a_cif f3_ifcl p_eleq1 f2_ifcl f0_ifcl f1_ifcl f2_ifcl a_cif f3_ifcl p_eleq1 f0_ifcl f1_ifcl f3_ifcl a_wcel f2_ifcl f3_ifcl a_wcel f0_ifcl f1_ifcl f2_ifcl a_cif f3_ifcl a_wcel f1_ifcl f2_ifcl p_ifboth $.
 $}
-$( The possible values of a conditional operator.  (Contributed by NM,
+
+$(The possible values of a conditional operator.  (Contributed by NM,
      17-Jun-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fifeqor_0 $f wff ph $.
-	fifeqor_1 $f class A $.
-	fifeqor_2 $f class B $.
-	ifeqor $p |- ( if ( ph , A , B ) = A \/ if ( ph , A , B ) = B ) $= fifeqor_0 fifeqor_1 fifeqor_2 cif fifeqor_1 wceq fifeqor_0 fifeqor_1 fifeqor_2 cif fifeqor_2 wceq fifeqor_0 fifeqor_1 fifeqor_2 cif fifeqor_1 wceq wn fifeqor_0 wn fifeqor_0 fifeqor_1 fifeqor_2 cif fifeqor_2 wceq fifeqor_0 fifeqor_0 fifeqor_1 fifeqor_2 cif fifeqor_1 wceq fifeqor_0 fifeqor_1 fifeqor_2 iftrue con3i fifeqor_0 fifeqor_1 fifeqor_2 iffalse syl orri $.
+	$v ph A B  $.
+	f0_ifeqor $f wff ph $.
+	f1_ifeqor $f class A $.
+	f2_ifeqor $f class B $.
+	p_ifeqor $p |- ( if ( ph , A , B ) = A \/ if ( ph , A , B ) = B ) $= f0_ifeqor f1_ifeqor f2_ifeqor p_iftrue f0_ifeqor f0_ifeqor f1_ifeqor f2_ifeqor a_cif f1_ifeqor a_wceq p_con3i f0_ifeqor f1_ifeqor f2_ifeqor p_iffalse f0_ifeqor f1_ifeqor f2_ifeqor a_cif f1_ifeqor a_wceq a_wn f0_ifeqor a_wn f0_ifeqor f1_ifeqor f2_ifeqor a_cif f2_ifeqor a_wceq p_syl f0_ifeqor f1_ifeqor f2_ifeqor a_cif f1_ifeqor a_wceq f0_ifeqor f1_ifeqor f2_ifeqor a_cif f2_ifeqor a_wceq p_orri $.
 $}
-$( Negating the first argument swaps the last two arguments of a conditional
+
+$(Negating the first argument swaps the last two arguments of a conditional
      operator.  (Contributed by NM, 21-Jun-2007.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fifnot_0 $f wff ph $.
-	fifnot_1 $f class A $.
-	fifnot_2 $f class B $.
-	ifnot $p |- if ( -. ph , A , B ) = if ( ph , B , A ) $= fifnot_0 fifnot_0 wn fifnot_1 fifnot_2 cif fifnot_0 fifnot_2 fifnot_1 cif wceq fifnot_0 fifnot_0 wn fifnot_1 fifnot_2 cif fifnot_2 fifnot_0 fifnot_2 fifnot_1 cif fifnot_0 fifnot_0 wn wn fifnot_0 wn fifnot_1 fifnot_2 cif fifnot_2 wceq fifnot_0 notnot1 fifnot_0 wn fifnot_1 fifnot_2 iffalse syl fifnot_0 fifnot_2 fifnot_1 iftrue eqtr4d fifnot_0 wn fifnot_0 wn fifnot_1 fifnot_2 cif fifnot_1 fifnot_0 fifnot_2 fifnot_1 cif fifnot_0 wn fifnot_1 fifnot_2 iftrue fifnot_0 fifnot_2 fifnot_1 iffalse eqtr4d pm2.61i $.
+	$v ph A B  $.
+	f0_ifnot $f wff ph $.
+	f1_ifnot $f class A $.
+	f2_ifnot $f class B $.
+	p_ifnot $p |- if ( -. ph , A , B ) = if ( ph , B , A ) $= f0_ifnot p_notnot1 f0_ifnot a_wn f1_ifnot f2_ifnot p_iffalse f0_ifnot f0_ifnot a_wn a_wn f0_ifnot a_wn f1_ifnot f2_ifnot a_cif f2_ifnot a_wceq p_syl f0_ifnot f2_ifnot f1_ifnot p_iftrue f0_ifnot f0_ifnot a_wn f1_ifnot f2_ifnot a_cif f2_ifnot f0_ifnot f2_ifnot f1_ifnot a_cif p_eqtr4d f0_ifnot a_wn f1_ifnot f2_ifnot p_iftrue f0_ifnot f2_ifnot f1_ifnot p_iffalse f0_ifnot a_wn f0_ifnot a_wn f1_ifnot f2_ifnot a_cif f1_ifnot f0_ifnot f2_ifnot f1_ifnot a_cif p_eqtr4d f0_ifnot f0_ifnot a_wn f1_ifnot f2_ifnot a_cif f0_ifnot f2_ifnot f1_ifnot a_cif a_wceq p_pm2.61i $.
 $}
-$( Rewrite a conjunction in an if statement as two nested conditionals.
+
+$(Rewrite a conjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	fifan_0 $f wff ph $.
-	fifan_1 $f wff ps $.
-	fifan_2 $f class A $.
-	fifan_3 $f class B $.
-	ifan $p |- if ( ( ph /\ ps ) , A , B ) = if ( ph , if ( ps , A , B ) , B ) $= fifan_0 fifan_0 fifan_1 wa fifan_2 fifan_3 cif fifan_0 fifan_1 fifan_2 fifan_3 cif fifan_3 cif wceq fifan_0 fifan_0 fifan_1 fifan_2 fifan_3 cif fifan_3 cif fifan_1 fifan_2 fifan_3 cif fifan_0 fifan_1 wa fifan_2 fifan_3 cif fifan_0 fifan_1 fifan_2 fifan_3 cif fifan_3 iftrue fifan_0 fifan_1 fifan_0 fifan_1 wa fifan_2 fifan_3 fifan_0 fifan_1 ibar ifbid eqtr2d fifan_0 wn fifan_0 fifan_1 wa fifan_2 fifan_3 cif fifan_3 fifan_0 fifan_1 fifan_2 fifan_3 cif fifan_3 cif fifan_0 wn fifan_0 fifan_1 wa wn fifan_0 fifan_1 wa fifan_2 fifan_3 cif fifan_3 wceq fifan_0 fifan_1 wa fifan_0 fifan_0 fifan_1 simpl con3i fifan_0 fifan_1 wa fifan_2 fifan_3 iffalse syl fifan_0 fifan_1 fifan_2 fifan_3 cif fifan_3 iffalse eqtr4d pm2.61i $.
+	$v ph ps A B  $.
+	f0_ifan $f wff ph $.
+	f1_ifan $f wff ps $.
+	f2_ifan $f class A $.
+	f3_ifan $f class B $.
+	p_ifan $p |- if ( ( ph /\ ps ) , A , B ) = if ( ph , if ( ps , A , B ) , B ) $= f0_ifan f1_ifan f2_ifan f3_ifan a_cif f3_ifan p_iftrue f0_ifan f1_ifan p_ibar f0_ifan f1_ifan f0_ifan f1_ifan a_wa f2_ifan f3_ifan p_ifbid f0_ifan f0_ifan f1_ifan f2_ifan f3_ifan a_cif f3_ifan a_cif f1_ifan f2_ifan f3_ifan a_cif f0_ifan f1_ifan a_wa f2_ifan f3_ifan a_cif p_eqtr2d f0_ifan f1_ifan p_simpl f0_ifan f1_ifan a_wa f0_ifan p_con3i f0_ifan f1_ifan a_wa f2_ifan f3_ifan p_iffalse f0_ifan a_wn f0_ifan f1_ifan a_wa a_wn f0_ifan f1_ifan a_wa f2_ifan f3_ifan a_cif f3_ifan a_wceq p_syl f0_ifan f1_ifan f2_ifan f3_ifan a_cif f3_ifan p_iffalse f0_ifan a_wn f0_ifan f1_ifan a_wa f2_ifan f3_ifan a_cif f3_ifan f0_ifan f1_ifan f2_ifan f3_ifan a_cif f3_ifan a_cif p_eqtr4d f0_ifan f0_ifan f1_ifan a_wa f2_ifan f3_ifan a_cif f0_ifan f1_ifan f2_ifan f3_ifan a_cif f3_ifan a_cif a_wceq p_pm2.61i $.
 $}
-$( Rewrite a disjunction in an if statement as two nested conditionals.
+
+$(Rewrite a disjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	fifor_0 $f wff ph $.
-	fifor_1 $f wff ps $.
-	fifor_2 $f class A $.
-	fifor_3 $f class B $.
-	ifor $p |- if ( ( ph \/ ps ) , A , B ) = if ( ph , A , if ( ps , A , B ) ) $= fifor_0 fifor_0 fifor_1 wo fifor_2 fifor_3 cif fifor_0 fifor_2 fifor_1 fifor_2 fifor_3 cif cif wceq fifor_0 fifor_0 fifor_1 wo fifor_2 fifor_3 cif fifor_2 fifor_0 fifor_2 fifor_1 fifor_2 fifor_3 cif cif fifor_0 fifor_1 fifor_0 fifor_1 wo fifor_2 fifor_3 cif fifor_2 wceq fifor_0 fifor_1 wo fifor_2 fifor_3 iftrue orcs fifor_0 fifor_2 fifor_1 fifor_2 fifor_3 cif iftrue eqtr4d fifor_0 wn fifor_0 fifor_2 fifor_1 fifor_2 fifor_3 cif cif fifor_1 fifor_2 fifor_3 cif fifor_0 fifor_1 wo fifor_2 fifor_3 cif fifor_0 fifor_2 fifor_1 fifor_2 fifor_3 cif iffalse fifor_0 wn fifor_1 fifor_0 fifor_1 wo fifor_2 fifor_3 fifor_0 fifor_1 biorf ifbid eqtr2d pm2.61i $.
+	$v ph ps A B  $.
+	f0_ifor $f wff ph $.
+	f1_ifor $f wff ps $.
+	f2_ifor $f class A $.
+	f3_ifor $f class B $.
+	p_ifor $p |- if ( ( ph \/ ps ) , A , B ) = if ( ph , A , if ( ps , A , B ) ) $= f0_ifor f1_ifor a_wo f2_ifor f3_ifor p_iftrue f0_ifor f1_ifor f0_ifor f1_ifor a_wo f2_ifor f3_ifor a_cif f2_ifor a_wceq p_orcs f0_ifor f2_ifor f1_ifor f2_ifor f3_ifor a_cif p_iftrue f0_ifor f0_ifor f1_ifor a_wo f2_ifor f3_ifor a_cif f2_ifor f0_ifor f2_ifor f1_ifor f2_ifor f3_ifor a_cif a_cif p_eqtr4d f0_ifor f2_ifor f1_ifor f2_ifor f3_ifor a_cif p_iffalse f0_ifor f1_ifor p_biorf f0_ifor a_wn f1_ifor f0_ifor f1_ifor a_wo f2_ifor f3_ifor p_ifbid f0_ifor a_wn f0_ifor f2_ifor f1_ifor f2_ifor f3_ifor a_cif a_cif f1_ifor f2_ifor f3_ifor a_cif f0_ifor f1_ifor a_wo f2_ifor f3_ifor a_cif p_eqtr2d f0_ifor f0_ifor f1_ifor a_wo f2_ifor f3_ifor a_cif f0_ifor f2_ifor f1_ifor f2_ifor f3_ifor a_cif a_cif a_wceq p_pm2.61i $.
 $}
-$( Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
+
+$(Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        become an antecedent.  We assume that a proof exists for ` ph ` when the
        class variable ` A ` is replaced with a specific class ` B ` .  The
        hypothesis ` ch ` should be assigned to the inference, and the
@@ -780,534 +729,420 @@ $( Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        assigning ~ keephyp to them.  For more information, see the Deduction
        Theorem ~ http://us.metamath.org/mpeuni/mmdeduction.html .  (Contributed
        by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v A $.
-	$v B $.
-	fdedth_0 $f wff ph $.
-	fdedth_1 $f wff ps $.
-	fdedth_2 $f wff ch $.
-	fdedth_3 $f class A $.
-	fdedth_4 $f class B $.
-	ededth_0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> ch ) ) $.
-	ededth_1 $e |- ch $.
-	dedth $p |- ( ph -> ps ) $= fdedth_0 fdedth_1 fdedth_2 ededth_1 fdedth_0 fdedth_3 fdedth_0 fdedth_3 fdedth_4 cif wceq fdedth_1 fdedth_2 wb fdedth_0 fdedth_0 fdedth_3 fdedth_4 cif fdedth_3 fdedth_0 fdedth_3 fdedth_4 iftrue eqcomd ededth_0 syl mpbiri $.
+	$v ph ps ch A B  $.
+	$d A  $.
+	$d B  $.
+	$d ph  $.
+	f0_dedth $f wff ph $.
+	f1_dedth $f wff ps $.
+	f2_dedth $f wff ch $.
+	f3_dedth $f class A $.
+	f4_dedth $f class B $.
+	e0_dedth $e |- ( A = if ( ph , A , B ) -> ( ps <-> ch ) ) $.
+	e1_dedth $e |- ch $.
+	p_dedth $p |- ( ph -> ps ) $= e1_dedth f0_dedth f3_dedth f4_dedth p_iftrue f0_dedth f0_dedth f3_dedth f4_dedth a_cif f3_dedth p_eqcomd e0_dedth f0_dedth f3_dedth f0_dedth f3_dedth f4_dedth a_cif a_wceq f1_dedth f2_dedth a_wb p_syl f0_dedth f1_dedth f2_dedth p_mpbiri $.
 $}
-$( Weak deduction theorem eliminating two hypotheses.  This theorem is
+
+$(Weak deduction theorem eliminating two hypotheses.  This theorem is
        simpler to use than ~ dedth2v but requires that each hypothesis has
        exactly one class variable.  See also comments in ~ dedth .
        (Contributed by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fdedth2h_0 $f wff ph $.
-	fdedth2h_1 $f wff ps $.
-	fdedth2h_2 $f wff ch $.
-	fdedth2h_3 $f wff th $.
-	fdedth2h_4 $f wff ta $.
-	fdedth2h_5 $f class A $.
-	fdedth2h_6 $f class B $.
-	fdedth2h_7 $f class C $.
-	fdedth2h_8 $f class D $.
-	ededth2h_0 $e |- ( A = if ( ph , A , C ) -> ( ch <-> th ) ) $.
-	ededth2h_1 $e |- ( B = if ( ps , B , D ) -> ( th <-> ta ) ) $.
-	ededth2h_2 $e |- ta $.
-	dedth2h $p |- ( ( ph /\ ps ) -> ch ) $= fdedth2h_0 fdedth2h_1 fdedth2h_2 fdedth2h_0 fdedth2h_1 fdedth2h_2 wi fdedth2h_1 fdedth2h_3 wi fdedth2h_5 fdedth2h_7 fdedth2h_5 fdedth2h_0 fdedth2h_5 fdedth2h_7 cif wceq fdedth2h_2 fdedth2h_3 fdedth2h_1 ededth2h_0 imbi2d fdedth2h_1 fdedth2h_3 fdedth2h_4 fdedth2h_6 fdedth2h_8 ededth2h_1 ededth2h_2 dedth dedth imp $.
+	$v ph ps ch th ta A B C D  $.
+	f0_dedth2h $f wff ph $.
+	f1_dedth2h $f wff ps $.
+	f2_dedth2h $f wff ch $.
+	f3_dedth2h $f wff th $.
+	f4_dedth2h $f wff ta $.
+	f5_dedth2h $f class A $.
+	f6_dedth2h $f class B $.
+	f7_dedth2h $f class C $.
+	f8_dedth2h $f class D $.
+	e0_dedth2h $e |- ( A = if ( ph , A , C ) -> ( ch <-> th ) ) $.
+	e1_dedth2h $e |- ( B = if ( ps , B , D ) -> ( th <-> ta ) ) $.
+	e2_dedth2h $e |- ta $.
+	p_dedth2h $p |- ( ( ph /\ ps ) -> ch ) $= e0_dedth2h f5_dedth2h f0_dedth2h f5_dedth2h f7_dedth2h a_cif a_wceq f2_dedth2h f3_dedth2h f1_dedth2h p_imbi2d e1_dedth2h e2_dedth2h f1_dedth2h f3_dedth2h f4_dedth2h f6_dedth2h f8_dedth2h p_dedth f0_dedth2h f1_dedth2h f2_dedth2h a_wi f1_dedth2h f3_dedth2h a_wi f5_dedth2h f7_dedth2h p_dedth f0_dedth2h f1_dedth2h f2_dedth2h p_imp $.
 $}
-$( Weak deduction theorem eliminating three hypotheses.  See comments in
+
+$(Weak deduction theorem eliminating three hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v ze $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	fdedth3h_0 $f wff ph $.
-	fdedth3h_1 $f wff ps $.
-	fdedth3h_2 $f wff ch $.
-	fdedth3h_3 $f wff th $.
-	fdedth3h_4 $f wff ta $.
-	fdedth3h_5 $f wff et $.
-	fdedth3h_6 $f wff ze $.
-	fdedth3h_7 $f class A $.
-	fdedth3h_8 $f class B $.
-	fdedth3h_9 $f class C $.
-	fdedth3h_10 $f class D $.
-	fdedth3h_11 $f class R $.
-	fdedth3h_12 $f class S $.
-	ededth3h_0 $e |- ( A = if ( ph , A , D ) -> ( th <-> ta ) ) $.
-	ededth3h_1 $e |- ( B = if ( ps , B , R ) -> ( ta <-> et ) ) $.
-	ededth3h_2 $e |- ( C = if ( ch , C , S ) -> ( et <-> ze ) ) $.
-	ededth3h_3 $e |- ze $.
-	dedth3h $p |- ( ( ph /\ ps /\ ch ) -> th ) $= fdedth3h_0 fdedth3h_1 fdedth3h_2 fdedth3h_3 fdedth3h_0 fdedth3h_1 fdedth3h_2 wa fdedth3h_3 wi fdedth3h_1 fdedth3h_2 wa fdedth3h_4 wi fdedth3h_7 fdedth3h_10 fdedth3h_7 fdedth3h_0 fdedth3h_7 fdedth3h_10 cif wceq fdedth3h_3 fdedth3h_4 fdedth3h_1 fdedth3h_2 wa ededth3h_0 imbi2d fdedth3h_1 fdedth3h_2 fdedth3h_4 fdedth3h_5 fdedth3h_6 fdedth3h_8 fdedth3h_9 fdedth3h_11 fdedth3h_12 ededth3h_1 ededth3h_2 ededth3h_3 dedth2h dedth 3impib $.
+	$v ph ps ch th ta et ze A B C D R S  $.
+	f0_dedth3h $f wff ph $.
+	f1_dedth3h $f wff ps $.
+	f2_dedth3h $f wff ch $.
+	f3_dedth3h $f wff th $.
+	f4_dedth3h $f wff ta $.
+	f5_dedth3h $f wff et $.
+	f6_dedth3h $f wff ze $.
+	f7_dedth3h $f class A $.
+	f8_dedth3h $f class B $.
+	f9_dedth3h $f class C $.
+	f10_dedth3h $f class D $.
+	f11_dedth3h $f class R $.
+	f12_dedth3h $f class S $.
+	e0_dedth3h $e |- ( A = if ( ph , A , D ) -> ( th <-> ta ) ) $.
+	e1_dedth3h $e |- ( B = if ( ps , B , R ) -> ( ta <-> et ) ) $.
+	e2_dedth3h $e |- ( C = if ( ch , C , S ) -> ( et <-> ze ) ) $.
+	e3_dedth3h $e |- ze $.
+	p_dedth3h $p |- ( ( ph /\ ps /\ ch ) -> th ) $= e0_dedth3h f7_dedth3h f0_dedth3h f7_dedth3h f10_dedth3h a_cif a_wceq f3_dedth3h f4_dedth3h f1_dedth3h f2_dedth3h a_wa p_imbi2d e1_dedth3h e2_dedth3h e3_dedth3h f1_dedth3h f2_dedth3h f4_dedth3h f5_dedth3h f6_dedth3h f8_dedth3h f9_dedth3h f11_dedth3h f12_dedth3h p_dedth2h f0_dedth3h f1_dedth3h f2_dedth3h a_wa f3_dedth3h a_wi f1_dedth3h f2_dedth3h a_wa f4_dedth3h a_wi f7_dedth3h f10_dedth3h p_dedth f0_dedth3h f1_dedth3h f2_dedth3h f3_dedth3h p_3impib $.
 $}
-$( Weak deduction theorem eliminating four hypotheses.  See comments in
+
+$(Weak deduction theorem eliminating four hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 16-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v ze $.
-	$v si $.
-	$v rh $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	fdedth4h_0 $f wff ph $.
-	fdedth4h_1 $f wff ps $.
-	fdedth4h_2 $f wff ch $.
-	fdedth4h_3 $f wff th $.
-	fdedth4h_4 $f wff ta $.
-	fdedth4h_5 $f wff et $.
-	fdedth4h_6 $f wff ze $.
-	fdedth4h_7 $f wff si $.
-	fdedth4h_8 $f wff rh $.
-	fdedth4h_9 $f class A $.
-	fdedth4h_10 $f class B $.
-	fdedth4h_11 $f class C $.
-	fdedth4h_12 $f class D $.
-	fdedth4h_13 $f class R $.
-	fdedth4h_14 $f class S $.
-	fdedth4h_15 $f class F $.
-	fdedth4h_16 $f class G $.
-	ededth4h_0 $e |- ( A = if ( ph , A , R ) -> ( ta <-> et ) ) $.
-	ededth4h_1 $e |- ( B = if ( ps , B , S ) -> ( et <-> ze ) ) $.
-	ededth4h_2 $e |- ( C = if ( ch , C , F ) -> ( ze <-> si ) ) $.
-	ededth4h_3 $e |- ( D = if ( th , D , G ) -> ( si <-> rh ) ) $.
-	ededth4h_4 $e |- rh $.
-	dedth4h $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) -> ta ) $= fdedth4h_0 fdedth4h_1 wa fdedth4h_2 fdedth4h_3 wa fdedth4h_4 fdedth4h_0 fdedth4h_1 fdedth4h_2 fdedth4h_3 wa fdedth4h_4 wi fdedth4h_2 fdedth4h_3 wa fdedth4h_5 wi fdedth4h_2 fdedth4h_3 wa fdedth4h_6 wi fdedth4h_9 fdedth4h_10 fdedth4h_13 fdedth4h_14 fdedth4h_9 fdedth4h_0 fdedth4h_9 fdedth4h_13 cif wceq fdedth4h_4 fdedth4h_5 fdedth4h_2 fdedth4h_3 wa ededth4h_0 imbi2d fdedth4h_10 fdedth4h_1 fdedth4h_10 fdedth4h_14 cif wceq fdedth4h_5 fdedth4h_6 fdedth4h_2 fdedth4h_3 wa ededth4h_1 imbi2d fdedth4h_2 fdedth4h_3 fdedth4h_6 fdedth4h_7 fdedth4h_8 fdedth4h_11 fdedth4h_12 fdedth4h_15 fdedth4h_16 ededth4h_2 ededth4h_3 ededth4h_4 dedth2h dedth2h imp $.
+	$v ph ps ch th ta et ze si rh A B C D R S F G  $.
+	f0_dedth4h $f wff ph $.
+	f1_dedth4h $f wff ps $.
+	f2_dedth4h $f wff ch $.
+	f3_dedth4h $f wff th $.
+	f4_dedth4h $f wff ta $.
+	f5_dedth4h $f wff et $.
+	f6_dedth4h $f wff ze $.
+	f7_dedth4h $f wff si $.
+	f8_dedth4h $f wff rh $.
+	f9_dedth4h $f class A $.
+	f10_dedth4h $f class B $.
+	f11_dedth4h $f class C $.
+	f12_dedth4h $f class D $.
+	f13_dedth4h $f class R $.
+	f14_dedth4h $f class S $.
+	f15_dedth4h $f class F $.
+	f16_dedth4h $f class G $.
+	e0_dedth4h $e |- ( A = if ( ph , A , R ) -> ( ta <-> et ) ) $.
+	e1_dedth4h $e |- ( B = if ( ps , B , S ) -> ( et <-> ze ) ) $.
+	e2_dedth4h $e |- ( C = if ( ch , C , F ) -> ( ze <-> si ) ) $.
+	e3_dedth4h $e |- ( D = if ( th , D , G ) -> ( si <-> rh ) ) $.
+	e4_dedth4h $e |- rh $.
+	p_dedth4h $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) -> ta ) $= e0_dedth4h f9_dedth4h f0_dedth4h f9_dedth4h f13_dedth4h a_cif a_wceq f4_dedth4h f5_dedth4h f2_dedth4h f3_dedth4h a_wa p_imbi2d e1_dedth4h f10_dedth4h f1_dedth4h f10_dedth4h f14_dedth4h a_cif a_wceq f5_dedth4h f6_dedth4h f2_dedth4h f3_dedth4h a_wa p_imbi2d e2_dedth4h e3_dedth4h e4_dedth4h f2_dedth4h f3_dedth4h f6_dedth4h f7_dedth4h f8_dedth4h f11_dedth4h f12_dedth4h f15_dedth4h f16_dedth4h p_dedth2h f0_dedth4h f1_dedth4h f2_dedth4h f3_dedth4h a_wa f4_dedth4h a_wi f2_dedth4h f3_dedth4h a_wa f5_dedth4h a_wi f2_dedth4h f3_dedth4h a_wa f6_dedth4h a_wi f9_dedth4h f10_dedth4h f13_dedth4h f14_dedth4h p_dedth2h f0_dedth4h f1_dedth4h a_wa f2_dedth4h f3_dedth4h a_wa f4_dedth4h p_imp $.
 $}
-$( Weak deduction theorem for eliminating a hypothesis with 2 class
+
+$(Weak deduction theorem for eliminating a hypothesis with 2 class
        variables.  Note: if the hypothesis can be separated into two
        hypotheses, each with one class variable, then ~ dedth2h is simpler to
        use.  See also comments in ~ dedth .  (Contributed by NM, 13-Aug-1999.)
        (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fdedth2v_0 $f wff ph $.
-	fdedth2v_1 $f wff ps $.
-	fdedth2v_2 $f wff ch $.
-	fdedth2v_3 $f wff th $.
-	fdedth2v_4 $f class A $.
-	fdedth2v_5 $f class B $.
-	fdedth2v_6 $f class C $.
-	fdedth2v_7 $f class D $.
-	ededth2v_0 $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
-	ededth2v_1 $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
-	ededth2v_2 $e |- th $.
-	dedth2v $p |- ( ph -> ps ) $= fdedth2v_0 fdedth2v_1 fdedth2v_0 fdedth2v_0 fdedth2v_1 fdedth2v_2 fdedth2v_3 fdedth2v_4 fdedth2v_5 fdedth2v_6 fdedth2v_7 ededth2v_0 ededth2v_1 ededth2v_2 dedth2h anidms $.
+	$v ph ps ch th A B C D  $.
+	f0_dedth2v $f wff ph $.
+	f1_dedth2v $f wff ps $.
+	f2_dedth2v $f wff ch $.
+	f3_dedth2v $f wff th $.
+	f4_dedth2v $f class A $.
+	f5_dedth2v $f class B $.
+	f6_dedth2v $f class C $.
+	f7_dedth2v $f class D $.
+	e0_dedth2v $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
+	e1_dedth2v $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
+	e2_dedth2v $e |- th $.
+	p_dedth2v $p |- ( ph -> ps ) $= e0_dedth2v e1_dedth2v e2_dedth2v f0_dedth2v f0_dedth2v f1_dedth2v f2_dedth2v f3_dedth2v f4_dedth2v f5_dedth2v f6_dedth2v f7_dedth2v p_dedth2h f0_dedth2v f1_dedth2v p_anidms $.
 $}
-$( Weak deduction theorem for eliminating a hypothesis with 3 class
+
+$(Weak deduction theorem for eliminating a hypothesis with 3 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        13-Aug-1999.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	fdedth3v_0 $f wff ph $.
-	fdedth3v_1 $f wff ps $.
-	fdedth3v_2 $f wff ch $.
-	fdedth3v_3 $f wff th $.
-	fdedth3v_4 $f wff ta $.
-	fdedth3v_5 $f class A $.
-	fdedth3v_6 $f class B $.
-	fdedth3v_7 $f class C $.
-	fdedth3v_8 $f class D $.
-	fdedth3v_9 $f class R $.
-	fdedth3v_10 $f class S $.
-	ededth3v_0 $e |- ( A = if ( ph , A , D ) -> ( ps <-> ch ) ) $.
-	ededth3v_1 $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
-	ededth3v_2 $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
-	ededth3v_3 $e |- ta $.
-	dedth3v $p |- ( ph -> ps ) $= fdedth3v_0 fdedth3v_1 fdedth3v_0 fdedth3v_0 fdedth3v_1 fdedth3v_0 fdedth3v_0 fdedth3v_0 fdedth3v_1 fdedth3v_2 fdedth3v_3 fdedth3v_4 fdedth3v_5 fdedth3v_6 fdedth3v_7 fdedth3v_8 fdedth3v_9 fdedth3v_10 ededth3v_0 ededth3v_1 ededth3v_2 ededth3v_3 dedth3h 3anidm12 anidms $.
+	$v ph ps ch th ta A B C D R S  $.
+	f0_dedth3v $f wff ph $.
+	f1_dedth3v $f wff ps $.
+	f2_dedth3v $f wff ch $.
+	f3_dedth3v $f wff th $.
+	f4_dedth3v $f wff ta $.
+	f5_dedth3v $f class A $.
+	f6_dedth3v $f class B $.
+	f7_dedth3v $f class C $.
+	f8_dedth3v $f class D $.
+	f9_dedth3v $f class R $.
+	f10_dedth3v $f class S $.
+	e0_dedth3v $e |- ( A = if ( ph , A , D ) -> ( ps <-> ch ) ) $.
+	e1_dedth3v $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
+	e2_dedth3v $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
+	e3_dedth3v $e |- ta $.
+	p_dedth3v $p |- ( ph -> ps ) $= e0_dedth3v e1_dedth3v e2_dedth3v e3_dedth3v f0_dedth3v f0_dedth3v f0_dedth3v f1_dedth3v f2_dedth3v f3_dedth3v f4_dedth3v f5_dedth3v f6_dedth3v f7_dedth3v f8_dedth3v f9_dedth3v f10_dedth3v p_dedth3h f0_dedth3v f0_dedth3v f1_dedth3v p_3anidm12 f0_dedth3v f1_dedth3v p_anidms $.
 $}
-$( Weak deduction theorem for eliminating a hypothesis with 4 class
+
+$(Weak deduction theorem for eliminating a hypothesis with 4 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        21-Apr-2007.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v U $.
-	fdedth4v_0 $f wff ph $.
-	fdedth4v_1 $f wff ps $.
-	fdedth4v_2 $f wff ch $.
-	fdedth4v_3 $f wff th $.
-	fdedth4v_4 $f wff ta $.
-	fdedth4v_5 $f wff et $.
-	fdedth4v_6 $f class A $.
-	fdedth4v_7 $f class B $.
-	fdedth4v_8 $f class C $.
-	fdedth4v_9 $f class D $.
-	fdedth4v_10 $f class R $.
-	fdedth4v_11 $f class S $.
-	fdedth4v_12 $f class T $.
-	fdedth4v_13 $f class U $.
-	ededth4v_0 $e |- ( A = if ( ph , A , R ) -> ( ps <-> ch ) ) $.
-	ededth4v_1 $e |- ( B = if ( ph , B , S ) -> ( ch <-> th ) ) $.
-	ededth4v_2 $e |- ( C = if ( ph , C , T ) -> ( th <-> ta ) ) $.
-	ededth4v_3 $e |- ( D = if ( ph , D , U ) -> ( ta <-> et ) ) $.
-	ededth4v_4 $e |- et $.
-	dedth4v $p |- ( ph -> ps ) $= fdedth4v_0 fdedth4v_1 fdedth4v_0 fdedth4v_0 wa fdedth4v_1 fdedth4v_0 fdedth4v_0 fdedth4v_0 fdedth4v_0 fdedth4v_1 fdedth4v_2 fdedth4v_3 fdedth4v_4 fdedth4v_5 fdedth4v_6 fdedth4v_7 fdedth4v_8 fdedth4v_9 fdedth4v_10 fdedth4v_11 fdedth4v_12 fdedth4v_13 ededth4v_0 ededth4v_1 ededth4v_2 ededth4v_3 ededth4v_4 dedth4h anidms anidms $.
+	$v ph ps ch th ta et A B C D R S T U  $.
+	f0_dedth4v $f wff ph $.
+	f1_dedth4v $f wff ps $.
+	f2_dedth4v $f wff ch $.
+	f3_dedth4v $f wff th $.
+	f4_dedth4v $f wff ta $.
+	f5_dedth4v $f wff et $.
+	f6_dedth4v $f class A $.
+	f7_dedth4v $f class B $.
+	f8_dedth4v $f class C $.
+	f9_dedth4v $f class D $.
+	f10_dedth4v $f class R $.
+	f11_dedth4v $f class S $.
+	f12_dedth4v $f class T $.
+	f13_dedth4v $f class U $.
+	e0_dedth4v $e |- ( A = if ( ph , A , R ) -> ( ps <-> ch ) ) $.
+	e1_dedth4v $e |- ( B = if ( ph , B , S ) -> ( ch <-> th ) ) $.
+	e2_dedth4v $e |- ( C = if ( ph , C , T ) -> ( th <-> ta ) ) $.
+	e3_dedth4v $e |- ( D = if ( ph , D , U ) -> ( ta <-> et ) ) $.
+	e4_dedth4v $e |- et $.
+	p_dedth4v $p |- ( ph -> ps ) $= e0_dedth4v e1_dedth4v e2_dedth4v e3_dedth4v e4_dedth4v f0_dedth4v f0_dedth4v f0_dedth4v f0_dedth4v f1_dedth4v f2_dedth4v f3_dedth4v f4_dedth4v f5_dedth4v f6_dedth4v f7_dedth4v f8_dedth4v f9_dedth4v f10_dedth4v f11_dedth4v f12_dedth4v f13_dedth4v p_dedth4h f0_dedth4v f0_dedth4v a_wa f1_dedth4v p_anidms f0_dedth4v f1_dedth4v p_anidms $.
 $}
-$( Eliminate a hypothesis containing class variable ` A ` when it is known
+
+$(Eliminate a hypothesis containing class variable ` A ` when it is known
        for a specific class ` B ` .  For more information, see comments in
        ~ dedth .  (Contributed by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v A $.
-	$v B $.
-	felimhyp_0 $f wff ph $.
-	felimhyp_1 $f wff ps $.
-	felimhyp_2 $f wff ch $.
-	felimhyp_3 $f class A $.
-	felimhyp_4 $f class B $.
-	eelimhyp_0 $e |- ( A = if ( ph , A , B ) -> ( ph <-> ps ) ) $.
-	eelimhyp_1 $e |- ( B = if ( ph , A , B ) -> ( ch <-> ps ) ) $.
-	eelimhyp_2 $e |- ch $.
-	elimhyp $p |- ps $= felimhyp_0 felimhyp_1 felimhyp_0 felimhyp_1 felimhyp_0 felimhyp_3 felimhyp_0 felimhyp_3 felimhyp_4 cif wceq felimhyp_0 felimhyp_1 wb felimhyp_0 felimhyp_0 felimhyp_3 felimhyp_4 cif felimhyp_3 felimhyp_0 felimhyp_3 felimhyp_4 iftrue eqcomd eelimhyp_0 syl ibi felimhyp_0 wn felimhyp_2 felimhyp_1 eelimhyp_2 felimhyp_0 wn felimhyp_4 felimhyp_0 felimhyp_3 felimhyp_4 cif wceq felimhyp_2 felimhyp_1 wb felimhyp_0 wn felimhyp_0 felimhyp_3 felimhyp_4 cif felimhyp_4 felimhyp_0 felimhyp_3 felimhyp_4 iffalse eqcomd eelimhyp_1 syl mpbii pm2.61i $.
+	$v ph ps ch A B  $.
+	f0_elimhyp $f wff ph $.
+	f1_elimhyp $f wff ps $.
+	f2_elimhyp $f wff ch $.
+	f3_elimhyp $f class A $.
+	f4_elimhyp $f class B $.
+	e0_elimhyp $e |- ( A = if ( ph , A , B ) -> ( ph <-> ps ) ) $.
+	e1_elimhyp $e |- ( B = if ( ph , A , B ) -> ( ch <-> ps ) ) $.
+	e2_elimhyp $e |- ch $.
+	p_elimhyp $p |- ps $= f0_elimhyp f3_elimhyp f4_elimhyp p_iftrue f0_elimhyp f0_elimhyp f3_elimhyp f4_elimhyp a_cif f3_elimhyp p_eqcomd e0_elimhyp f0_elimhyp f3_elimhyp f0_elimhyp f3_elimhyp f4_elimhyp a_cif a_wceq f0_elimhyp f1_elimhyp a_wb p_syl f0_elimhyp f1_elimhyp p_ibi e2_elimhyp f0_elimhyp f3_elimhyp f4_elimhyp p_iffalse f0_elimhyp a_wn f0_elimhyp f3_elimhyp f4_elimhyp a_cif f4_elimhyp p_eqcomd e1_elimhyp f0_elimhyp a_wn f4_elimhyp f0_elimhyp f3_elimhyp f4_elimhyp a_cif a_wceq f2_elimhyp f1_elimhyp a_wb p_syl f0_elimhyp a_wn f2_elimhyp f1_elimhyp p_mpbii f0_elimhyp f1_elimhyp p_pm2.61i $.
 $}
-$( Eliminate a hypothesis containing 2 class variables.  (Contributed by
+
+$(Eliminate a hypothesis containing 2 class variables.  (Contributed by
        NM, 14-Aug-1999.) $)
+
 ${
-	$v ph $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	felimhyp2v_0 $f wff ph $.
-	felimhyp2v_1 $f wff ch $.
-	felimhyp2v_2 $f wff th $.
-	felimhyp2v_3 $f wff ta $.
-	felimhyp2v_4 $f wff et $.
-	felimhyp2v_5 $f class A $.
-	felimhyp2v_6 $f class B $.
-	felimhyp2v_7 $f class C $.
-	felimhyp2v_8 $f class D $.
-	eelimhyp2v_0 $e |- ( A = if ( ph , A , C ) -> ( ph <-> ch ) ) $.
-	eelimhyp2v_1 $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
-	eelimhyp2v_2 $e |- ( C = if ( ph , A , C ) -> ( ta <-> et ) ) $.
-	eelimhyp2v_3 $e |- ( D = if ( ph , B , D ) -> ( et <-> th ) ) $.
-	eelimhyp2v_4 $e |- ta $.
-	elimhyp2v $p |- th $= felimhyp2v_0 felimhyp2v_2 felimhyp2v_0 felimhyp2v_2 felimhyp2v_0 felimhyp2v_0 felimhyp2v_1 felimhyp2v_2 felimhyp2v_0 felimhyp2v_5 felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 cif wceq felimhyp2v_0 felimhyp2v_1 wb felimhyp2v_0 felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 cif felimhyp2v_5 felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 iftrue eqcomd eelimhyp2v_0 syl felimhyp2v_0 felimhyp2v_6 felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 cif wceq felimhyp2v_1 felimhyp2v_2 wb felimhyp2v_0 felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 cif felimhyp2v_6 felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 iftrue eqcomd eelimhyp2v_1 syl bitrd ibi felimhyp2v_0 wn felimhyp2v_3 felimhyp2v_2 eelimhyp2v_4 felimhyp2v_0 wn felimhyp2v_3 felimhyp2v_4 felimhyp2v_2 felimhyp2v_0 wn felimhyp2v_7 felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 cif wceq felimhyp2v_3 felimhyp2v_4 wb felimhyp2v_0 wn felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 cif felimhyp2v_7 felimhyp2v_0 felimhyp2v_5 felimhyp2v_7 iffalse eqcomd eelimhyp2v_2 syl felimhyp2v_0 wn felimhyp2v_8 felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 cif wceq felimhyp2v_4 felimhyp2v_2 wb felimhyp2v_0 wn felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 cif felimhyp2v_8 felimhyp2v_0 felimhyp2v_6 felimhyp2v_8 iffalse eqcomd eelimhyp2v_3 syl bitrd mpbii pm2.61i $.
+	$v ph ch th ta et A B C D  $.
+	f0_elimhyp2v $f wff ph $.
+	f1_elimhyp2v $f wff ch $.
+	f2_elimhyp2v $f wff th $.
+	f3_elimhyp2v $f wff ta $.
+	f4_elimhyp2v $f wff et $.
+	f5_elimhyp2v $f class A $.
+	f6_elimhyp2v $f class B $.
+	f7_elimhyp2v $f class C $.
+	f8_elimhyp2v $f class D $.
+	e0_elimhyp2v $e |- ( A = if ( ph , A , C ) -> ( ph <-> ch ) ) $.
+	e1_elimhyp2v $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
+	e2_elimhyp2v $e |- ( C = if ( ph , A , C ) -> ( ta <-> et ) ) $.
+	e3_elimhyp2v $e |- ( D = if ( ph , B , D ) -> ( et <-> th ) ) $.
+	e4_elimhyp2v $e |- ta $.
+	p_elimhyp2v $p |- th $= f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v p_iftrue f0_elimhyp2v f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v a_cif f5_elimhyp2v p_eqcomd e0_elimhyp2v f0_elimhyp2v f5_elimhyp2v f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v a_cif a_wceq f0_elimhyp2v f1_elimhyp2v a_wb p_syl f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v p_iftrue f0_elimhyp2v f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v a_cif f6_elimhyp2v p_eqcomd e1_elimhyp2v f0_elimhyp2v f6_elimhyp2v f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v a_cif a_wceq f1_elimhyp2v f2_elimhyp2v a_wb p_syl f0_elimhyp2v f0_elimhyp2v f1_elimhyp2v f2_elimhyp2v p_bitrd f0_elimhyp2v f2_elimhyp2v p_ibi e4_elimhyp2v f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v p_iffalse f0_elimhyp2v a_wn f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v a_cif f7_elimhyp2v p_eqcomd e2_elimhyp2v f0_elimhyp2v a_wn f7_elimhyp2v f0_elimhyp2v f5_elimhyp2v f7_elimhyp2v a_cif a_wceq f3_elimhyp2v f4_elimhyp2v a_wb p_syl f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v p_iffalse f0_elimhyp2v a_wn f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v a_cif f8_elimhyp2v p_eqcomd e3_elimhyp2v f0_elimhyp2v a_wn f8_elimhyp2v f0_elimhyp2v f6_elimhyp2v f8_elimhyp2v a_cif a_wceq f4_elimhyp2v f2_elimhyp2v a_wb p_syl f0_elimhyp2v a_wn f3_elimhyp2v f4_elimhyp2v f2_elimhyp2v p_bitrd f0_elimhyp2v a_wn f3_elimhyp2v f2_elimhyp2v p_mpbii f0_elimhyp2v f2_elimhyp2v p_pm2.61i $.
 $}
-$( Eliminate a hypothesis containing 3 class variables.  (Contributed by
+
+$(Eliminate a hypothesis containing 3 class variables.  (Contributed by
        NM, 14-Aug-1999.) $)
+
 ${
-	$v ph $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v ze $.
-	$v si $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	felimhyp3v_0 $f wff ph $.
-	felimhyp3v_1 $f wff ch $.
-	felimhyp3v_2 $f wff th $.
-	felimhyp3v_3 $f wff ta $.
-	felimhyp3v_4 $f wff et $.
-	felimhyp3v_5 $f wff ze $.
-	felimhyp3v_6 $f wff si $.
-	felimhyp3v_7 $f class A $.
-	felimhyp3v_8 $f class B $.
-	felimhyp3v_9 $f class C $.
-	felimhyp3v_10 $f class D $.
-	felimhyp3v_11 $f class R $.
-	felimhyp3v_12 $f class S $.
-	eelimhyp3v_0 $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
-	eelimhyp3v_1 $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
-	eelimhyp3v_2 $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
-	eelimhyp3v_3 $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
-	eelimhyp3v_4 $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
-	eelimhyp3v_5 $e |- ( S = if ( ph , C , S ) -> ( si <-> ta ) ) $.
-	eelimhyp3v_6 $e |- et $.
-	elimhyp3v $p |- ta $= felimhyp3v_0 felimhyp3v_3 felimhyp3v_0 felimhyp3v_3 felimhyp3v_0 felimhyp3v_0 felimhyp3v_1 felimhyp3v_2 felimhyp3v_3 felimhyp3v_0 felimhyp3v_7 felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 cif wceq felimhyp3v_0 felimhyp3v_1 wb felimhyp3v_0 felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 cif felimhyp3v_7 felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 iftrue eqcomd eelimhyp3v_0 syl felimhyp3v_0 felimhyp3v_8 felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 cif wceq felimhyp3v_1 felimhyp3v_2 wb felimhyp3v_0 felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 cif felimhyp3v_8 felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 iftrue eqcomd eelimhyp3v_1 syl felimhyp3v_0 felimhyp3v_9 felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 cif wceq felimhyp3v_2 felimhyp3v_3 wb felimhyp3v_0 felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 cif felimhyp3v_9 felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 iftrue eqcomd eelimhyp3v_2 syl 3bitrd ibi felimhyp3v_0 wn felimhyp3v_4 felimhyp3v_3 eelimhyp3v_6 felimhyp3v_0 wn felimhyp3v_4 felimhyp3v_5 felimhyp3v_6 felimhyp3v_3 felimhyp3v_0 wn felimhyp3v_10 felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 cif wceq felimhyp3v_4 felimhyp3v_5 wb felimhyp3v_0 wn felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 cif felimhyp3v_10 felimhyp3v_0 felimhyp3v_7 felimhyp3v_10 iffalse eqcomd eelimhyp3v_3 syl felimhyp3v_0 wn felimhyp3v_11 felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 cif wceq felimhyp3v_5 felimhyp3v_6 wb felimhyp3v_0 wn felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 cif felimhyp3v_11 felimhyp3v_0 felimhyp3v_8 felimhyp3v_11 iffalse eqcomd eelimhyp3v_4 syl felimhyp3v_0 wn felimhyp3v_12 felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 cif wceq felimhyp3v_6 felimhyp3v_3 wb felimhyp3v_0 wn felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 cif felimhyp3v_12 felimhyp3v_0 felimhyp3v_9 felimhyp3v_12 iffalse eqcomd eelimhyp3v_5 syl 3bitrd mpbii pm2.61i $.
+	$v ph ch th ta et ze si A B C D R S  $.
+	f0_elimhyp3v $f wff ph $.
+	f1_elimhyp3v $f wff ch $.
+	f2_elimhyp3v $f wff th $.
+	f3_elimhyp3v $f wff ta $.
+	f4_elimhyp3v $f wff et $.
+	f5_elimhyp3v $f wff ze $.
+	f6_elimhyp3v $f wff si $.
+	f7_elimhyp3v $f class A $.
+	f8_elimhyp3v $f class B $.
+	f9_elimhyp3v $f class C $.
+	f10_elimhyp3v $f class D $.
+	f11_elimhyp3v $f class R $.
+	f12_elimhyp3v $f class S $.
+	e0_elimhyp3v $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
+	e1_elimhyp3v $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
+	e2_elimhyp3v $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
+	e3_elimhyp3v $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
+	e4_elimhyp3v $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
+	e5_elimhyp3v $e |- ( S = if ( ph , C , S ) -> ( si <-> ta ) ) $.
+	e6_elimhyp3v $e |- et $.
+	p_elimhyp3v $p |- ta $= f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v p_iftrue f0_elimhyp3v f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v a_cif f7_elimhyp3v p_eqcomd e0_elimhyp3v f0_elimhyp3v f7_elimhyp3v f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v a_cif a_wceq f0_elimhyp3v f1_elimhyp3v a_wb p_syl f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v p_iftrue f0_elimhyp3v f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v a_cif f8_elimhyp3v p_eqcomd e1_elimhyp3v f0_elimhyp3v f8_elimhyp3v f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v a_cif a_wceq f1_elimhyp3v f2_elimhyp3v a_wb p_syl f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v p_iftrue f0_elimhyp3v f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v a_cif f9_elimhyp3v p_eqcomd e2_elimhyp3v f0_elimhyp3v f9_elimhyp3v f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v a_cif a_wceq f2_elimhyp3v f3_elimhyp3v a_wb p_syl f0_elimhyp3v f0_elimhyp3v f1_elimhyp3v f2_elimhyp3v f3_elimhyp3v p_3bitrd f0_elimhyp3v f3_elimhyp3v p_ibi e6_elimhyp3v f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v p_iffalse f0_elimhyp3v a_wn f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v a_cif f10_elimhyp3v p_eqcomd e3_elimhyp3v f0_elimhyp3v a_wn f10_elimhyp3v f0_elimhyp3v f7_elimhyp3v f10_elimhyp3v a_cif a_wceq f4_elimhyp3v f5_elimhyp3v a_wb p_syl f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v p_iffalse f0_elimhyp3v a_wn f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v a_cif f11_elimhyp3v p_eqcomd e4_elimhyp3v f0_elimhyp3v a_wn f11_elimhyp3v f0_elimhyp3v f8_elimhyp3v f11_elimhyp3v a_cif a_wceq f5_elimhyp3v f6_elimhyp3v a_wb p_syl f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v p_iffalse f0_elimhyp3v a_wn f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v a_cif f12_elimhyp3v p_eqcomd e5_elimhyp3v f0_elimhyp3v a_wn f12_elimhyp3v f0_elimhyp3v f9_elimhyp3v f12_elimhyp3v a_cif a_wceq f6_elimhyp3v f3_elimhyp3v a_wb p_syl f0_elimhyp3v a_wn f4_elimhyp3v f5_elimhyp3v f6_elimhyp3v f3_elimhyp3v p_3bitrd f0_elimhyp3v a_wn f4_elimhyp3v f3_elimhyp3v p_mpbii f0_elimhyp3v f3_elimhyp3v p_pm2.61i $.
 $}
-$( Eliminate a hypothesis containing 4 class variables (for use with the
+
+$(Eliminate a hypothesis containing 4 class variables (for use with the
        weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v ze $.
-	$v si $.
-	$v rh $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	felimhyp4v_0 $f wff ph $.
-	felimhyp4v_1 $f wff ps $.
-	felimhyp4v_2 $f wff ch $.
-	felimhyp4v_3 $f wff th $.
-	felimhyp4v_4 $f wff ta $.
-	felimhyp4v_5 $f wff et $.
-	felimhyp4v_6 $f wff ze $.
-	felimhyp4v_7 $f wff si $.
-	felimhyp4v_8 $f wff rh $.
-	felimhyp4v_9 $f class A $.
-	felimhyp4v_10 $f class B $.
-	felimhyp4v_11 $f class C $.
-	felimhyp4v_12 $f class D $.
-	felimhyp4v_13 $f class R $.
-	felimhyp4v_14 $f class S $.
-	felimhyp4v_15 $f class F $.
-	felimhyp4v_16 $f class G $.
-	eelimhyp4v_0 $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
-	eelimhyp4v_1 $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
-	eelimhyp4v_2 $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
-	eelimhyp4v_3 $e |- ( F = if ( ph , F , G ) -> ( ta <-> ps ) ) $.
-	eelimhyp4v_4 $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
-	eelimhyp4v_5 $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
-	eelimhyp4v_6 $e |- ( S = if ( ph , C , S ) -> ( si <-> rh ) ) $.
-	eelimhyp4v_7 $e |- ( G = if ( ph , F , G ) -> ( rh <-> ps ) ) $.
-	eelimhyp4v_8 $e |- et $.
-	elimhyp4v $p |- ps $= felimhyp4v_0 felimhyp4v_1 felimhyp4v_0 felimhyp4v_1 felimhyp4v_0 felimhyp4v_0 felimhyp4v_3 felimhyp4v_4 felimhyp4v_1 felimhyp4v_0 felimhyp4v_0 felimhyp4v_2 felimhyp4v_3 felimhyp4v_0 felimhyp4v_9 felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 cif wceq felimhyp4v_0 felimhyp4v_2 wb felimhyp4v_0 felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 cif felimhyp4v_9 felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 iftrue eqcomd eelimhyp4v_0 syl felimhyp4v_0 felimhyp4v_10 felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 cif wceq felimhyp4v_2 felimhyp4v_3 wb felimhyp4v_0 felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 cif felimhyp4v_10 felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 iftrue eqcomd eelimhyp4v_1 syl bitrd felimhyp4v_0 felimhyp4v_11 felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 cif wceq felimhyp4v_3 felimhyp4v_4 wb felimhyp4v_0 felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 cif felimhyp4v_11 felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 iftrue eqcomd eelimhyp4v_2 syl felimhyp4v_0 felimhyp4v_15 felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 cif wceq felimhyp4v_4 felimhyp4v_1 wb felimhyp4v_0 felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 cif felimhyp4v_15 felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 iftrue eqcomd eelimhyp4v_3 syl 3bitrd ibi felimhyp4v_0 wn felimhyp4v_5 felimhyp4v_1 eelimhyp4v_8 felimhyp4v_0 wn felimhyp4v_5 felimhyp4v_7 felimhyp4v_8 felimhyp4v_1 felimhyp4v_0 wn felimhyp4v_5 felimhyp4v_6 felimhyp4v_7 felimhyp4v_0 wn felimhyp4v_12 felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 cif wceq felimhyp4v_5 felimhyp4v_6 wb felimhyp4v_0 wn felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 cif felimhyp4v_12 felimhyp4v_0 felimhyp4v_9 felimhyp4v_12 iffalse eqcomd eelimhyp4v_4 syl felimhyp4v_0 wn felimhyp4v_13 felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 cif wceq felimhyp4v_6 felimhyp4v_7 wb felimhyp4v_0 wn felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 cif felimhyp4v_13 felimhyp4v_0 felimhyp4v_10 felimhyp4v_13 iffalse eqcomd eelimhyp4v_5 syl bitrd felimhyp4v_0 wn felimhyp4v_14 felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 cif wceq felimhyp4v_7 felimhyp4v_8 wb felimhyp4v_0 wn felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 cif felimhyp4v_14 felimhyp4v_0 felimhyp4v_11 felimhyp4v_14 iffalse eqcomd eelimhyp4v_6 syl felimhyp4v_0 wn felimhyp4v_16 felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 cif wceq felimhyp4v_8 felimhyp4v_1 wb felimhyp4v_0 wn felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 cif felimhyp4v_16 felimhyp4v_0 felimhyp4v_15 felimhyp4v_16 iffalse eqcomd eelimhyp4v_7 syl 3bitrd mpbii pm2.61i $.
+	$v ph ps ch th ta et ze si rh A B C D R S F G  $.
+	f0_elimhyp4v $f wff ph $.
+	f1_elimhyp4v $f wff ps $.
+	f2_elimhyp4v $f wff ch $.
+	f3_elimhyp4v $f wff th $.
+	f4_elimhyp4v $f wff ta $.
+	f5_elimhyp4v $f wff et $.
+	f6_elimhyp4v $f wff ze $.
+	f7_elimhyp4v $f wff si $.
+	f8_elimhyp4v $f wff rh $.
+	f9_elimhyp4v $f class A $.
+	f10_elimhyp4v $f class B $.
+	f11_elimhyp4v $f class C $.
+	f12_elimhyp4v $f class D $.
+	f13_elimhyp4v $f class R $.
+	f14_elimhyp4v $f class S $.
+	f15_elimhyp4v $f class F $.
+	f16_elimhyp4v $f class G $.
+	e0_elimhyp4v $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
+	e1_elimhyp4v $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
+	e2_elimhyp4v $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
+	e3_elimhyp4v $e |- ( F = if ( ph , F , G ) -> ( ta <-> ps ) ) $.
+	e4_elimhyp4v $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
+	e5_elimhyp4v $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
+	e6_elimhyp4v $e |- ( S = if ( ph , C , S ) -> ( si <-> rh ) ) $.
+	e7_elimhyp4v $e |- ( G = if ( ph , F , G ) -> ( rh <-> ps ) ) $.
+	e8_elimhyp4v $e |- et $.
+	p_elimhyp4v $p |- ps $= f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v p_iftrue f0_elimhyp4v f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v a_cif f9_elimhyp4v p_eqcomd e0_elimhyp4v f0_elimhyp4v f9_elimhyp4v f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v a_cif a_wceq f0_elimhyp4v f2_elimhyp4v a_wb p_syl f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v p_iftrue f0_elimhyp4v f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v a_cif f10_elimhyp4v p_eqcomd e1_elimhyp4v f0_elimhyp4v f10_elimhyp4v f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v a_cif a_wceq f2_elimhyp4v f3_elimhyp4v a_wb p_syl f0_elimhyp4v f0_elimhyp4v f2_elimhyp4v f3_elimhyp4v p_bitrd f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v p_iftrue f0_elimhyp4v f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v a_cif f11_elimhyp4v p_eqcomd e2_elimhyp4v f0_elimhyp4v f11_elimhyp4v f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v a_cif a_wceq f3_elimhyp4v f4_elimhyp4v a_wb p_syl f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v p_iftrue f0_elimhyp4v f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v a_cif f15_elimhyp4v p_eqcomd e3_elimhyp4v f0_elimhyp4v f15_elimhyp4v f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v a_cif a_wceq f4_elimhyp4v f1_elimhyp4v a_wb p_syl f0_elimhyp4v f0_elimhyp4v f3_elimhyp4v f4_elimhyp4v f1_elimhyp4v p_3bitrd f0_elimhyp4v f1_elimhyp4v p_ibi e8_elimhyp4v f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v p_iffalse f0_elimhyp4v a_wn f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v a_cif f12_elimhyp4v p_eqcomd e4_elimhyp4v f0_elimhyp4v a_wn f12_elimhyp4v f0_elimhyp4v f9_elimhyp4v f12_elimhyp4v a_cif a_wceq f5_elimhyp4v f6_elimhyp4v a_wb p_syl f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v p_iffalse f0_elimhyp4v a_wn f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v a_cif f13_elimhyp4v p_eqcomd e5_elimhyp4v f0_elimhyp4v a_wn f13_elimhyp4v f0_elimhyp4v f10_elimhyp4v f13_elimhyp4v a_cif a_wceq f6_elimhyp4v f7_elimhyp4v a_wb p_syl f0_elimhyp4v a_wn f5_elimhyp4v f6_elimhyp4v f7_elimhyp4v p_bitrd f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v p_iffalse f0_elimhyp4v a_wn f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v a_cif f14_elimhyp4v p_eqcomd e6_elimhyp4v f0_elimhyp4v a_wn f14_elimhyp4v f0_elimhyp4v f11_elimhyp4v f14_elimhyp4v a_cif a_wceq f7_elimhyp4v f8_elimhyp4v a_wb p_syl f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v p_iffalse f0_elimhyp4v a_wn f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v a_cif f16_elimhyp4v p_eqcomd e7_elimhyp4v f0_elimhyp4v a_wn f16_elimhyp4v f0_elimhyp4v f15_elimhyp4v f16_elimhyp4v a_cif a_wceq f8_elimhyp4v f1_elimhyp4v a_wb p_syl f0_elimhyp4v a_wn f5_elimhyp4v f7_elimhyp4v f8_elimhyp4v f1_elimhyp4v p_3bitrd f0_elimhyp4v a_wn f5_elimhyp4v f1_elimhyp4v p_mpbii f0_elimhyp4v f1_elimhyp4v p_pm2.61i $.
 $}
-$( Eliminate a membership hypothesis for weak deduction theorem, when
+
+$(Eliminate a membership hypothesis for weak deduction theorem, when
        special case ` B e. C ` is provable.  (Contributed by NM,
        15-May-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	felimel_0 $f class A $.
-	felimel_1 $f class B $.
-	felimel_2 $f class C $.
-	eelimel_0 $e |- B e. C $.
-	elimel $p |- if ( A e. C , A , B ) e. C $= felimel_0 felimel_2 wcel felimel_0 felimel_2 wcel felimel_0 felimel_1 cif felimel_2 wcel felimel_1 felimel_2 wcel felimel_0 felimel_1 felimel_0 felimel_0 felimel_2 wcel felimel_0 felimel_1 cif felimel_2 eleq1 felimel_1 felimel_0 felimel_2 wcel felimel_0 felimel_1 cif felimel_2 eleq1 eelimel_0 elimhyp $.
+	$v A B C  $.
+	f0_elimel $f class A $.
+	f1_elimel $f class B $.
+	f2_elimel $f class C $.
+	e0_elimel $e |- B e. C $.
+	p_elimel $p |- if ( A e. C , A , B ) e. C $= f0_elimel f0_elimel f2_elimel a_wcel f0_elimel f1_elimel a_cif f2_elimel p_eleq1 f1_elimel f0_elimel f2_elimel a_wcel f0_elimel f1_elimel a_cif f2_elimel p_eleq1 e0_elimel f0_elimel f2_elimel a_wcel f0_elimel f2_elimel a_wcel f0_elimel f1_elimel a_cif f2_elimel a_wcel f1_elimel f2_elimel a_wcel f0_elimel f1_elimel p_elimhyp $.
 $}
-$( Version of ~ elimhyp where the hypothesis is deduced from the final
+
+$(Version of ~ elimhyp where the hypothesis is deduced from the final
        antecedent.  See ~ ghomgrplem for an example of its use.  (Contributed
        by Paul Chapman, 25-Mar-2008.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v A $.
-	$v B $.
-	felimdhyp_0 $f wff ph $.
-	felimdhyp_1 $f wff ps $.
-	felimdhyp_2 $f wff ch $.
-	felimdhyp_3 $f wff th $.
-	felimdhyp_4 $f class A $.
-	felimdhyp_5 $f class B $.
-	eelimdhyp_0 $e |- ( ph -> ps ) $.
-	eelimdhyp_1 $e |- ( A = if ( ph , A , B ) -> ( ps <-> ch ) ) $.
-	eelimdhyp_2 $e |- ( B = if ( ph , A , B ) -> ( th <-> ch ) ) $.
-	eelimdhyp_3 $e |- th $.
-	elimdhyp $p |- ch $= felimdhyp_0 felimdhyp_2 felimdhyp_0 felimdhyp_1 felimdhyp_2 eelimdhyp_0 felimdhyp_0 felimdhyp_4 felimdhyp_0 felimdhyp_4 felimdhyp_5 cif wceq felimdhyp_1 felimdhyp_2 wb felimdhyp_0 felimdhyp_0 felimdhyp_4 felimdhyp_5 cif felimdhyp_4 felimdhyp_0 felimdhyp_4 felimdhyp_5 iftrue eqcomd eelimdhyp_1 syl mpbid felimdhyp_0 wn felimdhyp_3 felimdhyp_2 eelimdhyp_3 felimdhyp_0 wn felimdhyp_5 felimdhyp_0 felimdhyp_4 felimdhyp_5 cif wceq felimdhyp_3 felimdhyp_2 wb felimdhyp_0 wn felimdhyp_0 felimdhyp_4 felimdhyp_5 cif felimdhyp_5 felimdhyp_0 felimdhyp_4 felimdhyp_5 iffalse eqcomd eelimdhyp_2 syl mpbii pm2.61i $.
+	$v ph ps ch th A B  $.
+	f0_elimdhyp $f wff ph $.
+	f1_elimdhyp $f wff ps $.
+	f2_elimdhyp $f wff ch $.
+	f3_elimdhyp $f wff th $.
+	f4_elimdhyp $f class A $.
+	f5_elimdhyp $f class B $.
+	e0_elimdhyp $e |- ( ph -> ps ) $.
+	e1_elimdhyp $e |- ( A = if ( ph , A , B ) -> ( ps <-> ch ) ) $.
+	e2_elimdhyp $e |- ( B = if ( ph , A , B ) -> ( th <-> ch ) ) $.
+	e3_elimdhyp $e |- th $.
+	p_elimdhyp $p |- ch $= e0_elimdhyp f0_elimdhyp f4_elimdhyp f5_elimdhyp p_iftrue f0_elimdhyp f0_elimdhyp f4_elimdhyp f5_elimdhyp a_cif f4_elimdhyp p_eqcomd e1_elimdhyp f0_elimdhyp f4_elimdhyp f0_elimdhyp f4_elimdhyp f5_elimdhyp a_cif a_wceq f1_elimdhyp f2_elimdhyp a_wb p_syl f0_elimdhyp f1_elimdhyp f2_elimdhyp p_mpbid e3_elimdhyp f0_elimdhyp f4_elimdhyp f5_elimdhyp p_iffalse f0_elimdhyp a_wn f0_elimdhyp f4_elimdhyp f5_elimdhyp a_cif f5_elimdhyp p_eqcomd e2_elimdhyp f0_elimdhyp a_wn f5_elimdhyp f0_elimdhyp f4_elimdhyp f5_elimdhyp a_cif a_wceq f3_elimdhyp f2_elimdhyp a_wb p_syl f0_elimdhyp a_wn f3_elimdhyp f2_elimdhyp p_mpbii f0_elimdhyp f2_elimdhyp p_pm2.61i $.
 $}
-$( Transform a hypothesis ` ps ` that we want to keep (but contains the
+
+$(Transform a hypothesis ` ps ` that we want to keep (but contains the
        same class variable ` A ` used in the eliminated hypothesis) for use
        with the weak deduction theorem.  (Contributed by NM, 15-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v A $.
-	$v B $.
-	fkeephyp_0 $f wff ph $.
-	fkeephyp_1 $f wff ps $.
-	fkeephyp_2 $f wff ch $.
-	fkeephyp_3 $f wff th $.
-	fkeephyp_4 $f class A $.
-	fkeephyp_5 $f class B $.
-	ekeephyp_0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
-	ekeephyp_1 $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
-	ekeephyp_2 $e |- ps $.
-	ekeephyp_3 $e |- ch $.
-	keephyp $p |- th $= fkeephyp_1 fkeephyp_2 fkeephyp_3 ekeephyp_2 ekeephyp_3 fkeephyp_0 fkeephyp_1 fkeephyp_2 fkeephyp_3 fkeephyp_4 fkeephyp_5 ekeephyp_0 ekeephyp_1 ifboth mp2an $.
+	$v ph ps ch th A B  $.
+	f0_keephyp $f wff ph $.
+	f1_keephyp $f wff ps $.
+	f2_keephyp $f wff ch $.
+	f3_keephyp $f wff th $.
+	f4_keephyp $f class A $.
+	f5_keephyp $f class B $.
+	e0_keephyp $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
+	e1_keephyp $e |- ( B = if ( ph , A , B ) -> ( ch <-> th ) ) $.
+	e2_keephyp $e |- ps $.
+	e3_keephyp $e |- ch $.
+	p_keephyp $p |- th $= e2_keephyp e3_keephyp e0_keephyp e1_keephyp f0_keephyp f1_keephyp f2_keephyp f3_keephyp f4_keephyp f5_keephyp p_ifboth f1_keephyp f2_keephyp f3_keephyp p_mp2an $.
 $}
-$( Keep a hypothesis containing 2 class variables (for use with the weak
+
+$(Keep a hypothesis containing 2 class variables (for use with the weak
        deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fkeephyp2v_0 $f wff ph $.
-	fkeephyp2v_1 $f wff ps $.
-	fkeephyp2v_2 $f wff ch $.
-	fkeephyp2v_3 $f wff th $.
-	fkeephyp2v_4 $f wff ta $.
-	fkeephyp2v_5 $f wff et $.
-	fkeephyp2v_6 $f class A $.
-	fkeephyp2v_7 $f class B $.
-	fkeephyp2v_8 $f class C $.
-	fkeephyp2v_9 $f class D $.
-	ekeephyp2v_0 $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
-	ekeephyp2v_1 $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
-	ekeephyp2v_2 $e |- ( C = if ( ph , A , C ) -> ( ta <-> et ) ) $.
-	ekeephyp2v_3 $e |- ( D = if ( ph , B , D ) -> ( et <-> th ) ) $.
-	ekeephyp2v_4 $e |- ps $.
-	ekeephyp2v_5 $e |- ta $.
-	keephyp2v $p |- th $= fkeephyp2v_0 fkeephyp2v_3 fkeephyp2v_0 fkeephyp2v_1 fkeephyp2v_3 ekeephyp2v_4 fkeephyp2v_0 fkeephyp2v_1 fkeephyp2v_2 fkeephyp2v_3 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 cif wceq fkeephyp2v_1 fkeephyp2v_2 wb fkeephyp2v_0 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 cif fkeephyp2v_6 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 iftrue eqcomd ekeephyp2v_0 syl fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 cif wceq fkeephyp2v_2 fkeephyp2v_3 wb fkeephyp2v_0 fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 cif fkeephyp2v_7 fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 iftrue eqcomd ekeephyp2v_1 syl bitrd mpbii fkeephyp2v_0 wn fkeephyp2v_4 fkeephyp2v_3 ekeephyp2v_5 fkeephyp2v_0 wn fkeephyp2v_4 fkeephyp2v_5 fkeephyp2v_3 fkeephyp2v_0 wn fkeephyp2v_8 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 cif wceq fkeephyp2v_4 fkeephyp2v_5 wb fkeephyp2v_0 wn fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 cif fkeephyp2v_8 fkeephyp2v_0 fkeephyp2v_6 fkeephyp2v_8 iffalse eqcomd ekeephyp2v_2 syl fkeephyp2v_0 wn fkeephyp2v_9 fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 cif wceq fkeephyp2v_5 fkeephyp2v_3 wb fkeephyp2v_0 wn fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 cif fkeephyp2v_9 fkeephyp2v_0 fkeephyp2v_7 fkeephyp2v_9 iffalse eqcomd ekeephyp2v_3 syl bitrd mpbii pm2.61i $.
+	$v ph ps ch th ta et A B C D  $.
+	f0_keephyp2v $f wff ph $.
+	f1_keephyp2v $f wff ps $.
+	f2_keephyp2v $f wff ch $.
+	f3_keephyp2v $f wff th $.
+	f4_keephyp2v $f wff ta $.
+	f5_keephyp2v $f wff et $.
+	f6_keephyp2v $f class A $.
+	f7_keephyp2v $f class B $.
+	f8_keephyp2v $f class C $.
+	f9_keephyp2v $f class D $.
+	e0_keephyp2v $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
+	e1_keephyp2v $e |- ( B = if ( ph , B , D ) -> ( ch <-> th ) ) $.
+	e2_keephyp2v $e |- ( C = if ( ph , A , C ) -> ( ta <-> et ) ) $.
+	e3_keephyp2v $e |- ( D = if ( ph , B , D ) -> ( et <-> th ) ) $.
+	e4_keephyp2v $e |- ps $.
+	e5_keephyp2v $e |- ta $.
+	p_keephyp2v $p |- th $= e4_keephyp2v f0_keephyp2v f6_keephyp2v f8_keephyp2v p_iftrue f0_keephyp2v f0_keephyp2v f6_keephyp2v f8_keephyp2v a_cif f6_keephyp2v p_eqcomd e0_keephyp2v f0_keephyp2v f6_keephyp2v f0_keephyp2v f6_keephyp2v f8_keephyp2v a_cif a_wceq f1_keephyp2v f2_keephyp2v a_wb p_syl f0_keephyp2v f7_keephyp2v f9_keephyp2v p_iftrue f0_keephyp2v f0_keephyp2v f7_keephyp2v f9_keephyp2v a_cif f7_keephyp2v p_eqcomd e1_keephyp2v f0_keephyp2v f7_keephyp2v f0_keephyp2v f7_keephyp2v f9_keephyp2v a_cif a_wceq f2_keephyp2v f3_keephyp2v a_wb p_syl f0_keephyp2v f1_keephyp2v f2_keephyp2v f3_keephyp2v p_bitrd f0_keephyp2v f1_keephyp2v f3_keephyp2v p_mpbii e5_keephyp2v f0_keephyp2v f6_keephyp2v f8_keephyp2v p_iffalse f0_keephyp2v a_wn f0_keephyp2v f6_keephyp2v f8_keephyp2v a_cif f8_keephyp2v p_eqcomd e2_keephyp2v f0_keephyp2v a_wn f8_keephyp2v f0_keephyp2v f6_keephyp2v f8_keephyp2v a_cif a_wceq f4_keephyp2v f5_keephyp2v a_wb p_syl f0_keephyp2v f7_keephyp2v f9_keephyp2v p_iffalse f0_keephyp2v a_wn f0_keephyp2v f7_keephyp2v f9_keephyp2v a_cif f9_keephyp2v p_eqcomd e3_keephyp2v f0_keephyp2v a_wn f9_keephyp2v f0_keephyp2v f7_keephyp2v f9_keephyp2v a_cif a_wceq f5_keephyp2v f3_keephyp2v a_wb p_syl f0_keephyp2v a_wn f4_keephyp2v f5_keephyp2v f3_keephyp2v p_bitrd f0_keephyp2v a_wn f4_keephyp2v f3_keephyp2v p_mpbii f0_keephyp2v f3_keephyp2v p_pm2.61i $.
 $}
-$( Keep a hypothesis containing 3 class variables.  (Contributed by NM,
+
+$(Keep a hypothesis containing 3 class variables.  (Contributed by NM,
        27-Sep-1999.) $)
+
 ${
-	$v ph $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	$v ze $.
-	$v si $.
-	$v rh $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	fkeephyp3v_0 $f wff ph $.
-	fkeephyp3v_1 $f wff ch $.
-	fkeephyp3v_2 $f wff th $.
-	fkeephyp3v_3 $f wff ta $.
-	fkeephyp3v_4 $f wff et $.
-	fkeephyp3v_5 $f wff ze $.
-	fkeephyp3v_6 $f wff si $.
-	fkeephyp3v_7 $f wff rh $.
-	fkeephyp3v_8 $f class A $.
-	fkeephyp3v_9 $f class B $.
-	fkeephyp3v_10 $f class C $.
-	fkeephyp3v_11 $f class D $.
-	fkeephyp3v_12 $f class R $.
-	fkeephyp3v_13 $f class S $.
-	ekeephyp3v_0 $e |- ( A = if ( ph , A , D ) -> ( rh <-> ch ) ) $.
-	ekeephyp3v_1 $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
-	ekeephyp3v_2 $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
-	ekeephyp3v_3 $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
-	ekeephyp3v_4 $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
-	ekeephyp3v_5 $e |- ( S = if ( ph , C , S ) -> ( si <-> ta ) ) $.
-	ekeephyp3v_6 $e |- rh $.
-	ekeephyp3v_7 $e |- et $.
-	keephyp3v $p |- ta $= fkeephyp3v_0 fkeephyp3v_3 fkeephyp3v_0 fkeephyp3v_7 fkeephyp3v_3 ekeephyp3v_6 fkeephyp3v_0 fkeephyp3v_7 fkeephyp3v_1 fkeephyp3v_2 fkeephyp3v_3 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 cif wceq fkeephyp3v_7 fkeephyp3v_1 wb fkeephyp3v_0 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 cif fkeephyp3v_8 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 iftrue eqcomd ekeephyp3v_0 syl fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 cif wceq fkeephyp3v_1 fkeephyp3v_2 wb fkeephyp3v_0 fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 cif fkeephyp3v_9 fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 iftrue eqcomd ekeephyp3v_1 syl fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 cif wceq fkeephyp3v_2 fkeephyp3v_3 wb fkeephyp3v_0 fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 cif fkeephyp3v_10 fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 iftrue eqcomd ekeephyp3v_2 syl 3bitrd mpbii fkeephyp3v_0 wn fkeephyp3v_4 fkeephyp3v_3 ekeephyp3v_7 fkeephyp3v_0 wn fkeephyp3v_4 fkeephyp3v_5 fkeephyp3v_6 fkeephyp3v_3 fkeephyp3v_0 wn fkeephyp3v_11 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 cif wceq fkeephyp3v_4 fkeephyp3v_5 wb fkeephyp3v_0 wn fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 cif fkeephyp3v_11 fkeephyp3v_0 fkeephyp3v_8 fkeephyp3v_11 iffalse eqcomd ekeephyp3v_3 syl fkeephyp3v_0 wn fkeephyp3v_12 fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 cif wceq fkeephyp3v_5 fkeephyp3v_6 wb fkeephyp3v_0 wn fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 cif fkeephyp3v_12 fkeephyp3v_0 fkeephyp3v_9 fkeephyp3v_12 iffalse eqcomd ekeephyp3v_4 syl fkeephyp3v_0 wn fkeephyp3v_13 fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 cif wceq fkeephyp3v_6 fkeephyp3v_3 wb fkeephyp3v_0 wn fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 cif fkeephyp3v_13 fkeephyp3v_0 fkeephyp3v_10 fkeephyp3v_13 iffalse eqcomd ekeephyp3v_5 syl 3bitrd mpbii pm2.61i $.
+	$v ph ch th ta et ze si rh A B C D R S  $.
+	f0_keephyp3v $f wff ph $.
+	f1_keephyp3v $f wff ch $.
+	f2_keephyp3v $f wff th $.
+	f3_keephyp3v $f wff ta $.
+	f4_keephyp3v $f wff et $.
+	f5_keephyp3v $f wff ze $.
+	f6_keephyp3v $f wff si $.
+	f7_keephyp3v $f wff rh $.
+	f8_keephyp3v $f class A $.
+	f9_keephyp3v $f class B $.
+	f10_keephyp3v $f class C $.
+	f11_keephyp3v $f class D $.
+	f12_keephyp3v $f class R $.
+	f13_keephyp3v $f class S $.
+	e0_keephyp3v $e |- ( A = if ( ph , A , D ) -> ( rh <-> ch ) ) $.
+	e1_keephyp3v $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
+	e2_keephyp3v $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
+	e3_keephyp3v $e |- ( D = if ( ph , A , D ) -> ( et <-> ze ) ) $.
+	e4_keephyp3v $e |- ( R = if ( ph , B , R ) -> ( ze <-> si ) ) $.
+	e5_keephyp3v $e |- ( S = if ( ph , C , S ) -> ( si <-> ta ) ) $.
+	e6_keephyp3v $e |- rh $.
+	e7_keephyp3v $e |- et $.
+	p_keephyp3v $p |- ta $= e6_keephyp3v f0_keephyp3v f8_keephyp3v f11_keephyp3v p_iftrue f0_keephyp3v f0_keephyp3v f8_keephyp3v f11_keephyp3v a_cif f8_keephyp3v p_eqcomd e0_keephyp3v f0_keephyp3v f8_keephyp3v f0_keephyp3v f8_keephyp3v f11_keephyp3v a_cif a_wceq f7_keephyp3v f1_keephyp3v a_wb p_syl f0_keephyp3v f9_keephyp3v f12_keephyp3v p_iftrue f0_keephyp3v f0_keephyp3v f9_keephyp3v f12_keephyp3v a_cif f9_keephyp3v p_eqcomd e1_keephyp3v f0_keephyp3v f9_keephyp3v f0_keephyp3v f9_keephyp3v f12_keephyp3v a_cif a_wceq f1_keephyp3v f2_keephyp3v a_wb p_syl f0_keephyp3v f10_keephyp3v f13_keephyp3v p_iftrue f0_keephyp3v f0_keephyp3v f10_keephyp3v f13_keephyp3v a_cif f10_keephyp3v p_eqcomd e2_keephyp3v f0_keephyp3v f10_keephyp3v f0_keephyp3v f10_keephyp3v f13_keephyp3v a_cif a_wceq f2_keephyp3v f3_keephyp3v a_wb p_syl f0_keephyp3v f7_keephyp3v f1_keephyp3v f2_keephyp3v f3_keephyp3v p_3bitrd f0_keephyp3v f7_keephyp3v f3_keephyp3v p_mpbii e7_keephyp3v f0_keephyp3v f8_keephyp3v f11_keephyp3v p_iffalse f0_keephyp3v a_wn f0_keephyp3v f8_keephyp3v f11_keephyp3v a_cif f11_keephyp3v p_eqcomd e3_keephyp3v f0_keephyp3v a_wn f11_keephyp3v f0_keephyp3v f8_keephyp3v f11_keephyp3v a_cif a_wceq f4_keephyp3v f5_keephyp3v a_wb p_syl f0_keephyp3v f9_keephyp3v f12_keephyp3v p_iffalse f0_keephyp3v a_wn f0_keephyp3v f9_keephyp3v f12_keephyp3v a_cif f12_keephyp3v p_eqcomd e4_keephyp3v f0_keephyp3v a_wn f12_keephyp3v f0_keephyp3v f9_keephyp3v f12_keephyp3v a_cif a_wceq f5_keephyp3v f6_keephyp3v a_wb p_syl f0_keephyp3v f10_keephyp3v f13_keephyp3v p_iffalse f0_keephyp3v a_wn f0_keephyp3v f10_keephyp3v f13_keephyp3v a_cif f13_keephyp3v p_eqcomd e5_keephyp3v f0_keephyp3v a_wn f13_keephyp3v f0_keephyp3v f10_keephyp3v f13_keephyp3v a_cif a_wceq f6_keephyp3v f3_keephyp3v a_wb p_syl f0_keephyp3v a_wn f4_keephyp3v f5_keephyp3v f6_keephyp3v f3_keephyp3v p_3bitrd f0_keephyp3v a_wn f4_keephyp3v f3_keephyp3v p_mpbii f0_keephyp3v f3_keephyp3v p_pm2.61i $.
 $}
-$( Keep a membership hypothesis for weak deduction theorem, when special
+
+$(Keep a membership hypothesis for weak deduction theorem, when special
        case ` B e. C ` is provable.  (Contributed by NM, 14-Aug-1999.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fkeepel_0 $f wff ph $.
-	fkeepel_1 $f class A $.
-	fkeepel_2 $f class B $.
-	fkeepel_3 $f class C $.
-	ekeepel_0 $e |- A e. C $.
-	ekeepel_1 $e |- B e. C $.
-	keepel $p |- if ( ph , A , B ) e. C $= fkeepel_0 fkeepel_1 fkeepel_3 wcel fkeepel_2 fkeepel_3 wcel fkeepel_0 fkeepel_1 fkeepel_2 cif fkeepel_3 wcel fkeepel_1 fkeepel_2 fkeepel_1 fkeepel_0 fkeepel_1 fkeepel_2 cif fkeepel_3 eleq1 fkeepel_2 fkeepel_0 fkeepel_1 fkeepel_2 cif fkeepel_3 eleq1 ekeepel_0 ekeepel_1 keephyp $.
+	$v ph A B C  $.
+	f0_keepel $f wff ph $.
+	f1_keepel $f class A $.
+	f2_keepel $f class B $.
+	f3_keepel $f class C $.
+	e0_keepel $e |- A e. C $.
+	e1_keepel $e |- B e. C $.
+	p_keepel $p |- if ( ph , A , B ) e. C $= f1_keepel f0_keepel f1_keepel f2_keepel a_cif f3_keepel p_eleq1 f2_keepel f0_keepel f1_keepel f2_keepel a_cif f3_keepel p_eleq1 e0_keepel e1_keepel f0_keepel f1_keepel f3_keepel a_wcel f2_keepel f3_keepel a_wcel f0_keepel f1_keepel f2_keepel a_cif f3_keepel a_wcel f1_keepel f2_keepel p_keephyp $.
 $}
-$( Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) $)
+
+$(Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fifex_0 $f wff ph $.
-	fifex_1 $f class A $.
-	fifex_2 $f class B $.
-	eifex_0 $e |- A e. _V $.
-	eifex_1 $e |- B e. _V $.
-	ifex $p |- if ( ph , A , B ) e. _V $= fifex_0 fifex_1 fifex_2 cvv eifex_0 eifex_1 keepel $.
+	$v ph A B  $.
+	f0_ifex $f wff ph $.
+	f1_ifex $f class A $.
+	f2_ifex $f class B $.
+	e0_ifex $e |- A e. _V $.
+	e1_ifex $e |- B e. _V $.
+	p_ifex $p |- if ( ph , A , B ) e. _V $= e0_ifex e1_ifex f0_ifex f1_ifex f2_ifex a_cvv p_keepel $.
 $}
-$( Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) $)
+
+$(Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v W $.
-	$v x $.
-	$v y $.
-	$d A x y $.
-	$d B y $.
-	$d ph x y $.
-	iifexg_0 $f set x $.
-	iifexg_1 $f set y $.
-	fifexg_0 $f wff ph $.
-	fifexg_1 $f class A $.
-	fifexg_2 $f class B $.
-	fifexg_3 $f class V $.
-	fifexg_4 $f class W $.
-	ifexg $p |- ( ( A e. V /\ B e. W ) -> if ( ph , A , B ) e. _V ) $= fifexg_0 iifexg_0 sup_set_class iifexg_1 sup_set_class cif cvv wcel fifexg_0 fifexg_1 iifexg_1 sup_set_class cif cvv wcel fifexg_0 fifexg_1 fifexg_2 cif cvv wcel iifexg_0 iifexg_1 fifexg_1 fifexg_2 fifexg_3 fifexg_4 iifexg_0 sup_set_class fifexg_1 wceq fifexg_0 iifexg_0 sup_set_class iifexg_1 sup_set_class cif fifexg_0 fifexg_1 iifexg_1 sup_set_class cif cvv fifexg_0 iifexg_0 sup_set_class fifexg_1 iifexg_1 sup_set_class ifeq1 eleq1d iifexg_1 sup_set_class fifexg_2 wceq fifexg_0 fifexg_1 iifexg_1 sup_set_class cif fifexg_0 fifexg_1 fifexg_2 cif cvv fifexg_0 iifexg_1 sup_set_class fifexg_2 fifexg_1 ifeq2 eleq1d fifexg_0 iifexg_0 sup_set_class iifexg_1 sup_set_class iifexg_0 vex iifexg_1 vex ifex vtocl2g $.
+	$v ph A B V W  $.
+	$d A x y  $.
+	$d B y  $.
+	$d ph x y  $.
+	f0_ifexg $f wff ph $.
+	f1_ifexg $f class A $.
+	f2_ifexg $f class B $.
+	f3_ifexg $f class V $.
+	f4_ifexg $f class W $.
+	i0_ifexg $f set x $.
+	i1_ifexg $f set y $.
+	p_ifexg $p |- ( ( A e. V /\ B e. W ) -> if ( ph , A , B ) e. _V ) $= f0_ifexg i0_ifexg a_sup_set_class f1_ifexg i1_ifexg a_sup_set_class p_ifeq1 i0_ifexg a_sup_set_class f1_ifexg a_wceq f0_ifexg i0_ifexg a_sup_set_class i1_ifexg a_sup_set_class a_cif f0_ifexg f1_ifexg i1_ifexg a_sup_set_class a_cif a_cvv p_eleq1d f0_ifexg i1_ifexg a_sup_set_class f2_ifexg f1_ifexg p_ifeq2 i1_ifexg a_sup_set_class f2_ifexg a_wceq f0_ifexg f1_ifexg i1_ifexg a_sup_set_class a_cif f0_ifexg f1_ifexg f2_ifexg a_cif a_cvv p_eleq1d i0_ifexg p_vex i1_ifexg p_vex f0_ifexg i0_ifexg a_sup_set_class i1_ifexg a_sup_set_class p_ifex f0_ifexg i0_ifexg a_sup_set_class i1_ifexg a_sup_set_class a_cif a_cvv a_wcel f0_ifexg f1_ifexg i1_ifexg a_sup_set_class a_cif a_cvv a_wcel f0_ifexg f1_ifexg f2_ifexg a_cif a_cvv a_wcel i0_ifexg i1_ifexg f1_ifexg f2_ifexg f3_ifexg f4_ifexg p_vtocl2g $.
 $}
+
 

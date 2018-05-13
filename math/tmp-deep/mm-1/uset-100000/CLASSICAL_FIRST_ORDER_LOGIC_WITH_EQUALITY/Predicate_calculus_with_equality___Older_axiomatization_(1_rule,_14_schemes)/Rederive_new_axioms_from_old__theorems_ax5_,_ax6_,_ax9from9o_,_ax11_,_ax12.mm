@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes)/Obsolete_schemes_ax-5o_ax-4_ax-6o_ax-9o_ax-10o_ax-10_ax-11o_ax-12o_ax-15_ax-16.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Rederive new axioms from old: theorems ax5 , ax6 , ax9from9o , ax11 , ax12
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -9,130 +11,135 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   included in this section.
 
 $)
-$( This theorem repeats ~ sp under the name ~ ax4 , so that the metamath
+
+$(This theorem repeats ~ sp under the name ~ ax4 , so that the metamath
      program's "verify markup" command will check that it matches axiom scheme
      ~ ax-4 .  It is preferred that references to this theorem use the name
      ~ sp .  (Contributed by NM, 18-Aug-2017.)  (New usage is discouraged.)
      (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fax4_0 $f wff ph $.
-	fax4_1 $f set x $.
-	ax4 $p |- ( A. x ph -> ph ) $= fax4_0 fax4_1 sp $.
+	$v ph x  $.
+	f0_ax4 $f wff ph $.
+	f1_ax4 $f set x $.
+	p_ax4 $p |- ( A. x ph -> ph ) $= f0_ax4 f1_ax4 p_sp $.
 $}
-$( Rederivation of axiom ~ ax-5 from ~ ax-5o and other older axioms.  See
+
+$(Rederivation of axiom ~ ax-5 from ~ ax-5o and other older axioms.  See
      ~ ax5o for the derivation of ~ ax-5o from ~ ax-5 .  (Contributed by NM,
      23-May-2008.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fax5_0 $f wff ph $.
-	fax5_1 $f wff ps $.
-	fax5_2 $f set x $.
-	ax5 $p |- ( A. x ( ph -> ps ) -> ( A. x ph -> A. x ps ) ) $= fax5_0 fax5_1 wi fax5_2 wal fax5_0 fax5_2 wal fax5_1 wi fax5_2 wal fax5_0 fax5_2 wal fax5_1 fax5_2 wal wi fax5_0 fax5_1 wi fax5_2 wal fax5_0 fax5_2 wal fax5_1 wi wi fax5_0 fax5_1 wi fax5_2 wal fax5_0 fax5_2 wal fax5_1 wi fax5_2 wal wi fax5_2 fax5_0 fax5_1 wi fax5_0 fax5_2 wal fax5_1 wi fax5_2 ax-5o fax5_0 fax5_2 wal fax5_0 fax5_0 fax5_1 wi fax5_2 wal fax5_1 fax5_0 fax5_2 ax-4 fax5_0 fax5_1 wi fax5_2 ax-4 syl5 mpg fax5_0 fax5_1 fax5_2 ax-5o syl $.
+	$v ph ps x  $.
+	f0_ax5 $f wff ph $.
+	f1_ax5 $f wff ps $.
+	f2_ax5 $f set x $.
+	p_ax5 $p |- ( A. x ( ph -> ps ) -> ( A. x ph -> A. x ps ) ) $= f0_ax5 f1_ax5 a_wi f0_ax5 f2_ax5 a_wal f1_ax5 a_wi f2_ax5 a_ax-5o f0_ax5 f2_ax5 a_ax-4 f0_ax5 f1_ax5 a_wi f2_ax5 a_ax-4 f0_ax5 f2_ax5 a_wal f0_ax5 f0_ax5 f1_ax5 a_wi f2_ax5 a_wal f1_ax5 p_syl5 f0_ax5 f1_ax5 a_wi f2_ax5 a_wal f0_ax5 f2_ax5 a_wal f1_ax5 a_wi a_wi f0_ax5 f1_ax5 a_wi f2_ax5 a_wal f0_ax5 f2_ax5 a_wal f1_ax5 a_wi f2_ax5 a_wal a_wi f2_ax5 p_mpg f0_ax5 f1_ax5 f2_ax5 a_ax-5o f0_ax5 f1_ax5 a_wi f2_ax5 a_wal f0_ax5 f2_ax5 a_wal f1_ax5 a_wi f2_ax5 a_wal f0_ax5 f2_ax5 a_wal f1_ax5 f2_ax5 a_wal a_wi p_syl $.
 $}
-$( Rederivation of axiom ~ ax-6 from ~ ax-6o and other older axioms.  See
+
+$(Rederivation of axiom ~ ax-6 from ~ ax-6o and other older axioms.  See
      ~ ax6o for the derivation of ~ ax-6o from ~ ax-6 .  (Contributed by NM,
      23-May-2008.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fax6_0 $f wff ph $.
-	fax6_1 $f set x $.
-	ax6 $p |- ( -. A. x ph -> A. x -. A. x ph ) $= fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn wi fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn fax6_1 wal wi fax6_1 fax6_0 fax6_1 wal fax6_1 wal wn fax6_0 fax6_1 wal wn fax6_1 ax-5o fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 ax-4 fax6_0 fax6_1 wal fax6_0 fax6_1 wal wi fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wi fax6_1 fax6_0 fax6_0 fax6_1 wal fax6_1 ax-5o fax6_0 fax6_1 wal id mpg nsyl mpg fax6_0 fax6_1 wal fax6_1 ax-6o nsyl4 $.
+	$v ph x  $.
+	f0_ax6 $f wff ph $.
+	f1_ax6 $f set x $.
+	p_ax6 $p |- ( -. A. x ph -> A. x -. A. x ph ) $= f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f0_ax6 f1_ax6 a_wal a_wn f1_ax6 a_ax-5o f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f1_ax6 a_ax-4 f0_ax6 f0_ax6 f1_ax6 a_wal f1_ax6 a_ax-5o f0_ax6 f1_ax6 a_wal p_id f0_ax6 f1_ax6 a_wal f0_ax6 f1_ax6 a_wal a_wi f0_ax6 f1_ax6 a_wal f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wi f1_ax6 p_mpg f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f1_ax6 a_wal f0_ax6 f1_ax6 a_wal f1_ax6 a_wal f0_ax6 f1_ax6 a_wal p_nsyl f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f1_ax6 a_wal f0_ax6 f1_ax6 a_wal a_wn a_wi f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f1_ax6 a_wal f0_ax6 f1_ax6 a_wal a_wn f1_ax6 a_wal a_wi f1_ax6 p_mpg f0_ax6 f1_ax6 a_wal f1_ax6 a_ax-6o f0_ax6 f1_ax6 a_wal f1_ax6 a_wal a_wn f1_ax6 a_wal f0_ax6 f1_ax6 a_wal a_wn f1_ax6 a_wal f0_ax6 f1_ax6 a_wal p_nsyl4 $.
 $}
-$( Rederivation of axiom ~ ax-9 from ~ ax-9o and other older axioms.  See
+
+$(Rederivation of axiom ~ ax-9 from ~ ax-9o and other older axioms.  See
      ~ ax9o for the derivation of ~ ax-9o from ~ ax-9 .  Lemma L18 in [Megill]
      p. 446 (p. 14 of the preprint).  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	fax9from9o_0 $f set x $.
-	fax9from9o_1 $f set y $.
-	ax9from9o $p |- -. A. x -. x = y $= fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 wal wi fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 fax9from9o_1 ax-9o fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 wal fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 ax-6o con4i mpg $.
+	$v x y  $.
+	f0_ax9from9o $f set x $.
+	f1_ax9from9o $f set y $.
+	p_ax9from9o $p |- -. A. x -. x = y $= f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq a_wn f0_ax9from9o a_wal a_wn f0_ax9from9o f1_ax9from9o a_ax-9o f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq a_wn f0_ax9from9o a_ax-6o f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq a_wn f0_ax9from9o a_wal a_wn f0_ax9from9o a_wal f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq p_con4i f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq a_wn f0_ax9from9o a_wal a_wn f0_ax9from9o a_wal a_wi f0_ax9from9o a_sup_set_class f1_ax9from9o a_sup_set_class a_wceq a_wn f0_ax9from9o a_wal a_wn f0_ax9from9o p_mpg $.
 $}
-$( ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
+
+$(` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
      (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
      by NM, 5-Aug-1993.)  (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fhba1-o_0 $f wff ph $.
-	fhba1-o_1 $f set x $.
-	hba1-o $p |- ( A. x ph -> A. x A. x ph ) $= fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 ax-4 con2i fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 ax6 fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_0 fhba1-o_1 wal fhba1-o_1 fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 ax6 con1i alimi 3syl $.
+	$v ph x  $.
+	f0_hba1-o $f wff ph $.
+	f1_hba1-o $f set x $.
+	p_hba1-o $p |- ( A. x ph -> A. x A. x ph ) $= f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_ax-4 f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_wal f0_hba1-o f1_hba1-o a_wal p_con2i f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o p_ax6 f0_hba1-o f1_hba1-o p_ax6 f0_hba1-o f1_hba1-o a_wal f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_wal p_con1i f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_wal a_wn f0_hba1-o f1_hba1-o a_wal f1_hba1-o p_alimi f0_hba1-o f1_hba1-o a_wal f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_wal a_wn f0_hba1-o f1_hba1-o a_wal a_wn f1_hba1-o a_wal a_wn f1_hba1-o a_wal f0_hba1-o f1_hba1-o a_wal f1_hba1-o a_wal p_3syl $.
 $}
-$( Inference version of ~ ax-5o .  (Contributed by NM, 5-Aug-1993.)
+
+$(Inference version of ~ ax-5o .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fa5i-o_0 $f wff ph $.
-	fa5i-o_1 $f wff ps $.
-	fa5i-o_2 $f set x $.
-	ea5i-o_0 $e |- ( A. x ph -> ps ) $.
-	a5i-o $p |- ( A. x ph -> A. x ps ) $= fa5i-o_0 fa5i-o_2 wal fa5i-o_1 fa5i-o_2 fa5i-o_0 fa5i-o_2 hba1-o ea5i-o_0 alrimih $.
+	$v ph ps x  $.
+	f0_a5i-o $f wff ph $.
+	f1_a5i-o $f wff ps $.
+	f2_a5i-o $f set x $.
+	e0_a5i-o $e |- ( A. x ph -> ps ) $.
+	p_a5i-o $p |- ( A. x ph -> A. x ps ) $= f0_a5i-o f2_a5i-o p_hba1-o e0_a5i-o f0_a5i-o f2_a5i-o a_wal f1_a5i-o f2_a5i-o p_alrimih $.
 $}
-$( Commutation law for identical variable specifiers.  The antecedent and
+
+$(Commutation law for identical variable specifiers.  The antecedent and
      consequent are true when ` x ` and ` y ` are substituted with the same
      variable.  Lemma L12 in [Megill] p. 445 (p. 12 of the preprint).  Version
      of ~ aecom using ~ ax-10o .  Unlike ~ ax10from10o , this version does not
      require ~ ax-17 .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	faecom-o_0 $f set x $.
-	faecom-o_1 $f set y $.
-	aecom-o $p |- ( A. x x = y -> A. y y = x ) $= faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 wal faecom-o_1 sup_set_class faecom-o_0 sup_set_class wceq faecom-o_1 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 faecom-o_1 ax-10o pm2.43i faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 sup_set_class faecom-o_0 sup_set_class wceq faecom-o_1 faecom-o_0 faecom-o_1 equcomi alimi syl $.
+	$v x y  $.
+	f0_aecom-o $f set x $.
+	f1_aecom-o $f set y $.
+	p_aecom-o $p |- ( A. x x = y -> A. y y = x ) $= f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f0_aecom-o f1_aecom-o a_ax-10o f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f0_aecom-o a_wal f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f1_aecom-o a_wal p_pm2.43i f0_aecom-o f1_aecom-o p_equcomi f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f1_aecom-o a_sup_set_class f0_aecom-o a_sup_set_class a_wceq f1_aecom-o p_alimi f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f0_aecom-o a_wal f0_aecom-o a_sup_set_class f1_aecom-o a_sup_set_class a_wceq f1_aecom-o a_wal f1_aecom-o a_sup_set_class f0_aecom-o a_sup_set_class a_wceq f1_aecom-o a_wal p_syl $.
 $}
-$( A commutation rule for identical variable specifiers.  Version of
+
+$(A commutation rule for identical variable specifiers.  Version of
        ~ aecoms using ax-10o .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	faecoms-o_0 $f wff ph $.
-	faecoms-o_1 $f set x $.
-	faecoms-o_2 $f set y $.
-	eaecoms-o_0 $e |- ( A. x x = y -> ph ) $.
-	aecoms-o $p |- ( A. y y = x -> ph ) $= faecoms-o_2 sup_set_class faecoms-o_1 sup_set_class wceq faecoms-o_2 wal faecoms-o_1 sup_set_class faecoms-o_2 sup_set_class wceq faecoms-o_1 wal faecoms-o_0 faecoms-o_2 faecoms-o_1 aecom-o eaecoms-o_0 syl $.
+	$v ph x y  $.
+	f0_aecoms-o $f wff ph $.
+	f1_aecoms-o $f set x $.
+	f2_aecoms-o $f set y $.
+	e0_aecoms-o $e |- ( A. x x = y -> ph ) $.
+	p_aecoms-o $p |- ( A. y y = x -> ph ) $= f2_aecoms-o f1_aecoms-o p_aecom-o e0_aecoms-o f2_aecoms-o a_sup_set_class f1_aecoms-o a_sup_set_class a_wceq f2_aecoms-o a_wal f1_aecoms-o a_sup_set_class f2_aecoms-o a_sup_set_class a_wceq f1_aecoms-o a_wal f0_aecoms-o p_syl $.
 $}
-$( All variables are effectively bound in an identical variable specifier.
+
+$(All variables are effectively bound in an identical variable specifier.
      Version of ~ hbae using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is disccouraged.)  (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	fhbae-o_0 $f set x $.
-	fhbae-o_1 $f set y $.
-	fhbae-o_2 $f set z $.
-	hbae-o $p |- ( A. x x = y -> A. z A. x x = y ) $= fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_2 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal fhbae-o_0 fhbae-o_2 sup_set_class fhbae-o_0 sup_set_class wceq fhbae-o_2 wal fhbae-o_2 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal wi fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 sup_set_class fhbae-o_0 sup_set_class wceq fhbae-o_2 wal wn fhbae-o_2 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal wn fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 ax-4 fhbae-o_0 fhbae-o_1 fhbae-o_2 ax-12o syl7 fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal wi fhbae-o_0 fhbae-o_2 fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 fhbae-o_2 ax-10o aecoms-o fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal wi fhbae-o_1 fhbae-o_2 fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_1 wal fhbae-o_1 sup_set_class fhbae-o_2 sup_set_class wceq fhbae-o_1 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_2 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_1 wal fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 fhbae-o_1 ax-10o pm2.43i fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_1 fhbae-o_2 ax-10o syl5 aecoms-o pm2.61ii a5i-o fhbae-o_0 sup_set_class fhbae-o_1 sup_set_class wceq fhbae-o_0 fhbae-o_2 ax-7 syl $.
+	$v x y z  $.
+	f0_hbae-o $f set x $.
+	f1_hbae-o $f set y $.
+	f2_hbae-o $f set z $.
+	p_hbae-o $p |- ( A. x x = y -> A. z A. x x = y ) $= f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_ax-4 f0_hbae-o f1_hbae-o f2_hbae-o a_ax-12o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_sup_set_class f0_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal a_wn f2_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal a_wn f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal p_syl7 f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o f2_hbae-o a_ax-10o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal a_wi f0_hbae-o f2_hbae-o p_aecoms-o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o f1_hbae-o a_ax-10o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f1_hbae-o a_wal p_pm2.43i f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f1_hbae-o f2_hbae-o a_ax-10o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f1_hbae-o a_wal f1_hbae-o a_sup_set_class f2_hbae-o a_sup_set_class a_wceq f1_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal p_syl5 f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal a_wi f1_hbae-o f2_hbae-o p_aecoms-o f2_hbae-o a_sup_set_class f0_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal f2_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal a_wi p_pm2.61ii f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal f0_hbae-o p_a5i-o f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o f2_hbae-o a_ax-7 f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f2_hbae-o a_wal f0_hbae-o a_wal f0_hbae-o a_sup_set_class f1_hbae-o a_sup_set_class a_wceq f0_hbae-o a_wal f2_hbae-o a_wal p_syl $.
 $}
-$( Formula-building lemma for use with the Distinctor Reduction Theorem.
+
+$(Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  Version of
        ~ dral1 using ~ ax-10o .  (Contributed by NM, 24-Nov-1994.)
        (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	fdral1-o_0 $f wff ph $.
-	fdral1-o_1 $f wff ps $.
-	fdral1-o_2 $f set x $.
-	fdral1-o_3 $f set y $.
-	edral1-o_0 $e |- ( A. x x = y -> ( ph <-> ps ) ) $.
-	dral1-o $p |- ( A. x x = y -> ( A. x ph <-> A. y ps ) ) $= fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_0 fdral1-o_2 wal fdral1-o_1 fdral1-o_3 wal fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_0 fdral1-o_2 wal fdral1-o_1 fdral1-o_2 wal fdral1-o_1 fdral1-o_3 wal fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_0 fdral1-o_1 fdral1-o_2 fdral1-o_2 fdral1-o_3 fdral1-o_2 hbae-o fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_0 fdral1-o_1 edral1-o_0 biimpd alimdh fdral1-o_1 fdral1-o_2 fdral1-o_3 ax-10o syld fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_1 fdral1-o_3 wal fdral1-o_0 fdral1-o_3 wal fdral1-o_0 fdral1-o_2 wal fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_1 fdral1-o_0 fdral1-o_3 fdral1-o_2 fdral1-o_3 fdral1-o_3 hbae-o fdral1-o_2 sup_set_class fdral1-o_3 sup_set_class wceq fdral1-o_2 wal fdral1-o_0 fdral1-o_1 edral1-o_0 biimprd alimdh fdral1-o_0 fdral1-o_3 wal fdral1-o_0 fdral1-o_2 wal wi fdral1-o_3 fdral1-o_2 fdral1-o_0 fdral1-o_3 fdral1-o_2 ax-10o aecoms-o syld impbid $.
+	$v ph ps x y  $.
+	f0_dral1-o $f wff ph $.
+	f1_dral1-o $f wff ps $.
+	f2_dral1-o $f set x $.
+	f3_dral1-o $f set y $.
+	e0_dral1-o $e |- ( A. x x = y -> ( ph <-> ps ) ) $.
+	p_dral1-o $p |- ( A. x x = y -> ( A. x ph <-> A. y ps ) ) $= f2_dral1-o f3_dral1-o f2_dral1-o p_hbae-o e0_dral1-o f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f0_dral1-o f1_dral1-o p_biimpd f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f0_dral1-o f1_dral1-o f2_dral1-o p_alimdh f1_dral1-o f2_dral1-o f3_dral1-o a_ax-10o f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f0_dral1-o f2_dral1-o a_wal f1_dral1-o f2_dral1-o a_wal f1_dral1-o f3_dral1-o a_wal p_syld f2_dral1-o f3_dral1-o f3_dral1-o p_hbae-o e0_dral1-o f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f0_dral1-o f1_dral1-o p_biimprd f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f1_dral1-o f0_dral1-o f3_dral1-o p_alimdh f0_dral1-o f3_dral1-o f2_dral1-o a_ax-10o f0_dral1-o f3_dral1-o a_wal f0_dral1-o f2_dral1-o a_wal a_wi f3_dral1-o f2_dral1-o p_aecoms-o f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f1_dral1-o f3_dral1-o a_wal f0_dral1-o f3_dral1-o a_wal f0_dral1-o f2_dral1-o a_wal p_syld f2_dral1-o a_sup_set_class f3_dral1-o a_sup_set_class a_wceq f2_dral1-o a_wal f0_dral1-o f2_dral1-o a_wal f1_dral1-o f3_dral1-o a_wal p_impbid $.
 $}
-$( Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
+
+$(Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
      axioms.  The proof does not require ~ ax-16 or ~ ax-17 .  See theorem
      ~ ax11o for the derivation of ~ ax-11o from ~ ax-11 .
 
@@ -144,29 +151,29 @@ $( Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
      having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
      (Contributed by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fax11_0 $f wff ph $.
-	fax11_1 $f set x $.
-	fax11_2 $f set y $.
-	ax11 $p |- ( x = y -> ( A. y ph -> A. x ( x = y -> ph ) ) ) $= fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 wal fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 fax11_2 wal fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 wi fax11_1 wal wi wi fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 wal fax11_0 fax11_2 wal fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 wi fax11_1 wal wi fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 wal fax11_0 fax11_2 wal fax11_0 fax11_1 wal fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 wi fax11_1 wal fax11_0 fax11_0 fax11_1 fax11_2 fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 wal fax11_0 biidd dral1-o fax11_0 fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 wi fax11_1 fax11_0 fax11_1 sup_set_class fax11_2 sup_set_class wceq ax-1 alimi syl6bir a1d fax11_0 fax11_2 wal fax11_0 fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 wal wn fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_1 sup_set_class fax11_2 sup_set_class wceq fax11_0 wi fax11_1 wal fax11_0 fax11_2 ax-4 fax11_0 fax11_1 fax11_2 ax-11o syl7 pm2.61i $.
+	$v ph x y  $.
+	f0_ax11 $f wff ph $.
+	f1_ax11 $f set x $.
+	f2_ax11 $f set y $.
+	p_ax11 $p |- ( x = y -> ( A. y ph -> A. x ( x = y -> ph ) ) ) $= f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_wal f0_ax11 p_biidd f0_ax11 f0_ax11 f1_ax11 f2_ax11 p_dral1-o f0_ax11 f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq a_ax-1 f0_ax11 f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 a_wi f1_ax11 p_alimi f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_wal f0_ax11 f2_ax11 a_wal f0_ax11 f1_ax11 a_wal f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 a_wi f1_ax11 a_wal p_syl6bir f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_wal f0_ax11 f2_ax11 a_wal f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 a_wi f1_ax11 a_wal a_wi f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq p_a1d f0_ax11 f2_ax11 a_ax-4 f0_ax11 f1_ax11 f2_ax11 a_ax-11o f0_ax11 f2_ax11 a_wal f0_ax11 f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_wal a_wn f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 a_wi f1_ax11 a_wal p_syl7 f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f1_ax11 a_wal f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 f2_ax11 a_wal f1_ax11 a_sup_set_class f2_ax11 a_sup_set_class a_wceq f0_ax11 a_wi f1_ax11 a_wal a_wi a_wi p_pm2.61i $.
 $}
-$( Derive ~ ax-12 from ~ ax-12o and other older axioms.
+
+$(Derive ~ ax-12 from ~ ax-12o and other older axioms.
 
      This proof uses newer axioms ~ ax-5 and ~ ax-9 , but since these are
      proved from the older axioms above, this is acceptable and lets us avoid
      having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
      (Contributed by NM, 21-Dec-2015.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	fax12_0 $f set x $.
-	fax12_1 $f set y $.
-	fax12_2 $f set z $.
-	ax12 $p |- ( -. x = y -> ( y = z -> A. x y = z ) ) $= fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 wal fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 wal wi fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq wa fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 wal wn fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 wal wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 wal wi fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 wal wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 wal fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 ax-4 con3i adantr fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq wa fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 wal fax12_0 sup_set_class fax12_1 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_2 sup_set_class wceq wn fax12_1 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_1 sup_set_class wceq fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 sup_set_class fax12_1 sup_set_class wceq wi fax12_2 fax12_1 fax12_2 fax12_1 fax12_0 equtrr equcoms con3rr3 imp fax12_0 sup_set_class fax12_2 sup_set_class wceq fax12_0 ax-4 nsyl fax12_1 fax12_2 fax12_0 ax-12o sylc ex pm2.43d $.
+	$v x y z  $.
+	f0_ax12 $f set x $.
+	f1_ax12 $f set y $.
+	f2_ax12 $f set z $.
+	p_ax12 $p |- ( -. x = y -> ( y = z -> A. x y = z ) ) $= f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq f0_ax12 a_ax-4 f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq f0_ax12 a_wal f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq p_con3i f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq f0_ax12 a_wal a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq p_adantr f2_ax12 f1_ax12 f0_ax12 p_equtrr f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wi f2_ax12 f1_ax12 p_equcoms f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq p_con3rr3 f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq a_wn p_imp f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_ax-4 f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq a_wa f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_wal p_nsyl f1_ax12 f2_ax12 f0_ax12 a_ax-12o f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq a_wa f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq f0_ax12 a_wal a_wn f0_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_wal a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_wal a_wi p_sylc f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_wal a_wi p_ex f0_ax12 a_sup_set_class f1_ax12 a_sup_set_class a_wceq a_wn f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f1_ax12 a_sup_set_class f2_ax12 a_sup_set_class a_wceq f0_ax12 a_wal p_pm2.43d $.
 $}
+
 

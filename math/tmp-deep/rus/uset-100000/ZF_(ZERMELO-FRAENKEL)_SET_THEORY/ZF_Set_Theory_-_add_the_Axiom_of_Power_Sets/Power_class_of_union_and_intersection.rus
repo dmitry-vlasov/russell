@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Ordered-pair_class_abstractions_(cont_).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                  Power class of union and intersection
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The power class of the intersection of two classes is the intersection
+/*The power class of the intersection of two classes is the intersection
        of their power classes.  Exercise 4.12(j) of [Mendelson] p. 235.
        (Contributed by NM, 23-Nov-2003.) */
 
@@ -30,7 +30,7 @@ proof of pwin {
 	qed prop 1 = step 11 ;;
 }
 
-/* The power class of the union of two classes includes the union of their
+/*The power class of the union of two classes includes the union of their
        power classes.  Exercise 4.12(k) of [Mendelson] p. 235.  (Contributed by
        NM, 23-Nov-2003.) */
 
@@ -55,7 +55,7 @@ proof of pwunss {
 	qed prop 1 = step 12 ;;
 }
 
-/* The power class of the union of two classes is a subset of the union of
+/*The power class of the union of two classes is a subset of the union of
        their power classes, iff one class is a subclass of the other.  Exercise
        4.12(l) of [Mendelson] p. 235.  (Contributed by NM, 23-Nov-2003.) */
 
@@ -128,11 +128,11 @@ proof of pwssun {
 	qed prop 1 = step 60 ;;
 }
 
-/* Break up the power class of a union into a union of smaller classes.
+/*Break up the power class of a union into a union of smaller classes.
        (Contributed by NM, 25-Mar-2007.)  (Proof shortened by Thierry Arnoux,
        20-Dec-2016.) */
 
-theorem pwundif (A : class, B : class)  {
+theorem pwundif (A : class, B : class) disjointed(A, B) {
 	prop 1 : wff = |- Pow ( A ∪ B ) = ( ( Pow ( A ∪ B ) ∖ Pow A ) ∪ Pow A ) ;;
 }
 
@@ -148,7 +148,7 @@ proof of pwundif {
 	qed prop 1 = step 8 ;;
 }
 
-/* Break up the power class of a union into a union of smaller classes.
+/*Break up the power class of a union into a union of smaller classes.
        Obsolete as of 20-Dec-2016.  (Contributed by NM, 25-Mar-2007.)
        (New usage is discouraged.) */
 
@@ -187,7 +187,7 @@ proof of pwundifOLD {
 	qed prop 1 = step 26 ;;
 }
 
-/* The power class of the union of two classes equals the union of their
+/*The power class of the union of two classes equals the union of their
      power classes, iff one class is a subclass of the other.  Part of Exercise
      7(b) of [Enderton] p. 28.  (Contributed by NM, 23-Nov-2003.) */
 

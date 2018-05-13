@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_negation.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical equivalence
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -18,7 +18,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
   for introducing and eliminating definitions.
 */
 
-/* Declare the biconditional connective. */
+/*Declare the biconditional connective. */
 
 constant {
 	symbol ↔ ;;
@@ -26,16 +26,16 @@ constant {
 	latex \leftrightarrow ;;
 }
 
-/* Double arrow (read:  'if and only if' or
+/*Double arrow (read:  'if and only if' or
                'is logically equivalent to') */
 
-/* Extend our wff definition to include the biconditional connective. */
+/*Extend our wff definition to include the biconditional connective. */
 
 rule wb (ph : wff, ps : wff) {
 	term : wff = # ( ph ↔ ps ) ;;
 }
 
-/* Define the biconditional (logical 'iff').
+/*Define the biconditional (logical 'iff').
 
      The definition ~ df-bi in this section is our first definition, which
      introduces and defines the biconditional connective ` <-> ` .  We define a
@@ -100,9 +100,9 @@ axiom df-bi (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ¬ ( ( ( ph ↔ ps ) → ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) ) → ¬ ( ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) → ( ph ↔ ps ) ) ) ;;
 }
 
-/* $j justification 'bijust' for 'df-bi'; */
+/*$j justification 'bijust' for 'df-bi'; */
 
-/* Property of the biconditional connective.  (Contributed by NM,
+/*Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.) */
 
 theorem bi1 (ph : wff, ps : wff)  {
@@ -118,7 +118,7 @@ proof of bi1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Property of the biconditional connective.  (Contributed by NM,
+/*Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.) */
 
 theorem bi3 (ph : wff, ps : wff)  {
@@ -133,7 +133,7 @@ proof of bi3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Infer an equivalence from an implication and its converse.  (Contributed
+/*Infer an equivalence from an implication and its converse.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem impbii (ph : wff, ps : wff)  {
@@ -149,7 +149,7 @@ proof of impbii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce an equivalence from two implications.  (Contributed by Rodolfo
+/*Deduce an equivalence from two implications.  (Contributed by Rodolfo
        Medina, 12-Oct-2010.) */
 
 theorem impbidd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -165,7 +165,7 @@ proof of impbidd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce an equivalence from two implications.  (Contributed by Wolf
+/*Deduce an equivalence from two implications.  (Contributed by Wolf
        Lammen, 12-May-2013.) */
 
 theorem impbid21d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -182,7 +182,7 @@ proof of impbid21d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduce an equivalence from two implications.  (Contributed by NM,
+/*Deduce an equivalence from two implications.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Wolf Lammen, 3-Nov-2012.) */
 
 theorem impbid (ph : wff, ps : wff, ch : wff)  {
@@ -198,7 +198,7 @@ proof of impbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Relate the biconditional connective to primitive connectives.  See
+/*Relate the biconditional connective to primitive connectives.  See
      ~ dfbi1gb for an unusual version proved directly from axioms.
      (Contributed by NM, 5-Aug-1993.) */
 
@@ -216,7 +216,7 @@ proof of dfbi1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* This proof of ~ dfbi1 , discovered by Gregory Bush on 8-Mar-2004, has
+/*This proof of ~ dfbi1 , discovered by Gregory Bush on 8-Mar-2004, has
      several curious properties.  First, it has only 17 steps directly from the
      axioms and ~ df-bi , compared to over 800 steps were the proof of ~ dfbi1
      expanded into axioms.  Second, step 2 demands only the property of "true";
@@ -260,7 +260,7 @@ proof of dfbi1gb {
 	qed prop 1 = step 17 ;;
 }
 
-/* Infer an implication from a logical equivalence.  (Contributed by NM,
+/*Infer an implication from a logical equivalence.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem biimpi (ph : wff, ps : wff)  {
@@ -275,7 +275,7 @@ proof of biimpi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a biconditional and an implication.
+/*A mixed syllogism inference from a biconditional and an implication.
        Useful for substituting an antecedent with a definition.  (Contributed
        by NM, 5-Aug-1993.) */
 
@@ -292,7 +292,7 @@ proof of sylbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from an implication and a biconditional.
+/*A mixed syllogism inference from an implication and a biconditional.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem sylib (ph : wff, ps : wff, ch : wff)  {
@@ -308,7 +308,7 @@ proof of sylib {
 	qed prop 1 = step 2 ;;
 }
 
-/* Property of the biconditional connective.  (Contributed by NM,
+/*Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) */
 
 theorem bi2 (ph : wff, ps : wff)  {
@@ -322,7 +322,7 @@ proof of bi2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative law for equivalence.  (Contributed by Wolf Lammen,
+/*Commutative law for equivalence.  (Contributed by Wolf Lammen,
      10-Nov-2012.) */
 
 theorem bicom1 (ph : wff, ps : wff)  {
@@ -336,7 +336,7 @@ proof of bicom1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative law for equivalence.  Theorem *4.21 of [WhiteheadRussell]
+/*Commutative law for equivalence.  Theorem *4.21 of [WhiteheadRussell]
      p. 117.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem bicom (ph : wff, ps : wff)  {
@@ -350,7 +350,7 @@ proof of bicom {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commute two sides of a biconditional in a deduction.  (Contributed by
+/*Commute two sides of a biconditional in a deduction.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem bicomd (ph : wff, ps : wff, ch : wff)  {
@@ -365,7 +365,7 @@ proof of bicomd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from commutative law for logical equivalence.  (Contributed by
+/*Inference from commutative law for logical equivalence.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem bicomi (ph : wff, ps : wff)  {
@@ -380,7 +380,7 @@ proof of bicomi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer an equivalence from two implications.  (Contributed by NM,
+/*Infer an equivalence from two implications.  (Contributed by NM,
        6-Mar-2007.) */
 
 theorem impbid1 (ph : wff, ps : wff, ch : wff)  {
@@ -396,7 +396,7 @@ proof of impbid1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer an equivalence from two implications.  (Contributed by NM,
+/*Infer an equivalence from two implications.  (Contributed by NM,
        6-Mar-2007.)  (Proof shortened by Wolf Lammen, 27-Sep-2013.) */
 
 theorem impbid2 (ph : wff, ps : wff, ch : wff)  {
@@ -412,7 +412,7 @@ proof of impbid2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A variation on ~ impbid with contraposition.  (Contributed by Jeff
+/*A variation on ~ impbid with contraposition.  (Contributed by Jeff
        Hankins, 3-Jul-2009.) */
 
 theorem impcon4bid (ph : wff, ps : wff, ch : wff)  {
@@ -428,7 +428,7 @@ proof of impcon4bid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer a converse implication from a logical equivalence.  (Contributed
+/*Infer a converse implication from a logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 16-Sep-2013.) */
 
 theorem biimpri (ph : wff, ps : wff)  {
@@ -443,7 +443,7 @@ proof of biimpri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce an implication from a logical equivalence.  (Contributed by NM,
+/*Deduce an implication from a logical equivalence.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem biimpd (ph : wff, ps : wff, ch : wff)  {
@@ -458,7 +458,7 @@ proof of biimpd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, related to modus ponens.
+/*An inference from a biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem mpbi (ph : wff, ps : wff)  {
@@ -474,7 +474,7 @@ proof of mpbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, related to modus ponens.
+/*An inference from a biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem mpbir (ph : wff, ps : wff)  {
@@ -490,7 +490,7 @@ proof of mpbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from a biconditional, related to modus ponens.  (Contributed
+/*A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem mpbid (ph : wff, ps : wff, ch : wff)  {
@@ -506,7 +506,7 @@ proof of mpbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a nested biconditional, related to modus ponens.
+/*An inference from a nested biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) */
 
@@ -523,7 +523,7 @@ proof of mpbii {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from an implication and a biconditional.
+/*A mixed syllogism inference from an implication and a biconditional.
        Useful for substituting a consequent with a definition.  (Contributed by
        NM, 5-Aug-1993.) */
 
@@ -540,7 +540,7 @@ proof of sylibr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a biconditional and an implication.
+/*A mixed syllogism inference from a biconditional and an implication.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem sylbir (ph : wff, ps : wff, ch : wff)  {
@@ -556,7 +556,7 @@ proof of sylbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
+/*A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
 
 theorem sylibd (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -571,7 +571,7 @@ proof of sylibd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
+/*A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
 
 theorem sylbid (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
@@ -586,7 +586,7 @@ proof of sylbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from a biconditional, related to modus ponens.  (Contributed
+/*A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 9-Aug-1994.) */
 
 theorem mpbidi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -602,7 +602,7 @@ proof of mpbidi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a nested implication and a
+/*A mixed syllogism inference from a nested implication and a
        biconditional.  Useful for substituting an embedded antecedent with a
        definition.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -619,7 +619,7 @@ proof of syl5bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a nested implication and a
+/*A mixed syllogism inference from a nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl5bir (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -635,7 +635,7 @@ proof of syl5bir {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 5-Aug-1993.) */
+/*A mixed syllogism inference.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl5ib (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -650,7 +650,7 @@ proof of syl5ib {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 19-Jun-2007.) */
+/*A mixed syllogism inference.  (Contributed by NM, 19-Jun-2007.) */
 
 theorem syl5ibcom (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -665,7 +665,7 @@ proof of syl5ibcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 3-Apr-1994.) */
+/*A mixed syllogism inference.  (Contributed by NM, 3-Apr-1994.) */
 
 theorem syl5ibr (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -680,7 +680,7 @@ proof of syl5ibr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 20-Jun-2007.) */
+/*A mixed syllogism inference.  (Contributed by NM, 20-Jun-2007.) */
 
 theorem syl5ibrcom (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -695,7 +695,7 @@ proof of syl5ibrcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a converse implication from a logical equivalence.  (Contributed
+/*Deduce a converse implication from a logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) */
 
 theorem biimprd (ph : wff, ps : wff, ch : wff)  {
@@ -710,7 +710,7 @@ proof of biimprd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a commuted implication from a logical equivalence.  (Contributed
+/*Deduce a commuted implication from a logical equivalence.  (Contributed
        by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) */
 
 theorem biimpcd (ph : wff, ps : wff, ch : wff)  {
@@ -725,7 +725,7 @@ proof of biimpcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a converse commuted implication from a logical equivalence.
+/*Deduce a converse commuted implication from a logical equivalence.
        (Contributed by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen,
        20-Dec-2013.) */
 
@@ -741,7 +741,7 @@ proof of biimprcd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a nested implication and a
+/*A mixed syllogism inference from a nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl6ib (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -757,7 +757,7 @@ proof of syl6ib {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a nested implication and a
+/*A mixed syllogism inference from a nested implication and a
        biconditional.  Useful for substituting an embedded consequent with a
        definition.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -774,7 +774,7 @@ proof of syl6ibr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 2-Jan-1994.) */
+/*A mixed syllogism inference.  (Contributed by NM, 2-Jan-1994.) */
 
 theorem syl6bi (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
@@ -789,7 +789,7 @@ proof of syl6bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference.  (Contributed by NM, 18-May-1994.) */
+/*A mixed syllogism inference.  (Contributed by NM, 18-May-1994.) */
 
 theorem syl6bir (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ch ↔ ps ) ) ;;
@@ -804,7 +804,7 @@ proof of syl6bir {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a doubly nested implication and a
+/*A mixed syllogism inference from a doubly nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl7bi (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -820,7 +820,7 @@ proof of syl7bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism rule of inference.  The second premise is used to replace
+/*A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM,
        1-Aug-1994.) */
 
@@ -837,7 +837,7 @@ proof of syl8ib {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from a biconditional, related to modus ponens.  (Contributed
+/*A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem mpbird (ph : wff, ps : wff, ch : wff)  {
@@ -853,7 +853,7 @@ proof of mpbird {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a nested biconditional, related to modus ponens.
+/*An inference from a nested biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) */
 
@@ -870,7 +870,7 @@ proof of mpbiri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
+/*A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
 
 theorem sylibrd (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -885,7 +885,7 @@ proof of sylibrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
+/*A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) */
 
 theorem sylbird (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ch ↔ ps ) ) ;;
@@ -900,7 +900,7 @@ proof of sylbird {
 	qed prop 1 = step 2 ;;
 }
 
-/* Principle of identity for logical equivalence.  Theorem *4.2 of
+/*Principle of identity for logical equivalence.  Theorem *4.2 of
      [WhiteheadRussell] p. 117.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem biid (ph : wff)  {
@@ -914,7 +914,7 @@ proof of biid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Principle of identity with antecedent.  (Contributed by NM,
+/*Principle of identity with antecedent.  (Contributed by NM,
      25-Nov-1995.) */
 
 theorem biidd (ph : wff, ps : wff)  {
@@ -927,7 +927,7 @@ proof of biidd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two propositions are equivalent if they are both true.  Closed form of
+/*Two propositions are equivalent if they are both true.  Closed form of
      ~ 2th .  Equivalent to a ~ bi1 -like version of the xor-connective.  This
      theorem stays true, no matter how you permute its operands.  This is
      evident from its sharper version
@@ -945,7 +945,7 @@ proof of pm5.1im {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two truths are equivalent.  (Contributed by NM, 18-Aug-1993.) */
+/*Two truths are equivalent.  (Contributed by NM, 18-Aug-1993.) */
 
 theorem 2th (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ph ;;
@@ -961,7 +961,7 @@ proof of 2th {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two truths are equivalent (deduction rule).  (Contributed by NM,
+/*Two truths are equivalent (deduction rule).  (Contributed by NM,
        3-Jun-2012.) */
 
 theorem 2thd (ph : wff, ps : wff, ch : wff)  {
@@ -977,7 +977,7 @@ proof of 2thd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference that converts a biconditional implied by one of its arguments,
+/*Inference that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 17-Oct-2003.) */
 
 theorem ibi (ph : wff, ps : wff)  {
@@ -992,7 +992,7 @@ proof of ibi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference that converts a biconditional implied by one of its arguments,
+/*Inference that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 22-Jul-2004.) */
 
 theorem ibir (ph : wff, ps : wff)  {
@@ -1007,7 +1007,7 @@ proof of ibir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction that converts a biconditional implied by one of its arguments,
+/*Deduction that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 26-Jun-2004.) */
 
 theorem ibd (ph : wff, ps : wff, ch : wff)  {
@@ -1022,7 +1022,7 @@ proof of ibd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional.  Theorem *5.74 of
+/*Distribution of implication over biconditional.  Theorem *5.74 of
      [WhiteheadRussell] p. 126.  (Contributed by NM, 1-Aug-1994.)  (Proof
      shortened by Wolf Lammen, 11-Apr-2013.) */
 
@@ -1045,7 +1045,7 @@ proof of pm5.74 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Distribution of implication over biconditional (inference rule).
+/*Distribution of implication over biconditional (inference rule).
        (Contributed by NM, 1-Aug-1994.) */
 
 theorem pm5.74i (ph : wff, ps : wff, ch : wff)  {
@@ -1060,7 +1060,7 @@ proof of pm5.74i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (reverse inference
+/*Distribution of implication over biconditional (reverse inference
        rule).  (Contributed by NM, 1-Aug-1994.) */
 
 theorem pm5.74ri (ph : wff, ps : wff, ch : wff)  {
@@ -1075,7 +1075,7 @@ proof of pm5.74ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 21-Mar-1996.) */
 
 theorem pm5.74d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1090,7 +1090,7 @@ proof of pm5.74d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of implication over biconditional (deduction rule).
+/*Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 19-Mar-1997.) */
 
 theorem pm5.74rd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1105,7 +1105,7 @@ proof of pm5.74rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from transitive law for logical equivalence.  (Contributed
+/*An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Oct-2012.) */
 
 theorem bitri (ph : wff, ps : wff, ch : wff)  {
@@ -1124,7 +1124,7 @@ proof of bitri {
 	qed prop 1 = step 5 ;;
 }
 
-/* An inference from transitive law for logical equivalence.  (Contributed
+/*An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem bitr2i (ph : wff, ps : wff, ch : wff)  {
@@ -1140,7 +1140,7 @@ proof of bitr2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from transitive law for logical equivalence.  (Contributed
+/*An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem bitr3i (ph : wff, ps : wff, ch : wff)  {
@@ -1156,7 +1156,7 @@ proof of bitr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from transitive law for logical equivalence.  (Contributed
+/*An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem bitr4i (ph : wff, ps : wff, ch : wff)  {
@@ -1172,14 +1172,14 @@ proof of bitr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Register '<->' as an equality for its type (wff). */
+/*Register '<->' as an equality for its type (wff). */
 
-/* $j
+/*$j
     equality 'wb' from 'biid' 'bicomi' 'bitri';
     definition 'dfbi1' for 'wb';
   */
 
-/* Deduction form of ~ bitri .  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Deduction form of ~ bitri .  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 14-Apr-2013.) */
 
 theorem bitrd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1197,7 +1197,7 @@ proof of bitrd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction form of ~ bitr2i .  (Contributed by NM, 9-Jun-2004.) */
+/*Deduction form of ~ bitr2i .  (Contributed by NM, 9-Jun-2004.) */
 
 theorem bitr2d (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
@@ -1212,7 +1212,7 @@ proof of bitr2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction form of ~ bitr3i .  (Contributed by NM, 5-Aug-1993.) */
+/*Deduction form of ~ bitr3i .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem bitr3d (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
@@ -1227,7 +1227,7 @@ proof of bitr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction form of ~ bitr4i .  (Contributed by NM, 5-Aug-1993.) */
+/*Deduction form of ~ bitr4i .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem bitr4d (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
@@ -1242,7 +1242,7 @@ proof of bitr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl5bb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1258,7 +1258,7 @@ proof of syl5bb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl5rbb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1274,7 +1274,7 @@ proof of syl5rbb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl5bbr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1290,7 +1290,7 @@ proof of syl5bbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        25-Nov-1994.) */
 
 theorem syl5rbbr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1306,7 +1306,7 @@ proof of syl5rbbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl6bb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1322,7 +1322,7 @@ proof of syl6bb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl6rbb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1338,7 +1338,7 @@ proof of syl6rbb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem syl6bbr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1354,7 +1354,7 @@ proof of syl6bbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference from two biconditionals.  (Contributed by NM,
+/*A syllogism inference from two biconditionals.  (Contributed by NM,
        25-Nov-1994.) */
 
 theorem syl6rbbr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1370,7 +1370,7 @@ proof of syl6rbbr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference, useful for removing a definition from both
+/*A mixed syllogism inference, useful for removing a definition from both
        sides of an implication.  (Contributed by NM, 10-Aug-1994.) */
 
 theorem 3imtr3i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1387,7 +1387,7 @@ proof of 3imtr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference, useful for applying a definition to both
+/*A mixed syllogism inference, useful for applying a definition to both
        sides of an implication.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3imtr4i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1404,7 +1404,7 @@ proof of 3imtr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3imtr3i .  Useful for converting conditional
+/*More general version of ~ 3imtr3i .  Useful for converting conditional
        definitions in a formula.  (Contributed by NM, 8-Apr-1996.) */
 
 theorem 3imtr3d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1421,7 +1421,7 @@ proof of 3imtr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3imtr4i .  Useful for converting conditional
+/*More general version of ~ 3imtr4i .  Useful for converting conditional
        definitions in a formula.  (Contributed by NM, 26-Oct-1995.) */
 
 theorem 3imtr4d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1438,7 +1438,7 @@ proof of 3imtr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3imtr3i .  Useful for converting definitions
+/*More general version of ~ 3imtr3i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
        Wolf Lammen, 20-Dec-2013.) */
 
@@ -1456,7 +1456,7 @@ proof of 3imtr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3imtr4i .  Useful for converting definitions
+/*More general version of ~ 3imtr4i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
        Wolf Lammen, 20-Dec-2013.) */
 
@@ -1474,7 +1474,7 @@ proof of 3imtr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3bitri (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1491,7 +1491,7 @@ proof of 3bitri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) */
 
 theorem 3bitrri (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1508,7 +1508,7 @@ proof of 3bitrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) */
 
 theorem 3bitr2i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1525,7 +1525,7 @@ proof of 3bitr2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) */
 
 theorem 3bitr2ri (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1542,7 +1542,7 @@ proof of 3bitr2ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 19-Aug-1993.) */
 
 theorem 3bitr3i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1559,7 +1559,7 @@ proof of 3bitr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3bitr3ri (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1576,7 +1576,7 @@ proof of 3bitr3ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.  This
+/*A chained inference from transitive law for logical equivalence.  This
        inference is frequently used to apply a definition to both sides of a
        logical equivalence.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -1594,7 +1594,7 @@ proof of 3bitr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained inference from transitive law for logical equivalence.
+/*A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 2-Sep-1995.) */
 
 theorem 3bitr4ri (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1611,7 +1611,7 @@ proof of 3bitr4ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        13-Aug-1999.) */
 
 theorem 3bitrd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1628,7 +1628,7 @@ proof of 3bitrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3bitrrd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1645,7 +1645,7 @@ proof of 3bitrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3bitr2d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1662,7 +1662,7 @@ proof of 3bitr2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3bitr2rd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1679,7 +1679,7 @@ proof of 3bitr2rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  Useful for converting
+/*Deduction from transitivity of biconditional.  Useful for converting
        conditional definitions in a formula.  (Contributed by NM,
        24-Apr-1996.) */
 
@@ -1697,7 +1697,7 @@ proof of 3bitr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3bitr3rd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1714,7 +1714,7 @@ proof of 3bitr3rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  Useful for converting
+/*Deduction from transitivity of biconditional.  Useful for converting
        conditional definitions in a formula.  (Contributed by NM,
        18-Oct-1995.) */
 
@@ -1732,7 +1732,7 @@ proof of 3bitr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from transitivity of biconditional.  (Contributed by NM,
+/*Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3bitr4rd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1749,7 +1749,7 @@ proof of 3bitr4rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3bitr3i .  Useful for converting definitions
+/*More general version of ~ 3bitr3i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 4-Jun-1995.) */
 
 theorem 3bitr3g (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1766,7 +1766,7 @@ proof of 3bitr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* More general version of ~ 3bitr4i .  Useful for converting definitions
+/*More general version of ~ 3bitr4i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3bitr4g (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1783,7 +1783,7 @@ proof of 3bitr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Construct a bi-conditional in antecedent position.  (Contributed by Wolf
+/*Construct a bi-conditional in antecedent position.  (Contributed by Wolf
        Lammen, 14-May-2013.) */
 
 theorem bi3ant (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1802,7 +1802,7 @@ proof of bi3ant {
 	qed prop 1 = step 6 ;;
 }
 
-/* Express symmetries of theorems in terms of biconditionals.  (Contributed
+/*Express symmetries of theorems in terms of biconditionals.  (Contributed
      by Wolf Lammen, 14-May-2013.) */
 
 theorem bisym (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1815,7 +1815,7 @@ proof of bisym {
 	qed prop 1 = step 2 ;;
 }
 
-/* Double negation.  Theorem *4.13 of [WhiteheadRussell] p. 117.
+/*Double negation.  Theorem *4.13 of [WhiteheadRussell] p. 117.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem notnot (ph : wff)  {
@@ -1829,7 +1829,7 @@ proof of notnot {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Theorem *4.1 of [WhiteheadRussell] p. 116.  (Contributed
+/*Contraposition.  Theorem *4.1 of [WhiteheadRussell] p. 116.  (Contributed
      by NM, 5-Aug-1993.) */
 
 theorem con34b (ph : wff, ps : wff)  {
@@ -1843,7 +1843,7 @@ proof of con34b {
 	qed prop 1 = step 3 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 21-May-1994.) */
+/*A contraposition deduction.  (Contributed by NM, 21-May-1994.) */
 
 theorem con4bid (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ¬ ps ↔ ¬ ch ) ) ;;
@@ -1859,7 +1859,7 @@ proof of con4bid {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction negating both sides of a logical equivalence.  (Contributed by
+/*Deduction negating both sides of a logical equivalence.  (Contributed by
        NM, 21-May-1994.) */
 
 theorem notbid (ph : wff, ps : wff, ch : wff)  {
@@ -1876,7 +1876,7 @@ proof of notbid {
 	qed prop 1 = step 4 ;;
 }
 
-/* Contraposition.  Theorem *4.11 of [WhiteheadRussell] p. 117.  (Contributed
+/*Contraposition.  Theorem *4.11 of [WhiteheadRussell] p. 117.  (Contributed
      by NM, 21-May-1994.)  (Proof shortened by Wolf Lammen, 12-Jun-2013.) */
 
 theorem notbi (ph : wff, ps : wff)  {
@@ -1892,7 +1892,7 @@ proof of notbi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Negate both sides of a logical equivalence.  (Contributed by NM,
+/*Negate both sides of a logical equivalence.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 19-May-2013.) */
 
 theorem notbii (ph : wff, ps : wff)  {
@@ -1907,11 +1907,11 @@ proof of notbii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem notbii is the congruence law for negation. */
+/*Theorem notbii is the congruence law for negation. */
 
-/* $j congruence 'notbii'; */
+/*$j congruence 'notbii'; */
 
-/* A contraposition inference.  (Contributed by NM, 21-May-1994.) */
+/*A contraposition inference.  (Contributed by NM, 21-May-1994.) */
 
 theorem con4bii (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ( ¬ ph ↔ ¬ ps ) ;;
@@ -1925,7 +1925,7 @@ proof of con4bii {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, related to modus tollens.
+/*An inference from a biconditional, related to modus tollens.
        (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) */
 
@@ -1942,7 +1942,7 @@ proof of mtbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, related to modus tollens.
+/*An inference from a biconditional, related to modus tollens.
        (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
        14-Oct-2012.) */
 
@@ -1959,7 +1959,7 @@ proof of mtbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from a biconditional, similar to modus tollens.
+/*A deduction from a biconditional, similar to modus tollens.
        (Contributed by NM, 26-Nov-1995.) */
 
 theorem mtbid (ph : wff, ps : wff, ch : wff)  {
@@ -1975,7 +1975,7 @@ proof of mtbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from a biconditional, similar to modus tollens.
+/*A deduction from a biconditional, similar to modus tollens.
        (Contributed by NM, 10-May-1994.) */
 
 theorem mtbird (ph : wff, ps : wff, ch : wff)  {
@@ -1991,7 +1991,7 @@ proof of mtbird {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, similar to modus tollens.
+/*An inference from a biconditional, similar to modus tollens.
        (Contributed by NM, 27-Nov-1995.) */
 
 theorem mtbii (ph : wff, ps : wff, ch : wff)  {
@@ -2007,7 +2007,7 @@ proof of mtbii {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from a biconditional, similar to modus tollens.
+/*An inference from a biconditional, similar to modus tollens.
        (Contributed by NM, 24-Aug-1995.) */
 
 theorem mtbiri (ph : wff, ps : wff, ch : wff)  {
@@ -2023,7 +2023,7 @@ proof of mtbiri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from an implication and a biconditional.
+/*A mixed syllogism inference from an implication and a biconditional.
        (Contributed by Wolf Lammen, 16-Dec-2013.) */
 
 theorem sylnib (ph : wff, ps : wff, ch : wff)  {
@@ -2039,7 +2039,7 @@ proof of sylnib {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from an implication and a biconditional.
+/*A mixed syllogism inference from an implication and a biconditional.
        Useful for substituting a consequent with a definition.  (Contributed by
        Wolf Lammen, 16-Dec-2013.) */
 
@@ -2056,7 +2056,7 @@ proof of sylnibr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a biconditional and an implication.
+/*A mixed syllogism inference from a biconditional and an implication.
        Useful for substituting an antecedent with a definition.  (Contributed
        by Wolf Lammen, 16-Dec-2013.) */
 
@@ -2073,7 +2073,7 @@ proof of sylnbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A mixed syllogism inference from a biconditional and an implication.
+/*A mixed syllogism inference from a biconditional and an implication.
        (Contributed by Wolf Lammen, 16-Dec-2013.) */
 
 theorem sylnbir (ph : wff, ps : wff, ch : wff)  {
@@ -2089,7 +2089,7 @@ proof of sylnbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Replacement of a subexpression by an equivalent one.  (Contributed by
+/*Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) */
 
 theorem xchnxbi (ph : wff, ps : wff, ch : wff)  {
@@ -2105,7 +2105,7 @@ proof of xchnxbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Replacement of a subexpression by an equivalent one.  (Contributed by
+/*Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) */
 
 theorem xchnxbir (ph : wff, ps : wff, ch : wff)  {
@@ -2121,7 +2121,7 @@ proof of xchnxbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Replacement of a subexpression by an equivalent one.  (Contributed by
+/*Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) */
 
 theorem xchbinx (ph : wff, ps : wff, ch : wff)  {
@@ -2137,7 +2137,7 @@ proof of xchbinx {
 	qed prop 1 = step 2 ;;
 }
 
-/* Replacement of a subexpression by an equivalent one.  (Contributed by
+/*Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) */
 
 theorem xchbinxr (ph : wff, ps : wff, ch : wff)  {
@@ -2153,10 +2153,10 @@ proof of xchbinxr {
 	qed prop 1 = step 2 ;;
 }
 
-/* The next three rules are useful for building up wff's around a
+/*The next three rules are useful for building up wff's around a
      definition, in order to make use of the definition. */
 
-/* Introduce an antecedent to both sides of a logical equivalence.
+/*Introduce an antecedent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        6-Feb-2013.) */
 
@@ -2172,7 +2172,7 @@ proof of imbi2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding a biconditional to the left in an equivalence.
+/*Inference adding a biconditional to the left in an equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        7-May-2011.)  (Proof shortened by Wolf Lammen, 16-May-2013.) */
 
@@ -2191,7 +2191,7 @@ proof of bibi2i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference adding a biconditional to the right in an equivalence.
+/*Inference adding a biconditional to the right in an equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem bibi1i (ph : wff, ps : wff, ch : wff)  {
@@ -2208,7 +2208,7 @@ proof of bibi1i {
 	qed prop 1 = step 4 ;;
 }
 
-/* The equivalence of two equivalences.  (Contributed by NM,
+/*The equivalence of two equivalences.  (Contributed by NM,
          5-Aug-1993.) */
 
 theorem bibi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2225,7 +2225,7 @@ proof of bibi12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding an antecedent to both sides of a logical equivalence.
+/*Deduction adding an antecedent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem imbi2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2240,7 +2240,7 @@ proof of imbi2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a consequent to both sides of a logical equivalence.
+/*Deduction adding a consequent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        17-Sep-2013.) */
 
@@ -2259,7 +2259,7 @@ proof of imbi1d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction adding a biconditional to the left in an equivalence.
+/*Deduction adding a biconditional to the left in an equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        19-May-2013.) */
 
@@ -2279,7 +2279,7 @@ proof of bibi2d {
 	qed prop 1 = step 6 ;;
 }
 
-/* Deduction adding a biconditional to the right in an equivalence.
+/*Deduction adding a biconditional to the right in an equivalence.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem bibi1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2296,7 +2296,7 @@ proof of bibi1d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of implications.
+/*Deduction joining two equivalences to form equivalence of implications.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem imbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2313,7 +2313,7 @@ proof of imbi12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining two equivalences to form equivalence of
+/*Deduction joining two equivalences to form equivalence of
        biconditionals.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem bibi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2330,7 +2330,7 @@ proof of bibi12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.84 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.84 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem imbi1 (ph : wff, ps : wff, ch : wff)  {
@@ -2343,7 +2343,7 @@ proof of imbi1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.85 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.85 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 19-May-2013.) */
 
 theorem imbi2 (ph : wff, ps : wff, ch : wff)  {
@@ -2356,7 +2356,7 @@ proof of imbi2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce a consequent to both sides of a logical equivalence.
+/*Introduce a consequent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        17-Sep-2013.) */
 
@@ -2372,7 +2372,7 @@ proof of imbi1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Join two logical equivalences to form equivalence of implications.
+/*Join two logical equivalences to form equivalence of implications.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem imbi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2389,11 +2389,11 @@ proof of imbi12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem imbi12i is the congruence law for implication. */
+/*Theorem imbi12i is the congruence law for implication. */
 
-/* $j congruence 'imbi12i'; */
+/*$j congruence 'imbi12i'; */
 
-/* Theorem *4.86 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.86 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem bibi1 (ph : wff, ps : wff, ch : wff)  {
@@ -2406,7 +2406,7 @@ proof of bibi1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Contraposition.  Theorem *4.12 of [WhiteheadRussell] p. 117.  (Contributed
+/*Contraposition.  Theorem *4.12 of [WhiteheadRussell] p. 117.  (Contributed
      by NM, 15-Apr-1995.)  (Proof shortened by Wolf Lammen, 3-Jan-2013.) */
 
 theorem con2bi (ph : wff, ps : wff)  {
@@ -2422,7 +2422,7 @@ proof of con2bi {
 	qed prop 1 = step 5 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 15-Apr-1995.) */
+/*A contraposition deduction.  (Contributed by NM, 15-Apr-1995.) */
 
 theorem con2bid (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ¬ ch ) ) ;;
@@ -2436,7 +2436,7 @@ proof of con2bid {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 9-Oct-1999.) */
+/*A contraposition deduction.  (Contributed by NM, 9-Oct-1999.) */
 
 theorem con1bid (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ¬ ps ↔ ch ) ) ;;
@@ -2451,7 +2451,7 @@ proof of con1bid {
 	qed prop 1 = step 3 ;;
 }
 
-/* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 13-Oct-2012.) */
 
 theorem con1bii (ph : wff, ps : wff)  {
@@ -2467,7 +2467,7 @@ proof of con1bii {
 	qed prop 1 = step 3 ;;
 }
 
-/* A contraposition inference.  (Contributed by NM, 5-Aug-1993.) */
+/*A contraposition inference.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem con2bii (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ¬ ps ) ;;
@@ -2482,7 +2482,7 @@ proof of con2bii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Bidirectional version of ~ con1 .  (Contributed by NM,
+/*Contraposition.  Bidirectional version of ~ con1 .  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem con1b (ph : wff, ps : wff)  {
@@ -2496,7 +2496,7 @@ proof of con1b {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Bidirectional version of ~ con2 .  (Contributed by NM,
+/*Contraposition.  Bidirectional version of ~ con2 .  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem con2b (ph : wff, ps : wff)  {
@@ -2510,7 +2510,7 @@ proof of con2b {
 	qed prop 1 = step 3 ;;
 }
 
-/* A wff is equivalent to itself with true antecedent.  (Contributed by NM,
+/*A wff is equivalent to itself with true antecedent.  (Contributed by NM,
      28-Jan-1996.) */
 
 theorem biimt (ph : wff, ps : wff)  {
@@ -2524,7 +2524,7 @@ proof of biimt {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.5 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.5 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.5 (ph : wff, ps : wff)  {
@@ -2537,7 +2537,7 @@ proof of pm5.5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference rule introducing a theorem as an antecedent.  (Contributed by
+/*Inference rule introducing a theorem as an antecedent.  (Contributed by
        NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) */
 
 theorem a1bi (ph : wff, ps : wff)  {
@@ -2552,7 +2552,7 @@ proof of a1bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A false consequent falsifies an antecedent.  (Contributed by NM,
+/*A false consequent falsifies an antecedent.  (Contributed by NM,
        19-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Nov-2012.) */
 
 theorem mt2bi (ph : wff, ps : wff)  {
@@ -2568,7 +2568,7 @@ proof of mt2bi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Modus-tollens-like theorem.  (Contributed by NM, 7-Apr-2001.)  (Proof
+/*Modus-tollens-like theorem.  (Contributed by NM, 7-Apr-2001.)  (Proof
      shortened by Wolf Lammen, 12-Nov-2012.) */
 
 theorem mtt (ph : wff, ps : wff)  {
@@ -2582,7 +2582,7 @@ proof of mtt {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.501 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.501 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.501 (ph : wff, ps : wff)  {
@@ -2597,7 +2597,7 @@ proof of pm5.501 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Implication in terms of implication and biconditional.  (Contributed by
+/*Implication in terms of implication and biconditional.  (Contributed by
      NM, 31-Mar-1994.)  (Proof shortened by Wolf Lammen, 24-Jan-2013.) */
 
 theorem ibib (ph : wff, ps : wff)  {
@@ -2610,7 +2610,7 @@ proof of ibib {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implication in terms of implication and biconditional.  (Contributed by
+/*Implication in terms of implication and biconditional.  (Contributed by
      NM, 29-Apr-2005.)  (Proof shortened by Wolf Lammen, 21-Dec-2013.) */
 
 theorem ibibr (ph : wff, ps : wff)  {
@@ -2625,7 +2625,7 @@ proof of ibibr {
 	qed prop 1 = step 4 ;;
 }
 
-/* A wff is equivalent to its equivalence with truth.  (Contributed by NM,
+/*A wff is equivalent to its equivalence with truth.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem tbt (ph : wff, ps : wff)  {
@@ -2641,7 +2641,7 @@ proof of tbt {
 	qed prop 1 = step 3 ;;
 }
 
-/* The negation of a wff is equivalent to the wff's equivalence to
+/*The negation of a wff is equivalent to the wff's equivalence to
      falsehood.  (Contributed by Juha Arpiainen, 19-Jan-2006.)  (Proof
      shortened by Wolf Lammen, 28-Jan-2013.) */
 
@@ -2656,7 +2656,7 @@ proof of nbn2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transfer negation via an equivalence.  (Contributed by NM, 3-Oct-2007.)
+/*Transfer negation via an equivalence.  (Contributed by NM, 3-Oct-2007.)
      (Proof shortened by Wolf Lammen, 28-Jan-2013.) */
 
 theorem bibif (ph : wff, ps : wff)  {
@@ -2670,7 +2670,7 @@ proof of bibif {
 	qed prop 1 = step 3 ;;
 }
 
-/* The negation of a wff is equivalent to the wff's equivalence to
+/*The negation of a wff is equivalent to the wff's equivalence to
        falsehood.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
        Lammen, 3-Oct-2013.) */
 
@@ -2687,7 +2687,7 @@ proof of nbn {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transfer falsehood via equivalence.  (Contributed by NM,
+/*Transfer falsehood via equivalence.  (Contributed by NM,
        11-Sep-2006.) */
 
 theorem nbn3 (ph : wff, ps : wff)  {
@@ -2702,7 +2702,7 @@ proof of nbn3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two propositions are equivalent if they are both false.  Closed form of
+/*Two propositions are equivalent if they are both false.  Closed form of
      ~ 2false .  Equivalent to a ~ bi2 -like version of the xor-connective.
      (Contributed by Wolf Lammen, 13-May-2013.) */
 
@@ -2716,7 +2716,7 @@ proof of pm5.21im {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two falsehoods are equivalent.  (Contributed by NM, 4-Apr-2005.)  (Proof
+/*Two falsehoods are equivalent.  (Contributed by NM, 4-Apr-2005.)  (Proof
        shortened by Wolf Lammen, 19-May-2013.) */
 
 theorem 2false (ph : wff, ps : wff)  {
@@ -2732,7 +2732,7 @@ proof of 2false {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two falsehoods are equivalent (deduction rule).  (Contributed by NM,
+/*Two falsehoods are equivalent (deduction rule).  (Contributed by NM,
        11-Oct-2013.) */
 
 theorem 2falsed (ph : wff, ps : wff, ch : wff)  {
@@ -2749,7 +2749,7 @@ proof of 2falsed {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two propositions implying a false one are equivalent.  (Contributed by
+/*Two propositions implying a false one are equivalent.  (Contributed by
        NM, 16-Feb-1996.)  (Proof shortened by Wolf Lammen, 19-May-2013.) */
 
 theorem pm5.21ni (ph : wff, ps : wff, ch : wff)  {
@@ -2766,7 +2766,7 @@ proof of pm5.21ni {
 	qed prop 1 = step 3 ;;
 }
 
-/* Eliminate an antecedent implied by each side of a biconditional.
+/*Eliminate an antecedent implied by each side of a biconditional.
          (Contributed by NM, 21-May-1999.) */
 
 theorem pm5.21nii (ph : wff, ps : wff, ch : wff)  {
@@ -2783,7 +2783,7 @@ proof of pm5.21nii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Eliminate an antecedent implied by each side of a biconditional,
+/*Eliminate an antecedent implied by each side of a biconditional,
        deduction version.  (Contributed by Paul Chapman, 21-Nov-2012.)  (Proof
        shortened by Wolf Lammen, 6-Oct-2013.) */
 
@@ -2804,7 +2804,7 @@ proof of pm5.21ndd {
 	qed prop 1 = step 5 ;;
 }
 
-/* Combine antecedents into a single bi-conditional.  This inference,
+/*Combine antecedents into a single bi-conditional.  This inference,
        reminiscent of ~ ja , is reversible:  The hypotheses can be deduced from
        the conclusion alone (see ~ pm5.1im and ~ pm5.21im ).  (Contributed by
        Wolf Lammen, 13-May-2013.) */
@@ -2826,7 +2826,7 @@ proof of bija {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *5.18 of [WhiteheadRussell] p. 124.  This theorem says that
+/*Theorem *5.18 of [WhiteheadRussell] p. 124.  This theorem says that
      logical equivalence is the same as negated "exclusive-or."  (Contributed
      by NM, 28-Jun-2002.)  (Proof shortened by Andrew Salmon, 20-Jun-2011.)
      (Proof shortened by Wolf Lammen, 15-Oct-2013.) */
@@ -2848,7 +2848,7 @@ proof of pm5.18 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Two ways to express "exclusive or."  (Contributed by NM, 1-Jan-2006.) */
+/*Two ways to express "exclusive or."  (Contributed by NM, 1-Jan-2006.) */
 
 theorem xor3 (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ¬ ( ph ↔ ps ) ↔ ( ph ↔ ¬ ps ) ) ;;
@@ -2861,7 +2861,7 @@ proof of xor3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Move negation outside of biconditional.  Compare Theorem *5.18 of
+/*Move negation outside of biconditional.  Compare Theorem *5.18 of
      [WhiteheadRussell] p. 124.  (Contributed by NM, 27-Jun-2002.)  (Proof
      shortened by Wolf Lammen, 20-Sep-2013.) */
 
@@ -2877,7 +2877,7 @@ proof of nbbn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Associative law for the biconditional.  An axiom of system DS in Vladimir
+/*Associative law for the biconditional.  An axiom of system DS in Vladimir
      Lifschitz, "On calculational proofs", Annals of Pure and Applied Logic,
      113:207-224, 2002,
      ~ http://www.cs.utexas.edu/users/ai-lab/pub-view.php?PubID=26805 .
@@ -2905,7 +2905,7 @@ proof of biass {
 	qed prop 1 = step 11 ;;
 }
 
-/* Theorem *5.19 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+/*Theorem *5.19 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.19 (ph : wff)  {
@@ -2919,7 +2919,7 @@ proof of pm5.19 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Logical equivalence of commuted antecedents.  Part of Theorem *4.87 of
+/*Logical equivalence of commuted antecedents.  Part of Theorem *4.87 of
      [WhiteheadRussell] p. 122.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem bi2.04 (ph : wff, ps : wff, ch : wff)  {
@@ -2933,7 +2933,7 @@ proof of bi2.04 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Antecedent absorption implication.  Theorem *5.4 of [WhiteheadRussell]
+/*Antecedent absorption implication.  Theorem *5.4 of [WhiteheadRussell]
      p. 125.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pm5.4 (ph : wff, ps : wff)  {
@@ -2947,7 +2947,7 @@ proof of pm5.4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distributive law for implication.  Compare Theorem *5.41 of
+/*Distributive law for implication.  Compare Theorem *5.41 of
      [WhiteheadRussell] p. 125.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem imdi (ph : wff, ps : wff, ch : wff)  {
@@ -2961,7 +2961,7 @@ proof of imdi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.41 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.41 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 12-Oct-2012.) */
 
 theorem pm5.41 (ph : wff, ps : wff, ch : wff)  {
@@ -2974,7 +2974,7 @@ proof of pm5.41 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.8 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.8 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.8 (ph : wff)  {
@@ -2988,7 +2988,7 @@ proof of pm4.8 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *4.81 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.81 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.81 (ph : wff)  {
@@ -3002,7 +3002,7 @@ proof of pm4.81 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Simplify an implication between two implications when the antecedent of
+/*Simplify an implication between two implications when the antecedent of
      the first is a consequence of the antecedent of the second.  The reverse
      form is useful in producing the successor step in induction proofs.
      (Contributed by Paul Chapman, 22-Jun-2011.)  (Proof shortened by Wolf

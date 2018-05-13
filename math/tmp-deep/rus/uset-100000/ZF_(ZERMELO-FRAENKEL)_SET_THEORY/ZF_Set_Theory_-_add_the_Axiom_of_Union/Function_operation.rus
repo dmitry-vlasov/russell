@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/_Maps_to__notation.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                              Function operation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,21 +14,21 @@ constant {
 	symbol oR ;;
 }
 
-/* Extend class notation to include mapping of an operation to a function
+/*Extend class notation to include mapping of an operation to a function
      operation. */
 
 rule cof (R : class) {
 	term : class = # oF R ;;
 }
 
-/* Extend class notation to include mapping of a binary relation to a
+/*Extend class notation to include mapping of a binary relation to a
      function relation. */
 
 rule cofr (R : class) {
 	term : class = # oR R ;;
 }
 
-/* Define the function operation map.  The definition is designed so that
+/*Define the function operation map.  The definition is designed so that
        if ` R ` is a binary operation, then ` oF R ` is the analogous operation
        on functions which corresponds to applying ` R ` pointwise to the values
        of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) */
@@ -40,7 +40,7 @@ definition df-of (x : set, R : class, f : set, g : set) disjointed(f g x R) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define the function relation map.  The definition is designed so that if
+/*Define the function relation map.  The definition is designed so that if
        ` R ` is a binary relation, then ` oF R ` is the analogous relation on
        functions which is true when each element of the left function relates
        to the corresponding element of the right function.  (Contributed by
@@ -53,7 +53,7 @@ definition df-ofr (x : set, R : class, f : set, g : set) disjointed(f g x R) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for function operation.  (Contributed by Mario
+/*Equality theorem for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) */
 
 theorem ofeq (R : class, S : class) disjointed(f g x R, f g x S) {
@@ -72,7 +72,7 @@ proof of ofeq {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for function relation.  (Contributed by Mario Carneiro,
+/*Equality theorem for function relation.  (Contributed by Mario Carneiro,
        28-Jul-2014.) */
 
 theorem ofreq (R : class, S : class) disjointed(f g x R, f g x S) {
@@ -90,7 +90,7 @@ proof of ofreq {
 	qed prop 1 = step 6 ;;
 }
 
-/* A function operation restricted to a set is a set.  (Contributed by NM,
+/*A function operation restricted to a set is a set.  (Contributed by NM,
        28-Jul-2014.) */
 
 theorem ofexg (A : class, R : class, V : class) disjointed(f g x R, f g x) {
@@ -106,7 +106,7 @@ proof of ofexg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Hypothesis builder for function operation.  (Contributed by Mario
+/*Hypothesis builder for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) */
 
 theorem nfof (x : set, R : class) disjointed(f g x y R, f g x y) {
@@ -130,7 +130,7 @@ proof of nfof {
 	qed prop 1 = step 10 ;;
 }
 
-/* Hypothesis builder for function relation.  (Contributed by Mario
+/*Hypothesis builder for function relation.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) */
 
 theorem nfofr (x : set, R : class) disjointed(f g x y R, f g x y) {
@@ -152,10 +152,10 @@ proof of nfofr {
 	qed prop 1 = step 8 ;;
 }
 
-/* Value of an operation applied to two functions.  (Contributed by Mario
+/*Value of an operation applied to two functions.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) */
 
-theorem offval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, f g x R) {
+theorem offval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, x, f g x R) {
 	hyp 1 : wff = |- ( ph → F Fn A ) ;;
 	hyp 2 : wff = |- ( ph → G Fn B ) ;;
 	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
@@ -216,10 +216,10 @@ proof of offval {
 	qed prop 1 = step 44 ;;
 }
 
-/* Value of a relation applied to two functions.  (Contributed by Mario
+/*Value of a relation applied to two functions.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) */
 
-theorem ofrfval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, f g x R) {
+theorem ofrfval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, x, f g x R) {
 	hyp 1 : wff = |- ( ph → F Fn A ) ;;
 	hyp 2 : wff = |- ( ph → G Fn B ) ;;
 	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
@@ -268,7 +268,7 @@ proof of ofrfval {
 	qed prop 1 = step 32 ;;
 }
 
-/* Evaluate a function operation at a point.  (Contributed by Mario
+/*Evaluate a function operation at a point.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) */
 
 theorem ofval (ph : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class, X : class) disjointed(x A, x F, x G, x ph, x S, x X, x R) {
@@ -310,7 +310,7 @@ proof of ofval {
 	qed prop 1 = step 22 ;;
 }
 
-/* Exhibit a function relation at a point.  (Contributed by Mario
+/*Exhibit a function relation at a point.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) */
 
 theorem ofrval (ph : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class, X : class) disjointed(x A, x F, x G, x ph, x S, x X, x R) {
@@ -353,10 +353,10 @@ proof of ofrval {
 	qed prop 1 = step 23 ;;
 }
 
-/* The function operation produces a function.  (Contributed by Mario
+/*The function operation produces a function.  (Contributed by Mario
        Carneiro, 22-Jul-2014.) */
 
-theorem offn (ph : wff, A : class, B : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, x F, x G, x ph, x S, x R) {
+theorem offn (ph : wff, A : class, B : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, x F, x G, x ph, x S, x, x R) {
 	hyp 1 : wff = |- ( ph → F Fn A ) ;;
 	hyp 2 : wff = |- ( ph → G Fn B ) ;;
 	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
@@ -379,7 +379,7 @@ proof of offn {
 	qed prop 1 = step 8 ;;
 }
 
-/* Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
+/*Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
      5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) */
 
 theorem fnfvof (A : class, R : class, F : class, G : class, V : class, X : class)  {
@@ -399,10 +399,10 @@ proof of fnfvof {
 	qed prop 1 = step 9 ;;
 }
 
-/* General value of ` ( F oF R G ) ` with no assumptions on functionality
+/*General value of ` ( F oF R G ) ` with no assumptions on functionality
        of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) */
 
-theorem offval3 (x : set, R : class, F : class, G : class, V : class, W : class) disjointed(F x a b, G x a b, V x, W x, R x a b) {
+theorem offval3 (x : set, R : class, F : class, G : class, V : class, W : class) disjointed(F x a b, G x a b, V x, W x, R x a b, x) {
 	prop 1 : wff = |- ( ( F ∈ V ∧ G ∈ W ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
 }
 
@@ -430,7 +430,7 @@ proof of offval3 {
 	qed prop 1 = step 19 ;;
 }
 
-/* Pointwise combination commutes with restriction.  (Contributed by Stefan
+/*Pointwise combination commutes with restriction.  (Contributed by Stefan
        O'Rear, 24-Jan-2015.) */
 
 theorem offres (D : class, R : class, F : class, G : class, V : class, W : class) disjointed(F x, G x, V x, W x, R x, D x) {
@@ -466,7 +466,7 @@ proof of offres {
 	qed prop 1 = step 24 ;;
 }
 
-/* The function operation produces a function.  (Contributed by Mario
+/*The function operation produces a function.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) */
 
 theorem off (ph : wff, x : set, y : set, A : class, B : class, C : class, R : class, S : class, T : class, U : class, F : class, G : class, V : class, W : class) disjointed(z A, z C, y z G, x y z ph, x y S, x y T, x y z F, x y z R, x y z U) {
@@ -514,7 +514,7 @@ proof of off {
 	qed prop 1 = step 29 ;;
 }
 
-/* Restrict the operands of a function operation to the same domain as that
+/*Restrict the operands of a function operation to the same domain as that
        of the operation itself.  (Contributed by Mario Carneiro,
        15-Sep-2014.) */
 
@@ -559,7 +559,7 @@ proof of ofres {
 	qed prop 1 = step 26 ;;
 }
 
-/* The function operation expressed as a mapping.  (Contributed by Mario
+/*The function operation expressed as a mapping.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) */
 
 theorem offval2 (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, V : class, W : class, X : class) disjointed(x y A, y B, y C, y F, y G, x y ph, x y R) {
@@ -620,7 +620,7 @@ proof of offval2 {
 	qed prop 1 = step 43 ;;
 }
 
-/* The function relation acting on maps.  (Contributed by Mario Carneiro,
+/*The function relation acting on maps.  (Contributed by Mario Carneiro,
        20-Jul-2014.) */
 
 theorem ofrfval2 (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, V : class, W : class, X : class) disjointed(x y A, y B, y C, y F, y G, x y ph, x y R) {
@@ -681,7 +681,7 @@ proof of ofrfval2 {
 	qed prop 1 = step 43 ;;
 }
 
-/* The composition of a function operation with another function.
+/*The composition of a function operation with another function.
        (Contributed by Mario Carneiro, 19-Dec-2014.) */
 
 theorem ofco (ph : wff, A : class, B : class, C : class, D : class, R : class, F : class, G : class, H : class, V : class, W : class, X : class) disjointed(y A, x y C, x y F, x y G, x y H, x y ph, x D, x y R) {
@@ -734,7 +734,7 @@ proof of ofco {
 	qed prop 1 = step 33 ;;
 }
 
-/* Convert an identity of the operation to the analogous identity on the
+/*Convert an identity of the operation to the analogous identity on the
          function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) */
 
 theorem offveq (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, H : class, V : class) disjointed(x A, x F, x G, x H, x ph, x R) {
@@ -759,11 +759,11 @@ proof of offveq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalent expressions for equality with a function operation.
+/*Equivalent expressions for equality with a function operation.
        (Contributed by NM, 9-Oct-2014.)  (Proof shortened by Mario Carneiro,
        5-Dec-2016.) */
 
-theorem offveqb (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, H : class, V : class) disjointed(x A, x F, x G, x H, x ph, x R, x F) {
+theorem offveqb (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, H : class, V : class) disjointed(x A, x F, x G, x H, x ph, x R, A, B, C, x F, G, H, R, ph) {
 	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
 	hyp 2 : wff = |- ( ph → F Fn A ) ;;
 	hyp 3 : wff = |- ( ph → G Fn A ) ;;
@@ -789,7 +789,7 @@ proof of offveqb {
 	qed prop 1 = step 11 ;;
 }
 
-/* Left operation by a constant.  (Contributed by Mario Carneiro,
+/*Left operation by a constant.  (Contributed by Mario Carneiro,
        24-Jul-2014.) */
 
 theorem ofc1 (ph : wff, A : class, B : class, C : class, R : class, F : class, V : class, W : class, X : class)  {
@@ -811,7 +811,7 @@ proof of ofc1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) */
+/*Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) */
 
 theorem ofc2 (ph : wff, A : class, B : class, C : class, R : class, F : class, V : class, W : class, X : class)  {
 	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
@@ -832,7 +832,7 @@ proof of ofc2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Function operation on two constant functions.  (Contributed by Mario
+/*Function operation on two constant functions.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) */
 
 theorem ofc12 (ph : wff, A : class, B : class, C : class, R : class, V : class, W : class, X : class) disjointed(x A, x B, x C, x ph, x R, x W, x X) {
@@ -857,7 +857,7 @@ proof of ofc12 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Transfer a reflexive law to the function relation.  (Contributed by
+/*Transfer a reflexive law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) */
 
 theorem caofref (ph : wff, x : set, A : class, R : class, S : class, F : class, V : class) disjointed(w x, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
@@ -892,7 +892,7 @@ proof of caofref {
 	qed prop 1 = step 19 ;;
 }
 
-/* Transfer a left inverse law to the function operation.  (Contributed
+/*Transfer a left inverse law to the function operation.  (Contributed
            by NM, 22-Oct-2014.) */
 
 theorem caofinvl (ph : wff, x : set, v : set, A : class, B : class, R : class, S : class, F : class, G : class, N : class, V : class, W : class) disjointed(w x B, w x, w x F, w x G, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x, v A, v F, x v N, v S, v ph, v w) {
@@ -956,7 +956,7 @@ proof of caofinvl {
 	qed prop 1 = step 45 ;;
 }
 
-/* Transfer a left identity law to the function operation.
+/*Transfer a left identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) */
 
 theorem caofid0l (ph : wff, x : set, A : class, B : class, R : class, S : class, F : class, V : class, W : class) disjointed(w x B, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
@@ -992,7 +992,7 @@ proof of caofid0l {
 	qed prop 1 = step 19 ;;
 }
 
-/* Transfer a right identity law to the function operation.
+/*Transfer a right identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) */
 
 theorem caofid0r (ph : wff, x : set, A : class, B : class, R : class, S : class, F : class, V : class, W : class) disjointed(w x B, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
@@ -1028,7 +1028,7 @@ proof of caofid0r {
 	qed prop 1 = step 19 ;;
 }
 
-/* Transfer a right absorption law to the function operation.
+/*Transfer a right absorption law to the function operation.
            (Contributed by Mario Carneiro, 28-Jul-2014.) */
 
 theorem caofid1 (ph : wff, x : set, A : class, B : class, C : class, R : class, S : class, F : class, V : class, W : class, X : class) disjointed(w x B, w x C, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
@@ -1067,7 +1067,7 @@ proof of caofid1 {
 	qed prop 1 = step 21 ;;
 }
 
-/* Transfer a right absorption law to the function operation.
+/*Transfer a right absorption law to the function operation.
          (Contributed by Mario Carneiro, 28-Jul-2014.) */
 
 theorem caofid2 (ph : wff, x : set, A : class, B : class, C : class, R : class, S : class, F : class, V : class, W : class, X : class) disjointed(w x B, w x C, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
@@ -1106,7 +1106,7 @@ proof of caofid2 {
 	qed prop 1 = step 21 ;;
 }
 
-/* Transfer a commutative law to the function operation.  (Contributed by
+/*Transfer a commutative law to the function operation.  (Contributed by
          Mario Carneiro, 26-Jul-2014.) */
 
 theorem caofcom (ph : wff, x : set, y : set, A : class, R : class, S : class, F : class, G : class, V : class) disjointed(w x, w x, w x y F, w x y G, w x y, w x y, w x y, w x y ph, w x y R, w A, w x y S, w x y, w x y) {
@@ -1146,7 +1146,7 @@ proof of caofcom {
 	qed prop 1 = step 23 ;;
 }
 
-/* Transfer a relation subset law to the function relation.  (Contributed
+/*Transfer a relation subset law to the function relation.  (Contributed
          by Mario Carneiro, 28-Jul-2014.) */
 
 theorem caofrss (ph : wff, x : set, y : set, A : class, R : class, S : class, T : class, F : class, G : class, V : class) disjointed(w x, w x, w x y F, w x y G, w x y, w x y, w x y, w x y ph, w x y R, w A, w x y S, w x y T, w x y) {
@@ -1195,7 +1195,7 @@ proof of caofrss {
 	qed prop 1 = step 32 ;;
 }
 
-/* Transfer an associative law to the function operation.  (Contributed
+/*Transfer an associative law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) */
 
 theorem caofass (ph : wff, x : set, y : set, z : set, A : class, P : class, R : class, S : class, T : class, F : class, G : class, H : class, O : class, V : class) disjointed(w x, w x, w x y z F, w x y z G, w x y z H, w x y z O, w x y z P, w x y z ph, w x y z R, w A, w x y z S, w x y z T, w x y z) {
@@ -1265,7 +1265,7 @@ proof of caofass {
 	qed prop 1 = step 52 ;;
 }
 
-/* Transfer a transitivity law to the function relation.  (Contributed by
+/*Transfer a transitivity law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) */
 
 theorem caoftrn (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, U : class, F : class, G : class, H : class, V : class) disjointed(w x, w x, w x y z F, w x y z G, w x y z H, w x y z, w x y z, w x y z ph, w x y z R, w A, w x y z S, w x y z T, w x y z U) {
@@ -1335,7 +1335,7 @@ proof of caoftrn {
 	qed prop 1 = step 52 ;;
 }
 
-/* Transfer a distributive law to the function operation.  (Contributed
+/*Transfer a distributive law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) */
 
 theorem caofdi (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, F : class, G : class, H : class, K : class, O : class, V : class) disjointed(w x y z A, w x y z F, w x y z G, w x y z ph, w x y z H, w x y z K, w x y z O, w x y z R, w x y z S, w x y z T) {
@@ -1395,7 +1395,7 @@ proof of caofdi {
 	qed prop 1 = step 42 ;;
 }
 
-/* Transfer a reverse distributive law to the function operation.
+/*Transfer a reverse distributive law to the function operation.
          (Contributed by NM, 19-Oct-2014.) */
 
 theorem caofdir (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, F : class, G : class, H : class, K : class, O : class, V : class) disjointed(w x y z A, w x y z F, w x y z G, w x y z ph, w x y z H, w x y z K, w x y z O, w x y z R, w x y z S, w x y z T) {
@@ -1455,7 +1455,7 @@ proof of caofdir {
 	qed prop 1 = step 42 ;;
 }
 
-/* Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
+/*Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
        Stefan O'Rear, 27-Mar-2015.) */
 
 theorem caonncan (ph : wff, x : set, y : set, A : class, B : class, S : class, I : class, M : class, V : class) disjointed(ph x y z, A x y z, B y z, I z, M x y z, S x y) {
@@ -1504,7 +1504,7 @@ proof of caonncan {
 	qed prop 1 = step 32 ;;
 }
 
-/* Equivalent expressions for a restriction of the function operation map.
+/*Equivalent expressions for a restriction of the function operation map.
        Unlike ` oF R ` which is a proper class, ` ( oF R | `` ( A X. B ) ) `
        can be a set by ~ ofmresex , allowing it to be used as a function or
        structure argument.  By ~ ofmresval , the restricted operation map
@@ -1539,10 +1539,10 @@ proof of ofmres {
 	qed prop 1 = step 19 ;;
 }
 
-/* Value of a restriction of the function operation map.  (Contributed by
+/*Value of a restriction of the function operation map.  (Contributed by
        NM, 20-Oct-2014.) */
 
-theorem ofmresval (ph : wff, A : class, B : class, R : class, F : class, G : class)  {
+theorem ofmresval (ph : wff, A : class, B : class, R : class, F : class, G : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- ( ph → F ∈ A ) ;;
 	hyp 2 : wff = |- ( ph → G ∈ B ) ;;
 	-----------------------
@@ -1555,10 +1555,10 @@ proof of ofmresval {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existence of a restriction of the function operation map.  (Contributed
+/*Existence of a restriction of the function operation map.  (Contributed
        by NM, 20-Oct-2014.) */
 
-theorem ofmresex (ph : wff, A : class, B : class, R : class, V : class, W : class)  {
+theorem ofmresex (ph : wff, A : class, B : class, R : class, V : class, W : class) disjointed(A, B, R) {
 	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
 	hyp 2 : wff = |- ( ph → B ∈ W ) ;;
 	-----------------------
@@ -1573,7 +1573,7 @@ proof of ofmresex {
 	qed prop 1 = step 4 ;;
 }
 
-/* Formula building theorem for support restrictions: vector operation with
+/*Formula building theorem for support restrictions: vector operation with
        left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) */
 
 theorem suppssof1 (ph : wff, v : set, A : class, B : class, D : class, R : class, L : class, O : class, V : class, W : class, Y : class, Z : class) disjointed(ph v x, A x, B v x, D x, O v x, R v, Y v x, Z v x) {

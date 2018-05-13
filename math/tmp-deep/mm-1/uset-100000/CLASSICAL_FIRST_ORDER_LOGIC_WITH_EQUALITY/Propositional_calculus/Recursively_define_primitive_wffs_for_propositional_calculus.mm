@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Pre-logic.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Recursively define primitive wffs for propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
+
+$(If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
      recursive definition of a wff (well-formed formula).  In classical logic
      (which is our logic), a wff is interpreted as either true or false.  So if
      ` ph ` is true, then ` -. ph ` is false; if ` ph ` is false, then
@@ -14,13 +17,16 @@ $( If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
      only wffs built up from other wffs, i.e. there is no starting or "atomic"
      wff.  Later, in predicate calculus, we will extend the basic wff
      definition by including atomic wffs ( ~ weq and ~ wel ). $)
-$c wff  $.
+
+$c wff $.
+
 ${
-	$v ph $.
-	fwn_0 $f wff ph $.
-	wn $a wff -. ph $.
+	$v ph  $.
+	f0_wn $f wff ph $.
+	a_wn $a wff -. ph $.
 $}
-$( If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
+
+$(If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
      ` ps ` ."  Part of the recursive definition of a wff.  The resulting wff
      is (interpreted as) false when ` ph ` is true and ` ps ` is false; it is
      true otherwise.  Think of the truth table for an OR gate with input ` ph `
@@ -55,13 +61,16 @@ $( If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
      material implication has a very specific technical definition, and
      misunderstandings of it are sometimes called "paradoxes of logical
      implication." $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fwi_0 $f wff ph $.
-	fwi_1 $f wff ps $.
-	wi $a wff ( ph -> ps ) $.
+	$v ph ps  $.
+	f0_wi $f wff ph $.
+	f1_wi $f wff ps $.
+	a_wi $a wff ( ph -> ps ) $.
 $}
-$( Register '-.' and '->' as primitive expressions (lacking definitions). $)
-$( $j primitive 'wn' 'wi'; $)
+
+$(Register '-.' and '->' as primitive expressions (lacking definitions). $)
+
+$($j primitive 'wn' 'wi'; $)
+
 

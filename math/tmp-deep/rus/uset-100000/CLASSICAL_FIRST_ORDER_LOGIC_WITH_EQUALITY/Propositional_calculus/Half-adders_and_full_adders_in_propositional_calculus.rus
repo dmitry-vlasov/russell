@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Auxiliary_theorems_for_Alan_Sare_s_virtual_deduction_tool,_part_1.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
        Half-adders and full adders in propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -23,23 +23,23 @@ constant {
 	symbol , ;;
 }
 
-/* Comma (also used for unordered pair notation later) */
+/*Comma (also used for unordered pair notation later) */
 
-/* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+/*Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 rule whad (ph : wff, ps : wff, ch : wff) {
 	term : wff = # hadd ( ph , ps , ch ) ;;
 }
 
-/* Define the half adder carry.  (Contributed by Mario Carneiro,
+/*Define the half adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 rule wcad (ph : wff, ps : wff, ch : wff) {
 	term : wff = # cadd ( ph , ps , ch ) ;;
 }
 
-/* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+/*Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 definition df-had (ph : wff, ps : wff, ch : wff)  {
@@ -49,7 +49,7 @@ definition df-had (ph : wff, ps : wff, ch : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define the half adder carry, which is true when at least two arguments are
+/*Define the half adder carry, which is true when at least two arguments are
      true.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
 
 definition df-cad (ph : wff, ps : wff, ch : wff)  {
@@ -59,7 +59,7 @@ definition df-cad (ph : wff, ps : wff, ch : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+/*Equality theorem for half adder.  (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem hadbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -79,7 +79,7 @@ proof of hadbi123d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+/*Equality theorem for adder carry.  (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem cadbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -101,7 +101,7 @@ proof of cadbi123d {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+/*Equality theorem for half adder.  (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem hadbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -121,7 +121,7 @@ proof of hadbi123i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+/*Equality theorem for adder carry.  (Contributed by Mario Carneiro,
        4-Sep-2016.) */
 
 theorem cadbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -141,7 +141,7 @@ proof of cadbi123i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Associative law for triple XOR. (Contributed by Mario Carneiro,
+/*Associative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem hadass (ph : wff, ps : wff, ch : wff)  {
@@ -155,7 +155,7 @@ proof of hadass {
 	qed prop 1 = step 3 ;;
 }
 
-/* The half adder is the same as the triple biconditional.  (Contributed by
+/*The half adder is the same as the triple biconditional.  (Contributed by
      Mario Carneiro, 4-Sep-2016.) */
 
 theorem hadbi (ph : wff, ps : wff, ch : wff)  {
@@ -173,7 +173,7 @@ proof of hadbi {
 	qed prop 1 = step 7 ;;
 }
 
-/* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+/*Commutative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem hadcoma (ph : wff, ps : wff, ch : wff)  {
@@ -190,7 +190,7 @@ proof of hadcoma {
 	qed prop 1 = step 6 ;;
 }
 
-/* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+/*Commutative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem hadcomb (ph : wff, ps : wff, ch : wff)  {
@@ -207,7 +207,7 @@ proof of hadcomb {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rotation law for triple XOR. (Contributed by Mario Carneiro,
+/*Rotation law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem hadrot (ph : wff, ps : wff, ch : wff)  {
@@ -221,7 +221,7 @@ proof of hadrot {
 	qed prop 1 = step 3 ;;
 }
 
-/* Write the adder carry in disjunctive normal form.  (Contributed by Mario
+/*Write the adder carry in disjunctive normal form.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) */
 
 theorem cador (ph : wff, ps : wff, ch : wff)  {
@@ -246,7 +246,7 @@ proof of cador {
 	qed prop 1 = step 14 ;;
 }
 
-/* Write the adder carry in conjunctive normal form.  (Contributed by Mario
+/*Write the adder carry in conjunctive normal form.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) */
 
 theorem cadan (ph : wff, ps : wff, ch : wff)  {
@@ -296,7 +296,7 @@ proof of cadan {
 	qed prop 1 = step 39 ;;
 }
 
-/* The half adder distributes over negation.  (Contributed by Mario Carneiro,
+/*The half adder distributes over negation.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem hadnot (ph : wff, ps : wff, ch : wff)  {
@@ -316,7 +316,7 @@ proof of hadnot {
 	qed prop 1 = step 9 ;;
 }
 
-/* The adder carry distributes over negation.  (Contributed by Mario
+/*The adder carry distributes over negation.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) */
 
 theorem cadnot (ph : wff, ps : wff, ch : wff)  {
@@ -337,7 +337,7 @@ proof of cadnot {
 	qed prop 1 = step 10 ;;
 }
 
-/* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+/*Commutative law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem cadcoma (ph : wff, ps : wff, ch : wff)  {
@@ -355,7 +355,7 @@ proof of cadcoma {
 	qed prop 1 = step 7 ;;
 }
 
-/* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+/*Commutative law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem cadcomb (ph : wff, ps : wff, ch : wff)  {
@@ -375,7 +375,7 @@ proof of cadcomb {
 	qed prop 1 = step 9 ;;
 }
 
-/* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+/*Rotation law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem cadrot (ph : wff, ps : wff, ch : wff)  {
@@ -389,7 +389,7 @@ proof of cadrot {
 	qed prop 1 = step 3 ;;
 }
 
-/* If one parameter is true, the adder carry is true exactly when at least
+/*If one parameter is true, the adder carry is true exactly when at least
      one of the other parameters is true.  (Contributed by Mario Carneiro,
      8-Sep-2016.) */
 
@@ -418,7 +418,7 @@ proof of cad1 {
 	qed prop 1 = step 17 ;;
 }
 
-/* If two parameters are true, the adder carry is true.  (Contributed by
+/*If two parameters are true, the adder carry is true.  (Contributed by
      Mario Carneiro, 4-Sep-2016.) */
 
 theorem cad11 (ph : wff, ps : wff, ch : wff)  {
@@ -432,7 +432,7 @@ proof of cad11 {
 	qed prop 1 = step 3 ;;
 }
 
-/* If one parameter is false, the adder carry is true exactly when both of
+/*If one parameter is false, the adder carry is true exactly when both of
      the other two parameters are true.  (Contributed by Mario Carneiro,
      8-Sep-2016.) */
 
@@ -452,7 +452,7 @@ proof of cad0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+/*Rotation law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem cadtru (ph : wff)  {
@@ -467,7 +467,7 @@ proof of cadtru {
 	qed prop 1 = step 4 ;;
 }
 
-/* If the first parameter is true, the half adder is equivalent to the
+/*If the first parameter is true, the half adder is equivalent to the
      equality of the other two inputs.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
@@ -488,7 +488,7 @@ proof of had1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* If the first parameter is false, the half adder is equivalent to the XOR
+/*If the first parameter is false, the half adder is equivalent to the XOR
      of the other two inputs.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
 
 theorem had0 (ph : wff, ps : wff, ch : wff)  {

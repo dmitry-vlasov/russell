@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Universal_quantifier__define__exists__and__not_free_.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
        Rule scheme ax-gen (Generalization)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Rule of Generalization.  The postulated inference rule of pure predicate
+/*Rule of Generalization.  The postulated inference rule of pure predicate
        calculus.  See e.g.  Rule 2 of [Hamilton] p. 74.  This rule says that if
        something is unconditionally true, then it is true for all values of a
        variable.  For example, if we have proved ` x = x ` , we can conclude
@@ -22,7 +22,7 @@ axiom ax-gen (ph : wff, x : set)  {
 	prop 1 : wff = |- ∀ x ph ;;
 }
 
-/* Generalization applied twice.  (Contributed by NM, 30-Apr-1998.) */
+/*Generalization applied twice.  (Contributed by NM, 30-Apr-1998.) */
 
 theorem gen2 (ph : wff, x : set, y : set)  {
 	hyp 1 : wff = |- ph ;;
@@ -36,7 +36,7 @@ proof of gen2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens combined with generalization.  (Contributed by NM,
+/*Modus ponens combined with generalization.  (Contributed by NM,
        24-May-1994.) */
 
 theorem mpg (ph : wff, ps : wff, x : set)  {
@@ -52,7 +52,7 @@ proof of mpg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens on biconditional combined with generalization.
+/*Modus ponens on biconditional combined with generalization.
        (Contributed by NM, 24-May-1994.)  (Proof shortened by Stefan Allan,
        28-Oct-2008.) */
 
@@ -69,7 +69,7 @@ proof of mpgbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens on biconditional combined with generalization.
+/*Modus ponens on biconditional combined with generalization.
        (Contributed by NM, 24-May-1994.)  (Proof shortened by Stefan Allan,
        28-Oct-2008.) */
 
@@ -86,7 +86,7 @@ proof of mpgbir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce that ` x ` is not free in ` ph ` from the definition.
+/*Deduce that ` x ` is not free in ` ph ` from the definition.
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfi (ph : wff, x : set)  {
@@ -101,7 +101,7 @@ proof of nfi {
 	qed prop 1 = step 2 ;;
 }
 
-/* No variable is (effectively) free in a theorem.
+/*No variable is (effectively) free in a theorem.
 
        This and later "hypothesis-building" lemmas, with labels starting
        "hb...", allow us to construct proofs of formulas of the form
@@ -121,7 +121,7 @@ proof of hbth {
 	qed prop 1 = step 2 ;;
 }
 
-/* No variable is (effectively) free in a theorem.  (Contributed by Mario
+/*No variable is (effectively) free in a theorem.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem nfth (ph : wff, x : set)  {
@@ -136,7 +136,7 @@ proof of nfth {
 	qed prop 1 = step 2 ;;
 }
 
-/* The true constant has no free variables.  (This can also be proven in one
+/*The true constant has no free variables.  (This can also be proven in one
      step with ~ nfv , but this proof does not use ~ ax-17 .)  (Contributed by
      Mario Carneiro, 6-Oct-2016.) */
 
@@ -150,7 +150,7 @@ proof of nftru {
 	qed prop 1 = step 2 ;;
 }
 
-/* Generalization rule for negated wff.  (Contributed by NM,
+/*Generalization rule for negated wff.  (Contributed by NM,
        18-May-1994.) */
 
 theorem nex (ph : wff, x : set)  {
@@ -165,7 +165,7 @@ proof of nex {
 	qed prop 1 = step 2 ;;
 }
 
-/* No variable is (effectively) free in a non-theorem.  (Contributed by
+/*No variable is (effectively) free in a non-theorem.  (Contributed by
        Mario Carneiro, 6-Dec-2016.) */
 
 theorem nfnth (ph : wff, x : set)  {

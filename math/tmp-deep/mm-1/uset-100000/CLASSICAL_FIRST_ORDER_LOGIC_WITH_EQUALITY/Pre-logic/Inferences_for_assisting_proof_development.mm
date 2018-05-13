@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Pre-logic/Pre-logic.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                  Inferences for assisting proof development
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( (_Note_:  This inference rule and the next one, ~ idi , will normally
+
+$((_Note_:  This inference rule and the next one, ~ idi , will normally
        never appear in a completed proof.  It can be ignored if you are using
        this database to assist learning logic - please start with the statement
        ~ wn instead.)
@@ -37,10 +40,12 @@ $( (_Note_:  This inference rule and the next one, ~ idi , will normally
        completed Proof Worksheets from the mmj2 Proof Assistant GUI, but it can
        also be useful on its own.  Interestingly, no axioms are required for
        its proof.  (Contributed by NM, 7-Feb-2006.) $)
-$( Inference form of ~ id .  This inference rule, which requires no axioms
+
+$(Inference form of ~ id .  This inference rule, which requires no axioms
        for its proof, is useful as a copy-paste mechanism during proof
        development in mmj2.  It is normally not referenced in the final version
        of a proof, since it is always redundant and can be removed using the
        'minimize *' command in the metamath program's Proof Assistant.
        (Contributed by Alan Sare, 31-Dec-2011.) $)
+
 

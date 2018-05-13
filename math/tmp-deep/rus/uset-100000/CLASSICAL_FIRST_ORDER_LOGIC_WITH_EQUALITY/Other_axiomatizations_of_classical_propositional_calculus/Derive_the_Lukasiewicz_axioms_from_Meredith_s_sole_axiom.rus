@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Derive the Lukasiewicz axioms from Meredith's sole axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Carew Meredith's sole axiom for propositional calculus.  This amazing
+/*Carew Meredith's sole axiom for propositional calculus.  This amazing
      formula is thought to be the shortest possible single axiom for
      propositional calculus with inference rule ~ ax-mp , where negation and
      implication are primitive.  Here we prove Meredith's axiom from ~ ax-1 ,
@@ -47,7 +47,7 @@ proof of meredith {
 	qed prop 1 = step 10 ;;
 }
 
-/* Alias for ~ meredith which "verify markup *" will match to
+/*Alias for ~ meredith which "verify markup *" will match to
      ~ ax-meredith .  (Contributed by NM, 21-Aug-2017.)
      (New usage is discouraged.) */
 
@@ -60,7 +60,7 @@ proof of axmeredith {
 	qed prop 1 = step 1 ;;
 }
 
-/* Theorem ~ meredith restated as an axiom.  This will allow us to ensure
+/*Theorem ~ meredith restated as an axiom.  This will allow us to ensure
      that the rederivation of ~ ax1 , ~ ax2 , and ~ ax3 below depend only on
      Meredith's sole axiom and not accidentally on a previous theorem above.
      Outside of this section, we will not make use of this axiom.  (Contributed
@@ -71,7 +71,7 @@ axiom ax-meredith (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ( ph → ps ) → ( ¬ ch → ¬ th ) ) → ch ) → ta ) → ( ( ta → ph ) → ( th → ph ) ) ) ;;
 }
 
-/* Step 3 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 3 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (The step numbers refer to Meredith's original paper.)  (Contributed by
      NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
@@ -89,7 +89,7 @@ proof of merlem1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Step 4 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 4 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -104,7 +104,7 @@ proof of merlem2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Step 7 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 7 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -123,7 +123,7 @@ proof of merlem3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Step 8 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 8 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -138,7 +138,7 @@ proof of merlem4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Step 11 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 11 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -159,7 +159,7 @@ proof of merlem5 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Step 12 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 12 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -174,7 +174,7 @@ proof of merlem6 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Between steps 14 and 15 of Meredith's proof of Lukasiewicz axioms from his
+/*Between steps 14 and 15 of Meredith's proof of Lukasiewicz axioms from his
      sole axiom.  (Contributed by NM, 22-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -193,7 +193,7 @@ proof of merlem7 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -209,7 +209,7 @@ proof of merlem8 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Step 18 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 18 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -228,7 +228,7 @@ proof of merlem9 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Step 19 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 19 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -245,7 +245,7 @@ proof of merlem10 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Step 20 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 20 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -262,7 +262,7 @@ proof of merlem11 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Step 28 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 28 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -281,7 +281,7 @@ proof of merlem12 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Step 35 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+/*Step 35 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -308,7 +308,7 @@ proof of merlem13 {
 	qed prop 1 = step 15 ;;
 }
 
-/* 1 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+/*1 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -327,7 +327,7 @@ proof of luk-1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* 2 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+/*2 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -348,7 +348,7 @@ proof of luk-2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* 3 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+/*3 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 

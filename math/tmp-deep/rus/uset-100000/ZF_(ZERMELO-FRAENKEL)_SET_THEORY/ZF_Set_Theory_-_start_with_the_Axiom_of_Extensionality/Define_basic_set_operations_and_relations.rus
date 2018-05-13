@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Proper_substitution_of_classes_for_sets_into_classes.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Define basic set operations and relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new symbols. */
+/*Declare new symbols. */
 
 constant {
 	symbol ∖ ;;
@@ -14,7 +14,7 @@ constant {
 	latex \setminus ;;
 }
 
-/* Backslash (difference) */
+/*Backslash (difference) */
 
 constant {
 	symbol ∪ ;;
@@ -22,7 +22,7 @@ constant {
 	latex \cup ;;
 }
 
-/* Cup (union) */
+/*Cup (union) */
 
 constant {
 	symbol ∩ ;;
@@ -30,7 +30,7 @@ constant {
 	latex \cap ;;
 }
 
-/* Cap (intersection) */
+/*Cap (intersection) */
 
 constant {
 	symbol ⊆ ;;
@@ -38,7 +38,7 @@ constant {
 	latex \subseteq ;;
 }
 
-/* Subclass or subset symbol */
+/*Subclass or subset symbol */
 
 constant {
 	symbol ⊂ ;;
@@ -46,30 +46,30 @@ constant {
 	latex \subset ;;
 }
 
-/* Proper subclass or subset symbol */
+/*Proper subclass or subset symbol */
 
-/* Extend class notation to include class difference (read:  " ` A ` minus
+/*Extend class notation to include class difference (read:  " ` A ` minus
      ` B ` "). */
 
 rule cdif (A : class, B : class) {
 	term : class = # ( A ∖ B ) ;;
 }
 
-/* Extend class notation to include union of two classes (read:  " ` A `
+/*Extend class notation to include union of two classes (read:  " ` A `
      union ` B ` "). */
 
 rule cun (A : class, B : class) {
 	term : class = # ( A ∪ B ) ;;
 }
 
-/* Extend class notation to include the intersection of two classes
+/*Extend class notation to include the intersection of two classes
      (read:  " ` A ` intersect ` B ` "). */
 
 rule cin (A : class, B : class) {
 	term : class = # ( A ∩ B ) ;;
 }
 
-/* Extend wff notation to include the subclass relation.  This is
+/*Extend wff notation to include the subclass relation.  This is
      read " ` A ` is a subclass of ` B ` " or " ` B ` includes ` A ` ."  When
      ` A ` exists as a set, it is also read " ` A ` is a subset of ` B ` ." */
 
@@ -77,13 +77,13 @@ rule wss (A : class, B : class) {
 	term : wff = # A ⊆ B ;;
 }
 
-/* Extend wff notation with proper subclass relation. */
+/*Extend wff notation with proper subclass relation. */
 
 rule wpss (A : class, B : class) {
 	term : wff = # A ⊂ B ;;
 }
 
-/* Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
@@ -107,7 +107,7 @@ proof of difjust {
 	qed prop 1 = step 11 ;;
 }
 
-/* Define class difference, also called relative complement.  Definition
+/*Define class difference, also called relative complement.  Definition
        5.12 of [TakeutiZaring] p. 20.  For example,
        ` ( { 1 , 3 } \ { 1 , 8 } ) = { 3 } ` ( ~ ex-dif ).  Contrast this
        operation with union ` ( A u. B ) ` ( ~ df-un ) and intersection
@@ -127,7 +127,7 @@ definition df-dif (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
@@ -149,7 +149,7 @@ proof of unjust {
 	qed prop 1 = step 9 ;;
 }
 
-/* Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
+/*Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
        p. 16.  For example, ` ( { 1 , 3 } u. { 1 , 8 } ) = { 1 , 3 , 8 } `
        ( ~ ex-un ).  Contrast this operation with difference ` ( A \ B ) `
        ( ~ df-dif ) and intersection ` ( A i^i B ) ` ( ~ df-in ).  For an
@@ -164,7 +164,7 @@ definition df-un (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
@@ -186,7 +186,7 @@ proof of injust {
 	qed prop 1 = step 9 ;;
 }
 
-/* Define the intersection of two classes.  Definition 5.6 of
+/*Define the intersection of two classes.  Definition 5.6 of
        [TakeutiZaring] p. 16.  For example,
        ` ( { 1 , 3 } i^i { 1 , 8 } ) = { 1 } ` ( ~ ex-in ).  Contrast this
        operation with union ` ( A u. B ) ` ( ~ df-un ) and difference
@@ -202,7 +202,7 @@ definition df-in (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate definition for the intersection of two classes.  (Contributed
+/*Alternate definition for the intersection of two classes.  (Contributed
        by NM, 6-Jul-2005.) */
 
 theorem dfin5 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -216,7 +216,7 @@ proof of dfin5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of class difference.  (Contributed by NM,
+/*Alternate definition of class difference.  (Contributed by NM,
        25-Mar-2004.) */
 
 theorem dfdif2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -230,7 +230,7 @@ proof of dfdif2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Expansion of membership in a class difference.  (Contributed by NM,
+/*Expansion of membership in a class difference.  (Contributed by NM,
        29-Apr-1994.) */
 
 theorem eldif (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -252,7 +252,7 @@ proof of eldif {
 	qed prop 1 = step 10 ;;
 }
 
-/* If a class is in one class and not another, it is also in their
+/*If a class is in one class and not another, it is also in their
        difference.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) */
 
@@ -269,7 +269,7 @@ proof of eldifd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is in the difference of two classes, it is also in the
+/*If a class is in the difference of two classes, it is also in the
        minuend.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) */
 
@@ -286,7 +286,7 @@ proof of eldifad {
 	qed prop 1 = step 3 ;;
 }
 
-/* If a class is in the difference of two classes, it is not in the
+/*If a class is in the difference of two classes, it is not in the
        subtrahend.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) */
 

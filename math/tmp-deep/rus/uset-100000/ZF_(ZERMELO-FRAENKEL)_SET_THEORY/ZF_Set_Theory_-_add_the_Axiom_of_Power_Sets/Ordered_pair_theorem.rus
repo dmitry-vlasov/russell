@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Derive_the_Axiom_of_Pairing.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Ordered pair theorem
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* An ordered pair is nonempty iff the arguments are sets.  (Contributed by
+/*An ordered pair is nonempty iff the arguments are sets.  (Contributed by
        NM, 24-Jan-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opnz (A : class, B : class)  {
@@ -25,7 +25,7 @@ proof of opnz {
 	qed prop 1 = step 8 ;;
 }
 
-/* An ordered pair is nonempty if the arguments are sets.  (Contributed by
+/*An ordered pair is nonempty if the arguments are sets.  (Contributed by
        Mario Carneiro, 26-Apr-2015.) */
 
 theorem opnzi (A : class, B : class)  {
@@ -41,7 +41,7 @@ proof of opnzi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality of the first members of equal ordered pairs.  (Contributed by
+/*Equality of the first members of equal ordered pairs.  (Contributed by
        NM, 28-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opth1 (A : class, B : class, C : class, D : class)  {
@@ -83,7 +83,7 @@ proof of opth1 {
 	qed prop 1 = step 28 ;;
 }
 
-/* The ordered pair theorem.  If two ordered pairs are equal, their first
+/*The ordered pair theorem.  If two ordered pairs are equal, their first
        elements are equal and their second elements are equal.  Exercise 6 of
        [TakeutiZaring] p. 16.  Note that ` C ` and ` D ` are not required to be
        sets due our specific ordered pair definition.  (Contributed by NM,
@@ -144,7 +144,7 @@ proof of opth {
 	qed prop 1 = step 43 ;;
 }
 
-/* Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
+/*Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
        our specific ordered pair definition.  (Contributed by NM,
        14-Oct-2005.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
@@ -171,10 +171,10 @@ proof of opthg {
 	qed prop 1 = step 14 ;;
 }
 
-/* Ordered pair theorem.  (Contributed by NM, 14-Oct-2005.)  (Revised by
+/*Ordered pair theorem.  (Contributed by NM, 14-Oct-2005.)  (Revised by
        Mario Carneiro, 26-Apr-2015.) */
 
-theorem opthg2 (A : class, B : class, C : class, D : class, V : class, W : class)  {
+theorem opthg2 (A : class, B : class, C : class, D : class, V : class, W : class) disjointed(A, B, C, D) {
 	prop 1 : wff = |- ( ( C ∈ V ∧ D ∈ W ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
 }
 
@@ -188,7 +188,7 @@ proof of opthg2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Ordered pair theorem.  (Contributed by NM, 21-Sep-2014.) */
+/*Ordered pair theorem.  (Contributed by NM, 21-Sep-2014.) */
 
 theorem opth2 (A : class, B : class, C : class, D : class)  {
 	hyp 1 : wff = |- C ∈ _V ;;
@@ -203,7 +203,7 @@ proof of opth2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Ordered triple theorem, with triple express with ordered pairs.
+/*Ordered triple theorem, with triple express with ordered pairs.
        (Contributed by NM, 1-May-1995.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -225,7 +225,7 @@ proof of otth2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Ordered triple theorem.  (Contributed by NM, 25-Sep-2014.)  (Revised by
+/*Ordered triple theorem.  (Contributed by NM, 25-Sep-2014.)  (Revised by
        Mario Carneiro, 26-Apr-2015.) */
 
 theorem otth (A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -245,7 +245,7 @@ proof of otth {
 	qed prop 1 = step 5 ;;
 }
 
-/* A variable introduction law for ordered pairs.  Analog of Lemma 15 of
+/*A variable introduction law for ordered pairs.  Analog of Lemma 15 of
        [Monk2] p. 109.  (Contributed by NM, 28-May-1995.) */
 
 theorem eqvinop (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -276,7 +276,7 @@ proof of eqvinop {
 	qed prop 1 = step 17 ;;
 }
 
-/* Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
+/*Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
        (Contributed by NM, 27-Dec-1996.)  (Revised by Andrew Salmon,
        11-Jul-2011.) */
 
@@ -358,7 +358,7 @@ proof of copsexg {
 	qed prop 1 = step 69 ;;
 }
 
-/* Closed theorem form of ~ copsex2g .  (Contributed by NM,
+/*Closed theorem form of ~ copsex2g .  (Contributed by NM,
        17-Feb-2013.) */
 
 theorem copsex2t (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y ps, x y A, x y B) {
@@ -397,7 +397,7 @@ proof of copsex2t {
 	qed prop 1 = step 28 ;;
 }
 
-/* Implicit substitution inference for ordered pairs.  (Contributed by NM,
+/*Implicit substitution inference for ordered pairs.  (Contributed by NM,
        28-May-1995.) */
 
 theorem copsex2g (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y ps, x y A, x y B) {
@@ -429,7 +429,7 @@ proof of copsex2g {
 	qed prop 1 = step 19 ;;
 }
 
-/* An implicit substitution inference for 2 ordered pairs.  (Contributed by
+/*An implicit substitution inference for 2 ordered pairs.  (Contributed by
        NM, 5-Aug-1995.) */
 
 theorem copsex4g (ph : wff, ps : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y z w A, x y z w B, x y z w C, x y z w D, x y z w ps, x y z w R, x y z w S) {
@@ -459,7 +459,7 @@ proof of copsex4g {
 	qed prop 1 = step 17 ;;
 }
 
-/* A property of ordered pairs.  (Contributed by Mario Carneiro,
+/*A property of ordered pairs.  (Contributed by Mario Carneiro,
      26-Apr-2015.) */
 
 theorem 0nelop (A : class, B : class)  {
@@ -491,7 +491,7 @@ proof of 0nelop {
 	qed prop 1 = step 21 ;;
 }
 
-/* Equivalence of existence implied by equality of ordered pairs.
+/*Equivalence of existence implied by equality of ordered pairs.
      (Contributed by NM, 28-May-2008.) */
 
 theorem opeqex (A : class, B : class, C : class, D : class)  {
@@ -506,7 +506,7 @@ proof of opeqex {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equivalence of existence implied by equality of ordered triples.
+/*Equivalence of existence implied by equality of ordered triples.
      (Contributed by NM, 26-Apr-2015.) */
 
 theorem oteqex2 (A : class, B : class, C : class, R : class, S : class, T : class)  {
@@ -523,7 +523,7 @@ proof of oteqex2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalence of existence implied by equality of ordered triples.
+/*Equivalence of existence implied by equality of ordered triples.
      (Contributed by NM, 28-May-2008.)  (Revised by Mario Carneiro,
      26-Apr-2015.) */
 
@@ -554,7 +554,7 @@ proof of oteqex {
 	qed prop 1 = step 19 ;;
 }
 
-/* An ordered pair commutes iff its members are equal.  (Contributed by NM,
+/*An ordered pair commutes iff its members are equal.  (Contributed by NM,
        28-May-2009.) */
 
 theorem opcom (A : class, B : class)  {
@@ -573,7 +573,7 @@ proof of opcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* "At most one" property of an ordered pair.  (Contributed by NM,
+/*"At most one" property of an ordered pair.  (Contributed by NM,
        11-Apr-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem moop2 (x : set, A : class, B : class) disjointed(x y A, y B) {
@@ -603,7 +603,7 @@ proof of moop2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Equivalence for an ordered pair equal to a singleton.  (Contributed by
+/*Equivalence for an ordered pair equal to a singleton.  (Contributed by
        NM, 3-Jun-2008.) */
 
 theorem opeqsn (A : class, B : class, C : class)  {
@@ -640,7 +640,7 @@ proof of opeqsn {
 	qed prop 1 = step 22 ;;
 }
 
-/* Equivalence for an ordered pair equal to an unordered pair.
+/*Equivalence for an ordered pair equal to an unordered pair.
        (Contributed by NM, 3-Jun-2008.) */
 
 theorem opeqpr (A : class, B : class, C : class, D : class)  {
@@ -663,7 +663,7 @@ proof of opeqpr {
 	qed prop 1 = step 7 ;;
 }
 
-/* "At most one" remains true inside ordered pair quantification.
+/*"At most one" remains true inside ordered pair quantification.
        (Contributed by NM, 28-Aug-2007.) */
 
 theorem mosubopt (ph : wff, x : set, y : set, z : set, A : class) disjointed(x y z A) {
@@ -696,7 +696,7 @@ proof of mosubopt {
 	qed prop 1 = step 22 ;;
 }
 
-/* "At most one" remains true inside ordered pair quantification.
+/*"At most one" remains true inside ordered pair quantification.
        (Contributed by NM, 28-May-1995.) */
 
 theorem mosubop (ph : wff, x : set, y : set, z : set, A : class) disjointed(x y z A) {
@@ -712,7 +712,7 @@ proof of mosubop {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transfer existential uniqueness to second member of an ordered pair.
+/*Transfer existential uniqueness to second member of an ordered pair.
        (Contributed by NM, 10-Apr-2004.) */
 
 theorem euop2 (ph : wff, x : set, y : set, A : class) disjointed(x ph, x A, x y) {
@@ -728,7 +728,7 @@ proof of euop2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Prove existential uniqueness for an ordered triple.  (Contributed by
+/*Prove existential uniqueness for an ordered triple.  (Contributed by
        Mario Carneiro, 20-May-2015.) */
 
 theorem euotd (ph : wff, ps : wff, x : set, A : class, B : class, C : class, a : set, b : set, c : set) disjointed(a b c x y A, a b c x y B, a b c x y C, a b c x ph, y ps) {
@@ -813,7 +813,7 @@ proof of euotd {
 	qed prop 1 = step 68 ;;
 }
 
-/* Justification theorem for the ordered pair definition in Norbert Wiener,
+/*Justification theorem for the ordered pair definition in Norbert Wiener,
        "A simplification of the logic of relations," _Proc. of the Cambridge
        Philos.  Soc_., 1914, vol. 17, pp.387-390.  It is also shown as a
        definition in [Enderton] p. 36 and as Exercise 4.8(b) of [Mendelson]
@@ -904,7 +904,7 @@ proof of opthwiener {
 	qed prop 1 = step 72 ;;
 }
 
-/* The union of an ordered pair.  Theorem 65 of [Suppes] p. 39.
+/*The union of an ordered pair.  Theorem 65 of [Suppes] p. 39.
        (Contributed by NM, 17-Aug-2004.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -928,7 +928,7 @@ proof of uniop {
 	qed prop 1 = step 9 ;;
 }
 
-/* Ordered pair membership is inherited by class union.  (Contributed by
+/*Ordered pair membership is inherited by class union.  (Contributed by
        NM, 13-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem uniopel (A : class, B : class, C : class)  {

@@ -1,265 +1,248 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Truth_tables.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
        Auxiliary theorems for Alan Sare's virtual deduction tool, part 1
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Virtual deduction rule ~ e22 without virtual deduction connectives.
+
+$(Virtual deduction rule ~ e22 without virtual deduction connectives.
        Special theorem needed for Alan Sare's virtual deduction translation
        tool.  (Contributed by Alan Sare, 2-May-2011.)
        (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fee22_0 $f wff ph $.
-	fee22_1 $f wff ps $.
-	fee22_2 $f wff ch $.
-	fee22_3 $f wff th $.
-	fee22_4 $f wff ta $.
-	eee22_0 $e |- ( ph -> ( ps -> ch ) ) $.
-	eee22_1 $e |- ( ph -> ( ps -> th ) ) $.
-	eee22_2 $e |- ( ch -> ( th -> ta ) ) $.
-	ee22 $p |- ( ph -> ( ps -> ta ) ) $= fee22_0 fee22_1 fee22_2 fee22_3 fee22_4 eee22_0 eee22_1 eee22_2 syl6c $.
+	$v ph ps ch th ta  $.
+	f0_ee22 $f wff ph $.
+	f1_ee22 $f wff ps $.
+	f2_ee22 $f wff ch $.
+	f3_ee22 $f wff th $.
+	f4_ee22 $f wff ta $.
+	e0_ee22 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1_ee22 $e |- ( ph -> ( ps -> th ) ) $.
+	e2_ee22 $e |- ( ch -> ( th -> ta ) ) $.
+	p_ee22 $p |- ( ph -> ( ps -> ta ) ) $= e0_ee22 e1_ee22 e2_ee22 f0_ee22 f1_ee22 f2_ee22 f3_ee22 f4_ee22 p_syl6c $.
 $}
-$( ~ e12an without virtual deduction connectives.  Special theorem needed
+
+$(~ e12an without virtual deduction connectives.  Special theorem needed
        for Alan Sare's virtual deduction translation tool.  (Contributed by
        Alan Sare, 28-Oct-2011.)  TODO: this is frequently used; come up with
        better label. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fee12an_0 $f wff ph $.
-	fee12an_1 $f wff ps $.
-	fee12an_2 $f wff ch $.
-	fee12an_3 $f wff th $.
-	fee12an_4 $f wff ta $.
-	eee12an_0 $e |- ( ph -> ps ) $.
-	eee12an_1 $e |- ( ph -> ( ch -> th ) ) $.
-	eee12an_2 $e |- ( ( ps /\ th ) -> ta ) $.
-	ee12an $p |- ( ph -> ( ch -> ta ) ) $= fee12an_0 fee12an_2 fee12an_1 fee12an_3 wa fee12an_4 fee12an_0 fee12an_2 fee12an_3 fee12an_1 eee12an_1 eee12an_0 jctild eee12an_2 syl6 $.
+	$v ph ps ch th ta  $.
+	f0_ee12an $f wff ph $.
+	f1_ee12an $f wff ps $.
+	f2_ee12an $f wff ch $.
+	f3_ee12an $f wff th $.
+	f4_ee12an $f wff ta $.
+	e0_ee12an $e |- ( ph -> ps ) $.
+	e1_ee12an $e |- ( ph -> ( ch -> th ) ) $.
+	e2_ee12an $e |- ( ( ps /\ th ) -> ta ) $.
+	p_ee12an $p |- ( ph -> ( ch -> ta ) ) $= e1_ee12an e0_ee12an f0_ee12an f2_ee12an f3_ee12an f1_ee12an p_jctild e2_ee12an f0_ee12an f2_ee12an f1_ee12an f3_ee12an a_wa f4_ee12an p_syl6 $.
 $}
-$( ~ e23 without virtual deductions.  (Contributed by Alan Sare,
+
+$(~ e23 without virtual deductions.  (Contributed by Alan Sare,
        17-Jul-2011.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	fee23_0 $f wff ph $.
-	fee23_1 $f wff ps $.
-	fee23_2 $f wff ch $.
-	fee23_3 $f wff th $.
-	fee23_4 $f wff ta $.
-	fee23_5 $f wff et $.
-	eee23_0 $e |- ( ph -> ( ps -> ch ) ) $.
-	eee23_1 $e |- ( ph -> ( ps -> ( th -> ta ) ) ) $.
-	eee23_2 $e |- ( ch -> ( ta -> et ) ) $.
-	ee23 $p |- ( ph -> ( ps -> ( th -> et ) ) ) $= fee23_0 fee23_1 fee23_3 fee23_4 fee23_5 eee23_1 fee23_0 fee23_1 fee23_2 fee23_4 fee23_5 wi eee23_0 eee23_2 syl6 syldd $.
+	$v ph ps ch th ta et  $.
+	f0_ee23 $f wff ph $.
+	f1_ee23 $f wff ps $.
+	f2_ee23 $f wff ch $.
+	f3_ee23 $f wff th $.
+	f4_ee23 $f wff ta $.
+	f5_ee23 $f wff et $.
+	e0_ee23 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1_ee23 $e |- ( ph -> ( ps -> ( th -> ta ) ) ) $.
+	e2_ee23 $e |- ( ch -> ( ta -> et ) ) $.
+	p_ee23 $p |- ( ph -> ( ps -> ( th -> et ) ) ) $= e1_ee23 e0_ee23 e2_ee23 f0_ee23 f1_ee23 f2_ee23 f4_ee23 f5_ee23 a_wi p_syl6 f0_ee23 f1_ee23 f3_ee23 f4_ee23 f5_ee23 p_syldd $.
 $}
-$( Exportation implication also converting head from biconditional to
+
+$(Exportation implication also converting head from biconditional to
      conditional.  This proof is ~ exbirVD automatically translated and
      minimized.  (Contributed by Alan Sare, 31-Dec-2011.)
      (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fexbir_0 $f wff ph $.
-	fexbir_1 $f wff ps $.
-	fexbir_2 $f wff ch $.
-	fexbir_3 $f wff th $.
-	exbir $p |- ( ( ( ph /\ ps ) -> ( ch <-> th ) ) -> ( ph -> ( ps -> ( th -> ch ) ) ) ) $= fexbir_0 fexbir_1 wa fexbir_2 fexbir_3 wb wi fexbir_0 fexbir_1 fexbir_3 fexbir_2 wi fexbir_2 fexbir_3 wb fexbir_3 fexbir_2 wi fexbir_0 fexbir_1 wa fexbir_2 fexbir_3 bi2 imim2i exp3a $.
+	$v ph ps ch th  $.
+	f0_exbir $f wff ph $.
+	f1_exbir $f wff ps $.
+	f2_exbir $f wff ch $.
+	f3_exbir $f wff th $.
+	p_exbir $p |- ( ( ( ph /\ ps ) -> ( ch <-> th ) ) -> ( ph -> ( ps -> ( th -> ch ) ) ) ) $= f2_exbir f3_exbir p_bi2 f2_exbir f3_exbir a_wb f3_exbir f2_exbir a_wi f0_exbir f1_exbir a_wa p_imim2i f0_exbir f1_exbir a_wa f2_exbir f3_exbir a_wb a_wi f0_exbir f1_exbir f3_exbir f2_exbir a_wi p_exp3a $.
 $}
-$( ~ impexp with a 3-conjunct antecedent.  (Contributed by Alan Sare,
+
+$(~ impexp with a 3-conjunct antecedent.  (Contributed by Alan Sare,
      31-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	f3impexp_0 $f wff ph $.
-	f3impexp_1 $f wff ps $.
-	f3impexp_2 $f wff ch $.
-	f3impexp_3 $f wff th $.
-	3impexp $p |- ( ( ( ph /\ ps /\ ch ) -> th ) <-> ( ph -> ( ps -> ( ch -> th ) ) ) ) $= f3impexp_0 f3impexp_1 f3impexp_2 w3a f3impexp_3 wi f3impexp_0 f3impexp_1 f3impexp_2 f3impexp_3 wi wi wi f3impexp_0 f3impexp_1 f3impexp_2 w3a f3impexp_3 wi f3impexp_0 f3impexp_1 f3impexp_2 f3impexp_3 f3impexp_0 f3impexp_1 f3impexp_2 w3a f3impexp_3 wi id 3expd f3impexp_0 f3impexp_1 f3impexp_2 f3impexp_3 wi wi wi f3impexp_0 f3impexp_1 f3impexp_2 f3impexp_3 f3impexp_0 f3impexp_1 f3impexp_2 f3impexp_3 wi wi wi id 3impd impbii $.
+	$v ph ps ch th  $.
+	f0_3impexp $f wff ph $.
+	f1_3impexp $f wff ps $.
+	f2_3impexp $f wff ch $.
+	f3_3impexp $f wff th $.
+	p_3impexp $p |- ( ( ( ph /\ ps /\ ch ) -> th ) <-> ( ph -> ( ps -> ( ch -> th ) ) ) ) $= f0_3impexp f1_3impexp f2_3impexp a_w3a f3_3impexp a_wi p_id f0_3impexp f1_3impexp f2_3impexp a_w3a f3_3impexp a_wi f0_3impexp f1_3impexp f2_3impexp f3_3impexp p_3expd f0_3impexp f1_3impexp f2_3impexp f3_3impexp a_wi a_wi a_wi p_id f0_3impexp f1_3impexp f2_3impexp f3_3impexp a_wi a_wi a_wi f0_3impexp f1_3impexp f2_3impexp f3_3impexp p_3impd f0_3impexp f1_3impexp f2_3impexp a_w3a f3_3impexp a_wi f0_3impexp f1_3impexp f2_3impexp f3_3impexp a_wi a_wi a_wi p_impbii $.
 $}
-$( ~ 3impexp with biconditional consequent of antecedent that is commuted in
+
+$(~ 3impexp with biconditional consequent of antecedent that is commuted in
      consequent.  Derived automatically from ~ 3impexpVD .  (Contributed by
      Alan Sare, 31-Dec-2011.)  (New usage is discouraged.)  TODO: decide if
      this is worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	f3impexpbicom_0 $f wff ph $.
-	f3impexpbicom_1 $f wff ps $.
-	f3impexpbicom_2 $f wff ch $.
-	f3impexpbicom_3 $f wff th $.
-	f3impexpbicom_4 $f wff ta $.
-	3impexpbicom $p |- ( ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) <-> ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) ) $= f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_3 f3impexpbicom_4 wb wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 f3impexpbicom_4 f3impexpbicom_3 wb wi wi wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_3 f3impexpbicom_4 wb wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 f3impexpbicom_4 f3impexpbicom_3 wb f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_3 f3impexpbicom_4 wb wi f3impexpbicom_3 f3impexpbicom_4 wb f3impexpbicom_4 f3impexpbicom_3 wb wb f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_4 f3impexpbicom_3 wb wi f3impexpbicom_3 f3impexpbicom_4 bicom f3impexpbicom_3 f3impexpbicom_4 wb f3impexpbicom_4 f3impexpbicom_3 wb wb f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_3 f3impexpbicom_4 wb wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_4 f3impexpbicom_3 wb wi f3impexpbicom_3 f3impexpbicom_4 wb f3impexpbicom_4 f3impexpbicom_3 wb f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a imbi2 biimpcd mpi 3expd f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 f3impexpbicom_4 f3impexpbicom_3 wb wi wi wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_4 f3impexpbicom_3 wb f3impexpbicom_3 f3impexpbicom_4 wb f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 w3a f3impexpbicom_4 f3impexpbicom_3 wb wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 f3impexpbicom_4 f3impexpbicom_3 wb wi wi wi f3impexpbicom_0 f3impexpbicom_1 f3impexpbicom_2 f3impexpbicom_4 f3impexpbicom_3 wb 3impexp biimpri f3impexpbicom_3 f3impexpbicom_4 bicom syl6ibr impbii $.
+	$v ph ps ch th ta  $.
+	f0_3impexpbicom $f wff ph $.
+	f1_3impexpbicom $f wff ps $.
+	f2_3impexpbicom $f wff ch $.
+	f3_3impexpbicom $f wff th $.
+	f4_3impexpbicom $f wff ta $.
+	p_3impexpbicom $p |- ( ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) <-> ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) ) $= f3_3impexpbicom f4_3impexpbicom p_bicom f3_3impexpbicom f4_3impexpbicom a_wb f4_3impexpbicom f3_3impexpbicom a_wb f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a p_imbi2 f3_3impexpbicom f4_3impexpbicom a_wb f4_3impexpbicom f3_3impexpbicom a_wb a_wb f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f3_3impexpbicom f4_3impexpbicom a_wb a_wi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f4_3impexpbicom f3_3impexpbicom a_wb a_wi p_biimpcd f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f3_3impexpbicom f4_3impexpbicom a_wb a_wi f3_3impexpbicom f4_3impexpbicom a_wb f4_3impexpbicom f3_3impexpbicom a_wb a_wb f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f4_3impexpbicom f3_3impexpbicom a_wb a_wi p_mpi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f3_3impexpbicom f4_3impexpbicom a_wb a_wi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom f4_3impexpbicom f3_3impexpbicom a_wb p_3expd f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom f4_3impexpbicom f3_3impexpbicom a_wb p_3impexp f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f4_3impexpbicom f3_3impexpbicom a_wb a_wi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom f4_3impexpbicom f3_3impexpbicom a_wb a_wi a_wi a_wi p_biimpri f3_3impexpbicom f4_3impexpbicom p_bicom f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom f4_3impexpbicom f3_3impexpbicom a_wb a_wi a_wi a_wi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f4_3impexpbicom f3_3impexpbicom a_wb f3_3impexpbicom f4_3impexpbicom a_wb p_syl6ibr f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom a_w3a f3_3impexpbicom f4_3impexpbicom a_wb a_wi f0_3impexpbicom f1_3impexpbicom f2_3impexpbicom f4_3impexpbicom f3_3impexpbicom a_wb a_wi a_wi a_wi p_impbii $.
 $}
-$( Deduction form of ~ 3impexpbicom .  Derived automatically from
+
+$(Deduction form of ~ 3impexpbicom .  Derived automatically from
        ~ 3impexpbicomiVD .  (Contributed by Alan Sare, 31-Dec-2011.)
        (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	f3impexpbicomi_0 $f wff ph $.
-	f3impexpbicomi_1 $f wff ps $.
-	f3impexpbicomi_2 $f wff ch $.
-	f3impexpbicomi_3 $f wff th $.
-	f3impexpbicomi_4 $f wff ta $.
-	e3impexpbicomi_0 $e |- ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) $.
-	3impexpbicomi $p |- ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) $= f3impexpbicomi_0 f3impexpbicomi_1 f3impexpbicomi_2 f3impexpbicomi_4 f3impexpbicomi_3 wb f3impexpbicomi_0 f3impexpbicomi_1 f3impexpbicomi_2 w3a f3impexpbicomi_3 f3impexpbicomi_4 e3impexpbicomi_0 bicomd 3exp $.
+	$v ph ps ch th ta  $.
+	f0_3impexpbicomi $f wff ph $.
+	f1_3impexpbicomi $f wff ps $.
+	f2_3impexpbicomi $f wff ch $.
+	f3_3impexpbicomi $f wff th $.
+	f4_3impexpbicomi $f wff ta $.
+	e0_3impexpbicomi $e |- ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) $.
+	p_3impexpbicomi $p |- ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) $= e0_3impexpbicomi f0_3impexpbicomi f1_3impexpbicomi f2_3impexpbicomi a_w3a f3_3impexpbicomi f4_3impexpbicomi p_bicomd f0_3impexpbicomi f1_3impexpbicomi f2_3impexpbicomi f4_3impexpbicomi f3_3impexpbicomi a_wb p_3exp $.
 $}
-$( Closed form of ~ ancoms .  Derived automatically from ~ ancomsimpVD .
+
+$(Closed form of ~ ancoms .  Derived automatically from ~ ancomsimpVD .
      (Contributed by Alan Sare, 31-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fancomsimp_0 $f wff ph $.
-	fancomsimp_1 $f wff ps $.
-	fancomsimp_2 $f wff ch $.
-	ancomsimp $p |- ( ( ( ph /\ ps ) -> ch ) <-> ( ( ps /\ ph ) -> ch ) ) $= fancomsimp_0 fancomsimp_1 wa fancomsimp_1 fancomsimp_0 wa fancomsimp_2 fancomsimp_0 fancomsimp_1 ancom imbi1i $.
+	$v ph ps ch  $.
+	f0_ancomsimp $f wff ph $.
+	f1_ancomsimp $f wff ps $.
+	f2_ancomsimp $f wff ch $.
+	p_ancomsimp $p |- ( ( ( ph /\ ps ) -> ch ) <-> ( ( ps /\ ph ) -> ch ) ) $= f0_ancomsimp f1_ancomsimp p_ancom f0_ancomsimp f1_ancomsimp a_wa f1_ancomsimp f0_ancomsimp a_wa f2_ancomsimp p_imbi1i $.
 $}
-$( Export and commute antecedents.  (Contributed by Alan Sare,
+
+$(Export and commute antecedents.  (Contributed by Alan Sare,
        18-Mar-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fexp3acom3r_0 $f wff ph $.
-	fexp3acom3r_1 $f wff ps $.
-	fexp3acom3r_2 $f wff ch $.
-	fexp3acom3r_3 $f wff th $.
-	eexp3acom3r_0 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
-	exp3acom3r $p |- ( ps -> ( ch -> ( ph -> th ) ) ) $= fexp3acom3r_0 fexp3acom3r_1 fexp3acom3r_2 fexp3acom3r_3 fexp3acom3r_0 fexp3acom3r_1 fexp3acom3r_2 fexp3acom3r_3 eexp3acom3r_0 exp3a com3l $.
+	$v ph ps ch th  $.
+	f0_exp3acom3r $f wff ph $.
+	f1_exp3acom3r $f wff ps $.
+	f2_exp3acom3r $f wff ch $.
+	f3_exp3acom3r $f wff th $.
+	e0_exp3acom3r $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	p_exp3acom3r $p |- ( ps -> ( ch -> ( ph -> th ) ) ) $= e0_exp3acom3r f0_exp3acom3r f1_exp3acom3r f2_exp3acom3r f3_exp3acom3r p_exp3a f0_exp3acom3r f1_exp3acom3r f2_exp3acom3r f3_exp3acom3r p_com3l $.
 $}
-$( Implication form of ~ exp3acom23 .  (Contributed by Alan Sare,
+
+$(Implication form of ~ exp3acom23 .  (Contributed by Alan Sare,
      22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
      keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fexp3acom23g_0 $f wff ph $.
-	fexp3acom23g_1 $f wff ps $.
-	fexp3acom23g_2 $f wff ch $.
-	fexp3acom23g_3 $f wff th $.
-	exp3acom23g $p |- ( ( ph -> ( ( ps /\ ch ) -> th ) ) <-> ( ph -> ( ch -> ( ps -> th ) ) ) ) $= fexp3acom23g_1 fexp3acom23g_2 wa fexp3acom23g_3 wi fexp3acom23g_2 fexp3acom23g_1 fexp3acom23g_3 wi wi fexp3acom23g_0 fexp3acom23g_1 fexp3acom23g_2 wa fexp3acom23g_3 wi fexp3acom23g_2 fexp3acom23g_1 wa fexp3acom23g_3 wi fexp3acom23g_2 fexp3acom23g_1 fexp3acom23g_3 wi wi fexp3acom23g_1 fexp3acom23g_2 fexp3acom23g_3 ancomsimp fexp3acom23g_2 fexp3acom23g_1 fexp3acom23g_3 impexp bitri imbi2i $.
+	$v ph ps ch th  $.
+	f0_exp3acom23g $f wff ph $.
+	f1_exp3acom23g $f wff ps $.
+	f2_exp3acom23g $f wff ch $.
+	f3_exp3acom23g $f wff th $.
+	p_exp3acom23g $p |- ( ( ph -> ( ( ps /\ ch ) -> th ) ) <-> ( ph -> ( ch -> ( ps -> th ) ) ) ) $= f1_exp3acom23g f2_exp3acom23g f3_exp3acom23g p_ancomsimp f2_exp3acom23g f1_exp3acom23g f3_exp3acom23g p_impexp f1_exp3acom23g f2_exp3acom23g a_wa f3_exp3acom23g a_wi f2_exp3acom23g f1_exp3acom23g a_wa f3_exp3acom23g a_wi f2_exp3acom23g f1_exp3acom23g f3_exp3acom23g a_wi a_wi p_bitri f1_exp3acom23g f2_exp3acom23g a_wa f3_exp3acom23g a_wi f2_exp3acom23g f1_exp3acom23g f3_exp3acom23g a_wi a_wi f0_exp3acom23g p_imbi2i $.
 $}
-$( The exportation deduction ~ exp3a with commutation of the conjoined
+
+$(The exportation deduction ~ exp3a with commutation of the conjoined
        wwfs.  (Contributed by Alan Sare, 22-Jul-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fexp3acom23_0 $f wff ph $.
-	fexp3acom23_1 $f wff ps $.
-	fexp3acom23_2 $f wff ch $.
-	fexp3acom23_3 $f wff th $.
-	eexp3acom23_0 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
-	exp3acom23 $p |- ( ph -> ( ch -> ( ps -> th ) ) ) $= fexp3acom23_0 fexp3acom23_1 fexp3acom23_2 fexp3acom23_3 fexp3acom23_0 fexp3acom23_1 fexp3acom23_2 fexp3acom23_3 eexp3acom23_0 exp3a com23 $.
+	$v ph ps ch th  $.
+	f0_exp3acom23 $f wff ph $.
+	f1_exp3acom23 $f wff ps $.
+	f2_exp3acom23 $f wff ch $.
+	f3_exp3acom23 $f wff th $.
+	e0_exp3acom23 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	p_exp3acom23 $p |- ( ph -> ( ch -> ( ps -> th ) ) ) $= e0_exp3acom23 f0_exp3acom23 f1_exp3acom23 f2_exp3acom23 f3_exp3acom23 p_exp3a f0_exp3acom23 f1_exp3acom23 f2_exp3acom23 f3_exp3acom23 p_com23 $.
 $}
-$( Implication form of ~ simplbi2com .  (Contributed by Alan Sare,
+
+$(Implication form of ~ simplbi2com .  (Contributed by Alan Sare,
      22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
      keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fsimplbi2comg_0 $f wff ph $.
-	fsimplbi2comg_1 $f wff ps $.
-	fsimplbi2comg_2 $f wff ch $.
-	simplbi2comg $p |- ( ( ph <-> ( ps /\ ch ) ) -> ( ch -> ( ps -> ph ) ) ) $= fsimplbi2comg_0 fsimplbi2comg_1 fsimplbi2comg_2 wa wb fsimplbi2comg_1 fsimplbi2comg_2 fsimplbi2comg_0 fsimplbi2comg_0 fsimplbi2comg_1 fsimplbi2comg_2 wa bi2 exp3acom23 $.
+	$v ph ps ch  $.
+	f0_simplbi2comg $f wff ph $.
+	f1_simplbi2comg $f wff ps $.
+	f2_simplbi2comg $f wff ch $.
+	p_simplbi2comg $p |- ( ( ph <-> ( ps /\ ch ) ) -> ( ch -> ( ps -> ph ) ) ) $= f0_simplbi2comg f1_simplbi2comg f2_simplbi2comg a_wa p_bi2 f0_simplbi2comg f1_simplbi2comg f2_simplbi2comg a_wa a_wb f1_simplbi2comg f2_simplbi2comg f0_simplbi2comg p_exp3acom23 $.
 $}
-$( A deduction eliminating a conjunct, similar to ~ simplbi2 .
+
+$(A deduction eliminating a conjunct, similar to ~ simplbi2 .
        (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Wolf
        Lammen, 10-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fsimplbi2com_0 $f wff ph $.
-	fsimplbi2com_1 $f wff ps $.
-	fsimplbi2com_2 $f wff ch $.
-	esimplbi2com_0 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	simplbi2com $p |- ( ch -> ( ps -> ph ) ) $= fsimplbi2com_1 fsimplbi2com_2 fsimplbi2com_0 fsimplbi2com_0 fsimplbi2com_1 fsimplbi2com_2 esimplbi2com_0 simplbi2 com12 $.
+	$v ph ps ch  $.
+	f0_simplbi2com $f wff ph $.
+	f1_simplbi2com $f wff ps $.
+	f2_simplbi2com $f wff ch $.
+	e0_simplbi2com $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_simplbi2com $p |- ( ch -> ( ps -> ph ) ) $= e0_simplbi2com f0_simplbi2com f1_simplbi2com f2_simplbi2com p_simplbi2 f1_simplbi2com f2_simplbi2com f0_simplbi2com p_com12 $.
 $}
-$( ~ e21 without virtual deductions.  (Contributed by Alan Sare,
+
+$(~ e21 without virtual deductions.  (Contributed by Alan Sare,
        18-Mar-2012.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fee21_0 $f wff ph $.
-	fee21_1 $f wff ps $.
-	fee21_2 $f wff ch $.
-	fee21_3 $f wff th $.
-	fee21_4 $f wff ta $.
-	eee21_0 $e |- ( ph -> ( ps -> ch ) ) $.
-	eee21_1 $e |- ( ph -> th ) $.
-	eee21_2 $e |- ( ch -> ( th -> ta ) ) $.
-	ee21 $p |- ( ph -> ( ps -> ta ) ) $= fee21_0 fee21_1 fee21_2 fee21_3 fee21_4 eee21_0 fee21_0 fee21_3 fee21_1 eee21_1 a1d eee21_2 ee22 $.
+	$v ph ps ch th ta  $.
+	f0_ee21 $f wff ph $.
+	f1_ee21 $f wff ps $.
+	f2_ee21 $f wff ch $.
+	f3_ee21 $f wff th $.
+	f4_ee21 $f wff ta $.
+	e0_ee21 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1_ee21 $e |- ( ph -> th ) $.
+	e2_ee21 $e |- ( ch -> ( th -> ta ) ) $.
+	p_ee21 $p |- ( ph -> ( ps -> ta ) ) $= e0_ee21 e1_ee21 f0_ee21 f3_ee21 f1_ee21 p_a1d e2_ee21 f0_ee21 f1_ee21 f2_ee21 f3_ee21 f4_ee21 p_ee22 $.
 $}
-$( ~ e10 without virtual deductions.  (Contributed by Alan Sare,
+
+$(~ e10 without virtual deductions.  (Contributed by Alan Sare,
        25-Jul-2011.)  TODO: this is frequently used; come up with better
        label. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fee10_0 $f wff ph $.
-	fee10_1 $f wff ps $.
-	fee10_2 $f wff ch $.
-	fee10_3 $f wff th $.
-	eee10_0 $e |- ( ph -> ps ) $.
-	eee10_1 $e |- ch $.
-	eee10_2 $e |- ( ps -> ( ch -> th ) ) $.
-	ee10 $p |- ( ph -> th ) $= fee10_0 fee10_1 fee10_3 eee10_0 fee10_1 fee10_2 fee10_3 eee10_1 eee10_2 mpi syl $.
+	$v ph ps ch th  $.
+	f0_ee10 $f wff ph $.
+	f1_ee10 $f wff ps $.
+	f2_ee10 $f wff ch $.
+	f3_ee10 $f wff th $.
+	e0_ee10 $e |- ( ph -> ps ) $.
+	e1_ee10 $e |- ch $.
+	e2_ee10 $e |- ( ps -> ( ch -> th ) ) $.
+	p_ee10 $p |- ( ph -> th ) $= e0_ee10 e1_ee10 e2_ee10 f1_ee10 f2_ee10 f3_ee10 p_mpi f0_ee10 f1_ee10 f3_ee10 p_syl $.
 $}
-$( ~ e02 without virtual deductions.  (Contributed by Alan Sare,
+
+$(~ e02 without virtual deductions.  (Contributed by Alan Sare,
        22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fee02_0 $f wff ph $.
-	fee02_1 $f wff ps $.
-	fee02_2 $f wff ch $.
-	fee02_3 $f wff th $.
-	fee02_4 $f wff ta $.
-	eee02_0 $e |- ph $.
-	eee02_1 $e |- ( ps -> ( ch -> th ) ) $.
-	eee02_2 $e |- ( ph -> ( th -> ta ) ) $.
-	ee02 $p |- ( ps -> ( ch -> ta ) ) $= fee02_1 fee02_0 fee02_2 fee02_3 fee02_4 fee02_0 fee02_1 eee02_0 a1i eee02_1 eee02_2 sylsyld $.
+	$v ph ps ch th ta  $.
+	f0_ee02 $f wff ph $.
+	f1_ee02 $f wff ps $.
+	f2_ee02 $f wff ch $.
+	f3_ee02 $f wff th $.
+	f4_ee02 $f wff ta $.
+	e0_ee02 $e |- ph $.
+	e1_ee02 $e |- ( ps -> ( ch -> th ) ) $.
+	e2_ee02 $e |- ( ph -> ( th -> ta ) ) $.
+	p_ee02 $p |- ( ps -> ( ch -> ta ) ) $= e0_ee02 f0_ee02 f1_ee02 p_a1i e1_ee02 e2_ee02 f1_ee02 f0_ee02 f2_ee02 f3_ee02 f4_ee02 p_sylsyld $.
 $}
-$( End of auxiliary theorems for Alan Sare's virtual deduction tool, part 1 $)
+
+$(End of auxiliary theorems for Alan Sare's virtual deduction tool, part 1 $)
+
 

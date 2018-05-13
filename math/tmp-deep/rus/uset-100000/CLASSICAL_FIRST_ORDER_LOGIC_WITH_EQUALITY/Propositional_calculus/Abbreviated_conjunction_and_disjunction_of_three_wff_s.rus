@@ -1,26 +1,26 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Miscellaneous_theorems_of_propositional_calculus.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Abbreviated conjunction and disjunction of three wff's
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Extend wff definition to include 3-way disjunction ('or'). */
+/*Extend wff definition to include 3-way disjunction ('or'). */
 
 rule w3o (ph : wff, ps : wff, ch : wff) {
 	term : wff = # ( ph ∨ ps ∨ ch ) ;;
 }
 
-/* Extend wff definition to include 3-way conjunction ('and'). */
+/*Extend wff definition to include 3-way conjunction ('and'). */
 
 rule w3a (ph : wff, ps : wff, ch : wff) {
 	term : wff = # ( ph ∧ ps ∧ ch ) ;;
 }
 
-/* These abbreviations help eliminate parentheses to aid readability. */
+/*These abbreviations help eliminate parentheses to aid readability. */
 
-/* Define disjunction ('or') of three wff's.  Definition *2.33 of
+/*Define disjunction ('or') of three wff's.  Definition *2.33 of
      [WhiteheadRussell] p. 105.  This abbreviation reduces the number of
      parentheses and emphasizes that the order of bracketing is not important
      by virtue of the associative law ~ orass .  (Contributed by NM,
@@ -33,7 +33,7 @@ definition df-3or (ph : wff, ps : wff, ch : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define conjunction ('and') of three wff's.  Definition *4.34 of
+/*Define conjunction ('and') of three wff's.  Definition *4.34 of
      [WhiteheadRussell] p. 118.  This abbreviation reduces the number of
      parentheses and emphasizes that the order of bracketing is not important
      by virtue of the associative law ~ anass .  (Contributed by NM,
@@ -46,7 +46,7 @@ definition df-3an (ph : wff, ps : wff, ch : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Associative law for triple disjunction.  (Contributed by NM,
+/*Associative law for triple disjunction.  (Contributed by NM,
      8-Apr-1994.) */
 
 theorem 3orass (ph : wff, ps : wff, ch : wff)  {
@@ -60,7 +60,7 @@ proof of 3orass {
 	qed prop 1 = step 3 ;;
 }
 
-/* Associative law for triple conjunction.  (Contributed by NM,
+/*Associative law for triple conjunction.  (Contributed by NM,
      8-Apr-1994.) */
 
 theorem 3anass (ph : wff, ps : wff, ch : wff)  {
@@ -74,7 +74,7 @@ proof of 3anass {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rotation law for triple conjunction.  (Contributed by NM, 8-Apr-1994.) */
+/*Rotation law for triple conjunction.  (Contributed by NM, 8-Apr-1994.) */
 
 theorem 3anrot (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ps ∧ ch ) ↔ ( ps ∧ ch ∧ ph ) ) ;;
@@ -88,7 +88,7 @@ proof of 3anrot {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rotation law for triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
+/*Rotation law for triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
 
 theorem 3orrot (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph ∨ ps ∨ ch ) ↔ ( ps ∨ ch ∨ ph ) ) ;;
@@ -102,7 +102,7 @@ proof of 3orrot {
 	qed prop 1 = step 4 ;;
 }
 
-/* Commutation law for triple conjunction.  (Contributed by NM,
+/*Commutation law for triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem 3ancoma (ph : wff, ps : wff, ch : wff)  {
@@ -118,7 +118,7 @@ proof of 3ancoma {
 	qed prop 1 = step 5 ;;
 }
 
-/* Commutation law for triple disjunction.  (Contributed by Mario Carneiro,
+/*Commutation law for triple disjunction.  (Contributed by Mario Carneiro,
      4-Sep-2016.) */
 
 theorem 3orcoma (ph : wff, ps : wff, ch : wff)  {
@@ -133,7 +133,7 @@ proof of 3orcoma {
 	qed prop 1 = step 4 ;;
 }
 
-/* Commutation law for triple conjunction.  (Contributed by NM,
+/*Commutation law for triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem 3ancomb (ph : wff, ps : wff, ch : wff)  {
@@ -147,7 +147,7 @@ proof of 3ancomb {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation law for triple disjunction.  (Contributed by Scott Fenton,
+/*Commutation law for triple disjunction.  (Contributed by Scott Fenton,
      20-Apr-2011.) */
 
 theorem 3orcomb (ph : wff, ps : wff, ch : wff)  {
@@ -163,7 +163,7 @@ proof of 3orcomb {
 	qed prop 1 = step 5 ;;
 }
 
-/* Reversal law for triple conjunction.  (Contributed by NM, 21-Apr-1994.) */
+/*Reversal law for triple conjunction.  (Contributed by NM, 21-Apr-1994.) */
 
 theorem 3anrev (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ps ∧ ch ) ↔ ( ch ∧ ps ∧ ph ) ) ;;
@@ -176,7 +176,7 @@ proof of 3anrev {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert triple conjunction to conjunction, then commute.  (Contributed by
+/*Convert triple conjunction to conjunction, then commute.  (Contributed by
      Jonathan Ben-Naim, 3-Jun-2011.) */
 
 theorem 3anan32 (ph : wff, ps : wff, ch : wff)  {
@@ -190,7 +190,7 @@ proof of 3anan32 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert triple conjunction to conjunction, then commute.  (Contributed by
+/*Convert triple conjunction to conjunction, then commute.  (Contributed by
      Jonathan Ben-Naim, 3-Jun-2011.)  (Proof shortened by Andrew Salmon,
      14-Jun-2011.) */
 
@@ -205,7 +205,7 @@ proof of 3anan12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Triple conjunction expressed in terms of triple disjunction.  (Contributed
+/*Triple conjunction expressed in terms of triple disjunction.  (Contributed
      by Jeff Hankins, 15-Aug-2009.) */
 
 theorem 3anor (ph : wff, ps : wff, ch : wff)  {
@@ -224,7 +224,7 @@ proof of 3anor {
 	qed prop 1 = step 8 ;;
 }
 
-/* Negated triple conjunction expressed in terms of triple disjunction.
+/*Negated triple conjunction expressed in terms of triple disjunction.
      (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof shortened by Andrew
      Salmon, 13-May-2011.) */
 
@@ -239,7 +239,7 @@ proof of 3ianor {
 	qed prop 1 = step 3 ;;
 }
 
-/* Negated triple disjunction as triple conjunction.  (Contributed by Scott
+/*Negated triple disjunction as triple conjunction.  (Contributed by Scott
      Fenton, 19-Apr-2011.) */
 
 theorem 3ioran (ph : wff, ps : wff, ch : wff)  {
@@ -257,7 +257,7 @@ proof of 3ioran {
 	qed prop 1 = step 7 ;;
 }
 
-/* Triple disjunction in terms of triple conjunction.  (Contributed by NM,
+/*Triple disjunction in terms of triple conjunction.  (Contributed by NM,
      8-Oct-2012.) */
 
 theorem 3oran (ph : wff, ps : wff, ch : wff)  {
@@ -271,7 +271,7 @@ proof of 3oran {
 	qed prop 1 = step 3 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM,
+/*Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem 3simpa (ph : wff, ps : wff, ch : wff)  {
@@ -284,7 +284,7 @@ proof of 3simpa {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM,
+/*Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem 3simpb (ph : wff, ps : wff, ch : wff)  {
@@ -298,7 +298,7 @@ proof of 3simpb {
 	qed prop 1 = step 3 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 21-Apr-1994.)
+/*Simplification of triple conjunction.  (Contributed by NM, 21-Apr-1994.)
      (Proof shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem 3simpc (ph : wff, ps : wff, ch : wff)  {
@@ -312,7 +312,7 @@ proof of 3simpc {
 	qed prop 1 = step 3 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM,
+/*Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem simp1 (ph : wff, ps : wff, ch : wff)  {
@@ -325,7 +325,7 @@ proof of simp1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM,
+/*Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem simp2 (ph : wff, ps : wff, ch : wff)  {
@@ -338,7 +338,7 @@ proof of simp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM,
+/*Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) */
 
 theorem simp3 (ph : wff, ps : wff, ch : wff)  {
@@ -351,7 +351,7 @@ proof of simp3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpl1 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ∧ ch ) ∧ th ) → ph ) ;;
@@ -363,7 +363,7 @@ proof of simpl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpl2 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ∧ ch ) ∧ th ) → ps ) ;;
@@ -375,7 +375,7 @@ proof of simpl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpl3 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ∧ ch ) ∧ th ) → ch ) ;;
@@ -387,7 +387,7 @@ proof of simpl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpr1 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ∧ th ) ) → ps ) ;;
@@ -399,7 +399,7 @@ proof of simpr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpr2 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ∧ th ) ) → ch ) ;;
@@ -411,7 +411,7 @@ proof of simpr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
+/*Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
 
 theorem simpr3 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ∧ th ) ) → th ) ;;
@@ -423,7 +423,7 @@ proof of simpr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer a conjunct from a triple conjunction.  (Contributed by NM,
+/*Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) */
 
 theorem simp1i (ph : wff, ps : wff, ch : wff)  {
@@ -438,7 +438,7 @@ proof of simp1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer a conjunct from a triple conjunction.  (Contributed by NM,
+/*Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) */
 
 theorem simp2i (ph : wff, ps : wff, ch : wff)  {
@@ -453,7 +453,7 @@ proof of simp2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer a conjunct from a triple conjunction.  (Contributed by NM,
+/*Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) */
 
 theorem simp3i (ph : wff, ps : wff, ch : wff)  {
@@ -468,7 +468,7 @@ proof of simp3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+/*Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) */
 
 theorem simp1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -483,7 +483,7 @@ proof of simp1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+/*Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) */
 
 theorem simp2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -498,7 +498,7 @@ proof of simp2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+/*Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) */
 
 theorem simp3d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -513,7 +513,7 @@ proof of simp3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+/*Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem simp1bi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -528,7 +528,7 @@ proof of simp1bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+/*Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem simp2bi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -543,7 +543,7 @@ proof of simp2bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+/*Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem simp3bi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -558,7 +558,7 @@ proof of simp3bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) */
 
 theorem 3adant1 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -573,7 +573,7 @@ proof of 3adant1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) */
 
 theorem 3adant2 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -588,7 +588,7 @@ proof of 3adant2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) */
 
 theorem 3adant3 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -603,7 +603,7 @@ proof of 3adant3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) */
 
 theorem 3ad2ant1 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -618,7 +618,7 @@ proof of 3ad2ant1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) */
 
 theorem 3ad2ant2 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -633,7 +633,7 @@ proof of 3ad2ant2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) */
 
 theorem 3ad2ant3 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -648,7 +648,7 @@ proof of 3ad2ant3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp1l (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ∧ th ) → ph ) ;;
@@ -660,7 +660,7 @@ proof of simp1l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp1r (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ch ∧ th ) → ps ) ;;
@@ -672,7 +672,7 @@ proof of simp1r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp2l (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ∧ th ) → ps ) ;;
@@ -684,7 +684,7 @@ proof of simp2l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp2r (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ∧ th ) → ch ) ;;
@@ -696,7 +696,7 @@ proof of simp2r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp3l (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ps ∧ ( ch ∧ th ) ) → ch ) ;;
@@ -708,7 +708,7 @@ proof of simp3l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
+/*Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
 
 theorem simp3r (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ ps ∧ ( ch ∧ th ) ) → th ) ;;
@@ -720,7 +720,7 @@ proof of simp3r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp11 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -733,7 +733,7 @@ proof of simp11 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp12 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -746,7 +746,7 @@ proof of simp12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp13 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -759,7 +759,7 @@ proof of simp13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp21 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -772,7 +772,7 @@ proof of simp21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp22 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -785,7 +785,7 @@ proof of simp22 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp23 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -798,7 +798,7 @@ proof of simp23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp31 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -811,7 +811,7 @@ proof of simp31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp32 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -824,7 +824,7 @@ proof of simp32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of doubly triple conjunction.  (Contributed by NM,
+/*Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) */
 
 theorem simp33 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -837,7 +837,7 @@ proof of simp33 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpll1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ) → ph ) ;;
@@ -849,7 +849,7 @@ proof of simpll1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpll2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ) → ps ) ;;
@@ -861,7 +861,7 @@ proof of simpll2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpll3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ) → ch ) ;;
@@ -873,7 +873,7 @@ proof of simpll3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simplr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ) → ph ) ;;
@@ -885,7 +885,7 @@ proof of simplr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simplr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ) → ps ) ;;
@@ -897,7 +897,7 @@ proof of simplr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simplr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ) → ch ) ;;
@@ -909,7 +909,7 @@ proof of simplr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ph ) ;;
@@ -921,7 +921,7 @@ proof of simprl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ps ) ;;
@@ -933,7 +933,7 @@ proof of simprl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprl3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ch ) ;;
@@ -945,7 +945,7 @@ proof of simprl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ph ) ;;
@@ -957,7 +957,7 @@ proof of simprr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ps ) ;;
@@ -969,7 +969,7 @@ proof of simprr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simprr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ch ) ;;
@@ -981,7 +981,7 @@ proof of simprr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl1l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ ta ) → ph ) ;;
@@ -993,7 +993,7 @@ proof of simpl1l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl1r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ ta ) → ps ) ;;
@@ -1005,7 +1005,7 @@ proof of simpl1r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl2l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ ta ) → ph ) ;;
@@ -1017,7 +1017,7 @@ proof of simpl2l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl2r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ ta ) → ps ) ;;
@@ -1029,7 +1029,7 @@ proof of simpl2r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl3l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ ta ) → ph ) ;;
@@ -1041,7 +1041,7 @@ proof of simpl3l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl3r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ ta ) → ps ) ;;
@@ -1053,7 +1053,7 @@ proof of simpl3r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr1l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ) → ph ) ;;
@@ -1065,7 +1065,7 @@ proof of simpr1l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr1r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ) → ps ) ;;
@@ -1077,7 +1077,7 @@ proof of simpr1r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr2l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ) → ph ) ;;
@@ -1089,7 +1089,7 @@ proof of simpr2l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr2r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ) → ps ) ;;
@@ -1101,7 +1101,7 @@ proof of simpr2r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr3l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ) → ph ) ;;
@@ -1113,7 +1113,7 @@ proof of simpr3l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr3r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ) → ps ) ;;
@@ -1125,7 +1125,7 @@ proof of simpr3r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1ll (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ) ∧ th ∧ ta ) → ph ) ;;
@@ -1137,7 +1137,7 @@ proof of simp1ll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1lr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ) ∧ th ∧ ta ) → ps ) ;;
@@ -1149,7 +1149,7 @@ proof of simp1lr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1rl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ) ∧ th ∧ ta ) → ph ) ;;
@@ -1161,7 +1161,7 @@ proof of simp1rl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1rr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ) ∧ th ∧ ta ) → ps ) ;;
@@ -1173,7 +1173,7 @@ proof of simp1rr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2ll (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ( ( ph ∧ ps ) ∧ ch ) ∧ ta ) → ph ) ;;
@@ -1185,7 +1185,7 @@ proof of simp2ll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2lr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ( ( ph ∧ ps ) ∧ ch ) ∧ ta ) → ps ) ;;
@@ -1197,7 +1197,7 @@ proof of simp2lr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2rl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ( ch ∧ ( ph ∧ ps ) ) ∧ ta ) → ph ) ;;
@@ -1209,7 +1209,7 @@ proof of simp2rl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2rr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ( ch ∧ ( ph ∧ ps ) ) ∧ ta ) → ps ) ;;
@@ -1221,7 +1221,7 @@ proof of simp2rr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3ll (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ta ∧ ( ( ph ∧ ps ) ∧ ch ) ) → ph ) ;;
@@ -1233,7 +1233,7 @@ proof of simp3ll {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3lr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ta ∧ ( ( ph ∧ ps ) ∧ ch ) ) → ps ) ;;
@@ -1245,7 +1245,7 @@ proof of simp3lr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3rl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ta ∧ ( ch ∧ ( ph ∧ ps ) ) ) → ph ) ;;
@@ -1257,7 +1257,7 @@ proof of simp3rl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3rr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	prop 1 : wff = |- ( ( th ∧ ta ∧ ( ch ∧ ( ph ∧ ps ) ) ) → ps ) ;;
@@ -1269,7 +1269,7 @@ proof of simp3rr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl11 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ) → ph ) ;;
@@ -1281,7 +1281,7 @@ proof of simpl11 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl12 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ) → ps ) ;;
@@ -1293,7 +1293,7 @@ proof of simpl12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl13 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ) → ch ) ;;
@@ -1305,7 +1305,7 @@ proof of simpl13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl21 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ) → ph ) ;;
@@ -1317,7 +1317,7 @@ proof of simpl21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl22 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ) → ps ) ;;
@@ -1329,7 +1329,7 @@ proof of simpl22 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl23 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ) → ch ) ;;
@@ -1341,7 +1341,7 @@ proof of simpl23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl31 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ph ) ;;
@@ -1353,7 +1353,7 @@ proof of simpl31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl32 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ps ) ;;
@@ -1365,7 +1365,7 @@ proof of simpl32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpl33 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ch ) ;;
@@ -1377,7 +1377,7 @@ proof of simpl33 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr11 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ph ) ;;
@@ -1389,7 +1389,7 @@ proof of simpr11 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr12 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ps ) ;;
@@ -1401,7 +1401,7 @@ proof of simpr12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr13 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ch ) ;;
@@ -1413,7 +1413,7 @@ proof of simpr13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr21 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ph ) ;;
@@ -1425,7 +1425,7 @@ proof of simpr21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr22 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ps ) ;;
@@ -1437,7 +1437,7 @@ proof of simpr22 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr23 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ch ) ;;
@@ -1449,7 +1449,7 @@ proof of simpr23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr31 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ph ) ;;
@@ -1461,7 +1461,7 @@ proof of simpr31 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr32 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ps ) ;;
@@ -1473,7 +1473,7 @@ proof of simpr32 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simpr33 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ch ) ;;
@@ -1485,7 +1485,7 @@ proof of simpr33 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1l1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ∧ et ) → ph ) ;;
@@ -1497,7 +1497,7 @@ proof of simp1l1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1l2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ∧ et ) → ps ) ;;
@@ -1509,7 +1509,7 @@ proof of simp1l2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1l3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ ta ∧ et ) → ch ) ;;
@@ -1521,7 +1521,7 @@ proof of simp1l3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1r1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ∧ et ) → ph ) ;;
@@ -1533,7 +1533,7 @@ proof of simp1r1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1r2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ∧ et ) → ps ) ;;
@@ -1545,7 +1545,7 @@ proof of simp1r2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp1r3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ ta ∧ et ) → ch ) ;;
@@ -1557,7 +1557,7 @@ proof of simp1r3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2l1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ et ) → ph ) ;;
@@ -1569,7 +1569,7 @@ proof of simp2l1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2l2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ et ) → ps ) ;;
@@ -1581,7 +1581,7 @@ proof of simp2l2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2l3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ∧ et ) → ch ) ;;
@@ -1593,7 +1593,7 @@ proof of simp2l3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2r1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ph ) ;;
@@ -1605,7 +1605,7 @@ proof of simp2r1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2r2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ps ) ;;
@@ -1617,7 +1617,7 @@ proof of simp2r2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp2r3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ) → ch ) ;;
@@ -1629,7 +1629,7 @@ proof of simp2r3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3l1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ph ) ;;
@@ -1641,7 +1641,7 @@ proof of simp3l1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3l2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ps ) ;;
@@ -1653,7 +1653,7 @@ proof of simp3l2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3l3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ) ) → ch ) ;;
@@ -1665,7 +1665,7 @@ proof of simp3l3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3r1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ph ) ;;
@@ -1677,7 +1677,7 @@ proof of simp3r1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3r2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ps ) ;;
@@ -1689,7 +1689,7 @@ proof of simp3r2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp3r3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ) ) → ch ) ;;
@@ -1701,7 +1701,7 @@ proof of simp3r3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp11l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ ta ∧ et ) → ph ) ;;
@@ -1713,7 +1713,7 @@ proof of simp11l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp11r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ ta ∧ et ) → ps ) ;;
@@ -1725,7 +1725,7 @@ proof of simp11r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp12l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ ta ∧ et ) → ph ) ;;
@@ -1737,7 +1737,7 @@ proof of simp12l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp12r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ ta ∧ et ) → ps ) ;;
@@ -1749,7 +1749,7 @@ proof of simp12r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp13l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ ta ∧ et ) → ph ) ;;
@@ -1761,7 +1761,7 @@ proof of simp13l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp13r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ ta ∧ et ) → ps ) ;;
@@ -1773,7 +1773,7 @@ proof of simp13r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp21l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ et ) → ph ) ;;
@@ -1785,7 +1785,7 @@ proof of simp21l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp21r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ∧ et ) → ps ) ;;
@@ -1797,7 +1797,7 @@ proof of simp21r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp22l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ et ) → ph ) ;;
@@ -1809,7 +1809,7 @@ proof of simp22l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp22r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ∧ et ) → ps ) ;;
@@ -1821,7 +1821,7 @@ proof of simp22r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp23l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ et ) → ph ) ;;
@@ -1833,7 +1833,7 @@ proof of simp23l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp23r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ∧ et ) → ps ) ;;
@@ -1845,7 +1845,7 @@ proof of simp23r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp31l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ) → ph ) ;;
@@ -1857,7 +1857,7 @@ proof of simp31l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp31r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ( ph ∧ ps ) ∧ ch ∧ th ) ) → ps ) ;;
@@ -1869,7 +1869,7 @@ proof of simp31r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp32l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ) → ph ) ;;
@@ -1881,7 +1881,7 @@ proof of simp32l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp32r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ch ∧ ( ph ∧ ps ) ∧ th ) ) → ps ) ;;
@@ -1893,7 +1893,7 @@ proof of simp32r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp33l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ) → ph ) ;;
@@ -1905,7 +1905,7 @@ proof of simp33l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp33r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ta ∧ et ∧ ( ch ∧ th ∧ ( ph ∧ ps ) ) ) → ps ) ;;
@@ -1917,7 +1917,7 @@ proof of simp33r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp111 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ∧ ze ) → ph ) ;;
@@ -1929,7 +1929,7 @@ proof of simp111 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp112 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ∧ ze ) → ps ) ;;
@@ -1941,7 +1941,7 @@ proof of simp112 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp113 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ et ∧ ze ) → ch ) ;;
@@ -1953,7 +1953,7 @@ proof of simp113 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp121 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ∧ ze ) → ph ) ;;
@@ -1965,7 +1965,7 @@ proof of simp121 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp122 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ∧ ze ) → ps ) ;;
@@ -1977,7 +1977,7 @@ proof of simp122 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp123 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ et ∧ ze ) → ch ) ;;
@@ -1989,7 +1989,7 @@ proof of simp123 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp131 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ∧ ze ) → ph ) ;;
@@ -2001,7 +2001,7 @@ proof of simp131 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp132 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ∧ ze ) → ps ) ;;
@@ -2013,7 +2013,7 @@ proof of simp132 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp133 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ et ∧ ze ) → ch ) ;;
@@ -2025,7 +2025,7 @@ proof of simp133 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp211 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ ze ) → ph ) ;;
@@ -2037,7 +2037,7 @@ proof of simp211 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp212 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ ze ) → ps ) ;;
@@ -2049,7 +2049,7 @@ proof of simp212 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp213 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ∧ ze ) → ch ) ;;
@@ -2061,7 +2061,7 @@ proof of simp213 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp221 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ ze ) → ph ) ;;
@@ -2073,7 +2073,7 @@ proof of simp221 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp222 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ ze ) → ps ) ;;
@@ -2085,7 +2085,7 @@ proof of simp222 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp223 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ∧ ze ) → ch ) ;;
@@ -2097,7 +2097,7 @@ proof of simp223 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp231 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ ze ) → ph ) ;;
@@ -2109,7 +2109,7 @@ proof of simp231 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp232 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ ze ) → ps ) ;;
@@ -2121,7 +2121,7 @@ proof of simp232 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp233 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ∧ ze ) → ch ) ;;
@@ -2133,7 +2133,7 @@ proof of simp233 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp311 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ph ) ;;
@@ -2145,7 +2145,7 @@ proof of simp311 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp312 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ps ) ;;
@@ -2157,7 +2157,7 @@ proof of simp312 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp313 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( ( ph ∧ ps ∧ ch ) ∧ th ∧ ta ) ) → ch ) ;;
@@ -2169,7 +2169,7 @@ proof of simp313 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp321 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ph ) ;;
@@ -2181,7 +2181,7 @@ proof of simp321 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp322 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ps ) ;;
@@ -2193,7 +2193,7 @@ proof of simp322 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp323 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ( ph ∧ ps ∧ ch ) ∧ ta ) ) → ch ) ;;
@@ -2205,7 +2205,7 @@ proof of simp323 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp331 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ph ) ;;
@@ -2217,7 +2217,7 @@ proof of simp331 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp332 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ps ) ;;
@@ -2229,7 +2229,7 @@ proof of simp332 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
+/*Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
 
 theorem simp333 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	prop 1 : wff = |- ( ( et ∧ ze ∧ ( th ∧ ta ∧ ( ph ∧ ps ∧ ch ) ) ) → ch ) ;;
@@ -2241,7 +2241,7 @@ proof of simp333 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem 3adantl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2256,7 +2256,7 @@ proof of 3adantl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem 3adantl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2271,7 +2271,7 @@ proof of 3adantl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem 3adantl3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2286,7 +2286,7 @@ proof of 3adantl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) */
 
 theorem 3adantr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2301,7 +2301,7 @@ proof of 3adantr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) */
 
 theorem 3adantr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2316,7 +2316,7 @@ proof of 3adantr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) */
 
 theorem 3adantr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2331,7 +2331,7 @@ proof of 3adantr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) */
 
 theorem 3ad2antl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2346,7 +2346,7 @@ proof of 3ad2antl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) */
 
 theorem 3ad2antl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2361,7 +2361,7 @@ proof of 3ad2antl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) */
 
 theorem 3ad2antl3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2376,7 +2376,7 @@ proof of 3ad2antl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        25-Dec-2007.) */
 
 theorem 3ad2antr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2391,7 +2391,7 @@ proof of 3ad2antr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        27-Dec-2007.) */
 
 theorem 3ad2antr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2406,7 +2406,7 @@ proof of 3ad2antr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to antecedent.  (Contributed by NM,
+/*Deduction adding conjuncts to antecedent.  (Contributed by NM,
        30-Dec-2007.) */
 
 theorem 3ad2antr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2421,7 +2421,7 @@ proof of 3ad2antr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Remove a hypothesis from the second member of a biimplication.
+/*Remove a hypothesis from the second member of a biimplication.
        (Contributed by FL, 22-Jul-2008.) */
 
 theorem 3anibar (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2437,7 +2437,7 @@ proof of 3anibar {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
+/*Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
 
 theorem 3mix1 (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ph → ( ph ∨ ps ∨ ch ) ) ;;
@@ -2450,7 +2450,7 @@ proof of 3mix1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
+/*Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
 
 theorem 3mix2 (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ph → ( ps ∨ ph ∨ ch ) ) ;;
@@ -2463,7 +2463,7 @@ proof of 3mix2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
+/*Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
 
 theorem 3mix3 (ph : wff, ps : wff, ch : wff)  {
 	prop 1 : wff = |- ( ph → ( ps ∨ ch ∨ ph ) ) ;;
@@ -2476,7 +2476,7 @@ proof of 3mix3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+/*Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) */
 
 theorem 3mix1i (ph : wff, ps : wff, ch : wff)  {
@@ -2491,7 +2491,7 @@ proof of 3mix1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+/*Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) */
 
 theorem 3mix2i (ph : wff, ps : wff, ch : wff)  {
@@ -2506,7 +2506,7 @@ proof of 3mix2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+/*Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) */
 
 theorem 3mix3i (ph : wff, ps : wff, ch : wff)  {
@@ -2521,7 +2521,7 @@ proof of 3mix3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer conjunction of premises.  (Contributed by NM, 10-Feb-1995.) */
+/*Infer conjunction of premises.  (Contributed by NM, 10-Feb-1995.) */
 
 theorem 3pm3.2i (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ph ;;
@@ -2538,7 +2538,7 @@ proof of 3pm3.2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* ~ pm3.2 for a triple conjunction.  (Contributed by Alan Sare,
+/*~ pm3.2 for a triple conjunction.  (Contributed by Alan Sare,
        24-Oct-2011.) */
 
 theorem pm3.2an3 (ph : wff, ps : wff, ch : wff)  {
@@ -2554,7 +2554,7 @@ proof of pm3.2an3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Join consequents with conjunction.  (Contributed by NM, 9-Apr-1994.) */
+/*Join consequents with conjunction.  (Contributed by NM, 9-Apr-1994.) */
 
 theorem 3jca (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -2571,7 +2571,7 @@ proof of 3jca {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction conjoining the consequents of three implications.
+/*Deduction conjoining the consequents of three implications.
        (Contributed by NM, 25-Sep-2005.) */
 
 theorem 3jcad (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -2591,7 +2591,7 @@ proof of 3jcad {
 	qed prop 1 = step 5 ;;
 }
 
-/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+/*Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        16-Sep-2011.) */
 
 theorem mpbir3an (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2609,7 +2609,7 @@ proof of mpbir3an {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach a conjunction of truths in a biconditional.  (Contributed by
+/*Detach a conjunction of truths in a biconditional.  (Contributed by
        Mario Carneiro, 11-May-2014.)  (Revised by Mario Carneiro,
        9-Jan-2015.) */
 
@@ -2628,7 +2628,7 @@ proof of mpbir3and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference.  (Contributed by Mario Carneiro, 11-May-2014.) */
+/*Syllogism inference.  (Contributed by Mario Carneiro, 11-May-2014.) */
 
 theorem syl3anbrc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -2645,7 +2645,7 @@ proof of syl3anbrc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Join antecedents and consequents with conjunction.  (Contributed by NM,
+/*Join antecedents and consequents with conjunction.  (Contributed by NM,
        8-Apr-1994.) */
 
 theorem 3anim123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -2664,7 +2664,7 @@ proof of 3anim123i {
 	qed prop 1 = step 4 ;;
 }
 
-/* Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
+/*Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
        Hankins, 16-Aug-2009.) */
 
 theorem 3anim1i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2680,7 +2680,7 @@ proof of 3anim1i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
+/*Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
        Hankins, 19-Aug-2009.) */
 
 theorem 3anim3i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2696,7 +2696,7 @@ proof of 3anim3i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Join 3 biconditionals with conjunction.  (Contributed by NM,
+/*Join 3 biconditionals with conjunction.  (Contributed by NM,
        21-Apr-1994.) */
 
 theorem 3anbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -2716,7 +2716,7 @@ proof of 3anbi123i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Join 3 biconditionals with disjunction.  (Contributed by NM,
+/*Join 3 biconditionals with disjunction.  (Contributed by NM,
        17-May-1994.) */
 
 theorem 3orbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -2736,7 +2736,7 @@ proof of 3orbi123i {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference adding two conjuncts to each side of a biconditional.
+/*Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi1i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2752,7 +2752,7 @@ proof of 3anbi1i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference adding two conjuncts to each side of a biconditional.
+/*Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi2i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2768,7 +2768,7 @@ proof of 3anbi2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference adding two conjuncts to each side of a biconditional.
+/*Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi3i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2784,7 +2784,7 @@ proof of 3anbi3i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Importation inference.  (Contributed by NM, 8-Apr-1994.) */
+/*Importation inference.  (Contributed by NM, 8-Apr-1994.) */
 
 theorem 3imp (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ( ch → th ) ) ) ;;
@@ -2799,7 +2799,7 @@ proof of 3imp {
 	qed prop 1 = step 3 ;;
 }
 
-/* Importation from double to triple conjunction.  (Contributed by NM,
+/*Importation from double to triple conjunction.  (Contributed by NM,
        20-Aug-1995.) */
 
 theorem 3impa (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2814,7 +2814,7 @@ proof of 3impa {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation from double to triple conjunction.  (Contributed by NM,
+/*Importation from double to triple conjunction.  (Contributed by NM,
        20-Aug-1995.) */
 
 theorem 3impb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2829,7 +2829,7 @@ proof of 3impb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
+/*Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
 
 theorem 3impia (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → ( ch → th ) ) ;;
@@ -2843,7 +2843,7 @@ proof of 3impia {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
+/*Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
 
 theorem 3impib (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ps ∧ ch ) → th ) ) ;;
@@ -2857,7 +2857,7 @@ proof of 3impib {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation inference.  (Contributed by NM, 30-May-1994.) */
+/*Exportation inference.  (Contributed by NM, 30-May-1994.) */
 
 theorem 3exp (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ∧ ch ) → th ) ;;
@@ -2871,7 +2871,7 @@ proof of 3exp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation from triple to double conjunction.  (Contributed by NM,
+/*Exportation from triple to double conjunction.  (Contributed by NM,
        20-Aug-1995.) */
 
 theorem 3expa (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2886,7 +2886,7 @@ proof of 3expa {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation from triple to double conjunction.  (Contributed by NM,
+/*Exportation from triple to double conjunction.  (Contributed by NM,
        20-Aug-1995.) */
 
 theorem 3expb (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2901,7 +2901,7 @@ proof of 3expb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation from triple conjunction.  (Contributed by NM,
+/*Exportation from triple conjunction.  (Contributed by NM,
        19-May-2007.) */
 
 theorem 3expia (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2916,7 +2916,7 @@ proof of 3expia {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation from triple conjunction.  (Contributed by NM,
+/*Exportation from triple conjunction.  (Contributed by NM,
        19-May-2007.) */
 
 theorem 3expib (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2931,7 +2931,7 @@ proof of 3expib {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
+/*Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
        28-Jan-1996.)  (Proof shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem 3com12 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2946,7 +2946,7 @@ proof of 3com12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
+/*Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
        28-Jan-1996.) */
 
 theorem 3com13 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2961,7 +2961,7 @@ proof of 3com13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation in antecedent.  Swap 2nd and 3rd.  (Contributed by NM,
+/*Commutation in antecedent.  Swap 2nd and 3rd.  (Contributed by NM,
        28-Jan-1996.) */
 
 theorem 3com23 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2977,7 +2977,7 @@ proof of 3com23 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation in antecedent.  Rotate left.  (Contributed by NM,
+/*Commutation in antecedent.  Rotate left.  (Contributed by NM,
        28-Jan-1996.) */
 
 theorem 3coml (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -2992,7 +2992,7 @@ proof of 3coml {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation in antecedent.  Rotate right.  (Contributed by NM,
+/*Commutation in antecedent.  Rotate right.  (Contributed by NM,
        28-Jan-1996.) */
 
 theorem 3comr (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -3007,7 +3007,7 @@ proof of 3comr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Feb-2008.) */
 
 theorem 3adant3r1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3022,7 +3022,7 @@ proof of 3adant3r1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        17-Feb-2008.) */
 
 theorem 3adant3r2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3037,7 +3037,7 @@ proof of 3adant3r2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        18-Feb-2008.) */
 
 theorem 3adant3r3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3052,7 +3052,7 @@ proof of 3adant3r3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Swap conjuncts.  (Contributed by NM, 16-Dec-2007.) */
+/*Swap conjuncts.  (Contributed by NM, 16-Dec-2007.) */
 
 theorem 3an1rs (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ( ph ∧ ps ∧ ch ) ∧ th ) → ta ) ;;
@@ -3069,7 +3069,7 @@ proof of 3an1rs {
 	qed prop 1 = step 5 ;;
 }
 
-/* Importation to left triple conjunction.  (Contributed by NM,
+/*Importation to left triple conjunction.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem 3imp1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3084,7 +3084,7 @@ proof of 3imp1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation deduction for triple conjunction.  (Contributed by NM,
+/*Importation deduction for triple conjunction.  (Contributed by NM,
        26-Oct-2006.) */
 
 theorem 3impd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3100,7 +3100,7 @@ proof of 3impd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Importation to right triple conjunction.  (Contributed by NM,
+/*Importation to right triple conjunction.  (Contributed by NM,
        26-Oct-2006.) */
 
 theorem 3imp2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3115,7 +3115,7 @@ proof of 3imp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation from left triple conjunction.  (Contributed by NM,
+/*Exportation from left triple conjunction.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem 3exp1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3130,7 +3130,7 @@ proof of 3exp1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation deduction for triple conjunction.  (Contributed by NM,
+/*Exportation deduction for triple conjunction.  (Contributed by NM,
        26-Oct-2006.) */
 
 theorem 3expd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3146,7 +3146,7 @@ proof of 3expd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Exportation from right triple conjunction.  (Contributed by NM,
+/*Exportation from right triple conjunction.  (Contributed by NM,
        26-Oct-2006.) */
 
 theorem 3exp2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3161,7 +3161,7 @@ proof of 3exp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple exportation inference.  (Contributed by Jeff Hankins,
+/*A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) */
 
 theorem exp5o (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3176,7 +3176,7 @@ proof of exp5o {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple exportation inference.  (Contributed by Jeff Hankins,
+/*A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) */
 
 theorem exp516 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3191,7 +3191,7 @@ proof of exp516 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple exportation inference.  (Contributed by Jeff Hankins,
+/*A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) */
 
 theorem exp520 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3206,7 +3206,7 @@ proof of exp520 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Associative law for conjunction applied to antecedent (eliminates
+/*Associative law for conjunction applied to antecedent (eliminates
        syllogism).  (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem 3anassrs (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3221,7 +3221,7 @@ proof of 3anassrs {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant1l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3237,7 +3237,7 @@ proof of 3adant1l {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant1r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3253,7 +3253,7 @@ proof of 3adant1r {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant2l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3269,7 +3269,7 @@ proof of 3adant2l {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant2r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3285,7 +3285,7 @@ proof of 3adant2r {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant3l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3301,7 +3301,7 @@ proof of 3adant3l {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction adding a conjunct to antecedent.  (Contributed by NM,
+/*Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) */
 
 theorem 3adant3r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3317,7 +3317,7 @@ proof of 3adant3r {
 	qed prop 1 = step 3 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by Jeff Hankins,
+/*Syllogism combined with contraction.  (Contributed by Jeff Hankins,
          1-Aug-2009.) */
 
 theorem syl12anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3335,7 +3335,7 @@ proof of syl12anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by Jeff Hankins,
+/*Syllogism combined with contraction.  (Contributed by Jeff Hankins,
          1-Aug-2009.) */
 
 theorem syl21anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3353,7 +3353,7 @@ proof of syl21anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl3anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -3371,7 +3371,7 @@ proof of syl3anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl22anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3390,7 +3390,7 @@ proof of syl22anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl13anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3409,7 +3409,7 @@ proof of syl13anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl31anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3428,7 +3428,7 @@ proof of syl31anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl112anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3447,7 +3447,7 @@ proof of syl112anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl121anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3466,7 +3466,7 @@ proof of syl121anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl211anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -3485,7 +3485,7 @@ proof of syl211anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl23anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3505,7 +3505,7 @@ proof of syl23anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl32anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3525,7 +3525,7 @@ proof of syl32anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl122anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3545,7 +3545,7 @@ proof of syl122anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl212anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3565,7 +3565,7 @@ proof of syl212anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl221anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3585,7 +3585,7 @@ proof of syl221anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl113anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3605,7 +3605,7 @@ proof of syl113anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl131anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3625,7 +3625,7 @@ proof of syl131anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl311anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -3645,7 +3645,7 @@ proof of syl311anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl33anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3666,7 +3666,7 @@ proof of syl33anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl222anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3687,7 +3687,7 @@ proof of syl222anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl123anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3708,7 +3708,7 @@ proof of syl123anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) */
 
 theorem syl132anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3729,7 +3729,7 @@ proof of syl132anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl213anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3750,7 +3750,7 @@ proof of syl213anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl231anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3771,7 +3771,7 @@ proof of syl231anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) */
 
 theorem syl312anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3792,7 +3792,7 @@ proof of syl312anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) */
 
 theorem syl321anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
@@ -3813,7 +3813,7 @@ proof of syl321anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl133anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3835,7 +3835,7 @@ proof of syl133anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl313anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3857,7 +3857,7 @@ proof of syl313anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl331anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3879,7 +3879,7 @@ proof of syl331anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl223anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3901,7 +3901,7 @@ proof of syl223anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl232anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3923,7 +3923,7 @@ proof of syl232anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl322anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff)  {
@@ -3945,7 +3945,7 @@ proof of syl322anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl233anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -3968,7 +3968,7 @@ proof of syl233anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl323anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -3991,7 +3991,7 @@ proof of syl323anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism combined with contraction.  (Contributed by NM,
+/*Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) */
 
 theorem syl332anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff)  {
@@ -4014,7 +4014,7 @@ proof of syl332anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference combined with contraction.  (Contributed by NM,
+/*A syllogism inference combined with contraction.  (Contributed by NM,
          10-Mar-2012.) */
 
 theorem syl333anc (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, mu : wff, la : wff)  {
@@ -4038,7 +4038,7 @@ proof of syl333anc {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4053,7 +4053,7 @@ proof of syl3an1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4069,7 +4069,7 @@ proof of syl3an2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -4085,7 +4085,7 @@ proof of syl3an3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an1b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ps ) ;;
@@ -4100,7 +4100,7 @@ proof of syl3an1b {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an2b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ch ) ;;
@@ -4115,7 +4115,7 @@ proof of syl3an2b {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an3b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph ↔ th ) ;;
@@ -4130,7 +4130,7 @@ proof of syl3an3b {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an1br (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ps ↔ ph ) ;;
@@ -4145,7 +4145,7 @@ proof of syl3an1br {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an2br (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ch ↔ ph ) ;;
@@ -4160,7 +4160,7 @@ proof of syl3an2br {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
+/*A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
 
 theorem syl3an3br (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( th ↔ ph ) ;;
@@ -4175,7 +4175,7 @@ proof of syl3an3br {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple syllogism inference.  (Contributed by NM, 13-May-2004.) */
+/*A triple syllogism inference.  (Contributed by NM, 13-May-2004.) */
 
 theorem syl3an (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4192,7 +4192,7 @@ proof of syl3an {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple syllogism inference.  (Contributed by NM, 15-Oct-2005.) */
+/*A triple syllogism inference.  (Contributed by NM, 15-Oct-2005.) */
 
 theorem syl3anb (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	hyp 1 : wff = |- ( ph ↔ ps ) ;;
@@ -4209,7 +4209,7 @@ proof of syl3anb {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple syllogism inference.  (Contributed by NM, 29-Dec-2011.) */
+/*A triple syllogism inference.  (Contributed by NM, 29-Dec-2011.) */
 
 theorem syl3anbr (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
 	hyp 1 : wff = |- ( ps ↔ ph ) ;;
@@ -4228,7 +4228,7 @@ proof of syl3anbr {
 	qed prop 1 = step 4 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 20-May-2007.) */
+/*A syllogism inference.  (Contributed by NM, 20-May-2007.) */
 
 theorem syld3an3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ∧ ch ) → th ) ;;
@@ -4244,7 +4244,7 @@ proof of syld3an3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 7-Jul-2008.) */
+/*A syllogism inference.  (Contributed by NM, 7-Jul-2008.) */
 
 theorem syld3an1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ch ∧ ps ∧ th ) → ph ) ;;
@@ -4261,7 +4261,7 @@ proof of syld3an1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 20-May-2007.) */
+/*A syllogism inference.  (Contributed by NM, 20-May-2007.) */
 
 theorem syld3an2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ch ∧ th ) → ps ) ;;
@@ -4278,7 +4278,7 @@ proof of syld3an2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
+/*A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
 
 theorem syl3anl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4293,7 +4293,7 @@ proof of syl3anl1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
+/*A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
 
 theorem syl3anl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -4309,7 +4309,7 @@ proof of syl3anl2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
+/*A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
 
 theorem syl3anl3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -4324,7 +4324,7 @@ proof of syl3anl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A triple syllogism inference.  (Contributed by NM, 24-Dec-2006.) */
+/*A triple syllogism inference.  (Contributed by NM, 24-Dec-2006.) */
 
 theorem syl3anl (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4341,7 +4341,7 @@ proof of syl3anl {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 31-Jul-2007.) */
+/*A syllogism inference.  (Contributed by NM, 31-Jul-2007.) */
 
 theorem syl3anr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -4356,7 +4356,7 @@ proof of syl3anr1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 1-Aug-2007.) */
+/*A syllogism inference.  (Contributed by NM, 1-Aug-2007.) */
 
 theorem syl3anr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → th ) ;;
@@ -4372,7 +4372,7 @@ proof of syl3anr2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A syllogism inference.  (Contributed by NM, 23-Aug-2007.) */
+/*A syllogism inference.  (Contributed by NM, 23-Aug-2007.) */
 
 theorem syl3anr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ta ) ;;
@@ -4387,7 +4387,7 @@ proof of syl3anr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation inference (undistribute conjunction).  (Contributed by NM,
+/*Importation inference (undistribute conjunction).  (Contributed by NM,
        14-Aug-1995.) */
 
 theorem 3impdi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4402,7 +4402,7 @@ proof of 3impdi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Importation inference (undistribute conjunction).  (Contributed by NM,
+/*Importation inference (undistribute conjunction).  (Contributed by NM,
        20-Aug-1995.) */
 
 theorem 3impdir (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4417,7 +4417,7 @@ proof of 3impdir {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from idempotent law for conjunction.  (Contributed by NM,
+/*Inference from idempotent law for conjunction.  (Contributed by NM,
        7-Mar-2008.) */
 
 theorem 3anidm12 (ph : wff, ps : wff, ch : wff)  {
@@ -4432,7 +4432,7 @@ proof of 3anidm12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from idempotent law for conjunction.  (Contributed by NM,
+/*Inference from idempotent law for conjunction.  (Contributed by NM,
        7-Mar-2008.) */
 
 theorem 3anidm13 (ph : wff, ps : wff, ch : wff)  {
@@ -4447,7 +4447,7 @@ proof of 3anidm13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from idempotent law for conjunction.  (Contributed by NM,
+/*Inference from idempotent law for conjunction.  (Contributed by NM,
        1-Feb-2007.) */
 
 theorem 3anidm23 (ph : wff, ps : wff, ch : wff)  {
@@ -4462,7 +4462,7 @@ proof of 3anidm23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from triple disjunction.  (Contributed by NM,
+/*Infer implication from triple disjunction.  (Contributed by NM,
        26-Sep-2006.) */
 
 theorem 3ori (ph : wff, ps : wff, ch : wff)  {
@@ -4480,7 +4480,7 @@ proof of 3ori {
 	qed prop 1 = step 5 ;;
 }
 
-/* Disjunction of 3 antecedents.  (Contributed by NM, 8-Apr-1994.) */
+/*Disjunction of 3 antecedents.  (Contributed by NM, 8-Apr-1994.) */
 
 theorem 3jao (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph → ps ) ∧ ( ch → ps ) ∧ ( th → ps ) ) → ( ( ph ∨ ch ∨ th ) → ps ) ) ;;
@@ -4496,7 +4496,7 @@ proof of 3jao {
 	qed prop 1 = step 6 ;;
 }
 
-/* Disjunction of 3 antecedents.  (Contributed by NM, 13-Sep-2011.) */
+/*Disjunction of 3 antecedents.  (Contributed by NM, 13-Sep-2011.) */
 
 theorem 3jaob (ph : wff, ps : wff, ch : wff, th : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∨ ch ∨ th ) → ps ) ↔ ( ( ph → ps ) ∧ ( ch → ps ) ∧ ( th → ps ) ) ) ;;
@@ -4515,7 +4515,7 @@ proof of 3jaob {
 	qed prop 1 = step 9 ;;
 }
 
-/* Disjunction of 3 antecedents (inference).  (Contributed by NM,
+/*Disjunction of 3 antecedents (inference).  (Contributed by NM,
        12-Sep-1995.) */
 
 theorem 3jaoi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4533,7 +4533,7 @@ proof of 3jaoi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Disjunction of 3 antecedents (deduction).  (Contributed by NM,
+/*Disjunction of 3 antecedents (deduction).  (Contributed by NM,
        14-Oct-2005.) */
 
 theorem 3jaod (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4550,7 +4550,7 @@ proof of 3jaod {
 	qed prop 1 = step 2 ;;
 }
 
-/* Disjunction of 3 antecedents (inference).  (Contributed by NM,
+/*Disjunction of 3 antecedents (inference).  (Contributed by NM,
        14-Oct-2005.) */
 
 theorem 3jaoian (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4570,7 +4570,7 @@ proof of 3jaoian {
 	qed prop 1 = step 5 ;;
 }
 
-/* Disjunction of 3 antecedents (deduction).  (Contributed by NM,
+/*Disjunction of 3 antecedents (deduction).  (Contributed by NM,
        14-Oct-2005.) */
 
 theorem 3jaodan (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4590,7 +4590,7 @@ proof of 3jaodan {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference conjoining and disjoining the antecedents of three
+/*Inference conjoining and disjoining the antecedents of three
        implications.  (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof
        shortened by Andrew Salmon, 13-May-2011.) */
 
@@ -4610,7 +4610,7 @@ proof of 3jaao {
 	qed prop 1 = step 4 ;;
 }
 
-/* Nested syllogism inference conjoining 3 dissimilar antecedents.
+/*Nested syllogism inference conjoining 3 dissimilar antecedents.
        (Contributed by NM, 1-May-1995.) */
 
 theorem syl3an9b (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -4628,7 +4628,7 @@ proof of syl3an9b {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction joining 3 equivalences to form equivalence of disjunctions.
+/*Deduction joining 3 equivalences to form equivalence of disjunctions.
        (Contributed by NM, 20-Apr-1994.) */
 
 theorem 3orbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -4648,7 +4648,7 @@ proof of 3orbi123d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction joining 3 equivalences to form equivalence of conjunctions.
+/*Deduction joining 3 equivalences to form equivalence of conjunctions.
        (Contributed by NM, 22-Apr-1994.) */
 
 theorem 3anbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -4668,7 +4668,7 @@ proof of 3anbi123d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction conjoining and adding a conjunct to equivalences.
+/*Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -4684,7 +4684,7 @@ proof of 3anbi12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining and adding a conjunct to equivalences.
+/*Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi13d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -4700,7 +4700,7 @@ proof of 3anbi13d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction conjoining and adding a conjunct to equivalences.
+/*Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) */
 
 theorem 3anbi23d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -4716,7 +4716,7 @@ proof of 3anbi23d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+/*Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) */
 
 theorem 3anbi1d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4731,7 +4731,7 @@ proof of 3anbi1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+/*Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) */
 
 theorem 3anbi2d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4746,7 +4746,7 @@ proof of 3anbi2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+/*Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) */
 
 theorem 3anbi3d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4761,7 +4761,7 @@ proof of 3anbi3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction joining 3 implications to form implication of conjunctions.
+/*Deduction joining 3 implications to form implication of conjunctions.
        (Contributed by NM, 24-Feb-2005.) */
 
 theorem 3anim123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -4781,7 +4781,7 @@ proof of 3anim123d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction joining 3 implications to form implication of disjunctions.
+/*Deduction joining 3 implications to form implication of disjunctions.
        (Contributed by NM, 4-Apr-1997.) */
 
 theorem 3orim123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
@@ -4801,7 +4801,7 @@ proof of 3orim123d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrangement of 6 conjuncts.  (Contributed by NM, 13-Mar-1995.) */
+/*Rearrangement of 6 conjuncts.  (Contributed by NM, 13-Mar-1995.) */
 
 theorem an6 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	prop 1 : wff = |- ( ( ( ph ∧ ps ∧ ch ) ∧ ( th ∧ ta ∧ et ) ) ↔ ( ( ph ∧ th ) ∧ ( ps ∧ ta ) ∧ ( ch ∧ et ) ) ) ;;
@@ -4820,7 +4820,7 @@ proof of an6 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Analog of ~ an4 for triple conjunction.  (Contributed by Scott Fenton,
+/*Analog of ~ an4 for triple conjunction.  (Contributed by Scott Fenton,
      16-Mar-2011.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3an6 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -4833,7 +4833,7 @@ proof of 3an6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Analog of ~ or4 for triple conjunction.  (Contributed by Scott Fenton,
+/*Analog of ~ or4 for triple conjunction.  (Contributed by Scott Fenton,
      16-Mar-2011.) */
 
 theorem 3or6 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -4853,7 +4853,7 @@ proof of 3or6 {
 	qed prop 1 = step 9 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) */
 
 theorem mp3an1 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4869,7 +4869,7 @@ proof of mp3an1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) */
 
 theorem mp3an2 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4885,7 +4885,7 @@ proof of mp3an2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) */
 
 theorem mp3an3 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4901,7 +4901,7 @@ proof of mp3an3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        13-Jul-2005.) */
 
 theorem mp3an12 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4918,7 +4918,7 @@ proof of mp3an12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        14-Jul-2005.) */
 
 theorem mp3an13 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4935,7 +4935,7 @@ proof of mp3an13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        14-Jul-2005.) */
 
 theorem mp3an23 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -4952,7 +4952,7 @@ proof of mp3an23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 5-Jul-2005.) */
+/*An inference based on modus ponens.  (Contributed by NM, 5-Jul-2005.) */
 
 theorem mp3an1i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ps ;;
@@ -4968,7 +4968,7 @@ proof of mp3an1i {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem mp3anl1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -4985,7 +4985,7 @@ proof of mp3anl1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem mp3anl2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5002,7 +5002,7 @@ proof of mp3anl2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) */
 
 theorem mp3anl3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5019,7 +5019,7 @@ proof of mp3anl3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 4-Nov-2006.) */
+/*An inference based on modus ponens.  (Contributed by NM, 4-Nov-2006.) */
 
 theorem mp3anr1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ps ;;
@@ -5035,7 +5035,7 @@ proof of mp3anr1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        24-Nov-2006.) */
 
 theorem mp3anr2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5052,7 +5052,7 @@ proof of mp3anr2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        19-Oct-2007.) */
 
 theorem mp3anr3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5069,7 +5069,7 @@ proof of mp3anr3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM,
+/*An inference based on modus ponens.  (Contributed by NM,
        14-May-1999.) */
 
 theorem mp3an (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5087,7 +5087,7 @@ proof of mp3an {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 8-Nov-2007.) */
+/*An inference based on modus ponens.  (Contributed by NM, 8-Nov-2007.) */
 
 theorem mpd3an3 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
@@ -5102,7 +5102,7 @@ proof of mpd3an3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference based on modus ponens.  (Contributed by NM, 4-Dec-2006.) */
+/*An inference based on modus ponens.  (Contributed by NM, 4-Dec-2006.) */
 
 theorem mpd3an23 (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -5118,7 +5118,7 @@ proof of mpd3an23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction based on modus ponens.  (Contributed by Mario Carneiro,
+/*A deduction based on modus ponens.  (Contributed by Mario Carneiro,
        24-Dec-2016.) */
 
 theorem mp3and (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5136,7 +5136,7 @@ proof of mp3and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from a logical equivalence.  Similar to ~ biimpa .
+/*Infer implication from a logical equivalence.  Similar to ~ biimpa .
        (Contributed by NM, 4-Sep-2005.) */
 
 theorem biimp3a (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5151,7 +5151,7 @@ proof of biimp3a {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer implication from a logical equivalence.  Similar to ~ biimpar .
+/*Infer implication from a logical equivalence.  Similar to ~ biimpar .
        (Contributed by NM, 2-Jan-2009.) */
 
 theorem biimp3ar (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5166,7 +5166,7 @@ proof of biimp3ar {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference that undistributes a triple conjunction in the antecedent.
+/*Inference that undistributes a triple conjunction in the antecedent.
        (Contributed by NM, 18-Apr-2007.) */
 
 theorem 3anandis (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5186,7 +5186,7 @@ proof of 3anandis {
 	qed prop 1 = step 7 ;;
 }
 
-/* Inference that undistributes a triple conjunction in the antecedent.
+/*Inference that undistributes a triple conjunction in the antecedent.
        (Contributed by NM, 25-Jul-2006.) */
 
 theorem 3anandirs (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -5206,7 +5206,7 @@ proof of 3anandirs {
 	qed prop 1 = step 7 ;;
 }
 
-/* Deduction for elimination by cases.  (Contributed by NM,
+/*Deduction for elimination by cases.  (Contributed by NM,
        22-Apr-1994.) */
 
 theorem ecase23d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -5227,7 +5227,7 @@ proof of ecase23d {
 	qed prop 1 = step 6 ;;
 }
 
-/* Inference for elimination by cases.  (Contributed by NM,
+/*Inference for elimination by cases.  (Contributed by NM,
        13-Jul-2005.) */
 
 theorem 3ecase (ph : wff, ps : wff, ch : wff, th : wff)  {

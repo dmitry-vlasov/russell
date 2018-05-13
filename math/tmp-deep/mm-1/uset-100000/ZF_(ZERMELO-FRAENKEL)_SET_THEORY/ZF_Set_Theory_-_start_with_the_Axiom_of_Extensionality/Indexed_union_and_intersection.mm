@@ -1,46 +1,53 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_intersection_of_a_class.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Indexed union and intersection
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$c U_  $.
-$( Underlined big cup. $)
-$c |^|_  $.
-$( Underlined big cap. $)
-$( Extend class notation to include indexed union.  Note:  Historically
+
+$c U_ $.
+
+$(Underlined big cup. $)
+
+$c |^|_ $.
+
+$(Underlined big cap. $)
+
+$(Extend class notation to include indexed union.  Note:  Historically
      (prior to 21-Oct-2005), set.mm used the notation ` U. x e. A B ` , with
      the same union symbol as ~ cuni .  While that syntax was unambiguous, it
      did not allow for LALR parsing of the syntax constructions in set.mm.  The
      new syntax uses as distinguished symbol ` U_ ` instead of ` U. ` and does
      allow LALR parsing.  Thanks to Peter Backes for suggesting this change. $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	fciun_0 $f set x $.
-	fciun_1 $f class A $.
-	fciun_2 $f class B $.
-	ciun $a class U_ x e. A B $.
+	$v x A B  $.
+	f0_ciun $f set x $.
+	f1_ciun $f class A $.
+	f2_ciun $f class B $.
+	a_ciun $a class U_ x e. A B $.
 $}
-$( Extend class notation to include indexed intersection.  Note:
+
+$(Extend class notation to include indexed intersection.  Note:
      Historically (prior to 21-Oct-2005), set.mm used the notation
      ` |^| x e. A B ` , with the same intersection symbol as ~ cint .  Although
      that syntax was unambiguous, it did not allow for LALR parsing of the
      syntax constructions in set.mm.  The new syntax uses a distinguished
      symbol ` |^|_ ` instead of ` |^| ` and does allow LALR parsing.  Thanks to
      Peter Backes for suggesting this change. $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	fciin_0 $f set x $.
-	fciin_1 $f class A $.
-	fciin_2 $f class B $.
-	ciin $a class |^|_ x e. A B $.
+	$v x A B  $.
+	f0_ciin $f set x $.
+	f1_ciin $f class A $.
+	f2_ciin $f class B $.
+	a_ciin $a class |^|_ x e. A B $.
 $}
-$( Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
+
+$(Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
        most applications, ` A ` is independent of ` x ` (although this is not
        required by the definition), and ` B ` depends on ` x ` i.e. can be read
        informally as ` B ( x ) ` .  We call ` x ` the index, ` A ` the index
@@ -56,1512 +63,1388 @@ $( Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
        a definition of ordinary union in terms of indexed union.  Theorems
        ~ fniunfv and ~ funiunfv are useful when ` B ` is a function.
        (Contributed by NM, 27-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	fdf-iun_0 $f set x $.
-	fdf-iun_1 $f set y $.
-	fdf-iun_2 $f class A $.
-	fdf-iun_3 $f class B $.
-	df-iun $a |- U_ x e. A B = { y | E. x e. A y e. B } $.
+	$v x y A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	f0_df-iun $f set x $.
+	f1_df-iun $f set y $.
+	f2_df-iun $f class A $.
+	f3_df-iun $f class B $.
+	a_df-iun $a |- U_ x e. A B = { y | E. x e. A y e. B } $.
 $}
-$( Define indexed intersection.  Definition of [Stoll] p. 45.  See the
+
+$(Define indexed intersection.  Definition of [Stoll] p. 45.  See the
        remarks for its sibling operation of indexed union ~ df-iun .  An
        alternate definition tying indexed intersection to ordinary intersection
        is ~ dfiin2 .  Theorem ~ intiin provides a definition of ordinary
        intersection in terms of indexed intersection.  (Contributed by NM,
        27-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	fdf-iin_0 $f set x $.
-	fdf-iin_1 $f set y $.
-	fdf-iin_2 $f class A $.
-	fdf-iin_3 $f class B $.
-	df-iin $a |- |^|_ x e. A B = { y | A. x e. A y e. B } $.
+	$v x y A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	f0_df-iin $f set x $.
+	f1_df-iin $f set y $.
+	f2_df-iin $f class A $.
+	f3_df-iin $f class B $.
+	a_df-iin $a |- |^|_ x e. A B = { y | A. x e. A y e. B } $.
 $}
-$( Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) $)
+
+$(Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d y C $.
-	ieliun_0 $f set y $.
-	feliun_0 $f set x $.
-	feliun_1 $f class A $.
-	feliun_2 $f class B $.
-	feliun_3 $f class C $.
-	eliun $p |- ( A e. U_ x e. B C <-> E. x e. B A e. C ) $= feliun_1 feliun_0 feliun_2 feliun_3 ciun wcel feliun_1 cvv wcel feliun_1 feliun_3 wcel feliun_0 feliun_2 wrex feliun_1 feliun_0 feliun_2 feliun_3 ciun elex feliun_1 feliun_3 wcel feliun_1 cvv wcel feliun_0 feliun_2 feliun_1 feliun_3 elex rexlimivw ieliun_0 sup_set_class feliun_3 wcel feliun_0 feliun_2 wrex feliun_1 feliun_3 wcel feliun_0 feliun_2 wrex ieliun_0 feliun_1 feliun_0 feliun_2 feliun_3 ciun cvv ieliun_0 sup_set_class feliun_1 wceq ieliun_0 sup_set_class feliun_3 wcel feliun_1 feliun_3 wcel feliun_0 feliun_2 ieliun_0 sup_set_class feliun_1 feliun_3 eleq1 rexbidv feliun_0 ieliun_0 feliun_2 feliun_3 df-iun elab2g pm5.21nii $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_eliun $f set x $.
+	f1_eliun $f class A $.
+	f2_eliun $f class B $.
+	f3_eliun $f class C $.
+	i0_eliun $f set y $.
+	p_eliun $p |- ( A e. U_ x e. B C <-> E. x e. B A e. C ) $= f1_eliun f0_eliun f2_eliun f3_eliun a_ciun p_elex f1_eliun f3_eliun p_elex f1_eliun f3_eliun a_wcel f1_eliun a_cvv a_wcel f0_eliun f2_eliun p_rexlimivw i0_eliun a_sup_set_class f1_eliun f3_eliun p_eleq1 i0_eliun a_sup_set_class f1_eliun a_wceq i0_eliun a_sup_set_class f3_eliun a_wcel f1_eliun f3_eliun a_wcel f0_eliun f2_eliun p_rexbidv f0_eliun i0_eliun f2_eliun f3_eliun a_df-iun i0_eliun a_sup_set_class f3_eliun a_wcel f0_eliun f2_eliun a_wrex f1_eliun f3_eliun a_wcel f0_eliun f2_eliun a_wrex i0_eliun f1_eliun f0_eliun f2_eliun f3_eliun a_ciun a_cvv p_elab2g f1_eliun f0_eliun f2_eliun f3_eliun a_ciun a_wcel f1_eliun a_cvv a_wcel f1_eliun f3_eliun a_wcel f0_eliun f2_eliun a_wrex p_pm5.21nii $.
 $}
-$( Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) $)
+
+$(Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v V $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d y C $.
-	ieliin_0 $f set y $.
-	feliin_0 $f set x $.
-	feliin_1 $f class A $.
-	feliin_2 $f class B $.
-	feliin_3 $f class C $.
-	feliin_4 $f class V $.
-	eliin $p |- ( A e. V -> ( A e. |^|_ x e. B C <-> A. x e. B A e. C ) ) $= ieliin_0 sup_set_class feliin_3 wcel feliin_0 feliin_2 wral feliin_1 feliin_3 wcel feliin_0 feliin_2 wral ieliin_0 feliin_1 feliin_0 feliin_2 feliin_3 ciin feliin_4 ieliin_0 sup_set_class feliin_1 wceq ieliin_0 sup_set_class feliin_3 wcel feliin_1 feliin_3 wcel feliin_0 feliin_2 ieliin_0 sup_set_class feliin_1 feliin_3 eleq1 ralbidv feliin_0 ieliin_0 feliin_2 feliin_3 df-iin elab2g $.
+	$v x A B C V  $.
+	$d x y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_eliin $f set x $.
+	f1_eliin $f class A $.
+	f2_eliin $f class B $.
+	f3_eliin $f class C $.
+	f4_eliin $f class V $.
+	i0_eliin $f set y $.
+	p_eliin $p |- ( A e. V -> ( A e. |^|_ x e. B C <-> A. x e. B A e. C ) ) $= i0_eliin a_sup_set_class f1_eliin f3_eliin p_eleq1 i0_eliin a_sup_set_class f1_eliin a_wceq i0_eliin a_sup_set_class f3_eliin a_wcel f1_eliin f3_eliin a_wcel f0_eliin f2_eliin p_ralbidv f0_eliin i0_eliin f2_eliin f3_eliin a_df-iin i0_eliin a_sup_set_class f3_eliin a_wcel f0_eliin f2_eliin a_wral f1_eliin f3_eliin a_wcel f0_eliin f2_eliin a_wral i0_eliin f1_eliin f0_eliin f2_eliin f3_eliin a_ciin f4_eliin p_elab2g $.
 $}
-$( Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) $)
+
+$(Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d y z A $.
-	$d x z B $.
-	$d z C $.
-	$d x y $.
-	iiuncom_0 $f set z $.
-	fiuncom_0 $f set x $.
-	fiuncom_1 $f set y $.
-	fiuncom_2 $f class A $.
-	fiuncom_3 $f class B $.
-	fiuncom_4 $f class C $.
-	iuncom $p |- U_ x e. A U_ y e. B C = U_ y e. B U_ x e. A C $= iiuncom_0 fiuncom_0 fiuncom_2 fiuncom_1 fiuncom_3 fiuncom_4 ciun ciun fiuncom_1 fiuncom_3 fiuncom_0 fiuncom_2 fiuncom_4 ciun ciun iiuncom_0 sup_set_class fiuncom_1 fiuncom_3 fiuncom_4 ciun wcel fiuncom_0 fiuncom_2 wrex iiuncom_0 sup_set_class fiuncom_0 fiuncom_2 fiuncom_4 ciun wcel fiuncom_1 fiuncom_3 wrex iiuncom_0 sup_set_class fiuncom_0 fiuncom_2 fiuncom_1 fiuncom_3 fiuncom_4 ciun ciun wcel iiuncom_0 sup_set_class fiuncom_1 fiuncom_3 fiuncom_0 fiuncom_2 fiuncom_4 ciun ciun wcel iiuncom_0 sup_set_class fiuncom_4 wcel fiuncom_1 fiuncom_3 wrex fiuncom_0 fiuncom_2 wrex iiuncom_0 sup_set_class fiuncom_4 wcel fiuncom_0 fiuncom_2 wrex fiuncom_1 fiuncom_3 wrex iiuncom_0 sup_set_class fiuncom_1 fiuncom_3 fiuncom_4 ciun wcel fiuncom_0 fiuncom_2 wrex iiuncom_0 sup_set_class fiuncom_0 fiuncom_2 fiuncom_4 ciun wcel fiuncom_1 fiuncom_3 wrex iiuncom_0 sup_set_class fiuncom_4 wcel fiuncom_0 fiuncom_1 fiuncom_2 fiuncom_3 rexcom iiuncom_0 sup_set_class fiuncom_1 fiuncom_3 fiuncom_4 ciun wcel iiuncom_0 sup_set_class fiuncom_4 wcel fiuncom_1 fiuncom_3 wrex fiuncom_0 fiuncom_2 fiuncom_1 iiuncom_0 sup_set_class fiuncom_3 fiuncom_4 eliun rexbii iiuncom_0 sup_set_class fiuncom_0 fiuncom_2 fiuncom_4 ciun wcel iiuncom_0 sup_set_class fiuncom_4 wcel fiuncom_0 fiuncom_2 wrex fiuncom_1 fiuncom_3 fiuncom_0 iiuncom_0 sup_set_class fiuncom_2 fiuncom_4 eliun rexbii 3bitr4i fiuncom_0 iiuncom_0 sup_set_class fiuncom_2 fiuncom_1 fiuncom_3 fiuncom_4 ciun eliun fiuncom_1 iiuncom_0 sup_set_class fiuncom_3 fiuncom_0 fiuncom_2 fiuncom_4 ciun eliun 3bitr4i eqriv $.
+	$v x y A B C  $.
+	$d y z A  $.
+	$d x z B  $.
+	$d z C  $.
+	$d x y  $.
+	f0_iuncom $f set x $.
+	f1_iuncom $f set y $.
+	f2_iuncom $f class A $.
+	f3_iuncom $f class B $.
+	f4_iuncom $f class C $.
+	i0_iuncom $f set z $.
+	p_iuncom $p |- U_ x e. A U_ y e. B C = U_ y e. B U_ x e. A C $= i0_iuncom a_sup_set_class f4_iuncom a_wcel f0_iuncom f1_iuncom f2_iuncom f3_iuncom p_rexcom f1_iuncom i0_iuncom a_sup_set_class f3_iuncom f4_iuncom p_eliun i0_iuncom a_sup_set_class f1_iuncom f3_iuncom f4_iuncom a_ciun a_wcel i0_iuncom a_sup_set_class f4_iuncom a_wcel f1_iuncom f3_iuncom a_wrex f0_iuncom f2_iuncom p_rexbii f0_iuncom i0_iuncom a_sup_set_class f2_iuncom f4_iuncom p_eliun i0_iuncom a_sup_set_class f0_iuncom f2_iuncom f4_iuncom a_ciun a_wcel i0_iuncom a_sup_set_class f4_iuncom a_wcel f0_iuncom f2_iuncom a_wrex f1_iuncom f3_iuncom p_rexbii i0_iuncom a_sup_set_class f4_iuncom a_wcel f1_iuncom f3_iuncom a_wrex f0_iuncom f2_iuncom a_wrex i0_iuncom a_sup_set_class f4_iuncom a_wcel f0_iuncom f2_iuncom a_wrex f1_iuncom f3_iuncom a_wrex i0_iuncom a_sup_set_class f1_iuncom f3_iuncom f4_iuncom a_ciun a_wcel f0_iuncom f2_iuncom a_wrex i0_iuncom a_sup_set_class f0_iuncom f2_iuncom f4_iuncom a_ciun a_wcel f1_iuncom f3_iuncom a_wrex p_3bitr4i f0_iuncom i0_iuncom a_sup_set_class f2_iuncom f1_iuncom f3_iuncom f4_iuncom a_ciun p_eliun f1_iuncom i0_iuncom a_sup_set_class f3_iuncom f0_iuncom f2_iuncom f4_iuncom a_ciun p_eliun i0_iuncom a_sup_set_class f1_iuncom f3_iuncom f4_iuncom a_ciun a_wcel f0_iuncom f2_iuncom a_wrex i0_iuncom a_sup_set_class f0_iuncom f2_iuncom f4_iuncom a_ciun a_wcel f1_iuncom f3_iuncom a_wrex i0_iuncom a_sup_set_class f0_iuncom f2_iuncom f1_iuncom f3_iuncom f4_iuncom a_ciun a_ciun a_wcel i0_iuncom a_sup_set_class f1_iuncom f3_iuncom f0_iuncom f2_iuncom f4_iuncom a_ciun a_ciun a_wcel p_3bitr4i i0_iuncom f0_iuncom f2_iuncom f1_iuncom f3_iuncom f4_iuncom a_ciun a_ciun f1_iuncom f3_iuncom f0_iuncom f2_iuncom f4_iuncom a_ciun a_ciun p_eqriv $.
 $}
-$( Commutation of union with indexed union.  (Contributed by Mario
+
+$(Commutation of union with indexed union.  (Contributed by Mario
        Carneiro, 18-Jan-2014.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$v z $.
-	$d y z A $.
-	$d y z B $.
-	$d x y z $.
-	iiuncom4_0 $f set y $.
-	iiuncom4_1 $f set z $.
-	fiuncom4_0 $f set x $.
-	fiuncom4_1 $f class A $.
-	fiuncom4_2 $f class B $.
-	iuncom4 $p |- U_ x e. A U. B = U. U_ x e. A B $= iiuncom4_0 fiuncom4_0 fiuncom4_1 fiuncom4_2 cuni ciun fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun cuni iiuncom4_0 sup_set_class fiuncom4_2 cuni wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wrex iiuncom4_0 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 cuni ciun wcel iiuncom4_0 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun cuni wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 wrex fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex iiuncom4_0 sup_set_class fiuncom4_2 cuni wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 wrex fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 wex iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 wrex fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 wex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex fiuncom4_0 fiuncom4_1 iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 df-rex rexbii iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa fiuncom4_0 iiuncom4_1 fiuncom4_1 rexcom4 bitri iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa fiuncom4_0 fiuncom4_1 wrex iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 iiuncom4_1 sup_set_class fiuncom4_2 wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel fiuncom4_0 fiuncom4_1 r19.41v exbii bitri iiuncom4_0 sup_set_class fiuncom4_2 cuni wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_2 wrex fiuncom4_0 fiuncom4_1 iiuncom4_1 iiuncom4_0 sup_set_class fiuncom4_2 eluni2 rexbii iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wrex iiuncom4_1 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 wex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel iiuncom4_1 fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun df-rex iiuncom4_1 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wcel iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel wa iiuncom4_1 iiuncom4_1 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun wcel iiuncom4_1 sup_set_class fiuncom4_2 wcel fiuncom4_0 fiuncom4_1 wrex iiuncom4_0 sup_set_class iiuncom4_1 sup_set_class wcel fiuncom4_0 iiuncom4_1 sup_set_class fiuncom4_1 fiuncom4_2 eliun anbi1i exbii bitri 3bitr4i fiuncom4_0 iiuncom4_0 sup_set_class fiuncom4_1 fiuncom4_2 cuni eliun iiuncom4_1 iiuncom4_0 sup_set_class fiuncom4_0 fiuncom4_1 fiuncom4_2 ciun eluni2 3bitr4i eqriv $.
+	$v x A B  $.
+	$d y z A  $.
+	$d y z B  $.
+	$d x y z  $.
+	f0_iuncom4 $f set x $.
+	f1_iuncom4 $f class A $.
+	f2_iuncom4 $f class B $.
+	i0_iuncom4 $f set y $.
+	i1_iuncom4 $f set z $.
+	p_iuncom4 $p |- U_ x e. A U. B = U. U_ x e. A B $= i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_df-rex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex f0_iuncom4 f1_iuncom4 p_rexbii i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa f0_iuncom4 i1_iuncom4 f1_iuncom4 p_rexcom4 i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_wrex f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_wex p_bitri i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel f0_iuncom4 f1_iuncom4 p_r19.41v i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 p_exbii i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_wrex f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_wex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex p_bitri i1_iuncom4 i0_iuncom4 a_sup_set_class f2_iuncom4 p_eluni2 i0_iuncom4 a_sup_set_class f2_iuncom4 a_cuni a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_wrex f0_iuncom4 f1_iuncom4 p_rexbii i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_df-rex f0_iuncom4 i1_iuncom4 a_sup_set_class f1_iuncom4 f2_iuncom4 p_eliun i1_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wcel i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel p_anbi1i i1_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 p_exbii i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wrex i1_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wcel i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex p_bitri i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f2_iuncom4 a_wrex f0_iuncom4 f1_iuncom4 a_wrex i1_iuncom4 a_sup_set_class f2_iuncom4 a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel a_wa i1_iuncom4 a_wex i0_iuncom4 a_sup_set_class f2_iuncom4 a_cuni a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wrex p_3bitr4i f0_iuncom4 i0_iuncom4 a_sup_set_class f1_iuncom4 f2_iuncom4 a_cuni p_eliun i1_iuncom4 i0_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun p_eluni2 i0_iuncom4 a_sup_set_class f2_iuncom4 a_cuni a_wcel f0_iuncom4 f1_iuncom4 a_wrex i0_iuncom4 a_sup_set_class i1_iuncom4 a_sup_set_class a_wcel i1_iuncom4 f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_wrex i0_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_cuni a_ciun a_wcel i0_iuncom4 a_sup_set_class f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_cuni a_wcel p_3bitr4i i0_iuncom4 f0_iuncom4 f1_iuncom4 f2_iuncom4 a_cuni a_ciun f0_iuncom4 f1_iuncom4 f2_iuncom4 a_ciun a_cuni p_eqriv $.
 $}
-$( Indexed union of a constant class, i.e. where ` B ` does not depend on
+
+$(Indexed union of a constant class, i.e. where ` B ` does not depend on
        ` x ` .  (Contributed by NM, 5-Sep-2004.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	iiunconst_0 $f set y $.
-	fiunconst_0 $f set x $.
-	fiunconst_1 $f class A $.
-	fiunconst_2 $f class B $.
-	iunconst $p |- ( A =/= (/) -> U_ x e. A B = B ) $= fiunconst_1 c0 wne iiunconst_0 fiunconst_0 fiunconst_1 fiunconst_2 ciun fiunconst_2 fiunconst_1 c0 wne iiunconst_0 sup_set_class fiunconst_2 wcel iiunconst_0 sup_set_class fiunconst_2 wcel fiunconst_0 fiunconst_1 wrex iiunconst_0 sup_set_class fiunconst_0 fiunconst_1 fiunconst_2 ciun wcel iiunconst_0 sup_set_class fiunconst_2 wcel fiunconst_0 fiunconst_1 r19.9rzv fiunconst_0 iiunconst_0 sup_set_class fiunconst_1 fiunconst_2 eliun syl6rbbr eqrdv $.
+	$v x A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_iunconst $f set x $.
+	f1_iunconst $f class A $.
+	f2_iunconst $f class B $.
+	i0_iunconst $f set y $.
+	p_iunconst $p |- ( A =/= (/) -> U_ x e. A B = B ) $= i0_iunconst a_sup_set_class f2_iunconst a_wcel f0_iunconst f1_iunconst p_r19.9rzv f0_iunconst i0_iunconst a_sup_set_class f1_iunconst f2_iunconst p_eliun f1_iunconst a_c0 a_wne i0_iunconst a_sup_set_class f2_iunconst a_wcel i0_iunconst a_sup_set_class f2_iunconst a_wcel f0_iunconst f1_iunconst a_wrex i0_iunconst a_sup_set_class f0_iunconst f1_iunconst f2_iunconst a_ciun a_wcel p_syl6rbbr f1_iunconst a_c0 a_wne i0_iunconst f0_iunconst f1_iunconst f2_iunconst a_ciun f2_iunconst p_eqrdv $.
 $}
-$( Indexed intersection of a constant class, i.e. where ` B ` does not
+
+$(Indexed intersection of a constant class, i.e. where ` B ` does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 6-Feb-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	iiinconst_0 $f set y $.
-	fiinconst_0 $f set x $.
-	fiinconst_1 $f class A $.
-	fiinconst_2 $f class B $.
-	iinconst $p |- ( A =/= (/) -> |^|_ x e. A B = B ) $= fiinconst_1 c0 wne iiinconst_0 fiinconst_0 fiinconst_1 fiinconst_2 ciin fiinconst_2 fiinconst_1 c0 wne iiinconst_0 sup_set_class fiinconst_2 wcel iiinconst_0 sup_set_class fiinconst_2 wcel fiinconst_0 fiinconst_1 wral iiinconst_0 sup_set_class fiinconst_0 fiinconst_1 fiinconst_2 ciin wcel iiinconst_0 sup_set_class fiinconst_2 wcel fiinconst_0 fiinconst_1 r19.3rzv iiinconst_0 sup_set_class cvv wcel iiinconst_0 sup_set_class fiinconst_0 fiinconst_1 fiinconst_2 ciin wcel iiinconst_0 sup_set_class fiinconst_2 wcel fiinconst_0 fiinconst_1 wral wb iiinconst_0 vex fiinconst_0 iiinconst_0 sup_set_class fiinconst_1 fiinconst_2 cvv eliin ax-mp syl6rbbr eqrdv $.
+	$v x A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_iinconst $f set x $.
+	f1_iinconst $f class A $.
+	f2_iinconst $f class B $.
+	i0_iinconst $f set y $.
+	p_iinconst $p |- ( A =/= (/) -> |^|_ x e. A B = B ) $= i0_iinconst a_sup_set_class f2_iinconst a_wcel f0_iinconst f1_iinconst p_r19.3rzv i0_iinconst p_vex f0_iinconst i0_iinconst a_sup_set_class f1_iinconst f2_iinconst a_cvv p_eliin i0_iinconst a_sup_set_class a_cvv a_wcel i0_iinconst a_sup_set_class f0_iinconst f1_iinconst f2_iinconst a_ciin a_wcel i0_iinconst a_sup_set_class f2_iinconst a_wcel f0_iinconst f1_iinconst a_wral a_wb a_ax-mp f1_iinconst a_c0 a_wne i0_iinconst a_sup_set_class f2_iinconst a_wcel i0_iinconst a_sup_set_class f2_iinconst a_wcel f0_iinconst f1_iinconst a_wral i0_iinconst a_sup_set_class f0_iinconst f1_iinconst f2_iinconst a_ciin a_wcel p_syl6rbbr f1_iinconst a_c0 a_wne i0_iinconst f0_iinconst f1_iinconst f2_iinconst a_ciin f2_iinconst p_eqrdv $.
 $}
-$( Law combining indexed union with indexed intersection.  Eq. 14 in
+
+$(Law combining indexed union with indexed intersection.  Eq. 14 in
        [KuratowskiMostowski] p. 109.  This theorem also appears as the last
        example at ~ http://en.wikipedia.org/wiki/Union%5F%28set%5Ftheory%29 .
        (Contributed by NM, 17-Aug-2004.)  (Proof shortened by Andrew Salmon,
        25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d x y $.
-	$d y z A $.
-	$d x z B $.
-	$d z C $.
-	iiuniin_0 $f set z $.
-	fiuniin_0 $f set x $.
-	fiuniin_1 $f set y $.
-	fiuniin_2 $f class A $.
-	fiuniin_3 $f class B $.
-	fiuniin_4 $f class C $.
-	iuniin $p |- U_ x e. A |^|_ y e. B C C_ |^|_ y e. B U_ x e. A C $= iiuniin_0 fiuniin_0 fiuniin_2 fiuniin_1 fiuniin_3 fiuniin_4 ciin ciun fiuniin_1 fiuniin_3 fiuniin_0 fiuniin_2 fiuniin_4 ciun ciin iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_4 ciin wcel fiuniin_0 fiuniin_2 wrex iiuniin_0 sup_set_class fiuniin_0 fiuniin_2 fiuniin_4 ciun wcel fiuniin_1 fiuniin_3 wral iiuniin_0 sup_set_class fiuniin_0 fiuniin_2 fiuniin_1 fiuniin_3 fiuniin_4 ciin ciun wcel iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_0 fiuniin_2 fiuniin_4 ciun ciin wcel iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_1 fiuniin_3 wral fiuniin_0 fiuniin_2 wrex iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_0 fiuniin_2 wrex fiuniin_1 fiuniin_3 wral iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_4 ciin wcel fiuniin_0 fiuniin_2 wrex iiuniin_0 sup_set_class fiuniin_0 fiuniin_2 fiuniin_4 ciun wcel fiuniin_1 fiuniin_3 wral iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_0 fiuniin_1 fiuniin_2 fiuniin_3 r19.12 iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_4 ciin wcel iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_1 fiuniin_3 wral fiuniin_0 fiuniin_2 iiuniin_0 sup_set_class cvv wcel iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_4 ciin wcel iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_1 fiuniin_3 wral wb iiuniin_0 vex fiuniin_1 iiuniin_0 sup_set_class fiuniin_3 fiuniin_4 cvv eliin ax-mp rexbii iiuniin_0 sup_set_class fiuniin_0 fiuniin_2 fiuniin_4 ciun wcel iiuniin_0 sup_set_class fiuniin_4 wcel fiuniin_0 fiuniin_2 wrex fiuniin_1 fiuniin_3 fiuniin_0 iiuniin_0 sup_set_class fiuniin_2 fiuniin_4 eliun ralbii 3imtr4i fiuniin_0 iiuniin_0 sup_set_class fiuniin_2 fiuniin_1 fiuniin_3 fiuniin_4 ciin eliun iiuniin_0 sup_set_class cvv wcel iiuniin_0 sup_set_class fiuniin_1 fiuniin_3 fiuniin_0 fiuniin_2 fiuniin_4 ciun ciin wcel iiuniin_0 sup_set_class fiuniin_0 fiuniin_2 fiuniin_4 ciun wcel fiuniin_1 fiuniin_3 wral wb iiuniin_0 vex fiuniin_1 iiuniin_0 sup_set_class fiuniin_3 fiuniin_0 fiuniin_2 fiuniin_4 ciun cvv eliin ax-mp 3imtr4i ssriv $.
+	$v x y A B C  $.
+	$d x y  $.
+	$d y z A  $.
+	$d x z B  $.
+	$d z C  $.
+	f0_iuniin $f set x $.
+	f1_iuniin $f set y $.
+	f2_iuniin $f class A $.
+	f3_iuniin $f class B $.
+	f4_iuniin $f class C $.
+	i0_iuniin $f set z $.
+	p_iuniin $p |- U_ x e. A |^|_ y e. B C C_ |^|_ y e. B U_ x e. A C $= i0_iuniin a_sup_set_class f4_iuniin a_wcel f0_iuniin f1_iuniin f2_iuniin f3_iuniin p_r19.12 i0_iuniin p_vex f1_iuniin i0_iuniin a_sup_set_class f3_iuniin f4_iuniin a_cvv p_eliin i0_iuniin a_sup_set_class a_cvv a_wcel i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f4_iuniin a_ciin a_wcel i0_iuniin a_sup_set_class f4_iuniin a_wcel f1_iuniin f3_iuniin a_wral a_wb a_ax-mp i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f4_iuniin a_ciin a_wcel i0_iuniin a_sup_set_class f4_iuniin a_wcel f1_iuniin f3_iuniin a_wral f0_iuniin f2_iuniin p_rexbii f0_iuniin i0_iuniin a_sup_set_class f2_iuniin f4_iuniin p_eliun i0_iuniin a_sup_set_class f0_iuniin f2_iuniin f4_iuniin a_ciun a_wcel i0_iuniin a_sup_set_class f4_iuniin a_wcel f0_iuniin f2_iuniin a_wrex f1_iuniin f3_iuniin p_ralbii i0_iuniin a_sup_set_class f4_iuniin a_wcel f1_iuniin f3_iuniin a_wral f0_iuniin f2_iuniin a_wrex i0_iuniin a_sup_set_class f4_iuniin a_wcel f0_iuniin f2_iuniin a_wrex f1_iuniin f3_iuniin a_wral i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f4_iuniin a_ciin a_wcel f0_iuniin f2_iuniin a_wrex i0_iuniin a_sup_set_class f0_iuniin f2_iuniin f4_iuniin a_ciun a_wcel f1_iuniin f3_iuniin a_wral p_3imtr4i f0_iuniin i0_iuniin a_sup_set_class f2_iuniin f1_iuniin f3_iuniin f4_iuniin a_ciin p_eliun i0_iuniin p_vex f1_iuniin i0_iuniin a_sup_set_class f3_iuniin f0_iuniin f2_iuniin f4_iuniin a_ciun a_cvv p_eliin i0_iuniin a_sup_set_class a_cvv a_wcel i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f0_iuniin f2_iuniin f4_iuniin a_ciun a_ciin a_wcel i0_iuniin a_sup_set_class f0_iuniin f2_iuniin f4_iuniin a_ciun a_wcel f1_iuniin f3_iuniin a_wral a_wb a_ax-mp i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f4_iuniin a_ciin a_wcel f0_iuniin f2_iuniin a_wrex i0_iuniin a_sup_set_class f0_iuniin f2_iuniin f4_iuniin a_ciun a_wcel f1_iuniin f3_iuniin a_wral i0_iuniin a_sup_set_class f0_iuniin f2_iuniin f1_iuniin f3_iuniin f4_iuniin a_ciin a_ciun a_wcel i0_iuniin a_sup_set_class f1_iuniin f3_iuniin f0_iuniin f2_iuniin f4_iuniin a_ciun a_ciin a_wcel p_3imtr4i i0_iuniin f0_iuniin f2_iuniin f1_iuniin f3_iuniin f4_iuniin a_ciin a_ciun f1_iuniin f3_iuniin f0_iuniin f2_iuniin f4_iuniin a_ciun a_ciin p_ssriv $.
 $}
-$( Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
+
+$(Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	iiunss1_0 $f set y $.
-	fiunss1_0 $f set x $.
-	fiunss1_1 $f class A $.
-	fiunss1_2 $f class B $.
-	fiunss1_3 $f class C $.
-	iunss1 $p |- ( A C_ B -> U_ x e. A C C_ U_ x e. B C ) $= fiunss1_1 fiunss1_2 wss iiunss1_0 fiunss1_0 fiunss1_1 fiunss1_3 ciun fiunss1_0 fiunss1_2 fiunss1_3 ciun fiunss1_1 fiunss1_2 wss iiunss1_0 sup_set_class fiunss1_3 wcel fiunss1_0 fiunss1_1 wrex iiunss1_0 sup_set_class fiunss1_3 wcel fiunss1_0 fiunss1_2 wrex iiunss1_0 sup_set_class fiunss1_0 fiunss1_1 fiunss1_3 ciun wcel iiunss1_0 sup_set_class fiunss1_0 fiunss1_2 fiunss1_3 ciun wcel iiunss1_0 sup_set_class fiunss1_3 wcel fiunss1_0 fiunss1_1 fiunss1_2 ssrexv fiunss1_0 iiunss1_0 sup_set_class fiunss1_1 fiunss1_3 eliun fiunss1_0 iiunss1_0 sup_set_class fiunss1_2 fiunss1_3 eliun 3imtr4g ssrdv $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iunss1 $f set x $.
+	f1_iunss1 $f class A $.
+	f2_iunss1 $f class B $.
+	f3_iunss1 $f class C $.
+	i0_iunss1 $f set y $.
+	p_iunss1 $p |- ( A C_ B -> U_ x e. A C C_ U_ x e. B C ) $= i0_iunss1 a_sup_set_class f3_iunss1 a_wcel f0_iunss1 f1_iunss1 f2_iunss1 p_ssrexv f0_iunss1 i0_iunss1 a_sup_set_class f1_iunss1 f3_iunss1 p_eliun f0_iunss1 i0_iunss1 a_sup_set_class f2_iunss1 f3_iunss1 p_eliun f1_iunss1 f2_iunss1 a_wss i0_iunss1 a_sup_set_class f3_iunss1 a_wcel f0_iunss1 f1_iunss1 a_wrex i0_iunss1 a_sup_set_class f3_iunss1 a_wcel f0_iunss1 f2_iunss1 a_wrex i0_iunss1 a_sup_set_class f0_iunss1 f1_iunss1 f3_iunss1 a_ciun a_wcel i0_iunss1 a_sup_set_class f0_iunss1 f2_iunss1 f3_iunss1 a_ciun a_wcel p_3imtr4g f1_iunss1 f2_iunss1 a_wss i0_iunss1 f0_iunss1 f1_iunss1 f3_iunss1 a_ciun f0_iunss1 f2_iunss1 f3_iunss1 a_ciun p_ssrdv $.
 $}
-$( Subclass theorem for indexed union.  (Contributed by NM,
+
+$(Subclass theorem for indexed union.  (Contributed by NM,
        24-Jan-2012.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	iiinss1_0 $f set y $.
-	fiinss1_0 $f set x $.
-	fiinss1_1 $f class A $.
-	fiinss1_2 $f class B $.
-	fiinss1_3 $f class C $.
-	iinss1 $p |- ( A C_ B -> |^|_ x e. B C C_ |^|_ x e. A C ) $= fiinss1_1 fiinss1_2 wss iiinss1_0 fiinss1_0 fiinss1_2 fiinss1_3 ciin fiinss1_0 fiinss1_1 fiinss1_3 ciin fiinss1_1 fiinss1_2 wss iiinss1_0 sup_set_class fiinss1_3 wcel fiinss1_0 fiinss1_2 wral iiinss1_0 sup_set_class fiinss1_3 wcel fiinss1_0 fiinss1_1 wral iiinss1_0 sup_set_class fiinss1_0 fiinss1_2 fiinss1_3 ciin wcel iiinss1_0 sup_set_class fiinss1_0 fiinss1_1 fiinss1_3 ciin wcel iiinss1_0 sup_set_class fiinss1_3 wcel fiinss1_0 fiinss1_1 fiinss1_2 ssralv iiinss1_0 sup_set_class cvv wcel iiinss1_0 sup_set_class fiinss1_0 fiinss1_2 fiinss1_3 ciin wcel iiinss1_0 sup_set_class fiinss1_3 wcel fiinss1_0 fiinss1_2 wral wb iiinss1_0 vex fiinss1_0 iiinss1_0 sup_set_class fiinss1_2 fiinss1_3 cvv eliin ax-mp iiinss1_0 sup_set_class cvv wcel iiinss1_0 sup_set_class fiinss1_0 fiinss1_1 fiinss1_3 ciin wcel iiinss1_0 sup_set_class fiinss1_3 wcel fiinss1_0 fiinss1_1 wral wb iiinss1_0 vex fiinss1_0 iiinss1_0 sup_set_class fiinss1_1 fiinss1_3 cvv eliin ax-mp 3imtr4g ssrdv $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iinss1 $f set x $.
+	f1_iinss1 $f class A $.
+	f2_iinss1 $f class B $.
+	f3_iinss1 $f class C $.
+	i0_iinss1 $f set y $.
+	p_iinss1 $p |- ( A C_ B -> |^|_ x e. B C C_ |^|_ x e. A C ) $= i0_iinss1 a_sup_set_class f3_iinss1 a_wcel f0_iinss1 f1_iinss1 f2_iinss1 p_ssralv i0_iinss1 p_vex f0_iinss1 i0_iinss1 a_sup_set_class f2_iinss1 f3_iinss1 a_cvv p_eliin i0_iinss1 a_sup_set_class a_cvv a_wcel i0_iinss1 a_sup_set_class f0_iinss1 f2_iinss1 f3_iinss1 a_ciin a_wcel i0_iinss1 a_sup_set_class f3_iinss1 a_wcel f0_iinss1 f2_iinss1 a_wral a_wb a_ax-mp i0_iinss1 p_vex f0_iinss1 i0_iinss1 a_sup_set_class f1_iinss1 f3_iinss1 a_cvv p_eliin i0_iinss1 a_sup_set_class a_cvv a_wcel i0_iinss1 a_sup_set_class f0_iinss1 f1_iinss1 f3_iinss1 a_ciin a_wcel i0_iinss1 a_sup_set_class f3_iinss1 a_wcel f0_iinss1 f1_iinss1 a_wral a_wb a_ax-mp f1_iinss1 f2_iinss1 a_wss i0_iinss1 a_sup_set_class f3_iinss1 a_wcel f0_iinss1 f2_iinss1 a_wral i0_iinss1 a_sup_set_class f3_iinss1 a_wcel f0_iinss1 f1_iinss1 a_wral i0_iinss1 a_sup_set_class f0_iinss1 f2_iinss1 f3_iinss1 a_ciin a_wcel i0_iinss1 a_sup_set_class f0_iinss1 f1_iinss1 f3_iinss1 a_ciin a_wcel p_3imtr4g f1_iinss1 f2_iinss1 a_wss i0_iinss1 f0_iinss1 f2_iinss1 f3_iinss1 a_ciin f0_iinss1 f1_iinss1 f3_iinss1 a_ciin p_ssrdv $.
 $}
-$( Equality theorem for indexed union.  (Contributed by NM,
+
+$(Equality theorem for indexed union.  (Contributed by NM,
        27-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	fiuneq1_0 $f set x $.
-	fiuneq1_1 $f class A $.
-	fiuneq1_2 $f class B $.
-	fiuneq1_3 $f class C $.
-	iuneq1 $p |- ( A = B -> U_ x e. A C = U_ x e. B C ) $= fiuneq1_1 fiuneq1_2 wss fiuneq1_2 fiuneq1_1 wss wa fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun wss fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun wss wa fiuneq1_1 fiuneq1_2 wceq fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun wceq fiuneq1_1 fiuneq1_2 wss fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun wss fiuneq1_2 fiuneq1_1 wss fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun wss fiuneq1_0 fiuneq1_1 fiuneq1_2 fiuneq1_3 iunss1 fiuneq1_0 fiuneq1_2 fiuneq1_1 fiuneq1_3 iunss1 anim12i fiuneq1_1 fiuneq1_2 eqss fiuneq1_0 fiuneq1_1 fiuneq1_3 ciun fiuneq1_0 fiuneq1_2 fiuneq1_3 ciun eqss 3imtr4i $.
+	$v x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d C  $.
+	f0_iuneq1 $f set x $.
+	f1_iuneq1 $f class A $.
+	f2_iuneq1 $f class B $.
+	f3_iuneq1 $f class C $.
+	p_iuneq1 $p |- ( A = B -> U_ x e. A C = U_ x e. B C ) $= f0_iuneq1 f1_iuneq1 f2_iuneq1 f3_iuneq1 p_iunss1 f0_iuneq1 f2_iuneq1 f1_iuneq1 f3_iuneq1 p_iunss1 f1_iuneq1 f2_iuneq1 a_wss f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun a_wss f2_iuneq1 f1_iuneq1 a_wss f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun a_wss p_anim12i f1_iuneq1 f2_iuneq1 p_eqss f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun p_eqss f1_iuneq1 f2_iuneq1 a_wss f2_iuneq1 f1_iuneq1 a_wss a_wa f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun a_wss f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun a_wss a_wa f1_iuneq1 f2_iuneq1 a_wceq f0_iuneq1 f1_iuneq1 f3_iuneq1 a_ciun f0_iuneq1 f2_iuneq1 f3_iuneq1 a_ciun a_wceq p_3imtr4i $.
 $}
-$( Equality theorem for restricted existential quantifier.  (Contributed by
+
+$(Equality theorem for restricted existential quantifier.  (Contributed by
        NM, 27-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	iiineq1_0 $f set y $.
-	fiineq1_0 $f set x $.
-	fiineq1_1 $f class A $.
-	fiineq1_2 $f class B $.
-	fiineq1_3 $f class C $.
-	iineq1 $p |- ( A = B -> |^|_ x e. A C = |^|_ x e. B C ) $= fiineq1_1 fiineq1_2 wceq iiineq1_0 sup_set_class fiineq1_3 wcel fiineq1_0 fiineq1_1 wral iiineq1_0 cab iiineq1_0 sup_set_class fiineq1_3 wcel fiineq1_0 fiineq1_2 wral iiineq1_0 cab fiineq1_0 fiineq1_1 fiineq1_3 ciin fiineq1_0 fiineq1_2 fiineq1_3 ciin fiineq1_1 fiineq1_2 wceq iiineq1_0 sup_set_class fiineq1_3 wcel fiineq1_0 fiineq1_1 wral iiineq1_0 sup_set_class fiineq1_3 wcel fiineq1_0 fiineq1_2 wral iiineq1_0 iiineq1_0 sup_set_class fiineq1_3 wcel fiineq1_0 fiineq1_1 fiineq1_2 raleq abbidv fiineq1_0 iiineq1_0 fiineq1_1 fiineq1_3 df-iin fiineq1_0 iiineq1_0 fiineq1_2 fiineq1_3 df-iin 3eqtr4g $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iineq1 $f set x $.
+	f1_iineq1 $f class A $.
+	f2_iineq1 $f class B $.
+	f3_iineq1 $f class C $.
+	i0_iineq1 $f set y $.
+	p_iineq1 $p |- ( A = B -> |^|_ x e. A C = |^|_ x e. B C ) $= i0_iineq1 a_sup_set_class f3_iineq1 a_wcel f0_iineq1 f1_iineq1 f2_iineq1 p_raleq f1_iineq1 f2_iineq1 a_wceq i0_iineq1 a_sup_set_class f3_iineq1 a_wcel f0_iineq1 f1_iineq1 a_wral i0_iineq1 a_sup_set_class f3_iineq1 a_wcel f0_iineq1 f2_iineq1 a_wral i0_iineq1 p_abbidv f0_iineq1 i0_iineq1 f1_iineq1 f3_iineq1 a_df-iin f0_iineq1 i0_iineq1 f2_iineq1 f3_iineq1 a_df-iin f1_iineq1 f2_iineq1 a_wceq i0_iineq1 a_sup_set_class f3_iineq1 a_wcel f0_iineq1 f1_iineq1 a_wral i0_iineq1 a_cab i0_iineq1 a_sup_set_class f3_iineq1 a_wcel f0_iineq1 f2_iineq1 a_wral i0_iineq1 a_cab f0_iineq1 f1_iineq1 f3_iineq1 a_ciin f0_iineq1 f2_iineq1 f3_iineq1 a_ciin p_3eqtr4g $.
 $}
-$( Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
+
+$(Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	iss2iun_0 $f set y $.
-	fss2iun_0 $f set x $.
-	fss2iun_1 $f class A $.
-	fss2iun_2 $f class B $.
-	fss2iun_3 $f class C $.
-	ss2iun $p |- ( A. x e. A B C_ C -> U_ x e. A B C_ U_ x e. A C ) $= fss2iun_2 fss2iun_3 wss fss2iun_0 fss2iun_1 wral iss2iun_0 fss2iun_0 fss2iun_1 fss2iun_2 ciun fss2iun_0 fss2iun_1 fss2iun_3 ciun fss2iun_2 fss2iun_3 wss fss2iun_0 fss2iun_1 wral iss2iun_0 sup_set_class fss2iun_2 wcel fss2iun_0 fss2iun_1 wrex iss2iun_0 sup_set_class fss2iun_3 wcel fss2iun_0 fss2iun_1 wrex iss2iun_0 sup_set_class fss2iun_0 fss2iun_1 fss2iun_2 ciun wcel iss2iun_0 sup_set_class fss2iun_0 fss2iun_1 fss2iun_3 ciun wcel fss2iun_2 fss2iun_3 wss fss2iun_0 fss2iun_1 wral iss2iun_0 sup_set_class fss2iun_2 wcel iss2iun_0 sup_set_class fss2iun_3 wcel wi fss2iun_0 fss2iun_1 wral iss2iun_0 sup_set_class fss2iun_2 wcel fss2iun_0 fss2iun_1 wrex iss2iun_0 sup_set_class fss2iun_3 wcel fss2iun_0 fss2iun_1 wrex wi fss2iun_2 fss2iun_3 wss iss2iun_0 sup_set_class fss2iun_2 wcel iss2iun_0 sup_set_class fss2iun_3 wcel wi fss2iun_0 fss2iun_1 fss2iun_2 fss2iun_3 iss2iun_0 sup_set_class ssel ralimi iss2iun_0 sup_set_class fss2iun_2 wcel iss2iun_0 sup_set_class fss2iun_3 wcel fss2iun_0 fss2iun_1 rexim syl fss2iun_0 iss2iun_0 sup_set_class fss2iun_1 fss2iun_2 eliun fss2iun_0 iss2iun_0 sup_set_class fss2iun_1 fss2iun_3 eliun 3imtr4g ssrdv $.
+	$v x A B C  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_ss2iun $f set x $.
+	f1_ss2iun $f class A $.
+	f2_ss2iun $f class B $.
+	f3_ss2iun $f class C $.
+	i0_ss2iun $f set y $.
+	p_ss2iun $p |- ( A. x e. A B C_ C -> U_ x e. A B C_ U_ x e. A C ) $= f2_ss2iun f3_ss2iun i0_ss2iun a_sup_set_class p_ssel f2_ss2iun f3_ss2iun a_wss i0_ss2iun a_sup_set_class f2_ss2iun a_wcel i0_ss2iun a_sup_set_class f3_ss2iun a_wcel a_wi f0_ss2iun f1_ss2iun p_ralimi i0_ss2iun a_sup_set_class f2_ss2iun a_wcel i0_ss2iun a_sup_set_class f3_ss2iun a_wcel f0_ss2iun f1_ss2iun p_rexim f2_ss2iun f3_ss2iun a_wss f0_ss2iun f1_ss2iun a_wral i0_ss2iun a_sup_set_class f2_ss2iun a_wcel i0_ss2iun a_sup_set_class f3_ss2iun a_wcel a_wi f0_ss2iun f1_ss2iun a_wral i0_ss2iun a_sup_set_class f2_ss2iun a_wcel f0_ss2iun f1_ss2iun a_wrex i0_ss2iun a_sup_set_class f3_ss2iun a_wcel f0_ss2iun f1_ss2iun a_wrex a_wi p_syl f0_ss2iun i0_ss2iun a_sup_set_class f1_ss2iun f2_ss2iun p_eliun f0_ss2iun i0_ss2iun a_sup_set_class f1_ss2iun f3_ss2iun p_eliun f2_ss2iun f3_ss2iun a_wss f0_ss2iun f1_ss2iun a_wral i0_ss2iun a_sup_set_class f2_ss2iun a_wcel f0_ss2iun f1_ss2iun a_wrex i0_ss2iun a_sup_set_class f3_ss2iun a_wcel f0_ss2iun f1_ss2iun a_wrex i0_ss2iun a_sup_set_class f0_ss2iun f1_ss2iun f2_ss2iun a_ciun a_wcel i0_ss2iun a_sup_set_class f0_ss2iun f1_ss2iun f3_ss2iun a_ciun a_wcel p_3imtr4g f2_ss2iun f3_ss2iun a_wss f0_ss2iun f1_ss2iun a_wral i0_ss2iun f0_ss2iun f1_ss2iun f2_ss2iun a_ciun f0_ss2iun f1_ss2iun f3_ss2iun a_ciun p_ssrdv $.
 $}
-$( Equality theorem for indexed union.  (Contributed by NM,
+
+$(Equality theorem for indexed union.  (Contributed by NM,
        22-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fiuneq2_0 $f set x $.
-	fiuneq2_1 $f class A $.
-	fiuneq2_2 $f class B $.
-	fiuneq2_3 $f class C $.
-	iuneq2 $p |- ( A. x e. A B = C -> U_ x e. A B = U_ x e. A C ) $= fiuneq2_2 fiuneq2_3 wss fiuneq2_0 fiuneq2_1 wral fiuneq2_3 fiuneq2_2 wss fiuneq2_0 fiuneq2_1 wral wa fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun wss fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun wss wa fiuneq2_2 fiuneq2_3 wceq fiuneq2_0 fiuneq2_1 wral fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun wceq fiuneq2_2 fiuneq2_3 wss fiuneq2_0 fiuneq2_1 wral fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun wss fiuneq2_3 fiuneq2_2 wss fiuneq2_0 fiuneq2_1 wral fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun wss fiuneq2_0 fiuneq2_1 fiuneq2_2 fiuneq2_3 ss2iun fiuneq2_0 fiuneq2_1 fiuneq2_3 fiuneq2_2 ss2iun anim12i fiuneq2_2 fiuneq2_3 wceq fiuneq2_0 fiuneq2_1 wral fiuneq2_2 fiuneq2_3 wss fiuneq2_3 fiuneq2_2 wss wa fiuneq2_0 fiuneq2_1 wral fiuneq2_2 fiuneq2_3 wss fiuneq2_0 fiuneq2_1 wral fiuneq2_3 fiuneq2_2 wss fiuneq2_0 fiuneq2_1 wral wa fiuneq2_2 fiuneq2_3 wceq fiuneq2_2 fiuneq2_3 wss fiuneq2_3 fiuneq2_2 wss wa fiuneq2_0 fiuneq2_1 fiuneq2_2 fiuneq2_3 eqss ralbii fiuneq2_2 fiuneq2_3 wss fiuneq2_3 fiuneq2_2 wss fiuneq2_0 fiuneq2_1 r19.26 bitri fiuneq2_0 fiuneq2_1 fiuneq2_2 ciun fiuneq2_0 fiuneq2_1 fiuneq2_3 ciun eqss 3imtr4i $.
+	$v x A B C  $.
+	$d x  $.
+	$d A  $.
+	$d B  $.
+	$d C  $.
+	f0_iuneq2 $f set x $.
+	f1_iuneq2 $f class A $.
+	f2_iuneq2 $f class B $.
+	f3_iuneq2 $f class C $.
+	p_iuneq2 $p |- ( A. x e. A B = C -> U_ x e. A B = U_ x e. A C ) $= f0_iuneq2 f1_iuneq2 f2_iuneq2 f3_iuneq2 p_ss2iun f0_iuneq2 f1_iuneq2 f3_iuneq2 f2_iuneq2 p_ss2iun f2_iuneq2 f3_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun a_wss f3_iuneq2 f2_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun a_wss p_anim12i f2_iuneq2 f3_iuneq2 p_eqss f2_iuneq2 f3_iuneq2 a_wceq f2_iuneq2 f3_iuneq2 a_wss f3_iuneq2 f2_iuneq2 a_wss a_wa f0_iuneq2 f1_iuneq2 p_ralbii f2_iuneq2 f3_iuneq2 a_wss f3_iuneq2 f2_iuneq2 a_wss f0_iuneq2 f1_iuneq2 p_r19.26 f2_iuneq2 f3_iuneq2 a_wceq f0_iuneq2 f1_iuneq2 a_wral f2_iuneq2 f3_iuneq2 a_wss f3_iuneq2 f2_iuneq2 a_wss a_wa f0_iuneq2 f1_iuneq2 a_wral f2_iuneq2 f3_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral f3_iuneq2 f2_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral a_wa p_bitri f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun p_eqss f2_iuneq2 f3_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral f3_iuneq2 f2_iuneq2 a_wss f0_iuneq2 f1_iuneq2 a_wral a_wa f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun a_wss f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun a_wss a_wa f2_iuneq2 f3_iuneq2 a_wceq f0_iuneq2 f1_iuneq2 a_wral f0_iuneq2 f1_iuneq2 f2_iuneq2 a_ciun f0_iuneq2 f1_iuneq2 f3_iuneq2 a_ciun a_wceq p_3imtr4i $.
 $}
-$( Equality theorem for indexed intersection.  (Contributed by NM,
+
+$(Equality theorem for indexed intersection.  (Contributed by NM,
        22-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	iiineq2_0 $f set y $.
-	fiineq2_0 $f set x $.
-	fiineq2_1 $f class A $.
-	fiineq2_2 $f class B $.
-	fiineq2_3 $f class C $.
-	iineq2 $p |- ( A. x e. A B = C -> |^|_ x e. A B = |^|_ x e. A C ) $= fiineq2_2 fiineq2_3 wceq fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_2 wcel fiineq2_0 fiineq2_1 wral iiineq2_0 cab iiineq2_0 sup_set_class fiineq2_3 wcel fiineq2_0 fiineq2_1 wral iiineq2_0 cab fiineq2_0 fiineq2_1 fiineq2_2 ciin fiineq2_0 fiineq2_1 fiineq2_3 ciin fiineq2_2 fiineq2_3 wceq fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_2 wcel fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_3 wcel fiineq2_0 fiineq2_1 wral iiineq2_0 fiineq2_2 fiineq2_3 wceq fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_2 wcel iiineq2_0 sup_set_class fiineq2_3 wcel wb fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_2 wcel fiineq2_0 fiineq2_1 wral iiineq2_0 sup_set_class fiineq2_3 wcel fiineq2_0 fiineq2_1 wral wb fiineq2_2 fiineq2_3 wceq iiineq2_0 sup_set_class fiineq2_2 wcel iiineq2_0 sup_set_class fiineq2_3 wcel wb fiineq2_0 fiineq2_1 fiineq2_2 fiineq2_3 iiineq2_0 sup_set_class eleq2 ralimi iiineq2_0 sup_set_class fiineq2_2 wcel iiineq2_0 sup_set_class fiineq2_3 wcel fiineq2_0 fiineq2_1 ralbi syl abbidv fiineq2_0 iiineq2_0 fiineq2_1 fiineq2_2 df-iin fiineq2_0 iiineq2_0 fiineq2_1 fiineq2_3 df-iin 3eqtr4g $.
+	$v x A B C  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_iineq2 $f set x $.
+	f1_iineq2 $f class A $.
+	f2_iineq2 $f class B $.
+	f3_iineq2 $f class C $.
+	i0_iineq2 $f set y $.
+	p_iineq2 $p |- ( A. x e. A B = C -> |^|_ x e. A B = |^|_ x e. A C ) $= f2_iineq2 f3_iineq2 i0_iineq2 a_sup_set_class p_eleq2 f2_iineq2 f3_iineq2 a_wceq i0_iineq2 a_sup_set_class f2_iineq2 a_wcel i0_iineq2 a_sup_set_class f3_iineq2 a_wcel a_wb f0_iineq2 f1_iineq2 p_ralimi i0_iineq2 a_sup_set_class f2_iineq2 a_wcel i0_iineq2 a_sup_set_class f3_iineq2 a_wcel f0_iineq2 f1_iineq2 p_ralbi f2_iineq2 f3_iineq2 a_wceq f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f2_iineq2 a_wcel i0_iineq2 a_sup_set_class f3_iineq2 a_wcel a_wb f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f2_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f3_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral a_wb p_syl f2_iineq2 f3_iineq2 a_wceq f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f2_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f3_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral i0_iineq2 p_abbidv f0_iineq2 i0_iineq2 f1_iineq2 f2_iineq2 a_df-iin f0_iineq2 i0_iineq2 f1_iineq2 f3_iineq2 a_df-iin f2_iineq2 f3_iineq2 a_wceq f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_sup_set_class f2_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_cab i0_iineq2 a_sup_set_class f3_iineq2 a_wcel f0_iineq2 f1_iineq2 a_wral i0_iineq2 a_cab f0_iineq2 f1_iineq2 f2_iineq2 a_ciin f0_iineq2 f1_iineq2 f3_iineq2 a_ciin p_3eqtr4g $.
 $}
-$( Equality inference for indexed union.  (Contributed by NM,
+
+$(Equality inference for indexed union.  (Contributed by NM,
        22-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fiuneq2i_0 $f set x $.
-	fiuneq2i_1 $f class A $.
-	fiuneq2i_2 $f class B $.
-	fiuneq2i_3 $f class C $.
-	eiuneq2i_0 $e |- ( x e. A -> B = C ) $.
-	iuneq2i $p |- U_ x e. A B = U_ x e. A C $= fiuneq2i_2 fiuneq2i_3 wceq fiuneq2i_0 fiuneq2i_1 fiuneq2i_2 ciun fiuneq2i_0 fiuneq2i_1 fiuneq2i_3 ciun wceq fiuneq2i_0 fiuneq2i_1 fiuneq2i_0 fiuneq2i_1 fiuneq2i_2 fiuneq2i_3 iuneq2 eiuneq2i_0 mprg $.
+	$v x A B C  $.
+	f0_iuneq2i $f set x $.
+	f1_iuneq2i $f class A $.
+	f2_iuneq2i $f class B $.
+	f3_iuneq2i $f class C $.
+	e0_iuneq2i $e |- ( x e. A -> B = C ) $.
+	p_iuneq2i $p |- U_ x e. A B = U_ x e. A C $= f0_iuneq2i f1_iuneq2i f2_iuneq2i f3_iuneq2i p_iuneq2 e0_iuneq2i f2_iuneq2i f3_iuneq2i a_wceq f0_iuneq2i f1_iuneq2i f2_iuneq2i a_ciun f0_iuneq2i f1_iuneq2i f3_iuneq2i a_ciun a_wceq f0_iuneq2i f1_iuneq2i p_mprg $.
 $}
-$( Equality inference for indexed intersection.  (Contributed by NM,
+
+$(Equality inference for indexed intersection.  (Contributed by NM,
        22-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fiineq2i_0 $f set x $.
-	fiineq2i_1 $f class A $.
-	fiineq2i_2 $f class B $.
-	fiineq2i_3 $f class C $.
-	eiineq2i_0 $e |- ( x e. A -> B = C ) $.
-	iineq2i $p |- |^|_ x e. A B = |^|_ x e. A C $= fiineq2i_2 fiineq2i_3 wceq fiineq2i_0 fiineq2i_1 fiineq2i_2 ciin fiineq2i_0 fiineq2i_1 fiineq2i_3 ciin wceq fiineq2i_0 fiineq2i_1 fiineq2i_0 fiineq2i_1 fiineq2i_2 fiineq2i_3 iineq2 eiineq2i_0 mprg $.
+	$v x A B C  $.
+	f0_iineq2i $f set x $.
+	f1_iineq2i $f class A $.
+	f2_iineq2i $f class B $.
+	f3_iineq2i $f class C $.
+	e0_iineq2i $e |- ( x e. A -> B = C ) $.
+	p_iineq2i $p |- |^|_ x e. A B = |^|_ x e. A C $= f0_iineq2i f1_iineq2i f2_iineq2i f3_iineq2i p_iineq2 e0_iineq2i f2_iineq2i f3_iineq2i a_wceq f0_iineq2i f1_iineq2i f2_iineq2i a_ciin f0_iineq2i f1_iineq2i f3_iineq2i a_ciin a_wceq f0_iineq2i f1_iineq2i p_mprg $.
 $}
-$( Equality deduction for indexed intersection.  (Contributed by NM,
+
+$(Equality deduction for indexed intersection.  (Contributed by NM,
        7-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fiineq2d_0 $f wff ph $.
-	fiineq2d_1 $f set x $.
-	fiineq2d_2 $f class A $.
-	fiineq2d_3 $f class B $.
-	fiineq2d_4 $f class C $.
-	eiineq2d_0 $e |- F/ x ph $.
-	eiineq2d_1 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
-	iineq2d $p |- ( ph -> |^|_ x e. A B = |^|_ x e. A C ) $= fiineq2d_0 fiineq2d_3 fiineq2d_4 wceq fiineq2d_1 fiineq2d_2 wral fiineq2d_1 fiineq2d_2 fiineq2d_3 ciin fiineq2d_1 fiineq2d_2 fiineq2d_4 ciin wceq fiineq2d_0 fiineq2d_3 fiineq2d_4 wceq fiineq2d_1 fiineq2d_2 eiineq2d_0 fiineq2d_0 fiineq2d_1 sup_set_class fiineq2d_2 wcel fiineq2d_3 fiineq2d_4 wceq eiineq2d_1 ex ralrimi fiineq2d_1 fiineq2d_2 fiineq2d_3 fiineq2d_4 iineq2 syl $.
+	$v ph x A B C  $.
+	f0_iineq2d $f wff ph $.
+	f1_iineq2d $f set x $.
+	f2_iineq2d $f class A $.
+	f3_iineq2d $f class B $.
+	f4_iineq2d $f class C $.
+	e0_iineq2d $e |- F/ x ph $.
+	e1_iineq2d $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	p_iineq2d $p |- ( ph -> |^|_ x e. A B = |^|_ x e. A C ) $= e0_iineq2d e1_iineq2d f0_iineq2d f1_iineq2d a_sup_set_class f2_iineq2d a_wcel f3_iineq2d f4_iineq2d a_wceq p_ex f0_iineq2d f3_iineq2d f4_iineq2d a_wceq f1_iineq2d f2_iineq2d p_ralrimi f1_iineq2d f2_iineq2d f3_iineq2d f4_iineq2d p_iineq2 f0_iineq2d f3_iineq2d f4_iineq2d a_wceq f1_iineq2d f2_iineq2d a_wral f1_iineq2d f2_iineq2d f3_iineq2d a_ciin f1_iineq2d f2_iineq2d f4_iineq2d a_ciin a_wceq p_syl $.
 $}
-$( Equality deduction for indexed union.  (Contributed by NM,
+
+$(Equality deduction for indexed union.  (Contributed by NM,
        3-Aug-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fiuneq2dv_0 $f wff ph $.
-	fiuneq2dv_1 $f set x $.
-	fiuneq2dv_2 $f class A $.
-	fiuneq2dv_3 $f class B $.
-	fiuneq2dv_4 $f class C $.
-	eiuneq2dv_0 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
-	iuneq2dv $p |- ( ph -> U_ x e. A B = U_ x e. A C ) $= fiuneq2dv_0 fiuneq2dv_3 fiuneq2dv_4 wceq fiuneq2dv_1 fiuneq2dv_2 wral fiuneq2dv_1 fiuneq2dv_2 fiuneq2dv_3 ciun fiuneq2dv_1 fiuneq2dv_2 fiuneq2dv_4 ciun wceq fiuneq2dv_0 fiuneq2dv_3 fiuneq2dv_4 wceq fiuneq2dv_1 fiuneq2dv_2 eiuneq2dv_0 ralrimiva fiuneq2dv_1 fiuneq2dv_2 fiuneq2dv_3 fiuneq2dv_4 iuneq2 syl $.
+	$v ph x A B C  $.
+	$d x ph  $.
+	f0_iuneq2dv $f wff ph $.
+	f1_iuneq2dv $f set x $.
+	f2_iuneq2dv $f class A $.
+	f3_iuneq2dv $f class B $.
+	f4_iuneq2dv $f class C $.
+	e0_iuneq2dv $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	p_iuneq2dv $p |- ( ph -> U_ x e. A B = U_ x e. A C ) $= e0_iuneq2dv f0_iuneq2dv f3_iuneq2dv f4_iuneq2dv a_wceq f1_iuneq2dv f2_iuneq2dv p_ralrimiva f1_iuneq2dv f2_iuneq2dv f3_iuneq2dv f4_iuneq2dv p_iuneq2 f0_iuneq2dv f3_iuneq2dv f4_iuneq2dv a_wceq f1_iuneq2dv f2_iuneq2dv a_wral f1_iuneq2dv f2_iuneq2dv f3_iuneq2dv a_ciun f1_iuneq2dv f2_iuneq2dv f4_iuneq2dv a_ciun a_wceq p_syl $.
 $}
-$( Equality deduction for indexed intersection.  (Contributed by NM,
+
+$(Equality deduction for indexed intersection.  (Contributed by NM,
        3-Aug-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	fiineq2dv_0 $f wff ph $.
-	fiineq2dv_1 $f set x $.
-	fiineq2dv_2 $f class A $.
-	fiineq2dv_3 $f class B $.
-	fiineq2dv_4 $f class C $.
-	eiineq2dv_0 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
-	iineq2dv $p |- ( ph -> |^|_ x e. A B = |^|_ x e. A C ) $= fiineq2dv_0 fiineq2dv_1 fiineq2dv_2 fiineq2dv_3 fiineq2dv_4 fiineq2dv_0 fiineq2dv_1 nfv eiineq2dv_0 iineq2d $.
+	$v ph x A B C  $.
+	$d x ph  $.
+	f0_iineq2dv $f wff ph $.
+	f1_iineq2dv $f set x $.
+	f2_iineq2dv $f class A $.
+	f3_iineq2dv $f class B $.
+	f4_iineq2dv $f class C $.
+	e0_iineq2dv $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	p_iineq2dv $p |- ( ph -> |^|_ x e. A B = |^|_ x e. A C ) $= f0_iineq2dv f1_iineq2dv p_nfv e0_iineq2dv f0_iineq2dv f1_iineq2dv f2_iineq2dv f3_iineq2dv f4_iineq2dv p_iineq2d $.
 $}
-$( Equality theorem for indexed union, deduction version.  (Contributed by
+
+$(Equality theorem for indexed union, deduction version.  (Contributed by
        Drahflow, 22-Oct-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	fiuneq1d_0 $f wff ph $.
-	fiuneq1d_1 $f set x $.
-	fiuneq1d_2 $f class A $.
-	fiuneq1d_3 $f class B $.
-	fiuneq1d_4 $f class C $.
-	eiuneq1d_0 $e |- ( ph -> A = B ) $.
-	iuneq1d $p |- ( ph -> U_ x e. A C = U_ x e. B C ) $= fiuneq1d_0 fiuneq1d_2 fiuneq1d_3 wceq fiuneq1d_1 fiuneq1d_2 fiuneq1d_4 ciun fiuneq1d_1 fiuneq1d_3 fiuneq1d_4 ciun wceq eiuneq1d_0 fiuneq1d_1 fiuneq1d_2 fiuneq1d_3 fiuneq1d_4 iuneq1 syl $.
+	$v ph x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	f0_iuneq1d $f wff ph $.
+	f1_iuneq1d $f set x $.
+	f2_iuneq1d $f class A $.
+	f3_iuneq1d $f class B $.
+	f4_iuneq1d $f class C $.
+	e0_iuneq1d $e |- ( ph -> A = B ) $.
+	p_iuneq1d $p |- ( ph -> U_ x e. A C = U_ x e. B C ) $= e0_iuneq1d f1_iuneq1d f2_iuneq1d f3_iuneq1d f4_iuneq1d p_iuneq1 f0_iuneq1d f2_iuneq1d f3_iuneq1d a_wceq f1_iuneq1d f2_iuneq1d f4_iuneq1d a_ciun f1_iuneq1d f3_iuneq1d f4_iuneq1d a_ciun a_wceq p_syl $.
 $}
-$( Equality deduction for indexed union, deduction version.  (Contributed
+
+$(Equality deduction for indexed union, deduction version.  (Contributed
          by Drahflow, 22-Oct-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x A $.
-	$d x B $.
-	$d x ph $.
-	fiuneq12d_0 $f wff ph $.
-	fiuneq12d_1 $f set x $.
-	fiuneq12d_2 $f class A $.
-	fiuneq12d_3 $f class B $.
-	fiuneq12d_4 $f class C $.
-	fiuneq12d_5 $f class D $.
-	eiuneq12d_0 $e |- ( ph -> A = B ) $.
-	eiuneq12d_1 $e |- ( ph -> C = D ) $.
-	iuneq12d $p |- ( ph -> U_ x e. A C = U_ x e. B D ) $= fiuneq12d_0 fiuneq12d_1 fiuneq12d_2 fiuneq12d_4 ciun fiuneq12d_1 fiuneq12d_3 fiuneq12d_4 ciun fiuneq12d_1 fiuneq12d_3 fiuneq12d_5 ciun fiuneq12d_0 fiuneq12d_1 fiuneq12d_2 fiuneq12d_3 fiuneq12d_4 eiuneq12d_0 iuneq1d fiuneq12d_0 fiuneq12d_1 fiuneq12d_3 fiuneq12d_4 fiuneq12d_5 fiuneq12d_0 fiuneq12d_4 fiuneq12d_5 wceq fiuneq12d_1 sup_set_class fiuneq12d_3 wcel eiuneq12d_1 adantr iuneq2dv eqtrd $.
+	$v ph x A B C D  $.
+	$d x A  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_iuneq12d $f wff ph $.
+	f1_iuneq12d $f set x $.
+	f2_iuneq12d $f class A $.
+	f3_iuneq12d $f class B $.
+	f4_iuneq12d $f class C $.
+	f5_iuneq12d $f class D $.
+	e0_iuneq12d $e |- ( ph -> A = B ) $.
+	e1_iuneq12d $e |- ( ph -> C = D ) $.
+	p_iuneq12d $p |- ( ph -> U_ x e. A C = U_ x e. B D ) $= e0_iuneq12d f0_iuneq12d f1_iuneq12d f2_iuneq12d f3_iuneq12d f4_iuneq12d p_iuneq1d e1_iuneq12d f0_iuneq12d f4_iuneq12d f5_iuneq12d a_wceq f1_iuneq12d a_sup_set_class f3_iuneq12d a_wcel p_adantr f0_iuneq12d f1_iuneq12d f3_iuneq12d f4_iuneq12d f5_iuneq12d p_iuneq2dv f0_iuneq12d f1_iuneq12d f2_iuneq12d f4_iuneq12d a_ciun f1_iuneq12d f3_iuneq12d f4_iuneq12d a_ciun f1_iuneq12d f3_iuneq12d f5_iuneq12d a_ciun p_eqtrd $.
 $}
-$( Equality deduction for indexed union.  (Contributed by Drahflow,
+
+$(Equality deduction for indexed union.  (Contributed by Drahflow,
        22-Oct-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x ph $.
-	$d x A $.
-	fiuneq2d_0 $f wff ph $.
-	fiuneq2d_1 $f set x $.
-	fiuneq2d_2 $f class A $.
-	fiuneq2d_3 $f class B $.
-	fiuneq2d_4 $f class C $.
-	eiuneq2d_0 $e |- ( ph -> B = C ) $.
-	iuneq2d $p |- ( ph -> U_ x e. A B = U_ x e. A C ) $= fiuneq2d_0 fiuneq2d_1 fiuneq2d_2 fiuneq2d_3 fiuneq2d_4 fiuneq2d_0 fiuneq2d_3 fiuneq2d_4 wceq fiuneq2d_1 sup_set_class fiuneq2d_2 wcel eiuneq2d_0 adantr iuneq2dv $.
+	$v ph x A B C  $.
+	$d x ph  $.
+	$d x A  $.
+	f0_iuneq2d $f wff ph $.
+	f1_iuneq2d $f set x $.
+	f2_iuneq2d $f class A $.
+	f3_iuneq2d $f class B $.
+	f4_iuneq2d $f class C $.
+	e0_iuneq2d $e |- ( ph -> B = C ) $.
+	p_iuneq2d $p |- ( ph -> U_ x e. A B = U_ x e. A C ) $= e0_iuneq2d f0_iuneq2d f3_iuneq2d f4_iuneq2d a_wceq f1_iuneq2d a_sup_set_class f2_iuneq2d a_wcel p_adantr f0_iuneq2d f1_iuneq2d f2_iuneq2d f3_iuneq2d f4_iuneq2d p_iuneq2dv $.
 $}
-$( Bound-variable hypothesis builder for indexed union.  (Contributed by
+
+$(Bound-variable hypothesis builder for indexed union.  (Contributed by
        Mario Carneiro, 25-Jan-2014.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d z A $.
-	$d z B $.
-	$d x z $.
-	$d y z $.
-	infiun_0 $f set z $.
-	fnfiun_0 $f set x $.
-	fnfiun_1 $f set y $.
-	fnfiun_2 $f class A $.
-	fnfiun_3 $f class B $.
-	enfiun_0 $e |- F/_ y A $.
-	enfiun_1 $e |- F/_ y B $.
-	nfiun $p |- F/_ y U_ x e. A B $= fnfiun_1 fnfiun_0 fnfiun_2 fnfiun_3 ciun infiun_0 sup_set_class fnfiun_3 wcel fnfiun_0 fnfiun_2 wrex infiun_0 cab fnfiun_0 infiun_0 fnfiun_2 fnfiun_3 df-iun infiun_0 sup_set_class fnfiun_3 wcel fnfiun_0 fnfiun_2 wrex fnfiun_1 infiun_0 infiun_0 sup_set_class fnfiun_3 wcel fnfiun_1 fnfiun_0 fnfiun_2 enfiun_0 fnfiun_1 infiun_0 fnfiun_3 enfiun_1 nfcri nfrex nfab nfcxfr $.
+	$v x y A B  $.
+	$d z A  $.
+	$d z B  $.
+	$d x z  $.
+	$d y z  $.
+	f0_nfiun $f set x $.
+	f1_nfiun $f set y $.
+	f2_nfiun $f class A $.
+	f3_nfiun $f class B $.
+	i0_nfiun $f set z $.
+	e0_nfiun $e |- F/_ y A $.
+	e1_nfiun $e |- F/_ y B $.
+	p_nfiun $p |- F/_ y U_ x e. A B $= f0_nfiun i0_nfiun f2_nfiun f3_nfiun a_df-iun e0_nfiun e1_nfiun f1_nfiun i0_nfiun f3_nfiun p_nfcri i0_nfiun a_sup_set_class f3_nfiun a_wcel f1_nfiun f0_nfiun f2_nfiun p_nfrex i0_nfiun a_sup_set_class f3_nfiun a_wcel f0_nfiun f2_nfiun a_wrex f1_nfiun i0_nfiun p_nfab f1_nfiun f0_nfiun f2_nfiun f3_nfiun a_ciun i0_nfiun a_sup_set_class f3_nfiun a_wcel f0_nfiun f2_nfiun a_wrex i0_nfiun a_cab p_nfcxfr $.
 $}
-$( Bound-variable hypothesis builder for indexed intersection.
+
+$(Bound-variable hypothesis builder for indexed intersection.
        (Contributed by Mario Carneiro, 25-Jan-2014.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d z A $.
-	$d z B $.
-	$d x z $.
-	$d y z $.
-	infiin_0 $f set z $.
-	fnfiin_0 $f set x $.
-	fnfiin_1 $f set y $.
-	fnfiin_2 $f class A $.
-	fnfiin_3 $f class B $.
-	enfiin_0 $e |- F/_ y A $.
-	enfiin_1 $e |- F/_ y B $.
-	nfiin $p |- F/_ y |^|_ x e. A B $= fnfiin_1 fnfiin_0 fnfiin_2 fnfiin_3 ciin infiin_0 sup_set_class fnfiin_3 wcel fnfiin_0 fnfiin_2 wral infiin_0 cab fnfiin_0 infiin_0 fnfiin_2 fnfiin_3 df-iin infiin_0 sup_set_class fnfiin_3 wcel fnfiin_0 fnfiin_2 wral fnfiin_1 infiin_0 infiin_0 sup_set_class fnfiin_3 wcel fnfiin_1 fnfiin_0 fnfiin_2 enfiin_0 fnfiin_1 infiin_0 fnfiin_3 enfiin_1 nfcri nfral nfab nfcxfr $.
+	$v x y A B  $.
+	$d z A  $.
+	$d z B  $.
+	$d x z  $.
+	$d y z  $.
+	f0_nfiin $f set x $.
+	f1_nfiin $f set y $.
+	f2_nfiin $f class A $.
+	f3_nfiin $f class B $.
+	i0_nfiin $f set z $.
+	e0_nfiin $e |- F/_ y A $.
+	e1_nfiin $e |- F/_ y B $.
+	p_nfiin $p |- F/_ y |^|_ x e. A B $= f0_nfiin i0_nfiin f2_nfiin f3_nfiin a_df-iin e0_nfiin e1_nfiin f1_nfiin i0_nfiin f3_nfiin p_nfcri i0_nfiin a_sup_set_class f3_nfiin a_wcel f1_nfiin f0_nfiin f2_nfiin p_nfral i0_nfiin a_sup_set_class f3_nfiin a_wcel f0_nfiin f2_nfiin a_wral f1_nfiin i0_nfiin p_nfab f1_nfiin f0_nfiin f2_nfiin f3_nfiin a_ciin i0_nfiin a_sup_set_class f3_nfiin a_wcel f0_nfiin f2_nfiin a_wral i0_nfiin a_cab p_nfcxfr $.
 $}
-$( Bound-variable hypothesis builder for indexed union.  (Contributed by
+
+$(Bound-variable hypothesis builder for indexed union.  (Contributed by
        NM, 12-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d x y $.
-	infiu1_0 $f set y $.
-	fnfiu1_0 $f set x $.
-	fnfiu1_1 $f class A $.
-	fnfiu1_2 $f class B $.
-	nfiu1 $p |- F/_ x U_ x e. A B $= fnfiu1_0 fnfiu1_0 fnfiu1_1 fnfiu1_2 ciun infiu1_0 sup_set_class fnfiu1_2 wcel fnfiu1_0 fnfiu1_1 wrex infiu1_0 cab fnfiu1_0 infiu1_0 fnfiu1_1 fnfiu1_2 df-iun infiu1_0 sup_set_class fnfiu1_2 wcel fnfiu1_0 fnfiu1_1 wrex fnfiu1_0 infiu1_0 infiu1_0 sup_set_class fnfiu1_2 wcel fnfiu1_0 fnfiu1_1 nfre1 nfab nfcxfr $.
+	$v x A B  $.
+	$d y A  $.
+	$d y B  $.
+	$d x y  $.
+	f0_nfiu1 $f set x $.
+	f1_nfiu1 $f class A $.
+	f2_nfiu1 $f class B $.
+	i0_nfiu1 $f set y $.
+	p_nfiu1 $p |- F/_ x U_ x e. A B $= f0_nfiu1 i0_nfiu1 f1_nfiu1 f2_nfiu1 a_df-iun i0_nfiu1 a_sup_set_class f2_nfiu1 a_wcel f0_nfiu1 f1_nfiu1 p_nfre1 i0_nfiu1 a_sup_set_class f2_nfiu1 a_wcel f0_nfiu1 f1_nfiu1 a_wrex f0_nfiu1 i0_nfiu1 p_nfab f0_nfiu1 f0_nfiu1 f1_nfiu1 f2_nfiu1 a_ciun i0_nfiu1 a_sup_set_class f2_nfiu1 a_wcel f0_nfiu1 f1_nfiu1 a_wrex i0_nfiu1 a_cab p_nfcxfr $.
 $}
-$( Bound-variable hypothesis builder for indexed intersection.
+
+$(Bound-variable hypothesis builder for indexed intersection.
        (Contributed by NM, 15-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d x y $.
-	infii1_0 $f set y $.
-	fnfii1_0 $f set x $.
-	fnfii1_1 $f class A $.
-	fnfii1_2 $f class B $.
-	nfii1 $p |- F/_ x |^|_ x e. A B $= fnfii1_0 fnfii1_0 fnfii1_1 fnfii1_2 ciin infii1_0 sup_set_class fnfii1_2 wcel fnfii1_0 fnfii1_1 wral infii1_0 cab fnfii1_0 infii1_0 fnfii1_1 fnfii1_2 df-iin infii1_0 sup_set_class fnfii1_2 wcel fnfii1_0 fnfii1_1 wral fnfii1_0 infii1_0 infii1_0 sup_set_class fnfii1_2 wcel fnfii1_0 fnfii1_1 nfra1 nfab nfcxfr $.
+	$v x A B  $.
+	$d y A  $.
+	$d y B  $.
+	$d x y  $.
+	f0_nfii1 $f set x $.
+	f1_nfii1 $f class A $.
+	f2_nfii1 $f class B $.
+	i0_nfii1 $f set y $.
+	p_nfii1 $p |- F/_ x |^|_ x e. A B $= f0_nfii1 i0_nfii1 f1_nfii1 f2_nfii1 a_df-iin i0_nfii1 a_sup_set_class f2_nfii1 a_wcel f0_nfii1 f1_nfii1 p_nfra1 i0_nfii1 a_sup_set_class f2_nfii1 a_wcel f0_nfii1 f1_nfii1 a_wral f0_nfii1 i0_nfii1 p_nfab f0_nfii1 f0_nfii1 f1_nfii1 f2_nfii1 a_ciin i0_nfii1 a_sup_set_class f2_nfii1 a_wcel f0_nfii1 f1_nfii1 a_wral i0_nfii1 a_cab p_nfcxfr $.
 $}
-$( Alternate definition of indexed union when ` B ` is a set.  Definition
+
+$(Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 23-Mar-2006.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d y z A $.
-	$d y z B $.
-	$d C z $.
-	$d x y z $.
-	idfiun2g_0 $f set z $.
-	fdfiun2g_0 $f set x $.
-	fdfiun2g_1 $f set y $.
-	fdfiun2g_2 $f class A $.
-	fdfiun2g_3 $f class B $.
-	fdfiun2g_4 $f class C $.
-	dfiun2g $p |- ( A. x e. A B e. C -> U_ x e. A B = U. { y | E. x e. A y = B } ) $= fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral idfiun2g_0 fdfiun2g_0 fdfiun2g_2 fdfiun2g_3 ciun fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 cab cuni fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_0 fdfiun2g_2 wrex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex wa fdfiun2g_1 wex idfiun2g_0 sup_set_class fdfiun2g_0 fdfiun2g_2 fdfiun2g_3 ciun wcel idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 cab cuni wcel fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 wex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex wa fdfiun2g_1 wex fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 wex fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 wex fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 wex fdfiun2g_0 fdfiun2g_2 fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 nfra1 fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral fdfiun2g_0 sup_set_class fdfiun2g_2 wcel idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 wex wb fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 wral fdfiun2g_0 sup_set_class fdfiun2g_2 wcel fdfiun2g_3 fdfiun2g_4 wcel idfiun2g_0 sup_set_class fdfiun2g_3 wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 wex wb fdfiun2g_3 fdfiun2g_4 wcel fdfiun2g_0 fdfiun2g_2 rsp fdfiun2g_1 idfiun2g_0 sup_set_class fdfiun2g_3 fdfiun2g_4 clel3g syl6 imp rexbida fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_0 fdfiun2g_1 fdfiun2g_2 rexcom4 syl6bb fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 wex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 wex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex wa fdfiun2g_1 wex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel wa fdfiun2g_1 fdfiun2g_1 sup_set_class fdfiun2g_3 wceq idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel fdfiun2g_0 fdfiun2g_2 r19.41v exbii fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex idfiun2g_0 sup_set_class fdfiun2g_1 sup_set_class wcel fdfiun2g_1 exancom bitri syl6bb fdfiun2g_0 idfiun2g_0 sup_set_class fdfiun2g_2 fdfiun2g_3 eliun fdfiun2g_1 sup_set_class fdfiun2g_3 wceq fdfiun2g_0 fdfiun2g_2 wrex fdfiun2g_1 idfiun2g_0 sup_set_class eluniab 3bitr4g eqrdv $.
+	$v x y A B C  $.
+	$d y z A  $.
+	$d y z B  $.
+	$d C z  $.
+	$d x y z  $.
+	f0_dfiun2g $f set x $.
+	f1_dfiun2g $f set y $.
+	f2_dfiun2g $f class A $.
+	f3_dfiun2g $f class B $.
+	f4_dfiun2g $f class C $.
+	i0_dfiun2g $f set z $.
+	p_dfiun2g $p |- ( A. x e. A B e. C -> U_ x e. A B = U. { y | E. x e. A y = B } ) $= f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g p_nfra1 f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g p_rsp f1_dfiun2g i0_dfiun2g a_sup_set_class f3_dfiun2g f4_dfiun2g p_clel3g f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral f0_dfiun2g a_sup_set_class f2_dfiun2g a_wcel f3_dfiun2g f4_dfiun2g a_wcel i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g a_wex a_wb p_syl6 f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral f0_dfiun2g a_sup_set_class f2_dfiun2g a_wcel i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g a_wex a_wb p_imp f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g a_wex f0_dfiun2g f2_dfiun2g p_rexbida f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f0_dfiun2g f1_dfiun2g f2_dfiun2g p_rexcom4 f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g a_wex f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_wex p_syl6bb f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel f0_dfiun2g f2_dfiun2g p_r19.41v f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g p_exbii f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel f1_dfiun2g p_exancom f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_wex f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f1_dfiun2g a_wex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex a_wa f1_dfiun2g a_wex p_bitri f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel a_wa f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_wex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex a_wa f1_dfiun2g a_wex p_syl6bb f0_dfiun2g i0_dfiun2g a_sup_set_class f2_dfiun2g f3_dfiun2g p_eliun f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g i0_dfiun2g a_sup_set_class p_eluniab f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral i0_dfiun2g a_sup_set_class f3_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wrex i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class a_wcel f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex a_wa f1_dfiun2g a_wex i0_dfiun2g a_sup_set_class f0_dfiun2g f2_dfiun2g f3_dfiun2g a_ciun a_wcel i0_dfiun2g a_sup_set_class f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_cab a_cuni a_wcel p_3bitr4g f3_dfiun2g f4_dfiun2g a_wcel f0_dfiun2g f2_dfiun2g a_wral i0_dfiun2g f0_dfiun2g f2_dfiun2g f3_dfiun2g a_ciun f1_dfiun2g a_sup_set_class f3_dfiun2g a_wceq f0_dfiun2g f2_dfiun2g a_wrex f1_dfiun2g a_cab a_cuni p_eqrdv $.
 $}
-$( Alternate definition of indexed intersection when ` B ` is a set.
+
+$(Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Jeff Hankins, 27-Aug-2009.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$v w $.
-	$d y z w A $.
-	$d y z w B $.
-	$d w C z $.
-	$d w x y z $.
-	idfiin2g_0 $f set z $.
-	idfiin2g_1 $f set w $.
-	fdfiin2g_0 $f set x $.
-	fdfiin2g_1 $f set y $.
-	fdfiin2g_2 $f class A $.
-	fdfiin2g_3 $f class B $.
-	fdfiin2g_4 $f class C $.
-	dfiin2g $p |- ( A. x e. A B e. C -> |^|_ x e. A B = |^| { y | E. x e. A y = B } ) $= fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 wral idfiin2g_1 sup_set_class fdfiin2g_3 wcel fdfiin2g_0 fdfiin2g_2 wral idfiin2g_1 cab idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal idfiin2g_1 cab fdfiin2g_0 fdfiin2g_2 fdfiin2g_3 ciin fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab cint fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 wral idfiin2g_1 sup_set_class fdfiin2g_3 wcel fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal idfiin2g_1 idfiin2g_1 sup_set_class fdfiin2g_3 wcel fdfiin2g_0 fdfiin2g_2 wral fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 wal fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal idfiin2g_1 sup_set_class fdfiin2g_3 wcel fdfiin2g_0 fdfiin2g_2 df-ral fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 wral fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 wal idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 wral fdfiin2g_0 sup_set_class fdfiin2g_2 wcel fdfiin2g_3 fdfiin2g_4 wcel wi fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 wal wb fdfiin2g_3 fdfiin2g_4 wcel fdfiin2g_0 fdfiin2g_2 df-ral fdfiin2g_0 sup_set_class fdfiin2g_2 wcel fdfiin2g_3 fdfiin2g_4 wcel wi fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi wb fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 wal wb fdfiin2g_0 sup_set_class fdfiin2g_2 wcel fdfiin2g_3 fdfiin2g_4 wcel wi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi wb fdfiin2g_0 fdfiin2g_0 sup_set_class fdfiin2g_2 wcel fdfiin2g_3 fdfiin2g_4 wcel wi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal fdfiin2g_3 fdfiin2g_4 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wb fdfiin2g_0 sup_set_class fdfiin2g_2 wcel fdfiin2g_3 fdfiin2g_4 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 idfiin2g_1 sup_set_class eleq2 biimprcd alrimiv fdfiin2g_3 fdfiin2g_4 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal fdfiin2g_3 fdfiin2g_3 wceq idfiin2g_1 sup_set_class fdfiin2g_3 wcel fdfiin2g_3 eqid idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_3 fdfiin2g_3 wceq idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi idfiin2g_0 fdfiin2g_3 fdfiin2g_4 idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_0 sup_set_class fdfiin2g_3 wceq fdfiin2g_3 fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel idfiin2g_0 sup_set_class fdfiin2g_3 fdfiin2g_3 eqeq1 idfiin2g_0 sup_set_class fdfiin2g_3 idfiin2g_1 sup_set_class eleq2 imbi12d spcgv mpii impbid2 imim2i pm5.74d alimi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_1 sup_set_class fdfiin2g_3 wcel wi fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 albi syl sylbi idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi idfiin2g_0 wal fdfiin2g_0 wal idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 wal idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi fdfiin2g_0 wal idfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi idfiin2g_0 wal fdfiin2g_0 wal idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 wral fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi fdfiin2g_0 wal idfiin2g_0 idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 df-ral albii fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi fdfiin2g_0 idfiin2g_0 alcom bitr4i idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi fdfiin2g_0 fdfiin2g_2 wral idfiin2g_0 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel fdfiin2g_0 fdfiin2g_2 r19.23v idfiin2g_0 sup_set_class fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex idfiin2g_0 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 idfiin2g_0 sup_set_class idfiin2g_0 vex fdfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wceq fdfiin2g_1 sup_set_class fdfiin2g_3 wceq idfiin2g_0 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 fdfiin2g_1 sup_set_class idfiin2g_0 sup_set_class fdfiin2g_3 eqeq1 rexbidv elab imbi1i bitr4i albii fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi wi idfiin2g_0 wal fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 wal wi fdfiin2g_0 fdfiin2g_0 sup_set_class fdfiin2g_2 wcel idfiin2g_0 sup_set_class fdfiin2g_3 wceq idfiin2g_1 sup_set_class idfiin2g_0 sup_set_class wcel wi idfiin2g_0 19.21v albii 3bitr3ri syl6bb syl5bb abbidv fdfiin2g_0 idfiin2g_1 fdfiin2g_2 fdfiin2g_3 df-iin idfiin2g_1 idfiin2g_0 fdfiin2g_1 sup_set_class fdfiin2g_3 wceq fdfiin2g_0 fdfiin2g_2 wrex fdfiin2g_1 cab df-int 3eqtr4g $.
+	$v x y A B C  $.
+	$d y z w A  $.
+	$d y z w B  $.
+	$d w C z  $.
+	$d w x y z  $.
+	f0_dfiin2g $f set x $.
+	f1_dfiin2g $f set y $.
+	f2_dfiin2g $f class A $.
+	f3_dfiin2g $f class B $.
+	f4_dfiin2g $f class C $.
+	i0_dfiin2g $f set z $.
+	i1_dfiin2g $f set w $.
+	p_dfiin2g $p |- ( A. x e. A B e. C -> |^|_ x e. A B = |^| { y | E. x e. A y = B } ) $= i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_df-ral f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_df-ral i0_dfiin2g a_sup_set_class f3_dfiin2g i1_dfiin2g a_sup_set_class p_eleq2 i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel p_biimprcd i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g p_alrimiv f3_dfiin2g p_eqid i0_dfiin2g a_sup_set_class f3_dfiin2g f3_dfiin2g p_eqeq1 i0_dfiin2g a_sup_set_class f3_dfiin2g i1_dfiin2g a_sup_set_class p_eleq2 i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f3_dfiin2g f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel p_imbi12d i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f3_dfiin2g f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi i0_dfiin2g f3_dfiin2g f4_dfiin2g p_spcgv f3_dfiin2g f4_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal f3_dfiin2g f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel p_mpii f3_dfiin2g f4_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal p_impbid2 f3_dfiin2g f4_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wb f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel p_imim2i f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel f3_dfiin2g f4_dfiin2g a_wcel a_wi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal p_pm5.74d f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel f3_dfiin2g f4_dfiin2g a_wcel a_wi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi a_wb f0_dfiin2g p_alimi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g p_albi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel f3_dfiin2g f4_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi a_wb f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g a_wal a_wb p_syl f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel f3_dfiin2g f4_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g a_wal a_wb p_sylbi i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_df-ral i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_wral f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi f0_dfiin2g a_wal i0_dfiin2g p_albii f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi f0_dfiin2g i0_dfiin2g p_alcom i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi f0_dfiin2g a_wal i0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi i0_dfiin2g a_wal f0_dfiin2g a_wal p_bitr4i i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel f0_dfiin2g f2_dfiin2g p_r19.23v i0_dfiin2g p_vex f1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class f3_dfiin2g p_eqeq1 f1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wceq f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g p_rexbidv f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g i0_dfiin2g a_sup_set_class p_elab i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel p_imbi1i i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi p_bitr4i i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g p_albii f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g p_19.21v f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi i0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g p_albii i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi a_wi i0_dfiin2g a_wal f0_dfiin2g a_wal i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g a_wal p_3bitr3ri f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i0_dfiin2g a_sup_set_class f3_dfiin2g a_wceq i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal a_wi f0_dfiin2g a_wal i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal p_syl6bb i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral f0_dfiin2g a_sup_set_class f2_dfiin2g a_wcel i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel a_wi f0_dfiin2g a_wal f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal p_syl5bb f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal i1_dfiin2g p_abbidv f0_dfiin2g i1_dfiin2g f2_dfiin2g f3_dfiin2g a_df-iin i1_dfiin2g i0_dfiin2g f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_df-int f3_dfiin2g f4_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral i1_dfiin2g a_sup_set_class f3_dfiin2g a_wcel f0_dfiin2g f2_dfiin2g a_wral i1_dfiin2g a_cab i0_dfiin2g a_sup_set_class f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_wcel i1_dfiin2g a_sup_set_class i0_dfiin2g a_sup_set_class a_wcel a_wi i0_dfiin2g a_wal i1_dfiin2g a_cab f0_dfiin2g f2_dfiin2g f3_dfiin2g a_ciin f1_dfiin2g a_sup_set_class f3_dfiin2g a_wceq f0_dfiin2g f2_dfiin2g a_wrex f1_dfiin2g a_cab a_cint p_3eqtr4g $.
 $}
-$( Alternate definition of indexed union when ` B ` is a set.  Definition
+
+$(Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 27-Jun-1998.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	fdfiun2_0 $f set x $.
-	fdfiun2_1 $f set y $.
-	fdfiun2_2 $f class A $.
-	fdfiun2_3 $f class B $.
-	edfiun2_0 $e |- B e. _V $.
-	dfiun2 $p |- U_ x e. A B = U. { y | E. x e. A y = B } $= fdfiun2_3 cvv wcel fdfiun2_0 fdfiun2_2 fdfiun2_3 ciun fdfiun2_1 sup_set_class fdfiun2_3 wceq fdfiun2_0 fdfiun2_2 wrex fdfiun2_1 cab cuni wceq fdfiun2_0 fdfiun2_2 fdfiun2_0 fdfiun2_1 fdfiun2_2 fdfiun2_3 cvv dfiun2g fdfiun2_3 cvv wcel fdfiun2_0 sup_set_class fdfiun2_2 wcel edfiun2_0 a1i mprg $.
+	$v x y A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	f0_dfiun2 $f set x $.
+	f1_dfiun2 $f set y $.
+	f2_dfiun2 $f class A $.
+	f3_dfiun2 $f class B $.
+	e0_dfiun2 $e |- B e. _V $.
+	p_dfiun2 $p |- U_ x e. A B = U. { y | E. x e. A y = B } $= f0_dfiun2 f1_dfiun2 f2_dfiun2 f3_dfiun2 a_cvv p_dfiun2g e0_dfiun2 f3_dfiun2 a_cvv a_wcel f0_dfiun2 a_sup_set_class f2_dfiun2 a_wcel p_a1i f3_dfiun2 a_cvv a_wcel f0_dfiun2 f2_dfiun2 f3_dfiun2 a_ciun f1_dfiun2 a_sup_set_class f3_dfiun2 a_wceq f0_dfiun2 f2_dfiun2 a_wrex f1_dfiun2 a_cab a_cuni a_wceq f0_dfiun2 f2_dfiun2 p_mprg $.
 $}
-$( Alternate definition of indexed intersection when ` B ` is a set.
+
+$(Alternate definition of indexed intersection when ` B ` is a set.
        Definition 15(b) of [Suppes] p. 44.  (Contributed by NM, 28-Jun-1998.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	fdfiin2_0 $f set x $.
-	fdfiin2_1 $f set y $.
-	fdfiin2_2 $f class A $.
-	fdfiin2_3 $f class B $.
-	edfiin2_0 $e |- B e. _V $.
-	dfiin2 $p |- |^|_ x e. A B = |^| { y | E. x e. A y = B } $= fdfiin2_3 cvv wcel fdfiin2_0 fdfiin2_2 fdfiin2_3 ciin fdfiin2_1 sup_set_class fdfiin2_3 wceq fdfiin2_0 fdfiin2_2 wrex fdfiin2_1 cab cint wceq fdfiin2_0 fdfiin2_2 fdfiin2_0 fdfiin2_1 fdfiin2_2 fdfiin2_3 cvv dfiin2g fdfiin2_3 cvv wcel fdfiin2_0 sup_set_class fdfiin2_2 wcel edfiin2_0 a1i mprg $.
+	$v x y A B  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	f0_dfiin2 $f set x $.
+	f1_dfiin2 $f set y $.
+	f2_dfiin2 $f class A $.
+	f3_dfiin2 $f class B $.
+	e0_dfiin2 $e |- B e. _V $.
+	p_dfiin2 $p |- |^|_ x e. A B = |^| { y | E. x e. A y = B } $= f0_dfiin2 f1_dfiin2 f2_dfiin2 f3_dfiin2 a_cvv p_dfiin2g e0_dfiin2 f3_dfiin2 a_cvv a_wcel f0_dfiin2 a_sup_set_class f2_dfiin2 a_wcel p_a1i f3_dfiin2 a_cvv a_wcel f0_dfiin2 f2_dfiin2 f3_dfiin2 a_ciin f1_dfiin2 a_sup_set_class f3_dfiin2 a_wceq f0_dfiin2 f2_dfiin2 a_wrex f1_dfiin2 a_cab a_cint a_wceq f0_dfiin2 f2_dfiin2 p_mprg $.
 $}
-$( Rule used to change the bound variables in an indexed union, with the
+
+$(Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d z y A $.
-	$d z x A $.
-	$d z B $.
-	$d z C $.
-	icbviun_0 $f set z $.
-	fcbviun_0 $f set x $.
-	fcbviun_1 $f set y $.
-	fcbviun_2 $f class A $.
-	fcbviun_3 $f class B $.
-	fcbviun_4 $f class C $.
-	ecbviun_0 $e |- F/_ y B $.
-	ecbviun_1 $e |- F/_ x C $.
-	ecbviun_2 $e |- ( x = y -> B = C ) $.
-	cbviun $p |- U_ x e. A B = U_ y e. A C $= icbviun_0 sup_set_class fcbviun_3 wcel fcbviun_0 fcbviun_2 wrex icbviun_0 cab icbviun_0 sup_set_class fcbviun_4 wcel fcbviun_1 fcbviun_2 wrex icbviun_0 cab fcbviun_0 fcbviun_2 fcbviun_3 ciun fcbviun_1 fcbviun_2 fcbviun_4 ciun icbviun_0 sup_set_class fcbviun_3 wcel fcbviun_0 fcbviun_2 wrex icbviun_0 sup_set_class fcbviun_4 wcel fcbviun_1 fcbviun_2 wrex icbviun_0 icbviun_0 sup_set_class fcbviun_3 wcel icbviun_0 sup_set_class fcbviun_4 wcel fcbviun_0 fcbviun_1 fcbviun_2 fcbviun_1 icbviun_0 fcbviun_3 ecbviun_0 nfcri fcbviun_0 icbviun_0 fcbviun_4 ecbviun_1 nfcri fcbviun_0 sup_set_class fcbviun_1 sup_set_class wceq fcbviun_3 fcbviun_4 icbviun_0 sup_set_class ecbviun_2 eleq2d cbvrex abbii fcbviun_0 icbviun_0 fcbviun_2 fcbviun_3 df-iun fcbviun_1 icbviun_0 fcbviun_2 fcbviun_4 df-iun 3eqtr4i $.
+	$v x y A B C  $.
+	$d z y A  $.
+	$d z x A  $.
+	$d z B  $.
+	$d z C  $.
+	f0_cbviun $f set x $.
+	f1_cbviun $f set y $.
+	f2_cbviun $f class A $.
+	f3_cbviun $f class B $.
+	f4_cbviun $f class C $.
+	i0_cbviun $f set z $.
+	e0_cbviun $e |- F/_ y B $.
+	e1_cbviun $e |- F/_ x C $.
+	e2_cbviun $e |- ( x = y -> B = C ) $.
+	p_cbviun $p |- U_ x e. A B = U_ y e. A C $= e0_cbviun f1_cbviun i0_cbviun f3_cbviun p_nfcri e1_cbviun f0_cbviun i0_cbviun f4_cbviun p_nfcri e2_cbviun f0_cbviun a_sup_set_class f1_cbviun a_sup_set_class a_wceq f3_cbviun f4_cbviun i0_cbviun a_sup_set_class p_eleq2d i0_cbviun a_sup_set_class f3_cbviun a_wcel i0_cbviun a_sup_set_class f4_cbviun a_wcel f0_cbviun f1_cbviun f2_cbviun p_cbvrex i0_cbviun a_sup_set_class f3_cbviun a_wcel f0_cbviun f2_cbviun a_wrex i0_cbviun a_sup_set_class f4_cbviun a_wcel f1_cbviun f2_cbviun a_wrex i0_cbviun p_abbii f0_cbviun i0_cbviun f2_cbviun f3_cbviun a_df-iun f1_cbviun i0_cbviun f2_cbviun f4_cbviun a_df-iun i0_cbviun a_sup_set_class f3_cbviun a_wcel f0_cbviun f2_cbviun a_wrex i0_cbviun a_cab i0_cbviun a_sup_set_class f4_cbviun a_wcel f1_cbviun f2_cbviun a_wrex i0_cbviun a_cab f0_cbviun f2_cbviun f3_cbviun a_ciun f1_cbviun f2_cbviun f4_cbviun a_ciun p_3eqtr4i $.
 $}
-$( Change bound variables in an indexed intersection.  (Contributed by Jeff
+
+$(Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d z y A $.
-	$d z x A $.
-	$d z B $.
-	$d z C $.
-	icbviin_0 $f set z $.
-	fcbviin_0 $f set x $.
-	fcbviin_1 $f set y $.
-	fcbviin_2 $f class A $.
-	fcbviin_3 $f class B $.
-	fcbviin_4 $f class C $.
-	ecbviin_0 $e |- F/_ y B $.
-	ecbviin_1 $e |- F/_ x C $.
-	ecbviin_2 $e |- ( x = y -> B = C ) $.
-	cbviin $p |- |^|_ x e. A B = |^|_ y e. A C $= icbviin_0 sup_set_class fcbviin_3 wcel fcbviin_0 fcbviin_2 wral icbviin_0 cab icbviin_0 sup_set_class fcbviin_4 wcel fcbviin_1 fcbviin_2 wral icbviin_0 cab fcbviin_0 fcbviin_2 fcbviin_3 ciin fcbviin_1 fcbviin_2 fcbviin_4 ciin icbviin_0 sup_set_class fcbviin_3 wcel fcbviin_0 fcbviin_2 wral icbviin_0 sup_set_class fcbviin_4 wcel fcbviin_1 fcbviin_2 wral icbviin_0 icbviin_0 sup_set_class fcbviin_3 wcel icbviin_0 sup_set_class fcbviin_4 wcel fcbviin_0 fcbviin_1 fcbviin_2 fcbviin_1 icbviin_0 fcbviin_3 ecbviin_0 nfcri fcbviin_0 icbviin_0 fcbviin_4 ecbviin_1 nfcri fcbviin_0 sup_set_class fcbviin_1 sup_set_class wceq fcbviin_3 fcbviin_4 icbviin_0 sup_set_class ecbviin_2 eleq2d cbvral abbii fcbviin_0 icbviin_0 fcbviin_2 fcbviin_3 df-iin fcbviin_1 icbviin_0 fcbviin_2 fcbviin_4 df-iin 3eqtr4i $.
+	$v x y A B C  $.
+	$d z y A  $.
+	$d z x A  $.
+	$d z B  $.
+	$d z C  $.
+	f0_cbviin $f set x $.
+	f1_cbviin $f set y $.
+	f2_cbviin $f class A $.
+	f3_cbviin $f class B $.
+	f4_cbviin $f class C $.
+	i0_cbviin $f set z $.
+	e0_cbviin $e |- F/_ y B $.
+	e1_cbviin $e |- F/_ x C $.
+	e2_cbviin $e |- ( x = y -> B = C ) $.
+	p_cbviin $p |- |^|_ x e. A B = |^|_ y e. A C $= e0_cbviin f1_cbviin i0_cbviin f3_cbviin p_nfcri e1_cbviin f0_cbviin i0_cbviin f4_cbviin p_nfcri e2_cbviin f0_cbviin a_sup_set_class f1_cbviin a_sup_set_class a_wceq f3_cbviin f4_cbviin i0_cbviin a_sup_set_class p_eleq2d i0_cbviin a_sup_set_class f3_cbviin a_wcel i0_cbviin a_sup_set_class f4_cbviin a_wcel f0_cbviin f1_cbviin f2_cbviin p_cbvral i0_cbviin a_sup_set_class f3_cbviin a_wcel f0_cbviin f2_cbviin a_wral i0_cbviin a_sup_set_class f4_cbviin a_wcel f1_cbviin f2_cbviin a_wral i0_cbviin p_abbii f0_cbviin i0_cbviin f2_cbviin f3_cbviin a_df-iin f1_cbviin i0_cbviin f2_cbviin f4_cbviin a_df-iin i0_cbviin a_sup_set_class f3_cbviin a_wcel f0_cbviin f2_cbviin a_wral i0_cbviin a_cab i0_cbviin a_sup_set_class f4_cbviin a_wcel f1_cbviin f2_cbviin a_wral i0_cbviin a_cab f0_cbviin f2_cbviin f3_cbviin a_ciin f1_cbviin f2_cbviin f4_cbviin a_ciin p_3eqtr4i $.
 $}
-$( Rule used to change the bound variables in an indexed union, with the
+
+$(Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 15-Sep-2003.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d y A $.
-	$d y B $.
-	$d x C $.
-	fcbviunv_0 $f set x $.
-	fcbviunv_1 $f set y $.
-	fcbviunv_2 $f class A $.
-	fcbviunv_3 $f class B $.
-	fcbviunv_4 $f class C $.
-	ecbviunv_0 $e |- ( x = y -> B = C ) $.
-	cbviunv $p |- U_ x e. A B = U_ y e. A C $= fcbviunv_0 fcbviunv_1 fcbviunv_2 fcbviunv_3 fcbviunv_4 fcbviunv_1 fcbviunv_3 nfcv fcbviunv_0 fcbviunv_4 nfcv ecbviunv_0 cbviun $.
+	$v x y A B C  $.
+	$d x A  $.
+	$d y A  $.
+	$d y B  $.
+	$d x C  $.
+	f0_cbviunv $f set x $.
+	f1_cbviunv $f set y $.
+	f2_cbviunv $f class A $.
+	f3_cbviunv $f class B $.
+	f4_cbviunv $f class C $.
+	e0_cbviunv $e |- ( x = y -> B = C ) $.
+	p_cbviunv $p |- U_ x e. A B = U_ y e. A C $= f1_cbviunv f3_cbviunv p_nfcv f0_cbviunv f4_cbviunv p_nfcv e0_cbviunv f0_cbviunv f1_cbviunv f2_cbviunv f3_cbviunv f4_cbviunv p_cbviun $.
 $}
-$( Change bound variables in an indexed intersection.  (Contributed by Jeff
+
+$(Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d y A $.
-	$d y B $.
-	$d x C $.
-	fcbviinv_0 $f set x $.
-	fcbviinv_1 $f set y $.
-	fcbviinv_2 $f class A $.
-	fcbviinv_3 $f class B $.
-	fcbviinv_4 $f class C $.
-	ecbviinv_0 $e |- ( x = y -> B = C ) $.
-	cbviinv $p |- |^|_ x e. A B = |^|_ y e. A C $= fcbviinv_0 fcbviinv_1 fcbviinv_2 fcbviinv_3 fcbviinv_4 fcbviinv_1 fcbviinv_3 nfcv fcbviinv_0 fcbviinv_4 nfcv ecbviinv_0 cbviin $.
+	$v x y A B C  $.
+	$d x A  $.
+	$d y A  $.
+	$d y B  $.
+	$d x C  $.
+	f0_cbviinv $f set x $.
+	f1_cbviinv $f set y $.
+	f2_cbviinv $f class A $.
+	f3_cbviinv $f class B $.
+	f4_cbviinv $f class C $.
+	e0_cbviinv $e |- ( x = y -> B = C ) $.
+	p_cbviinv $p |- |^|_ x e. A B = |^|_ y e. A C $= f1_cbviinv f3_cbviinv p_nfcv f0_cbviinv f4_cbviinv p_nfcv e0_cbviinv f0_cbviinv f1_cbviinv f2_cbviinv f3_cbviinv f4_cbviinv p_cbviin $.
 $}
-$( Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
+
+$(Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y C $.
-	$d y A $.
-	$d y B $.
-	iiunss_0 $f set y $.
-	fiunss_0 $f set x $.
-	fiunss_1 $f class A $.
-	fiunss_2 $f class B $.
-	fiunss_3 $f class C $.
-	iunss $p |- ( U_ x e. A B C_ C <-> A. x e. A B C_ C ) $= fiunss_0 fiunss_1 fiunss_2 ciun fiunss_3 wss iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 cab fiunss_3 wss iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 sup_set_class fiunss_3 wcel wi iiunss_0 wal fiunss_2 fiunss_3 wss fiunss_0 fiunss_1 wral fiunss_0 fiunss_1 fiunss_2 ciun iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 cab fiunss_3 fiunss_0 iiunss_0 fiunss_1 fiunss_2 df-iun sseq1i iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 fiunss_3 abss fiunss_2 fiunss_3 wss fiunss_0 fiunss_1 wral iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel wi iiunss_0 wal fiunss_0 fiunss_1 wral iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel wi fiunss_0 fiunss_1 wral iiunss_0 wal iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 sup_set_class fiunss_3 wcel wi iiunss_0 wal fiunss_2 fiunss_3 wss iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel wi iiunss_0 wal fiunss_0 fiunss_1 iiunss_0 fiunss_2 fiunss_3 dfss2 ralbii iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel wi fiunss_0 iiunss_0 fiunss_1 ralcom4 iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel wi fiunss_0 fiunss_1 wral iiunss_0 sup_set_class fiunss_2 wcel fiunss_0 fiunss_1 wrex iiunss_0 sup_set_class fiunss_3 wcel wi iiunss_0 iiunss_0 sup_set_class fiunss_2 wcel iiunss_0 sup_set_class fiunss_3 wcel fiunss_0 fiunss_1 r19.23v albii 3bitrri 3bitri $.
+	$v x A B C  $.
+	$d x y C  $.
+	$d y A  $.
+	$d y B  $.
+	f0_iunss $f set x $.
+	f1_iunss $f class A $.
+	f2_iunss $f class B $.
+	f3_iunss $f class C $.
+	i0_iunss $f set y $.
+	p_iunss $p |- ( U_ x e. A B C_ C <-> A. x e. A B C_ C ) $= f0_iunss i0_iunss f1_iunss f2_iunss a_df-iun f0_iunss f1_iunss f2_iunss a_ciun i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss a_cab f3_iunss p_sseq1i i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss f3_iunss p_abss i0_iunss f2_iunss f3_iunss p_dfss2 f2_iunss f3_iunss a_wss i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel a_wi i0_iunss a_wal f0_iunss f1_iunss p_ralbii i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel a_wi f0_iunss i0_iunss f1_iunss p_ralcom4 i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel f0_iunss f1_iunss p_r19.23v i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel a_wi f0_iunss f1_iunss a_wral i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss a_sup_set_class f3_iunss a_wcel a_wi i0_iunss p_albii f2_iunss f3_iunss a_wss f0_iunss f1_iunss a_wral i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel a_wi i0_iunss a_wal f0_iunss f1_iunss a_wral i0_iunss a_sup_set_class f2_iunss a_wcel i0_iunss a_sup_set_class f3_iunss a_wcel a_wi f0_iunss f1_iunss a_wral i0_iunss a_wal i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss a_sup_set_class f3_iunss a_wcel a_wi i0_iunss a_wal p_3bitrri f0_iunss f1_iunss f2_iunss a_ciun f3_iunss a_wss i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss a_cab f3_iunss a_wss i0_iunss a_sup_set_class f2_iunss a_wcel f0_iunss f1_iunss a_wrex i0_iunss a_sup_set_class f3_iunss a_wcel a_wi i0_iunss a_wal f2_iunss f3_iunss a_wss f0_iunss f1_iunss a_wral p_3bitri $.
 $}
-$( Subset implication for an indexed union.  (Contributed by NM,
+
+$(Subset implication for an indexed union.  (Contributed by NM,
        3-Sep-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y C $.
-	$d y A $.
-	$d y B $.
-	issiun_0 $f set y $.
-	fssiun_0 $f set x $.
-	fssiun_1 $f class A $.
-	fssiun_2 $f class B $.
-	fssiun_3 $f class C $.
-	ssiun $p |- ( E. x e. A C C_ B -> C C_ U_ x e. A B ) $= fssiun_3 fssiun_2 wss fssiun_0 fssiun_1 wrex issiun_0 fssiun_3 fssiun_0 fssiun_1 fssiun_2 ciun fssiun_3 fssiun_2 wss fssiun_0 fssiun_1 wrex issiun_0 sup_set_class fssiun_3 wcel issiun_0 sup_set_class fssiun_2 wcel fssiun_0 fssiun_1 wrex issiun_0 sup_set_class fssiun_0 fssiun_1 fssiun_2 ciun wcel fssiun_3 fssiun_2 wss fssiun_0 fssiun_1 wrex issiun_0 sup_set_class fssiun_3 wcel issiun_0 sup_set_class fssiun_2 wcel wi fssiun_0 fssiun_1 wrex issiun_0 sup_set_class fssiun_3 wcel issiun_0 sup_set_class fssiun_2 wcel fssiun_0 fssiun_1 wrex wi fssiun_3 fssiun_2 wss issiun_0 sup_set_class fssiun_3 wcel issiun_0 sup_set_class fssiun_2 wcel wi fssiun_0 fssiun_1 fssiun_3 fssiun_2 issiun_0 sup_set_class ssel reximi issiun_0 sup_set_class fssiun_3 wcel issiun_0 sup_set_class fssiun_2 wcel fssiun_0 fssiun_1 r19.37av syl fssiun_0 issiun_0 sup_set_class fssiun_1 fssiun_2 eliun syl6ibr ssrdv $.
+	$v x A B C  $.
+	$d x y C  $.
+	$d y A  $.
+	$d y B  $.
+	f0_ssiun $f set x $.
+	f1_ssiun $f class A $.
+	f2_ssiun $f class B $.
+	f3_ssiun $f class C $.
+	i0_ssiun $f set y $.
+	p_ssiun $p |- ( E. x e. A C C_ B -> C C_ U_ x e. A B ) $= f3_ssiun f2_ssiun i0_ssiun a_sup_set_class p_ssel f3_ssiun f2_ssiun a_wss i0_ssiun a_sup_set_class f3_ssiun a_wcel i0_ssiun a_sup_set_class f2_ssiun a_wcel a_wi f0_ssiun f1_ssiun p_reximi i0_ssiun a_sup_set_class f3_ssiun a_wcel i0_ssiun a_sup_set_class f2_ssiun a_wcel f0_ssiun f1_ssiun p_r19.37av f3_ssiun f2_ssiun a_wss f0_ssiun f1_ssiun a_wrex i0_ssiun a_sup_set_class f3_ssiun a_wcel i0_ssiun a_sup_set_class f2_ssiun a_wcel a_wi f0_ssiun f1_ssiun a_wrex i0_ssiun a_sup_set_class f3_ssiun a_wcel i0_ssiun a_sup_set_class f2_ssiun a_wcel f0_ssiun f1_ssiun a_wrex a_wi p_syl f0_ssiun i0_ssiun a_sup_set_class f1_ssiun f2_ssiun p_eliun f3_ssiun f2_ssiun a_wss f0_ssiun f1_ssiun a_wrex i0_ssiun a_sup_set_class f3_ssiun a_wcel i0_ssiun a_sup_set_class f2_ssiun a_wcel f0_ssiun f1_ssiun a_wrex i0_ssiun a_sup_set_class f0_ssiun f1_ssiun f2_ssiun a_ciun a_wcel p_syl6ibr f3_ssiun f2_ssiun a_wss f0_ssiun f1_ssiun a_wrex i0_ssiun f3_ssiun f0_ssiun f1_ssiun f2_ssiun a_ciun p_ssrdv $.
 $}
-$( Identity law for subset of an indexed union.  (Contributed by NM,
+
+$(Identity law for subset of an indexed union.  (Contributed by NM,
        12-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d x y $.
-	issiun2_0 $f set y $.
-	fssiun2_0 $f set x $.
-	fssiun2_1 $f class A $.
-	fssiun2_2 $f class B $.
-	ssiun2 $p |- ( x e. A -> B C_ U_ x e. A B ) $= fssiun2_0 sup_set_class fssiun2_1 wcel issiun2_0 fssiun2_2 fssiun2_0 fssiun2_1 fssiun2_2 ciun fssiun2_0 sup_set_class fssiun2_1 wcel issiun2_0 sup_set_class fssiun2_2 wcel issiun2_0 sup_set_class fssiun2_2 wcel fssiun2_0 fssiun2_1 wrex issiun2_0 sup_set_class fssiun2_0 fssiun2_1 fssiun2_2 ciun wcel fssiun2_0 sup_set_class fssiun2_1 wcel issiun2_0 sup_set_class fssiun2_2 wcel issiun2_0 sup_set_class fssiun2_2 wcel fssiun2_0 fssiun2_1 wrex issiun2_0 sup_set_class fssiun2_2 wcel fssiun2_0 fssiun2_1 rspe ex fssiun2_0 issiun2_0 sup_set_class fssiun2_1 fssiun2_2 eliun syl6ibr ssrdv $.
+	$v x A B  $.
+	$d y A  $.
+	$d y B  $.
+	$d x y  $.
+	f0_ssiun2 $f set x $.
+	f1_ssiun2 $f class A $.
+	f2_ssiun2 $f class B $.
+	i0_ssiun2 $f set y $.
+	p_ssiun2 $p |- ( x e. A -> B C_ U_ x e. A B ) $= i0_ssiun2 a_sup_set_class f2_ssiun2 a_wcel f0_ssiun2 f1_ssiun2 p_rspe f0_ssiun2 a_sup_set_class f1_ssiun2 a_wcel i0_ssiun2 a_sup_set_class f2_ssiun2 a_wcel i0_ssiun2 a_sup_set_class f2_ssiun2 a_wcel f0_ssiun2 f1_ssiun2 a_wrex p_ex f0_ssiun2 i0_ssiun2 a_sup_set_class f1_ssiun2 f2_ssiun2 p_eliun f0_ssiun2 a_sup_set_class f1_ssiun2 a_wcel i0_ssiun2 a_sup_set_class f2_ssiun2 a_wcel i0_ssiun2 a_sup_set_class f2_ssiun2 a_wcel f0_ssiun2 f1_ssiun2 a_wrex i0_ssiun2 a_sup_set_class f0_ssiun2 f1_ssiun2 f2_ssiun2 a_ciun a_wcel p_syl6ibr f0_ssiun2 a_sup_set_class f1_ssiun2 a_wcel i0_ssiun2 f2_ssiun2 f0_ssiun2 f1_ssiun2 f2_ssiun2 a_ciun p_ssrdv $.
 $}
-$( Subset relationship for an indexed union.  (Contributed by NM,
+
+$(Subset relationship for an indexed union.  (Contributed by NM,
        26-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x A $.
-	$d x C $.
-	$d x D $.
-	fssiun2s_0 $f set x $.
-	fssiun2s_1 $f class A $.
-	fssiun2s_2 $f class B $.
-	fssiun2s_3 $f class C $.
-	fssiun2s_4 $f class D $.
-	essiun2s_0 $e |- ( x = C -> B = D ) $.
-	ssiun2s $p |- ( C e. A -> D C_ U_ x e. A B ) $= fssiun2s_2 fssiun2s_0 fssiun2s_1 fssiun2s_2 ciun wss fssiun2s_4 fssiun2s_0 fssiun2s_1 fssiun2s_2 ciun wss fssiun2s_0 fssiun2s_3 fssiun2s_1 fssiun2s_0 fssiun2s_3 nfcv fssiun2s_0 fssiun2s_4 fssiun2s_0 fssiun2s_1 fssiun2s_2 ciun fssiun2s_0 fssiun2s_4 nfcv fssiun2s_0 fssiun2s_1 fssiun2s_2 nfiu1 nfss fssiun2s_0 sup_set_class fssiun2s_3 wceq fssiun2s_2 fssiun2s_4 fssiun2s_0 fssiun2s_1 fssiun2s_2 ciun essiun2s_0 sseq1d fssiun2s_0 fssiun2s_1 fssiun2s_2 ssiun2 vtoclgaf $.
+	$v x A B C D  $.
+	$d x A  $.
+	$d x C  $.
+	$d x D  $.
+	f0_ssiun2s $f set x $.
+	f1_ssiun2s $f class A $.
+	f2_ssiun2s $f class B $.
+	f3_ssiun2s $f class C $.
+	f4_ssiun2s $f class D $.
+	e0_ssiun2s $e |- ( x = C -> B = D ) $.
+	p_ssiun2s $p |- ( C e. A -> D C_ U_ x e. A B ) $= f0_ssiun2s f3_ssiun2s p_nfcv f0_ssiun2s f4_ssiun2s p_nfcv f0_ssiun2s f1_ssiun2s f2_ssiun2s p_nfiu1 f0_ssiun2s f4_ssiun2s f0_ssiun2s f1_ssiun2s f2_ssiun2s a_ciun p_nfss e0_ssiun2s f0_ssiun2s a_sup_set_class f3_ssiun2s a_wceq f2_ssiun2s f4_ssiun2s f0_ssiun2s f1_ssiun2s f2_ssiun2s a_ciun p_sseq1d f0_ssiun2s f1_ssiun2s f2_ssiun2s p_ssiun2 f2_ssiun2s f0_ssiun2s f1_ssiun2s f2_ssiun2s a_ciun a_wss f4_ssiun2s f0_ssiun2s f1_ssiun2s f2_ssiun2s a_ciun a_wss f0_ssiun2s f3_ssiun2s f1_ssiun2s p_vtoclgaf $.
 $}
-$( A subclass condition on the members of two indexed classes ` C ( x ) `
+
+$(A subclass condition on the members of two indexed classes ` C ( x ) `
        and ` D ( y ) ` that implies a subclass relation on their indexed
        unions.  Generalization of Proposition 8.6 of [TakeutiZaring] p. 59.
        Compare ~ uniss2 .  (Contributed by NM, 9-Dec-2004.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x y $.
-	$d x B $.
-	$d y C $.
-	$d x D $.
-	fiunss2_0 $f set x $.
-	fiunss2_1 $f set y $.
-	fiunss2_2 $f class A $.
-	fiunss2_3 $f class B $.
-	fiunss2_4 $f class C $.
-	fiunss2_5 $f class D $.
-	iunss2 $p |- ( A. x e. A E. y e. B C C_ D -> U_ x e. A C C_ U_ y e. B D ) $= fiunss2_4 fiunss2_5 wss fiunss2_1 fiunss2_3 wrex fiunss2_0 fiunss2_2 wral fiunss2_4 fiunss2_1 fiunss2_3 fiunss2_5 ciun wss fiunss2_0 fiunss2_2 wral fiunss2_0 fiunss2_2 fiunss2_4 ciun fiunss2_1 fiunss2_3 fiunss2_5 ciun wss fiunss2_4 fiunss2_5 wss fiunss2_1 fiunss2_3 wrex fiunss2_4 fiunss2_1 fiunss2_3 fiunss2_5 ciun wss fiunss2_0 fiunss2_2 fiunss2_1 fiunss2_3 fiunss2_5 fiunss2_4 ssiun ralimi fiunss2_0 fiunss2_2 fiunss2_4 fiunss2_1 fiunss2_3 fiunss2_5 ciun iunss sylibr $.
+	$v x y A B C D  $.
+	$d x y  $.
+	$d x B  $.
+	$d y C  $.
+	$d x D  $.
+	f0_iunss2 $f set x $.
+	f1_iunss2 $f set y $.
+	f2_iunss2 $f class A $.
+	f3_iunss2 $f class B $.
+	f4_iunss2 $f class C $.
+	f5_iunss2 $f class D $.
+	p_iunss2 $p |- ( A. x e. A E. y e. B C C_ D -> U_ x e. A C C_ U_ y e. B D ) $= f1_iunss2 f3_iunss2 f5_iunss2 f4_iunss2 p_ssiun f4_iunss2 f5_iunss2 a_wss f1_iunss2 f3_iunss2 a_wrex f4_iunss2 f1_iunss2 f3_iunss2 f5_iunss2 a_ciun a_wss f0_iunss2 f2_iunss2 p_ralimi f0_iunss2 f2_iunss2 f4_iunss2 f1_iunss2 f3_iunss2 f5_iunss2 a_ciun p_iunss f4_iunss2 f5_iunss2 a_wss f1_iunss2 f3_iunss2 a_wrex f0_iunss2 f2_iunss2 a_wral f4_iunss2 f1_iunss2 f3_iunss2 f5_iunss2 a_ciun a_wss f0_iunss2 f2_iunss2 a_wral f0_iunss2 f2_iunss2 f4_iunss2 a_ciun f1_iunss2 f3_iunss2 f5_iunss2 a_ciun a_wss p_sylibr $.
 $}
-$( The indexed union of a class abstraction.  (Contributed by NM,
+
+$(The indexed union of a class abstraction.  (Contributed by NM,
        27-Dec-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d y A $.
-	$d x y $.
-	fiunab_0 $f wff ph $.
-	fiunab_1 $f set x $.
-	fiunab_2 $f set y $.
-	fiunab_3 $f class A $.
-	iunab $p |- U_ x e. A { y | ph } = { y | E. x e. A ph } $= fiunab_1 fiunab_3 fiunab_0 fiunab_2 cab ciun fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 cab wceq fiunab_2 sup_set_class fiunab_1 fiunab_3 fiunab_0 fiunab_2 cab ciun wcel fiunab_2 sup_set_class fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 cab wcel wb fiunab_2 fiunab_2 fiunab_1 fiunab_3 fiunab_0 fiunab_2 cab ciun fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 cab fiunab_1 fiunab_2 fiunab_3 fiunab_0 fiunab_2 cab fiunab_2 fiunab_3 nfcv fiunab_0 fiunab_2 nfab1 nfiun fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 nfab1 cleqf fiunab_2 sup_set_class fiunab_0 fiunab_2 cab wcel fiunab_1 fiunab_3 wrex fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 sup_set_class fiunab_1 fiunab_3 fiunab_0 fiunab_2 cab ciun wcel fiunab_2 sup_set_class fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 cab wcel fiunab_2 sup_set_class fiunab_0 fiunab_2 cab wcel fiunab_0 fiunab_1 fiunab_3 fiunab_0 fiunab_2 abid rexbii fiunab_1 fiunab_2 sup_set_class fiunab_3 fiunab_0 fiunab_2 cab eliun fiunab_0 fiunab_1 fiunab_3 wrex fiunab_2 abid 3bitr4i mpgbir $.
+	$v ph x y A  $.
+	$d y A  $.
+	$d x y  $.
+	$d x  $.
+	f0_iunab $f wff ph $.
+	f1_iunab $f set x $.
+	f2_iunab $f set y $.
+	f3_iunab $f class A $.
+	p_iunab $p |- U_ x e. A { y | ph } = { y | E. x e. A ph } $= f2_iunab f3_iunab p_nfcv f0_iunab f2_iunab p_nfab1 f1_iunab f2_iunab f3_iunab f0_iunab f2_iunab a_cab p_nfiun f0_iunab f1_iunab f3_iunab a_wrex f2_iunab p_nfab1 f2_iunab f1_iunab f3_iunab f0_iunab f2_iunab a_cab a_ciun f0_iunab f1_iunab f3_iunab a_wrex f2_iunab a_cab p_cleqf f0_iunab f2_iunab p_abid f2_iunab a_sup_set_class f0_iunab f2_iunab a_cab a_wcel f0_iunab f1_iunab f3_iunab p_rexbii f1_iunab f2_iunab a_sup_set_class f3_iunab f0_iunab f2_iunab a_cab p_eliun f0_iunab f1_iunab f3_iunab a_wrex f2_iunab p_abid f2_iunab a_sup_set_class f0_iunab f2_iunab a_cab a_wcel f1_iunab f3_iunab a_wrex f0_iunab f1_iunab f3_iunab a_wrex f2_iunab a_sup_set_class f1_iunab f3_iunab f0_iunab f2_iunab a_cab a_ciun a_wcel f2_iunab a_sup_set_class f0_iunab f1_iunab f3_iunab a_wrex f2_iunab a_cab a_wcel p_3bitr4i f1_iunab f3_iunab f0_iunab f2_iunab a_cab a_ciun f0_iunab f1_iunab f3_iunab a_wrex f2_iunab a_cab a_wceq f2_iunab a_sup_set_class f1_iunab f3_iunab f0_iunab f2_iunab a_cab a_ciun a_wcel f2_iunab a_sup_set_class f0_iunab f1_iunab f3_iunab a_wrex f2_iunab a_cab a_wcel a_wb f2_iunab p_mpgbir $.
 $}
-$( The indexed union of a restricted class abstraction.  (Contributed by
+
+$(The indexed union of a restricted class abstraction.  (Contributed by
        NM, 3-Jan-2004.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d y A $.
-	$d x y $.
-	$d x B $.
-	fiunrab_0 $f wff ph $.
-	fiunrab_1 $f set x $.
-	fiunrab_2 $f set y $.
-	fiunrab_3 $f class A $.
-	fiunrab_4 $f class B $.
-	iunrab $p |- U_ x e. A { y e. B | ph } = { y e. B | E. x e. A ph } $= fiunrab_1 fiunrab_3 fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_2 cab ciun fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_1 fiunrab_3 wrex fiunrab_2 cab fiunrab_1 fiunrab_3 fiunrab_0 fiunrab_2 fiunrab_4 crab ciun fiunrab_0 fiunrab_1 fiunrab_3 wrex fiunrab_2 fiunrab_4 crab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_1 fiunrab_2 fiunrab_3 iunab fiunrab_1 fiunrab_3 fiunrab_0 fiunrab_2 fiunrab_4 crab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_2 cab fiunrab_0 fiunrab_2 fiunrab_4 crab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_2 cab wceq fiunrab_1 sup_set_class fiunrab_3 wcel fiunrab_0 fiunrab_2 fiunrab_4 df-rab a1i iuneq2i fiunrab_0 fiunrab_1 fiunrab_3 wrex fiunrab_2 fiunrab_4 crab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 fiunrab_1 fiunrab_3 wrex wa fiunrab_2 cab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_1 fiunrab_3 wrex fiunrab_2 cab fiunrab_0 fiunrab_1 fiunrab_3 wrex fiunrab_2 fiunrab_4 df-rab fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 wa fiunrab_1 fiunrab_3 wrex fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 fiunrab_1 fiunrab_3 wrex wa fiunrab_2 fiunrab_2 sup_set_class fiunrab_4 wcel fiunrab_0 fiunrab_1 fiunrab_3 r19.42v abbii eqtr4i 3eqtr4i $.
+	$v ph x y A B  $.
+	$d y A  $.
+	$d x y  $.
+	$d x B  $.
+	f0_iunrab $f wff ph $.
+	f1_iunrab $f set x $.
+	f2_iunrab $f set y $.
+	f3_iunrab $f class A $.
+	f4_iunrab $f class B $.
+	p_iunrab $p |- U_ x e. A { y e. B | ph } = { y e. B | E. x e. A ph } $= f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f1_iunrab f2_iunrab f3_iunrab p_iunab f0_iunrab f2_iunrab f4_iunrab a_df-rab f0_iunrab f2_iunrab f4_iunrab a_crab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f2_iunrab a_cab a_wceq f1_iunrab a_sup_set_class f3_iunrab a_wcel p_a1i f1_iunrab f3_iunrab f0_iunrab f2_iunrab f4_iunrab a_crab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f2_iunrab a_cab p_iuneq2i f0_iunrab f1_iunrab f3_iunrab a_wrex f2_iunrab f4_iunrab a_df-rab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab f1_iunrab f3_iunrab p_r19.42v f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f1_iunrab f3_iunrab a_wrex f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab f1_iunrab f3_iunrab a_wrex a_wa f2_iunrab p_abbii f0_iunrab f1_iunrab f3_iunrab a_wrex f2_iunrab f4_iunrab a_crab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab f1_iunrab f3_iunrab a_wrex a_wa f2_iunrab a_cab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f1_iunrab f3_iunrab a_wrex f2_iunrab a_cab p_eqtr4i f1_iunrab f3_iunrab f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f2_iunrab a_cab a_ciun f2_iunrab a_sup_set_class f4_iunrab a_wcel f0_iunrab a_wa f1_iunrab f3_iunrab a_wrex f2_iunrab a_cab f1_iunrab f3_iunrab f0_iunrab f2_iunrab f4_iunrab a_crab a_ciun f0_iunrab f1_iunrab f3_iunrab a_wrex f2_iunrab f4_iunrab a_crab p_3eqtr4i $.
 $}
-$( Indexed union with a class difference as its index.  (Contributed by NM,
+
+$(Indexed union with a class difference as its index.  (Contributed by NM,
        10-Dec-2004.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	$d x D $.
-	fiunxdif2_0 $f set x $.
-	fiunxdif2_1 $f set y $.
-	fiunxdif2_2 $f class A $.
-	fiunxdif2_3 $f class B $.
-	fiunxdif2_4 $f class C $.
-	fiunxdif2_5 $f class D $.
-	eiunxdif2_0 $e |- ( x = y -> C = D ) $.
-	iunxdif2 $p |- ( A. x e. A E. y e. ( A \ B ) C C_ D -> U_ y e. ( A \ B ) D = U_ x e. A C ) $= fiunxdif2_4 fiunxdif2_5 wss fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif wrex fiunxdif2_0 fiunxdif2_2 wral fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun wss fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun wss wa fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun wceq fiunxdif2_4 fiunxdif2_5 wss fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif wrex fiunxdif2_0 fiunxdif2_2 wral fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun wss fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun wss fiunxdif2_0 fiunxdif2_1 fiunxdif2_2 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_4 fiunxdif2_5 iunss2 fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_1 fiunxdif2_2 fiunxdif2_5 ciun fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_2 wss fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_1 fiunxdif2_2 fiunxdif2_5 ciun wss fiunxdif2_2 fiunxdif2_3 difss fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_2 fiunxdif2_5 iunss1 ax-mp fiunxdif2_0 fiunxdif2_1 fiunxdif2_2 fiunxdif2_4 fiunxdif2_5 eiunxdif2_0 cbviunv sseqtr4i jctil fiunxdif2_1 fiunxdif2_2 fiunxdif2_3 cdif fiunxdif2_5 ciun fiunxdif2_0 fiunxdif2_2 fiunxdif2_4 ciun eqss sylibr $.
+	$v x y A B C D  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	$d x D  $.
+	f0_iunxdif2 $f set x $.
+	f1_iunxdif2 $f set y $.
+	f2_iunxdif2 $f class A $.
+	f3_iunxdif2 $f class B $.
+	f4_iunxdif2 $f class C $.
+	f5_iunxdif2 $f class D $.
+	e0_iunxdif2 $e |- ( x = y -> C = D ) $.
+	p_iunxdif2 $p |- ( A. x e. A E. y e. ( A \ B ) C C_ D -> U_ y e. ( A \ B ) D = U_ x e. A C ) $= f0_iunxdif2 f1_iunxdif2 f2_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f4_iunxdif2 f5_iunxdif2 p_iunss2 f2_iunxdif2 f3_iunxdif2 p_difss f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f2_iunxdif2 f5_iunxdif2 p_iunss1 f2_iunxdif2 f3_iunxdif2 a_cdif f2_iunxdif2 a_wss f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f1_iunxdif2 f2_iunxdif2 f5_iunxdif2 a_ciun a_wss a_ax-mp e0_iunxdif2 f0_iunxdif2 f1_iunxdif2 f2_iunxdif2 f4_iunxdif2 f5_iunxdif2 p_cbviunv f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f1_iunxdif2 f2_iunxdif2 f5_iunxdif2 a_ciun f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun p_sseqtr4i f4_iunxdif2 f5_iunxdif2 a_wss f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif a_wrex f0_iunxdif2 f2_iunxdif2 a_wral f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun a_wss f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun a_wss p_jctil f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun p_eqss f4_iunxdif2 f5_iunxdif2 a_wss f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif a_wrex f0_iunxdif2 f2_iunxdif2 a_wral f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun a_wss f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun a_wss a_wa f1_iunxdif2 f2_iunxdif2 f3_iunxdif2 a_cdif f5_iunxdif2 a_ciun f0_iunxdif2 f2_iunxdif2 f4_iunxdif2 a_ciun a_wceq p_sylibr $.
 $}
-$( Subset theorem for an indexed intersection.  (Contributed by FL,
+
+$(Subset theorem for an indexed intersection.  (Contributed by FL,
        15-Oct-2012.)  (Proof shortened by Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	$d x y $.
-	issiinf_0 $f set y $.
-	fssiinf_0 $f set x $.
-	fssiinf_1 $f class A $.
-	fssiinf_2 $f class B $.
-	fssiinf_3 $f class C $.
-	essiinf_0 $e |- F/_ x C $.
-	ssiinf $p |- ( C C_ |^|_ x e. A B <-> A. x e. A C C_ B ) $= issiinf_0 sup_set_class fssiinf_0 fssiinf_1 fssiinf_2 ciin wcel issiinf_0 fssiinf_3 wral issiinf_0 sup_set_class fssiinf_2 wcel issiinf_0 fssiinf_3 wral fssiinf_0 fssiinf_1 wral fssiinf_3 fssiinf_0 fssiinf_1 fssiinf_2 ciin wss fssiinf_3 fssiinf_2 wss fssiinf_0 fssiinf_1 wral issiinf_0 sup_set_class fssiinf_0 fssiinf_1 fssiinf_2 ciin wcel issiinf_0 fssiinf_3 wral issiinf_0 sup_set_class fssiinf_2 wcel fssiinf_0 fssiinf_1 wral issiinf_0 fssiinf_3 wral issiinf_0 sup_set_class fssiinf_2 wcel issiinf_0 fssiinf_3 wral fssiinf_0 fssiinf_1 wral issiinf_0 sup_set_class fssiinf_0 fssiinf_1 fssiinf_2 ciin wcel issiinf_0 sup_set_class fssiinf_2 wcel fssiinf_0 fssiinf_1 wral issiinf_0 fssiinf_3 issiinf_0 sup_set_class cvv wcel issiinf_0 sup_set_class fssiinf_0 fssiinf_1 fssiinf_2 ciin wcel issiinf_0 sup_set_class fssiinf_2 wcel fssiinf_0 fssiinf_1 wral wb issiinf_0 vex fssiinf_0 issiinf_0 sup_set_class fssiinf_1 fssiinf_2 cvv eliin ax-mp ralbii issiinf_0 sup_set_class fssiinf_2 wcel issiinf_0 fssiinf_0 fssiinf_3 fssiinf_1 essiinf_0 issiinf_0 fssiinf_1 nfcv ralcomf bitri issiinf_0 fssiinf_3 fssiinf_0 fssiinf_1 fssiinf_2 ciin dfss3 fssiinf_3 fssiinf_2 wss issiinf_0 sup_set_class fssiinf_2 wcel issiinf_0 fssiinf_3 wral fssiinf_0 fssiinf_1 issiinf_0 fssiinf_3 fssiinf_2 dfss3 ralbii 3bitr4i $.
+	$v x A B C  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	$d x y  $.
+	f0_ssiinf $f set x $.
+	f1_ssiinf $f class A $.
+	f2_ssiinf $f class B $.
+	f3_ssiinf $f class C $.
+	i0_ssiinf $f set y $.
+	e0_ssiinf $e |- F/_ x C $.
+	p_ssiinf $p |- ( C C_ |^|_ x e. A B <-> A. x e. A C C_ B ) $= i0_ssiinf p_vex f0_ssiinf i0_ssiinf a_sup_set_class f1_ssiinf f2_ssiinf a_cvv p_eliin i0_ssiinf a_sup_set_class a_cvv a_wcel i0_ssiinf a_sup_set_class f0_ssiinf f1_ssiinf f2_ssiinf a_ciin a_wcel i0_ssiinf a_sup_set_class f2_ssiinf a_wcel f0_ssiinf f1_ssiinf a_wral a_wb a_ax-mp i0_ssiinf a_sup_set_class f0_ssiinf f1_ssiinf f2_ssiinf a_ciin a_wcel i0_ssiinf a_sup_set_class f2_ssiinf a_wcel f0_ssiinf f1_ssiinf a_wral i0_ssiinf f3_ssiinf p_ralbii e0_ssiinf i0_ssiinf f1_ssiinf p_nfcv i0_ssiinf a_sup_set_class f2_ssiinf a_wcel i0_ssiinf f0_ssiinf f3_ssiinf f1_ssiinf p_ralcomf i0_ssiinf a_sup_set_class f0_ssiinf f1_ssiinf f2_ssiinf a_ciin a_wcel i0_ssiinf f3_ssiinf a_wral i0_ssiinf a_sup_set_class f2_ssiinf a_wcel f0_ssiinf f1_ssiinf a_wral i0_ssiinf f3_ssiinf a_wral i0_ssiinf a_sup_set_class f2_ssiinf a_wcel i0_ssiinf f3_ssiinf a_wral f0_ssiinf f1_ssiinf a_wral p_bitri i0_ssiinf f3_ssiinf f0_ssiinf f1_ssiinf f2_ssiinf a_ciin p_dfss3 i0_ssiinf f3_ssiinf f2_ssiinf p_dfss3 f3_ssiinf f2_ssiinf a_wss i0_ssiinf a_sup_set_class f2_ssiinf a_wcel i0_ssiinf f3_ssiinf a_wral f0_ssiinf f1_ssiinf p_ralbii i0_ssiinf a_sup_set_class f0_ssiinf f1_ssiinf f2_ssiinf a_ciin a_wcel i0_ssiinf f3_ssiinf a_wral i0_ssiinf a_sup_set_class f2_ssiinf a_wcel i0_ssiinf f3_ssiinf a_wral f0_ssiinf f1_ssiinf a_wral f3_ssiinf f0_ssiinf f1_ssiinf f2_ssiinf a_ciin a_wss f3_ssiinf f2_ssiinf a_wss f0_ssiinf f1_ssiinf a_wral p_3bitr4i $.
 $}
-$( Subset theorem for an indexed intersection.  (Contributed by NM,
+
+$(Subset theorem for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x C $.
-	fssiin_0 $f set x $.
-	fssiin_1 $f class A $.
-	fssiin_2 $f class B $.
-	fssiin_3 $f class C $.
-	ssiin $p |- ( C C_ |^|_ x e. A B <-> A. x e. A C C_ B ) $= fssiin_0 fssiin_1 fssiin_2 fssiin_3 fssiin_0 fssiin_3 nfcv ssiinf $.
+	$v x A B C  $.
+	$d x C  $.
+	f0_ssiin $f set x $.
+	f1_ssiin $f class A $.
+	f2_ssiin $f class B $.
+	f3_ssiin $f class C $.
+	p_ssiin $p |- ( C C_ |^|_ x e. A B <-> A. x e. A C C_ B ) $= f0_ssiin f3_ssiin p_nfcv f0_ssiin f1_ssiin f2_ssiin f3_ssiin p_ssiinf $.
 $}
-$( Subset implication for an indexed intersection.  (Contributed by NM,
+
+$(Subset implication for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y C $.
-	$d y A $.
-	$d y B $.
-	iiinss_0 $f set y $.
-	fiinss_0 $f set x $.
-	fiinss_1 $f class A $.
-	fiinss_2 $f class B $.
-	fiinss_3 $f class C $.
-	iinss $p |- ( E. x e. A B C_ C -> |^|_ x e. A B C_ C ) $= fiinss_2 fiinss_3 wss fiinss_0 fiinss_1 wrex iiinss_0 fiinss_0 fiinss_1 fiinss_2 ciin fiinss_3 iiinss_0 sup_set_class fiinss_0 fiinss_1 fiinss_2 ciin wcel iiinss_0 sup_set_class fiinss_2 wcel fiinss_0 fiinss_1 wral fiinss_2 fiinss_3 wss fiinss_0 fiinss_1 wrex iiinss_0 sup_set_class fiinss_3 wcel iiinss_0 sup_set_class cvv wcel iiinss_0 sup_set_class fiinss_0 fiinss_1 fiinss_2 ciin wcel iiinss_0 sup_set_class fiinss_2 wcel fiinss_0 fiinss_1 wral wb iiinss_0 vex fiinss_0 iiinss_0 sup_set_class fiinss_1 fiinss_2 cvv eliin ax-mp fiinss_2 fiinss_3 wss fiinss_0 fiinss_1 wrex iiinss_0 sup_set_class fiinss_2 wcel iiinss_0 sup_set_class fiinss_3 wcel wi fiinss_0 fiinss_1 wrex iiinss_0 sup_set_class fiinss_2 wcel fiinss_0 fiinss_1 wral iiinss_0 sup_set_class fiinss_3 wcel wi fiinss_2 fiinss_3 wss iiinss_0 sup_set_class fiinss_2 wcel iiinss_0 sup_set_class fiinss_3 wcel wi fiinss_0 fiinss_1 fiinss_2 fiinss_3 iiinss_0 sup_set_class ssel reximi iiinss_0 sup_set_class fiinss_2 wcel iiinss_0 sup_set_class fiinss_3 wcel fiinss_0 fiinss_1 r19.36av syl syl5bi ssrdv $.
+	$v x A B C  $.
+	$d x y C  $.
+	$d y A  $.
+	$d y B  $.
+	f0_iinss $f set x $.
+	f1_iinss $f class A $.
+	f2_iinss $f class B $.
+	f3_iinss $f class C $.
+	i0_iinss $f set y $.
+	p_iinss $p |- ( E. x e. A B C_ C -> |^|_ x e. A B C_ C ) $= i0_iinss p_vex f0_iinss i0_iinss a_sup_set_class f1_iinss f2_iinss a_cvv p_eliin i0_iinss a_sup_set_class a_cvv a_wcel i0_iinss a_sup_set_class f0_iinss f1_iinss f2_iinss a_ciin a_wcel i0_iinss a_sup_set_class f2_iinss a_wcel f0_iinss f1_iinss a_wral a_wb a_ax-mp f2_iinss f3_iinss i0_iinss a_sup_set_class p_ssel f2_iinss f3_iinss a_wss i0_iinss a_sup_set_class f2_iinss a_wcel i0_iinss a_sup_set_class f3_iinss a_wcel a_wi f0_iinss f1_iinss p_reximi i0_iinss a_sup_set_class f2_iinss a_wcel i0_iinss a_sup_set_class f3_iinss a_wcel f0_iinss f1_iinss p_r19.36av f2_iinss f3_iinss a_wss f0_iinss f1_iinss a_wrex i0_iinss a_sup_set_class f2_iinss a_wcel i0_iinss a_sup_set_class f3_iinss a_wcel a_wi f0_iinss f1_iinss a_wrex i0_iinss a_sup_set_class f2_iinss a_wcel f0_iinss f1_iinss a_wral i0_iinss a_sup_set_class f3_iinss a_wcel a_wi p_syl i0_iinss a_sup_set_class f0_iinss f1_iinss f2_iinss a_ciin a_wcel i0_iinss a_sup_set_class f2_iinss a_wcel f0_iinss f1_iinss a_wral f2_iinss f3_iinss a_wss f0_iinss f1_iinss a_wrex i0_iinss a_sup_set_class f3_iinss a_wcel p_syl5bi f2_iinss f3_iinss a_wss f0_iinss f1_iinss a_wrex i0_iinss f0_iinss f1_iinss f2_iinss a_ciin f3_iinss p_ssrdv $.
 $}
-$( An indexed intersection is included in any of its members.  (Contributed
+
+$(An indexed intersection is included in any of its members.  (Contributed
        by FL, 15-Oct-2012.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d A y $.
-	$d B y $.
-	$d x y $.
-	iiinss2_0 $f set y $.
-	fiinss2_0 $f set x $.
-	fiinss2_1 $f class A $.
-	fiinss2_2 $f class B $.
-	iinss2 $p |- ( x e. A -> |^|_ x e. A B C_ B ) $= fiinss2_0 sup_set_class fiinss2_1 wcel iiinss2_0 fiinss2_0 fiinss2_1 fiinss2_2 ciin fiinss2_2 iiinss2_0 sup_set_class fiinss2_0 fiinss2_1 fiinss2_2 ciin wcel fiinss2_0 sup_set_class fiinss2_1 wcel iiinss2_0 sup_set_class fiinss2_2 wcel iiinss2_0 sup_set_class fiinss2_0 fiinss2_1 fiinss2_2 ciin wcel iiinss2_0 sup_set_class fiinss2_2 wcel fiinss2_0 fiinss2_1 wral fiinss2_0 sup_set_class fiinss2_1 wcel iiinss2_0 sup_set_class fiinss2_2 wcel wi iiinss2_0 sup_set_class cvv wcel iiinss2_0 sup_set_class fiinss2_0 fiinss2_1 fiinss2_2 ciin wcel iiinss2_0 sup_set_class fiinss2_2 wcel fiinss2_0 fiinss2_1 wral wb iiinss2_0 vex fiinss2_0 iiinss2_0 sup_set_class fiinss2_1 fiinss2_2 cvv eliin ax-mp iiinss2_0 sup_set_class fiinss2_2 wcel fiinss2_0 fiinss2_1 rsp sylbi com12 ssrdv $.
+	$v x A B  $.
+	$d A y  $.
+	$d B y  $.
+	$d x y  $.
+	f0_iinss2 $f set x $.
+	f1_iinss2 $f class A $.
+	f2_iinss2 $f class B $.
+	i0_iinss2 $f set y $.
+	p_iinss2 $p |- ( x e. A -> |^|_ x e. A B C_ B ) $= i0_iinss2 p_vex f0_iinss2 i0_iinss2 a_sup_set_class f1_iinss2 f2_iinss2 a_cvv p_eliin i0_iinss2 a_sup_set_class a_cvv a_wcel i0_iinss2 a_sup_set_class f0_iinss2 f1_iinss2 f2_iinss2 a_ciin a_wcel i0_iinss2 a_sup_set_class f2_iinss2 a_wcel f0_iinss2 f1_iinss2 a_wral a_wb a_ax-mp i0_iinss2 a_sup_set_class f2_iinss2 a_wcel f0_iinss2 f1_iinss2 p_rsp i0_iinss2 a_sup_set_class f0_iinss2 f1_iinss2 f2_iinss2 a_ciin a_wcel i0_iinss2 a_sup_set_class f2_iinss2 a_wcel f0_iinss2 f1_iinss2 a_wral f0_iinss2 a_sup_set_class f1_iinss2 a_wcel i0_iinss2 a_sup_set_class f2_iinss2 a_wcel a_wi p_sylbi i0_iinss2 a_sup_set_class f0_iinss2 f1_iinss2 f2_iinss2 a_ciin a_wcel f0_iinss2 a_sup_set_class f1_iinss2 a_wcel i0_iinss2 a_sup_set_class f2_iinss2 a_wcel p_com12 f0_iinss2 a_sup_set_class f1_iinss2 a_wcel i0_iinss2 f0_iinss2 f1_iinss2 f2_iinss2 a_ciin f2_iinss2 p_ssrdv $.
 $}
-$( Class union in terms of indexed union.  Definition in [Stoll] p. 43.
+
+$(Class union in terms of indexed union.  Definition in [Stoll] p. 43.
        (Contributed by NM, 28-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	iuniiun_0 $f set y $.
-	funiiun_0 $f set x $.
-	funiiun_1 $f class A $.
-	uniiun $p |- U. A = U_ x e. A x $= funiiun_1 cuni iuniiun_0 sup_set_class funiiun_0 sup_set_class wcel funiiun_0 funiiun_1 wrex iuniiun_0 cab funiiun_0 funiiun_1 funiiun_0 sup_set_class ciun iuniiun_0 funiiun_0 funiiun_1 dfuni2 funiiun_0 iuniiun_0 funiiun_1 funiiun_0 sup_set_class df-iun eqtr4i $.
+	$v x A  $.
+	$d x y A  $.
+	f0_uniiun $f set x $.
+	f1_uniiun $f class A $.
+	i0_uniiun $f set y $.
+	p_uniiun $p |- U. A = U_ x e. A x $= i0_uniiun f0_uniiun f1_uniiun p_dfuni2 f0_uniiun i0_uniiun f1_uniiun f0_uniiun a_sup_set_class a_df-iun f1_uniiun a_cuni i0_uniiun a_sup_set_class f0_uniiun a_sup_set_class a_wcel f0_uniiun f1_uniiun a_wrex i0_uniiun a_cab f0_uniiun f1_uniiun f0_uniiun a_sup_set_class a_ciun p_eqtr4i $.
 $}
-$( Class intersection in terms of indexed intersection.  Definition in
+
+$(Class intersection in terms of indexed intersection.  Definition in
        [Stoll] p. 44.  (Contributed by NM, 28-Jun-1998.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	iintiin_0 $f set y $.
-	fintiin_0 $f set x $.
-	fintiin_1 $f class A $.
-	intiin $p |- |^| A = |^|_ x e. A x $= fintiin_1 cint iintiin_0 sup_set_class fintiin_0 sup_set_class wcel fintiin_0 fintiin_1 wral iintiin_0 cab fintiin_0 fintiin_1 fintiin_0 sup_set_class ciin iintiin_0 fintiin_0 fintiin_1 dfint2 fintiin_0 iintiin_0 fintiin_1 fintiin_0 sup_set_class df-iin eqtr4i $.
+	$v x A  $.
+	$d x y A  $.
+	f0_intiin $f set x $.
+	f1_intiin $f class A $.
+	i0_intiin $f set y $.
+	p_intiin $p |- |^| A = |^|_ x e. A x $= i0_intiin f0_intiin f1_intiin p_dfint2 f0_intiin i0_intiin f1_intiin f0_intiin a_sup_set_class a_df-iin f1_intiin a_cint i0_intiin a_sup_set_class f0_intiin a_sup_set_class a_wcel f0_intiin f1_intiin a_wral i0_intiin a_cab f0_intiin f1_intiin f0_intiin a_sup_set_class a_ciin p_eqtr4i $.
 $}
-$( An indexed union of singletons recovers the index set.  (Contributed by
+
+$(An indexed union of singletons recovers the index set.  (Contributed by
        NM, 6-Sep-2005.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	iiunid_0 $f set y $.
-	fiunid_0 $f set x $.
-	fiunid_1 $f class A $.
-	iunid $p |- U_ x e. A { x } = A $= fiunid_0 fiunid_1 fiunid_0 sup_set_class csn ciun fiunid_0 fiunid_1 fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 cab ciun fiunid_1 fiunid_0 fiunid_1 fiunid_0 sup_set_class csn fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 cab fiunid_0 sup_set_class csn fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 cab wceq fiunid_0 sup_set_class fiunid_1 wcel fiunid_0 sup_set_class csn iiunid_0 sup_set_class fiunid_0 sup_set_class wceq iiunid_0 cab fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 cab iiunid_0 fiunid_0 sup_set_class df-sn iiunid_0 sup_set_class fiunid_0 sup_set_class wceq fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 iiunid_0 fiunid_0 equcom abbii eqtri a1i iuneq2i fiunid_0 fiunid_1 fiunid_0 sup_set_class iiunid_0 sup_set_class wceq iiunid_0 cab ciun fiunid_0 sup_set_class iiunid_0 sup_set_class wceq fiunid_0 fiunid_1 wrex iiunid_0 cab iiunid_0 sup_set_class fiunid_1 wcel iiunid_0 cab fiunid_1 fiunid_0 sup_set_class iiunid_0 sup_set_class wceq fiunid_0 iiunid_0 fiunid_1 iunab iiunid_0 sup_set_class fiunid_1 wcel fiunid_0 sup_set_class iiunid_0 sup_set_class wceq fiunid_0 fiunid_1 wrex iiunid_0 fiunid_0 iiunid_0 sup_set_class fiunid_1 risset abbii iiunid_0 fiunid_1 abid2 3eqtr2i eqtri $.
+	$v x A  $.
+	$d x y A  $.
+	f0_iunid $f set x $.
+	f1_iunid $f class A $.
+	i0_iunid $f set y $.
+	p_iunid $p |- U_ x e. A { x } = A $= i0_iunid f0_iunid a_sup_set_class a_df-sn i0_iunid f0_iunid p_equcom i0_iunid a_sup_set_class f0_iunid a_sup_set_class a_wceq f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid p_abbii f0_iunid a_sup_set_class a_csn i0_iunid a_sup_set_class f0_iunid a_sup_set_class a_wceq i0_iunid a_cab f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid a_cab p_eqtri f0_iunid a_sup_set_class a_csn f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid a_cab a_wceq f0_iunid a_sup_set_class f1_iunid a_wcel p_a1i f0_iunid f1_iunid f0_iunid a_sup_set_class a_csn f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid a_cab p_iuneq2i f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq f0_iunid i0_iunid f1_iunid p_iunab f0_iunid i0_iunid a_sup_set_class f1_iunid p_risset i0_iunid a_sup_set_class f1_iunid a_wcel f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq f0_iunid f1_iunid a_wrex i0_iunid p_abbii i0_iunid f1_iunid p_abid2 f0_iunid f1_iunid f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid a_cab a_ciun f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq f0_iunid f1_iunid a_wrex i0_iunid a_cab i0_iunid a_sup_set_class f1_iunid a_wcel i0_iunid a_cab f1_iunid p_3eqtr2i f0_iunid f1_iunid f0_iunid a_sup_set_class a_csn a_ciun f0_iunid f1_iunid f0_iunid a_sup_set_class i0_iunid a_sup_set_class a_wceq i0_iunid a_cab a_ciun f1_iunid p_eqtri $.
 $}
-$( An indexed union of the empty set is empty.  (Contributed by NM,
+
+$(An indexed union of the empty set is empty.  (Contributed by NM,
        26-Mar-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	iiun0_0 $f set y $.
-	fiun0_0 $f set x $.
-	fiun0_1 $f class A $.
-	iun0 $p |- U_ x e. A (/) = (/) $= iiun0_0 fiun0_0 fiun0_1 c0 ciun c0 iiun0_0 sup_set_class fiun0_0 fiun0_1 c0 ciun wcel iiun0_0 sup_set_class c0 wcel iiun0_0 sup_set_class fiun0_0 fiun0_1 c0 ciun wcel iiun0_0 sup_set_class c0 wcel fiun0_0 fiun0_1 wrex iiun0_0 sup_set_class c0 wcel fiun0_0 fiun0_1 iiun0_0 sup_set_class c0 wcel wn fiun0_0 sup_set_class fiun0_1 wcel iiun0_0 sup_set_class noel a1i nrex fiun0_0 iiun0_0 sup_set_class fiun0_1 c0 eliun mtbir iiun0_0 sup_set_class noel 2false eqriv $.
+	$v x A  $.
+	$d x y  $.
+	$d y A  $.
+	f0_iun0 $f set x $.
+	f1_iun0 $f class A $.
+	i0_iun0 $f set y $.
+	p_iun0 $p |- U_ x e. A (/) = (/) $= i0_iun0 a_sup_set_class p_noel i0_iun0 a_sup_set_class a_c0 a_wcel a_wn f0_iun0 a_sup_set_class f1_iun0 a_wcel p_a1i i0_iun0 a_sup_set_class a_c0 a_wcel f0_iun0 f1_iun0 p_nrex f0_iun0 i0_iun0 a_sup_set_class f1_iun0 a_c0 p_eliun i0_iun0 a_sup_set_class f0_iun0 f1_iun0 a_c0 a_ciun a_wcel i0_iun0 a_sup_set_class a_c0 a_wcel f0_iun0 f1_iun0 a_wrex p_mtbir i0_iun0 a_sup_set_class p_noel i0_iun0 a_sup_set_class f0_iun0 f1_iun0 a_c0 a_ciun a_wcel i0_iun0 a_sup_set_class a_c0 a_wcel p_2false i0_iun0 f0_iun0 f1_iun0 a_c0 a_ciun a_c0 p_eqriv $.
 $}
-$( An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
+
+$(An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	i0iun_0 $f set y $.
-	f0iun_0 $f set x $.
-	f0iun_1 $f class A $.
-	0iun $p |- U_ x e. (/) A = (/) $= i0iun_0 f0iun_0 c0 f0iun_1 ciun c0 i0iun_0 sup_set_class f0iun_0 c0 f0iun_1 ciun wcel i0iun_0 sup_set_class c0 wcel i0iun_0 sup_set_class f0iun_0 c0 f0iun_1 ciun wcel i0iun_0 sup_set_class f0iun_1 wcel f0iun_0 c0 wrex i0iun_0 sup_set_class f0iun_1 wcel f0iun_0 rex0 f0iun_0 i0iun_0 sup_set_class c0 f0iun_1 eliun mtbir i0iun_0 sup_set_class noel 2false eqriv $.
+	$v x A  $.
+	$d x y  $.
+	$d y A  $.
+	f0_0iun $f set x $.
+	f1_0iun $f class A $.
+	i0_0iun $f set y $.
+	p_0iun $p |- U_ x e. (/) A = (/) $= i0_0iun a_sup_set_class f1_0iun a_wcel f0_0iun p_rex0 f0_0iun i0_0iun a_sup_set_class a_c0 f1_0iun p_eliun i0_0iun a_sup_set_class f0_0iun a_c0 f1_0iun a_ciun a_wcel i0_0iun a_sup_set_class f1_0iun a_wcel f0_0iun a_c0 a_wrex p_mtbir i0_0iun a_sup_set_class p_noel i0_0iun a_sup_set_class f0_0iun a_c0 f1_0iun a_ciun a_wcel i0_0iun a_sup_set_class a_c0 a_wcel p_2false i0_0iun f0_0iun a_c0 f1_0iun a_ciun a_c0 p_eqriv $.
 $}
-$( An empty indexed intersection is the universal class.  (Contributed by
+
+$(An empty indexed intersection is the universal class.  (Contributed by
        NM, 20-Oct-2005.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	i0iin_0 $f set y $.
-	f0iin_0 $f set x $.
-	f0iin_1 $f class A $.
-	0iin $p |- |^|_ x e. (/) A = _V $= f0iin_0 c0 f0iin_1 ciin i0iin_0 sup_set_class f0iin_1 wcel f0iin_0 c0 wral i0iin_0 cab cvv f0iin_0 i0iin_0 c0 f0iin_1 df-iin i0iin_0 sup_set_class f0iin_1 wcel f0iin_0 c0 wral i0iin_0 cvv i0iin_0 sup_set_class cvv wcel i0iin_0 sup_set_class f0iin_1 wcel f0iin_0 c0 wral i0iin_0 vex i0iin_0 sup_set_class f0iin_1 wcel f0iin_0 ral0 2th abbi2i eqtr4i $.
+	$v x A  $.
+	$d x y  $.
+	$d y A  $.
+	f0_0iin $f set x $.
+	f1_0iin $f class A $.
+	i0_0iin $f set y $.
+	p_0iin $p |- |^|_ x e. (/) A = _V $= f0_0iin i0_0iin a_c0 f1_0iin a_df-iin i0_0iin p_vex i0_0iin a_sup_set_class f1_0iin a_wcel f0_0iin p_ral0 i0_0iin a_sup_set_class a_cvv a_wcel i0_0iin a_sup_set_class f1_0iin a_wcel f0_0iin a_c0 a_wral p_2th i0_0iin a_sup_set_class f1_0iin a_wcel f0_0iin a_c0 a_wral i0_0iin a_cvv p_abbi2i f0_0iin a_c0 f1_0iin a_ciin i0_0iin a_sup_set_class f1_0iin a_wcel f0_0iin a_c0 a_wral i0_0iin a_cab a_cvv p_eqtr4i $.
 $}
-$( Indexed intersection with a universal index class.  When ` A ` doesn't
+
+$(Indexed intersection with a universal index class.  When ` A ` doesn't
        depend on ` x ` , this evaluates to ` A ` by ~ 19.3 and ~ abid2 .  When
        ` A = x ` , this evaluates to ` (/) ` by ~ intiin and ~ intv .
        (Contributed by NM, 11-Sep-2008.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y $.
-	$d y A $.
-	fviin_0 $f set x $.
-	fviin_1 $f set y $.
-	fviin_2 $f class A $.
-	viin $p |- |^|_ x e. _V A = { y | A. x y e. A } $= fviin_0 cvv fviin_2 ciin fviin_1 sup_set_class fviin_2 wcel fviin_0 cvv wral fviin_1 cab fviin_1 sup_set_class fviin_2 wcel fviin_0 wal fviin_1 cab fviin_0 fviin_1 cvv fviin_2 df-iin fviin_1 sup_set_class fviin_2 wcel fviin_0 cvv wral fviin_1 sup_set_class fviin_2 wcel fviin_0 wal fviin_1 fviin_1 sup_set_class fviin_2 wcel fviin_0 ralv abbii eqtri $.
+	$v x y A  $.
+	$d x y  $.
+	$d y A  $.
+	f0_viin $f set x $.
+	f1_viin $f set y $.
+	f2_viin $f class A $.
+	p_viin $p |- |^|_ x e. _V A = { y | A. x y e. A } $= f0_viin f1_viin a_cvv f2_viin a_df-iin f1_viin a_sup_set_class f2_viin a_wcel f0_viin p_ralv f1_viin a_sup_set_class f2_viin a_wcel f0_viin a_cvv a_wral f1_viin a_sup_set_class f2_viin a_wcel f0_viin a_wal f1_viin p_abbii f0_viin a_cvv f2_viin a_ciin f1_viin a_sup_set_class f2_viin a_wcel f0_viin a_cvv a_wral f1_viin a_cab f1_viin a_sup_set_class f2_viin a_wcel f0_viin a_wal f1_viin a_cab p_eqtri $.
 $}
-$( There is a non-empty class in an indexed collection ` B ( x ) ` iff the
+
+$(There is a non-empty class in an indexed collection ` B ( x ) ` iff the
        indexed union of them is non-empty.  (Contributed by NM, 15-Oct-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	iiunn0_0 $f set y $.
-	fiunn0_0 $f set x $.
-	fiunn0_1 $f class A $.
-	fiunn0_2 $f class B $.
-	iunn0 $p |- ( E. x e. A B =/= (/) <-> U_ x e. A B =/= (/) ) $= iiunn0_0 sup_set_class fiunn0_2 wcel iiunn0_0 wex fiunn0_0 fiunn0_1 wrex iiunn0_0 sup_set_class fiunn0_0 fiunn0_1 fiunn0_2 ciun wcel iiunn0_0 wex fiunn0_2 c0 wne fiunn0_0 fiunn0_1 wrex fiunn0_0 fiunn0_1 fiunn0_2 ciun c0 wne iiunn0_0 sup_set_class fiunn0_2 wcel iiunn0_0 wex fiunn0_0 fiunn0_1 wrex iiunn0_0 sup_set_class fiunn0_2 wcel fiunn0_0 fiunn0_1 wrex iiunn0_0 wex iiunn0_0 sup_set_class fiunn0_0 fiunn0_1 fiunn0_2 ciun wcel iiunn0_0 wex iiunn0_0 sup_set_class fiunn0_2 wcel fiunn0_0 iiunn0_0 fiunn0_1 rexcom4 iiunn0_0 sup_set_class fiunn0_0 fiunn0_1 fiunn0_2 ciun wcel iiunn0_0 sup_set_class fiunn0_2 wcel fiunn0_0 fiunn0_1 wrex iiunn0_0 fiunn0_0 iiunn0_0 sup_set_class fiunn0_1 fiunn0_2 eliun exbii bitr4i fiunn0_2 c0 wne iiunn0_0 sup_set_class fiunn0_2 wcel iiunn0_0 wex fiunn0_0 fiunn0_1 iiunn0_0 fiunn0_2 n0 rexbii iiunn0_0 fiunn0_0 fiunn0_1 fiunn0_2 ciun n0 3bitr4i $.
+	$v x A B  $.
+	$d x y A  $.
+	$d y B  $.
+	f0_iunn0 $f set x $.
+	f1_iunn0 $f class A $.
+	f2_iunn0 $f class B $.
+	i0_iunn0 $f set y $.
+	p_iunn0 $p |- ( E. x e. A B =/= (/) <-> U_ x e. A B =/= (/) ) $= i0_iunn0 a_sup_set_class f2_iunn0 a_wcel f0_iunn0 i0_iunn0 f1_iunn0 p_rexcom4 f0_iunn0 i0_iunn0 a_sup_set_class f1_iunn0 f2_iunn0 p_eliun i0_iunn0 a_sup_set_class f0_iunn0 f1_iunn0 f2_iunn0 a_ciun a_wcel i0_iunn0 a_sup_set_class f2_iunn0 a_wcel f0_iunn0 f1_iunn0 a_wrex i0_iunn0 p_exbii i0_iunn0 a_sup_set_class f2_iunn0 a_wcel i0_iunn0 a_wex f0_iunn0 f1_iunn0 a_wrex i0_iunn0 a_sup_set_class f2_iunn0 a_wcel f0_iunn0 f1_iunn0 a_wrex i0_iunn0 a_wex i0_iunn0 a_sup_set_class f0_iunn0 f1_iunn0 f2_iunn0 a_ciun a_wcel i0_iunn0 a_wex p_bitr4i i0_iunn0 f2_iunn0 p_n0 f2_iunn0 a_c0 a_wne i0_iunn0 a_sup_set_class f2_iunn0 a_wcel i0_iunn0 a_wex f0_iunn0 f1_iunn0 p_rexbii i0_iunn0 f0_iunn0 f1_iunn0 f2_iunn0 a_ciun p_n0 i0_iunn0 a_sup_set_class f2_iunn0 a_wcel i0_iunn0 a_wex f0_iunn0 f1_iunn0 a_wrex i0_iunn0 a_sup_set_class f0_iunn0 f1_iunn0 f2_iunn0 a_ciun a_wcel i0_iunn0 a_wex f2_iunn0 a_c0 a_wne f0_iunn0 f1_iunn0 a_wrex f0_iunn0 f1_iunn0 f2_iunn0 a_ciun a_c0 a_wne p_3bitr4i $.
 $}
-$( Indexed intersection of a class builder.  (Contributed by NM,
+
+$(Indexed intersection of a class builder.  (Contributed by NM,
        6-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d y A $.
-	$d x y $.
-	fiinab_0 $f wff ph $.
-	fiinab_1 $f set x $.
-	fiinab_2 $f set y $.
-	fiinab_3 $f class A $.
-	iinab $p |- |^|_ x e. A { y | ph } = { y | A. x e. A ph } $= fiinab_1 fiinab_3 fiinab_0 fiinab_2 cab ciin fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 cab wceq fiinab_2 sup_set_class fiinab_1 fiinab_3 fiinab_0 fiinab_2 cab ciin wcel fiinab_2 sup_set_class fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 cab wcel wb fiinab_2 fiinab_2 fiinab_1 fiinab_3 fiinab_0 fiinab_2 cab ciin fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 cab fiinab_1 fiinab_2 fiinab_3 fiinab_0 fiinab_2 cab fiinab_2 fiinab_3 nfcv fiinab_0 fiinab_2 nfab1 nfiin fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 nfab1 cleqf fiinab_2 sup_set_class fiinab_0 fiinab_2 cab wcel fiinab_1 fiinab_3 wral fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 sup_set_class fiinab_1 fiinab_3 fiinab_0 fiinab_2 cab ciin wcel fiinab_2 sup_set_class fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 cab wcel fiinab_2 sup_set_class fiinab_0 fiinab_2 cab wcel fiinab_0 fiinab_1 fiinab_3 fiinab_0 fiinab_2 abid ralbii fiinab_2 sup_set_class cvv wcel fiinab_2 sup_set_class fiinab_1 fiinab_3 fiinab_0 fiinab_2 cab ciin wcel fiinab_2 sup_set_class fiinab_0 fiinab_2 cab wcel fiinab_1 fiinab_3 wral wb fiinab_2 vex fiinab_1 fiinab_2 sup_set_class fiinab_3 fiinab_0 fiinab_2 cab cvv eliin ax-mp fiinab_0 fiinab_1 fiinab_3 wral fiinab_2 abid 3bitr4i mpgbir $.
+	$v ph x y A  $.
+	$d y A  $.
+	$d x y  $.
+	f0_iinab $f wff ph $.
+	f1_iinab $f set x $.
+	f2_iinab $f set y $.
+	f3_iinab $f class A $.
+	p_iinab $p |- |^|_ x e. A { y | ph } = { y | A. x e. A ph } $= f2_iinab f3_iinab p_nfcv f0_iinab f2_iinab p_nfab1 f1_iinab f2_iinab f3_iinab f0_iinab f2_iinab a_cab p_nfiin f0_iinab f1_iinab f3_iinab a_wral f2_iinab p_nfab1 f2_iinab f1_iinab f3_iinab f0_iinab f2_iinab a_cab a_ciin f0_iinab f1_iinab f3_iinab a_wral f2_iinab a_cab p_cleqf f0_iinab f2_iinab p_abid f2_iinab a_sup_set_class f0_iinab f2_iinab a_cab a_wcel f0_iinab f1_iinab f3_iinab p_ralbii f2_iinab p_vex f1_iinab f2_iinab a_sup_set_class f3_iinab f0_iinab f2_iinab a_cab a_cvv p_eliin f2_iinab a_sup_set_class a_cvv a_wcel f2_iinab a_sup_set_class f1_iinab f3_iinab f0_iinab f2_iinab a_cab a_ciin a_wcel f2_iinab a_sup_set_class f0_iinab f2_iinab a_cab a_wcel f1_iinab f3_iinab a_wral a_wb a_ax-mp f0_iinab f1_iinab f3_iinab a_wral f2_iinab p_abid f2_iinab a_sup_set_class f0_iinab f2_iinab a_cab a_wcel f1_iinab f3_iinab a_wral f0_iinab f1_iinab f3_iinab a_wral f2_iinab a_sup_set_class f1_iinab f3_iinab f0_iinab f2_iinab a_cab a_ciin a_wcel f2_iinab a_sup_set_class f0_iinab f1_iinab f3_iinab a_wral f2_iinab a_cab a_wcel p_3bitr4i f1_iinab f3_iinab f0_iinab f2_iinab a_cab a_ciin f0_iinab f1_iinab f3_iinab a_wral f2_iinab a_cab a_wceq f2_iinab a_sup_set_class f1_iinab f3_iinab f0_iinab f2_iinab a_cab a_ciin a_wcel f2_iinab a_sup_set_class f0_iinab f1_iinab f3_iinab a_wral f2_iinab a_cab a_wcel a_wb f2_iinab p_mpgbir $.
 $}
-$( Indexed intersection of a restricted class builder.  (Contributed by NM,
+
+$(Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d y A $.
-	$d x y $.
-	$d x A $.
-	$d x B $.
-	fiinrab_0 $f wff ph $.
-	fiinrab_1 $f set x $.
-	fiinrab_2 $f set y $.
-	fiinrab_3 $f class A $.
-	fiinrab_4 $f class B $.
-	iinrab $p |- ( A =/= (/) -> |^|_ x e. A { y e. B | ph } = { y e. B | A. x e. A ph } ) $= fiinrab_3 c0 wne fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_1 fiinrab_3 wral fiinrab_2 cab fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 fiinrab_1 fiinrab_3 wral wa fiinrab_2 cab fiinrab_1 fiinrab_3 fiinrab_0 fiinrab_2 fiinrab_4 crab ciin fiinrab_0 fiinrab_1 fiinrab_3 wral fiinrab_2 fiinrab_4 crab fiinrab_3 c0 wne fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_1 fiinrab_3 wral fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 fiinrab_1 fiinrab_3 wral wa fiinrab_2 fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 fiinrab_1 fiinrab_3 r19.28zv abbidv fiinrab_1 fiinrab_3 fiinrab_0 fiinrab_2 fiinrab_4 crab ciin fiinrab_1 fiinrab_3 fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_2 cab ciin fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_1 fiinrab_3 wral fiinrab_2 cab fiinrab_1 fiinrab_3 fiinrab_0 fiinrab_2 fiinrab_4 crab fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_2 cab fiinrab_0 fiinrab_2 fiinrab_4 crab fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_2 cab wceq fiinrab_1 sup_set_class fiinrab_3 wcel fiinrab_0 fiinrab_2 fiinrab_4 df-rab a1i iineq2i fiinrab_2 sup_set_class fiinrab_4 wcel fiinrab_0 wa fiinrab_1 fiinrab_2 fiinrab_3 iinab eqtri fiinrab_0 fiinrab_1 fiinrab_3 wral fiinrab_2 fiinrab_4 df-rab 3eqtr4g $.
+	$v ph x y A B  $.
+	$d y A  $.
+	$d x y  $.
+	$d x A  $.
+	$d x B  $.
+	f0_iinrab $f wff ph $.
+	f1_iinrab $f set x $.
+	f2_iinrab $f set y $.
+	f3_iinrab $f class A $.
+	f4_iinrab $f class B $.
+	p_iinrab $p |- ( A =/= (/) -> |^|_ x e. A { y e. B | ph } = { y e. B | A. x e. A ph } ) $= f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab f1_iinrab f3_iinrab p_r19.28zv f3_iinrab a_c0 a_wne f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f1_iinrab f3_iinrab a_wral f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab f1_iinrab f3_iinrab a_wral a_wa f2_iinrab p_abbidv f0_iinrab f2_iinrab f4_iinrab a_df-rab f0_iinrab f2_iinrab f4_iinrab a_crab f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f2_iinrab a_cab a_wceq f1_iinrab a_sup_set_class f3_iinrab a_wcel p_a1i f1_iinrab f3_iinrab f0_iinrab f2_iinrab f4_iinrab a_crab f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f2_iinrab a_cab p_iineq2i f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f1_iinrab f2_iinrab f3_iinrab p_iinab f1_iinrab f3_iinrab f0_iinrab f2_iinrab f4_iinrab a_crab a_ciin f1_iinrab f3_iinrab f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f2_iinrab a_cab a_ciin f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f1_iinrab f3_iinrab a_wral f2_iinrab a_cab p_eqtri f0_iinrab f1_iinrab f3_iinrab a_wral f2_iinrab f4_iinrab a_df-rab f3_iinrab a_c0 a_wne f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab a_wa f1_iinrab f3_iinrab a_wral f2_iinrab a_cab f2_iinrab a_sup_set_class f4_iinrab a_wcel f0_iinrab f1_iinrab f3_iinrab a_wral a_wa f2_iinrab a_cab f1_iinrab f3_iinrab f0_iinrab f2_iinrab f4_iinrab a_crab a_ciin f0_iinrab f1_iinrab f3_iinrab a_wral f2_iinrab f4_iinrab a_crab p_3eqtr4g $.
 $}
-$( Indexed intersection of a restricted class builder.  (Contributed by NM,
+
+$(Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d y A $.
-	$d x y $.
-	$d x A $.
-	$d x B $.
-	$d y B $.
-	fiinrab2_0 $f wff ph $.
-	fiinrab2_1 $f set x $.
-	fiinrab2_2 $f set y $.
-	fiinrab2_3 $f class A $.
-	fiinrab2_4 $f class B $.
-	iinrab2 $p |- ( |^|_ x e. A { y e. B | ph } i^i B ) = { y e. B | A. x e. A ph } $= fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_4 cin fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab wceq fiinrab2_3 c0 fiinrab2_3 c0 wceq fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_4 cin fiinrab2_4 fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_3 c0 wceq fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_4 cin cvv fiinrab2_4 cin fiinrab2_4 fiinrab2_3 c0 wceq fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin cvv fiinrab2_4 fiinrab2_3 c0 wceq fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_1 c0 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin cvv fiinrab2_1 fiinrab2_3 c0 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab iineq1 fiinrab2_1 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab 0iin syl6eq ineq1d cvv fiinrab2_4 cin fiinrab2_4 cvv cin fiinrab2_4 cvv fiinrab2_4 incom fiinrab2_4 inv1 eqtri syl6eq fiinrab2_3 c0 wceq fiinrab2_0 fiinrab2_2 fiinrab2_4 wral fiinrab2_1 fiinrab2_3 wral fiinrab2_4 fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab wceq fiinrab2_0 fiinrab2_2 fiinrab2_4 wral fiinrab2_1 fiinrab2_3 rzal fiinrab2_4 fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab wceq fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 wral fiinrab2_0 fiinrab2_2 fiinrab2_4 wral fiinrab2_1 fiinrab2_3 wral fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 rabid2 fiinrab2_0 fiinrab2_2 fiinrab2_1 fiinrab2_4 fiinrab2_3 ralcom bitr2i sylib eqtrd fiinrab2_3 c0 wne fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_4 cin fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_4 cin fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_3 c0 wne fiinrab2_1 fiinrab2_3 fiinrab2_0 fiinrab2_2 fiinrab2_4 crab ciin fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_4 fiinrab2_0 fiinrab2_1 fiinrab2_2 fiinrab2_3 fiinrab2_4 iinrab ineq1d fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_4 wss fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_4 cin wceq fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 ssrab2 fiinrab2_0 fiinrab2_1 fiinrab2_3 wral fiinrab2_2 fiinrab2_4 crab fiinrab2_4 dfss mpbi syl6eqr pm2.61ine $.
+	$v ph x y A B  $.
+	$d y A  $.
+	$d x y  $.
+	$d x A  $.
+	$d x B  $.
+	$d y B  $.
+	f0_iinrab2 $f wff ph $.
+	f1_iinrab2 $f set x $.
+	f2_iinrab2 $f set y $.
+	f3_iinrab2 $f class A $.
+	f4_iinrab2 $f class B $.
+	p_iinrab2 $p |- ( |^|_ x e. A { y e. B | ph } i^i B ) = { y e. B | A. x e. A ph } $= f1_iinrab2 f3_iinrab2 a_c0 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab p_iineq1 f1_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab p_0iin f3_iinrab2 a_c0 a_wceq f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f1_iinrab2 a_c0 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin a_cvv p_syl6eq f3_iinrab2 a_c0 a_wceq f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin a_cvv f4_iinrab2 p_ineq1d a_cvv f4_iinrab2 p_incom f4_iinrab2 p_inv1 a_cvv f4_iinrab2 a_cin f4_iinrab2 a_cvv a_cin f4_iinrab2 p_eqtri f3_iinrab2 a_c0 a_wceq f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f4_iinrab2 a_cin a_cvv f4_iinrab2 a_cin f4_iinrab2 p_syl6eq f0_iinrab2 f2_iinrab2 f4_iinrab2 a_wral f1_iinrab2 f3_iinrab2 p_rzal f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 p_rabid2 f0_iinrab2 f2_iinrab2 f1_iinrab2 f4_iinrab2 f3_iinrab2 p_ralcom f4_iinrab2 f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab a_wceq f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_wral f0_iinrab2 f2_iinrab2 f4_iinrab2 a_wral f1_iinrab2 f3_iinrab2 a_wral p_bitr2i f3_iinrab2 a_c0 a_wceq f0_iinrab2 f2_iinrab2 f4_iinrab2 a_wral f1_iinrab2 f3_iinrab2 a_wral f4_iinrab2 f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab a_wceq p_sylib f3_iinrab2 a_c0 a_wceq f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f4_iinrab2 a_cin f4_iinrab2 f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab p_eqtrd f0_iinrab2 f1_iinrab2 f2_iinrab2 f3_iinrab2 f4_iinrab2 p_iinrab f3_iinrab2 a_c0 a_wne f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f4_iinrab2 p_ineq1d f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 p_ssrab2 f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f4_iinrab2 p_dfss f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f4_iinrab2 a_wss f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f4_iinrab2 a_cin a_wceq p_mpbi f3_iinrab2 a_c0 a_wne f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f4_iinrab2 a_cin f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab f4_iinrab2 a_cin f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab p_syl6eqr f1_iinrab2 f3_iinrab2 f0_iinrab2 f2_iinrab2 f4_iinrab2 a_crab a_ciin f4_iinrab2 a_cin f0_iinrab2 f1_iinrab2 f3_iinrab2 a_wral f2_iinrab2 f4_iinrab2 a_crab a_wceq f3_iinrab2 a_c0 p_pm2.61ine $.
 $}
-$( Indexed union of intersection.  Generalization of half of theorem
+
+$(Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 26-Mar-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	$d y C $.
-	iiunin2_0 $f set y $.
-	fiunin2_0 $f set x $.
-	fiunin2_1 $f class A $.
-	fiunin2_2 $f class B $.
-	fiunin2_3 $f class C $.
-	iunin2 $p |- U_ x e. A ( B i^i C ) = ( B i^i U_ x e. A C ) $= iiunin2_0 fiunin2_0 fiunin2_1 fiunin2_2 fiunin2_3 cin ciun fiunin2_2 fiunin2_0 fiunin2_1 fiunin2_3 ciun cin iiunin2_0 sup_set_class fiunin2_2 fiunin2_3 cin wcel fiunin2_0 fiunin2_1 wrex iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_0 fiunin2_1 fiunin2_3 ciun wcel wa iiunin2_0 sup_set_class fiunin2_0 fiunin2_1 fiunin2_2 fiunin2_3 cin ciun wcel iiunin2_0 sup_set_class fiunin2_2 fiunin2_0 fiunin2_1 fiunin2_3 ciun cin wcel iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_3 wcel wa fiunin2_0 fiunin2_1 wrex iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_3 wcel fiunin2_0 fiunin2_1 wrex wa iiunin2_0 sup_set_class fiunin2_2 fiunin2_3 cin wcel fiunin2_0 fiunin2_1 wrex iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_0 fiunin2_1 fiunin2_3 ciun wcel wa iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_3 wcel fiunin2_0 fiunin2_1 r19.42v iiunin2_0 sup_set_class fiunin2_2 fiunin2_3 cin wcel iiunin2_0 sup_set_class fiunin2_2 wcel iiunin2_0 sup_set_class fiunin2_3 wcel wa fiunin2_0 fiunin2_1 iiunin2_0 sup_set_class fiunin2_2 fiunin2_3 elin rexbii iiunin2_0 sup_set_class fiunin2_0 fiunin2_1 fiunin2_3 ciun wcel iiunin2_0 sup_set_class fiunin2_3 wcel fiunin2_0 fiunin2_1 wrex iiunin2_0 sup_set_class fiunin2_2 wcel fiunin2_0 iiunin2_0 sup_set_class fiunin2_1 fiunin2_3 eliun anbi2i 3bitr4i fiunin2_0 iiunin2_0 sup_set_class fiunin2_1 fiunin2_2 fiunin2_3 cin eliun iiunin2_0 sup_set_class fiunin2_2 fiunin2_0 fiunin2_1 fiunin2_3 ciun elin 3bitr4i eqriv $.
+	$v x A B C  $.
+	$d y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iunin2 $f set x $.
+	f1_iunin2 $f class A $.
+	f2_iunin2 $f class B $.
+	f3_iunin2 $f class C $.
+	i0_iunin2 $f set y $.
+	p_iunin2 $p |- U_ x e. A ( B i^i C ) = ( B i^i U_ x e. A C ) $= i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f3_iunin2 a_wcel f0_iunin2 f1_iunin2 p_r19.42v i0_iunin2 a_sup_set_class f2_iunin2 f3_iunin2 p_elin i0_iunin2 a_sup_set_class f2_iunin2 f3_iunin2 a_cin a_wcel i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f3_iunin2 a_wcel a_wa f0_iunin2 f1_iunin2 p_rexbii f0_iunin2 i0_iunin2 a_sup_set_class f1_iunin2 f3_iunin2 p_eliun i0_iunin2 a_sup_set_class f0_iunin2 f1_iunin2 f3_iunin2 a_ciun a_wcel i0_iunin2 a_sup_set_class f3_iunin2 a_wcel f0_iunin2 f1_iunin2 a_wrex i0_iunin2 a_sup_set_class f2_iunin2 a_wcel p_anbi2i i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f3_iunin2 a_wcel a_wa f0_iunin2 f1_iunin2 a_wrex i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f3_iunin2 a_wcel f0_iunin2 f1_iunin2 a_wrex a_wa i0_iunin2 a_sup_set_class f2_iunin2 f3_iunin2 a_cin a_wcel f0_iunin2 f1_iunin2 a_wrex i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f0_iunin2 f1_iunin2 f3_iunin2 a_ciun a_wcel a_wa p_3bitr4i f0_iunin2 i0_iunin2 a_sup_set_class f1_iunin2 f2_iunin2 f3_iunin2 a_cin p_eliun i0_iunin2 a_sup_set_class f2_iunin2 f0_iunin2 f1_iunin2 f3_iunin2 a_ciun p_elin i0_iunin2 a_sup_set_class f2_iunin2 f3_iunin2 a_cin a_wcel f0_iunin2 f1_iunin2 a_wrex i0_iunin2 a_sup_set_class f2_iunin2 a_wcel i0_iunin2 a_sup_set_class f0_iunin2 f1_iunin2 f3_iunin2 a_ciun a_wcel a_wa i0_iunin2 a_sup_set_class f0_iunin2 f1_iunin2 f2_iunin2 f3_iunin2 a_cin a_ciun a_wcel i0_iunin2 a_sup_set_class f2_iunin2 f0_iunin2 f1_iunin2 f3_iunin2 a_ciun a_cin a_wcel p_3bitr4i i0_iunin2 f0_iunin2 f1_iunin2 f2_iunin2 f3_iunin2 a_cin a_ciun f2_iunin2 f0_iunin2 f1_iunin2 f3_iunin2 a_ciun a_cin p_eqriv $.
 $}
-$( Indexed union of intersection.  Generalization of half of theorem
+
+$(Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 30-Aug-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x B $.
-	fiunin1_0 $f set x $.
-	fiunin1_1 $f class A $.
-	fiunin1_2 $f class B $.
-	fiunin1_3 $f class C $.
-	iunin1 $p |- U_ x e. A ( C i^i B ) = ( U_ x e. A C i^i B ) $= fiunin1_0 fiunin1_1 fiunin1_2 fiunin1_3 cin ciun fiunin1_2 fiunin1_0 fiunin1_1 fiunin1_3 ciun cin fiunin1_0 fiunin1_1 fiunin1_3 fiunin1_2 cin ciun fiunin1_0 fiunin1_1 fiunin1_3 ciun fiunin1_2 cin fiunin1_0 fiunin1_1 fiunin1_2 fiunin1_3 iunin2 fiunin1_0 fiunin1_1 fiunin1_3 fiunin1_2 cin fiunin1_2 fiunin1_3 cin fiunin1_3 fiunin1_2 cin fiunin1_2 fiunin1_3 cin wceq fiunin1_0 sup_set_class fiunin1_1 wcel fiunin1_3 fiunin1_2 incom a1i iuneq2i fiunin1_0 fiunin1_1 fiunin1_3 ciun fiunin1_2 incom 3eqtr4i $.
+	$v x A B C  $.
+	$d A  $.
+	$d x B  $.
+	$d C  $.
+	f0_iunin1 $f set x $.
+	f1_iunin1 $f class A $.
+	f2_iunin1 $f class B $.
+	f3_iunin1 $f class C $.
+	p_iunin1 $p |- U_ x e. A ( C i^i B ) = ( U_ x e. A C i^i B ) $= f0_iunin1 f1_iunin1 f2_iunin1 f3_iunin1 p_iunin2 f3_iunin1 f2_iunin1 p_incom f3_iunin1 f2_iunin1 a_cin f2_iunin1 f3_iunin1 a_cin a_wceq f0_iunin1 a_sup_set_class f1_iunin1 a_wcel p_a1i f0_iunin1 f1_iunin1 f3_iunin1 f2_iunin1 a_cin f2_iunin1 f3_iunin1 a_cin p_iuneq2i f0_iunin1 f1_iunin1 f3_iunin1 a_ciun f2_iunin1 p_incom f0_iunin1 f1_iunin1 f2_iunin1 f3_iunin1 a_cin a_ciun f2_iunin1 f0_iunin1 f1_iunin1 f3_iunin1 a_ciun a_cin f0_iunin1 f1_iunin1 f3_iunin1 f2_iunin1 a_cin a_ciun f0_iunin1 f1_iunin1 f3_iunin1 a_ciun f2_iunin1 a_cin p_3eqtr4i $.
 $}
-$( Indexed intersection of union.  Generalization of half of theorem
+
+$(Indexed intersection of union.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	$d y C $.
-	iiinun2_0 $f set y $.
-	fiinun2_0 $f set x $.
-	fiinun2_1 $f class A $.
-	fiinun2_2 $f class B $.
-	fiinun2_3 $f class C $.
-	iinun2 $p |- |^|_ x e. A ( B u. C ) = ( B u. |^|_ x e. A C ) $= iiinun2_0 fiinun2_0 fiinun2_1 fiinun2_2 fiinun2_3 cun ciin fiinun2_2 fiinun2_0 fiinun2_1 fiinun2_3 ciin cun iiinun2_0 sup_set_class fiinun2_2 fiinun2_3 cun wcel fiinun2_0 fiinun2_1 wral iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_3 ciin wcel wo iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_2 fiinun2_3 cun ciin wcel iiinun2_0 sup_set_class fiinun2_2 fiinun2_0 fiinun2_1 fiinun2_3 ciin cun wcel iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_3 wcel wo fiinun2_0 fiinun2_1 wral iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_3 wcel fiinun2_0 fiinun2_1 wral wo iiinun2_0 sup_set_class fiinun2_2 fiinun2_3 cun wcel fiinun2_0 fiinun2_1 wral iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_3 ciin wcel wo iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_3 wcel fiinun2_0 fiinun2_1 r19.32v iiinun2_0 sup_set_class fiinun2_2 fiinun2_3 cun wcel iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class fiinun2_3 wcel wo fiinun2_0 fiinun2_1 iiinun2_0 sup_set_class fiinun2_2 fiinun2_3 elun ralbii iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_3 ciin wcel iiinun2_0 sup_set_class fiinun2_3 wcel fiinun2_0 fiinun2_1 wral iiinun2_0 sup_set_class fiinun2_2 wcel iiinun2_0 sup_set_class cvv wcel iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_3 ciin wcel iiinun2_0 sup_set_class fiinun2_3 wcel fiinun2_0 fiinun2_1 wral wb iiinun2_0 vex fiinun2_0 iiinun2_0 sup_set_class fiinun2_1 fiinun2_3 cvv eliin ax-mp orbi2i 3bitr4i iiinun2_0 sup_set_class cvv wcel iiinun2_0 sup_set_class fiinun2_0 fiinun2_1 fiinun2_2 fiinun2_3 cun ciin wcel iiinun2_0 sup_set_class fiinun2_2 fiinun2_3 cun wcel fiinun2_0 fiinun2_1 wral wb iiinun2_0 vex fiinun2_0 iiinun2_0 sup_set_class fiinun2_1 fiinun2_2 fiinun2_3 cun cvv eliin ax-mp iiinun2_0 sup_set_class fiinun2_2 fiinun2_0 fiinun2_1 fiinun2_3 ciin elun 3bitr4i eqriv $.
+	$v x A B C  $.
+	$d y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iinun2 $f set x $.
+	f1_iinun2 $f class A $.
+	f2_iinun2 $f class B $.
+	f3_iinun2 $f class C $.
+	i0_iinun2 $f set y $.
+	p_iinun2 $p |- |^|_ x e. A ( B u. C ) = ( B u. |^|_ x e. A C ) $= i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel f0_iinun2 f1_iinun2 p_r19.32v i0_iinun2 a_sup_set_class f2_iinun2 f3_iinun2 p_elun i0_iinun2 a_sup_set_class f2_iinun2 f3_iinun2 a_cun a_wcel i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel a_wo f0_iinun2 f1_iinun2 p_ralbii i0_iinun2 p_vex f0_iinun2 i0_iinun2 a_sup_set_class f1_iinun2 f3_iinun2 a_cvv p_eliin i0_iinun2 a_sup_set_class a_cvv a_wcel i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel f0_iinun2 f1_iinun2 a_wral a_wb a_ax-mp i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel f0_iinun2 f1_iinun2 a_wral i0_iinun2 a_sup_set_class f2_iinun2 a_wcel p_orbi2i i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel a_wo f0_iinun2 f1_iinun2 a_wral i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f3_iinun2 a_wcel f0_iinun2 f1_iinun2 a_wral a_wo i0_iinun2 a_sup_set_class f2_iinun2 f3_iinun2 a_cun a_wcel f0_iinun2 f1_iinun2 a_wral i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_wcel a_wo p_3bitr4i i0_iinun2 p_vex f0_iinun2 i0_iinun2 a_sup_set_class f1_iinun2 f2_iinun2 f3_iinun2 a_cun a_cvv p_eliin i0_iinun2 a_sup_set_class a_cvv a_wcel i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f2_iinun2 f3_iinun2 a_cun a_ciin a_wcel i0_iinun2 a_sup_set_class f2_iinun2 f3_iinun2 a_cun a_wcel f0_iinun2 f1_iinun2 a_wral a_wb a_ax-mp i0_iinun2 a_sup_set_class f2_iinun2 f0_iinun2 f1_iinun2 f3_iinun2 a_ciin p_elun i0_iinun2 a_sup_set_class f2_iinun2 f3_iinun2 a_cun a_wcel f0_iinun2 f1_iinun2 a_wral i0_iinun2 a_sup_set_class f2_iinun2 a_wcel i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_wcel a_wo i0_iinun2 a_sup_set_class f0_iinun2 f1_iinun2 f2_iinun2 f3_iinun2 a_cun a_ciin a_wcel i0_iinun2 a_sup_set_class f2_iinun2 f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_cun a_wcel p_3bitr4i i0_iinun2 f0_iinun2 f1_iinun2 f2_iinun2 f3_iinun2 a_cun a_ciin f2_iinun2 f0_iinun2 f1_iinun2 f3_iinun2 a_ciin a_cun p_eqriv $.
 $}
-$( Indexed union of class difference.  Generalization of half of theorem
+
+$(Indexed union of class difference.  Generalization of half of theorem
        "De Morgan's laws" in [Enderton] p. 31.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	$d y C $.
-	iiundif2_0 $f set y $.
-	fiundif2_0 $f set x $.
-	fiundif2_1 $f class A $.
-	fiundif2_2 $f class B $.
-	fiundif2_3 $f class C $.
-	iundif2 $p |- U_ x e. A ( B \ C ) = ( B \ |^|_ x e. A C ) $= iiundif2_0 fiundif2_0 fiundif2_1 fiundif2_2 fiundif2_3 cdif ciun fiundif2_2 fiundif2_0 fiundif2_1 fiundif2_3 ciin cdif iiundif2_0 sup_set_class fiundif2_2 fiundif2_3 cdif wcel fiundif2_0 fiundif2_1 wrex iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_3 ciin wcel wn wa iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_2 fiundif2_3 cdif ciun wcel iiundif2_0 sup_set_class fiundif2_2 fiundif2_0 fiundif2_1 fiundif2_3 ciin cdif wcel iiundif2_0 sup_set_class fiundif2_2 fiundif2_3 cdif wcel fiundif2_0 fiundif2_1 wrex iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_3 wcel wn wa fiundif2_0 fiundif2_1 wrex iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_3 wcel wn fiundif2_0 fiundif2_1 wrex wa iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_3 ciin wcel wn wa iiundif2_0 sup_set_class fiundif2_2 fiundif2_3 cdif wcel iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_3 wcel wn wa fiundif2_0 fiundif2_1 iiundif2_0 sup_set_class fiundif2_2 fiundif2_3 eldif rexbii iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_3 wcel wn fiundif2_0 fiundif2_1 r19.42v iiundif2_0 sup_set_class fiundif2_3 wcel wn fiundif2_0 fiundif2_1 wrex iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_3 ciin wcel wn iiundif2_0 sup_set_class fiundif2_2 wcel iiundif2_0 sup_set_class fiundif2_3 wcel wn fiundif2_0 fiundif2_1 wrex iiundif2_0 sup_set_class fiundif2_3 wcel fiundif2_0 fiundif2_1 wral iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_3 ciin wcel iiundif2_0 sup_set_class fiundif2_3 wcel fiundif2_0 fiundif2_1 rexnal iiundif2_0 sup_set_class cvv wcel iiundif2_0 sup_set_class fiundif2_0 fiundif2_1 fiundif2_3 ciin wcel iiundif2_0 sup_set_class fiundif2_3 wcel fiundif2_0 fiundif2_1 wral wb iiundif2_0 vex fiundif2_0 iiundif2_0 sup_set_class fiundif2_1 fiundif2_3 cvv eliin ax-mp xchbinxr anbi2i 3bitri fiundif2_0 iiundif2_0 sup_set_class fiundif2_1 fiundif2_2 fiundif2_3 cdif eliun iiundif2_0 sup_set_class fiundif2_2 fiundif2_0 fiundif2_1 fiundif2_3 ciin eldif 3bitr4i eqriv $.
+	$v x A B C  $.
+	$d y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iundif2 $f set x $.
+	f1_iundif2 $f class A $.
+	f2_iundif2 $f class B $.
+	f3_iundif2 $f class C $.
+	i0_iundif2 $f set y $.
+	p_iundif2 $p |- U_ x e. A ( B \ C ) = ( B \ |^|_ x e. A C ) $= i0_iundif2 a_sup_set_class f2_iundif2 f3_iundif2 p_eldif i0_iundif2 a_sup_set_class f2_iundif2 f3_iundif2 a_cdif a_wcel i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn a_wa f0_iundif2 f1_iundif2 p_rexbii i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn f0_iundif2 f1_iundif2 p_r19.42v i0_iundif2 a_sup_set_class f3_iundif2 a_wcel f0_iundif2 f1_iundif2 p_rexnal i0_iundif2 p_vex f0_iundif2 i0_iundif2 a_sup_set_class f1_iundif2 f3_iundif2 a_cvv p_eliin i0_iundif2 a_sup_set_class a_cvv a_wcel i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_wcel i0_iundif2 a_sup_set_class f3_iundif2 a_wcel f0_iundif2 f1_iundif2 a_wral a_wb a_ax-mp i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn f0_iundif2 f1_iundif2 a_wrex i0_iundif2 a_sup_set_class f3_iundif2 a_wcel f0_iundif2 f1_iundif2 a_wral i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_wcel p_xchbinxr i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn f0_iundif2 f1_iundif2 a_wrex i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_wcel a_wn i0_iundif2 a_sup_set_class f2_iundif2 a_wcel p_anbi2i i0_iundif2 a_sup_set_class f2_iundif2 f3_iundif2 a_cdif a_wcel f0_iundif2 f1_iundif2 a_wrex i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn a_wa f0_iundif2 f1_iundif2 a_wrex i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f3_iundif2 a_wcel a_wn f0_iundif2 f1_iundif2 a_wrex a_wa i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_wcel a_wn a_wa p_3bitri f0_iundif2 i0_iundif2 a_sup_set_class f1_iundif2 f2_iundif2 f3_iundif2 a_cdif p_eliun i0_iundif2 a_sup_set_class f2_iundif2 f0_iundif2 f1_iundif2 f3_iundif2 a_ciin p_eldif i0_iundif2 a_sup_set_class f2_iundif2 f3_iundif2 a_cdif a_wcel f0_iundif2 f1_iundif2 a_wrex i0_iundif2 a_sup_set_class f2_iundif2 a_wcel i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_wcel a_wn a_wa i0_iundif2 a_sup_set_class f0_iundif2 f1_iundif2 f2_iundif2 f3_iundif2 a_cdif a_ciun a_wcel i0_iundif2 a_sup_set_class f2_iundif2 f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_cdif a_wcel p_3bitr4i i0_iundif2 f0_iundif2 f1_iundif2 f2_iundif2 f3_iundif2 a_cdif a_ciun f2_iundif2 f0_iundif2 f1_iundif2 f3_iundif2 a_ciin a_cdif p_eqriv $.
 $}
-$( Rearrange indexed unions over intersection.  (Contributed by NM,
+
+$(Rearrange indexed unions over intersection.  (Contributed by NM,
        18-Dec-2008.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$d x B $.
-	$d y C $.
-	$d x D $.
-	$d x y $.
-	f2iunin_0 $f set x $.
-	f2iunin_1 $f set y $.
-	f2iunin_2 $f class A $.
-	f2iunin_3 $f class B $.
-	f2iunin_4 $f class C $.
-	f2iunin_5 $f class D $.
-	2iunin $p |- U_ x e. A U_ y e. B ( C i^i D ) = ( U_ x e. A C i^i U_ y e. B D ) $= f2iunin_0 f2iunin_2 f2iunin_1 f2iunin_3 f2iunin_4 f2iunin_5 cin ciun ciun f2iunin_0 f2iunin_2 f2iunin_4 f2iunin_1 f2iunin_3 f2iunin_5 ciun cin ciun f2iunin_0 f2iunin_2 f2iunin_4 ciun f2iunin_1 f2iunin_3 f2iunin_5 ciun cin f2iunin_0 f2iunin_2 f2iunin_1 f2iunin_3 f2iunin_4 f2iunin_5 cin ciun f2iunin_4 f2iunin_1 f2iunin_3 f2iunin_5 ciun cin f2iunin_1 f2iunin_3 f2iunin_4 f2iunin_5 cin ciun f2iunin_4 f2iunin_1 f2iunin_3 f2iunin_5 ciun cin wceq f2iunin_0 sup_set_class f2iunin_2 wcel f2iunin_1 f2iunin_3 f2iunin_4 f2iunin_5 iunin2 a1i iuneq2i f2iunin_0 f2iunin_2 f2iunin_1 f2iunin_3 f2iunin_5 ciun f2iunin_4 iunin1 eqtri $.
+	$v x y A B C D  $.
+	$d x B  $.
+	$d y C  $.
+	$d x D  $.
+	$d x y  $.
+	f0_2iunin $f set x $.
+	f1_2iunin $f set y $.
+	f2_2iunin $f class A $.
+	f3_2iunin $f class B $.
+	f4_2iunin $f class C $.
+	f5_2iunin $f class D $.
+	p_2iunin $p |- U_ x e. A U_ y e. B ( C i^i D ) = ( U_ x e. A C i^i U_ y e. B D ) $= f1_2iunin f3_2iunin f4_2iunin f5_2iunin p_iunin2 f1_2iunin f3_2iunin f4_2iunin f5_2iunin a_cin a_ciun f4_2iunin f1_2iunin f3_2iunin f5_2iunin a_ciun a_cin a_wceq f0_2iunin a_sup_set_class f2_2iunin a_wcel p_a1i f0_2iunin f2_2iunin f1_2iunin f3_2iunin f4_2iunin f5_2iunin a_cin a_ciun f4_2iunin f1_2iunin f3_2iunin f5_2iunin a_ciun a_cin p_iuneq2i f0_2iunin f2_2iunin f1_2iunin f3_2iunin f5_2iunin a_ciun f4_2iunin p_iunin1 f0_2iunin f2_2iunin f1_2iunin f3_2iunin f4_2iunin f5_2iunin a_cin a_ciun a_ciun f0_2iunin f2_2iunin f4_2iunin f1_2iunin f3_2iunin f5_2iunin a_ciun a_cin a_ciun f0_2iunin f2_2iunin f4_2iunin a_ciun f1_2iunin f3_2iunin f5_2iunin a_ciun a_cin p_eqtri $.
 $}
-$( Indexed intersection of class difference.  Generalization of half of
+
+$(Indexed intersection of class difference.  Generalization of half of
        theorem "De Morgan's laws" in [Enderton] p. 31.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 5-Oct-2006.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	iiindif2_0 $f set y $.
-	fiindif2_0 $f set x $.
-	fiindif2_1 $f class A $.
-	fiindif2_2 $f class B $.
-	fiindif2_3 $f class C $.
-	iindif2 $p |- ( A =/= (/) -> |^|_ x e. A ( B \ C ) = ( B \ U_ x e. A C ) ) $= fiindif2_1 c0 wne iiindif2_0 fiindif2_0 fiindif2_1 fiindif2_2 fiindif2_3 cdif ciin fiindif2_2 fiindif2_0 fiindif2_1 fiindif2_3 ciun cdif fiindif2_1 c0 wne iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 cdif wcel fiindif2_0 fiindif2_1 wral iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_3 ciun wcel wn wa iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_2 fiindif2_3 cdif ciin wcel iiindif2_0 sup_set_class fiindif2_2 fiindif2_0 fiindif2_1 fiindif2_3 ciun cdif wcel fiindif2_1 c0 wne iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn wa fiindif2_0 fiindif2_1 wral iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn fiindif2_0 fiindif2_1 wral wa iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 cdif wcel fiindif2_0 fiindif2_1 wral iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_3 ciun wcel wn wa iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn fiindif2_0 fiindif2_1 r19.28zv iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn wa iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 cdif wcel fiindif2_0 fiindif2_1 iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 cdif wcel iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn wa iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 eldif bicomi ralbii iiindif2_0 sup_set_class fiindif2_3 wcel wn fiindif2_0 fiindif2_1 wral iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_3 ciun wcel wn iiindif2_0 sup_set_class fiindif2_2 wcel iiindif2_0 sup_set_class fiindif2_3 wcel wn fiindif2_0 fiindif2_1 wral iiindif2_0 sup_set_class fiindif2_3 wcel fiindif2_0 fiindif2_1 wrex iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_3 ciun wcel iiindif2_0 sup_set_class fiindif2_3 wcel fiindif2_0 fiindif2_1 ralnex fiindif2_0 iiindif2_0 sup_set_class fiindif2_1 fiindif2_3 eliun xchbinxr anbi2i 3bitr3g iiindif2_0 sup_set_class cvv wcel iiindif2_0 sup_set_class fiindif2_0 fiindif2_1 fiindif2_2 fiindif2_3 cdif ciin wcel iiindif2_0 sup_set_class fiindif2_2 fiindif2_3 cdif wcel fiindif2_0 fiindif2_1 wral wb iiindif2_0 vex fiindif2_0 iiindif2_0 sup_set_class fiindif2_1 fiindif2_2 fiindif2_3 cdif cvv eliin ax-mp iiindif2_0 sup_set_class fiindif2_2 fiindif2_0 fiindif2_1 fiindif2_3 ciun eldif 3bitr4g eqrdv $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iindif2 $f set x $.
+	f1_iindif2 $f class A $.
+	f2_iindif2 $f class B $.
+	f3_iindif2 $f class C $.
+	i0_iindif2 $f set y $.
+	p_iindif2 $p |- ( A =/= (/) -> |^|_ x e. A ( B \ C ) = ( B \ U_ x e. A C ) ) $= i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn f0_iindif2 f1_iindif2 p_r19.28zv i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 p_eldif i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 a_cdif a_wcel i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn a_wa p_bicomi i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn a_wa i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 a_cdif a_wcel f0_iindif2 f1_iindif2 p_ralbii i0_iindif2 a_sup_set_class f3_iindif2 a_wcel f0_iindif2 f1_iindif2 p_ralnex f0_iindif2 i0_iindif2 a_sup_set_class f1_iindif2 f3_iindif2 p_eliun i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn f0_iindif2 f1_iindif2 a_wral i0_iindif2 a_sup_set_class f3_iindif2 a_wcel f0_iindif2 f1_iindif2 a_wrex i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_wcel p_xchbinxr i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn f0_iindif2 f1_iindif2 a_wral i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_wcel a_wn i0_iindif2 a_sup_set_class f2_iindif2 a_wcel p_anbi2i f1_iindif2 a_c0 a_wne i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn a_wa f0_iindif2 f1_iindif2 a_wral i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f3_iindif2 a_wcel a_wn f0_iindif2 f1_iindif2 a_wral a_wa i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 a_cdif a_wcel f0_iindif2 f1_iindif2 a_wral i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_wcel a_wn a_wa p_3bitr3g i0_iindif2 p_vex f0_iindif2 i0_iindif2 a_sup_set_class f1_iindif2 f2_iindif2 f3_iindif2 a_cdif a_cvv p_eliin i0_iindif2 a_sup_set_class a_cvv a_wcel i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f2_iindif2 f3_iindif2 a_cdif a_ciin a_wcel i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 a_cdif a_wcel f0_iindif2 f1_iindif2 a_wral a_wb a_ax-mp i0_iindif2 a_sup_set_class f2_iindif2 f0_iindif2 f1_iindif2 f3_iindif2 a_ciun p_eldif f1_iindif2 a_c0 a_wne i0_iindif2 a_sup_set_class f2_iindif2 f3_iindif2 a_cdif a_wcel f0_iindif2 f1_iindif2 a_wral i0_iindif2 a_sup_set_class f2_iindif2 a_wcel i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_wcel a_wn a_wa i0_iindif2 a_sup_set_class f0_iindif2 f1_iindif2 f2_iindif2 f3_iindif2 a_cdif a_ciin a_wcel i0_iindif2 a_sup_set_class f2_iindif2 f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_cdif a_wcel p_3bitr4g f1_iindif2 a_c0 a_wne i0_iindif2 f0_iindif2 f1_iindif2 f2_iindif2 f3_iindif2 a_cdif a_ciin f2_iindif2 f0_iindif2 f1_iindif2 f3_iindif2 a_ciun a_cdif p_eqrdv $.
 $}
-$( Indexed intersection of intersection.  Generalization of half of theorem
+
+$(Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	iiinin2_0 $f set y $.
-	fiinin2_0 $f set x $.
-	fiinin2_1 $f class A $.
-	fiinin2_2 $f class B $.
-	fiinin2_3 $f class C $.
-	iinin2 $p |- ( A =/= (/) -> |^|_ x e. A ( B i^i C ) = ( B i^i |^|_ x e. A C ) ) $= fiinin2_1 c0 wne iiinin2_0 fiinin2_0 fiinin2_1 fiinin2_2 fiinin2_3 cin ciin fiinin2_2 fiinin2_0 fiinin2_1 fiinin2_3 ciin cin fiinin2_1 c0 wne iiinin2_0 sup_set_class fiinin2_2 fiinin2_3 cin wcel fiinin2_0 fiinin2_1 wral iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_3 ciin wcel wa iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_2 fiinin2_3 cin ciin wcel iiinin2_0 sup_set_class fiinin2_2 fiinin2_0 fiinin2_1 fiinin2_3 ciin cin wcel fiinin2_1 c0 wne iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_3 wcel wa fiinin2_0 fiinin2_1 wral iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_3 wcel fiinin2_0 fiinin2_1 wral wa iiinin2_0 sup_set_class fiinin2_2 fiinin2_3 cin wcel fiinin2_0 fiinin2_1 wral iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_3 ciin wcel wa iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_3 wcel fiinin2_0 fiinin2_1 r19.28zv iiinin2_0 sup_set_class fiinin2_2 fiinin2_3 cin wcel iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class fiinin2_3 wcel wa fiinin2_0 fiinin2_1 iiinin2_0 sup_set_class fiinin2_2 fiinin2_3 elin ralbii iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_3 ciin wcel iiinin2_0 sup_set_class fiinin2_3 wcel fiinin2_0 fiinin2_1 wral iiinin2_0 sup_set_class fiinin2_2 wcel iiinin2_0 sup_set_class cvv wcel iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_3 ciin wcel iiinin2_0 sup_set_class fiinin2_3 wcel fiinin2_0 fiinin2_1 wral wb iiinin2_0 vex fiinin2_0 iiinin2_0 sup_set_class fiinin2_1 fiinin2_3 cvv eliin ax-mp anbi2i 3bitr4g iiinin2_0 sup_set_class cvv wcel iiinin2_0 sup_set_class fiinin2_0 fiinin2_1 fiinin2_2 fiinin2_3 cin ciin wcel iiinin2_0 sup_set_class fiinin2_2 fiinin2_3 cin wcel fiinin2_0 fiinin2_1 wral wb iiinin2_0 vex fiinin2_0 iiinin2_0 sup_set_class fiinin2_1 fiinin2_2 fiinin2_3 cin cvv eliin ax-mp iiinin2_0 sup_set_class fiinin2_2 fiinin2_0 fiinin2_1 fiinin2_3 ciin elin 3bitr4g eqrdv $.
+	$v x A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	f0_iinin2 $f set x $.
+	f1_iinin2 $f class A $.
+	f2_iinin2 $f class B $.
+	f3_iinin2 $f class C $.
+	i0_iinin2 $f set y $.
+	p_iinin2 $p |- ( A =/= (/) -> |^|_ x e. A ( B i^i C ) = ( B i^i |^|_ x e. A C ) ) $= i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel f0_iinin2 f1_iinin2 p_r19.28zv i0_iinin2 a_sup_set_class f2_iinin2 f3_iinin2 p_elin i0_iinin2 a_sup_set_class f2_iinin2 f3_iinin2 a_cin a_wcel i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel a_wa f0_iinin2 f1_iinin2 p_ralbii i0_iinin2 p_vex f0_iinin2 i0_iinin2 a_sup_set_class f1_iinin2 f3_iinin2 a_cvv p_eliin i0_iinin2 a_sup_set_class a_cvv a_wcel i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel f0_iinin2 f1_iinin2 a_wral a_wb a_ax-mp i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel f0_iinin2 f1_iinin2 a_wral i0_iinin2 a_sup_set_class f2_iinin2 a_wcel p_anbi2i f1_iinin2 a_c0 a_wne i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel a_wa f0_iinin2 f1_iinin2 a_wral i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f3_iinin2 a_wcel f0_iinin2 f1_iinin2 a_wral a_wa i0_iinin2 a_sup_set_class f2_iinin2 f3_iinin2 a_cin a_wcel f0_iinin2 f1_iinin2 a_wral i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_wcel a_wa p_3bitr4g i0_iinin2 p_vex f0_iinin2 i0_iinin2 a_sup_set_class f1_iinin2 f2_iinin2 f3_iinin2 a_cin a_cvv p_eliin i0_iinin2 a_sup_set_class a_cvv a_wcel i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f2_iinin2 f3_iinin2 a_cin a_ciin a_wcel i0_iinin2 a_sup_set_class f2_iinin2 f3_iinin2 a_cin a_wcel f0_iinin2 f1_iinin2 a_wral a_wb a_ax-mp i0_iinin2 a_sup_set_class f2_iinin2 f0_iinin2 f1_iinin2 f3_iinin2 a_ciin p_elin f1_iinin2 a_c0 a_wne i0_iinin2 a_sup_set_class f2_iinin2 f3_iinin2 a_cin a_wcel f0_iinin2 f1_iinin2 a_wral i0_iinin2 a_sup_set_class f2_iinin2 a_wcel i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_wcel a_wa i0_iinin2 a_sup_set_class f0_iinin2 f1_iinin2 f2_iinin2 f3_iinin2 a_cin a_ciin a_wcel i0_iinin2 a_sup_set_class f2_iinin2 f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_cin a_wcel p_3bitr4g f1_iinin2 a_c0 a_wne i0_iinin2 f0_iinin2 f1_iinin2 f2_iinin2 f3_iinin2 a_cin a_ciin f2_iinin2 f0_iinin2 f1_iinin2 f3_iinin2 a_ciin a_cin p_eqrdv $.
 $}
-$( Indexed intersection of intersection.  Generalization of half of theorem
+
+$(Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	fiinin1_0 $f set x $.
-	fiinin1_1 $f class A $.
-	fiinin1_2 $f class B $.
-	fiinin1_3 $f class C $.
-	iinin1 $p |- ( A =/= (/) -> |^|_ x e. A ( C i^i B ) = ( |^|_ x e. A C i^i B ) ) $= fiinin1_1 c0 wne fiinin1_0 fiinin1_1 fiinin1_2 fiinin1_3 cin ciin fiinin1_2 fiinin1_0 fiinin1_1 fiinin1_3 ciin cin fiinin1_0 fiinin1_1 fiinin1_3 fiinin1_2 cin ciin fiinin1_0 fiinin1_1 fiinin1_3 ciin fiinin1_2 cin fiinin1_0 fiinin1_1 fiinin1_2 fiinin1_3 iinin2 fiinin1_0 fiinin1_1 fiinin1_3 fiinin1_2 cin fiinin1_2 fiinin1_3 cin fiinin1_3 fiinin1_2 cin fiinin1_2 fiinin1_3 cin wceq fiinin1_0 sup_set_class fiinin1_1 wcel fiinin1_3 fiinin1_2 incom a1i iineq2i fiinin1_0 fiinin1_1 fiinin1_3 ciin fiinin1_2 incom 3eqtr4g $.
+	$v x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d C  $.
+	f0_iinin1 $f set x $.
+	f1_iinin1 $f class A $.
+	f2_iinin1 $f class B $.
+	f3_iinin1 $f class C $.
+	p_iinin1 $p |- ( A =/= (/) -> |^|_ x e. A ( C i^i B ) = ( |^|_ x e. A C i^i B ) ) $= f0_iinin1 f1_iinin1 f2_iinin1 f3_iinin1 p_iinin2 f3_iinin1 f2_iinin1 p_incom f3_iinin1 f2_iinin1 a_cin f2_iinin1 f3_iinin1 a_cin a_wceq f0_iinin1 a_sup_set_class f1_iinin1 a_wcel p_a1i f0_iinin1 f1_iinin1 f3_iinin1 f2_iinin1 a_cin f2_iinin1 f3_iinin1 a_cin p_iineq2i f0_iinin1 f1_iinin1 f3_iinin1 a_ciin f2_iinin1 p_incom f1_iinin1 a_c0 a_wne f0_iinin1 f1_iinin1 f2_iinin1 f3_iinin1 a_cin a_ciin f2_iinin1 f0_iinin1 f1_iinin1 f3_iinin1 a_ciin a_cin f0_iinin1 f1_iinin1 f3_iinin1 f2_iinin1 a_cin a_ciin f0_iinin1 f1_iinin1 f3_iinin1 a_ciin f2_iinin1 a_cin p_3eqtr4g $.
 $}
-$( Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
+
+$(Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
        30-Dec-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v S $.
-	$v X $.
-	$d A x $.
-	$d X x $.
-	$d B x $.
-	felriin_0 $f set x $.
-	felriin_1 $f class A $.
-	felriin_2 $f class B $.
-	felriin_3 $f class S $.
-	felriin_4 $f class X $.
-	elriin $p |- ( B e. ( A i^i |^|_ x e. X S ) <-> ( B e. A /\ A. x e. X B e. S ) ) $= felriin_2 felriin_1 felriin_0 felriin_4 felriin_3 ciin cin wcel felriin_2 felriin_1 wcel felriin_2 felriin_0 felriin_4 felriin_3 ciin wcel wa felriin_2 felriin_1 wcel felriin_2 felriin_3 wcel felriin_0 felriin_4 wral wa felriin_2 felriin_1 felriin_0 felriin_4 felriin_3 ciin elin felriin_2 felriin_1 wcel felriin_2 felriin_0 felriin_4 felriin_3 ciin wcel felriin_2 felriin_3 wcel felriin_0 felriin_4 wral felriin_0 felriin_2 felriin_4 felriin_3 felriin_1 eliin pm5.32i bitri $.
+	$v x A B S X  $.
+	$d A x  $.
+	$d X x  $.
+	$d B x  $.
+	f0_elriin $f set x $.
+	f1_elriin $f class A $.
+	f2_elriin $f class B $.
+	f3_elriin $f class S $.
+	f4_elriin $f class X $.
+	p_elriin $p |- ( B e. ( A i^i |^|_ x e. X S ) <-> ( B e. A /\ A. x e. X B e. S ) ) $= f2_elriin f1_elriin f0_elriin f4_elriin f3_elriin a_ciin p_elin f0_elriin f2_elriin f4_elriin f3_elriin f1_elriin p_eliin f2_elriin f1_elriin a_wcel f2_elriin f0_elriin f4_elriin f3_elriin a_ciin a_wcel f2_elriin f3_elriin a_wcel f0_elriin f4_elriin a_wral p_pm5.32i f2_elriin f1_elriin f0_elriin f4_elriin f3_elriin a_ciin a_cin a_wcel f2_elriin f1_elriin a_wcel f2_elriin f0_elriin f4_elriin f3_elriin a_ciin a_wcel a_wa f2_elriin f1_elriin a_wcel f2_elriin f3_elriin a_wcel f0_elriin f4_elriin a_wral a_wa p_bitri $.
 $}
-$( Relative intersection of an empty family.  (Contributed by Stefan
+
+$(Relative intersection of an empty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v S $.
-	$v X $.
-	$d A x $.
-	$d X x $.
-	friin0_0 $f set x $.
-	friin0_1 $f class A $.
-	friin0_2 $f class S $.
-	friin0_3 $f class X $.
-	riin0 $p |- ( X = (/) -> ( A i^i |^|_ x e. X S ) = A ) $= friin0_3 c0 wceq friin0_1 friin0_0 friin0_3 friin0_2 ciin cin friin0_1 friin0_0 c0 friin0_2 ciin cin friin0_1 friin0_3 c0 wceq friin0_0 friin0_3 friin0_2 ciin friin0_0 c0 friin0_2 ciin friin0_1 friin0_0 friin0_3 c0 friin0_2 iineq1 ineq2d friin0_1 friin0_0 c0 friin0_2 ciin cin friin0_1 cvv cin friin0_1 friin0_0 c0 friin0_2 ciin cvv friin0_1 friin0_0 friin0_2 0iin ineq2i friin0_1 inv1 eqtri syl6eq $.
+	$v x A S X  $.
+	$d A x  $.
+	$d X x  $.
+	$d x  $.
+	f0_riin0 $f set x $.
+	f1_riin0 $f class A $.
+	f2_riin0 $f class S $.
+	f3_riin0 $f class X $.
+	p_riin0 $p |- ( X = (/) -> ( A i^i |^|_ x e. X S ) = A ) $= f0_riin0 f3_riin0 a_c0 f2_riin0 p_iineq1 f3_riin0 a_c0 a_wceq f0_riin0 f3_riin0 f2_riin0 a_ciin f0_riin0 a_c0 f2_riin0 a_ciin f1_riin0 p_ineq2d f0_riin0 f2_riin0 p_0iin f0_riin0 a_c0 f2_riin0 a_ciin a_cvv f1_riin0 p_ineq2i f1_riin0 p_inv1 f1_riin0 f0_riin0 a_c0 f2_riin0 a_ciin a_cin f1_riin0 a_cvv a_cin f1_riin0 p_eqtri f3_riin0 a_c0 a_wceq f1_riin0 f0_riin0 f3_riin0 f2_riin0 a_ciin a_cin f1_riin0 f0_riin0 a_c0 f2_riin0 a_ciin a_cin f1_riin0 p_syl6eq $.
 $}
-$( Relative intersection of a nonempty family.  (Contributed by Stefan
+
+$(Relative intersection of a nonempty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v S $.
-	$v X $.
-	$d A x $.
-	$d X x $.
-	friinn0_0 $f set x $.
-	friinn0_1 $f class A $.
-	friinn0_2 $f class S $.
-	friinn0_3 $f class X $.
-	riinn0 $p |- ( ( A. x e. X S C_ A /\ X =/= (/) ) -> ( A i^i |^|_ x e. X S ) = |^|_ x e. X S ) $= friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wral friinn0_3 c0 wne wa friinn0_1 friinn0_0 friinn0_3 friinn0_2 ciin cin friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 cin friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 friinn0_0 friinn0_3 friinn0_2 ciin incom friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wral friinn0_3 c0 wne wa friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 wss friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 cin friinn0_0 friinn0_3 friinn0_2 ciin wceq friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wral friinn0_3 c0 wne wa friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wrex friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 wss friinn0_3 c0 wne friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wral friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 wrex friinn0_2 friinn0_1 wss friinn0_0 friinn0_3 r19.2z ancoms friinn0_0 friinn0_3 friinn0_2 friinn0_1 iinss syl friinn0_0 friinn0_3 friinn0_2 ciin friinn0_1 df-ss sylib syl5eq $.
+	$v x A S X  $.
+	$d A x  $.
+	$d X x  $.
+	$d x  $.
+	f0_riinn0 $f set x $.
+	f1_riinn0 $f class A $.
+	f2_riinn0 $f class S $.
+	f3_riinn0 $f class X $.
+	p_riinn0 $p |- ( ( A. x e. X S C_ A /\ X =/= (/) ) -> ( A i^i |^|_ x e. X S ) = |^|_ x e. X S ) $= f1_riinn0 f0_riinn0 f3_riinn0 f2_riinn0 a_ciin p_incom f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 p_r19.2z f3_riinn0 a_c0 a_wne f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wral f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wrex p_ancoms f0_riinn0 f3_riinn0 f2_riinn0 f1_riinn0 p_iinss f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wral f3_riinn0 a_c0 a_wne a_wa f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wrex f0_riinn0 f3_riinn0 f2_riinn0 a_ciin f1_riinn0 a_wss p_syl f0_riinn0 f3_riinn0 f2_riinn0 a_ciin f1_riinn0 a_df-ss f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wral f3_riinn0 a_c0 a_wne a_wa f0_riinn0 f3_riinn0 f2_riinn0 a_ciin f1_riinn0 a_wss f0_riinn0 f3_riinn0 f2_riinn0 a_ciin f1_riinn0 a_cin f0_riinn0 f3_riinn0 f2_riinn0 a_ciin a_wceq p_sylib f2_riinn0 f1_riinn0 a_wss f0_riinn0 f3_riinn0 a_wral f3_riinn0 a_c0 a_wne a_wa f1_riinn0 f0_riinn0 f3_riinn0 f2_riinn0 a_ciin a_cin f0_riinn0 f3_riinn0 f2_riinn0 a_ciin f1_riinn0 a_cin f0_riinn0 f3_riinn0 f2_riinn0 a_ciin p_syl5eq $.
 $}
-$( Relative intersection of a relative abstraction.  (Contributed by Stefan
+
+$(Relative intersection of a relative abstraction.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v X $.
-	$d A x y $.
-	$d X x y $.
-	friinrab_0 $f wff ph $.
-	friinrab_1 $f set x $.
-	friinrab_2 $f set y $.
-	friinrab_3 $f class A $.
-	friinrab_4 $f class X $.
-	riinrab $p |- ( A i^i |^|_ x e. X { y e. A | ph } ) = { y e. A | A. x e. X ph } $= friinrab_3 friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin cin friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 crab wceq friinrab_4 c0 friinrab_4 c0 wceq friinrab_3 friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin cin friinrab_3 friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 crab friinrab_1 friinrab_3 friinrab_0 friinrab_2 friinrab_3 crab friinrab_4 riin0 friinrab_4 c0 wceq friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 wral friinrab_3 friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 crab wceq friinrab_4 c0 wceq friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 friinrab_0 friinrab_1 friinrab_4 rzal ralrimivw friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 rabid2 sylibr eqtrd friinrab_4 c0 wne friinrab_3 friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin cin friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin friinrab_0 friinrab_1 friinrab_4 wral friinrab_2 friinrab_3 crab friinrab_0 friinrab_2 friinrab_3 crab friinrab_3 wss friinrab_1 friinrab_4 wral friinrab_4 c0 wne friinrab_3 friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin cin friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 crab ciin wceq friinrab_0 friinrab_2 friinrab_3 crab friinrab_3 wss friinrab_1 friinrab_4 friinrab_0 friinrab_2 friinrab_3 ssrab2 rgenw friinrab_1 friinrab_3 friinrab_0 friinrab_2 friinrab_3 crab friinrab_4 riinn0 mpan friinrab_0 friinrab_1 friinrab_2 friinrab_4 friinrab_3 iinrab eqtrd pm2.61ine $.
+	$v ph x y A X  $.
+	$d A x y  $.
+	$d X x y  $.
+	$d x  $.
+	f0_riinrab $f wff ph $.
+	f1_riinrab $f set x $.
+	f2_riinrab $f set y $.
+	f3_riinrab $f class A $.
+	f4_riinrab $f class X $.
+	p_riinrab $p |- ( A i^i |^|_ x e. X { y e. A | ph } ) = { y e. A | A. x e. X ph } $= f1_riinrab f3_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab f4_riinrab p_riin0 f0_riinrab f1_riinrab f4_riinrab p_rzal f4_riinrab a_c0 a_wceq f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab p_ralrimivw f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab p_rabid2 f4_riinrab a_c0 a_wceq f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab a_wral f3_riinrab f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab a_crab a_wceq p_sylibr f4_riinrab a_c0 a_wceq f3_riinrab f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin a_cin f3_riinrab f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab a_crab p_eqtrd f0_riinrab f2_riinrab f3_riinrab p_ssrab2 f0_riinrab f2_riinrab f3_riinrab a_crab f3_riinrab a_wss f1_riinrab f4_riinrab p_rgenw f1_riinrab f3_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab f4_riinrab p_riinn0 f0_riinrab f2_riinrab f3_riinrab a_crab f3_riinrab a_wss f1_riinrab f4_riinrab a_wral f4_riinrab a_c0 a_wne f3_riinrab f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin a_cin f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin a_wceq p_mpan f0_riinrab f1_riinrab f2_riinrab f4_riinrab f3_riinrab p_iinrab f4_riinrab a_c0 a_wne f3_riinrab f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin a_cin f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab a_crab p_eqtrd f3_riinrab f1_riinrab f4_riinrab f0_riinrab f2_riinrab f3_riinrab a_crab a_ciin a_cin f0_riinrab f1_riinrab f4_riinrab a_wral f2_riinrab f3_riinrab a_crab a_wceq f4_riinrab a_c0 p_pm2.61ine $.
 $}
-$( A singleton index picks out an instance of an indexed intersection's
+
+$(A singleton index picks out an instance of an indexed intersection's
        argument.  (Contributed by NM, 15-Jan-2012.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v V $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d x y C $.
-	$d y V $.
-	iiinxsng_0 $f set y $.
-	fiinxsng_0 $f set x $.
-	fiinxsng_1 $f class A $.
-	fiinxsng_2 $f class B $.
-	fiinxsng_3 $f class C $.
-	fiinxsng_4 $f class V $.
-	eiinxsng_0 $e |- ( x = A -> B = C ) $.
-	iinxsng $p |- ( A e. V -> |^|_ x e. { A } B = C ) $= fiinxsng_1 fiinxsng_4 wcel fiinxsng_0 fiinxsng_1 csn fiinxsng_2 ciin iiinxsng_0 sup_set_class fiinxsng_2 wcel fiinxsng_0 fiinxsng_1 csn wral iiinxsng_0 cab fiinxsng_3 fiinxsng_0 iiinxsng_0 fiinxsng_1 csn fiinxsng_2 df-iin fiinxsng_1 fiinxsng_4 wcel iiinxsng_0 sup_set_class fiinxsng_2 wcel fiinxsng_0 fiinxsng_1 csn wral iiinxsng_0 fiinxsng_3 iiinxsng_0 sup_set_class fiinxsng_2 wcel iiinxsng_0 sup_set_class fiinxsng_3 wcel fiinxsng_0 fiinxsng_1 fiinxsng_4 fiinxsng_0 sup_set_class fiinxsng_1 wceq fiinxsng_2 fiinxsng_3 iiinxsng_0 sup_set_class eiinxsng_0 eleq2d ralsng abbi1dv syl5eq $.
+	$v x A B C V  $.
+	$d x y A  $.
+	$d y B  $.
+	$d x y C  $.
+	$d y V  $.
+	f0_iinxsng $f set x $.
+	f1_iinxsng $f class A $.
+	f2_iinxsng $f class B $.
+	f3_iinxsng $f class C $.
+	f4_iinxsng $f class V $.
+	i0_iinxsng $f set y $.
+	e0_iinxsng $e |- ( x = A -> B = C ) $.
+	p_iinxsng $p |- ( A e. V -> |^|_ x e. { A } B = C ) $= f0_iinxsng i0_iinxsng f1_iinxsng a_csn f2_iinxsng a_df-iin e0_iinxsng f0_iinxsng a_sup_set_class f1_iinxsng a_wceq f2_iinxsng f3_iinxsng i0_iinxsng a_sup_set_class p_eleq2d i0_iinxsng a_sup_set_class f2_iinxsng a_wcel i0_iinxsng a_sup_set_class f3_iinxsng a_wcel f0_iinxsng f1_iinxsng f4_iinxsng p_ralsng f1_iinxsng f4_iinxsng a_wcel i0_iinxsng a_sup_set_class f2_iinxsng a_wcel f0_iinxsng f1_iinxsng a_csn a_wral i0_iinxsng f3_iinxsng p_abbi1dv f1_iinxsng f4_iinxsng a_wcel f0_iinxsng f1_iinxsng a_csn f2_iinxsng a_ciin i0_iinxsng a_sup_set_class f2_iinxsng a_wcel f0_iinxsng f1_iinxsng a_csn a_wral i0_iinxsng a_cab f3_iinxsng p_syl5eq $.
 $}
-$( Indexed intersection with an unordered pair index.  (Contributed by NM,
+
+$(Indexed intersection with an unordered pair index.  (Contributed by NM,
        25-Jan-2012.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v E $.
-	$v V $.
-	$v W $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d y C $.
-	$d x y D $.
-	$d x y E $.
-	$d y V $.
-	$d y W $.
-	iiinxprg_0 $f set y $.
-	fiinxprg_0 $f set x $.
-	fiinxprg_1 $f class A $.
-	fiinxprg_2 $f class B $.
-	fiinxprg_3 $f class C $.
-	fiinxprg_4 $f class D $.
-	fiinxprg_5 $f class E $.
-	fiinxprg_6 $f class V $.
-	fiinxprg_7 $f class W $.
-	eiinxprg_0 $e |- ( x = A -> C = D ) $.
-	eiinxprg_1 $e |- ( x = B -> C = E ) $.
-	iinxprg $p |- ( ( A e. V /\ B e. W ) -> |^|_ x e. { A , B } C = ( D i^i E ) ) $= fiinxprg_1 fiinxprg_6 wcel fiinxprg_2 fiinxprg_7 wcel wa iiinxprg_0 sup_set_class fiinxprg_3 wcel fiinxprg_0 fiinxprg_1 fiinxprg_2 cpr wral iiinxprg_0 cab iiinxprg_0 sup_set_class fiinxprg_4 wcel iiinxprg_0 sup_set_class fiinxprg_5 wcel wa iiinxprg_0 cab fiinxprg_0 fiinxprg_1 fiinxprg_2 cpr fiinxprg_3 ciin fiinxprg_4 fiinxprg_5 cin fiinxprg_1 fiinxprg_6 wcel fiinxprg_2 fiinxprg_7 wcel wa iiinxprg_0 sup_set_class fiinxprg_3 wcel fiinxprg_0 fiinxprg_1 fiinxprg_2 cpr wral iiinxprg_0 sup_set_class fiinxprg_4 wcel iiinxprg_0 sup_set_class fiinxprg_5 wcel wa iiinxprg_0 iiinxprg_0 sup_set_class fiinxprg_3 wcel iiinxprg_0 sup_set_class fiinxprg_4 wcel iiinxprg_0 sup_set_class fiinxprg_5 wcel fiinxprg_0 fiinxprg_1 fiinxprg_2 fiinxprg_6 fiinxprg_7 fiinxprg_0 sup_set_class fiinxprg_1 wceq fiinxprg_3 fiinxprg_4 iiinxprg_0 sup_set_class eiinxprg_0 eleq2d fiinxprg_0 sup_set_class fiinxprg_2 wceq fiinxprg_3 fiinxprg_5 iiinxprg_0 sup_set_class eiinxprg_1 eleq2d ralprg abbidv fiinxprg_0 iiinxprg_0 fiinxprg_1 fiinxprg_2 cpr fiinxprg_3 df-iin iiinxprg_0 fiinxprg_4 fiinxprg_5 df-in 3eqtr4g $.
+	$v x A B C D E V W  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y C  $.
+	$d x y D  $.
+	$d x y E  $.
+	$d y V  $.
+	$d y W  $.
+	f0_iinxprg $f set x $.
+	f1_iinxprg $f class A $.
+	f2_iinxprg $f class B $.
+	f3_iinxprg $f class C $.
+	f4_iinxprg $f class D $.
+	f5_iinxprg $f class E $.
+	f6_iinxprg $f class V $.
+	f7_iinxprg $f class W $.
+	i0_iinxprg $f set y $.
+	e0_iinxprg $e |- ( x = A -> C = D ) $.
+	e1_iinxprg $e |- ( x = B -> C = E ) $.
+	p_iinxprg $p |- ( ( A e. V /\ B e. W ) -> |^|_ x e. { A , B } C = ( D i^i E ) ) $= e0_iinxprg f0_iinxprg a_sup_set_class f1_iinxprg a_wceq f3_iinxprg f4_iinxprg i0_iinxprg a_sup_set_class p_eleq2d e1_iinxprg f0_iinxprg a_sup_set_class f2_iinxprg a_wceq f3_iinxprg f5_iinxprg i0_iinxprg a_sup_set_class p_eleq2d i0_iinxprg a_sup_set_class f3_iinxprg a_wcel i0_iinxprg a_sup_set_class f4_iinxprg a_wcel i0_iinxprg a_sup_set_class f5_iinxprg a_wcel f0_iinxprg f1_iinxprg f2_iinxprg f6_iinxprg f7_iinxprg p_ralprg f1_iinxprg f6_iinxprg a_wcel f2_iinxprg f7_iinxprg a_wcel a_wa i0_iinxprg a_sup_set_class f3_iinxprg a_wcel f0_iinxprg f1_iinxprg f2_iinxprg a_cpr a_wral i0_iinxprg a_sup_set_class f4_iinxprg a_wcel i0_iinxprg a_sup_set_class f5_iinxprg a_wcel a_wa i0_iinxprg p_abbidv f0_iinxprg i0_iinxprg f1_iinxprg f2_iinxprg a_cpr f3_iinxprg a_df-iin i0_iinxprg f4_iinxprg f5_iinxprg a_df-in f1_iinxprg f6_iinxprg a_wcel f2_iinxprg f7_iinxprg a_wcel a_wa i0_iinxprg a_sup_set_class f3_iinxprg a_wcel f0_iinxprg f1_iinxprg f2_iinxprg a_cpr a_wral i0_iinxprg a_cab i0_iinxprg a_sup_set_class f4_iinxprg a_wcel i0_iinxprg a_sup_set_class f5_iinxprg a_wcel a_wa i0_iinxprg a_cab f0_iinxprg f1_iinxprg f2_iinxprg a_cpr f3_iinxprg a_ciin f4_iinxprg f5_iinxprg a_cin p_3eqtr4g $.
 $}
-$( A singleton index picks out an instance of an indexed union's argument.
+
+$(A singleton index picks out an instance of an indexed union's argument.
        (Contributed by Mario Carneiro, 25-Jun-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v V $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d x y C $.
-	$d y V $.
-	iiunxsng_0 $f set y $.
-	fiunxsng_0 $f set x $.
-	fiunxsng_1 $f class A $.
-	fiunxsng_2 $f class B $.
-	fiunxsng_3 $f class C $.
-	fiunxsng_4 $f class V $.
-	eiunxsng_0 $e |- ( x = A -> B = C ) $.
-	iunxsng $p |- ( A e. V -> U_ x e. { A } B = C ) $= fiunxsng_1 fiunxsng_4 wcel iiunxsng_0 fiunxsng_0 fiunxsng_1 csn fiunxsng_2 ciun fiunxsng_3 iiunxsng_0 sup_set_class fiunxsng_0 fiunxsng_1 csn fiunxsng_2 ciun wcel iiunxsng_0 sup_set_class fiunxsng_2 wcel fiunxsng_0 fiunxsng_1 csn wrex fiunxsng_1 fiunxsng_4 wcel iiunxsng_0 sup_set_class fiunxsng_3 wcel fiunxsng_0 iiunxsng_0 sup_set_class fiunxsng_1 csn fiunxsng_2 eliun iiunxsng_0 sup_set_class fiunxsng_2 wcel iiunxsng_0 sup_set_class fiunxsng_3 wcel fiunxsng_0 fiunxsng_1 fiunxsng_4 fiunxsng_0 sup_set_class fiunxsng_1 wceq fiunxsng_2 fiunxsng_3 iiunxsng_0 sup_set_class eiunxsng_0 eleq2d rexsng syl5bb eqrdv $.
+	$v x A B C V  $.
+	$d x y A  $.
+	$d y B  $.
+	$d x y C  $.
+	$d y V  $.
+	f0_iunxsng $f set x $.
+	f1_iunxsng $f class A $.
+	f2_iunxsng $f class B $.
+	f3_iunxsng $f class C $.
+	f4_iunxsng $f class V $.
+	i0_iunxsng $f set y $.
+	e0_iunxsng $e |- ( x = A -> B = C ) $.
+	p_iunxsng $p |- ( A e. V -> U_ x e. { A } B = C ) $= f0_iunxsng i0_iunxsng a_sup_set_class f1_iunxsng a_csn f2_iunxsng p_eliun e0_iunxsng f0_iunxsng a_sup_set_class f1_iunxsng a_wceq f2_iunxsng f3_iunxsng i0_iunxsng a_sup_set_class p_eleq2d i0_iunxsng a_sup_set_class f2_iunxsng a_wcel i0_iunxsng a_sup_set_class f3_iunxsng a_wcel f0_iunxsng f1_iunxsng f4_iunxsng p_rexsng i0_iunxsng a_sup_set_class f0_iunxsng f1_iunxsng a_csn f2_iunxsng a_ciun a_wcel i0_iunxsng a_sup_set_class f2_iunxsng a_wcel f0_iunxsng f1_iunxsng a_csn a_wrex f1_iunxsng f4_iunxsng a_wcel i0_iunxsng a_sup_set_class f3_iunxsng a_wcel p_syl5bb f1_iunxsng f4_iunxsng a_wcel i0_iunxsng f0_iunxsng f1_iunxsng a_csn f2_iunxsng a_ciun f3_iunxsng p_eqrdv $.
 $}
-$( A singleton index picks out an instance of an indexed union's argument.
+
+$(A singleton index picks out an instance of an indexed union's argument.
        (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Mario Carneiro,
        25-Jun-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x C $.
-	fiunxsn_0 $f set x $.
-	fiunxsn_1 $f class A $.
-	fiunxsn_2 $f class B $.
-	fiunxsn_3 $f class C $.
-	eiunxsn_0 $e |- A e. _V $.
-	eiunxsn_1 $e |- ( x = A -> B = C ) $.
-	iunxsn $p |- U_ x e. { A } B = C $= fiunxsn_1 cvv wcel fiunxsn_0 fiunxsn_1 csn fiunxsn_2 ciun fiunxsn_3 wceq eiunxsn_0 fiunxsn_0 fiunxsn_1 fiunxsn_2 fiunxsn_3 cvv eiunxsn_1 iunxsng ax-mp $.
+	$v x A B C  $.
+	$d x A  $.
+	$d B  $.
+	$d x C  $.
+	f0_iunxsn $f set x $.
+	f1_iunxsn $f class A $.
+	f2_iunxsn $f class B $.
+	f3_iunxsn $f class C $.
+	e0_iunxsn $e |- A e. _V $.
+	e1_iunxsn $e |- ( x = A -> B = C ) $.
+	p_iunxsn $p |- U_ x e. { A } B = C $= e0_iunxsn e1_iunxsn f0_iunxsn f1_iunxsn f2_iunxsn f3_iunxsn a_cvv p_iunxsng f1_iunxsn a_cvv a_wcel f0_iunxsn f1_iunxsn a_csn f2_iunxsn a_ciun f3_iunxsn a_wceq a_ax-mp $.
 $}
-$( Separate a union in an indexed union.  (Contributed by NM,
+
+$(Separate a union in an indexed union.  (Contributed by NM,
        27-Dec-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	iiunun_0 $f set y $.
-	fiunun_0 $f set x $.
-	fiunun_1 $f class A $.
-	fiunun_2 $f class B $.
-	fiunun_3 $f class C $.
-	iunun $p |- U_ x e. A ( B u. C ) = ( U_ x e. A B u. U_ x e. A C ) $= iiunun_0 fiunun_0 fiunun_1 fiunun_2 fiunun_3 cun ciun fiunun_0 fiunun_1 fiunun_2 ciun fiunun_0 fiunun_1 fiunun_3 ciun cun iiunun_0 sup_set_class fiunun_2 fiunun_3 cun wcel fiunun_0 fiunun_1 wrex iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 ciun wcel iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_3 ciun wcel wo iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 fiunun_3 cun ciun wcel iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 ciun fiunun_0 fiunun_1 fiunun_3 ciun cun wcel iiunun_0 sup_set_class fiunun_2 wcel iiunun_0 sup_set_class fiunun_3 wcel wo fiunun_0 fiunun_1 wrex iiunun_0 sup_set_class fiunun_2 wcel fiunun_0 fiunun_1 wrex iiunun_0 sup_set_class fiunun_3 wcel fiunun_0 fiunun_1 wrex wo iiunun_0 sup_set_class fiunun_2 fiunun_3 cun wcel fiunun_0 fiunun_1 wrex iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 ciun wcel iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_3 ciun wcel wo iiunun_0 sup_set_class fiunun_2 wcel iiunun_0 sup_set_class fiunun_3 wcel fiunun_0 fiunun_1 r19.43 iiunun_0 sup_set_class fiunun_2 fiunun_3 cun wcel iiunun_0 sup_set_class fiunun_2 wcel iiunun_0 sup_set_class fiunun_3 wcel wo fiunun_0 fiunun_1 iiunun_0 sup_set_class fiunun_2 fiunun_3 elun rexbii iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 ciun wcel iiunun_0 sup_set_class fiunun_2 wcel fiunun_0 fiunun_1 wrex iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_3 ciun wcel iiunun_0 sup_set_class fiunun_3 wcel fiunun_0 fiunun_1 wrex fiunun_0 iiunun_0 sup_set_class fiunun_1 fiunun_2 eliun fiunun_0 iiunun_0 sup_set_class fiunun_1 fiunun_3 eliun orbi12i 3bitr4i fiunun_0 iiunun_0 sup_set_class fiunun_1 fiunun_2 fiunun_3 cun eliun iiunun_0 sup_set_class fiunun_0 fiunun_1 fiunun_2 ciun fiunun_0 fiunun_1 fiunun_3 ciun elun 3bitr4i eqriv $.
+	$v x A B C  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_iunun $f set x $.
+	f1_iunun $f class A $.
+	f2_iunun $f class B $.
+	f3_iunun $f class C $.
+	i0_iunun $f set y $.
+	p_iunun $p |- U_ x e. A ( B u. C ) = ( U_ x e. A B u. U_ x e. A C ) $= i0_iunun a_sup_set_class f2_iunun a_wcel i0_iunun a_sup_set_class f3_iunun a_wcel f0_iunun f1_iunun p_r19.43 i0_iunun a_sup_set_class f2_iunun f3_iunun p_elun i0_iunun a_sup_set_class f2_iunun f3_iunun a_cun a_wcel i0_iunun a_sup_set_class f2_iunun a_wcel i0_iunun a_sup_set_class f3_iunun a_wcel a_wo f0_iunun f1_iunun p_rexbii f0_iunun i0_iunun a_sup_set_class f1_iunun f2_iunun p_eliun f0_iunun i0_iunun a_sup_set_class f1_iunun f3_iunun p_eliun i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun a_ciun a_wcel i0_iunun a_sup_set_class f2_iunun a_wcel f0_iunun f1_iunun a_wrex i0_iunun a_sup_set_class f0_iunun f1_iunun f3_iunun a_ciun a_wcel i0_iunun a_sup_set_class f3_iunun a_wcel f0_iunun f1_iunun a_wrex p_orbi12i i0_iunun a_sup_set_class f2_iunun a_wcel i0_iunun a_sup_set_class f3_iunun a_wcel a_wo f0_iunun f1_iunun a_wrex i0_iunun a_sup_set_class f2_iunun a_wcel f0_iunun f1_iunun a_wrex i0_iunun a_sup_set_class f3_iunun a_wcel f0_iunun f1_iunun a_wrex a_wo i0_iunun a_sup_set_class f2_iunun f3_iunun a_cun a_wcel f0_iunun f1_iunun a_wrex i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun a_ciun a_wcel i0_iunun a_sup_set_class f0_iunun f1_iunun f3_iunun a_ciun a_wcel a_wo p_3bitr4i f0_iunun i0_iunun a_sup_set_class f1_iunun f2_iunun f3_iunun a_cun p_eliun i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun a_ciun f0_iunun f1_iunun f3_iunun a_ciun p_elun i0_iunun a_sup_set_class f2_iunun f3_iunun a_cun a_wcel f0_iunun f1_iunun a_wrex i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun a_ciun a_wcel i0_iunun a_sup_set_class f0_iunun f1_iunun f3_iunun a_ciun a_wcel a_wo i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun f3_iunun a_cun a_ciun a_wcel i0_iunun a_sup_set_class f0_iunun f1_iunun f2_iunun a_ciun f0_iunun f1_iunun f3_iunun a_ciun a_cun a_wcel p_3bitr4i i0_iunun f0_iunun f1_iunun f2_iunun f3_iunun a_cun a_ciun f0_iunun f1_iunun f2_iunun a_ciun f0_iunun f1_iunun f3_iunun a_ciun a_cun p_eqriv $.
 $}
-$( Separate a union in the index of an indexed union.  (Contributed by NM,
+
+$(Separate a union in the index of an indexed union.  (Contributed by NM,
        26-Mar-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y B $.
-	$d y C $.
-	iiunxun_0 $f set y $.
-	fiunxun_0 $f set x $.
-	fiunxun_1 $f class A $.
-	fiunxun_2 $f class B $.
-	fiunxun_3 $f class C $.
-	iunxun $p |- U_ x e. ( A u. B ) C = ( U_ x e. A C u. U_ x e. B C ) $= iiunxun_0 fiunxun_0 fiunxun_1 fiunxun_2 cun fiunxun_3 ciun fiunxun_0 fiunxun_1 fiunxun_3 ciun fiunxun_0 fiunxun_2 fiunxun_3 ciun cun iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_1 fiunxun_2 cun wrex iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_3 ciun wcel iiunxun_0 sup_set_class fiunxun_0 fiunxun_2 fiunxun_3 ciun wcel wo iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_2 cun fiunxun_3 ciun wcel iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_3 ciun fiunxun_0 fiunxun_2 fiunxun_3 ciun cun wcel iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_1 fiunxun_2 cun wrex iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_1 wrex iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_2 wrex wo iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_3 ciun wcel iiunxun_0 sup_set_class fiunxun_0 fiunxun_2 fiunxun_3 ciun wcel wo iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_1 fiunxun_2 rexun iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_3 ciun wcel iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_1 wrex iiunxun_0 sup_set_class fiunxun_0 fiunxun_2 fiunxun_3 ciun wcel iiunxun_0 sup_set_class fiunxun_3 wcel fiunxun_0 fiunxun_2 wrex fiunxun_0 iiunxun_0 sup_set_class fiunxun_1 fiunxun_3 eliun fiunxun_0 iiunxun_0 sup_set_class fiunxun_2 fiunxun_3 eliun orbi12i bitr4i fiunxun_0 iiunxun_0 sup_set_class fiunxun_1 fiunxun_2 cun fiunxun_3 eliun iiunxun_0 sup_set_class fiunxun_0 fiunxun_1 fiunxun_3 ciun fiunxun_0 fiunxun_2 fiunxun_3 ciun elun 3bitr4i eqriv $.
+	$v x A B C  $.
+	$d x y  $.
+	$d y A  $.
+	$d y B  $.
+	$d y C  $.
+	f0_iunxun $f set x $.
+	f1_iunxun $f class A $.
+	f2_iunxun $f class B $.
+	f3_iunxun $f class C $.
+	i0_iunxun $f set y $.
+	p_iunxun $p |- U_ x e. ( A u. B ) C = ( U_ x e. A C u. U_ x e. B C ) $= i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f1_iunxun f2_iunxun p_rexun f0_iunxun i0_iunxun a_sup_set_class f1_iunxun f3_iunxun p_eliun f0_iunxun i0_iunxun a_sup_set_class f2_iunxun f3_iunxun p_eliun i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f3_iunxun a_ciun a_wcel i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f1_iunxun a_wrex i0_iunxun a_sup_set_class f0_iunxun f2_iunxun f3_iunxun a_ciun a_wcel i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f2_iunxun a_wrex p_orbi12i i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f1_iunxun f2_iunxun a_cun a_wrex i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f1_iunxun a_wrex i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f2_iunxun a_wrex a_wo i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f3_iunxun a_ciun a_wcel i0_iunxun a_sup_set_class f0_iunxun f2_iunxun f3_iunxun a_ciun a_wcel a_wo p_bitr4i f0_iunxun i0_iunxun a_sup_set_class f1_iunxun f2_iunxun a_cun f3_iunxun p_eliun i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f3_iunxun a_ciun f0_iunxun f2_iunxun f3_iunxun a_ciun p_elun i0_iunxun a_sup_set_class f3_iunxun a_wcel f0_iunxun f1_iunxun f2_iunxun a_cun a_wrex i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f3_iunxun a_ciun a_wcel i0_iunxun a_sup_set_class f0_iunxun f2_iunxun f3_iunxun a_ciun a_wcel a_wo i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f2_iunxun a_cun f3_iunxun a_ciun a_wcel i0_iunxun a_sup_set_class f0_iunxun f1_iunxun f3_iunxun a_ciun f0_iunxun f2_iunxun f3_iunxun a_ciun a_cun a_wcel p_3bitr4i i0_iunxun f0_iunxun f1_iunxun f2_iunxun a_cun f3_iunxun a_ciun f0_iunxun f1_iunxun f3_iunxun a_ciun f0_iunxun f2_iunxun f3_iunxun a_ciun a_cun p_eqriv $.
 $}
-$( Separate an indexed union in the index of an indexed union.
+
+$(Separate an indexed union in the index of an indexed union.
        (Contributed by Mario Carneiro, 5-Dec-2016.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v z $.
-	$d x y z $.
-	$d x z A $.
-	$d z B $.
-	$d y z C $.
-	iiunxiun_0 $f set z $.
-	fiunxiun_0 $f set x $.
-	fiunxiun_1 $f set y $.
-	fiunxiun_2 $f class A $.
-	fiunxiun_3 $f class B $.
-	fiunxiun_4 $f class C $.
-	iunxiun $p |- U_ x e. U_ y e. A B C = U_ y e. A U_ x e. B C $= iiunxiun_0 fiunxiun_0 fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun fiunxiun_4 ciun fiunxiun_1 fiunxiun_2 fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun ciun iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_0 fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wrex iiunxiun_0 sup_set_class fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun wcel fiunxiun_1 fiunxiun_2 wrex iiunxiun_0 sup_set_class fiunxiun_0 fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun fiunxiun_4 ciun wcel iiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun ciun wcel fiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_1 fiunxiun_2 wrex iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_0 fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wrex iiunxiun_0 sup_set_class fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun wcel fiunxiun_1 fiunxiun_2 wrex fiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_1 fiunxiun_2 wrex fiunxiun_0 wex fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_1 fiunxiun_2 wrex fiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_1 fiunxiun_2 wrex fiunxiun_0 fiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 sup_set_class fiunxiun_3 wcel fiunxiun_1 fiunxiun_2 wrex iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_1 fiunxiun_2 wrex fiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun wcel fiunxiun_0 sup_set_class fiunxiun_3 wcel fiunxiun_1 fiunxiun_2 wrex iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_1 fiunxiun_0 sup_set_class fiunxiun_2 fiunxiun_3 eliun anbi1i fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_1 fiunxiun_2 r19.41v bitr4i exbii fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_1 fiunxiun_0 fiunxiun_2 rexcom4 bitr4i iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_0 fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun df-rex iiunxiun_0 sup_set_class fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun wcel fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_1 fiunxiun_2 iiunxiun_0 sup_set_class fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_0 fiunxiun_3 wrex fiunxiun_0 sup_set_class fiunxiun_3 wcel iiunxiun_0 sup_set_class fiunxiun_4 wcel wa fiunxiun_0 wex fiunxiun_0 iiunxiun_0 sup_set_class fiunxiun_3 fiunxiun_4 eliun iiunxiun_0 sup_set_class fiunxiun_4 wcel fiunxiun_0 fiunxiun_3 df-rex bitri rexbii 3bitr4i fiunxiun_0 iiunxiun_0 sup_set_class fiunxiun_1 fiunxiun_2 fiunxiun_3 ciun fiunxiun_4 eliun fiunxiun_1 iiunxiun_0 sup_set_class fiunxiun_2 fiunxiun_0 fiunxiun_3 fiunxiun_4 ciun eliun 3bitr4i eqriv $.
+	$v x y A B C  $.
+	$d x y z  $.
+	$d x z A  $.
+	$d z B  $.
+	$d y z C  $.
+	f0_iunxiun $f set x $.
+	f1_iunxiun $f set y $.
+	f2_iunxiun $f class A $.
+	f3_iunxiun $f class B $.
+	f4_iunxiun $f class C $.
+	i0_iunxiun $f set z $.
+	p_iunxiun $p |- U_ x e. U_ y e. A B C = U_ y e. A U_ x e. B C $= f1_iunxiun f0_iunxiun a_sup_set_class f2_iunxiun f3_iunxiun p_eliun f0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wcel f0_iunxiun a_sup_set_class f3_iunxiun a_wcel f1_iunxiun f2_iunxiun a_wrex i0_iunxiun a_sup_set_class f4_iunxiun a_wcel p_anbi1i f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f1_iunxiun f2_iunxiun p_r19.41v f0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_sup_set_class f3_iunxiun a_wcel f1_iunxiun f2_iunxiun a_wrex i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f1_iunxiun f2_iunxiun a_wrex p_bitr4i f0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f1_iunxiun f2_iunxiun a_wrex f0_iunxiun p_exbii f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f1_iunxiun f0_iunxiun f2_iunxiun p_rexcom4 f0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f1_iunxiun f2_iunxiun a_wrex f0_iunxiun a_wex f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex f1_iunxiun f2_iunxiun a_wrex p_bitr4i i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f0_iunxiun f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_df-rex f0_iunxiun i0_iunxiun a_sup_set_class f3_iunxiun f4_iunxiun p_eliun i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f0_iunxiun f3_iunxiun a_df-rex i0_iunxiun a_sup_set_class f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f0_iunxiun f3_iunxiun a_wrex f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex p_bitri i0_iunxiun a_sup_set_class f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_wcel f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex f1_iunxiun f2_iunxiun p_rexbii f0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex f0_iunxiun a_sup_set_class f3_iunxiun a_wcel i0_iunxiun a_sup_set_class f4_iunxiun a_wcel a_wa f0_iunxiun a_wex f1_iunxiun f2_iunxiun a_wrex i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f0_iunxiun f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wrex i0_iunxiun a_sup_set_class f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_wcel f1_iunxiun f2_iunxiun a_wrex p_3bitr4i f0_iunxiun i0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f3_iunxiun a_ciun f4_iunxiun p_eliun f1_iunxiun i0_iunxiun a_sup_set_class f2_iunxiun f0_iunxiun f3_iunxiun f4_iunxiun a_ciun p_eliun i0_iunxiun a_sup_set_class f4_iunxiun a_wcel f0_iunxiun f1_iunxiun f2_iunxiun f3_iunxiun a_ciun a_wrex i0_iunxiun a_sup_set_class f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_wcel f1_iunxiun f2_iunxiun a_wrex i0_iunxiun a_sup_set_class f0_iunxiun f1_iunxiun f2_iunxiun f3_iunxiun a_ciun f4_iunxiun a_ciun a_wcel i0_iunxiun a_sup_set_class f1_iunxiun f2_iunxiun f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_ciun a_wcel p_3bitr4i i0_iunxiun f0_iunxiun f1_iunxiun f2_iunxiun f3_iunxiun a_ciun f4_iunxiun a_ciun f1_iunxiun f2_iunxiun f0_iunxiun f3_iunxiun f4_iunxiun a_ciun a_ciun p_eqriv $.
 $}
-$( A relationship involving union and indexed intersection.  Exercise 23 of
+
+$(A relationship involving union and indexed intersection.  Exercise 23 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	iiinuni_0 $f set y $.
-	fiinuni_0 $f set x $.
-	fiinuni_1 $f class A $.
-	fiinuni_2 $f class B $.
-	iinuni $p |- ( A u. |^| B ) = |^|_ x e. B ( A u. x ) $= iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_2 cint wcel wo iiinuni_0 cab iiinuni_0 sup_set_class fiinuni_1 fiinuni_0 sup_set_class cun wcel fiinuni_0 fiinuni_2 wral iiinuni_0 cab fiinuni_1 fiinuni_2 cint cun fiinuni_0 fiinuni_2 fiinuni_1 fiinuni_0 sup_set_class cun ciin iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_2 cint wcel wo iiinuni_0 sup_set_class fiinuni_1 fiinuni_0 sup_set_class cun wcel fiinuni_0 fiinuni_2 wral iiinuni_0 iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_0 sup_set_class wcel wo fiinuni_0 fiinuni_2 wral iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_0 sup_set_class wcel fiinuni_0 fiinuni_2 wral wo iiinuni_0 sup_set_class fiinuni_1 fiinuni_0 sup_set_class cun wcel fiinuni_0 fiinuni_2 wral iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_2 cint wcel wo iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_0 sup_set_class wcel fiinuni_0 fiinuni_2 r19.32v iiinuni_0 sup_set_class fiinuni_1 fiinuni_0 sup_set_class cun wcel iiinuni_0 sup_set_class fiinuni_1 wcel iiinuni_0 sup_set_class fiinuni_0 sup_set_class wcel wo fiinuni_0 fiinuni_2 iiinuni_0 sup_set_class fiinuni_1 fiinuni_0 sup_set_class elun ralbii iiinuni_0 sup_set_class fiinuni_2 cint wcel iiinuni_0 sup_set_class fiinuni_0 sup_set_class wcel fiinuni_0 fiinuni_2 wral iiinuni_0 sup_set_class fiinuni_1 wcel fiinuni_0 iiinuni_0 sup_set_class fiinuni_2 iiinuni_0 vex elint2 orbi2i 3bitr4ri abbii iiinuni_0 fiinuni_1 fiinuni_2 cint df-un fiinuni_0 iiinuni_0 fiinuni_2 fiinuni_1 fiinuni_0 sup_set_class cun df-iin 3eqtr4i $.
+	$v x A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	f0_iinuni $f set x $.
+	f1_iinuni $f class A $.
+	f2_iinuni $f class B $.
+	i0_iinuni $f set y $.
+	p_iinuni $p |- ( A u. |^| B ) = |^|_ x e. B ( A u. x ) $= i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f0_iinuni a_sup_set_class a_wcel f0_iinuni f2_iinuni p_r19.32v i0_iinuni a_sup_set_class f1_iinuni f0_iinuni a_sup_set_class p_elun i0_iinuni a_sup_set_class f1_iinuni f0_iinuni a_sup_set_class a_cun a_wcel i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f0_iinuni a_sup_set_class a_wcel a_wo f0_iinuni f2_iinuni p_ralbii i0_iinuni p_vex f0_iinuni i0_iinuni a_sup_set_class f2_iinuni p_elint2 i0_iinuni a_sup_set_class f2_iinuni a_cint a_wcel i0_iinuni a_sup_set_class f0_iinuni a_sup_set_class a_wcel f0_iinuni f2_iinuni a_wral i0_iinuni a_sup_set_class f1_iinuni a_wcel p_orbi2i i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f0_iinuni a_sup_set_class a_wcel a_wo f0_iinuni f2_iinuni a_wral i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f0_iinuni a_sup_set_class a_wcel f0_iinuni f2_iinuni a_wral a_wo i0_iinuni a_sup_set_class f1_iinuni f0_iinuni a_sup_set_class a_cun a_wcel f0_iinuni f2_iinuni a_wral i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f2_iinuni a_cint a_wcel a_wo p_3bitr4ri i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f2_iinuni a_cint a_wcel a_wo i0_iinuni a_sup_set_class f1_iinuni f0_iinuni a_sup_set_class a_cun a_wcel f0_iinuni f2_iinuni a_wral i0_iinuni p_abbii i0_iinuni f1_iinuni f2_iinuni a_cint a_df-un f0_iinuni i0_iinuni f2_iinuni f1_iinuni f0_iinuni a_sup_set_class a_cun a_df-iin i0_iinuni a_sup_set_class f1_iinuni a_wcel i0_iinuni a_sup_set_class f2_iinuni a_cint a_wcel a_wo i0_iinuni a_cab i0_iinuni a_sup_set_class f1_iinuni f0_iinuni a_sup_set_class a_cun a_wcel f0_iinuni f2_iinuni a_wral i0_iinuni a_cab f1_iinuni f2_iinuni a_cint a_cun f0_iinuni f2_iinuni f1_iinuni f0_iinuni a_sup_set_class a_cun a_ciin p_3eqtr4i $.
 $}
-$( A relationship involving union and indexed union.  Exercise 25 of
+
+$(A relationship involving union and indexed union.  Exercise 25 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fiununi_0 $f set x $.
-	fiununi_1 $f class A $.
-	fiununi_2 $f class B $.
-	iununi $p |- ( ( B = (/) -> A = (/) ) <-> ( A u. U. B ) = U_ x e. B ( A u. x ) ) $= fiununi_2 c0 wceq fiununi_1 c0 wceq wi fiununi_1 fiununi_2 cuni cun fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class cun ciun wceq fiununi_2 c0 wceq fiununi_1 c0 wceq wi fiununi_1 fiununi_0 fiununi_2 fiununi_0 sup_set_class ciun cun fiununi_0 fiununi_2 fiununi_1 ciun fiununi_0 fiununi_2 fiununi_0 sup_set_class ciun cun fiununi_1 fiununi_2 cuni cun fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class cun ciun fiununi_2 c0 wceq fiununi_1 c0 wceq wi fiununi_1 fiununi_0 fiununi_2 fiununi_1 ciun fiununi_0 fiununi_2 fiununi_0 sup_set_class ciun fiununi_2 c0 wceq fiununi_1 c0 wceq wi fiununi_0 fiununi_2 fiununi_1 ciun fiununi_1 fiununi_2 c0 wceq fiununi_1 c0 wceq fiununi_0 fiununi_2 fiununi_1 ciun fiununi_1 wceq fiununi_2 c0 wceq wn fiununi_2 c0 wne fiununi_0 fiununi_2 fiununi_1 ciun fiununi_1 wceq fiununi_2 c0 df-ne fiununi_0 fiununi_2 fiununi_1 iunconst sylbir fiununi_1 c0 wceq fiununi_0 fiununi_2 c0 ciun c0 fiununi_0 fiununi_2 fiununi_1 ciun fiununi_1 fiununi_0 fiununi_2 iun0 fiununi_1 c0 wceq fiununi_0 fiununi_2 fiununi_1 c0 fiununi_1 c0 wceq id iuneq2d fiununi_1 c0 wceq id 3eqtr4a ja eqcomd uneq1d fiununi_2 cuni fiununi_0 fiununi_2 fiununi_0 sup_set_class ciun fiununi_1 fiununi_0 fiununi_2 uniiun uneq2i fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class iunun 3eqtr4g fiununi_2 c0 wceq fiununi_1 fiununi_2 cuni cun fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class cun ciun wceq fiununi_1 c0 wceq fiununi_2 c0 wceq fiununi_1 fiununi_2 cuni cun fiununi_1 fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class cun ciun c0 fiununi_2 c0 wceq fiununi_1 fiununi_2 cuni cun fiununi_1 c0 cun fiununi_1 fiununi_2 c0 wceq fiununi_2 cuni c0 fiununi_1 fiununi_2 c0 wceq fiununi_2 cuni c0 cuni c0 fiununi_2 c0 unieq uni0 syl6eq uneq2d fiununi_1 un0 syl6eq fiununi_2 c0 wceq fiununi_0 fiununi_2 fiununi_1 fiununi_0 sup_set_class cun ciun fiununi_0 c0 fiununi_1 fiununi_0 sup_set_class cun ciun c0 fiununi_0 fiununi_2 c0 fiununi_1 fiununi_0 sup_set_class cun iuneq1 fiununi_0 fiununi_1 fiununi_0 sup_set_class cun 0iun syl6eq eqeq12d biimpcd impbii $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_iununi $f set x $.
+	f1_iununi $f class A $.
+	f2_iununi $f class B $.
+	p_iununi $p |- ( ( B = (/) -> A = (/) ) <-> ( A u. U. B ) = U_ x e. B ( A u. x ) ) $= f2_iununi a_c0 a_df-ne f0_iununi f2_iununi f1_iununi p_iunconst f2_iununi a_c0 a_wceq a_wn f2_iununi a_c0 a_wne f0_iununi f2_iununi f1_iununi a_ciun f1_iununi a_wceq p_sylbir f0_iununi f2_iununi p_iun0 f1_iununi a_c0 a_wceq p_id f1_iununi a_c0 a_wceq f0_iununi f2_iununi f1_iununi a_c0 p_iuneq2d f1_iununi a_c0 a_wceq p_id f1_iununi a_c0 a_wceq f0_iununi f2_iununi a_c0 a_ciun a_c0 f0_iununi f2_iununi f1_iununi a_ciun f1_iununi p_3eqtr4a f2_iununi a_c0 a_wceq f1_iununi a_c0 a_wceq f0_iununi f2_iununi f1_iununi a_ciun f1_iununi a_wceq p_ja f2_iununi a_c0 a_wceq f1_iununi a_c0 a_wceq a_wi f0_iununi f2_iununi f1_iununi a_ciun f1_iununi p_eqcomd f2_iununi a_c0 a_wceq f1_iununi a_c0 a_wceq a_wi f1_iununi f0_iununi f2_iununi f1_iununi a_ciun f0_iununi f2_iununi f0_iununi a_sup_set_class a_ciun p_uneq1d f0_iununi f2_iununi p_uniiun f2_iununi a_cuni f0_iununi f2_iununi f0_iununi a_sup_set_class a_ciun f1_iununi p_uneq2i f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class p_iunun f2_iununi a_c0 a_wceq f1_iununi a_c0 a_wceq a_wi f1_iununi f0_iununi f2_iununi f0_iununi a_sup_set_class a_ciun a_cun f0_iununi f2_iununi f1_iununi a_ciun f0_iununi f2_iununi f0_iununi a_sup_set_class a_ciun a_cun f1_iununi f2_iununi a_cuni a_cun f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class a_cun a_ciun p_3eqtr4g f2_iununi a_c0 p_unieq p_uni0 f2_iununi a_c0 a_wceq f2_iununi a_cuni a_c0 a_cuni a_c0 p_syl6eq f2_iununi a_c0 a_wceq f2_iununi a_cuni a_c0 f1_iununi p_uneq2d f1_iununi p_un0 f2_iununi a_c0 a_wceq f1_iununi f2_iununi a_cuni a_cun f1_iununi a_c0 a_cun f1_iununi p_syl6eq f0_iununi f2_iununi a_c0 f1_iununi f0_iununi a_sup_set_class a_cun p_iuneq1 f0_iununi f1_iununi f0_iununi a_sup_set_class a_cun p_0iun f2_iununi a_c0 a_wceq f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class a_cun a_ciun f0_iununi a_c0 f1_iununi f0_iununi a_sup_set_class a_cun a_ciun a_c0 p_syl6eq f2_iununi a_c0 a_wceq f1_iununi f2_iununi a_cuni a_cun f1_iununi f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class a_cun a_ciun a_c0 p_eqeq12d f2_iununi a_c0 a_wceq f1_iununi f2_iununi a_cuni a_cun f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class a_cun a_ciun a_wceq f1_iununi a_c0 a_wceq p_biimpcd f2_iununi a_c0 a_wceq f1_iununi a_c0 a_wceq a_wi f1_iununi f2_iununi a_cuni a_cun f0_iununi f2_iununi f1_iununi f0_iununi a_sup_set_class a_cun a_ciun a_wceq p_impbii $.
 $}
-$( Subclass relationship for power class and union.  (Contributed by NM,
+
+$(Subclass relationship for power class and union.  (Contributed by NM,
        18-Jul-2006.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	isspwuni_0 $f set x $.
-	fsspwuni_0 $f class A $.
-	fsspwuni_1 $f class B $.
-	sspwuni $p |- ( A C_ ~P B <-> U. A C_ B ) $= isspwuni_0 sup_set_class fsspwuni_1 cpw wcel isspwuni_0 fsspwuni_0 wral isspwuni_0 sup_set_class fsspwuni_1 wss isspwuni_0 fsspwuni_0 wral fsspwuni_0 fsspwuni_1 cpw wss fsspwuni_0 cuni fsspwuni_1 wss isspwuni_0 sup_set_class fsspwuni_1 cpw wcel isspwuni_0 sup_set_class fsspwuni_1 wss isspwuni_0 fsspwuni_0 isspwuni_0 sup_set_class fsspwuni_1 isspwuni_0 vex elpw ralbii isspwuni_0 fsspwuni_0 fsspwuni_1 cpw dfss3 isspwuni_0 fsspwuni_0 fsspwuni_1 unissb 3bitr4i $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_sspwuni $f class A $.
+	f1_sspwuni $f class B $.
+	i0_sspwuni $f set x $.
+	p_sspwuni $p |- ( A C_ ~P B <-> U. A C_ B ) $= i0_sspwuni p_vex i0_sspwuni a_sup_set_class f1_sspwuni p_elpw i0_sspwuni a_sup_set_class f1_sspwuni a_cpw a_wcel i0_sspwuni a_sup_set_class f1_sspwuni a_wss i0_sspwuni f0_sspwuni p_ralbii i0_sspwuni f0_sspwuni f1_sspwuni a_cpw p_dfss3 i0_sspwuni f0_sspwuni f1_sspwuni p_unissb i0_sspwuni a_sup_set_class f1_sspwuni a_cpw a_wcel i0_sspwuni f0_sspwuni a_wral i0_sspwuni a_sup_set_class f1_sspwuni a_wss i0_sspwuni f0_sspwuni a_wral f0_sspwuni f1_sspwuni a_cpw a_wss f0_sspwuni a_cuni f1_sspwuni a_wss p_3bitr4i $.
 $}
-$( Two ways to express a collection of subclasses.  (Contributed by NM,
+
+$(Two ways to express a collection of subclasses.  (Contributed by NM,
        19-Jul-2006.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fpwssb_0 $f set x $.
-	fpwssb_1 $f class A $.
-	fpwssb_2 $f class B $.
-	pwssb $p |- ( A C_ ~P B <-> A. x e. A x C_ B ) $= fpwssb_1 fpwssb_2 cpw wss fpwssb_1 cuni fpwssb_2 wss fpwssb_0 sup_set_class fpwssb_2 wss fpwssb_0 fpwssb_1 wral fpwssb_1 fpwssb_2 sspwuni fpwssb_0 fpwssb_1 fpwssb_2 unissb bitri $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_pwssb $f set x $.
+	f1_pwssb $f class A $.
+	f2_pwssb $f class B $.
+	p_pwssb $p |- ( A C_ ~P B <-> A. x e. A x C_ B ) $= f1_pwssb f2_pwssb p_sspwuni f0_pwssb f1_pwssb f2_pwssb p_unissb f1_pwssb f2_pwssb a_cpw a_wss f1_pwssb a_cuni f2_pwssb a_wss f0_pwssb a_sup_set_class f2_pwssb a_wss f0_pwssb f1_pwssb a_wral p_bitri $.
 $}
-$( Relationship for power class and union.  (Contributed by NM,
+
+$(Relationship for power class and union.  (Contributed by NM,
      18-Jul-2006.) $)
+
 ${
-	$v A $.
-	$v B $.
-	felpwuni_0 $f class A $.
-	felpwuni_1 $f class B $.
-	elpwuni $p |- ( B e. A -> ( A C_ ~P B <-> U. A = B ) ) $= felpwuni_0 felpwuni_1 cpw wss felpwuni_0 cuni felpwuni_1 wss felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 felpwuni_1 sspwuni felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wss felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 cuni felpwuni_1 wss felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 felpwuni_1 unissel expcom felpwuni_0 cuni felpwuni_1 eqimss impbid1 syl5bb $.
+	$v A B  $.
+	f0_elpwuni $f class A $.
+	f1_elpwuni $f class B $.
+	p_elpwuni $p |- ( B e. A -> ( A C_ ~P B <-> U. A = B ) ) $= f0_elpwuni f1_elpwuni p_sspwuni f0_elpwuni f1_elpwuni p_unissel f0_elpwuni a_cuni f1_elpwuni a_wss f1_elpwuni f0_elpwuni a_wcel f0_elpwuni a_cuni f1_elpwuni a_wceq p_expcom f0_elpwuni a_cuni f1_elpwuni p_eqimss f1_elpwuni f0_elpwuni a_wcel f0_elpwuni a_cuni f1_elpwuni a_wss f0_elpwuni a_cuni f1_elpwuni a_wceq p_impbid1 f0_elpwuni f1_elpwuni a_cpw a_wss f0_elpwuni a_cuni f1_elpwuni a_wss f1_elpwuni f0_elpwuni a_wcel f0_elpwuni a_cuni f1_elpwuni a_wceq p_syl5bb $.
 $}
-$( The power class of an intersection in terms of indexed intersection.
+
+$(The power class of an intersection in terms of indexed intersection.
        Exercise 24(a) of [Enderton] p. 33.  (Contributed by NM,
        29-Nov-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	iiinpw_0 $f set y $.
-	fiinpw_0 $f set x $.
-	fiinpw_1 $f class A $.
-	iinpw $p |- ~P |^| A = |^|_ x e. A ~P x $= iiinpw_0 fiinpw_1 cint cpw fiinpw_0 fiinpw_1 fiinpw_0 sup_set_class cpw ciin iiinpw_0 sup_set_class fiinpw_1 cint wss iiinpw_0 sup_set_class fiinpw_0 sup_set_class cpw wcel fiinpw_0 fiinpw_1 wral iiinpw_0 sup_set_class fiinpw_1 cint cpw wcel iiinpw_0 sup_set_class fiinpw_0 fiinpw_1 fiinpw_0 sup_set_class cpw ciin wcel iiinpw_0 sup_set_class fiinpw_1 cint wss iiinpw_0 sup_set_class fiinpw_0 sup_set_class wss fiinpw_0 fiinpw_1 wral iiinpw_0 sup_set_class fiinpw_0 sup_set_class cpw wcel fiinpw_0 fiinpw_1 wral fiinpw_0 iiinpw_0 sup_set_class fiinpw_1 ssint iiinpw_0 sup_set_class fiinpw_0 sup_set_class cpw wcel iiinpw_0 sup_set_class fiinpw_0 sup_set_class wss fiinpw_0 fiinpw_1 iiinpw_0 sup_set_class fiinpw_0 sup_set_class iiinpw_0 vex elpw ralbii bitr4i iiinpw_0 sup_set_class fiinpw_1 cint iiinpw_0 vex elpw iiinpw_0 sup_set_class cvv wcel iiinpw_0 sup_set_class fiinpw_0 fiinpw_1 fiinpw_0 sup_set_class cpw ciin wcel iiinpw_0 sup_set_class fiinpw_0 sup_set_class cpw wcel fiinpw_0 fiinpw_1 wral wb iiinpw_0 vex fiinpw_0 iiinpw_0 sup_set_class fiinpw_1 fiinpw_0 sup_set_class cpw cvv eliin ax-mp 3bitr4i eqriv $.
+	$v x A  $.
+	$d x y A  $.
+	f0_iinpw $f set x $.
+	f1_iinpw $f class A $.
+	i0_iinpw $f set y $.
+	p_iinpw $p |- ~P |^| A = |^|_ x e. A ~P x $= f0_iinpw i0_iinpw a_sup_set_class f1_iinpw p_ssint i0_iinpw p_vex i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class p_elpw i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_cpw a_wcel i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_wss f0_iinpw f1_iinpw p_ralbii i0_iinpw a_sup_set_class f1_iinpw a_cint a_wss i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_wss f0_iinpw f1_iinpw a_wral i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_cpw a_wcel f0_iinpw f1_iinpw a_wral p_bitr4i i0_iinpw p_vex i0_iinpw a_sup_set_class f1_iinpw a_cint p_elpw i0_iinpw p_vex f0_iinpw i0_iinpw a_sup_set_class f1_iinpw f0_iinpw a_sup_set_class a_cpw a_cvv p_eliin i0_iinpw a_sup_set_class a_cvv a_wcel i0_iinpw a_sup_set_class f0_iinpw f1_iinpw f0_iinpw a_sup_set_class a_cpw a_ciin a_wcel i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_cpw a_wcel f0_iinpw f1_iinpw a_wral a_wb a_ax-mp i0_iinpw a_sup_set_class f1_iinpw a_cint a_wss i0_iinpw a_sup_set_class f0_iinpw a_sup_set_class a_cpw a_wcel f0_iinpw f1_iinpw a_wral i0_iinpw a_sup_set_class f1_iinpw a_cint a_cpw a_wcel i0_iinpw a_sup_set_class f0_iinpw f1_iinpw f0_iinpw a_sup_set_class a_cpw a_ciin a_wcel p_3bitr4i i0_iinpw f1_iinpw a_cint a_cpw f0_iinpw f1_iinpw f0_iinpw a_sup_set_class a_cpw a_ciin p_eqriv $.
 $}
-$( Inclusion of an indexed union of a power class in the power class of the
+
+$(Inclusion of an indexed union of a power class in the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 25-Nov-2003.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	iiunpwss_0 $f set y $.
-	fiunpwss_0 $f set x $.
-	fiunpwss_1 $f class A $.
-	iunpwss $p |- U_ x e. A ~P x C_ ~P U. A $= iiunpwss_0 fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class cpw ciun fiunpwss_1 cuni cpw iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class wss fiunpwss_0 fiunpwss_1 wrex iiunpwss_0 sup_set_class fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class ciun wss iiunpwss_0 sup_set_class fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class cpw ciun wcel iiunpwss_0 sup_set_class fiunpwss_1 cuni cpw wcel fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class iiunpwss_0 sup_set_class ssiun iiunpwss_0 sup_set_class fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class cpw ciun wcel iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class cpw wcel fiunpwss_0 fiunpwss_1 wrex iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class wss fiunpwss_0 fiunpwss_1 wrex fiunpwss_0 iiunpwss_0 sup_set_class fiunpwss_1 fiunpwss_0 sup_set_class cpw eliun iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class cpw wcel iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class wss fiunpwss_0 fiunpwss_1 iiunpwss_0 sup_set_class fiunpwss_0 sup_set_class iiunpwss_0 vex elpw rexbii bitri iiunpwss_0 sup_set_class fiunpwss_1 cuni cpw wcel iiunpwss_0 sup_set_class fiunpwss_1 cuni wss iiunpwss_0 sup_set_class fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class ciun wss iiunpwss_0 sup_set_class fiunpwss_1 cuni iiunpwss_0 vex elpw fiunpwss_1 cuni fiunpwss_0 fiunpwss_1 fiunpwss_0 sup_set_class ciun iiunpwss_0 sup_set_class fiunpwss_0 fiunpwss_1 uniiun sseq2i bitri 3imtr4i ssriv $.
+	$v x A  $.
+	$d x y A  $.
+	f0_iunpwss $f set x $.
+	f1_iunpwss $f class A $.
+	i0_iunpwss $f set y $.
+	p_iunpwss $p |- U_ x e. A ~P x C_ ~P U. A $= f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class i0_iunpwss a_sup_set_class p_ssiun f0_iunpwss i0_iunpwss a_sup_set_class f1_iunpwss f0_iunpwss a_sup_set_class a_cpw p_eliun i0_iunpwss p_vex i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class p_elpw i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class a_cpw a_wcel i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class a_wss f0_iunpwss f1_iunpwss p_rexbii i0_iunpwss a_sup_set_class f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_cpw a_ciun a_wcel i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class a_cpw a_wcel f0_iunpwss f1_iunpwss a_wrex i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class a_wss f0_iunpwss f1_iunpwss a_wrex p_bitri i0_iunpwss p_vex i0_iunpwss a_sup_set_class f1_iunpwss a_cuni p_elpw f0_iunpwss f1_iunpwss p_uniiun f1_iunpwss a_cuni f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_ciun i0_iunpwss a_sup_set_class p_sseq2i i0_iunpwss a_sup_set_class f1_iunpwss a_cuni a_cpw a_wcel i0_iunpwss a_sup_set_class f1_iunpwss a_cuni a_wss i0_iunpwss a_sup_set_class f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_ciun a_wss p_bitri i0_iunpwss a_sup_set_class f0_iunpwss a_sup_set_class a_wss f0_iunpwss f1_iunpwss a_wrex i0_iunpwss a_sup_set_class f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_ciun a_wss i0_iunpwss a_sup_set_class f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_cpw a_ciun a_wcel i0_iunpwss a_sup_set_class f1_iunpwss a_cuni a_cpw a_wcel p_3imtr4i i0_iunpwss f0_iunpwss f1_iunpwss f0_iunpwss a_sup_set_class a_cpw a_ciun f1_iunpwss a_cuni a_cpw p_ssriv $.
 $}
-$( Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
+
+$(Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
      3-Apr-2015.)  (Revised by Mario Carneiro, 5-Jun-2015.) $)
+
 ${
-	$v A $.
-	$v X $.
-	frintn0_0 $f class A $.
-	frintn0_1 $f class X $.
-	rintn0 $p |- ( ( X C_ ~P A /\ X =/= (/) ) -> ( A i^i |^| X ) = |^| X ) $= frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_0 frintn0_1 cint cin frintn0_1 cint frintn0_0 cin frintn0_1 cint frintn0_0 frintn0_1 cint incom frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_1 cint frintn0_0 wss frintn0_1 cint frintn0_0 cin frintn0_1 cint wceq frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_1 cint frintn0_0 cpw cuni frintn0_0 frintn0_1 frintn0_0 cpw intssuni2 frintn0_0 cpw frintn0_0 cpw wss frintn0_0 cpw cuni frintn0_0 wss frintn0_0 cpw ssid frintn0_0 cpw frintn0_0 sspwuni mpbi syl6ss frintn0_1 cint frintn0_0 df-ss sylib syl5eq $.
+	$v A X  $.
+	f0_rintn0 $f class A $.
+	f1_rintn0 $f class X $.
+	p_rintn0 $p |- ( ( X C_ ~P A /\ X =/= (/) ) -> ( A i^i |^| X ) = |^| X ) $= f0_rintn0 f1_rintn0 a_cint p_incom f1_rintn0 f0_rintn0 a_cpw p_intssuni2 f0_rintn0 a_cpw p_ssid f0_rintn0 a_cpw f0_rintn0 p_sspwuni f0_rintn0 a_cpw f0_rintn0 a_cpw a_wss f0_rintn0 a_cpw a_cuni f0_rintn0 a_wss p_mpbi f1_rintn0 f0_rintn0 a_cpw a_wss f1_rintn0 a_c0 a_wne a_wa f1_rintn0 a_cint f0_rintn0 a_cpw a_cuni f0_rintn0 p_syl6ss f1_rintn0 a_cint f0_rintn0 a_df-ss f1_rintn0 f0_rintn0 a_cpw a_wss f1_rintn0 a_c0 a_wne a_wa f1_rintn0 a_cint f0_rintn0 a_wss f1_rintn0 a_cint f0_rintn0 a_cin f1_rintn0 a_cint a_wceq p_sylib f1_rintn0 f0_rintn0 a_cpw a_wss f1_rintn0 a_c0 a_wne a_wa f0_rintn0 f1_rintn0 a_cint a_cin f1_rintn0 a_cint f0_rintn0 a_cin f1_rintn0 a_cint p_syl5eq $.
 $}
+
 

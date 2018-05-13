@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/First_and_second_members_of_an_ordered_pair.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Function transposition
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,15 +10,15 @@ constant {
 	symbol tpos ;;
 }
 
-/* Function transposition */
+/*Function transposition */
 
-/* The transposition of a function. */
+/*The transposition of a function. */
 
 rule ctpos (F : class) {
 	term : class = # tpos F ;;
 }
 
-/* Define the transposition of a function, which is a function
+/*Define the transposition of a function, which is a function
        ` G = tpos F ` satisfying ` G ( x , y ) = F ( y , x ) ` .  (Contributed
        by Mario Carneiro, 10-Sep-2015.) */
 
@@ -29,10 +29,10 @@ definition df-tpos (x : set, F : class) disjointed(F x) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Subset theorem for transposition.  (Contributed by Mario Carneiro,
+/*Subset theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
-theorem tposss (F : class, G : class) disjointed(x F, x G) {
+theorem tposss (F : class, G : class) disjointed(x, x, x F, x G) {
 	prop 1 : wff = |- ( F ⊆ G → tpos F ⊆ tpos G ) ;;
 }
 
@@ -57,10 +57,10 @@ proof of tposss {
 	qed prop 1 = step 16 ;;
 }
 
-/* Equality theorem for transposition.  (Contributed by Mario Carneiro,
+/*Equality theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
-theorem tposeq (F : class, G : class)  {
+theorem tposeq (F : class, G : class) disjointed(F, G) {
 	prop 1 : wff = |- ( F = G → tpos F = tpos G ) ;;
 }
 
@@ -75,10 +75,10 @@ proof of tposeq {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for transposition.  (Contributed by Mario Carneiro,
+/*Equality theorem for transposition.  (Contributed by Mario Carneiro,
          7-Jan-2017.) */
 
-theorem tposeqd (ph : wff, F : class, G : class)  {
+theorem tposeqd (ph : wff, F : class, G : class) disjointed(F, G) {
 	hyp 1 : wff = |- ( ph → F = G ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → tpos F = tpos G ) ;;
@@ -90,10 +90,10 @@ proof of tposeqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* The transposition is a subset of a cross product.  (Contributed by Mario
+/*The transposition is a subset of a cross product.  (Contributed by Mario
        Carneiro, 12-Jan-2017.) */
 
-theorem tposssxp (F : class) disjointed(x F) {
+theorem tposssxp (F : class) disjointed(x, x, x F, x) {
 	prop 1 : wff = |- tpos F ⊆ ( ( ⁻¹ dom F ∪ { ∅ } ) × ran F ) ;;
 }
 
@@ -110,10 +110,10 @@ proof of tposssxp {
 	qed prop 1 = step 8 ;;
 }
 
-/* The transposition is a relation.  (Contributed by Mario Carneiro,
+/*The transposition is a relation.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
-theorem reltpos (F : class)  {
+theorem reltpos (F : class) disjointed(F) {
 	prop 1 : wff = |- Rel tpos F ;;
 }
 
@@ -125,10 +125,10 @@ proof of reltpos {
 	qed prop 1 = step 4 ;;
 }
 
-/* Value of the transposition at a pair ` <. A , B >. ` .  (Contributed by
+/*Value of the transposition at a pair ` <. A , B >. ` .  (Contributed by
        Mario Carneiro, 10-Sep-2015.) */
 
-theorem brtpos2 (A : class, B : class, F : class, V : class) disjointed(x y A, x y B, x y F) {
+theorem brtpos2 (A : class, B : class, F : class, V : class) disjointed(x y A, x y B, x y F, x) {
 	prop 1 : wff = |- ( B ∈ V → ( A tpos F B ↔ ( A ∈ ( ⁻¹ dom F ∪ { ∅ } ) ∧ ⋃ ⁻¹ { A } F B ) ) ) ;;
 }
 
@@ -186,13 +186,13 @@ proof of brtpos2 {
 	qed prop 1 = step 49 ;;
 }
 
-/* The behavior of ` tpos ` when the left argument is the empty set (which
+/*The behavior of ` tpos ` when the left argument is the empty set (which
        is not an ordered pair but is the "default" value of an ordered pair
        when the arguments are proper classes).  This allows us to eliminate
        sethood hypotheses on ` A , B ` in ~ brtpos .  (Contributed by Mario
        Carneiro, 10-Sep-2015.) */
 
-theorem brtpos0 (A : class, F : class, V : class)  {
+theorem brtpos0 (A : class, F : class, V : class) disjointed(A, F) {
 	prop 1 : wff = |- ( A ∈ V → ( ∅ tpos F A ↔ ∅ F A ) ) ;;
 }
 
@@ -213,10 +213,10 @@ proof of brtpos0 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Necessary and sufficient condition for ` dom tpos F ` to be a relation.
+/*Necessary and sufficient condition for ` dom tpos F ` to be a relation.
        (Contributed by Mario Carneiro, 10-Sep-2015.) */
 
-theorem reldmtpos (F : class) disjointed(x y, x y, x y F) {
+theorem reldmtpos (F : class) disjointed(x y, x y, x y F, x) {
 	prop 1 : wff = |- ( Rel dom tpos F ↔ ¬ ∅ ∈ dom F ) ;;
 }
 
@@ -278,10 +278,10 @@ proof of reldmtpos {
 	qed prop 1 = step 53 ;;
 }
 
-/* The transposition swaps arguments of a three-parameter relation.
+/*The transposition swaps arguments of a three-parameter relation.
        (Contributed by Mario Carneiro, 10-Sep-2015.) */
 
-theorem brtpos (A : class, B : class, C : class, F : class, V : class)  {
+theorem brtpos (A : class, B : class, C : class, F : class, V : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( C ∈ V → ( 〈 A , B 〉 tpos F C ↔ 〈 B , A 〉 F C ) ) ;;
 }
 
@@ -318,10 +318,10 @@ proof of brtpos {
 	qed prop 1 = step 29 ;;
 }
 
-/* The transposition swaps the first two elements in a collection of
+/*The transposition swaps the first two elements in a collection of
        ordered triples.  (Contributed by Mario Carneiro, 1-Dec-2014.) */
 
-theorem ottpos (A : class, B : class, C : class, F : class, V : class)  {
+theorem ottpos (A : class, B : class, C : class, F : class, V : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( C ∈ V → ( 〈 A , B , C 〉 ∈ tpos F ↔ 〈 B , A , C 〉 ∈ F ) ) ;;
 }
 
@@ -338,10 +338,10 @@ proof of ottpos {
 	qed prop 1 = step 9 ;;
 }
 
-/* The transposition swaps arguments of a three-parameter relation.
+/*The transposition swaps arguments of a three-parameter relation.
        (Contributed by Mario Carneiro, 3-Nov-2015.) */
 
-theorem relbrtpos (A : class, B : class, C : class, F : class)  {
+theorem relbrtpos (A : class, B : class, C : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( Rel F → ( 〈 A , B 〉 tpos F C ↔ 〈 B , A 〉 F C ) ) ;;
 }
 
@@ -356,10 +356,10 @@ proof of relbrtpos {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
+/*The domain of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) */
 
-theorem dmtpos (F : class) disjointed(x y, x y, x y z F) {
+theorem dmtpos (F : class) disjointed(x y, x y, x y z F, x) {
 	prop 1 : wff = |- ( Rel dom F → dom tpos F = ⁻¹ dom F ) ;;
 }
 
@@ -391,10 +391,10 @@ proof of dmtpos {
 	qed prop 1 = step 23 ;;
 }
 
-/* The range of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
+/*The range of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) */
 
-theorem rntpos (F : class) disjointed(x y, x y, w x y z F) {
+theorem rntpos (F : class) disjointed(x y, x y, w x y z F, x) {
 	prop 1 : wff = |- ( Rel dom F → ran tpos F = ran F ) ;;
 }
 
@@ -451,10 +451,10 @@ proof of rntpos {
 	qed prop 1 = step 48 ;;
 }
 
-/* The transposition of a set is a set.  (Contributed by Mario Carneiro,
+/*The transposition of a set is a set.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
-theorem tposexg (F : class, V : class)  {
+theorem tposexg (F : class, V : class) disjointed(F) {
 	prop 1 : wff = |- ( F ∈ V → tpos F ∈ _V ) ;;
 }
 
@@ -474,7 +474,7 @@ proof of tposexg {
 	qed prop 1 = step 12 ;;
 }
 
-/* The transposition swaps the arguments in a two-argument function.  When
+/*The transposition swaps the arguments in a two-argument function.  When
        ` F ` is a matrix, which is to say a function from
        ` ( 1 ... m ) X. ( 1 ... n ) ` to ` RR ` or some ring, ` tpos F ` is the
        transposition of ` F ` , which is where the name comes from.
@@ -499,10 +499,10 @@ proof of ovtpos {
 	qed prop 1 = step 10 ;;
 }
 
-/* The transposition of a function is a function.  (Contributed by Mario
+/*The transposition of a function is a function.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) */
 
-theorem tposfun (F : class) disjointed(x F) {
+theorem tposfun (F : class) disjointed(x, x, x F, x) {
 	prop 1 : wff = |- ( Fun F → Fun tpos F ) ;;
 }
 
@@ -517,10 +517,10 @@ proof of tposfun {
 	qed prop 1 = step 6 ;;
 }
 
-/* Alternate definition of ` tpos ` when ` F ` has relational domain.
+/*Alternate definition of ` tpos ` when ` F ` has relational domain.
        (Contributed by Mario Carneiro, 10-Sep-2015.) */
 
-theorem dftpos2 (x : set, F : class) disjointed(x F) {
+theorem dftpos2 (x : set, F : class) disjointed(x, x, x F, x) {
 	prop 1 : wff = |- ( Rel dom F → tpos F = ( F ∘ ( x ∈ ⁻¹ dom F ↦ ⋃ ⁻¹ { x } ) ) ) ;;
 }
 
@@ -542,10 +542,10 @@ proof of dftpos2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Alternate definition of ` tpos ` when ` F ` has relational domain.
+/*Alternate definition of ` tpos ` when ` F ` has relational domain.
        Compare ~ df-cnv .  (Contributed by Mario Carneiro, 10-Sep-2015.) */
 
-theorem dftpos3 (x : set, y : set, z : set, F : class) disjointed(x y, x y, w x y z F) {
+theorem dftpos3 (x : set, y : set, z : set, F : class) disjointed(x y, x y, w x y z F, x) {
 	prop 1 : wff = |- ( Rel dom F → tpos F = { 〈 〈 x , y 〉 , z 〉 | 〈 y , x 〉 F z } ) ;;
 }
 
@@ -581,10 +581,10 @@ proof of dftpos3 {
 	qed prop 1 = step 27 ;;
 }
 
-/* Alternate definition of ` tpos ` .  (Contributed by Mario Carneiro,
+/*Alternate definition of ` tpos ` .  (Contributed by Mario Carneiro,
        4-Oct-2015.) */
 
-theorem dftpos4 (x : set, F : class) disjointed(x y, x y, w x y z F) {
+theorem dftpos4 (x : set, F : class) disjointed(x y, x y, w x y z F, x) {
 	prop 1 : wff = |- tpos F = ( F ∘ ( x ∈ ( ( _V × _V ) ∪ { ∅ } ) ↦ ⋃ ⁻¹ { x } ) ) ;;
 }
 
@@ -668,10 +668,10 @@ proof of dftpos4 {
 	qed prop 1 = step 75 ;;
 }
 
-/* Value of the double transposition for a general class ` F ` .
+/*Value of the double transposition for a general class ` F ` .
        (Contributed by Mario Carneiro, 16-Sep-2015.) */
 
-theorem tpostpos (F : class) disjointed(x y, x y, w x y z F) {
+theorem tpostpos (F : class) disjointed(x y, x y, w x y z F, x) {
 	prop 1 : wff = |- tpos tpos F = ( F ∩ ( ( ( _V × _V ) ∪ { ∅ } ) × _V ) ) ;;
 }
 
@@ -758,10 +758,10 @@ proof of tpostpos {
 	qed prop 1 = step 78 ;;
 }
 
-/* Value of the double transposition for a relation on triples.
+/*Value of the double transposition for a relation on triples.
        (Contributed by Mario Carneiro, 16-Sep-2015.) */
 
-theorem tpostpos2 (F : class)  {
+theorem tpostpos2 (F : class) disjointed(F) {
 	prop 1 : wff = |- ( ( Rel F ∧ Rel dom F ) → tpos tpos F = F ) ;;
 }
 
@@ -780,9 +780,9 @@ proof of tpostpos2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* The domain of a transposition.  (Contributed by NM, 10-Sep-2015.) */
+/*The domain of a transposition.  (Contributed by NM, 10-Sep-2015.) */
 
-theorem tposfn2 (A : class, F : class)  {
+theorem tposfn2 (A : class, F : class) disjointed(A, F) {
 	prop 1 : wff = |- ( Rel A → ( F Fn A → tpos F Fn ⁻¹ A ) ) ;;
 }
 
@@ -803,10 +803,10 @@ proof of tposfn2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Condition for a surjective transposition.  (Contributed by NM,
+/*Condition for a surjective transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposfo2 (A : class, B : class, F : class)  {
+theorem tposfo2 (A : class, B : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( Rel A → ( F : A ↠ B → tpos F : ⁻¹ A ↠ B ) ) ;;
 }
 
@@ -828,10 +828,10 @@ proof of tposfo2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* The domain and range of a transposition.  (Contributed by NM,
+/*The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposf2 (A : class, B : class, F : class)  {
+theorem tposf2 (A : class, B : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( Rel A → ( F : A ⟶ B → tpos F : ⁻¹ A ⟶ B ) ) ;;
 }
 
@@ -852,10 +852,10 @@ proof of tposf2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Condition for an injective transposition.  (Contributed by NM,
+/*Condition for an injective transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposf12 (A : class, B : class, F : class) disjointed(x A, x B, x F) {
+theorem tposf12 (A : class, B : class, F : class) disjointed(x A, x B, x F, x) {
 	prop 1 : wff = |- ( Rel A → ( F : A ↣ B → tpos F : ⁻¹ A ↣ B ) ) ;;
 }
 
@@ -893,10 +893,10 @@ proof of tposf12 {
 	qed prop 1 = step 29 ;;
 }
 
-/* Condition of a bijective transposition.  (Contributed by NM,
+/*Condition of a bijective transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposf1o2 (A : class, B : class, F : class)  {
+theorem tposf1o2 (A : class, B : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( Rel A → ( F : A ⤖ B → tpos F : ⁻¹ A ⤖ B ) ) ;;
 }
 
@@ -910,10 +910,10 @@ proof of tposf1o2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* The domain and range of a transposition.  (Contributed by NM,
+/*The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposfo (A : class, B : class, C : class, F : class)  {
+theorem tposfo (A : class, B : class, C : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( F : ( A × B ) ↠ C → tpos F : ( B × A ) ↠ C ) ;;
 }
 
@@ -928,10 +928,10 @@ proof of tposfo {
 	qed prop 1 = step 7 ;;
 }
 
-/* The domain and range of a transposition.  (Contributed by NM,
+/*The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) */
 
-theorem tposf (A : class, B : class, C : class, F : class)  {
+theorem tposf (A : class, B : class, C : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( F : ( A × B ) ⟶ C → tpos F : ( B × A ) ⟶ C ) ;;
 }
 
@@ -945,10 +945,10 @@ proof of tposf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Functionality of a transposition.  (Contributed by Mario Carneiro,
+/*Functionality of a transposition.  (Contributed by Mario Carneiro,
        4-Oct-2015.) */
 
-theorem tposfn (A : class, B : class, F : class)  {
+theorem tposfn (A : class, B : class, F : class) disjointed(A, B, F) {
 	prop 1 : wff = |- ( F Fn ( A × B ) → tpos F Fn ( B × A ) ) ;;
 }
 
@@ -960,7 +960,7 @@ proof of tposfn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transposition of the empty set.  (Contributed by NM, 10-Sep-2015.) */
+/*Transposition of the empty set.  (Contributed by NM, 10-Sep-2015.) */
 
 theorem tpos0 ()  {
 	prop 1 : wff = |- tpos ∅ = ∅ ;;
@@ -981,10 +981,10 @@ proof of tpos0 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Transposition of a composition.  (Contributed by Mario Carneiro,
+/*Transposition of a composition.  (Contributed by Mario Carneiro,
        4-Oct-2015.) */
 
-theorem tposco (F : class, G : class) disjointed(x F, x G) {
+theorem tposco (F : class, G : class) disjointed(x, x, x F, x G) {
 	prop 1 : wff = |- tpos ( F ∘ G ) = ( F ∘ tpos G ) ;;
 }
 
@@ -998,10 +998,10 @@ proof of tposco {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways to say a function is symmetric.  (Contributed by Mario
+/*Two ways to say a function is symmetric.  (Contributed by Mario
        Carneiro, 4-Oct-2015.) */
 
-theorem tpossym (x : set, y : set, A : class, F : class) disjointed(x y A, x y, x y F) {
+theorem tpossym (x : set, y : set, A : class, F : class) disjointed(x y A, x y, x y F, x) {
 	prop 1 : wff = |- ( F Fn ( A × A ) → ( tpos F = F ↔ ∀ x ∈ A ∀ y ∈ A ( x F y ) = ( y F x ) ) ) ;;
 }
 
@@ -1018,7 +1018,7 @@ proof of tpossym {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for transposition.  (Contributed by Mario Carneiro,
+/*Equality theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
 theorem tposeqi (F : class, G : class)  {
@@ -1033,7 +1033,7 @@ proof of tposeqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transposition is a set.  (Contributed by Mario Carneiro,
+/*A transposition is a set.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
 theorem tposex (F : class)  {
@@ -1048,7 +1048,7 @@ proof of tposex {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hypothesis builder for transposition.  (Contributed by Mario Carneiro,
+/*Hypothesis builder for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) */
 
 theorem nftpos (x : set, F : class) disjointed(x y, y F) {
@@ -1066,7 +1066,7 @@ proof of nftpos {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transposition of a class of ordered triples.  (Contributed by Mario
+/*Transposition of a class of ordered triples.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) */
 
 theorem tposoprab (ph : wff, x : set, y : set, z : set, F : class) disjointed(a b c x y z, a b c ph) {
@@ -1111,7 +1111,7 @@ proof of tposoprab {
 	qed prop 1 = step 31 ;;
 }
 
-/* Transposition of a two-argument mapping.  (Contributed by Mario
+/*Transposition of a two-argument mapping.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) */
 
 theorem tposmpt2 (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(x y z, z A, z B, z C) {

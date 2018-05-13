@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/True_and_false_constants.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Truth tables
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -17,120 +19,199 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   ` -/\ ` (nand aka Sheffer stroke) ~ df-nan , and
   ` \/_ ` (exclusive or) ~ df-xor .
 $)
-$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	truantru $p |- ( ( T. /\ T. ) <-> T. ) $= wtru anidm $.
+	$v  $.
+	p_truantru $p |- ( ( T. /\ T. ) <-> T. ) $= a_wtru p_anidm $.
 $}
-$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	truanfal $p |- ( ( T. /\ F. ) <-> F. ) $= wtru wfal wa wfal wtru fal intnan bifal $.
+	$v  $.
+	p_truanfal $p |- ( ( T. /\ F. ) <-> F. ) $= p_fal a_wfal a_wtru p_intnan a_wtru a_wfal a_wa p_bifal $.
 $}
-$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	falantru $p |- ( ( F. /\ T. ) <-> F. ) $= wfal wtru wa wfal wtru fal intnanr bifal $.
+	$v  $.
+	p_falantru $p |- ( ( F. /\ T. ) <-> F. ) $= p_fal a_wfal a_wtru p_intnanr a_wfal a_wtru a_wa p_bifal $.
 $}
-$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	falanfal $p |- ( ( F. /\ F. ) <-> F. ) $= wfal anidm $.
+	$v  $.
+	p_falanfal $p |- ( ( F. /\ F. ) <-> F. ) $= a_wfal p_anidm $.
 $}
-$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	truortru $p |- ( ( T. \/ T. ) <-> T. ) $= wtru oridm $.
+	$v  $.
+	p_truortru $p |- ( ( T. \/ T. ) <-> T. ) $= a_wtru p_oridm $.
 $}
-$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	truorfal $p |- ( ( T. \/ F. ) <-> T. ) $= wtru wfal wo wtru wfal tru orci bitru $.
+	$v  $.
+	p_truorfal $p |- ( ( T. \/ F. ) <-> T. ) $= p_tru a_wtru a_wfal p_orci a_wtru a_wfal a_wo p_bitru $.
 $}
-$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	falortru $p |- ( ( F. \/ T. ) <-> T. ) $= wfal wtru wo wtru wfal tru olci bitru $.
+	$v  $.
+	p_falortru $p |- ( ( F. \/ T. ) <-> T. ) $= p_tru a_wtru a_wfal p_olci a_wfal a_wtru a_wo p_bitru $.
 $}
-$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	falorfal $p |- ( ( F. \/ F. ) <-> F. ) $= wfal oridm $.
+	$v  $.
+	p_falorfal $p |- ( ( F. \/ F. ) <-> F. ) $= a_wfal p_oridm $.
 $}
-$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	truimtru $p |- ( ( T. -> T. ) <-> T. ) $= wtru wtru wi wtru id bitru $.
+	$v  $.
+	p_truimtru $p |- ( ( T. -> T. ) <-> T. ) $= a_wtru p_id a_wtru a_wtru a_wi p_bitru $.
 $}
-$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	truimfal $p |- ( ( T. -> F. ) <-> F. ) $= wfal wtru wfal wi wtru wfal tru a1bi bicomi $.
+	$v  $.
+	p_truimfal $p |- ( ( T. -> F. ) <-> F. ) $= p_tru a_wtru a_wfal p_a1bi a_wfal a_wtru a_wfal a_wi p_bicomi $.
 $}
-$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	falimtru $p |- ( ( F. -> T. ) <-> T. ) $= wfal wtru wi wtru falim bitru $.
+	$v  $.
+	p_falimtru $p |- ( ( F. -> T. ) <-> T. ) $= a_wtru p_falim a_wfal a_wtru a_wi p_bitru $.
 $}
-$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	falimfal $p |- ( ( F. -> F. ) <-> T. ) $= wfal wfal wi wfal id bitru $.
+	$v  $.
+	p_falimfal $p |- ( ( F. -> F. ) <-> T. ) $= a_wfal p_id a_wfal a_wfal a_wi p_bitru $.
 $}
-$( A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
+$(A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
+
 ${
-	nottru $p |- ( -. T. <-> F. ) $= wfal wtru wn df-fal bicomi $.
+	$v  $.
+	p_nottru $p |- ( -. T. <-> F. ) $= a_df-fal a_wfal a_wtru a_wn p_bicomi $.
 $}
-$( A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	notfal $p |- ( -. F. <-> T. ) $= wfal wn fal bitru $.
+	$v  $.
+	p_notfal $p |- ( -. F. <-> T. ) $= p_fal a_wfal a_wn p_bitru $.
 $}
-$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	trubitru $p |- ( ( T. <-> T. ) <-> T. ) $= wtru wtru wb wtru biid bitru $.
+	$v  $.
+	p_trubitru $p |- ( ( T. <-> T. ) <-> T. ) $= a_wtru p_biid a_wtru a_wtru a_wb p_bitru $.
 $}
-$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	trubifal $p |- ( ( T. <-> F. ) <-> F. ) $= wtru wfal wb wtru wn wfal wb wtru wfal wb wn nottru wtru wfal nbbn mpbi bifal $.
+	$v  $.
+	p_trubifal $p |- ( ( T. <-> F. ) <-> F. ) $= p_nottru a_wtru a_wfal p_nbbn a_wtru a_wn a_wfal a_wb a_wtru a_wfal a_wb a_wn p_mpbi a_wtru a_wfal a_wb p_bifal $.
 $}
-$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	falbitru $p |- ( ( F. <-> T. ) <-> F. ) $= wfal wtru wb wtru wfal wb wfal wfal wtru bicom trubifal bitri $.
+	$v  $.
+	p_falbitru $p |- ( ( F. <-> T. ) <-> F. ) $= a_wfal a_wtru p_bicom p_trubifal a_wfal a_wtru a_wb a_wtru a_wfal a_wb a_wfal p_bitri $.
 $}
-$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	falbifal $p |- ( ( F. <-> F. ) <-> T. ) $= wfal wfal wb wfal biid bitru $.
+	$v  $.
+	p_falbifal $p |- ( ( F. <-> F. ) <-> T. ) $= a_wfal p_biid a_wfal a_wfal a_wb p_bitru $.
 $}
-$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	trunantru $p |- ( ( T. -/\ T. ) <-> F. ) $= wtru wtru wnan wtru wn wfal wtru nannot nottru bitr3i $.
+	$v  $.
+	p_trunantru $p |- ( ( T. -/\ T. ) <-> F. ) $= a_wtru p_nannot p_nottru a_wtru a_wtru a_wnan a_wtru a_wn a_wfal p_bitr3i $.
 $}
-$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+
+$(A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	trunanfal $p |- ( ( T. -/\ F. ) <-> T. ) $= wtru wfal wnan wtru wfal wa wn wfal wn wtru wtru wfal df-nan wtru wfal wa wfal truanfal notbii notfal 3bitri $.
+	$v  $.
+	p_trunanfal $p |- ( ( T. -/\ F. ) <-> T. ) $= a_wtru a_wfal a_df-nan p_truanfal a_wtru a_wfal a_wa a_wfal p_notbii p_notfal a_wtru a_wfal a_wnan a_wtru a_wfal a_wa a_wn a_wfal a_wn a_wtru p_3bitri $.
 $}
-$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+
+$(A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	falnantru $p |- ( ( F. -/\ T. ) <-> T. ) $= wfal wtru wnan wtru wfal wnan wtru wfal wtru nancom trunanfal bitri $.
+	$v  $.
+	p_falnantru $p |- ( ( F. -/\ T. ) <-> T. ) $= a_wfal a_wtru p_nancom p_trunanfal a_wfal a_wtru a_wnan a_wtru a_wfal a_wnan a_wtru p_bitri $.
 $}
-$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+
+$(A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) $)
+
 ${
-	falnanfal $p |- ( ( F. -/\ F. ) <-> T. ) $= wfal wfal wnan wfal wn wtru wfal nannot notfal bitr3i $.
+	$v  $.
+	p_falnanfal $p |- ( ( F. -/\ F. ) <-> T. ) $= a_wfal p_nannot p_notfal a_wfal a_wfal a_wnan a_wfal a_wn a_wtru p_bitr3i $.
 $}
-$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
+
+$(A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
+
 ${
-	truxortru $p |- ( ( T. \/_ T. ) <-> F. ) $= wtru wtru wxo wtru wn wfal wtru wtru wxo wtru wtru wb wtru wtru wtru df-xor trubitru xchbinx nottru bitri $.
+	$v  $.
+	p_truxortru $p |- ( ( T. \/_ T. ) <-> F. ) $= a_wtru a_wtru a_df-xor p_trubitru a_wtru a_wtru a_wxo a_wtru a_wtru a_wb a_wtru p_xchbinx p_nottru a_wtru a_wtru a_wxo a_wtru a_wn a_wfal p_bitri $.
 $}
-$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
+
+$(A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
+
 ${
-	truxorfal $p |- ( ( T. \/_ F. ) <-> T. ) $= wtru wfal wxo wfal wn wtru wtru wfal wxo wtru wfal wb wfal wtru wfal df-xor trubifal xchbinx notfal bitri $.
+	$v  $.
+	p_truxorfal $p |- ( ( T. \/_ F. ) <-> T. ) $= a_wtru a_wfal a_df-xor p_trubifal a_wtru a_wfal a_wxo a_wtru a_wfal a_wb a_wfal p_xchbinx p_notfal a_wtru a_wfal a_wxo a_wfal a_wn a_wtru p_bitri $.
 $}
-$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
+
+$(A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
+
 ${
-	falxortru $p |- ( ( F. \/_ T. ) <-> T. ) $= wfal wtru wxo wfal wtru wb wn wfal wn wtru wfal wtru df-xor wfal wtru wb wfal falbitru notbii notfal 3bitri $.
+	$v  $.
+	p_falxortru $p |- ( ( F. \/_ T. ) <-> T. ) $= a_wfal a_wtru a_df-xor p_falbitru a_wfal a_wtru a_wb a_wfal p_notbii p_notfal a_wfal a_wtru a_wxo a_wfal a_wtru a_wb a_wn a_wfal a_wn a_wtru p_3bitri $.
 $}
-$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
+
+$(A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
+
 ${
-	falxorfal $p |- ( ( F. \/_ F. ) <-> F. ) $= wfal wfal wxo wtru wn wfal wfal wfal wxo wfal wfal wb wtru wfal wfal df-xor falbifal xchbinx nottru bitri $.
+	$v  $.
+	p_falxorfal $p |- ( ( F. \/_ F. ) <-> F. ) $= a_wfal a_wfal a_df-xor p_falbifal a_wfal a_wfal a_wxo a_wfal a_wfal a_wb a_wtru p_xchbinx p_nottru a_wfal a_wfal a_wxo a_wtru a_wn a_wfal p_bitri $.
 $}
+
 

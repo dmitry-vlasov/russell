@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Relations.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Definite description binder (inverted iota)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,14 +10,14 @@ constant {
 	symbol iota ;;
 }
 
-/* Extend class notation with Russell's definition description binder
+/*Extend class notation with Russell's definition description binder
      (inverted iota). */
 
 rule cio (ph : wff, x : set) {
 	term : class = # ( iota x ph ) ;;
 }
 
-/* Soundness justification theorem for ~ df-iota .  (Contributed by Andrew
+/*Soundness justification theorem for ~ df-iota .  (Contributed by Andrew
        Salmon, 29-Jun-2011.) */
 
 theorem iotajust (ph : wff, x : set, y : set, z : set) disjointed(w x z, ph w z, ph w y, x y) {
@@ -37,7 +37,7 @@ proof of iotajust {
 	qed prop 1 = step 8 ;;
 }
 
-/* Define Russell's definition description binder, which can be read as
+/*Define Russell's definition description binder, which can be read as
        "the unique ` x ` such that ` ph ` ," where ` ph ` ordinarily contains
        ` x ` as a free variable.  Our definition is meaningful only when there
        is exactly one ` x ` such that ` ph ` is true (see ~ iotaval );
@@ -62,7 +62,7 @@ definition df-iota (ph : wff, x : set, y : set) disjointed(y x, y ph) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate definition for descriptions.  Definition 8.18 in [Quine]
+/*Alternate definition for descriptions.  Definition 8.18 in [Quine]
        p. 56.  (Contributed by Andrew Salmon, 30-Jun-2011.) */
 
 theorem dfiota2 (ph : wff, x : set, y : set) disjointed(y x, y ph) {
@@ -81,7 +81,7 @@ proof of dfiota2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+/*Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
        by Andrew Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro,
        15-Oct-2016.) */
 
@@ -98,7 +98,7 @@ proof of nfiota1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction version of ~ nfiota .  (Contributed by NM, 18-Feb-2013.) */
+/*Deduction version of ~ nfiota .  (Contributed by NM, 18-Feb-2013.) */
 
 theorem nfiotad (ph : wff, ps : wff, x : set, y : set) disjointed(z ps, z ph, x z, y z) {
 	hyp 1 : wff = |- F/ y ph ;;
@@ -124,10 +124,10 @@ proof of nfiotad {
 	qed prop 1 = step 12 ;;
 }
 
-/* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+/*Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
        by NM, 23-Aug-2011.) */
 
-theorem nfiota (ph : wff, x : set, y : set)  {
+theorem nfiota (ph : wff, x : set, y : set) disjointed(ph, x, y) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- F/_ x ( iota y ph ) ;;
@@ -141,7 +141,7 @@ proof of nfiota {
 	qed prop 1 = step 4 ;;
 }
 
-/* Change bound variables in a description binder.  (Contributed by Andrew
+/*Change bound variables in a description binder.  (Contributed by Andrew
        Salmon, 1-Aug-2011.) */
 
 theorem cbviota (ph : wff, ps : wff, x : set, y : set) disjointed(z w x, z w y, z w ph, z w ps) {
@@ -181,7 +181,7 @@ proof of cbviota {
 	qed prop 1 = step 24 ;;
 }
 
-/* Change bound variables in a description binder.  (Contributed by Andrew
+/*Change bound variables in a description binder.  (Contributed by Andrew
        Salmon, 1-Aug-2011.) */
 
 theorem cbviotav (ph : wff, ps : wff, x : set, y : set) disjointed(ph y, ps x) {
@@ -197,7 +197,7 @@ proof of cbviotav {
 	qed prop 1 = step 3 ;;
 }
 
-/* Variable substitution in description binder.  Compare ~ sb8eu .
+/*Variable substitution in description binder.  Compare ~ sb8eu .
        (Contributed by NM, 18-Mar-2013.) */
 
 theorem sb8iota (ph : wff, x : set, y : set) disjointed(w z ph, w z x, w z y) {
@@ -232,7 +232,7 @@ proof of sb8iota {
 	qed prop 1 = step 21 ;;
 }
 
-/* Equality theorem for descriptions.  (Contributed by Andrew Salmon,
+/*Equality theorem for descriptions.  (Contributed by Andrew Salmon,
        30-Jun-2011.) */
 
 theorem iotaeq (ph : wff, x : set, y : set) disjointed(y z, x z, ph z) {
@@ -255,7 +255,7 @@ proof of iotaeq {
 	qed prop 1 = step 11 ;;
 }
 
-/* Equivalence theorem for descriptions.  (Contributed by Andrew Salmon,
+/*Equivalence theorem for descriptions.  (Contributed by Andrew Salmon,
        30-Jun-2011.) */
 
 theorem iotabi (ph : wff, ps : wff, x : set) disjointed(ph z, ps z, x z) {
@@ -275,11 +275,11 @@ proof of iotabi {
 	qed prop 1 = step 8 ;;
 }
 
-/* Part of Theorem 8.17 in [Quine] p. 56.  This theorem serves as a lemma
+/*Part of Theorem 8.17 in [Quine] p. 56.  This theorem serves as a lemma
        for the fundamental property of iota.  (Contributed by Andrew Salmon,
        11-Jul-2011.) */
 
-theorem uniabio (ph : wff, x : set, y : set) disjointed(x y) {
+theorem uniabio (ph : wff, x : set, y : set) disjointed(ph, x y) {
 	prop 1 : wff = |- ( ∀ x ( ph ↔ x = y ) → ⋃ { x | ph } = y ) ;;
 }
 
@@ -295,10 +295,10 @@ proof of uniabio {
 	qed prop 1 = step 8 ;;
 }
 
-/* Theorem 8.19 in [Quine] p. 57.  This theorem is the fundamental property
+/*Theorem 8.19 in [Quine] p. 57.  This theorem is the fundamental property
        of iota.  (Contributed by Andrew Salmon, 11-Jul-2011.) */
 
-theorem iotaval (ph : wff, x : set, y : set) disjointed(ph z, x y z) {
+theorem iotaval (ph : wff, x : set, y : set) disjointed(ph z, z, x y z) {
 	prop 1 : wff = |- ( ∀ x ( ph ↔ x = y ) → ( iota x ph ) = y ) ;;
 }
 
@@ -325,10 +325,10 @@ proof of iotaval {
 	qed prop 1 = step 18 ;;
 }
 
-/* Equivalence between two different forms of ` iota ` .  (Contributed by
+/*Equivalence between two different forms of ` iota ` .  (Contributed by
        Andrew Salmon, 12-Jul-2011.) */
 
-theorem iotauni (ph : wff, x : set) disjointed(ph z, x z) {
+theorem iotauni (ph : wff, x : set) disjointed(ph z, z, x z) {
 	prop 1 : wff = |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
 }
 
@@ -343,10 +343,10 @@ proof of iotauni {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalence between two different forms of ` iota ` .  (Contributed by
+/*Equivalence between two different forms of ` iota ` .  (Contributed by
        Mario Carneiro, 24-Dec-2016.) */
 
-theorem iotaint (ph : wff, x : set)  {
+theorem iotaint (ph : wff, x : set) disjointed(ph, x) {
 	prop 1 : wff = |- ( ∃! x ph → ( iota x ph ) = ⋂ { x | ph } ) ;;
 }
 
@@ -358,10 +358,10 @@ proof of iotaint {
 	qed prop 1 = step 4 ;;
 }
 
-/* Property of iota.  (Contributed by NM, 23-Aug-2011.)  (Revised by Mario
+/*Property of iota.  (Contributed by NM, 23-Aug-2011.)  (Revised by Mario
        Carneiro, 23-Dec-2016.) */
 
-theorem iota1 (ph : wff, x : set) disjointed(ph z, x z) {
+theorem iota1 (ph : wff, x : set) disjointed(ph z, z, x z) {
 	prop 1 : wff = |- ( ∃! x ph → ( ph ↔ ( iota x ph ) = x ) ) ;;
 }
 
@@ -379,11 +379,11 @@ proof of iota1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Theorem 8.22 in [Quine] p. 57.  This theorem is the result if there
+/*Theorem 8.22 in [Quine] p. 57.  This theorem is the result if there
        isn't exactly one ` x ` that satisfies ` ph ` .  (Contributed by Andrew
        Salmon, 11-Jul-2011.) */
 
-theorem iotanul (ph : wff, x : set) disjointed(ph z, x z) {
+theorem iotanul (ph : wff, x : set) disjointed(ph z, z, x z) {
 	prop 1 : wff = |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
 }
 
@@ -410,10 +410,10 @@ proof of iotanul {
 	qed prop 1 = step 18 ;;
 }
 
-/* The ` iota ` class is a subset of the union of all elements satisfying
+/*The ` iota ` class is a subset of the union of all elements satisfying
        ` ph ` .  (Contributed by Mario Carneiro, 24-Dec-2016.) */
 
-theorem iotassuni (ph : wff, x : set)  {
+theorem iotassuni (ph : wff, x : set) disjointed(ph, x) {
 	prop 1 : wff = |- ( iota x ph ) ⊆ ⋃ { x | ph } ;;
 }
 
@@ -429,11 +429,11 @@ proof of iotassuni {
 	qed prop 1 = step 8 ;;
 }
 
-/* Theorem 8.23 in [Quine] p. 58.  This theorem proves the existence of the
+/*Theorem 8.23 in [Quine] p. 58.  This theorem proves the existence of the
        ` iota ` class under our definition.  (Contributed by Andrew Salmon,
        11-Jul-2011.) */
 
-theorem iotaex (ph : wff, x : set) disjointed(ph z, x z) {
+theorem iotaex (ph : wff, x : set) disjointed(ph z, z, x z) {
 	prop 1 : wff = |- ( iota x ph ) ∈ _V ;;
 }
 
@@ -452,10 +452,10 @@ proof of iotaex {
 	qed prop 1 = step 10 ;;
 }
 
-/* Theorem *14.22 in [WhiteheadRussell] p. 190.  (Contributed by Andrew
+/*Theorem *14.22 in [WhiteheadRussell] p. 190.  (Contributed by Andrew
        Salmon, 12-Jul-2011.) */
 
-theorem iota4 (ph : wff, x : set) disjointed(ph z, x z) {
+theorem iota4 (ph : wff, x : set) disjointed(ph z, z, x z) {
 	prop 1 : wff = |- ( ∃! x ph → [. ( iota x ph ) / x ]. ph ) ;;
 }
 
@@ -476,7 +476,7 @@ proof of iota4 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Theorem *14.23 in [WhiteheadRussell] p. 191.  (Contributed by Andrew
+/*Theorem *14.23 in [WhiteheadRussell] p. 191.  (Contributed by Andrew
      Salmon, 12-Jul-2011.) */
 
 theorem iota4an (ph : wff, ps : wff, x : set)  {
@@ -497,7 +497,7 @@ proof of iota4an {
 	qed prop 1 = step 10 ;;
 }
 
-/* A method for computing iota.  (Contributed by NM, 17-Sep-2013.) */
+/*A method for computing iota.  (Contributed by NM, 17-Sep-2013.) */
 
 theorem iota5 (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y A, x V, x ph, y ps) {
 	hyp 1 : wff = |- ( ( ph ∧ A ∈ V ) → ( ps ↔ x = A ) ) ;;
@@ -520,7 +520,7 @@ proof of iota5 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Formula-building deduction rule for iota.  (Contributed by NM,
+/*Formula-building deduction rule for iota.  (Contributed by NM,
        20-Aug-2011.) */
 
 theorem iotabidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -536,7 +536,7 @@ proof of iotabidv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Formula-building deduction rule for iota.  (Contributed by Mario
+/*Formula-building deduction rule for iota.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) */
 
 theorem iotabii (ph : wff, ps : wff, x : set)  {
@@ -551,7 +551,7 @@ proof of iotabii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership law for descriptions.
+/*Membership law for descriptions.
 
      This can useful for expanding an unbounded iota-based definition (see
      ~ df-iota ).  If you have a bounded iota-based definition, ~ riotacl2 may
@@ -570,11 +570,11 @@ proof of iotacl {
 	qed prop 1 = step 3 ;;
 }
 
-/* A condition that allows us to represent "the unique element such that
+/*A condition that allows us to represent "the unique element such that
          ` ph ` " with a class expression ` A ` .  (Contributed by NM,
          30-Dec-2014.) */
 
-theorem iota2df (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class)  {
+theorem iota2df (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class) disjointed(x, B, ps) {
 	hyp 1 : wff = |- ( ph → B ∈ V ) ;;
 	hyp 2 : wff = |- ( ph → ∃! x ps ) ;;
 	hyp 3 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
@@ -603,11 +603,11 @@ proof of iota2df {
 	qed prop 1 = step 14 ;;
 }
 
-/* A condition that allows us to represent "the unique element such that
+/*A condition that allows us to represent "the unique element such that
        ` ph ` " with a class expression ` A ` .  (Contributed by NM,
        30-Dec-2014.) */
 
-theorem iota2d (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class) disjointed(x B, x ph, x ch) {
+theorem iota2d (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class) disjointed(x, B, ps, x B, x ph, x ch) {
 	hyp 1 : wff = |- ( ph → B ∈ V ) ;;
 	hyp 2 : wff = |- ( ph → ∃! x ps ) ;;
 	hyp 3 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
@@ -623,7 +623,7 @@ proof of iota2d {
 	qed prop 1 = step 4 ;;
 }
 
-/* The unique element such that ` ph ` .  (Contributed by Jeff Madsen,
+/*The unique element such that ` ph ` .  (Contributed by Jeff Madsen,
        1-Jun-2011.)  (Revised by Mario Carneiro, 23-Dec-2016.) */
 
 theorem iota2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(A x, ps x) {
@@ -647,7 +647,7 @@ proof of iota2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* A class abstraction with a unique member can be expressed as a singleton.
+/*A class abstraction with a unique member can be expressed as a singleton.
      (Contributed by Mario Carneiro, 23-Dec-2016.) */
 
 theorem sniota (ph : wff, x : set)  {
@@ -672,7 +672,7 @@ proof of sniota {
 	qed prop 1 = step 14 ;;
 }
 
-/* The ` iota ` operation using the ` if ` operator.  (Contributed by Scott
+/*The ` iota ` operation using the ` if ` operator.  (Contributed by Scott
        Fenton, 6-Oct-2017.) */
 
 theorem dfiota4 (ph : wff, x : set)  {
@@ -690,7 +690,7 @@ proof of dfiota4 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Class substitution within a description binder.  (Contributed by Scott
+/*Class substitution within a description binder.  (Contributed by Scott
        Fenton, 6-Oct-2017.) */
 
 theorem csbiotag (ph : wff, x : set, y : set, A : class, V : class) disjointed(A y z, x y z, ph z) {

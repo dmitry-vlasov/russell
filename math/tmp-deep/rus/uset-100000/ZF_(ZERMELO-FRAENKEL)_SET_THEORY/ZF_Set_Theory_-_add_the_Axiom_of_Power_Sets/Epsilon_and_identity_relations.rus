@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Power_class_of_union_and_intersection.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Epsilon and identity relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new constant symbols. */
+/*Declare new constant symbols. */
 
 constant {
 	symbol 𝛜 ;;
@@ -14,7 +14,7 @@ constant {
 	latex \epsilon ;;
 }
 
-/* Letter E (for epsilon relation) */
+/*Letter E (for epsilon relation) */
 
 constant {
 	symbol _I ;;
@@ -22,21 +22,21 @@ constant {
 	latex \rm{Id} ;;
 }
 
-/* Letter I (for identity relation) */
+/*Letter I (for identity relation) */
 
-/* Extend class notation to include the epsilon relation. */
+/*Extend class notation to include the epsilon relation. */
 
 rule cep () {
 	term : class = # 𝛜 ;;
 }
 
-/* Extend the definition of a class to include identity relation. */
+/*Extend the definition of a class to include identity relation. */
 
 rule cid () {
 	term : class = # _I ;;
 }
 
-/* Define the epsilon relation.  Similar to Definition 6.22 of
+/*Define the epsilon relation.  Similar to Definition 6.22 of
        [TakeutiZaring] p. 30.  The epsilon relation and set membership are the
        same, that is, ` ( A _E B <-> A e. B ) ` when ` B ` is a set by
        ~ epelg .  Thus, ` 5 _E { 1 , 5 } ` ( ~ ex-eprel ).  (Contributed by NM,
@@ -49,7 +49,7 @@ definition df-eprel (x : set, y : set) disjointed(x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* The epsilon relation and membership are the same.  General version of
+/*The epsilon relation and membership are the same.  General version of
        ~ epel .  (Contributed by Scott Fenton, 27-Mar-2011.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
@@ -84,7 +84,7 @@ proof of epelg {
 	qed prop 1 = step 22 ;;
 }
 
-/* The epsilon relationship and the membership relation are the same.
+/*The epsilon relationship and the membership relation are the same.
        (Contributed by Scott Fenton, 11-Apr-2012.) */
 
 theorem epelc (A : class, B : class)  {
@@ -99,7 +99,7 @@ proof of epelc {
 	qed prop 1 = step 2 ;;
 }
 
-/* The epsilon relation and the membership relation are the same.
+/*The epsilon relation and the membership relation are the same.
      (Contributed by NM, 13-Aug-1995.) */
 
 theorem epel (x : set, y : set)  {
@@ -112,7 +112,7 @@ proof of epel {
 	qed prop 1 = step 2 ;;
 }
 
-/* Define the identity relation.  Definition 9.15 of [Quine] p. 64.  For
+/*Define the identity relation.  Definition 9.15 of [Quine] p. 64.  For
        example, ` 5 _I 5 ` and ` -. 4 _I 5 ` ( ~ ex-id ).  (Contributed by NM,
        13-Aug-1995.) */
 
@@ -123,7 +123,7 @@ definition df-id (x : set, y : set) disjointed(x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* A stronger version of ~ df-id that doesn't require ` x ` and ` y ` to be
+/*A stronger version of ~ df-id that doesn't require ` x ` and ` y ` to be
        distinct.  Ordinarily, we wouldn't use this as a definition, since
        non-distinct dummy variables would make soundness verification more
        difficult (as the proof here shows).  The proof can be instructive in
@@ -189,7 +189,7 @@ proof of dfid3 {
 	qed prop 1 = step 49 ;;
 }
 
-/* Alternate definition of the identity relation.  (Contributed by NM,
+/*Alternate definition of the identity relation.  (Contributed by NM,
      15-Mar-2007.) */
 
 theorem dfid2 (x : set)  {

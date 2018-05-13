@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Define_basic_set_operations_and_relations.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Subclasses and subsets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
+/*Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
      For example, ` { 1 , 2 } C_ { 1 , 2 , 3 } ` ( ~ ex-ss ).  Note that
      ` A C_ A ` (proved in ~ ssid ).  Contrast this relationship with the
      relationship ` A C. B ` (as will be defined in ~ df-pss ).  For a more
@@ -22,7 +22,7 @@ definition df-ss (A : class, B : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Variant of subclass definition ~ df-ss .  (Contributed by NM,
+/*Variant of subclass definition ~ df-ss .  (Contributed by NM,
      3-Sep-2004.) */
 
 theorem dfss (A : class, B : class)  {
@@ -36,7 +36,7 @@ proof of dfss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Define proper subclass relationship between two classes.  Definition 5.9
+/*Define proper subclass relationship between two classes.  Definition 5.9
      of [TakeutiZaring] p. 17.  For example, ` { 1 , 2 } C. { 1 , 2 , 3 } `
      ( ~ ex-pss ).  Note that ` -. A C. A ` (proved in ~ pssirr ).  Contrast
      this relationship with the relationship ` A C_ B ` (as defined in
@@ -50,7 +50,7 @@ definition df-pss (A : class, B : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Alternate definition of the subclass relationship between two classes.
+/*Alternate definition of the subclass relationship between two classes.
        Definition 5.9 of [TakeutiZaring] p. 17.  (Contributed by NM,
        8-Jan-2002.) */
 
@@ -70,7 +70,7 @@ proof of dfss2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Alternate definition of subclass relationship.  (Contributed by NM,
+/*Alternate definition of subclass relationship.  (Contributed by NM,
        14-Oct-1999.) */
 
 theorem dfss3 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -84,7 +84,7 @@ proof of dfss3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalence for subclass relation, using bound-variable hypotheses
+/*Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) */
 
@@ -110,11 +110,11 @@ proof of dfss2f {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equivalence for subclass relation, using bound-variable hypotheses
+/*Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        20-Mar-2004.) */
 
-theorem dfss3f (x : set, A : class, B : class)  {
+theorem dfss3f (x : set, A : class, B : class) disjointed(A, B, x, A, B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -128,10 +128,10 @@ proof of dfss3f {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` x ` is not free in ` A ` and ` B ` , it is not free in
+/*If ` x ` is not free in ` A ` and ` B ` , it is not free in
        ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) */
 
-theorem nfss (x : set, A : class, B : class)  {
+theorem nfss (x : set, A : class, B : class) disjointed(A, B, x, A, B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -145,7 +145,7 @@ proof of nfss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership relationships follow from a subclass relationship.
+/*Membership relationships follow from a subclass relationship.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem ssel (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -165,7 +165,7 @@ proof of ssel {
 	qed prop 1 = step 8 ;;
 }
 
-/* Membership relationships follow from a subclass relationship.
+/*Membership relationships follow from a subclass relationship.
      (Contributed by NM, 7-Jun-2004.) */
 
 theorem ssel2 (A : class, B : class, C : class)  {
@@ -178,7 +178,7 @@ proof of ssel2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership inference from subclass relationship.  (Contributed by NM,
+/*Membership inference from subclass relationship.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem sseli (A : class, B : class, C : class)  {
@@ -193,7 +193,7 @@ proof of sseli {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership inference from subclass relationship.  (Contributed by NM,
+/*Membership inference from subclass relationship.  (Contributed by NM,
          31-May-1999.) */
 
 theorem sselii (A : class, B : class, C : class)  {
@@ -209,7 +209,7 @@ proof of sselii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership inference from subclass relationship.  (Contributed by NM,
+/*Membership inference from subclass relationship.  (Contributed by NM,
          25-Jun-2014.) */
 
 theorem sseldi (ph : wff, A : class, B : class, C : class)  {
@@ -225,7 +225,7 @@ proof of sseldi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership deduction from subclass relationship.  (Contributed by NM,
+/*Membership deduction from subclass relationship.  (Contributed by NM,
        15-Nov-1995.) */
 
 theorem sseld (ph : wff, A : class, B : class, C : class)  {
@@ -240,7 +240,7 @@ proof of sseld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership deduction from subclass relationship.  (Contributed by NM,
+/*Membership deduction from subclass relationship.  (Contributed by NM,
        26-Jun-2014.) */
 
 theorem sselda (ph : wff, A : class, B : class, C : class)  {
@@ -255,7 +255,7 @@ proof of sselda {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership inference from subclass relationship.  (Contributed by NM,
+/*Membership inference from subclass relationship.  (Contributed by NM,
          14-Dec-2004.) */
 
 theorem sseldd (ph : wff, A : class, B : class, C : class)  {
@@ -271,7 +271,7 @@ proof of sseldd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is not in another class, it is also not in a subclass of that
+/*If a class is not in another class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
 
 theorem ssneld (ph : wff, A : class, B : class, C : class)  {
@@ -286,7 +286,7 @@ proof of ssneld {
 	qed prop 1 = step 2 ;;
 }
 
-/* If an element is not in a class, it is also not in a subclass of that
+/*If an element is not in a class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
 
 theorem ssneldd (ph : wff, A : class, B : class, C : class)  {
@@ -302,7 +302,7 @@ proof of ssneldd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference rule based on subclass definition.  (Contributed by NM,
+/*Inference rule based on subclass definition.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem ssriv (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -317,7 +317,7 @@ proof of ssriv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction rule based on subclass definition.  (Contributed by NM,
+/*Deduction rule based on subclass definition.  (Contributed by NM,
        15-Nov-1995.) */
 
 theorem ssrdv (ph : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
@@ -333,7 +333,7 @@ proof of ssrdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
+/*Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) */
 
@@ -352,7 +352,7 @@ proof of sstr2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
+/*Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
      NM, 5-Sep-2003.) */
 
 theorem sstr (A : class, B : class, C : class)  {
@@ -365,7 +365,7 @@ proof of sstr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) */
+/*Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) */
 
 theorem sstri (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A ⊆ B ;;
@@ -380,7 +380,7 @@ proof of sstri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) */
+/*Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) */
 
 theorem sstrd (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
@@ -395,7 +395,7 @@ proof of sstrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) */
+/*Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) */
 
 theorem syl5ss (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A ⊆ B ;;
@@ -410,7 +410,7 @@ proof of syl5ss {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+/*Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) */
 
 theorem syl6ss (ph : wff, A : class, B : class, C : class)  {
@@ -426,7 +426,7 @@ proof of syl6ss {
 	qed prop 1 = step 2 ;;
 }
 
-/* A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
+/*A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
 
 theorem sylan9ss (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -442,7 +442,7 @@ proof of sylan9ss {
 	qed prop 1 = step 2 ;;
 }
 
-/* A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) */
+/*A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) */
 
 theorem sylan9ssr (ph : wff, ps : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
@@ -457,7 +457,7 @@ proof of sylan9ssr {
 	qed prop 1 = step 2 ;;
 }
 
-/* The subclass relationship is antisymmetric.  Compare Theorem 4 of
+/*The subclass relationship is antisymmetric.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqss (A : class, B : class) disjointed(x A, x B) {
@@ -475,7 +475,7 @@ proof of eqss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Infer equality from two subclass relationships.  Compare Theorem 4 of
+/*Infer equality from two subclass relationships.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) */
 
 theorem eqssi (A : class, B : class)  {
@@ -491,7 +491,7 @@ proof of eqssi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction from two subclass relationships.  Compare Theorem 4
+/*Equality deduction from two subclass relationships.  Compare Theorem 4
        of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) */
 
 theorem eqssd (ph : wff, A : class, B : class)  {
@@ -507,7 +507,7 @@ proof of eqssd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
+/*Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 14-Jun-2011.) */
 
@@ -522,7 +522,7 @@ proof of ssid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Any class is a subclass of the universal class.  (Contributed by NM,
+/*Any class is a subclass of the universal class.  (Contributed by NM,
        31-Oct-1995.) */
 
 theorem ssv (A : class) disjointed(A x) {
@@ -536,7 +536,7 @@ proof of ssv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 21-Jun-2011.) */
 
 theorem sseq1 (A : class, B : class, C : class)  {
@@ -554,7 +554,7 @@ proof of sseq1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for the subclass relationship.  (Contributed by NM,
+/*Equality theorem for the subclass relationship.  (Contributed by NM,
      25-Jun-1998.) */
 
 theorem sseq2 (A : class, B : class, C : class)  {
@@ -573,7 +573,7 @@ proof of sseq2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for the subclass relationship.  (Contributed by NM,
+/*Equality theorem for the subclass relationship.  (Contributed by NM,
      31-May-1999.) */
 
 theorem sseq12 (A : class, B : class, C : class, D : class)  {
@@ -587,7 +587,7 @@ proof of sseq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality inference for the subclass relationship.  (Contributed by
+/*An equality inference for the subclass relationship.  (Contributed by
        NM, 18-Aug-1993.) */
 
 theorem sseq1i (A : class, B : class, C : class)  {
@@ -602,7 +602,7 @@ proof of sseq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the subclass relationship.  (Contributed by
+/*An equality inference for the subclass relationship.  (Contributed by
        NM, 30-Aug-1993.) */
 
 theorem sseq2i (A : class, B : class, C : class)  {
@@ -617,7 +617,7 @@ proof of sseq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the subclass relationship.  (Contributed by
+/*An equality inference for the subclass relationship.  (Contributed by
          NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
 
 theorem sseq12i (A : class, B : class, C : class, D : class)  {
@@ -633,7 +633,7 @@ proof of sseq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality deduction for the subclass relationship.  (Contributed by
+/*An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) */
 
 theorem sseq1d (ph : wff, A : class, B : class, C : class)  {
@@ -648,7 +648,7 @@ proof of sseq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality deduction for the subclass relationship.  (Contributed by
+/*An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) */
 
 theorem sseq2d (ph : wff, A : class, B : class, C : class)  {
@@ -663,7 +663,7 @@ proof of sseq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality deduction for the subclass relationship.  (Contributed by
+/*An equality deduction for the subclass relationship.  (Contributed by
          NM, 31-May-1999.) */
 
 theorem sseq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -680,7 +680,7 @@ proof of sseq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 16-Jul-1995.) */
 
 theorem eqsstri (A : class, B : class, C : class)  {
@@ -696,7 +696,7 @@ proof of eqsstri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 19-Oct-1999.) */
 
 theorem eqsstr3i (A : class, B : class, C : class)  {
@@ -712,7 +712,7 @@ proof of eqsstr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 28-Jul-1995.) */
 
 theorem sseqtri (A : class, B : class, C : class)  {
@@ -728,7 +728,7 @@ proof of sseqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 4-Apr-1995.) */
 
 theorem sseqtr4i (A : class, B : class, C : class)  {
@@ -744,7 +744,7 @@ proof of sseqtr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) */
 
 theorem eqsstrd (ph : wff, A : class, B : class, C : class)  {
@@ -760,7 +760,7 @@ proof of eqsstrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) */
 
 theorem eqsstr3d (ph : wff, A : class, B : class, C : class)  {
@@ -776,7 +776,7 @@ proof of eqsstr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) */
 
 theorem sseqtrd (ph : wff, A : class, B : class, C : class)  {
@@ -792,7 +792,7 @@ proof of sseqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into a subclass relationship.  (Contributed by
+/*Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) */
 
 theorem sseqtr4d (ph : wff, A : class, B : class, C : class)  {
@@ -808,7 +808,7 @@ proof of sseqtr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality in both sides of a subclass relationship.
+/*Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) */
 
@@ -826,7 +826,7 @@ proof of 3sstr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality in both sides of a subclass relationship.
+/*Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) */
 
@@ -844,7 +844,7 @@ proof of 3sstr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a subclass relationship.
+/*Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) */
 
 theorem 3sstr3g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -861,7 +861,7 @@ proof of 3sstr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a subclass relationship.
+/*Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 16-Aug-1994.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) */
 
@@ -879,7 +879,7 @@ proof of 3sstr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a subclass relationship.
+/*Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) */
 
 theorem 3sstr3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -896,7 +896,7 @@ proof of 3sstr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of a subclass relationship.
+/*Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 30-Nov-1995.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) */
 
@@ -914,7 +914,7 @@ proof of 3sstr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained subclass and equality deduction.  (Contributed by NM,
+/*B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) */
 
 theorem syl5eqss (ph : wff, A : class, B : class, C : class)  {
@@ -930,7 +930,7 @@ proof of syl5eqss {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained subclass and equality deduction.  (Contributed by NM,
+/*B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) */
 
 theorem syl5eqssr (ph : wff, A : class, B : class, C : class)  {
@@ -946,7 +946,7 @@ proof of syl5eqssr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained subclass and equality deduction.  (Contributed by NM,
+/*A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) */
 
 theorem syl6sseq (ph : wff, A : class, B : class, C : class)  {
@@ -962,7 +962,7 @@ proof of syl6sseq {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained subclass and equality deduction.  (Contributed by NM,
+/*A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) */
 
 theorem syl6sseqr (ph : wff, A : class, B : class, C : class)  {
@@ -978,7 +978,7 @@ proof of syl6sseqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+/*Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) */
 
 theorem syl5sseq (ph : wff, A : class, B : class, C : class)  {
@@ -995,7 +995,7 @@ proof of syl5sseq {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+/*Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) */
 
 theorem syl5sseqr (ph : wff, A : class, B : class, C : class)  {
@@ -1011,7 +1011,7 @@ proof of syl5sseqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained subclass and equality deduction.  (Contributed by Mario
+/*A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) */
 
 theorem syl6eqss (ph : wff, A : class, B : class, C : class)  {
@@ -1027,7 +1027,7 @@ proof of syl6eqss {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained subclass and equality deduction.  (Contributed by Mario
+/*A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) */
 
 theorem syl6eqssr (ph : wff, A : class, B : class, C : class)  {
@@ -1043,7 +1043,7 @@ proof of syl6eqssr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
+/*Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 21-Jun-2011.) */
 
 theorem eqimss (A : class, B : class)  {
@@ -1056,7 +1056,7 @@ proof of eqimss {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality implies the subclass relation.  (Contributed by NM,
+/*Equality implies the subclass relation.  (Contributed by NM,
      23-Nov-2003.) */
 
 theorem eqimss2 (A : class, B : class)  {
@@ -1069,7 +1069,7 @@ proof of eqimss2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer subclass relationship from equality.  (Contributed by NM,
+/*Infer subclass relationship from equality.  (Contributed by NM,
        6-Jan-2007.) */
 
 theorem eqimssi (A : class, B : class)  {
@@ -1084,7 +1084,7 @@ proof of eqimssi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer subclass relationship from equality.  (Contributed by NM,
+/*Infer subclass relationship from equality.  (Contributed by NM,
        7-Jan-2007.) */
 
 theorem eqimss2i (A : class, B : class)  {
@@ -1099,7 +1099,7 @@ proof of eqimss2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two classes are different if they don't include the same class.
+/*Two classes are different if they don't include the same class.
      (Contributed by NM, 23-Apr-2015.) */
 
 theorem nssne1 (A : class, B : class, C : class)  {
@@ -1114,7 +1114,7 @@ proof of nssne1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two classes are different if they are not subclasses of the same class.
+/*Two classes are different if they are not subclasses of the same class.
      (Contributed by NM, 23-Apr-2015.) */
 
 theorem nssne2 (A : class, B : class, C : class)  {
@@ -1129,7 +1129,7 @@ proof of nssne2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
+/*Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 25-Feb-1996.)  (Proof shortened by Andrew
        Salmon, 21-Jun-2011.) */
 
@@ -1145,7 +1145,7 @@ proof of nss {
 	qed prop 1 = step 4 ;;
 }
 
-/* Quantification restricted to a subclass.  (Contributed by NM,
+/*Quantification restricted to a subclass.  (Contributed by NM,
        11-Mar-2006.) */
 
 theorem ssralv (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1159,7 +1159,7 @@ proof of ssralv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existential quantification restricted to a subclass.  (Contributed by
+/*Existential quantification restricted to a subclass.  (Contributed by
        NM, 11-Jan-2007.) */
 
 theorem ssrexv (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1173,7 +1173,7 @@ proof of ssrexv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted universal quantification on a subset in terms of superset.
+/*Restricted universal quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) */
 
 theorem ralss (ph : wff, x : set, A : class, B : class) disjointed(A x, B x) {
@@ -1190,7 +1190,7 @@ proof of ralss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Restricted existential quantification on a subset in terms of superset.
+/*Restricted existential quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) */
 
 theorem rexss (ph : wff, x : set, A : class, B : class) disjointed(A x, B x) {
@@ -1207,10 +1207,10 @@ proof of rexss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Class abstractions in a subclass relationship.  (Contributed by NM,
+/*Class abstractions in a subclass relationship.  (Contributed by NM,
        3-Jul-1994.) */
 
-theorem ss2ab (ph : wff, ps : wff, x : set)  {
+theorem ss2ab (ph : wff, ps : wff, x : set) disjointed(ph, ps, x) {
 	prop 1 : wff = |- ( { x | ph } ⊆ { x | ps } ↔ ∀ x ( ph → ps ) ) ;;
 }
 
@@ -1226,7 +1226,7 @@ proof of ss2ab {
 	qed prop 1 = step 8 ;;
 }
 
-/* Class abstraction in a subclass relationship.  (Contributed by NM,
+/*Class abstraction in a subclass relationship.  (Contributed by NM,
        16-Aug-2006.) */
 
 theorem abss (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1241,7 +1241,7 @@ proof of abss {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) */
+/*Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) */
 
 theorem ssab (ph : wff, x : set, A : class) disjointed(x A) {
 	prop 1 : wff = |- ( A ⊆ { x | ph } ↔ ∀ x ( x ∈ A → ph ) ) ;;
@@ -1255,7 +1255,7 @@ proof of ssab {
 	qed prop 1 = step 4 ;;
 }
 
-/* The relation for a subclass of a class abstraction is equivalent to
+/*The relation for a subclass of a class abstraction is equivalent to
        restricted quantification.  (Contributed by NM, 6-Sep-2006.) */
 
 theorem ssabral (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1269,7 +1269,7 @@ proof of ssabral {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference of abstraction subclass from implication.  (Contributed by NM,
+/*Inference of abstraction subclass from implication.  (Contributed by NM,
        31-Mar-1995.) */
 
 theorem ss2abi (ph : wff, ps : wff, x : set)  {
@@ -1284,7 +1284,7 @@ proof of ss2abi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction of abstraction subclass from implication.  (Contributed by NM,
+/*Deduction of abstraction subclass from implication.  (Contributed by NM,
        29-Jul-2011.) */
 
 theorem ss2abdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -1300,7 +1300,7 @@ proof of ss2abdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction of abstraction subclass from implication.  (Contributed by NM,
+/*Deduction of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) */
 
 theorem abssdv (ph : wff, ps : wff, x : set, A : class) disjointed(x ph, x A) {
@@ -1316,7 +1316,7 @@ proof of abssdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference of abstraction subclass from implication.  (Contributed by NM,
+/*Inference of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) */
 
 theorem abssi (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1332,7 +1332,7 @@ proof of abssi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted abstraction classes in a subclass relationship.  (Contributed
+/*Restricted abstraction classes in a subclass relationship.  (Contributed
      by NM, 30-May-1999.) */
 
 theorem ss2rab (ph : wff, ps : wff, x : set, A : class)  {
@@ -1352,7 +1352,7 @@ proof of ss2rab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted class abstraction in a subclass relationship.  (Contributed
+/*Restricted class abstraction in a subclass relationship.  (Contributed
        by NM, 16-Aug-2006.) */
 
 theorem rabss (ph : wff, x : set, A : class, B : class) disjointed(x B) {
@@ -1371,7 +1371,7 @@ proof of rabss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Subclass of a restricted class abstraction.  (Contributed by NM,
+/*Subclass of a restricted class abstraction.  (Contributed by NM,
        16-Aug-2006.) */
 
 theorem ssrab (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1391,7 +1391,7 @@ proof of ssrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subclass of a restricted class abstraction (deduction rule).
+/*Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 31-Aug-2006.) */
 
 theorem ssrabdv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
@@ -1408,7 +1408,7 @@ proof of ssrabdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subclass of a restricted class abstraction (deduction rule).
+/*Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 2-Feb-2015.) */
 
 theorem rabssdv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x B, x ph) {
@@ -1425,7 +1425,7 @@ proof of rabssdv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction of restricted abstraction subclass from implication.
+/*Deduction of restricted abstraction subclass from implication.
        (Contributed by NM, 30-May-2006.) */
 
 theorem ss2rabdv (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
@@ -1441,7 +1441,7 @@ proof of ss2rabdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference of restricted abstraction subclass from implication.
+/*Inference of restricted abstraction subclass from implication.
        (Contributed by NM, 14-Oct-1999.) */
 
 theorem ss2rabi (ph : wff, ps : wff, x : set, A : class)  {
@@ -1456,7 +1456,7 @@ proof of ss2rabi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass law for restricted abstraction.  (Contributed by NM,
+/*Subclass law for restricted abstraction.  (Contributed by NM,
        18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem rabss2 (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1475,10 +1475,10 @@ proof of rabss2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Subclass relation for the restriction of a class abstraction.
+/*Subclass relation for the restriction of a class abstraction.
        (Contributed by NM, 31-Mar-1995.) */
 
-theorem ssab2 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem ssab2 (ph : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- { x | ( x ∈ A ∧ ph ) } ⊆ A ;;
 }
 
@@ -1488,10 +1488,10 @@ proof of ssab2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass relation for a restricted class.  (Contributed by NM,
+/*Subclass relation for a restricted class.  (Contributed by NM,
        19-Mar-1997.) */
 
-theorem ssrab2 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem ssrab2 (ph : wff, x : set, A : class) disjointed(x A, x) {
 	prop 1 : wff = |- { x ∈ A | ph } ⊆ A ;;
 }
 
@@ -1502,7 +1502,7 @@ proof of ssrab2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A restricted class is a subclass of the corresponding unrestricted class.
+/*A restricted class is a subclass of the corresponding unrestricted class.
      (Contributed by Mario Carneiro, 23-Dec-2016.) */
 
 theorem rabssab (ph : wff, x : set, A : class)  {
@@ -1517,7 +1517,7 @@ proof of rabssab {
 	qed prop 1 = step 4 ;;
 }
 
-/* A subset relationship useful for converting union to indexed union using
+/*A subset relationship useful for converting union to indexed union using
        ~ dfiun2 or ~ dfiun2g and intersection to indexed intersection using
        ~ dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
        Carneiro, 26-Sep-2015.) */
@@ -1548,7 +1548,7 @@ proof of uniiunlem {
 	qed prop 1 = step 17 ;;
 }
 
-/* Alternate definition of proper subclass.  (Contributed by NM,
+/*Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.) */
 
 theorem dfpss2 (A : class, B : class)  {
@@ -1563,7 +1563,7 @@ proof of dfpss2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Alternate definition of proper subclass.  (Contributed by NM,
+/*Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem dfpss3 (A : class, B : class)  {
@@ -1580,7 +1580,7 @@ proof of dfpss3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
+/*Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
 
 theorem psseq1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( A ⊂ C ↔ B ⊂ C ) ) ;;
@@ -1596,7 +1596,7 @@ proof of psseq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
+/*Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
 
 theorem psseq2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( C ⊂ A ↔ C ⊂ B ) ) ;;
@@ -1612,7 +1612,7 @@ proof of psseq2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* An equality inference for the proper subclass relationship.
+/*An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq1i (A : class, B : class, C : class)  {
@@ -1627,7 +1627,7 @@ proof of psseq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the proper subclass relationship.
+/*An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq2i (A : class, B : class, C : class)  {
@@ -1642,7 +1642,7 @@ proof of psseq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the proper subclass relationship.
+/*An equality inference for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq12i (A : class, B : class, C : class, D : class)  {
@@ -1659,7 +1659,7 @@ proof of psseq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality deduction for the proper subclass relationship.
+/*An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq1d (ph : wff, A : class, B : class, C : class)  {
@@ -1674,7 +1674,7 @@ proof of psseq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality deduction for the proper subclass relationship.
+/*An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq2d (ph : wff, A : class, B : class, C : class)  {
@@ -1689,7 +1689,7 @@ proof of psseq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality deduction for the proper subclass relationship.
+/*An equality deduction for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) */
 
 theorem psseq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1706,7 +1706,7 @@ proof of psseq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
+/*A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) */
 
 theorem pssss (A : class, B : class)  {
@@ -1719,7 +1719,7 @@ proof of pssss {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two classes in a proper subclass relationship are not equal.  (Contributed
+/*Two classes in a proper subclass relationship are not equal.  (Contributed
      by NM, 16-Feb-2015.) */
 
 theorem pssne (A : class, B : class)  {
@@ -1732,7 +1732,7 @@ proof of pssne {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce subclass from proper subclass.  (Contributed by NM,
+/*Deduce subclass from proper subclass.  (Contributed by NM,
        29-Feb-1996.) */
 
 theorem pssssd (ph : wff, A : class, B : class)  {
@@ -1747,7 +1747,7 @@ proof of pssssd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Proper subclasses are unequal.  Deduction form of ~ pssne .
+/*Proper subclasses are unequal.  Deduction form of ~ pssne .
        (Contributed by David Moews, 1-May-2017.) */
 
 theorem pssned (ph : wff, A : class, B : class)  {
@@ -1762,7 +1762,7 @@ proof of pssned {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass in terms of proper subclass.  (Contributed by NM,
+/*Subclass in terms of proper subclass.  (Contributed by NM,
      25-Feb-1996.) */
 
 theorem sspss (A : class, B : class)  {
@@ -1781,7 +1781,7 @@ proof of sspss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
+/*Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) */
 
 theorem pssirr (A : class)  {
@@ -1795,7 +1795,7 @@ proof of pssirr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
+/*Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
      p. 23.  (Contributed by NM, 7-Feb-1996.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) */
 
@@ -1813,7 +1813,7 @@ proof of pssn2lp {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways of stating trichotomy with respect to inclusion.  (Contributed by
+/*Two ways of stating trichotomy with respect to inclusion.  (Contributed by
      NM, 12-Aug-2004.) */
 
 theorem sspsstri (A : class, B : class)  {
@@ -1835,7 +1835,7 @@ proof of sspsstri {
 	qed prop 1 = step 11 ;;
 }
 
-/* Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
+/*Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem ssnpss (A : class, B : class)  {
@@ -1849,7 +1849,7 @@ proof of ssnpss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
+/*Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) */
 
 theorem psstr (A : class, B : class, C : class)  {
@@ -1870,7 +1870,7 @@ proof of psstr {
 	qed prop 1 = step 10 ;;
 }
 
-/* Transitive law for subclass and proper subclass.  (Contributed by NM,
+/*Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) */
 
 theorem sspsstr (A : class, B : class, C : class)  {
@@ -1889,7 +1889,7 @@ proof of sspsstr {
 	qed prop 1 = step 8 ;;
 }
 
-/* Transitive law for subclass and proper subclass.  (Contributed by NM,
+/*Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) */
 
 theorem psssstr (A : class, B : class, C : class)  {
@@ -1908,7 +1908,7 @@ proof of psssstr {
 	qed prop 1 = step 8 ;;
 }
 
-/* Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
+/*Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
        (Contributed by David Moews, 1-May-2017.) */
 
 theorem psstrd (ph : wff, A : class, B : class, C : class)  {
@@ -1924,7 +1924,7 @@ proof of psstrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Transitivity involving subclass and proper subclass inclusion.
+/*Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ sspsstr .  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -1941,7 +1941,7 @@ proof of sspsstrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Transitivity involving subclass and proper subclass inclusion.
+/*Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ psssstr .  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -1958,7 +1958,7 @@ proof of psssstrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A class is not a proper subclass of another iff it satisfies a
+/*A class is not a proper subclass of another iff it satisfies a
      one-directional form of ~ eqss .  (Contributed by Mario Carneiro,
      15-May-2015.) */
 

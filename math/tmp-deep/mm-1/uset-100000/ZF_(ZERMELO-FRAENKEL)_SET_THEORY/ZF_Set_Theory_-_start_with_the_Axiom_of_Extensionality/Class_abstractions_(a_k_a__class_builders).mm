@@ -1,129 +1,223 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Introduce_the_Axiom_of_Extensionality.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Class abstractions (a.k.a. class builders)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Declare new constants use in class definition. $)
-$c {  $.
-$( Left brace $)
-$c |  $.
-$( Vertical bar $)
-$c }  $.
-$( Right brace $)
-$( --- Start of old code before overloading prevention patch. $)
-$( @c class @. @( Class variable type @)
+
+$(Declare new constants use in class definition. $)
+
+$c { $.
+
+$(Left brace $)
+
+$c | $.
+
+$(Vertical bar $)
+
+$c } $.
+
+$(Right brace $)
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@c class @. @( Class variable type @)
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( Declare symbols as variables $)
-$( Declare variable symbols that will be used to represent classes.  Note
+
+$(--- End of old code before overloading prevention patch. $)
+
+$(Declare symbols as variables $)
+
+$(Declare variable symbols that will be used to represent classes.  Note
      that later on ` R ` , ` S ` , ` F ` and ` G ` denote relations and
      functions, but these letters serve as mnemonics only and in fact behave
      no differently from the variables ` A ` through ` D ` . $)
-$( Introduce the class builder or class abstraction notation ("the class of
+
+$(Introduce the class builder or class abstraction notation ("the class of
      sets ` x ` such that ` ph ` is true").  Our class variables ` A ` ,
      ` B ` , etc. range over class builders (implicitly in the case of defined
      class terms such as ~ df-nul ).  Note that a set variable can be expressed
      as a class builder per theorem ~ cvjust , justifying the assignment of set
      variables to class variables via the use of ~ cv . $)
+
 ${
-	$v ph $.
-	$v x $.
-	fcab_0 $f wff ph $.
-	fcab_1 $f set x $.
-	cab $a class { x | ph } $.
+	$v ph x  $.
+	f0_cab $f wff ph $.
+	f1_cab $f set x $.
+	a_cab $a class { x | ph } $.
 $}
-$( --- Start of old code before overloading prevention patch. $)
-$( @( A set variable is a class expression.  The syntax " ` class x ` " can be
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@( A set variable is a class expression.  The syntax " ` class x ` " can be
      viewed as an abbreviation for " ` class { y | y e. x } ` " (a special case
      of ~ cab ), where ` y ` is distinct from ` x ` .  See the discussion under
      the definition of class in [Jech] p. 4.  Note that ` { y | y e. x } = x `
      by ~ cvjust . @)
   cv @a class x @.
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( $j primitive 'cv' 'wceq' 'wcel' 'cab'; $)
-$( Let ` A ` be a class variable. $)
-$( Let ` B ` be a class variable. $)
-$( Let ` C ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` D ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` P ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` Q ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` R ` be a class variable. $)
-$( Let ` S ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` T ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` U ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` e ` be an individual variable. $)
-$( Let ` f ` be an individual variable. $)
-$( Let ` g ` be an individual variable. $)
-$( Let ` h ` be an individual variable. $)
-$( Let ` i ` be an individual variable. $)
-$( Let ` j ` be an individual variable. $)
-$( Let ` k ` be an individual variable. $)
-$( Let ` m ` be an individual variable. $)
-$( Let ` n ` be an individual variable. $)
-$( Let ` o ` be an individual variable. $)
-$( Let ` E ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` F ` be a class variable. $)
-$( Let ` G ` be a class variable. $)
-$( Let ` H ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` I ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` J ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` K ` be a class variable. $)
-$( Let ` L ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` M ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` N ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` O ` be a class variable. $)
-$( Let ` V ` be a class variable. $)
-$( Let ` W ` be a class variable. $)
-$( Let ` X ` be a class variable. $)
-$( Let ` Y ` be a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Define a connective symbol for use as a class variable. $)
-$( Let ` Z ` be a class variable. $)
-$( Let ` s ` be an individual variable. $)
-$( Let ` r ` be an individual variable. $)
-$( Let ` q ` be an individual variable. $)
-$( Let ` p ` be an individual variable. $)
-$( Let ` a ` be an individual variable. $)
-$( Let ` b ` be an individual variable. $)
-$( Let ` c ` be an individual variable. $)
-$( Let ` d ` be an individual variable. $)
-$( Let ` l ` be an individual variable. $)
-$( --- Start of old code before overloading prevention patch. $)
-$( @( Extend wff definition to include class equality. @)
+
+$(--- End of old code before overloading prevention patch. $)
+
+$($j primitive 'cv' 'wceq' 'wcel' 'cab'; $)
+
+$(Let ` A ` be a class variable. $)
+
+$(Let ` B ` be a class variable. $)
+
+$(Let ` C ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` D ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` P ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` Q ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` R ` be a class variable. $)
+
+$(Let ` S ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` T ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` U ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` e ` be an individual variable. $)
+
+$(Let ` f ` be an individual variable. $)
+
+$(Let ` g ` be an individual variable. $)
+
+$(Let ` h ` be an individual variable. $)
+
+$(Let ` i ` be an individual variable. $)
+
+$(Let ` j ` be an individual variable. $)
+
+$(Let ` k ` be an individual variable. $)
+
+$(Let ` m ` be an individual variable. $)
+
+$(Let ` n ` be an individual variable. $)
+
+$(Let ` o ` be an individual variable. $)
+
+$(Let ` E ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` F ` be a class variable. $)
+
+$(Let ` G ` be a class variable. $)
+
+$(Let ` H ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` I ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` J ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` K ` be a class variable. $)
+
+$(Let ` L ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` M ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` N ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` O ` be a class variable. $)
+
+$(Let ` V ` be a class variable. $)
+
+$(Let ` W ` be a class variable. $)
+
+$(Let ` X ` be a class variable. $)
+
+$(Let ` Y ` be a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Define a connective symbol for use as a class variable. $)
+
+$(Let ` Z ` be a class variable. $)
+
+$(Let ` s ` be an individual variable. $)
+
+$(Let ` r ` be an individual variable. $)
+
+$(Let ` q ` be an individual variable. $)
+
+$(Let ` p ` be an individual variable. $)
+
+$(Let ` a ` be an individual variable. $)
+
+$(Let ` b ` be an individual variable. $)
+
+$(Let ` c ` be an individual variable. $)
+
+$(Let ` d ` be an individual variable. $)
+
+$(Let ` l ` be an individual variable. $)
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@( Extend wff definition to include class equality. @)
   wceq @a wff A = B @.
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( --- Start of old code before overloading prevention patch. $)
-$( @( Extend wff definition to include the membership connective between
+
+$(--- End of old code before overloading prevention patch. $)
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@( Extend wff definition to include the membership connective between
      classes. @)
   wcel @a wff A e. B @.
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( Define class abstraction notation (so-called by Quine), also called a
+
+$(--- End of old code before overloading prevention patch. $)
+
+$(Define class abstraction notation (so-called by Quine), also called a
      "class builder" in the literature. ` x ` and ` y ` need not be distinct.
      Definition 2.1 of [Quine] p. 16.  Typically, ` ph ` will have ` y ` as a
      free variable, and " ` { y | ph } ` " is read "the class of all sets ` y `
@@ -157,79 +251,78 @@ $( Define class abstraction notation (so-called by Quine), also called a
      For a general discussion of the theory of classes, see
      ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fdf-clab_0 $f wff ph $.
-	fdf-clab_1 $f set x $.
-	fdf-clab_2 $f set y $.
-	df-clab $a |- ( x e. { y | ph } <-> [ x / y ] ph ) $.
+	$v ph x y  $.
+	f0_df-clab $f wff ph $.
+	f1_df-clab $f set x $.
+	f2_df-clab $f set y $.
+	a_df-clab $a |- ( x e. { y | ph } <-> [ x / y ] ph ) $.
 $}
-$( Simplification of class abstraction notation when the free and bound
+
+$(Simplification of class abstraction notation when the free and bound
      variables are identical.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fabid_0 $f wff ph $.
-	fabid_1 $f set x $.
-	abid $p |- ( x e. { x | ph } <-> ph ) $= fabid_1 sup_set_class fabid_0 fabid_1 cab wcel fabid_0 fabid_1 fabid_1 wsb fabid_0 fabid_0 fabid_1 fabid_1 df-clab fabid_0 fabid_1 sbid bitri $.
+	$v ph x  $.
+	f0_abid $f wff ph $.
+	f1_abid $f set x $.
+	p_abid $p |- ( x e. { x | ph } <-> ph ) $= f0_abid f1_abid f1_abid a_df-clab f0_abid f1_abid p_sbid f1_abid a_sup_set_class f0_abid f1_abid a_cab a_wcel f0_abid f1_abid f1_abid a_wsb f0_abid p_bitri $.
 $}
-$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+
+$(Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$d x y $.
-	fhbab1_0 $f wff ph $.
-	fhbab1_1 $f set x $.
-	fhbab1_2 $f set y $.
-	hbab1 $p |- ( y e. { x | ph } -> A. x y e. { x | ph } ) $= fhbab1_2 sup_set_class fhbab1_0 fhbab1_1 cab wcel fhbab1_0 fhbab1_1 fhbab1_2 wsb fhbab1_1 fhbab1_0 fhbab1_2 fhbab1_1 df-clab fhbab1_0 fhbab1_1 fhbab1_2 hbs1 hbxfrbi $.
+	$v ph x y  $.
+	$d x y  $.
+	f0_hbab1 $f wff ph $.
+	f1_hbab1 $f set x $.
+	f2_hbab1 $f set y $.
+	p_hbab1 $p |- ( y e. { x | ph } -> A. x y e. { x | ph } ) $= f0_hbab1 f2_hbab1 f1_hbab1 a_df-clab f0_hbab1 f1_hbab1 f2_hbab1 p_hbs1 f2_hbab1 a_sup_set_class f0_hbab1 f1_hbab1 a_cab a_wcel f0_hbab1 f1_hbab1 f2_hbab1 a_wsb f1_hbab1 p_hbxfrbi $.
 $}
-$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+
+$(Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$d x y $.
-	fnfsab1_0 $f wff ph $.
-	fnfsab1_1 $f set x $.
-	fnfsab1_2 $f set y $.
-	nfsab1 $p |- F/ x y e. { x | ph } $= fnfsab1_2 sup_set_class fnfsab1_0 fnfsab1_1 cab wcel fnfsab1_1 fnfsab1_0 fnfsab1_1 fnfsab1_2 hbab1 nfi $.
+	$v ph x y  $.
+	$d x y  $.
+	f0_nfsab1 $f wff ph $.
+	f1_nfsab1 $f set x $.
+	f2_nfsab1 $f set y $.
+	p_nfsab1 $p |- F/ x y e. { x | ph } $= f0_nfsab1 f1_nfsab1 f2_nfsab1 p_hbab1 f2_nfsab1 a_sup_set_class f0_nfsab1 f1_nfsab1 a_cab a_wcel f1_nfsab1 p_nfi $.
 $}
-$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+
+$(Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 1-Mar-1995.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	fhbab_0 $f wff ph $.
-	fhbab_1 $f set x $.
-	fhbab_2 $f set y $.
-	fhbab_3 $f set z $.
-	ehbab_0 $e |- ( ph -> A. x ph ) $.
-	hbab $p |- ( z e. { y | ph } -> A. x z e. { y | ph } ) $= fhbab_3 sup_set_class fhbab_0 fhbab_2 cab wcel fhbab_0 fhbab_2 fhbab_3 wsb fhbab_1 fhbab_0 fhbab_3 fhbab_2 df-clab fhbab_0 fhbab_2 fhbab_3 fhbab_1 ehbab_0 hbsb hbxfrbi $.
+	$v ph x y z  $.
+	$d x z  $.
+	f0_hbab $f wff ph $.
+	f1_hbab $f set x $.
+	f2_hbab $f set y $.
+	f3_hbab $f set z $.
+	e0_hbab $e |- ( ph -> A. x ph ) $.
+	p_hbab $p |- ( z e. { y | ph } -> A. x z e. { y | ph } ) $= f0_hbab f3_hbab f2_hbab a_df-clab e0_hbab f0_hbab f2_hbab f3_hbab f1_hbab p_hbsb f3_hbab a_sup_set_class f0_hbab f2_hbab a_cab a_wcel f0_hbab f2_hbab f3_hbab a_wsb f1_hbab p_hbxfrbi $.
 $}
-$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+
+$(Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	fnfsab_0 $f wff ph $.
-	fnfsab_1 $f set x $.
-	fnfsab_2 $f set y $.
-	fnfsab_3 $f set z $.
-	enfsab_0 $e |- F/ x ph $.
-	nfsab $p |- F/ x z e. { y | ph } $= fnfsab_3 sup_set_class fnfsab_0 fnfsab_2 cab wcel fnfsab_1 fnfsab_0 fnfsab_1 fnfsab_2 fnfsab_3 fnfsab_0 fnfsab_1 enfsab_0 nfri hbab nfi $.
+	$v ph x y z  $.
+	$d x z  $.
+	f0_nfsab $f wff ph $.
+	f1_nfsab $f set x $.
+	f2_nfsab $f set y $.
+	f3_nfsab $f set z $.
+	e0_nfsab $e |- F/ x ph $.
+	p_nfsab $p |- F/ x z e. { y | ph } $= e0_nfsab f0_nfsab f1_nfsab p_nfri f0_nfsab f1_nfsab f2_nfsab f3_nfsab p_hbab f3_nfsab a_sup_set_class f0_nfsab f2_nfsab a_cab a_wcel f1_nfsab p_nfi $.
 $}
-$( Define the equality connective between classes.  Definition 2.7 of
+
+$(Define the equality connective between classes.  Definition 2.7 of
        [Quine] p. 18.  Also Definition 4.5 of [TakeutiZaring] p. 13; Chapter 4
        provides its justification and methods for eliminating it.  Note that
        its elimination will not necessarily result in a single wff in the
@@ -267,42 +360,38 @@ $( Define the equality connective between classes.  Definition 2.7 of
        For a general discussion of the theory of classes, see
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
        15-Sep-1993.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	$d x y z $.
-	fdf-cleq_0 $f set x $.
-	fdf-cleq_1 $f set y $.
-	fdf-cleq_2 $f set z $.
-	fdf-cleq_3 $f class A $.
-	fdf-cleq_4 $f class B $.
-	edf-cleq_0 $e |- ( A. x ( x e. y <-> x e. z ) -> y = z ) $.
-	df-cleq $a |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $.
+	$v x y z A B  $.
+	$d x A  $.
+	$d x B  $.
+	$d x y z  $.
+	f0_df-cleq $f set x $.
+	f1_df-cleq $f set y $.
+	f2_df-cleq $f set z $.
+	f3_df-cleq $f class A $.
+	f4_df-cleq $f class B $.
+	e0_df-cleq $e |- ( A. x ( x e. y <-> x e. z ) -> y = z ) $.
+	a_df-cleq $a |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $.
 $}
-$( The same as ~ df-cleq with the hypothesis removed using the Axiom of
+
+$(The same as ~ df-cleq with the hypothesis removed using the Axiom of
        Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$v z $.
-	$d x A $.
-	$d x B $.
-	$d x y z $.
-	idfcleq_0 $f set y $.
-	idfcleq_1 $f set z $.
-	fdfcleq_0 $f set x $.
-	fdfcleq_1 $f class A $.
-	fdfcleq_2 $f class B $.
-	dfcleq $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $= fdfcleq_0 idfcleq_0 idfcleq_1 fdfcleq_1 fdfcleq_2 idfcleq_0 idfcleq_1 fdfcleq_0 ax-ext df-cleq $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	$d x y z  $.
+	f0_dfcleq $f set x $.
+	f1_dfcleq $f class A $.
+	f2_dfcleq $f class B $.
+	i0_dfcleq $f set y $.
+	i1_dfcleq $f set z $.
+	p_dfcleq $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $= i0_dfcleq i1_dfcleq f0_dfcleq a_ax-ext f0_dfcleq i0_dfcleq i1_dfcleq f1_dfcleq f2_dfcleq a_df-cleq $.
 $}
-$( Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
+
+$(Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        theorem shows that a set variable can be expressed as a class
        abstraction.  This provides a motivation for the class syntax
        construction ~ cv , which allows us to substitute a set variable for a
@@ -313,17 +402,17 @@ $( Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        and Zaring.  See also the discussion under the definition of class in
        [Jech] p. 4 showing that "Every set can be considered to be a class."
        (Contributed by NM, 7-Nov-2006.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x y z $.
-	icvjust_0 $f set z $.
-	fcvjust_0 $f set x $.
-	fcvjust_1 $f set y $.
-	cvjust $p |- x = { y | y e. x } $= fcvjust_0 sup_set_class fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 cab wceq icvjust_0 sup_set_class fcvjust_0 sup_set_class wcel icvjust_0 sup_set_class fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 cab wcel wb icvjust_0 icvjust_0 fcvjust_0 sup_set_class fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 cab dfcleq icvjust_0 sup_set_class fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 cab wcel fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 icvjust_0 wsb icvjust_0 sup_set_class fcvjust_0 sup_set_class wcel fcvjust_1 sup_set_class fcvjust_0 sup_set_class wcel icvjust_0 fcvjust_1 df-clab icvjust_0 fcvjust_1 fcvjust_0 elsb3 bitr2i mpgbir $.
+	$v x y  $.
+	$d x y z  $.
+	f0_cvjust $f set x $.
+	f1_cvjust $f set y $.
+	i0_cvjust $f set z $.
+	p_cvjust $p |- x = { y | y e. x } $= i0_cvjust f0_cvjust a_sup_set_class f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel f1_cvjust a_cab p_dfcleq f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel i0_cvjust f1_cvjust a_df-clab i0_cvjust f1_cvjust f0_cvjust p_elsb3 i0_cvjust a_sup_set_class f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel f1_cvjust a_cab a_wcel f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel f1_cvjust i0_cvjust a_wsb i0_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel p_bitr2i f0_cvjust a_sup_set_class f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel f1_cvjust a_cab a_wceq i0_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel i0_cvjust a_sup_set_class f1_cvjust a_sup_set_class f0_cvjust a_sup_set_class a_wcel f1_cvjust a_cab a_wcel a_wb i0_cvjust p_mpgbir $.
 $}
-$( Define the membership connective between classes.  Theorem 6.3 of
+
+$(Define the membership connective between classes.  Theorem 6.3 of
        [Quine] p. 41, or Proposition 4.6 of [TakeutiZaring] p. 13, which we
        adopt as a definition.  See these references for its metalogical
        justification.  Note that like ~ df-cleq it extends or "overloads" the
@@ -342,70 +431,67 @@ $( Define the membership connective between classes.  Theorem 6.3 of
        For a general discussion of the theory of classes, see
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fdf-clel_0 $f set x $.
-	fdf-clel_1 $f class A $.
-	fdf-clel_2 $f class B $.
-	df-clel $a |- ( A e. B <-> E. x ( x = A /\ x e. B ) ) $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_df-clel $f set x $.
+	f1_df-clel $f class A $.
+	f2_df-clel $f class B $.
+	a_df-clel $a |- ( A e. B <-> E. x ( x = A /\ x e. B ) ) $.
 $}
-$( Infer equality of classes from equivalence of membership.  (Contributed
+
+$(Infer equality of classes from equivalence of membership.  (Contributed
        by NM, 5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	feqriv_0 $f set x $.
-	feqriv_1 $f class A $.
-	feqriv_2 $f class B $.
-	eeqriv_0 $e |- ( x e. A <-> x e. B ) $.
-	eqriv $p |- A = B $= feqriv_1 feqriv_2 wceq feqriv_0 sup_set_class feqriv_1 wcel feqriv_0 sup_set_class feqriv_2 wcel wb feqriv_0 feqriv_0 feqriv_1 feqriv_2 dfcleq eeqriv_0 mpgbir $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_eqriv $f set x $.
+	f1_eqriv $f class A $.
+	f2_eqriv $f class B $.
+	e0_eqriv $e |- ( x e. A <-> x e. B ) $.
+	p_eqriv $p |- A = B $= f0_eqriv f1_eqriv f2_eqriv p_dfcleq e0_eqriv f1_eqriv f2_eqriv a_wceq f0_eqriv a_sup_set_class f1_eqriv a_wcel f0_eqriv a_sup_set_class f2_eqriv a_wcel a_wb f0_eqriv p_mpgbir $.
 $}
-$( Deduce equality of classes from equivalence of membership.  (Contributed
+
+$(Deduce equality of classes from equivalence of membership.  (Contributed
        by NM, 17-Mar-1996.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	$d x ph $.
-	feqrdv_0 $f wff ph $.
-	feqrdv_1 $f set x $.
-	feqrdv_2 $f class A $.
-	feqrdv_3 $f class B $.
-	eeqrdv_0 $e |- ( ph -> ( x e. A <-> x e. B ) ) $.
-	eqrdv $p |- ( ph -> A = B ) $= feqrdv_0 feqrdv_1 sup_set_class feqrdv_2 wcel feqrdv_1 sup_set_class feqrdv_3 wcel wb feqrdv_1 wal feqrdv_2 feqrdv_3 wceq feqrdv_0 feqrdv_1 sup_set_class feqrdv_2 wcel feqrdv_1 sup_set_class feqrdv_3 wcel wb feqrdv_1 eeqrdv_0 alrimiv feqrdv_1 feqrdv_2 feqrdv_3 dfcleq sylibr $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_eqrdv $f wff ph $.
+	f1_eqrdv $f set x $.
+	f2_eqrdv $f class A $.
+	f3_eqrdv $f class B $.
+	e0_eqrdv $e |- ( ph -> ( x e. A <-> x e. B ) ) $.
+	p_eqrdv $p |- ( ph -> A = B ) $= e0_eqrdv f0_eqrdv f1_eqrdv a_sup_set_class f2_eqrdv a_wcel f1_eqrdv a_sup_set_class f3_eqrdv a_wcel a_wb f1_eqrdv p_alrimiv f1_eqrdv f2_eqrdv f3_eqrdv p_dfcleq f0_eqrdv f1_eqrdv a_sup_set_class f2_eqrdv a_wcel f1_eqrdv a_sup_set_class f3_eqrdv a_wcel a_wb f1_eqrdv a_wal f2_eqrdv f3_eqrdv a_wceq p_sylibr $.
 $}
-$( Deduce equality of classes from an equivalence of membership that
+
+$(Deduce equality of classes from an equivalence of membership that
        depends on the membership variable.  (Contributed by NM, 7-Nov-2008.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	$d x ph $.
-	feqrdav_0 $f wff ph $.
-	feqrdav_1 $f set x $.
-	feqrdav_2 $f class A $.
-	feqrdav_3 $f class B $.
-	feqrdav_4 $f class C $.
-	eeqrdav_0 $e |- ( ( ph /\ x e. A ) -> x e. C ) $.
-	eeqrdav_1 $e |- ( ( ph /\ x e. B ) -> x e. C ) $.
-	eeqrdav_2 $e |- ( ( ph /\ x e. C ) -> ( x e. A <-> x e. B ) ) $.
-	eqrdav $p |- ( ph -> A = B ) $= feqrdav_0 feqrdav_1 feqrdav_2 feqrdav_3 feqrdav_0 feqrdav_1 sup_set_class feqrdav_2 wcel feqrdav_1 sup_set_class feqrdav_3 wcel feqrdav_0 feqrdav_1 sup_set_class feqrdav_2 wcel wa feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_3 wcel eeqrdav_0 feqrdav_0 feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_2 wcel feqrdav_1 sup_set_class feqrdav_3 wcel feqrdav_0 feqrdav_1 sup_set_class feqrdav_4 wcel wa feqrdav_1 sup_set_class feqrdav_2 wcel feqrdav_1 sup_set_class feqrdav_3 wcel eeqrdav_2 biimpd impancom mpd feqrdav_0 feqrdav_1 sup_set_class feqrdav_3 wcel wa feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_2 wcel eeqrdav_1 feqrdav_0 feqrdav_1 sup_set_class feqrdav_3 wcel feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_2 wcel wi feqrdav_0 feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_3 wcel feqrdav_1 sup_set_class feqrdav_2 wcel feqrdav_0 feqrdav_1 sup_set_class feqrdav_4 wcel feqrdav_1 sup_set_class feqrdav_2 wcel feqrdav_1 sup_set_class feqrdav_3 wcel eeqrdav_2 exbiri com23 imp mpd impbida eqrdv $.
+	$v ph x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_eqrdav $f wff ph $.
+	f1_eqrdav $f set x $.
+	f2_eqrdav $f class A $.
+	f3_eqrdav $f class B $.
+	f4_eqrdav $f class C $.
+	e0_eqrdav $e |- ( ( ph /\ x e. A ) -> x e. C ) $.
+	e1_eqrdav $e |- ( ( ph /\ x e. B ) -> x e. C ) $.
+	e2_eqrdav $e |- ( ( ph /\ x e. C ) -> ( x e. A <-> x e. B ) ) $.
+	p_eqrdav $p |- ( ph -> A = B ) $= e0_eqrdav e2_eqrdav f0_eqrdav f1_eqrdav a_sup_set_class f4_eqrdav a_wcel a_wa f1_eqrdav a_sup_set_class f2_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel p_biimpd f0_eqrdav f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f2_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel p_impancom f0_eqrdav f1_eqrdav a_sup_set_class f2_eqrdav a_wcel a_wa f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel p_mpd e1_eqrdav e2_eqrdav f0_eqrdav f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f2_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel p_exbiri f0_eqrdav f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel f1_eqrdav a_sup_set_class f2_eqrdav a_wcel p_com23 f0_eqrdav f1_eqrdav a_sup_set_class f3_eqrdav a_wcel f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f2_eqrdav a_wcel a_wi p_imp f0_eqrdav f1_eqrdav a_sup_set_class f3_eqrdav a_wcel a_wa f1_eqrdav a_sup_set_class f4_eqrdav a_wcel f1_eqrdav a_sup_set_class f2_eqrdav a_wcel p_mpd f0_eqrdav f1_eqrdav a_sup_set_class f2_eqrdav a_wcel f1_eqrdav a_sup_set_class f3_eqrdav a_wcel p_impbida f0_eqrdav f1_eqrdav f2_eqrdav f3_eqrdav p_eqrdv $.
 $}
-$( Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
+
+$(Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        p. 41.
 
        This law is thought to have originated with Aristotle (_Metaphysics_,
@@ -415,1588 +501,1491 @@ $( Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        why the man is man or the musician musician.").  (Thanks to Stefan Allan
        and Beno&icirc;t Jubin for this information.)  (Contributed by NM,
        5-Aug-1993.)  (Revised by Beno&icirc;t Jubin, 14-Oct-2017.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d x A $.
-	ieqid_0 $f set x $.
-	feqid_0 $f class A $.
-	eqid $p |- A = A $= ieqid_0 feqid_0 feqid_0 ieqid_0 sup_set_class feqid_0 wcel biid eqriv $.
+	$v A  $.
+	$d x A  $.
+	f0_eqid $f class A $.
+	i0_eqid $f set x $.
+	p_eqid $p |- A = A $= i0_eqid a_sup_set_class f0_eqid a_wcel p_biid i0_eqid f0_eqid f0_eqid p_eqriv $.
 $}
-$( Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) $)
+
+$(Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	feqidd_0 $f wff ph $.
-	feqidd_1 $f class A $.
-	eqidd $p |- ( ph -> A = A ) $= feqidd_1 feqidd_1 wceq feqidd_0 feqidd_1 eqid a1i $.
+	$v ph A  $.
+	f0_eqidd $f wff ph $.
+	f1_eqidd $f class A $.
+	p_eqidd $p |- ( ph -> A = A ) $= f1_eqidd p_eqid f1_eqidd f1_eqidd a_wceq f0_eqidd p_a1i $.
 $}
-$( Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
+
+$(Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	ieqcom_0 $f set x $.
-	feqcom_0 $f class A $.
-	feqcom_1 $f class B $.
-	eqcom $p |- ( A = B <-> B = A ) $= ieqcom_0 sup_set_class feqcom_0 wcel ieqcom_0 sup_set_class feqcom_1 wcel wb ieqcom_0 wal ieqcom_0 sup_set_class feqcom_1 wcel ieqcom_0 sup_set_class feqcom_0 wcel wb ieqcom_0 wal feqcom_0 feqcom_1 wceq feqcom_1 feqcom_0 wceq ieqcom_0 sup_set_class feqcom_0 wcel ieqcom_0 sup_set_class feqcom_1 wcel wb ieqcom_0 sup_set_class feqcom_1 wcel ieqcom_0 sup_set_class feqcom_0 wcel wb ieqcom_0 ieqcom_0 sup_set_class feqcom_0 wcel ieqcom_0 sup_set_class feqcom_1 wcel bicom albii ieqcom_0 feqcom_0 feqcom_1 dfcleq ieqcom_0 feqcom_1 feqcom_0 dfcleq 3bitr4i $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_eqcom $f class A $.
+	f1_eqcom $f class B $.
+	i0_eqcom $f set x $.
+	p_eqcom $p |- ( A = B <-> B = A ) $= i0_eqcom a_sup_set_class f0_eqcom a_wcel i0_eqcom a_sup_set_class f1_eqcom a_wcel p_bicom i0_eqcom a_sup_set_class f0_eqcom a_wcel i0_eqcom a_sup_set_class f1_eqcom a_wcel a_wb i0_eqcom a_sup_set_class f1_eqcom a_wcel i0_eqcom a_sup_set_class f0_eqcom a_wcel a_wb i0_eqcom p_albii i0_eqcom f0_eqcom f1_eqcom p_dfcleq i0_eqcom f1_eqcom f0_eqcom p_dfcleq i0_eqcom a_sup_set_class f0_eqcom a_wcel i0_eqcom a_sup_set_class f1_eqcom a_wcel a_wb i0_eqcom a_wal i0_eqcom a_sup_set_class f1_eqcom a_wcel i0_eqcom a_sup_set_class f0_eqcom a_wcel a_wb i0_eqcom a_wal f0_eqcom f1_eqcom a_wceq f1_eqcom f0_eqcom a_wceq p_3bitr4i $.
 $}
-$( Inference applying commutative law for class equality to an antecedent.
+
+$(Inference applying commutative law for class equality to an antecedent.
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	feqcoms_0 $f wff ph $.
-	feqcoms_1 $f class A $.
-	feqcoms_2 $f class B $.
-	eeqcoms_0 $e |- ( A = B -> ph ) $.
-	eqcoms $p |- ( B = A -> ph ) $= feqcoms_2 feqcoms_1 wceq feqcoms_1 feqcoms_2 wceq feqcoms_0 feqcoms_2 feqcoms_1 eqcom eeqcoms_0 sylbi $.
+	$v ph A B  $.
+	f0_eqcoms $f wff ph $.
+	f1_eqcoms $f class A $.
+	f2_eqcoms $f class B $.
+	e0_eqcoms $e |- ( A = B -> ph ) $.
+	p_eqcoms $p |- ( B = A -> ph ) $= f2_eqcoms f1_eqcoms p_eqcom e0_eqcoms f2_eqcoms f1_eqcoms a_wceq f1_eqcoms f2_eqcoms a_wceq f0_eqcoms p_sylbi $.
 $}
-$( Inference from commutative law for class equality.  (Contributed by NM,
+
+$(Inference from commutative law for class equality.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqcomi_0 $f class A $.
-	feqcomi_1 $f class B $.
-	eeqcomi_0 $e |- A = B $.
-	eqcomi $p |- B = A $= feqcomi_0 feqcomi_1 wceq feqcomi_1 feqcomi_0 wceq eeqcomi_0 feqcomi_0 feqcomi_1 eqcom mpbi $.
+	$v A B  $.
+	f0_eqcomi $f class A $.
+	f1_eqcomi $f class B $.
+	e0_eqcomi $e |- A = B $.
+	p_eqcomi $p |- B = A $= e0_eqcomi f0_eqcomi f1_eqcomi p_eqcom f0_eqcomi f1_eqcomi a_wceq f1_eqcomi f0_eqcomi a_wceq p_mpbi $.
 $}
-$( Deduction from commutative law for class equality.  (Contributed by NM,
+
+$(Deduction from commutative law for class equality.  (Contributed by NM,
        15-Aug-1994.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	feqcomd_0 $f wff ph $.
-	feqcomd_1 $f class A $.
-	feqcomd_2 $f class B $.
-	eeqcomd_0 $e |- ( ph -> A = B ) $.
-	eqcomd $p |- ( ph -> B = A ) $= feqcomd_0 feqcomd_1 feqcomd_2 wceq feqcomd_2 feqcomd_1 wceq eeqcomd_0 feqcomd_1 feqcomd_2 eqcom sylib $.
+	$v ph A B  $.
+	f0_eqcomd $f wff ph $.
+	f1_eqcomd $f class A $.
+	f2_eqcomd $f class B $.
+	e0_eqcomd $e |- ( ph -> A = B ) $.
+	p_eqcomd $p |- ( ph -> B = A ) $= e0_eqcomd f1_eqcomd f2_eqcomd p_eqcom f0_eqcomd f1_eqcomd f2_eqcomd a_wceq f2_eqcomd f1_eqcomd a_wceq p_sylib $.
 $}
-$( Equality implies equivalence of equalities.  (Contributed by NM,
+
+$(Equality implies equivalence of equalities.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	ieqeq1_0 $f set x $.
-	feqeq1_0 $f class A $.
-	feqeq1_1 $f class B $.
-	feqeq1_2 $f class C $.
-	eqeq1 $p |- ( A = B -> ( A = C <-> B = C ) ) $= feqeq1_0 feqeq1_1 wceq ieqeq1_0 sup_set_class feqeq1_0 wcel ieqeq1_0 sup_set_class feqeq1_2 wcel wb ieqeq1_0 wal ieqeq1_0 sup_set_class feqeq1_1 wcel ieqeq1_0 sup_set_class feqeq1_2 wcel wb ieqeq1_0 wal feqeq1_0 feqeq1_2 wceq feqeq1_1 feqeq1_2 wceq feqeq1_0 feqeq1_1 wceq ieqeq1_0 sup_set_class feqeq1_0 wcel ieqeq1_0 sup_set_class feqeq1_2 wcel wb ieqeq1_0 sup_set_class feqeq1_1 wcel ieqeq1_0 sup_set_class feqeq1_2 wcel wb ieqeq1_0 feqeq1_0 feqeq1_1 wceq ieqeq1_0 sup_set_class feqeq1_0 wcel ieqeq1_0 sup_set_class feqeq1_1 wcel ieqeq1_0 sup_set_class feqeq1_2 wcel feqeq1_0 feqeq1_1 wceq ieqeq1_0 sup_set_class feqeq1_0 wcel ieqeq1_0 sup_set_class feqeq1_1 wcel wb ieqeq1_0 feqeq1_0 feqeq1_1 wceq ieqeq1_0 sup_set_class feqeq1_0 wcel ieqeq1_0 sup_set_class feqeq1_1 wcel wb ieqeq1_0 wal ieqeq1_0 feqeq1_0 feqeq1_1 dfcleq biimpi 19.21bi bibi1d albidv ieqeq1_0 feqeq1_0 feqeq1_2 dfcleq ieqeq1_0 feqeq1_1 feqeq1_2 dfcleq 3bitr4g $.
+	$v A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_eqeq1 $f class A $.
+	f1_eqeq1 $f class B $.
+	f2_eqeq1 $f class C $.
+	i0_eqeq1 $f set x $.
+	p_eqeq1 $p |- ( A = B -> ( A = C <-> B = C ) ) $= i0_eqeq1 f0_eqeq1 f1_eqeq1 p_dfcleq f0_eqeq1 f1_eqeq1 a_wceq i0_eqeq1 a_sup_set_class f0_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f1_eqeq1 a_wcel a_wb i0_eqeq1 a_wal p_biimpi f0_eqeq1 f1_eqeq1 a_wceq i0_eqeq1 a_sup_set_class f0_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f1_eqeq1 a_wcel a_wb i0_eqeq1 p_19.21bi f0_eqeq1 f1_eqeq1 a_wceq i0_eqeq1 a_sup_set_class f0_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f1_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f2_eqeq1 a_wcel p_bibi1d f0_eqeq1 f1_eqeq1 a_wceq i0_eqeq1 a_sup_set_class f0_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f2_eqeq1 a_wcel a_wb i0_eqeq1 a_sup_set_class f1_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f2_eqeq1 a_wcel a_wb i0_eqeq1 p_albidv i0_eqeq1 f0_eqeq1 f2_eqeq1 p_dfcleq i0_eqeq1 f1_eqeq1 f2_eqeq1 p_dfcleq f0_eqeq1 f1_eqeq1 a_wceq i0_eqeq1 a_sup_set_class f0_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f2_eqeq1 a_wcel a_wb i0_eqeq1 a_wal i0_eqeq1 a_sup_set_class f1_eqeq1 a_wcel i0_eqeq1 a_sup_set_class f2_eqeq1 a_wcel a_wb i0_eqeq1 a_wal f0_eqeq1 f2_eqeq1 a_wceq f1_eqeq1 f2_eqeq1 a_wceq p_3bitr4g $.
 $}
-$( Inference from equality to equivalence of equalities.  (Contributed by
+
+$(Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeq1i_0 $f class A $.
-	feqeq1i_1 $f class B $.
-	feqeq1i_2 $f class C $.
-	eeqeq1i_0 $e |- A = B $.
-	eqeq1i $p |- ( A = C <-> B = C ) $= feqeq1i_0 feqeq1i_1 wceq feqeq1i_0 feqeq1i_2 wceq feqeq1i_1 feqeq1i_2 wceq wb eeqeq1i_0 feqeq1i_0 feqeq1i_1 feqeq1i_2 eqeq1 ax-mp $.
+	$v A B C  $.
+	f0_eqeq1i $f class A $.
+	f1_eqeq1i $f class B $.
+	f2_eqeq1i $f class C $.
+	e0_eqeq1i $e |- A = B $.
+	p_eqeq1i $p |- ( A = C <-> B = C ) $= e0_eqeq1i f0_eqeq1i f1_eqeq1i f2_eqeq1i p_eqeq1 f0_eqeq1i f1_eqeq1i a_wceq f0_eqeq1i f2_eqeq1i a_wceq f1_eqeq1i f2_eqeq1i a_wceq a_wb a_ax-mp $.
 $}
-$( Deduction from equality to equivalence of equalities.  (Contributed by
+
+$(Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeq1d_0 $f wff ph $.
-	feqeq1d_1 $f class A $.
-	feqeq1d_2 $f class B $.
-	feqeq1d_3 $f class C $.
-	eeqeq1d_0 $e |- ( ph -> A = B ) $.
-	eqeq1d $p |- ( ph -> ( A = C <-> B = C ) ) $= feqeq1d_0 feqeq1d_1 feqeq1d_2 wceq feqeq1d_1 feqeq1d_3 wceq feqeq1d_2 feqeq1d_3 wceq wb eeqeq1d_0 feqeq1d_1 feqeq1d_2 feqeq1d_3 eqeq1 syl $.
+	$v ph A B C  $.
+	f0_eqeq1d $f wff ph $.
+	f1_eqeq1d $f class A $.
+	f2_eqeq1d $f class B $.
+	f3_eqeq1d $f class C $.
+	e0_eqeq1d $e |- ( ph -> A = B ) $.
+	p_eqeq1d $p |- ( ph -> ( A = C <-> B = C ) ) $= e0_eqeq1d f1_eqeq1d f2_eqeq1d f3_eqeq1d p_eqeq1 f0_eqeq1d f1_eqeq1d f2_eqeq1d a_wceq f1_eqeq1d f3_eqeq1d a_wceq f2_eqeq1d f3_eqeq1d a_wceq a_wb p_syl $.
 $}
-$( Equality implies equivalence of equalities.  (Contributed by NM,
+
+$(Equality implies equivalence of equalities.  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeq2_0 $f class A $.
-	feqeq2_1 $f class B $.
-	feqeq2_2 $f class C $.
-	eqeq2 $p |- ( A = B -> ( C = A <-> C = B ) ) $= feqeq2_0 feqeq2_1 wceq feqeq2_0 feqeq2_2 wceq feqeq2_1 feqeq2_2 wceq feqeq2_2 feqeq2_0 wceq feqeq2_2 feqeq2_1 wceq feqeq2_0 feqeq2_1 feqeq2_2 eqeq1 feqeq2_2 feqeq2_0 eqcom feqeq2_2 feqeq2_1 eqcom 3bitr4g $.
+	$v A B C  $.
+	f0_eqeq2 $f class A $.
+	f1_eqeq2 $f class B $.
+	f2_eqeq2 $f class C $.
+	p_eqeq2 $p |- ( A = B -> ( C = A <-> C = B ) ) $= f0_eqeq2 f1_eqeq2 f2_eqeq2 p_eqeq1 f2_eqeq2 f0_eqeq2 p_eqcom f2_eqeq2 f1_eqeq2 p_eqcom f0_eqeq2 f1_eqeq2 a_wceq f0_eqeq2 f2_eqeq2 a_wceq f1_eqeq2 f2_eqeq2 a_wceq f2_eqeq2 f0_eqeq2 a_wceq f2_eqeq2 f1_eqeq2 a_wceq p_3bitr4g $.
 $}
-$( Inference from equality to equivalence of equalities.  (Contributed by
+
+$(Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeq2i_0 $f class A $.
-	feqeq2i_1 $f class B $.
-	feqeq2i_2 $f class C $.
-	eeqeq2i_0 $e |- A = B $.
-	eqeq2i $p |- ( C = A <-> C = B ) $= feqeq2i_0 feqeq2i_1 wceq feqeq2i_2 feqeq2i_0 wceq feqeq2i_2 feqeq2i_1 wceq wb eeqeq2i_0 feqeq2i_0 feqeq2i_1 feqeq2i_2 eqeq2 ax-mp $.
+	$v A B C  $.
+	f0_eqeq2i $f class A $.
+	f1_eqeq2i $f class B $.
+	f2_eqeq2i $f class C $.
+	e0_eqeq2i $e |- A = B $.
+	p_eqeq2i $p |- ( C = A <-> C = B ) $= e0_eqeq2i f0_eqeq2i f1_eqeq2i f2_eqeq2i p_eqeq2 f0_eqeq2i f1_eqeq2i a_wceq f2_eqeq2i f0_eqeq2i a_wceq f2_eqeq2i f1_eqeq2i a_wceq a_wb a_ax-mp $.
 $}
-$( Deduction from equality to equivalence of equalities.  (Contributed by
+
+$(Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeq2d_0 $f wff ph $.
-	feqeq2d_1 $f class A $.
-	feqeq2d_2 $f class B $.
-	feqeq2d_3 $f class C $.
-	eeqeq2d_0 $e |- ( ph -> A = B ) $.
-	eqeq2d $p |- ( ph -> ( C = A <-> C = B ) ) $= feqeq2d_0 feqeq2d_1 feqeq2d_2 wceq feqeq2d_3 feqeq2d_1 wceq feqeq2d_3 feqeq2d_2 wceq wb eeqeq2d_0 feqeq2d_1 feqeq2d_2 feqeq2d_3 eqeq2 syl $.
+	$v ph A B C  $.
+	f0_eqeq2d $f wff ph $.
+	f1_eqeq2d $f class A $.
+	f2_eqeq2d $f class B $.
+	f3_eqeq2d $f class C $.
+	e0_eqeq2d $e |- ( ph -> A = B ) $.
+	p_eqeq2d $p |- ( ph -> ( C = A <-> C = B ) ) $= e0_eqeq2d f1_eqeq2d f2_eqeq2d f3_eqeq2d p_eqeq2 f0_eqeq2d f1_eqeq2d f2_eqeq2d a_wceq f3_eqeq2d f1_eqeq2d a_wceq f3_eqeq2d f2_eqeq2d a_wceq a_wb p_syl $.
 $}
-$( Equality relationship among 4 classes.  (Contributed by NM,
+
+$(Equality relationship among 4 classes.  (Contributed by NM,
      3-Aug-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feqeq12_0 $f class A $.
-	feqeq12_1 $f class B $.
-	feqeq12_2 $f class C $.
-	feqeq12_3 $f class D $.
-	eqeq12 $p |- ( ( A = B /\ C = D ) -> ( A = C <-> B = D ) ) $= feqeq12_0 feqeq12_1 wceq feqeq12_0 feqeq12_2 wceq feqeq12_1 feqeq12_2 wceq feqeq12_2 feqeq12_3 wceq feqeq12_1 feqeq12_3 wceq feqeq12_0 feqeq12_1 feqeq12_2 eqeq1 feqeq12_2 feqeq12_3 feqeq12_1 eqeq2 sylan9bb $.
+	$v A B C D  $.
+	f0_eqeq12 $f class A $.
+	f1_eqeq12 $f class B $.
+	f2_eqeq12 $f class C $.
+	f3_eqeq12 $f class D $.
+	p_eqeq12 $p |- ( ( A = B /\ C = D ) -> ( A = C <-> B = D ) ) $= f0_eqeq12 f1_eqeq12 f2_eqeq12 p_eqeq1 f2_eqeq12 f3_eqeq12 f1_eqeq12 p_eqeq2 f0_eqeq12 f1_eqeq12 a_wceq f0_eqeq12 f2_eqeq12 a_wceq f1_eqeq12 f2_eqeq12 a_wceq f2_eqeq12 f3_eqeq12 a_wceq f1_eqeq12 f3_eqeq12 a_wceq p_sylan9bb $.
 $}
-$( A useful inference for substituting definitions into an equality.
+
+$(A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feqeq12i_0 $f class A $.
-	feqeq12i_1 $f class B $.
-	feqeq12i_2 $f class C $.
-	feqeq12i_3 $f class D $.
-	eeqeq12i_0 $e |- A = B $.
-	eeqeq12i_1 $e |- C = D $.
-	eqeq12i $p |- ( A = C <-> B = D ) $= feqeq12i_0 feqeq12i_1 wceq feqeq12i_2 feqeq12i_3 wceq feqeq12i_0 feqeq12i_2 wceq feqeq12i_1 feqeq12i_3 wceq wb eeqeq12i_0 eeqeq12i_1 feqeq12i_0 feqeq12i_1 feqeq12i_2 feqeq12i_3 eqeq12 mp2an $.
+	$v A B C D  $.
+	f0_eqeq12i $f class A $.
+	f1_eqeq12i $f class B $.
+	f2_eqeq12i $f class C $.
+	f3_eqeq12i $f class D $.
+	e0_eqeq12i $e |- A = B $.
+	e1_eqeq12i $e |- C = D $.
+	p_eqeq12i $p |- ( A = C <-> B = D ) $= e0_eqeq12i e1_eqeq12i f0_eqeq12i f1_eqeq12i f2_eqeq12i f3_eqeq12i p_eqeq12 f0_eqeq12i f1_eqeq12i a_wceq f2_eqeq12i f3_eqeq12i a_wceq f0_eqeq12i f2_eqeq12i a_wceq f1_eqeq12i f3_eqeq12i a_wceq a_wb p_mp2an $.
 $}
-$( Theorem eqeq12i is the congruence law for equality. $)
-$( $j congruence 'eqeq12i'; $)
-$( A useful inference for substituting definitions into an equality.
+
+$(Theorem eqeq12i is the congruence law for equality. $)
+
+$($j congruence 'eqeq12i'; $)
+
+$(A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feqeq12d_0 $f wff ph $.
-	feqeq12d_1 $f class A $.
-	feqeq12d_2 $f class B $.
-	feqeq12d_3 $f class C $.
-	feqeq12d_4 $f class D $.
-	eeqeq12d_0 $e |- ( ph -> A = B ) $.
-	eeqeq12d_1 $e |- ( ph -> C = D ) $.
-	eqeq12d $p |- ( ph -> ( A = C <-> B = D ) ) $= feqeq12d_0 feqeq12d_1 feqeq12d_2 wceq feqeq12d_3 feqeq12d_4 wceq feqeq12d_1 feqeq12d_3 wceq feqeq12d_2 feqeq12d_4 wceq wb eeqeq12d_0 eeqeq12d_1 feqeq12d_1 feqeq12d_2 feqeq12d_3 feqeq12d_4 eqeq12 syl2anc $.
+	$v ph A B C D  $.
+	f0_eqeq12d $f wff ph $.
+	f1_eqeq12d $f class A $.
+	f2_eqeq12d $f class B $.
+	f3_eqeq12d $f class C $.
+	f4_eqeq12d $f class D $.
+	e0_eqeq12d $e |- ( ph -> A = B ) $.
+	e1_eqeq12d $e |- ( ph -> C = D ) $.
+	p_eqeq12d $p |- ( ph -> ( A = C <-> B = D ) ) $= e0_eqeq12d e1_eqeq12d f1_eqeq12d f2_eqeq12d f3_eqeq12d f4_eqeq12d p_eqeq12 f0_eqeq12d f1_eqeq12d f2_eqeq12d a_wceq f3_eqeq12d f4_eqeq12d a_wceq f1_eqeq12d f3_eqeq12d a_wceq f2_eqeq12d f4_eqeq12d a_wceq a_wb p_syl2anc $.
 $}
-$( A useful inference for substituting definitions into an equality.
+
+$(A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feqeqan12d_0 $f wff ph $.
-	feqeqan12d_1 $f wff ps $.
-	feqeqan12d_2 $f class A $.
-	feqeqan12d_3 $f class B $.
-	feqeqan12d_4 $f class C $.
-	feqeqan12d_5 $f class D $.
-	eeqeqan12d_0 $e |- ( ph -> A = B ) $.
-	eeqeqan12d_1 $e |- ( ps -> C = D ) $.
-	eqeqan12d $p |- ( ( ph /\ ps ) -> ( A = C <-> B = D ) ) $= feqeqan12d_0 feqeqan12d_2 feqeqan12d_3 wceq feqeqan12d_4 feqeqan12d_5 wceq feqeqan12d_2 feqeqan12d_4 wceq feqeqan12d_3 feqeqan12d_5 wceq wb feqeqan12d_1 eeqeqan12d_0 eeqeqan12d_1 feqeqan12d_2 feqeqan12d_3 feqeqan12d_4 feqeqan12d_5 eqeq12 syl2an $.
+	$v ph ps A B C D  $.
+	f0_eqeqan12d $f wff ph $.
+	f1_eqeqan12d $f wff ps $.
+	f2_eqeqan12d $f class A $.
+	f3_eqeqan12d $f class B $.
+	f4_eqeqan12d $f class C $.
+	f5_eqeqan12d $f class D $.
+	e0_eqeqan12d $e |- ( ph -> A = B ) $.
+	e1_eqeqan12d $e |- ( ps -> C = D ) $.
+	p_eqeqan12d $p |- ( ( ph /\ ps ) -> ( A = C <-> B = D ) ) $= e0_eqeqan12d e1_eqeqan12d f2_eqeqan12d f3_eqeqan12d f4_eqeqan12d f5_eqeqan12d p_eqeq12 f0_eqeqan12d f2_eqeqan12d f3_eqeqan12d a_wceq f4_eqeqan12d f5_eqeqan12d a_wceq f2_eqeqan12d f4_eqeqan12d a_wceq f3_eqeqan12d f5_eqeqan12d a_wceq a_wb f1_eqeqan12d p_syl2an $.
 $}
-$( A useful inference for substituting definitions into an equality.
+
+$(A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feqeqan12rd_0 $f wff ph $.
-	feqeqan12rd_1 $f wff ps $.
-	feqeqan12rd_2 $f class A $.
-	feqeqan12rd_3 $f class B $.
-	feqeqan12rd_4 $f class C $.
-	feqeqan12rd_5 $f class D $.
-	eeqeqan12rd_0 $e |- ( ph -> A = B ) $.
-	eeqeqan12rd_1 $e |- ( ps -> C = D ) $.
-	eqeqan12rd $p |- ( ( ps /\ ph ) -> ( A = C <-> B = D ) ) $= feqeqan12rd_0 feqeqan12rd_1 feqeqan12rd_2 feqeqan12rd_4 wceq feqeqan12rd_3 feqeqan12rd_5 wceq wb feqeqan12rd_0 feqeqan12rd_1 feqeqan12rd_2 feqeqan12rd_3 feqeqan12rd_4 feqeqan12rd_5 eeqeqan12rd_0 eeqeqan12rd_1 eqeqan12d ancoms $.
+	$v ph ps A B C D  $.
+	f0_eqeqan12rd $f wff ph $.
+	f1_eqeqan12rd $f wff ps $.
+	f2_eqeqan12rd $f class A $.
+	f3_eqeqan12rd $f class B $.
+	f4_eqeqan12rd $f class C $.
+	f5_eqeqan12rd $f class D $.
+	e0_eqeqan12rd $e |- ( ph -> A = B ) $.
+	e1_eqeqan12rd $e |- ( ps -> C = D ) $.
+	p_eqeqan12rd $p |- ( ( ps /\ ph ) -> ( A = C <-> B = D ) ) $= e0_eqeqan12rd e1_eqeqan12rd f0_eqeqan12rd f1_eqeqan12rd f2_eqeqan12rd f3_eqeqan12rd f4_eqeqan12rd f5_eqeqan12rd p_eqeqan12d f0_eqeqan12rd f1_eqeqan12rd f2_eqeqan12rd f4_eqeqan12rd a_wceq f3_eqeqan12rd f5_eqeqan12rd a_wceq a_wb p_ancoms $.
 $}
-$( Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
+
+$(Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
      p. 13.  (Contributed by NM, 25-Jan-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr_0 $f class A $.
-	feqtr_1 $f class B $.
-	feqtr_2 $f class C $.
-	eqtr $p |- ( ( A = B /\ B = C ) -> A = C ) $= feqtr_0 feqtr_1 wceq feqtr_0 feqtr_2 wceq feqtr_1 feqtr_2 wceq feqtr_0 feqtr_1 feqtr_2 eqeq1 biimpar $.
+	$v A B C  $.
+	f0_eqtr $f class A $.
+	f1_eqtr $f class B $.
+	f2_eqtr $f class C $.
+	p_eqtr $p |- ( ( A = B /\ B = C ) -> A = C ) $= f0_eqtr f1_eqtr f2_eqtr p_eqeq1 f0_eqtr f1_eqtr a_wceq f0_eqtr f2_eqtr a_wceq f1_eqtr f2_eqtr a_wceq p_biimpar $.
 $}
-$( A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
+
+$(A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr2_0 $f class A $.
-	feqtr2_1 $f class B $.
-	feqtr2_2 $f class C $.
-	eqtr2 $p |- ( ( A = B /\ A = C ) -> B = C ) $= feqtr2_0 feqtr2_1 wceq feqtr2_1 feqtr2_0 wceq feqtr2_0 feqtr2_2 wceq feqtr2_1 feqtr2_2 wceq feqtr2_0 feqtr2_1 eqcom feqtr2_1 feqtr2_0 feqtr2_2 eqtr sylanb $.
+	$v A B C  $.
+	f0_eqtr2 $f class A $.
+	f1_eqtr2 $f class B $.
+	f2_eqtr2 $f class C $.
+	p_eqtr2 $p |- ( ( A = B /\ A = C ) -> B = C ) $= f0_eqtr2 f1_eqtr2 p_eqcom f1_eqtr2 f0_eqtr2 f2_eqtr2 p_eqtr f0_eqtr2 f1_eqtr2 a_wceq f1_eqtr2 f0_eqtr2 a_wceq f0_eqtr2 f2_eqtr2 a_wceq f1_eqtr2 f2_eqtr2 a_wceq p_sylanb $.
 $}
-$( A transitive law for class equality.  (Contributed by NM, 20-May-2005.) $)
+
+$(A transitive law for class equality.  (Contributed by NM, 20-May-2005.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr3_0 $f class A $.
-	feqtr3_1 $f class B $.
-	feqtr3_2 $f class C $.
-	eqtr3 $p |- ( ( A = C /\ B = C ) -> A = B ) $= feqtr3_1 feqtr3_2 wceq feqtr3_0 feqtr3_2 wceq feqtr3_2 feqtr3_1 wceq feqtr3_0 feqtr3_1 wceq feqtr3_1 feqtr3_2 eqcom feqtr3_0 feqtr3_2 feqtr3_1 eqtr sylan2b $.
+	$v A B C  $.
+	f0_eqtr3 $f class A $.
+	f1_eqtr3 $f class B $.
+	f2_eqtr3 $f class C $.
+	p_eqtr3 $p |- ( ( A = C /\ B = C ) -> A = B ) $= f1_eqtr3 f2_eqtr3 p_eqcom f0_eqtr3 f2_eqtr3 f1_eqtr3 p_eqtr f1_eqtr3 f2_eqtr3 a_wceq f0_eqtr3 f2_eqtr3 a_wceq f2_eqtr3 f1_eqtr3 a_wceq f0_eqtr3 f1_eqtr3 a_wceq p_sylan2b $.
 $}
-$( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtri_0 $f class A $.
-	feqtri_1 $f class B $.
-	feqtri_2 $f class C $.
-	eeqtri_0 $e |- A = B $.
-	eeqtri_1 $e |- B = C $.
-	eqtri $p |- A = C $= feqtri_0 feqtri_1 wceq feqtri_0 feqtri_2 wceq eeqtri_0 feqtri_1 feqtri_2 feqtri_0 eeqtri_1 eqeq2i mpbi $.
+	$v A B C  $.
+	f0_eqtri $f class A $.
+	f1_eqtri $f class B $.
+	f2_eqtri $f class C $.
+	e0_eqtri $e |- A = B $.
+	e1_eqtri $e |- B = C $.
+	p_eqtri $p |- A = C $= e0_eqtri e1_eqtri f1_eqtri f2_eqtri f0_eqtri p_eqeq2i f0_eqtri f1_eqtri a_wceq f0_eqtri f2_eqtri a_wceq p_mpbi $.
 $}
-$( An equality transitivity inference.  (Contributed by NM,
+
+$(An equality transitivity inference.  (Contributed by NM,
        21-Feb-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr2i_0 $f class A $.
-	feqtr2i_1 $f class B $.
-	feqtr2i_2 $f class C $.
-	eeqtr2i_0 $e |- A = B $.
-	eeqtr2i_1 $e |- B = C $.
-	eqtr2i $p |- C = A $= feqtr2i_0 feqtr2i_2 feqtr2i_0 feqtr2i_1 feqtr2i_2 eeqtr2i_0 eeqtr2i_1 eqtri eqcomi $.
+	$v A B C  $.
+	f0_eqtr2i $f class A $.
+	f1_eqtr2i $f class B $.
+	f2_eqtr2i $f class C $.
+	e0_eqtr2i $e |- A = B $.
+	e1_eqtr2i $e |- B = C $.
+	p_eqtr2i $p |- C = A $= e0_eqtr2i e1_eqtr2i f0_eqtr2i f1_eqtr2i f2_eqtr2i p_eqtri f0_eqtr2i f2_eqtr2i p_eqcomi $.
 $}
-$( An equality transitivity inference.  (Contributed by NM, 6-May-1994.) $)
+
+$(An equality transitivity inference.  (Contributed by NM, 6-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr3i_0 $f class A $.
-	feqtr3i_1 $f class B $.
-	feqtr3i_2 $f class C $.
-	eeqtr3i_0 $e |- A = B $.
-	eeqtr3i_1 $e |- A = C $.
-	eqtr3i $p |- B = C $= feqtr3i_1 feqtr3i_0 feqtr3i_2 feqtr3i_0 feqtr3i_1 eeqtr3i_0 eqcomi eeqtr3i_1 eqtri $.
+	$v A B C  $.
+	f0_eqtr3i $f class A $.
+	f1_eqtr3i $f class B $.
+	f2_eqtr3i $f class C $.
+	e0_eqtr3i $e |- A = B $.
+	e1_eqtr3i $e |- A = C $.
+	p_eqtr3i $p |- B = C $= e0_eqtr3i f0_eqtr3i f1_eqtr3i p_eqcomi e1_eqtr3i f1_eqtr3i f0_eqtr3i f2_eqtr3i p_eqtri $.
 $}
-$( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr4i_0 $f class A $.
-	feqtr4i_1 $f class B $.
-	feqtr4i_2 $f class C $.
-	eeqtr4i_0 $e |- A = B $.
-	eeqtr4i_1 $e |- C = B $.
-	eqtr4i $p |- A = C $= feqtr4i_0 feqtr4i_1 feqtr4i_2 eeqtr4i_0 feqtr4i_2 feqtr4i_1 eeqtr4i_1 eqcomi eqtri $.
+	$v A B C  $.
+	f0_eqtr4i $f class A $.
+	f1_eqtr4i $f class B $.
+	f2_eqtr4i $f class C $.
+	e0_eqtr4i $e |- A = B $.
+	e1_eqtr4i $e |- C = B $.
+	p_eqtr4i $p |- A = C $= e0_eqtr4i e1_eqtr4i f2_eqtr4i f1_eqtr4i p_eqcomi f0_eqtr4i f1_eqtr4i f2_eqtr4i p_eqtri $.
 $}
-$( Register '=' as an equality for its type (class). $)
-$( $j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; $)
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(Register '=' as an equality for its type (class). $)
+
+$($j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; $)
+
+$(An inference from three chained equalities.  (Contributed by NM,
        29-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtri_0 $f class A $.
-	f3eqtri_1 $f class B $.
-	f3eqtri_2 $f class C $.
-	f3eqtri_3 $f class D $.
-	e3eqtri_0 $e |- A = B $.
-	e3eqtri_1 $e |- B = C $.
-	e3eqtri_2 $e |- C = D $.
-	3eqtri $p |- A = D $= f3eqtri_0 f3eqtri_1 f3eqtri_3 e3eqtri_0 f3eqtri_1 f3eqtri_2 f3eqtri_3 e3eqtri_1 e3eqtri_2 eqtri eqtri $.
+	$v A B C D  $.
+	f0_3eqtri $f class A $.
+	f1_3eqtri $f class B $.
+	f2_3eqtri $f class C $.
+	f3_3eqtri $f class D $.
+	e0_3eqtri $e |- A = B $.
+	e1_3eqtri $e |- B = C $.
+	e2_3eqtri $e |- C = D $.
+	p_3eqtri $p |- A = D $= e0_3eqtri e1_3eqtri e2_3eqtri f1_3eqtri f2_3eqtri f3_3eqtri p_eqtri f0_3eqtri f1_3eqtri f3_3eqtri p_eqtri $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtrri_0 $f class A $.
-	f3eqtrri_1 $f class B $.
-	f3eqtrri_2 $f class C $.
-	f3eqtrri_3 $f class D $.
-	e3eqtrri_0 $e |- A = B $.
-	e3eqtrri_1 $e |- B = C $.
-	e3eqtrri_2 $e |- C = D $.
-	3eqtrri $p |- D = A $= f3eqtrri_0 f3eqtrri_2 f3eqtrri_3 f3eqtrri_0 f3eqtrri_1 f3eqtrri_2 e3eqtrri_0 e3eqtrri_1 eqtri e3eqtrri_2 eqtr2i $.
+	$v A B C D  $.
+	f0_3eqtrri $f class A $.
+	f1_3eqtrri $f class B $.
+	f2_3eqtrri $f class C $.
+	f3_3eqtrri $f class D $.
+	e0_3eqtrri $e |- A = B $.
+	e1_3eqtrri $e |- B = C $.
+	e2_3eqtrri $e |- C = D $.
+	p_3eqtrri $p |- D = A $= e0_3eqtrri e1_3eqtrri f0_3eqtrri f1_3eqtrri f2_3eqtrri p_eqtri e2_3eqtrri f0_3eqtrri f2_3eqtrri f3_3eqtrri p_eqtr2i $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr2i_0 $f class A $.
-	f3eqtr2i_1 $f class B $.
-	f3eqtr2i_2 $f class C $.
-	f3eqtr2i_3 $f class D $.
-	e3eqtr2i_0 $e |- A = B $.
-	e3eqtr2i_1 $e |- C = B $.
-	e3eqtr2i_2 $e |- C = D $.
-	3eqtr2i $p |- A = D $= f3eqtr2i_0 f3eqtr2i_2 f3eqtr2i_3 f3eqtr2i_0 f3eqtr2i_1 f3eqtr2i_2 e3eqtr2i_0 e3eqtr2i_1 eqtr4i e3eqtr2i_2 eqtri $.
+	$v A B C D  $.
+	f0_3eqtr2i $f class A $.
+	f1_3eqtr2i $f class B $.
+	f2_3eqtr2i $f class C $.
+	f3_3eqtr2i $f class D $.
+	e0_3eqtr2i $e |- A = B $.
+	e1_3eqtr2i $e |- C = B $.
+	e2_3eqtr2i $e |- C = D $.
+	p_3eqtr2i $p |- A = D $= e0_3eqtr2i e1_3eqtr2i f0_3eqtr2i f1_3eqtr2i f2_3eqtr2i p_eqtr4i e2_3eqtr2i f0_3eqtr2i f2_3eqtr2i f3_3eqtr2i p_eqtri $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr2ri_0 $f class A $.
-	f3eqtr2ri_1 $f class B $.
-	f3eqtr2ri_2 $f class C $.
-	f3eqtr2ri_3 $f class D $.
-	e3eqtr2ri_0 $e |- A = B $.
-	e3eqtr2ri_1 $e |- C = B $.
-	e3eqtr2ri_2 $e |- C = D $.
-	3eqtr2ri $p |- D = A $= f3eqtr2ri_0 f3eqtr2ri_2 f3eqtr2ri_3 f3eqtr2ri_0 f3eqtr2ri_1 f3eqtr2ri_2 e3eqtr2ri_0 e3eqtr2ri_1 eqtr4i e3eqtr2ri_2 eqtr2i $.
+	$v A B C D  $.
+	f0_3eqtr2ri $f class A $.
+	f1_3eqtr2ri $f class B $.
+	f2_3eqtr2ri $f class C $.
+	f3_3eqtr2ri $f class D $.
+	e0_3eqtr2ri $e |- A = B $.
+	e1_3eqtr2ri $e |- C = B $.
+	e2_3eqtr2ri $e |- C = D $.
+	p_3eqtr2ri $p |- D = A $= e0_3eqtr2ri e1_3eqtr2ri f0_3eqtr2ri f1_3eqtr2ri f2_3eqtr2ri p_eqtr4i e2_3eqtr2ri f0_3eqtr2ri f2_3eqtr2ri f3_3eqtr2ri p_eqtr2i $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        6-May-1994.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3i_0 $f class A $.
-	f3eqtr3i_1 $f class B $.
-	f3eqtr3i_2 $f class C $.
-	f3eqtr3i_3 $f class D $.
-	e3eqtr3i_0 $e |- A = B $.
-	e3eqtr3i_1 $e |- A = C $.
-	e3eqtr3i_2 $e |- B = D $.
-	3eqtr3i $p |- C = D $= f3eqtr3i_1 f3eqtr3i_2 f3eqtr3i_3 f3eqtr3i_0 f3eqtr3i_1 f3eqtr3i_2 e3eqtr3i_0 e3eqtr3i_1 eqtr3i e3eqtr3i_2 eqtr3i $.
+	$v A B C D  $.
+	f0_3eqtr3i $f class A $.
+	f1_3eqtr3i $f class B $.
+	f2_3eqtr3i $f class C $.
+	f3_3eqtr3i $f class D $.
+	e0_3eqtr3i $e |- A = B $.
+	e1_3eqtr3i $e |- A = C $.
+	e2_3eqtr3i $e |- B = D $.
+	p_3eqtr3i $p |- C = D $= e0_3eqtr3i e1_3eqtr3i f0_3eqtr3i f1_3eqtr3i f2_3eqtr3i p_eqtr3i e2_3eqtr3i f1_3eqtr3i f2_3eqtr3i f3_3eqtr3i p_eqtr3i $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        15-Aug-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3ri_0 $f class A $.
-	f3eqtr3ri_1 $f class B $.
-	f3eqtr3ri_2 $f class C $.
-	f3eqtr3ri_3 $f class D $.
-	e3eqtr3ri_0 $e |- A = B $.
-	e3eqtr3ri_1 $e |- A = C $.
-	e3eqtr3ri_2 $e |- B = D $.
-	3eqtr3ri $p |- D = C $= f3eqtr3ri_1 f3eqtr3ri_3 f3eqtr3ri_2 e3eqtr3ri_2 f3eqtr3ri_0 f3eqtr3ri_1 f3eqtr3ri_2 e3eqtr3ri_0 e3eqtr3ri_1 eqtr3i eqtr3i $.
+	$v A B C D  $.
+	f0_3eqtr3ri $f class A $.
+	f1_3eqtr3ri $f class B $.
+	f2_3eqtr3ri $f class C $.
+	f3_3eqtr3ri $f class D $.
+	e0_3eqtr3ri $e |- A = B $.
+	e1_3eqtr3ri $e |- A = C $.
+	e2_3eqtr3ri $e |- B = D $.
+	p_3eqtr3ri $p |- D = C $= e2_3eqtr3ri e0_3eqtr3ri e1_3eqtr3ri f0_3eqtr3ri f1_3eqtr3ri f2_3eqtr3ri p_eqtr3i f1_3eqtr3ri f3_3eqtr3ri f2_3eqtr3ri p_eqtr3i $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4i_0 $f class A $.
-	f3eqtr4i_1 $f class B $.
-	f3eqtr4i_2 $f class C $.
-	f3eqtr4i_3 $f class D $.
-	e3eqtr4i_0 $e |- A = B $.
-	e3eqtr4i_1 $e |- C = A $.
-	e3eqtr4i_2 $e |- D = B $.
-	3eqtr4i $p |- C = D $= f3eqtr4i_2 f3eqtr4i_0 f3eqtr4i_3 e3eqtr4i_1 f3eqtr4i_3 f3eqtr4i_1 f3eqtr4i_0 e3eqtr4i_2 e3eqtr4i_0 eqtr4i eqtr4i $.
+	$v A B C D  $.
+	f0_3eqtr4i $f class A $.
+	f1_3eqtr4i $f class B $.
+	f2_3eqtr4i $f class C $.
+	f3_3eqtr4i $f class D $.
+	e0_3eqtr4i $e |- A = B $.
+	e1_3eqtr4i $e |- C = A $.
+	e2_3eqtr4i $e |- D = B $.
+	p_3eqtr4i $p |- C = D $= e1_3eqtr4i e2_3eqtr4i e0_3eqtr4i f3_3eqtr4i f1_3eqtr4i f0_3eqtr4i p_eqtr4i f2_3eqtr4i f0_3eqtr4i f3_3eqtr4i p_eqtr4i $.
 $}
-$( An inference from three chained equalities.  (Contributed by NM,
+
+$(An inference from three chained equalities.  (Contributed by NM,
        2-Sep-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4ri_0 $f class A $.
-	f3eqtr4ri_1 $f class B $.
-	f3eqtr4ri_2 $f class C $.
-	f3eqtr4ri_3 $f class D $.
-	e3eqtr4ri_0 $e |- A = B $.
-	e3eqtr4ri_1 $e |- C = A $.
-	e3eqtr4ri_2 $e |- D = B $.
-	3eqtr4ri $p |- D = C $= f3eqtr4ri_3 f3eqtr4ri_0 f3eqtr4ri_2 f3eqtr4ri_3 f3eqtr4ri_1 f3eqtr4ri_0 e3eqtr4ri_2 e3eqtr4ri_0 eqtr4i e3eqtr4ri_1 eqtr4i $.
+	$v A B C D  $.
+	f0_3eqtr4ri $f class A $.
+	f1_3eqtr4ri $f class B $.
+	f2_3eqtr4ri $f class C $.
+	f3_3eqtr4ri $f class D $.
+	e0_3eqtr4ri $e |- A = B $.
+	e1_3eqtr4ri $e |- C = A $.
+	e2_3eqtr4ri $e |- D = B $.
+	p_3eqtr4ri $p |- D = C $= e2_3eqtr4ri e0_3eqtr4ri f3_3eqtr4ri f1_3eqtr4ri f0_3eqtr4ri p_eqtr4i e1_3eqtr4ri f3_3eqtr4ri f0_3eqtr4ri f2_3eqtr4ri p_eqtr4i $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtrd_0 $f wff ph $.
-	feqtrd_1 $f class A $.
-	feqtrd_2 $f class B $.
-	feqtrd_3 $f class C $.
-	eeqtrd_0 $e |- ( ph -> A = B ) $.
-	eeqtrd_1 $e |- ( ph -> B = C ) $.
-	eqtrd $p |- ( ph -> A = C ) $= feqtrd_0 feqtrd_1 feqtrd_2 wceq feqtrd_1 feqtrd_3 wceq eeqtrd_0 feqtrd_0 feqtrd_2 feqtrd_3 feqtrd_1 eeqtrd_1 eqeq2d mpbid $.
+	$v ph A B C  $.
+	f0_eqtrd $f wff ph $.
+	f1_eqtrd $f class A $.
+	f2_eqtrd $f class B $.
+	f3_eqtrd $f class C $.
+	e0_eqtrd $e |- ( ph -> A = B ) $.
+	e1_eqtrd $e |- ( ph -> B = C ) $.
+	p_eqtrd $p |- ( ph -> A = C ) $= e0_eqtrd e1_eqtrd f0_eqtrd f2_eqtrd f3_eqtrd f1_eqtrd p_eqeq2d f0_eqtrd f1_eqtrd f2_eqtrd a_wceq f1_eqtrd f3_eqtrd a_wceq p_mpbid $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        18-Oct-1999.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr2d_0 $f wff ph $.
-	feqtr2d_1 $f class A $.
-	feqtr2d_2 $f class B $.
-	feqtr2d_3 $f class C $.
-	eeqtr2d_0 $e |- ( ph -> A = B ) $.
-	eeqtr2d_1 $e |- ( ph -> B = C ) $.
-	eqtr2d $p |- ( ph -> C = A ) $= feqtr2d_0 feqtr2d_1 feqtr2d_3 feqtr2d_0 feqtr2d_1 feqtr2d_2 feqtr2d_3 eeqtr2d_0 eeqtr2d_1 eqtrd eqcomd $.
+	$v ph A B C  $.
+	f0_eqtr2d $f wff ph $.
+	f1_eqtr2d $f class A $.
+	f2_eqtr2d $f class B $.
+	f3_eqtr2d $f class C $.
+	e0_eqtr2d $e |- ( ph -> A = B ) $.
+	e1_eqtr2d $e |- ( ph -> B = C ) $.
+	p_eqtr2d $p |- ( ph -> C = A ) $= e0_eqtr2d e1_eqtr2d f0_eqtr2d f1_eqtr2d f2_eqtr2d f3_eqtr2d p_eqtrd f0_eqtr2d f1_eqtr2d f3_eqtr2d p_eqcomd $.
 $}
-$( An equality transitivity equality deduction.  (Contributed by NM,
+
+$(An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr3d_0 $f wff ph $.
-	feqtr3d_1 $f class A $.
-	feqtr3d_2 $f class B $.
-	feqtr3d_3 $f class C $.
-	eeqtr3d_0 $e |- ( ph -> A = B ) $.
-	eeqtr3d_1 $e |- ( ph -> A = C ) $.
-	eqtr3d $p |- ( ph -> B = C ) $= feqtr3d_0 feqtr3d_2 feqtr3d_1 feqtr3d_3 feqtr3d_0 feqtr3d_1 feqtr3d_2 eeqtr3d_0 eqcomd eeqtr3d_1 eqtrd $.
+	$v ph A B C  $.
+	f0_eqtr3d $f wff ph $.
+	f1_eqtr3d $f class A $.
+	f2_eqtr3d $f class B $.
+	f3_eqtr3d $f class C $.
+	e0_eqtr3d $e |- ( ph -> A = B ) $.
+	e1_eqtr3d $e |- ( ph -> A = C ) $.
+	p_eqtr3d $p |- ( ph -> B = C ) $= e0_eqtr3d f0_eqtr3d f1_eqtr3d f2_eqtr3d p_eqcomd e1_eqtr3d f0_eqtr3d f2_eqtr3d f1_eqtr3d f3_eqtr3d p_eqtrd $.
 $}
-$( An equality transitivity equality deduction.  (Contributed by NM,
+
+$(An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqtr4d_0 $f wff ph $.
-	feqtr4d_1 $f class A $.
-	feqtr4d_2 $f class B $.
-	feqtr4d_3 $f class C $.
-	eeqtr4d_0 $e |- ( ph -> A = B ) $.
-	eeqtr4d_1 $e |- ( ph -> C = B ) $.
-	eqtr4d $p |- ( ph -> A = C ) $= feqtr4d_0 feqtr4d_1 feqtr4d_2 feqtr4d_3 eeqtr4d_0 feqtr4d_0 feqtr4d_3 feqtr4d_2 eeqtr4d_1 eqcomd eqtrd $.
+	$v ph A B C  $.
+	f0_eqtr4d $f wff ph $.
+	f1_eqtr4d $f class A $.
+	f2_eqtr4d $f class B $.
+	f3_eqtr4d $f class C $.
+	e0_eqtr4d $e |- ( ph -> A = B ) $.
+	e1_eqtr4d $e |- ( ph -> C = B ) $.
+	p_eqtr4d $p |- ( ph -> A = C ) $= e0_eqtr4d e1_eqtr4d f0_eqtr4d f3_eqtr4d f2_eqtr4d p_eqcomd f0_eqtr4d f1_eqtr4d f2_eqtr4d f3_eqtr4d p_eqtrd $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        29-Oct-1995.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtrd_0 $f wff ph $.
-	f3eqtrd_1 $f class A $.
-	f3eqtrd_2 $f class B $.
-	f3eqtrd_3 $f class C $.
-	f3eqtrd_4 $f class D $.
-	e3eqtrd_0 $e |- ( ph -> A = B ) $.
-	e3eqtrd_1 $e |- ( ph -> B = C ) $.
-	e3eqtrd_2 $e |- ( ph -> C = D ) $.
-	3eqtrd $p |- ( ph -> A = D ) $= f3eqtrd_0 f3eqtrd_1 f3eqtrd_2 f3eqtrd_4 e3eqtrd_0 f3eqtrd_0 f3eqtrd_2 f3eqtrd_3 f3eqtrd_4 e3eqtrd_1 e3eqtrd_2 eqtrd eqtrd $.
+	$v ph A B C D  $.
+	f0_3eqtrd $f wff ph $.
+	f1_3eqtrd $f class A $.
+	f2_3eqtrd $f class B $.
+	f3_3eqtrd $f class C $.
+	f4_3eqtrd $f class D $.
+	e0_3eqtrd $e |- ( ph -> A = B ) $.
+	e1_3eqtrd $e |- ( ph -> B = C ) $.
+	e2_3eqtrd $e |- ( ph -> C = D ) $.
+	p_3eqtrd $p |- ( ph -> A = D ) $= e0_3eqtrd e1_3eqtrd e2_3eqtrd f0_3eqtrd f2_3eqtrd f3_3eqtrd f4_3eqtrd p_eqtrd f0_3eqtrd f1_3eqtrd f2_3eqtrd f4_3eqtrd p_eqtrd $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtrrd_0 $f wff ph $.
-	f3eqtrrd_1 $f class A $.
-	f3eqtrrd_2 $f class B $.
-	f3eqtrrd_3 $f class C $.
-	f3eqtrrd_4 $f class D $.
-	e3eqtrrd_0 $e |- ( ph -> A = B ) $.
-	e3eqtrrd_1 $e |- ( ph -> B = C ) $.
-	e3eqtrrd_2 $e |- ( ph -> C = D ) $.
-	3eqtrrd $p |- ( ph -> D = A ) $= f3eqtrrd_0 f3eqtrrd_1 f3eqtrrd_3 f3eqtrrd_4 f3eqtrrd_0 f3eqtrrd_1 f3eqtrrd_2 f3eqtrrd_3 e3eqtrrd_0 e3eqtrrd_1 eqtrd e3eqtrrd_2 eqtr2d $.
+	$v ph A B C D  $.
+	f0_3eqtrrd $f wff ph $.
+	f1_3eqtrrd $f class A $.
+	f2_3eqtrrd $f class B $.
+	f3_3eqtrrd $f class C $.
+	f4_3eqtrrd $f class D $.
+	e0_3eqtrrd $e |- ( ph -> A = B ) $.
+	e1_3eqtrrd $e |- ( ph -> B = C ) $.
+	e2_3eqtrrd $e |- ( ph -> C = D ) $.
+	p_3eqtrrd $p |- ( ph -> D = A ) $= e0_3eqtrrd e1_3eqtrrd f0_3eqtrrd f1_3eqtrrd f2_3eqtrrd f3_3eqtrrd p_eqtrd e2_3eqtrrd f0_3eqtrrd f1_3eqtrrd f3_3eqtrrd f4_3eqtrrd p_eqtr2d $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr2d_0 $f wff ph $.
-	f3eqtr2d_1 $f class A $.
-	f3eqtr2d_2 $f class B $.
-	f3eqtr2d_3 $f class C $.
-	f3eqtr2d_4 $f class D $.
-	e3eqtr2d_0 $e |- ( ph -> A = B ) $.
-	e3eqtr2d_1 $e |- ( ph -> C = B ) $.
-	e3eqtr2d_2 $e |- ( ph -> C = D ) $.
-	3eqtr2d $p |- ( ph -> A = D ) $= f3eqtr2d_0 f3eqtr2d_1 f3eqtr2d_3 f3eqtr2d_4 f3eqtr2d_0 f3eqtr2d_1 f3eqtr2d_2 f3eqtr2d_3 e3eqtr2d_0 e3eqtr2d_1 eqtr4d e3eqtr2d_2 eqtrd $.
+	$v ph A B C D  $.
+	f0_3eqtr2d $f wff ph $.
+	f1_3eqtr2d $f class A $.
+	f2_3eqtr2d $f class B $.
+	f3_3eqtr2d $f class C $.
+	f4_3eqtr2d $f class D $.
+	e0_3eqtr2d $e |- ( ph -> A = B ) $.
+	e1_3eqtr2d $e |- ( ph -> C = B ) $.
+	e2_3eqtr2d $e |- ( ph -> C = D ) $.
+	p_3eqtr2d $p |- ( ph -> A = D ) $= e0_3eqtr2d e1_3eqtr2d f0_3eqtr2d f1_3eqtr2d f2_3eqtr2d f3_3eqtr2d p_eqtr4d e2_3eqtr2d f0_3eqtr2d f1_3eqtr2d f3_3eqtr2d f4_3eqtr2d p_eqtrd $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr2rd_0 $f wff ph $.
-	f3eqtr2rd_1 $f class A $.
-	f3eqtr2rd_2 $f class B $.
-	f3eqtr2rd_3 $f class C $.
-	f3eqtr2rd_4 $f class D $.
-	e3eqtr2rd_0 $e |- ( ph -> A = B ) $.
-	e3eqtr2rd_1 $e |- ( ph -> C = B ) $.
-	e3eqtr2rd_2 $e |- ( ph -> C = D ) $.
-	3eqtr2rd $p |- ( ph -> D = A ) $= f3eqtr2rd_0 f3eqtr2rd_1 f3eqtr2rd_3 f3eqtr2rd_4 f3eqtr2rd_0 f3eqtr2rd_1 f3eqtr2rd_2 f3eqtr2rd_3 e3eqtr2rd_0 e3eqtr2rd_1 eqtr4d e3eqtr2rd_2 eqtr2d $.
+	$v ph A B C D  $.
+	f0_3eqtr2rd $f wff ph $.
+	f1_3eqtr2rd $f class A $.
+	f2_3eqtr2rd $f class B $.
+	f3_3eqtr2rd $f class C $.
+	f4_3eqtr2rd $f class D $.
+	e0_3eqtr2rd $e |- ( ph -> A = B ) $.
+	e1_3eqtr2rd $e |- ( ph -> C = B ) $.
+	e2_3eqtr2rd $e |- ( ph -> C = D ) $.
+	p_3eqtr2rd $p |- ( ph -> D = A ) $= e0_3eqtr2rd e1_3eqtr2rd f0_3eqtr2rd f1_3eqtr2rd f2_3eqtr2rd f3_3eqtr2rd p_eqtr4d e2_3eqtr2rd f0_3eqtr2rd f1_3eqtr2rd f3_3eqtr2rd f4_3eqtr2rd p_eqtr2d $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3d_0 $f wff ph $.
-	f3eqtr3d_1 $f class A $.
-	f3eqtr3d_2 $f class B $.
-	f3eqtr3d_3 $f class C $.
-	f3eqtr3d_4 $f class D $.
-	e3eqtr3d_0 $e |- ( ph -> A = B ) $.
-	e3eqtr3d_1 $e |- ( ph -> A = C ) $.
-	e3eqtr3d_2 $e |- ( ph -> B = D ) $.
-	3eqtr3d $p |- ( ph -> C = D ) $= f3eqtr3d_0 f3eqtr3d_2 f3eqtr3d_3 f3eqtr3d_4 f3eqtr3d_0 f3eqtr3d_1 f3eqtr3d_2 f3eqtr3d_3 e3eqtr3d_0 e3eqtr3d_1 eqtr3d e3eqtr3d_2 eqtr3d $.
+	$v ph A B C D  $.
+	f0_3eqtr3d $f wff ph $.
+	f1_3eqtr3d $f class A $.
+	f2_3eqtr3d $f class B $.
+	f3_3eqtr3d $f class C $.
+	f4_3eqtr3d $f class D $.
+	e0_3eqtr3d $e |- ( ph -> A = B ) $.
+	e1_3eqtr3d $e |- ( ph -> A = C ) $.
+	e2_3eqtr3d $e |- ( ph -> B = D ) $.
+	p_3eqtr3d $p |- ( ph -> C = D ) $= e0_3eqtr3d e1_3eqtr3d f0_3eqtr3d f1_3eqtr3d f2_3eqtr3d f3_3eqtr3d p_eqtr3d e2_3eqtr3d f0_3eqtr3d f2_3eqtr3d f3_3eqtr3d f4_3eqtr3d p_eqtr3d $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        14-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3rd_0 $f wff ph $.
-	f3eqtr3rd_1 $f class A $.
-	f3eqtr3rd_2 $f class B $.
-	f3eqtr3rd_3 $f class C $.
-	f3eqtr3rd_4 $f class D $.
-	e3eqtr3rd_0 $e |- ( ph -> A = B ) $.
-	e3eqtr3rd_1 $e |- ( ph -> A = C ) $.
-	e3eqtr3rd_2 $e |- ( ph -> B = D ) $.
-	3eqtr3rd $p |- ( ph -> D = C ) $= f3eqtr3rd_0 f3eqtr3rd_2 f3eqtr3rd_4 f3eqtr3rd_3 e3eqtr3rd_2 f3eqtr3rd_0 f3eqtr3rd_1 f3eqtr3rd_2 f3eqtr3rd_3 e3eqtr3rd_0 e3eqtr3rd_1 eqtr3d eqtr3d $.
+	$v ph A B C D  $.
+	f0_3eqtr3rd $f wff ph $.
+	f1_3eqtr3rd $f class A $.
+	f2_3eqtr3rd $f class B $.
+	f3_3eqtr3rd $f class C $.
+	f4_3eqtr3rd $f class D $.
+	e0_3eqtr3rd $e |- ( ph -> A = B ) $.
+	e1_3eqtr3rd $e |- ( ph -> A = C ) $.
+	e2_3eqtr3rd $e |- ( ph -> B = D ) $.
+	p_3eqtr3rd $p |- ( ph -> D = C ) $= e2_3eqtr3rd e0_3eqtr3rd e1_3eqtr3rd f0_3eqtr3rd f1_3eqtr3rd f2_3eqtr3rd f3_3eqtr3rd p_eqtr3d f0_3eqtr3rd f2_3eqtr3rd f4_3eqtr3rd f3_3eqtr3rd p_eqtr3d $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4d_0 $f wff ph $.
-	f3eqtr4d_1 $f class A $.
-	f3eqtr4d_2 $f class B $.
-	f3eqtr4d_3 $f class C $.
-	f3eqtr4d_4 $f class D $.
-	e3eqtr4d_0 $e |- ( ph -> A = B ) $.
-	e3eqtr4d_1 $e |- ( ph -> C = A ) $.
-	e3eqtr4d_2 $e |- ( ph -> D = B ) $.
-	3eqtr4d $p |- ( ph -> C = D ) $= f3eqtr4d_0 f3eqtr4d_3 f3eqtr4d_1 f3eqtr4d_4 e3eqtr4d_1 f3eqtr4d_0 f3eqtr4d_4 f3eqtr4d_2 f3eqtr4d_1 e3eqtr4d_2 e3eqtr4d_0 eqtr4d eqtr4d $.
+	$v ph A B C D  $.
+	f0_3eqtr4d $f wff ph $.
+	f1_3eqtr4d $f class A $.
+	f2_3eqtr4d $f class B $.
+	f3_3eqtr4d $f class C $.
+	f4_3eqtr4d $f class D $.
+	e0_3eqtr4d $e |- ( ph -> A = B ) $.
+	e1_3eqtr4d $e |- ( ph -> C = A ) $.
+	e2_3eqtr4d $e |- ( ph -> D = B ) $.
+	p_3eqtr4d $p |- ( ph -> C = D ) $= e1_3eqtr4d e2_3eqtr4d e0_3eqtr4d f0_3eqtr4d f4_3eqtr4d f2_3eqtr4d f1_3eqtr4d p_eqtr4d f0_3eqtr4d f3_3eqtr4d f1_3eqtr4d f4_3eqtr4d p_eqtr4d $.
 $}
-$( A deduction from three chained equalities.  (Contributed by NM,
+
+$(A deduction from three chained equalities.  (Contributed by NM,
        21-Sep-1995.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4rd_0 $f wff ph $.
-	f3eqtr4rd_1 $f class A $.
-	f3eqtr4rd_2 $f class B $.
-	f3eqtr4rd_3 $f class C $.
-	f3eqtr4rd_4 $f class D $.
-	e3eqtr4rd_0 $e |- ( ph -> A = B ) $.
-	e3eqtr4rd_1 $e |- ( ph -> C = A ) $.
-	e3eqtr4rd_2 $e |- ( ph -> D = B ) $.
-	3eqtr4rd $p |- ( ph -> D = C ) $= f3eqtr4rd_0 f3eqtr4rd_4 f3eqtr4rd_1 f3eqtr4rd_3 f3eqtr4rd_0 f3eqtr4rd_4 f3eqtr4rd_2 f3eqtr4rd_1 e3eqtr4rd_2 e3eqtr4rd_0 eqtr4d e3eqtr4rd_1 eqtr4d $.
+	$v ph A B C D  $.
+	f0_3eqtr4rd $f wff ph $.
+	f1_3eqtr4rd $f class A $.
+	f2_3eqtr4rd $f class B $.
+	f3_3eqtr4rd $f class C $.
+	f4_3eqtr4rd $f class D $.
+	e0_3eqtr4rd $e |- ( ph -> A = B ) $.
+	e1_3eqtr4rd $e |- ( ph -> C = A ) $.
+	e2_3eqtr4rd $e |- ( ph -> D = B ) $.
+	p_3eqtr4rd $p |- ( ph -> D = C ) $= e2_3eqtr4rd e0_3eqtr4rd f0_3eqtr4rd f4_3eqtr4rd f2_3eqtr4rd f1_3eqtr4rd p_eqtr4d e1_3eqtr4rd f0_3eqtr4rd f4_3eqtr4rd f1_3eqtr4rd f3_3eqtr4rd p_eqtr4d $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eq_0 $f wff ph $.
-	fsyl5eq_1 $f class A $.
-	fsyl5eq_2 $f class B $.
-	fsyl5eq_3 $f class C $.
-	esyl5eq_0 $e |- A = B $.
-	esyl5eq_1 $e |- ( ph -> B = C ) $.
-	syl5eq $p |- ( ph -> A = C ) $= fsyl5eq_0 fsyl5eq_1 fsyl5eq_2 fsyl5eq_3 fsyl5eq_1 fsyl5eq_2 wceq fsyl5eq_0 esyl5eq_0 a1i esyl5eq_1 eqtrd $.
+	$v ph A B C  $.
+	f0_syl5eq $f wff ph $.
+	f1_syl5eq $f class A $.
+	f2_syl5eq $f class B $.
+	f3_syl5eq $f class C $.
+	e0_syl5eq $e |- A = B $.
+	e1_syl5eq $e |- ( ph -> B = C ) $.
+	p_syl5eq $p |- ( ph -> A = C ) $= e0_syl5eq f1_syl5eq f2_syl5eq a_wceq f0_syl5eq p_a1i e1_syl5eq f0_syl5eq f1_syl5eq f2_syl5eq f3_syl5eq p_eqtrd $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5req_0 $f wff ph $.
-	fsyl5req_1 $f class A $.
-	fsyl5req_2 $f class B $.
-	fsyl5req_3 $f class C $.
-	esyl5req_0 $e |- A = B $.
-	esyl5req_1 $e |- ( ph -> B = C ) $.
-	syl5req $p |- ( ph -> C = A ) $= fsyl5req_0 fsyl5req_1 fsyl5req_3 fsyl5req_0 fsyl5req_1 fsyl5req_2 fsyl5req_3 esyl5req_0 esyl5req_1 syl5eq eqcomd $.
+	$v ph A B C  $.
+	f0_syl5req $f wff ph $.
+	f1_syl5req $f class A $.
+	f2_syl5req $f class B $.
+	f3_syl5req $f class C $.
+	e0_syl5req $e |- A = B $.
+	e1_syl5req $e |- ( ph -> B = C ) $.
+	p_syl5req $p |- ( ph -> C = A ) $= e0_syl5req e1_syl5req f0_syl5req f1_syl5req f2_syl5req f3_syl5req p_syl5eq f0_syl5req f1_syl5req f3_syl5req p_eqcomd $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eqr_0 $f wff ph $.
-	fsyl5eqr_1 $f class A $.
-	fsyl5eqr_2 $f class B $.
-	fsyl5eqr_3 $f class C $.
-	esyl5eqr_0 $e |- B = A $.
-	esyl5eqr_1 $e |- ( ph -> B = C ) $.
-	syl5eqr $p |- ( ph -> A = C ) $= fsyl5eqr_0 fsyl5eqr_1 fsyl5eqr_2 fsyl5eqr_3 fsyl5eqr_2 fsyl5eqr_1 esyl5eqr_0 eqcomi esyl5eqr_1 syl5eq $.
+	$v ph A B C  $.
+	f0_syl5eqr $f wff ph $.
+	f1_syl5eqr $f class A $.
+	f2_syl5eqr $f class B $.
+	f3_syl5eqr $f class C $.
+	e0_syl5eqr $e |- B = A $.
+	e1_syl5eqr $e |- ( ph -> B = C ) $.
+	p_syl5eqr $p |- ( ph -> A = C ) $= e0_syl5eqr f2_syl5eqr f1_syl5eqr p_eqcomi e1_syl5eqr f0_syl5eqr f1_syl5eqr f2_syl5eqr f3_syl5eqr p_syl5eq $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5reqr_0 $f wff ph $.
-	fsyl5reqr_1 $f class A $.
-	fsyl5reqr_2 $f class B $.
-	fsyl5reqr_3 $f class C $.
-	esyl5reqr_0 $e |- B = A $.
-	esyl5reqr_1 $e |- ( ph -> B = C ) $.
-	syl5reqr $p |- ( ph -> C = A ) $= fsyl5reqr_0 fsyl5reqr_1 fsyl5reqr_2 fsyl5reqr_3 fsyl5reqr_2 fsyl5reqr_1 esyl5reqr_0 eqcomi esyl5reqr_1 syl5req $.
+	$v ph A B C  $.
+	f0_syl5reqr $f wff ph $.
+	f1_syl5reqr $f class A $.
+	f2_syl5reqr $f class B $.
+	f3_syl5reqr $f class C $.
+	e0_syl5reqr $e |- B = A $.
+	e1_syl5reqr $e |- ( ph -> B = C ) $.
+	p_syl5reqr $p |- ( ph -> C = A ) $= e0_syl5reqr f2_syl5reqr f1_syl5reqr p_eqcomi e1_syl5reqr f0_syl5reqr f1_syl5reqr f2_syl5reqr f3_syl5reqr p_syl5req $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eq_0 $f wff ph $.
-	fsyl6eq_1 $f class A $.
-	fsyl6eq_2 $f class B $.
-	fsyl6eq_3 $f class C $.
-	esyl6eq_0 $e |- ( ph -> A = B ) $.
-	esyl6eq_1 $e |- B = C $.
-	syl6eq $p |- ( ph -> A = C ) $= fsyl6eq_0 fsyl6eq_1 fsyl6eq_2 fsyl6eq_3 esyl6eq_0 fsyl6eq_2 fsyl6eq_3 wceq fsyl6eq_0 esyl6eq_1 a1i eqtrd $.
+	$v ph A B C  $.
+	f0_syl6eq $f wff ph $.
+	f1_syl6eq $f class A $.
+	f2_syl6eq $f class B $.
+	f3_syl6eq $f class C $.
+	e0_syl6eq $e |- ( ph -> A = B ) $.
+	e1_syl6eq $e |- B = C $.
+	p_syl6eq $p |- ( ph -> A = C ) $= e0_syl6eq e1_syl6eq f2_syl6eq f3_syl6eq a_wceq f0_syl6eq p_a1i f0_syl6eq f1_syl6eq f2_syl6eq f3_syl6eq p_eqtrd $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6req_0 $f wff ph $.
-	fsyl6req_1 $f class A $.
-	fsyl6req_2 $f class B $.
-	fsyl6req_3 $f class C $.
-	esyl6req_0 $e |- ( ph -> A = B ) $.
-	esyl6req_1 $e |- B = C $.
-	syl6req $p |- ( ph -> C = A ) $= fsyl6req_0 fsyl6req_1 fsyl6req_3 fsyl6req_0 fsyl6req_1 fsyl6req_2 fsyl6req_3 esyl6req_0 esyl6req_1 syl6eq eqcomd $.
+	$v ph A B C  $.
+	f0_syl6req $f wff ph $.
+	f1_syl6req $f class A $.
+	f2_syl6req $f class B $.
+	f3_syl6req $f class C $.
+	e0_syl6req $e |- ( ph -> A = B ) $.
+	e1_syl6req $e |- B = C $.
+	p_syl6req $p |- ( ph -> C = A ) $= e0_syl6req e1_syl6req f0_syl6req f1_syl6req f2_syl6req f3_syl6req p_syl6eq f0_syl6req f1_syl6req f3_syl6req p_eqcomd $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eqr_0 $f wff ph $.
-	fsyl6eqr_1 $f class A $.
-	fsyl6eqr_2 $f class B $.
-	fsyl6eqr_3 $f class C $.
-	esyl6eqr_0 $e |- ( ph -> A = B ) $.
-	esyl6eqr_1 $e |- C = B $.
-	syl6eqr $p |- ( ph -> A = C ) $= fsyl6eqr_0 fsyl6eqr_1 fsyl6eqr_2 fsyl6eqr_3 esyl6eqr_0 fsyl6eqr_3 fsyl6eqr_2 esyl6eqr_1 eqcomi syl6eq $.
+	$v ph A B C  $.
+	f0_syl6eqr $f wff ph $.
+	f1_syl6eqr $f class A $.
+	f2_syl6eqr $f class B $.
+	f3_syl6eqr $f class C $.
+	e0_syl6eqr $e |- ( ph -> A = B ) $.
+	e1_syl6eqr $e |- C = B $.
+	p_syl6eqr $p |- ( ph -> A = C ) $= e0_syl6eqr e1_syl6eqr f3_syl6eqr f2_syl6eqr p_eqcomi f0_syl6eqr f1_syl6eqr f2_syl6eqr f3_syl6eqr p_syl6eq $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6reqr_0 $f wff ph $.
-	fsyl6reqr_1 $f class A $.
-	fsyl6reqr_2 $f class B $.
-	fsyl6reqr_3 $f class C $.
-	esyl6reqr_0 $e |- ( ph -> A = B ) $.
-	esyl6reqr_1 $e |- C = B $.
-	syl6reqr $p |- ( ph -> C = A ) $= fsyl6reqr_0 fsyl6reqr_1 fsyl6reqr_2 fsyl6reqr_3 esyl6reqr_0 fsyl6reqr_3 fsyl6reqr_2 esyl6reqr_1 eqcomi syl6req $.
+	$v ph A B C  $.
+	f0_syl6reqr $f wff ph $.
+	f1_syl6reqr $f class A $.
+	f2_syl6reqr $f class B $.
+	f3_syl6reqr $f class C $.
+	e0_syl6reqr $e |- ( ph -> A = B ) $.
+	e1_syl6reqr $e |- C = B $.
+	p_syl6reqr $p |- ( ph -> C = A ) $= e0_syl6reqr e1_syl6reqr f3_syl6reqr f2_syl6reqr p_eqcomi f0_syl6reqr f1_syl6reqr f2_syl6reqr f3_syl6reqr p_syl6req $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
+
+$(An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsylan9eq_0 $f wff ph $.
-	fsylan9eq_1 $f wff ps $.
-	fsylan9eq_2 $f class A $.
-	fsylan9eq_3 $f class B $.
-	fsylan9eq_4 $f class C $.
-	esylan9eq_0 $e |- ( ph -> A = B ) $.
-	esylan9eq_1 $e |- ( ps -> B = C ) $.
-	sylan9eq $p |- ( ( ph /\ ps ) -> A = C ) $= fsylan9eq_0 fsylan9eq_2 fsylan9eq_3 wceq fsylan9eq_3 fsylan9eq_4 wceq fsylan9eq_2 fsylan9eq_4 wceq fsylan9eq_1 esylan9eq_0 esylan9eq_1 fsylan9eq_2 fsylan9eq_3 fsylan9eq_4 eqtr syl2an $.
+	$v ph ps A B C  $.
+	f0_sylan9eq $f wff ph $.
+	f1_sylan9eq $f wff ps $.
+	f2_sylan9eq $f class A $.
+	f3_sylan9eq $f class B $.
+	f4_sylan9eq $f class C $.
+	e0_sylan9eq $e |- ( ph -> A = B ) $.
+	e1_sylan9eq $e |- ( ps -> B = C ) $.
+	p_sylan9eq $p |- ( ( ph /\ ps ) -> A = C ) $= e0_sylan9eq e1_sylan9eq f2_sylan9eq f3_sylan9eq f4_sylan9eq p_eqtr f0_sylan9eq f2_sylan9eq f3_sylan9eq a_wceq f3_sylan9eq f4_sylan9eq a_wceq f2_sylan9eq f4_sylan9eq a_wceq f1_sylan9eq p_syl2an $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM,
+
+$(An equality transitivity deduction.  (Contributed by NM,
        23-Jun-2007.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsylan9req_0 $f wff ph $.
-	fsylan9req_1 $f wff ps $.
-	fsylan9req_2 $f class A $.
-	fsylan9req_3 $f class B $.
-	fsylan9req_4 $f class C $.
-	esylan9req_0 $e |- ( ph -> B = A ) $.
-	esylan9req_1 $e |- ( ps -> B = C ) $.
-	sylan9req $p |- ( ( ph /\ ps ) -> A = C ) $= fsylan9req_0 fsylan9req_1 fsylan9req_2 fsylan9req_3 fsylan9req_4 fsylan9req_0 fsylan9req_3 fsylan9req_2 esylan9req_0 eqcomd esylan9req_1 sylan9eq $.
+	$v ph ps A B C  $.
+	f0_sylan9req $f wff ph $.
+	f1_sylan9req $f wff ps $.
+	f2_sylan9req $f class A $.
+	f3_sylan9req $f class B $.
+	f4_sylan9req $f class C $.
+	e0_sylan9req $e |- ( ph -> B = A ) $.
+	e1_sylan9req $e |- ( ps -> B = C ) $.
+	p_sylan9req $p |- ( ( ph /\ ps ) -> A = C ) $= e0_sylan9req f0_sylan9req f3_sylan9req f2_sylan9req p_eqcomd e1_sylan9req f0_sylan9req f1_sylan9req f2_sylan9req f3_sylan9req f4_sylan9req p_sylan9eq $.
 $}
-$( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) $)
+
+$(An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsylan9eqr_0 $f wff ph $.
-	fsylan9eqr_1 $f wff ps $.
-	fsylan9eqr_2 $f class A $.
-	fsylan9eqr_3 $f class B $.
-	fsylan9eqr_4 $f class C $.
-	esylan9eqr_0 $e |- ( ph -> A = B ) $.
-	esylan9eqr_1 $e |- ( ps -> B = C ) $.
-	sylan9eqr $p |- ( ( ps /\ ph ) -> A = C ) $= fsylan9eqr_0 fsylan9eqr_1 fsylan9eqr_2 fsylan9eqr_4 wceq fsylan9eqr_0 fsylan9eqr_1 fsylan9eqr_2 fsylan9eqr_3 fsylan9eqr_4 esylan9eqr_0 esylan9eqr_1 sylan9eq ancoms $.
+	$v ph ps A B C  $.
+	f0_sylan9eqr $f wff ph $.
+	f1_sylan9eqr $f wff ps $.
+	f2_sylan9eqr $f class A $.
+	f3_sylan9eqr $f class B $.
+	f4_sylan9eqr $f class C $.
+	e0_sylan9eqr $e |- ( ph -> A = B ) $.
+	e1_sylan9eqr $e |- ( ps -> B = C ) $.
+	p_sylan9eqr $p |- ( ( ps /\ ph ) -> A = C ) $= e0_sylan9eqr e1_sylan9eqr f0_sylan9eqr f1_sylan9eqr f2_sylan9eqr f3_sylan9eqr f4_sylan9eqr p_sylan9eq f0_sylan9eqr f1_sylan9eqr f2_sylan9eqr f4_sylan9eqr a_wceq p_ancoms $.
 $}
-$( A chained equality inference, useful for converting from definitions.
+
+$(A chained equality inference, useful for converting from definitions.
        (Contributed by NM, 15-Nov-1994.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3g_0 $f wff ph $.
-	f3eqtr3g_1 $f class A $.
-	f3eqtr3g_2 $f class B $.
-	f3eqtr3g_3 $f class C $.
-	f3eqtr3g_4 $f class D $.
-	e3eqtr3g_0 $e |- ( ph -> A = B ) $.
-	e3eqtr3g_1 $e |- A = C $.
-	e3eqtr3g_2 $e |- B = D $.
-	3eqtr3g $p |- ( ph -> C = D ) $= f3eqtr3g_0 f3eqtr3g_3 f3eqtr3g_2 f3eqtr3g_4 f3eqtr3g_0 f3eqtr3g_3 f3eqtr3g_1 f3eqtr3g_2 e3eqtr3g_1 e3eqtr3g_0 syl5eqr e3eqtr3g_2 syl6eq $.
+	$v ph A B C D  $.
+	f0_3eqtr3g $f wff ph $.
+	f1_3eqtr3g $f class A $.
+	f2_3eqtr3g $f class B $.
+	f3_3eqtr3g $f class C $.
+	f4_3eqtr3g $f class D $.
+	e0_3eqtr3g $e |- ( ph -> A = B ) $.
+	e1_3eqtr3g $e |- A = C $.
+	e2_3eqtr3g $e |- B = D $.
+	p_3eqtr3g $p |- ( ph -> C = D ) $= e1_3eqtr3g e0_3eqtr3g f0_3eqtr3g f3_3eqtr3g f1_3eqtr3g f2_3eqtr3g p_syl5eqr e2_3eqtr3g f0_3eqtr3g f3_3eqtr3g f2_3eqtr3g f4_3eqtr3g p_syl6eq $.
 $}
-$( A chained equality inference, useful for converting from definitions.
+
+$(A chained equality inference, useful for converting from definitions.
        (Contributed by Mario Carneiro, 6-Nov-2015.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr3a_0 $f wff ph $.
-	f3eqtr3a_1 $f class A $.
-	f3eqtr3a_2 $f class B $.
-	f3eqtr3a_3 $f class C $.
-	f3eqtr3a_4 $f class D $.
-	e3eqtr3a_0 $e |- A = B $.
-	e3eqtr3a_1 $e |- ( ph -> A = C ) $.
-	e3eqtr3a_2 $e |- ( ph -> B = D ) $.
-	3eqtr3a $p |- ( ph -> C = D ) $= f3eqtr3a_0 f3eqtr3a_1 f3eqtr3a_3 f3eqtr3a_4 e3eqtr3a_1 f3eqtr3a_0 f3eqtr3a_1 f3eqtr3a_2 f3eqtr3a_4 e3eqtr3a_0 e3eqtr3a_2 syl5eq eqtr3d $.
+	$v ph A B C D  $.
+	f0_3eqtr3a $f wff ph $.
+	f1_3eqtr3a $f class A $.
+	f2_3eqtr3a $f class B $.
+	f3_3eqtr3a $f class C $.
+	f4_3eqtr3a $f class D $.
+	e0_3eqtr3a $e |- A = B $.
+	e1_3eqtr3a $e |- ( ph -> A = C ) $.
+	e2_3eqtr3a $e |- ( ph -> B = D ) $.
+	p_3eqtr3a $p |- ( ph -> C = D ) $= e1_3eqtr3a e0_3eqtr3a e2_3eqtr3a f0_3eqtr3a f1_3eqtr3a f2_3eqtr3a f4_3eqtr3a p_syl5eq f0_3eqtr3a f1_3eqtr3a f3_3eqtr3a f4_3eqtr3a p_eqtr3d $.
 $}
-$( A chained equality inference, useful for converting to definitions.
+
+$(A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4g_0 $f wff ph $.
-	f3eqtr4g_1 $f class A $.
-	f3eqtr4g_2 $f class B $.
-	f3eqtr4g_3 $f class C $.
-	f3eqtr4g_4 $f class D $.
-	e3eqtr4g_0 $e |- ( ph -> A = B ) $.
-	e3eqtr4g_1 $e |- C = A $.
-	e3eqtr4g_2 $e |- D = B $.
-	3eqtr4g $p |- ( ph -> C = D ) $= f3eqtr4g_0 f3eqtr4g_3 f3eqtr4g_2 f3eqtr4g_4 f3eqtr4g_0 f3eqtr4g_3 f3eqtr4g_1 f3eqtr4g_2 e3eqtr4g_1 e3eqtr4g_0 syl5eq e3eqtr4g_2 syl6eqr $.
+	$v ph A B C D  $.
+	f0_3eqtr4g $f wff ph $.
+	f1_3eqtr4g $f class A $.
+	f2_3eqtr4g $f class B $.
+	f3_3eqtr4g $f class C $.
+	f4_3eqtr4g $f class D $.
+	e0_3eqtr4g $e |- ( ph -> A = B ) $.
+	e1_3eqtr4g $e |- C = A $.
+	e2_3eqtr4g $e |- D = B $.
+	p_3eqtr4g $p |- ( ph -> C = D ) $= e1_3eqtr4g e0_3eqtr4g f0_3eqtr4g f3_3eqtr4g f1_3eqtr4g f2_3eqtr4g p_syl5eq e2_3eqtr4g f0_3eqtr4g f3_3eqtr4g f2_3eqtr4g f4_3eqtr4g p_syl6eqr $.
 $}
-$( A chained equality inference, useful for converting to definitions.
+
+$(A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 2-Feb-2007.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eqtr4a_0 $f wff ph $.
-	f3eqtr4a_1 $f class A $.
-	f3eqtr4a_2 $f class B $.
-	f3eqtr4a_3 $f class C $.
-	f3eqtr4a_4 $f class D $.
-	e3eqtr4a_0 $e |- A = B $.
-	e3eqtr4a_1 $e |- ( ph -> C = A ) $.
-	e3eqtr4a_2 $e |- ( ph -> D = B ) $.
-	3eqtr4a $p |- ( ph -> C = D ) $= f3eqtr4a_0 f3eqtr4a_3 f3eqtr4a_2 f3eqtr4a_4 f3eqtr4a_0 f3eqtr4a_3 f3eqtr4a_1 f3eqtr4a_2 e3eqtr4a_1 e3eqtr4a_0 syl6eq e3eqtr4a_2 eqtr4d $.
+	$v ph A B C D  $.
+	f0_3eqtr4a $f wff ph $.
+	f1_3eqtr4a $f class A $.
+	f2_3eqtr4a $f class B $.
+	f3_3eqtr4a $f class C $.
+	f4_3eqtr4a $f class D $.
+	e0_3eqtr4a $e |- A = B $.
+	e1_3eqtr4a $e |- ( ph -> C = A ) $.
+	e2_3eqtr4a $e |- ( ph -> D = B ) $.
+	p_3eqtr4a $p |- ( ph -> C = D ) $= e1_3eqtr4a e0_3eqtr4a f0_3eqtr4a f3_3eqtr4a f1_3eqtr4a f2_3eqtr4a p_syl6eq e2_3eqtr4a f0_3eqtr4a f3_3eqtr4a f2_3eqtr4a f4_3eqtr4a p_eqtr4d $.
 $}
-$( A compound transitive inference for class equality.  (Contributed by NM,
+
+$(A compound transitive inference for class equality.  (Contributed by NM,
        22-Jan-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v F $.
-	$v G $.
-	feq2tri_0 $f class A $.
-	feq2tri_1 $f class B $.
-	feq2tri_2 $f class C $.
-	feq2tri_3 $f class D $.
-	feq2tri_4 $f class F $.
-	feq2tri_5 $f class G $.
-	eeq2tri_0 $e |- ( A = C -> D = F ) $.
-	eeq2tri_1 $e |- ( B = D -> C = G ) $.
-	eq2tri $p |- ( ( A = C /\ B = F ) <-> ( B = D /\ A = G ) ) $= feq2tri_0 feq2tri_2 wceq feq2tri_1 feq2tri_3 wceq wa feq2tri_1 feq2tri_3 wceq feq2tri_0 feq2tri_2 wceq wa feq2tri_0 feq2tri_2 wceq feq2tri_1 feq2tri_4 wceq wa feq2tri_1 feq2tri_3 wceq feq2tri_0 feq2tri_5 wceq wa feq2tri_0 feq2tri_2 wceq feq2tri_1 feq2tri_3 wceq ancom feq2tri_0 feq2tri_2 wceq feq2tri_1 feq2tri_3 wceq feq2tri_1 feq2tri_4 wceq feq2tri_0 feq2tri_2 wceq feq2tri_3 feq2tri_4 feq2tri_1 eeq2tri_0 eqeq2d pm5.32i feq2tri_1 feq2tri_3 wceq feq2tri_0 feq2tri_2 wceq feq2tri_0 feq2tri_5 wceq feq2tri_1 feq2tri_3 wceq feq2tri_2 feq2tri_5 feq2tri_0 eeq2tri_1 eqeq2d pm5.32i 3bitr3i $.
+	$v A B C D F G  $.
+	f0_eq2tri $f class A $.
+	f1_eq2tri $f class B $.
+	f2_eq2tri $f class C $.
+	f3_eq2tri $f class D $.
+	f4_eq2tri $f class F $.
+	f5_eq2tri $f class G $.
+	e0_eq2tri $e |- ( A = C -> D = F ) $.
+	e1_eq2tri $e |- ( B = D -> C = G ) $.
+	p_eq2tri $p |- ( ( A = C /\ B = F ) <-> ( B = D /\ A = G ) ) $= f0_eq2tri f2_eq2tri a_wceq f1_eq2tri f3_eq2tri a_wceq p_ancom e0_eq2tri f0_eq2tri f2_eq2tri a_wceq f3_eq2tri f4_eq2tri f1_eq2tri p_eqeq2d f0_eq2tri f2_eq2tri a_wceq f1_eq2tri f3_eq2tri a_wceq f1_eq2tri f4_eq2tri a_wceq p_pm5.32i e1_eq2tri f1_eq2tri f3_eq2tri a_wceq f2_eq2tri f5_eq2tri f0_eq2tri p_eqeq2d f1_eq2tri f3_eq2tri a_wceq f0_eq2tri f2_eq2tri a_wceq f0_eq2tri f5_eq2tri a_wceq p_pm5.32i f0_eq2tri f2_eq2tri a_wceq f1_eq2tri f3_eq2tri a_wceq a_wa f1_eq2tri f3_eq2tri a_wceq f0_eq2tri f2_eq2tri a_wceq a_wa f0_eq2tri f2_eq2tri a_wceq f1_eq2tri f4_eq2tri a_wceq a_wa f1_eq2tri f3_eq2tri a_wceq f0_eq2tri f5_eq2tri a_wceq a_wa p_3bitr3i $.
 $}
-$( Equality implies equivalence of membership.  (Contributed by NM,
+
+$(Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	ieleq1_0 $f set x $.
-	feleq1_0 $f class A $.
-	feleq1_1 $f class B $.
-	feleq1_2 $f class C $.
-	eleq1 $p |- ( A = B -> ( A e. C <-> B e. C ) ) $= feleq1_0 feleq1_1 wceq ieleq1_0 sup_set_class feleq1_0 wceq ieleq1_0 sup_set_class feleq1_2 wcel wa ieleq1_0 wex ieleq1_0 sup_set_class feleq1_1 wceq ieleq1_0 sup_set_class feleq1_2 wcel wa ieleq1_0 wex feleq1_0 feleq1_2 wcel feleq1_1 feleq1_2 wcel feleq1_0 feleq1_1 wceq ieleq1_0 sup_set_class feleq1_0 wceq ieleq1_0 sup_set_class feleq1_2 wcel wa ieleq1_0 sup_set_class feleq1_1 wceq ieleq1_0 sup_set_class feleq1_2 wcel wa ieleq1_0 feleq1_0 feleq1_1 wceq ieleq1_0 sup_set_class feleq1_0 wceq ieleq1_0 sup_set_class feleq1_1 wceq ieleq1_0 sup_set_class feleq1_2 wcel feleq1_0 feleq1_1 ieleq1_0 sup_set_class eqeq2 anbi1d exbidv ieleq1_0 feleq1_0 feleq1_2 df-clel ieleq1_0 feleq1_1 feleq1_2 df-clel 3bitr4g $.
+	$v A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_eleq1 $f class A $.
+	f1_eleq1 $f class B $.
+	f2_eleq1 $f class C $.
+	i0_eleq1 $f set x $.
+	p_eleq1 $p |- ( A = B -> ( A e. C <-> B e. C ) ) $= f0_eleq1 f1_eleq1 i0_eleq1 a_sup_set_class p_eqeq2 f0_eleq1 f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f0_eleq1 a_wceq i0_eleq1 a_sup_set_class f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f2_eleq1 a_wcel p_anbi1d f0_eleq1 f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f0_eleq1 a_wceq i0_eleq1 a_sup_set_class f2_eleq1 a_wcel a_wa i0_eleq1 a_sup_set_class f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f2_eleq1 a_wcel a_wa i0_eleq1 p_exbidv i0_eleq1 f0_eleq1 f2_eleq1 a_df-clel i0_eleq1 f1_eleq1 f2_eleq1 a_df-clel f0_eleq1 f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f0_eleq1 a_wceq i0_eleq1 a_sup_set_class f2_eleq1 a_wcel a_wa i0_eleq1 a_wex i0_eleq1 a_sup_set_class f1_eleq1 a_wceq i0_eleq1 a_sup_set_class f2_eleq1 a_wcel a_wa i0_eleq1 a_wex f0_eleq1 f2_eleq1 a_wcel f1_eleq1 f2_eleq1 a_wcel p_3bitr4g $.
 $}
-$( Equality implies equivalence of membership.  (Contributed by NM,
+
+$(Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	ieleq2_0 $f set x $.
-	feleq2_0 $f class A $.
-	feleq2_1 $f class B $.
-	feleq2_2 $f class C $.
-	eleq2 $p |- ( A = B -> ( C e. A <-> C e. B ) ) $= feleq2_0 feleq2_1 wceq ieleq2_0 sup_set_class feleq2_2 wceq ieleq2_0 sup_set_class feleq2_0 wcel wa ieleq2_0 wex ieleq2_0 sup_set_class feleq2_2 wceq ieleq2_0 sup_set_class feleq2_1 wcel wa ieleq2_0 wex feleq2_2 feleq2_0 wcel feleq2_2 feleq2_1 wcel feleq2_0 feleq2_1 wceq ieleq2_0 sup_set_class feleq2_2 wceq ieleq2_0 sup_set_class feleq2_0 wcel wa ieleq2_0 sup_set_class feleq2_2 wceq ieleq2_0 sup_set_class feleq2_1 wcel wa ieleq2_0 feleq2_0 feleq2_1 wceq ieleq2_0 sup_set_class feleq2_0 wcel ieleq2_0 sup_set_class feleq2_1 wcel ieleq2_0 sup_set_class feleq2_2 wceq feleq2_0 feleq2_1 wceq ieleq2_0 sup_set_class feleq2_0 wcel ieleq2_0 sup_set_class feleq2_1 wcel wb ieleq2_0 feleq2_0 feleq2_1 wceq ieleq2_0 sup_set_class feleq2_0 wcel ieleq2_0 sup_set_class feleq2_1 wcel wb ieleq2_0 wal ieleq2_0 feleq2_0 feleq2_1 dfcleq biimpi 19.21bi anbi2d exbidv ieleq2_0 feleq2_2 feleq2_0 df-clel ieleq2_0 feleq2_2 feleq2_1 df-clel 3bitr4g $.
+	$v A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_eleq2 $f class A $.
+	f1_eleq2 $f class B $.
+	f2_eleq2 $f class C $.
+	i0_eleq2 $f set x $.
+	p_eleq2 $p |- ( A = B -> ( C e. A <-> C e. B ) ) $= i0_eleq2 f0_eleq2 f1_eleq2 p_dfcleq f0_eleq2 f1_eleq2 a_wceq i0_eleq2 a_sup_set_class f0_eleq2 a_wcel i0_eleq2 a_sup_set_class f1_eleq2 a_wcel a_wb i0_eleq2 a_wal p_biimpi f0_eleq2 f1_eleq2 a_wceq i0_eleq2 a_sup_set_class f0_eleq2 a_wcel i0_eleq2 a_sup_set_class f1_eleq2 a_wcel a_wb i0_eleq2 p_19.21bi f0_eleq2 f1_eleq2 a_wceq i0_eleq2 a_sup_set_class f0_eleq2 a_wcel i0_eleq2 a_sup_set_class f1_eleq2 a_wcel i0_eleq2 a_sup_set_class f2_eleq2 a_wceq p_anbi2d f0_eleq2 f1_eleq2 a_wceq i0_eleq2 a_sup_set_class f2_eleq2 a_wceq i0_eleq2 a_sup_set_class f0_eleq2 a_wcel a_wa i0_eleq2 a_sup_set_class f2_eleq2 a_wceq i0_eleq2 a_sup_set_class f1_eleq2 a_wcel a_wa i0_eleq2 p_exbidv i0_eleq2 f2_eleq2 f0_eleq2 a_df-clel i0_eleq2 f2_eleq2 f1_eleq2 a_df-clel f0_eleq2 f1_eleq2 a_wceq i0_eleq2 a_sup_set_class f2_eleq2 a_wceq i0_eleq2 a_sup_set_class f0_eleq2 a_wcel a_wa i0_eleq2 a_wex i0_eleq2 a_sup_set_class f2_eleq2 a_wceq i0_eleq2 a_sup_set_class f1_eleq2 a_wcel a_wa i0_eleq2 a_wex f2_eleq2 f0_eleq2 a_wcel f2_eleq2 f1_eleq2 a_wcel p_3bitr4g $.
 $}
-$( Equality implies equivalence of membership.  (Contributed by NM,
+
+$(Equality implies equivalence of membership.  (Contributed by NM,
      31-May-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feleq12_0 $f class A $.
-	feleq12_1 $f class B $.
-	feleq12_2 $f class C $.
-	feleq12_3 $f class D $.
-	eleq12 $p |- ( ( A = B /\ C = D ) -> ( A e. C <-> B e. D ) ) $= feleq12_0 feleq12_1 wceq feleq12_0 feleq12_2 wcel feleq12_1 feleq12_2 wcel feleq12_2 feleq12_3 wceq feleq12_1 feleq12_3 wcel feleq12_0 feleq12_1 feleq12_2 eleq1 feleq12_2 feleq12_3 feleq12_1 eleq2 sylan9bb $.
+	$v A B C D  $.
+	f0_eleq12 $f class A $.
+	f1_eleq12 $f class B $.
+	f2_eleq12 $f class C $.
+	f3_eleq12 $f class D $.
+	p_eleq12 $p |- ( ( A = B /\ C = D ) -> ( A e. C <-> B e. D ) ) $= f0_eleq12 f1_eleq12 f2_eleq12 p_eleq1 f2_eleq12 f3_eleq12 f1_eleq12 p_eleq2 f0_eleq12 f1_eleq12 a_wceq f0_eleq12 f2_eleq12 a_wcel f1_eleq12 f2_eleq12 a_wcel f2_eleq12 f3_eleq12 a_wceq f1_eleq12 f3_eleq12 a_wcel p_sylan9bb $.
 $}
-$( Inference from equality to equivalence of membership.  (Contributed by
+
+$(Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq1i_0 $f class A $.
-	feleq1i_1 $f class B $.
-	feleq1i_2 $f class C $.
-	eeleq1i_0 $e |- A = B $.
-	eleq1i $p |- ( A e. C <-> B e. C ) $= feleq1i_0 feleq1i_1 wceq feleq1i_0 feleq1i_2 wcel feleq1i_1 feleq1i_2 wcel wb eeleq1i_0 feleq1i_0 feleq1i_1 feleq1i_2 eleq1 ax-mp $.
+	$v A B C  $.
+	f0_eleq1i $f class A $.
+	f1_eleq1i $f class B $.
+	f2_eleq1i $f class C $.
+	e0_eleq1i $e |- A = B $.
+	p_eleq1i $p |- ( A e. C <-> B e. C ) $= e0_eleq1i f0_eleq1i f1_eleq1i f2_eleq1i p_eleq1 f0_eleq1i f1_eleq1i a_wceq f0_eleq1i f2_eleq1i a_wcel f1_eleq1i f2_eleq1i a_wcel a_wb a_ax-mp $.
 $}
-$( Inference from equality to equivalence of membership.  (Contributed by
+
+$(Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq2i_0 $f class A $.
-	feleq2i_1 $f class B $.
-	feleq2i_2 $f class C $.
-	eeleq2i_0 $e |- A = B $.
-	eleq2i $p |- ( C e. A <-> C e. B ) $= feleq2i_0 feleq2i_1 wceq feleq2i_2 feleq2i_0 wcel feleq2i_2 feleq2i_1 wcel wb eeleq2i_0 feleq2i_0 feleq2i_1 feleq2i_2 eleq2 ax-mp $.
+	$v A B C  $.
+	f0_eleq2i $f class A $.
+	f1_eleq2i $f class B $.
+	f2_eleq2i $f class C $.
+	e0_eleq2i $e |- A = B $.
+	p_eleq2i $p |- ( C e. A <-> C e. B ) $= e0_eleq2i f0_eleq2i f1_eleq2i f2_eleq2i p_eleq2 f0_eleq2i f1_eleq2i a_wceq f2_eleq2i f0_eleq2i a_wcel f2_eleq2i f1_eleq2i a_wcel a_wb a_ax-mp $.
 $}
-$( Inference from equality to equivalence of membership.  (Contributed by
+
+$(Inference from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feleq12i_0 $f class A $.
-	feleq12i_1 $f class B $.
-	feleq12i_2 $f class C $.
-	feleq12i_3 $f class D $.
-	eeleq12i_0 $e |- A = B $.
-	eeleq12i_1 $e |- C = D $.
-	eleq12i $p |- ( A e. C <-> B e. D ) $= feleq12i_0 feleq12i_2 wcel feleq12i_0 feleq12i_3 wcel feleq12i_1 feleq12i_3 wcel feleq12i_2 feleq12i_3 feleq12i_0 eeleq12i_1 eleq2i feleq12i_0 feleq12i_1 feleq12i_3 eeleq12i_0 eleq1i bitri $.
+	$v A B C D  $.
+	f0_eleq12i $f class A $.
+	f1_eleq12i $f class B $.
+	f2_eleq12i $f class C $.
+	f3_eleq12i $f class D $.
+	e0_eleq12i $e |- A = B $.
+	e1_eleq12i $e |- C = D $.
+	p_eleq12i $p |- ( A e. C <-> B e. D ) $= e1_eleq12i f2_eleq12i f3_eleq12i f0_eleq12i p_eleq2i e0_eleq12i f0_eleq12i f1_eleq12i f3_eleq12i p_eleq1i f0_eleq12i f2_eleq12i a_wcel f0_eleq12i f3_eleq12i a_wcel f1_eleq12i f3_eleq12i a_wcel p_bitri $.
 $}
-$( Theorem eleq12i is the congruence law for elementhood. $)
-$( $j congruence 'eleq12i'; $)
-$( Deduction from equality to equivalence of membership.  (Contributed by
+
+$(Theorem eleq12i is the congruence law for elementhood. $)
+
+$($j congruence 'eleq12i'; $)
+
+$(Deduction from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq1d_0 $f wff ph $.
-	feleq1d_1 $f class A $.
-	feleq1d_2 $f class B $.
-	feleq1d_3 $f class C $.
-	eeleq1d_0 $e |- ( ph -> A = B ) $.
-	eleq1d $p |- ( ph -> ( A e. C <-> B e. C ) ) $= feleq1d_0 feleq1d_1 feleq1d_2 wceq feleq1d_1 feleq1d_3 wcel feleq1d_2 feleq1d_3 wcel wb eeleq1d_0 feleq1d_1 feleq1d_2 feleq1d_3 eleq1 syl $.
+	$v ph A B C  $.
+	f0_eleq1d $f wff ph $.
+	f1_eleq1d $f class A $.
+	f2_eleq1d $f class B $.
+	f3_eleq1d $f class C $.
+	e0_eleq1d $e |- ( ph -> A = B ) $.
+	p_eleq1d $p |- ( ph -> ( A e. C <-> B e. C ) ) $= e0_eleq1d f1_eleq1d f2_eleq1d f3_eleq1d p_eleq1 f0_eleq1d f1_eleq1d f2_eleq1d a_wceq f1_eleq1d f3_eleq1d a_wcel f2_eleq1d f3_eleq1d a_wcel a_wb p_syl $.
 $}
-$( Deduction from equality to equivalence of membership.  (Contributed by
+
+$(Deduction from equality to equivalence of membership.  (Contributed by
        NM, 27-Dec-1993.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq2d_0 $f wff ph $.
-	feleq2d_1 $f class A $.
-	feleq2d_2 $f class B $.
-	feleq2d_3 $f class C $.
-	eeleq2d_0 $e |- ( ph -> A = B ) $.
-	eleq2d $p |- ( ph -> ( C e. A <-> C e. B ) ) $= feleq2d_0 feleq2d_1 feleq2d_2 wceq feleq2d_3 feleq2d_1 wcel feleq2d_3 feleq2d_2 wcel wb eeleq2d_0 feleq2d_1 feleq2d_2 feleq2d_3 eleq2 syl $.
+	$v ph A B C  $.
+	f0_eleq2d $f wff ph $.
+	f1_eleq2d $f class A $.
+	f2_eleq2d $f class B $.
+	f3_eleq2d $f class C $.
+	e0_eleq2d $e |- ( ph -> A = B ) $.
+	p_eleq2d $p |- ( ph -> ( C e. A <-> C e. B ) ) $= e0_eleq2d f1_eleq2d f2_eleq2d f3_eleq2d p_eleq2 f0_eleq2d f1_eleq2d f2_eleq2d a_wceq f3_eleq2d f1_eleq2d a_wcel f3_eleq2d f2_eleq2d a_wcel a_wb p_syl $.
 $}
-$( Deduction from equality to equivalence of membership.  (Contributed by
+
+$(Deduction from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	feleq12d_0 $f wff ph $.
-	feleq12d_1 $f class A $.
-	feleq12d_2 $f class B $.
-	feleq12d_3 $f class C $.
-	feleq12d_4 $f class D $.
-	eeleq12d_0 $e |- ( ph -> A = B ) $.
-	eeleq12d_1 $e |- ( ph -> C = D ) $.
-	eleq12d $p |- ( ph -> ( A e. C <-> B e. D ) ) $= feleq12d_0 feleq12d_1 feleq12d_3 wcel feleq12d_1 feleq12d_4 wcel feleq12d_2 feleq12d_4 wcel feleq12d_0 feleq12d_3 feleq12d_4 feleq12d_1 eeleq12d_1 eleq2d feleq12d_0 feleq12d_1 feleq12d_2 feleq12d_4 eeleq12d_0 eleq1d bitrd $.
+	$v ph A B C D  $.
+	f0_eleq12d $f wff ph $.
+	f1_eleq12d $f class A $.
+	f2_eleq12d $f class B $.
+	f3_eleq12d $f class C $.
+	f4_eleq12d $f class D $.
+	e0_eleq12d $e |- ( ph -> A = B ) $.
+	e1_eleq12d $e |- ( ph -> C = D ) $.
+	p_eleq12d $p |- ( ph -> ( A e. C <-> B e. D ) ) $= e1_eleq12d f0_eleq12d f3_eleq12d f4_eleq12d f1_eleq12d p_eleq2d e0_eleq12d f0_eleq12d f1_eleq12d f2_eleq12d f4_eleq12d p_eleq1d f0_eleq12d f1_eleq12d f3_eleq12d a_wcel f1_eleq12d f4_eleq12d a_wcel f2_eleq12d f4_eleq12d a_wcel p_bitrd $.
 $}
-$( A transitive-type law relating membership and equality.  (Contributed by
+
+$(A transitive-type law relating membership and equality.  (Contributed by
      NM, 9-Apr-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq1a_0 $f class A $.
-	feleq1a_1 $f class B $.
-	feleq1a_2 $f class C $.
-	eleq1a $p |- ( A e. B -> ( C = A -> C e. B ) ) $= feleq1a_2 feleq1a_0 wceq feleq1a_2 feleq1a_1 wcel feleq1a_0 feleq1a_1 wcel feleq1a_2 feleq1a_0 feleq1a_1 eleq1 biimprcd $.
+	$v A B C  $.
+	f0_eleq1a $f class A $.
+	f1_eleq1a $f class B $.
+	f2_eleq1a $f class C $.
+	p_eleq1a $p |- ( A e. B -> ( C = A -> C e. B ) ) $= f2_eleq1a f0_eleq1a f1_eleq1a p_eleq1 f2_eleq1a f0_eleq1a a_wceq f2_eleq1a f1_eleq1a a_wcel f0_eleq1a f1_eleq1a a_wcel p_biimprcd $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeltri_0 $f class A $.
-	feqeltri_1 $f class B $.
-	feqeltri_2 $f class C $.
-	eeqeltri_0 $e |- A = B $.
-	eeqeltri_1 $e |- B e. C $.
-	eqeltri $p |- A e. C $= feqeltri_0 feqeltri_2 wcel feqeltri_1 feqeltri_2 wcel eeqeltri_1 feqeltri_0 feqeltri_1 feqeltri_2 eeqeltri_0 eleq1i mpbir $.
+	$v A B C  $.
+	f0_eqeltri $f class A $.
+	f1_eqeltri $f class B $.
+	f2_eqeltri $f class C $.
+	e0_eqeltri $e |- A = B $.
+	e1_eqeltri $e |- B e. C $.
+	p_eqeltri $p |- A e. C $= e1_eqeltri e0_eqeltri f0_eqeltri f1_eqeltri f2_eqeltri p_eleq1i f0_eqeltri f2_eqeltri a_wcel f1_eqeltri f2_eqeltri a_wcel p_mpbir $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeltrri_0 $f class A $.
-	feqeltrri_1 $f class B $.
-	feqeltrri_2 $f class C $.
-	eeqeltrri_0 $e |- A = B $.
-	eeqeltrri_1 $e |- A e. C $.
-	eqeltrri $p |- B e. C $= feqeltrri_1 feqeltrri_0 feqeltrri_2 feqeltrri_0 feqeltrri_1 eeqeltrri_0 eqcomi eeqeltrri_1 eqeltri $.
+	$v A B C  $.
+	f0_eqeltrri $f class A $.
+	f1_eqeltrri $f class B $.
+	f2_eqeltrri $f class C $.
+	e0_eqeltrri $e |- A = B $.
+	e1_eqeltrri $e |- A e. C $.
+	p_eqeltrri $p |- B e. C $= e0_eqeltrri f0_eqeltrri f1_eqeltrri p_eqcomi e1_eqeltrri f1_eqeltrri f0_eqeltrri f2_eqeltrri p_eqeltri $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feleqtri_0 $f class A $.
-	feleqtri_1 $f class B $.
-	feleqtri_2 $f class C $.
-	eeleqtri_0 $e |- A e. B $.
-	eeleqtri_1 $e |- B = C $.
-	eleqtri $p |- A e. C $= feleqtri_0 feleqtri_1 wcel feleqtri_0 feleqtri_2 wcel eeleqtri_0 feleqtri_1 feleqtri_2 feleqtri_0 eeleqtri_1 eleq2i mpbi $.
+	$v A B C  $.
+	f0_eleqtri $f class A $.
+	f1_eleqtri $f class B $.
+	f2_eleqtri $f class C $.
+	e0_eleqtri $e |- A e. B $.
+	e1_eleqtri $e |- B = C $.
+	p_eleqtri $p |- A e. C $= e0_eleqtri e1_eleqtri f1_eleqtri f2_eleqtri f0_eleqtri p_eleq2i f0_eleqtri f1_eleqtri a_wcel f0_eleqtri f2_eleqtri a_wcel p_mpbi $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feleqtrri_0 $f class A $.
-	feleqtrri_1 $f class B $.
-	feleqtrri_2 $f class C $.
-	eeleqtrri_0 $e |- A e. B $.
-	eeleqtrri_1 $e |- C = B $.
-	eleqtrri $p |- A e. C $= feleqtrri_0 feleqtrri_1 feleqtrri_2 eeleqtrri_0 feleqtrri_2 feleqtrri_1 eeleqtrri_1 eqcomi eleqtri $.
+	$v A B C  $.
+	f0_eleqtrri $f class A $.
+	f1_eleqtrri $f class B $.
+	f2_eleqtrri $f class C $.
+	e0_eleqtrri $e |- A e. B $.
+	e1_eleqtrri $e |- C = B $.
+	p_eleqtrri $p |- A e. C $= e0_eleqtrri e1_eleqtrri f2_eleqtrri f1_eleqtrri p_eqcomi f0_eleqtrri f1_eleqtrri f2_eleqtrri p_eleqtri $.
 $}
-$( Substitution of equal classes into membership relation, deduction form.
+
+$(Substitution of equal classes into membership relation, deduction form.
        (Contributed by Raph Levien, 10-Dec-2002.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeltrd_0 $f wff ph $.
-	feqeltrd_1 $f class A $.
-	feqeltrd_2 $f class B $.
-	feqeltrd_3 $f class C $.
-	eeqeltrd_0 $e |- ( ph -> A = B ) $.
-	eeqeltrd_1 $e |- ( ph -> B e. C ) $.
-	eqeltrd $p |- ( ph -> A e. C ) $= feqeltrd_0 feqeltrd_1 feqeltrd_3 wcel feqeltrd_2 feqeltrd_3 wcel eeqeltrd_1 feqeltrd_0 feqeltrd_1 feqeltrd_2 feqeltrd_3 eeqeltrd_0 eleq1d mpbird $.
+	$v ph A B C  $.
+	f0_eqeltrd $f wff ph $.
+	f1_eqeltrd $f class A $.
+	f2_eqeltrd $f class B $.
+	f3_eqeltrd $f class C $.
+	e0_eqeltrd $e |- ( ph -> A = B ) $.
+	e1_eqeltrd $e |- ( ph -> B e. C ) $.
+	p_eqeltrd $p |- ( ph -> A e. C ) $= e1_eqeltrd e0_eqeltrd f0_eqeltrd f1_eqeltrd f2_eqeltrd f3_eqeltrd p_eleq1d f0_eqeltrd f1_eqeltrd f3_eqeltrd a_wcel f2_eqeltrd f3_eqeltrd a_wcel p_mpbird $.
 $}
-$( Deduction that substitutes equal classes into membership.  (Contributed
+
+$(Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqeltrrd_0 $f wff ph $.
-	feqeltrrd_1 $f class A $.
-	feqeltrrd_2 $f class B $.
-	feqeltrrd_3 $f class C $.
-	eeqeltrrd_0 $e |- ( ph -> A = B ) $.
-	eeqeltrrd_1 $e |- ( ph -> A e. C ) $.
-	eqeltrrd $p |- ( ph -> B e. C ) $= feqeltrrd_0 feqeltrrd_2 feqeltrrd_1 feqeltrrd_3 feqeltrrd_0 feqeltrrd_1 feqeltrrd_2 eeqeltrrd_0 eqcomd eeqeltrrd_1 eqeltrd $.
+	$v ph A B C  $.
+	f0_eqeltrrd $f wff ph $.
+	f1_eqeltrrd $f class A $.
+	f2_eqeltrrd $f class B $.
+	f3_eqeltrrd $f class C $.
+	e0_eqeltrrd $e |- ( ph -> A = B ) $.
+	e1_eqeltrrd $e |- ( ph -> A e. C ) $.
+	p_eqeltrrd $p |- ( ph -> B e. C ) $= e0_eqeltrrd f0_eqeltrrd f1_eqeltrrd f2_eqeltrrd p_eqcomd e1_eqeltrrd f0_eqeltrrd f2_eqeltrrd f1_eqeltrrd f3_eqeltrrd p_eqeltrd $.
 $}
-$( Deduction that substitutes equal classes into membership.  (Contributed
+
+$(Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feleqtrd_0 $f wff ph $.
-	feleqtrd_1 $f class A $.
-	feleqtrd_2 $f class B $.
-	feleqtrd_3 $f class C $.
-	eeleqtrd_0 $e |- ( ph -> A e. B ) $.
-	eeleqtrd_1 $e |- ( ph -> B = C ) $.
-	eleqtrd $p |- ( ph -> A e. C ) $= feleqtrd_0 feleqtrd_1 feleqtrd_2 wcel feleqtrd_1 feleqtrd_3 wcel eeleqtrd_0 feleqtrd_0 feleqtrd_2 feleqtrd_3 feleqtrd_1 eeleqtrd_1 eleq2d mpbid $.
+	$v ph A B C  $.
+	f0_eleqtrd $f wff ph $.
+	f1_eleqtrd $f class A $.
+	f2_eleqtrd $f class B $.
+	f3_eleqtrd $f class C $.
+	e0_eleqtrd $e |- ( ph -> A e. B ) $.
+	e1_eleqtrd $e |- ( ph -> B = C ) $.
+	p_eleqtrd $p |- ( ph -> A e. C ) $= e0_eleqtrd e1_eleqtrd f0_eleqtrd f2_eleqtrd f3_eleqtrd f1_eleqtrd p_eleq2d f0_eleqtrd f1_eleqtrd f2_eleqtrd a_wcel f1_eleqtrd f3_eleqtrd a_wcel p_mpbid $.
 $}
-$( Deduction that substitutes equal classes into membership.  (Contributed
+
+$(Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feleqtrrd_0 $f wff ph $.
-	feleqtrrd_1 $f class A $.
-	feleqtrrd_2 $f class B $.
-	feleqtrrd_3 $f class C $.
-	eeleqtrrd_0 $e |- ( ph -> A e. B ) $.
-	eeleqtrrd_1 $e |- ( ph -> C = B ) $.
-	eleqtrrd $p |- ( ph -> A e. C ) $= feleqtrrd_0 feleqtrrd_1 feleqtrrd_2 feleqtrrd_3 eeleqtrrd_0 feleqtrrd_0 feleqtrrd_3 feleqtrrd_2 eeleqtrrd_1 eqcomd eleqtrd $.
+	$v ph A B C  $.
+	f0_eleqtrrd $f wff ph $.
+	f1_eleqtrrd $f class A $.
+	f2_eleqtrrd $f class B $.
+	f3_eleqtrrd $f class C $.
+	e0_eleqtrrd $e |- ( ph -> A e. B ) $.
+	e1_eleqtrrd $e |- ( ph -> C = B ) $.
+	p_eleqtrrd $p |- ( ph -> A e. C ) $= e0_eleqtrrd e1_eleqtrrd f0_eleqtrrd f3_eleqtrrd f2_eleqtrrd p_eqcomd f0_eleqtrrd f1_eleqtrrd f2_eleqtrrd f3_eleqtrrd p_eleqtrd $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr3i_0 $f class A $.
-	f3eltr3i_1 $f class B $.
-	f3eltr3i_2 $f class C $.
-	f3eltr3i_3 $f class D $.
-	e3eltr3i_0 $e |- A e. B $.
-	e3eltr3i_1 $e |- A = C $.
-	e3eltr3i_2 $e |- B = D $.
-	3eltr3i $p |- C e. D $= f3eltr3i_0 f3eltr3i_2 f3eltr3i_3 e3eltr3i_1 f3eltr3i_0 f3eltr3i_1 f3eltr3i_3 e3eltr3i_0 e3eltr3i_2 eleqtri eqeltrri $.
+	$v A B C D  $.
+	f0_3eltr3i $f class A $.
+	f1_3eltr3i $f class B $.
+	f2_3eltr3i $f class C $.
+	f3_3eltr3i $f class D $.
+	e0_3eltr3i $e |- A e. B $.
+	e1_3eltr3i $e |- A = C $.
+	e2_3eltr3i $e |- B = D $.
+	p_3eltr3i $p |- C e. D $= e1_3eltr3i e0_3eltr3i e2_3eltr3i f0_3eltr3i f1_3eltr3i f3_3eltr3i p_eleqtri f0_3eltr3i f2_3eltr3i f3_3eltr3i p_eqeltrri $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr4i_0 $f class A $.
-	f3eltr4i_1 $f class B $.
-	f3eltr4i_2 $f class C $.
-	f3eltr4i_3 $f class D $.
-	e3eltr4i_0 $e |- A e. B $.
-	e3eltr4i_1 $e |- C = A $.
-	e3eltr4i_2 $e |- D = B $.
-	3eltr4i $p |- C e. D $= f3eltr4i_2 f3eltr4i_0 f3eltr4i_3 e3eltr4i_1 f3eltr4i_0 f3eltr4i_1 f3eltr4i_3 e3eltr4i_0 e3eltr4i_2 eleqtrri eqeltri $.
+	$v A B C D  $.
+	f0_3eltr4i $f class A $.
+	f1_3eltr4i $f class B $.
+	f2_3eltr4i $f class C $.
+	f3_3eltr4i $f class D $.
+	e0_3eltr4i $e |- A e. B $.
+	e1_3eltr4i $e |- C = A $.
+	e2_3eltr4i $e |- D = B $.
+	p_3eltr4i $p |- C e. D $= e1_3eltr4i e0_3eltr4i e2_3eltr4i f0_3eltr4i f1_3eltr4i f3_3eltr4i p_eleqtrri f2_3eltr4i f0_3eltr4i f3_3eltr4i p_eqeltri $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr3d_0 $f wff ph $.
-	f3eltr3d_1 $f class A $.
-	f3eltr3d_2 $f class B $.
-	f3eltr3d_3 $f class C $.
-	f3eltr3d_4 $f class D $.
-	e3eltr3d_0 $e |- ( ph -> A e. B ) $.
-	e3eltr3d_1 $e |- ( ph -> A = C ) $.
-	e3eltr3d_2 $e |- ( ph -> B = D ) $.
-	3eltr3d $p |- ( ph -> C e. D ) $= f3eltr3d_0 f3eltr3d_1 f3eltr3d_3 f3eltr3d_4 e3eltr3d_1 f3eltr3d_0 f3eltr3d_1 f3eltr3d_2 f3eltr3d_4 e3eltr3d_0 e3eltr3d_2 eleqtrd eqeltrrd $.
+	$v ph A B C D  $.
+	f0_3eltr3d $f wff ph $.
+	f1_3eltr3d $f class A $.
+	f2_3eltr3d $f class B $.
+	f3_3eltr3d $f class C $.
+	f4_3eltr3d $f class D $.
+	e0_3eltr3d $e |- ( ph -> A e. B ) $.
+	e1_3eltr3d $e |- ( ph -> A = C ) $.
+	e2_3eltr3d $e |- ( ph -> B = D ) $.
+	p_3eltr3d $p |- ( ph -> C e. D ) $= e1_3eltr3d e0_3eltr3d e2_3eltr3d f0_3eltr3d f1_3eltr3d f2_3eltr3d f4_3eltr3d p_eleqtrd f0_3eltr3d f1_3eltr3d f3_3eltr3d f4_3eltr3d p_eqeltrrd $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr4d_0 $f wff ph $.
-	f3eltr4d_1 $f class A $.
-	f3eltr4d_2 $f class B $.
-	f3eltr4d_3 $f class C $.
-	f3eltr4d_4 $f class D $.
-	e3eltr4d_0 $e |- ( ph -> A e. B ) $.
-	e3eltr4d_1 $e |- ( ph -> C = A ) $.
-	e3eltr4d_2 $e |- ( ph -> D = B ) $.
-	3eltr4d $p |- ( ph -> C e. D ) $= f3eltr4d_0 f3eltr4d_3 f3eltr4d_1 f3eltr4d_4 e3eltr4d_1 f3eltr4d_0 f3eltr4d_1 f3eltr4d_2 f3eltr4d_4 e3eltr4d_0 e3eltr4d_2 eleqtrrd eqeltrd $.
+	$v ph A B C D  $.
+	f0_3eltr4d $f wff ph $.
+	f1_3eltr4d $f class A $.
+	f2_3eltr4d $f class B $.
+	f3_3eltr4d $f class C $.
+	f4_3eltr4d $f class D $.
+	e0_3eltr4d $e |- ( ph -> A e. B ) $.
+	e1_3eltr4d $e |- ( ph -> C = A ) $.
+	e2_3eltr4d $e |- ( ph -> D = B ) $.
+	p_3eltr4d $p |- ( ph -> C e. D ) $= e1_3eltr4d e0_3eltr4d e2_3eltr4d f0_3eltr4d f1_3eltr4d f2_3eltr4d f4_3eltr4d p_eleqtrrd f0_3eltr4d f3_3eltr4d f1_3eltr4d f4_3eltr4d p_eqeltrd $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr3g_0 $f wff ph $.
-	f3eltr3g_1 $f class A $.
-	f3eltr3g_2 $f class B $.
-	f3eltr3g_3 $f class C $.
-	f3eltr3g_4 $f class D $.
-	e3eltr3g_0 $e |- ( ph -> A e. B ) $.
-	e3eltr3g_1 $e |- A = C $.
-	e3eltr3g_2 $e |- B = D $.
-	3eltr3g $p |- ( ph -> C e. D ) $= f3eltr3g_0 f3eltr3g_1 f3eltr3g_2 wcel f3eltr3g_3 f3eltr3g_4 wcel e3eltr3g_0 f3eltr3g_1 f3eltr3g_3 f3eltr3g_2 f3eltr3g_4 e3eltr3g_1 e3eltr3g_2 eleq12i sylib $.
+	$v ph A B C D  $.
+	f0_3eltr3g $f wff ph $.
+	f1_3eltr3g $f class A $.
+	f2_3eltr3g $f class B $.
+	f3_3eltr3g $f class C $.
+	f4_3eltr3g $f class D $.
+	e0_3eltr3g $e |- ( ph -> A e. B ) $.
+	e1_3eltr3g $e |- A = C $.
+	e2_3eltr3g $e |- B = D $.
+	p_3eltr3g $p |- ( ph -> C e. D ) $= e0_3eltr3g e1_3eltr3g e2_3eltr3g f1_3eltr3g f3_3eltr3g f2_3eltr3g f4_3eltr3g p_eleq12i f0_3eltr3g f1_3eltr3g f2_3eltr3g a_wcel f3_3eltr3g f4_3eltr3g a_wcel p_sylib $.
 $}
-$( Substitution of equal classes into membership relation.  (Contributed by
+
+$(Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3eltr4g_0 $f wff ph $.
-	f3eltr4g_1 $f class A $.
-	f3eltr4g_2 $f class B $.
-	f3eltr4g_3 $f class C $.
-	f3eltr4g_4 $f class D $.
-	e3eltr4g_0 $e |- ( ph -> A e. B ) $.
-	e3eltr4g_1 $e |- C = A $.
-	e3eltr4g_2 $e |- D = B $.
-	3eltr4g $p |- ( ph -> C e. D ) $= f3eltr4g_0 f3eltr4g_1 f3eltr4g_2 wcel f3eltr4g_3 f3eltr4g_4 wcel e3eltr4g_0 f3eltr4g_3 f3eltr4g_1 f3eltr4g_4 f3eltr4g_2 e3eltr4g_1 e3eltr4g_2 eleq12i sylibr $.
+	$v ph A B C D  $.
+	f0_3eltr4g $f wff ph $.
+	f1_3eltr4g $f class A $.
+	f2_3eltr4g $f class B $.
+	f3_3eltr4g $f class C $.
+	f4_3eltr4g $f class D $.
+	e0_3eltr4g $e |- ( ph -> A e. B ) $.
+	e1_3eltr4g $e |- C = A $.
+	e2_3eltr4g $e |- D = B $.
+	p_3eltr4g $p |- ( ph -> C e. D ) $= e0_3eltr4g e1_3eltr4g e2_3eltr4g f3_3eltr4g f1_3eltr4g f4_3eltr4g f2_3eltr4g p_eleq12i f0_3eltr4g f1_3eltr4g f2_3eltr4g a_wcel f3_3eltr4g f4_3eltr4g a_wcel p_sylibr $.
 $}
-$( B membership and equality inference.  (Contributed by NM,
+
+$(B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eqel_0 $f wff ph $.
-	fsyl5eqel_1 $f class A $.
-	fsyl5eqel_2 $f class B $.
-	fsyl5eqel_3 $f class C $.
-	esyl5eqel_0 $e |- A = B $.
-	esyl5eqel_1 $e |- ( ph -> B e. C ) $.
-	syl5eqel $p |- ( ph -> A e. C ) $= fsyl5eqel_0 fsyl5eqel_1 fsyl5eqel_2 fsyl5eqel_3 fsyl5eqel_1 fsyl5eqel_2 wceq fsyl5eqel_0 esyl5eqel_0 a1i esyl5eqel_1 eqeltrd $.
+	$v ph A B C  $.
+	f0_syl5eqel $f wff ph $.
+	f1_syl5eqel $f class A $.
+	f2_syl5eqel $f class B $.
+	f3_syl5eqel $f class C $.
+	e0_syl5eqel $e |- A = B $.
+	e1_syl5eqel $e |- ( ph -> B e. C ) $.
+	p_syl5eqel $p |- ( ph -> A e. C ) $= e0_syl5eqel f1_syl5eqel f2_syl5eqel a_wceq f0_syl5eqel p_a1i e1_syl5eqel f0_syl5eqel f1_syl5eqel f2_syl5eqel f3_syl5eqel p_eqeltrd $.
 $}
-$( B membership and equality inference.  (Contributed by NM,
+
+$(B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eqelr_0 $f wff ph $.
-	fsyl5eqelr_1 $f class A $.
-	fsyl5eqelr_2 $f class B $.
-	fsyl5eqelr_3 $f class C $.
-	esyl5eqelr_0 $e |- B = A $.
-	esyl5eqelr_1 $e |- ( ph -> B e. C ) $.
-	syl5eqelr $p |- ( ph -> A e. C ) $= fsyl5eqelr_0 fsyl5eqelr_1 fsyl5eqelr_2 fsyl5eqelr_3 fsyl5eqelr_2 fsyl5eqelr_1 esyl5eqelr_0 eqcomi esyl5eqelr_1 syl5eqel $.
+	$v ph A B C  $.
+	f0_syl5eqelr $f wff ph $.
+	f1_syl5eqelr $f class A $.
+	f2_syl5eqelr $f class B $.
+	f3_syl5eqelr $f class C $.
+	e0_syl5eqelr $e |- B = A $.
+	e1_syl5eqelr $e |- ( ph -> B e. C ) $.
+	p_syl5eqelr $p |- ( ph -> A e. C ) $= e0_syl5eqelr f2_syl5eqelr f1_syl5eqelr p_eqcomi e1_syl5eqelr f0_syl5eqelr f1_syl5eqelr f2_syl5eqelr f3_syl5eqelr p_syl5eqel $.
 $}
-$( B membership and equality inference.  (Contributed by NM,
+
+$(B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eleq_0 $f wff ph $.
-	fsyl5eleq_1 $f class A $.
-	fsyl5eleq_2 $f class B $.
-	fsyl5eleq_3 $f class C $.
-	esyl5eleq_0 $e |- A e. B $.
-	esyl5eleq_1 $e |- ( ph -> B = C ) $.
-	syl5eleq $p |- ( ph -> A e. C ) $= fsyl5eleq_0 fsyl5eleq_1 fsyl5eleq_2 fsyl5eleq_3 fsyl5eleq_1 fsyl5eleq_2 wcel fsyl5eleq_0 esyl5eleq_0 a1i esyl5eleq_1 eleqtrd $.
+	$v ph A B C  $.
+	f0_syl5eleq $f wff ph $.
+	f1_syl5eleq $f class A $.
+	f2_syl5eleq $f class B $.
+	f3_syl5eleq $f class C $.
+	e0_syl5eleq $e |- A e. B $.
+	e1_syl5eleq $e |- ( ph -> B = C ) $.
+	p_syl5eleq $p |- ( ph -> A e. C ) $= e0_syl5eleq f1_syl5eleq f2_syl5eleq a_wcel f0_syl5eleq p_a1i e1_syl5eleq f0_syl5eleq f1_syl5eleq f2_syl5eleq f3_syl5eleq p_eleqtrd $.
 $}
-$( B membership and equality inference.  (Contributed by NM,
+
+$(B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eleqr_0 $f wff ph $.
-	fsyl5eleqr_1 $f class A $.
-	fsyl5eleqr_2 $f class B $.
-	fsyl5eleqr_3 $f class C $.
-	esyl5eleqr_0 $e |- A e. B $.
-	esyl5eleqr_1 $e |- ( ph -> C = B ) $.
-	syl5eleqr $p |- ( ph -> A e. C ) $= fsyl5eleqr_0 fsyl5eleqr_1 fsyl5eleqr_2 fsyl5eleqr_3 esyl5eleqr_0 fsyl5eleqr_0 fsyl5eleqr_3 fsyl5eleqr_2 esyl5eleqr_1 eqcomd syl5eleq $.
+	$v ph A B C  $.
+	f0_syl5eleqr $f wff ph $.
+	f1_syl5eleqr $f class A $.
+	f2_syl5eleqr $f class B $.
+	f3_syl5eleqr $f class C $.
+	e0_syl5eleqr $e |- A e. B $.
+	e1_syl5eleqr $e |- ( ph -> C = B ) $.
+	p_syl5eleqr $p |- ( ph -> A e. C ) $= e0_syl5eleqr e1_syl5eleqr f0_syl5eleqr f3_syl5eleqr f2_syl5eleqr p_eqcomd f0_syl5eleqr f1_syl5eleqr f2_syl5eleqr f3_syl5eleqr p_syl5eleq $.
 $}
-$( A membership and equality inference.  (Contributed by NM,
+
+$(A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eqel_0 $f wff ph $.
-	fsyl6eqel_1 $f class A $.
-	fsyl6eqel_2 $f class B $.
-	fsyl6eqel_3 $f class C $.
-	esyl6eqel_0 $e |- ( ph -> A = B ) $.
-	esyl6eqel_1 $e |- B e. C $.
-	syl6eqel $p |- ( ph -> A e. C ) $= fsyl6eqel_0 fsyl6eqel_1 fsyl6eqel_2 fsyl6eqel_3 esyl6eqel_0 fsyl6eqel_2 fsyl6eqel_3 wcel fsyl6eqel_0 esyl6eqel_1 a1i eqeltrd $.
+	$v ph A B C  $.
+	f0_syl6eqel $f wff ph $.
+	f1_syl6eqel $f class A $.
+	f2_syl6eqel $f class B $.
+	f3_syl6eqel $f class C $.
+	e0_syl6eqel $e |- ( ph -> A = B ) $.
+	e1_syl6eqel $e |- B e. C $.
+	p_syl6eqel $p |- ( ph -> A e. C ) $= e0_syl6eqel e1_syl6eqel f2_syl6eqel f3_syl6eqel a_wcel f0_syl6eqel p_a1i f0_syl6eqel f1_syl6eqel f2_syl6eqel f3_syl6eqel p_eqeltrd $.
 $}
-$( A membership and equality inference.  (Contributed by NM,
+
+$(A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eqelr_0 $f wff ph $.
-	fsyl6eqelr_1 $f class A $.
-	fsyl6eqelr_2 $f class B $.
-	fsyl6eqelr_3 $f class C $.
-	esyl6eqelr_0 $e |- ( ph -> B = A ) $.
-	esyl6eqelr_1 $e |- B e. C $.
-	syl6eqelr $p |- ( ph -> A e. C ) $= fsyl6eqelr_0 fsyl6eqelr_1 fsyl6eqelr_2 fsyl6eqelr_3 fsyl6eqelr_0 fsyl6eqelr_2 fsyl6eqelr_1 esyl6eqelr_0 eqcomd esyl6eqelr_1 syl6eqel $.
+	$v ph A B C  $.
+	f0_syl6eqelr $f wff ph $.
+	f1_syl6eqelr $f class A $.
+	f2_syl6eqelr $f class B $.
+	f3_syl6eqelr $f class C $.
+	e0_syl6eqelr $e |- ( ph -> B = A ) $.
+	e1_syl6eqelr $e |- B e. C $.
+	p_syl6eqelr $p |- ( ph -> A e. C ) $= e0_syl6eqelr f0_syl6eqelr f2_syl6eqelr f1_syl6eqelr p_eqcomd e1_syl6eqelr f0_syl6eqelr f1_syl6eqelr f2_syl6eqelr f3_syl6eqelr p_syl6eqel $.
 $}
-$( A membership and equality inference.  (Contributed by NM,
+
+$(A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eleq_0 $f wff ph $.
-	fsyl6eleq_1 $f class A $.
-	fsyl6eleq_2 $f class B $.
-	fsyl6eleq_3 $f class C $.
-	esyl6eleq_0 $e |- ( ph -> A e. B ) $.
-	esyl6eleq_1 $e |- B = C $.
-	syl6eleq $p |- ( ph -> A e. C ) $= fsyl6eleq_0 fsyl6eleq_1 fsyl6eleq_2 fsyl6eleq_3 esyl6eleq_0 fsyl6eleq_2 fsyl6eleq_3 wceq fsyl6eleq_0 esyl6eleq_1 a1i eleqtrd $.
+	$v ph A B C  $.
+	f0_syl6eleq $f wff ph $.
+	f1_syl6eleq $f class A $.
+	f2_syl6eleq $f class B $.
+	f3_syl6eleq $f class C $.
+	e0_syl6eleq $e |- ( ph -> A e. B ) $.
+	e1_syl6eleq $e |- B = C $.
+	p_syl6eleq $p |- ( ph -> A e. C ) $= e0_syl6eleq e1_syl6eleq f2_syl6eleq f3_syl6eleq a_wceq f0_syl6eleq p_a1i f0_syl6eleq f1_syl6eleq f2_syl6eleq f3_syl6eleq p_eleqtrd $.
 $}
-$( A membership and equality inference.  (Contributed by NM,
+
+$(A membership and equality inference.  (Contributed by NM,
        24-Apr-2005.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eleqr_0 $f wff ph $.
-	fsyl6eleqr_1 $f class A $.
-	fsyl6eleqr_2 $f class B $.
-	fsyl6eleqr_3 $f class C $.
-	esyl6eleqr_0 $e |- ( ph -> A e. B ) $.
-	esyl6eleqr_1 $e |- C = B $.
-	syl6eleqr $p |- ( ph -> A e. C ) $= fsyl6eleqr_0 fsyl6eleqr_1 fsyl6eleqr_2 fsyl6eleqr_3 esyl6eleqr_0 fsyl6eleqr_3 fsyl6eleqr_2 esyl6eleqr_1 eqcomi syl6eleq $.
+	$v ph A B C  $.
+	f0_syl6eleqr $f wff ph $.
+	f1_syl6eleqr $f class A $.
+	f2_syl6eleqr $f class B $.
+	f3_syl6eleqr $f class C $.
+	e0_syl6eleqr $e |- ( ph -> A e. B ) $.
+	e1_syl6eleqr $e |- C = B $.
+	p_syl6eleqr $p |- ( ph -> A e. C ) $= e0_syl6eleqr e1_syl6eleqr f3_syl6eleqr f2_syl6eleqr p_eqcomi f0_syl6eleqr f1_syl6eleqr f2_syl6eleqr f3_syl6eleqr p_syl6eleq $.
 $}
-$( Substitution of equal classes into a membership antecedent.
+
+$(Substitution of equal classes into a membership antecedent.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feleq2s_0 $f wff ph $.
-	feleq2s_1 $f class A $.
-	feleq2s_2 $f class B $.
-	feleq2s_3 $f class C $.
-	eeleq2s_0 $e |- ( A e. B -> ph ) $.
-	eeleq2s_1 $e |- C = B $.
-	eleq2s $p |- ( A e. C -> ph ) $= feleq2s_1 feleq2s_3 wcel feleq2s_1 feleq2s_2 wcel feleq2s_0 feleq2s_3 feleq2s_2 feleq2s_1 eeleq2s_1 eleq2i eeleq2s_0 sylbi $.
+	$v ph A B C  $.
+	f0_eleq2s $f wff ph $.
+	f1_eleq2s $f class A $.
+	f2_eleq2s $f class B $.
+	f3_eleq2s $f class C $.
+	e0_eleq2s $e |- ( A e. B -> ph ) $.
+	e1_eleq2s $e |- C = B $.
+	p_eleq2s $p |- ( A e. C -> ph ) $= e1_eleq2s f3_eleq2s f2_eleq2s f1_eleq2s p_eleq2i e0_eleq2s f1_eleq2s f3_eleq2s a_wcel f1_eleq2s f2_eleq2s a_wcel f0_eleq2s p_sylbi $.
 $}
-$( If a class is not an element of another class, an equal class is also
+
+$(If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqneltrd_0 $f wff ph $.
-	feqneltrd_1 $f class A $.
-	feqneltrd_2 $f class B $.
-	feqneltrd_3 $f class C $.
-	eeqneltrd_0 $e |- ( ph -> A = B ) $.
-	eeqneltrd_1 $e |- ( ph -> -. B e. C ) $.
-	eqneltrd $p |- ( ph -> -. A e. C ) $= feqneltrd_0 feqneltrd_1 feqneltrd_3 wcel feqneltrd_2 feqneltrd_3 wcel eeqneltrd_1 feqneltrd_0 feqneltrd_1 feqneltrd_2 feqneltrd_3 eeqneltrd_0 eleq1d mtbird $.
+	$v ph A B C  $.
+	f0_eqneltrd $f wff ph $.
+	f1_eqneltrd $f class A $.
+	f2_eqneltrd $f class B $.
+	f3_eqneltrd $f class C $.
+	e0_eqneltrd $e |- ( ph -> A = B ) $.
+	e1_eqneltrd $e |- ( ph -> -. B e. C ) $.
+	p_eqneltrd $p |- ( ph -> -. A e. C ) $= e1_eqneltrd e0_eqneltrd f0_eqneltrd f1_eqneltrd f2_eqneltrd f3_eqneltrd p_eleq1d f0_eqneltrd f1_eqneltrd f3_eqneltrd a_wcel f2_eqneltrd f3_eqneltrd a_wcel p_mtbird $.
 $}
-$( If a class is not an element of another class, an equal class is also
+
+$(If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqneltrrd_0 $f wff ph $.
-	feqneltrrd_1 $f class A $.
-	feqneltrrd_2 $f class B $.
-	feqneltrrd_3 $f class C $.
-	eeqneltrrd_0 $e |- ( ph -> A = B ) $.
-	eeqneltrrd_1 $e |- ( ph -> -. A e. C ) $.
-	eqneltrrd $p |- ( ph -> -. B e. C ) $= feqneltrrd_0 feqneltrrd_1 feqneltrrd_3 wcel feqneltrrd_2 feqneltrrd_3 wcel eeqneltrrd_1 feqneltrrd_0 feqneltrrd_1 feqneltrrd_2 feqneltrrd_3 eeqneltrrd_0 eleq1d mtbid $.
+	$v ph A B C  $.
+	f0_eqneltrrd $f wff ph $.
+	f1_eqneltrrd $f class A $.
+	f2_eqneltrrd $f class B $.
+	f3_eqneltrrd $f class C $.
+	e0_eqneltrrd $e |- ( ph -> A = B ) $.
+	e1_eqneltrrd $e |- ( ph -> -. A e. C ) $.
+	p_eqneltrrd $p |- ( ph -> -. B e. C ) $= e1_eqneltrrd e0_eqneltrrd f0_eqneltrrd f1_eqneltrrd f2_eqneltrrd f3_eqneltrrd p_eleq1d f0_eqneltrrd f1_eqneltrrd f3_eqneltrrd a_wcel f2_eqneltrrd f3_eqneltrrd a_wcel p_mtbid $.
 $}
-$( If a class is not an element of another class, it is also not an element
+
+$(If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fneleqtrd_0 $f wff ph $.
-	fneleqtrd_1 $f class A $.
-	fneleqtrd_2 $f class B $.
-	fneleqtrd_3 $f class C $.
-	eneleqtrd_0 $e |- ( ph -> -. C e. A ) $.
-	eneleqtrd_1 $e |- ( ph -> A = B ) $.
-	neleqtrd $p |- ( ph -> -. C e. B ) $= fneleqtrd_0 fneleqtrd_3 fneleqtrd_1 wcel fneleqtrd_3 fneleqtrd_2 wcel eneleqtrd_0 fneleqtrd_0 fneleqtrd_1 fneleqtrd_2 fneleqtrd_3 eneleqtrd_1 eleq2d mtbid $.
+	$v ph A B C  $.
+	f0_neleqtrd $f wff ph $.
+	f1_neleqtrd $f class A $.
+	f2_neleqtrd $f class B $.
+	f3_neleqtrd $f class C $.
+	e0_neleqtrd $e |- ( ph -> -. C e. A ) $.
+	e1_neleqtrd $e |- ( ph -> A = B ) $.
+	p_neleqtrd $p |- ( ph -> -. C e. B ) $= e0_neleqtrd e1_neleqtrd f0_neleqtrd f1_neleqtrd f2_neleqtrd f3_neleqtrd p_eleq2d f0_neleqtrd f3_neleqtrd f1_neleqtrd a_wcel f3_neleqtrd f2_neleqtrd a_wcel p_mtbid $.
 $}
-$( If a class is not an element of another class, it is also not an element
+
+$(If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fneleqtrrd_0 $f wff ph $.
-	fneleqtrrd_1 $f class A $.
-	fneleqtrrd_2 $f class B $.
-	fneleqtrrd_3 $f class C $.
-	eneleqtrrd_0 $e |- ( ph -> -. C e. B ) $.
-	eneleqtrrd_1 $e |- ( ph -> A = B ) $.
-	neleqtrrd $p |- ( ph -> -. C e. A ) $= fneleqtrrd_0 fneleqtrrd_3 fneleqtrrd_1 wcel fneleqtrrd_3 fneleqtrrd_2 wcel eneleqtrrd_0 fneleqtrrd_0 fneleqtrrd_1 fneleqtrrd_2 fneleqtrrd_3 eneleqtrrd_1 eleq2d mtbird $.
+	$v ph A B C  $.
+	f0_neleqtrrd $f wff ph $.
+	f1_neleqtrrd $f class A $.
+	f2_neleqtrrd $f class B $.
+	f3_neleqtrrd $f class C $.
+	e0_neleqtrrd $e |- ( ph -> -. C e. B ) $.
+	e1_neleqtrrd $e |- ( ph -> A = B ) $.
+	p_neleqtrrd $p |- ( ph -> -. C e. A ) $= e0_neleqtrrd e1_neleqtrrd f0_neleqtrrd f1_neleqtrrd f2_neleqtrrd f3_neleqtrrd p_eleq2d f0_neleqtrrd f3_neleqtrrd f1_neleqtrrd a_wcel f3_neleqtrrd f2_neleqtrrd a_wcel p_mtbird $.
 $}
-$( Establish equality between classes, using bound-variable hypotheses
+
+$(Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d y A $.
-	$d y B $.
-	$d x y $.
-	fcleqh_0 $f set x $.
-	fcleqh_1 $f set y $.
-	fcleqh_2 $f class A $.
-	fcleqh_3 $f class B $.
-	ecleqh_0 $e |- ( y e. A -> A. x y e. A ) $.
-	ecleqh_1 $e |- ( y e. B -> A. x y e. B ) $.
-	cleqh $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $= fcleqh_2 fcleqh_3 wceq fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_1 wal fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_0 wal fcleqh_1 fcleqh_2 fcleqh_3 dfcleq fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_0 wal fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_1 wal fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_0 fcleqh_1 fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 ax-17 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wi fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel wi wa fcleqh_0 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel dfbi2 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wi fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel wi fcleqh_0 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_0 ecleqh_0 ecleqh_1 hbim fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_0 ecleqh_1 ecleqh_0 hbim hban hbxfrbi fcleqh_0 sup_set_class fcleqh_1 sup_set_class wceq fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_0 sup_set_class fcleqh_1 sup_set_class wceq fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_0 sup_set_class fcleqh_1 sup_set_class fcleqh_2 eleq1 fcleqh_0 sup_set_class fcleqh_1 sup_set_class fcleqh_3 eleq1 bibi12d biimpd cbv3h fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 fcleqh_0 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wi fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel wi wa fcleqh_0 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel dfbi2 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wi fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel wi fcleqh_0 fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_0 ecleqh_0 ecleqh_1 hbim fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_0 ecleqh_1 ecleqh_0 hbim hban hbxfrbi fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 ax-17 fcleqh_1 sup_set_class fcleqh_0 sup_set_class wceq fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel wb fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_3 wcel wb wb fcleqh_0 fcleqh_1 fcleqh_0 sup_set_class fcleqh_1 sup_set_class wceq fcleqh_0 sup_set_class fcleqh_2 wcel fcleqh_1 sup_set_class fcleqh_2 wcel fcleqh_0 sup_set_class fcleqh_3 wcel fcleqh_1 sup_set_class fcleqh_3 wcel fcleqh_0 sup_set_class fcleqh_1 sup_set_class fcleqh_2 eleq1 fcleqh_0 sup_set_class fcleqh_1 sup_set_class fcleqh_3 eleq1 bibi12d equcoms biimprd cbv3h impbii bitr4i $.
+	$v x y A B  $.
+	$d y A  $.
+	$d y B  $.
+	$d x y  $.
+	f0_cleqh $f set x $.
+	f1_cleqh $f set y $.
+	f2_cleqh $f class A $.
+	f3_cleqh $f class B $.
+	e0_cleqh $e |- ( y e. A -> A. x y e. A ) $.
+	e1_cleqh $e |- ( y e. B -> A. x y e. B ) $.
+	p_cleqh $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $= f1_cleqh f2_cleqh f3_cleqh p_dfcleq f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_ax-17 f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel p_dfbi2 e0_cleqh e1_cleqh f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel f0_cleqh p_hbim e1_cleqh e0_cleqh f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh p_hbim f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wi f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel a_wi f0_cleqh p_hban f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wi f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel a_wi a_wa f0_cleqh p_hbxfrbi f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class f2_cleqh p_eleq1 f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class f3_cleqh p_eleq1 f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class a_wceq f0_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel p_bibi12d f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class a_wceq f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb p_biimpd f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f0_cleqh f1_cleqh p_cbv3h f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel p_dfbi2 e0_cleqh e1_cleqh f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel f0_cleqh p_hbim e1_cleqh e0_cleqh f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh p_hbim f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wi f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel a_wi f0_cleqh p_hban f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wi f1_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel a_wi a_wa f0_cleqh p_hbxfrbi f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_ax-17 f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class f2_cleqh p_eleq1 f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class f3_cleqh p_eleq1 f0_cleqh a_sup_set_class f1_cleqh a_sup_set_class a_wceq f0_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel p_bibi12d f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb a_wb f0_cleqh f1_cleqh p_equcoms f1_cleqh a_sup_set_class f0_cleqh a_sup_set_class a_wceq f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb p_biimprd f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh f0_cleqh p_cbv3h f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f0_cleqh a_wal f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_wal p_impbii f2_cleqh f3_cleqh a_wceq f1_cleqh a_sup_set_class f2_cleqh a_wcel f1_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f1_cleqh a_wal f0_cleqh a_sup_set_class f2_cleqh a_wcel f0_cleqh a_sup_set_class f3_cleqh a_wcel a_wb f0_cleqh a_wal p_bitr4i $.
 $}
-$( A way of showing two classes are not equal.  (Contributed by NM,
+
+$(A way of showing two classes are not equal.  (Contributed by NM,
      1-Apr-1997.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fnelneq_0 $f class A $.
-	fnelneq_1 $f class B $.
-	fnelneq_2 $f class C $.
-	nelneq $p |- ( ( A e. C /\ -. B e. C ) -> -. A = B ) $= fnelneq_0 fnelneq_2 wcel fnelneq_0 fnelneq_1 wceq fnelneq_1 fnelneq_2 wcel fnelneq_0 fnelneq_1 wceq fnelneq_0 fnelneq_2 wcel fnelneq_1 fnelneq_2 wcel fnelneq_0 fnelneq_1 fnelneq_2 eleq1 biimpcd con3and $.
+	$v A B C  $.
+	f0_nelneq $f class A $.
+	f1_nelneq $f class B $.
+	f2_nelneq $f class C $.
+	p_nelneq $p |- ( ( A e. C /\ -. B e. C ) -> -. A = B ) $= f0_nelneq f1_nelneq f2_nelneq p_eleq1 f0_nelneq f1_nelneq a_wceq f0_nelneq f2_nelneq a_wcel f1_nelneq f2_nelneq a_wcel p_biimpcd f0_nelneq f2_nelneq a_wcel f0_nelneq f1_nelneq a_wceq f1_nelneq f2_nelneq a_wcel p_con3and $.
 $}
-$( A way of showing two classes are not equal.  (Contributed by NM,
+
+$(A way of showing two classes are not equal.  (Contributed by NM,
      12-Jan-2002.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fnelneq2_0 $f class A $.
-	fnelneq2_1 $f class B $.
-	fnelneq2_2 $f class C $.
-	nelneq2 $p |- ( ( A e. B /\ -. A e. C ) -> -. B = C ) $= fnelneq2_0 fnelneq2_1 wcel fnelneq2_1 fnelneq2_2 wceq fnelneq2_0 fnelneq2_2 wcel fnelneq2_1 fnelneq2_2 wceq fnelneq2_0 fnelneq2_1 wcel fnelneq2_0 fnelneq2_2 wcel fnelneq2_1 fnelneq2_2 fnelneq2_0 eleq2 biimpcd con3and $.
+	$v A B C  $.
+	f0_nelneq2 $f class A $.
+	f1_nelneq2 $f class B $.
+	f2_nelneq2 $f class C $.
+	p_nelneq2 $p |- ( ( A e. B /\ -. A e. C ) -> -. B = C ) $= f1_nelneq2 f2_nelneq2 f0_nelneq2 p_eleq2 f1_nelneq2 f2_nelneq2 a_wceq f0_nelneq2 f1_nelneq2 a_wcel f0_nelneq2 f2_nelneq2 a_wcel p_biimpcd f0_nelneq2 f1_nelneq2 a_wcel f1_nelneq2 f2_nelneq2 a_wceq f0_nelneq2 f2_nelneq2 a_wcel p_con3and $.
 $}
-$( Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
+
+$(Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y $.
-	$d y A $.
-	feqsb3lem_0 $f set x $.
-	feqsb3lem_1 $f set y $.
-	feqsb3lem_2 $f class A $.
-	eqsb3lem $p |- ( [ x / y ] y = A <-> x = A ) $= feqsb3lem_1 sup_set_class feqsb3lem_2 wceq feqsb3lem_0 sup_set_class feqsb3lem_2 wceq feqsb3lem_1 feqsb3lem_0 feqsb3lem_0 sup_set_class feqsb3lem_2 wceq feqsb3lem_1 nfv feqsb3lem_1 sup_set_class feqsb3lem_0 sup_set_class feqsb3lem_2 eqeq1 sbie $.
+	$v x y A  $.
+	$d x y  $.
+	$d y A  $.
+	f0_eqsb3lem $f set x $.
+	f1_eqsb3lem $f set y $.
+	f2_eqsb3lem $f class A $.
+	p_eqsb3lem $p |- ( [ x / y ] y = A <-> x = A ) $= f0_eqsb3lem a_sup_set_class f2_eqsb3lem a_wceq f1_eqsb3lem p_nfv f1_eqsb3lem a_sup_set_class f0_eqsb3lem a_sup_set_class f2_eqsb3lem p_eqeq1 f1_eqsb3lem a_sup_set_class f2_eqsb3lem a_wceq f0_eqsb3lem a_sup_set_class f2_eqsb3lem a_wceq f1_eqsb3lem f0_eqsb3lem p_sbie $.
 $}
-$( Substitution applied to an atomic wff (class version of ~ equsb3 ).
+
+$(Substitution applied to an atomic wff (class version of ~ equsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v w $.
-	$d y A $.
-	$d w y $.
-	$d w A $.
-	$d x w $.
-	ieqsb3_0 $f set w $.
-	feqsb3_0 $f set x $.
-	feqsb3_1 $f set y $.
-	feqsb3_2 $f class A $.
-	eqsb3 $p |- ( [ x / y ] y = A <-> x = A ) $= feqsb3_1 sup_set_class feqsb3_2 wceq feqsb3_1 ieqsb3_0 wsb ieqsb3_0 feqsb3_0 wsb ieqsb3_0 sup_set_class feqsb3_2 wceq ieqsb3_0 feqsb3_0 wsb feqsb3_1 sup_set_class feqsb3_2 wceq feqsb3_1 feqsb3_0 wsb feqsb3_0 sup_set_class feqsb3_2 wceq feqsb3_1 sup_set_class feqsb3_2 wceq feqsb3_1 ieqsb3_0 wsb ieqsb3_0 sup_set_class feqsb3_2 wceq ieqsb3_0 feqsb3_0 ieqsb3_0 feqsb3_1 feqsb3_2 eqsb3lem sbbii feqsb3_1 sup_set_class feqsb3_2 wceq feqsb3_1 feqsb3_0 ieqsb3_0 feqsb3_1 sup_set_class feqsb3_2 wceq ieqsb3_0 nfv sbco2 feqsb3_0 ieqsb3_0 feqsb3_2 eqsb3lem 3bitr3i $.
+	$v x y A  $.
+	$d y A  $.
+	$d w y  $.
+	$d w A  $.
+	$d x w  $.
+	f0_eqsb3 $f set x $.
+	f1_eqsb3 $f set y $.
+	f2_eqsb3 $f class A $.
+	i0_eqsb3 $f set w $.
+	p_eqsb3 $p |- ( [ x / y ] y = A <-> x = A ) $= i0_eqsb3 f1_eqsb3 f2_eqsb3 p_eqsb3lem f1_eqsb3 a_sup_set_class f2_eqsb3 a_wceq f1_eqsb3 i0_eqsb3 a_wsb i0_eqsb3 a_sup_set_class f2_eqsb3 a_wceq i0_eqsb3 f0_eqsb3 p_sbbii f1_eqsb3 a_sup_set_class f2_eqsb3 a_wceq i0_eqsb3 p_nfv f1_eqsb3 a_sup_set_class f2_eqsb3 a_wceq f1_eqsb3 f0_eqsb3 i0_eqsb3 p_sbco2 f0_eqsb3 i0_eqsb3 f2_eqsb3 p_eqsb3lem f1_eqsb3 a_sup_set_class f2_eqsb3 a_wceq f1_eqsb3 i0_eqsb3 a_wsb i0_eqsb3 f0_eqsb3 a_wsb i0_eqsb3 a_sup_set_class f2_eqsb3 a_wceq i0_eqsb3 f0_eqsb3 a_wsb f1_eqsb3 a_sup_set_class f2_eqsb3 a_wceq f1_eqsb3 f0_eqsb3 a_wsb f0_eqsb3 a_sup_set_class f2_eqsb3 a_wceq p_3bitr3i $.
 $}
-$( Substitution applied to an atomic wff (class version of ~ elsb3 ).
+
+$(Substitution applied to an atomic wff (class version of ~ elsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.)  (Proof shortened by
        Andrew Salmon, 14-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v w $.
-	$d y A $.
-	$d w y $.
-	$d w A $.
-	$d w x $.
-	iclelsb3_0 $f set w $.
-	fclelsb3_0 $f set x $.
-	fclelsb3_1 $f set y $.
-	fclelsb3_2 $f class A $.
-	clelsb3 $p |- ( [ x / y ] y e. A <-> x e. A ) $= iclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_1 wsb fclelsb3_1 fclelsb3_0 wsb iclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_0 wsb fclelsb3_1 sup_set_class fclelsb3_2 wcel fclelsb3_1 fclelsb3_0 wsb fclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_0 fclelsb3_1 iclelsb3_0 sup_set_class fclelsb3_2 wcel fclelsb3_1 nfv sbco2 iclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_1 wsb fclelsb3_1 sup_set_class fclelsb3_2 wcel fclelsb3_1 fclelsb3_0 iclelsb3_0 sup_set_class fclelsb3_2 wcel fclelsb3_1 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_1 fclelsb3_1 sup_set_class fclelsb3_2 wcel iclelsb3_0 nfv iclelsb3_0 sup_set_class fclelsb3_1 sup_set_class fclelsb3_2 eleq1 sbie sbbii iclelsb3_0 sup_set_class fclelsb3_2 wcel fclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 fclelsb3_0 fclelsb3_0 sup_set_class fclelsb3_2 wcel iclelsb3_0 nfv iclelsb3_0 sup_set_class fclelsb3_0 sup_set_class fclelsb3_2 eleq1 sbie 3bitr3i $.
+	$v x y A  $.
+	$d y A  $.
+	$d w y  $.
+	$d w A  $.
+	$d w x  $.
+	f0_clelsb3 $f set x $.
+	f1_clelsb3 $f set y $.
+	f2_clelsb3 $f class A $.
+	i0_clelsb3 $f set w $.
+	p_clelsb3 $p |- ( [ x / y ] y e. A <-> x e. A ) $= i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel f1_clelsb3 p_nfv i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f0_clelsb3 f1_clelsb3 p_sbco2 f1_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 p_nfv i0_clelsb3 a_sup_set_class f1_clelsb3 a_sup_set_class f2_clelsb3 p_eleq1 i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel f1_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f1_clelsb3 p_sbie i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f1_clelsb3 a_wsb f1_clelsb3 a_sup_set_class f2_clelsb3 a_wcel f1_clelsb3 f0_clelsb3 p_sbbii f0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 p_nfv i0_clelsb3 a_sup_set_class f0_clelsb3 a_sup_set_class f2_clelsb3 p_eleq1 i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel f0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f0_clelsb3 p_sbie i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f1_clelsb3 a_wsb f1_clelsb3 f0_clelsb3 a_wsb i0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel i0_clelsb3 f0_clelsb3 a_wsb f1_clelsb3 a_sup_set_class f2_clelsb3 a_wcel f1_clelsb3 f0_clelsb3 a_wsb f0_clelsb3 a_sup_set_class f2_clelsb3 a_wcel p_3bitr3i $.
 $}
-$( A utility lemma to transfer a bound-variable hypothesis builder into a
+
+$(A utility lemma to transfer a bound-variable hypothesis builder into a
        definition.  See ~ hbxfrbi for equivalence version.  (Contributed by NM,
        21-Aug-2007.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	fhbxfreq_0 $f set x $.
-	fhbxfreq_1 $f set y $.
-	fhbxfreq_2 $f class A $.
-	fhbxfreq_3 $f class B $.
-	ehbxfreq_0 $e |- A = B $.
-	ehbxfreq_1 $e |- ( y e. B -> A. x y e. B ) $.
-	hbxfreq $p |- ( y e. A -> A. x y e. A ) $= fhbxfreq_1 sup_set_class fhbxfreq_2 wcel fhbxfreq_1 sup_set_class fhbxfreq_3 wcel fhbxfreq_0 fhbxfreq_2 fhbxfreq_3 fhbxfreq_1 sup_set_class ehbxfreq_0 eleq2i ehbxfreq_1 hbxfrbi $.
+	$v x y A B  $.
+	f0_hbxfreq $f set x $.
+	f1_hbxfreq $f set y $.
+	f2_hbxfreq $f class A $.
+	f3_hbxfreq $f class B $.
+	e0_hbxfreq $e |- A = B $.
+	e1_hbxfreq $e |- ( y e. B -> A. x y e. B ) $.
+	p_hbxfreq $p |- ( y e. A -> A. x y e. A ) $= e0_hbxfreq f2_hbxfreq f3_hbxfreq f1_hbxfreq a_sup_set_class p_eleq2i e1_hbxfreq f1_hbxfreq a_sup_set_class f2_hbxfreq a_wcel f1_hbxfreq a_sup_set_class f3_hbxfreq a_wcel f0_hbxfreq p_hbxfrbi $.
 $}
-$( Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
+
+$(Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$d y A $.
-	$d x z $.
-	fhblem_0 $f set x $.
-	fhblem_1 $f set y $.
-	fhblem_2 $f set z $.
-	fhblem_3 $f class A $.
-	ehblem_0 $e |- ( y e. A -> A. x y e. A ) $.
-	hblem $p |- ( z e. A -> A. x z e. A ) $= fhblem_1 sup_set_class fhblem_3 wcel fhblem_1 fhblem_2 wsb fhblem_1 sup_set_class fhblem_3 wcel fhblem_1 fhblem_2 wsb fhblem_0 wal fhblem_2 sup_set_class fhblem_3 wcel fhblem_2 sup_set_class fhblem_3 wcel fhblem_0 wal fhblem_1 sup_set_class fhblem_3 wcel fhblem_1 fhblem_2 fhblem_0 ehblem_0 hbsb fhblem_2 fhblem_1 fhblem_3 clelsb3 fhblem_1 sup_set_class fhblem_3 wcel fhblem_1 fhblem_2 wsb fhblem_2 sup_set_class fhblem_3 wcel fhblem_0 fhblem_2 fhblem_1 fhblem_3 clelsb3 albii 3imtr3i $.
+	$v x y z A  $.
+	$d y A  $.
+	$d x z  $.
+	f0_hblem $f set x $.
+	f1_hblem $f set y $.
+	f2_hblem $f set z $.
+	f3_hblem $f class A $.
+	e0_hblem $e |- ( y e. A -> A. x y e. A ) $.
+	p_hblem $p |- ( z e. A -> A. x z e. A ) $= e0_hblem f1_hblem a_sup_set_class f3_hblem a_wcel f1_hblem f2_hblem f0_hblem p_hbsb f2_hblem f1_hblem f3_hblem p_clelsb3 f2_hblem f1_hblem f3_hblem p_clelsb3 f1_hblem a_sup_set_class f3_hblem a_wcel f1_hblem f2_hblem a_wsb f2_hblem a_sup_set_class f3_hblem a_wcel f0_hblem p_albii f1_hblem a_sup_set_class f3_hblem a_wcel f1_hblem f2_hblem a_wsb f1_hblem a_sup_set_class f3_hblem a_wcel f1_hblem f2_hblem a_wsb f0_hblem a_wal f2_hblem a_sup_set_class f3_hblem a_wcel f2_hblem a_sup_set_class f3_hblem a_wcel f0_hblem a_wal p_3imtr3i $.
 $}
-$( Equality of a class variable and a class abstraction (also called a
+
+$(Equality of a class variable and a class abstraction (also called a
        class builder).  Theorem 5.1 of [Quine] p. 34.  This theorem shows the
        relationship between expressions with class abstractions and expressions
        with class variables.  Note that ~ abbi and its relatives are among
@@ -2020,272 +2009,272 @@ $( Equality of a class variable and a class abstraction (also called a
        formulation ~ cplem2 .  For more information on class variables, see
        Quine pp. 15-21 and/or Takeuti and Zaring pp. 10-13.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x A y $.
-	$d ph y $.
-	iabeq2_0 $f set y $.
-	fabeq2_0 $f wff ph $.
-	fabeq2_1 $f set x $.
-	fabeq2_2 $f class A $.
-	abeq2 $p |- ( A = { x | ph } <-> A. x ( x e. A <-> ph ) ) $= fabeq2_2 fabeq2_0 fabeq2_1 cab wceq fabeq2_1 sup_set_class fabeq2_2 wcel fabeq2_1 sup_set_class fabeq2_0 fabeq2_1 cab wcel wb fabeq2_1 wal fabeq2_1 sup_set_class fabeq2_2 wcel fabeq2_0 wb fabeq2_1 wal fabeq2_1 iabeq2_0 fabeq2_2 fabeq2_0 fabeq2_1 cab iabeq2_0 sup_set_class fabeq2_2 wcel fabeq2_1 ax-17 fabeq2_0 fabeq2_1 iabeq2_0 hbab1 cleqh fabeq2_1 sup_set_class fabeq2_2 wcel fabeq2_1 sup_set_class fabeq2_0 fabeq2_1 cab wcel wb fabeq2_1 sup_set_class fabeq2_2 wcel fabeq2_0 wb fabeq2_1 fabeq2_1 sup_set_class fabeq2_0 fabeq2_1 cab wcel fabeq2_0 fabeq2_1 sup_set_class fabeq2_2 wcel fabeq2_0 fabeq2_1 abid bibi2i albii bitri $.
+	$v ph x A  $.
+	$d x A y  $.
+	$d ph y  $.
+	f0_abeq2 $f wff ph $.
+	f1_abeq2 $f set x $.
+	f2_abeq2 $f class A $.
+	i0_abeq2 $f set y $.
+	p_abeq2 $p |- ( A = { x | ph } <-> A. x ( x e. A <-> ph ) ) $= i0_abeq2 a_sup_set_class f2_abeq2 a_wcel f1_abeq2 a_ax-17 f0_abeq2 f1_abeq2 i0_abeq2 p_hbab1 f1_abeq2 i0_abeq2 f2_abeq2 f0_abeq2 f1_abeq2 a_cab p_cleqh f0_abeq2 f1_abeq2 p_abid f1_abeq2 a_sup_set_class f0_abeq2 f1_abeq2 a_cab a_wcel f0_abeq2 f1_abeq2 a_sup_set_class f2_abeq2 a_wcel p_bibi2i f1_abeq2 a_sup_set_class f2_abeq2 a_wcel f1_abeq2 a_sup_set_class f0_abeq2 f1_abeq2 a_cab a_wcel a_wb f1_abeq2 a_sup_set_class f2_abeq2 a_wcel f0_abeq2 a_wb f1_abeq2 p_albii f2_abeq2 f0_abeq2 f1_abeq2 a_cab a_wceq f1_abeq2 a_sup_set_class f2_abeq2 a_wcel f1_abeq2 a_sup_set_class f0_abeq2 f1_abeq2 a_cab a_wcel a_wb f1_abeq2 a_wal f1_abeq2 a_sup_set_class f2_abeq2 a_wcel f0_abeq2 a_wb f1_abeq2 a_wal p_bitri $.
 $}
-$( Equality of a class variable and a class abstraction.  (Contributed by
+
+$(Equality of a class variable and a class abstraction.  (Contributed by
        NM, 20-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fabeq1_0 $f wff ph $.
-	fabeq1_1 $f set x $.
-	fabeq1_2 $f class A $.
-	abeq1 $p |- ( { x | ph } = A <-> A. x ( ph <-> x e. A ) ) $= fabeq1_2 fabeq1_0 fabeq1_1 cab wceq fabeq1_1 sup_set_class fabeq1_2 wcel fabeq1_0 wb fabeq1_1 wal fabeq1_0 fabeq1_1 cab fabeq1_2 wceq fabeq1_0 fabeq1_1 sup_set_class fabeq1_2 wcel wb fabeq1_1 wal fabeq1_0 fabeq1_1 fabeq1_2 abeq2 fabeq1_0 fabeq1_1 cab fabeq1_2 eqcom fabeq1_0 fabeq1_1 sup_set_class fabeq1_2 wcel wb fabeq1_1 sup_set_class fabeq1_2 wcel fabeq1_0 wb fabeq1_1 fabeq1_0 fabeq1_1 sup_set_class fabeq1_2 wcel bicom albii 3bitr4i $.
+	$v ph x A  $.
+	$d x A  $.
+	$d ph  $.
+	f0_abeq1 $f wff ph $.
+	f1_abeq1 $f set x $.
+	f2_abeq1 $f class A $.
+	p_abeq1 $p |- ( { x | ph } = A <-> A. x ( ph <-> x e. A ) ) $= f0_abeq1 f1_abeq1 f2_abeq1 p_abeq2 f0_abeq1 f1_abeq1 a_cab f2_abeq1 p_eqcom f0_abeq1 f1_abeq1 a_sup_set_class f2_abeq1 a_wcel p_bicom f0_abeq1 f1_abeq1 a_sup_set_class f2_abeq1 a_wcel a_wb f1_abeq1 a_sup_set_class f2_abeq1 a_wcel f0_abeq1 a_wb f1_abeq1 p_albii f2_abeq1 f0_abeq1 f1_abeq1 a_cab a_wceq f1_abeq1 a_sup_set_class f2_abeq1 a_wcel f0_abeq1 a_wb f1_abeq1 a_wal f0_abeq1 f1_abeq1 a_cab f2_abeq1 a_wceq f0_abeq1 f1_abeq1 a_sup_set_class f2_abeq1 a_wcel a_wb f1_abeq1 a_wal p_3bitr4i $.
 $}
-$( Equality of a class variable and a class abstraction (inference rule).
+
+$(Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 3-Apr-1996.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fabeq2i_0 $f wff ph $.
-	fabeq2i_1 $f set x $.
-	fabeq2i_2 $f class A $.
-	eabeq2i_0 $e |- A = { x | ph } $.
-	abeq2i $p |- ( x e. A <-> ph ) $= fabeq2i_1 sup_set_class fabeq2i_2 wcel fabeq2i_1 sup_set_class fabeq2i_0 fabeq2i_1 cab wcel fabeq2i_0 fabeq2i_2 fabeq2i_0 fabeq2i_1 cab fabeq2i_1 sup_set_class eabeq2i_0 eleq2i fabeq2i_0 fabeq2i_1 abid bitri $.
+	$v ph x A  $.
+	f0_abeq2i $f wff ph $.
+	f1_abeq2i $f set x $.
+	f2_abeq2i $f class A $.
+	e0_abeq2i $e |- A = { x | ph } $.
+	p_abeq2i $p |- ( x e. A <-> ph ) $= e0_abeq2i f2_abeq2i f0_abeq2i f1_abeq2i a_cab f1_abeq2i a_sup_set_class p_eleq2i f0_abeq2i f1_abeq2i p_abid f1_abeq2i a_sup_set_class f2_abeq2i a_wcel f1_abeq2i a_sup_set_class f0_abeq2i f1_abeq2i a_cab a_wcel f0_abeq2i p_bitri $.
 $}
-$( Equality of a class variable and a class abstraction (inference rule).
+
+$(Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 31-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fabeq1i_0 $f wff ph $.
-	fabeq1i_1 $f set x $.
-	fabeq1i_2 $f class A $.
-	eabeq1i_0 $e |- { x | ph } = A $.
-	abeq1i $p |- ( ph <-> x e. A ) $= fabeq1i_0 fabeq1i_1 sup_set_class fabeq1i_0 fabeq1i_1 cab wcel fabeq1i_1 sup_set_class fabeq1i_2 wcel fabeq1i_0 fabeq1i_1 abid fabeq1i_0 fabeq1i_1 cab fabeq1i_2 fabeq1i_1 sup_set_class eabeq1i_0 eleq2i bitr3i $.
+	$v ph x A  $.
+	f0_abeq1i $f wff ph $.
+	f1_abeq1i $f set x $.
+	f2_abeq1i $f class A $.
+	e0_abeq1i $e |- { x | ph } = A $.
+	p_abeq1i $p |- ( ph <-> x e. A ) $= f0_abeq1i f1_abeq1i p_abid e0_abeq1i f0_abeq1i f1_abeq1i a_cab f2_abeq1i f1_abeq1i a_sup_set_class p_eleq2i f0_abeq1i f1_abeq1i a_sup_set_class f0_abeq1i f1_abeq1i a_cab a_wcel f1_abeq1i a_sup_set_class f2_abeq1i a_wcel p_bitr3i $.
 $}
-$( Equality of a class variable and a class abstraction (deduction).
+
+$(Equality of a class variable and a class abstraction (deduction).
        (Contributed by NM, 16-Nov-1995.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fabeq2d_0 $f wff ph $.
-	fabeq2d_1 $f wff ps $.
-	fabeq2d_2 $f set x $.
-	fabeq2d_3 $f class A $.
-	eabeq2d_0 $e |- ( ph -> A = { x | ps } ) $.
-	abeq2d $p |- ( ph -> ( x e. A <-> ps ) ) $= fabeq2d_0 fabeq2d_2 sup_set_class fabeq2d_3 wcel fabeq2d_2 sup_set_class fabeq2d_1 fabeq2d_2 cab wcel fabeq2d_1 fabeq2d_0 fabeq2d_3 fabeq2d_1 fabeq2d_2 cab fabeq2d_2 sup_set_class eabeq2d_0 eleq2d fabeq2d_1 fabeq2d_2 abid syl6bb $.
+	$v ph ps x A  $.
+	f0_abeq2d $f wff ph $.
+	f1_abeq2d $f wff ps $.
+	f2_abeq2d $f set x $.
+	f3_abeq2d $f class A $.
+	e0_abeq2d $e |- ( ph -> A = { x | ps } ) $.
+	p_abeq2d $p |- ( ph -> ( x e. A <-> ps ) ) $= e0_abeq2d f0_abeq2d f3_abeq2d f1_abeq2d f2_abeq2d a_cab f2_abeq2d a_sup_set_class p_eleq2d f1_abeq2d f2_abeq2d p_abid f0_abeq2d f2_abeq2d a_sup_set_class f3_abeq2d a_wcel f2_abeq2d a_sup_set_class f1_abeq2d f2_abeq2d a_cab a_wcel f1_abeq2d p_syl6bb $.
 $}
-$( Equivalent wff's correspond to equal class abstractions.  (Contributed
+
+$(Equivalent wff's correspond to equal class abstractions.  (Contributed
        by NM, 25-Nov-2013.)  (Revised by Mario Carneiro, 11-Aug-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$d ph y $.
-	$d ps y $.
-	$d x y $.
-	iabbi_0 $f set y $.
-	fabbi_0 $f wff ph $.
-	fabbi_1 $f wff ps $.
-	fabbi_2 $f set x $.
-	abbi $p |- ( A. x ( ph <-> ps ) <-> { x | ph } = { x | ps } ) $= fabbi_0 fabbi_2 cab fabbi_1 fabbi_2 cab wceq iabbi_0 sup_set_class fabbi_0 fabbi_2 cab wcel iabbi_0 sup_set_class fabbi_1 fabbi_2 cab wcel wb iabbi_0 wal fabbi_0 fabbi_1 wb fabbi_2 wal iabbi_0 fabbi_0 fabbi_2 cab fabbi_1 fabbi_2 cab dfcleq iabbi_0 sup_set_class fabbi_0 fabbi_2 cab wcel iabbi_0 sup_set_class fabbi_1 fabbi_2 cab wcel wb fabbi_0 fabbi_1 wb iabbi_0 fabbi_2 iabbi_0 sup_set_class fabbi_0 fabbi_2 cab wcel iabbi_0 sup_set_class fabbi_1 fabbi_2 cab wcel fabbi_2 fabbi_0 fabbi_2 iabbi_0 nfsab1 fabbi_1 fabbi_2 iabbi_0 nfsab1 nfbi fabbi_0 fabbi_1 wb iabbi_0 nfv iabbi_0 sup_set_class fabbi_2 sup_set_class wceq iabbi_0 sup_set_class fabbi_0 fabbi_2 cab wcel fabbi_0 iabbi_0 sup_set_class fabbi_1 fabbi_2 cab wcel fabbi_1 iabbi_0 sup_set_class fabbi_0 fabbi_2 cab wcel fabbi_0 fabbi_2 iabbi_0 wsb iabbi_0 sup_set_class fabbi_2 sup_set_class wceq fabbi_0 fabbi_0 iabbi_0 fabbi_2 df-clab fabbi_0 iabbi_0 fabbi_2 sbequ12r syl5bb iabbi_0 sup_set_class fabbi_1 fabbi_2 cab wcel fabbi_1 fabbi_2 iabbi_0 wsb iabbi_0 sup_set_class fabbi_2 sup_set_class wceq fabbi_1 fabbi_1 iabbi_0 fabbi_2 df-clab fabbi_1 iabbi_0 fabbi_2 sbequ12r syl5bb bibi12d cbval bitr2i $.
+	$v ph ps x  $.
+	$d ph y  $.
+	$d ps y  $.
+	$d x y  $.
+	f0_abbi $f wff ph $.
+	f1_abbi $f wff ps $.
+	f2_abbi $f set x $.
+	i0_abbi $f set y $.
+	p_abbi $p |- ( A. x ( ph <-> ps ) <-> { x | ph } = { x | ps } ) $= i0_abbi f0_abbi f2_abbi a_cab f1_abbi f2_abbi a_cab p_dfcleq f0_abbi f2_abbi i0_abbi p_nfsab1 f1_abbi f2_abbi i0_abbi p_nfsab1 i0_abbi a_sup_set_class f0_abbi f2_abbi a_cab a_wcel i0_abbi a_sup_set_class f1_abbi f2_abbi a_cab a_wcel f2_abbi p_nfbi f0_abbi f1_abbi a_wb i0_abbi p_nfv f0_abbi i0_abbi f2_abbi a_df-clab f0_abbi i0_abbi f2_abbi p_sbequ12r i0_abbi a_sup_set_class f0_abbi f2_abbi a_cab a_wcel f0_abbi f2_abbi i0_abbi a_wsb i0_abbi a_sup_set_class f2_abbi a_sup_set_class a_wceq f0_abbi p_syl5bb f1_abbi i0_abbi f2_abbi a_df-clab f1_abbi i0_abbi f2_abbi p_sbequ12r i0_abbi a_sup_set_class f1_abbi f2_abbi a_cab a_wcel f1_abbi f2_abbi i0_abbi a_wsb i0_abbi a_sup_set_class f2_abbi a_sup_set_class a_wceq f1_abbi p_syl5bb i0_abbi a_sup_set_class f2_abbi a_sup_set_class a_wceq i0_abbi a_sup_set_class f0_abbi f2_abbi a_cab a_wcel f0_abbi i0_abbi a_sup_set_class f1_abbi f2_abbi a_cab a_wcel f1_abbi p_bibi12d i0_abbi a_sup_set_class f0_abbi f2_abbi a_cab a_wcel i0_abbi a_sup_set_class f1_abbi f2_abbi a_cab a_wcel a_wb f0_abbi f1_abbi a_wb i0_abbi f2_abbi p_cbval f0_abbi f2_abbi a_cab f1_abbi f2_abbi a_cab a_wceq i0_abbi a_sup_set_class f0_abbi f2_abbi a_cab a_wcel i0_abbi a_sup_set_class f1_abbi f2_abbi a_cab a_wcel a_wb i0_abbi a_wal f0_abbi f1_abbi a_wb f2_abbi a_wal p_bitr2i $.
 $}
-$( Equality of a class variable and a class abstraction (inference rule).
+
+$(Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fabbi2i_0 $f wff ph $.
-	fabbi2i_1 $f set x $.
-	fabbi2i_2 $f class A $.
-	eabbi2i_0 $e |- ( x e. A <-> ph ) $.
-	abbi2i $p |- A = { x | ph } $= fabbi2i_2 fabbi2i_0 fabbi2i_1 cab wceq fabbi2i_1 sup_set_class fabbi2i_2 wcel fabbi2i_0 wb fabbi2i_1 fabbi2i_0 fabbi2i_1 fabbi2i_2 abeq2 eabbi2i_0 mpgbir $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_abbi2i $f wff ph $.
+	f1_abbi2i $f set x $.
+	f2_abbi2i $f class A $.
+	e0_abbi2i $e |- ( x e. A <-> ph ) $.
+	p_abbi2i $p |- A = { x | ph } $= f0_abbi2i f1_abbi2i f2_abbi2i p_abeq2 e0_abbi2i f2_abbi2i f0_abbi2i f1_abbi2i a_cab a_wceq f1_abbi2i a_sup_set_class f2_abbi2i a_wcel f0_abbi2i a_wb f1_abbi2i p_mpgbir $.
 $}
-$( Equivalent wff's yield equal class abstractions (inference rule).
+
+$(Equivalent wff's yield equal class abstractions (inference rule).
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fabbii_0 $f wff ph $.
-	fabbii_1 $f wff ps $.
-	fabbii_2 $f set x $.
-	eabbii_0 $e |- ( ph <-> ps ) $.
-	abbii $p |- { x | ph } = { x | ps } $= fabbii_0 fabbii_1 wb fabbii_0 fabbii_2 cab fabbii_1 fabbii_2 cab wceq fabbii_2 fabbii_0 fabbii_1 fabbii_2 abbi eabbii_0 mpgbi $.
+	$v ph ps x  $.
+	f0_abbii $f wff ph $.
+	f1_abbii $f wff ps $.
+	f2_abbii $f set x $.
+	e0_abbii $e |- ( ph <-> ps ) $.
+	p_abbii $p |- { x | ph } = { x | ps } $= f0_abbii f1_abbii f2_abbii p_abbi e0_abbii f0_abbii f1_abbii a_wb f0_abbii f2_abbii a_cab f1_abbii f2_abbii a_cab a_wceq f2_abbii p_mpgbi $.
 $}
-$( Theorem abbii is the congruence law for class abstraction. $)
-$( $j congruence 'abbii'; $)
-$( ` y ` is a dummy var. $)
-$( Equivalent wff's yield equal class abstractions (deduction rule).
+
+$(Theorem abbii is the congruence law for class abstraction. $)
+
+$($j congruence 'abbii'; $)
+
+$(` y ` is a dummy var. $)
+
+$(Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	fabbid_0 $f wff ph $.
-	fabbid_1 $f wff ps $.
-	fabbid_2 $f wff ch $.
-	fabbid_3 $f set x $.
-	eabbid_0 $e |- F/ x ph $.
-	eabbid_1 $e |- ( ph -> ( ps <-> ch ) ) $.
-	abbid $p |- ( ph -> { x | ps } = { x | ch } ) $= fabbid_0 fabbid_1 fabbid_2 wb fabbid_3 wal fabbid_1 fabbid_3 cab fabbid_2 fabbid_3 cab wceq fabbid_0 fabbid_1 fabbid_2 wb fabbid_3 eabbid_0 eabbid_1 alrimi fabbid_1 fabbid_2 fabbid_3 abbi sylib $.
+	$v ph ps ch x  $.
+	$d x  $.
+	$d ph  $.
+	$d ps  $.
+	$d ch  $.
+	f0_abbid $f wff ph $.
+	f1_abbid $f wff ps $.
+	f2_abbid $f wff ch $.
+	f3_abbid $f set x $.
+	e0_abbid $e |- F/ x ph $.
+	e1_abbid $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_abbid $p |- ( ph -> { x | ps } = { x | ch } ) $= e0_abbid e1_abbid f0_abbid f1_abbid f2_abbid a_wb f3_abbid p_alrimi f1_abbid f2_abbid f3_abbid p_abbi f0_abbid f1_abbid f2_abbid a_wb f3_abbid a_wal f1_abbid f3_abbid a_cab f2_abbid f3_abbid a_cab a_wceq p_sylib $.
 $}
-$( Equivalent wff's yield equal class abstractions (deduction rule).
+
+$(Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 10-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$d x ph $.
-	fabbidv_0 $f wff ph $.
-	fabbidv_1 $f wff ps $.
-	fabbidv_2 $f wff ch $.
-	fabbidv_3 $f set x $.
-	eabbidv_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	abbidv $p |- ( ph -> { x | ps } = { x | ch } ) $= fabbidv_0 fabbidv_1 fabbidv_2 fabbidv_3 fabbidv_0 fabbidv_3 nfv eabbidv_0 abbid $.
+	$v ph ps ch x  $.
+	$d x ph  $.
+	f0_abbidv $f wff ph $.
+	f1_abbidv $f wff ps $.
+	f2_abbidv $f wff ch $.
+	f3_abbidv $f set x $.
+	e0_abbidv $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_abbidv $p |- ( ph -> { x | ps } = { x | ch } ) $= f0_abbidv f3_abbidv p_nfv e0_abbidv f0_abbidv f1_abbidv f2_abbidv f3_abbidv p_abbid $.
 $}
-$( ` y ` is a dummy var. $)
-$( Deduction from a wff to a class abstraction.  (Contributed by NM,
+
+$(` y ` is a dummy var. $)
+
+$(Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	$d ph x $.
-	fabbi2dv_0 $f wff ph $.
-	fabbi2dv_1 $f wff ps $.
-	fabbi2dv_2 $f set x $.
-	fabbi2dv_3 $f class A $.
-	eabbi2dv_0 $e |- ( ph -> ( x e. A <-> ps ) ) $.
-	abbi2dv $p |- ( ph -> A = { x | ps } ) $= fabbi2dv_0 fabbi2dv_2 sup_set_class fabbi2dv_3 wcel fabbi2dv_1 wb fabbi2dv_2 wal fabbi2dv_3 fabbi2dv_1 fabbi2dv_2 cab wceq fabbi2dv_0 fabbi2dv_2 sup_set_class fabbi2dv_3 wcel fabbi2dv_1 wb fabbi2dv_2 eabbi2dv_0 alrimiv fabbi2dv_1 fabbi2dv_2 fabbi2dv_3 abeq2 sylibr $.
+	$v ph ps x A  $.
+	$d x A  $.
+	$d ph x  $.
+	$d ps  $.
+	f0_abbi2dv $f wff ph $.
+	f1_abbi2dv $f wff ps $.
+	f2_abbi2dv $f set x $.
+	f3_abbi2dv $f class A $.
+	e0_abbi2dv $e |- ( ph -> ( x e. A <-> ps ) ) $.
+	p_abbi2dv $p |- ( ph -> A = { x | ps } ) $= e0_abbi2dv f0_abbi2dv f2_abbi2dv a_sup_set_class f3_abbi2dv a_wcel f1_abbi2dv a_wb f2_abbi2dv p_alrimiv f1_abbi2dv f2_abbi2dv f3_abbi2dv p_abeq2 f0_abbi2dv f2_abbi2dv a_sup_set_class f3_abbi2dv a_wcel f1_abbi2dv a_wb f2_abbi2dv a_wal f3_abbi2dv f1_abbi2dv f2_abbi2dv a_cab a_wceq p_sylibr $.
 $}
-$( ` y ` is a dummy var. $)
-$( Deduction from a wff to a class abstraction.  (Contributed by NM,
+
+$(` y ` is a dummy var. $)
+
+$(Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	$d ph x $.
-	fabbi1dv_0 $f wff ph $.
-	fabbi1dv_1 $f wff ps $.
-	fabbi1dv_2 $f set x $.
-	fabbi1dv_3 $f class A $.
-	eabbi1dv_0 $e |- ( ph -> ( ps <-> x e. A ) ) $.
-	abbi1dv $p |- ( ph -> { x | ps } = A ) $= fabbi1dv_0 fabbi1dv_1 fabbi1dv_2 sup_set_class fabbi1dv_3 wcel wb fabbi1dv_2 wal fabbi1dv_1 fabbi1dv_2 cab fabbi1dv_3 wceq fabbi1dv_0 fabbi1dv_1 fabbi1dv_2 sup_set_class fabbi1dv_3 wcel wb fabbi1dv_2 eabbi1dv_0 alrimiv fabbi1dv_1 fabbi1dv_2 fabbi1dv_3 abeq1 sylibr $.
+	$v ph ps x A  $.
+	$d x A  $.
+	$d ph x  $.
+	$d ps  $.
+	f0_abbi1dv $f wff ph $.
+	f1_abbi1dv $f wff ps $.
+	f2_abbi1dv $f set x $.
+	f3_abbi1dv $f class A $.
+	e0_abbi1dv $e |- ( ph -> ( ps <-> x e. A ) ) $.
+	p_abbi1dv $p |- ( ph -> { x | ps } = A ) $= e0_abbi1dv f0_abbi1dv f1_abbi1dv f2_abbi1dv a_sup_set_class f3_abbi1dv a_wcel a_wb f2_abbi1dv p_alrimiv f1_abbi1dv f2_abbi1dv f3_abbi1dv p_abeq1 f0_abbi1dv f1_abbi1dv f2_abbi1dv a_sup_set_class f3_abbi1dv a_wcel a_wb f2_abbi1dv a_wal f1_abbi1dv f2_abbi1dv a_cab f3_abbi1dv a_wceq p_sylibr $.
 $}
-$( A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
+
+$(A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
        (Contributed by NM, 26-Dec-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$d x A $.
-	fabid2_0 $f set x $.
-	fabid2_1 $f class A $.
-	abid2 $p |- { x | x e. A } = A $= fabid2_1 fabid2_0 sup_set_class fabid2_1 wcel fabid2_0 cab fabid2_0 sup_set_class fabid2_1 wcel fabid2_0 fabid2_1 fabid2_0 sup_set_class fabid2_1 wcel biid abbi2i eqcomi $.
+	$v x A  $.
+	$d x A  $.
+	f0_abid2 $f set x $.
+	f1_abid2 $f class A $.
+	p_abid2 $p |- { x | x e. A } = A $= f0_abid2 a_sup_set_class f1_abid2 a_wcel p_biid f0_abid2 a_sup_set_class f1_abid2 a_wcel f0_abid2 f1_abid2 p_abbi2i f1_abid2 f0_abid2 a_sup_set_class f1_abid2 a_wcel f0_abid2 a_cab p_eqcomi $.
 $}
-$( Rule used to change bound variables, using implicit substitution.
+
+$(Rule used to change bound variables, using implicit substitution.
        (Contributed by Andrew Salmon, 11-Jul-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$d x z $.
-	$d y z $.
-	$d ph z $.
-	$d ps z $.
-	icbvab_0 $f set z $.
-	fcbvab_0 $f wff ph $.
-	fcbvab_1 $f wff ps $.
-	fcbvab_2 $f set x $.
-	fcbvab_3 $f set y $.
-	ecbvab_0 $e |- F/ y ph $.
-	ecbvab_1 $e |- F/ x ps $.
-	ecbvab_2 $e |- ( x = y -> ( ph <-> ps ) ) $.
-	cbvab $p |- { x | ph } = { y | ps } $= icbvab_0 fcbvab_0 fcbvab_2 cab fcbvab_1 fcbvab_3 cab fcbvab_0 fcbvab_2 icbvab_0 wsb fcbvab_1 fcbvab_3 icbvab_0 wsb icbvab_0 sup_set_class fcbvab_0 fcbvab_2 cab wcel icbvab_0 sup_set_class fcbvab_1 fcbvab_3 cab wcel fcbvab_0 fcbvab_1 fcbvab_3 icbvab_0 wsb fcbvab_2 icbvab_0 fcbvab_1 fcbvab_3 icbvab_0 fcbvab_2 ecbvab_1 nfsb fcbvab_0 fcbvab_1 fcbvab_3 fcbvab_2 wsb fcbvab_2 sup_set_class icbvab_0 sup_set_class wceq fcbvab_1 fcbvab_3 icbvab_0 wsb fcbvab_1 fcbvab_0 fcbvab_3 fcbvab_2 ecbvab_0 fcbvab_3 sup_set_class fcbvab_2 sup_set_class wceq fcbvab_0 fcbvab_1 fcbvab_0 fcbvab_1 wb fcbvab_2 fcbvab_3 ecbvab_2 equcoms bicomd sbie fcbvab_1 fcbvab_2 icbvab_0 fcbvab_3 sbequ syl5bbr sbie fcbvab_0 icbvab_0 fcbvab_2 df-clab fcbvab_1 icbvab_0 fcbvab_3 df-clab 3bitr4i eqriv $.
+	$v ph ps x y  $.
+	$d x z  $.
+	$d y z  $.
+	$d ph z  $.
+	$d ps z  $.
+	f0_cbvab $f wff ph $.
+	f1_cbvab $f wff ps $.
+	f2_cbvab $f set x $.
+	f3_cbvab $f set y $.
+	i0_cbvab $f set z $.
+	e0_cbvab $e |- F/ y ph $.
+	e1_cbvab $e |- F/ x ps $.
+	e2_cbvab $e |- ( x = y -> ( ph <-> ps ) ) $.
+	p_cbvab $p |- { x | ph } = { y | ps } $= e1_cbvab f1_cbvab f3_cbvab i0_cbvab f2_cbvab p_nfsb e0_cbvab e2_cbvab f0_cbvab f1_cbvab a_wb f2_cbvab f3_cbvab p_equcoms f3_cbvab a_sup_set_class f2_cbvab a_sup_set_class a_wceq f0_cbvab f1_cbvab p_bicomd f1_cbvab f0_cbvab f3_cbvab f2_cbvab p_sbie f1_cbvab f2_cbvab i0_cbvab f3_cbvab p_sbequ f0_cbvab f1_cbvab f3_cbvab f2_cbvab a_wsb f2_cbvab a_sup_set_class i0_cbvab a_sup_set_class a_wceq f1_cbvab f3_cbvab i0_cbvab a_wsb p_syl5bbr f0_cbvab f1_cbvab f3_cbvab i0_cbvab a_wsb f2_cbvab i0_cbvab p_sbie f0_cbvab i0_cbvab f2_cbvab a_df-clab f1_cbvab i0_cbvab f3_cbvab a_df-clab f0_cbvab f2_cbvab i0_cbvab a_wsb f1_cbvab f3_cbvab i0_cbvab a_wsb i0_cbvab a_sup_set_class f0_cbvab f2_cbvab a_cab a_wcel i0_cbvab a_sup_set_class f1_cbvab f3_cbvab a_cab a_wcel p_3bitr4i i0_cbvab f0_cbvab f2_cbvab a_cab f1_cbvab f3_cbvab a_cab p_eqriv $.
 $}
-$( Rule used to change bound variables, using implicit substitution.
+
+$(Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$d y ph $.
-	$d x ps $.
-	fcbvabv_0 $f wff ph $.
-	fcbvabv_1 $f wff ps $.
-	fcbvabv_2 $f set x $.
-	fcbvabv_3 $f set y $.
-	ecbvabv_0 $e |- ( x = y -> ( ph <-> ps ) ) $.
-	cbvabv $p |- { x | ph } = { y | ps } $= fcbvabv_0 fcbvabv_1 fcbvabv_2 fcbvabv_3 fcbvabv_0 fcbvabv_3 nfv fcbvabv_1 fcbvabv_2 nfv ecbvabv_0 cbvab $.
+	$v ph ps x y  $.
+	$d y ph  $.
+	$d x ps  $.
+	f0_cbvabv $f wff ph $.
+	f1_cbvabv $f wff ps $.
+	f2_cbvabv $f set x $.
+	f3_cbvabv $f set y $.
+	e0_cbvabv $e |- ( x = y -> ( ph <-> ps ) ) $.
+	p_cbvabv $p |- { x | ph } = { y | ps } $= f0_cbvabv f3_cbvabv p_nfv f1_cbvabv f2_cbvabv p_nfv e0_cbvabv f0_cbvabv f1_cbvabv f2_cbvabv f3_cbvabv p_cbvab $.
 $}
-$( Membership of a class variable in a class abstraction.  (Contributed by
+
+$(Membership of a class variable in a class abstraction.  (Contributed by
        NM, 23-Dec-1993.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x A y $.
-	$d ph y $.
-	iclelab_0 $f set y $.
-	fclelab_0 $f wff ph $.
-	fclelab_1 $f set x $.
-	fclelab_2 $f class A $.
-	clelab $p |- ( A e. { x | ph } <-> E. x ( x = A /\ ph ) ) $= iclelab_0 sup_set_class fclelab_2 wceq iclelab_0 sup_set_class fclelab_0 fclelab_1 cab wcel wa iclelab_0 wex iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 fclelab_1 iclelab_0 wsb wa iclelab_0 wex fclelab_2 fclelab_0 fclelab_1 cab wcel fclelab_1 sup_set_class fclelab_2 wceq fclelab_0 wa fclelab_1 wex iclelab_0 sup_set_class fclelab_2 wceq iclelab_0 sup_set_class fclelab_0 fclelab_1 cab wcel wa iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 fclelab_1 iclelab_0 wsb wa iclelab_0 iclelab_0 sup_set_class fclelab_0 fclelab_1 cab wcel fclelab_0 fclelab_1 iclelab_0 wsb iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 iclelab_0 fclelab_1 df-clab anbi2i exbii iclelab_0 fclelab_2 fclelab_0 fclelab_1 cab df-clel fclelab_1 sup_set_class fclelab_2 wceq fclelab_0 wa iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 fclelab_1 iclelab_0 wsb wa fclelab_1 iclelab_0 fclelab_1 sup_set_class fclelab_2 wceq fclelab_0 wa iclelab_0 nfv iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 fclelab_1 iclelab_0 wsb fclelab_1 iclelab_0 sup_set_class fclelab_2 wceq fclelab_1 nfv fclelab_0 fclelab_1 iclelab_0 nfs1v nfan fclelab_1 sup_set_class iclelab_0 sup_set_class wceq fclelab_1 sup_set_class fclelab_2 wceq iclelab_0 sup_set_class fclelab_2 wceq fclelab_0 fclelab_0 fclelab_1 iclelab_0 wsb fclelab_1 sup_set_class iclelab_0 sup_set_class fclelab_2 eqeq1 fclelab_0 fclelab_1 iclelab_0 sbequ12 anbi12d cbvex 3bitr4i $.
+	$v ph x A  $.
+	$d x A y  $.
+	$d ph y  $.
+	f0_clelab $f wff ph $.
+	f1_clelab $f set x $.
+	f2_clelab $f class A $.
+	i0_clelab $f set y $.
+	p_clelab $p |- ( A e. { x | ph } <-> E. x ( x = A /\ ph ) ) $= f0_clelab i0_clelab f1_clelab a_df-clab i0_clelab a_sup_set_class f0_clelab f1_clelab a_cab a_wcel f0_clelab f1_clelab i0_clelab a_wsb i0_clelab a_sup_set_class f2_clelab a_wceq p_anbi2i i0_clelab a_sup_set_class f2_clelab a_wceq i0_clelab a_sup_set_class f0_clelab f1_clelab a_cab a_wcel a_wa i0_clelab a_sup_set_class f2_clelab a_wceq f0_clelab f1_clelab i0_clelab a_wsb a_wa i0_clelab p_exbii i0_clelab f2_clelab f0_clelab f1_clelab a_cab a_df-clel f1_clelab a_sup_set_class f2_clelab a_wceq f0_clelab a_wa i0_clelab p_nfv i0_clelab a_sup_set_class f2_clelab a_wceq f1_clelab p_nfv f0_clelab f1_clelab i0_clelab p_nfs1v i0_clelab a_sup_set_class f2_clelab a_wceq f0_clelab f1_clelab i0_clelab a_wsb f1_clelab p_nfan f1_clelab a_sup_set_class i0_clelab a_sup_set_class f2_clelab p_eqeq1 f0_clelab f1_clelab i0_clelab p_sbequ12 f1_clelab a_sup_set_class i0_clelab a_sup_set_class a_wceq f1_clelab a_sup_set_class f2_clelab a_wceq i0_clelab a_sup_set_class f2_clelab a_wceq f0_clelab f0_clelab f1_clelab i0_clelab a_wsb p_anbi12d f1_clelab a_sup_set_class f2_clelab a_wceq f0_clelab a_wa i0_clelab a_sup_set_class f2_clelab a_wceq f0_clelab f1_clelab i0_clelab a_wsb a_wa f1_clelab i0_clelab p_cbvex i0_clelab a_sup_set_class f2_clelab a_wceq i0_clelab a_sup_set_class f0_clelab f1_clelab a_cab a_wcel a_wa i0_clelab a_wex i0_clelab a_sup_set_class f2_clelab a_wceq f0_clelab f1_clelab i0_clelab a_wsb a_wa i0_clelab a_wex f2_clelab f0_clelab f1_clelab a_cab a_wcel f1_clelab a_sup_set_class f2_clelab a_wceq f0_clelab a_wa f1_clelab a_wex p_3bitr4i $.
 $}
-$( Membership of a class abstraction in another class.  (Contributed by NM,
+
+$(Membership of a class abstraction in another class.  (Contributed by NM,
        17-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d y A $.
-	$d y ph $.
-	$d x y $.
-	fclabel_0 $f wff ph $.
-	fclabel_1 $f set x $.
-	fclabel_2 $f set y $.
-	fclabel_3 $f class A $.
-	clabel $p |- ( { x | ph } e. A <-> E. y ( y e. A /\ A. x ( x e. y <-> ph ) ) ) $= fclabel_0 fclabel_1 cab fclabel_3 wcel fclabel_2 sup_set_class fclabel_0 fclabel_1 cab wceq fclabel_2 sup_set_class fclabel_3 wcel wa fclabel_2 wex fclabel_2 sup_set_class fclabel_3 wcel fclabel_1 sup_set_class fclabel_2 sup_set_class wcel fclabel_0 wb fclabel_1 wal wa fclabel_2 wex fclabel_2 fclabel_0 fclabel_1 cab fclabel_3 df-clel fclabel_2 sup_set_class fclabel_0 fclabel_1 cab wceq fclabel_2 sup_set_class fclabel_3 wcel wa fclabel_2 sup_set_class fclabel_3 wcel fclabel_1 sup_set_class fclabel_2 sup_set_class wcel fclabel_0 wb fclabel_1 wal wa fclabel_2 fclabel_2 sup_set_class fclabel_0 fclabel_1 cab wceq fclabel_1 sup_set_class fclabel_2 sup_set_class wcel fclabel_0 wb fclabel_1 wal fclabel_2 sup_set_class fclabel_3 wcel fclabel_0 fclabel_1 fclabel_2 sup_set_class abeq2 anbi2ci exbii bitri $.
+	$v ph x y A  $.
+	$d y A  $.
+	$d y ph  $.
+	$d x y  $.
+	f0_clabel $f wff ph $.
+	f1_clabel $f set x $.
+	f2_clabel $f set y $.
+	f3_clabel $f class A $.
+	p_clabel $p |- ( { x | ph } e. A <-> E. y ( y e. A /\ A. x ( x e. y <-> ph ) ) ) $= f2_clabel f0_clabel f1_clabel a_cab f3_clabel a_df-clel f0_clabel f1_clabel f2_clabel a_sup_set_class p_abeq2 f2_clabel a_sup_set_class f0_clabel f1_clabel a_cab a_wceq f1_clabel a_sup_set_class f2_clabel a_sup_set_class a_wcel f0_clabel a_wb f1_clabel a_wal f2_clabel a_sup_set_class f3_clabel a_wcel p_anbi2ci f2_clabel a_sup_set_class f0_clabel f1_clabel a_cab a_wceq f2_clabel a_sup_set_class f3_clabel a_wcel a_wa f2_clabel a_sup_set_class f3_clabel a_wcel f1_clabel a_sup_set_class f2_clabel a_sup_set_class a_wcel f0_clabel a_wb f1_clabel a_wal a_wa f2_clabel p_exbii f0_clabel f1_clabel a_cab f3_clabel a_wcel f2_clabel a_sup_set_class f0_clabel f1_clabel a_cab a_wceq f2_clabel a_sup_set_class f3_clabel a_wcel a_wa f2_clabel a_wex f2_clabel a_sup_set_class f3_clabel a_wcel f1_clabel a_sup_set_class f2_clabel a_sup_set_class a_wcel f0_clabel a_wb f1_clabel a_wal a_wa f2_clabel a_wex p_bitri $.
 $}
-$( The right-hand side of the second equality is a way of representing
+
+$(The right-hand side of the second equality is a way of representing
        proper substitution of ` y ` for ` x ` into a class variable.
        (Contributed by NM, 14-Sep-2003.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$d z A $.
-	$d z x $.
-	$d z y $.
-	fsbab_0 $f set x $.
-	fsbab_1 $f set y $.
-	fsbab_2 $f set z $.
-	fsbab_3 $f class A $.
-	sbab $p |- ( x = y -> A = { z | [ y / x ] z e. A } ) $= fsbab_0 sup_set_class fsbab_1 sup_set_class wceq fsbab_2 sup_set_class fsbab_3 wcel fsbab_0 fsbab_1 wsb fsbab_2 fsbab_3 fsbab_2 sup_set_class fsbab_3 wcel fsbab_0 fsbab_1 sbequ12 abbi2dv $.
+	$v x y z A  $.
+	$d z A  $.
+	$d z x  $.
+	$d z y  $.
+	f0_sbab $f set x $.
+	f1_sbab $f set y $.
+	f2_sbab $f set z $.
+	f3_sbab $f class A $.
+	p_sbab $p |- ( x = y -> A = { z | [ y / x ] z e. A } ) $= f2_sbab a_sup_set_class f3_sbab a_wcel f0_sbab f1_sbab p_sbequ12 f0_sbab a_sup_set_class f1_sbab a_sup_set_class a_wceq f2_sbab a_sup_set_class f3_sbab a_wcel f0_sbab f1_sbab a_wsb f2_sbab f3_sbab p_abbi2dv $.
 $}
+
 

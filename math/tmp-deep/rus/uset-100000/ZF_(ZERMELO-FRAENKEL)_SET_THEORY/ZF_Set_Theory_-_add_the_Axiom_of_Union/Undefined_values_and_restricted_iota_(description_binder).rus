@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Cantor_s_Theorem.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Undefined values and restricted iota (description binder)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,19 +14,19 @@ constant {
 	symbol iota_ ;;
 }
 
-/* Extend class notation with undefined value function. */
+/*Extend class notation with undefined value function. */
 
 rule cund () {
 	term : class = # Undef ;;
 }
 
-/* Extend class notation with restricted description binder. */
+/*Extend class notation with restricted description binder. */
 
 rule crio (ph : wff, x : set, A : class) {
 	term : class = # ( iota_ x ∈ A ph ) ;;
 }
 
-/* Define the undefined value function, whose value at set ` s ` is
+/*Define the undefined value function, whose value at set ` s ` is
      guaranteed not to be a member of ` s ` (see ~ pwuninel ).  (Contributed by
      NM, 15-Sep-2011.) */
 
@@ -37,7 +37,7 @@ definition df-undef (s : set)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
+/*Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
      (Contributed by Stefan O'Rear, 22-Feb-2015.) */
 
 theorem pwuninel2 (A : class, V : class)  {
@@ -51,7 +51,7 @@ proof of pwuninel2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The power set of the union of a set does not belong to the set.  This
+/*The power set of the union of a set does not belong to the set.  This
      theorem provides a way of constructing a new set that doesn't belong to a
      given set.  See also ~ pwuninel2 .  (Contributed by NM, 27-Jun-2008.)
      (Proof shortened by Mario Carneiro, 23-Dec-2016.) */
@@ -71,7 +71,7 @@ proof of pwuninel {
 	qed prop 1 = step 7 ;;
 }
 
-/* Value of the undefined value function.  Normally we will not reference
+/*Value of the undefined value function.  Normally we will not reference
        the explicit value but will use ~ undefnel instead.  (Contributed by NM,
        15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
 
@@ -93,7 +93,7 @@ proof of undefval {
 	qed prop 1 = step 9 ;;
 }
 
-/* The undefined value generated from a set is not a member of the set.
+/*The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) */
 
 theorem undefnel2 (S : class, V : class)  {
@@ -108,7 +108,7 @@ proof of undefnel2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The undefined value generated from a set is not a member of the set.
+/*The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) */
 
 theorem undefnel (S : class, V : class)  {
@@ -122,7 +122,7 @@ proof of undefnel {
 	qed prop 1 = step 3 ;;
 }
 
-/* Define restricted description binder.  In case it doesn't exist, we
+/*Define restricted description binder.  In case it doesn't exist, we
        return a set which is not a member of the domain of discourse ` A ` .
        See also comments for ~ df-iota .  (Contributed by NM, 15-Sep-2011.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
@@ -134,7 +134,7 @@ definition df-riota (ph : wff, x : set, A : class)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Formula-building deduction rule for iota.  (Contributed by NM,
+/*Formula-building deduction rule for iota.  (Contributed by NM,
        15-Sep-2011.) */
 
 theorem riotaeqdv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ph) {
@@ -163,7 +163,7 @@ proof of riotaeqdv {
 	qed prop 1 = step 16 ;;
 }
 
-/* Formula-building deduction rule for restricted iota.  (Contributed by
+/*Formula-building deduction rule for restricted iota.  (Contributed by
        NM, 15-Sep-2011.) */
 
 theorem riotabidv (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
@@ -184,7 +184,7 @@ proof of riotabidv {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality deduction for restricted universal quantifier.  (Contributed by
+/*Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 15-Sep-2011.) */
 
 theorem riotaeqbidv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x ph) {
@@ -201,7 +201,7 @@ proof of riotaeqbidv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) */
+/*Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) */
 
 theorem riotaex (ps : wff, x : set, A : class)  {
 	prop 1 : wff = |- ( iota_ x ∈ A ps ) ∈ _V ;;
@@ -216,7 +216,7 @@ proof of riotaex {
 	qed prop 1 = step 5 ;;
 }
 
-/* An iota restricted to the universe is unrestricted.  (Contributed by NM,
+/*An iota restricted to the universe is unrestricted.  (Contributed by NM,
      18-Sep-2011.) */
 
 theorem riotav (ph : wff, x : set)  {
@@ -247,7 +247,7 @@ proof of riotav {
 	qed prop 1 = step 20 ;;
 }
 
-/* Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) */
+/*Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) */
 
 theorem riotaiota (ph : wff, x : set, A : class)  {
 	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
@@ -260,7 +260,7 @@ proof of riotaiota {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted iota in terms of class union.  (Contributed by NM,
+/*Restricted iota in terms of class union.  (Contributed by NM,
      11-Oct-2011.) */
 
 theorem riotauni (ph : wff, x : set, A : class)  {
@@ -279,11 +279,11 @@ proof of riotauni {
 	qed prop 1 = step 8 ;;
 }
 
-/* The abstraction variable in a restricted iota descriptor isn't free.
+/*The abstraction variable in a restricted iota descriptor isn't free.
        (Contributed by NM, 12-Oct-2011.)  (Revised by Mario Carneiro,
        15-Oct-2016.) */
 
-theorem nfriota1 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem nfriota1 (ph : wff, x : set, A : class) disjointed(x A, ph) {
 	prop 1 : wff = |- F/_ x ( iota_ x ∈ A ph ) ;;
 }
 
@@ -299,7 +299,7 @@ proof of nfriota1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
+/*Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem nfriotad (ph : wff, ps : wff, x : set, y : set, A : class)  {
@@ -340,10 +340,10 @@ proof of nfriotad {
 	qed prop 1 = step 26 ;;
 }
 
-/* A variable not free in a wff remains so in a restricted iota
+/*A variable not free in a wff remains so in a restricted iota
        descriptor.  (Contributed by NM, 12-Oct-2011.) */
 
-theorem nfriota (ph : wff, x : set, y : set, A : class) disjointed(x y) {
+theorem nfriota (ph : wff, x : set, y : set, A : class) disjointed(x y, A, ph) {
 	hyp 1 : wff = |- F/ x ph ;;
 	hyp 2 : wff = |- F/_ x A ;;
 	-----------------------
@@ -359,7 +359,7 @@ proof of nfriota {
 	qed prop 1 = step 5 ;;
 }
 
-/* Change bound variable in a restricted description binder.  (Contributed
+/*Change bound variable in a restricted description binder.  (Contributed
        by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem cbvriota (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x z A, y z A, z ph, z ps) {
@@ -403,7 +403,7 @@ proof of cbvriota {
 	qed prop 1 = step 28 ;;
 }
 
-/* Change bound variable in a restricted description binder.  (Contributed
+/*Change bound variable in a restricted description binder.  (Contributed
        by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem cbvriotav (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x A, y A, y ph, x ps) {
@@ -419,7 +419,7 @@ proof of cbvriotav {
 	qed prop 1 = step 3 ;;
 }
 
-/* Interchange class substitution and restricted description binder.
+/*Interchange class substitution and restricted description binder.
        (Contributed by NM, 24-Feb-2013.) */
 
 theorem csbriotag (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x z B, z ph, x y) {
@@ -443,7 +443,7 @@ proof of csbriotag {
 	qed prop 1 = step 12 ;;
 }
 
-/* Membership law for "the unique element in ` A ` such that ` ph ` ."
+/*Membership law for "the unique element in ` A ` such that ` ph ` ."
 
      This can useful for expanding an iota-based definition (see ~ df-iota ).
      If you have an unbounded iota, ~ iotacl may be useful.
@@ -466,7 +466,7 @@ proof of riotacl2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) */
+/*Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) */
 
 theorem riotacl (ph : wff, x : set, A : class) disjointed(x A) {
 	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
@@ -479,7 +479,7 @@ proof of riotacl {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
+/*Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
      NM, 23-Aug-2011.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
 
 theorem riotasbc (ph : wff, x : set, A : class)  {
@@ -495,7 +495,7 @@ proof of riotasbc {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equivalent wff's yield equal restricted class abstractions (deduction
+/*Equivalent wff's yield equal restricted class abstractions (deduction
        rule).  ( ~ rabbidva analog.)  (Contributed by NM, 17-Jan-2012.) */
 
 theorem riotabidva (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
@@ -518,7 +518,7 @@ proof of riotabidva {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equivalent wff's yield equal restricted iotas (inference rule).
+/*Equivalent wff's yield equal restricted iotas (inference rule).
        ( ~ rabbiia analog.)  (Contributed by NM, 16-Jan-2012.) */
 
 theorem riotabiia (ph : wff, ps : wff, x : set, A : class)  {
@@ -535,7 +535,7 @@ proof of riotabiia {
 	qed prop 1 = step 4 ;;
 }
 
-/* Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
+/*Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
        Carneiro, 15-Oct-2016.) */
 
 theorem riota1 (ph : wff, x : set, A : class) disjointed(x A) {
@@ -552,7 +552,7 @@ proof of riota1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Property of iota.  (Contributed by NM, 23-Aug-2011.) */
+/*Property of iota.  (Contributed by NM, 23-Aug-2011.) */
 
 theorem riota1a (ph : wff, x : set, A : class)  {
 	prop 1 : wff = |- ( ( x ∈ A ∧ ∃! x ∈ A ph ) → ( ph ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
@@ -567,7 +567,7 @@ proof of riota1a {
 	qed prop 1 = step 5 ;;
 }
 
-/* A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
+/*A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem riota2df (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A) {
@@ -604,11 +604,11 @@ proof of riota2df {
 	qed prop 1 = step 20 ;;
 }
 
-/* This theorem shows a condition that allows us to represent a descriptor
+/*This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
 
-theorem riota2f (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A) {
+theorem riota2f (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(ph, x A, B) {
 	hyp 1 : wff = |- F/_ x B ;;
 	hyp 2 : wff = |- F/ x ps ;;
 	hyp 3 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
@@ -626,7 +626,7 @@ proof of riota2f {
 	qed prop 1 = step 6 ;;
 }
 
-/* This theorem shows a condition that allows us to represent a descriptor
+/*This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
        (Revised by Mario Carneiro, 10-Dec-2016.) */
 
@@ -643,11 +643,11 @@ proof of riota2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Properties of a restricted definite description operator.  Todo: can
+/*Properties of a restricted definite description operator.  Todo: can
        some uses of ~ riota2f be shortened with this?  (Contributed by NM,
        23-Nov-2013.) */
 
-theorem riotaprop (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A) {
+theorem riotaprop (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(ph, x A, B) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- B = ( iota_ x ∈ A ph ) ;;
 	hyp 3 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
@@ -670,7 +670,7 @@ proof of riotaprop {
 	qed prop 1 = step 11 ;;
 }
 
-/* A method for computing restricted iota.  (Contributed by NM,
+/*A method for computing restricted iota.  (Contributed by NM,
        16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem riota5f (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x y A, y B, x y ph, y ps) {
@@ -729,7 +729,7 @@ proof of riota5f {
 	qed prop 1 = step 43 ;;
 }
 
-/* A method for computing restricted iota.  (Contributed by NM,
+/*A method for computing restricted iota.  (Contributed by NM,
        20-Oct-2011.)  (Revised by Mario Carneiro, 6-Dec-2016.) */
 
 theorem riota5 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
@@ -745,10 +745,10 @@ proof of riota5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A method for computing restricted iota.  (Contributed by NM,
+/*A method for computing restricted iota.  (Contributed by NM,
        20-Oct-2011.)  (New usage is discouraged.) */
 
-theorem riota5OLD (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
+theorem riota5OLD (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph, ps) {
 	hyp 1 : wff = |- ( ( ph ∧ B ∈ A ∧ x ∈ A ) → ( ps ↔ x = B ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( ph ∧ B ∈ A ) → ( iota_ x ∈ A ps ) = B ) ;;
@@ -761,7 +761,7 @@ proof of riota5OLD {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+/*Restriction of a unique element to a smaller class.  (Contributed by NM,
        21-Aug-2011.)  (Revised by NM, 22-Mar-2013.) */
 
 theorem riotass2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -797,10 +797,10 @@ proof of riotass2 {
 	qed prop 1 = step 25 ;;
 }
 
-/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+/*Restriction of a unique element to a smaller class.  (Contributed by NM,
        19-Oct-2005.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
 
-theorem riotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+theorem riotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B, ph) {
 	prop 1 : wff = |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
 }
 
@@ -825,10 +825,10 @@ proof of riotass {
 	qed prop 1 = step 17 ;;
 }
 
-/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+/*Restriction of a unique element to a smaller class.  (Contributed by NM,
        19-Feb-2006.)  (Revised by NM, 16-Jun-2017.) */
 
-theorem moriotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+theorem moriotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B, ph) {
 	prop 1 : wff = |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
 }
 
@@ -844,10 +844,10 @@ proof of moriotass {
 	qed prop 1 = step 8 ;;
 }
 
-/* A restricted class abstraction with a unique member can be expressed as
+/*A restricted class abstraction with a unique member can be expressed as
        a singleton.  (Contributed by NM, 30-May-2006.) */
 
-theorem snriota (ph : wff, x : set, A : class)  {
+theorem snriota (ph : wff, x : set, A : class) disjointed(A, ph, x) {
 	prop 1 : wff = |- ( ∃! x ∈ A ph → { x ∈ A | ph } = { ( iota_ x ∈ A ph ) } ) ;;
 }
 
@@ -863,7 +863,7 @@ proof of snriota {
 	qed prop 1 = step 8 ;;
 }
 
-/* Change the variable ` x ` in the expression for "the unique ` x ` such
+/*Change the variable ` x ` in the expression for "the unique ` x ` such
        that ` ps ` " to another variable ` y ` contained in expression ` B ` .
        Use ~ reuhypd to eliminate the last hypothesis.  (Contributed by NM,
        16-Jan-2012.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
@@ -916,7 +916,7 @@ proof of riotaxfrd {
 	qed prop 1 = step 33 ;;
 }
 
-/* Specify the same property in two ways when class ` B ( y ) ` is
+/*Specify the same property in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
        Mario Carneiro, 24-Dec-2016.) */
 
@@ -960,7 +960,7 @@ proof of eusvobj2 {
 	qed prop 1 = step 29 ;;
 }
 
-/* Specify the same object in two ways when class ` B ( y ) ` is
+/*Specify the same object in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
        Mario Carneiro, 19-Nov-2016.) */
 
@@ -979,7 +979,7 @@ proof of eusvobj1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* There is one domain element for each value of a one-to-one onto
+/*There is one domain element for each value of a one-to-one onto
        function.  (Contributed by NM, 26-May-2006.) */
 
 theorem f1ofveu (x : set, A : class, B : class, C : class, F : class) disjointed(x A, x B, x C, x F) {
@@ -1006,7 +1006,7 @@ proof of f1ofveu {
 	qed prop 1 = step 16 ;;
 }
 
-/* Value of the converse of a one-to-one onto function.  (Contributed by
+/*Value of the converse of a one-to-one onto function.  (Contributed by
        NM, 26-May-2006.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
 
 theorem f1ocnvfv3 (x : set, A : class, B : class, C : class, F : class) disjointed(x A, x B, x C, x F) {
@@ -1025,7 +1025,7 @@ proof of f1ocnvfv3 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Restricted iota equals the undefined value of its domain of discourse
+/*Restricted iota equals the undefined value of its domain of discourse
        ` A ` when not meaningful.  (Contributed by NM, 16-Jan-2012.)  (Revised
        by Mario Carneiro, 15-Oct-2016.) */
 
@@ -1043,7 +1043,7 @@ proof of riotaund {
 	qed prop 1 = step 6 ;;
 }
 
-/* For proper classes, restricted and unrestricted iota are the same.
+/*For proper classes, restricted and unrestricted iota are the same.
        (Contributed by NM, 15-Sep-2011.) */
 
 theorem riotaprc (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1066,7 +1066,7 @@ proof of riotaprc {
 	qed prop 1 = step 12 ;;
 }
 
-/* The restricted iota class is limited in size by the base set.
+/*The restricted iota class is limited in size by the base set.
        (Contributed by Mario Carneiro, 24-Dec-2016.) */
 
 theorem riotassuni (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1099,7 +1099,7 @@ proof of riotassuni {
 	qed prop 1 = step 22 ;;
 }
 
-/* Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
+/*Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
        by Mario Carneiro, 24-Dec-2016.) */
 
 theorem riotaclbg (ph : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -1118,7 +1118,7 @@ proof of riotaclbg {
 	qed prop 1 = step 8 ;;
 }
 
-/* Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) */
+/*Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) */
 
 theorem riotaclb (ph : wff, x : set, A : class) disjointed(x A) {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -1132,7 +1132,7 @@ proof of riotaclb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted iota equals the undefined value of its domain of discourse
+/*Restricted iota equals the undefined value of its domain of discourse
        ` A ` when not meaningful.  (Contributed by NM, 26-Sep-2011.) */
 
 theorem riotaundb (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1153,7 +1153,7 @@ proof of riotaundb {
 	qed prop 1 = step 8 ;;
 }
 
-/* Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
+/*Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) */
 
 theorem riotasvd (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y z A, x z B, x z C, z D, z ph, x z ps) {
@@ -1198,10 +1198,10 @@ proof of riotasvd {
 	qed prop 1 = step 30 ;;
 }
 
-/* Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
+/*Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
-theorem riotasvdOLD (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+theorem riotasvdOLD (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, D, ph, x ps) {
 	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
 	hyp 2 : wff = |- ( ph → ∀ y ph ) ;;
 	hyp 3 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
@@ -1280,11 +1280,11 @@ proof of riotasvdOLD {
 	qed prop 1 = step 67 ;;
 }
 
-/* Value of description binder ` D ` for a single-valued class expression
+/*Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 2-Mar-2013.) */
 
-theorem riotasv2d (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class, V : class) disjointed(x y A, x y B, x C, y E, x ps) {
+theorem riotasv2d (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class, V : class) disjointed(x y A, x y B, x C, D, y E, F, ph, x ps) {
 	hyp 1 : wff = |- F/ y ph ;;
 	hyp 2 : wff = |- ( ph → F/_ y F ) ;;
 	hyp 3 : wff = |- ( ph → F/ y ch ) ;;
@@ -1329,7 +1329,7 @@ proof of riotasv2d {
 	qed prop 1 = step 27 ;;
 }
 
-/* Value of description binder ` D ` for a single-valued class expression
+/*Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -1422,12 +1422,12 @@ proof of riotasv2dOLD {
 	qed prop 1 = step 72 ;;
 }
 
-/* The value of description binder ` D ` for a single-valued class
+/*The value of description binder ` D ` for a single-valued class
        expression ` C ( y ) ` (as in e.g. ~ reusv2 ) in the form of a
        substitution instance.  Special case of ~ riota2f .  (Contributed by NM,
        3-Mar-2013.)  (Proof shortened by Mario Carneiro, 6-Dec-2016.) */
 
-theorem riotasv2s (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, V : class) disjointed(x y A, x y B, x C, x y E, x ph) {
+theorem riotasv2s (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, V : class) disjointed(x y A, x y B, x C, D, x y E, x ph) {
 	hyp 1 : wff = |- D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( A ∈ V ∧ D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → D = [_ E / y ]_ C ) ;;
@@ -1462,12 +1462,12 @@ proof of riotasv2s {
 	qed prop 1 = step 25 ;;
 }
 
-/* Value of description binder ` D ` for a single-valued class expression
+/*Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 26-Jan-2013.)  (Proof shortened by Mario Carneiro,
        6-Dec-2016.) */
 
-theorem riotasv (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x B, x C, x ph) {
+theorem riotasv (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x B, x C, x ph, D) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
 	-----------------------
@@ -1483,13 +1483,13 @@ proof of riotasv {
 	qed prop 1 = step 5 ;;
 }
 
-/* A property ` ch ` holding for a representative of a single-valued class
+/*A property ` ch ` holding for a representative of a single-valued class
        expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
        description binder ` D ` (in the form of property ` th ` ).
        (Contributed by NM, 5-Mar-2013.)  (Revised by Mario Carneiro,
        15-Oct-2016.) */
 
-theorem riotasv3d (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+theorem riotasv3d (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, D, ph, x ps) {
 	hyp 1 : wff = |- F/ y ph ;;
 	hyp 2 : wff = |- ( ph → F/ y th ) ;;
 	hyp 3 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
@@ -1523,13 +1523,13 @@ proof of riotasv3d {
 	qed prop 1 = step 18 ;;
 }
 
-/* A property ` ch ` holding for a representative of a single-valued class
+/*A property ` ch ` holding for a representative of a single-valued class
        expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
        description binder ` D ` (in the form of property ` th ` ).
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
-theorem riotasv3dOLD (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+theorem riotasv3dOLD (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, D, ph, x ps) {
 	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
 	hyp 2 : wff = |- ( ph → ∀ y ph ) ;;
 	hyp 3 : wff = |- ( ph → ( th → ∀ y th ) ) ;;

@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Binary_relations.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Ordered-pair class abstractions (class builders)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -12,23 +12,23 @@ constant {
 	latex \mapsto ;;
 }
 
-/* Maps-to symbol */
+/*Maps-to symbol */
 
-/* Extend class notation to include ordered-pair class abstraction (class
+/*Extend class notation to include ordered-pair class abstraction (class
      builder). */
 
 rule copab (ph : wff, x : set, y : set) {
 	term : class = # { 〈 x , y 〉 | ph } ;;
 }
 
-/* Extend the definition of a class to include maps-to notation for defining
+/*Extend the definition of a class to include maps-to notation for defining
      a function via a rule. */
 
 rule cmpt (x : set, A : class, B : class) {
 	term : class = # ( x ∈ A ↦ B ) ;;
 }
 
-/* Define the class abstraction of a collection of ordered pairs.
+/*Define the class abstraction of a collection of ordered pairs.
        Definition 3.3 of [Monk1] p. 34.  Usually ` x ` and ` y ` are distinct,
        although the definition doesn't strictly require it (see ~ dfid2 for a
        case where they are not distinct).  The brace notation is called "class
@@ -45,7 +45,7 @@ definition df-opab (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, z 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define maps-to notation for defining a function via a rule.  Read as
+/*Define maps-to notation for defining a function via a rule.  Read as
        "the function defined by the map from ` x ` (in ` A ` ) to
        ` B ( x ) ` ."  The class expression ` B ` is the value of the function
        at ` x ` and normally contains the variable ` x ` .  An example is the
@@ -60,7 +60,7 @@ definition df-mpt (x : set, y : set, A : class, B : class) disjointed(x y, y A, 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* The collection of ordered pairs in a class is a subclass of it.
+/*The collection of ordered pairs in a class is a subclass of it.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
@@ -81,7 +81,7 @@ proof of opabss {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+/*Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.)  (Proof shortened by Andrew
        Salmon, 9-Jul-2011.) */
 
@@ -105,10 +105,10 @@ proof of opabbid {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+/*Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 15-May-1995.) */
 
-theorem opabbidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+theorem opabbidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph, ps, ch) {
 	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → { 〈 x , y 〉 | ps } = { 〈 x , y 〉 | ch } ) ;;
@@ -121,7 +121,7 @@ proof of opabbidv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalent wff's yield equal class abstractions.  (Contributed by NM,
+/*Equivalent wff's yield equal class abstractions.  (Contributed by NM,
        15-May-1995.) */
 
 theorem opabbii (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, z ph, z ps) {
@@ -139,7 +139,7 @@ proof of opabbii {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for class abstraction.  (Contributed
        by NM, 1-Sep-1999.)  (Unnecessary distinct variable restrictions were
        removed by Andrew Salmon, 11-Jul-2011.) */
 
@@ -161,7 +161,7 @@ proof of nfopab {
 	qed prop 1 = step 7 ;;
 }
 
-/* The first abstraction variable in an ordered-pair class abstraction
+/*The first abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
 
@@ -178,7 +178,7 @@ proof of nfopab1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The second abstraction variable in an ordered-pair class abstraction
+/*The second abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
 
@@ -196,7 +196,7 @@ proof of nfopab2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule used to change bound variables in an ordered-pair class
+/*Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        14-Sep-2003.) */
 
@@ -231,7 +231,7 @@ proof of cbvopab {
 	qed prop 1 = step 16 ;;
 }
 
-/* Rule used to change bound variables in an ordered-pair class
+/*Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        15-Oct-1996.) */
 
@@ -250,7 +250,7 @@ proof of cbvopabv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Change first bound variable in an ordered-pair class abstraction, using
+/*Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 6-Oct-2004.)  (Revised by
        Mario Carneiro, 14-Oct-2016.) */
 
@@ -296,7 +296,7 @@ proof of cbvopab1 {
 	qed prop 1 = step 29 ;;
 }
 
-/* Change second bound variable in an ordered-pair class abstraction, using
+/*Change second bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 22-Aug-2013.) */
 
 theorem cbvopab2 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(w x y z, w ph, w ps) {
@@ -325,7 +325,7 @@ proof of cbvopab2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Change first bound variable in an ordered-pair class abstraction, using
+/*Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 31-Jul-2003.) */
 
 theorem cbvopab1s (ph : wff, x : set, y : set, z : set) disjointed(x y z w, z w ph) {
@@ -352,7 +352,7 @@ proof of cbvopab1s {
 	qed prop 1 = step 15 ;;
 }
 
-/* Rule used to change the first bound variable in an ordered pair
+/*Rule used to change the first bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        31-Jul-2003.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) */
 
@@ -369,7 +369,7 @@ proof of cbvopab1v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change the second bound variable in an ordered pair
+/*Rule used to change the second bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        2-Sep-1999.) */
 
@@ -393,7 +393,7 @@ proof of cbvopab2v {
 	qed prop 1 = step 9 ;;
 }
 
-/* Move substitution into a class abstraction.  (Contributed by NM,
+/*Move substitution into a class abstraction.  (Contributed by NM,
        6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
 
 theorem csbopabg (ph : wff, x : set, y : set, z : set, A : class, V : class) disjointed(w y z A, w ph, w x y z) {
@@ -416,7 +416,7 @@ proof of csbopabg {
 	qed prop 1 = step 11 ;;
 }
 
-/* Union of two ordered pair class abstractions.  (Contributed by NM,
+/*Union of two ordered pair class abstractions.  (Contributed by NM,
        30-Sep-2002.) */
 
 theorem unopab (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, ph z, ps z) {
@@ -443,7 +443,7 @@ proof of unopab {
 	qed prop 1 = step 15 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by Mario
+/*An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpteq12f (x : set, A : class, B : class, C : class, D : class) disjointed(x y, y A, y B, y C, y D) {
@@ -471,10 +471,10 @@ proof of mpteq12f {
 	qed prop 1 = step 16 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Mario
+/*An equality inference for the maps to notation.  (Contributed by Mario
          Carneiro, 26-Jan-2017.) */
 
-theorem mpteq12dva (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph) {
+theorem mpteq12dva (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph, A, B, C, D) {
 	hyp 1 : wff = |- ( ph → A = C ) ;;
 	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B = D ) ;;
 	-----------------------
@@ -489,10 +489,10 @@ proof of mpteq12dva {
 	qed prop 1 = step 4 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by NM,
+/*An equality inference for the maps to notation.  (Contributed by NM,
        24-Aug-2011.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
 
-theorem mpteq12dv (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph) {
+theorem mpteq12dv (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph, A, B, C, D) {
 	hyp 1 : wff = |- ( ph → A = C ) ;;
 	hyp 2 : wff = |- ( ph → B = D ) ;;
 	-----------------------
@@ -505,7 +505,7 @@ proof of mpteq12dv {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by NM,
+/*An equality theorem for the maps to notation.  (Contributed by NM,
        16-Dec-2013.) */
 
 theorem mpteq12 (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C) {
@@ -519,7 +519,7 @@ proof of mpteq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by Mario
+/*An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpteq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
@@ -534,7 +534,7 @@ proof of mpteq1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* An equality theorem for the maps to notation.  (Contributed by Mario
+/*An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 11-Jun-2016.) */
 
 theorem mpteq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
@@ -549,7 +549,7 @@ proof of mpteq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Mario
+/*An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpteq2ia (x : set, A : class, B : class, C : class)  {
@@ -567,7 +567,7 @@ proof of mpteq2ia {
 	qed prop 1 = step 5 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Mario
+/*An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) */
 
 theorem mpteq2i (x : set, A : class, B : class, C : class)  {
@@ -582,7 +582,7 @@ proof of mpteq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Scott
+/*An equality inference for the maps to notation.  (Contributed by Scott
        Fenton, 27-Oct-2010.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
 
 theorem mpteq12i (x : set, A : class, B : class, C : class, D : class)  {
@@ -600,7 +600,7 @@ proof of mpteq12i {
 	qed prop 1 = step 4 ;;
 }
 
-/* Slightly more general equality inference for the maps to notation.
+/*Slightly more general equality inference for the maps to notation.
        (Contributed by FL, 14-Sep-2013.)  (Revised by Mario Carneiro,
        16-Dec-2013.) */
 
@@ -621,7 +621,7 @@ proof of mpteq2da {
 	qed prop 1 = step 6 ;;
 }
 
-/* Slightly more general equality inference for the maps to notation.
+/*Slightly more general equality inference for the maps to notation.
        (Contributed by Scott Fenton, 25-Apr-2012.) */
 
 theorem mpteq2dva (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -636,7 +636,7 @@ proof of mpteq2dva {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality inference for the maps to notation.  (Contributed by Mario
+/*An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 23-Aug-2014.) */
 
 theorem mpteq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -651,7 +651,7 @@ proof of mpteq2dv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for the maps-to notation.
+/*Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) */
 
 theorem nfmpt (x : set, y : set, A : class, B : class) disjointed(z A, z B, x y z) {
@@ -672,10 +672,10 @@ proof of nfmpt {
 	qed prop 1 = step 6 ;;
 }
 
-/* Bound-variable hypothesis builder for the maps-to notation.
+/*Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by FL, 17-Feb-2008.) */
 
-theorem nfmpt1 (x : set, A : class, B : class) disjointed(A z, B z, x z) {
+theorem nfmpt1 (x : set, A : class, B : class) disjointed(A z, B z, x, x z) {
 	prop 1 : wff = |- F/_ x ( x ∈ A ↦ B ) ;;
 }
 
@@ -687,7 +687,7 @@ proof of nfmpt1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule to change the bound variable in a maps-to function, using implicit
+/*Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) */
 
@@ -729,7 +729,7 @@ proof of cbvmpt {
 	qed prop 1 = step 25 ;;
 }
 
-/* Rule to change the bound variable in a maps-to function, using implicit
+/*Rule to change the bound variable in a maps-to function, using implicit
        substitution.  (Contributed by Mario Carneiro, 19-Feb-2013.) */
 
 theorem cbvmptv (x : set, y : set, A : class, B : class, C : class) disjointed(A x, A y, B y, C x) {
@@ -745,7 +745,7 @@ proof of cbvmptv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Function with universal domain in maps-to notation.  (Contributed by NM,
+/*Function with universal domain in maps-to notation.  (Contributed by NM,
        16-Aug-2013.) */
 
 theorem mptv (x : set, y : set, B : class) disjointed(x y, y B) {

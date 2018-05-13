@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/True_and_false_constants.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Truth tables
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -18,7 +18,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
   ` \/_ ` (exclusive or) ~ df-xor .
 */
 
-/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem truantru ()  {
 	prop 1 : wff = |- ( ( T. ∧ T. ) ↔ T. ) ;;
@@ -29,7 +29,7 @@ proof of truantru {
 	qed prop 1 = step 1 ;;
 }
 
-/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem truanfal ()  {
 	prop 1 : wff = |- ( ( T. ∧ F. ) ↔ F. ) ;;
@@ -42,7 +42,7 @@ proof of truanfal {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem falantru ()  {
 	prop 1 : wff = |- ( ( F. ∧ T. ) ↔ F. ) ;;
@@ -55,7 +55,7 @@ proof of falantru {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem falanfal ()  {
 	prop 1 : wff = |- ( ( F. ∧ F. ) ↔ F. ) ;;
@@ -66,7 +66,7 @@ proof of falanfal {
 	qed prop 1 = step 1 ;;
 }
 
-/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem truortru ()  {
@@ -78,7 +78,7 @@ proof of truortru {
 	qed prop 1 = step 1 ;;
 }
 
-/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem truorfal ()  {
 	prop 1 : wff = |- ( ( T. ∨ F. ) ↔ T. ) ;;
@@ -91,7 +91,7 @@ proof of truorfal {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem falortru ()  {
 	prop 1 : wff = |- ( ( F. ∨ T. ) ↔ T. ) ;;
@@ -104,7 +104,7 @@ proof of falortru {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem falorfal ()  {
@@ -116,7 +116,7 @@ proof of falorfal {
 	qed prop 1 = step 1 ;;
 }
 
-/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem truimtru ()  {
 	prop 1 : wff = |- ( ( T. → T. ) ↔ T. ) ;;
@@ -128,7 +128,7 @@ proof of truimtru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem truimfal ()  {
@@ -142,7 +142,7 @@ proof of truimfal {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem falimtru ()  {
 	prop 1 : wff = |- ( ( F. → T. ) ↔ T. ) ;;
@@ -154,7 +154,7 @@ proof of falimtru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem falimfal ()  {
 	prop 1 : wff = |- ( ( F. → F. ) ↔ T. ) ;;
@@ -166,7 +166,7 @@ proof of falimfal {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+/*A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 theorem nottru ()  {
 	prop 1 : wff = |- ( ¬ T. ↔ F. ) ;;
@@ -178,7 +178,7 @@ proof of nottru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem notfal ()  {
@@ -191,7 +191,7 @@ proof of notfal {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem trubitru ()  {
@@ -204,7 +204,7 @@ proof of trubitru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem trubifal ()  {
@@ -219,7 +219,7 @@ proof of trubifal {
 	qed prop 1 = step 4 ;;
 }
 
-/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem falbitru ()  {
@@ -233,7 +233,7 @@ proof of falbitru {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem falbifal ()  {
@@ -246,7 +246,7 @@ proof of falbifal {
 	qed prop 1 = step 2 ;;
 }
 
-/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem trunantru ()  {
@@ -260,7 +260,7 @@ proof of trunantru {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+/*A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem trunanfal ()  {
@@ -276,7 +276,7 @@ proof of trunanfal {
 	qed prop 1 = step 5 ;;
 }
 
-/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+/*A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem falnantru ()  {
@@ -290,7 +290,7 @@ proof of falnantru {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem falnanfal ()  {
@@ -304,7 +304,7 @@ proof of falnanfal {
 	qed prop 1 = step 3 ;;
 }
 
-/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
+/*A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
 
 theorem truxortru ()  {
 	prop 1 : wff = |- ( ( T. \/_ T. ) ↔ F. ) ;;
@@ -319,7 +319,7 @@ proof of truxortru {
 	qed prop 1 = step 5 ;;
 }
 
-/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
+/*A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
 
 theorem truxorfal ()  {
 	prop 1 : wff = |- ( ( T. \/_ F. ) ↔ T. ) ;;
@@ -334,7 +334,7 @@ proof of truxorfal {
 	qed prop 1 = step 5 ;;
 }
 
-/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
+/*A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
 
 theorem falxortru ()  {
 	prop 1 : wff = |- ( ( F. \/_ T. ) ↔ T. ) ;;
@@ -349,7 +349,7 @@ proof of falxortru {
 	qed prop 1 = step 5 ;;
 }
 
-/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
+/*A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
 
 theorem falxorfal ()  {
 	prop 1 : wff = |- ( ( F. \/_ F. ) ↔ F. ) ;;

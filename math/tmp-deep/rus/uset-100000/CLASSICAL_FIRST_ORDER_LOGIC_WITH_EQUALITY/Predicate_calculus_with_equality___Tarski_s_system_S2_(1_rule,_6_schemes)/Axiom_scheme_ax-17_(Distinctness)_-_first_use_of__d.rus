@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-5_(Quantified_Implication).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Axiom scheme ax-17 (Distinctness) - first use of $d
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Distinctness.  This axiom quantifies a variable over a formula
+/*Axiom of Distinctness.  This axiom quantifies a variable over a formula
        in which it does not occur.  Axiom C5 in [Megill] p. 444 (p. 11 of the
        preprint).  Also appears as Axiom B6 (p. 75) of system S2 of [Tarski]
        p. 77 and Axiom C5-1 of [Monk2] p. 113.
@@ -24,7 +24,7 @@ axiom ax-17 (ph : wff, x : set) disjointed(x ph) {
 	prop 1 : wff = |- ( ph → ∀ x ph ) ;;
 }
 
-/* ~ ax-17 with antecedent.  Useful in proofs of deduction versions of
+/*~ ax-17 with antecedent.  Useful in proofs of deduction versions of
        bound-variable hypothesis builders.  (Contributed by NM, 1-Mar-2013.) */
 
 theorem a17d (ph : wff, ps : wff, x : set) disjointed(x ps) {
@@ -37,7 +37,7 @@ proof of a17d {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` x ` is not present in ` ph ` , then ` x ` is not free in ` ph ` .
+/*If ` x ` is not present in ` ph ` , then ` x ` is not free in ` ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfv (ph : wff, x : set) disjointed(x ph) {
@@ -50,7 +50,7 @@ proof of nfv {
 	qed prop 1 = step 2 ;;
 }
 
-/* ~ nfv with antecedent.  Useful in proofs of deduction versions of
+/*~ nfv with antecedent.  Useful in proofs of deduction versions of
        bound-variable hypothesis builders such as ~ nfimd .  (Contributed by
        Mario Carneiro, 6-Oct-2016.) */
 
@@ -64,7 +64,7 @@ proof of nfvd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
        3-Apr-1994.) */
 
 theorem alimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -79,7 +79,7 @@ proof of alimdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-1994.) */
 
 theorem eximdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -94,7 +94,7 @@ proof of eximdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-2004.) */
 
 theorem 2alimdv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -109,7 +109,7 @@ proof of 2alimdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        3-Aug-1995.) */
 
 theorem 2eximdv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -124,7 +124,7 @@ proof of 2eximdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for universal quantifier (deduction rule).
+/*Formula-building rule for universal quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem albidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -139,7 +139,7 @@ proof of albidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for existential quantifier (deduction rule).
+/*Formula-building rule for existential quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem exbidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -154,7 +154,7 @@ proof of exbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for 2 universal quantifiers (deduction rule).
+/*Formula-building rule for 2 universal quantifiers (deduction rule).
        (Contributed by NM, 4-Mar-1997.) */
 
 theorem 2albidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -169,7 +169,7 @@ proof of 2albidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for 2 existential quantifiers (deduction rule).
+/*Formula-building rule for 2 existential quantifiers (deduction rule).
        (Contributed by NM, 1-May-1995.) */
 
 theorem 2exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -184,7 +184,7 @@ proof of 2exbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for 3 existential quantifiers (deduction rule).
+/*Formula-building rule for 3 existential quantifiers (deduction rule).
        (Contributed by NM, 1-May-1995.) */
 
 theorem 3exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(x ph, y ph, z ph) {
@@ -199,7 +199,7 @@ proof of 3exbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for 4 existential quantifiers (deduction rule).
+/*Formula-building rule for 4 existential quantifiers (deduction rule).
        (Contributed by NM, 3-Aug-1995.) */
 
 theorem 4exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, w : set) disjointed(x ph, y ph, z ph, w ph) {
@@ -214,7 +214,7 @@ proof of 4exbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem alrimiv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -229,7 +229,7 @@ proof of alrimiv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        31-Jul-1995.) */
 
 theorem alrimivv (ph : wff, ps : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -244,7 +244,7 @@ proof of alrimivv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        10-Feb-1997.) */
 
 theorem alrimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph, x ps) {
@@ -260,7 +260,7 @@ proof of alrimdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Apply the definition of not-free in a context.  (Contributed by Mario
+/*Apply the definition of not-free in a context.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem nfdv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -276,7 +276,7 @@ proof of nfdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Quantification of two variables over a formula in which they do not
+/*Quantification of two variables over a formula in which they do not
        occur.  (Contributed by Alan Sare, 12-Apr-2011.) */
 
 theorem 2ax17 (ph : wff, x : set, y : set) disjointed(x ph, y ph) {

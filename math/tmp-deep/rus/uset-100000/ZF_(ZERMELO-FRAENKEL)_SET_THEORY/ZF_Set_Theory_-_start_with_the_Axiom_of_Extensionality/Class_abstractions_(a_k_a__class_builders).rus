@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Introduce_the_Axiom_of_Extensionality.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Class abstractions (a.k.a. class builders)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new constants use in class definition. */
+/*Declare new constants use in class definition. */
 
 constant {
 	symbol { ;;
@@ -14,13 +14,13 @@ constant {
 	latex \{ ;;
 }
 
-/* Left brace */
+/*Left brace */
 
 constant {
 	symbol | ;;
 }
 
-/* Vertical bar */
+/*Vertical bar */
 
 constant {
 	symbol } ;;
@@ -28,23 +28,23 @@ constant {
 	latex \} ;;
 }
 
-/* Right brace */
+/*Right brace */
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @c class @. @( Class variable type @)
+/*@c class @. @( Class variable type @)
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* Declare symbols as variables */
+/*Declare symbols as variables */
 
-/* Declare variable symbols that will be used to represent classes.  Note
+/*Declare variable symbols that will be used to represent classes.  Note
      that later on ` R ` , ` S ` , ` F ` and ` G ` denote relations and
      functions, but these letters serve as mnemonics only and in fact behave
      no differently from the variables ` A ` through ` D ` . */
 
-/* Introduce the class builder or class abstraction notation ("the class of
+/*Introduce the class builder or class abstraction notation ("the class of
      sets ` x ` such that ` ph ` is true").  Our class variables ` A ` ,
      ` B ` , etc. range over class builders (implicitly in the case of defined
      class terms such as ~ df-nul ).  Note that a set variable can be expressed
@@ -55,9 +55,9 @@ rule cab (ph : wff, x : set) {
 	term : class = # { x | ph } ;;
 }
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @( A set variable is a class expression.  The syntax " ` class x ` " can be
+/*@( A set variable is a class expression.  The syntax " ` class x ` " can be
      viewed as an abbreviation for " ` class { y | y e. x } ` " (a special case
      of ~ cab ), where ` y ` is distinct from ` x ` .  See the discussion under
      the definition of class in [Jech] p. 4.  Note that ` { y | y e. x } = x `
@@ -65,164 +65,164 @@ rule cab (ph : wff, x : set) {
   cv @a class x @.
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* $j primitive 'cv' 'wceq' 'wcel' 'cab'; */
+/*$j primitive 'cv' 'wceq' 'wcel' 'cab'; */
 
-/* Let ` A ` be a class variable. */
+/*Let ` A ` be a class variable. */
 
-/* Let ` B ` be a class variable. */
+/*Let ` B ` be a class variable. */
 
-/* Let ` C ` be a class variable. */
+/*Let ` C ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` D ` be a class variable. */
+/*Let ` D ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` P ` be a class variable. */
+/*Let ` P ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` Q ` be a class variable. */
+/*Let ` Q ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` R ` be a class variable. */
+/*Let ` R ` be a class variable. */
 
-/* Let ` S ` be a class variable. */
+/*Let ` S ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` T ` be a class variable. */
+/*Let ` T ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` U ` be a class variable. */
+/*Let ` U ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` e ` be an individual variable. */
+/*Let ` e ` be an individual variable. */
 
-/* Let ` f ` be an individual variable. */
+/*Let ` f ` be an individual variable. */
 
-/* Let ` g ` be an individual variable. */
+/*Let ` g ` be an individual variable. */
 
-/* Let ` h ` be an individual variable. */
+/*Let ` h ` be an individual variable. */
 
-/* Let ` i ` be an individual variable. */
+/*Let ` i ` be an individual variable. */
 
-/* Let ` j ` be an individual variable. */
+/*Let ` j ` be an individual variable. */
 
-/* Let ` k ` be an individual variable. */
+/*Let ` k ` be an individual variable. */
 
-/* Let ` m ` be an individual variable. */
+/*Let ` m ` be an individual variable. */
 
-/* Let ` n ` be an individual variable. */
+/*Let ` n ` be an individual variable. */
 
-/* Let ` o ` be an individual variable. */
+/*Let ` o ` be an individual variable. */
 
-/* Let ` E ` be a class variable. */
+/*Let ` E ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` F ` be a class variable. */
+/*Let ` F ` be a class variable. */
 
-/* Let ` G ` be a class variable. */
+/*Let ` G ` be a class variable. */
 
-/* Let ` H ` be a class variable. */
+/*Let ` H ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` I ` be a class variable. */
+/*Let ` I ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` J ` be a class variable. */
+/*Let ` J ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` K ` be a class variable. */
+/*Let ` K ` be a class variable. */
 
-/* Let ` L ` be a class variable. */
+/*Let ` L ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` M ` be a class variable. */
+/*Let ` M ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` N ` be a class variable. */
+/*Let ` N ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` O ` be a class variable. */
+/*Let ` O ` be a class variable. */
 
-/* Let ` V ` be a class variable. */
+/*Let ` V ` be a class variable. */
 
-/* Let ` W ` be a class variable. */
+/*Let ` W ` be a class variable. */
 
-/* Let ` X ` be a class variable. */
+/*Let ` X ` be a class variable. */
 
-/* Let ` Y ` be a class variable. */
+/*Let ` Y ` be a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Define a connective symbol for use as a class variable. */
+/*Define a connective symbol for use as a class variable. */
 
-/* Let ` Z ` be a class variable. */
+/*Let ` Z ` be a class variable. */
 
-/* Let ` s ` be an individual variable. */
+/*Let ` s ` be an individual variable. */
 
-/* Let ` r ` be an individual variable. */
+/*Let ` r ` be an individual variable. */
 
-/* Let ` q ` be an individual variable. */
+/*Let ` q ` be an individual variable. */
 
-/* Let ` p ` be an individual variable. */
+/*Let ` p ` be an individual variable. */
 
-/* Let ` a ` be an individual variable. */
+/*Let ` a ` be an individual variable. */
 
-/* Let ` b ` be an individual variable. */
+/*Let ` b ` be an individual variable. */
 
-/* Let ` c ` be an individual variable. */
+/*Let ` c ` be an individual variable. */
 
-/* Let ` d ` be an individual variable. */
+/*Let ` d ` be an individual variable. */
 
-/* Let ` l ` be an individual variable. */
+/*Let ` l ` be an individual variable. */
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @( Extend wff definition to include class equality. @)
+/*@( Extend wff definition to include class equality. @)
   wceq @a wff A = B @.
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* --- Start of old code before overloading prevention patch. */
+/*--- Start of old code before overloading prevention patch. */
 
-/* @( Extend wff definition to include the membership connective between
+/*@( Extend wff definition to include the membership connective between
      classes. @)
   wcel @a wff A e. B @.
   */
 
-/* --- End of old code before overloading prevention patch. */
+/*--- End of old code before overloading prevention patch. */
 
-/* Define class abstraction notation (so-called by Quine), also called a
+/*Define class abstraction notation (so-called by Quine), also called a
      "class builder" in the literature. ` x ` and ` y ` need not be distinct.
      Definition 2.1 of [Quine] p. 16.  Typically, ` ph ` will have ` y ` as a
      free variable, and " ` { y | ph } ` " is read "the class of all sets ` y `
@@ -264,7 +264,7 @@ definition df-clab (ph : wff, x : set, y : set)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Simplification of class abstraction notation when the free and bound
+/*Simplification of class abstraction notation when the free and bound
      variables are identical.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem abid (ph : wff, x : set)  {
@@ -278,7 +278,7 @@ proof of abid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem hbab1 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -292,7 +292,7 @@ proof of hbab1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfsab1 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -305,7 +305,7 @@ proof of nfsab1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 1-Mar-1995.) */
 
 theorem hbab (ph : wff, x : set, y : set, z : set) disjointed(x z) {
@@ -321,7 +321,7 @@ proof of hbab {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for a class abstraction.  (Contributed
+/*Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfsab (ph : wff, x : set, y : set, z : set) disjointed(x z) {
@@ -337,7 +337,7 @@ proof of nfsab {
 	qed prop 1 = step 3 ;;
 }
 
-/* Define the equality connective between classes.  Definition 2.7 of
+/*Define the equality connective between classes.  Definition 2.7 of
        [Quine] p. 18.  Also Definition 4.5 of [TakeutiZaring] p. 13; Chapter 4
        provides its justification and methods for eliminating it.  Note that
        its elimination will not necessarily result in a single wff in the
@@ -384,7 +384,7 @@ definition df-cleq (x : set, y : set, z : set, A : class, B : class) disjointed(
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* The same as ~ df-cleq with the hypothesis removed using the Axiom of
+/*The same as ~ df-cleq with the hypothesis removed using the Axiom of
        Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) */
 
 theorem dfcleq (x : set, A : class, B : class) disjointed(x A, x B, x y z) {
@@ -398,7 +398,7 @@ proof of dfcleq {
 	qed prop 1 = step 2 ;;
 }
 
-/* Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
+/*Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        theorem shows that a set variable can be expressed as a class
        abstraction.  This provides a motivation for the class syntax
        construction ~ cv , which allows us to substitute a set variable for a
@@ -424,7 +424,7 @@ proof of cvjust {
 	qed prop 1 = step 5 ;;
 }
 
-/* Define the membership connective between classes.  Theorem 6.3 of
+/*Define the membership connective between classes.  Theorem 6.3 of
        [Quine] p. 41, or Proposition 4.6 of [TakeutiZaring] p. 13, which we
        adopt as a definition.  See these references for its metalogical
        justification.  Note that like ~ df-cleq it extends or "overloads" the
@@ -451,7 +451,7 @@ definition df-clel (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Infer equality of classes from equivalence of membership.  (Contributed
+/*Infer equality of classes from equivalence of membership.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem eqriv (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -466,7 +466,7 @@ proof of eqriv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce equality of classes from equivalence of membership.  (Contributed
+/*Deduce equality of classes from equivalence of membership.  (Contributed
        by NM, 17-Mar-1996.) */
 
 theorem eqrdv (ph : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
@@ -482,7 +482,7 @@ proof of eqrdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduce equality of classes from an equivalence of membership that
+/*Deduce equality of classes from an equivalence of membership that
        depends on the membership variable.  (Contributed by NM, 7-Nov-2008.) */
 
 theorem eqrdav (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x ph) {
@@ -506,7 +506,7 @@ proof of eqrdav {
 	qed prop 1 = step 9 ;;
 }
 
-/* Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
+/*Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        p. 41.
 
        This law is thought to have originated with Aristotle (_Metaphysics_,
@@ -528,7 +528,7 @@ proof of eqid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) */
+/*Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) */
 
 theorem eqidd (ph : wff, A : class)  {
 	prop 1 : wff = |- ( ph → A = A ) ;;
@@ -540,7 +540,7 @@ proof of eqidd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
+/*Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqcom (A : class, B : class) disjointed(x A, x B) {
@@ -557,7 +557,7 @@ proof of eqcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference applying commutative law for class equality to an antecedent.
+/*Inference applying commutative law for class equality to an antecedent.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqcoms (ph : wff, A : class, B : class)  {
@@ -572,7 +572,7 @@ proof of eqcoms {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from commutative law for class equality.  (Contributed by NM,
+/*Inference from commutative law for class equality.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem eqcomi (A : class, B : class)  {
@@ -587,7 +587,7 @@ proof of eqcomi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from commutative law for class equality.  (Contributed by NM,
+/*Deduction from commutative law for class equality.  (Contributed by NM,
        15-Aug-1994.) */
 
 theorem eqcomd (ph : wff, A : class, B : class)  {
@@ -602,7 +602,7 @@ proof of eqcomd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality implies equivalence of equalities.  (Contributed by NM,
+/*Equality implies equivalence of equalities.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem eqeq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -622,7 +622,7 @@ proof of eqeq1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Inference from equality to equivalence of equalities.  (Contributed by
+/*Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqeq1i (A : class, B : class, C : class)  {
@@ -637,7 +637,7 @@ proof of eqeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to equivalence of equalities.  (Contributed by
+/*Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) */
 
 theorem eqeq1d (ph : wff, A : class, B : class, C : class)  {
@@ -652,7 +652,7 @@ proof of eqeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality implies equivalence of equalities.  (Contributed by NM,
+/*Equality implies equivalence of equalities.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem eqeq2 (A : class, B : class, C : class)  {
@@ -667,7 +667,7 @@ proof of eqeq2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference from equality to equivalence of equalities.  (Contributed by
+/*Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqeq2i (A : class, B : class, C : class)  {
@@ -682,7 +682,7 @@ proof of eqeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to equivalence of equalities.  (Contributed by
+/*Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) */
 
 theorem eqeq2d (ph : wff, A : class, B : class, C : class)  {
@@ -697,7 +697,7 @@ proof of eqeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality relationship among 4 classes.  (Contributed by NM,
+/*Equality relationship among 4 classes.  (Contributed by NM,
      3-Aug-1994.) */
 
 theorem eqeq12 (A : class, B : class, C : class, D : class)  {
@@ -711,7 +711,7 @@ proof of eqeq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A useful inference for substituting definitions into an equality.
+/*A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) */
 
@@ -728,11 +728,11 @@ proof of eqeq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem eqeq12i is the congruence law for equality. */
+/*Theorem eqeq12i is the congruence law for equality. */
 
-/* $j congruence 'eqeq12i'; */
+/*$j congruence 'eqeq12i'; */
 
-/* A useful inference for substituting definitions into an equality.
+/*A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) */
 
@@ -749,7 +749,7 @@ proof of eqeq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A useful inference for substituting definitions into an equality.
+/*A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) */
 
@@ -766,7 +766,7 @@ proof of eqeqan12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A useful inference for substituting definitions into an equality.
+/*A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.) */
 
 theorem eqeqan12rd (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
@@ -782,7 +782,7 @@ proof of eqeqan12rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
+/*Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
      p. 13.  (Contributed by NM, 25-Jan-2004.) */
 
 theorem eqtr (A : class, B : class, C : class)  {
@@ -795,7 +795,7 @@ proof of eqtr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
+/*A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem eqtr2 (A : class, B : class, C : class)  {
@@ -809,7 +809,7 @@ proof of eqtr2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A transitive law for class equality.  (Contributed by NM, 20-May-2005.) */
+/*A transitive law for class equality.  (Contributed by NM, 20-May-2005.) */
 
 theorem eqtr3 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( A = C ∧ B = C ) → A = B ) ;;
@@ -822,7 +822,7 @@ proof of eqtr3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqtri (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -837,7 +837,7 @@ proof of eqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity inference.  (Contributed by NM,
+/*An equality transitivity inference.  (Contributed by NM,
        21-Feb-1995.) */
 
 theorem eqtr2i (A : class, B : class, C : class)  {
@@ -853,7 +853,7 @@ proof of eqtr2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity inference.  (Contributed by NM, 6-May-1994.) */
+/*An equality transitivity inference.  (Contributed by NM, 6-May-1994.) */
 
 theorem eqtr3i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -868,7 +868,7 @@ proof of eqtr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqtr4i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -883,11 +883,11 @@ proof of eqtr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Register '=' as an equality for its type (class). */
+/*Register '=' as an equality for its type (class). */
 
-/* $j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; */
+/*$j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; */
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        29-Aug-1993.) */
 
 theorem 3eqtri (A : class, B : class, C : class, D : class)  {
@@ -904,7 +904,7 @@ proof of 3eqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtrri (A : class, B : class, C : class, D : class)  {
@@ -921,7 +921,7 @@ proof of 3eqtrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.) */
 
 theorem 3eqtr2i (A : class, B : class, C : class, D : class)  {
@@ -938,7 +938,7 @@ proof of 3eqtr2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr2ri (A : class, B : class, C : class, D : class)  {
@@ -955,7 +955,7 @@ proof of 3eqtr2ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        6-May-1994.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr3i (A : class, B : class, C : class, D : class)  {
@@ -972,7 +972,7 @@ proof of 3eqtr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        15-Aug-2004.) */
 
 theorem 3eqtr3ri (A : class, B : class, C : class, D : class)  {
@@ -989,7 +989,7 @@ proof of 3eqtr3ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr4i (A : class, B : class, C : class, D : class)  {
@@ -1006,7 +1006,7 @@ proof of 3eqtr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* An inference from three chained equalities.  (Contributed by NM,
+/*An inference from three chained equalities.  (Contributed by NM,
        2-Sep-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr4ri (A : class, B : class, C : class, D : class)  {
@@ -1023,7 +1023,7 @@ proof of 3eqtr4ri {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem eqtrd (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -1038,7 +1038,7 @@ proof of eqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        18-Oct-1999.) */
 
 theorem eqtr2d (ph : wff, A : class, B : class, C : class)  {
@@ -1054,7 +1054,7 @@ proof of eqtr2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity equality deduction.  (Contributed by NM,
+/*An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) */
 
 theorem eqtr3d (ph : wff, A : class, B : class, C : class)  {
@@ -1070,7 +1070,7 @@ proof of eqtr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity equality deduction.  (Contributed by NM,
+/*An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) */
 
 theorem eqtr4d (ph : wff, A : class, B : class, C : class)  {
@@ -1086,7 +1086,7 @@ proof of eqtr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        29-Oct-1995.) */
 
 theorem 3eqtrd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1103,7 +1103,7 @@ proof of 3eqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtrrd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1120,7 +1120,7 @@ proof of 3eqtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3eqtr2d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1137,7 +1137,7 @@ proof of 3eqtr2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) */
 
 theorem 3eqtr2rd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1154,7 +1154,7 @@ proof of 3eqtr2rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1171,7 +1171,7 @@ proof of 3eqtr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        14-Jan-2006.) */
 
 theorem 3eqtr3rd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1188,7 +1188,7 @@ proof of 3eqtr3rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3eqtr4d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1205,7 +1205,7 @@ proof of 3eqtr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction from three chained equalities.  (Contributed by NM,
+/*A deduction from three chained equalities.  (Contributed by NM,
        21-Sep-1995.) */
 
 theorem 3eqtr4rd (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1222,7 +1222,7 @@ proof of 3eqtr4rd {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl5eq (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -1237,7 +1237,7 @@ proof of syl5eq {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) */
 
 theorem syl5req (ph : wff, A : class, B : class, C : class)  {
@@ -1253,7 +1253,7 @@ proof of syl5req {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl5eqr (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- B = A ;;
@@ -1268,7 +1268,7 @@ proof of syl5eqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) */
 
 theorem syl5reqr (ph : wff, A : class, B : class, C : class)  {
@@ -1284,7 +1284,7 @@ proof of syl5reqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl6eq (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -1299,7 +1299,7 @@ proof of syl6eq {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) */
 
 theorem syl6req (ph : wff, A : class, B : class, C : class)  {
@@ -1315,7 +1315,7 @@ proof of syl6req {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem syl6eqr (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -1330,7 +1330,7 @@ proof of syl6eqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) */
 
 theorem syl6reqr (ph : wff, A : class, B : class, C : class)  {
@@ -1346,7 +1346,7 @@ proof of syl6reqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
+/*An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem sylan9eq (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -1362,7 +1362,7 @@ proof of sylan9eq {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM,
+/*An equality transitivity deduction.  (Contributed by NM,
        23-Jun-2007.) */
 
 theorem sylan9req (ph : wff, ps : wff, A : class, B : class, C : class)  {
@@ -1378,7 +1378,7 @@ proof of sylan9req {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) */
+/*An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) */
 
 theorem sylan9eqr (ph : wff, ps : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -1393,7 +1393,7 @@ proof of sylan9eqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference, useful for converting from definitions.
+/*A chained equality inference, useful for converting from definitions.
        (Contributed by NM, 15-Nov-1994.) */
 
 theorem 3eqtr3g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1410,7 +1410,7 @@ proof of 3eqtr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference, useful for converting from definitions.
+/*A chained equality inference, useful for converting from definitions.
        (Contributed by Mario Carneiro, 6-Nov-2015.) */
 
 theorem 3eqtr3a (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1427,7 +1427,7 @@ proof of 3eqtr3a {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference, useful for converting to definitions.
+/*A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3eqtr4g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1444,7 +1444,7 @@ proof of 3eqtr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* A chained equality inference, useful for converting to definitions.
+/*A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 2-Feb-2007.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) */
 
@@ -1462,7 +1462,7 @@ proof of 3eqtr4a {
 	qed prop 1 = step 2 ;;
 }
 
-/* A compound transitive inference for class equality.  (Contributed by NM,
+/*A compound transitive inference for class equality.  (Contributed by NM,
        22-Jan-2004.) */
 
 theorem eq2tri (A : class, B : class, C : class, D : class, F : class, G : class)  {
@@ -1482,7 +1482,7 @@ proof of eq2tri {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality implies equivalence of membership.  (Contributed by NM,
+/*Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem eleq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1500,7 +1500,7 @@ proof of eleq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality implies equivalence of membership.  (Contributed by NM,
+/*Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem eleq2 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1520,7 +1520,7 @@ proof of eleq2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality implies equivalence of membership.  (Contributed by NM,
+/*Equality implies equivalence of membership.  (Contributed by NM,
      31-May-1999.) */
 
 theorem eleq12 (A : class, B : class, C : class, D : class)  {
@@ -1534,7 +1534,7 @@ proof of eleq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from equality to equivalence of membership.  (Contributed by
+/*Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eleq1i (A : class, B : class, C : class)  {
@@ -1549,7 +1549,7 @@ proof of eleq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from equality to equivalence of membership.  (Contributed by
+/*Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eleq2i (A : class, B : class, C : class)  {
@@ -1564,7 +1564,7 @@ proof of eleq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from equality to equivalence of membership.  (Contributed by
+/*Inference from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) */
 
 theorem eleq12i (A : class, B : class, C : class, D : class)  {
@@ -1581,11 +1581,11 @@ proof of eleq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem eleq12i is the congruence law for elementhood. */
+/*Theorem eleq12i is the congruence law for elementhood. */
 
-/* $j congruence 'eleq12i'; */
+/*$j congruence 'eleq12i'; */
 
-/* Deduction from equality to equivalence of membership.  (Contributed by
+/*Deduction from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eleq1d (ph : wff, A : class, B : class, C : class)  {
@@ -1600,7 +1600,7 @@ proof of eleq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to equivalence of membership.  (Contributed by
+/*Deduction from equality to equivalence of membership.  (Contributed by
        NM, 27-Dec-1993.) */
 
 theorem eleq2d (ph : wff, A : class, B : class, C : class)  {
@@ -1615,7 +1615,7 @@ proof of eleq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to equivalence of membership.  (Contributed by
+/*Deduction from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) */
 
 theorem eleq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1632,7 +1632,7 @@ proof of eleq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* A transitive-type law relating membership and equality.  (Contributed by
+/*A transitive-type law relating membership and equality.  (Contributed by
      NM, 9-Apr-1994.) */
 
 theorem eleq1a (A : class, B : class, C : class)  {
@@ -1645,7 +1645,7 @@ proof of eleq1a {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqeltri (A : class, B : class, C : class)  {
@@ -1661,7 +1661,7 @@ proof of eqeltri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eqeltrri (A : class, B : class, C : class)  {
@@ -1677,7 +1677,7 @@ proof of eqeltrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eleqtri (A : class, B : class, C : class)  {
@@ -1693,7 +1693,7 @@ proof of eleqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem eleqtrri (A : class, B : class, C : class)  {
@@ -1709,7 +1709,7 @@ proof of eleqtrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation, deduction form.
+/*Substitution of equal classes into membership relation, deduction form.
        (Contributed by Raph Levien, 10-Dec-2002.) */
 
 theorem eqeltrd (ph : wff, A : class, B : class, C : class)  {
@@ -1725,7 +1725,7 @@ proof of eqeltrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction that substitutes equal classes into membership.  (Contributed
+/*Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) */
 
 theorem eqeltrrd (ph : wff, A : class, B : class, C : class)  {
@@ -1741,7 +1741,7 @@ proof of eqeltrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction that substitutes equal classes into membership.  (Contributed
+/*Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) */
 
 theorem eleqtrd (ph : wff, A : class, B : class, C : class)  {
@@ -1757,7 +1757,7 @@ proof of eleqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction that substitutes equal classes into membership.  (Contributed
+/*Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) */
 
 theorem eleqtrrd (ph : wff, A : class, B : class, C : class)  {
@@ -1773,7 +1773,7 @@ proof of eleqtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr3i (A : class, B : class, C : class, D : class)  {
@@ -1790,7 +1790,7 @@ proof of 3eltr3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr4i (A : class, B : class, C : class, D : class)  {
@@ -1807,7 +1807,7 @@ proof of 3eltr4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1824,7 +1824,7 @@ proof of 3eltr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr4d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1841,7 +1841,7 @@ proof of 3eltr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr3g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1858,7 +1858,7 @@ proof of 3eltr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into membership relation.  (Contributed by
+/*Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) */
 
 theorem 3eltr4g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1875,7 +1875,7 @@ proof of 3eltr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* B membership and equality inference.  (Contributed by NM,
+/*B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl5eqel (ph : wff, A : class, B : class, C : class)  {
@@ -1891,7 +1891,7 @@ proof of syl5eqel {
 	qed prop 1 = step 2 ;;
 }
 
-/* B membership and equality inference.  (Contributed by NM,
+/*B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl5eqelr (ph : wff, A : class, B : class, C : class)  {
@@ -1907,7 +1907,7 @@ proof of syl5eqelr {
 	qed prop 1 = step 2 ;;
 }
 
-/* B membership and equality inference.  (Contributed by NM,
+/*B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl5eleq (ph : wff, A : class, B : class, C : class)  {
@@ -1923,7 +1923,7 @@ proof of syl5eleq {
 	qed prop 1 = step 2 ;;
 }
 
-/* B membership and equality inference.  (Contributed by NM,
+/*B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl5eleqr (ph : wff, A : class, B : class, C : class)  {
@@ -1939,7 +1939,7 @@ proof of syl5eleqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A membership and equality inference.  (Contributed by NM,
+/*A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl6eqel (ph : wff, A : class, B : class, C : class)  {
@@ -1955,7 +1955,7 @@ proof of syl6eqel {
 	qed prop 1 = step 2 ;;
 }
 
-/* A membership and equality inference.  (Contributed by NM,
+/*A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl6eqelr (ph : wff, A : class, B : class, C : class)  {
@@ -1971,7 +1971,7 @@ proof of syl6eqelr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A membership and equality inference.  (Contributed by NM,
+/*A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) */
 
 theorem syl6eleq (ph : wff, A : class, B : class, C : class)  {
@@ -1987,7 +1987,7 @@ proof of syl6eleq {
 	qed prop 1 = step 2 ;;
 }
 
-/* A membership and equality inference.  (Contributed by NM,
+/*A membership and equality inference.  (Contributed by NM,
        24-Apr-2005.) */
 
 theorem syl6eleqr (ph : wff, A : class, B : class, C : class)  {
@@ -2003,7 +2003,7 @@ proof of syl6eleqr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into a membership antecedent.
+/*Substitution of equal classes into a membership antecedent.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
 
 theorem eleq2s (ph : wff, A : class, B : class, C : class)  {
@@ -2019,7 +2019,7 @@ proof of eleq2s {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is not an element of another class, an equal class is also
+/*If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -2036,7 +2036,7 @@ proof of eqneltrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is not an element of another class, an equal class is also
+/*If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -2053,7 +2053,7 @@ proof of eqneltrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is not an element of another class, it is also not an element
+/*If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -2070,7 +2070,7 @@ proof of neleqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is not an element of another class, it is also not an element
+/*If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -2087,7 +2087,7 @@ proof of neleqtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Establish equality between classes, using bound-variable hypotheses
+/*Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.) */
 
@@ -2128,7 +2128,7 @@ proof of cleqh {
 	qed prop 1 = step 26 ;;
 }
 
-/* A way of showing two classes are not equal.  (Contributed by NM,
+/*A way of showing two classes are not equal.  (Contributed by NM,
      1-Apr-1997.) */
 
 theorem nelneq (A : class, B : class, C : class)  {
@@ -2142,7 +2142,7 @@ proof of nelneq {
 	qed prop 1 = step 3 ;;
 }
 
-/* A way of showing two classes are not equal.  (Contributed by NM,
+/*A way of showing two classes are not equal.  (Contributed by NM,
      12-Jan-2002.) */
 
 theorem nelneq2 (A : class, B : class, C : class)  {
@@ -2156,7 +2156,7 @@ proof of nelneq2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
+/*Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
 
 theorem eqsb3lem (x : set, y : set, A : class) disjointed(x y, y A) {
@@ -2170,7 +2170,7 @@ proof of eqsb3lem {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution applied to an atomic wff (class version of ~ equsb3 ).
+/*Substitution applied to an atomic wff (class version of ~ equsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.) */
 
 theorem eqsb3 (x : set, y : set, A : class) disjointed(y A, w y, w A, x w) {
@@ -2188,7 +2188,7 @@ proof of eqsb3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution applied to an atomic wff (class version of ~ elsb3 ).
+/*Substitution applied to an atomic wff (class version of ~ elsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.)  (Proof shortened by
        Andrew Salmon, 14-Jun-2011.) */
 
@@ -2211,7 +2211,7 @@ proof of clelsb3 {
 	qed prop 1 = step 10 ;;
 }
 
-/* A utility lemma to transfer a bound-variable hypothesis builder into a
+/*A utility lemma to transfer a bound-variable hypothesis builder into a
        definition.  See ~ hbxfrbi for equivalence version.  (Contributed by NM,
        21-Aug-2007.) */
 
@@ -2228,7 +2228,7 @@ proof of hbxfreq {
 	qed prop 1 = step 2 ;;
 }
 
-/* Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
+/*Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Andrew Salmon,
        11-Jul-2011.) */
 
@@ -2247,7 +2247,7 @@ proof of hblem {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality of a class variable and a class abstraction (also called a
+/*Equality of a class variable and a class abstraction (also called a
        class builder).  Theorem 5.1 of [Quine] p. 34.  This theorem shows the
        relationship between expressions with class abstractions and expressions
        with class variables.  Note that ~ abbi and its relatives are among
@@ -2288,10 +2288,10 @@ proof of abeq2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality of a class variable and a class abstraction.  (Contributed by
+/*Equality of a class variable and a class abstraction.  (Contributed by
        NM, 20-Aug-1993.) */
 
-theorem abeq1 (ph : wff, x : set, A : class) disjointed(x A) {
+theorem abeq1 (ph : wff, x : set, A : class) disjointed(x A, ph) {
 	prop 1 : wff = |- ( { x | ph } = A ↔ ∀ x ( ph ↔ x ∈ A ) ) ;;
 }
 
@@ -2304,7 +2304,7 @@ proof of abeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality of a class variable and a class abstraction (inference rule).
+/*Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 3-Apr-1996.) */
 
 theorem abeq2i (ph : wff, x : set, A : class)  {
@@ -2320,7 +2320,7 @@ proof of abeq2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality of a class variable and a class abstraction (inference rule).
+/*Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 31-Jul-1994.) */
 
 theorem abeq1i (ph : wff, x : set, A : class)  {
@@ -2336,7 +2336,7 @@ proof of abeq1i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality of a class variable and a class abstraction (deduction).
+/*Equality of a class variable and a class abstraction (deduction).
        (Contributed by NM, 16-Nov-1995.) */
 
 theorem abeq2d (ph : wff, ps : wff, x : set, A : class)  {
@@ -2352,7 +2352,7 @@ proof of abeq2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalent wff's correspond to equal class abstractions.  (Contributed
+/*Equivalent wff's correspond to equal class abstractions.  (Contributed
        by NM, 25-Nov-2013.)  (Revised by Mario Carneiro, 11-Aug-2016.) */
 
 theorem abbi (ph : wff, ps : wff, x : set) disjointed(ph y, ps y, x y) {
@@ -2378,7 +2378,7 @@ proof of abbi {
 	qed prop 1 = step 14 ;;
 }
 
-/* Equality of a class variable and a class abstraction (inference rule).
+/*Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem abbi2i (ph : wff, x : set, A : class) disjointed(x A) {
@@ -2393,7 +2393,7 @@ proof of abbi2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equivalent wff's yield equal class abstractions (inference rule).
+/*Equivalent wff's yield equal class abstractions (inference rule).
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem abbii (ph : wff, ps : wff, x : set)  {
@@ -2408,17 +2408,17 @@ proof of abbii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem abbii is the congruence law for class abstraction. */
+/*Theorem abbii is the congruence law for class abstraction. */
 
-/* $j congruence 'abbii'; */
+/*$j congruence 'abbii'; */
 
-/* ` y ` is a dummy var. */
+/*` y ` is a dummy var. */
 
-/* Equivalent wff's yield equal class abstractions (deduction rule).
+/*Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        7-Oct-2016.) */
 
-theorem abbid (ph : wff, ps : wff, ch : wff, x : set)  {
+theorem abbid (ph : wff, ps : wff, ch : wff, x : set) disjointed(x, ph, ps, ch) {
 	hyp 1 : wff = |- F/ x ph ;;
 	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
 	-----------------------
@@ -2432,7 +2432,7 @@ proof of abbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalent wff's yield equal class abstractions (deduction rule).
+/*Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 10-Aug-1993.) */
 
 theorem abbidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -2447,12 +2447,12 @@ proof of abbidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` y ` is a dummy var. */
+/*` y ` is a dummy var. */
 
-/* Deduction from a wff to a class abstraction.  (Contributed by NM,
+/*Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) */
 
-theorem abbi2dv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, ph x) {
+theorem abbi2dv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, ph x, ps) {
 	hyp 1 : wff = |- ( ph → ( x ∈ A ↔ ps ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → A = { x | ps } ) ;;
@@ -2465,12 +2465,12 @@ proof of abbi2dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` y ` is a dummy var. */
+/*` y ` is a dummy var. */
 
-/* Deduction from a wff to a class abstraction.  (Contributed by NM,
+/*Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) */
 
-theorem abbi1dv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, ph x) {
+theorem abbi1dv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, ph x, ps) {
 	hyp 1 : wff = |- ( ph → ( ps ↔ x ∈ A ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ph → { x | ps } = A ) ;;
@@ -2483,7 +2483,7 @@ proof of abbi1dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
+/*A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
        (Contributed by NM, 26-Dec-1993.) */
 
 theorem abid2 (x : set, A : class) disjointed(x A) {
@@ -2497,7 +2497,7 @@ proof of abid2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by Andrew Salmon, 11-Jul-2011.) */
 
 theorem cbvab (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, ph z, ps z) {
@@ -2524,7 +2524,7 @@ proof of cbvab {
 	qed prop 1 = step 11 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-May-1999.) */
 
 theorem cbvabv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps) {
@@ -2540,7 +2540,7 @@ proof of cbvabv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership of a class variable in a class abstraction.  (Contributed by
+/*Membership of a class variable in a class abstraction.  (Contributed by
        NM, 23-Dec-1993.) */
 
 theorem clelab (ph : wff, x : set, A : class) disjointed(x A y, ph y) {
@@ -2565,7 +2565,7 @@ proof of clelab {
 	qed prop 1 = step 13 ;;
 }
 
-/* Membership of a class abstraction in another class.  (Contributed by NM,
+/*Membership of a class abstraction in another class.  (Contributed by NM,
        17-Jan-2006.) */
 
 theorem clabel (ph : wff, x : set, y : set, A : class) disjointed(y A, y ph, x y) {
@@ -2581,7 +2581,7 @@ proof of clabel {
 	qed prop 1 = step 5 ;;
 }
 
-/* The right-hand side of the second equality is a way of representing
+/*The right-hand side of the second equality is a way of representing
        proper substitution of ` y ` for ` x ` into a class variable.
        (Contributed by NM, 14-Sep-2003.) */
 

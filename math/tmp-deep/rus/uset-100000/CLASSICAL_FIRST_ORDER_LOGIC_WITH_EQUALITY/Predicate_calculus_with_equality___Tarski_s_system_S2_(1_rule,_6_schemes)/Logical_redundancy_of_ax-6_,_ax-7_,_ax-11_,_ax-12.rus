@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_schemes_ax-14_(Right_Membership_Equality).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Logical redundancy of ax-6 , ax-7 , ax-11 , ax-12
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -98,7 +98,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_
 
 */
 
-/* Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
+/*Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
        so here we show that the degenerate case of ~ ax-9 can be derived.
        (Contributed by NM, 23-Apr-2017.) */
 
@@ -115,7 +115,7 @@ proof of ax9dgen {
 	qed prop 1 = step 5 ;;
 }
 
-/* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+/*Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 9-Apr-2017.) */
 
@@ -130,7 +130,7 @@ proof of ax6w {
 	qed prop 1 = step 1 ;;
 }
 
-/* Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
+/*Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  Unlike ~ ax-7 , this theorem requires that ` x ` and ` y ` be
        distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) */
@@ -146,7 +146,7 @@ proof of ax7w {
 	qed prop 1 = step 1 ;;
 }
 
-/* Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
+/*Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
      a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) */
 
@@ -159,7 +159,7 @@ proof of ax7dgen {
 	qed prop 1 = step 1 ;;
 }
 
-/* Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
+/*Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
        schemes.  In some cases, this lemma may lead to shorter proofs than
        ~ ax11w .  (Contributed by NM, 10-Apr-2017.) */
 
@@ -175,7 +175,7 @@ proof of ax11wlem {
 	qed prop 1 = step 2 ;;
 }
 
-/* Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
+/*Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  An instance of the first hypothesis will normally require that
        ` x ` and ` y ` be distinct (unless ` x ` does not occur in ` ph ` ).
@@ -195,7 +195,7 @@ proof of ax11w {
 	qed prop 1 = step 3 ;;
 }
 
-/* Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
+/*Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) */
 
@@ -210,7 +210,7 @@ proof of ax11dgen {
 	qed prop 1 = step 3 ;;
 }
 
-/* Example of an application of ~ ax11w that results in an instance of
+/*Example of an application of ~ ax11w that results in an instance of
        ~ ax-11 for a contrived formula with mixed free and bound variables,
        ` ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ` , in place of
        ` ph ` .  The proof illustrates bound variable renaming with ~ cbvalvw
@@ -245,7 +245,7 @@ proof of ax11wdemo {
 	qed prop 1 = step 19 ;;
 }
 
-/* Weak version (principal instance) of ~ ax-12 not involving bundling.
+/*Weak version (principal instance) of ~ ax-12 not involving bundling.
        Uses only Tarski's FOL axiom schemes.  The proof is trivial but is
        included to complete the set ~ ax6w , ~ ax7w , and ~ ax11w .
        (Contributed by NM, 10-Apr-2017.) */
@@ -259,7 +259,7 @@ proof of ax12w {
 	qed prop 1 = step 1 ;;
 }
 
-/* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
+/*Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) */
 
@@ -273,7 +273,7 @@ proof of ax12dgen1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
+/*Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) */
 
@@ -288,7 +288,7 @@ proof of ax12dgen2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
+/*Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) */
 
@@ -303,7 +303,7 @@ proof of ax12dgen3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
+/*Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
      ` z ` have a common substitution.  Uses only Tarski's FOL axiom schemes .
      (Contributed by NM, 13-Apr-2017.) */
 

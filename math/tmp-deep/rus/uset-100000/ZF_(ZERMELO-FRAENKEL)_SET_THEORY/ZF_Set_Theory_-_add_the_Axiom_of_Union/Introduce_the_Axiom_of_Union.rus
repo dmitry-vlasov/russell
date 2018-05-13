@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                   Introduce the Axiom of Union
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Union.  An axiom of Zermelo-Fraenkel set theory.  It states
+/*Axiom of Union.  An axiom of Zermelo-Fraenkel set theory.  It states
        that a set ` y ` exists that includes the union of a given set ` x `
        i.e. the collection of all members of the members of ` x ` .  The
        variant ~ axun2 states that the union itself exists.  A version with the
@@ -21,7 +21,7 @@ axiom ax-un (x : set, y : set, z : set, w : set) disjointed(w x y z) {
 	prop 1 : wff = |- ∃ y ∀ z ( ∃ w ( z ∈ w ∧ w ∈ x ) → z ∈ y ) ;;
 }
 
-/* Axiom of Union expressed with the fewest number of different variables.
+/*Axiom of Union expressed with the fewest number of different variables.
        (Contributed by NM, 14-Aug-2003.) */
 
 theorem zfun (x : set, y : set, z : set) disjointed(w x y z) {
@@ -42,7 +42,7 @@ proof of zfun {
 	qed prop 1 = step 9 ;;
 }
 
-/* A variant of the Axiom of Union ~ ax-un .  For any set ` x ` , there
+/*A variant of the Axiom of Union ~ ax-un .  For any set ` x ` , there
        exists a set ` y ` whose members are exactly the members of the members
        of ` x ` i.e. the union of ` x ` .  Axiom Union of [BellMachover]
        p. 466.  (Contributed by NM, 4-Jun-2006.) */
@@ -57,7 +57,7 @@ proof of axun2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The Axiom of Union using the standard abbreviation for union.  Given any
+/*The Axiom of Union using the standard abbreviation for union.  Given any
        set ` x ` , its union ` y ` exists.  (Contributed by NM, 4-Jun-2006.) */
 
 theorem uniex2 (x : set, y : set) disjointed(x y z) {
@@ -79,7 +79,7 @@ proof of uniex2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* The Axiom of Union in class notation.  This says that if ` A ` is a set
+/*The Axiom of Union in class notation.  This says that if ` A ` is a set
        i.e. ` A e. _V ` (see ~ isset ), then the union of ` A ` is also a set.
        Same as Axiom 3 of [TakeutiZaring] p. 16.  (Contributed by NM,
        11-Aug-1993.) */
@@ -100,7 +100,7 @@ proof of uniex {
 	qed prop 1 = step 5 ;;
 }
 
-/* The ZF Axiom of Union in class notation, in the form of a theorem
+/*The ZF Axiom of Union in class notation, in the form of a theorem
        instead of an inference.  We use the antecedent ` A e. V ` instead of
        ` A e. _V ` to make the theorem more general and thus shorten some
        proofs; obviously the universal class constant ` _V ` is one possible
@@ -121,7 +121,7 @@ proof of uniexg {
 	qed prop 1 = step 5 ;;
 }
 
-/* The union of two sets is a set.  Corollary 5.8 of [TakeutiZaring]
+/*The union of two sets is a set.  Corollary 5.8 of [TakeutiZaring]
        p. 16.  (Contributed by NM, 1-Jul-1994.) */
 
 theorem unex (A : class, B : class)  {
@@ -139,7 +139,7 @@ proof of unex {
 	qed prop 1 = step 4 ;;
 }
 
-/* A triple of classes exists.  (Contributed by NM, 10-Apr-1994.) */
+/*A triple of classes exists.  (Contributed by NM, 10-Apr-1994.) */
 
 theorem tpex (A : class, B : class, C : class)  {
 	prop 1 : wff = |- { A , B , C } ∈ _V ;;
@@ -154,7 +154,7 @@ proof of tpex {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existence of union is equivalent to existence of its components.
+/*Existence of union is equivalent to existence of its components.
        (Contributed by NM, 11-Jun-1998.) */
 
 theorem unexb (A : class, B : class) disjointed(x y A, x y B) {
@@ -182,7 +182,7 @@ proof of unexb {
 	qed prop 1 = step 16 ;;
 }
 
-/* A union of two sets is a set.  Corollary 5.8 of [TakeutiZaring] p. 16.
+/*A union of two sets is a set.  Corollary 5.8 of [TakeutiZaring] p. 16.
      (Contributed by NM, 18-Sep-2006.) */
 
 theorem unexg (A : class, B : class, V : class, W : class)  {
@@ -198,7 +198,7 @@ proof of unexg {
 	qed prop 1 = step 5 ;;
 }
 
-/* A version of ~ unisn without the ` A e. _V ` hypothesis.  (Contributed
+/*A version of ~ unisn without the ` A e. _V ` hypothesis.  (Contributed
        by Stefan Allan, 14-Mar-2006.) */
 
 theorem unisn2 (A : class)  {
@@ -221,7 +221,7 @@ proof of unisn2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Union of a singleton in the form of a restricted class abstraction.
+/*Union of a singleton in the form of a restricted class abstraction.
        (Contributed by NM, 3-Jul-2008.) */
 
 theorem unisn3 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -236,7 +236,7 @@ proof of unisn3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The class of all singletons is a proper class.  (Contributed by NM,
+/*The class of all singletons is a proper class.  (Contributed by NM,
        10-Oct-2008.)  (Proof shortened by Eric Schmidt, 7-Dec-2008.) */
 
 theorem snnex (x : set, y : set) disjointed(x y z) {
@@ -274,7 +274,7 @@ proof of snnex {
 	qed prop 1 = step 26 ;;
 }
 
-/* If the subtrahend of a class difference exists, then the minuend exists
+/*If the subtrahend of a class difference exists, then the minuend exists
      iff the difference exists.  (Contributed by NM, 12-Nov-2003.)  (Proof
      shortened by Andrew Salmon, 12-Aug-2011.) */
 
@@ -297,7 +297,7 @@ proof of difex2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Each member of an ordered pair belongs to the union of the union of a
+/*Each member of an ordered pair belongs to the union of the union of a
        class to which the ordered pair belongs.  Lemma 3D of [Enderton] p. 41.
        (Contributed by NM, 31-Mar-1995.)  (Revised by Mario Carneiro,
        27-Feb-2016.) */
@@ -326,7 +326,7 @@ proof of opeluu {
 	qed prop 1 = step 13 ;;
 }
 
-/* Expression for double union that moves union into a class builder.
+/*Expression for double union that moves union into a class builder.
        (Contributed by FL, 28-May-2007.) */
 
 theorem uniuni (x : set, y : set, A : class) disjointed(A x y v z, A x y u z) {
@@ -387,7 +387,7 @@ proof of uniuni {
 	qed prop 1 = step 49 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.) */
 
 theorem eusv1 (x : set, y : set, A : class) disjointed(x y z, A y z) {
@@ -408,7 +408,7 @@ proof of eusv1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Even if ` x ` is free in ` A ` , it is effectively bound when
+/*Even if ` x ` is free in ` A ` , it is effectively bound when
        ` A ( x ) ` is single-valued.  (Contributed by NM, 14-Oct-2010.)
        (Revised by Mario Carneiro, 14-Oct-2016.) */
 
@@ -444,7 +444,7 @@ proof of eusvnf {
 	qed prop 1 = step 23 ;;
 }
 
-/* Two ways to say that ` A ( x ) ` is a set expression that does not
+/*Two ways to say that ` A ( x ) ` is a set expression that does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
 
 theorem eusvnfb (x : set, y : set, A : class) disjointed(x y, A y) {
@@ -475,7 +475,7 @@ proof of eusvnfb {
 	qed prop 1 = step 20 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.)  (Revised by Mario
        Carneiro, 18-Nov-2016.) */
 
@@ -497,7 +497,7 @@ proof of eusv2i {
 	qed prop 1 = step 10 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
 
 theorem eusv2nf (x : set, y : set, A : class) disjointed(x y, A y) {
@@ -532,7 +532,7 @@ proof of eusv2nf {
 	qed prop 1 = step 22 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 15-Oct-2010.)  (Proof shortened by
        Mario Carneiro, 18-Nov-2016.) */
 
@@ -550,7 +550,7 @@ proof of eusv2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)  (Proof shortened by
        Mario Carneiro, 18-Nov-2016.) */
 
@@ -577,10 +577,10 @@ proof of reusv1 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Lemma for ~ reusv2 .  (Contributed by NM, 22-Oct-2010.)  (Proof
+/*Lemma for ~ reusv2 .  (Contributed by NM, 22-Oct-2010.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) */
 
-theorem reusv2lem1 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+theorem reusv2lem1 (x : set, y : set, A : class, B : class) disjointed(x y A, x B, x, x) {
 	prop 1 : wff = |- ( A ≠ ∅ → ( ∃! x ∀ y ∈ A x = B ↔ ∃ x ∀ y ∈ A x = B ) ) ;;
 }
 
@@ -602,7 +602,7 @@ proof of reusv2lem1 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
+/*Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) */
 
 theorem reusv2lem2 (x : set, y : set, A : class, B : class) disjointed(x y z A, x z B, x z, x z) {
@@ -655,10 +655,10 @@ proof of reusv2lem2 {
 	qed prop 1 = step 41 ;;
 }
 
-/* Lemma for ~ reusv2 .  (Contributed by NM, 14-Dec-2012.)  (Proof
+/*Lemma for ~ reusv2 .  (Contributed by NM, 14-Dec-2012.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) */
 
-theorem reusv2lem3 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+theorem reusv2lem3 (x : set, y : set, A : class, B : class) disjointed(x y A, x B, x, x) {
 	prop 1 : wff = |- ( ∀ y ∈ A B ∈ _V → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
 }
 
@@ -706,7 +706,7 @@ proof of reusv2lem3 {
 	qed prop 1 = step 40 ;;
 }
 
-/* Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) */
+/*Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) */
 
 theorem reusv2lem4 (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, x z B, x z C, x z ph) {
 	prop 1 : wff = |- ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
@@ -780,7 +780,7 @@ proof of reusv2lem4 {
 	qed prop 1 = step 63 ;;
 }
 
-/* Lemma for ~ reusv2 .  (Contributed by NM, 4-Jan-2013.)  (Proof shortened
+/*Lemma for ~ reusv2 .  (Contributed by NM, 4-Jan-2013.)  (Proof shortened
        by Mario Carneiro, 19-Nov-2016.) */
 
 theorem reusv2lem5 (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x C) {
@@ -814,7 +814,7 @@ proof of reusv2lem5 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression ` C ( y ) `
+/*Two ways to express single-valuedness of a class expression ` C ( y ) `
        that is constant for those ` y e. B ` such that ` ph ` .  The first
        antecedent ensures that the constant value belongs to the existential
        uniqueness domain ` A ` , and the second ensures that ` C ( y ) ` is
@@ -878,7 +878,7 @@ proof of reusv2 {
 	qed prop 1 = step 48 ;;
 }
 
-/* Two ways of expressing existential uniqueness via an indirect equality.
+/*Two ways of expressing existential uniqueness via an indirect equality.
        (Contributed by NM, 23-Dec-2012.) */
 
 theorem reusv3i (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class) disjointed(x y z B, x z C, x y D, x z ph, x y ps) {
@@ -905,7 +905,7 @@ proof of reusv3i {
 	qed prop 1 = step 13 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  See ~ reusv1 for the connection to uniqueness.
        (Contributed by NM, 27-Dec-2012.) */
 
@@ -955,7 +955,7 @@ proof of reusv3 {
 	qed prop 1 = step 35 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` B ( x ) ` .  (Contributed by NM, 27-Oct-2010.) */
 
 theorem eusv4 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
@@ -971,7 +971,7 @@ proof of eusv4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -1000,7 +1000,7 @@ proof of reusv5OLD {
 	qed prop 1 = step 17 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  The converse does not hold.  Note that ` U. A = |^| A `
        means ` A ` is a singleton ( ~ uniintsn ).  (Contributed by NM,
        30-Oct-2010.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.)
@@ -1126,7 +1126,7 @@ proof of reusv6OLD {
 	qed prop 1 = step 111 ;;
 }
 
-/* Two ways to express single-valuedness of a class expression
+/*Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  Note that ` U. A = |^| A ` means ` A ` is a singleton
        ( ~ uniintsn ).  (Contributed by NM, 14-Dec-2012.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -1211,7 +1211,7 @@ proof of reusv7OLD {
 	qed prop 1 = step 70 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        18-Feb-2007.) */
 
@@ -1239,7 +1239,7 @@ proof of alxfr {
 	qed prop 1 = step 14 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        15-Aug-2014.)  (Proof shortened by Mario Carneiro, 19-Nov-2016.) */
 
@@ -1268,7 +1268,7 @@ proof of ralxfrd {
 	qed prop 1 = step 13 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by FL,
        10-Apr-2007.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
 
@@ -1290,7 +1290,7 @@ proof of rexxfrd {
 	qed prop 1 = step 6 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by Mario
        Carneiro, 20-Aug-2014.) */
 
@@ -1318,7 +1318,7 @@ proof of ralxfr2d {
 	qed prop 1 = step 12 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by Mario
        Carneiro, 20-Aug-2014.)  (Proof shortened by Mario Carneiro,
        19-Nov-2016.) */
@@ -1341,7 +1341,7 @@ proof of rexxfr2d {
 	qed prop 1 = step 6 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        10-Jun-2005.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
 
@@ -1362,7 +1362,7 @@ proof of ralxfr {
 	qed prop 1 = step 5 ;;
 }
 
-/* Transfer universal quantification from a variable ` x ` to another
+/*Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  This proof does not use
        ~ ralxfrd .  (Contributed by NM, 10-Jun-2005.)  (Revised by Mario
        Carneiro, 15-Aug-2014.)  (Proof modification is discouraged.)
@@ -1393,7 +1393,7 @@ proof of ralxfrALT {
 	qed prop 1 = step 13 ;;
 }
 
-/* Transfer existence from a variable ` x ` to another variable ` y `
+/*Transfer existence from a variable ` x ` to another variable ` y `
        contained in expression ` A ` .  (Contributed by NM, 10-Jun-2005.)
        (Revised by Mario Carneiro, 15-Aug-2014.) */
 
@@ -1415,7 +1415,7 @@ proof of rexxfr {
 	qed prop 1 = step 6 ;;
 }
 
-/* Class builder membership after substituting an expression ` A `
+/*Class builder membership after substituting an expression ` A `
        (containing ` y ` ) for ` x ` in the class expression ` ch ` .
        (Contributed by NM, 16-Jan-2012.) */
 
@@ -1456,11 +1456,11 @@ proof of rabxfrd {
 	qed prop 1 = step 23 ;;
 }
 
-/* Class builder membership after substituting an expression ` A `
+/*Class builder membership after substituting an expression ` A `
        (containing ` y ` ) for ` x ` in the class expression ` ph ` .
        (Contributed by NM, 10-Jun-2005.) */
 
-theorem rabxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x A, x y D, y ph, x ps) {
+theorem rabxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x A, B, C, x y D, y ph, x ps) {
 	hyp 1 : wff = |- F/_ y B ;;
 	hyp 2 : wff = |- F/_ y C ;;
 	hyp 3 : wff = |- ( y ∈ D → A ∈ D ) ;;
@@ -1478,7 +1478,7 @@ proof of rabxfr {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        16-Jan-2012.)  (Revised by NM, 16-Jun-2017.) */
 
@@ -1520,7 +1520,7 @@ proof of reuxfr2d {
 	qed prop 1 = step 27 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.)  (Revised by NM, 16-Jun-2017.) */
 
@@ -1539,7 +1539,7 @@ proof of reuxfr2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  Use ~ reuhypd to
        eliminate the second hypothesis.  (Contributed by NM, 16-Jan-2012.) */
 
@@ -1568,7 +1568,7 @@ proof of reuxfrd {
 	qed prop 1 = step 13 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  Use ~ reuhyp to
        eliminate the second hypothesis.  (Contributed by NM, 14-Nov-2004.) */
 
@@ -1588,7 +1588,7 @@ proof of reuxfr {
 	qed prop 1 = step 4 ;;
 }
 
-/* A theorem useful for eliminating the restricted existential uniqueness
+/*A theorem useful for eliminating the restricted existential uniqueness
        hypotheses in ~ riotaxfrd .  (Contributed by NM, 16-Jan-2012.) */
 
 theorem reuhypd (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(y ph, y B, y C, x y) {
@@ -1616,7 +1616,7 @@ proof of reuhypd {
 	qed prop 1 = step 14 ;;
 }
 
-/* A theorem useful for eliminating the restricted existential uniqueness
+/*A theorem useful for eliminating the restricted existential uniqueness
        hypotheses in ~ reuxfr .  (Contributed by NM, 15-Nov-2004.) */
 
 theorem reuhyp (x : set, y : set, A : class, B : class, C : class) disjointed(y B, y C, x y) {
@@ -1635,7 +1635,7 @@ proof of reuhyp {
 	qed prop 1 = step 5 ;;
 }
 
-/* The Axiom of Union and its converse.  A class is a set iff its union is a
+/*The Axiom of Union and its converse.  A class is a set iff its union is a
      set.  (Contributed by NM, 11-Nov-2003.) */
 
 theorem uniexb (A : class)  {
@@ -1652,7 +1652,7 @@ proof of uniexb {
 	qed prop 1 = step 6 ;;
 }
 
-/* The Axiom of Power Sets and its converse.  A class is a set iff its power
+/*The Axiom of Power Sets and its converse.  A class is a set iff its power
      class is a set.  (Contributed by NM, 11-Nov-2003.) */
 
 theorem pwexb (A : class)  {
@@ -1667,7 +1667,7 @@ proof of pwexb {
 	qed prop 1 = step 4 ;;
 }
 
-/* The union of the universe is the universe.  Exercise 4.12(c) of
+/*The union of the universe is the universe.  Exercise 4.12(c) of
      [Mendelson] p. 235.  (Contributed by NM, 14-Sep-2003.) */
 
 theorem univ ()  {
@@ -1682,7 +1682,7 @@ proof of univ {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a power class difference.  (Contributed by NM,
+/*Membership in a power class difference.  (Contributed by NM,
        25-Mar-2007.) */
 
 theorem eldifpw (A : class, B : class, C : class)  {
@@ -1712,7 +1712,7 @@ proof of eldifpw {
 	qed prop 1 = step 17 ;;
 }
 
-/* Membership in the power class of a union.  (Contributed by NM,
+/*Membership in the power class of a union.  (Contributed by NM,
        26-Mar-2007.) */
 
 theorem elpwun (A : class, B : class, C : class)  {
@@ -1741,7 +1741,7 @@ proof of elpwun {
 	qed prop 1 = step 16 ;;
 }
 
-/* Membership in an extension of a power class.  (Contributed by NM,
+/*Membership in an extension of a power class.  (Contributed by NM,
        26-Mar-2007.) */
 
 theorem elpwunsn (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1781,7 +1781,7 @@ proof of elpwunsn {
 	qed prop 1 = step 28 ;;
 }
 
-/* Extract the first member of an ordered pair.  Theorem 73 of [Suppes]
+/*Extract the first member of an ordered pair.  Theorem 73 of [Suppes]
        p. 42.  (See ~ op2ndb to extract the second member, ~ op1sta for an
        alternate version, and ~ op1st for the preferred version.)  (Contributed
        by NM, 25-Nov-2003.) */
@@ -1810,7 +1810,7 @@ proof of op1stb {
 	qed prop 1 = step 13 ;;
 }
 
-/* An indexed union of a power class in terms of the power class of the
+/*An indexed union of a power class in terms of the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 29-Nov-2003.) */
 
@@ -1859,7 +1859,7 @@ proof of iunpw {
 	qed prop 1 = step 34 ;;
 }
 
-/* A well-founded relation has no 3-cycle loops.  Special case of
+/*A well-founded relation has no 3-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        10-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
 
@@ -1938,7 +1938,7 @@ proof of fr3nr {
 	qed prop 1 = step 66 ;;
 }
 
-/* A set well-founded by epsilon contains no 3-cycle loops.  (Contributed by
+/*A set well-founded by epsilon contains no 3-cycle loops.  (Contributed by
      NM, 19-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
 
 theorem epne3 (A : class, B : class, C : class, D : class)  {
@@ -1959,7 +1959,7 @@ proof of epne3 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Alternate definition of well-ordering.  Definition 6.24(2) of
+/*Alternate definition of well-ordering.  Definition 6.24(2) of
        [TakeutiZaring] p. 30.  (Contributed by NM, 16-Mar-1997.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) */
 

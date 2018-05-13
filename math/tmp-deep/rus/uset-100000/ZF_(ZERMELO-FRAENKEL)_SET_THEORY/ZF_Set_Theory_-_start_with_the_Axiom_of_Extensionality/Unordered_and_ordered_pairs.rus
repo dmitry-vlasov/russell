@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Power_classes.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Unordered and ordered pairs
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new symbols needed. */
+/*Declare new symbols needed. */
 
 constant {
 	symbol 〈 ;;
@@ -14,7 +14,7 @@ constant {
 	latex \langle ;;
 }
 
-/* Bracket (the period distinguishes it from 'less than') */
+/*Bracket (the period distinguishes it from 'less than') */
 
 constant {
 	symbol 〉 ;;
@@ -22,39 +22,39 @@ constant {
 	latex \rangle ;;
 }
 
-/* Bracket (the period distinguishes it from 'greater than') */
+/*Bracket (the period distinguishes it from 'greater than') */
 
-/* Extend class notation to include singleton. */
+/*Extend class notation to include singleton. */
 
 rule csn (A : class) {
 	term : class = # { A } ;;
 }
 
-/* Extend class notation to include unordered pair. */
+/*Extend class notation to include unordered pair. */
 
 rule cpr (A : class, B : class) {
 	term : class = # { A , B } ;;
 }
 
-/* Extend class notation to include unordered triplet. */
+/*Extend class notation to include unordered triplet. */
 
 rule ctp (A : class, B : class, C : class) {
 	term : class = # { A , B , C } ;;
 }
 
-/* Extend class notation to include ordered pair. */
+/*Extend class notation to include ordered pair. */
 
 rule cop (A : class, B : class) {
 	term : class = # 〈 A , B 〉 ;;
 }
 
-/* Extend class notation to include ordered triple. */
+/*Extend class notation to include ordered triple. */
 
 rule cotp (A : class, B : class, C : class) {
 	term : class = # 〈 A , B , C 〉 ;;
 }
 
-/* Soundness justification theorem for ~ df-sn .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-sn .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -72,7 +72,7 @@ proof of snjust {
 	qed prop 1 = step 5 ;;
 }
 
-/* Define the singleton of a class.  Definition 7.1 of [Quine] p. 48.  For
+/*Define the singleton of a class.  Definition 7.1 of [Quine] p. 48.  For
        convenience, it is well-defined for proper classes, i.e., those that are
        not elements of ` _V ` , although it is not very meaningful in this
        case.  For an alternate definition see ~ dfsn2 .  (Contributed by NM,
@@ -85,7 +85,7 @@ definition df-sn (x : set, A : class) disjointed(x A) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define unordered pair of classes.  Definition 7.1 of [Quine] p. 48.  For
+/*Define unordered pair of classes.  Definition 7.1 of [Quine] p. 48.  For
      example, ` A e. { 1 , -u 1 } -> ( A ^ 2 ) = 1 ` ( ~ ex-pr ).  They are
      unordered, so ` { A , B } = { B , A } ` as proven by ~ prcom .  For a more
      traditional definition, but requiring a dummy variable, see ~ dfpr2 .
@@ -98,7 +98,7 @@ definition df-pr (A : class, B : class)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define unordered triple of classes.  Definition of [Enderton] p. 19.
+/*Define unordered triple of classes.  Definition of [Enderton] p. 19.
      (Contributed by NM, 9-Apr-1994.) */
 
 definition df-tp (A : class, B : class, C : class)  {
@@ -108,7 +108,7 @@ definition df-tp (A : class, B : class, C : class)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Definition of an ordered pair, equivalent to Kuratowski's definition
+/*Definition of an ordered pair, equivalent to Kuratowski's definition
        ` { { A } , { A , B } } ` when the arguments are sets.  Since the
        behavior of Kuratowski definition is not very useful for proper classes,
        we define it to be empty in this case (see ~ opprc1 , ~ opprc2 , and
@@ -146,7 +146,7 @@ definition df-op (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define ordered triple of classes.  Definition of ordered triple in [Stoll]
+/*Define ordered triple of classes.  Definition of ordered triple in [Stoll]
      p. 25.  (Contributed by NM, 3-Apr-2015.) */
 
 definition df-ot (A : class, B : class, C : class)  {
@@ -156,7 +156,7 @@ definition df-ot (A : class, B : class, C : class)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for singletons.  Part of Exercise 4 of [TakeutiZaring]
+/*Equality theorem for singletons.  Part of Exercise 4 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sneq (A : class, B : class) disjointed(x A, x B) {
@@ -173,7 +173,7 @@ proof of sneq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality inference for singletons.  (Contributed by NM, 22-Jan-2004.) */
+/*Equality inference for singletons.  (Contributed by NM, 22-Jan-2004.) */
 
 theorem sneqi (A : class, B : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -187,7 +187,7 @@ proof of sneqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for singletons.  (Contributed by NM, 22-Jan-2004.) */
+/*Equality deduction for singletons.  (Contributed by NM, 22-Jan-2004.) */
 
 theorem sneqd (ph : wff, A : class, B : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -201,7 +201,7 @@ proof of sneqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate definition of singleton.  Definition 5.1 of [TakeutiZaring]
+/*Alternate definition of singleton.  Definition 5.1 of [TakeutiZaring]
      p. 15.  (Contributed by NM, 24-Apr-1994.) */
 
 theorem dfsn2 (A : class)  {
@@ -215,7 +215,7 @@ proof of dfsn2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
+/*There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem elsn (x : set, A : class) disjointed(x A) {
@@ -228,7 +228,7 @@ proof of elsn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate definition of unordered pair.  Definition 5.1 of
+/*Alternate definition of unordered pair.  Definition 5.1 of
        [TakeutiZaring] p. 15.  (Contributed by NM, 24-Apr-1994.) */
 
 theorem dfpr2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -247,7 +247,7 @@ proof of dfpr2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* A member of an unordered pair of classes is one or the other of them.
+/*A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15, generalized.  (Contributed by NM,
        13-Sep-1995.) */
 
@@ -265,7 +265,7 @@ proof of elprg {
 	qed prop 1 = step 5 ;;
 }
 
-/* A member of an unordered pair of classes is one or the other of them.
+/*A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15.  (Contributed by NM,
        13-Sep-1995.) */
 
@@ -281,7 +281,7 @@ proof of elpr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A member of an unordered pair of classes is one or the other of them.
+/*A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15.  (Contributed by NM,
        14-Oct-2005.) */
 
@@ -307,7 +307,7 @@ proof of elpr2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* If a class is an element of a pair, then it is one of the two paired
+/*If a class is an element of a pair, then it is one of the two paired
      elements.  (Contributed by Scott Fenton, 1-Apr-2011.) */
 
 theorem elpri (A : class, B : class, C : class)  {
@@ -320,7 +320,7 @@ proof of elpri {
 	qed prop 1 = step 2 ;;
 }
 
-/* If an element doesn't match the items in an unordered pair, it is not in
+/*If an element doesn't match the items in an unordered pair, it is not in
        the unordered pair.  (Contributed by David A. Wheeler, 10-May-2015.) */
 
 theorem nelpri (A : class, B : class, C : class)  {
@@ -339,7 +339,7 @@ proof of nelpri {
 	qed prop 1 = step 5 ;;
 }
 
-/* There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
+/*There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15 (generalized).  (Contributed by NM, 13-Sep-1995.)  (Proof
        shortened by Andrew Salmon, 29-Jun-2011.) */
 
@@ -355,7 +355,7 @@ proof of elsncg {
 	qed prop 1 = step 3 ;;
 }
 
-/* There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
+/*There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 13-Sep-1995.) */
 
 theorem elsnc (A : class, B : class)  {
@@ -370,7 +370,7 @@ proof of elsnc {
 	qed prop 1 = step 2 ;;
 }
 
-/* There is only one element in a singleton.  (Contributed by NM,
+/*There is only one element in a singleton.  (Contributed by NM,
      5-Jun-1994.) */
 
 theorem elsni (A : class, B : class)  {
@@ -383,7 +383,7 @@ proof of elsni {
 	qed prop 1 = step 2 ;;
 }
 
-/* A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
+/*A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
      p. 49.  (Contributed by NM, 28-Oct-2003.) */
 
 theorem snidg (A : class, V : class)  {
@@ -397,7 +397,7 @@ proof of snidg {
 	qed prop 1 = step 3 ;;
 }
 
-/* A class is a set iff it is a member of its singleton.  (Contributed by NM,
+/*A class is a set iff it is a member of its singleton.  (Contributed by NM,
      5-Apr-2004.) */
 
 theorem snidb (A : class)  {
@@ -411,7 +411,7 @@ proof of snidb {
 	qed prop 1 = step 3 ;;
 }
 
-/* A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
+/*A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
        p. 49.  (Contributed by NM, 31-Dec-1993.) */
 
 theorem snid (A : class)  {
@@ -426,7 +426,7 @@ proof of snid {
 	qed prop 1 = step 2 ;;
 }
 
-/* There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
+/*There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
      p. 15.  This variation requires only that ` B ` , rather than ` A ` , be a
      set.  (Contributed by NM, 28-Oct-2003.) */
 
@@ -443,7 +443,7 @@ proof of elsnc2g {
 	qed prop 1 = step 5 ;;
 }
 
-/* There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
+/*There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  This variation requires only that ` B ` , rather than ` A ` , be
        a set.  (Contributed by NM, 12-Jun-1994.) */
 
@@ -459,10 +459,10 @@ proof of elsnc2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution expressed in terms of quantification over a singleton.
+/*Substitution expressed in terms of quantification over a singleton.
        (Contributed by Mario Carneiro, 23-Apr-2015.) */
 
-theorem ralsns (ph : wff, x : set, A : class, V : class) disjointed(A x) {
+theorem ralsns (ph : wff, x : set, A : class, V : class) disjointed(A x, x) {
 	prop 1 : wff = |- ( A ∈ V → ( ∀ x ∈ { A } ph ↔ [. A / x ]. ph ) ) ;;
 }
 
@@ -477,10 +477,10 @@ proof of ralsns {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted existential quantification over a singleton.  (Contributed by
+/*Restricted existential quantification over a singleton.  (Contributed by
        Mario Carneiro, 23-Apr-2015.) */
 
-theorem rexsns (ph : wff, x : set, A : class, V : class) disjointed(A x) {
+theorem rexsns (ph : wff, x : set, A : class, V : class) disjointed(A x, x) {
 	prop 1 : wff = |- ( A ∈ V → ( ∃ x ∈ { A } ph ↔ [. A / x ]. ph ) ) ;;
 }
 
@@ -496,7 +496,7 @@ proof of rexsns {
 	qed prop 1 = step 8 ;;
 }
 
-/* Substitution expressed in terms of quantification over a singleton.
+/*Substitution expressed in terms of quantification over a singleton.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        23-Apr-2015.) */
 
@@ -513,7 +513,7 @@ proof of ralsng {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted existential quantification over a singleton.  (Contributed by
+/*Restricted existential quantification over a singleton.  (Contributed by
        NM, 29-Jan-2012.) */
 
 theorem rexsng (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(A x, ps x) {
@@ -529,7 +529,7 @@ proof of rexsng {
 	qed prop 1 = step 3 ;;
 }
 
-/* Convert a quantification over a singleton to a substitution.
+/*Convert a quantification over a singleton to a substitution.
        (Contributed by NM, 27-Apr-2009.) */
 
 theorem ralsn (ph : wff, ps : wff, x : set, A : class) disjointed(A x, ps x) {
@@ -545,7 +545,7 @@ proof of ralsn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted existential quantification over a singleton.  (Contributed by
+/*Restricted existential quantification over a singleton.  (Contributed by
        Jeff Madsen, 5-Jan-2011.) */
 
 theorem rexsn (ph : wff, ps : wff, x : set, A : class) disjointed(A x, ps x) {
@@ -561,7 +561,7 @@ proof of rexsn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Members of an unordered triple of classes.  (Contributed by FL,
+/*Members of an unordered triple of classes.  (Contributed by FL,
        2-Feb-2014.)  (Proof shortened by Mario Carneiro, 11-Feb-2015.) */
 
 theorem eltpg (A : class, B : class, C : class, D : class, V : class)  {
@@ -581,7 +581,7 @@ proof of eltpg {
 	qed prop 1 = step 9 ;;
 }
 
-/* A member of an unordered triple of classes is one of them.  (Contributed
+/*A member of an unordered triple of classes is one of them.  (Contributed
        by Mario Carneiro, 11-Feb-2015.) */
 
 theorem eltpi (A : class, B : class, C : class, D : class)  {
@@ -594,7 +594,7 @@ proof of eltpi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A member of an unordered triple of classes is one of them.  Special case
+/*A member of an unordered triple of classes is one of them.  Special case
        of Exercise 1 of [TakeutiZaring] p. 17.  (Contributed by NM,
        8-Apr-1994.)  (Revised by Mario Carneiro, 11-Feb-2015.) */
 
@@ -610,7 +610,7 @@ proof of eltp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate definition of unordered triple of classes.  Special case of
+/*Alternate definition of unordered triple of classes.  Special case of
        Definition 5.3 of [TakeutiZaring] p. 16.  (Contributed by NM,
        8-Apr-1994.) */
 
@@ -625,7 +625,7 @@ proof of dftp2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for unordered pairs.  (Contributed by
+/*Bound-variable hypothesis builder for unordered pairs.  (Contributed by
        NM, 14-Nov-1995.) */
 
 theorem nfpr (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -646,7 +646,7 @@ proof of nfpr {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership of a conditional operator in an unordered pair.  (Contributed
+/*Membership of a conditional operator in an unordered pair.  (Contributed
      by NM, 17-Jun-2007.) */
 
 theorem ifpr (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -665,10 +665,10 @@ proof of ifpr {
 	qed prop 1 = step 8 ;;
 }
 
-/* Convert a quantification over a pair to a conjunction.  (Contributed by
+/*Convert a quantification over a pair to a conjunction.  (Contributed by
        NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
-theorem ralprg (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class, W : class) disjointed(x A, x B, x ps, x ch) {
+theorem ralprg (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class, W : class) disjointed(x A, x B, x, x ps, x ch, x) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ch ) ) ;;
 	-----------------------
@@ -687,10 +687,10 @@ proof of ralprg {
 	qed prop 1 = step 8 ;;
 }
 
-/* Convert a quantification over a pair to a disjunction.  (Contributed by
+/*Convert a quantification over a pair to a disjunction.  (Contributed by
        NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
-theorem rexprg (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class, W : class) disjointed(x A, x B, x ps, x ch) {
+theorem rexprg (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class, W : class) disjointed(x A, x B, x, x ps, x ch, x) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ch ) ) ;;
 	-----------------------
@@ -711,7 +711,7 @@ proof of rexprg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Convert a quantification over a triple to a conjunction.  (Contributed
+/*Convert a quantification over a triple to a conjunction.  (Contributed
        by NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem raltpg (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x A, x B, x C, x ps, x ch, x th) {
@@ -736,7 +736,7 @@ proof of raltpg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Convert a quantification over a triple to a disjunction.  (Contributed
+/*Convert a quantification over a triple to a disjunction.  (Contributed
        by Mario Carneiro, 23-Apr-2015.) */
 
 theorem rextpg (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x A, x B, x C, x ps, x ch, x th) {
@@ -763,7 +763,7 @@ proof of rextpg {
 	qed prop 1 = step 12 ;;
 }
 
-/* Convert a quantification over a pair to a conjunction.  (Contributed by
+/*Convert a quantification over a pair to a conjunction.  (Contributed by
        NM, 3-Jun-2007.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem ralpr (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps, x ch) {
@@ -781,7 +781,7 @@ proof of ralpr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Convert an existential quantification over a pair to a disjunction.
+/*Convert an existential quantification over a pair to a disjunction.
        (Contributed by NM, 3-Jun-2007.)  (Revised by Mario Carneiro,
        23-Apr-2015.) */
 
@@ -800,7 +800,7 @@ proof of rexpr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Convert a quantification over a triple to a conjunction.  (Contributed
+/*Convert a quantification over a triple to a conjunction.  (Contributed
        by NM, 13-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem raltp (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch, x th) {
@@ -820,7 +820,7 @@ proof of raltp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Convert a quantification over a triple to a disjunction.  (Contributed
+/*Convert a quantification over a triple to a disjunction.  (Contributed
        by Mario Carneiro, 23-Apr-2015.) */
 
 theorem rextp (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch, x th) {
@@ -840,14 +840,14 @@ proof of rextp {
 	qed prop 1 = step 2 ;;
 }
 
-/* TODO - make obsolete; use ralsnsSBC instead - also,
+/*TODO - make obsolete; use ralsnsSBC instead - also,
        shorten posn w/ ralsn or ralsng */
 
-/* Substitution expressed in terms of quantification over a singleton.
+/*Substitution expressed in terms of quantification over a singleton.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        23-Apr-2015.) */
 
-theorem sbcsng (ph : wff, x : set, A : class, V : class) disjointed(x A) {
+theorem sbcsng (ph : wff, x : set, A : class, V : class) disjointed(x A, ph) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ∀ x ∈ { A } ph ) ) ;;
 }
 
@@ -857,7 +857,7 @@ proof of sbcsng {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for singletons.  (Contributed by NM,
+/*Bound-variable hypothesis builder for singletons.  (Contributed by NM,
        14-Nov-1995.) */
 
 theorem nfsn (x : set, A : class)  {
@@ -873,7 +873,7 @@ proof of nfsn {
 	qed prop 1 = step 3 ;;
 }
 
-/* Distribute proper substitution through the singleton of a class.
+/*Distribute proper substitution through the singleton of a class.
        ~ csbsng is derived from the virtual deduction proof ~ csbsngVD .
        (Contributed by Alan Sare, 10-Nov-2012.) */
 
@@ -894,7 +894,7 @@ proof of csbsng {
 	qed prop 1 = step 8 ;;
 }
 
-/* Intersection with the singleton of a non-member is disjoint.
+/*Intersection with the singleton of a non-member is disjoint.
        (Contributed by NM, 22-May-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) */
 
@@ -918,7 +918,7 @@ proof of disjsn {
 	qed prop 1 = step 11 ;;
 }
 
-/* Intersection of distinct singletons is disjoint.  (Contributed by NM,
+/*Intersection of distinct singletons is disjoint.  (Contributed by NM,
      25-May-1998.) */
 
 theorem disjsn2 (A : class, B : class)  {
@@ -934,7 +934,7 @@ proof of disjsn2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The singleton of a proper class (one that doesn't exist) is the empty
+/*The singleton of a proper class (one that doesn't exist) is the empty
        set.  Theorem 7.2 of [Quine] p. 48.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem snprc (A : class) disjointed(x A) {
@@ -952,7 +952,7 @@ proof of snprc {
 	qed prop 1 = step 6 ;;
 }
 
-/* Special case of ~ r19.12 where its converse holds.  (Contributed by NM,
+/*Special case of ~ r19.12 where its converse holds.  (Contributed by NM,
        19-May-2008.)  (Revised by Mario Carneiro, 23-Apr-2015.) */
 
 theorem r19.12sn (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
@@ -971,7 +971,7 @@ proof of r19.12sn {
 	qed prop 1 = step 6 ;;
 }
 
-/* Condition where a restricted class abstraction is a singleton.
+/*Condition where a restricted class abstraction is a singleton.
        (Contributed by NM, 28-May-2006.) */
 
 theorem rabsn (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -989,11 +989,11 @@ proof of rabsn {
 	qed prop 1 = step 7 ;;
 }
 
-/* Another way to express existential uniqueness of a wff: its class
+/*Another way to express existential uniqueness of a wff: its class
        abstraction is a singleton.  (Contributed by Mario Carneiro,
        14-Nov-2016.) */
 
-theorem euabsn2 (ph : wff, x : set, y : set) disjointed(x y, y ph) {
+theorem euabsn2 (ph : wff, x : set, y : set) disjointed(x y, y ph, y) {
 	prop 1 : wff = |- ( ∃! x ph ↔ ∃ y { x | ph } = { y } ) ;;
 }
 
@@ -1009,10 +1009,10 @@ proof of euabsn2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Another way to express existential uniqueness of a wff: its class
+/*Another way to express existential uniqueness of a wff: its class
        abstraction is a singleton.  (Contributed by NM, 22-Feb-2004.) */
 
-theorem euabsn (ph : wff, x : set) disjointed(x y, y ph) {
+theorem euabsn (ph : wff, x : set) disjointed(x y, y ph, y) {
 	prop 1 : wff = |- ( ∃! x ph ↔ ∃ x { x | ph } = { x } ) ;;
 }
 
@@ -1029,7 +1029,7 @@ proof of euabsn {
 	qed prop 1 = step 8 ;;
 }
 
-/* A way to express restricted existential uniqueness of a wff: its
+/*A way to express restricted existential uniqueness of a wff: its
        restricted class abstraction is a singleton.  (Contributed by NM,
        30-May-2006.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) */
 
@@ -1047,7 +1047,7 @@ proof of reusn {
 	qed prop 1 = step 6 ;;
 }
 
-/* Restricted existential uniqueness determined by a singleton.
+/*Restricted existential uniqueness determined by a singleton.
        (Contributed by NM, 29-May-2006.) */
 
 theorem absneu (ph : wff, x : set, A : class, V : class) disjointed(x y, y ph, y A) {
@@ -1065,11 +1065,11 @@ proof of absneu {
 	qed prop 1 = step 6 ;;
 }
 
-/* Restricted existential uniqueness determined by a singleton.
+/*Restricted existential uniqueness determined by a singleton.
        (Contributed by NM, 29-May-2006.)  (Revised by Mario Carneiro,
        23-Dec-2016.) */
 
-theorem rabsneu (ph : wff, x : set, A : class, B : class, V : class)  {
+theorem rabsneu (ph : wff, x : set, A : class, B : class, V : class) disjointed(x, ph, A) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ { x ∈ B | ph } = { A } ) → ∃! x ∈ B ph ) ;;
 }
 
@@ -1083,7 +1083,7 @@ proof of rabsneu {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways to express " ` A ` is a singleton."  (Contributed by NM,
+/*Two ways to express " ` A ` is a singleton."  (Contributed by NM,
        30-Oct-2010.) */
 
 theorem eusn (x : set, A : class) disjointed(x A) {
@@ -1099,7 +1099,7 @@ proof of eusn {
 	qed prop 1 = step 5 ;;
 }
 
-/* Truth implied by equality of a restricted class abstraction and a
+/*Truth implied by equality of a restricted class abstraction and a
        singleton.  (Contributed by NM, 29-May-2006.)  (Proof shortened by Mario
        Carneiro, 23-Dec-2016.) */
 
@@ -1120,7 +1120,7 @@ proof of rabsnt {
 	qed prop 1 = step 6 ;;
 }
 
-/* Commutative law for unordered pairs.  (Contributed by NM, 5-Aug-1993.) */
+/*Commutative law for unordered pairs.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem prcom (A : class, B : class)  {
 	prop 1 : wff = |- { A , B } = { B , A } ;;
@@ -1134,7 +1134,7 @@ proof of prcom {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for unordered pairs.  (Contributed by NM,
+/*Equality theorem for unordered pairs.  (Contributed by NM,
      29-Mar-1998.) */
 
 theorem preq1 (A : class, B : class, C : class)  {
@@ -1150,7 +1150,7 @@ proof of preq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for unordered pairs.  (Contributed by NM, 5-Aug-1993.) */
+/*Equality theorem for unordered pairs.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem preq2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → { C , A } = { C , B } ) ;;
@@ -1164,7 +1164,7 @@ proof of preq2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for unordered pairs.  (Contributed by NM,
+/*Equality theorem for unordered pairs.  (Contributed by NM,
      19-Oct-2012.) */
 
 theorem preq12 (A : class, B : class, C : class, D : class)  {
@@ -1178,7 +1178,7 @@ proof of preq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for unordered pairs.  (Contributed by NM,
+/*Equality inference for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) */
 
 theorem preq1i (A : class, B : class, C : class)  {
@@ -1193,7 +1193,7 @@ proof of preq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for unordered pairs.  (Contributed by NM,
+/*Equality inference for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) */
 
 theorem preq2i (A : class, B : class, C : class)  {
@@ -1208,7 +1208,7 @@ proof of preq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for unordered pairs.  (Contributed by NM,
+/*Equality inference for unordered pairs.  (Contributed by NM,
          19-Oct-2012.) */
 
 theorem preq12i (A : class, B : class, C : class, D : class)  {
@@ -1224,7 +1224,7 @@ proof of preq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for unordered pairs.  (Contributed by NM,
+/*Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) */
 
 theorem preq1d (ph : wff, A : class, B : class, C : class)  {
@@ -1239,7 +1239,7 @@ proof of preq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for unordered pairs.  (Contributed by NM,
+/*Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) */
 
 theorem preq2d (ph : wff, A : class, B : class, C : class)  {
@@ -1254,7 +1254,7 @@ proof of preq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for unordered pairs.  (Contributed by NM,
+/*Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) */
 
 theorem preq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1270,7 +1270,7 @@ proof of preq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) */
 
 theorem tpeq1 (A : class, B : class, C : class, D : class)  {
@@ -1286,7 +1286,7 @@ proof of tpeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) */
 
 theorem tpeq2 (A : class, B : class, C : class, D : class)  {
@@ -1302,7 +1302,7 @@ proof of tpeq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) */
 
 theorem tpeq3 (A : class, B : class, C : class, D : class)  {
@@ -1318,7 +1318,7 @@ proof of tpeq3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) */
 
 theorem tpeq1d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1333,7 +1333,7 @@ proof of tpeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) */
 
 theorem tpeq2d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1348,7 +1348,7 @@ proof of tpeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) */
 
 theorem tpeq3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1363,7 +1363,7 @@ proof of tpeq3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for unordered triples.  (Contributed by NM,
+/*Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) */
 
 theorem tpeq123d (ph : wff, A : class, B : class, C : class, D : class, E : class, F : class)  {
@@ -1382,7 +1382,7 @@ proof of tpeq123d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rotation of the elements of an unordered triple.  (Contributed by Alan
+/*Rotation of the elements of an unordered triple.  (Contributed by Alan
        Sare, 24-Oct-2011.) */
 
 theorem tprot (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1399,7 +1399,7 @@ proof of tprot {
 	qed prop 1 = step 5 ;;
 }
 
-/* Swap 1st and 2nd members of an undordered triple.  (Contributed by NM,
+/*Swap 1st and 2nd members of an undordered triple.  (Contributed by NM,
      22-May-2015.) */
 
 theorem tpcoma (A : class, B : class, C : class)  {
@@ -1415,7 +1415,7 @@ proof of tpcoma {
 	qed prop 1 = step 5 ;;
 }
 
-/* Swap 2nd and 3rd members of an undordered triple.  (Contributed by NM,
+/*Swap 2nd and 3rd members of an undordered triple.  (Contributed by NM,
      22-May-2015.) */
 
 theorem tpcomb (A : class, B : class, C : class)  {
@@ -1430,7 +1430,7 @@ proof of tpcomb {
 	qed prop 1 = step 4 ;;
 }
 
-/* Split off the first element of an unordered triple.  (Contributed by Mario
+/*Split off the first element of an unordered triple.  (Contributed by Mario
      Carneiro, 5-Jan-2016.) */
 
 theorem tpass (A : class, B : class, C : class)  {
@@ -1445,7 +1445,7 @@ proof of tpass {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
+/*Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
      5-Jan-2016.) */
 
 theorem qdass (A : class, B : class, C : class, D : class)  {
@@ -1462,7 +1462,7 @@ proof of qdass {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
+/*Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
      5-Jan-2016.) */
 
 theorem qdassr (A : class, B : class, C : class, D : class)  {
@@ -1479,7 +1479,7 @@ proof of qdassr {
 	qed prop 1 = step 6 ;;
 }
 
-/* Unordered triple ` { A , A , B } ` is just an overlong way to write
+/*Unordered triple ` { A , A , B } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) */
 
 theorem tpidm12 (A : class, B : class)  {
@@ -1495,7 +1495,7 @@ proof of tpidm12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Unordered triple ` { A , B , A } ` is just an overlong way to write
+/*Unordered triple ` { A , B , A } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) */
 
 theorem tpidm13 (A : class, B : class)  {
@@ -1509,7 +1509,7 @@ proof of tpidm13 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Unordered triple ` { A , B , B } ` is just an overlong way to write
+/*Unordered triple ` { A , B , B } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) */
 
 theorem tpidm23 (A : class, B : class)  {
@@ -1524,7 +1524,7 @@ proof of tpidm23 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Unordered triple ` { A , A , A } ` is just an overlong way to write
+/*Unordered triple ` { A , A , A } ` is just an overlong way to write
      ` { A } ` .  (Contributed by David A. Wheeler, 10-May-2015.) */
 
 theorem tpidm (A : class)  {
@@ -1538,7 +1538,7 @@ proof of tpidm {
 	qed prop 1 = step 3 ;;
 }
 
-/* An unordered pair contains its first member.  Part of Theorem 7.6 of
+/*An unordered pair contains its first member.  Part of Theorem 7.6 of
      [Quine] p. 49.  (Contributed by Stefan Allan, 8-Nov-2008.) */
 
 theorem prid1g (A : class, B : class, V : class)  {
@@ -1553,7 +1553,7 @@ proof of prid1g {
 	qed prop 1 = step 4 ;;
 }
 
-/* An unordered pair contains its second member.  Part of Theorem 7.6 of
+/*An unordered pair contains its second member.  Part of Theorem 7.6 of
      [Quine] p. 49.  (Contributed by Stefan Allan, 8-Nov-2008.) */
 
 theorem prid2g (A : class, B : class, V : class)  {
@@ -1567,7 +1567,7 @@ proof of prid2g {
 	qed prop 1 = step 3 ;;
 }
 
-/* An unordered pair contains its first member.  Part of Theorem 7.6 of
+/*An unordered pair contains its first member.  Part of Theorem 7.6 of
        [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem prid1 (A : class, B : class)  {
@@ -1582,7 +1582,7 @@ proof of prid1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An unordered pair contains its second member.  Part of Theorem 7.6 of
+/*An unordered pair contains its second member.  Part of Theorem 7.6 of
        [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem prid2 (A : class, B : class)  {
@@ -1598,7 +1598,7 @@ proof of prid2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A proper class vanishes in an unordered pair.  (Contributed by NM,
+/*A proper class vanishes in an unordered pair.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem prprc1 (A : class, B : class)  {
@@ -1617,7 +1617,7 @@ proof of prprc1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* A proper class vanishes in an unordered pair.  (Contributed by NM,
+/*A proper class vanishes in an unordered pair.  (Contributed by NM,
      22-Mar-2006.) */
 
 theorem prprc2 (A : class, B : class)  {
@@ -1631,7 +1631,7 @@ proof of prprc2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An unordered pair containing two proper classes is the empty set.
+/*An unordered pair containing two proper classes is the empty set.
      (Contributed by NM, 22-Mar-2006.) */
 
 theorem prprc (A : class, B : class)  {
@@ -1646,7 +1646,7 @@ proof of prprc {
 	qed prop 1 = step 4 ;;
 }
 
-/* One of the three elements of an unordered triple.  (Contributed by NM,
+/*One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem tpid1 (A : class, B : class, C : class)  {
@@ -1663,7 +1663,7 @@ proof of tpid1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* One of the three elements of an unordered triple.  (Contributed by NM,
+/*One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem tpid2 (A : class, B : class, C : class)  {
@@ -1680,11 +1680,11 @@ proof of tpid2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Closed theorem form of ~ tpid3 .  This proof was automatically generated
+/*Closed theorem form of ~ tpid3 .  This proof was automatically generated
        from the virtual deduction proof ~ tpid3gVD using a translation
        program.  (Contributed by Alan Sare, 24-Oct-2011.) */
 
-theorem tpid3g (A : class, B : class, C : class, D : class) disjointed(x A, x B, x C, x D) {
+theorem tpid3g (A : class, B : class, C : class, D : class) disjointed(x A, x B, x C, x D, x) {
 	prop 1 : wff = |- ( A ∈ B → A ∈ { C , D , A } ) ;;
 }
 
@@ -1705,7 +1705,7 @@ proof of tpid3g {
 	qed prop 1 = step 12 ;;
 }
 
-/* One of the three elements of an unordered triple.  (Contributed by NM,
+/*One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem tpid3 (A : class, B : class, C : class)  {
@@ -1722,7 +1722,7 @@ proof of tpid3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The singleton of a set is not empty.  (Contributed by NM, 14-Dec-2008.) */
+/*The singleton of a set is not empty.  (Contributed by NM, 14-Dec-2008.) */
 
 theorem snnzg (A : class, V : class)  {
 	prop 1 : wff = |- ( A ∈ V → { A } ≠ ∅ ) ;;
@@ -1735,7 +1735,7 @@ proof of snnzg {
 	qed prop 1 = step 3 ;;
 }
 
-/* The singleton of a set is not empty.  (Contributed by NM,
+/*The singleton of a set is not empty.  (Contributed by NM,
        10-Apr-1994.) */
 
 theorem snnz (A : class)  {
@@ -1750,7 +1750,7 @@ proof of snnz {
 	qed prop 1 = step 2 ;;
 }
 
-/* A pair containing a set is not empty.  (Contributed by NM,
+/*A pair containing a set is not empty.  (Contributed by NM,
        9-Apr-1994.) */
 
 theorem prnz (A : class, B : class)  {
@@ -1766,7 +1766,7 @@ proof of prnz {
 	qed prop 1 = step 3 ;;
 }
 
-/* A pair containing a set is not empty.  (Contributed by FL,
+/*A pair containing a set is not empty.  (Contributed by FL,
        19-Sep-2011.) */
 
 theorem prnzg (A : class, B : class, V : class) disjointed(x A, x B) {
@@ -1783,7 +1783,7 @@ proof of prnzg {
 	qed prop 1 = step 5 ;;
 }
 
-/* A triplet containing a set is not empty.  (Contributed by NM,
+/*A triplet containing a set is not empty.  (Contributed by NM,
        10-Apr-1994.) */
 
 theorem tpnz (A : class, B : class, C : class)  {
@@ -1799,7 +1799,7 @@ proof of tpnz {
 	qed prop 1 = step 3 ;;
 }
 
-/* The singleton of an element of a class is a subset of the class.
+/*The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem snss (A : class, B : class) disjointed(A x, B x) {
@@ -1819,7 +1819,7 @@ proof of snss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in a set with an element removed.  (Contributed by NM,
+/*Membership in a set with an element removed.  (Contributed by NM,
      10-Oct-2007.) */
 
 theorem eldifsn (A : class, B : class, C : class)  {
@@ -1835,7 +1835,7 @@ proof of eldifsn {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a set with an element removed.  (Contributed by NM,
+/*Membership in a set with an element removed.  (Contributed by NM,
      10-Mar-2015.) */
 
 theorem eldifsni (A : class, B : class, C : class)  {
@@ -1848,7 +1848,7 @@ proof of eldifsni {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` A ` is not in ` ( B \ { A } ) ` .  (Contributed by David Moews,
+/*` A ` is not in ` ( B \ { A } ) ` .  (Contributed by David Moews,
      1-May-2017.) */
 
 theorem neldifsn (A : class, B : class)  {
@@ -1862,7 +1862,7 @@ proof of neldifsn {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` A ` is not in ` ( B \ { A } ) ` .  Deduction form.  (Contributed by
+/*` A ` is not in ` ( B \ { A } ) ` .  Deduction form.  (Contributed by
      David Moews, 1-May-2017.) */
 
 theorem neldifsnd (ph : wff, A : class, B : class)  {
@@ -1875,7 +1875,7 @@ proof of neldifsnd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted existential quantification over a set with an element removed.
+/*Restricted existential quantification over a set with an element removed.
      (Contributed by NM, 4-Feb-2015.) */
 
 theorem rexdifsn (ph : wff, x : set, A : class, B : class)  {
@@ -1891,7 +1891,7 @@ proof of rexdifsn {
 	qed prop 1 = step 5 ;;
 }
 
-/* The singleton of an element of a class is a subset of the class.
+/*The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 22-Jul-2001.) */
 
 theorem snssg (A : class, B : class, V : class) disjointed(A x, B x) {
@@ -1909,7 +1909,7 @@ proof of snssg {
 	qed prop 1 = step 6 ;;
 }
 
-/* An element not in a set can be removed without affecting the set.
+/*An element not in a set can be removed without affecting the set.
        (Contributed by NM, 16-Mar-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -1932,7 +1932,7 @@ proof of difsn {
 	qed prop 1 = step 10 ;;
 }
 
-/* Removal of a singleton from an unordered pair.  (Contributed by NM,
+/*Removal of a singleton from an unordered pair.  (Contributed by NM,
        16-Mar-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem difprsn (A : class, B : class) disjointed(A x, B x) {
@@ -1955,7 +1955,7 @@ proof of difprsn {
 	qed prop 1 = step 11 ;;
 }
 
-/* ` ( B \ { A } ) ` equals ` B ` if and only if ` A ` is not a member of
+/*` ( B \ { A } ) ` equals ` B ` if and only if ` A ` is not a member of
      ` B ` .  Generalization of ~ difsn .  (Contributed by David Moews,
      1-May-2017.) */
 
@@ -1974,7 +1974,7 @@ proof of difsneq {
 	qed prop 1 = step 7 ;;
 }
 
-/* ` ( B \ { A } ) ` is a proper subclass of ` B ` if and only if ` A ` is a
+/*` ( B \ { A } ) ` is a proper subclass of ` B ` if and only if ` A ` is a
      member of ` B ` .  (Contributed by David Moews, 1-May-2017.) */
 
 theorem difsnpss (A : class, B : class)  {
@@ -1993,7 +1993,7 @@ proof of difsnpss {
 	qed prop 1 = step 8 ;;
 }
 
-/* The singleton of an element of a class is a subset of the class.
+/*The singleton of an element of a class is a subset of the class.
      (Contributed by NM, 6-Jun-1994.) */
 
 theorem snssi (A : class, B : class)  {
@@ -2006,7 +2006,7 @@ proof of snssi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The singleton of an element of a class is a subset of the class
+/*The singleton of an element of a class is a subset of the class
        (deduction rule).  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
 
 theorem snssd (ph : wff, A : class, B : class)  {
@@ -2022,7 +2022,7 @@ proof of snssd {
 	qed prop 1 = step 3 ;;
 }
 
-/* If we remove a single element from a class then put it back in, we end up
+/*If we remove a single element from a class then put it back in, we end up
      with the original class.  (Contributed by NM, 2-Oct-2006.) */
 
 theorem difsnid (A : class, B : class)  {
@@ -2038,9 +2038,9 @@ proof of difsnid {
 	qed prop 1 = step 5 ;;
 }
 
-/* Note that ` x ` is a dummy variable in the proof below. */
+/*Note that ` x ` is a dummy variable in the proof below. */
 
-/* Compute the power set of the empty set.  Theorem 89 of [Suppes] p. 47.
+/*Compute the power set of the empty set.  Theorem 89 of [Suppes] p. 47.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
      29-Jun-2011.) */
 
@@ -2058,7 +2058,7 @@ proof of pw0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Compute the power set of the power set of the empty set.  (See ~ pw0 for
+/*Compute the power set of the power set of the empty set.  (See ~ pw0 for
        the power set of the empty set.)  Theorem 90 of [Suppes] p. 48.
        Although this theorem is a special case of ~ pwsn , we have chosen to
        show a direct elementary proof.  (Contributed by NM, 7-Aug-1994.) */
@@ -2101,7 +2101,7 @@ proof of pwpw0 {
 	qed prop 1 = step 29 ;;
 }
 
-/* A singleton is a subset of an unordered pair containing its member.
+/*A singleton is a subset of an unordered pair containing its member.
      (Contributed by NM, 27-Aug-2004.) */
 
 theorem snsspr1 (A : class, B : class)  {
@@ -2115,7 +2115,7 @@ proof of snsspr1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A singleton is a subset of an unordered pair containing its member.
+/*A singleton is a subset of an unordered pair containing its member.
      (Contributed by NM, 2-May-2009.) */
 
 theorem snsspr2 (A : class, B : class)  {
@@ -2129,7 +2129,7 @@ proof of snsspr2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A singleton is a subset of an unordered triple containing its member.
+/*A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) */
 
 theorem snsstp1 (A : class, B : class, C : class)  {
@@ -2145,7 +2145,7 @@ proof of snsstp1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A singleton is a subset of an unordered triple containing its member.
+/*A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) */
 
 theorem snsstp2 (A : class, B : class, C : class)  {
@@ -2161,7 +2161,7 @@ proof of snsstp2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A singleton is a subset of an unordered triple containing its member.
+/*A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) */
 
 theorem snsstp3 (A : class, B : class, C : class)  {
@@ -2175,11 +2175,11 @@ proof of snsstp3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A pair of elements of a class is a subset of the class.  Theorem 7.5 of
+/*A pair of elements of a class is a subset of the class.  Theorem 7.5 of
        [Quine] p. 49.  (Contributed by NM, 30-May-1994.)  (Proof shortened by
        Andrew Salmon, 29-Jun-2011.) */
 
-theorem prss (A : class, B : class, C : class)  {
+theorem prss (A : class, B : class, C : class) disjointed(A, B, C) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -2197,11 +2197,11 @@ proof of prss {
 	qed prop 1 = step 7 ;;
 }
 
-/* A pair of elements of a class is a subset of the class.  Theorem 7.5 of
+/*A pair of elements of a class is a subset of the class.  Theorem 7.5 of
        [Quine] p. 49.  (Contributed by NM, 22-Mar-2006.)  (Proof shortened by
        Andrew Salmon, 29-Jun-2011.) */
 
-theorem prssg (A : class, B : class, C : class, V : class, W : class)  {
+theorem prssg (A : class, B : class, C : class, V : class, W : class) disjointed(A, B, C) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( ( A ∈ C ∧ B ∈ C ) ↔ { A , B } ⊆ C ) ) ;;
 }
 
@@ -2217,7 +2217,7 @@ proof of prssg {
 	qed prop 1 = step 8 ;;
 }
 
-/* A pair of elements of a class is a subset of the class.  (Contributed by
+/*A pair of elements of a class is a subset of the class.  (Contributed by
      NM, 16-Jan-2015.) */
 
 theorem prssi (A : class, B : class, C : class)  {
@@ -2230,7 +2230,7 @@ proof of prssi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The subsets of a singleton.  (Contributed by NM, 24-Apr-2004.) */
+/*The subsets of a singleton.  (Contributed by NM, 24-Apr-2004.) */
 
 theorem sssn (A : class, B : class) disjointed(x A, x B) {
 	prop 1 : wff = |- ( A ⊆ { B } ↔ ( A = ∅ ∨ A = { B } ) ) ;;
@@ -2262,12 +2262,12 @@ proof of sssn {
 	qed prop 1 = step 21 ;;
 }
 
-/* The property of being sandwiched between two sets naturally splits under
+/*The property of being sandwiched between two sets naturally splits under
        union with a singleton.  This is the induction hypothesis for the
        determination of large powersets such as ~ pwtp .  (Contributed by Mario
        Carneiro, 2-Jul-2016.) */
 
-theorem ssunsn2 (A : class, B : class, C : class, D : class)  {
+theorem ssunsn2 (A : class, B : class, C : class, D : class) disjointed(A, B) {
 	prop 1 : wff = |- ( ( B ⊆ A ∧ A ⊆ ( C ∪ { D } ) ) ↔ ( ( B ⊆ A ∧ A ⊆ C ) ∨ ( ( B ∪ { D } ) ⊆ A ∧ A ⊆ ( C ∪ { D } ) ) ) ) ;;
 }
 
@@ -2325,10 +2325,10 @@ proof of ssunsn2 {
 	qed prop 1 = step 50 ;;
 }
 
-/* Possible values for a set sandwiched between another set and it plus a
+/*Possible values for a set sandwiched between another set and it plus a
        singleton.  (Contributed by Mario Carneiro, 2-Jul-2016.) */
 
-theorem ssunsn (A : class, B : class, C : class)  {
+theorem ssunsn (A : class, B : class, C : class) disjointed(A, B) {
 	prop 1 : wff = |- ( ( B ⊆ A ∧ A ⊆ ( B ∪ { C } ) ) ↔ ( A = B ∨ A = ( B ∪ { C } ) ) ) ;;
 }
 
@@ -2345,7 +2345,7 @@ proof of ssunsn {
 	qed prop 1 = step 9 ;;
 }
 
-/* Two ways to express that a nonempty set equals a singleton.
+/*Two ways to express that a nonempty set equals a singleton.
        (Contributed by NM, 15-Dec-2007.) */
 
 theorem eqsn (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2369,7 +2369,7 @@ proof of eqsn {
 	qed prop 1 = step 13 ;;
 }
 
-/* Possible values for a set sandwiched between another set and it plus a
+/*Possible values for a set sandwiched between another set and it plus a
        singleton.  (Contributed by Mario Carneiro, 2-Jul-2016.) */
 
 theorem ssunpr (A : class, B : class, C : class, D : class)  {
@@ -2403,7 +2403,7 @@ proof of ssunpr {
 	qed prop 1 = step 23 ;;
 }
 
-/* The subsets of a pair.  (Contributed by NM, 16-Mar-2006.)  (Proof
+/*The subsets of a pair.  (Contributed by NM, 16-Mar-2006.)  (Proof
        shortened by Mario Carneiro, 2-Jul-2016.) */
 
 theorem sspr (A : class, B : class, C : class)  {
@@ -2438,7 +2438,7 @@ proof of sspr {
 	qed prop 1 = step 24 ;;
 }
 
-/* The subsets of a triple.  (Contributed by Mario Carneiro,
+/*The subsets of a triple.  (Contributed by Mario Carneiro,
        2-Jul-2016.) */
 
 theorem sstp (A : class, B : class, C : class, D : class)  {
@@ -2485,10 +2485,10 @@ proof of sstp {
 	qed prop 1 = step 36 ;;
 }
 
-/* A triplet of elements of a class is a subset of the class.  (Contributed
+/*A triplet of elements of a class is a subset of the class.  (Contributed
        by NM, 9-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
-theorem tpss (A : class, B : class, C : class, D : class)  {
+theorem tpss (A : class, B : class, C : class, D : class) disjointed(A, B, C, D) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	hyp 3 : wff = |- C ∈ _V ;;
@@ -2509,7 +2509,7 @@ proof of tpss {
 	qed prop 1 = step 9 ;;
 }
 
-/* If the singletons of two sets are equal, the two sets are equal.  Part
+/*If the singletons of two sets are equal, the two sets are equal.  Part
        of Exercise 4 of [TakeutiZaring] p. 15.  (Contributed by NM,
        27-Aug-1993.) */
 
@@ -2528,7 +2528,7 @@ proof of sneqr {
 	qed prop 1 = step 5 ;;
 }
 
-/* If a singleton is a subset of another, their members are equal.
+/*If a singleton is a subset of another, their members are equal.
        (Contributed by NM, 28-May-2006.) */
 
 theorem snsssn (A : class, B : class)  {
@@ -2549,9 +2549,9 @@ proof of snsssn {
 	qed prop 1 = step 8 ;;
 }
 
-/* Closed form of ~ sneqr .  (Contributed by Scott Fenton, 1-Apr-2011.) */
+/*Closed form of ~ sneqr .  (Contributed by Scott Fenton, 1-Apr-2011.) */
 
-theorem sneqrg (A : class, B : class, V : class) disjointed(x A, x B) {
+theorem sneqrg (A : class, B : class, V : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( A ∈ V → ( { A } = { B } → A = B ) ) ;;
 }
 
@@ -2567,7 +2567,7 @@ proof of sneqrg {
 	qed prop 1 = step 7 ;;
 }
 
-/* Two singletons of sets are equal iff their elements are equal.
+/*Two singletons of sets are equal iff their elements are equal.
      (Contributed by Scott Fenton, 16-Apr-2012.) */
 
 theorem sneqbg (A : class, B : class, V : class)  {
@@ -2581,7 +2581,7 @@ proof of sneqbg {
 	qed prop 1 = step 3 ;;
 }
 
-/* The singleton of a class is a subset of its power class.  (Contributed
+/*The singleton of a class is a subset of its power class.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem snsspw (A : class) disjointed(x A) {
@@ -2599,11 +2599,11 @@ proof of snsspw {
 	qed prop 1 = step 6 ;;
 }
 
-/* An unordered pair belongs to the power class of a class iff each member
+/*An unordered pair belongs to the power class of a class iff each member
        belongs to the class.  (Contributed by NM, 10-Dec-2003.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) */
 
-theorem prsspw (A : class, B : class, C : class)  {
+theorem prsspw (A : class, B : class, C : class) disjointed(A, B, C) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -2619,7 +2619,7 @@ proof of prsspw {
 	qed prop 1 = step 5 ;;
 }
 
-/* Reverse equality lemma for unordered pairs.  If two unordered pairs have
+/*Reverse equality lemma for unordered pairs.  If two unordered pairs have
        the same second element, the first elements are equal.  (Contributed by
        NM, 18-Oct-1995.) */
 
@@ -2647,7 +2647,7 @@ proof of preqr1 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Reverse equality lemma for unordered pairs.  If two unordered pairs have
+/*Reverse equality lemma for unordered pairs.  If two unordered pairs have
        the same first element, the second elements are equal.  (Contributed by
        NM, 5-Aug-1993.) */
 
@@ -2667,7 +2667,7 @@ proof of preqr2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality relationship for two unordered pairs.  (Contributed by NM,
+/*Equality relationship for two unordered pairs.  (Contributed by NM,
        17-Oct-1996.) */
 
 theorem preq12b (A : class, B : class, C : class, D : class)  {
@@ -2713,7 +2713,7 @@ proof of preq12b {
 	qed prop 1 = step 30 ;;
 }
 
-/* Equality of two unordered pairs.  (Contributed by NM, 17-Oct-1996.) */
+/*Equality of two unordered pairs.  (Contributed by NM, 17-Oct-1996.) */
 
 theorem prel12 (A : class, B : class, C : class, D : class)  {
 	hyp 1 : wff = |- A ∈ _V ;;
@@ -2760,7 +2760,7 @@ proof of prel12 {
 	qed prop 1 = step 32 ;;
 }
 
-/* A way to represent ordered pairs using unordered pairs with distinct
+/*A way to represent ordered pairs using unordered pairs with distinct
        members.  (Contributed by NM, 27-Mar-2007.) */
 
 theorem opthpr (A : class, B : class, C : class, D : class)  {
@@ -2786,7 +2786,7 @@ proof of opthpr {
 	qed prop 1 = step 10 ;;
 }
 
-/* Closed form of ~ preq12b .  (Contributed by Scott Fenton,
+/*Closed form of ~ preq12b .  (Contributed by Scott Fenton,
        28-Mar-2014.) */
 
 theorem preq12bg (A : class, B : class, C : class, D : class, V : class, W : class, X : class, Y : class) disjointed(A x y z w, B x y z w, C x y z w, D x y z w, V x y z w, W x y z w, X x y z w, Y x y z w) {
@@ -2842,7 +2842,7 @@ proof of preq12bg {
 	qed prop 1 = step 44 ;;
 }
 
-/* Equivalence for a pair equal to a singleton.  (Contributed by NM,
+/*Equivalence for a pair equal to a singleton.  (Contributed by NM,
        3-Jun-2008.) */
 
 theorem preqsn (A : class, B : class, C : class)  {
@@ -2871,7 +2871,7 @@ proof of preqsn {
 	qed prop 1 = step 14 ;;
 }
 
-/* Rewrite ~ df-op using ` if ` .  When both arguments are sets, it reduces
+/*Rewrite ~ df-op using ` if ` .  When both arguments are sets, it reduces
        to the standard Kuratowski definition; otherwise, it is defined to be
        the empty set.  (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
@@ -2900,7 +2900,7 @@ proof of dfopif {
 	qed prop 1 = step 16 ;;
 }
 
-/* Value of the ordered pair when the arguments are sets.  (Contributed by
+/*Value of the ordered pair when the arguments are sets.  (Contributed by
      Mario Carneiro, 26-Apr-2015.) */
 
 theorem dfopg (A : class, B : class, V : class, W : class)  {
@@ -2917,7 +2917,7 @@ proof of dfopg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Value of an ordered pair when the arguments are sets, with the
+/*Value of an ordered pair when the arguments are sets, with the
        conclusion corresponding to Kuratowski's original definition.
        (Contributed by NM, 25-Jun-1998.) */
 
@@ -2934,7 +2934,7 @@ proof of dfop {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
+/*Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
      (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opeq1 (A : class, B : class, C : class)  {
@@ -2955,7 +2955,7 @@ proof of opeq1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
+/*Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
      (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opeq2 (A : class, B : class, C : class)  {
@@ -2975,7 +2975,7 @@ proof of opeq2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for ordered pairs.  (Contributed by NM, 28-May-1995.) */
+/*Equality theorem for ordered pairs.  (Contributed by NM, 28-May-1995.) */
 
 theorem opeq12 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A = C ∧ B = D ) → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
@@ -2988,7 +2988,7 @@ proof of opeq12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality inference for ordered pairs.  (Contributed by NM,
+/*Equality inference for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) */
 
 theorem opeq1i (A : class, B : class, C : class)  {
@@ -3003,7 +3003,7 @@ proof of opeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for ordered pairs.  (Contributed by NM,
+/*Equality inference for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) */
 
 theorem opeq2i (A : class, B : class, C : class)  {
@@ -3018,7 +3018,7 @@ proof of opeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for ordered pairs.  (Contributed by NM,
+/*Equality inference for ordered pairs.  (Contributed by NM,
          16-Dec-2006.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) */
 
 theorem opeq12i (A : class, B : class, C : class, D : class)  {
@@ -3034,7 +3034,7 @@ proof of opeq12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered pairs.  (Contributed by NM,
+/*Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) */
 
 theorem opeq1d (ph : wff, A : class, B : class, C : class)  {
@@ -3049,7 +3049,7 @@ proof of opeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered pairs.  (Contributed by NM,
+/*Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) */
 
 theorem opeq2d (ph : wff, A : class, B : class, C : class)  {
@@ -3064,7 +3064,7 @@ proof of opeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered pairs.  (Contributed by NM,
+/*Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem opeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -3080,7 +3080,7 @@ proof of opeq12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
+/*Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
 
 theorem oteq1 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( A = B → 〈 A , C , D 〉 = 〈 B , C , D 〉 ) ;;
@@ -3095,7 +3095,7 @@ proof of oteq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
+/*Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
 
 theorem oteq2 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( A = B → 〈 C , A , D 〉 = 〈 C , B , D 〉 ) ;;
@@ -3110,7 +3110,7 @@ proof of oteq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
+/*Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) */
 
 theorem oteq3 (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( A = B → 〈 C , D , A 〉 = 〈 C , D , B 〉 ) ;;
@@ -3124,7 +3124,7 @@ proof of oteq3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
+/*Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) */
 
 theorem oteq1d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -3139,7 +3139,7 @@ proof of oteq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
+/*Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) */
 
 theorem oteq2d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -3154,7 +3154,7 @@ proof of oteq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
+/*Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) */
 
 theorem oteq3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -3169,7 +3169,7 @@ proof of oteq3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
+/*Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) */
 
 theorem oteq123d (ph : wff, A : class, B : class, C : class, D : class, E : class, F : class)  {
@@ -3188,7 +3188,7 @@ proof of oteq123d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for ordered pairs.  (Contributed by
+/*Bound-variable hypothesis builder for ordered pairs.  (Contributed by
        NM, 14-Nov-1995.) */
 
 theorem nfop (x : set, A : class, B : class)  {
@@ -3212,7 +3212,7 @@ proof of nfop {
 	qed prop 1 = step 10 ;;
 }
 
-/* Deduction version of bound-variable hypothesis builder ~ nfop .  This
+/*Deduction version of bound-variable hypothesis builder ~ nfop .  This
        shows how the deduction version of a not-free theorem such as ~ nfop can
        be created from the corresponding not-free inference theorem.
        (Contributed by NM, 4-Feb-2008.) */
@@ -3243,7 +3243,7 @@ proof of nfopd {
 	qed prop 1 = step 14 ;;
 }
 
-/* The ordered pair ` <. A , A >. ` in Kuratowski's representation.
+/*The ordered pair ` <. A , A >. ` in Kuratowski's representation.
        (Contributed by FL, 28-Dec-2011.) */
 
 theorem opid (A : class)  {
@@ -3262,7 +3262,7 @@ proof of opid {
 	qed prop 1 = step 6 ;;
 }
 
-/* Restricted quantification over the union of a set and a singleton, using
+/*Restricted quantification over the union of a set and a singleton, using
        implicit substitution.  (Contributed by Paul Chapman, 17-Nov-2012.)
        (Revised by Mario Carneiro, 23-Apr-2015.) */
 
@@ -3280,7 +3280,7 @@ proof of ralunsn {
 	qed prop 1 = step 4 ;;
 }
 
-/* Double restricted quantification over the union of a set and a
+/*Double restricted quantification over the union of a set and a
        singleton, using implicit substitution.  (Contributed by Paul Chapman,
        17-Nov-2012.) */
 
@@ -3305,7 +3305,7 @@ proof of 2ralunsn {
 	qed prop 1 = step 9 ;;
 }
 
-/* Expansion of an ordered pair when either member is a proper class.
+/*Expansion of an ordered pair when either member is a proper class.
      (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opprc (A : class, B : class)  {
@@ -3319,7 +3319,7 @@ proof of opprc {
 	qed prop 1 = step 3 ;;
 }
 
-/* Expansion of an ordered pair when the first member is a proper class.  See
+/*Expansion of an ordered pair when the first member is a proper class.  See
      also ~ opprc .  (Contributed by NM, 10-Apr-2004.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) */
 
@@ -3335,7 +3335,7 @@ proof of opprc1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Expansion of an ordered pair when the second member is a proper class.
+/*Expansion of an ordered pair when the second member is a proper class.
      See also ~ opprc .  (Contributed by NM, 15-Nov-1994.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) */
 
@@ -3351,7 +3351,7 @@ proof of opprc2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* If an ordered pair has an element, then its arguments are sets.
+/*If an ordered pair has an element, then its arguments are sets.
      (Contributed by Mario Carneiro, 26-Apr-2015.) */
 
 theorem oprcl (A : class, B : class, C : class)  {
@@ -3365,9 +3365,9 @@ proof of oprcl {
 	qed prop 1 = step 3 ;;
 }
 
-/* The power set of a singleton.  (Contributed by NM, 5-Jun-2006.) */
+/*The power set of a singleton.  (Contributed by NM, 5-Jun-2006.) */
 
-theorem pwsn (A : class) disjointed(x A) {
+theorem pwsn (A : class) disjointed(x A, x, x) {
 	prop 1 : wff = |- Pow { A } = { ∅ , { A } } ;;
 }
 
@@ -3381,11 +3381,11 @@ proof of pwsn {
 	qed prop 1 = step 5 ;;
 }
 
-/* The power set of a singleton (direct proof).  TO DO - should we keep
+/*The power set of a singleton (direct proof).  TO DO - should we keep
        this?  (Contributed by NM, 5-Jun-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
-theorem pwsnALT (A : class) disjointed(x A, x y, y A) {
+theorem pwsnALT (A : class) disjointed(x A, x, x, x y, y A) {
 	prop 1 : wff = |- Pow { A } = { ∅ , { A } } ;;
 }
 
@@ -3423,9 +3423,9 @@ proof of pwsnALT {
 	qed prop 1 = step 29 ;;
 }
 
-/* The power set of an unordered pair.  (Contributed by NM, 1-May-2009.) */
+/*The power set of an unordered pair.  (Contributed by NM, 1-May-2009.) */
 
-theorem pwpr (A : class, B : class) disjointed(x A, x B) {
+theorem pwpr (A : class, B : class) disjointed(x A, x B, x, x, A) {
 	prop 1 : wff = |- Pow { A , B } = ( { ∅ , { A } } ∪ { { B } , { A , B } } ) ;;
 }
 
@@ -3446,10 +3446,10 @@ proof of pwpr {
 	qed prop 1 = step 12 ;;
 }
 
-/* The power set of an unordered triple.  (Contributed by Mario Carneiro,
+/*The power set of an unordered triple.  (Contributed by Mario Carneiro,
        2-Jul-2016.) */
 
-theorem pwtp (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+theorem pwtp (A : class, B : class, C : class) disjointed(x A, x B, x C, x, A) {
 	prop 1 : wff = |- Pow { A , B , C } = ( ( { ∅ , { A } } ∪ { { B } , { A , B } } ) ∪ ( { { C } , { A , C } } ∪ { { B , C } , { A , B , C } } ) ) ;;
 }
 
@@ -3480,7 +3480,7 @@ proof of pwtp {
 	qed prop 1 = step 22 ;;
 }
 
-/* Compute the power set of the power set of the power set of the empty
+/*Compute the power set of the power set of the power set of the empty
        set.  (See also ~ pw0 and ~ pwpw0 .)  (Contributed by NM,
        2-May-2009.) */
 
@@ -3493,7 +3493,7 @@ proof of pwpwpw0 {
 	qed prop 1 = step 1 ;;
 }
 
-/* The power class of the universe is the universe.  Exercise 4.12(d) of
+/*The power class of the universe is the universe.  Exercise 4.12(d) of
        [Mendelson] p. 235.  (Contributed by NM, 14-Sep-2003.) */
 
 theorem pwv ()  {

@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_difference,_union,_and_intersection_of_two_classes.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            The empty set
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare the symbol for the empty or null set. */
+/*Declare the symbol for the empty or null set. */
 
 constant {
 	symbol ∅ ;;
@@ -14,15 +14,15 @@ constant {
 	latex \emptyset ;;
 }
 
-/* null set */
+/*null set */
 
-/* Extend class notation to include the empty set. */
+/*Extend class notation to include the empty set. */
 
 rule c0 () {
 	term : class = # ∅ ;;
 }
 
-/* Define the empty set.  Special case of Exercise 4.10(o) of [Mendelson]
+/*Define the empty set.  Special case of Exercise 4.10(o) of [Mendelson]
      p. 231.  For a more traditional definition, but requiring a dummy
      variable, see ~ dfnul2 .  (Contributed by NM, 5-Aug-1993.) */
 
@@ -33,7 +33,7 @@ definition df-nul ()  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate definition of the empty set.  Definition 5.14 of [TakeutiZaring]
+/*Alternate definition of the empty set.  Definition 5.14 of [TakeutiZaring]
      p. 20.  (Contributed by NM, 26-Dec-1996.) */
 
 theorem dfnul2 (x : set)  {
@@ -53,7 +53,7 @@ proof of dfnul2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Alternate definition of the empty set.  (Contributed by NM,
+/*Alternate definition of the empty set.  (Contributed by NM,
      25-Mar-2004.) */
 
 theorem dfnul3 (x : set, A : class)  {
@@ -72,7 +72,7 @@ proof of dfnul3 {
 	qed prop 1 = step 8 ;;
 }
 
-/* The empty set has no elements.  Theorem 6.14 of [Quine] p. 44.
+/*The empty set has no elements.  Theorem 6.14 of [Quine] p. 44.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Mario Carneiro,
      1-Sep-2015.) */
 
@@ -90,7 +90,7 @@ proof of noel {
 	qed prop 1 = step 6 ;;
 }
 
-/* If a set has elements, it is not empty.  (Contributed by NM,
+/*If a set has elements, it is not empty.  (Contributed by NM,
      31-Dec-1993.) */
 
 theorem n0i (A : class, B : class)  {
@@ -105,7 +105,7 @@ proof of n0i {
 	qed prop 1 = step 4 ;;
 }
 
-/* If a set has elements, it is not empty.  (Contributed by NM,
+/*If a set has elements, it is not empty.  (Contributed by NM,
      31-Dec-1993.) */
 
 theorem ne0i (A : class, B : class)  {
@@ -119,7 +119,7 @@ proof of ne0i {
 	qed prop 1 = step 3 ;;
 }
 
-/* The universal class is not equal to the empty set.  (Contributed by NM,
+/*The universal class is not equal to the empty set.  (Contributed by NM,
      11-Sep-2008.) */
 
 theorem vn0 ()  {
@@ -134,12 +134,12 @@ proof of vn0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A nonempty class has at least one element.  Proposition 5.17(1) of
+/*A nonempty class has at least one element.  Proposition 5.17(1) of
        [TakeutiZaring] p. 20.  This version of ~ n0 requires only that ` x `
        not be free in, rather than not occur in, ` A ` .  (Contributed by NM,
        17-Oct-2003.) */
 
-theorem n0f (x : set, A : class)  {
+theorem n0f (x : set, A : class) disjointed(x, A) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- ( A ≠ ∅ ↔ ∃ x x ∈ A ) ;;
@@ -158,7 +158,7 @@ proof of n0f {
 	qed prop 1 = step 9 ;;
 }
 
-/* A nonempty class has at least one element.  Proposition 5.17(1) of
+/*A nonempty class has at least one element.  Proposition 5.17(1) of
        [TakeutiZaring] p. 20.  (Contributed by NM, 29-Sep-2006.) */
 
 theorem n0 (x : set, A : class) disjointed(x A) {
@@ -171,7 +171,7 @@ proof of n0 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nonempty class has at least one element.  Proposition 5.17(1) of
+/*A nonempty class has at least one element.  Proposition 5.17(1) of
        [TakeutiZaring] p. 20.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem neq0 (x : set, A : class) disjointed(x A) {
@@ -185,7 +185,7 @@ proof of neq0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Restricted existence deduced from non-empty class.  (Contributed by NM,
+/*Restricted existence deduced from non-empty class.  (Contributed by NM,
        1-Feb-2012.) */
 
 theorem reximdva0 (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -206,7 +206,7 @@ proof of reximdva0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* A case of equivalence of "at most one" and "only one".  (Contributed by
+/*A case of equivalence of "at most one" and "only one".  (Contributed by
        FL, 6-Dec-2010.) */
 
 theorem n0moeu (x : set, A : class) disjointed(A x) {
@@ -222,7 +222,7 @@ proof of n0moeu {
 	qed prop 1 = step 5 ;;
 }
 
-/* Vacuous existential quantification is false.  (Contributed by NM,
+/*Vacuous existential quantification is false.  (Contributed by NM,
      15-Oct-2003.) */
 
 theorem rex0 (ph : wff, x : set)  {
@@ -236,7 +236,7 @@ proof of rex0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The empty set has no elements.  Theorem 2 of [Suppes] p. 22.
+/*The empty set has no elements.  Theorem 2 of [Suppes] p. 22.
        (Contributed by NM, 29-Aug-1993.) */
 
 theorem eq0 (x : set, A : class) disjointed(x A) {
@@ -251,7 +251,7 @@ proof of eq0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The universe contains every set.  (Contributed by NM, 11-Sep-2006.) */
+/*The universe contains every set.  (Contributed by NM, 11-Sep-2006.) */
 
 theorem eqv (x : set, A : class) disjointed(x A) {
 	prop 1 : wff = |- ( A = _V ↔ ∀ x x ∈ A ) ;;
@@ -266,7 +266,7 @@ proof of eqv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership of the empty set in another class.  (Contributed by NM,
+/*Membership of the empty set in another class.  (Contributed by NM,
        29-Jun-2004.) */
 
 theorem 0el (x : set, y : set, A : class) disjointed(x A, x y) {
@@ -281,7 +281,7 @@ proof of 0el {
 	qed prop 1 = step 4 ;;
 }
 
-/* The class builder of a wff not containing the abstraction variable is
+/*The class builder of a wff not containing the abstraction variable is
        either the universal class or the empty set.  (Contributed by Mario
        Carneiro, 29-Aug-2013.) */
 
@@ -306,10 +306,10 @@ proof of abvor0 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Nonempty class abstraction.  (Contributed by NM, 26-Dec-1996.)  (Proof
+/*Nonempty class abstraction.  (Contributed by NM, 26-Dec-1996.)  (Proof
        shortened by Mario Carneiro, 11-Nov-2016.) */
 
-theorem abn0 (ph : wff, x : set)  {
+theorem abn0 (ph : wff, x : set) disjointed(x, ph) {
 	prop 1 : wff = |- ( { x | ph } ≠ ∅ ↔ ∃ x ph ) ;;
 }
 
@@ -322,7 +322,7 @@ proof of abn0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Non-empty restricted class abstraction.  (Contributed by NM,
+/*Non-empty restricted class abstraction.  (Contributed by NM,
      29-Aug-1999.) */
 
 theorem rabn0 (ph : wff, x : set, A : class)  {
@@ -338,7 +338,7 @@ proof of rabn0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Any restricted class abstraction restricted to the empty set is empty.
+/*Any restricted class abstraction restricted to the empty set is empty.
      (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) */
 
@@ -359,7 +359,7 @@ proof of rab0 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Condition for a restricted class abstraction to be empty.  (Contributed by
+/*Condition for a restricted class abstraction to be empty.  (Contributed by
      Jeff Madsen, 7-Jun-2010.) */
 
 theorem rabeq0 (ph : wff, x : set, A : class)  {
@@ -374,7 +374,7 @@ proof of rabeq0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Law of excluded middle, in terms of restricted class abstractions.
+/*Law of excluded middle, in terms of restricted class abstractions.
        (Contributed by Jeff Madsen, 20-Jun-2011.) */
 
 theorem rabxm (ph : wff, x : set, A : class) disjointed(A x) {
@@ -391,7 +391,7 @@ proof of rabxm {
 	qed prop 1 = step 6 ;;
 }
 
-/* Law of noncontradiction, in terms of restricted class abstractions.
+/*Law of noncontradiction, in terms of restricted class abstractions.
        (Contributed by Jeff Madsen, 20-Jun-2011.) */
 
 theorem rabnc (ph : wff, x : set, A : class) disjointed(A x) {
@@ -408,7 +408,7 @@ proof of rabnc {
 	qed prop 1 = step 6 ;;
 }
 
-/* The union of a class with the empty set is itself.  Theorem 24 of
+/*The union of a class with the empty set is itself.  Theorem 24 of
        [Suppes] p. 27.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem un0 (A : class) disjointed(x A) {
@@ -424,7 +424,7 @@ proof of un0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The intersection of a class with the empty set is the empty set.
+/*The intersection of a class with the empty set is the empty set.
        Theorem 16 of [Suppes] p. 26.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem in0 (A : class) disjointed(x A) {
@@ -440,7 +440,7 @@ proof of in0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The intersection of a class with the universal class is itself.  Exercise
+/*The intersection of a class with the universal class is itself.  Exercise
      4.10(k) of [Mendelson] p. 231.  (Contributed by NM, 17-May-1998.) */
 
 theorem inv1 (A : class)  {
@@ -456,7 +456,7 @@ proof of inv1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The union of a class with the universal class is the universal class.
+/*The union of a class with the universal class is the universal class.
      Exercise 4.10(l) of [Mendelson] p. 231.  (Contributed by NM,
      17-May-1998.) */
 
@@ -471,7 +471,7 @@ proof of unv {
 	qed prop 1 = step 3 ;;
 }
 
-/* The null set is a subset of any class.  Part of Exercise 1 of
+/*The null set is a subset of any class.  Part of Exercise 1 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 0ss (A : class) disjointed(A x) {
@@ -486,7 +486,7 @@ proof of 0ss {
 	qed prop 1 = step 3 ;;
 }
 
-/* Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23 and its
+/*Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23 and its
      converse.  (Contributed by NM, 17-Sep-2003.) */
 
 theorem ss0b (A : class)  {
@@ -501,7 +501,7 @@ proof of ss0b {
 	qed prop 1 = step 4 ;;
 }
 
-/* Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23.
+/*Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23.
      (Contributed by NM, 13-Aug-1994.) */
 
 theorem ss0 (A : class)  {
@@ -514,7 +514,7 @@ proof of ss0 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A subclass of an empty class is empty.  (Contributed by NM, 7-Mar-2007.)
+/*A subclass of an empty class is empty.  (Contributed by NM, 7-Mar-2007.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem sseq0 (A : class, B : class)  {
@@ -529,7 +529,7 @@ proof of sseq0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A class with a nonempty subclass is nonempty.  (Contributed by NM,
+/*A class with a nonempty subclass is nonempty.  (Contributed by NM,
      17-Feb-2007.) */
 
 theorem ssn0 (A : class, B : class)  {
@@ -544,7 +544,7 @@ proof of ssn0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A class builder with a false argument is empty.  (Contributed by NM,
+/*A class builder with a false argument is empty.  (Contributed by NM,
        20-Jan-2012.) */
 
 theorem abf (ph : wff, x : set)  {
@@ -561,7 +561,7 @@ proof of abf {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction rule for equality to the empty set.  (Contributed by NM,
+/*Deduction rule for equality to the empty set.  (Contributed by NM,
        11-Jul-2014.) */
 
 theorem eq0rdv (ph : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -578,7 +578,7 @@ proof of eq0rdv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two classes are empty iff their union is empty.  (Contributed by NM,
+/*Two classes are empty iff their union is empty.  (Contributed by NM,
      11-Aug-2004.) */
 
 theorem un00 (A : class, B : class)  {
@@ -604,7 +604,7 @@ proof of un00 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Only the universal class has the universal class as a subclass.
+/*Only the universal class has the universal class as a subclass.
      (Contributed by NM, 17-Sep-2003.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) */
 
@@ -620,7 +620,7 @@ proof of vss {
 	qed prop 1 = step 4 ;;
 }
 
-/* The null set is a proper subset of any non-empty set.  (Contributed by NM,
+/*The null set is a proper subset of any non-empty set.  (Contributed by NM,
      27-Feb-1996.) */
 
 theorem 0pss (A : class)  {
@@ -636,7 +636,7 @@ proof of 0pss {
 	qed prop 1 = step 5 ;;
 }
 
-/* No set is a proper subset of the empty set.  (Contributed by NM,
+/*No set is a proper subset of the empty set.  (Contributed by NM,
      17-Jun-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem npss0 (A : class)  {
@@ -653,7 +653,7 @@ proof of npss0 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Any non-universal class is a proper subclass of the universal class.
+/*Any non-universal class is a proper subclass of the universal class.
      (Contributed by NM, 17-May-1998.) */
 
 theorem pssv (A : class)  {
@@ -667,10 +667,10 @@ proof of pssv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways of saying that two classes are disjoint (have no members in
+/*Two ways of saying that two classes are disjoint (have no members in
        common).  (Contributed by NM, 17-Feb-2004.) */
 
-theorem disj (x : set, A : class, B : class) disjointed(x A, x B) {
+theorem disj (x : set, A : class, B : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( ( A ∩ B ) = ∅ ↔ ∀ x ∈ A ¬ x ∈ B ) ;;
 }
 
@@ -689,10 +689,10 @@ proof of disj {
 	qed prop 1 = step 11 ;;
 }
 
-/* Two ways of saying that two classes are disjoint.  (Contributed by Jeff
+/*Two ways of saying that two classes are disjoint.  (Contributed by Jeff
        Madsen, 19-Jun-2011.) */
 
-theorem disjr (x : set, A : class, B : class) disjointed(x A, x B) {
+theorem disjr (x : set, A : class, B : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( ( A ∩ B ) = ∅ ↔ ∀ x ∈ B ¬ x ∈ A ) ;;
 }
 
@@ -704,10 +704,10 @@ proof of disjr {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways of saying that two classes are disjoint (have no members in
+/*Two ways of saying that two classes are disjoint (have no members in
        common).  (Contributed by NM, 19-Aug-1993.) */
 
-theorem disj1 (x : set, A : class, B : class) disjointed(x A, x B) {
+theorem disj1 (x : set, A : class, B : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( ( A ∩ B ) = ∅ ↔ ∀ x ( x ∈ A → ¬ x ∈ B ) ) ;;
 }
 
@@ -718,7 +718,7 @@ proof of disj1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways of saying that two classes are disjoint, using the complement
+/*Two ways of saying that two classes are disjoint, using the complement
        of ` B ` relative to a universe ` C ` .  (Contributed by NM,
        15-Feb-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
@@ -742,10 +742,10 @@ proof of reldisj {
 	qed prop 1 = step 11 ;;
 }
 
-/* Two ways of saying that two classes are disjoint.  (Contributed by NM,
+/*Two ways of saying that two classes are disjoint.  (Contributed by NM,
        19-May-1998.) */
 
-theorem disj3 (A : class, B : class) disjointed(x A, x B) {
+theorem disj3 (A : class, B : class) disjointed(x A, x B, x) {
 	prop 1 : wff = |- ( ( A ∩ B ) = ∅ ↔ A = ( A ∖ B ) ) ;;
 }
 
@@ -762,7 +762,7 @@ proof of disj3 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Members of disjoint sets are not equal.  (Contributed by NM,
+/*Members of disjoint sets are not equal.  (Contributed by NM,
        28-Mar-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem disjne (A : class, B : class, C : class, D : class) disjointed(x A, x B, x C) {
@@ -783,7 +783,7 @@ proof of disjne {
 	qed prop 1 = step 9 ;;
 }
 
-/* A set can't belong to both members of disjoint classes.  (Contributed by
+/*A set can't belong to both members of disjoint classes.  (Contributed by
      NM, 28-Feb-2015.) */
 
 theorem disjel (A : class, B : class, C : class)  {
@@ -800,7 +800,7 @@ proof of disjel {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways of saying that two classes are disjoint.  (Contributed by NM,
+/*Two ways of saying that two classes are disjoint.  (Contributed by NM,
      17-May-1998.) */
 
 theorem disj2 (A : class, B : class)  {
@@ -814,7 +814,7 @@ proof of disj2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two ways of saying that two classes are disjoint.  (Contributed by NM,
+/*Two ways of saying that two classes are disjoint.  (Contributed by NM,
      21-Mar-2004.) */
 
 theorem disj4 (A : class, B : class)  {
@@ -832,7 +832,7 @@ proof of disj4 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Intersection with a subclass of a disjoint class.  (Contributed by FL,
+/*Intersection with a subclass of a disjoint class.  (Contributed by FL,
      24-Jan-2007.) */
 
 theorem ssdisj (A : class, B : class, C : class)  {
@@ -851,7 +851,7 @@ proof of ssdisj {
 	qed prop 1 = step 8 ;;
 }
 
-/* A class is a proper subset of its union with a disjoint nonempty class.
+/*A class is a proper subset of its union with a disjoint nonempty class.
      (Contributed by NM, 15-Sep-2004.) */
 
 theorem disjpss (A : class, B : class)  {
@@ -877,7 +877,7 @@ proof of disjpss {
 	qed prop 1 = step 15 ;;
 }
 
-/* The union of disjoint classes is disjoint.  (Contributed by NM,
+/*The union of disjoint classes is disjoint.  (Contributed by NM,
      26-Sep-2004.) */
 
 theorem undisj1 (A : class, B : class, C : class)  {
@@ -892,7 +892,7 @@ proof of undisj1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The union of disjoint classes is disjoint.  (Contributed by NM,
+/*The union of disjoint classes is disjoint.  (Contributed by NM,
      13-Sep-2004.) */
 
 theorem undisj2 (A : class, B : class, C : class)  {
@@ -907,7 +907,7 @@ proof of undisj2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Subclass expressed in terms of intersection with difference from the
+/*Subclass expressed in terms of intersection with difference from the
      universal class.  (Contributed by NM, 17-Sep-2003.) */
 
 theorem ssindif0 (A : class, B : class)  {
@@ -922,7 +922,7 @@ proof of ssindif0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The intersection of classes with a common member is nonempty.
+/*The intersection of classes with a common member is nonempty.
      (Contributed by NM, 7-Apr-1994.) */
 
 theorem inelcm (A : class, B : class, C : class)  {
@@ -936,7 +936,7 @@ proof of inelcm {
 	qed prop 1 = step 3 ;;
 }
 
-/* A minimum element of a class has no elements in common with the class.
+/*A minimum element of a class has no elements in common with the class.
      (Contributed by NM, 22-Jun-1994.) */
 
 theorem minel (A : class, B : class, C : class)  {
@@ -953,7 +953,7 @@ proof of minel {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribute union over difference.  (Contributed by NM, 17-May-1998.)
+/*Distribute union over difference.  (Contributed by NM, 17-May-1998.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem undif4 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -983,10 +983,10 @@ proof of undif4 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Subset relation for disjoint classes.  (Contributed by NM,
+/*Subset relation for disjoint classes.  (Contributed by NM,
        25-Oct-2005.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
-theorem disjssun (A : class, B : class, C : class)  {
+theorem disjssun (A : class, B : class, C : class) disjointed(A, B, C) {
 	prop 1 : wff = |- ( ( A ∩ B ) = ∅ → ( A ⊆ ( B ∪ C ) ↔ A ⊆ C ) ) ;;
 }
 
@@ -1004,7 +1004,7 @@ proof of disjssun {
 	qed prop 1 = step 10 ;;
 }
 
-/* Subclass expressed in terms of difference.  Exercise 7 of
+/*Subclass expressed in terms of difference.  Exercise 7 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) */
 
 theorem ssdif0 (A : class, B : class) disjointed(x A, x B) {
@@ -1023,7 +1023,7 @@ proof of ssdif0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Universal class equality in terms of empty difference.  (Contributed by
+/*Universal class equality in terms of empty difference.  (Contributed by
      NM, 17-Sep-2003.) */
 
 theorem vdif0 (A : class)  {
@@ -1037,7 +1037,7 @@ proof of vdif0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A proper subclass has a nonempty difference.  (Contributed by NM,
+/*A proper subclass has a nonempty difference.  (Contributed by NM,
      3-May-1994.) */
 
 theorem pssdifn0 (A : class, B : class)  {
@@ -1054,7 +1054,7 @@ proof of pssdifn0 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A proper subclass has a nonempty difference.  (Contributed by Mario
+/*A proper subclass has a nonempty difference.  (Contributed by Mario
      Carneiro, 27-Apr-2016.) */
 
 theorem pssdif (A : class, B : class)  {
@@ -1068,7 +1068,7 @@ proof of pssdif {
 	qed prop 1 = step 3 ;;
 }
 
-/* A subclass missing a member is a proper subclass.  (Contributed by NM,
+/*A subclass missing a member is a proper subclass.  (Contributed by NM,
      12-Jan-2002.) */
 
 theorem ssnelpss (A : class, B : class, C : class)  {
@@ -1085,7 +1085,7 @@ proof of ssnelpss {
 	qed prop 1 = step 6 ;;
 }
 
-/* Subclass inclusion with one element of the superclass missing is proper
+/*Subclass inclusion with one element of the superclass missing is proper
        subclass inclusion.  Deduction form of ~ ssnelpss .  (Contributed by
        David Moews, 1-May-2017.) */
 
@@ -1104,7 +1104,7 @@ proof of ssnelpssd {
 	qed prop 1 = step 3 ;;
 }
 
-/* A proper subclass has a member in one argument that's not in both.
+/*A proper subclass has a member in one argument that's not in both.
        (Contributed by NM, 29-Feb-1996.) */
 
 theorem pssnel (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1121,7 +1121,7 @@ proof of pssnel {
 	qed prop 1 = step 6 ;;
 }
 
-/* Difference, intersection, and subclass relationship.  (Contributed by
+/*Difference, intersection, and subclass relationship.  (Contributed by
        NM, 30-Apr-1994.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) */
 
 theorem difin0ss (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1151,7 +1151,7 @@ proof of difin0ss {
 	qed prop 1 = step 18 ;;
 }
 
-/* Intersection, subclass, and difference relationship.  (Contributed by
+/*Intersection, subclass, and difference relationship.  (Contributed by
        NM, 27-Oct-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.)
        (Proof shortened by Wolf Lammen, 30-Sep-2014.) */
 
@@ -1178,7 +1178,7 @@ proof of inssdif0 {
 	qed prop 1 = step 14 ;;
 }
 
-/* The difference between a class and itself is the empty set.  Proposition
+/*The difference between a class and itself is the empty set.  Proposition
      5.15 of [TakeutiZaring] p. 20.  Also Theorem 32 of [Suppes] p. 28.
      (Contributed by NM, 22-Apr-2004.) */
 
@@ -1193,7 +1193,7 @@ proof of difid {
 	qed prop 1 = step 3 ;;
 }
 
-/* The difference between a class and itself is the empty set.  Proposition
+/*The difference between a class and itself is the empty set.  Proposition
        5.15 of [TakeutiZaring] p. 20.  Also Theorem 32 of [Suppes] p. 28.
        Alternate proof of ~ difid .  (Contributed by David Abernethy,
        17-Jun-2012.)  (Proof modification is discouraged.)
@@ -1211,7 +1211,7 @@ proof of difidALT {
 	qed prop 1 = step 3 ;;
 }
 
-/* The difference between a class and the empty set.  Part of Exercise 4.4 of
+/*The difference between a class and the empty set.  Part of Exercise 4.4 of
      [Stoll] p. 16.  (Contributed by NM, 17-Aug-2004.) */
 
 theorem dif0 (A : class)  {
@@ -1226,7 +1226,7 @@ proof of dif0 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The difference between the empty set and a class.  Part of Exercise 4.4 of
+/*The difference between the empty set and a class.  Part of Exercise 4.4 of
      [Stoll] p. 16.  (Contributed by NM, 17-Aug-2004.) */
 
 theorem 0dif (A : class)  {
@@ -1240,7 +1240,7 @@ proof of 0dif {
 	qed prop 1 = step 3 ;;
 }
 
-/* A class and its relative complement are disjoint.  Theorem 38 of [Suppes]
+/*A class and its relative complement are disjoint.  Theorem 38 of [Suppes]
      p. 29.  (Contributed by NM, 24-Mar-1998.) */
 
 theorem disjdif (A : class, B : class)  {
@@ -1254,7 +1254,7 @@ proof of disjdif {
 	qed prop 1 = step 3 ;;
 }
 
-/* The difference of a class from its intersection is empty.  Theorem 37 of
+/*The difference of a class from its intersection is empty.  Theorem 37 of
      [Suppes] p. 29.  (Contributed by NM, 17-Aug-2004.)  (Proof shortened by
      Andrew Salmon, 26-Jun-2011.) */
 
@@ -1269,7 +1269,7 @@ proof of difin0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The union of a class and its complement is the universe.  Theorem 5.1(5)
+/*The union of a class and its complement is the universe.  Theorem 5.1(5)
      of [Stoll] p. 17.  (Contributed by NM, 17-Aug-2004.) */
 
 theorem undifv (A : class)  {
@@ -1285,7 +1285,7 @@ proof of undifv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Absorption of difference by union.  This decomposes a union into two
+/*Absorption of difference by union.  This decomposes a union into two
      disjoint classes (see ~ disjdif ).  Theorem 35 of [Suppes] p. 29.
      (Contributed by NM, 19-May-1998.) */
 
@@ -1307,7 +1307,7 @@ proof of undif1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Absorption of difference by union.  This decomposes a union into two
+/*Absorption of difference by union.  This decomposes a union into two
      disjoint classes (see ~ disjdif ).  Part of proof of Corollary 6K of
      [Enderton] p. 144.  (Contributed by NM, 19-May-1998.) */
 
@@ -1323,7 +1323,7 @@ proof of undif2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Absorption of difference by union.  (Contributed by NM, 18-Aug-2013.) */
+/*Absorption of difference by union.  (Contributed by NM, 18-Aug-2013.) */
 
 theorem undifabs (A : class, B : class)  {
 	prop 1 : wff = |- ( A ∪ ( A ∖ B ) ) = A ;;
@@ -1338,7 +1338,7 @@ proof of undifabs {
 	qed prop 1 = step 5 ;;
 }
 
-/* The intersection and class difference of a class with another class
+/*The intersection and class difference of a class with another class
        unite to give the original class.  (Contributed by Paul Chapman,
        5-Jun-2009.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
@@ -1357,7 +1357,7 @@ proof of inundif {
 	qed prop 1 = step 6 ;;
 }
 
-/* Absorption of union by difference.  Theorem 36 of [Suppes] p. 29.
+/*Absorption of union by difference.  Theorem 36 of [Suppes] p. 29.
      (Contributed by NM, 19-May-1998.) */
 
 theorem difun2 (A : class, B : class)  {
@@ -1373,7 +1373,7 @@ proof of difun2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Union of complementary parts into whole.  (Contributed by NM,
+/*Union of complementary parts into whole.  (Contributed by NM,
      22-Mar-1998.) */
 
 theorem undif (A : class, B : class)  {
@@ -1388,7 +1388,7 @@ proof of undif {
 	qed prop 1 = step 4 ;;
 }
 
-/* A subset of a difference does not intersect the subtrahend.  (Contributed
+/*A subset of a difference does not intersect the subtrahend.  (Contributed
      by Jeff Hankins, 1-Sep-2013.)  (Proof shortened by Mario Carneiro,
      24-Aug-2015.) */
 
@@ -1406,7 +1406,7 @@ proof of ssdifin0 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A class is a subclass of itself subtracted from another iff it is the
+/*A class is a subclass of itself subtracted from another iff it is the
      empty set.  (Contributed by Steve Rodriguez, 20-Nov-2015.) */
 
 theorem ssdifeq0 (A : class, B : class)  {
@@ -1426,7 +1426,7 @@ proof of ssdifeq0 {
 	qed prop 1 = step 9 ;;
 }
 
-/* A condition equivalent to inclusion in the union of two classes.
+/*A condition equivalent to inclusion in the union of two classes.
        (Contributed by NM, 26-Mar-2007.) */
 
 theorem ssundif (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1448,7 +1448,7 @@ proof of ssundif {
 	qed prop 1 = step 10 ;;
 }
 
-/* Swap the arguments of a class difference.  (Contributed by NM,
+/*Swap the arguments of a class difference.  (Contributed by NM,
      29-Mar-2007.) */
 
 theorem difcom (A : class, B : class, C : class)  {
@@ -1464,7 +1464,7 @@ proof of difcom {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways to express overlapping subsets.  (Contributed by Stefan O'Rear,
+/*Two ways to express overlapping subsets.  (Contributed by Stefan O'Rear,
      31-Oct-2014.) */
 
 theorem pssdifcom1 (A : class, B : class, C : class)  {
@@ -1484,7 +1484,7 @@ proof of pssdifcom1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Two ways to express non-covering pairs of subsets.  (Contributed by Stefan
+/*Two ways to express non-covering pairs of subsets.  (Contributed by Stefan
      O'Rear, 31-Oct-2014.) */
 
 theorem pssdifcom2 (A : class, B : class, C : class)  {
@@ -1504,7 +1504,7 @@ proof of pssdifcom2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distributive law for class difference.  Exercise 4.8 of [Stoll] p. 16.
+/*Distributive law for class difference.  Exercise 4.8 of [Stoll] p. 16.
      (Contributed by NM, 18-Aug-2004.) */
 
 theorem difdifdir (A : class, B : class, C : class)  {
@@ -1537,7 +1537,7 @@ proof of difdifdir {
 	qed prop 1 = step 22 ;;
 }
 
-/* Two ways to say that ` A ` and ` B ` partition ` C ` (when ` A ` and ` B `
+/*Two ways to say that ` A ` and ` B ` partition ` C ` (when ` A ` and ` B `
      don't overlap and ` A ` is a part of ` C ` ).  (Contributed by FL,
      17-Nov-2008.) */
 
@@ -1587,7 +1587,7 @@ proof of uneqdifeq {
 	qed prop 1 = step 38 ;;
 }
 
-/* Theorem 19.2 of [Margaris] p. 89 with restricted quantifiers (compare
+/*Theorem 19.2 of [Margaris] p. 89 with restricted quantifiers (compare
        ~ 19.2 ).  The restricted version is valid only when the domain of
        quantification is not empty.  (Contributed by NM, 15-Nov-2003.) */
 
@@ -1606,7 +1606,7 @@ proof of r19.2z {
 	qed prop 1 = step 7 ;;
 }
 
-/* A response to the notion that the condition ` A =/= (/) ` can be removed
+/*A response to the notion that the condition ` A =/= (/) ` can be removed
        in ~ r19.2z .  Interestingly enough, ` ph ` does not figure in the
        left-hand side.  (Contributed by Jeff Hankins, 24-Aug-2009.) */
 
@@ -1632,7 +1632,7 @@ proof of r19.2zb {
 	qed prop 1 = step 14 ;;
 }
 
-/* Restricted quantification of wff not containing quantified variable.
+/*Restricted quantification of wff not containing quantified variable.
        (Contributed by FL, 3-Jan-2008.) */
 
 theorem r19.3rz (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1652,7 +1652,7 @@ proof of r19.3rz {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 26-Oct-2010.) */
 
@@ -1670,7 +1670,7 @@ proof of r19.28z {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantification of wff not containing quantified variable.
+/*Restricted quantification of wff not containing quantified variable.
        (Contributed by NM, 10-Mar-1997.) */
 
 theorem r19.3rzv (ph : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -1688,7 +1688,7 @@ proof of r19.3rzv {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted quantification of wff not containing quantified variable.
+/*Restricted quantification of wff not containing quantified variable.
        (Contributed by NM, 27-May-1998.) */
 
 theorem r19.9rzv (ph : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -1704,7 +1704,7 @@ proof of r19.9rzv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 19-Aug-2004.) */
 
@@ -1720,7 +1720,7 @@ proof of r19.28zv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.37 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.37 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by Paul Chapman, 8-Oct-2007.) */
 
@@ -1736,7 +1736,7 @@ proof of r19.37zv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted version of Theorem 19.45 of [Margaris] p. 90.  (Contributed
+/*Restricted version of Theorem 19.45 of [Margaris] p. 90.  (Contributed
        by NM, 27-May-1998.) */
 
 theorem r19.45zv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -1751,7 +1751,7 @@ proof of r19.45zv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 26-Oct-2010.) */
 
@@ -1769,7 +1769,7 @@ proof of r19.27z {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 19-Aug-2004.) */
 
@@ -1785,7 +1785,7 @@ proof of r19.27zv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.36 of [Margaris] p. 90.  It
+/*Restricted quantifier version of Theorem 19.36 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 20-Sep-2003.) */
 
@@ -1801,7 +1801,7 @@ proof of r19.36zv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Vacuous quantification is always true.  (Contributed by NM,
+/*Vacuous quantification is always true.  (Contributed by NM,
        11-Mar-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem rzal (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1816,7 +1816,7 @@ proof of rzal {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted existential quantification implies its restriction is
+/*Restricted existential quantification implies its restriction is
        nonempty.  (Contributed by Szymon Jaroszewicz, 3-Apr-2007.) */
 
 theorem rexn0 (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1830,7 +1830,7 @@ proof of rexn0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Idempotent law for restricted quantifier.  (Contributed by NM,
+/*Idempotent law for restricted quantifier.  (Contributed by NM,
        28-Mar-1997.) */
 
 theorem ralidm (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1853,7 +1853,7 @@ proof of ralidm {
 	qed prop 1 = step 12 ;;
 }
 
-/* Vacuous universal quantification is always true.  (Contributed by NM,
+/*Vacuous universal quantification is always true.  (Contributed by NM,
      20-Oct-2005.) */
 
 theorem ral0 (ph : wff, x : set)  {
@@ -1867,7 +1867,7 @@ proof of ral0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Generalization rule that eliminates a non-zero class requirement.
+/*Generalization rule that eliminates a non-zero class requirement.
        (Contributed by NM, 8-Dec-2012.) */
 
 theorem rgenz (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1883,7 +1883,7 @@ proof of rgenz {
 	qed prop 1 = step 3 ;;
 }
 
-/* The quantification of a falsehood is vacuous when true.  (Contributed by
+/*The quantification of a falsehood is vacuous when true.  (Contributed by
        NM, 26-Nov-2005.) */
 
 theorem ralf0 (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1904,9 +1904,9 @@ proof of ralf0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* TODO - shorten r19.3zv, r19.27zv, r19.28zv, raaanv w/ non-v */
+/*TODO - shorten r19.3zv, r19.27zv, r19.28zv, raaanv w/ non-v */
 
-/* Rearrange restricted quantifiers.  (Contributed by NM, 26-Oct-2010.) */
+/*Rearrange restricted quantifiers.  (Contributed by NM, 26-Oct-2010.) */
 
 theorem raaan (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A) {
 	hyp 1 : wff = |- F/ y ph ;;
@@ -1931,7 +1931,7 @@ proof of raaan {
 	qed prop 1 = step 12 ;;
 }
 
-/* Rearrange restricted quantifiers.  (Contributed by NM, 11-Mar-1997.) */
+/*Rearrange restricted quantifiers.  (Contributed by NM, 11-Mar-1997.) */
 
 theorem raaanv (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(y ph, x ps, x y A) {
 	prop 1 : wff = |- ( ∀ x ∈ A ∀ y ∈ A ( ph ∧ ps ) ↔ ( ∀ x ∈ A ph ∧ ∀ y ∈ A ps ) ) ;;
@@ -1951,7 +1951,7 @@ proof of raaanv {
 	qed prop 1 = step 10 ;;
 }
 
-/* Set substitution into the first argument of a subset relation.
+/*Set substitution into the first argument of a subset relation.
        (Contributed by Rodolfo Medina, 7-Jul-2010.)  (Proof shortened by Mario
        Carneiro, 14-Nov-2016.) */
 
@@ -1971,7 +1971,7 @@ proof of sbss {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distribute proper substitution through a subclass relation.
+/*Distribute proper substitution through a subclass relation.
        (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Alexander
        van der Vekens, 23-Jul-2017.) */
 

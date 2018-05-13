@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Introduce_the_Axiom_of_Power_Sets.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Derive the Axiom of Pairing
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
+/*The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
        [TakeutiZaring] p. 15.  In some textbooks this is stated as a separate
        axiom; here we show it is redundant since it can be derived from the
        other axioms.
@@ -60,7 +60,7 @@ proof of zfpair {
 	qed prop 1 = step 35 ;;
 }
 
-/* Unabbreviated version of the Axiom of Pairing of ZF set theory, derived
+/*Unabbreviated version of the Axiom of Pairing of ZF set theory, derived
        as a theorem from the other axioms.
 
        This theorem should not be referenced by any proof.  Instead, use
@@ -88,7 +88,7 @@ proof of axpr {
 	qed prop 1 = step 12 ;;
 }
 
-/* The Axiom of Pairing of ZF set theory.  It was derived as theorem ~ axpr
+/*The Axiom of Pairing of ZF set theory.  It was derived as theorem ~ axpr
        above and is therefore redundant, but we state it as a separate axiom
        here so that its uses can be identified more easily.  (Contributed by
        NM, 14-Nov-2006.) */
@@ -97,7 +97,7 @@ axiom ax-pr (x : set, y : set, z : set, w : set) disjointed(x z w, y z w) {
 	prop 1 : wff = |- ∃ z ∀ w ( ( w = x ∨ w = y ) → w ∈ z ) ;;
 }
 
-/* Derive the abbreviated version of the Axiom of Pairing from ~ ax-pr .
+/*Derive the abbreviated version of the Axiom of Pairing from ~ ax-pr .
        See ~ zfpair for its derivation from the other axioms.  (Contributed by
        NM, 14-Nov-2006.) */
 
@@ -121,7 +121,7 @@ proof of zfpair2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* A singleton is a set.  Theorem 7.13 of [Quine] p. 51, proved using
+/*A singleton is a set.  Theorem 7.13 of [Quine] p. 51, proved using
        Extensionality, Separation, and Pairing.  See also ~ snexALT .
        (Contributed by NM, 7-Aug-1994.)  (Revised by Mario Carneiro,
        19-May-2013.)  (Proof modification is discouraged.) */
@@ -147,7 +147,7 @@ proof of snex {
 	qed prop 1 = step 12 ;;
 }
 
-/* The Axiom of Pairing using class variables.  Theorem 7.13 of [Quine]
+/*The Axiom of Pairing using class variables.  Theorem 7.13 of [Quine]
        p. 51.  By virtue of its definition, an unordered pair remains a set
        (even though no longer a pair) even when its components are proper
        classes (see ~ prprc ), so we can dispense with hypotheses requiring
@@ -177,7 +177,7 @@ proof of prex {
 	qed prop 1 = step 15 ;;
 }
 
-/* Every set is an element of some other set.  This has a shorter proof
+/*Every set is an element of some other set.  This has a shorter proof
        than ~ el but uses more axioms.  (Contributed by NM, 4-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -195,7 +195,7 @@ proof of elALT {
 	qed prop 1 = step 6 ;;
 }
 
-/* An alternative proof of ~ dtru ("two things exist") using ~ ax-pr
+/*An alternative proof of ~ dtru ("two things exist") using ~ ax-pr
        instead of ~ ax-pow .  (Contributed by Mario Carneiro, 31-Aug-2015.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -223,7 +223,7 @@ proof of dtruALT2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* A singleton of a set belongs to the power class of a class containing
+/*A singleton of a set belongs to the power class of a class containing
        the set.  (Contributed by Alan Sare, 25-Aug-2011.) */
 
 theorem snelpwi (A : class, B : class)  {
@@ -238,7 +238,7 @@ proof of snelpwi {
 	qed prop 1 = step 4 ;;
 }
 
-/* A singleton of a set belongs to the power class of a class containing
+/*A singleton of a set belongs to the power class of a class containing
        the set.  (Contributed by NM, 1-Apr-1998.) */
 
 theorem snelpw (A : class, B : class)  {
@@ -255,7 +255,7 @@ proof of snelpw {
 	qed prop 1 = step 4 ;;
 }
 
-/* A theorem similar to extensionality, requiring the existence of a
+/*A theorem similar to extensionality, requiring the existence of a
        singleton.  Exercise 8 of [TakeutiZaring] p. 16.  (Contributed by NM,
        10-Aug-1993.) */
 
@@ -279,7 +279,7 @@ proof of rext {
 	qed prop 1 = step 12 ;;
 }
 
-/* Classes are subclasses if and only if their power classes are
+/*Classes are subclasses if and only if their power classes are
        subclasses.  Exercise 18 of [TakeutiZaring] p. 18.  (Contributed by NM,
        13-Oct-1996.) */
 
@@ -314,7 +314,7 @@ proof of sspwb {
 	qed prop 1 = step 22 ;;
 }
 
-/* A class equals the union of its power class.  Exercise 6(a) of
+/*A class equals the union of its power class.  Exercise 6(a) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.)  (Proof shortened
        by Alan Sare, 28-Dec-2008.) */
 
@@ -338,7 +338,7 @@ proof of unipw {
 	qed prop 1 = step 11 ;;
 }
 
-/* Membership of a power class.  Exercise 10 of [Enderton] p. 26.
+/*Membership of a power class.  Exercise 10 of [Enderton] p. 26.
      (Contributed by NM, 13-Jan-2007.) */
 
 theorem pwel (A : class, B : class)  {
@@ -356,7 +356,7 @@ proof of pwel {
 	qed prop 1 = step 7 ;;
 }
 
-/* A class is transitive iff its power class is transitive.  (Contributed by
+/*A class is transitive iff its power class is transitive.  (Contributed by
      Alan Sare, 25-Aug-2011.)  (Revised by Mario Carneiro, 15-Jun-2014.) */
 
 theorem pwtr (A : class)  {
@@ -372,7 +372,7 @@ proof of pwtr {
 	qed prop 1 = step 5 ;;
 }
 
-/* An extensionality-like principle defining subclass in terms of subsets.
+/*An extensionality-like principle defining subclass in terms of subsets.
        (Contributed by NM, 30-Jun-2004.) */
 
 theorem ssextss (x : set, A : class, B : class) disjointed(A x, B x) {
@@ -392,7 +392,7 @@ proof of ssextss {
 	qed prop 1 = step 9 ;;
 }
 
-/* An extensionality-like principle that uses the subset instead of the
+/*An extensionality-like principle that uses the subset instead of the
        membership relation: two classes are equal iff they have the same
        subsets.  (Contributed by NM, 30-Jun-2004.) */
 
@@ -410,7 +410,7 @@ proof of ssext {
 	qed prop 1 = step 6 ;;
 }
 
-/* Negation of subclass relationship.  Compare ~ nss .  (Contributed by NM,
+/*Negation of subclass relationship.  Compare ~ nss .  (Contributed by NM,
        30-Jun-2004.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem nssss (x : set, A : class, B : class) disjointed(A x, B x) {
@@ -425,7 +425,7 @@ proof of nssss {
 	qed prop 1 = step 4 ;;
 }
 
-/* Classes are equal if and only if their power classes are equal.  Exercise
+/*Classes are equal if and only if their power classes are equal.  Exercise
      19 of [TakeutiZaring] p. 18.  (Contributed by NM, 13-Oct-1996.) */
 
 theorem pweqb (A : class, B : class)  {
@@ -442,7 +442,7 @@ proof of pweqb {
 	qed prop 1 = step 6 ;;
 }
 
-/* The intersection of all sets to which a set belongs is the singleton of
+/*The intersection of all sets to which a set belongs is the singleton of
        that set.  (Contributed by NM, 5-Jun-2009.) */
 
 theorem intid (x : set, A : class) disjointed(x A) {
@@ -466,7 +466,7 @@ proof of intid {
 	qed prop 1 = step 11 ;;
 }
 
-/* "At most one" existence implies a class abstraction exists.
+/*"At most one" existence implies a class abstraction exists.
        (Contributed by NM, 30-Dec-1996.) */
 
 theorem moabex (ph : wff, x : set) disjointed(x y, y ph) {
@@ -490,7 +490,7 @@ proof of moabex {
 	qed prop 1 = step 12 ;;
 }
 
-/* Restricted "at most one" existence implies a restricted class abstraction
+/*Restricted "at most one" existence implies a restricted class abstraction
      exists.  (Contributed by NM, 17-Jun-2017.) */
 
 theorem rmorabex (ph : wff, x : set, A : class)  {
@@ -506,7 +506,7 @@ proof of rmorabex {
 	qed prop 1 = step 5 ;;
 }
 
-/* The abstraction of a wff with existential uniqueness exists.  (Contributed
+/*The abstraction of a wff with existential uniqueness exists.  (Contributed
      by NM, 25-Nov-1994.) */
 
 theorem euabex (ph : wff, x : set)  {
@@ -520,7 +520,7 @@ proof of euabex {
 	qed prop 1 = step 3 ;;
 }
 
-/* A non-empty class (even if proper) has a non-empty subset.  (Contributed
+/*A non-empty class (even if proper) has a non-empty subset.  (Contributed
        by NM, 23-Aug-2003.) */
 
 theorem nnullss (x : set, A : class) disjointed(x y A) {
@@ -546,7 +546,7 @@ proof of nnullss {
 	qed prop 1 = step 14 ;;
 }
 
-/* Restricted existence in a class (even if proper) implies restricted
+/*Restricted existence in a class (even if proper) implies restricted
        existence in a subset.  (Contributed by NM, 23-Aug-2003.) */
 
 theorem exss (ph : wff, x : set, y : set, A : class) disjointed(x y z A, y z ph) {
@@ -597,7 +597,7 @@ proof of exss {
 	qed prop 1 = step 39 ;;
 }
 
-/* An ordered pair of classes is a set.  Exercise 7 of [TakeutiZaring]
+/*An ordered pair of classes is a set.  Exercise 7 of [TakeutiZaring]
      p. 16.  (Contributed by NM, 18-Aug-1993.)  (Revised by Mario Carneiro,
      26-Apr-2015.) */
 
@@ -614,7 +614,7 @@ proof of opex {
 	qed prop 1 = step 5 ;;
 }
 
-/* An ordered triple of classes is a set.  (Contributed by NM,
+/*An ordered triple of classes is a set.  (Contributed by NM,
      3-Apr-2015.) */
 
 theorem otex (A : class, B : class, C : class)  {
@@ -628,7 +628,7 @@ proof of otex {
 	qed prop 1 = step 3 ;;
 }
 
-/* An ordered pair has two elements.  Exercise 3 of [TakeutiZaring] p. 15.
+/*An ordered pair has two elements.  Exercise 3 of [TakeutiZaring] p. 15.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -648,7 +648,7 @@ proof of elop {
 	qed prop 1 = step 4 ;;
 }
 
-/* One of the two elements in an ordered pair.  (Contributed by NM,
+/*One of the two elements in an ordered pair.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opi1 (A : class, B : class)  {
@@ -666,7 +666,7 @@ proof of opi1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* One of the two elements of an ordered pair.  (Contributed by NM,
+/*One of the two elements of an ordered pair.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
 
 theorem opi2 (A : class, B : class)  {

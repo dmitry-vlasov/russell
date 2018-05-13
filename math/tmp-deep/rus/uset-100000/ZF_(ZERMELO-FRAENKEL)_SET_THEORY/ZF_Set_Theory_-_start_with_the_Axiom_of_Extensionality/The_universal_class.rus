@@ -1,26 +1,26 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Restricted_quantification.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The universal class
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare the symbol for the universal class. */
+/*Declare the symbol for the universal class. */
 
 constant {
 	symbol _V ;;
 }
 
-/* Letter V (for the universal class) */
+/*Letter V (for the universal class) */
 
-/* Extend class notation to include the universal class symbol. */
+/*Extend class notation to include the universal class symbol. */
 
 rule cvv () {
 	term : class = # _V ;;
 }
 
-/* Soundness justification theorem for ~ df-v .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-v .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.) */
 
 theorem vjust (x : set, y : set) disjointed(z x, z y) {
@@ -41,7 +41,7 @@ proof of vjust {
 	qed prop 1 = step 9 ;;
 }
 
-/* Define the universal class.  Definition 5.20 of [TakeutiZaring] p. 21.
+/*Define the universal class.  Definition 5.20 of [TakeutiZaring] p. 21.
      Also Definition 2.9 of [Quine] p. 19.  (Contributed by NM, 5-Aug-1993.) */
 
 definition df-v (x : set)  {
@@ -51,7 +51,7 @@ definition df-v (x : set)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* All set variables are sets (see ~ isset ).  Theorem 6.8 of [Quine] p. 43.
+/*All set variables are sets (see ~ isset ).  Theorem 6.8 of [Quine] p. 43.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem vex (x : set)  {
@@ -66,7 +66,7 @@ proof of vex {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways to say " ` A ` is a set":  A class ` A ` is a member of the
+/*Two ways to say " ` A ` is a set":  A class ` A ` is a member of the
        universal class ` _V ` (see ~ df-v ) if and only if the class ` A `
        exists (i.e. there exists some set ` x ` equal to class ` A ` ).
        Theorem 6.9 of [Quine] p. 43. _Notational convention_:  We will use the
@@ -96,7 +96,7 @@ proof of isset {
 	qed prop 1 = step 5 ;;
 }
 
-/* A version of isset that does not require x and A to be distinct.
+/*A version of isset that does not require x and A to be distinct.
        (Contributed by Andrew Salmon, 6-Jun-2011.)  (Revised by Mario Carneiro,
        10-Oct-2016.) */
 
@@ -117,7 +117,7 @@ proof of issetf {
 	qed prop 1 = step 6 ;;
 }
 
-/* A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
+/*A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem isseti (x : set, A : class) disjointed(x A) {
@@ -132,7 +132,7 @@ proof of isseti {
 	qed prop 1 = step 2 ;;
 }
 
-/* A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
+/*A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem issetri (x : set, A : class) disjointed(x A) {
@@ -147,7 +147,7 @@ proof of issetri {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a class is a member of another class, it is a set.  Theorem 6.12 of
+/*If a class is a member of another class, it is a set.  Theorem 6.12 of
        [Quine] p. 44.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
        Andrew Salmon, 8-Jun-2011.) */
 
@@ -164,7 +164,7 @@ proof of elex {
 	qed prop 1 = step 4 ;;
 }
 
-/* If a class is a member of another class, it is a set.  (Contributed by
+/*If a class is a member of another class, it is a set.  (Contributed by
        NM, 11-Jun-1994.) */
 
 theorem elexi (A : class, B : class)  {
@@ -179,7 +179,7 @@ proof of elexi {
 	qed prop 1 = step 2 ;;
 }
 
-/* An element of a class exists.  (Contributed by NM, 1-May-1995.) */
+/*An element of a class exists.  (Contributed by NM, 1-May-1995.) */
 
 theorem elisset (x : set, A : class, V : class) disjointed(x A) {
 	prop 1 : wff = |- ( A ∈ V → ∃ x x = A ) ;;
@@ -192,7 +192,7 @@ proof of elisset {
 	qed prop 1 = step 3 ;;
 }
 
-/* If two classes each contain another class, then both contain some set.
+/*If two classes each contain another class, then both contain some set.
        (Contributed by Alan Sare, 24-Oct-2011.) */
 
 theorem elex22 (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -211,7 +211,7 @@ proof of elex22 {
 	qed prop 1 = step 8 ;;
 }
 
-/* If a class contains another class, then it contains some set.
+/*If a class contains another class, then it contains some set.
        (Contributed by Alan Sare, 25-Sep-2011.) */
 
 theorem elex2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -227,7 +227,7 @@ proof of elex2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A universal quantifier restricted to the universe is unrestricted.
+/*A universal quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 26-Mar-2004.) */
 
 theorem ralv (ph : wff, x : set)  {
@@ -243,7 +243,7 @@ proof of ralv {
 	qed prop 1 = step 5 ;;
 }
 
-/* An existential quantifier restricted to the universe is unrestricted.
+/*An existential quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 26-Mar-2004.) */
 
 theorem rexv (ph : wff, x : set)  {
@@ -259,7 +259,7 @@ proof of rexv {
 	qed prop 1 = step 5 ;;
 }
 
-/* A uniqueness quantifier restricted to the universe is unrestricted.
+/*A uniqueness quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 1-Nov-2010.) */
 
 theorem reuv (ph : wff, x : set)  {
@@ -275,7 +275,7 @@ proof of reuv {
 	qed prop 1 = step 5 ;;
 }
 
-/* A uniqueness quantifier restricted to the universe is unrestricted.
+/*A uniqueness quantifier restricted to the universe is unrestricted.
      (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
 
 theorem rmov (ph : wff, x : set)  {
@@ -291,7 +291,7 @@ proof of rmov {
 	qed prop 1 = step 5 ;;
 }
 
-/* A class abstraction restricted to the universe is unrestricted.
+/*A class abstraction restricted to the universe is unrestricted.
      (Contributed by NM, 27-Dec-2004.)  (Proof shortened by Andrew Salmon,
      8-Jun-2011.) */
 
@@ -308,7 +308,7 @@ proof of rabab {
 	qed prop 1 = step 5 ;;
 }
 
-/* Commutation of restricted and unrestricted universal quantifiers.
+/*Commutation of restricted and unrestricted universal quantifiers.
        (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) */
 
@@ -325,7 +325,7 @@ proof of ralcom4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Commutation of restricted and unrestricted existential quantifiers.
+/*Commutation of restricted and unrestricted existential quantifiers.
        (Contributed by NM, 12-Apr-2004.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) */
 
@@ -342,7 +342,7 @@ proof of rexcom4 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
+/*Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
        1-Jun-2011.) */
 
 theorem rexcom4a (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(A x, x y, ph x) {
@@ -357,7 +357,7 @@ proof of rexcom4a {
 	qed prop 1 = step 4 ;;
 }
 
-/* Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
+/*Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
        1-Jun-2011.) */
 
 theorem rexcom4b (ph : wff, x : set, y : set, A : class, B : class) disjointed(A x, x y, ph x, B x) {
@@ -375,7 +375,7 @@ proof of rexcom4b {
 	qed prop 1 = step 5 ;;
 }
 
-/* Closed theorem version of ~ ceqsalg .  (Contributed by NM,
+/*Closed theorem version of ~ ceqsalg .  (Contributed by NM,
        28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) */
 
 theorem ceqsalt (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -405,7 +405,7 @@ proof of ceqsalt {
 	qed prop 1 = step 19 ;;
 }
 
-/* Restricted quantifier version of ~ ceqsalt .  (Contributed by NM,
+/*Restricted quantifier version of ~ ceqsalt .  (Contributed by NM,
        28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) */
 
 theorem ceqsralt (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -432,7 +432,7 @@ proof of ceqsralt {
 	qed prop 1 = step 16 ;;
 }
 
-/* A representation of explicit substitution of a class for a variable,
+/*A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        29-Oct-2003.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
@@ -457,7 +457,7 @@ proof of ceqsalg {
 	qed prop 1 = step 10 ;;
 }
 
-/* A representation of explicit substitution of a class for a variable,
+/*A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        18-Aug-1993.) */
 
@@ -475,7 +475,7 @@ proof of ceqsal {
 	qed prop 1 = step 2 ;;
 }
 
-/* A representation of explicit substitution of a class for a variable,
+/*A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        18-Aug-1993.) */
 
@@ -492,7 +492,7 @@ proof of ceqsalv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted quantifier version of ~ ceqsalv .  (Contributed by NM,
+/*Restricted quantifier version of ~ ceqsalv .  (Contributed by NM,
        21-Jun-2013.) */
 
 theorem ceqsralv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -509,7 +509,7 @@ proof of ceqsralv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Implicit substitution for class with embedded variable.  (Contributed by
+/*Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) */
 
 theorem gencl (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, B : class) disjointed(x ps) {
@@ -528,7 +528,7 @@ proof of gencl {
 	qed prop 1 = step 4 ;;
 }
 
-/* Implicit substitution for class with embedded variable.  (Contributed by
+/*Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) */
 
 theorem 2gencl (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y, x R, x ps, y C, y S, y ch) {
@@ -556,7 +556,7 @@ proof of 2gencl {
 	qed prop 1 = step 11 ;;
 }
 
-/* Implicit substitution for class with embedded variable.  (Contributed by
+/*Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) */
 
 theorem 3gencl (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class) disjointed(x y z, y z D, z F, x y R, y z S, x ps, y ch, z th) {
@@ -586,7 +586,7 @@ proof of 3gencl {
 	qed prop 1 = step 11 ;;
 }
 
-/* Implicit substitution inference for general classes.  (Contributed by
+/*Implicit substitution inference for general classes.  (Contributed by
        NM, 26-Aug-2007.) */
 
 theorem cgsexg (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A, x ps) {
@@ -610,7 +610,7 @@ proof of cgsexg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Implicit substitution inference for general classes.  (Contributed by
+/*Implicit substitution inference for general classes.  (Contributed by
        NM, 26-Jul-1995.) */
 
 theorem cgsex2g (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y ps, x y A, x y B) {
@@ -638,7 +638,7 @@ proof of cgsex2g {
 	qed prop 1 = step 14 ;;
 }
 
-/* An implicit substitution inference for 4 general classes.  (Contributed
+/*An implicit substitution inference for 4 general classes.  (Contributed
        by NM, 5-Aug-1995.) */
 
 theorem cgsex4g (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y z w A, x y z w B, x y z w C, x y z w D, x y z w ps) {
@@ -677,7 +677,7 @@ proof of cgsex4g {
 	qed prop 1 = step 25 ;;
 }
 
-/* Elimination of an existential quantifier, using implicit substitution.
+/*Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 2-Mar-1995.)  (Revised by Mario Carneiro,
        10-Oct-2016.) */
 
@@ -701,7 +701,7 @@ proof of ceqsex {
 	qed prop 1 = step 8 ;;
 }
 
-/* Elimination of an existential quantifier, using implicit substitution.
+/*Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 2-Mar-1995.) */
 
 theorem ceqsexv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
@@ -717,7 +717,7 @@ proof of ceqsexv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of two existential quantifiers, using implicit
+/*Elimination of two existential quantifiers, using implicit
        substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) */
 
 theorem ceqsex2 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -748,7 +748,7 @@ proof of ceqsex2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Elimination of two existential quantifiers, using implicit
+/*Elimination of two existential quantifiers, using implicit
        substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) */
 
 theorem ceqsex2v (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x ps, y ch) {
@@ -767,7 +767,7 @@ proof of ceqsex2v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Elimination of three existential quantifiers, using implicit
+/*Elimination of three existential quantifiers, using implicit
        substitution.  (Contributed by NM, 16-Aug-2011.) */
 
 theorem ceqsex3v (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C, x ps, y ch, z th) {
@@ -801,7 +801,7 @@ proof of ceqsex3v {
 	qed prop 1 = step 16 ;;
 }
 
-/* Elimination of four existential quantifiers, using implicit
+/*Elimination of four existential quantifiers, using implicit
        substitution.  (Contributed by NM, 23-Sep-2011.) */
 
 theorem ceqsex4v (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class) disjointed(x y z w A, x y z w B, x y z w C, x y z w D, x ps, y ch, z th, w ta) {
@@ -837,7 +837,7 @@ proof of ceqsex4v {
 	qed prop 1 = step 16 ;;
 }
 
-/* Elimination of six existential quantifiers, using implicit
+/*Elimination of six existential quantifiers, using implicit
        substitution.  (Contributed by NM, 21-Sep-2011.) */
 
 theorem ceqsex6v (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, C : class, D : class, E : class, F : class) disjointed(x y z w v u A, x y z w v u B, x y z w v u C, x y z w v u D, x y z w v u E, x y z w v u F, x ps, y ch, z th, w ta, v et, u ze) {
@@ -876,7 +876,7 @@ proof of ceqsex6v {
 	qed prop 1 = step 15 ;;
 }
 
-/* Elimination of eight existential quantifiers, using implicit
+/*Elimination of eight existential quantifiers, using implicit
        substitution.  (Contributed by NM, 23-Sep-2011.) */
 
 theorem ceqsex8v (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff, si : wff, rh : wff, x : set, y : set, z : set, w : set, v : set, u : set, t : set, A : class, B : class, C : class, D : class, E : class, F : class, G : class, H : class, s : set) disjointed(x y z w v u t s A, x y z w v u t s B, x y z w v u t s C, x y z w v u t s D, x y z w v u t s E, x y z w v u t s F, x y z w v u t s G, x y z w v u t s H, x ps, y ch, z th, w ta, v et, u ze, t si, s rh) {
@@ -930,7 +930,7 @@ proof of ceqsex8v {
 	qed prop 1 = step 26 ;;
 }
 
-/* Change of bound variable using implicit substitution.  (Contributed by
+/*Change of bound variable using implicit substitution.  (Contributed by
        NM, 17-May-1996.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem gencbvex (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class) disjointed(x ps, y ph, x th, y ch, y A) {
@@ -965,7 +965,7 @@ proof of gencbvex {
 	qed prop 1 = step 19 ;;
 }
 
-/* Restatement of ~ gencbvex with weaker hypotheses.  (Contributed by
+/*Restatement of ~ gencbvex with weaker hypotheses.  (Contributed by
        Jeffrey Hankins, 6-Dec-2006.) */
 
 theorem gencbvex2 (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class) disjointed(x ps, y ph, x th, y ch, y A) {
@@ -985,7 +985,7 @@ proof of gencbvex2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Change of bound variable using implicit substitution.  (Contributed by
+/*Change of bound variable using implicit substitution.  (Contributed by
        NM, 17-May-1996.) */
 
 theorem gencbval (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class) disjointed(x ps, y ph, x th, y ch, y A) {
@@ -1007,7 +1007,7 @@ proof of gencbval {
 	qed prop 1 = step 6 ;;
 }
 
-/* Introduce an explicit substitution into an implicit substitution
+/*Introduce an explicit substitution into an implicit substitution
        hypothesis.  See also ~ csbhypf .  (Contributed by Raph Levien,
        10-Apr-2004.) */
 
@@ -1032,10 +1032,10 @@ proof of sbhypf {
 	qed prop 1 = step 10 ;;
 }
 
-/* Closed theorem form of ~ vtoclgf .  (Contributed by NM, 17-Feb-2013.)
+/*Closed theorem form of ~ vtoclgf .  (Contributed by NM, 17-Feb-2013.)
        (Revised by Mario Carneiro, 12-Oct-2016.) */
 
-theorem vtoclgft (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(z A, x z) {
+theorem vtoclgft (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(z A, x z, z) {
 	prop 1 : wff = |- ( ( ( F/_ x A ∧ F/ x ps ) ∧ ( ∀ x ( x = A → ( ph ↔ ps ) ) ∧ ∀ x ph ) ∧ A ∈ V ) → ps ) ;;
 }
 
@@ -1069,7 +1069,7 @@ proof of vtoclgft {
 	qed prop 1 = step 25 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
          Mario Carneiro, 15-Oct-2016.) */
 
 theorem vtocldf (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class)  {
@@ -1092,7 +1092,7 @@ proof of vtocldf {
 	qed prop 1 = step 5 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        Mario Carneiro, 15-Oct-2016.) */
 
 theorem vtocld (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A, x ph, x ch) {
@@ -1111,7 +1111,7 @@ proof of vtocld {
 	qed prop 1 = step 4 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  This is a
+/*Implicit substitution of a class for a set variable.  This is a
        generalization of ~ chvar .  (Contributed by NM, 30-Aug-1993.) */
 
 theorem vtoclf (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
@@ -1133,7 +1133,7 @@ proof of vtoclf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 30-Aug-1993.) */
 
 theorem vtocl (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
@@ -1150,7 +1150,7 @@ proof of vtocl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implicit substitution of classes for set variables.  (Contributed by NM,
+/*Implicit substitution of classes for set variables.  (Contributed by NM,
        26-Jul-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem vtocl2 (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x y ps) {
@@ -1179,7 +1179,7 @@ proof of vtocl2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Implicit substitution of classes for set variables.  (Contributed by NM,
+/*Implicit substitution of classes for set variables.  (Contributed by NM,
        3-Jun-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem vtocl3 (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class) disjointed(x y z A, x y z B, x y z C, x y z ps) {
@@ -1214,7 +1214,7 @@ proof of vtocl3 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 23-Dec-1993.) */
 
 theorem vtoclb (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class) disjointed(x A, x ch, x th) {
@@ -1232,7 +1232,7 @@ proof of vtoclb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implicit substitution of a class for a set variable, with bound-variable
+/*Implicit substitution of a class for a set variable, with bound-variable
        hypotheses in place of distinct variable restrictions.  (Contributed by
        NM, 21-Sep-2003.)  (Proof shortened by Mario Carneiro, 10-Oct-2016.) */
 
@@ -1255,7 +1255,7 @@ proof of vtoclgf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution of a class expression for a set variable.
+/*Implicit substitution of a class expression for a set variable.
        (Contributed by NM, 17-Apr-1995.) */
 
 theorem vtoclg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A, x ps) {
@@ -1272,7 +1272,7 @@ proof of vtoclg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 29-Apr-1994.) */
 
 theorem vtoclbg (ph : wff, ps : wff, ch : wff, th : wff, x : set, A : class, V : class) disjointed(x A, x ch, x th) {
@@ -1289,7 +1289,7 @@ proof of vtoclbg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 25-Apr-1995.) */
 
 theorem vtocl2gf (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class)  {
@@ -1316,10 +1316,10 @@ proof of vtocl2gf {
 	qed prop 1 = step 7 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) */
 
-theorem vtocl3gf (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class)  {
+theorem vtocl3gf (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(A, B, C, y, z) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ y A ;;
 	hyp 3 : wff = |- F/_ z A ;;
@@ -1352,7 +1352,7 @@ proof of vtocl3gf {
 	qed prop 1 = step 11 ;;
 }
 
-/* Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+/*Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 25-Apr-1995.) */
 
 theorem vtocl2g (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x A, y A, y B, x ps, y ch) {
@@ -1373,10 +1373,10 @@ proof of vtocl2g {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 17-Feb-2006.)  (Revised by Mario Carneiro, 10-Oct-2016.) */
 
-theorem vtoclgaf (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x B) {
+theorem vtoclgaf (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(A, x B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/ x ps ;;
 	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -1395,7 +1395,7 @@ proof of vtoclgaf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 20-Aug-1995.) */
 
 theorem vtoclga (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -1412,7 +1412,7 @@ proof of vtoclga {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+/*Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 10-Aug-2013.) */
 
 theorem vtocl2gaf (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y C, x y D) {
@@ -1448,7 +1448,7 @@ proof of vtocl2gaf {
 	qed prop 1 = step 16 ;;
 }
 
-/* Implicit substitution of 2 classes for 2 set variables.  (Contributed by
+/*Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 20-Aug-1995.) */
 
 theorem vtocl2ga (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x y C, x y D, x ps, y ch) {
@@ -1469,10 +1469,10 @@ proof of vtocl2ga {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution of 3 classes for 3 set variables.  (Contributed by
+/*Implicit substitution of 3 classes for 3 set variables.  (Contributed by
        NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 11-Oct-2016.) */
 
-theorem vtocl3gaf (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, T : class) disjointed(x y z R, x y z S, x y z T) {
+theorem vtocl3gaf (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, T : class) disjointed(A, B, C, x y z R, x y z S, x y z T) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ y A ;;
 	hyp 3 : wff = |- F/_ z A ;;
@@ -1520,7 +1520,7 @@ proof of vtocl3gaf {
 	qed prop 1 = step 26 ;;
 }
 
-/* Implicit substitution of 3 classes for 3 set variables.  (Contributed by
+/*Implicit substitution of 3 classes for 3 set variables.  (Contributed by
        NM, 20-Aug-1995.) */
 
 theorem vtocl3ga (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y z A, y z B, z C, x y z D, x y z R, x y z S, x ps, y ch, z th) {
@@ -1546,7 +1546,7 @@ proof of vtocl3ga {
 	qed prop 1 = step 10 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 10-Jan-2004.) */
 
 theorem vtocleg (ph : wff, x : set, A : class, V : class) disjointed(x A, x ph) {
@@ -1562,7 +1562,7 @@ proof of vtocleg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Closed theorem
+/*Implicit substitution of a class for a set variable.  (Closed theorem
        version of ~ vtoclef .)  (Contributed by NM, 7-Nov-2005.)  (Revised by
        Mario Carneiro, 11-Oct-2016.) */
 
@@ -1581,7 +1581,7 @@ proof of vtoclegft {
 	qed prop 1 = step 7 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 18-Aug-1993.) */
 
 theorem vtoclef (ph : wff, x : set, A : class) disjointed(x A) {
@@ -1599,7 +1599,7 @@ proof of vtoclef {
 	qed prop 1 = step 3 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 9-Sep-1993.) */
 
 theorem vtocle (ph : wff, x : set, A : class) disjointed(x A, x ph) {
@@ -1615,7 +1615,7 @@ proof of vtocle {
 	qed prop 1 = step 2 ;;
 }
 
-/* Implicit substitution of a class for a set variable.  (Contributed by
+/*Implicit substitution of a class for a set variable.  (Contributed by
        NM, 21-Nov-1994.) */
 
 theorem vtoclri (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -1631,10 +1631,10 @@ proof of vtoclri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A closed version of ~ spcimgf .  (Contributed by Mario Carneiro,
+/*A closed version of ~ spcimgf .  (Contributed by Mario Carneiro,
        4-Jan-2017.) */
 
-theorem spcimgft (ph : wff, ps : wff, x : set, A : class, B : class)  {
+theorem spcimgft (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x, A) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- F/_ x A ;;
 	-----------------------
@@ -1652,10 +1652,10 @@ proof of spcimgft {
 	qed prop 1 = step 7 ;;
 }
 
-/* A closed version of ~ spcgf .  (Contributed by Andrew Salmon,
+/*A closed version of ~ spcgf .  (Contributed by Andrew Salmon,
        6-Jun-2011.)  (Revised by Mario Carneiro, 4-Jan-2017.) */
 
-theorem spcgft (ph : wff, ps : wff, x : set, A : class, B : class)  {
+theorem spcgft (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x, A) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- F/_ x A ;;
 	-----------------------
@@ -1671,7 +1671,7 @@ proof of spcgft {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule of specialization, using implicit substitution.  Compare Theorem
+/*Rule of specialization, using implicit substitution.  Compare Theorem
          7.3 of [Quine] p. 44.  (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem spcimgf (ph : wff, ps : wff, x : set, A : class, V : class)  {
@@ -1688,7 +1688,7 @@ proof of spcimgf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existential specialization, using implicit substitution.  (Contributed
+/*Existential specialization, using implicit substitution.  (Contributed
        by Mario Carneiro, 4-Jan-2017.) */
 
 theorem spcimegf (ph : wff, ps : wff, x : set, A : class, V : class)  {
@@ -1709,11 +1709,11 @@ proof of spcimegf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rule of specialization, using implicit substitution.  Compare Theorem
+/*Rule of specialization, using implicit substitution.  Compare Theorem
        7.3 of [Quine] p. 44.  (Contributed by NM, 2-Feb-1997.)  (Revised by
        Andrew Salmon, 12-Aug-2011.) */
 
-theorem spcgf (ph : wff, ps : wff, x : set, A : class, V : class)  {
+theorem spcgf (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(A, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/ x ps ;;
 	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -1727,10 +1727,10 @@ proof of spcgf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existential specialization, using implicit substitution.  (Contributed
+/*Existential specialization, using implicit substitution.  (Contributed
        by NM, 2-Feb-1997.) */
 
-theorem spcegf (ph : wff, ps : wff, x : set, A : class, V : class)  {
+theorem spcegf (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(A, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/ x ps ;;
 	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -1748,7 +1748,7 @@ proof of spcegf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed
+/*Restricted specialization, using implicit substitution.  (Contributed
          by Mario Carneiro, 4-Jan-2017.) */
 
 theorem spcimdv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x ph, x ch) {
@@ -1768,7 +1768,7 @@ proof of spcimdv {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rule of specialization, using implicit substitution.  Analogous to
+/*Rule of specialization, using implicit substitution.  Analogous to
          ~ rspcdv .  (Contributed by David Moews, 1-May-2017.) */
 
 theorem spcdv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x ph, x ch) {
@@ -1784,7 +1784,7 @@ proof of spcdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted existential specialization, using implicit substitution.
+/*Restricted existential specialization, using implicit substitution.
        (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem spcimedv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x ph, x ch) {
@@ -1803,7 +1803,7 @@ proof of spcimedv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule of specialization, using implicit substitution.  Compare Theorem
+/*Rule of specialization, using implicit substitution.  Compare Theorem
        7.3 of [Quine] p. 44.  (Contributed by NM, 22-Jun-1994.) */
 
 theorem spcgv (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x ps, x A) {
@@ -1819,7 +1819,7 @@ proof of spcgv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existential specialization, using implicit substitution.  (Contributed
+/*Existential specialization, using implicit substitution.  (Contributed
        by NM, 14-Aug-1994.) */
 
 theorem spcegv (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x ps, x A) {
@@ -1835,7 +1835,7 @@ proof of spcegv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existential specialization with 2 quantifiers, using implicit
+/*Existential specialization with 2 quantifiers, using implicit
        substitution.  (Contributed by NM, 3-Aug-1995.) */
 
 theorem spc2egv (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ps) {
@@ -1856,7 +1856,7 @@ proof of spc2egv {
 	qed prop 1 = step 8 ;;
 }
 
-/* Specialization with 2 quantifiers, using implicit substitution.
+/*Specialization with 2 quantifiers, using implicit substitution.
        (Contributed by NM, 27-Apr-2004.) */
 
 theorem spc2gv (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ps) {
@@ -1874,7 +1874,7 @@ proof of spc2gv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existential specialization with 3 quantifiers, using implicit
+/*Existential specialization with 3 quantifiers, using implicit
        substitution.  (Contributed by NM, 12-May-2008.) */
 
 theorem spc3egv (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x y z A, x y z B, x y z C, x y z ps) {
@@ -1897,7 +1897,7 @@ proof of spc3egv {
 	qed prop 1 = step 10 ;;
 }
 
-/* Specialization with 3 quantifiers, using implicit substitution.
+/*Specialization with 3 quantifiers, using implicit substitution.
        (Contributed by NM, 12-May-2008.) */
 
 theorem spc3gv (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, V : class, W : class, X : class) disjointed(x y z A, x y z B, x y z C, x y z ps) {
@@ -1921,7 +1921,7 @@ proof of spc3gv {
 	qed prop 1 = step 11 ;;
 }
 
-/* Rule of specialization, using implicit substitution.  (Contributed by
+/*Rule of specialization, using implicit substitution.  (Contributed by
        NM, 22-Jun-1994.) */
 
 theorem spcv (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
@@ -1937,7 +1937,7 @@ proof of spcv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existential specialization, using implicit substitution.  (Contributed
+/*Existential specialization, using implicit substitution.  (Contributed
        by NM, 31-Dec-1993.)  (Proof shortened by Eric Schmidt, 22-Dec-2006.) */
 
 theorem spcev (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
@@ -1953,7 +1953,7 @@ proof of spcev {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existential specialization, using implicit substitution.  (Contributed
+/*Existential specialization, using implicit substitution.  (Contributed
        by NM, 3-Aug-1995.) */
 
 theorem spc2ev (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x y ps) {
@@ -1970,7 +1970,7 @@ proof of spc2ev {
 	qed prop 1 = step 2 ;;
 }
 
-/* A closed version of ~ rspc .  (Contributed by Andrew Salmon,
+/*A closed version of ~ rspc .  (Contributed by Andrew Salmon,
        6-Jun-2011.) */
 
 theorem rspct (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1999,7 +1999,7 @@ proof of rspct {
 	qed prop 1 = step 16 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 19-Apr-2005.)  (Revised by Mario Carneiro, 11-Oct-2016.) */
 
 theorem rspc (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2022,7 +2022,7 @@ proof of rspc {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted existential specialization, using implicit substitution.
+/*Restricted existential specialization, using implicit substitution.
        (Contributed by NM, 26-May-1998.)  (Revised by Mario Carneiro,
        11-Oct-2016.) */
 
@@ -2046,7 +2046,7 @@ proof of rspce {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 26-May-1998.) */
 
 theorem rspcv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2061,7 +2061,7 @@ proof of rspcv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 2-Feb-2006.) */
 
 theorem rspccv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2076,7 +2076,7 @@ proof of rspccv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 13-Sep-2005.) */
 
 theorem rspcva (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2091,7 +2091,7 @@ proof of rspcva {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 26-Jul-2006.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem rspccva (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2106,7 +2106,7 @@ proof of rspccva {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted existential specialization, using implicit substitution.
+/*Restricted existential specialization, using implicit substitution.
        (Contributed by NM, 26-May-1998.) */
 
 theorem rspcev (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2121,7 +2121,7 @@ proof of rspcev {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed
+/*Restricted specialization, using implicit substitution.  (Contributed
          by Mario Carneiro, 4-Jan-2017.) */
 
 theorem rspcimdv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph, x ch) {
@@ -2143,7 +2143,7 @@ proof of rspcimdv {
 	qed prop 1 = step 8 ;;
 }
 
-/* Restricted existential specialization, using implicit substitution.
+/*Restricted existential specialization, using implicit substitution.
        (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
 theorem rspcimedv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph, x ch) {
@@ -2162,7 +2162,7 @@ proof of rspcimedv {
 	qed prop 1 = step 5 ;;
 }
 
-/* Restricted specialization, using implicit substitution.  (Contributed by
+/*Restricted specialization, using implicit substitution.  (Contributed by
        NM, 17-Feb-2007.)  (Revised by Mario Carneiro, 4-Jan-2017.) */
 
 theorem rspcdv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph, x ch) {
@@ -2178,7 +2178,7 @@ proof of rspcdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted existential specialization, using implicit substitution.
+/*Restricted existential specialization, using implicit substitution.
        (Contributed by FL, 17-Apr-2007.)  (Revised by Mario Carneiro,
        4-Jan-2017.) */
 
@@ -2195,7 +2195,7 @@ proof of rspcedv {
 	qed prop 1 = step 2 ;;
 }
 
-/* 2-variable restricted specialization, using implicit substitution.
+/*2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 9-Nov-2012.) */
 
 theorem rspc2 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x C, x y D) {
@@ -2217,7 +2217,7 @@ proof of rspc2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* 2-variable restricted specialization, using implicit substitution.
+/*2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 13-Sep-1999.) */
 
 theorem rspc2v (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x C, x y D, x ch, y ps) {
@@ -2234,7 +2234,7 @@ proof of rspc2v {
 	qed prop 1 = step 3 ;;
 }
 
-/* 2-variable restricted specialization, using implicit substitution.
+/*2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 18-Jun-2014.) */
 
 theorem rspc2va (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x C, x y D, x ch, y ps) {
@@ -2250,7 +2250,7 @@ proof of rspc2va {
 	qed prop 1 = step 2 ;;
 }
 
-/* 2-variable restricted existential specialization, using implicit
+/*2-variable restricted existential specialization, using implicit
        substitution.  (Contributed by NM, 16-Oct-1999.) */
 
 theorem rspc2ev (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x C, x y D, x ch, y ps) {
@@ -2270,7 +2270,7 @@ proof of rspc2ev {
 	qed prop 1 = step 6 ;;
 }
 
-/* 3-variable restricted specialization, using implicit substitution.
+/*3-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 10-May-2005.) */
 
 theorem rspc3v (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, T : class) disjointed(z ps, x ch, y th, x y z A, y z B, z C, x R, x y S, x y z T) {
@@ -2291,7 +2291,7 @@ proof of rspc3v {
 	qed prop 1 = step 6 ;;
 }
 
-/* 3-variable restricted existentional specialization, using implicit
+/*3-variable restricted existentional specialization, using implicit
        substitution.  (Contributed by NM, 25-Jul-2012.) */
 
 theorem rspc3ev (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, A : class, B : class, C : class, R : class, S : class, T : class) disjointed(z ps, x ch, y th, x y z A, y z B, z C, x R, x y S, x y z T) {
@@ -2314,7 +2314,7 @@ proof of rspc3ev {
 	qed prop 1 = step 8 ;;
 }
 
-/* A variable introduction law for class equality.  (Contributed by NM,
+/*A variable introduction law for class equality.  (Contributed by NM,
        14-Apr-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
 
 theorem eqvinc (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2340,7 +2340,7 @@ proof of eqvinc {
 	qed prop 1 = step 13 ;;
 }
 
-/* A variable introduction law for class equality, using bound-variable
+/*A variable introduction law for class equality, using bound-variable
        hypotheses instead of distinct variable conditions.  (Contributed by NM,
        14-Sep-2003.) */
 
@@ -2367,7 +2367,7 @@ proof of eqvincf {
 	qed prop 1 = step 10 ;;
 }
 
-/* Two ways to express substitution of ` A ` for ` x ` in ` ph ` .
+/*Two ways to express substitution of ` A ` for ` x ` in ` ph ` .
        (Contributed by NM, 2-Mar-1995.) */
 
 theorem alexeq (ph : wff, x : set, A : class) disjointed(x A y, ph y) {
@@ -2390,7 +2390,7 @@ proof of alexeq {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality implies equivalence with substitution.  (Contributed by NM,
+/*Equality implies equivalence with substitution.  (Contributed by NM,
        2-Mar-1995.) */
 
 theorem ceqex (ph : wff, x : set, A : class) disjointed(x A y, ph y) {
@@ -2421,7 +2421,7 @@ proof of ceqex {
 	qed prop 1 = step 19 ;;
 }
 
-/* A representation of explicit substitution of a class for a variable,
+/*A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        11-Oct-2004.) */
 
@@ -2443,7 +2443,7 @@ proof of ceqsexg {
 	qed prop 1 = step 7 ;;
 }
 
-/* Elimination of an existential quantifier, using implicit substitution.
+/*Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 29-Dec-1996.) */
 
 theorem ceqsexgv (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A, x ps) {
@@ -2458,7 +2458,7 @@ proof of ceqsexgv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of a restricted existential quantifier, using implicit
+/*Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by NM, 30-Apr-2004.) */
 
 theorem ceqsrexv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2480,7 +2480,7 @@ proof of ceqsrexv {
 	qed prop 1 = step 9 ;;
 }
 
-/* Elimination of a restricted existential quantifier, using implicit
+/*Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by Mario Carneiro, 14-Mar-2014.) */
 
 theorem ceqsrexbv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
@@ -2503,7 +2503,7 @@ proof of ceqsrexbv {
 	qed prop 1 = step 10 ;;
 }
 
-/* Elimination of a restricted existential quantifier, using implicit
+/*Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by NM, 29-Oct-2005.) */
 
 theorem ceqsrex2v (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, x C, x y D, x ps, y ch) {
@@ -2528,7 +2528,7 @@ proof of ceqsrex2v {
 	qed prop 1 = step 11 ;;
 }
 
-/* An alternate definition of class membership when the class is a set.
+/*An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) */
 
 theorem clel2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2544,7 +2544,7 @@ proof of clel2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An alternate definition of class membership when the class is a set.
+/*An alternate definition of class membership when the class is a set.
        (Contributed by NM, 13-Aug-2005.) */
 
 theorem clel3g (x : set, A : class, B : class, V : class) disjointed(x A, x B) {
@@ -2558,7 +2558,7 @@ proof of clel3g {
 	qed prop 1 = step 3 ;;
 }
 
-/* An alternate definition of class membership when the class is a set.
+/*An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) */
 
 theorem clel3 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2573,7 +2573,7 @@ proof of clel3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An alternate definition of class membership when the class is a set.
+/*An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) */
 
 theorem clel4 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -2589,7 +2589,7 @@ proof of clel4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Compare theorem *13.183 in [WhiteheadRussell] p. 178.  Only ` A ` is
+/*Compare theorem *13.183 in [WhiteheadRussell] p. 178.  Only ` A ` is
        required to be a set.  (Contributed by Andrew Salmon, 3-Jun-2011.) */
 
 theorem pm13.183 (z : set, A : class, B : class, V : class) disjointed(y A z, y B z) {
@@ -2619,7 +2619,7 @@ proof of pm13.183 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.3 of [Margaris] p. 89.  We
+/*Restricted quantifier version of Theorem 19.3 of [Margaris] p. 89.  We
        don't need the non-empty class condition of ~ r19.3rzv when there is an
        outer quantifier.  (Contributed by NM, 25-Oct-2012.) */
 
@@ -2638,7 +2638,7 @@ proof of rr19.3v {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  We
+/*Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  We
        don't need the non-empty class condition of ~ r19.28zv when there is an
        outer quantifier.  (Contributed by NM, 29-Oct-2012.) */
 
@@ -2663,11 +2663,11 @@ proof of rr19.28v {
 	qed prop 1 = step 13 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.  (Closed
+/*Membership in a class abstraction, using implicit substitution.  (Closed
        theorem version of ~ elabg .)  (Contributed by NM, 7-Nov-2005.)  (Proof
        shortened by Andrew Salmon, 8-Jun-2011.) */
 
-theorem elabgt (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x ps) {
+theorem elabgt (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, ph, x ps) {
 	prop 1 : wff = |- ( ( A ∈ B ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( A ∈ { x | ph } ↔ ps ) ) ;;
 }
 
@@ -2691,7 +2691,7 @@ proof of elabgt {
 	qed prop 1 = step 16 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.  Compare
+/*Membership in a class abstraction, using implicit substitution.  Compare
        Theorem 6.13 of [Quine] p. 44.  This version has bound-variable
        hypotheses in place of distinct variable restrictions.  (Contributed by
        NM, 21-Sep-2003.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
@@ -2715,11 +2715,11 @@ proof of elabgf {
 	qed prop 1 = step 7 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.
+/*Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
        12-Oct-2016.) */
 
-theorem elabf (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
+theorem elabf (ph : wff, ps : wff, x : set, A : class) disjointed(ps, x A, ph) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- A ∈ _V ;;
 	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -2734,7 +2734,7 @@ proof of elabf {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.  Compare
+/*Membership in a class abstraction, using implicit substitution.  Compare
        Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 1-Aug-1994.) */
 
 theorem elab (ph : wff, ps : wff, x : set, A : class) disjointed(x ps, x A) {
@@ -2750,7 +2750,7 @@ proof of elab {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.  Compare
+/*Membership in a class abstraction, using implicit substitution.  Compare
        Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 14-Apr-1995.) */
 
 theorem elabg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x ps, x A) {
@@ -2766,7 +2766,7 @@ proof of elabg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.
+/*Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 13-Sep-1995.) */
 
 theorem elab2g (ph : wff, ps : wff, x : set, A : class, B : class, V : class) disjointed(x ps, x A) {
@@ -2783,7 +2783,7 @@ proof of elab2g {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.
+/*Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 13-Sep-1995.) */
 
 theorem elab2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A) {
@@ -2800,7 +2800,7 @@ proof of elab2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.
+/*Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 17-Oct-2012.) */
 
 theorem elab4g (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A) {
@@ -2817,10 +2817,10 @@ proof of elab4g {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class abstraction, with a weaker antecedent than
+/*Membership in a class abstraction, with a weaker antecedent than
        ~ elabgf .  (Contributed by NM, 6-Sep-2011.) */
 
-theorem elab3gf (ph : wff, ps : wff, x : set, A : class, B : class)  {
+theorem elab3gf (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(A) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/ x ps ;;
 	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -2838,7 +2838,7 @@ proof of elab3gf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in a class abstraction, with a weaker antecedent than
+/*Membership in a class abstraction, with a weaker antecedent than
        ~ elabg .  (Contributed by NM, 29-Aug-2006.) */
 
 theorem elab3g (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A) {
@@ -2854,7 +2854,7 @@ proof of elab3g {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a class abstraction using implicit substitution.
+/*Membership in a class abstraction using implicit substitution.
        (Contributed by NM, 10-Nov-2000.) */
 
 theorem elab3 (ph : wff, ps : wff, x : set, A : class) disjointed(x ps, x A) {
@@ -2870,7 +2870,7 @@ proof of elab3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a restricted class abstraction, using implicit
+/*Membership in a restricted class abstraction, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable restrictions.  (Contributed by NM, 21-Sep-2003.) */
 
@@ -2899,7 +2899,7 @@ proof of elrabf {
 	qed prop 1 = step 12 ;;
 }
 
-/* Membership in a restricted class abstraction, using implicit
+/*Membership in a restricted class abstraction, using implicit
        substitution.  (Contributed by NM, 21-May-1999.) */
 
 theorem elrab (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A, x B) {
@@ -2916,7 +2916,7 @@ proof of elrab {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in a restricted class abstraction, using implicit
+/*Membership in a restricted class abstraction, using implicit
        substitution.  (Contributed by NM, 5-Oct-2006.) */
 
 theorem elrab3 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A, x B) {
@@ -2931,7 +2931,7 @@ proof of elrab3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a class abstraction, using implicit substitution.
+/*Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 2-Nov-2006.) */
 
 theorem elrab2 (ph : wff, ps : wff, x : set, A : class, B : class, C : class) disjointed(x ps, x A, x B) {
@@ -2948,10 +2948,10 @@ proof of elrab2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Universal quantification over a class abstraction.  (Contributed by Jeff
+/*Universal quantification over a class abstraction.  (Contributed by Jeff
        Madsen, 10-Jun-2010.) */
 
-theorem ralab (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, y ps) {
+theorem ralab (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, y, y ps) {
 	hyp 1 : wff = |- ( y = x → ( ph ↔ ps ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∀ x ∈ { y | ph } ch ↔ ∀ x ( ps → ch ) ) ;;
@@ -2967,7 +2967,7 @@ proof of ralab {
 	qed prop 1 = step 6 ;;
 }
 
-/* Universal quantification over a restricted class abstraction.
+/*Universal quantification over a restricted class abstraction.
        (Contributed by Jeff Madsen, 10-Jun-2010.) */
 
 theorem ralrab (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, y A, y ps) {
@@ -2985,11 +2985,11 @@ proof of ralrab {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existential quantification over a class abstraction.  (Contributed by
+/*Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 23-Jan-2014.)  (Revised by Mario Carneiro,
        3-Sep-2015.) */
 
-theorem rexab (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, y ps) {
+theorem rexab (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, y, y ps) {
 	hyp 1 : wff = |- ( y = x → ( ph ↔ ps ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∃ x ∈ { y | ph } ch ↔ ∃ x ( ps ∧ ch ) ) ;;
@@ -3005,7 +3005,7 @@ proof of rexab {
 	qed prop 1 = step 6 ;;
 }
 
-/* Existential quantification over a class abstraction.  (Contributed by
+/*Existential quantification over a class abstraction.  (Contributed by
        Jeff Madsen, 17-Jun-2011.)  (Revised by Mario Carneiro, 3-Sep-2015.) */
 
 theorem rexrab (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, y A, y ps) {
@@ -3023,10 +3023,10 @@ proof of rexrab {
 	qed prop 1 = step 5 ;;
 }
 
-/* Universal quantification over a class abstraction.  (Contributed by
+/*Universal quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) */
 
-theorem ralab2 (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, x ch, x ph, y ps) {
+theorem ralab2 (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, x, x ch, x ph, y ps) {
 	hyp 1 : wff = |- ( x = y → ( ps ↔ ch ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∀ x ∈ { y | ph } ps ↔ ∀ y ( ph → ch ) ) ;;
@@ -3047,7 +3047,7 @@ proof of ralab2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Universal quantification over a restricted class abstraction.
+/*Universal quantification over a restricted class abstraction.
        (Contributed by Mario Carneiro, 3-Sep-2015.) */
 
 theorem ralrab2 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, x A, x ch, x ph, y ps) {
@@ -3068,10 +3068,10 @@ proof of ralrab2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Existential quantification over a class abstraction.  (Contributed by
+/*Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) */
 
-theorem rexab2 (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, x ch, x ph, y ps) {
+theorem rexab2 (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x y, x, x ch, x ph, y ps) {
 	hyp 1 : wff = |- ( x = y → ( ps ↔ ch ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∃ x ∈ { y | ph } ps ↔ ∃ y ( ph ∧ ch ) ) ;;
@@ -3092,7 +3092,7 @@ proof of rexab2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Existential quantification over a class abstraction.  (Contributed by
+/*Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) */
 
 theorem rexrab2 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, x A, x ch, x ph, y ps) {
@@ -3113,11 +3113,11 @@ proof of rexrab2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Identity used to create closed-form versions of bound-variable
+/*Identity used to create closed-form versions of bound-variable
        hypothesis builders for class expressions.  (Contributed by NM,
        10-Nov-2005.)  (Proof shortened by Mario Carneiro, 12-Oct-2016.) */
 
-theorem abidnf (x : set, z : set, A : class) disjointed(x z, A z) {
+theorem abidnf (x : set, z : set, A : class) disjointed(A, x z, x, A z) {
 	prop 1 : wff = |- ( F/_ x A → { z | ∀ x z ∈ A } = A ) ;;
 }
 
@@ -3130,13 +3130,13 @@ proof of abidnf {
 	qed prop 1 = step 5 ;;
 }
 
-/* A deduction theorem for converting the inference ` |- F/_ x A ` =>
+/*A deduction theorem for converting the inference ` |- F/_ x A ` =>
        ` |- ph ` into a closed theorem.  Use ~ nfa1 and ~ nfab to eliminate the
        hypothesis of the substitution instance ` ps ` of the inference.  For
        converting the inference form into a deduction form, ~ abidnf is
        useful.  (Contributed by NM, 8-Dec-2006.) */
 
-theorem dedhb (ph : wff, ps : wff, x : set, z : set, A : class) disjointed(x z, z A) {
+theorem dedhb (ph : wff, ps : wff, x : set, z : set, A : class) disjointed(A, x z, x, z A) {
 	hyp 1 : wff = |- ( A = { z | ∀ x z ∈ A } → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ps ;;
 	-----------------------
@@ -3151,7 +3151,7 @@ proof of dedhb {
 	qed prop 1 = step 4 ;;
 }
 
-/* A condition which implies existential uniqueness.  (Contributed by Jeff
+/*A condition which implies existential uniqueness.  (Contributed by Jeff
        Hankins, 8-Sep-2009.) */
 
 theorem eqeu (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(y ph, x y ps, x y A) {
@@ -3177,7 +3177,7 @@ proof of eqeu {
 	qed prop 1 = step 12 ;;
 }
 
-/* Equality has existential uniqueness.  (Contributed by NM,
+/*Equality has existential uniqueness.  (Contributed by NM,
        25-Nov-1994.) */
 
 theorem eueq (x : set, A : class) disjointed(x y A) {
@@ -3196,7 +3196,7 @@ proof of eueq {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality has existential uniqueness.  (Contributed by NM,
+/*Equality has existential uniqueness.  (Contributed by NM,
        5-Apr-1995.) */
 
 theorem eueq1 (x : set, A : class) disjointed(x A) {
@@ -3211,7 +3211,7 @@ proof of eueq1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality has existential uniqueness (split into 2 cases).  (Contributed
+/*Equality has existential uniqueness (split into 2 cases).  (Contributed
        by NM, 5-Apr-1995.) */
 
 theorem eueq2 (ph : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B) {
@@ -3251,7 +3251,7 @@ proof of eueq2 {
 	qed prop 1 = step 26 ;;
 }
 
-/* Equality has existential uniqueness (split into 3 cases).  (Contributed
+/*Equality has existential uniqueness (split into 3 cases).  (Contributed
        by NM, 5-Apr-1995.)  (Proof shortened by Mario Carneiro,
        28-Sep-2015.) */
 
@@ -3322,7 +3322,7 @@ proof of eueq3 {
 	qed prop 1 = step 54 ;;
 }
 
-/* There is at most one set equal to a class.  (Contributed by NM,
+/*There is at most one set equal to a class.  (Contributed by NM,
        8-Mar-1995.) */
 
 theorem moeq (x : set, A : class) disjointed(x A) {
@@ -3339,7 +3339,7 @@ proof of moeq {
 	qed prop 1 = step 6 ;;
 }
 
-/* "At most one" property of equality (split into 3 cases).  (The first 2
+/*"At most one" property of equality (split into 3 cases).  (The first 2
        hypotheses could be eliminated with longer proof.)  (Contributed by NM,
        23-Apr-1995.) */
 
@@ -3383,7 +3383,7 @@ proof of moeq3 {
 	qed prop 1 = step 27 ;;
 }
 
-/* "At most one" remains true after substitution.  (Contributed by NM,
+/*"At most one" remains true after substitution.  (Contributed by NM,
        9-Mar-1995.) */
 
 theorem mosub (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
@@ -3400,7 +3400,7 @@ proof of mosub {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem for inferring "at most one."  (Contributed by NM,
+/*Theorem for inferring "at most one."  (Contributed by NM,
        17-Oct-1996.) */
 
 theorem mo2icl (ph : wff, x : set, A : class) disjointed(x y A, y ph) {
@@ -3433,7 +3433,7 @@ proof of mo2icl {
 	qed prop 1 = step 21 ;;
 }
 
-/* Consequence of "at most one."  (Contributed by NM, 2-Jan-2015.) */
+/*Consequence of "at most one."  (Contributed by NM, 2-Jan-2015.) */
 
 theorem mob2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x y A, y ph, x y ps) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
@@ -3464,9 +3464,9 @@ proof of mob2 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Consequence of "at most one."  (Contributed by NM, 29-Jun-2008.) */
+/*Consequence of "at most one."  (Contributed by NM, 29-Jun-2008.) */
 
-theorem moi2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x ps) {
+theorem moi2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, ph, x ps) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( ( A ∈ B ∧ ∃* x ph ) ∧ ( ph ∧ ps ) ) → x = A ) ;;
@@ -3480,9 +3480,9 @@ proof of moi2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) */
+/*Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) */
 
-theorem mob (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ch, x ps) {
+theorem mob (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ch, ph, x ps) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ch ) ) ;;
 	-----------------------
@@ -3513,9 +3513,9 @@ proof of mob {
 	qed prop 1 = step 20 ;;
 }
 
-/* Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) */
+/*Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) */
 
-theorem moi (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ch, x ps) {
+theorem moi (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ch, ph, x ps) {
 	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ch ) ) ;;
 	-----------------------
@@ -3531,10 +3531,10 @@ proof of moi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Derive membership from uniqueness.  (Contributed by Jeff Madsen,
+/*Derive membership from uniqueness.  (Contributed by Jeff Madsen,
        2-Sep-2009.) */
 
-theorem morex (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(B x, A x, ps x) {
+theorem morex (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(B x, A x, ph, ps x) {
 	hyp 1 : wff = |- B ∈ _V ;;
 	hyp 2 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
 	-----------------------
@@ -3559,7 +3559,7 @@ proof of morex {
 	qed prop 1 = step 14 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.) */
 
@@ -3592,7 +3592,7 @@ proof of euxfr2 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Transfer existential uniqueness from a variable ` x ` to another
+/*Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.) */
 
@@ -3619,7 +3619,7 @@ proof of euxfr {
 	qed prop 1 = step 11 ;;
 }
 
-/* Existential uniqueness via an indirect equality.  (Contributed by NM,
+/*Existential uniqueness via an indirect equality.  (Contributed by NM,
        11-Oct-2010.) */
 
 theorem euind (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class) disjointed(y z w ph, x z ps, y z w A, x z B, x y w) {
@@ -3682,10 +3682,10 @@ proof of euind {
 	qed prop 1 = step 47 ;;
 }
 
-/* A way to express restricted uniqueness.  (Contributed by NM,
+/*A way to express restricted uniqueness.  (Contributed by NM,
        22-Nov-1994.) */
 
-theorem reu2 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph) {
+theorem reu2 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph, x) {
 	prop 1 : wff = |- ( ∃! x ∈ A ph ↔ ( ∃ x ∈ A ph ∧ ∀ x ∈ A ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
 }
 
@@ -3721,10 +3721,10 @@ proof of reu2 {
 	qed prop 1 = step 28 ;;
 }
 
-/* A way to express restricted uniqueness.  (Contributed by NM,
+/*A way to express restricted uniqueness.  (Contributed by NM,
        20-Oct-2006.) */
 
-theorem reu6 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph) {
+theorem reu6 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph, x) {
 	prop 1 : wff = |- ( ∃! x ∈ A ph ↔ ∃ y ∈ A ∀ x ∈ A ( ph ↔ x = y ) ) ;;
 }
 
@@ -3781,10 +3781,10 @@ proof of reu6 {
 	qed prop 1 = step 49 ;;
 }
 
-/* A way to express restricted uniqueness.  (Contributed by NM,
+/*A way to express restricted uniqueness.  (Contributed by NM,
        24-Oct-2006.) */
 
-theorem reu3 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph) {
+theorem reu3 (ph : wff, x : set, y : set, A : class) disjointed(x y A, x y, y ph, x) {
 	prop 1 : wff = |- ( ∃! x ∈ A ph ↔ ( ∃ x ∈ A ph ∧ ∃ y ∈ A ∀ x ∈ A ( ph → x = y ) ) ) ;;
 }
 
@@ -3814,10 +3814,10 @@ proof of reu3 {
 	qed prop 1 = step 22 ;;
 }
 
-/* A condition which implies existential uniqueness.  (Contributed by Mario
+/*A condition which implies existential uniqueness.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) */
 
-theorem reu6i (ph : wff, x : set, A : class, B : class) disjointed(x y A, x y B, y ph) {
+theorem reu6i (ph : wff, x : set, A : class, B : class) disjointed(x y A, x y B, y ph, x) {
 	prop 1 : wff = |- ( ( B ∈ A ∧ ∀ x ∈ A ( ph ↔ x = B ) ) → ∃! x ∈ A ph ) ;;
 }
 
@@ -3832,10 +3832,10 @@ proof of reu6i {
 	qed prop 1 = step 6 ;;
 }
 
-/* A condition which implies existential uniqueness.  (Contributed by Mario
+/*A condition which implies existential uniqueness.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) */
 
-theorem eqreu (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ps) {
+theorem eqreu (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, ph, x ps) {
 	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( B ∈ A ∧ ps ∧ ∀ x ∈ A ( ph → x = B ) ) → ∃! x ∈ A ph ) ;;
@@ -3854,7 +3854,7 @@ proof of eqreu {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted "at most one" using implicit substitution.  (Contributed by
+/*Restricted "at most one" using implicit substitution.  (Contributed by
        NM, 24-Oct-2006.)  (Revised by NM, 16-Jun-2017.) */
 
 theorem rmo4 (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, y ph, x ps) {
@@ -3887,7 +3887,7 @@ proof of rmo4 {
 	qed prop 1 = step 20 ;;
 }
 
-/* Restricted uniqueness using implicit substitution.  (Contributed by NM,
+/*Restricted uniqueness using implicit substitution.  (Contributed by NM,
        23-Nov-1994.) */
 
 theorem reu4 (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, y ph, x ps) {
@@ -3904,7 +3904,7 @@ proof of reu4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Restricted uniqueness using implicit substitution.  (Contributed by NM,
+/*Restricted uniqueness using implicit substitution.  (Contributed by NM,
        24-Oct-2006.) */
 
 theorem reu7 (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y z A, y z ph, x z ps) {
@@ -3932,7 +3932,7 @@ proof of reu7 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Restricted uniqueness using implicit substitution.  (Contributed by NM,
+/*Restricted uniqueness using implicit substitution.  (Contributed by NM,
        24-Oct-2006.) */
 
 theorem reu8 (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, y ph, x ps) {
@@ -3973,7 +3973,7 @@ proof of reu8 {
 	qed prop 1 = step 28 ;;
 }
 
-/* Equality has existential uniqueness.  (Contributed by Mario Carneiro,
+/*Equality has existential uniqueness.  (Contributed by Mario Carneiro,
        1-Sep-2015.) */
 
 theorem reueq (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -3991,7 +3991,7 @@ proof of reueq {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted "at most one" still holds when a conjunct is added.
+/*Restricted "at most one" still holds when a conjunct is added.
      (Contributed by NM, 16-Jun-2017.) */
 
 theorem rmoan (ph : wff, ps : wff, x : set, A : class)  {
@@ -4009,7 +4009,7 @@ proof of rmoan {
 	qed prop 1 = step 7 ;;
 }
 
-/* Restricted "at most one" is preserved through implication (note wff
+/*Restricted "at most one" is preserved through implication (note wff
      reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
 
 theorem rmoim (ph : wff, ps : wff, x : set, A : class)  {
@@ -4029,7 +4029,7 @@ proof of rmoim {
 	qed prop 1 = step 9 ;;
 }
 
-/* Restricted "at most one" is preserved through implication (note wff
+/*Restricted "at most one" is preserved through implication (note wff
        reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
 
 theorem rmoimia (ph : wff, ps : wff, x : set, A : class)  {
@@ -4044,7 +4044,7 @@ proof of rmoimia {
 	qed prop 1 = step 2 ;;
 }
 
-/* Restricted "at most one" is preserved through implication (note wff
+/*Restricted "at most one" is preserved through implication (note wff
        reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
 
 theorem rmoimi2 (ph : wff, ps : wff, x : set, A : class, B : class)  {
@@ -4062,7 +4062,7 @@ proof of rmoimi2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A condition allowing swap of uniqueness and existential quantifiers.
+/*A condition allowing swap of uniqueness and existential quantifiers.
        (Contributed by Thierry Arnoux, 7-Apr-2017.)  (Revised by NM,
        16-Jun-2017.) */
 
@@ -4099,7 +4099,7 @@ proof of 2reuswap {
 	qed prop 1 = step 25 ;;
 }
 
-/* Existential uniqueness via an indirect equality.  (Contributed by NM,
+/*Existential uniqueness via an indirect equality.  (Contributed by NM,
        16-Oct-2010.) */
 
 theorem reuind (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class) disjointed(w y z A, x z B, w x y z C, w y z ph, x z ps) {
@@ -4174,7 +4174,7 @@ proof of reuind {
 	qed prop 1 = step 60 ;;
 }
 
-/* Double restricted quantification with "at most one," analogous to
+/*Double restricted quantification with "at most one," analogous to
        ~ 2moex .  (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
 
 theorem 2rmorex (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x B, x y) {
@@ -4195,7 +4195,7 @@ proof of 2rmorex {
 	qed prop 1 = step 10 ;;
 }
 
-/* Lemma for ~ 2reu5 .  Note that ` E! x e. A E! y e. B ph ` does not mean
+/*Lemma for ~ 2reu5 .  Note that ` E! x e. A E! y e. B ph ` does not mean
        "there is exactly one ` x ` in ` A ` and exactly one ` y ` in ` B ` such
        that ` ph ` holds;" see comment for ~ 2eu5 .  (Contributed by Alexander
        van der Vekens, 17-Jun-2017.) */
@@ -4220,7 +4220,7 @@ proof of 2reu5lem1 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Lemma for ~ 2reu5 .  (Contributed by Alexander van der Vekens,
+/*Lemma for ~ 2reu5 .  (Contributed by Alexander van der Vekens,
        17-Jun-2017.) */
 
 theorem 2reu5lem2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x B, x y) {
@@ -4243,7 +4243,7 @@ proof of 2reu5lem2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Lemma for ~ 2reu5 .  This lemma is interesting in its own right, showing
+/*Lemma for ~ 2reu5 .  This lemma is interesting in its own right, showing
        that existential restriction in the last conjunct (the "at most one"
        part) is optional; compare ~ rmo2 .  (Contributed by Alexander van der
        Vekens, 17-Jun-2017.) */
@@ -4287,7 +4287,7 @@ proof of 2reu5lem3 {
 	qed prop 1 = step 31 ;;
 }
 
-/* Double restricted existential uniqueness in terms of restricted
+/*Double restricted existential uniqueness in terms of restricted
        existential quantification and restricted universal quantification,
        analogous to ~ 2eu5 and ~ reu3 .  (Contributed by Alexander van der
        Vekens, 17-Jun-2017.) */

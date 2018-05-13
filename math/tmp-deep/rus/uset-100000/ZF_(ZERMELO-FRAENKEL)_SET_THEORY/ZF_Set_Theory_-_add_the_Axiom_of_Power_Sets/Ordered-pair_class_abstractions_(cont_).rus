@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Ordered_pair_theorem.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Ordered-pair class abstractions (cont.)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
+/*The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
        (Contributed by NM, 14-Apr-1995.)  (Proof shortened by Andrew Salmon,
        25-Jul-2011.) */
 
@@ -24,7 +24,7 @@ proof of opabid {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in a class abstraction of pairs.  (Contributed by NM,
+/*Membership in a class abstraction of pairs.  (Contributed by NM,
        24-Mar-1998.) */
 
 theorem elopab (ph : wff, x : set, y : set, A : class) disjointed(x z A, y z A, z ph) {
@@ -48,11 +48,11 @@ proof of elopab {
 	qed prop 1 = step 12 ;;
 }
 
-/* The law of concretion in terms of substitutions.  (Contributed by NM,
+/*The law of concretion in terms of substitutions.  (Contributed by NM,
        30-Sep-2002.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.)
        (New usage is discouraged.) */
 
-theorem opelopabsbOLD (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, x y w) {
+theorem opelopabsbOLD (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, x y w, ph) {
 	prop 1 : wff = |- ( 〈 z , w 〉 ∈ { 〈 x , y 〉 | ph } ↔ [ w / y ] [ z / x ] ph ) ;;
 }
 
@@ -74,10 +74,10 @@ proof of opelopabsbOLD {
 	qed prop 1 = step 14 ;;
 }
 
-/* The law of concretion in terms of substitutions.  (Contributed by NM,
+/*The law of concretion in terms of substitutions.  (Contributed by NM,
        17-Mar-2008.)  (New usage is discouraged.) */
 
-theorem brabsbOLD (ph : wff, x : set, y : set, z : set, w : set, R : class) disjointed(x y z, x y w) {
+theorem brabsbOLD (ph : wff, x : set, y : set, z : set, w : set, R : class) disjointed(x y z, x y w, ph) {
 	hyp 1 : wff = |- R = { 〈 x , y 〉 | ph } ;;
 	-----------------------
 	prop 1 : wff = |- ( z R w ↔ [ w / y ] [ z / x ] ph ) ;;
@@ -91,7 +91,7 @@ proof of brabsbOLD {
 	qed prop 1 = step 4 ;;
 }
 
-/* The law of concretion in terms of substitutions.  (Contributed by NM,
+/*The law of concretion in terms of substitutions.  (Contributed by NM,
        30-Sep-2002.)  (Revised by Mario Carneiro, 18-Nov-2016.) */
 
 theorem opelopabsb (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y z w, w z A, w x B, w z ph) {
@@ -155,10 +155,10 @@ proof of opelopabsb {
 	qed prop 1 = step 52 ;;
 }
 
-/* The law of concretion in terms of substitutions.  (Contributed by NM,
+/*The law of concretion in terms of substitutions.  (Contributed by NM,
        17-Mar-2008.) */
 
-theorem brabsb (ph : wff, x : set, y : set, A : class, B : class, R : class) disjointed(x y, x B) {
+theorem brabsb (ph : wff, x : set, y : set, A : class, B : class, R : class) disjointed(x y, A, x B, ph) {
 	hyp 1 : wff = |- R = { 〈 x , y 〉 | ph } ;;
 	-----------------------
 	prop 1 : wff = |- ( A R B ↔ [. A / x ]. [. B / y ]. ph ) ;;
@@ -172,10 +172,10 @@ proof of brabsb {
 	qed prop 1 = step 4 ;;
 }
 
-/* Closed theorem form of ~ opelopab .  (Contributed by NM,
+/*Closed theorem form of ~ opelopab .  (Contributed by NM,
        19-Feb-2013.) */
 
-theorem opelopabt (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ch) {
+theorem opelopabt (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ch, ph) {
 	prop 1 : wff = |- ( ( ∀ x ∀ y ( x = A → ( ph ↔ ps ) ) ∧ ∀ x ∀ y ( y = B → ( ps ↔ ch ) ) ∧ ( A ∈ V ∧ B ∈ W ) ) → ( 〈 A , B 〉 ∈ { 〈 x , y 〉 | ph } ↔ ch ) ) ;;
 }
 
@@ -194,7 +194,7 @@ proof of opelopabt {
 	qed prop 1 = step 11 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        Mario Carneiro, 19-Dec-2013.) */
 
 theorem opelopabga (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ps) {
@@ -210,7 +210,7 @@ proof of opelopabga {
 	qed prop 1 = step 3 ;;
 }
 
-/* The law of concretion for a binary relation.  (Contributed by Mario
+/*The law of concretion for a binary relation.  (Contributed by Mario
          Carneiro, 19-Dec-2013.) */
 
 theorem brabga (ph : wff, ps : wff, x : set, y : set, A : class, B : class, R : class, V : class, W : class) disjointed(x y A, x y B, x y ps) {
@@ -229,7 +229,7 @@ proof of brabga {
 	qed prop 1 = step 5 ;;
 }
 
-/* Ordered pair membership in an ordered pair class abstraction.
+/*Ordered pair membership in an ordered pair class abstraction.
        (Contributed by Mario Carneiro, 19-Dec-2013.) */
 
 theorem opelopab2a (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, x y ps, x y C, x y D) {
@@ -248,7 +248,7 @@ proof of opelopab2a {
 	qed prop 1 = step 6 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        Mario Carneiro, 19-Dec-2013.) */
 
 theorem opelopaba (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x y ps) {
@@ -265,7 +265,7 @@ proof of opelopaba {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion for a binary relation.  (Contributed by NM,
+/*The law of concretion for a binary relation.  (Contributed by NM,
          19-Dec-2013.) */
 
 theorem braba (ph : wff, ps : wff, x : set, y : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y ps) {
@@ -283,7 +283,7 @@ proof of braba {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        NM, 28-May-1995.)  (Revised by Mario Carneiro, 19-Dec-2013.) */
 
 theorem opelopabg (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, x y B, x y ch) {
@@ -299,7 +299,7 @@ proof of opelopabg {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion for a binary relation.  (Contributed by NM,
+/*The law of concretion for a binary relation.  (Contributed by NM,
          16-Aug-1999.)  (Revised by Mario Carneiro, 19-Dec-2013.) */
 
 theorem brabg (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class, R : class) disjointed(x y A, x y B, x y ch) {
@@ -316,7 +316,7 @@ proof of brabg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Ordered pair membership in an ordered pair class abstraction.
+/*Ordered pair membership in an ordered pair class abstraction.
        (Contributed by NM, 14-Oct-2007.)  (Revised by Mario Carneiro,
        19-Dec-2013.) */
 
@@ -333,7 +333,7 @@ proof of opelopab2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        NM, 16-May-1995.) */
 
 theorem opelopab (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, x y ch) {
@@ -351,7 +351,7 @@ proof of opelopab {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion for a binary relation.  (Contributed by NM,
+/*The law of concretion for a binary relation.  (Contributed by NM,
          16-Aug-1999.) */
 
 theorem brab (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y ch) {
@@ -370,12 +370,12 @@ proof of brab {
 	qed prop 1 = step 2 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
        ~ opelopab uses bound-variable hypotheses in place of distinct variable
        conditions."  (Contributed by Mario Carneiro, 19-Dec-2013.)  (Proof
        shortened by Mario Carneiro, 18-Nov-2016.) */
 
-theorem opelopabaf (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem opelopabaf (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ph, ps) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- F/ y ps ;;
 	hyp 3 : wff = |- A ∈ _V ;;
@@ -394,11 +394,11 @@ proof of opelopabaf {
 	qed prop 1 = step 5 ;;
 }
 
-/* The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
+/*The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
        ~ opelopab uses bound-variable hypotheses in place of distinct variable
        conditions."  (Contributed by NM, 19-Dec-2008.) */
 
-theorem opelopabf (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
+theorem opelopabf (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B, ch, ph) {
 	hyp 1 : wff = |- F/ x ps ;;
 	hyp 2 : wff = |- F/ y ch ;;
 	hyp 3 : wff = |- A ∈ _V ;;
@@ -422,7 +422,7 @@ proof of opelopabf {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equivalence of ordered pair abstraction subclass and implication.
+/*Equivalence of ordered pair abstraction subclass and implication.
        (Contributed by NM, 27-Dec-1996.)  (Revised by Mario Carneiro,
        19-May-2013.) */
 
@@ -446,11 +446,11 @@ proof of ssopab2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Equivalence of ordered pair abstraction subclass and implication.
+/*Equivalence of ordered pair abstraction subclass and implication.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) */
 
-theorem ssopab2b (ph : wff, ps : wff, x : set, y : set)  {
+theorem ssopab2b (ph : wff, ps : wff, x : set, y : set) disjointed(ph, ps, x, y) {
 	prop 1 : wff = |- ( { 〈 x , y 〉 | ph } ⊆ { 〈 x , y 〉 | ps } ↔ ∀ x ∀ y ( ph → ps ) ) ;;
 }
 
@@ -472,7 +472,7 @@ proof of ssopab2b {
 	qed prop 1 = step 14 ;;
 }
 
-/* Inference of ordered pair abstraction subclass from implication.
+/*Inference of ordered pair abstraction subclass from implication.
        (Contributed by NM, 5-Apr-1995.) */
 
 theorem ssopab2i (ph : wff, ps : wff, x : set, y : set)  {
@@ -488,7 +488,7 @@ proof of ssopab2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference of ordered pair abstraction subclass from implication.
+/*Inference of ordered pair abstraction subclass from implication.
        (Contributed by NM, 19-Jan-2014.)  (Revised by Mario Carneiro,
        24-Jun-2014.) */
 
@@ -505,10 +505,10 @@ proof of ssopab2dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equivalence of ordered pair abstraction equality and biconditional.
+/*Equivalence of ordered pair abstraction equality and biconditional.
        (Contributed by Mario Carneiro, 4-Jan-2017.) */
 
-theorem eqopab2b (ph : wff, ps : wff, x : set, y : set)  {
+theorem eqopab2b (ph : wff, ps : wff, x : set, y : set) disjointed(ph, ps, x, y) {
 	prop 1 : wff = |- ( { 〈 x , y 〉 | ph } = { 〈 x , y 〉 | ps } ↔ ∀ x ∀ y ( ph ↔ ps ) ) ;;
 }
 
@@ -522,7 +522,7 @@ proof of eqopab2b {
 	qed prop 1 = step 6 ;;
 }
 
-/* Non-empty ordered pair class abstraction.  (Contributed by NM,
+/*Non-empty ordered pair class abstraction.  (Contributed by NM,
        10-Oct-2007.) */
 
 theorem opabn0 (ph : wff, x : set, y : set) disjointed(z ph, z x, z y) {
@@ -546,7 +546,7 @@ proof of opabn0 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Move indexed union inside an ordered-pair abstraction.  (Contributed by
+/*Move indexed union inside an ordered-pair abstraction.  (Contributed by
        Stefan O'Rear, 20-Feb-2015.) */
 
 theorem iunopab (ph : wff, x : set, y : set, z : set, A : class) disjointed(ph w, A w x, A y, w y z, x z) {

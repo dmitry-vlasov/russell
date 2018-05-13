@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Tarski-Bernays-Wajsberg_axioms_from_Meredith_s_Second_CO_Axiom.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
        Derive the Lukasiewicz axioms from the The Russell-Bernays Axioms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Justification for ~ rb-imdf .  (Contributed by Anthony Hart,
+/*Justification for ~ rb-imdf .  (Contributed by Anthony Hart,
      17-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -27,7 +27,7 @@ proof of rb-bijust {
 	qed prop 1 = step 9 ;;
 }
 
-/* The definition of implication, in terms of ` \/ ` and ` -. ` .
+/*The definition of implication, in terms of ` \/ ` and ` -. ` .
      (Contributed by Anthony Hart, 17-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -42,7 +42,7 @@ proof of rb-imdf {
 	qed prop 1 = step 3 ;;
 }
 
-/* Modus ponens for ` \/ ` ` -. ` axiom systems.  (Contributed by Anthony
+/*Modus ponens for ` \/ ` ` -. ` axiom systems.  (Contributed by Anthony
        Hart, 12-Aug-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -59,7 +59,7 @@ proof of anmp {
 	qed prop 1 = step 2 ;;
 }
 
-/* The first of four axioms in the Russell-Bernays axiom system.
+/*The first of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -76,7 +76,7 @@ proof of rb-ax1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The second of four axioms in the Russell-Bernays axiom system.
+/*The second of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -92,7 +92,7 @@ proof of rb-ax2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The third of four axioms in the Russell-Bernays axiom system.
+/*The third of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -107,7 +107,7 @@ proof of rb-ax3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The fourth of four axioms in the Russell-Bernays axiom system.
+/*The fourth of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -123,7 +123,7 @@ proof of rb-ax4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -141,7 +141,7 @@ proof of rbsyl {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -165,7 +165,7 @@ proof of rblem1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 18-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -182,7 +182,7 @@ proof of rblem2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 18-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -199,7 +199,7 @@ proof of rblem3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -235,7 +235,7 @@ proof of rblem4 {
 	qed prop 1 = step 20 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 19-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -268,7 +268,7 @@ proof of rblem5 {
 	qed prop 1 = step 21 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 19-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -294,7 +294,7 @@ proof of rblem6 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+/*Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 19-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -312,7 +312,7 @@ proof of rblem7 {
 	qed prop 1 = step 4 ;;
 }
 
-/* ~ ax-mp derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+/*~ ax-mp derived from Russell-Bernays'.  (Contributed by Anthony Hart,
        19-Aug-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -331,7 +331,7 @@ proof of re1axmp {
 	qed prop 1 = step 4 ;;
 }
 
-/* ~ luk-1 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+/*~ luk-1 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
      19-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -386,7 +386,7 @@ proof of re2luk1 {
 	qed prop 1 = step 43 ;;
 }
 
-/* ~ luk-2 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+/*~ luk-2 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
      19-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -423,7 +423,7 @@ proof of re2luk2 {
 	qed prop 1 = step 25 ;;
 }
 
-/* ~ luk-3 derived from Russell-Bernays'.
+/*~ luk-3 derived from Russell-Bernays'.
 
      This theorem, along with ~ re1axmp , ~ re2luk1 , and ~ re2luk2 shows that
      ~ rb-ax1 , ~ rb-ax2 , ~ rb-ax3 , and ~ rb-ax4 , along with ~ anmp , can be

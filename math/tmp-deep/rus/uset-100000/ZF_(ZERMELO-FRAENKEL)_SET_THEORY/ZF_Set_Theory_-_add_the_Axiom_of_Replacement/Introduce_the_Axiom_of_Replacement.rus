@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Introduce the Axiom of Replacement
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Replacement.  An axiom scheme of Zermelo-Fraenkel set theory.
+/*Axiom of Replacement.  An axiom scheme of Zermelo-Fraenkel set theory.
        Axiom 5 of [TakeutiZaring] p. 19.  It tells us that the image of any set
        under a function is also a set (see the variant ~ funimaex ).  Although
        ` ph ` may be any wff whatsoever, this axiom is useful (i.e. its
@@ -39,7 +39,7 @@ axiom ax-rep (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z w) 
 	prop 1 : wff = |- ( ∀ w ∃ y ∀ z ( ∀ y ph → z = y ) → ∃ y ∀ z ( z ∈ y ↔ ∃ w ( w ∈ x ∧ ∀ y ph ) ) ) ;;
 }
 
-/* The version of the Axiom of Replacement used in the Metamath Solitaire
+/*The version of the Axiom of Replacement used in the Metamath Solitaire
        applet ~ http://us.metamath.org/mmsolitaire/mms.html .  Equivalence is
        shown via the path ~ ax-rep ` -> ` ~ axrep1 ` -> ` ~ axrep2 ` -> `
        ~ axrepnd ` -> ` ~ zfcndrep = ~ ax-rep .  (Contributed by NM,
@@ -85,7 +85,7 @@ proof of axrep1 {
 	qed prop 1 = step 31 ;;
 }
 
-/* Axiom of Replacement expressed with the fewest number of different
+/*Axiom of Replacement expressed with the fewest number of different
        variables and without any restrictions on ` ph ` .  (Contributed by NM,
        15-Aug-2003.) */
 
@@ -128,7 +128,7 @@ proof of axrep2 {
 	qed prop 1 = step 30 ;;
 }
 
-/* Axiom of Replacement slightly strengthened from ~ axrep2 ; ` w ` may
+/*Axiom of Replacement slightly strengthened from ~ axrep2 ; ` w ` may
        occur free in ` ph ` .  (Contributed by NM, 2-Jan-1997.) */
 
 theorem axrep3 (ph : wff, x : set, y : set, z : set, w : set) disjointed(w x y z) {
@@ -158,7 +158,7 @@ proof of axrep3 {
 	qed prop 1 = step 19 ;;
 }
 
-/* A more traditional version of the Axiom of Replacement.  (Contributed by
+/*A more traditional version of the Axiom of Replacement.  (Contributed by
        NM, 14-Aug-1994.) */
 
 theorem axrep4 (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z w) {
@@ -193,7 +193,7 @@ proof of axrep4 {
 	qed prop 1 = step 22 ;;
 }
 
-/* Axiom of Replacement (similar to Axiom Rep of [BellMachover] p. 463).
+/*Axiom of Replacement (similar to Axiom Rep of [BellMachover] p. 463).
        The antecedent tells us ` ph ` is analogous to a "function" from ` x `
        to ` y ` (although it is not really a function since it is a wff and not
        a class).  In the consequent we postulate the existence of a set ` z `
@@ -230,7 +230,7 @@ proof of axrep5 {
 	qed prop 1 = step 18 ;;
 }
 
-/* An inference rule based on the Axiom of Replacement.  Typically, ` ph `
+/*An inference rule based on the Axiom of Replacement.  Typically, ` ph `
        defines a function from ` x ` to ` y ` .  (Contributed by NM,
        26-Nov-1995.) */
 
@@ -263,7 +263,7 @@ proof of zfrepclf {
 	qed prop 1 = step 16 ;;
 }
 
-/* An inference rule based on the Axiom of Replacement.  Typically, ` ph `
+/*An inference rule based on the Axiom of Replacement.  Typically, ` ph `
        defines a function from ` x ` to ` y ` .  (Contributed by NM,
        26-Nov-1995.) */
 
@@ -280,7 +280,7 @@ proof of zfrep3cl {
 	qed prop 1 = step 2 ;;
 }
 
-/* A version of Replacement using class abstractions.  (Contributed by NM,
+/*A version of Replacement using class abstractions.  (Contributed by NM,
        26-Nov-1995.) */
 
 theorem zfrep4 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(ph y z, ps z, x y z) {

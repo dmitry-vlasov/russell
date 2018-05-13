@@ -1,25 +1,30 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Russell_s_Paradox.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Proper substitution of classes for sets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$c [.  $.
-$c ].  $.
-$( Extend wff notation to include the proper substitution of a class for a
+
+$c [. $.
+
+$c ]. $.
+
+$(Extend wff notation to include the proper substitution of a class for a
      set.  Read this notation as "the proper substitution of class ` A ` for
      set variable ` x ` in wff ` ph ` ." $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fwsbc_0 $f wff ph $.
-	fwsbc_1 $f set x $.
-	fwsbc_2 $f class A $.
-	wsbc $a wff [. A / x ]. ph $.
+	$v ph x A  $.
+	f0_wsbc $f wff ph $.
+	f1_wsbc $f set x $.
+	f2_wsbc $f class A $.
+	a_wsbc $a wff [. A / x ]. ph $.
 $}
-$( Define the proper substitution of a class for a set.
+
+$(Define the proper substitution of a class for a set.
 
      When ` A ` is a proper class, our definition evaluates to false.  This is
      somewhat arbitrary: we could have, instead, chosen the conclusion of
@@ -51,17 +56,18 @@ $( Define the proper substitution of a class for a set.
      The related definition ~ df-csb defines proper substitution into a class
      variable (as opposed to a wff variable).  (Contributed by NM,
      14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fdf-sbc_0 $f wff ph $.
-	fdf-sbc_1 $f set x $.
-	fdf-sbc_2 $f class A $.
-	df-sbc $a |- ( [. A / x ]. ph <-> A e. { x | ph } ) $.
+	$v ph x A  $.
+	f0_df-sbc $f wff ph $.
+	f1_df-sbc $f set x $.
+	f2_df-sbc $f class A $.
+	a_df-sbc $a |- ( [. A / x ]. ph <-> A e. { x | ph } ) $.
 $}
-$( --- Start of old code before overloading prevention patch. $)
-$( @( Extend wff notation to include the proper substitution of a class for a
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@( Extend wff notation to include the proper substitution of a class for a
      set.  This definition "overloads" the previously defined variable
      substitution ~ wsb (where the first argument is a set variable rather
      than a class variable).  We take care to ensure that this new definition
@@ -69,8 +75,10 @@ $( @( Extend wff notation to include the proper substitution of a class for a
      substitution of class ` A ` for set variable ` x ` in wff ` ph ` ." @)
   wsbcSBC @a wff [ A / x ] ph @.
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+
+$(--- End of old code before overloading prevention patch. $)
+
+$(This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, provides us with a weak definition
      of the proper substitution of a class for a set.  Since our ~ df-sbc does
      not result in the same behavior as Quine's for proper classes, if we
@@ -85,96 +93,90 @@ $( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      below.  Proper substiution with a proper class is rarely needed, and when
      it is, we can simply use the expansion of Quine's definition.
      (Contributed by NM, 14-Apr-1995.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	fdfsbcq_0 $f wff ph $.
-	fdfsbcq_1 $f set x $.
-	fdfsbcq_2 $f class A $.
-	fdfsbcq_3 $f class B $.
-	dfsbcq $p |- ( A = B -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $= fdfsbcq_2 fdfsbcq_3 wceq fdfsbcq_2 fdfsbcq_0 fdfsbcq_1 cab wcel fdfsbcq_3 fdfsbcq_0 fdfsbcq_1 cab wcel fdfsbcq_0 fdfsbcq_1 fdfsbcq_2 wsbc fdfsbcq_0 fdfsbcq_1 fdfsbcq_3 wsbc fdfsbcq_2 fdfsbcq_3 fdfsbcq_0 fdfsbcq_1 cab eleq1 fdfsbcq_0 fdfsbcq_1 fdfsbcq_2 df-sbc fdfsbcq_0 fdfsbcq_1 fdfsbcq_3 df-sbc 3bitr4g $.
+	$v ph x A B  $.
+	f0_dfsbcq $f wff ph $.
+	f1_dfsbcq $f set x $.
+	f2_dfsbcq $f class A $.
+	f3_dfsbcq $f class B $.
+	p_dfsbcq $p |- ( A = B -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $= f2_dfsbcq f3_dfsbcq f0_dfsbcq f1_dfsbcq a_cab p_eleq1 f0_dfsbcq f1_dfsbcq f2_dfsbcq a_df-sbc f0_dfsbcq f1_dfsbcq f3_dfsbcq a_df-sbc f2_dfsbcq f3_dfsbcq a_wceq f2_dfsbcq f0_dfsbcq f1_dfsbcq a_cab a_wcel f3_dfsbcq f0_dfsbcq f1_dfsbcq a_cab a_wcel f0_dfsbcq f1_dfsbcq f2_dfsbcq a_wsbc f0_dfsbcq f1_dfsbcq f3_dfsbcq a_wsbc p_3bitr4g $.
 $}
-$( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+
+$(This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, relates logic substitution ~ df-sb
      and substitution for class variables ~ df-sbc .  Unlike Quine, we use a
      different syntax for each in order to avoid overloading it.  See remarks
      in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	fdfsbcq2_0 $f wff ph $.
-	fdfsbcq2_1 $f set x $.
-	fdfsbcq2_2 $f set y $.
-	fdfsbcq2_3 $f class A $.
-	dfsbcq2 $p |- ( y = A -> ( [ y / x ] ph <-> [. A / x ]. ph ) ) $= fdfsbcq2_2 sup_set_class fdfsbcq2_3 wceq fdfsbcq2_2 sup_set_class fdfsbcq2_0 fdfsbcq2_1 cab wcel fdfsbcq2_3 fdfsbcq2_0 fdfsbcq2_1 cab wcel fdfsbcq2_0 fdfsbcq2_1 fdfsbcq2_2 wsb fdfsbcq2_0 fdfsbcq2_1 fdfsbcq2_3 wsbc fdfsbcq2_2 sup_set_class fdfsbcq2_3 fdfsbcq2_0 fdfsbcq2_1 cab eleq1 fdfsbcq2_0 fdfsbcq2_2 fdfsbcq2_1 df-clab fdfsbcq2_0 fdfsbcq2_1 fdfsbcq2_3 wsbc fdfsbcq2_3 fdfsbcq2_0 fdfsbcq2_1 cab wcel fdfsbcq2_0 fdfsbcq2_1 fdfsbcq2_3 df-sbc bicomi 3bitr3g $.
+	$v ph x y A  $.
+	f0_dfsbcq2 $f wff ph $.
+	f1_dfsbcq2 $f set x $.
+	f2_dfsbcq2 $f set y $.
+	f3_dfsbcq2 $f class A $.
+	p_dfsbcq2 $p |- ( y = A -> ( [ y / x ] ph <-> [. A / x ]. ph ) ) $= f2_dfsbcq2 a_sup_set_class f3_dfsbcq2 f0_dfsbcq2 f1_dfsbcq2 a_cab p_eleq1 f0_dfsbcq2 f2_dfsbcq2 f1_dfsbcq2 a_df-clab f0_dfsbcq2 f1_dfsbcq2 f3_dfsbcq2 a_df-sbc f0_dfsbcq2 f1_dfsbcq2 f3_dfsbcq2 a_wsbc f3_dfsbcq2 f0_dfsbcq2 f1_dfsbcq2 a_cab a_wcel p_bicomi f2_dfsbcq2 a_sup_set_class f3_dfsbcq2 a_wceq f2_dfsbcq2 a_sup_set_class f0_dfsbcq2 f1_dfsbcq2 a_cab a_wcel f3_dfsbcq2 f0_dfsbcq2 f1_dfsbcq2 a_cab a_wcel f0_dfsbcq2 f1_dfsbcq2 f2_dfsbcq2 a_wsb f0_dfsbcq2 f1_dfsbcq2 f3_dfsbcq2 a_wsbc p_3bitr3g $.
 $}
-$( Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
+
+$(Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
      ~ df-sbc is a set variable.  This theorem lets us reuse theorems based on
      ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
      31-Dec-2016.)  (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	fsbsbc_0 $f wff ph $.
-	fsbsbc_1 $f set x $.
-	fsbsbc_2 $f set y $.
-	sbsbc $p |- ( [ y / x ] ph <-> [. y / x ]. ph ) $= fsbsbc_2 sup_set_class fsbsbc_2 sup_set_class wceq fsbsbc_0 fsbsbc_1 fsbsbc_2 wsb fsbsbc_0 fsbsbc_1 fsbsbc_2 sup_set_class wsbc wb fsbsbc_2 sup_set_class eqid fsbsbc_0 fsbsbc_1 fsbsbc_2 fsbsbc_2 sup_set_class dfsbcq2 ax-mp $.
+	$v ph x y  $.
+	f0_sbsbc $f wff ph $.
+	f1_sbsbc $f set x $.
+	f2_sbsbc $f set y $.
+	p_sbsbc $p |- ( [ y / x ] ph <-> [. y / x ]. ph ) $= f2_sbsbc a_sup_set_class p_eqid f0_sbsbc f1_sbsbc f2_sbsbc f2_sbsbc a_sup_set_class p_dfsbcq2 f2_sbsbc a_sup_set_class f2_sbsbc a_sup_set_class a_wceq f0_sbsbc f1_sbsbc f2_sbsbc a_wsb f0_sbsbc f1_sbsbc f2_sbsbc a_sup_set_class a_wsbc a_wb a_ax-mp $.
 $}
-$( Equality theorem for class substitution.  (Contributed by Mario
+
+$(Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	fsbceq1d_0 $f wff ph $.
-	fsbceq1d_1 $f set x $.
-	fsbceq1d_2 $f class A $.
-	fsbceq1d_3 $f class B $.
-	esbceq1d_0 $e |- ( ph -> A = B ) $.
-	sbceq1d $p |- ( ph -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $= fsbceq1d_0 fsbceq1d_2 fsbceq1d_3 wceq fsbceq1d_0 fsbceq1d_1 fsbceq1d_2 wsbc fsbceq1d_0 fsbceq1d_1 fsbceq1d_3 wsbc wb esbceq1d_0 fsbceq1d_0 fsbceq1d_1 fsbceq1d_2 fsbceq1d_3 dfsbcq syl $.
+	$v ph x A B  $.
+	f0_sbceq1d $f wff ph $.
+	f1_sbceq1d $f set x $.
+	f2_sbceq1d $f class A $.
+	f3_sbceq1d $f class B $.
+	e0_sbceq1d $e |- ( ph -> A = B ) $.
+	p_sbceq1d $p |- ( ph -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $= e0_sbceq1d f0_sbceq1d f1_sbceq1d f2_sbceq1d f3_sbceq1d p_dfsbcq f0_sbceq1d f2_sbceq1d f3_sbceq1d a_wceq f0_sbceq1d f1_sbceq1d f2_sbceq1d a_wsbc f0_sbceq1d f1_sbceq1d f3_sbceq1d a_wsbc a_wb p_syl $.
 $}
-$( Equality theorem for class substitution.  (Contributed by Mario
+
+$(Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	fsbceq1dd_0 $f wff ph $.
-	fsbceq1dd_1 $f set x $.
-	fsbceq1dd_2 $f class A $.
-	fsbceq1dd_3 $f class B $.
-	esbceq1dd_0 $e |- ( ph -> A = B ) $.
-	esbceq1dd_1 $e |- ( ph -> [. A / x ]. ph ) $.
-	sbceq1dd $p |- ( ph -> [. B / x ]. ph ) $= fsbceq1dd_0 fsbceq1dd_0 fsbceq1dd_1 fsbceq1dd_2 wsbc fsbceq1dd_0 fsbceq1dd_1 fsbceq1dd_3 wsbc esbceq1dd_1 fsbceq1dd_0 fsbceq1dd_1 fsbceq1dd_2 fsbceq1dd_3 esbceq1dd_0 sbceq1d mpbid $.
+	$v ph x A B  $.
+	f0_sbceq1dd $f wff ph $.
+	f1_sbceq1dd $f set x $.
+	f2_sbceq1dd $f class A $.
+	f3_sbceq1dd $f class B $.
+	e0_sbceq1dd $e |- ( ph -> A = B ) $.
+	e1_sbceq1dd $e |- ( ph -> [. A / x ]. ph ) $.
+	p_sbceq1dd $p |- ( ph -> [. B / x ]. ph ) $= e1_sbceq1dd e0_sbceq1dd f0_sbceq1dd f1_sbceq1dd f2_sbceq1dd f3_sbceq1dd p_sbceq1d f0_sbceq1dd f0_sbceq1dd f1_sbceq1dd f2_sbceq1dd a_wsbc f0_sbceq1dd f1_sbceq1dd f3_sbceq1dd a_wsbc p_mpbid $.
 $}
-$( This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
+
+$(This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
        (see its comments) and ~ dfsbcq2 .  (Contributed by NM, 18-Nov-2008.)
        (Proof shortened by Andrew Salmon, 29-Jun-2011.)
        (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d y A $.
-	$d y ph $.
-	$d x y $.
-	isbc8g_0 $f set y $.
-	fsbc8g_0 $f wff ph $.
-	fsbc8g_1 $f set x $.
-	fsbc8g_2 $f class A $.
-	fsbc8g_3 $f class V $.
-	sbc8g $p |- ( A e. V -> ( [. A / x ]. ph <-> A e. { x | ph } ) ) $= fsbc8g_0 fsbc8g_1 isbc8g_0 sup_set_class wsbc isbc8g_0 sup_set_class fsbc8g_0 fsbc8g_1 cab wcel fsbc8g_0 fsbc8g_1 fsbc8g_2 wsbc fsbc8g_2 fsbc8g_0 fsbc8g_1 cab wcel isbc8g_0 fsbc8g_2 fsbc8g_3 fsbc8g_0 fsbc8g_1 isbc8g_0 sup_set_class fsbc8g_2 dfsbcq isbc8g_0 sup_set_class fsbc8g_2 fsbc8g_0 fsbc8g_1 cab eleq1 isbc8g_0 sup_set_class fsbc8g_0 fsbc8g_1 cab wcel fsbc8g_0 fsbc8g_1 isbc8g_0 wsb fsbc8g_0 fsbc8g_1 isbc8g_0 sup_set_class wsbc fsbc8g_0 isbc8g_0 fsbc8g_1 df-clab isbc8g_0 sup_set_class isbc8g_0 sup_set_class wceq fsbc8g_0 fsbc8g_1 isbc8g_0 wsb fsbc8g_0 fsbc8g_1 isbc8g_0 sup_set_class wsbc wb isbc8g_0 equid fsbc8g_0 fsbc8g_1 isbc8g_0 isbc8g_0 sup_set_class dfsbcq2 ax-mp bitr2i vtoclbg $.
+	$v ph x A V  $.
+	$d y A  $.
+	$d y ph  $.
+	$d x y  $.
+	f0_sbc8g $f wff ph $.
+	f1_sbc8g $f set x $.
+	f2_sbc8g $f class A $.
+	f3_sbc8g $f class V $.
+	i0_sbc8g $f set y $.
+	p_sbc8g $p |- ( A e. V -> ( [. A / x ]. ph <-> A e. { x | ph } ) ) $= f0_sbc8g f1_sbc8g i0_sbc8g a_sup_set_class f2_sbc8g p_dfsbcq i0_sbc8g a_sup_set_class f2_sbc8g f0_sbc8g f1_sbc8g a_cab p_eleq1 f0_sbc8g i0_sbc8g f1_sbc8g a_df-clab i0_sbc8g p_equid f0_sbc8g f1_sbc8g i0_sbc8g i0_sbc8g a_sup_set_class p_dfsbcq2 i0_sbc8g a_sup_set_class i0_sbc8g a_sup_set_class a_wceq f0_sbc8g f1_sbc8g i0_sbc8g a_wsb f0_sbc8g f1_sbc8g i0_sbc8g a_sup_set_class a_wsbc a_wb a_ax-mp i0_sbc8g a_sup_set_class f0_sbc8g f1_sbc8g a_cab a_wcel f0_sbc8g f1_sbc8g i0_sbc8g a_wsb f0_sbc8g f1_sbc8g i0_sbc8g a_sup_set_class a_wsbc p_bitr2i f0_sbc8g f1_sbc8g i0_sbc8g a_sup_set_class a_wsbc i0_sbc8g a_sup_set_class f0_sbc8g f1_sbc8g a_cab a_wcel f0_sbc8g f1_sbc8g f2_sbc8g a_wsbc f2_sbc8g f0_sbc8g f1_sbc8g a_cab a_wcel i0_sbc8g f2_sbc8g f3_sbc8g p_vtoclbg $.
 $}
-$( The disjunction of two equivalences for class substitution does not
+
+$(The disjunction of two equivalences for class substitution does not
        require a class existence hypothesis.  This theorem tells us that there
        are only 2 possibilities for ` [ A / x ] ph ` behavior at proper
        classes, matching the ~ sbc5 (false) and ~ sbc6 (true) conclusions.
@@ -185,1514 +187,1372 @@ $( The disjunction of two equivalences for class substitution does not
        disjunct) and true (the second disjunct) as a function of some other
        variable ` y ` that ` ph ` or ` A ` may contain.  (Contributed by NM,
        11-Oct-2004.)  (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	$d y ph $.
-	isbc2or_0 $f set y $.
-	fsbc2or_0 $f wff ph $.
-	fsbc2or_1 $f set x $.
-	fsbc2or_2 $f class A $.
-	sbc2or $p |- ( ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) \/ ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $= fsbc2or_2 cvv wcel fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal wb wo fsbc2or_2 cvv wcel fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal wb fsbc2or_0 fsbc2or_1 isbc2or_0 wsb fsbc2or_1 sup_set_class isbc2or_0 sup_set_class wceq fsbc2or_0 wa fsbc2or_1 wex fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex isbc2or_0 fsbc2or_2 cvv fsbc2or_0 fsbc2or_1 isbc2or_0 fsbc2or_2 dfsbcq2 isbc2or_0 sup_set_class fsbc2or_2 wceq fsbc2or_1 sup_set_class isbc2or_0 sup_set_class wceq fsbc2or_0 wa fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 isbc2or_0 sup_set_class fsbc2or_2 wceq fsbc2or_1 sup_set_class isbc2or_0 sup_set_class wceq fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 isbc2or_0 sup_set_class fsbc2or_2 fsbc2or_1 sup_set_class eqeq2 anbi1d exbidv fsbc2or_0 fsbc2or_1 isbc2or_0 sb5 vtoclbg orcd fsbc2or_2 cvv wcel wn fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wn wb wo fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal wb wo fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex pm5.15 fsbc2or_2 cvv wcel wn fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wn wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal wb fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wb fsbc2or_2 cvv wcel wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal fsbc2or_0 fsbc2or_1 fsbc2or_2 wsbc fsbc2or_2 cvv wcel wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 wex wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 wal fsbc2or_2 cvv wcel wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_1 fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wa fsbc2or_2 cvv wcel fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_2 cvv wcel fsbc2or_0 fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_1 sup_set_class cvv wcel fsbc2or_2 cvv wcel fsbc2or_1 vex fsbc2or_1 sup_set_class fsbc2or_2 cvv eleq1 mpbii adantr con3i nexdv fsbc2or_2 cvv wcel wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 wi fsbc2or_1 fsbc2or_2 cvv wcel wn fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_0 fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_2 cvv wcel fsbc2or_1 sup_set_class fsbc2or_2 wceq fsbc2or_1 sup_set_class cvv wcel fsbc2or_2 cvv wcel fsbc2or_1 vex fsbc2or_1 sup_set_class fsbc2or_2 cvv eleq1 mpbii con3i pm2.21d alrimiv 2thd bibi2d orbi2d mpbii pm2.61i $.
+	$v ph x A  $.
+	$d x y A  $.
+	$d y ph  $.
+	f0_sbc2or $f wff ph $.
+	f1_sbc2or $f set x $.
+	f2_sbc2or $f class A $.
+	i0_sbc2or $f set y $.
+	p_sbc2or $p |- ( ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) \/ ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $= f0_sbc2or f1_sbc2or i0_sbc2or f2_sbc2or p_dfsbcq2 i0_sbc2or a_sup_set_class f2_sbc2or f1_sbc2or a_sup_set_class p_eqeq2 i0_sbc2or a_sup_set_class f2_sbc2or a_wceq f1_sbc2or a_sup_set_class i0_sbc2or a_sup_set_class a_wceq f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or p_anbi1d i0_sbc2or a_sup_set_class f2_sbc2or a_wceq f1_sbc2or a_sup_set_class i0_sbc2or a_sup_set_class a_wceq f0_sbc2or a_wa f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or p_exbidv f0_sbc2or f1_sbc2or i0_sbc2or p_sb5 f0_sbc2or f1_sbc2or i0_sbc2or a_wsb f1_sbc2or a_sup_set_class i0_sbc2or a_sup_set_class a_wceq f0_sbc2or a_wa f1_sbc2or a_wex f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex i0_sbc2or f2_sbc2or a_cvv p_vtoclbg f2_sbc2or a_cvv a_wcel f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal a_wb p_orcd f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex p_pm5.15 f1_sbc2or p_vex f1_sbc2or a_sup_set_class f2_sbc2or a_cvv p_eleq1 f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f1_sbc2or a_sup_set_class a_cvv a_wcel f2_sbc2or a_cvv a_wcel p_mpbii f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f2_sbc2or a_cvv a_wcel f0_sbc2or p_adantr f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f2_sbc2or a_cvv a_wcel p_con3i f2_sbc2or a_cvv a_wcel a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or p_nexdv f1_sbc2or p_vex f1_sbc2or a_sup_set_class f2_sbc2or a_cvv p_eleq1 f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f1_sbc2or a_sup_set_class a_cvv a_wcel f2_sbc2or a_cvv a_wcel p_mpbii f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f2_sbc2or a_cvv a_wcel p_con3i f2_sbc2or a_cvv a_wcel a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or p_pm2.21d f2_sbc2or a_cvv a_wcel a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or p_alrimiv f2_sbc2or a_cvv a_wcel a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal p_2thd f2_sbc2or a_cvv a_wcel a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wn f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc p_bibi2d f2_sbc2or a_cvv a_wcel a_wn f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wn a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wb p_orbi2d f2_sbc2or a_cvv a_wcel a_wn f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wn a_wb a_wo f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal a_wb a_wo p_mpbii f2_sbc2or a_cvv a_wcel f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wa f1_sbc2or a_wex a_wb f0_sbc2or f1_sbc2or f2_sbc2or a_wsbc f1_sbc2or a_sup_set_class f2_sbc2or a_wceq f0_sbc2or a_wi f1_sbc2or a_wal a_wb a_wo p_pm2.61i $.
 $}
-$( By our definition of proper substitution, it can only be true if the
+
+$(By our definition of proper substitution, it can only be true if the
      substituted expression is a set.  (Contributed by Mario Carneiro,
      13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fsbcex_0 $f wff ph $.
-	fsbcex_1 $f set x $.
-	fsbcex_2 $f class A $.
-	sbcex $p |- ( [. A / x ]. ph -> A e. _V ) $= fsbcex_0 fsbcex_1 fsbcex_2 wsbc fsbcex_2 fsbcex_0 fsbcex_1 cab wcel fsbcex_2 cvv wcel fsbcex_0 fsbcex_1 fsbcex_2 df-sbc fsbcex_2 fsbcex_0 fsbcex_1 cab elex sylbi $.
+	$v ph x A  $.
+	f0_sbcex $f wff ph $.
+	f1_sbcex $f set x $.
+	f2_sbcex $f class A $.
+	p_sbcex $p |- ( [. A / x ]. ph -> A e. _V ) $= f0_sbcex f1_sbcex f2_sbcex a_df-sbc f2_sbcex f0_sbcex f1_sbcex a_cab p_elex f0_sbcex f1_sbcex f2_sbcex a_wsbc f2_sbcex f0_sbcex f1_sbcex a_cab a_wcel f2_sbcex a_cvv a_wcel p_sylbi $.
 $}
-$( Equality theorem for class substitution.  Class version of ~ sbequ12 .
+
+$(Equality theorem for class substitution.  Class version of ~ sbequ12 .
      (Contributed by NM, 26-Sep-2003.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fsbceq1a_0 $f wff ph $.
-	fsbceq1a_1 $f set x $.
-	fsbceq1a_2 $f class A $.
-	sbceq1a $p |- ( x = A -> ( ph <-> [. A / x ]. ph ) ) $= fsbceq1a_0 fsbceq1a_0 fsbceq1a_1 fsbceq1a_1 wsb fsbceq1a_1 sup_set_class fsbceq1a_2 wceq fsbceq1a_0 fsbceq1a_1 fsbceq1a_2 wsbc fsbceq1a_0 fsbceq1a_1 sbid fsbceq1a_0 fsbceq1a_1 fsbceq1a_1 fsbceq1a_2 dfsbcq2 syl5bbr $.
+	$v ph x A  $.
+	f0_sbceq1a $f wff ph $.
+	f1_sbceq1a $f set x $.
+	f2_sbceq1a $f class A $.
+	p_sbceq1a $p |- ( x = A -> ( ph <-> [. A / x ]. ph ) ) $= f0_sbceq1a f1_sbceq1a p_sbid f0_sbceq1a f1_sbceq1a f1_sbceq1a f2_sbceq1a p_dfsbcq2 f0_sbceq1a f0_sbceq1a f1_sbceq1a f1_sbceq1a a_wsb f1_sbceq1a a_sup_set_class f2_sbceq1a a_wceq f0_sbceq1a f1_sbceq1a f2_sbceq1a a_wsbc p_syl5bbr $.
 $}
-$( Equality theorem for class substitution.  Class version of ~ sbequ12r .
+
+$(Equality theorem for class substitution.  Class version of ~ sbequ12r .
      (Contributed by NM, 4-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fsbceq2a_0 $f wff ph $.
-	fsbceq2a_1 $f set x $.
-	fsbceq2a_2 $f class A $.
-	sbceq2a $p |- ( A = x -> ( [. A / x ]. ph <-> ph ) ) $= fsbceq2a_2 fsbceq2a_1 sup_set_class wceq fsbceq2a_0 fsbceq2a_0 fsbceq2a_1 fsbceq2a_2 wsbc fsbceq2a_0 fsbceq2a_0 fsbceq2a_1 fsbceq2a_2 wsbc wb fsbceq2a_1 sup_set_class fsbceq2a_2 fsbceq2a_0 fsbceq2a_1 fsbceq2a_2 sbceq1a eqcoms bicomd $.
+	$v ph x A  $.
+	f0_sbceq2a $f wff ph $.
+	f1_sbceq2a $f set x $.
+	f2_sbceq2a $f class A $.
+	p_sbceq2a $p |- ( A = x -> ( [. A / x ]. ph <-> ph ) ) $= f0_sbceq2a f1_sbceq2a f2_sbceq2a p_sbceq1a f0_sbceq2a f0_sbceq2a f1_sbceq2a f2_sbceq2a a_wsbc a_wb f1_sbceq2a a_sup_set_class f2_sbceq2a p_eqcoms f2_sbceq2a f1_sbceq2a a_sup_set_class a_wceq f0_sbceq2a f0_sbceq2a f1_sbceq2a f2_sbceq2a a_wsbc p_bicomd $.
 $}
-$( Specialization: if a formula is true for all sets, it is true for any
+
+$(Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d ph y $.
-	$d A y $.
-	$d x y $.
-	ispsbc_0 $f set y $.
-	fspsbc_0 $f wff ph $.
-	fspsbc_1 $f set x $.
-	fspsbc_2 $f class A $.
-	fspsbc_3 $f class V $.
-	spsbc $p |- ( A e. V -> ( A. x ph -> [. A / x ]. ph ) ) $= fspsbc_0 fspsbc_1 wal fspsbc_0 fspsbc_1 fspsbc_2 wsbc wi ispsbc_0 fspsbc_2 fspsbc_3 fspsbc_0 fspsbc_1 wal fspsbc_0 fspsbc_1 ispsbc_0 sup_set_class wsbc ispsbc_0 sup_set_class fspsbc_2 wceq fspsbc_0 fspsbc_1 fspsbc_2 wsbc fspsbc_0 fspsbc_1 wal fspsbc_0 fspsbc_1 ispsbc_0 wsb fspsbc_0 fspsbc_1 ispsbc_0 sup_set_class wsbc fspsbc_0 fspsbc_1 ispsbc_0 stdpc4 fspsbc_0 fspsbc_1 ispsbc_0 sbsbc sylib fspsbc_0 fspsbc_1 ispsbc_0 sup_set_class fspsbc_2 dfsbcq syl5ib vtocleg $.
+	$v ph x A V  $.
+	$d ph y  $.
+	$d A y  $.
+	$d x y  $.
+	f0_spsbc $f wff ph $.
+	f1_spsbc $f set x $.
+	f2_spsbc $f class A $.
+	f3_spsbc $f class V $.
+	i0_spsbc $f set y $.
+	p_spsbc $p |- ( A e. V -> ( A. x ph -> [. A / x ]. ph ) ) $= f0_spsbc f1_spsbc i0_spsbc p_stdpc4 f0_spsbc f1_spsbc i0_spsbc p_sbsbc f0_spsbc f1_spsbc a_wal f0_spsbc f1_spsbc i0_spsbc a_wsb f0_spsbc f1_spsbc i0_spsbc a_sup_set_class a_wsbc p_sylib f0_spsbc f1_spsbc i0_spsbc a_sup_set_class f2_spsbc p_dfsbcq f0_spsbc f1_spsbc a_wal f0_spsbc f1_spsbc i0_spsbc a_sup_set_class a_wsbc i0_spsbc a_sup_set_class f2_spsbc a_wceq f0_spsbc f1_spsbc f2_spsbc a_wsbc p_syl5ib f0_spsbc f1_spsbc a_wal f0_spsbc f1_spsbc f2_spsbc a_wsbc a_wi i0_spsbc f2_spsbc f3_spsbc p_vtocleg $.
 $}
-$( Specialization: if a formula is true for all sets, it is true for any
+
+$(Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
        9-Feb-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	fspsbcd_0 $f wff ph $.
-	fspsbcd_1 $f wff ps $.
-	fspsbcd_2 $f set x $.
-	fspsbcd_3 $f class A $.
-	fspsbcd_4 $f class V $.
-	espsbcd_0 $e |- ( ph -> A e. V ) $.
-	espsbcd_1 $e |- ( ph -> A. x ps ) $.
-	spsbcd $p |- ( ph -> [. A / x ]. ps ) $= fspsbcd_0 fspsbcd_3 fspsbcd_4 wcel fspsbcd_1 fspsbcd_2 wal fspsbcd_1 fspsbcd_2 fspsbcd_3 wsbc espsbcd_0 espsbcd_1 fspsbcd_1 fspsbcd_2 fspsbcd_3 fspsbcd_4 spsbc sylc $.
+	$v ph ps x A V  $.
+	$d ph  $.
+	$d A  $.
+	$d x  $.
+	f0_spsbcd $f wff ph $.
+	f1_spsbcd $f wff ps $.
+	f2_spsbcd $f set x $.
+	f3_spsbcd $f class A $.
+	f4_spsbcd $f class V $.
+	e0_spsbcd $e |- ( ph -> A e. V ) $.
+	e1_spsbcd $e |- ( ph -> A. x ps ) $.
+	p_spsbcd $p |- ( ph -> [. A / x ]. ps ) $= e0_spsbcd e1_spsbcd f1_spsbcd f2_spsbcd f3_spsbcd f4_spsbcd p_spsbc f0_spsbcd f3_spsbcd f4_spsbcd a_wcel f1_spsbcd f2_spsbcd a_wal f1_spsbcd f2_spsbcd f3_spsbcd a_wsbc p_sylc $.
 $}
-$( A substitution into a theorem remains true (when ` A ` is a set).
+
+$(A substitution into a theorem remains true (when ` A ` is a set).
        (Contributed by NM, 5-Nov-2005.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	fsbcth_0 $f wff ph $.
-	fsbcth_1 $f set x $.
-	fsbcth_2 $f class A $.
-	fsbcth_3 $f class V $.
-	esbcth_0 $e |- ph $.
-	sbcth $p |- ( A e. V -> [. A / x ]. ph ) $= fsbcth_2 fsbcth_3 wcel fsbcth_0 fsbcth_1 wal fsbcth_0 fsbcth_1 fsbcth_2 wsbc fsbcth_0 fsbcth_1 esbcth_0 ax-gen fsbcth_0 fsbcth_1 fsbcth_2 fsbcth_3 spsbc mpi $.
+	$v ph x A V  $.
+	f0_sbcth $f wff ph $.
+	f1_sbcth $f set x $.
+	f2_sbcth $f class A $.
+	f3_sbcth $f class V $.
+	e0_sbcth $e |- ph $.
+	p_sbcth $p |- ( A e. V -> [. A / x ]. ph ) $= e0_sbcth f0_sbcth f1_sbcth a_ax-gen f0_sbcth f1_sbcth f2_sbcth f3_sbcth p_spsbc f2_sbcth f3_sbcth a_wcel f0_sbcth f1_sbcth a_wal f0_sbcth f1_sbcth f2_sbcth a_wsbc p_mpi $.
 $}
-$( Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
+
+$(Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
        (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x ph $.
-	fsbcthdv_0 $f wff ph $.
-	fsbcthdv_1 $f wff ps $.
-	fsbcthdv_2 $f set x $.
-	fsbcthdv_3 $f class A $.
-	fsbcthdv_4 $f class V $.
-	esbcthdv_0 $e |- ( ph -> ps ) $.
-	sbcthdv $p |- ( ( ph /\ A e. V ) -> [. A / x ]. ps ) $= fsbcthdv_0 fsbcthdv_1 fsbcthdv_2 wal fsbcthdv_3 fsbcthdv_4 wcel fsbcthdv_1 fsbcthdv_2 fsbcthdv_3 wsbc fsbcthdv_0 fsbcthdv_1 fsbcthdv_2 esbcthdv_0 alrimiv fsbcthdv_1 fsbcthdv_2 fsbcthdv_3 fsbcthdv_4 spsbc mpan9 $.
+	$v ph ps x A V  $.
+	$d x ph  $.
+	f0_sbcthdv $f wff ph $.
+	f1_sbcthdv $f wff ps $.
+	f2_sbcthdv $f set x $.
+	f3_sbcthdv $f class A $.
+	f4_sbcthdv $f class V $.
+	e0_sbcthdv $e |- ( ph -> ps ) $.
+	p_sbcthdv $p |- ( ( ph /\ A e. V ) -> [. A / x ]. ps ) $= e0_sbcthdv f0_sbcthdv f1_sbcthdv f2_sbcthdv p_alrimiv f1_sbcthdv f2_sbcthdv f3_sbcthdv f4_sbcthdv p_spsbc f0_sbcthdv f1_sbcthdv f2_sbcthdv a_wal f3_sbcthdv f4_sbcthdv a_wcel f1_sbcthdv f2_sbcthdv f3_sbcthdv a_wsbc p_mpan9 $.
 $}
-$( An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
+
+$(An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
      Carneiro, 18-Feb-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	fsbcid_0 $f wff ph $.
-	fsbcid_1 $f set x $.
-	sbcid $p |- ( [. x / x ]. ph <-> ph ) $= fsbcid_0 fsbcid_1 fsbcid_1 sup_set_class wsbc fsbcid_0 fsbcid_1 fsbcid_1 wsb fsbcid_0 fsbcid_0 fsbcid_1 fsbcid_1 sbsbc fsbcid_0 fsbcid_1 sbid bitr3i $.
+	$v ph x  $.
+	f0_sbcid $f wff ph $.
+	f1_sbcid $f set x $.
+	p_sbcid $p |- ( [. x / x ]. ph <-> ph ) $= f0_sbcid f1_sbcid f1_sbcid p_sbsbc f0_sbcid f1_sbcid p_sbid f0_sbcid f1_sbcid f1_sbcid a_sup_set_class a_wsbc f0_sbcid f1_sbcid f1_sbcid a_wsb f0_sbcid p_bitr3i $.
 $}
-$( Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
+
+$(Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fnfsbc1d_0 $f wff ph $.
-	fnfsbc1d_1 $f wff ps $.
-	fnfsbc1d_2 $f set x $.
-	fnfsbc1d_3 $f class A $.
-	enfsbc1d_0 $e |- ( ph -> F/_ x A ) $.
-	nfsbc1d $p |- ( ph -> F/ x [. A / x ]. ps ) $= fnfsbc1d_1 fnfsbc1d_2 fnfsbc1d_3 wsbc fnfsbc1d_3 fnfsbc1d_1 fnfsbc1d_2 cab wcel fnfsbc1d_0 fnfsbc1d_2 fnfsbc1d_1 fnfsbc1d_2 fnfsbc1d_3 df-sbc fnfsbc1d_0 fnfsbc1d_2 fnfsbc1d_3 fnfsbc1d_1 fnfsbc1d_2 cab enfsbc1d_0 fnfsbc1d_2 fnfsbc1d_1 fnfsbc1d_2 cab wnfc fnfsbc1d_0 fnfsbc1d_1 fnfsbc1d_2 nfab1 a1i nfeld nfxfrd $.
+	$v ph ps x A  $.
+	f0_nfsbc1d $f wff ph $.
+	f1_nfsbc1d $f wff ps $.
+	f2_nfsbc1d $f set x $.
+	f3_nfsbc1d $f class A $.
+	e0_nfsbc1d $e |- ( ph -> F/_ x A ) $.
+	p_nfsbc1d $p |- ( ph -> F/ x [. A / x ]. ps ) $= f1_nfsbc1d f2_nfsbc1d f3_nfsbc1d a_df-sbc e0_nfsbc1d f1_nfsbc1d f2_nfsbc1d p_nfab1 f2_nfsbc1d f1_nfsbc1d f2_nfsbc1d a_cab a_wnfc f0_nfsbc1d p_a1i f0_nfsbc1d f2_nfsbc1d f3_nfsbc1d f1_nfsbc1d f2_nfsbc1d a_cab p_nfeld f1_nfsbc1d f2_nfsbc1d f3_nfsbc1d a_wsbc f3_nfsbc1d f1_nfsbc1d f2_nfsbc1d a_cab a_wcel f0_nfsbc1d f2_nfsbc1d p_nfxfrd $.
 $}
-$( Bound-variable hypothesis builder for class substitution.  (Contributed
+
+$(Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fnfsbc1_0 $f wff ph $.
-	fnfsbc1_1 $f set x $.
-	fnfsbc1_2 $f class A $.
-	enfsbc1_0 $e |- F/_ x A $.
-	nfsbc1 $p |- F/ x [. A / x ]. ph $= fnfsbc1_0 fnfsbc1_1 fnfsbc1_2 wsbc fnfsbc1_1 wnf wtru fnfsbc1_0 fnfsbc1_1 fnfsbc1_2 fnfsbc1_1 fnfsbc1_2 wnfc wtru enfsbc1_0 a1i nfsbc1d trud $.
+	$v ph x A  $.
+	f0_nfsbc1 $f wff ph $.
+	f1_nfsbc1 $f set x $.
+	f2_nfsbc1 $f class A $.
+	e0_nfsbc1 $e |- F/_ x A $.
+	p_nfsbc1 $p |- F/ x [. A / x ]. ph $= e0_nfsbc1 f1_nfsbc1 f2_nfsbc1 a_wnfc a_wtru p_a1i a_wtru f0_nfsbc1 f1_nfsbc1 f2_nfsbc1 p_nfsbc1d f0_nfsbc1 f1_nfsbc1 f2_nfsbc1 a_wsbc f1_nfsbc1 a_wnf p_trud $.
 $}
-$( Bound-variable hypothesis builder for class substitution.  (Contributed
+
+$(Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fnfsbc1v_0 $f wff ph $.
-	fnfsbc1v_1 $f set x $.
-	fnfsbc1v_2 $f class A $.
-	nfsbc1v $p |- F/ x [. A / x ]. ph $= fnfsbc1v_0 fnfsbc1v_1 fnfsbc1v_2 fnfsbc1v_1 fnfsbc1v_2 nfcv nfsbc1 $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_nfsbc1v $f wff ph $.
+	f1_nfsbc1v $f set x $.
+	f2_nfsbc1v $f class A $.
+	p_nfsbc1v $p |- F/ x [. A / x ]. ph $= f1_nfsbc1v f2_nfsbc1v p_nfcv f0_nfsbc1v f1_nfsbc1v f2_nfsbc1v p_nfsbc1 $.
 $}
-$( Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
+
+$(Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v A $.
-	fnfsbcd_0 $f wff ph $.
-	fnfsbcd_1 $f wff ps $.
-	fnfsbcd_2 $f set x $.
-	fnfsbcd_3 $f set y $.
-	fnfsbcd_4 $f class A $.
-	enfsbcd_0 $e |- F/ y ph $.
-	enfsbcd_1 $e |- ( ph -> F/_ x A ) $.
-	enfsbcd_2 $e |- ( ph -> F/ x ps ) $.
-	nfsbcd $p |- ( ph -> F/ x [. A / y ]. ps ) $= fnfsbcd_1 fnfsbcd_3 fnfsbcd_4 wsbc fnfsbcd_4 fnfsbcd_1 fnfsbcd_3 cab wcel fnfsbcd_0 fnfsbcd_2 fnfsbcd_1 fnfsbcd_3 fnfsbcd_4 df-sbc fnfsbcd_0 fnfsbcd_2 fnfsbcd_4 fnfsbcd_1 fnfsbcd_3 cab enfsbcd_1 fnfsbcd_0 fnfsbcd_1 fnfsbcd_2 fnfsbcd_3 enfsbcd_0 enfsbcd_2 nfabd nfeld nfxfrd $.
+	$v ph ps x y A  $.
+	f0_nfsbcd $f wff ph $.
+	f1_nfsbcd $f wff ps $.
+	f2_nfsbcd $f set x $.
+	f3_nfsbcd $f set y $.
+	f4_nfsbcd $f class A $.
+	e0_nfsbcd $e |- F/ y ph $.
+	e1_nfsbcd $e |- ( ph -> F/_ x A ) $.
+	e2_nfsbcd $e |- ( ph -> F/ x ps ) $.
+	p_nfsbcd $p |- ( ph -> F/ x [. A / y ]. ps ) $= f1_nfsbcd f3_nfsbcd f4_nfsbcd a_df-sbc e1_nfsbcd e0_nfsbcd e2_nfsbcd f0_nfsbcd f1_nfsbcd f2_nfsbcd f3_nfsbcd p_nfabd f0_nfsbcd f2_nfsbcd f4_nfsbcd f1_nfsbcd f3_nfsbcd a_cab p_nfeld f1_nfsbcd f3_nfsbcd f4_nfsbcd a_wsbc f4_nfsbcd f1_nfsbcd f3_nfsbcd a_cab a_wcel f0_nfsbcd f2_nfsbcd p_nfxfrd $.
 $}
-$( Bound-variable hypothesis builder for class substitution.  (Contributed
+
+$(Bound-variable hypothesis builder for class substitution.  (Contributed
        by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	fnfsbc_0 $f wff ph $.
-	fnfsbc_1 $f set x $.
-	fnfsbc_2 $f set y $.
-	fnfsbc_3 $f class A $.
-	enfsbc_0 $e |- F/_ x A $.
-	enfsbc_1 $e |- F/ x ph $.
-	nfsbc $p |- F/ x [. A / y ]. ph $= fnfsbc_0 fnfsbc_2 fnfsbc_3 wsbc fnfsbc_1 wnf wtru fnfsbc_0 fnfsbc_1 fnfsbc_2 fnfsbc_3 fnfsbc_2 nftru fnfsbc_1 fnfsbc_3 wnfc wtru enfsbc_0 a1i fnfsbc_0 fnfsbc_1 wnf wtru enfsbc_1 a1i nfsbcd trud $.
+	$v ph x y A  $.
+	f0_nfsbc $f wff ph $.
+	f1_nfsbc $f set x $.
+	f2_nfsbc $f set y $.
+	f3_nfsbc $f class A $.
+	e0_nfsbc $e |- F/_ x A $.
+	e1_nfsbc $e |- F/ x ph $.
+	p_nfsbc $p |- F/ x [. A / y ]. ph $= f2_nfsbc p_nftru e0_nfsbc f1_nfsbc f3_nfsbc a_wnfc a_wtru p_a1i e1_nfsbc f0_nfsbc f1_nfsbc a_wnf a_wtru p_a1i a_wtru f0_nfsbc f1_nfsbc f2_nfsbc f3_nfsbc p_nfsbcd f0_nfsbc f2_nfsbc f3_nfsbc a_wsbc f1_nfsbc a_wnf p_trud $.
 $}
-$( A composition law for class substitution.  (Contributed by NM,
+
+$(A composition law for class substitution.  (Contributed by NM,
        26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v z $.
-	$d x z $.
-	$d z A $.
-	$d y z ph $.
-	isbcco_0 $f set z $.
-	fsbcco_0 $f wff ph $.
-	fsbcco_1 $f set x $.
-	fsbcco_2 $f set y $.
-	fsbcco_3 $f class A $.
-	sbcco $p |- ( [. A / y ]. [. y / x ]. ph <-> [. A / x ]. ph ) $= fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 fsbcco_3 wsbc fsbcco_3 cvv wcel fsbcco_0 fsbcco_1 fsbcco_3 wsbc fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 fsbcco_3 sbcex fsbcco_0 fsbcco_1 fsbcco_3 sbcex fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 sup_set_class wsbc fsbcco_0 fsbcco_1 isbcco_0 sup_set_class wsbc fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 fsbcco_3 wsbc fsbcco_0 fsbcco_1 fsbcco_3 wsbc isbcco_0 fsbcco_3 cvv fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 sup_set_class fsbcco_3 dfsbcq fsbcco_0 fsbcco_1 isbcco_0 sup_set_class fsbcco_3 dfsbcq fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 sup_set_class wsbc fsbcco_0 fsbcco_1 isbcco_0 wsb fsbcco_0 fsbcco_1 isbcco_0 sup_set_class wsbc fsbcco_0 fsbcco_1 fsbcco_2 wsb fsbcco_2 isbcco_0 wsb fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 wsb fsbcco_0 fsbcco_1 isbcco_0 wsb fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 sup_set_class wsbc fsbcco_0 fsbcco_1 fsbcco_2 wsb fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 fsbcco_0 fsbcco_1 fsbcco_2 sbsbc sbbii fsbcco_0 fsbcco_1 isbcco_0 fsbcco_2 fsbcco_0 fsbcco_2 nfv sbco2 fsbcco_0 fsbcco_1 fsbcco_2 sup_set_class wsbc fsbcco_2 isbcco_0 sbsbc 3bitr3ri fsbcco_0 fsbcco_1 isbcco_0 sbsbc bitri vtoclbg pm5.21nii $.
+	$v ph x y A  $.
+	$d x z  $.
+	$d z A  $.
+	$d y z ph  $.
+	f0_sbcco $f wff ph $.
+	f1_sbcco $f set x $.
+	f2_sbcco $f set y $.
+	f3_sbcco $f class A $.
+	i0_sbcco $f set z $.
+	p_sbcco $p |- ( [. A / y ]. [. y / x ]. ph <-> [. A / x ]. ph ) $= f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco f3_sbcco p_sbcex f0_sbcco f1_sbcco f3_sbcco p_sbcex f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco a_sup_set_class f3_sbcco p_dfsbcq f0_sbcco f1_sbcco i0_sbcco a_sup_set_class f3_sbcco p_dfsbcq f0_sbcco f1_sbcco f2_sbcco p_sbsbc f0_sbcco f1_sbcco f2_sbcco a_wsb f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco p_sbbii f0_sbcco f2_sbcco p_nfv f0_sbcco f1_sbcco i0_sbcco f2_sbcco p_sbco2 f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco p_sbsbc f0_sbcco f1_sbcco f2_sbcco a_wsb f2_sbcco i0_sbcco a_wsb f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco a_wsb f0_sbcco f1_sbcco i0_sbcco a_wsb f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco a_sup_set_class a_wsbc p_3bitr3ri f0_sbcco f1_sbcco i0_sbcco p_sbsbc f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco a_sup_set_class a_wsbc f0_sbcco f1_sbcco i0_sbcco a_wsb f0_sbcco f1_sbcco i0_sbcco a_sup_set_class a_wsbc p_bitri f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco i0_sbcco a_sup_set_class a_wsbc f0_sbcco f1_sbcco i0_sbcco a_sup_set_class a_wsbc f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco f3_sbcco a_wsbc f0_sbcco f1_sbcco f3_sbcco a_wsbc i0_sbcco f3_sbcco a_cvv p_vtoclbg f0_sbcco f1_sbcco f2_sbcco a_sup_set_class a_wsbc f2_sbcco f3_sbcco a_wsbc f3_sbcco a_cvv a_wcel f0_sbcco f1_sbcco f3_sbcco a_wsbc p_pm5.21nii $.
 $}
-$( A composition law for class substitution.  Importantly, ` x ` may occur
+
+$(A composition law for class substitution.  Importantly, ` x ` may occur
        free in the class expression substituted for ` A ` .  (Contributed by
        NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y $.
-	$d y ph $.
-	$d A y $.
-	fsbcco2_0 $f wff ph $.
-	fsbcco2_1 $f set x $.
-	fsbcco2_2 $f set y $.
-	fsbcco2_3 $f class A $.
-	fsbcco2_4 $f class B $.
-	esbcco2_0 $e |- ( x = y -> A = B ) $.
-	sbcco2 $p |- ( [. x / y ]. [. B / x ]. ph <-> [. A / x ]. ph ) $= fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_2 fsbcco2_1 sup_set_class wsbc fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_2 fsbcco2_1 wsb fsbcco2_0 fsbcco2_1 fsbcco2_3 wsbc fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_2 fsbcco2_1 sbsbc fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_0 fsbcco2_1 fsbcco2_3 wsbc fsbcco2_2 fsbcco2_1 fsbcco2_0 fsbcco2_1 fsbcco2_3 wsbc fsbcco2_2 nfv fsbcco2_2 sup_set_class fsbcco2_1 sup_set_class wceq fsbcco2_3 fsbcco2_4 wceq fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_0 fsbcco2_1 fsbcco2_3 wsbc wb fsbcco2_3 fsbcco2_4 wceq fsbcco2_1 sup_set_class fsbcco2_2 sup_set_class esbcco2_0 eqcoms fsbcco2_3 fsbcco2_4 wceq fsbcco2_0 fsbcco2_1 fsbcco2_3 wsbc fsbcco2_0 fsbcco2_1 fsbcco2_4 wsbc fsbcco2_0 fsbcco2_1 fsbcco2_3 fsbcco2_4 dfsbcq bicomd syl sbie bitr3i $.
+	$v ph x y A B  $.
+	$d x y  $.
+	$d y ph  $.
+	$d A y  $.
+	f0_sbcco2 $f wff ph $.
+	f1_sbcco2 $f set x $.
+	f2_sbcco2 $f set y $.
+	f3_sbcco2 $f class A $.
+	f4_sbcco2 $f class B $.
+	e0_sbcco2 $e |- ( x = y -> A = B ) $.
+	p_sbcco2 $p |- ( [. x / y ]. [. B / x ]. ph <-> [. A / x ]. ph ) $= f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc f2_sbcco2 f1_sbcco2 p_sbsbc f0_sbcco2 f1_sbcco2 f3_sbcco2 a_wsbc f2_sbcco2 p_nfv e0_sbcco2 f3_sbcco2 f4_sbcco2 a_wceq f1_sbcco2 a_sup_set_class f2_sbcco2 a_sup_set_class p_eqcoms f0_sbcco2 f1_sbcco2 f3_sbcco2 f4_sbcco2 p_dfsbcq f3_sbcco2 f4_sbcco2 a_wceq f0_sbcco2 f1_sbcco2 f3_sbcco2 a_wsbc f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc p_bicomd f2_sbcco2 a_sup_set_class f1_sbcco2 a_sup_set_class a_wceq f3_sbcco2 f4_sbcco2 a_wceq f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc f0_sbcco2 f1_sbcco2 f3_sbcco2 a_wsbc a_wb p_syl f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc f0_sbcco2 f1_sbcco2 f3_sbcco2 a_wsbc f2_sbcco2 f1_sbcco2 p_sbie f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc f2_sbcco2 f1_sbcco2 a_sup_set_class a_wsbc f0_sbcco2 f1_sbcco2 f4_sbcco2 a_wsbc f2_sbcco2 f1_sbcco2 a_wsb f0_sbcco2 f1_sbcco2 f3_sbcco2 a_wsbc p_bitr3i $.
 $}
-$( An equivalence for class substitution.  (Contributed by NM,
+
+$(An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	$d y ph $.
-	isbc5_0 $f set y $.
-	fsbc5_0 $f wff ph $.
-	fsbc5_1 $f set x $.
-	fsbc5_2 $f class A $.
-	sbc5 $p |- ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) $= fsbc5_0 fsbc5_1 fsbc5_2 wsbc fsbc5_2 cvv wcel fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 wa fsbc5_1 wex fsbc5_0 fsbc5_1 fsbc5_2 sbcex fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 wa fsbc5_1 wex fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_1 wex fsbc5_2 cvv wcel fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 fsbc5_1 exsimpl fsbc5_1 fsbc5_2 isset sylibr fsbc5_0 fsbc5_1 isbc5_0 wsb fsbc5_1 sup_set_class isbc5_0 sup_set_class wceq fsbc5_0 wa fsbc5_1 wex fsbc5_0 fsbc5_1 fsbc5_2 wsbc fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 wa fsbc5_1 wex isbc5_0 fsbc5_2 cvv fsbc5_0 fsbc5_1 isbc5_0 fsbc5_2 dfsbcq2 isbc5_0 sup_set_class fsbc5_2 wceq fsbc5_1 sup_set_class isbc5_0 sup_set_class wceq fsbc5_0 wa fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 wa fsbc5_1 isbc5_0 sup_set_class fsbc5_2 wceq fsbc5_1 sup_set_class isbc5_0 sup_set_class wceq fsbc5_1 sup_set_class fsbc5_2 wceq fsbc5_0 isbc5_0 sup_set_class fsbc5_2 fsbc5_1 sup_set_class eqeq2 anbi1d exbidv fsbc5_0 fsbc5_1 isbc5_0 sb5 vtoclbg pm5.21nii $.
+	$v ph x A  $.
+	$d x y A  $.
+	$d y ph  $.
+	f0_sbc5 $f wff ph $.
+	f1_sbc5 $f set x $.
+	f2_sbc5 $f class A $.
+	i0_sbc5 $f set y $.
+	p_sbc5 $p |- ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) $= f0_sbc5 f1_sbc5 f2_sbc5 p_sbcex f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 f1_sbc5 p_exsimpl f1_sbc5 f2_sbc5 p_isset f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 a_wa f1_sbc5 a_wex f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f1_sbc5 a_wex f2_sbc5 a_cvv a_wcel p_sylibr f0_sbc5 f1_sbc5 i0_sbc5 f2_sbc5 p_dfsbcq2 i0_sbc5 a_sup_set_class f2_sbc5 f1_sbc5 a_sup_set_class p_eqeq2 i0_sbc5 a_sup_set_class f2_sbc5 a_wceq f1_sbc5 a_sup_set_class i0_sbc5 a_sup_set_class a_wceq f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 p_anbi1d i0_sbc5 a_sup_set_class f2_sbc5 a_wceq f1_sbc5 a_sup_set_class i0_sbc5 a_sup_set_class a_wceq f0_sbc5 a_wa f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 a_wa f1_sbc5 p_exbidv f0_sbc5 f1_sbc5 i0_sbc5 p_sb5 f0_sbc5 f1_sbc5 i0_sbc5 a_wsb f1_sbc5 a_sup_set_class i0_sbc5 a_sup_set_class a_wceq f0_sbc5 a_wa f1_sbc5 a_wex f0_sbc5 f1_sbc5 f2_sbc5 a_wsbc f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 a_wa f1_sbc5 a_wex i0_sbc5 f2_sbc5 a_cvv p_vtoclbg f0_sbc5 f1_sbc5 f2_sbc5 a_wsbc f2_sbc5 a_cvv a_wcel f1_sbc5 a_sup_set_class f2_sbc5 a_wceq f0_sbc5 a_wa f1_sbc5 a_wex p_pm5.21nii $.
 $}
-$( An equivalence for class substitution.  (Contributed by NM,
+
+$(An equivalence for class substitution.  (Contributed by NM,
        11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	fsbc6g_0 $f wff ph $.
-	fsbc6g_1 $f set x $.
-	fsbc6g_2 $f class A $.
-	fsbc6g_3 $f class V $.
-	sbc6g $p |- ( A e. V -> ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $= fsbc6g_2 fsbc6g_3 wcel fsbc6g_1 sup_set_class fsbc6g_2 wceq fsbc6g_0 wi fsbc6g_1 wal fsbc6g_1 sup_set_class fsbc6g_2 wceq fsbc6g_0 wa fsbc6g_1 wex fsbc6g_0 fsbc6g_1 fsbc6g_2 wsbc fsbc6g_0 fsbc6g_1 sup_set_class fsbc6g_2 wceq fsbc6g_0 wa fsbc6g_1 wex fsbc6g_1 fsbc6g_2 fsbc6g_3 fsbc6g_1 sup_set_class fsbc6g_2 wceq fsbc6g_0 wa fsbc6g_1 nfe1 fsbc6g_0 fsbc6g_1 fsbc6g_2 ceqex ceqsalg fsbc6g_0 fsbc6g_1 fsbc6g_2 sbc5 syl6rbbr $.
+	$v ph x A V  $.
+	$d x A  $.
+	f0_sbc6g $f wff ph $.
+	f1_sbc6g $f set x $.
+	f2_sbc6g $f class A $.
+	f3_sbc6g $f class V $.
+	p_sbc6g $p |- ( A e. V -> ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $= f1_sbc6g a_sup_set_class f2_sbc6g a_wceq f0_sbc6g a_wa f1_sbc6g p_nfe1 f0_sbc6g f1_sbc6g f2_sbc6g p_ceqex f0_sbc6g f1_sbc6g a_sup_set_class f2_sbc6g a_wceq f0_sbc6g a_wa f1_sbc6g a_wex f1_sbc6g f2_sbc6g f3_sbc6g p_ceqsalg f0_sbc6g f1_sbc6g f2_sbc6g p_sbc5 f2_sbc6g f3_sbc6g a_wcel f1_sbc6g a_sup_set_class f2_sbc6g a_wceq f0_sbc6g a_wi f1_sbc6g a_wal f1_sbc6g a_sup_set_class f2_sbc6g a_wceq f0_sbc6g a_wa f1_sbc6g a_wex f0_sbc6g f1_sbc6g f2_sbc6g a_wsbc p_syl6rbbr $.
 $}
-$( An equivalence for class substitution.  (Contributed by NM,
+
+$(An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fsbc6_0 $f wff ph $.
-	fsbc6_1 $f set x $.
-	fsbc6_2 $f class A $.
-	esbc6_0 $e |- A e. _V $.
-	sbc6 $p |- ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) $= fsbc6_2 cvv wcel fsbc6_0 fsbc6_1 fsbc6_2 wsbc fsbc6_1 sup_set_class fsbc6_2 wceq fsbc6_0 wi fsbc6_1 wal wb esbc6_0 fsbc6_0 fsbc6_1 fsbc6_2 cvv sbc6g ax-mp $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_sbc6 $f wff ph $.
+	f1_sbc6 $f set x $.
+	f2_sbc6 $f class A $.
+	e0_sbc6 $e |- A e. _V $.
+	p_sbc6 $p |- ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) $= e0_sbc6 f0_sbc6 f1_sbc6 f2_sbc6 a_cvv p_sbc6g f2_sbc6 a_cvv a_wcel f0_sbc6 f1_sbc6 f2_sbc6 a_wsbc f1_sbc6 a_sup_set_class f2_sbc6 a_wceq f0_sbc6 a_wi f1_sbc6 a_wal a_wb a_ax-mp $.
 $}
-$( An equivalence for class substitution in the spirit of ~ df-clab .  Note
+
+$(An equivalence for class substitution in the spirit of ~ df-clab .  Note
        that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
        18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d y A $.
-	$d y ph $.
-	$d x y $.
-	fsbc7_0 $f wff ph $.
-	fsbc7_1 $f set x $.
-	fsbc7_2 $f set y $.
-	fsbc7_3 $f class A $.
-	sbc7 $p |- ( [. A / x ]. ph <-> E. y ( y = A /\ [. y / x ]. ph ) ) $= fsbc7_0 fsbc7_1 fsbc7_3 wsbc fsbc7_0 fsbc7_1 fsbc7_2 sup_set_class wsbc fsbc7_2 fsbc7_3 wsbc fsbc7_2 sup_set_class fsbc7_3 wceq fsbc7_0 fsbc7_1 fsbc7_2 sup_set_class wsbc wa fsbc7_2 wex fsbc7_0 fsbc7_1 fsbc7_2 fsbc7_3 sbcco fsbc7_0 fsbc7_1 fsbc7_2 sup_set_class wsbc fsbc7_2 fsbc7_3 sbc5 bitr3i $.
+	$v ph x y A  $.
+	$d y A  $.
+	$d y ph  $.
+	$d x y  $.
+	f0_sbc7 $f wff ph $.
+	f1_sbc7 $f set x $.
+	f2_sbc7 $f set y $.
+	f3_sbc7 $f class A $.
+	p_sbc7 $p |- ( [. A / x ]. ph <-> E. y ( y = A /\ [. y / x ]. ph ) ) $= f0_sbc7 f1_sbc7 f2_sbc7 f3_sbc7 p_sbcco f0_sbc7 f1_sbc7 f2_sbc7 a_sup_set_class a_wsbc f2_sbc7 f3_sbc7 p_sbc5 f0_sbc7 f1_sbc7 f3_sbc7 a_wsbc f0_sbc7 f1_sbc7 f2_sbc7 a_sup_set_class a_wsbc f2_sbc7 f3_sbc7 a_wsbc f2_sbc7 a_sup_set_class f3_sbc7 a_wceq f0_sbc7 f1_sbc7 f2_sbc7 a_sup_set_class a_wsbc a_wa f2_sbc7 a_wex p_bitr3i $.
 $}
-$( Change bound variables in a wff substitution.  (Contributed by Jeff
+
+$(Change bound variables in a wff substitution.  (Contributed by Jeff
        Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v A $.
-	fcbvsbc_0 $f wff ph $.
-	fcbvsbc_1 $f wff ps $.
-	fcbvsbc_2 $f set x $.
-	fcbvsbc_3 $f set y $.
-	fcbvsbc_4 $f class A $.
-	ecbvsbc_0 $e |- F/ y ph $.
-	ecbvsbc_1 $e |- F/ x ps $.
-	ecbvsbc_2 $e |- ( x = y -> ( ph <-> ps ) ) $.
-	cbvsbc $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $= fcbvsbc_4 fcbvsbc_0 fcbvsbc_2 cab wcel fcbvsbc_4 fcbvsbc_1 fcbvsbc_3 cab wcel fcbvsbc_0 fcbvsbc_2 fcbvsbc_4 wsbc fcbvsbc_1 fcbvsbc_3 fcbvsbc_4 wsbc fcbvsbc_0 fcbvsbc_2 cab fcbvsbc_1 fcbvsbc_3 cab fcbvsbc_4 fcbvsbc_0 fcbvsbc_1 fcbvsbc_2 fcbvsbc_3 ecbvsbc_0 ecbvsbc_1 ecbvsbc_2 cbvab eleq2i fcbvsbc_0 fcbvsbc_2 fcbvsbc_4 df-sbc fcbvsbc_1 fcbvsbc_3 fcbvsbc_4 df-sbc 3bitr4i $.
+	$v ph ps x y A  $.
+	f0_cbvsbc $f wff ph $.
+	f1_cbvsbc $f wff ps $.
+	f2_cbvsbc $f set x $.
+	f3_cbvsbc $f set y $.
+	f4_cbvsbc $f class A $.
+	e0_cbvsbc $e |- F/ y ph $.
+	e1_cbvsbc $e |- F/ x ps $.
+	e2_cbvsbc $e |- ( x = y -> ( ph <-> ps ) ) $.
+	p_cbvsbc $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $= e0_cbvsbc e1_cbvsbc e2_cbvsbc f0_cbvsbc f1_cbvsbc f2_cbvsbc f3_cbvsbc p_cbvab f0_cbvsbc f2_cbvsbc a_cab f1_cbvsbc f3_cbvsbc a_cab f4_cbvsbc p_eleq2i f0_cbvsbc f2_cbvsbc f4_cbvsbc a_df-sbc f1_cbvsbc f3_cbvsbc f4_cbvsbc a_df-sbc f4_cbvsbc f0_cbvsbc f2_cbvsbc a_cab a_wcel f4_cbvsbc f1_cbvsbc f3_cbvsbc a_cab a_wcel f0_cbvsbc f2_cbvsbc f4_cbvsbc a_wsbc f1_cbvsbc f3_cbvsbc f4_cbvsbc a_wsbc p_3bitr4i $.
 $}
-$( Change the bound variable of a class substitution using implicit
+
+$(Change the bound variable of a class substitution using implicit
        substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
        Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d y ph $.
-	$d x ps $.
-	fcbvsbcv_0 $f wff ph $.
-	fcbvsbcv_1 $f wff ps $.
-	fcbvsbcv_2 $f set x $.
-	fcbvsbcv_3 $f set y $.
-	fcbvsbcv_4 $f class A $.
-	ecbvsbcv_0 $e |- ( x = y -> ( ph <-> ps ) ) $.
-	cbvsbcv $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $= fcbvsbcv_0 fcbvsbcv_1 fcbvsbcv_2 fcbvsbcv_3 fcbvsbcv_4 fcbvsbcv_0 fcbvsbcv_3 nfv fcbvsbcv_1 fcbvsbcv_2 nfv ecbvsbcv_0 cbvsbc $.
+	$v ph ps x y A  $.
+	$d y ph  $.
+	$d x ps  $.
+	f0_cbvsbcv $f wff ph $.
+	f1_cbvsbcv $f wff ps $.
+	f2_cbvsbcv $f set x $.
+	f3_cbvsbcv $f set y $.
+	f4_cbvsbcv $f class A $.
+	e0_cbvsbcv $e |- ( x = y -> ( ph <-> ps ) ) $.
+	p_cbvsbcv $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $= f0_cbvsbcv f3_cbvsbcv p_nfv f1_cbvsbcv f2_cbvsbcv p_nfv e0_cbvsbcv f0_cbvsbcv f1_cbvsbcv f2_cbvsbcv f3_cbvsbcv f4_cbvsbcv p_cbvsbc $.
 $}
-$( Conversion of implicit substitution to explicit class substitution,
+
+$(Conversion of implicit substitution to explicit class substitution,
        using a bound-variable hypothesis instead of distinct variables.
        (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
        10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	fsbciegft_0 $f wff ph $.
-	fsbciegft_1 $f wff ps $.
-	fsbciegft_2 $f set x $.
-	fsbciegft_3 $f class A $.
-	fsbciegft_4 $f class V $.
-	sbciegft $p |- ( ( A e. V /\ F/ x ps /\ A. x ( x = A -> ( ph <-> ps ) ) ) -> ( [. A / x ]. ph <-> ps ) ) $= fsbciegft_3 fsbciegft_4 wcel fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal w3a fsbciegft_0 fsbciegft_2 fsbciegft_3 wsbc fsbciegft_1 fsbciegft_0 fsbciegft_2 fsbciegft_3 wsbc fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_2 wex fsbciegft_3 fsbciegft_4 wcel fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal w3a fsbciegft_1 fsbciegft_0 fsbciegft_2 fsbciegft_3 sbc5 fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_2 wex fsbciegft_1 wi fsbciegft_3 fsbciegft_4 wcel fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_1 wi fsbciegft_2 wal fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_2 wex fsbciegft_1 wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_1 wi fsbciegft_2 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 fsbciegft_0 fsbciegft_1 wb fsbciegft_0 fsbciegft_1 wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 bi1 imim2i imp3a alimi fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_1 wi fsbciegft_2 wal fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_2 wex fsbciegft_1 wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wa fsbciegft_1 fsbciegft_2 19.23t biimpa sylan2 3adant1 syl5bi fsbciegft_3 fsbciegft_4 wcel fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal w3a fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 wal fsbciegft_0 fsbciegft_2 fsbciegft_3 wsbc fsbciegft_1 fsbciegft_2 wnf fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 wal wi fsbciegft_3 fsbciegft_4 wcel fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal fsbciegft_1 fsbciegft_2 wnf fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi wi fsbciegft_2 wal fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 wal wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi wi fsbciegft_2 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_1 fsbciegft_0 fsbciegft_0 fsbciegft_1 wb fsbciegft_1 fsbciegft_0 wi fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 bi2 imim2i com23 alimi fsbciegft_1 fsbciegft_2 wnf fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi wi fsbciegft_2 wal fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 wal wi fsbciegft_1 fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 19.21t biimpa sylan2 3adant1 fsbciegft_3 fsbciegft_4 wcel fsbciegft_1 fsbciegft_2 wnf fsbciegft_0 fsbciegft_2 fsbciegft_3 wsbc fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 wi fsbciegft_2 wal wb fsbciegft_2 sup_set_class fsbciegft_3 wceq fsbciegft_0 fsbciegft_1 wb wi fsbciegft_2 wal fsbciegft_0 fsbciegft_2 fsbciegft_3 fsbciegft_4 sbc6g 3ad2ant1 sylibrd impbid $.
+	$v ph ps x A V  $.
+	$d x A  $.
+	$d ps  $.
+	f0_sbciegft $f wff ph $.
+	f1_sbciegft $f wff ps $.
+	f2_sbciegft $f set x $.
+	f3_sbciegft $f class A $.
+	f4_sbciegft $f class V $.
+	p_sbciegft $p |- ( ( A e. V /\ F/ x ps /\ A. x ( x = A -> ( ph <-> ps ) ) ) -> ( [. A / x ]. ph <-> ps ) ) $= f0_sbciegft f2_sbciegft f3_sbciegft p_sbc5 f0_sbciegft f1_sbciegft p_bi1 f0_sbciegft f1_sbciegft a_wb f0_sbciegft f1_sbciegft a_wi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq p_imim2i f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft p_imp3a f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f1_sbciegft a_wi f2_sbciegft p_alimi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f1_sbciegft f2_sbciegft p_19.23t f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f1_sbciegft a_wi f2_sbciegft a_wal f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f2_sbciegft a_wex f1_sbciegft a_wi p_biimpa f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f1_sbciegft a_wi f2_sbciegft a_wal f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f2_sbciegft a_wex f1_sbciegft a_wi p_sylan2 f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f2_sbciegft a_wex f1_sbciegft a_wi f3_sbciegft f4_sbciegft a_wcel p_3adant1 f0_sbciegft f2_sbciegft f3_sbciegft a_wsbc f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wa f2_sbciegft a_wex f3_sbciegft f4_sbciegft a_wcel f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal a_w3a f1_sbciegft p_syl5bi f0_sbciegft f1_sbciegft p_bi2 f0_sbciegft f1_sbciegft a_wb f1_sbciegft f0_sbciegft a_wi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq p_imim2i f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f1_sbciegft f0_sbciegft p_com23 f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi a_wi f2_sbciegft p_alimi f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft p_19.21t f1_sbciegft f2_sbciegft a_wnf f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi a_wi f2_sbciegft a_wal f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft a_wal a_wi p_biimpa f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal f1_sbciegft f2_sbciegft a_wnf f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi a_wi f2_sbciegft a_wal f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft a_wal a_wi p_sylan2 f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft a_wal a_wi f3_sbciegft f4_sbciegft a_wcel p_3adant1 f0_sbciegft f2_sbciegft f3_sbciegft f4_sbciegft p_sbc6g f3_sbciegft f4_sbciegft a_wcel f1_sbciegft f2_sbciegft a_wnf f0_sbciegft f2_sbciegft f3_sbciegft a_wsbc f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft a_wal a_wb f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal p_3ad2ant1 f3_sbciegft f4_sbciegft a_wcel f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal a_w3a f1_sbciegft f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft a_wi f2_sbciegft a_wal f0_sbciegft f2_sbciegft f3_sbciegft a_wsbc p_sylibrd f3_sbciegft f4_sbciegft a_wcel f1_sbciegft f2_sbciegft a_wnf f2_sbciegft a_sup_set_class f3_sbciegft a_wceq f0_sbciegft f1_sbciegft a_wb a_wi f2_sbciegft a_wal a_w3a f0_sbciegft f2_sbciegft f3_sbciegft a_wsbc f1_sbciegft p_impbid $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	fsbciegf_0 $f wff ph $.
-	fsbciegf_1 $f wff ps $.
-	fsbciegf_2 $f set x $.
-	fsbciegf_3 $f class A $.
-	fsbciegf_4 $f class V $.
-	esbciegf_0 $e |- F/ x ps $.
-	esbciegf_1 $e |- ( x = A -> ( ph <-> ps ) ) $.
-	sbciegf $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $= fsbciegf_3 fsbciegf_4 wcel fsbciegf_1 fsbciegf_2 wnf fsbciegf_2 sup_set_class fsbciegf_3 wceq fsbciegf_0 fsbciegf_1 wb wi fsbciegf_2 wal fsbciegf_0 fsbciegf_2 fsbciegf_3 wsbc fsbciegf_1 wb esbciegf_0 fsbciegf_2 sup_set_class fsbciegf_3 wceq fsbciegf_0 fsbciegf_1 wb wi fsbciegf_2 esbciegf_1 ax-gen fsbciegf_0 fsbciegf_1 fsbciegf_2 fsbciegf_3 fsbciegf_4 sbciegft mp3an23 $.
+	$v ph ps x A V  $.
+	$d x A  $.
+	f0_sbciegf $f wff ph $.
+	f1_sbciegf $f wff ps $.
+	f2_sbciegf $f set x $.
+	f3_sbciegf $f class A $.
+	f4_sbciegf $f class V $.
+	e0_sbciegf $e |- F/ x ps $.
+	e1_sbciegf $e |- ( x = A -> ( ph <-> ps ) ) $.
+	p_sbciegf $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $= e0_sbciegf e1_sbciegf f2_sbciegf a_sup_set_class f3_sbciegf a_wceq f0_sbciegf f1_sbciegf a_wb a_wi f2_sbciegf a_ax-gen f0_sbciegf f1_sbciegf f2_sbciegf f3_sbciegf f4_sbciegf p_sbciegft f3_sbciegf f4_sbciegf a_wcel f1_sbciegf f2_sbciegf a_wnf f2_sbciegf a_sup_set_class f3_sbciegf a_wceq f0_sbciegf f1_sbciegf a_wb a_wi f2_sbciegf a_wal f0_sbciegf f2_sbciegf f3_sbciegf a_wsbc f1_sbciegf a_wb p_mp3an23 $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 10-Nov-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	$d x ps $.
-	fsbcieg_0 $f wff ph $.
-	fsbcieg_1 $f wff ps $.
-	fsbcieg_2 $f set x $.
-	fsbcieg_3 $f class A $.
-	fsbcieg_4 $f class V $.
-	esbcieg_0 $e |- ( x = A -> ( ph <-> ps ) ) $.
-	sbcieg $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $= fsbcieg_3 fsbcieg_4 wcel fsbcieg_3 cvv wcel fsbcieg_0 fsbcieg_2 fsbcieg_3 wsbc fsbcieg_1 wb fsbcieg_3 fsbcieg_4 elex fsbcieg_0 fsbcieg_1 fsbcieg_2 fsbcieg_3 cvv fsbcieg_1 fsbcieg_2 nfv esbcieg_0 sbciegf syl $.
+	$v ph ps x A V  $.
+	$d x A  $.
+	$d x ps  $.
+	f0_sbcieg $f wff ph $.
+	f1_sbcieg $f wff ps $.
+	f2_sbcieg $f set x $.
+	f3_sbcieg $f class A $.
+	f4_sbcieg $f class V $.
+	e0_sbcieg $e |- ( x = A -> ( ph <-> ps ) ) $.
+	p_sbcieg $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $= f3_sbcieg f4_sbcieg p_elex f1_sbcieg f2_sbcieg p_nfv e0_sbcieg f0_sbcieg f1_sbcieg f2_sbcieg f3_sbcieg a_cvv p_sbciegf f3_sbcieg f4_sbcieg a_wcel f3_sbcieg a_cvv a_wcel f0_sbcieg f2_sbcieg f3_sbcieg a_wsbc f1_sbcieg a_wb p_syl $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v V $.
-	$d x y $.
-	$d A y $.
-	$d ch y $.
-	$d ph y $.
-	$d ps x $.
-	fsbcie2g_0 $f wff ph $.
-	fsbcie2g_1 $f wff ps $.
-	fsbcie2g_2 $f wff ch $.
-	fsbcie2g_3 $f set x $.
-	fsbcie2g_4 $f set y $.
-	fsbcie2g_5 $f class A $.
-	fsbcie2g_6 $f class V $.
-	esbcie2g_0 $e |- ( x = y -> ( ph <-> ps ) ) $.
-	esbcie2g_1 $e |- ( y = A -> ( ps <-> ch ) ) $.
-	sbcie2g $p |- ( A e. V -> ( [. A / x ]. ph <-> ch ) ) $= fsbcie2g_0 fsbcie2g_3 fsbcie2g_4 sup_set_class wsbc fsbcie2g_1 fsbcie2g_0 fsbcie2g_3 fsbcie2g_5 wsbc fsbcie2g_2 fsbcie2g_4 fsbcie2g_5 fsbcie2g_6 fsbcie2g_0 fsbcie2g_3 fsbcie2g_4 sup_set_class fsbcie2g_5 dfsbcq esbcie2g_1 fsbcie2g_0 fsbcie2g_3 fsbcie2g_4 sup_set_class wsbc fsbcie2g_0 fsbcie2g_3 fsbcie2g_4 wsb fsbcie2g_1 fsbcie2g_0 fsbcie2g_3 fsbcie2g_4 sbsbc fsbcie2g_0 fsbcie2g_1 fsbcie2g_3 fsbcie2g_4 fsbcie2g_1 fsbcie2g_3 nfv esbcie2g_0 sbie bitr3i vtoclbg $.
+	$v ph ps ch x y A V  $.
+	$d x y  $.
+	$d A y  $.
+	$d ch y  $.
+	$d ph y  $.
+	$d ps x  $.
+	f0_sbcie2g $f wff ph $.
+	f1_sbcie2g $f wff ps $.
+	f2_sbcie2g $f wff ch $.
+	f3_sbcie2g $f set x $.
+	f4_sbcie2g $f set y $.
+	f5_sbcie2g $f class A $.
+	f6_sbcie2g $f class V $.
+	e0_sbcie2g $e |- ( x = y -> ( ph <-> ps ) ) $.
+	e1_sbcie2g $e |- ( y = A -> ( ps <-> ch ) ) $.
+	p_sbcie2g $p |- ( A e. V -> ( [. A / x ]. ph <-> ch ) ) $= f0_sbcie2g f3_sbcie2g f4_sbcie2g a_sup_set_class f5_sbcie2g p_dfsbcq e1_sbcie2g f0_sbcie2g f3_sbcie2g f4_sbcie2g p_sbsbc f1_sbcie2g f3_sbcie2g p_nfv e0_sbcie2g f0_sbcie2g f1_sbcie2g f3_sbcie2g f4_sbcie2g p_sbie f0_sbcie2g f3_sbcie2g f4_sbcie2g a_sup_set_class a_wsbc f0_sbcie2g f3_sbcie2g f4_sbcie2g a_wsb f1_sbcie2g p_bitr3i f0_sbcie2g f3_sbcie2g f4_sbcie2g a_sup_set_class a_wsbc f1_sbcie2g f0_sbcie2g f3_sbcie2g f5_sbcie2g a_wsbc f2_sbcie2g f4_sbcie2g f5_sbcie2g f6_sbcie2g p_vtoclbg $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 4-Sep-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	$d x ps $.
-	fsbcie_0 $f wff ph $.
-	fsbcie_1 $f wff ps $.
-	fsbcie_2 $f set x $.
-	fsbcie_3 $f class A $.
-	esbcie_0 $e |- A e. _V $.
-	esbcie_1 $e |- ( x = A -> ( ph <-> ps ) ) $.
-	sbcie $p |- ( [. A / x ]. ph <-> ps ) $= fsbcie_3 cvv wcel fsbcie_0 fsbcie_2 fsbcie_3 wsbc fsbcie_1 wb esbcie_0 fsbcie_0 fsbcie_1 fsbcie_2 fsbcie_3 cvv esbcie_1 sbcieg ax-mp $.
+	$v ph ps x A  $.
+	$d x A  $.
+	$d x ps  $.
+	f0_sbcie $f wff ph $.
+	f1_sbcie $f wff ps $.
+	f2_sbcie $f set x $.
+	f3_sbcie $f class A $.
+	e0_sbcie $e |- A e. _V $.
+	e1_sbcie $e |- ( x = A -> ( ph <-> ps ) ) $.
+	p_sbcie $p |- ( [. A / x ]. ph <-> ps ) $= e0_sbcie e1_sbcie f0_sbcie f1_sbcie f2_sbcie f3_sbcie a_cvv p_sbcieg f3_sbcie a_cvv a_wcel f0_sbcie f2_sbcie f3_sbcie a_wsbc f1_sbcie a_wb a_ax-mp $.
 $}
-$( Conversion of implicit substitution to explicit class substitution,
+
+$(Conversion of implicit substitution to explicit class substitution,
          deduction form.  (Contributed by NM, 29-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	fsbciedf_0 $f wff ph $.
-	fsbciedf_1 $f wff ps $.
-	fsbciedf_2 $f wff ch $.
-	fsbciedf_3 $f set x $.
-	fsbciedf_4 $f class A $.
-	fsbciedf_5 $f class V $.
-	esbciedf_0 $e |- ( ph -> A e. V ) $.
-	esbciedf_1 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
-	esbciedf_2 $e |- F/ x ph $.
-	esbciedf_3 $e |- ( ph -> F/ x ch ) $.
-	sbciedf $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= fsbciedf_0 fsbciedf_4 fsbciedf_5 wcel fsbciedf_2 fsbciedf_3 wnf fsbciedf_3 sup_set_class fsbciedf_4 wceq fsbciedf_1 fsbciedf_2 wb wi fsbciedf_3 wal fsbciedf_1 fsbciedf_3 fsbciedf_4 wsbc fsbciedf_2 wb esbciedf_0 esbciedf_3 fsbciedf_0 fsbciedf_3 sup_set_class fsbciedf_4 wceq fsbciedf_1 fsbciedf_2 wb wi fsbciedf_3 esbciedf_2 fsbciedf_0 fsbciedf_3 sup_set_class fsbciedf_4 wceq fsbciedf_1 fsbciedf_2 wb esbciedf_1 ex alrimi fsbciedf_1 fsbciedf_2 fsbciedf_3 fsbciedf_4 fsbciedf_5 sbciegft syl3anc $.
+	$v ph ps ch x A V  $.
+	$d x A  $.
+	f0_sbciedf $f wff ph $.
+	f1_sbciedf $f wff ps $.
+	f2_sbciedf $f wff ch $.
+	f3_sbciedf $f set x $.
+	f4_sbciedf $f class A $.
+	f5_sbciedf $f class V $.
+	e0_sbciedf $e |- ( ph -> A e. V ) $.
+	e1_sbciedf $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	e2_sbciedf $e |- F/ x ph $.
+	e3_sbciedf $e |- ( ph -> F/ x ch ) $.
+	p_sbciedf $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= e0_sbciedf e3_sbciedf e2_sbciedf e1_sbciedf f0_sbciedf f3_sbciedf a_sup_set_class f4_sbciedf a_wceq f1_sbciedf f2_sbciedf a_wb p_ex f0_sbciedf f3_sbciedf a_sup_set_class f4_sbciedf a_wceq f1_sbciedf f2_sbciedf a_wb a_wi f3_sbciedf p_alrimi f1_sbciedf f2_sbciedf f3_sbciedf f4_sbciedf f5_sbciedf p_sbciegft f0_sbciedf f4_sbciedf f5_sbciedf a_wcel f2_sbciedf f3_sbciedf a_wnf f3_sbciedf a_sup_set_class f4_sbciedf a_wceq f1_sbciedf f2_sbciedf a_wb a_wi f3_sbciedf a_wal f1_sbciedf f3_sbciedf f4_sbciedf a_wsbc f2_sbciedf a_wb p_syl3anc $.
 $}
-$( Conversion of implicit substitution to explicit class substitution,
+
+$(Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x A $.
-	$d x ph $.
-	$d x ch $.
-	fsbcied_0 $f wff ph $.
-	fsbcied_1 $f wff ps $.
-	fsbcied_2 $f wff ch $.
-	fsbcied_3 $f set x $.
-	fsbcied_4 $f class A $.
-	fsbcied_5 $f class V $.
-	esbcied_0 $e |- ( ph -> A e. V ) $.
-	esbcied_1 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
-	sbcied $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= fsbcied_0 fsbcied_1 fsbcied_2 fsbcied_3 fsbcied_4 fsbcied_5 esbcied_0 esbcied_1 fsbcied_0 fsbcied_3 nfv fsbcied_0 fsbcied_2 fsbcied_3 nfvd sbciedf $.
+	$v ph ps ch x A V  $.
+	$d x A  $.
+	$d x ph  $.
+	$d x ch  $.
+	f0_sbcied $f wff ph $.
+	f1_sbcied $f wff ps $.
+	f2_sbcied $f wff ch $.
+	f3_sbcied $f set x $.
+	f4_sbcied $f class A $.
+	f5_sbcied $f class V $.
+	e0_sbcied $e |- ( ph -> A e. V ) $.
+	e1_sbcied $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	p_sbcied $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= e0_sbcied e1_sbcied f0_sbcied f3_sbcied p_nfv f0_sbcied f2_sbcied f3_sbcied p_nfvd f0_sbcied f1_sbcied f2_sbcied f3_sbcied f4_sbcied f5_sbcied p_sbciedf $.
 $}
-$( Conversion of implicit substitution to explicit class substitution,
+
+$(Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$d x A $.
-	$d x ph $.
-	$d x ch $.
-	fsbcied2_0 $f wff ph $.
-	fsbcied2_1 $f wff ps $.
-	fsbcied2_2 $f wff ch $.
-	fsbcied2_3 $f set x $.
-	fsbcied2_4 $f class A $.
-	fsbcied2_5 $f class B $.
-	fsbcied2_6 $f class V $.
-	esbcied2_0 $e |- ( ph -> A e. V ) $.
-	esbcied2_1 $e |- ( ph -> A = B ) $.
-	esbcied2_2 $e |- ( ( ph /\ x = B ) -> ( ps <-> ch ) ) $.
-	sbcied2 $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= fsbcied2_0 fsbcied2_1 fsbcied2_2 fsbcied2_3 fsbcied2_4 fsbcied2_6 esbcied2_0 fsbcied2_0 fsbcied2_3 sup_set_class fsbcied2_4 wceq fsbcied2_3 sup_set_class fsbcied2_5 wceq fsbcied2_1 fsbcied2_2 wb fsbcied2_3 sup_set_class fsbcied2_4 wceq fsbcied2_0 fsbcied2_3 sup_set_class fsbcied2_4 fsbcied2_5 fsbcied2_3 sup_set_class fsbcied2_4 wceq id esbcied2_1 sylan9eqr esbcied2_2 syldan sbcied $.
+	$v ph ps ch x A B V  $.
+	$d x A  $.
+	$d x ph  $.
+	$d x ch  $.
+	f0_sbcied2 $f wff ph $.
+	f1_sbcied2 $f wff ps $.
+	f2_sbcied2 $f wff ch $.
+	f3_sbcied2 $f set x $.
+	f4_sbcied2 $f class A $.
+	f5_sbcied2 $f class B $.
+	f6_sbcied2 $f class V $.
+	e0_sbcied2 $e |- ( ph -> A e. V ) $.
+	e1_sbcied2 $e |- ( ph -> A = B ) $.
+	e2_sbcied2 $e |- ( ( ph /\ x = B ) -> ( ps <-> ch ) ) $.
+	p_sbcied2 $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $= e0_sbcied2 f3_sbcied2 a_sup_set_class f4_sbcied2 a_wceq p_id e1_sbcied2 f3_sbcied2 a_sup_set_class f4_sbcied2 a_wceq f0_sbcied2 f3_sbcied2 a_sup_set_class f4_sbcied2 f5_sbcied2 p_sylan9eqr e2_sbcied2 f0_sbcied2 f3_sbcied2 a_sup_set_class f4_sbcied2 a_wceq f3_sbcied2 a_sup_set_class f5_sbcied2 a_wceq f1_sbcied2 f2_sbcied2 a_wb p_syldan f0_sbcied2 f1_sbcied2 f2_sbcied2 f3_sbcied2 f4_sbcied2 f6_sbcied2 p_sbcied $.
 $}
-$( Membership in a restricted class abstraction, expressed with explicit
+
+$(Membership in a restricted class abstraction, expressed with explicit
        class substitution.  (The variation ~ elrabf has implicit
        substitution).  The hypothesis specifies that ` x ` must not be a free
        variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
        by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d y B $.
-	$d y ph $.
-	$d x y $.
-	ielrabsf_0 $f set y $.
-	felrabsf_0 $f wff ph $.
-	felrabsf_1 $f set x $.
-	felrabsf_2 $f class A $.
-	felrabsf_3 $f class B $.
-	eelrabsf_0 $e |- F/_ x B $.
-	elrabsf $p |- ( A e. { x e. B | ph } <-> ( A e. B /\ [. A / x ]. ph ) ) $= felrabsf_0 felrabsf_1 ielrabsf_0 sup_set_class wsbc felrabsf_0 felrabsf_1 felrabsf_2 wsbc ielrabsf_0 felrabsf_2 felrabsf_3 felrabsf_0 felrabsf_1 felrabsf_3 crab felrabsf_0 felrabsf_1 ielrabsf_0 sup_set_class felrabsf_2 dfsbcq felrabsf_0 felrabsf_0 felrabsf_1 ielrabsf_0 sup_set_class wsbc felrabsf_1 ielrabsf_0 felrabsf_3 eelrabsf_0 ielrabsf_0 felrabsf_3 nfcv felrabsf_0 ielrabsf_0 nfv felrabsf_0 felrabsf_1 ielrabsf_0 sup_set_class nfsbc1v felrabsf_0 felrabsf_1 ielrabsf_0 sup_set_class sbceq1a cbvrab elrab2 $.
+	$v ph x A B  $.
+	$d y A  $.
+	$d y B  $.
+	$d y ph  $.
+	$d x y  $.
+	f0_elrabsf $f wff ph $.
+	f1_elrabsf $f set x $.
+	f2_elrabsf $f class A $.
+	f3_elrabsf $f class B $.
+	i0_elrabsf $f set y $.
+	e0_elrabsf $e |- F/_ x B $.
+	p_elrabsf $p |- ( A e. { x e. B | ph } <-> ( A e. B /\ [. A / x ]. ph ) ) $= f0_elrabsf f1_elrabsf i0_elrabsf a_sup_set_class f2_elrabsf p_dfsbcq e0_elrabsf i0_elrabsf f3_elrabsf p_nfcv f0_elrabsf i0_elrabsf p_nfv f0_elrabsf f1_elrabsf i0_elrabsf a_sup_set_class p_nfsbc1v f0_elrabsf f1_elrabsf i0_elrabsf a_sup_set_class p_sbceq1a f0_elrabsf f0_elrabsf f1_elrabsf i0_elrabsf a_sup_set_class a_wsbc f1_elrabsf i0_elrabsf f3_elrabsf p_cbvrab f0_elrabsf f1_elrabsf i0_elrabsf a_sup_set_class a_wsbc f0_elrabsf f1_elrabsf f2_elrabsf a_wsbc i0_elrabsf f2_elrabsf f3_elrabsf f0_elrabsf f1_elrabsf f3_elrabsf a_crab p_elrab2 $.
 $}
-$( Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
+
+$(Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
        (Contributed by Andrew Salmon, 29-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v y $.
-	$d x y B $.
-	$d y A $.
-	ieqsbc3_0 $f set y $.
-	feqsbc3_0 $f set x $.
-	feqsbc3_1 $f class A $.
-	feqsbc3_2 $f class B $.
-	feqsbc3_3 $f class V $.
-	eqsbc3 $p |- ( A e. V -> ( [. A / x ]. x = B <-> A = B ) ) $= feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 ieqsbc3_0 sup_set_class wsbc ieqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 feqsbc3_1 wsbc feqsbc3_1 feqsbc3_2 wceq ieqsbc3_0 feqsbc3_1 feqsbc3_3 feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 ieqsbc3_0 sup_set_class feqsbc3_1 dfsbcq ieqsbc3_0 sup_set_class feqsbc3_1 feqsbc3_2 eqeq1 feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 ieqsbc3_0 sup_set_class wsbc feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 ieqsbc3_0 wsb ieqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 sup_set_class feqsbc3_2 wceq feqsbc3_0 ieqsbc3_0 sbsbc ieqsbc3_0 feqsbc3_0 feqsbc3_2 eqsb3 bitr3i vtoclbg $.
+	$v x A B V  $.
+	$d x y B  $.
+	$d y A  $.
+	f0_eqsbc3 $f set x $.
+	f1_eqsbc3 $f class A $.
+	f2_eqsbc3 $f class B $.
+	f3_eqsbc3 $f class V $.
+	i0_eqsbc3 $f set y $.
+	p_eqsbc3 $p |- ( A e. V -> ( [. A / x ]. x = B <-> A = B ) ) $= f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 i0_eqsbc3 a_sup_set_class f1_eqsbc3 p_dfsbcq i0_eqsbc3 a_sup_set_class f1_eqsbc3 f2_eqsbc3 p_eqeq1 f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 i0_eqsbc3 p_sbsbc i0_eqsbc3 f0_eqsbc3 f2_eqsbc3 p_eqsb3 f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 i0_eqsbc3 a_sup_set_class a_wsbc f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 i0_eqsbc3 a_wsb i0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq p_bitr3i f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 i0_eqsbc3 a_sup_set_class a_wsbc i0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 a_sup_set_class f2_eqsbc3 a_wceq f0_eqsbc3 f1_eqsbc3 a_wsbc f1_eqsbc3 f2_eqsbc3 a_wceq i0_eqsbc3 f1_eqsbc3 f3_eqsbc3 p_vtoclbg $.
 $}
-$( Move negation in and out of class substitution.  (Contributed by NM,
+
+$(Move negation in and out of class substitution.  (Contributed by NM,
        16-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	isbcng_0 $f set y $.
-	fsbcng_0 $f wff ph $.
-	fsbcng_1 $f set x $.
-	fsbcng_2 $f class A $.
-	fsbcng_3 $f class V $.
-	sbcng $p |- ( A e. V -> ( [. A / x ]. -. ph <-> -. [. A / x ]. ph ) ) $= fsbcng_0 wn fsbcng_1 isbcng_0 wsb fsbcng_0 fsbcng_1 isbcng_0 wsb wn fsbcng_0 wn fsbcng_1 fsbcng_2 wsbc fsbcng_0 fsbcng_1 fsbcng_2 wsbc wn isbcng_0 fsbcng_2 fsbcng_3 fsbcng_0 wn fsbcng_1 isbcng_0 fsbcng_2 dfsbcq2 isbcng_0 sup_set_class fsbcng_2 wceq fsbcng_0 fsbcng_1 isbcng_0 wsb fsbcng_0 fsbcng_1 fsbcng_2 wsbc fsbcng_0 fsbcng_1 isbcng_0 fsbcng_2 dfsbcq2 notbid fsbcng_0 fsbcng_1 isbcng_0 sbn vtoclbg $.
+	$v ph x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y  $.
+	f0_sbcng $f wff ph $.
+	f1_sbcng $f set x $.
+	f2_sbcng $f class A $.
+	f3_sbcng $f class V $.
+	i0_sbcng $f set y $.
+	p_sbcng $p |- ( A e. V -> ( [. A / x ]. -. ph <-> -. [. A / x ]. ph ) ) $= f0_sbcng a_wn f1_sbcng i0_sbcng f2_sbcng p_dfsbcq2 f0_sbcng f1_sbcng i0_sbcng f2_sbcng p_dfsbcq2 i0_sbcng a_sup_set_class f2_sbcng a_wceq f0_sbcng f1_sbcng i0_sbcng a_wsb f0_sbcng f1_sbcng f2_sbcng a_wsbc p_notbid f0_sbcng f1_sbcng i0_sbcng p_sbn f0_sbcng a_wn f1_sbcng i0_sbcng a_wsb f0_sbcng f1_sbcng i0_sbcng a_wsb a_wn f0_sbcng a_wn f1_sbcng f2_sbcng a_wsbc f0_sbcng f1_sbcng f2_sbcng a_wsbc a_wn i0_sbcng f2_sbcng f3_sbcng p_vtoclbg $.
 $}
-$( Distribution of class substitution over implication.  (Contributed by
+
+$(Distribution of class substitution over implication.  (Contributed by
        NM, 16-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcimg_0 $f set y $.
-	fsbcimg_0 $f wff ph $.
-	fsbcimg_1 $f wff ps $.
-	fsbcimg_2 $f set x $.
-	fsbcimg_3 $f class A $.
-	fsbcimg_4 $f class V $.
-	sbcimg $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( [. A / x ]. ph -> [. A / x ]. ps ) ) ) $= fsbcimg_0 fsbcimg_1 wi fsbcimg_2 isbcimg_0 wsb fsbcimg_0 fsbcimg_2 isbcimg_0 wsb fsbcimg_1 fsbcimg_2 isbcimg_0 wsb wi fsbcimg_0 fsbcimg_1 wi fsbcimg_2 fsbcimg_3 wsbc fsbcimg_0 fsbcimg_2 fsbcimg_3 wsbc fsbcimg_1 fsbcimg_2 fsbcimg_3 wsbc wi isbcimg_0 fsbcimg_3 fsbcimg_4 fsbcimg_0 fsbcimg_1 wi fsbcimg_2 isbcimg_0 fsbcimg_3 dfsbcq2 isbcimg_0 sup_set_class fsbcimg_3 wceq fsbcimg_0 fsbcimg_2 isbcimg_0 wsb fsbcimg_0 fsbcimg_2 fsbcimg_3 wsbc fsbcimg_1 fsbcimg_2 isbcimg_0 wsb fsbcimg_1 fsbcimg_2 fsbcimg_3 wsbc fsbcimg_0 fsbcimg_2 isbcimg_0 fsbcimg_3 dfsbcq2 fsbcimg_1 fsbcimg_2 isbcimg_0 fsbcimg_3 dfsbcq2 imbi12d fsbcimg_0 fsbcimg_1 fsbcimg_2 isbcimg_0 sbim vtoclbg $.
+	$v ph ps x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcimg $f wff ph $.
+	f1_sbcimg $f wff ps $.
+	f2_sbcimg $f set x $.
+	f3_sbcimg $f class A $.
+	f4_sbcimg $f class V $.
+	i0_sbcimg $f set y $.
+	p_sbcimg $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( [. A / x ]. ph -> [. A / x ]. ps ) ) ) $= f0_sbcimg f1_sbcimg a_wi f2_sbcimg i0_sbcimg f3_sbcimg p_dfsbcq2 f0_sbcimg f2_sbcimg i0_sbcimg f3_sbcimg p_dfsbcq2 f1_sbcimg f2_sbcimg i0_sbcimg f3_sbcimg p_dfsbcq2 i0_sbcimg a_sup_set_class f3_sbcimg a_wceq f0_sbcimg f2_sbcimg i0_sbcimg a_wsb f0_sbcimg f2_sbcimg f3_sbcimg a_wsbc f1_sbcimg f2_sbcimg i0_sbcimg a_wsb f1_sbcimg f2_sbcimg f3_sbcimg a_wsbc p_imbi12d f0_sbcimg f1_sbcimg f2_sbcimg i0_sbcimg p_sbim f0_sbcimg f1_sbcimg a_wi f2_sbcimg i0_sbcimg a_wsb f0_sbcimg f2_sbcimg i0_sbcimg a_wsb f1_sbcimg f2_sbcimg i0_sbcimg a_wsb a_wi f0_sbcimg f1_sbcimg a_wi f2_sbcimg f3_sbcimg a_wsbc f0_sbcimg f2_sbcimg f3_sbcimg a_wsbc f1_sbcimg f2_sbcimg f3_sbcimg a_wsbc a_wi i0_sbcimg f3_sbcimg f4_sbcimg p_vtoclbg $.
 $}
-$( Distribution of class substitution over conjunction.  (Contributed by
+
+$(Distribution of class substitution over conjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcan_0 $f set y $.
-	fsbcan_0 $f wff ph $.
-	fsbcan_1 $f wff ps $.
-	fsbcan_2 $f set x $.
-	fsbcan_3 $f class A $.
-	sbcan $p |- ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) $= fsbcan_0 fsbcan_1 wa fsbcan_2 fsbcan_3 wsbc fsbcan_3 cvv wcel fsbcan_0 fsbcan_2 fsbcan_3 wsbc fsbcan_1 fsbcan_2 fsbcan_3 wsbc wa fsbcan_0 fsbcan_1 wa fsbcan_2 fsbcan_3 sbcex fsbcan_1 fsbcan_2 fsbcan_3 wsbc fsbcan_3 cvv wcel fsbcan_0 fsbcan_2 fsbcan_3 wsbc fsbcan_1 fsbcan_2 fsbcan_3 sbcex adantl fsbcan_0 fsbcan_1 wa fsbcan_2 isbcan_0 wsb fsbcan_0 fsbcan_2 isbcan_0 wsb fsbcan_1 fsbcan_2 isbcan_0 wsb wa fsbcan_0 fsbcan_1 wa fsbcan_2 fsbcan_3 wsbc fsbcan_0 fsbcan_2 fsbcan_3 wsbc fsbcan_1 fsbcan_2 fsbcan_3 wsbc wa isbcan_0 fsbcan_3 cvv fsbcan_0 fsbcan_1 wa fsbcan_2 isbcan_0 fsbcan_3 dfsbcq2 isbcan_0 sup_set_class fsbcan_3 wceq fsbcan_0 fsbcan_2 isbcan_0 wsb fsbcan_0 fsbcan_2 fsbcan_3 wsbc fsbcan_1 fsbcan_2 isbcan_0 wsb fsbcan_1 fsbcan_2 fsbcan_3 wsbc fsbcan_0 fsbcan_2 isbcan_0 fsbcan_3 dfsbcq2 fsbcan_1 fsbcan_2 isbcan_0 fsbcan_3 dfsbcq2 anbi12d fsbcan_0 fsbcan_1 fsbcan_2 isbcan_0 sban vtoclbg pm5.21nii $.
+	$v ph ps x A  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcan $f wff ph $.
+	f1_sbcan $f wff ps $.
+	f2_sbcan $f set x $.
+	f3_sbcan $f class A $.
+	i0_sbcan $f set y $.
+	p_sbcan $p |- ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) $= f0_sbcan f1_sbcan a_wa f2_sbcan f3_sbcan p_sbcex f1_sbcan f2_sbcan f3_sbcan p_sbcex f1_sbcan f2_sbcan f3_sbcan a_wsbc f3_sbcan a_cvv a_wcel f0_sbcan f2_sbcan f3_sbcan a_wsbc p_adantl f0_sbcan f1_sbcan a_wa f2_sbcan i0_sbcan f3_sbcan p_dfsbcq2 f0_sbcan f2_sbcan i0_sbcan f3_sbcan p_dfsbcq2 f1_sbcan f2_sbcan i0_sbcan f3_sbcan p_dfsbcq2 i0_sbcan a_sup_set_class f3_sbcan a_wceq f0_sbcan f2_sbcan i0_sbcan a_wsb f0_sbcan f2_sbcan f3_sbcan a_wsbc f1_sbcan f2_sbcan i0_sbcan a_wsb f1_sbcan f2_sbcan f3_sbcan a_wsbc p_anbi12d f0_sbcan f1_sbcan f2_sbcan i0_sbcan p_sban f0_sbcan f1_sbcan a_wa f2_sbcan i0_sbcan a_wsb f0_sbcan f2_sbcan i0_sbcan a_wsb f1_sbcan f2_sbcan i0_sbcan a_wsb a_wa f0_sbcan f1_sbcan a_wa f2_sbcan f3_sbcan a_wsbc f0_sbcan f2_sbcan f3_sbcan a_wsbc f1_sbcan f2_sbcan f3_sbcan a_wsbc a_wa i0_sbcan f3_sbcan a_cvv p_vtoclbg f0_sbcan f1_sbcan a_wa f2_sbcan f3_sbcan a_wsbc f3_sbcan a_cvv a_wcel f0_sbcan f2_sbcan f3_sbcan a_wsbc f1_sbcan f2_sbcan f3_sbcan a_wsbc a_wa p_pm5.21nii $.
 $}
-$( Distribution of class substitution over conjunction.  (Contributed by
+
+$(Distribution of class substitution over conjunction.  (Contributed by
        NM, 21-May-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcang_0 $f set y $.
-	fsbcang_0 $f wff ph $.
-	fsbcang_1 $f wff ps $.
-	fsbcang_2 $f set x $.
-	fsbcang_3 $f class A $.
-	fsbcang_4 $f class V $.
-	sbcang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) ) $= fsbcang_0 fsbcang_1 wa fsbcang_2 isbcang_0 wsb fsbcang_0 fsbcang_2 isbcang_0 wsb fsbcang_1 fsbcang_2 isbcang_0 wsb wa fsbcang_0 fsbcang_1 wa fsbcang_2 fsbcang_3 wsbc fsbcang_0 fsbcang_2 fsbcang_3 wsbc fsbcang_1 fsbcang_2 fsbcang_3 wsbc wa isbcang_0 fsbcang_3 fsbcang_4 fsbcang_0 fsbcang_1 wa fsbcang_2 isbcang_0 fsbcang_3 dfsbcq2 isbcang_0 sup_set_class fsbcang_3 wceq fsbcang_0 fsbcang_2 isbcang_0 wsb fsbcang_0 fsbcang_2 fsbcang_3 wsbc fsbcang_1 fsbcang_2 isbcang_0 wsb fsbcang_1 fsbcang_2 fsbcang_3 wsbc fsbcang_0 fsbcang_2 isbcang_0 fsbcang_3 dfsbcq2 fsbcang_1 fsbcang_2 isbcang_0 fsbcang_3 dfsbcq2 anbi12d fsbcang_0 fsbcang_1 fsbcang_2 isbcang_0 sban vtoclbg $.
+	$v ph ps x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcang $f wff ph $.
+	f1_sbcang $f wff ps $.
+	f2_sbcang $f set x $.
+	f3_sbcang $f class A $.
+	f4_sbcang $f class V $.
+	i0_sbcang $f set y $.
+	p_sbcang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) ) $= f0_sbcang f1_sbcang a_wa f2_sbcang i0_sbcang f3_sbcang p_dfsbcq2 f0_sbcang f2_sbcang i0_sbcang f3_sbcang p_dfsbcq2 f1_sbcang f2_sbcang i0_sbcang f3_sbcang p_dfsbcq2 i0_sbcang a_sup_set_class f3_sbcang a_wceq f0_sbcang f2_sbcang i0_sbcang a_wsb f0_sbcang f2_sbcang f3_sbcang a_wsbc f1_sbcang f2_sbcang i0_sbcang a_wsb f1_sbcang f2_sbcang f3_sbcang a_wsbc p_anbi12d f0_sbcang f1_sbcang f2_sbcang i0_sbcang p_sban f0_sbcang f1_sbcang a_wa f2_sbcang i0_sbcang a_wsb f0_sbcang f2_sbcang i0_sbcang a_wsb f1_sbcang f2_sbcang i0_sbcang a_wsb a_wa f0_sbcang f1_sbcang a_wa f2_sbcang f3_sbcang a_wsbc f0_sbcang f2_sbcang f3_sbcang a_wsbc f1_sbcang f2_sbcang f3_sbcang a_wsbc a_wa i0_sbcang f3_sbcang f4_sbcang p_vtoclbg $.
 $}
-$( Distribution of class substitution over disjunction.  (Contributed by
+
+$(Distribution of class substitution over disjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcor_0 $f set y $.
-	fsbcor_0 $f wff ph $.
-	fsbcor_1 $f wff ps $.
-	fsbcor_2 $f set x $.
-	fsbcor_3 $f class A $.
-	sbcor $p |- ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) $= fsbcor_0 fsbcor_1 wo fsbcor_2 fsbcor_3 wsbc fsbcor_3 cvv wcel fsbcor_0 fsbcor_2 fsbcor_3 wsbc fsbcor_1 fsbcor_2 fsbcor_3 wsbc wo fsbcor_0 fsbcor_1 wo fsbcor_2 fsbcor_3 sbcex fsbcor_0 fsbcor_2 fsbcor_3 wsbc fsbcor_3 cvv wcel fsbcor_1 fsbcor_2 fsbcor_3 wsbc fsbcor_0 fsbcor_2 fsbcor_3 sbcex fsbcor_1 fsbcor_2 fsbcor_3 sbcex jaoi fsbcor_0 fsbcor_1 wo fsbcor_2 isbcor_0 wsb fsbcor_0 fsbcor_2 isbcor_0 wsb fsbcor_1 fsbcor_2 isbcor_0 wsb wo fsbcor_0 fsbcor_1 wo fsbcor_2 fsbcor_3 wsbc fsbcor_0 fsbcor_2 fsbcor_3 wsbc fsbcor_1 fsbcor_2 fsbcor_3 wsbc wo isbcor_0 fsbcor_3 cvv fsbcor_0 fsbcor_1 wo fsbcor_2 isbcor_0 fsbcor_3 dfsbcq2 isbcor_0 sup_set_class fsbcor_3 wceq fsbcor_0 fsbcor_2 isbcor_0 wsb fsbcor_0 fsbcor_2 fsbcor_3 wsbc fsbcor_1 fsbcor_2 isbcor_0 wsb fsbcor_1 fsbcor_2 fsbcor_3 wsbc fsbcor_0 fsbcor_2 isbcor_0 fsbcor_3 dfsbcq2 fsbcor_1 fsbcor_2 isbcor_0 fsbcor_3 dfsbcq2 orbi12d fsbcor_0 fsbcor_1 fsbcor_2 isbcor_0 sbor vtoclbg pm5.21nii $.
+	$v ph ps x A  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcor $f wff ph $.
+	f1_sbcor $f wff ps $.
+	f2_sbcor $f set x $.
+	f3_sbcor $f class A $.
+	i0_sbcor $f set y $.
+	p_sbcor $p |- ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) $= f0_sbcor f1_sbcor a_wo f2_sbcor f3_sbcor p_sbcex f0_sbcor f2_sbcor f3_sbcor p_sbcex f1_sbcor f2_sbcor f3_sbcor p_sbcex f0_sbcor f2_sbcor f3_sbcor a_wsbc f3_sbcor a_cvv a_wcel f1_sbcor f2_sbcor f3_sbcor a_wsbc p_jaoi f0_sbcor f1_sbcor a_wo f2_sbcor i0_sbcor f3_sbcor p_dfsbcq2 f0_sbcor f2_sbcor i0_sbcor f3_sbcor p_dfsbcq2 f1_sbcor f2_sbcor i0_sbcor f3_sbcor p_dfsbcq2 i0_sbcor a_sup_set_class f3_sbcor a_wceq f0_sbcor f2_sbcor i0_sbcor a_wsb f0_sbcor f2_sbcor f3_sbcor a_wsbc f1_sbcor f2_sbcor i0_sbcor a_wsb f1_sbcor f2_sbcor f3_sbcor a_wsbc p_orbi12d f0_sbcor f1_sbcor f2_sbcor i0_sbcor p_sbor f0_sbcor f1_sbcor a_wo f2_sbcor i0_sbcor a_wsb f0_sbcor f2_sbcor i0_sbcor a_wsb f1_sbcor f2_sbcor i0_sbcor a_wsb a_wo f0_sbcor f1_sbcor a_wo f2_sbcor f3_sbcor a_wsbc f0_sbcor f2_sbcor f3_sbcor a_wsbc f1_sbcor f2_sbcor f3_sbcor a_wsbc a_wo i0_sbcor f3_sbcor a_cvv p_vtoclbg f0_sbcor f1_sbcor a_wo f2_sbcor f3_sbcor a_wsbc f3_sbcor a_cvv a_wcel f0_sbcor f2_sbcor f3_sbcor a_wsbc f1_sbcor f2_sbcor f3_sbcor a_wsbc a_wo p_pm5.21nii $.
 $}
-$( Distribution of class substitution over disjunction.  (Contributed by
+
+$(Distribution of class substitution over disjunction.  (Contributed by
        NM, 21-May-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcorg_0 $f set y $.
-	fsbcorg_0 $f wff ph $.
-	fsbcorg_1 $f wff ps $.
-	fsbcorg_2 $f set x $.
-	fsbcorg_3 $f class A $.
-	fsbcorg_4 $f class V $.
-	sbcorg $p |- ( A e. V -> ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) ) $= fsbcorg_0 fsbcorg_1 wo fsbcorg_2 isbcorg_0 wsb fsbcorg_0 fsbcorg_2 isbcorg_0 wsb fsbcorg_1 fsbcorg_2 isbcorg_0 wsb wo fsbcorg_0 fsbcorg_1 wo fsbcorg_2 fsbcorg_3 wsbc fsbcorg_0 fsbcorg_2 fsbcorg_3 wsbc fsbcorg_1 fsbcorg_2 fsbcorg_3 wsbc wo isbcorg_0 fsbcorg_3 fsbcorg_4 fsbcorg_0 fsbcorg_1 wo fsbcorg_2 isbcorg_0 fsbcorg_3 dfsbcq2 isbcorg_0 sup_set_class fsbcorg_3 wceq fsbcorg_0 fsbcorg_2 isbcorg_0 wsb fsbcorg_0 fsbcorg_2 fsbcorg_3 wsbc fsbcorg_1 fsbcorg_2 isbcorg_0 wsb fsbcorg_1 fsbcorg_2 fsbcorg_3 wsbc fsbcorg_0 fsbcorg_2 isbcorg_0 fsbcorg_3 dfsbcq2 fsbcorg_1 fsbcorg_2 isbcorg_0 fsbcorg_3 dfsbcq2 orbi12d fsbcorg_0 fsbcorg_1 fsbcorg_2 isbcorg_0 sbor vtoclbg $.
+	$v ph ps x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcorg $f wff ph $.
+	f1_sbcorg $f wff ps $.
+	f2_sbcorg $f set x $.
+	f3_sbcorg $f class A $.
+	f4_sbcorg $f class V $.
+	i0_sbcorg $f set y $.
+	p_sbcorg $p |- ( A e. V -> ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) ) $= f0_sbcorg f1_sbcorg a_wo f2_sbcorg i0_sbcorg f3_sbcorg p_dfsbcq2 f0_sbcorg f2_sbcorg i0_sbcorg f3_sbcorg p_dfsbcq2 f1_sbcorg f2_sbcorg i0_sbcorg f3_sbcorg p_dfsbcq2 i0_sbcorg a_sup_set_class f3_sbcorg a_wceq f0_sbcorg f2_sbcorg i0_sbcorg a_wsb f0_sbcorg f2_sbcorg f3_sbcorg a_wsbc f1_sbcorg f2_sbcorg i0_sbcorg a_wsb f1_sbcorg f2_sbcorg f3_sbcorg a_wsbc p_orbi12d f0_sbcorg f1_sbcorg f2_sbcorg i0_sbcorg p_sbor f0_sbcorg f1_sbcorg a_wo f2_sbcorg i0_sbcorg a_wsb f0_sbcorg f2_sbcorg i0_sbcorg a_wsb f1_sbcorg f2_sbcorg i0_sbcorg a_wsb a_wo f0_sbcorg f1_sbcorg a_wo f2_sbcorg f3_sbcorg a_wsbc f0_sbcorg f2_sbcorg f3_sbcorg a_wsbc f1_sbcorg f2_sbcorg f3_sbcorg a_wsbc a_wo i0_sbcorg f3_sbcorg f4_sbcorg p_vtoclbg $.
 $}
-$( Distribution of class substitution over biconditional.  (Contributed by
+
+$(Distribution of class substitution over biconditional.  (Contributed by
        Raph Levien, 10-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	$d y ps $.
-	isbcbig_0 $f set y $.
-	fsbcbig_0 $f wff ph $.
-	fsbcbig_1 $f wff ps $.
-	fsbcbig_2 $f set x $.
-	fsbcbig_3 $f class A $.
-	fsbcbig_4 $f class V $.
-	sbcbig $p |- ( A e. V -> ( [. A / x ]. ( ph <-> ps ) <-> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) ) $= fsbcbig_0 fsbcbig_1 wb fsbcbig_2 isbcbig_0 wsb fsbcbig_0 fsbcbig_2 isbcbig_0 wsb fsbcbig_1 fsbcbig_2 isbcbig_0 wsb wb fsbcbig_0 fsbcbig_1 wb fsbcbig_2 fsbcbig_3 wsbc fsbcbig_0 fsbcbig_2 fsbcbig_3 wsbc fsbcbig_1 fsbcbig_2 fsbcbig_3 wsbc wb isbcbig_0 fsbcbig_3 fsbcbig_4 fsbcbig_0 fsbcbig_1 wb fsbcbig_2 isbcbig_0 fsbcbig_3 dfsbcq2 isbcbig_0 sup_set_class fsbcbig_3 wceq fsbcbig_0 fsbcbig_2 isbcbig_0 wsb fsbcbig_0 fsbcbig_2 fsbcbig_3 wsbc fsbcbig_1 fsbcbig_2 isbcbig_0 wsb fsbcbig_1 fsbcbig_2 fsbcbig_3 wsbc fsbcbig_0 fsbcbig_2 isbcbig_0 fsbcbig_3 dfsbcq2 fsbcbig_1 fsbcbig_2 isbcbig_0 fsbcbig_3 dfsbcq2 bibi12d fsbcbig_0 fsbcbig_1 fsbcbig_2 isbcbig_0 sbbi vtoclbg $.
+	$v ph ps x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	$d y ps  $.
+	f0_sbcbig $f wff ph $.
+	f1_sbcbig $f wff ps $.
+	f2_sbcbig $f set x $.
+	f3_sbcbig $f class A $.
+	f4_sbcbig $f class V $.
+	i0_sbcbig $f set y $.
+	p_sbcbig $p |- ( A e. V -> ( [. A / x ]. ( ph <-> ps ) <-> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) ) $= f0_sbcbig f1_sbcbig a_wb f2_sbcbig i0_sbcbig f3_sbcbig p_dfsbcq2 f0_sbcbig f2_sbcbig i0_sbcbig f3_sbcbig p_dfsbcq2 f1_sbcbig f2_sbcbig i0_sbcbig f3_sbcbig p_dfsbcq2 i0_sbcbig a_sup_set_class f3_sbcbig a_wceq f0_sbcbig f2_sbcbig i0_sbcbig a_wsb f0_sbcbig f2_sbcbig f3_sbcbig a_wsbc f1_sbcbig f2_sbcbig i0_sbcbig a_wsb f1_sbcbig f2_sbcbig f3_sbcbig a_wsbc p_bibi12d f0_sbcbig f1_sbcbig f2_sbcbig i0_sbcbig p_sbbi f0_sbcbig f1_sbcbig a_wb f2_sbcbig i0_sbcbig a_wsb f0_sbcbig f2_sbcbig i0_sbcbig a_wsb f1_sbcbig f2_sbcbig i0_sbcbig a_wsb a_wb f0_sbcbig f1_sbcbig a_wb f2_sbcbig f3_sbcbig a_wsbc f0_sbcbig f2_sbcbig f3_sbcbig a_wsbc f1_sbcbig f2_sbcbig f3_sbcbig a_wsbc a_wb i0_sbcbig f3_sbcbig f4_sbcbig p_vtoclbg $.
 $}
-$( Move universal quantifier in and out of class substitution.
+
+$(Move universal quantifier in and out of class substitution.
        (Contributed by NM, 31-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v z $.
-	$d x z A $.
-	$d x y z $.
-	$d z ph $.
-	isbcal_0 $f set z $.
-	fsbcal_0 $f wff ph $.
-	fsbcal_1 $f set x $.
-	fsbcal_2 $f set y $.
-	fsbcal_3 $f class A $.
-	sbcal $p |- ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) $= fsbcal_0 fsbcal_1 wal fsbcal_2 fsbcal_3 wsbc fsbcal_3 cvv wcel fsbcal_0 fsbcal_2 fsbcal_3 wsbc fsbcal_1 wal fsbcal_0 fsbcal_1 wal fsbcal_2 fsbcal_3 sbcex fsbcal_0 fsbcal_2 fsbcal_3 wsbc fsbcal_3 cvv wcel fsbcal_1 fsbcal_0 fsbcal_2 fsbcal_3 sbcex sps fsbcal_0 fsbcal_1 wal fsbcal_2 isbcal_0 wsb fsbcal_0 fsbcal_2 isbcal_0 wsb fsbcal_1 wal fsbcal_0 fsbcal_1 wal fsbcal_2 fsbcal_3 wsbc fsbcal_0 fsbcal_2 fsbcal_3 wsbc fsbcal_1 wal isbcal_0 fsbcal_3 cvv fsbcal_0 fsbcal_1 wal fsbcal_2 isbcal_0 fsbcal_3 dfsbcq2 isbcal_0 sup_set_class fsbcal_3 wceq fsbcal_0 fsbcal_2 isbcal_0 wsb fsbcal_0 fsbcal_2 fsbcal_3 wsbc fsbcal_1 fsbcal_0 fsbcal_2 isbcal_0 fsbcal_3 dfsbcq2 albidv fsbcal_0 fsbcal_1 fsbcal_2 isbcal_0 sbal vtoclbg pm5.21nii $.
+	$v ph x y A  $.
+	$d x z A  $.
+	$d x y z  $.
+	$d z ph  $.
+	f0_sbcal $f wff ph $.
+	f1_sbcal $f set x $.
+	f2_sbcal $f set y $.
+	f3_sbcal $f class A $.
+	i0_sbcal $f set z $.
+	p_sbcal $p |- ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) $= f0_sbcal f1_sbcal a_wal f2_sbcal f3_sbcal p_sbcex f0_sbcal f2_sbcal f3_sbcal p_sbcex f0_sbcal f2_sbcal f3_sbcal a_wsbc f3_sbcal a_cvv a_wcel f1_sbcal p_sps f0_sbcal f1_sbcal a_wal f2_sbcal i0_sbcal f3_sbcal p_dfsbcq2 f0_sbcal f2_sbcal i0_sbcal f3_sbcal p_dfsbcq2 i0_sbcal a_sup_set_class f3_sbcal a_wceq f0_sbcal f2_sbcal i0_sbcal a_wsb f0_sbcal f2_sbcal f3_sbcal a_wsbc f1_sbcal p_albidv f0_sbcal f1_sbcal f2_sbcal i0_sbcal p_sbal f0_sbcal f1_sbcal a_wal f2_sbcal i0_sbcal a_wsb f0_sbcal f2_sbcal i0_sbcal a_wsb f1_sbcal a_wal f0_sbcal f1_sbcal a_wal f2_sbcal f3_sbcal a_wsbc f0_sbcal f2_sbcal f3_sbcal a_wsbc f1_sbcal a_wal i0_sbcal f3_sbcal a_cvv p_vtoclbg f0_sbcal f1_sbcal a_wal f2_sbcal f3_sbcal a_wsbc f3_sbcal a_cvv a_wcel f0_sbcal f2_sbcal f3_sbcal a_wsbc f1_sbcal a_wal p_pm5.21nii $.
 $}
-$( Move universal quantifier in and out of class substitution.
+
+$(Move universal quantifier in and out of class substitution.
        (Contributed by NM, 16-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v V $.
-	$v z $.
-	$d x z A $.
-	$d x y z $.
-	$d z ph $.
-	isbcalg_0 $f set z $.
-	fsbcalg_0 $f wff ph $.
-	fsbcalg_1 $f set x $.
-	fsbcalg_2 $f set y $.
-	fsbcalg_3 $f class A $.
-	fsbcalg_4 $f class V $.
-	sbcalg $p |- ( A e. V -> ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) ) $= fsbcalg_0 fsbcalg_1 wal fsbcalg_2 isbcalg_0 wsb fsbcalg_0 fsbcalg_2 isbcalg_0 wsb fsbcalg_1 wal fsbcalg_0 fsbcalg_1 wal fsbcalg_2 fsbcalg_3 wsbc fsbcalg_0 fsbcalg_2 fsbcalg_3 wsbc fsbcalg_1 wal isbcalg_0 fsbcalg_3 fsbcalg_4 fsbcalg_0 fsbcalg_1 wal fsbcalg_2 isbcalg_0 fsbcalg_3 dfsbcq2 isbcalg_0 sup_set_class fsbcalg_3 wceq fsbcalg_0 fsbcalg_2 isbcalg_0 wsb fsbcalg_0 fsbcalg_2 fsbcalg_3 wsbc fsbcalg_1 fsbcalg_0 fsbcalg_2 isbcalg_0 fsbcalg_3 dfsbcq2 albidv fsbcalg_0 fsbcalg_1 fsbcalg_2 isbcalg_0 sbal vtoclbg $.
+	$v ph x y A V  $.
+	$d x z A  $.
+	$d x y z  $.
+	$d z ph  $.
+	f0_sbcalg $f wff ph $.
+	f1_sbcalg $f set x $.
+	f2_sbcalg $f set y $.
+	f3_sbcalg $f class A $.
+	f4_sbcalg $f class V $.
+	i0_sbcalg $f set z $.
+	p_sbcalg $p |- ( A e. V -> ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) ) $= f0_sbcalg f1_sbcalg a_wal f2_sbcalg i0_sbcalg f3_sbcalg p_dfsbcq2 f0_sbcalg f2_sbcalg i0_sbcalg f3_sbcalg p_dfsbcq2 i0_sbcalg a_sup_set_class f3_sbcalg a_wceq f0_sbcalg f2_sbcalg i0_sbcalg a_wsb f0_sbcalg f2_sbcalg f3_sbcalg a_wsbc f1_sbcalg p_albidv f0_sbcalg f1_sbcalg f2_sbcalg i0_sbcalg p_sbal f0_sbcalg f1_sbcalg a_wal f2_sbcalg i0_sbcalg a_wsb f0_sbcalg f2_sbcalg i0_sbcalg a_wsb f1_sbcalg a_wal f0_sbcalg f1_sbcalg a_wal f2_sbcalg f3_sbcalg a_wsbc f0_sbcalg f2_sbcalg f3_sbcalg a_wsbc f1_sbcalg a_wal i0_sbcalg f3_sbcalg f4_sbcalg p_vtoclbg $.
 $}
-$( Move existential quantifier in and out of class substitution.
+
+$(Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v z $.
-	$d x z A $.
-	$d x y z $.
-	$d z ph $.
-	isbcex2_0 $f set z $.
-	fsbcex2_0 $f wff ph $.
-	fsbcex2_1 $f set x $.
-	fsbcex2_2 $f set y $.
-	fsbcex2_3 $f class A $.
-	sbcex2 $p |- ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) $= fsbcex2_0 fsbcex2_1 wex fsbcex2_2 fsbcex2_3 wsbc fsbcex2_3 cvv wcel fsbcex2_0 fsbcex2_2 fsbcex2_3 wsbc fsbcex2_1 wex fsbcex2_0 fsbcex2_1 wex fsbcex2_2 fsbcex2_3 sbcex fsbcex2_0 fsbcex2_2 fsbcex2_3 wsbc fsbcex2_3 cvv wcel fsbcex2_1 fsbcex2_0 fsbcex2_2 fsbcex2_3 sbcex exlimiv fsbcex2_0 fsbcex2_1 wex fsbcex2_2 isbcex2_0 wsb fsbcex2_0 fsbcex2_2 isbcex2_0 wsb fsbcex2_1 wex fsbcex2_0 fsbcex2_1 wex fsbcex2_2 fsbcex2_3 wsbc fsbcex2_0 fsbcex2_2 fsbcex2_3 wsbc fsbcex2_1 wex isbcex2_0 fsbcex2_3 cvv fsbcex2_0 fsbcex2_1 wex fsbcex2_2 isbcex2_0 fsbcex2_3 dfsbcq2 isbcex2_0 sup_set_class fsbcex2_3 wceq fsbcex2_0 fsbcex2_2 isbcex2_0 wsb fsbcex2_0 fsbcex2_2 fsbcex2_3 wsbc fsbcex2_1 fsbcex2_0 fsbcex2_2 isbcex2_0 fsbcex2_3 dfsbcq2 exbidv fsbcex2_0 fsbcex2_1 fsbcex2_2 isbcex2_0 sbex vtoclbg pm5.21nii $.
+	$v ph x y A  $.
+	$d x z A  $.
+	$d x y z  $.
+	$d z ph  $.
+	f0_sbcex2 $f wff ph $.
+	f1_sbcex2 $f set x $.
+	f2_sbcex2 $f set y $.
+	f3_sbcex2 $f class A $.
+	i0_sbcex2 $f set z $.
+	p_sbcex2 $p |- ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) $= f0_sbcex2 f1_sbcex2 a_wex f2_sbcex2 f3_sbcex2 p_sbcex f0_sbcex2 f2_sbcex2 f3_sbcex2 p_sbcex f0_sbcex2 f2_sbcex2 f3_sbcex2 a_wsbc f3_sbcex2 a_cvv a_wcel f1_sbcex2 p_exlimiv f0_sbcex2 f1_sbcex2 a_wex f2_sbcex2 i0_sbcex2 f3_sbcex2 p_dfsbcq2 f0_sbcex2 f2_sbcex2 i0_sbcex2 f3_sbcex2 p_dfsbcq2 i0_sbcex2 a_sup_set_class f3_sbcex2 a_wceq f0_sbcex2 f2_sbcex2 i0_sbcex2 a_wsb f0_sbcex2 f2_sbcex2 f3_sbcex2 a_wsbc f1_sbcex2 p_exbidv f0_sbcex2 f1_sbcex2 f2_sbcex2 i0_sbcex2 p_sbex f0_sbcex2 f1_sbcex2 a_wex f2_sbcex2 i0_sbcex2 a_wsb f0_sbcex2 f2_sbcex2 i0_sbcex2 a_wsb f1_sbcex2 a_wex f0_sbcex2 f1_sbcex2 a_wex f2_sbcex2 f3_sbcex2 a_wsbc f0_sbcex2 f2_sbcex2 f3_sbcex2 a_wsbc f1_sbcex2 a_wex i0_sbcex2 f3_sbcex2 a_cvv p_vtoclbg f0_sbcex2 f1_sbcex2 a_wex f2_sbcex2 f3_sbcex2 a_wsbc f3_sbcex2 a_cvv a_wcel f0_sbcex2 f2_sbcex2 f3_sbcex2 a_wsbc f1_sbcex2 a_wex p_pm5.21nii $.
 $}
-$( Move existential quantifier in and out of class substitution.
+
+$(Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v V $.
-	$v z $.
-	$d x z A $.
-	$d x y z $.
-	$d z ph $.
-	isbcexg_0 $f set z $.
-	fsbcexg_0 $f wff ph $.
-	fsbcexg_1 $f set x $.
-	fsbcexg_2 $f set y $.
-	fsbcexg_3 $f class A $.
-	fsbcexg_4 $f class V $.
-	sbcexg $p |- ( A e. V -> ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) ) $= fsbcexg_0 fsbcexg_1 wex fsbcexg_2 isbcexg_0 wsb fsbcexg_0 fsbcexg_2 isbcexg_0 wsb fsbcexg_1 wex fsbcexg_0 fsbcexg_1 wex fsbcexg_2 fsbcexg_3 wsbc fsbcexg_0 fsbcexg_2 fsbcexg_3 wsbc fsbcexg_1 wex isbcexg_0 fsbcexg_3 fsbcexg_4 fsbcexg_0 fsbcexg_1 wex fsbcexg_2 isbcexg_0 fsbcexg_3 dfsbcq2 isbcexg_0 sup_set_class fsbcexg_3 wceq fsbcexg_0 fsbcexg_2 isbcexg_0 wsb fsbcexg_0 fsbcexg_2 fsbcexg_3 wsbc fsbcexg_1 fsbcexg_0 fsbcexg_2 isbcexg_0 fsbcexg_3 dfsbcq2 exbidv fsbcexg_0 fsbcexg_1 fsbcexg_2 isbcexg_0 sbex vtoclbg $.
+	$v ph x y A V  $.
+	$d x z A  $.
+	$d x y z  $.
+	$d z ph  $.
+	f0_sbcexg $f wff ph $.
+	f1_sbcexg $f set x $.
+	f2_sbcexg $f set y $.
+	f3_sbcexg $f class A $.
+	f4_sbcexg $f class V $.
+	i0_sbcexg $f set z $.
+	p_sbcexg $p |- ( A e. V -> ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) ) $= f0_sbcexg f1_sbcexg a_wex f2_sbcexg i0_sbcexg f3_sbcexg p_dfsbcq2 f0_sbcexg f2_sbcexg i0_sbcexg f3_sbcexg p_dfsbcq2 i0_sbcexg a_sup_set_class f3_sbcexg a_wceq f0_sbcexg f2_sbcexg i0_sbcexg a_wsb f0_sbcexg f2_sbcexg f3_sbcexg a_wsbc f1_sbcexg p_exbidv f0_sbcexg f1_sbcexg f2_sbcexg i0_sbcexg p_sbex f0_sbcexg f1_sbcexg a_wex f2_sbcexg i0_sbcexg a_wsb f0_sbcexg f2_sbcexg i0_sbcexg a_wsb f1_sbcexg a_wex f0_sbcexg f1_sbcexg a_wex f2_sbcexg f3_sbcexg a_wsbc f0_sbcexg f2_sbcexg f3_sbcexg a_wsbc f1_sbcexg a_wex i0_sbcexg f3_sbcexg f4_sbcexg p_vtoclbg $.
 $}
-$( Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
+
+$(Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
        28-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$d x B $.
-	$d x A $.
-	fsbceqal_0 $f set x $.
-	fsbceqal_1 $f class A $.
-	fsbceqal_2 $f class B $.
-	fsbceqal_3 $f class V $.
-	sbceqal $p |- ( A e. V -> ( A. x ( x = A -> x = B ) -> A = B ) ) $= fsbceqal_1 fsbceqal_3 wcel fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 sup_set_class fsbceqal_2 wceq wi fsbceqal_0 wal fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 sup_set_class fsbceqal_2 wceq wi fsbceqal_0 fsbceqal_1 wsbc fsbceqal_1 fsbceqal_2 wceq fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 sup_set_class fsbceqal_2 wceq wi fsbceqal_0 fsbceqal_1 fsbceqal_3 spsbc fsbceqal_1 fsbceqal_3 wcel fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 sup_set_class fsbceqal_2 wceq wi fsbceqal_0 fsbceqal_1 wsbc fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 wsbc wi fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_1 fsbceqal_2 wceq fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 fsbceqal_3 sbcimg fsbceqal_1 fsbceqal_3 wcel fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 wsbc wi fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 wsbc wb fsbceqal_1 fsbceqal_3 wcel fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_1 fsbceqal_1 wceq fsbceqal_1 eqid fsbceqal_0 fsbceqal_1 fsbceqal_1 fsbceqal_3 eqsbc3 mpbiri fsbceqal_0 sup_set_class fsbceqal_1 wceq fsbceqal_0 fsbceqal_1 wsbc fsbceqal_0 sup_set_class fsbceqal_2 wceq fsbceqal_0 fsbceqal_1 wsbc pm5.5 syl fsbceqal_0 fsbceqal_1 fsbceqal_2 fsbceqal_3 eqsbc3 3bitrd sylibd $.
+	$v x A B V  $.
+	$d x B  $.
+	$d x A  $.
+	f0_sbceqal $f set x $.
+	f1_sbceqal $f class A $.
+	f2_sbceqal $f class B $.
+	f3_sbceqal $f class V $.
+	p_sbceqal $p |- ( A e. V -> ( A. x ( x = A -> x = B ) -> A = B ) ) $= f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal a_sup_set_class f2_sbceqal a_wceq a_wi f0_sbceqal f1_sbceqal f3_sbceqal p_spsbc f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal f3_sbceqal p_sbcimg f1_sbceqal p_eqid f0_sbceqal f1_sbceqal f1_sbceqal f3_sbceqal p_eqsbc3 f1_sbceqal f3_sbceqal a_wcel f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f1_sbceqal f1_sbceqal a_wceq p_mpbiri f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc p_pm5.5 f1_sbceqal f3_sbceqal a_wcel f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc a_wi f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc a_wb p_syl f0_sbceqal f1_sbceqal f2_sbceqal f3_sbceqal p_eqsbc3 f1_sbceqal f3_sbceqal a_wcel f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal a_sup_set_class f2_sbceqal a_wceq a_wi f0_sbceqal f1_sbceqal a_wsbc f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc a_wi f0_sbceqal a_sup_set_class f2_sbceqal a_wceq f0_sbceqal f1_sbceqal a_wsbc f1_sbceqal f2_sbceqal a_wceq p_3bitrd f1_sbceqal f3_sbceqal a_wcel f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal a_sup_set_class f2_sbceqal a_wceq a_wi f0_sbceqal a_wal f0_sbceqal a_sup_set_class f1_sbceqal a_wceq f0_sbceqal a_sup_set_class f2_sbceqal a_wceq a_wi f0_sbceqal f1_sbceqal a_wsbc f1_sbceqal f2_sbceqal a_wceq p_sylibd $.
 $}
-$( Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
+
+$(Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
        Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$d x A $.
-	$d x B $.
-	fsbeqalb_0 $f wff ph $.
-	fsbeqalb_1 $f set x $.
-	fsbeqalb_2 $f class A $.
-	fsbeqalb_3 $f class B $.
-	fsbeqalb_4 $f class V $.
-	sbeqalb $p |- ( A e. V -> ( ( A. x ( ph <-> x = A ) /\ A. x ( ph <-> x = B ) ) -> A = B ) ) $= fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_2 wceq wb fsbeqalb_1 wal fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wb fsbeqalb_1 wal wa fsbeqalb_1 sup_set_class fsbeqalb_2 wceq fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wi fsbeqalb_1 wal fsbeqalb_2 fsbeqalb_4 wcel fsbeqalb_2 fsbeqalb_3 wceq fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_2 wceq wb fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wb fsbeqalb_1 sup_set_class fsbeqalb_2 wceq fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wi fsbeqalb_1 fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_2 wceq wb fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wb wa fsbeqalb_1 sup_set_class fsbeqalb_2 wceq fsbeqalb_1 sup_set_class fsbeqalb_3 wceq fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_2 wceq wb fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wb fsbeqalb_1 sup_set_class fsbeqalb_2 wceq fsbeqalb_1 sup_set_class fsbeqalb_3 wceq wb fsbeqalb_0 fsbeqalb_1 sup_set_class fsbeqalb_2 wceq fsbeqalb_1 sup_set_class fsbeqalb_3 wceq bibi1 biimpa biimpd alanimi fsbeqalb_1 fsbeqalb_2 fsbeqalb_3 fsbeqalb_4 sbceqal syl5 $.
+	$v ph x A B V  $.
+	$d x A  $.
+	$d x B  $.
+	f0_sbeqalb $f wff ph $.
+	f1_sbeqalb $f set x $.
+	f2_sbeqalb $f class A $.
+	f3_sbeqalb $f class B $.
+	f4_sbeqalb $f class V $.
+	p_sbeqalb $p |- ( A e. V -> ( ( A. x ( ph <-> x = A ) /\ A. x ( ph <-> x = B ) ) -> A = B ) ) $= f0_sbeqalb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq p_bibi1 f0_sbeqalb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq a_wb f0_sbeqalb f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wb p_biimpa f0_sbeqalb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq a_wb f0_sbeqalb f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wb a_wa f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq p_biimpd f0_sbeqalb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq a_wb f0_sbeqalb f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wi f1_sbeqalb p_alanimi f1_sbeqalb f2_sbeqalb f3_sbeqalb f4_sbeqalb p_sbceqal f0_sbeqalb f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq a_wb f1_sbeqalb a_wal f0_sbeqalb f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wb f1_sbeqalb a_wal a_wa f1_sbeqalb a_sup_set_class f2_sbeqalb a_wceq f1_sbeqalb a_sup_set_class f3_sbeqalb a_wceq a_wi f1_sbeqalb a_wal f2_sbeqalb f4_sbeqalb a_wcel f2_sbeqalb f3_sbeqalb a_wceq p_syl5 $.
 $}
-$( Formula-building deduction rule for class substitution.  (Contributed by
+
+$(Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	fsbcbid_0 $f wff ph $.
-	fsbcbid_1 $f wff ps $.
-	fsbcbid_2 $f wff ch $.
-	fsbcbid_3 $f set x $.
-	fsbcbid_4 $f class A $.
-	esbcbid_0 $e |- F/ x ph $.
-	esbcbid_1 $e |- ( ph -> ( ps <-> ch ) ) $.
-	sbcbid $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $= fsbcbid_0 fsbcbid_4 fsbcbid_1 fsbcbid_3 cab wcel fsbcbid_4 fsbcbid_2 fsbcbid_3 cab wcel fsbcbid_1 fsbcbid_3 fsbcbid_4 wsbc fsbcbid_2 fsbcbid_3 fsbcbid_4 wsbc fsbcbid_0 fsbcbid_1 fsbcbid_3 cab fsbcbid_2 fsbcbid_3 cab fsbcbid_4 fsbcbid_0 fsbcbid_1 fsbcbid_2 fsbcbid_3 esbcbid_0 esbcbid_1 abbid eleq2d fsbcbid_1 fsbcbid_3 fsbcbid_4 df-sbc fsbcbid_2 fsbcbid_3 fsbcbid_4 df-sbc 3bitr4g $.
+	$v ph ps ch x A  $.
+	f0_sbcbid $f wff ph $.
+	f1_sbcbid $f wff ps $.
+	f2_sbcbid $f wff ch $.
+	f3_sbcbid $f set x $.
+	f4_sbcbid $f class A $.
+	e0_sbcbid $e |- F/ x ph $.
+	e1_sbcbid $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_sbcbid $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $= e0_sbcbid e1_sbcbid f0_sbcbid f1_sbcbid f2_sbcbid f3_sbcbid p_abbid f0_sbcbid f1_sbcbid f3_sbcbid a_cab f2_sbcbid f3_sbcbid a_cab f4_sbcbid p_eleq2d f1_sbcbid f3_sbcbid f4_sbcbid a_df-sbc f2_sbcbid f3_sbcbid f4_sbcbid a_df-sbc f0_sbcbid f4_sbcbid f1_sbcbid f3_sbcbid a_cab a_wcel f4_sbcbid f2_sbcbid f3_sbcbid a_cab a_wcel f1_sbcbid f3_sbcbid f4_sbcbid a_wsbc f2_sbcbid f3_sbcbid f4_sbcbid a_wsbc p_3bitr4g $.
 $}
-$( Formula-building deduction rule for class substitution.  (Contributed by
+
+$(Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$d x ph $.
-	fsbcbidv_0 $f wff ph $.
-	fsbcbidv_1 $f wff ps $.
-	fsbcbidv_2 $f wff ch $.
-	fsbcbidv_3 $f set x $.
-	fsbcbidv_4 $f class A $.
-	esbcbidv_0 $e |- ( ph -> ( ps <-> ch ) ) $.
-	sbcbidv $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $= fsbcbidv_0 fsbcbidv_1 fsbcbidv_2 fsbcbidv_3 fsbcbidv_4 fsbcbidv_0 fsbcbidv_3 nfv esbcbidv_0 sbcbid $.
+	$v ph ps ch x A  $.
+	$d x ph  $.
+	f0_sbcbidv $f wff ph $.
+	f1_sbcbidv $f wff ps $.
+	f2_sbcbidv $f wff ch $.
+	f3_sbcbidv $f set x $.
+	f4_sbcbidv $f class A $.
+	e0_sbcbidv $e |- ( ph -> ( ps <-> ch ) ) $.
+	p_sbcbidv $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $= f0_sbcbidv f3_sbcbidv p_nfv e0_sbcbidv f0_sbcbidv f1_sbcbidv f2_sbcbidv f3_sbcbidv f4_sbcbidv p_sbcbid $.
 $}
-$( Formula-building inference rule for class substitution.  (Contributed by
+
+$(Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fsbcbii_0 $f wff ph $.
-	fsbcbii_1 $f wff ps $.
-	fsbcbii_2 $f set x $.
-	fsbcbii_3 $f class A $.
-	esbcbii_0 $e |- ( ph <-> ps ) $.
-	sbcbii $p |- ( [. A / x ]. ph <-> [. A / x ]. ps ) $= fsbcbii_0 fsbcbii_2 fsbcbii_3 wsbc fsbcbii_1 fsbcbii_2 fsbcbii_3 wsbc wb wtru fsbcbii_0 fsbcbii_1 fsbcbii_2 fsbcbii_3 fsbcbii_0 fsbcbii_1 wb wtru esbcbii_0 a1i sbcbidv trud $.
+	$v ph ps x A  $.
+	f0_sbcbii $f wff ph $.
+	f1_sbcbii $f wff ps $.
+	f2_sbcbii $f set x $.
+	f3_sbcbii $f class A $.
+	e0_sbcbii $e |- ( ph <-> ps ) $.
+	p_sbcbii $p |- ( [. A / x ]. ph <-> [. A / x ]. ps ) $= e0_sbcbii f0_sbcbii f1_sbcbii a_wb a_wtru p_a1i a_wtru f0_sbcbii f1_sbcbii f2_sbcbii f3_sbcbii p_sbcbidv f0_sbcbii f2_sbcbii f3_sbcbii a_wsbc f1_sbcbii f2_sbcbii f3_sbcbii a_wsbc a_wb p_trud $.
 $}
-$( Formula-building inference rule for class substitution.  (Contributed by
+
+$(Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.)  (New usage is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	fsbcbiiOLD_0 $f wff ph $.
-	fsbcbiiOLD_1 $f wff ps $.
-	fsbcbiiOLD_2 $f set x $.
-	fsbcbiiOLD_3 $f class A $.
-	fsbcbiiOLD_4 $f class V $.
-	esbcbiiOLD_0 $e |- ( ph <-> ps ) $.
-	sbcbiiOLD $p |- ( A e. V -> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) $= fsbcbiiOLD_0 fsbcbiiOLD_2 fsbcbiiOLD_3 wsbc fsbcbiiOLD_1 fsbcbiiOLD_2 fsbcbiiOLD_3 wsbc wb fsbcbiiOLD_3 fsbcbiiOLD_4 wcel fsbcbiiOLD_0 fsbcbiiOLD_1 fsbcbiiOLD_2 fsbcbiiOLD_3 esbcbiiOLD_0 sbcbii a1i $.
+	$v ph ps x A V  $.
+	f0_sbcbiiOLD $f wff ph $.
+	f1_sbcbiiOLD $f wff ps $.
+	f2_sbcbiiOLD $f set x $.
+	f3_sbcbiiOLD $f class A $.
+	f4_sbcbiiOLD $f class V $.
+	e0_sbcbiiOLD $e |- ( ph <-> ps ) $.
+	p_sbcbiiOLD $p |- ( A e. V -> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) $= e0_sbcbiiOLD f0_sbcbiiOLD f1_sbcbiiOLD f2_sbcbiiOLD f3_sbcbiiOLD p_sbcbii f0_sbcbiiOLD f2_sbcbiiOLD f3_sbcbiiOLD a_wsbc f1_sbcbiiOLD f2_sbcbiiOLD f3_sbcbiiOLD a_wsbc a_wb f3_sbcbiiOLD f4_sbcbiiOLD a_wcel p_a1i $.
 $}
-$( ~ eqsbc3 with set variable on right side of equals sign.  This proof was
+
+$(~ eqsbc3 with set variable on right side of equals sign.  This proof was
        automatically generated from the virtual deduction proof ~ eqsbc3rVD
        using a translation program.  (Contributed by Alan Sare,
        24-Oct-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x C $.
-	$d x A $.
-	feqsbc3r_0 $f set x $.
-	feqsbc3r_1 $f class A $.
-	feqsbc3r_2 $f class B $.
-	feqsbc3r_3 $f class C $.
-	eqsbc3r $p |- ( A e. B -> ( [. A / x ]. C = x <-> C = A ) ) $= feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_1 feqsbc3r_3 wceq feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_1 feqsbc3r_3 wceq feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 feqsbc3r_3 feqsbc3r_0 sup_set_class eqcom sbcbii biimpi feqsbc3r_0 feqsbc3r_1 feqsbc3r_3 feqsbc3r_2 eqsbc3 syl5ib feqsbc3r_1 feqsbc3r_3 eqcom syl6ib feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_1 feqsbc3r_3 wceq feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 wsbc feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_3 feqsbc3r_1 wceq feqsbc3r_1 feqsbc3r_3 wceq feqsbc3r_1 feqsbc3r_2 wcel feqsbc3r_3 feqsbc3r_1 wceq idd feqsbc3r_1 feqsbc3r_3 eqcom syl6ibr feqsbc3r_0 feqsbc3r_1 feqsbc3r_3 feqsbc3r_2 eqsbc3 sylibrd feqsbc3r_3 feqsbc3r_0 sup_set_class wceq feqsbc3r_0 sup_set_class feqsbc3r_3 wceq feqsbc3r_0 feqsbc3r_1 feqsbc3r_3 feqsbc3r_0 sup_set_class eqcom sbcbii syl6ibr impbid $.
+	$v x A B C  $.
+	$d x C  $.
+	$d x A  $.
+	f0_eqsbc3r $f set x $.
+	f1_eqsbc3r $f class A $.
+	f2_eqsbc3r $f class B $.
+	f3_eqsbc3r $f class C $.
+	p_eqsbc3r $p |- ( A e. B -> ( [. A / x ]. C = x <-> C = A ) ) $= f3_eqsbc3r f0_eqsbc3r a_sup_set_class p_eqcom f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r p_sbcbii f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc p_biimpi f0_eqsbc3r f1_eqsbc3r f3_eqsbc3r f2_eqsbc3r p_eqsbc3 f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f1_eqsbc3r f2_eqsbc3r a_wcel f1_eqsbc3r f3_eqsbc3r a_wceq p_syl5ib f1_eqsbc3r f3_eqsbc3r p_eqcom f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f1_eqsbc3r f3_eqsbc3r a_wceq f3_eqsbc3r f1_eqsbc3r a_wceq p_syl6ib f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f1_eqsbc3r a_wceq p_idd f1_eqsbc3r f3_eqsbc3r p_eqcom f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f1_eqsbc3r a_wceq f3_eqsbc3r f1_eqsbc3r a_wceq f1_eqsbc3r f3_eqsbc3r a_wceq p_syl6ibr f0_eqsbc3r f1_eqsbc3r f3_eqsbc3r f2_eqsbc3r p_eqsbc3 f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f1_eqsbc3r a_wceq f1_eqsbc3r f3_eqsbc3r a_wceq f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc p_sylibrd f3_eqsbc3r f0_eqsbc3r a_sup_set_class p_eqcom f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r p_sbcbii f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f1_eqsbc3r a_wceq f0_eqsbc3r a_sup_set_class f3_eqsbc3r a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc p_syl6ibr f1_eqsbc3r f2_eqsbc3r a_wcel f3_eqsbc3r f0_eqsbc3r a_sup_set_class a_wceq f0_eqsbc3r f1_eqsbc3r a_wsbc f3_eqsbc3r f1_eqsbc3r a_wceq p_impbid $.
 $}
-$( Distribution of class substitution over triple conjunction.
+
+$(Distribution of class substitution over triple conjunction.
        (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d y ch $.
-	$d y ps $.
-	$d y ph $.
-	$d y A $.
-	$d x y $.
-	isbc3ang_0 $f set y $.
-	fsbc3ang_0 $f wff ph $.
-	fsbc3ang_1 $f wff ps $.
-	fsbc3ang_2 $f wff ch $.
-	fsbc3ang_3 $f set x $.
-	fsbc3ang_4 $f class A $.
-	fsbc3ang_5 $f class V $.
-	sbc3ang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps /\ ch ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps /\ [. A / x ]. ch ) ) ) $= fsbc3ang_0 fsbc3ang_1 fsbc3ang_2 w3a fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_0 fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_1 fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_2 fsbc3ang_3 isbc3ang_0 wsb w3a fsbc3ang_0 fsbc3ang_1 fsbc3ang_2 w3a fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_0 fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_1 fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_2 fsbc3ang_3 fsbc3ang_4 wsbc w3a isbc3ang_0 fsbc3ang_4 fsbc3ang_5 fsbc3ang_0 fsbc3ang_1 fsbc3ang_2 w3a fsbc3ang_3 isbc3ang_0 fsbc3ang_4 dfsbcq2 isbc3ang_0 sup_set_class fsbc3ang_4 wceq fsbc3ang_0 fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_0 fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_1 fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_1 fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_2 fsbc3ang_3 isbc3ang_0 wsb fsbc3ang_2 fsbc3ang_3 fsbc3ang_4 wsbc fsbc3ang_0 fsbc3ang_3 isbc3ang_0 fsbc3ang_4 dfsbcq2 fsbc3ang_1 fsbc3ang_3 isbc3ang_0 fsbc3ang_4 dfsbcq2 fsbc3ang_2 fsbc3ang_3 isbc3ang_0 fsbc3ang_4 dfsbcq2 3anbi123d fsbc3ang_0 fsbc3ang_1 fsbc3ang_2 fsbc3ang_3 isbc3ang_0 sb3an vtoclbg $.
+	$v ph ps ch x A V  $.
+	$d y ch  $.
+	$d y ps  $.
+	$d y ph  $.
+	$d y A  $.
+	$d x y  $.
+	f0_sbc3ang $f wff ph $.
+	f1_sbc3ang $f wff ps $.
+	f2_sbc3ang $f wff ch $.
+	f3_sbc3ang $f set x $.
+	f4_sbc3ang $f class A $.
+	f5_sbc3ang $f class V $.
+	i0_sbc3ang $f set y $.
+	p_sbc3ang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps /\ ch ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps /\ [. A / x ]. ch ) ) ) $= f0_sbc3ang f1_sbc3ang f2_sbc3ang a_w3a f3_sbc3ang i0_sbc3ang f4_sbc3ang p_dfsbcq2 f0_sbc3ang f3_sbc3ang i0_sbc3ang f4_sbc3ang p_dfsbcq2 f1_sbc3ang f3_sbc3ang i0_sbc3ang f4_sbc3ang p_dfsbcq2 f2_sbc3ang f3_sbc3ang i0_sbc3ang f4_sbc3ang p_dfsbcq2 i0_sbc3ang a_sup_set_class f4_sbc3ang a_wceq f0_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb f0_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc f1_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb f1_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc f2_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb f2_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc p_3anbi123d f0_sbc3ang f1_sbc3ang f2_sbc3ang f3_sbc3ang i0_sbc3ang p_sb3an f0_sbc3ang f1_sbc3ang f2_sbc3ang a_w3a f3_sbc3ang i0_sbc3ang a_wsb f0_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb f1_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb f2_sbc3ang f3_sbc3ang i0_sbc3ang a_wsb a_w3a f0_sbc3ang f1_sbc3ang f2_sbc3ang a_w3a f3_sbc3ang f4_sbc3ang a_wsbc f0_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc f1_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc f2_sbc3ang f3_sbc3ang f4_sbc3ang a_wsbc a_w3a i0_sbc3ang f4_sbc3ang f5_sbc3ang p_vtoclbg $.
 $}
-$( Class substitution into a membership relation.  (Contributed by NM,
+
+$(Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	isbcel1gv_0 $f set y $.
-	fsbcel1gv_0 $f set x $.
-	fsbcel1gv_1 $f class A $.
-	fsbcel1gv_2 $f class B $.
-	fsbcel1gv_3 $f class V $.
-	sbcel1gv $p |- ( A e. V -> ( [. A / x ]. x e. B <-> A e. B ) ) $= fsbcel1gv_0 sup_set_class fsbcel1gv_2 wcel fsbcel1gv_0 isbcel1gv_0 wsb isbcel1gv_0 sup_set_class fsbcel1gv_2 wcel fsbcel1gv_0 sup_set_class fsbcel1gv_2 wcel fsbcel1gv_0 fsbcel1gv_1 wsbc fsbcel1gv_1 fsbcel1gv_2 wcel isbcel1gv_0 fsbcel1gv_1 fsbcel1gv_3 fsbcel1gv_0 sup_set_class fsbcel1gv_2 wcel fsbcel1gv_0 isbcel1gv_0 fsbcel1gv_1 dfsbcq2 isbcel1gv_0 sup_set_class fsbcel1gv_1 fsbcel1gv_2 eleq1 isbcel1gv_0 fsbcel1gv_0 fsbcel1gv_2 clelsb3 vtoclbg $.
+	$v x A B V  $.
+	$d y A  $.
+	$d x y B  $.
+	f0_sbcel1gv $f set x $.
+	f1_sbcel1gv $f class A $.
+	f2_sbcel1gv $f class B $.
+	f3_sbcel1gv $f class V $.
+	i0_sbcel1gv $f set y $.
+	p_sbcel1gv $p |- ( A e. V -> ( [. A / x ]. x e. B <-> A e. B ) ) $= f0_sbcel1gv a_sup_set_class f2_sbcel1gv a_wcel f0_sbcel1gv i0_sbcel1gv f1_sbcel1gv p_dfsbcq2 i0_sbcel1gv a_sup_set_class f1_sbcel1gv f2_sbcel1gv p_eleq1 i0_sbcel1gv f0_sbcel1gv f2_sbcel1gv p_clelsb3 f0_sbcel1gv a_sup_set_class f2_sbcel1gv a_wcel f0_sbcel1gv i0_sbcel1gv a_wsb i0_sbcel1gv a_sup_set_class f2_sbcel1gv a_wcel f0_sbcel1gv a_sup_set_class f2_sbcel1gv a_wcel f0_sbcel1gv f1_sbcel1gv a_wsbc f1_sbcel1gv f2_sbcel1gv a_wcel i0_sbcel1gv f1_sbcel1gv f3_sbcel1gv p_vtoclbg $.
 $}
-$( Class substitution into a membership relation.  (Contributed by NM,
+
+$(Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v y $.
-	$d y B $.
-	$d x y A $.
-	isbcel2gv_0 $f set y $.
-	fsbcel2gv_0 $f set x $.
-	fsbcel2gv_1 $f class A $.
-	fsbcel2gv_2 $f class B $.
-	fsbcel2gv_3 $f class V $.
-	sbcel2gv $p |- ( B e. V -> ( [. B / x ]. A e. x <-> A e. B ) ) $= fsbcel2gv_1 fsbcel2gv_0 sup_set_class wcel fsbcel2gv_0 isbcel2gv_0 wsb fsbcel2gv_1 isbcel2gv_0 sup_set_class wcel fsbcel2gv_1 fsbcel2gv_0 sup_set_class wcel fsbcel2gv_0 fsbcel2gv_2 wsbc fsbcel2gv_1 fsbcel2gv_2 wcel isbcel2gv_0 fsbcel2gv_2 fsbcel2gv_3 fsbcel2gv_1 fsbcel2gv_0 sup_set_class wcel fsbcel2gv_0 isbcel2gv_0 fsbcel2gv_2 dfsbcq2 isbcel2gv_0 sup_set_class fsbcel2gv_2 fsbcel2gv_1 eleq2 fsbcel2gv_1 fsbcel2gv_0 sup_set_class wcel fsbcel2gv_1 isbcel2gv_0 sup_set_class wcel fsbcel2gv_0 isbcel2gv_0 fsbcel2gv_1 isbcel2gv_0 sup_set_class wcel fsbcel2gv_0 nfv fsbcel2gv_0 sup_set_class isbcel2gv_0 sup_set_class fsbcel2gv_1 eleq2 sbie vtoclbg $.
+	$v x A B V  $.
+	$d y B  $.
+	$d x y A  $.
+	f0_sbcel2gv $f set x $.
+	f1_sbcel2gv $f class A $.
+	f2_sbcel2gv $f class B $.
+	f3_sbcel2gv $f class V $.
+	i0_sbcel2gv $f set y $.
+	p_sbcel2gv $p |- ( B e. V -> ( [. B / x ]. A e. x <-> A e. B ) ) $= f1_sbcel2gv f0_sbcel2gv a_sup_set_class a_wcel f0_sbcel2gv i0_sbcel2gv f2_sbcel2gv p_dfsbcq2 i0_sbcel2gv a_sup_set_class f2_sbcel2gv f1_sbcel2gv p_eleq2 f1_sbcel2gv i0_sbcel2gv a_sup_set_class a_wcel f0_sbcel2gv p_nfv f0_sbcel2gv a_sup_set_class i0_sbcel2gv a_sup_set_class f1_sbcel2gv p_eleq2 f1_sbcel2gv f0_sbcel2gv a_sup_set_class a_wcel f1_sbcel2gv i0_sbcel2gv a_sup_set_class a_wcel f0_sbcel2gv i0_sbcel2gv p_sbie f1_sbcel2gv f0_sbcel2gv a_sup_set_class a_wcel f0_sbcel2gv i0_sbcel2gv a_wsb f1_sbcel2gv i0_sbcel2gv a_sup_set_class a_wcel f1_sbcel2gv f0_sbcel2gv a_sup_set_class a_wcel f0_sbcel2gv f2_sbcel2gv a_wsbc f1_sbcel2gv f2_sbcel2gv a_wcel i0_sbcel2gv f2_sbcel2gv f3_sbcel2gv p_vtoclbg $.
 $}
-$( Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
+
+$(Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
        by NM, 11-Nov-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x ph $.
-	fsbcimdv_0 $f wff ph $.
-	fsbcimdv_1 $f wff ps $.
-	fsbcimdv_2 $f wff ch $.
-	fsbcimdv_3 $f set x $.
-	fsbcimdv_4 $f class A $.
-	fsbcimdv_5 $f class V $.
-	esbcimdv_0 $e |- ( ph -> ( ps -> ch ) ) $.
-	sbcimdv $p |- ( ( ph /\ A e. V ) -> ( [. A / x ]. ps -> [. A / x ]. ch ) ) $= fsbcimdv_4 fsbcimdv_5 wcel fsbcimdv_0 fsbcimdv_1 fsbcimdv_3 fsbcimdv_4 wsbc fsbcimdv_2 fsbcimdv_3 fsbcimdv_4 wsbc wi fsbcimdv_4 fsbcimdv_5 wcel fsbcimdv_0 fsbcimdv_1 fsbcimdv_2 wi fsbcimdv_3 fsbcimdv_4 wsbc fsbcimdv_1 fsbcimdv_3 fsbcimdv_4 wsbc fsbcimdv_2 fsbcimdv_3 fsbcimdv_4 wsbc wi fsbcimdv_0 fsbcimdv_1 fsbcimdv_2 wi fsbcimdv_3 wal fsbcimdv_4 fsbcimdv_5 wcel fsbcimdv_1 fsbcimdv_2 wi fsbcimdv_3 fsbcimdv_4 wsbc fsbcimdv_0 fsbcimdv_1 fsbcimdv_2 wi fsbcimdv_3 esbcimdv_0 alrimiv fsbcimdv_1 fsbcimdv_2 wi fsbcimdv_3 fsbcimdv_4 fsbcimdv_5 spsbc syl5 fsbcimdv_1 fsbcimdv_2 fsbcimdv_3 fsbcimdv_4 fsbcimdv_5 sbcimg sylibd impcom $.
+	$v ph ps ch x A V  $.
+	$d x ph  $.
+	f0_sbcimdv $f wff ph $.
+	f1_sbcimdv $f wff ps $.
+	f2_sbcimdv $f wff ch $.
+	f3_sbcimdv $f set x $.
+	f4_sbcimdv $f class A $.
+	f5_sbcimdv $f class V $.
+	e0_sbcimdv $e |- ( ph -> ( ps -> ch ) ) $.
+	p_sbcimdv $p |- ( ( ph /\ A e. V ) -> ( [. A / x ]. ps -> [. A / x ]. ch ) ) $= e0_sbcimdv f0_sbcimdv f1_sbcimdv f2_sbcimdv a_wi f3_sbcimdv p_alrimiv f1_sbcimdv f2_sbcimdv a_wi f3_sbcimdv f4_sbcimdv f5_sbcimdv p_spsbc f0_sbcimdv f1_sbcimdv f2_sbcimdv a_wi f3_sbcimdv a_wal f4_sbcimdv f5_sbcimdv a_wcel f1_sbcimdv f2_sbcimdv a_wi f3_sbcimdv f4_sbcimdv a_wsbc p_syl5 f1_sbcimdv f2_sbcimdv f3_sbcimdv f4_sbcimdv f5_sbcimdv p_sbcimg f4_sbcimdv f5_sbcimdv a_wcel f0_sbcimdv f1_sbcimdv f2_sbcimdv a_wi f3_sbcimdv f4_sbcimdv a_wsbc f1_sbcimdv f3_sbcimdv f4_sbcimdv a_wsbc f2_sbcimdv f3_sbcimdv f4_sbcimdv a_wsbc a_wi p_sylibd f4_sbcimdv f5_sbcimdv a_wcel f0_sbcimdv f1_sbcimdv f3_sbcimdv f4_sbcimdv a_wsbc f2_sbcimdv f3_sbcimdv f4_sbcimdv a_wsbc a_wi p_impcom $.
 $}
-$( Substitution for a variable not free in a wff does not affect it.
+
+$(Substitution for a variable not free in a wff does not affect it.
        (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$v y $.
-	$d x y $.
-	$d y A $.
-	$d y ph $.
-	isbctt_0 $f set y $.
-	fsbctt_0 $f wff ph $.
-	fsbctt_1 $f set x $.
-	fsbctt_2 $f class A $.
-	fsbctt_3 $f class V $.
-	sbctt $p |- ( ( A e. V /\ F/ x ph ) -> ( [. A / x ]. ph <-> ph ) ) $= fsbctt_2 fsbctt_3 wcel fsbctt_0 fsbctt_1 wnf fsbctt_0 fsbctt_1 fsbctt_2 wsbc fsbctt_0 wb fsbctt_0 fsbctt_1 wnf fsbctt_0 fsbctt_1 isbctt_0 wsb fsbctt_0 wb wi fsbctt_0 fsbctt_1 wnf fsbctt_0 fsbctt_1 fsbctt_2 wsbc fsbctt_0 wb wi isbctt_0 fsbctt_2 fsbctt_3 isbctt_0 sup_set_class fsbctt_2 wceq fsbctt_0 fsbctt_1 isbctt_0 wsb fsbctt_0 wb fsbctt_0 fsbctt_1 fsbctt_2 wsbc fsbctt_0 wb fsbctt_0 fsbctt_1 wnf isbctt_0 sup_set_class fsbctt_2 wceq fsbctt_0 fsbctt_1 isbctt_0 wsb fsbctt_0 fsbctt_1 fsbctt_2 wsbc fsbctt_0 fsbctt_0 fsbctt_1 isbctt_0 fsbctt_2 dfsbcq2 bibi1d imbi2d fsbctt_0 fsbctt_1 isbctt_0 sbft vtoclg imp $.
+	$v ph x A V  $.
+	$d x y  $.
+	$d y A  $.
+	$d y ph  $.
+	f0_sbctt $f wff ph $.
+	f1_sbctt $f set x $.
+	f2_sbctt $f class A $.
+	f3_sbctt $f class V $.
+	i0_sbctt $f set y $.
+	p_sbctt $p |- ( ( A e. V /\ F/ x ph ) -> ( [. A / x ]. ph <-> ph ) ) $= f0_sbctt f1_sbctt i0_sbctt f2_sbctt p_dfsbcq2 i0_sbctt a_sup_set_class f2_sbctt a_wceq f0_sbctt f1_sbctt i0_sbctt a_wsb f0_sbctt f1_sbctt f2_sbctt a_wsbc f0_sbctt p_bibi1d i0_sbctt a_sup_set_class f2_sbctt a_wceq f0_sbctt f1_sbctt i0_sbctt a_wsb f0_sbctt a_wb f0_sbctt f1_sbctt f2_sbctt a_wsbc f0_sbctt a_wb f0_sbctt f1_sbctt a_wnf p_imbi2d f0_sbctt f1_sbctt i0_sbctt p_sbft f0_sbctt f1_sbctt a_wnf f0_sbctt f1_sbctt i0_sbctt a_wsb f0_sbctt a_wb a_wi f0_sbctt f1_sbctt a_wnf f0_sbctt f1_sbctt f2_sbctt a_wsbc f0_sbctt a_wb a_wi i0_sbctt f2_sbctt f3_sbctt p_vtoclg f2_sbctt f3_sbctt a_wcel f0_sbctt f1_sbctt a_wnf f0_sbctt f1_sbctt f2_sbctt a_wsbc f0_sbctt a_wb p_imp $.
 $}
-$( Substitution for a variable not free in a wff does not affect it.
+
+$(Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	fsbcgf_0 $f wff ph $.
-	fsbcgf_1 $f set x $.
-	fsbcgf_2 $f class A $.
-	fsbcgf_3 $f class V $.
-	esbcgf_0 $e |- F/ x ph $.
-	sbcgf $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $= fsbcgf_2 fsbcgf_3 wcel fsbcgf_0 fsbcgf_1 wnf fsbcgf_0 fsbcgf_1 fsbcgf_2 wsbc fsbcgf_0 wb esbcgf_0 fsbcgf_0 fsbcgf_1 fsbcgf_2 fsbcgf_3 sbctt mpan2 $.
+	$v ph x A V  $.
+	$d A  $.
+	$d ph  $.
+	$d x  $.
+	f0_sbcgf $f wff ph $.
+	f1_sbcgf $f set x $.
+	f2_sbcgf $f class A $.
+	f3_sbcgf $f class V $.
+	e0_sbcgf $e |- F/ x ph $.
+	p_sbcgf $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $= e0_sbcgf f0_sbcgf f1_sbcgf f2_sbcgf f3_sbcgf p_sbctt f2_sbcgf f3_sbcgf a_wcel f0_sbcgf f1_sbcgf a_wnf f0_sbcgf f1_sbcgf f2_sbcgf a_wsbc f0_sbcgf a_wb p_mpan2 $.
 $}
-$( Substitution for a variable not free in antecedent affects only the
+
+$(Substitution for a variable not free in antecedent affects only the
        consequent.  (Contributed by NM, 11-Oct-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v V $.
-	fsbc19.21g_0 $f wff ph $.
-	fsbc19.21g_1 $f wff ps $.
-	fsbc19.21g_2 $f set x $.
-	fsbc19.21g_3 $f class A $.
-	fsbc19.21g_4 $f class V $.
-	esbc19.21g_0 $e |- F/ x ph $.
-	sbc19.21g $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( ph -> [. A / x ]. ps ) ) ) $= fsbc19.21g_3 fsbc19.21g_4 wcel fsbc19.21g_0 fsbc19.21g_1 wi fsbc19.21g_2 fsbc19.21g_3 wsbc fsbc19.21g_0 fsbc19.21g_2 fsbc19.21g_3 wsbc fsbc19.21g_1 fsbc19.21g_2 fsbc19.21g_3 wsbc wi fsbc19.21g_0 fsbc19.21g_1 fsbc19.21g_2 fsbc19.21g_3 wsbc wi fsbc19.21g_0 fsbc19.21g_1 fsbc19.21g_2 fsbc19.21g_3 fsbc19.21g_4 sbcimg fsbc19.21g_3 fsbc19.21g_4 wcel fsbc19.21g_0 fsbc19.21g_2 fsbc19.21g_3 wsbc fsbc19.21g_0 fsbc19.21g_1 fsbc19.21g_2 fsbc19.21g_3 wsbc fsbc19.21g_0 fsbc19.21g_2 fsbc19.21g_3 fsbc19.21g_4 esbc19.21g_0 sbcgf imbi1d bitrd $.
+	$v ph ps x A V  $.
+	$d A  $.
+	$d ph  $.
+	$d x  $.
+	f0_sbc19.21g $f wff ph $.
+	f1_sbc19.21g $f wff ps $.
+	f2_sbc19.21g $f set x $.
+	f3_sbc19.21g $f class A $.
+	f4_sbc19.21g $f class V $.
+	e0_sbc19.21g $e |- F/ x ph $.
+	p_sbc19.21g $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( ph -> [. A / x ]. ps ) ) ) $= f0_sbc19.21g f1_sbc19.21g f2_sbc19.21g f3_sbc19.21g f4_sbc19.21g p_sbcimg e0_sbc19.21g f0_sbc19.21g f2_sbc19.21g f3_sbc19.21g f4_sbc19.21g p_sbcgf f3_sbc19.21g f4_sbc19.21g a_wcel f0_sbc19.21g f2_sbc19.21g f3_sbc19.21g a_wsbc f0_sbc19.21g f1_sbc19.21g f2_sbc19.21g f3_sbc19.21g a_wsbc p_imbi1d f3_sbc19.21g f4_sbc19.21g a_wcel f0_sbc19.21g f1_sbc19.21g a_wi f2_sbc19.21g f3_sbc19.21g a_wsbc f0_sbc19.21g f2_sbc19.21g f3_sbc19.21g a_wsbc f1_sbc19.21g f2_sbc19.21g f3_sbc19.21g a_wsbc a_wi f0_sbc19.21g f1_sbc19.21g f2_sbc19.21g f3_sbc19.21g a_wsbc a_wi p_bitrd $.
 $}
-$( Substitution for a variable not occurring in a wff does not affect it.
+
+$(Substitution for a variable not occurring in a wff does not affect it.
        Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
        10-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v V $.
-	$d x ph $.
-	fsbcg_0 $f wff ph $.
-	fsbcg_1 $f set x $.
-	fsbcg_2 $f class A $.
-	fsbcg_3 $f class V $.
-	sbcg $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $= fsbcg_0 fsbcg_1 fsbcg_2 fsbcg_3 fsbcg_0 fsbcg_1 nfv sbcgf $.
+	$v ph x A V  $.
+	$d x ph  $.
+	f0_sbcg $f wff ph $.
+	f1_sbcg $f set x $.
+	f2_sbcg $f class A $.
+	f3_sbcg $f class V $.
+	p_sbcg $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $= f0_sbcg f1_sbcg p_nfv f0_sbcg f1_sbcg f2_sbcg f3_sbcg p_sbcgf $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Dec-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v W $.
-	$d x y A $.
-	$d y B $.
-	$d x V $.
-	$d y W $.
-	fsbc2iegf_0 $f wff ph $.
-	fsbc2iegf_1 $f wff ps $.
-	fsbc2iegf_2 $f set x $.
-	fsbc2iegf_3 $f set y $.
-	fsbc2iegf_4 $f class A $.
-	fsbc2iegf_5 $f class B $.
-	fsbc2iegf_6 $f class V $.
-	fsbc2iegf_7 $f class W $.
-	esbc2iegf_0 $e |- F/ x ps $.
-	esbc2iegf_1 $e |- F/ y ps $.
-	esbc2iegf_2 $e |- F/ x B e. W $.
-	esbc2iegf_3 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
-	sbc2iegf $p |- ( ( A e. V /\ B e. W ) -> ( [. A / x ]. [. B / y ]. ph <-> ps ) ) $= fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_5 fsbc2iegf_7 wcel wa fsbc2iegf_0 fsbc2iegf_3 fsbc2iegf_5 wsbc fsbc2iegf_1 fsbc2iegf_2 fsbc2iegf_4 fsbc2iegf_6 fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_5 fsbc2iegf_7 wcel simpl fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq fsbc2iegf_0 fsbc2iegf_3 fsbc2iegf_5 wsbc fsbc2iegf_1 wb fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq wa fsbc2iegf_0 fsbc2iegf_1 fsbc2iegf_3 fsbc2iegf_5 fsbc2iegf_7 fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq simpl fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq fsbc2iegf_3 sup_set_class fsbc2iegf_5 wceq fsbc2iegf_0 fsbc2iegf_1 wb fsbc2iegf_5 fsbc2iegf_7 wcel esbc2iegf_3 adantll fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq wa fsbc2iegf_3 nfv fsbc2iegf_1 fsbc2iegf_3 wnf fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 sup_set_class fsbc2iegf_4 wceq wa esbc2iegf_1 a1i sbciedf adantll fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_5 fsbc2iegf_7 wcel fsbc2iegf_2 fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_2 nfv esbc2iegf_2 nfan fsbc2iegf_1 fsbc2iegf_2 wnf fsbc2iegf_4 fsbc2iegf_6 wcel fsbc2iegf_5 fsbc2iegf_7 wcel wa esbc2iegf_0 a1i sbciedf $.
+	$v ph ps x y A B V W  $.
+	$d x y A  $.
+	$d y B  $.
+	$d x V  $.
+	$d y W  $.
+	f0_sbc2iegf $f wff ph $.
+	f1_sbc2iegf $f wff ps $.
+	f2_sbc2iegf $f set x $.
+	f3_sbc2iegf $f set y $.
+	f4_sbc2iegf $f class A $.
+	f5_sbc2iegf $f class B $.
+	f6_sbc2iegf $f class V $.
+	f7_sbc2iegf $f class W $.
+	e0_sbc2iegf $e |- F/ x ps $.
+	e1_sbc2iegf $e |- F/ y ps $.
+	e2_sbc2iegf $e |- F/ x B e. W $.
+	e3_sbc2iegf $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+	p_sbc2iegf $p |- ( ( A e. V /\ B e. W ) -> ( [. A / x ]. [. B / y ]. ph <-> ps ) ) $= f4_sbc2iegf f6_sbc2iegf a_wcel f5_sbc2iegf f7_sbc2iegf a_wcel p_simpl f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq p_simpl e3_sbc2iegf f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq f3_sbc2iegf a_sup_set_class f5_sbc2iegf a_wceq f0_sbc2iegf f1_sbc2iegf a_wb f5_sbc2iegf f7_sbc2iegf a_wcel p_adantll f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq a_wa f3_sbc2iegf p_nfv e1_sbc2iegf f1_sbc2iegf f3_sbc2iegf a_wnf f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq a_wa p_a1i f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq a_wa f0_sbc2iegf f1_sbc2iegf f3_sbc2iegf f5_sbc2iegf f7_sbc2iegf p_sbciedf f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf a_sup_set_class f4_sbc2iegf a_wceq f0_sbc2iegf f3_sbc2iegf f5_sbc2iegf a_wsbc f1_sbc2iegf a_wb f4_sbc2iegf f6_sbc2iegf a_wcel p_adantll f4_sbc2iegf f6_sbc2iegf a_wcel f2_sbc2iegf p_nfv e2_sbc2iegf f4_sbc2iegf f6_sbc2iegf a_wcel f5_sbc2iegf f7_sbc2iegf a_wcel f2_sbc2iegf p_nfan e0_sbc2iegf f1_sbc2iegf f2_sbc2iegf a_wnf f4_sbc2iegf f6_sbc2iegf a_wcel f5_sbc2iegf f7_sbc2iegf a_wcel a_wa p_a1i f4_sbc2iegf f6_sbc2iegf a_wcel f5_sbc2iegf f7_sbc2iegf a_wcel a_wa f0_sbc2iegf f3_sbc2iegf f5_sbc2iegf a_wsbc f1_sbc2iegf f2_sbc2iegf f4_sbc2iegf f6_sbc2iegf p_sbciedf $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
        19-Dec-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y A $.
-	$d y B $.
-	$d x y ps $.
-	fsbc2ie_0 $f wff ph $.
-	fsbc2ie_1 $f wff ps $.
-	fsbc2ie_2 $f set x $.
-	fsbc2ie_3 $f set y $.
-	fsbc2ie_4 $f class A $.
-	fsbc2ie_5 $f class B $.
-	esbc2ie_0 $e |- A e. _V $.
-	esbc2ie_1 $e |- B e. _V $.
-	esbc2ie_2 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
-	sbc2ie $p |- ( [. A / x ]. [. B / y ]. ph <-> ps ) $= fsbc2ie_4 cvv wcel fsbc2ie_5 cvv wcel fsbc2ie_0 fsbc2ie_3 fsbc2ie_5 wsbc fsbc2ie_2 fsbc2ie_4 wsbc fsbc2ie_1 wb esbc2ie_0 esbc2ie_1 fsbc2ie_0 fsbc2ie_1 fsbc2ie_2 fsbc2ie_3 fsbc2ie_4 fsbc2ie_5 cvv cvv fsbc2ie_1 fsbc2ie_2 nfv fsbc2ie_1 fsbc2ie_3 nfv fsbc2ie_5 cvv wcel fsbc2ie_2 esbc2ie_1 nfth esbc2ie_2 sbc2iegf mp2an $.
+	$v ph ps x y A B  $.
+	$d x y A  $.
+	$d y B  $.
+	$d x y ps  $.
+	f0_sbc2ie $f wff ph $.
+	f1_sbc2ie $f wff ps $.
+	f2_sbc2ie $f set x $.
+	f3_sbc2ie $f set y $.
+	f4_sbc2ie $f class A $.
+	f5_sbc2ie $f class B $.
+	e0_sbc2ie $e |- A e. _V $.
+	e1_sbc2ie $e |- B e. _V $.
+	e2_sbc2ie $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+	p_sbc2ie $p |- ( [. A / x ]. [. B / y ]. ph <-> ps ) $= e0_sbc2ie e1_sbc2ie f1_sbc2ie f2_sbc2ie p_nfv f1_sbc2ie f3_sbc2ie p_nfv e1_sbc2ie f5_sbc2ie a_cvv a_wcel f2_sbc2ie p_nfth e2_sbc2ie f0_sbc2ie f1_sbc2ie f2_sbc2ie f3_sbc2ie f4_sbc2ie f5_sbc2ie a_cvv a_cvv p_sbc2iegf f4_sbc2ie a_cvv a_wcel f5_sbc2ie a_cvv a_wcel f0_sbc2ie f3_sbc2ie f5_sbc2ie a_wsbc f2_sbc2ie f4_sbc2ie a_wsbc f1_sbc2ie a_wb p_mp2an $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
        18-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y A $.
-	$d y B $.
-	$d x y ph $.
-	$d x y ch $.
-	fsbc2iedv_0 $f wff ph $.
-	fsbc2iedv_1 $f wff ps $.
-	fsbc2iedv_2 $f wff ch $.
-	fsbc2iedv_3 $f set x $.
-	fsbc2iedv_4 $f set y $.
-	fsbc2iedv_5 $f class A $.
-	fsbc2iedv_6 $f class B $.
-	esbc2iedv_0 $e |- A e. _V $.
-	esbc2iedv_1 $e |- B e. _V $.
-	esbc2iedv_2 $e |- ( ph -> ( ( x = A /\ y = B ) -> ( ps <-> ch ) ) ) $.
-	sbc2iedv $p |- ( ph -> ( [. A / x ]. [. B / y ]. ps <-> ch ) ) $= fsbc2iedv_0 fsbc2iedv_1 fsbc2iedv_4 fsbc2iedv_6 wsbc fsbc2iedv_2 fsbc2iedv_3 fsbc2iedv_5 cvv fsbc2iedv_5 cvv wcel fsbc2iedv_0 esbc2iedv_0 a1i fsbc2iedv_0 fsbc2iedv_3 sup_set_class fsbc2iedv_5 wceq wa fsbc2iedv_1 fsbc2iedv_2 fsbc2iedv_4 fsbc2iedv_6 cvv fsbc2iedv_6 cvv wcel fsbc2iedv_0 fsbc2iedv_3 sup_set_class fsbc2iedv_5 wceq wa esbc2iedv_1 a1i fsbc2iedv_0 fsbc2iedv_3 sup_set_class fsbc2iedv_5 wceq fsbc2iedv_4 sup_set_class fsbc2iedv_6 wceq fsbc2iedv_1 fsbc2iedv_2 wb esbc2iedv_2 impl sbcied sbcied $.
+	$v ph ps ch x y A B  $.
+	$d x y A  $.
+	$d y B  $.
+	$d x y ph  $.
+	$d x y ch  $.
+	f0_sbc2iedv $f wff ph $.
+	f1_sbc2iedv $f wff ps $.
+	f2_sbc2iedv $f wff ch $.
+	f3_sbc2iedv $f set x $.
+	f4_sbc2iedv $f set y $.
+	f5_sbc2iedv $f class A $.
+	f6_sbc2iedv $f class B $.
+	e0_sbc2iedv $e |- A e. _V $.
+	e1_sbc2iedv $e |- B e. _V $.
+	e2_sbc2iedv $e |- ( ph -> ( ( x = A /\ y = B ) -> ( ps <-> ch ) ) ) $.
+	p_sbc2iedv $p |- ( ph -> ( [. A / x ]. [. B / y ]. ps <-> ch ) ) $= e0_sbc2iedv f5_sbc2iedv a_cvv a_wcel f0_sbc2iedv p_a1i e1_sbc2iedv f6_sbc2iedv a_cvv a_wcel f0_sbc2iedv f3_sbc2iedv a_sup_set_class f5_sbc2iedv a_wceq a_wa p_a1i e2_sbc2iedv f0_sbc2iedv f3_sbc2iedv a_sup_set_class f5_sbc2iedv a_wceq f4_sbc2iedv a_sup_set_class f6_sbc2iedv a_wceq f1_sbc2iedv f2_sbc2iedv a_wb p_impl f0_sbc2iedv f3_sbc2iedv a_sup_set_class f5_sbc2iedv a_wceq a_wa f1_sbc2iedv f2_sbc2iedv f4_sbc2iedv f6_sbc2iedv a_cvv p_sbcied f0_sbc2iedv f1_sbc2iedv f4_sbc2iedv f6_sbc2iedv a_wsbc f2_sbc2iedv f3_sbc2iedv f5_sbc2iedv a_cvv p_sbcied $.
 $}
-$( Conversion of implicit substitution to explicit class substitution.
+
+$(Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
        Carneiro, 29-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x y z A $.
-	$d y z B $.
-	$d z C $.
-	$d x y z ps $.
-	fsbc3ie_0 $f wff ph $.
-	fsbc3ie_1 $f wff ps $.
-	fsbc3ie_2 $f set x $.
-	fsbc3ie_3 $f set y $.
-	fsbc3ie_4 $f set z $.
-	fsbc3ie_5 $f class A $.
-	fsbc3ie_6 $f class B $.
-	fsbc3ie_7 $f class C $.
-	esbc3ie_0 $e |- A e. _V $.
-	esbc3ie_1 $e |- B e. _V $.
-	esbc3ie_2 $e |- C e. _V $.
-	esbc3ie_3 $e |- ( ( x = A /\ y = B /\ z = C ) -> ( ph <-> ps ) ) $.
-	sbc3ie $p |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph <-> ps ) $= fsbc3ie_0 fsbc3ie_4 fsbc3ie_7 wsbc fsbc3ie_1 fsbc3ie_2 fsbc3ie_3 fsbc3ie_5 fsbc3ie_6 esbc3ie_0 esbc3ie_1 fsbc3ie_2 sup_set_class fsbc3ie_5 wceq fsbc3ie_3 sup_set_class fsbc3ie_6 wceq wa fsbc3ie_0 fsbc3ie_1 fsbc3ie_4 fsbc3ie_7 cvv fsbc3ie_7 cvv wcel fsbc3ie_2 sup_set_class fsbc3ie_5 wceq fsbc3ie_3 sup_set_class fsbc3ie_6 wceq wa esbc3ie_2 a1i fsbc3ie_2 sup_set_class fsbc3ie_5 wceq fsbc3ie_3 sup_set_class fsbc3ie_6 wceq fsbc3ie_4 sup_set_class fsbc3ie_7 wceq fsbc3ie_0 fsbc3ie_1 wb esbc3ie_3 3expa sbcied sbc2ie $.
+	$v ph ps x y z A B C  $.
+	$d x y z A  $.
+	$d y z B  $.
+	$d z C  $.
+	$d x y z ps  $.
+	f0_sbc3ie $f wff ph $.
+	f1_sbc3ie $f wff ps $.
+	f2_sbc3ie $f set x $.
+	f3_sbc3ie $f set y $.
+	f4_sbc3ie $f set z $.
+	f5_sbc3ie $f class A $.
+	f6_sbc3ie $f class B $.
+	f7_sbc3ie $f class C $.
+	e0_sbc3ie $e |- A e. _V $.
+	e1_sbc3ie $e |- B e. _V $.
+	e2_sbc3ie $e |- C e. _V $.
+	e3_sbc3ie $e |- ( ( x = A /\ y = B /\ z = C ) -> ( ph <-> ps ) ) $.
+	p_sbc3ie $p |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph <-> ps ) $= e0_sbc3ie e1_sbc3ie e2_sbc3ie f7_sbc3ie a_cvv a_wcel f2_sbc3ie a_sup_set_class f5_sbc3ie a_wceq f3_sbc3ie a_sup_set_class f6_sbc3ie a_wceq a_wa p_a1i e3_sbc3ie f2_sbc3ie a_sup_set_class f5_sbc3ie a_wceq f3_sbc3ie a_sup_set_class f6_sbc3ie a_wceq f4_sbc3ie a_sup_set_class f7_sbc3ie a_wceq f0_sbc3ie f1_sbc3ie a_wb p_3expa f2_sbc3ie a_sup_set_class f5_sbc3ie a_wceq f3_sbc3ie a_sup_set_class f6_sbc3ie a_wceq a_wa f0_sbc3ie f1_sbc3ie f4_sbc3ie f7_sbc3ie a_cvv p_sbcied f0_sbc3ie f4_sbc3ie f7_sbc3ie a_wsbc f1_sbc3ie f2_sbc3ie f3_sbc3ie f5_sbc3ie f6_sbc3ie p_sbc2ie $.
 $}
-$( Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
+
+$(Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
        Mario Carneiro, 18-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$d x y A $.
-	$d x y B $.
-	fsbccomlem_0 $f wff ph $.
-	fsbccomlem_1 $f set x $.
-	fsbccomlem_2 $f set y $.
-	fsbccomlem_3 $f class A $.
-	fsbccomlem_4 $f class B $.
-	sbccomlem $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $= fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex fsbccomlem_1 fsbccomlem_3 wsbc fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex fsbccomlem_2 fsbccomlem_4 wsbc fsbccomlem_0 fsbccomlem_2 fsbccomlem_4 wsbc fsbccomlem_1 fsbccomlem_3 wsbc fsbccomlem_0 fsbccomlem_1 fsbccomlem_3 wsbc fsbccomlem_2 fsbccomlem_4 wsbc fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex wa fsbccomlem_1 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex wa fsbccomlem_2 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex fsbccomlem_1 fsbccomlem_3 wsbc fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex fsbccomlem_2 fsbccomlem_4 wsbc fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_2 wex fsbccomlem_1 wex fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_1 wex fsbccomlem_2 wex fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex wa fsbccomlem_1 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex wa fsbccomlem_2 wex fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_1 fsbccomlem_2 excom fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_1 fsbccomlem_2 exdistr fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_1 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex wa fsbccomlem_2 fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_1 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa wa fsbccomlem_1 wex fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex wa fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa wa fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa wa fsbccomlem_1 fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 an12 exbii fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 19.42v bitri exbii 3bitr3i fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex fsbccomlem_1 fsbccomlem_3 sbc5 fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex fsbccomlem_2 fsbccomlem_4 sbc5 3bitr4i fsbccomlem_0 fsbccomlem_2 fsbccomlem_4 wsbc fsbccomlem_2 sup_set_class fsbccomlem_4 wceq fsbccomlem_0 wa fsbccomlem_2 wex fsbccomlem_1 fsbccomlem_3 fsbccomlem_0 fsbccomlem_2 fsbccomlem_4 sbc5 sbcbii fsbccomlem_0 fsbccomlem_1 fsbccomlem_3 wsbc fsbccomlem_1 sup_set_class fsbccomlem_3 wceq fsbccomlem_0 wa fsbccomlem_1 wex fsbccomlem_2 fsbccomlem_4 fsbccomlem_0 fsbccomlem_1 fsbccomlem_3 sbc5 sbcbii 3bitr4i $.
+	$v ph x y A B  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d y  $.
+	$d x  $.
+	f0_sbccomlem $f wff ph $.
+	f1_sbccomlem $f set x $.
+	f2_sbccomlem $f set y $.
+	f3_sbccomlem $f class A $.
+	f4_sbccomlem $f class B $.
+	p_sbccomlem $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $= f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem f2_sbccomlem p_excom f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem f2_sbccomlem p_exdistr f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem p_an12 f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem p_exbii f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem p_19.42v f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex a_wa p_bitri f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex a_wa f2_sbccomlem p_exbii f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f2_sbccomlem a_wex f1_sbccomlem a_wex f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa a_wa f1_sbccomlem a_wex f2_sbccomlem a_wex f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex a_wa f1_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex a_wa f2_sbccomlem a_wex p_3bitr3i f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex f1_sbccomlem f3_sbccomlem p_sbc5 f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex f2_sbccomlem f4_sbccomlem p_sbc5 f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex a_wa f1_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex a_wa f2_sbccomlem a_wex f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex f1_sbccomlem f3_sbccomlem a_wsbc f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex f2_sbccomlem f4_sbccomlem a_wsbc p_3bitr4i f0_sbccomlem f2_sbccomlem f4_sbccomlem p_sbc5 f0_sbccomlem f2_sbccomlem f4_sbccomlem a_wsbc f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex f1_sbccomlem f3_sbccomlem p_sbcbii f0_sbccomlem f1_sbccomlem f3_sbccomlem p_sbc5 f0_sbccomlem f1_sbccomlem f3_sbccomlem a_wsbc f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex f2_sbccomlem f4_sbccomlem p_sbcbii f2_sbccomlem a_sup_set_class f4_sbccomlem a_wceq f0_sbccomlem a_wa f2_sbccomlem a_wex f1_sbccomlem f3_sbccomlem a_wsbc f1_sbccomlem a_sup_set_class f3_sbccomlem a_wceq f0_sbccomlem a_wa f1_sbccomlem a_wex f2_sbccomlem f4_sbccomlem a_wsbc f0_sbccomlem f2_sbccomlem f4_sbccomlem a_wsbc f1_sbccomlem f3_sbccomlem a_wsbc f0_sbccomlem f1_sbccomlem f3_sbccomlem a_wsbc f2_sbccomlem f4_sbccomlem a_wsbc p_3bitr4i $.
 $}
-$( Commutative law for double class substitution.  (Contributed by NM,
+
+$(Commutative law for double class substitution.  (Contributed by NM,
        15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$v w $.
-	$d w y z A $.
-	$d w x z B $.
-	$d w z ph $.
-	$d x y $.
-	isbccom_0 $f set z $.
-	isbccom_1 $f set w $.
-	fsbccom_0 $f wff ph $.
-	fsbccom_1 $f set x $.
-	fsbccom_2 $f set y $.
-	fsbccom_3 $f class A $.
-	fsbccom_4 $f class B $.
-	sbccom $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $= fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 fsbccom_4 wsbc fsbccom_0 fsbccom_2 fsbccom_4 wsbc fsbccom_1 fsbccom_3 wsbc fsbccom_0 fsbccom_1 fsbccom_3 wsbc fsbccom_2 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 fsbccom_4 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc isbccom_0 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_0 isbccom_1 fsbccom_3 fsbccom_4 sbccomlem fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_1 fsbccom_4 fsbccom_0 fsbccom_2 fsbccom_1 isbccom_1 sup_set_class isbccom_0 sup_set_class sbccomlem sbcbii fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_1 fsbccom_4 isbccom_0 sup_set_class sbccomlem bitri sbcbii fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_2 fsbccom_3 isbccom_1 sup_set_class sbccomlem sbcbii 3bitr3i fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_1 isbccom_0 fsbccom_3 sbcco fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_2 isbccom_1 fsbccom_4 sbcco 3bitr3i fsbccom_0 fsbccom_2 isbccom_1 sup_set_class wsbc isbccom_1 fsbccom_4 wsbc fsbccom_0 fsbccom_2 fsbccom_4 wsbc fsbccom_1 fsbccom_3 fsbccom_0 fsbccom_2 isbccom_1 fsbccom_4 sbcco sbcbii fsbccom_0 fsbccom_1 isbccom_0 sup_set_class wsbc isbccom_0 fsbccom_3 wsbc fsbccom_0 fsbccom_1 fsbccom_3 wsbc fsbccom_2 fsbccom_4 fsbccom_0 fsbccom_1 isbccom_0 fsbccom_3 sbcco sbcbii 3bitr3i $.
+	$v ph x y A B  $.
+	$d w y z A  $.
+	$d w x z B  $.
+	$d w z ph  $.
+	$d x y  $.
+	f0_sbccom $f wff ph $.
+	f1_sbccom $f set x $.
+	f2_sbccom $f set y $.
+	f3_sbccom $f class A $.
+	f4_sbccom $f class B $.
+	i0_sbccom $f set z $.
+	i1_sbccom $f set w $.
+	p_sbccom $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $= f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i0_sbccom i1_sbccom f3_sbccom f4_sbccom p_sbccomlem f0_sbccom f2_sbccom f1_sbccom i1_sbccom a_sup_set_class i0_sbccom a_sup_set_class p_sbccomlem f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom p_sbcbii f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f1_sbccom f4_sbccom i0_sbccom a_sup_set_class p_sbccomlem f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc p_bitri f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom p_sbcbii f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f2_sbccom f3_sbccom i1_sbccom a_sup_set_class p_sbccomlem f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom p_sbcbii f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc i0_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc p_3bitr3i f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom i0_sbccom f3_sbccom p_sbcco f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom i1_sbccom f4_sbccom p_sbcco f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom f4_sbccom a_wsbc p_3bitr3i f0_sbccom f2_sbccom i1_sbccom f4_sbccom p_sbcco f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom f4_sbccom a_wsbc f1_sbccom f3_sbccom p_sbcbii f0_sbccom f1_sbccom i0_sbccom f3_sbccom p_sbcco f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom f3_sbccom a_wsbc f2_sbccom f4_sbccom p_sbcbii f0_sbccom f2_sbccom i1_sbccom a_sup_set_class a_wsbc i1_sbccom f4_sbccom a_wsbc f1_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom i0_sbccom a_sup_set_class a_wsbc i0_sbccom f3_sbccom a_wsbc f2_sbccom f4_sbccom a_wsbc f0_sbccom f2_sbccom f4_sbccom a_wsbc f1_sbccom f3_sbccom a_wsbc f0_sbccom f1_sbccom f3_sbccom a_wsbc f2_sbccom f4_sbccom a_wsbc p_3bitr3i $.
 $}
-$( Interchange class substitution and restricted quantifier.  (Contributed
+
+$(Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v z $.
-	$d x y z $.
-	$d A z $.
-	$d B x z $.
-	$d V z $.
-	$d ph z $.
-	isbcralt_0 $f set z $.
-	fsbcralt_0 $f wff ph $.
-	fsbcralt_1 $f set x $.
-	fsbcralt_2 $f set y $.
-	fsbcralt_3 $f class A $.
-	fsbcralt_4 $f class B $.
-	fsbcralt_5 $f class V $.
-	sbcralt $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $= fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 fsbcralt_3 wsbc fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 sup_set_class wsbc isbcralt_0 fsbcralt_3 wsbc fsbcralt_3 fsbcralt_5 wcel fsbcralt_2 fsbcralt_3 wnfc wa fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc fsbcralt_2 fsbcralt_4 wral fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 fsbcralt_3 sbcco fsbcralt_3 fsbcralt_5 wcel fsbcralt_2 fsbcralt_3 wnfc wa fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 sup_set_class wsbc fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc fsbcralt_2 fsbcralt_4 wral isbcralt_0 fsbcralt_3 fsbcralt_5 fsbcralt_3 fsbcralt_5 wcel fsbcralt_2 fsbcralt_3 wnfc simpl fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 sup_set_class wsbc fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_2 fsbcralt_4 wral fsbcralt_3 fsbcralt_5 wcel fsbcralt_2 fsbcralt_3 wnfc wa isbcralt_0 sup_set_class fsbcralt_3 wceq wa fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc fsbcralt_2 fsbcralt_4 wral fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 sup_set_class wsbc fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 wsb fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_2 fsbcralt_4 wral fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 sbsbc fsbcralt_0 fsbcralt_2 fsbcralt_4 wral fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_2 fsbcralt_4 wral fsbcralt_1 isbcralt_0 fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_1 fsbcralt_2 fsbcralt_4 fsbcralt_1 fsbcralt_4 nfcv fsbcralt_0 fsbcralt_1 isbcralt_0 nfs1v nfral fsbcralt_1 sup_set_class isbcralt_0 sup_set_class wceq fsbcralt_0 fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_2 fsbcralt_4 fsbcralt_0 fsbcralt_1 isbcralt_0 sbequ12 ralbidv sbie bitr3i fsbcralt_2 fsbcralt_3 wnfc isbcralt_0 sup_set_class fsbcralt_3 wceq fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_2 fsbcralt_4 wral fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc fsbcralt_2 fsbcralt_4 wral wb fsbcralt_3 fsbcralt_5 wcel fsbcralt_2 fsbcralt_3 wnfc isbcralt_0 sup_set_class fsbcralt_3 wceq wa fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc fsbcralt_2 fsbcralt_4 fsbcralt_2 fsbcralt_3 wnfc isbcralt_0 sup_set_class fsbcralt_3 wceq fsbcralt_2 fsbcralt_2 fsbcralt_3 nfnfc1 fsbcralt_2 fsbcralt_3 wnfc fsbcralt_2 isbcralt_0 sup_set_class fsbcralt_3 fsbcralt_2 fsbcralt_3 wnfc fsbcralt_2 isbcralt_0 sup_set_class nfcvd fsbcralt_2 fsbcralt_3 wnfc id nfeqd nfan1 isbcralt_0 sup_set_class fsbcralt_3 wceq fsbcralt_0 fsbcralt_1 isbcralt_0 wsb fsbcralt_0 fsbcralt_1 fsbcralt_3 wsbc wb fsbcralt_2 fsbcralt_3 wnfc fsbcralt_0 fsbcralt_1 isbcralt_0 fsbcralt_3 dfsbcq2 adantl ralbid adantll syl5bb sbcied syl5bbr $.
+	$v ph x y A B V  $.
+	$d x y z  $.
+	$d A z  $.
+	$d B x z  $.
+	$d V z  $.
+	$d ph z  $.
+	f0_sbcralt $f wff ph $.
+	f1_sbcralt $f set x $.
+	f2_sbcralt $f set y $.
+	f3_sbcralt $f class A $.
+	f4_sbcralt $f class B $.
+	f5_sbcralt $f class V $.
+	i0_sbcralt $f set z $.
+	p_sbcralt $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $= f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt f3_sbcralt p_sbcco f3_sbcralt f5_sbcralt a_wcel f2_sbcralt f3_sbcralt a_wnfc p_simpl f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt p_sbsbc f1_sbcralt f4_sbcralt p_nfcv f0_sbcralt f1_sbcralt i0_sbcralt p_nfs1v f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f1_sbcralt f2_sbcralt f4_sbcralt p_nfral f0_sbcralt f1_sbcralt i0_sbcralt p_sbequ12 f1_sbcralt a_sup_set_class i0_sbcralt a_sup_set_class a_wceq f0_sbcralt f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f2_sbcralt f4_sbcralt p_ralbidv f0_sbcralt f2_sbcralt f4_sbcralt a_wral f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt p_sbie f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt a_sup_set_class a_wsbc f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt a_wsb f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f2_sbcralt f4_sbcralt a_wral p_bitr3i f2_sbcralt f3_sbcralt p_nfnfc1 f2_sbcralt f3_sbcralt a_wnfc f2_sbcralt i0_sbcralt a_sup_set_class p_nfcvd f2_sbcralt f3_sbcralt a_wnfc p_id f2_sbcralt f3_sbcralt a_wnfc f2_sbcralt i0_sbcralt a_sup_set_class f3_sbcralt p_nfeqd f2_sbcralt f3_sbcralt a_wnfc i0_sbcralt a_sup_set_class f3_sbcralt a_wceq f2_sbcralt p_nfan1 f0_sbcralt f1_sbcralt i0_sbcralt f3_sbcralt p_dfsbcq2 i0_sbcralt a_sup_set_class f3_sbcralt a_wceq f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc a_wb f2_sbcralt f3_sbcralt a_wnfc p_adantl f2_sbcralt f3_sbcralt a_wnfc i0_sbcralt a_sup_set_class f3_sbcralt a_wceq a_wa f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc f2_sbcralt f4_sbcralt p_ralbid f2_sbcralt f3_sbcralt a_wnfc i0_sbcralt a_sup_set_class f3_sbcralt a_wceq f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f2_sbcralt f4_sbcralt a_wral f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc f2_sbcralt f4_sbcralt a_wral a_wb f3_sbcralt f5_sbcralt a_wcel p_adantll f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt a_sup_set_class a_wsbc f0_sbcralt f1_sbcralt i0_sbcralt a_wsb f2_sbcralt f4_sbcralt a_wral f3_sbcralt f5_sbcralt a_wcel f2_sbcralt f3_sbcralt a_wnfc a_wa i0_sbcralt a_sup_set_class f3_sbcralt a_wceq a_wa f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc f2_sbcralt f4_sbcralt a_wral p_syl5bb f3_sbcralt f5_sbcralt a_wcel f2_sbcralt f3_sbcralt a_wnfc a_wa f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt a_sup_set_class a_wsbc f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc f2_sbcralt f4_sbcralt a_wral i0_sbcralt f3_sbcralt f5_sbcralt p_sbcied f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt f3_sbcralt a_wsbc f0_sbcralt f2_sbcralt f4_sbcralt a_wral f1_sbcralt i0_sbcralt a_sup_set_class a_wsbc i0_sbcralt f3_sbcralt a_wsbc f3_sbcralt f5_sbcralt a_wcel f2_sbcralt f3_sbcralt a_wnfc a_wa f0_sbcralt f1_sbcralt f3_sbcralt a_wsbc f2_sbcralt f4_sbcralt a_wral p_syl5bbr $.
 $}
-$( Interchange class substitution and restricted existential quantifier.
+
+$(Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
        13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$d x y $.
-	$d B x $.
-	fsbcrext_0 $f wff ph $.
-	fsbcrext_1 $f set x $.
-	fsbcrext_2 $f set y $.
-	fsbcrext_3 $f class A $.
-	fsbcrext_4 $f class B $.
-	fsbcrext_5 $f class V $.
-	sbcrext $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $= fsbcrext_3 fsbcrext_5 wcel fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_3 wnfc fsbcrext_0 fsbcrext_2 fsbcrext_4 wrex fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc fsbcrext_2 fsbcrext_4 wrex wb fsbcrext_3 fsbcrext_5 elex fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_3 wnfc wa fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_0 fsbcrext_2 fsbcrext_4 wrex fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc fsbcrext_2 fsbcrext_4 wrex fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_3 wnfc wa fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_3 cvv wcel fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral fsbcrext_1 fsbcrext_3 wsbc wn wb fsbcrext_2 fsbcrext_3 wnfc fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral fsbcrext_1 fsbcrext_3 cvv sbcng adantr fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_3 wnfc wa fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 wral fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_3 wnfc wa fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_2 fsbcrext_4 wral fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 wral fsbcrext_0 wn fsbcrext_1 fsbcrext_2 fsbcrext_3 fsbcrext_4 cvv sbcralt fsbcrext_2 fsbcrext_3 wnfc fsbcrext_3 cvv wcel fsbcrext_0 wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_2 fsbcrext_4 wral fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 wral wb fsbcrext_2 fsbcrext_3 wnfc fsbcrext_3 cvv wcel wa fsbcrext_0 wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn fsbcrext_2 fsbcrext_4 fsbcrext_2 fsbcrext_3 wnfc fsbcrext_3 cvv wcel fsbcrext_2 fsbcrext_2 fsbcrext_3 nfnfc1 fsbcrext_2 fsbcrext_3 wnfc fsbcrext_2 fsbcrext_3 cvv fsbcrext_2 fsbcrext_3 wnfc id fsbcrext_2 fsbcrext_3 wnfc fsbcrext_2 cvv nfcvd nfeld nfan1 fsbcrext_3 cvv wcel fsbcrext_0 wn fsbcrext_1 fsbcrext_3 wsbc fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc wn wb fsbcrext_2 fsbcrext_3 wnfc fsbcrext_0 fsbcrext_1 fsbcrext_3 cvv sbcng adantl ralbid ancoms bitrd notbid bitrd fsbcrext_0 fsbcrext_2 fsbcrext_4 wrex fsbcrext_0 wn fsbcrext_2 fsbcrext_4 wral wn fsbcrext_1 fsbcrext_3 fsbcrext_0 fsbcrext_2 fsbcrext_4 dfrex2 sbcbii fsbcrext_0 fsbcrext_1 fsbcrext_3 wsbc fsbcrext_2 fsbcrext_4 dfrex2 3bitr4g sylan $.
+	$v ph x y A B V  $.
+	$d x y  $.
+	$d A  $.
+	$d B x  $.
+	$d V  $.
+	$d ph  $.
+	f0_sbcrext $f wff ph $.
+	f1_sbcrext $f set x $.
+	f2_sbcrext $f set y $.
+	f3_sbcrext $f class A $.
+	f4_sbcrext $f class B $.
+	f5_sbcrext $f class V $.
+	p_sbcrext $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $= f3_sbcrext f5_sbcrext p_elex f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral f1_sbcrext f3_sbcrext a_cvv p_sbcng f3_sbcrext a_cvv a_wcel f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral a_wn f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral f1_sbcrext f3_sbcrext a_wsbc a_wn a_wb f2_sbcrext f3_sbcrext a_wnfc p_adantr f0_sbcrext a_wn f1_sbcrext f2_sbcrext f3_sbcrext f4_sbcrext a_cvv p_sbcralt f2_sbcrext f3_sbcrext p_nfnfc1 f2_sbcrext f3_sbcrext a_wnfc p_id f2_sbcrext f3_sbcrext a_wnfc f2_sbcrext a_cvv p_nfcvd f2_sbcrext f3_sbcrext a_wnfc f2_sbcrext f3_sbcrext a_cvv p_nfeld f2_sbcrext f3_sbcrext a_wnfc f3_sbcrext a_cvv a_wcel f2_sbcrext p_nfan1 f0_sbcrext f1_sbcrext f3_sbcrext a_cvv p_sbcng f3_sbcrext a_cvv a_wcel f0_sbcrext a_wn f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn a_wb f2_sbcrext f3_sbcrext a_wnfc p_adantl f2_sbcrext f3_sbcrext a_wnfc f3_sbcrext a_cvv a_wcel a_wa f0_sbcrext a_wn f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext p_ralbid f2_sbcrext f3_sbcrext a_wnfc f3_sbcrext a_cvv a_wcel f0_sbcrext a_wn f1_sbcrext f3_sbcrext a_wsbc f2_sbcrext f4_sbcrext a_wral f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext a_wral a_wb p_ancoms f3_sbcrext a_cvv a_wcel f2_sbcrext f3_sbcrext a_wnfc a_wa f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext a_wn f1_sbcrext f3_sbcrext a_wsbc f2_sbcrext f4_sbcrext a_wral f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext a_wral p_bitrd f3_sbcrext a_cvv a_wcel f2_sbcrext f3_sbcrext a_wnfc a_wa f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext a_wral p_notbid f3_sbcrext a_cvv a_wcel f2_sbcrext f3_sbcrext a_wnfc a_wa f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral a_wn f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral f1_sbcrext f3_sbcrext a_wsbc a_wn f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext a_wral a_wn p_bitrd f0_sbcrext f2_sbcrext f4_sbcrext p_dfrex2 f0_sbcrext f2_sbcrext f4_sbcrext a_wrex f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral a_wn f1_sbcrext f3_sbcrext p_sbcbii f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc f2_sbcrext f4_sbcrext p_dfrex2 f3_sbcrext a_cvv a_wcel f2_sbcrext f3_sbcrext a_wnfc a_wa f0_sbcrext a_wn f2_sbcrext f4_sbcrext a_wral a_wn f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc a_wn f2_sbcrext f4_sbcrext a_wral a_wn f0_sbcrext f2_sbcrext f4_sbcrext a_wrex f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc f2_sbcrext f4_sbcrext a_wrex p_3bitr4g f3_sbcrext f5_sbcrext a_wcel f3_sbcrext a_cvv a_wcel f2_sbcrext f3_sbcrext a_wnfc f0_sbcrext f2_sbcrext f4_sbcrext a_wrex f1_sbcrext f3_sbcrext a_wsbc f0_sbcrext f1_sbcrext f3_sbcrext a_wsbc f2_sbcrext f4_sbcrext a_wrex a_wb p_sylan $.
 $}
-$( Interchange class substitution and restricted quantifier.  (Contributed
+
+$(Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v z $.
-	$d y z A $.
-	$d x B $.
-	$d x y z $.
-	$d ph z $.
-	$d B z $.
-	isbcralg_0 $f set z $.
-	fsbcralg_0 $f wff ph $.
-	fsbcralg_1 $f set x $.
-	fsbcralg_2 $f set y $.
-	fsbcralg_3 $f class A $.
-	fsbcralg_4 $f class B $.
-	fsbcralg_5 $f class V $.
-	sbcralg $p |- ( A e. V -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $= fsbcralg_0 fsbcralg_2 fsbcralg_4 wral fsbcralg_1 isbcralg_0 wsb fsbcralg_0 fsbcralg_1 isbcralg_0 wsb fsbcralg_2 fsbcralg_4 wral fsbcralg_0 fsbcralg_2 fsbcralg_4 wral fsbcralg_1 fsbcralg_3 wsbc fsbcralg_0 fsbcralg_1 fsbcralg_3 wsbc fsbcralg_2 fsbcralg_4 wral isbcralg_0 fsbcralg_3 fsbcralg_5 fsbcralg_0 fsbcralg_2 fsbcralg_4 wral fsbcralg_1 isbcralg_0 fsbcralg_3 dfsbcq2 isbcralg_0 sup_set_class fsbcralg_3 wceq fsbcralg_0 fsbcralg_1 isbcralg_0 wsb fsbcralg_0 fsbcralg_1 fsbcralg_3 wsbc fsbcralg_2 fsbcralg_4 fsbcralg_0 fsbcralg_1 isbcralg_0 fsbcralg_3 dfsbcq2 ralbidv fsbcralg_0 fsbcralg_2 fsbcralg_4 wral fsbcralg_0 fsbcralg_1 isbcralg_0 wsb fsbcralg_2 fsbcralg_4 wral fsbcralg_1 isbcralg_0 fsbcralg_0 fsbcralg_1 isbcralg_0 wsb fsbcralg_1 fsbcralg_2 fsbcralg_4 fsbcralg_1 fsbcralg_4 nfcv fsbcralg_0 fsbcralg_1 isbcralg_0 nfs1v nfral fsbcralg_1 sup_set_class isbcralg_0 sup_set_class wceq fsbcralg_0 fsbcralg_0 fsbcralg_1 isbcralg_0 wsb fsbcralg_2 fsbcralg_4 fsbcralg_0 fsbcralg_1 isbcralg_0 sbequ12 ralbidv sbie vtoclbg $.
+	$v ph x y A B V  $.
+	$d y z A  $.
+	$d x B  $.
+	$d x y z  $.
+	$d ph z  $.
+	$d B z  $.
+	f0_sbcralg $f wff ph $.
+	f1_sbcralg $f set x $.
+	f2_sbcralg $f set y $.
+	f3_sbcralg $f class A $.
+	f4_sbcralg $f class B $.
+	f5_sbcralg $f class V $.
+	i0_sbcralg $f set z $.
+	p_sbcralg $p |- ( A e. V -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $= f0_sbcralg f2_sbcralg f4_sbcralg a_wral f1_sbcralg i0_sbcralg f3_sbcralg p_dfsbcq2 f0_sbcralg f1_sbcralg i0_sbcralg f3_sbcralg p_dfsbcq2 i0_sbcralg a_sup_set_class f3_sbcralg a_wceq f0_sbcralg f1_sbcralg i0_sbcralg a_wsb f0_sbcralg f1_sbcralg f3_sbcralg a_wsbc f2_sbcralg f4_sbcralg p_ralbidv f1_sbcralg f4_sbcralg p_nfcv f0_sbcralg f1_sbcralg i0_sbcralg p_nfs1v f0_sbcralg f1_sbcralg i0_sbcralg a_wsb f1_sbcralg f2_sbcralg f4_sbcralg p_nfral f0_sbcralg f1_sbcralg i0_sbcralg p_sbequ12 f1_sbcralg a_sup_set_class i0_sbcralg a_sup_set_class a_wceq f0_sbcralg f0_sbcralg f1_sbcralg i0_sbcralg a_wsb f2_sbcralg f4_sbcralg p_ralbidv f0_sbcralg f2_sbcralg f4_sbcralg a_wral f0_sbcralg f1_sbcralg i0_sbcralg a_wsb f2_sbcralg f4_sbcralg a_wral f1_sbcralg i0_sbcralg p_sbie f0_sbcralg f2_sbcralg f4_sbcralg a_wral f1_sbcralg i0_sbcralg a_wsb f0_sbcralg f1_sbcralg i0_sbcralg a_wsb f2_sbcralg f4_sbcralg a_wral f0_sbcralg f2_sbcralg f4_sbcralg a_wral f1_sbcralg f3_sbcralg a_wsbc f0_sbcralg f1_sbcralg f3_sbcralg a_wsbc f2_sbcralg f4_sbcralg a_wral i0_sbcralg f3_sbcralg f5_sbcralg p_vtoclbg $.
 $}
-$( Interchange class substitution and restricted existential quantifier.
+
+$(Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v z $.
-	$d y z A $.
-	$d x B $.
-	$d x y z $.
-	$d ph z $.
-	$d B z $.
-	isbcrexg_0 $f set z $.
-	fsbcrexg_0 $f wff ph $.
-	fsbcrexg_1 $f set x $.
-	fsbcrexg_2 $f set y $.
-	fsbcrexg_3 $f class A $.
-	fsbcrexg_4 $f class B $.
-	fsbcrexg_5 $f class V $.
-	sbcrexg $p |- ( A e. V -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $= fsbcrexg_0 fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_0 fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_0 fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_1 fsbcrexg_3 wsbc fsbcrexg_0 fsbcrexg_1 fsbcrexg_3 wsbc fsbcrexg_2 fsbcrexg_4 wrex isbcrexg_0 fsbcrexg_3 fsbcrexg_5 fsbcrexg_0 fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_1 isbcrexg_0 fsbcrexg_3 dfsbcq2 isbcrexg_0 sup_set_class fsbcrexg_3 wceq fsbcrexg_0 fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_0 fsbcrexg_1 fsbcrexg_3 wsbc fsbcrexg_2 fsbcrexg_4 fsbcrexg_0 fsbcrexg_1 isbcrexg_0 fsbcrexg_3 dfsbcq2 rexbidv fsbcrexg_0 fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_0 fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_2 fsbcrexg_4 wrex fsbcrexg_1 isbcrexg_0 fsbcrexg_0 fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_1 fsbcrexg_2 fsbcrexg_4 fsbcrexg_1 fsbcrexg_4 nfcv fsbcrexg_0 fsbcrexg_1 isbcrexg_0 nfs1v nfrex fsbcrexg_1 sup_set_class isbcrexg_0 sup_set_class wceq fsbcrexg_0 fsbcrexg_0 fsbcrexg_1 isbcrexg_0 wsb fsbcrexg_2 fsbcrexg_4 fsbcrexg_0 fsbcrexg_1 isbcrexg_0 sbequ12 rexbidv sbie vtoclbg $.
+	$v ph x y A B V  $.
+	$d y z A  $.
+	$d x B  $.
+	$d x y z  $.
+	$d ph z  $.
+	$d B z  $.
+	f0_sbcrexg $f wff ph $.
+	f1_sbcrexg $f set x $.
+	f2_sbcrexg $f set y $.
+	f3_sbcrexg $f class A $.
+	f4_sbcrexg $f class B $.
+	f5_sbcrexg $f class V $.
+	i0_sbcrexg $f set z $.
+	p_sbcrexg $p |- ( A e. V -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $= f0_sbcrexg f2_sbcrexg f4_sbcrexg a_wrex f1_sbcrexg i0_sbcrexg f3_sbcrexg p_dfsbcq2 f0_sbcrexg f1_sbcrexg i0_sbcrexg f3_sbcrexg p_dfsbcq2 i0_sbcrexg a_sup_set_class f3_sbcrexg a_wceq f0_sbcrexg f1_sbcrexg i0_sbcrexg a_wsb f0_sbcrexg f1_sbcrexg f3_sbcrexg a_wsbc f2_sbcrexg f4_sbcrexg p_rexbidv f1_sbcrexg f4_sbcrexg p_nfcv f0_sbcrexg f1_sbcrexg i0_sbcrexg p_nfs1v f0_sbcrexg f1_sbcrexg i0_sbcrexg a_wsb f1_sbcrexg f2_sbcrexg f4_sbcrexg p_nfrex f0_sbcrexg f1_sbcrexg i0_sbcrexg p_sbequ12 f1_sbcrexg a_sup_set_class i0_sbcrexg a_sup_set_class a_wceq f0_sbcrexg f0_sbcrexg f1_sbcrexg i0_sbcrexg a_wsb f2_sbcrexg f4_sbcrexg p_rexbidv f0_sbcrexg f2_sbcrexg f4_sbcrexg a_wrex f0_sbcrexg f1_sbcrexg i0_sbcrexg a_wsb f2_sbcrexg f4_sbcrexg a_wrex f1_sbcrexg i0_sbcrexg p_sbie f0_sbcrexg f2_sbcrexg f4_sbcrexg a_wrex f1_sbcrexg i0_sbcrexg a_wsb f0_sbcrexg f1_sbcrexg i0_sbcrexg a_wsb f2_sbcrexg f4_sbcrexg a_wrex f0_sbcrexg f2_sbcrexg f4_sbcrexg a_wrex f1_sbcrexg f3_sbcrexg a_wsbc f0_sbcrexg f1_sbcrexg f3_sbcrexg a_wsbc f2_sbcrexg f4_sbcrexg a_wrex i0_sbcrexg f3_sbcrexg f5_sbcrexg p_vtoclbg $.
 $}
-$( Interchange class substitution and restricted uniqueness quantifier.
+
+$(Interchange class substitution and restricted uniqueness quantifier.
        (Contributed by NM, 24-Feb-2013.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v z $.
-	$d y z A $.
-	$d x B $.
-	$d x y z $.
-	$d ph z $.
-	$d B z $.
-	isbcreug_0 $f set z $.
-	fsbcreug_0 $f wff ph $.
-	fsbcreug_1 $f set x $.
-	fsbcreug_2 $f set y $.
-	fsbcreug_3 $f class A $.
-	fsbcreug_4 $f class B $.
-	fsbcreug_5 $f class V $.
-	sbcreug $p |- ( A e. V -> ( [. A / x ]. E! y e. B ph <-> E! y e. B [. A / x ]. ph ) ) $= fsbcreug_0 fsbcreug_2 fsbcreug_4 wreu fsbcreug_1 isbcreug_0 wsb fsbcreug_0 fsbcreug_1 isbcreug_0 wsb fsbcreug_2 fsbcreug_4 wreu fsbcreug_0 fsbcreug_2 fsbcreug_4 wreu fsbcreug_1 fsbcreug_3 wsbc fsbcreug_0 fsbcreug_1 fsbcreug_3 wsbc fsbcreug_2 fsbcreug_4 wreu isbcreug_0 fsbcreug_3 fsbcreug_5 fsbcreug_0 fsbcreug_2 fsbcreug_4 wreu fsbcreug_1 isbcreug_0 fsbcreug_3 dfsbcq2 isbcreug_0 sup_set_class fsbcreug_3 wceq fsbcreug_0 fsbcreug_1 isbcreug_0 wsb fsbcreug_0 fsbcreug_1 fsbcreug_3 wsbc fsbcreug_2 fsbcreug_4 fsbcreug_0 fsbcreug_1 isbcreug_0 fsbcreug_3 dfsbcq2 reubidv fsbcreug_0 fsbcreug_2 fsbcreug_4 wreu fsbcreug_0 fsbcreug_1 isbcreug_0 wsb fsbcreug_2 fsbcreug_4 wreu fsbcreug_1 isbcreug_0 fsbcreug_0 fsbcreug_1 isbcreug_0 wsb fsbcreug_1 fsbcreug_2 fsbcreug_4 fsbcreug_1 fsbcreug_4 nfcv fsbcreug_0 fsbcreug_1 isbcreug_0 nfs1v nfreu fsbcreug_1 sup_set_class isbcreug_0 sup_set_class wceq fsbcreug_0 fsbcreug_0 fsbcreug_1 isbcreug_0 wsb fsbcreug_2 fsbcreug_4 fsbcreug_0 fsbcreug_1 isbcreug_0 sbequ12 reubidv sbie vtoclbg $.
+	$v ph x y A B V  $.
+	$d y z A  $.
+	$d x B  $.
+	$d x y z  $.
+	$d ph z  $.
+	$d B z  $.
+	f0_sbcreug $f wff ph $.
+	f1_sbcreug $f set x $.
+	f2_sbcreug $f set y $.
+	f3_sbcreug $f class A $.
+	f4_sbcreug $f class B $.
+	f5_sbcreug $f class V $.
+	i0_sbcreug $f set z $.
+	p_sbcreug $p |- ( A e. V -> ( [. A / x ]. E! y e. B ph <-> E! y e. B [. A / x ]. ph ) ) $= f0_sbcreug f2_sbcreug f4_sbcreug a_wreu f1_sbcreug i0_sbcreug f3_sbcreug p_dfsbcq2 f0_sbcreug f1_sbcreug i0_sbcreug f3_sbcreug p_dfsbcq2 i0_sbcreug a_sup_set_class f3_sbcreug a_wceq f0_sbcreug f1_sbcreug i0_sbcreug a_wsb f0_sbcreug f1_sbcreug f3_sbcreug a_wsbc f2_sbcreug f4_sbcreug p_reubidv f1_sbcreug f4_sbcreug p_nfcv f0_sbcreug f1_sbcreug i0_sbcreug p_nfs1v f0_sbcreug f1_sbcreug i0_sbcreug a_wsb f1_sbcreug f2_sbcreug f4_sbcreug p_nfreu f0_sbcreug f1_sbcreug i0_sbcreug p_sbequ12 f1_sbcreug a_sup_set_class i0_sbcreug a_sup_set_class a_wceq f0_sbcreug f0_sbcreug f1_sbcreug i0_sbcreug a_wsb f2_sbcreug f4_sbcreug p_reubidv f0_sbcreug f2_sbcreug f4_sbcreug a_wreu f0_sbcreug f1_sbcreug i0_sbcreug a_wsb f2_sbcreug f4_sbcreug a_wreu f1_sbcreug i0_sbcreug p_sbie f0_sbcreug f2_sbcreug f4_sbcreug a_wreu f1_sbcreug i0_sbcreug a_wsb f0_sbcreug f1_sbcreug i0_sbcreug a_wsb f2_sbcreug f4_sbcreug a_wreu f0_sbcreug f2_sbcreug f4_sbcreug a_wreu f1_sbcreug f3_sbcreug a_wsbc f0_sbcreug f1_sbcreug f3_sbcreug a_wsbc f2_sbcreug f4_sbcreug a_wreu i0_sbcreug f3_sbcreug f5_sbcreug p_vtoclbg $.
 $}
-$( Interchange class substitution and class abstraction.  (Contributed by
+
+$(Interchange class substitution and class abstraction.  (Contributed by
        NM, 5-Nov-2005.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v V $.
-	$v w $.
-	$d y w A $.
-	$d w B $.
-	$d w ph $.
-	$d x y $.
-	$d w x $.
-	isbcabel_0 $f set w $.
-	fsbcabel_0 $f wff ph $.
-	fsbcabel_1 $f set x $.
-	fsbcabel_2 $f set y $.
-	fsbcabel_3 $f class A $.
-	fsbcabel_4 $f class B $.
-	fsbcabel_5 $f class V $.
-	esbcabel_0 $e |- F/_ x B $.
-	sbcabel $p |- ( A e. V -> ( [. A / x ]. { y | ph } e. B <-> { y | [. A / x ]. ph } e. B ) ) $= fsbcabel_3 fsbcabel_5 wcel fsbcabel_3 cvv wcel fsbcabel_0 fsbcabel_2 cab fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 wsbc fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab fsbcabel_4 wcel wb fsbcabel_3 fsbcabel_5 elex fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 wex fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 wex fsbcabel_0 fsbcabel_2 cab fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 wsbc fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab fsbcabel_4 wcel fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 wex fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 wex isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 wex isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 fsbcabel_1 fsbcabel_3 cvv sbcexg fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 wsbc wa isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 cvv sbcang fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 wsbc isbcabel_0 sup_set_class fsbcabel_4 wcel fsbcabel_3 cvv wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 wal isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_2 wal fsbcabel_1 fsbcabel_3 wsbc fsbcabel_3 cvv wcel fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 wal isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_2 wal fsbcabel_1 fsbcabel_3 fsbcabel_0 fsbcabel_2 isbcabel_0 sup_set_class abeq2 sbcbii fsbcabel_3 cvv wcel fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_2 wal fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 wal fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 wal fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_2 fsbcabel_1 fsbcabel_3 cvv sbcalg fsbcabel_3 cvv wcel fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 fsbcabel_3 cvv wcel fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 wb fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_1 fsbcabel_3 wsbc fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc wb fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 cvv sbcbig fsbcabel_3 cvv wcel fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 sup_set_class isbcabel_0 sup_set_class wcel fsbcabel_1 fsbcabel_3 cvv sbcg bibi1d bitrd albidv bitrd syl5bb fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 isbcabel_0 sup_set_class abeq2 syl6bbr isbcabel_0 sup_set_class fsbcabel_4 wcel fsbcabel_1 fsbcabel_3 cvv fsbcabel_1 isbcabel_0 fsbcabel_4 esbcabel_0 nfcri sbcgf anbi12d bitrd exbidv bitrd fsbcabel_0 fsbcabel_2 cab fsbcabel_4 wcel isbcabel_0 sup_set_class fsbcabel_0 fsbcabel_2 cab wceq isbcabel_0 sup_set_class fsbcabel_4 wcel wa isbcabel_0 wex fsbcabel_1 fsbcabel_3 isbcabel_0 fsbcabel_0 fsbcabel_2 cab fsbcabel_4 df-clel sbcbii isbcabel_0 fsbcabel_0 fsbcabel_1 fsbcabel_3 wsbc fsbcabel_2 cab fsbcabel_4 df-clel 3bitr4g syl $.
+	$v ph x y A B V  $.
+	$d y w A  $.
+	$d w B  $.
+	$d w ph  $.
+	$d x y  $.
+	$d w x  $.
+	f0_sbcabel $f wff ph $.
+	f1_sbcabel $f set x $.
+	f2_sbcabel $f set y $.
+	f3_sbcabel $f class A $.
+	f4_sbcabel $f class B $.
+	f5_sbcabel $f class V $.
+	i0_sbcabel $f set w $.
+	e0_sbcabel $e |- F/_ x B $.
+	p_sbcabel $p |- ( A e. V -> ( [. A / x ]. { y | ph } e. B <-> { y | [. A / x ]. ph } e. B ) ) $= f3_sbcabel f5_sbcabel p_elex i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel f1_sbcabel f3_sbcabel a_cvv p_sbcexg i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_cvv p_sbcang f0_sbcabel f2_sbcabel i0_sbcabel a_sup_set_class p_abeq2 i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f2_sbcabel a_wal f1_sbcabel f3_sbcabel p_sbcbii f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f2_sbcabel f1_sbcabel f3_sbcabel a_cvv p_sbcalg f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_cvv p_sbcbig f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f1_sbcabel f3_sbcabel a_cvv p_sbcg f3_sbcabel a_cvv a_wcel f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc p_bibi1d f3_sbcabel a_cvv a_wcel f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f1_sbcabel f3_sbcabel a_wsbc f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb p_bitrd f3_sbcabel a_cvv a_wcel f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb f2_sbcabel p_albidv f3_sbcabel a_cvv a_wcel f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f2_sbcabel a_wal f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_wal f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb f2_sbcabel a_wal p_bitrd i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel a_wb f2_sbcabel a_wal f1_sbcabel f3_sbcabel a_wsbc f3_sbcabel a_cvv a_wcel f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb f2_sbcabel a_wal p_syl5bb f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel i0_sbcabel a_sup_set_class p_abeq2 f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_sup_set_class i0_sbcabel a_sup_set_class a_wcel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc a_wb f2_sbcabel a_wal i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq p_syl6bbr e0_sbcabel f1_sbcabel i0_sbcabel f4_sbcabel p_nfcri i0_sbcabel a_sup_set_class f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_cvv p_sbcgf f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f4_sbcabel a_wcel p_anbi12d f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_wsbc a_wa i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa p_bitrd f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel p_exbidv f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel a_wex f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_wex i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel a_wex p_bitrd i0_sbcabel f0_sbcabel f2_sbcabel a_cab f4_sbcabel a_df-clel f0_sbcabel f2_sbcabel a_cab f4_sbcabel a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel a_wex f1_sbcabel f3_sbcabel p_sbcbii i0_sbcabel f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab f4_sbcabel a_df-clel f3_sbcabel a_cvv a_wcel i0_sbcabel a_sup_set_class f0_sbcabel f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel a_wex f1_sbcabel f3_sbcabel a_wsbc i0_sbcabel a_sup_set_class f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab a_wceq i0_sbcabel a_sup_set_class f4_sbcabel a_wcel a_wa i0_sbcabel a_wex f0_sbcabel f2_sbcabel a_cab f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_wsbc f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab f4_sbcabel a_wcel p_3bitr4g f3_sbcabel f5_sbcabel a_wcel f3_sbcabel a_cvv a_wcel f0_sbcabel f2_sbcabel a_cab f4_sbcabel a_wcel f1_sbcabel f3_sbcabel a_wsbc f0_sbcabel f1_sbcabel f3_sbcabel a_wsbc f2_sbcabel a_cab f4_sbcabel a_wcel a_wb p_syl $.
 $}
-$( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
+
+$(Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
        provides an axiom for a predicate calculus for a restricted domain.
        This theorem generalizes the unrestricted ~ stdpc4 and ~ spsbc .  See
        also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
        (Proof shortened by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	$d y ph $.
-	irspsbc_0 $f set y $.
-	frspsbc_0 $f wff ph $.
-	frspsbc_1 $f set x $.
-	frspsbc_2 $f class A $.
-	frspsbc_3 $f class B $.
-	rspsbc $p |- ( A e. B -> ( A. x e. B ph -> [. A / x ]. ph ) ) $= frspsbc_0 frspsbc_1 frspsbc_3 wral frspsbc_0 frspsbc_1 irspsbc_0 wsb irspsbc_0 frspsbc_3 wral frspsbc_2 frspsbc_3 wcel frspsbc_0 frspsbc_1 frspsbc_2 wsbc frspsbc_0 frspsbc_1 irspsbc_0 frspsbc_3 cbvralsv frspsbc_0 frspsbc_1 irspsbc_0 wsb frspsbc_0 frspsbc_1 frspsbc_2 wsbc irspsbc_0 frspsbc_2 frspsbc_3 frspsbc_0 frspsbc_1 irspsbc_0 frspsbc_2 dfsbcq2 rspcv syl5bi $.
+	$v ph x A B  $.
+	$d y A  $.
+	$d x y B  $.
+	$d y ph  $.
+	f0_rspsbc $f wff ph $.
+	f1_rspsbc $f set x $.
+	f2_rspsbc $f class A $.
+	f3_rspsbc $f class B $.
+	i0_rspsbc $f set y $.
+	p_rspsbc $p |- ( A e. B -> ( A. x e. B ph -> [. A / x ]. ph ) ) $= f0_rspsbc f1_rspsbc i0_rspsbc f3_rspsbc p_cbvralsv f0_rspsbc f1_rspsbc i0_rspsbc f2_rspsbc p_dfsbcq2 f0_rspsbc f1_rspsbc i0_rspsbc a_wsb f0_rspsbc f1_rspsbc f2_rspsbc a_wsbc i0_rspsbc f2_rspsbc f3_rspsbc p_rspcv f0_rspsbc f1_rspsbc f3_rspsbc a_wral f0_rspsbc f1_rspsbc i0_rspsbc a_wsb i0_rspsbc f3_rspsbc a_wral f2_rspsbc f3_rspsbc a_wcel f0_rspsbc f1_rspsbc f2_rspsbc a_wsbc p_syl5bi $.
 $}
-$( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
+
+$(Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
        (Contributed by NM, 14-Dec-2005.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x B $.
-	frspsbca_0 $f wff ph $.
-	frspsbca_1 $f set x $.
-	frspsbca_2 $f class A $.
-	frspsbca_3 $f class B $.
-	rspsbca $p |- ( ( A e. B /\ A. x e. B ph ) -> [. A / x ]. ph ) $= frspsbca_2 frspsbca_3 wcel frspsbca_0 frspsbca_1 frspsbca_3 wral frspsbca_0 frspsbca_1 frspsbca_2 wsbc frspsbca_0 frspsbca_1 frspsbca_2 frspsbca_3 rspsbc imp $.
+	$v ph x A B  $.
+	$d A  $.
+	$d x B  $.
+	$d ph  $.
+	f0_rspsbca $f wff ph $.
+	f1_rspsbca $f set x $.
+	f2_rspsbca $f class A $.
+	f3_rspsbca $f class B $.
+	p_rspsbca $p |- ( ( A e. B /\ A. x e. B ph ) -> [. A / x ]. ph ) $= f0_rspsbca f1_rspsbca f2_rspsbca f3_rspsbca p_rspsbc f2_rspsbca f3_rspsbca a_wcel f0_rspsbca f1_rspsbca f3_rspsbca a_wral f0_rspsbca f1_rspsbca f2_rspsbca a_wsbc p_imp $.
 $}
-$( Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
+
+$(Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d y A $.
-	$d x y B $.
-	$d y ph $.
-	irspesbca_0 $f set y $.
-	frspesbca_0 $f wff ph $.
-	frspesbca_1 $f set x $.
-	frspesbca_2 $f class A $.
-	frspesbca_3 $f class B $.
-	rspesbca $p |- ( ( A e. B /\ [. A / x ]. ph ) -> E. x e. B ph ) $= frspesbca_2 frspesbca_3 wcel frspesbca_0 frspesbca_1 frspesbca_2 wsbc wa frspesbca_0 frspesbca_1 irspesbca_0 wsb irspesbca_0 frspesbca_3 wrex frspesbca_0 frspesbca_1 frspesbca_3 wrex frspesbca_0 frspesbca_1 irspesbca_0 wsb frspesbca_0 frspesbca_1 frspesbca_2 wsbc irspesbca_0 frspesbca_2 frspesbca_3 frspesbca_0 frspesbca_1 irspesbca_0 frspesbca_2 dfsbcq2 rspcev frspesbca_0 frspesbca_1 irspesbca_0 frspesbca_3 cbvrexsv sylibr $.
+	$v ph x A B  $.
+	$d y A  $.
+	$d x y B  $.
+	$d y ph  $.
+	f0_rspesbca $f wff ph $.
+	f1_rspesbca $f set x $.
+	f2_rspesbca $f class A $.
+	f3_rspesbca $f class B $.
+	i0_rspesbca $f set y $.
+	p_rspesbca $p |- ( ( A e. B /\ [. A / x ]. ph ) -> E. x e. B ph ) $= f0_rspesbca f1_rspesbca i0_rspesbca f2_rspesbca p_dfsbcq2 f0_rspesbca f1_rspesbca i0_rspesbca a_wsb f0_rspesbca f1_rspesbca f2_rspesbca a_wsbc i0_rspesbca f2_rspesbca f3_rspesbca p_rspcev f0_rspesbca f1_rspesbca i0_rspesbca f3_rspesbca p_cbvrexsv f2_rspesbca f3_rspesbca a_wcel f0_rspesbca f1_rspesbca f2_rspesbca a_wsbc a_wa f0_rspesbca f1_rspesbca i0_rspesbca a_wsb i0_rspesbca f3_rspesbca a_wrex f0_rspesbca f1_rspesbca f3_rspesbca a_wrex p_sylibr $.
 $}
-$( Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
+
+$(Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
        18-Nov-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	fspesbc_0 $f wff ph $.
-	fspesbc_1 $f set x $.
-	fspesbc_2 $f class A $.
-	spesbc $p |- ( [. A / x ]. ph -> E. x ph ) $= fspesbc_0 fspesbc_1 fspesbc_2 wsbc fspesbc_0 fspesbc_1 cvv wrex fspesbc_0 fspesbc_1 wex fspesbc_2 cvv wcel fspesbc_0 fspesbc_1 fspesbc_2 wsbc fspesbc_0 fspesbc_1 cvv wrex fspesbc_0 fspesbc_1 fspesbc_2 sbcex fspesbc_0 fspesbc_1 fspesbc_2 cvv rspesbca mpancom fspesbc_0 fspesbc_1 rexv sylib $.
+	$v ph x A  $.
+	$d A  $.
+	$d x  $.
+	$d ph  $.
+	f0_spesbc $f wff ph $.
+	f1_spesbc $f set x $.
+	f2_spesbc $f class A $.
+	p_spesbc $p |- ( [. A / x ]. ph -> E. x ph ) $= f0_spesbc f1_spesbc f2_spesbc p_sbcex f0_spesbc f1_spesbc f2_spesbc a_cvv p_rspesbca f2_spesbc a_cvv a_wcel f0_spesbc f1_spesbc f2_spesbc a_wsbc f0_spesbc f1_spesbc a_cvv a_wrex p_mpancom f0_spesbc f1_spesbc p_rexv f0_spesbc f1_spesbc f2_spesbc a_wsbc f0_spesbc f1_spesbc a_cvv a_wrex f0_spesbc f1_spesbc a_wex p_sylib $.
 $}
-$( form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
+
+$(form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fspesbcd_0 $f wff ph $.
-	fspesbcd_1 $f wff ps $.
-	fspesbcd_2 $f set x $.
-	fspesbcd_3 $f class A $.
-	espesbcd_0 $e |- ( ph -> [. A / x ]. ps ) $.
-	spesbcd $p |- ( ph -> E. x ps ) $= fspesbcd_0 fspesbcd_1 fspesbcd_2 fspesbcd_3 wsbc fspesbcd_1 fspesbcd_2 wex espesbcd_0 fspesbcd_1 fspesbcd_2 fspesbcd_3 spesbc syl $.
+	$v ph ps x A  $.
+	$d A  $.
+	$d x  $.
+	$d ph  $.
+	f0_spesbcd $f wff ph $.
+	f1_spesbcd $f wff ps $.
+	f2_spesbcd $f set x $.
+	f3_spesbcd $f class A $.
+	e0_spesbcd $e |- ( ph -> [. A / x ]. ps ) $.
+	p_spesbcd $p |- ( ph -> E. x ps ) $= e0_spesbcd f1_spesbcd f2_spesbcd f3_spesbcd p_spesbc f0_spesbcd f1_spesbcd f2_spesbcd f3_spesbcd a_wsbc f1_spesbcd f2_spesbcd a_wex p_syl $.
 $}
-$( A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
+
+$(A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x B $.
-	fsbcth2_0 $f wff ph $.
-	fsbcth2_1 $f set x $.
-	fsbcth2_2 $f class A $.
-	fsbcth2_3 $f class B $.
-	esbcth2_0 $e |- ( x e. B -> ph ) $.
-	sbcth2 $p |- ( A e. B -> [. A / x ]. ph ) $= fsbcth2_2 fsbcth2_3 wcel fsbcth2_0 fsbcth2_1 fsbcth2_3 wral fsbcth2_0 fsbcth2_1 fsbcth2_2 wsbc fsbcth2_0 fsbcth2_1 fsbcth2_3 esbcth2_0 rgen fsbcth2_0 fsbcth2_1 fsbcth2_2 fsbcth2_3 rspsbc mpi $.
+	$v ph x A B  $.
+	$d x B  $.
+	f0_sbcth2 $f wff ph $.
+	f1_sbcth2 $f set x $.
+	f2_sbcth2 $f class A $.
+	f3_sbcth2 $f class B $.
+	e0_sbcth2 $e |- ( x e. B -> ph ) $.
+	p_sbcth2 $p |- ( A e. B -> [. A / x ]. ph ) $= e0_sbcth2 f0_sbcth2 f1_sbcth2 f3_sbcth2 p_rgen f0_sbcth2 f1_sbcth2 f2_sbcth2 f3_sbcth2 p_rspsbc f2_sbcth2 f3_sbcth2 a_wcel f0_sbcth2 f1_sbcth2 f3_sbcth2 a_wral f0_sbcth2 f1_sbcth2 f2_sbcth2 a_wsbc p_mpi $.
 $}
-$( Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
+
+$(Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
        an axiom of a predicate calculus for a restricted domain.  Compare the
        unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fra5_0 $f wff ph $.
-	fra5_1 $f wff ps $.
-	fra5_2 $f set x $.
-	fra5_3 $f class A $.
-	era5_0 $e |- F/ x ph $.
-	ra5 $p |- ( A. x e. A ( ph -> ps ) -> ( ph -> A. x e. A ps ) ) $= fra5_0 fra5_1 wi fra5_2 fra5_3 wral fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi fra5_2 wal fra5_1 fra5_2 fra5_3 wral fra5_0 fra5_1 wi fra5_2 fra5_3 wral fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi wi fra5_2 wal fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi fra5_2 wal wi fra5_0 fra5_1 wi fra5_2 fra5_3 wral fra5_2 sup_set_class fra5_3 wcel fra5_0 fra5_1 wi wi fra5_2 wal fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi wi fra5_2 wal fra5_0 fra5_1 wi fra5_2 fra5_3 df-ral fra5_2 sup_set_class fra5_3 wcel fra5_0 fra5_1 wi wi fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi wi fra5_2 fra5_2 sup_set_class fra5_3 wcel fra5_0 fra5_1 bi2.04 albii bitri fra5_0 fra5_2 sup_set_class fra5_3 wcel fra5_1 wi fra5_2 era5_0 stdpc5 sylbi fra5_1 fra5_2 fra5_3 df-ral syl6ibr $.
+	$v ph ps x A  $.
+	f0_ra5 $f wff ph $.
+	f1_ra5 $f wff ps $.
+	f2_ra5 $f set x $.
+	f3_ra5 $f class A $.
+	e0_ra5 $e |- F/ x ph $.
+	p_ra5 $p |- ( A. x e. A ( ph -> ps ) -> ( ph -> A. x e. A ps ) ) $= f0_ra5 f1_ra5 a_wi f2_ra5 f3_ra5 a_df-ral f2_ra5 a_sup_set_class f3_ra5 a_wcel f0_ra5 f1_ra5 p_bi2.04 f2_ra5 a_sup_set_class f3_ra5 a_wcel f0_ra5 f1_ra5 a_wi a_wi f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi a_wi f2_ra5 p_albii f0_ra5 f1_ra5 a_wi f2_ra5 f3_ra5 a_wral f2_ra5 a_sup_set_class f3_ra5 a_wcel f0_ra5 f1_ra5 a_wi a_wi f2_ra5 a_wal f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi a_wi f2_ra5 a_wal p_bitri e0_ra5 f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi f2_ra5 p_stdpc5 f0_ra5 f1_ra5 a_wi f2_ra5 f3_ra5 a_wral f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi a_wi f2_ra5 a_wal f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi f2_ra5 a_wal a_wi p_sylbi f1_ra5 f2_ra5 f3_ra5 a_df-ral f0_ra5 f1_ra5 a_wi f2_ra5 f3_ra5 a_wral f0_ra5 f2_ra5 a_sup_set_class f3_ra5 a_wcel f1_ra5 a_wi f2_ra5 a_wal f1_ra5 f2_ra5 f3_ra5 a_wral p_syl6ibr $.
 $}
-$( Alternate definition of restricted "at most one."  Note that
+
+$(Alternate definition of restricted "at most one."  Note that
        ` E* x e. A ph ` is not equivalent to
        ` E. y e. A A. x e. A ( ph -> x = y ) ` (in analogy to ~ reu6 ); to see
        this, let ` A ` be the empty set.  However, one direction of this
        pattern holds; see ~ rmo2i .  (Contributed by NM, 17-Jun-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y A $.
-	frmo2_0 $f wff ph $.
-	frmo2_1 $f set x $.
-	frmo2_2 $f set y $.
-	frmo2_3 $f class A $.
-	ermo2_0 $e |- F/ y ph $.
-	rmo2 $p |- ( E* x e. A ph <-> E. y A. x e. A ( ph -> x = y ) ) $= frmo2_0 frmo2_1 frmo2_3 wrmo frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 wmo frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 wal frmo2_2 wex frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 frmo2_3 wral frmo2_2 wex frmo2_0 frmo2_1 frmo2_3 df-rmo frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 frmo2_2 frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 frmo2_2 frmo2_1 sup_set_class frmo2_3 wcel frmo2_2 nfv ermo2_0 nfan mo2 frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 wal frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 frmo2_3 wral frmo2_2 frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 wal frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi wi frmo2_1 wal frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 frmo2_3 wral frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 wa frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi wi frmo2_1 frmo2_1 sup_set_class frmo2_3 wcel frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq impexp albii frmo2_0 frmo2_1 sup_set_class frmo2_2 sup_set_class wceq wi frmo2_1 frmo2_3 df-ral bitr4i exbii 3bitri $.
+	$v ph x y A  $.
+	$d x y A  $.
+	f0_rmo2 $f wff ph $.
+	f1_rmo2 $f set x $.
+	f2_rmo2 $f set y $.
+	f3_rmo2 $f class A $.
+	e0_rmo2 $e |- F/ y ph $.
+	p_rmo2 $p |- ( E* x e. A ph <-> E. y A. x e. A ( ph -> x = y ) ) $= f0_rmo2 f1_rmo2 f3_rmo2 a_df-rmo f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f2_rmo2 p_nfv e0_rmo2 f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 f2_rmo2 p_nfan f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 f2_rmo2 p_mo2 f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq p_impexp f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi a_wi f1_rmo2 p_albii f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 f3_rmo2 a_df-ral f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 a_wal f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi a_wi f1_rmo2 a_wal f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 f3_rmo2 a_wral p_bitr4i f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 a_wal f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 f3_rmo2 a_wral f2_rmo2 p_exbii f0_rmo2 f1_rmo2 f3_rmo2 a_wrmo f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 a_wmo f1_rmo2 a_sup_set_class f3_rmo2 a_wcel f0_rmo2 a_wa f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 a_wal f2_rmo2 a_wex f0_rmo2 f1_rmo2 a_sup_set_class f2_rmo2 a_sup_set_class a_wceq a_wi f1_rmo2 f3_rmo2 a_wral f2_rmo2 a_wex p_3bitri $.
 $}
-$( Condition implying restricted "at most one."  (Contributed by NM,
+
+$(Condition implying restricted "at most one."  (Contributed by NM,
        17-Jun-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y A $.
-	frmo2i_0 $f wff ph $.
-	frmo2i_1 $f set x $.
-	frmo2i_2 $f set y $.
-	frmo2i_3 $f class A $.
-	ermo2i_0 $e |- F/ y ph $.
-	rmo2i $p |- ( E. y e. A A. x e. A ( ph -> x = y ) -> E* x e. A ph ) $= frmo2i_0 frmo2i_1 sup_set_class frmo2i_2 sup_set_class wceq wi frmo2i_1 frmo2i_3 wral frmo2i_2 frmo2i_3 wrex frmo2i_0 frmo2i_1 sup_set_class frmo2i_2 sup_set_class wceq wi frmo2i_1 frmo2i_3 wral frmo2i_2 wex frmo2i_0 frmo2i_1 frmo2i_3 wrmo frmo2i_0 frmo2i_1 sup_set_class frmo2i_2 sup_set_class wceq wi frmo2i_1 frmo2i_3 wral frmo2i_2 frmo2i_3 rexex frmo2i_0 frmo2i_1 frmo2i_2 frmo2i_3 ermo2i_0 rmo2 sylibr $.
+	$v ph x y A  $.
+	$d x y A  $.
+	f0_rmo2i $f wff ph $.
+	f1_rmo2i $f set x $.
+	f2_rmo2i $f set y $.
+	f3_rmo2i $f class A $.
+	e0_rmo2i $e |- F/ y ph $.
+	p_rmo2i $p |- ( E. y e. A A. x e. A ( ph -> x = y ) -> E* x e. A ph ) $= f0_rmo2i f1_rmo2i a_sup_set_class f2_rmo2i a_sup_set_class a_wceq a_wi f1_rmo2i f3_rmo2i a_wral f2_rmo2i f3_rmo2i p_rexex e0_rmo2i f0_rmo2i f1_rmo2i f2_rmo2i f3_rmo2i p_rmo2 f0_rmo2i f1_rmo2i a_sup_set_class f2_rmo2i a_sup_set_class a_wceq a_wi f1_rmo2i f3_rmo2i a_wral f2_rmo2i f3_rmo2i a_wrex f0_rmo2i f1_rmo2i a_sup_set_class f2_rmo2i a_sup_set_class a_wceq a_wi f1_rmo2i f3_rmo2i a_wral f2_rmo2i a_wex f0_rmo2i f1_rmo2i f3_rmo2i a_wrmo p_sylibr $.
 $}
-$( Restricted "at most one" using explicit substitution.  (Contributed by
+
+$(Restricted "at most one" using explicit substitution.  (Contributed by
        NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y A $.
-	frmo3_0 $f wff ph $.
-	frmo3_1 $f set x $.
-	frmo3_2 $f set y $.
-	frmo3_3 $f class A $.
-	ermo3_0 $e |- F/ y ph $.
-	rmo3 $p |- ( E* x e. A ph <-> A. x e. A A. y e. A ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $= frmo3_0 frmo3_1 frmo3_3 wrmo frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 wmo frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral frmo3_1 frmo3_3 wral frmo3_0 frmo3_1 frmo3_3 df-rmo frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 wal frmo3_1 wal frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral wi frmo3_1 wal frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 wmo frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral frmo3_1 frmo3_3 wral frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 wal frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral wi frmo3_1 frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 wal frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi wi frmo3_2 wal frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi frmo3_2 frmo3_3 wral frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral wi frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi wi frmo3_2 frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi wi frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_2 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 wsb wa wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_2 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa wa frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb frmo3_2 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 wsb frmo3_1 sup_set_class frmo3_3 wcel frmo3_1 frmo3_2 wsb frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_2 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 sban frmo3_1 sup_set_class frmo3_3 wcel frmo3_1 frmo3_2 wsb frmo3_2 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 wsb frmo3_2 frmo3_1 frmo3_3 clelsb3 anbi1i bitri anbi2i frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_2 sup_set_class frmo3_3 wcel frmo3_0 frmo3_1 frmo3_2 wsb an4 frmo3_1 sup_set_class frmo3_3 wcel frmo3_2 sup_set_class frmo3_3 wcel wa frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_3 wcel frmo3_2 sup_set_class frmo3_3 wcel ancom anbi1i 3bitri imbi1i frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel wa frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq impexp frmo3_2 sup_set_class frmo3_3 wcel frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi impexp 3bitri albii frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi wi frmo3_2 frmo3_3 df-ral frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 r19.21v 3bitr2i albii frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 wa frmo3_1 frmo3_2 frmo3_1 sup_set_class frmo3_3 wcel frmo3_0 frmo3_2 frmo3_1 sup_set_class frmo3_3 wcel frmo3_2 nfv ermo3_0 nfan mo3 frmo3_0 frmo3_0 frmo3_1 frmo3_2 wsb wa frmo3_1 sup_set_class frmo3_2 sup_set_class wceq wi frmo3_2 frmo3_3 wral frmo3_1 frmo3_3 df-ral 3bitr4i bitri $.
+	$v ph x y A  $.
+	$d x y A  $.
+	f0_rmo3 $f wff ph $.
+	f1_rmo3 $f set x $.
+	f2_rmo3 $f set y $.
+	f3_rmo3 $f class A $.
+	e0_rmo3 $e |- F/ y ph $.
+	p_rmo3 $p |- ( E* x e. A ph <-> A. x e. A A. y e. A ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $= f0_rmo3 f1_rmo3 f3_rmo3 a_df-rmo f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 p_sban f2_rmo3 f1_rmo3 f3_rmo3 p_clelsb3 f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 f2_rmo3 a_wsb f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 a_wsb p_anbi1i f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 f2_rmo3 a_wsb f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa p_bitri f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa p_anbi2i f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 a_wsb p_an4 f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f2_rmo3 a_sup_set_class f3_rmo3 a_wcel p_ancom f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f2_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa p_anbi1i f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f2_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa a_wa f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa a_wa p_3bitri f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq p_imbi1i f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq p_impexp f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi p_impexp f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel a_wa f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi a_wi p_3bitri f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi a_wi f2_rmo3 p_albii f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi f2_rmo3 f3_rmo3 a_df-ral f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 p_r19.21v f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_wal f2_rmo3 a_sup_set_class f3_rmo3 a_wcel f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi a_wi f2_rmo3 a_wal f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi a_wi f2_rmo3 f3_rmo3 a_wral f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral a_wi p_3bitr2i f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_wal f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral a_wi f1_rmo3 p_albii f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f2_rmo3 p_nfv e0_rmo3 f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f2_rmo3 p_nfan f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 p_mo3 f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral f1_rmo3 f3_rmo3 a_df-ral f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 a_wal f1_rmo3 a_wal f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral a_wi f1_rmo3 a_wal f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_wmo f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral f1_rmo3 f3_rmo3 a_wral p_3bitr4i f0_rmo3 f1_rmo3 f3_rmo3 a_wrmo f1_rmo3 a_sup_set_class f3_rmo3 a_wcel f0_rmo3 a_wa f1_rmo3 a_wmo f0_rmo3 f0_rmo3 f1_rmo3 f2_rmo3 a_wsb a_wa f1_rmo3 a_sup_set_class f2_rmo3 a_sup_set_class a_wceq a_wi f2_rmo3 f3_rmo3 a_wral f1_rmo3 f3_rmo3 a_wral p_bitri $.
 $}
-$( Consequence of "at most one", using implicit substitution.  (Contributed
+
+$(Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	$d x ps $.
-	$d x ch $.
-	frmob_0 $f wff ph $.
-	frmob_1 $f wff ps $.
-	frmob_2 $f wff ch $.
-	frmob_3 $f set x $.
-	frmob_4 $f class A $.
-	frmob_5 $f class B $.
-	frmob_6 $f class C $.
-	ermob_0 $e |- ( x = B -> ( ph <-> ps ) ) $.
-	ermob_1 $e |- ( x = C -> ( ph <-> ch ) ) $.
-	rmob $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) ) -> ( B = C <-> ( C e. A /\ ch ) ) ) $= frmob_0 frmob_3 frmob_4 wrmo frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa frmob_5 frmob_6 wceq frmob_6 frmob_4 wcel frmob_2 wa wb frmob_0 frmob_3 frmob_4 df-rmo frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_6 frmob_4 wcel frmob_5 frmob_6 wceq frmob_6 frmob_4 wcel frmob_2 wa frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_5 frmob_4 wcel frmob_5 frmob_6 wceq frmob_6 frmob_4 wcel frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 simprl frmob_5 frmob_6 frmob_4 eleq1 syl5ibcom frmob_6 frmob_4 wcel frmob_2 wa frmob_6 frmob_4 wcel wi frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_6 frmob_4 wcel frmob_2 simpl a1i frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_6 frmob_4 wcel frmob_5 frmob_6 wceq frmob_6 frmob_4 wcel frmob_2 wa wb frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_6 frmob_4 wcel wa frmob_5 frmob_4 wcel frmob_6 frmob_4 wcel frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 frmob_5 frmob_6 wceq frmob_6 frmob_4 wcel frmob_2 wa wb frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 frmob_6 frmob_4 wcel simplrl frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa wa frmob_6 frmob_4 wcel simpr frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 wa frmob_6 frmob_4 wcel simpll frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 frmob_6 frmob_4 wcel simplrl frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_3 wmo frmob_5 frmob_4 wcel frmob_1 frmob_6 frmob_4 wcel simplrr frmob_3 sup_set_class frmob_4 wcel frmob_0 wa frmob_5 frmob_4 wcel frmob_1 wa frmob_6 frmob_4 wcel frmob_2 wa frmob_3 frmob_5 frmob_6 frmob_4 frmob_4 frmob_3 sup_set_class frmob_5 wceq frmob_3 sup_set_class frmob_4 wcel frmob_5 frmob_4 wcel frmob_0 frmob_1 frmob_3 sup_set_class frmob_5 frmob_4 eleq1 ermob_0 anbi12d frmob_3 sup_set_class frmob_6 wceq frmob_3 sup_set_class frmob_4 wcel frmob_6 frmob_4 wcel frmob_0 frmob_2 frmob_3 sup_set_class frmob_6 frmob_4 eleq1 ermob_1 anbi12d mob syl212anc ex pm5.21ndd sylanb $.
+	$v ph ps ch x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	$d ph  $.
+	$d x ps  $.
+	$d x ch  $.
+	f0_rmob $f wff ph $.
+	f1_rmob $f wff ps $.
+	f2_rmob $f wff ch $.
+	f3_rmob $f set x $.
+	f4_rmob $f class A $.
+	f5_rmob $f class B $.
+	f6_rmob $f class C $.
+	e0_rmob $e |- ( x = B -> ( ph <-> ps ) ) $.
+	e1_rmob $e |- ( x = C -> ( ph <-> ch ) ) $.
+	p_rmob $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) ) -> ( B = C <-> ( C e. A /\ ch ) ) ) $= f0_rmob f3_rmob f4_rmob a_df-rmo f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob p_simprl f5_rmob f6_rmob f4_rmob p_eleq1 f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa f5_rmob f4_rmob a_wcel f5_rmob f6_rmob a_wceq f6_rmob f4_rmob a_wcel p_syl5ibcom f6_rmob f4_rmob a_wcel f2_rmob p_simpl f6_rmob f4_rmob a_wcel f2_rmob a_wa f6_rmob f4_rmob a_wcel a_wi f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa p_a1i f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob f6_rmob f4_rmob a_wcel p_simplrl f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa f6_rmob f4_rmob a_wcel p_simpr f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa f6_rmob f4_rmob a_wcel p_simpll f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob f6_rmob f4_rmob a_wcel p_simplrl f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob f6_rmob f4_rmob a_wcel p_simplrr f3_rmob a_sup_set_class f5_rmob f4_rmob p_eleq1 e0_rmob f3_rmob a_sup_set_class f5_rmob a_wceq f3_rmob a_sup_set_class f4_rmob a_wcel f5_rmob f4_rmob a_wcel f0_rmob f1_rmob p_anbi12d f3_rmob a_sup_set_class f6_rmob f4_rmob p_eleq1 e1_rmob f3_rmob a_sup_set_class f6_rmob a_wceq f3_rmob a_sup_set_class f4_rmob a_wcel f6_rmob f4_rmob a_wcel f0_rmob f2_rmob p_anbi12d f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f5_rmob f4_rmob a_wcel f1_rmob a_wa f6_rmob f4_rmob a_wcel f2_rmob a_wa f3_rmob f5_rmob f6_rmob f4_rmob f4_rmob p_mob f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa f6_rmob f4_rmob a_wcel a_wa f5_rmob f4_rmob a_wcel f6_rmob f4_rmob a_wcel f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob f5_rmob f6_rmob a_wceq f6_rmob f4_rmob a_wcel f2_rmob a_wa a_wb p_syl212anc f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa f6_rmob f4_rmob a_wcel f5_rmob f6_rmob a_wceq f6_rmob f4_rmob a_wcel f2_rmob a_wa a_wb p_ex f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa a_wa f6_rmob f4_rmob a_wcel f5_rmob f6_rmob a_wceq f6_rmob f4_rmob a_wcel f2_rmob a_wa p_pm5.21ndd f0_rmob f3_rmob f4_rmob a_wrmo f3_rmob a_sup_set_class f4_rmob a_wcel f0_rmob a_wa f3_rmob a_wmo f5_rmob f4_rmob a_wcel f1_rmob a_wa f5_rmob f6_rmob a_wceq f6_rmob f4_rmob a_wcel f2_rmob a_wa a_wb p_sylanb $.
 $}
-$( Consequence of "at most one", using implicit substitution.  (Contributed
+
+$(Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	$d x ps $.
-	$d x ch $.
-	frmoi_0 $f wff ph $.
-	frmoi_1 $f wff ps $.
-	frmoi_2 $f wff ch $.
-	frmoi_3 $f set x $.
-	frmoi_4 $f class A $.
-	frmoi_5 $f class B $.
-	frmoi_6 $f class C $.
-	ermoi_0 $e |- ( x = B -> ( ph <-> ps ) ) $.
-	ermoi_1 $e |- ( x = C -> ( ph <-> ch ) ) $.
-	rmoi $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) /\ ( C e. A /\ ch ) ) -> B = C ) $= frmoi_0 frmoi_3 frmoi_4 wrmo frmoi_5 frmoi_4 wcel frmoi_1 wa frmoi_5 frmoi_6 wceq frmoi_6 frmoi_4 wcel frmoi_2 wa frmoi_0 frmoi_1 frmoi_2 frmoi_3 frmoi_4 frmoi_5 frmoi_6 ermoi_0 ermoi_1 rmob biimp3ar $.
+	$v ph ps ch x A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	$d ph  $.
+	$d x ps  $.
+	$d x ch  $.
+	f0_rmoi $f wff ph $.
+	f1_rmoi $f wff ps $.
+	f2_rmoi $f wff ch $.
+	f3_rmoi $f set x $.
+	f4_rmoi $f class A $.
+	f5_rmoi $f class B $.
+	f6_rmoi $f class C $.
+	e0_rmoi $e |- ( x = B -> ( ph <-> ps ) ) $.
+	e1_rmoi $e |- ( x = C -> ( ph <-> ch ) ) $.
+	p_rmoi $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) /\ ( C e. A /\ ch ) ) -> B = C ) $= e0_rmoi e1_rmoi f0_rmoi f1_rmoi f2_rmoi f3_rmoi f4_rmoi f5_rmoi f6_rmoi p_rmob f0_rmoi f3_rmoi f4_rmoi a_wrmo f5_rmoi f4_rmoi a_wcel f1_rmoi a_wa f5_rmoi f6_rmoi a_wceq f6_rmoi f4_rmoi a_wcel f2_rmoi a_wa p_biimp3ar $.
 $}
+
 

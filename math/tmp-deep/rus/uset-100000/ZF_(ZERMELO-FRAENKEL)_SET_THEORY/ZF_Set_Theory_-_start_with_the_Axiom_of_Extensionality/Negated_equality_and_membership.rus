@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Class_form_not-free_predicate.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Negated equality and membership
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new connectives. */
+/*Declare new connectives. */
 
 constant {
 	symbol ≠ ;;
@@ -14,7 +14,7 @@ constant {
 	latex \ne ;;
 }
 
-/* Not equal to (equal sign with slash through it). */
+/*Not equal to (equal sign with slash through it). */
 
 constant {
 	symbol ∉ ;;
@@ -22,21 +22,21 @@ constant {
 	latex \notin ;;
 }
 
-/* Not an element of (epsilon with slash through it). */
+/*Not an element of (epsilon with slash through it). */
 
-/* Extend wff notation to include inequality. */
+/*Extend wff notation to include inequality. */
 
 rule wne (A : class, B : class) {
 	term : wff = # A ≠ B ;;
 }
 
-/* Extend wff notation to include negated membership. */
+/*Extend wff notation to include negated membership. */
 
 rule wnel (A : class, B : class) {
 	term : wff = # A ∉ B ;;
 }
 
-/* Define inequality.  (Contributed by NM, 5-Aug-1993.) */
+/*Define inequality.  (Contributed by NM, 5-Aug-1993.) */
 
 definition df-ne (A : class, B : class)  {
 	defiendum : wff = # A ≠ B ;;
@@ -45,7 +45,7 @@ definition df-ne (A : class, B : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define negated membership.  (Contributed by NM, 7-Aug-1994.) */
+/*Define negated membership.  (Contributed by NM, 7-Aug-1994.) */
 
 definition df-nel (A : class, B : class)  {
 	defiendum : wff = # A ∉ B ;;
@@ -54,7 +54,7 @@ definition df-nel (A : class, B : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Negation of inequality.  (Contributed by NM, 9-Jun-2006.) */
+/*Negation of inequality.  (Contributed by NM, 9-Jun-2006.) */
 
 theorem nne (A : class, B : class)  {
 	prop 1 : wff = |- ( ¬ A ≠ B ↔ A = B ) ;;
@@ -67,7 +67,7 @@ proof of nne {
 	qed prop 1 = step 3 ;;
 }
 
-/* No class is unequal to itself.  (Contributed by Stefan O'Rear,
+/*No class is unequal to itself.  (Contributed by Stefan O'Rear,
      1-Jan-2015.) */
 
 theorem neirr (A : class)  {
@@ -81,7 +81,7 @@ proof of neirr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Excluded middle with equality and inequality.  (Contributed by NM,
+/*Excluded middle with equality and inequality.  (Contributed by NM,
      3-Feb-2012.) */
 
 theorem exmidne (A : class, B : class)  {
@@ -96,7 +96,7 @@ proof of exmidne {
 	qed prop 1 = step 4 ;;
 }
 
-/* Law of noncontradiction with equality and inequality.  (Contributed by NM,
+/*Law of noncontradiction with equality and inequality.  (Contributed by NM,
      3-Feb-2012.) */
 
 theorem nonconne (A : class, B : class)  {
@@ -111,7 +111,7 @@ proof of nonconne {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+/*Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
 
 theorem neeq1 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( A ≠ C ↔ B ≠ C ) ) ;;
@@ -126,7 +126,7 @@ proof of neeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+/*Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
 
 theorem neeq2 (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A = B → ( C ≠ A ↔ C ≠ B ) ) ;;
@@ -141,7 +141,7 @@ proof of neeq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+/*Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
 
 theorem neeq1i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -155,7 +155,7 @@ proof of neeq1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+/*Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
 
 theorem neeq2i (A : class, B : class, C : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -169,7 +169,7 @@ proof of neeq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference for inequality.  (Contributed by NM, 24-Jul-2012.) */
+/*Inference for inequality.  (Contributed by NM, 24-Jul-2012.) */
 
 theorem neeq12i (A : class, B : class, C : class, D : class)  {
 	hyp 1 : wff = |- A = B ;;
@@ -185,7 +185,7 @@ proof of neeq12i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+/*Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
 
 theorem neeq1d (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -199,7 +199,7 @@ proof of neeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+/*Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
 
 theorem neeq2d (ph : wff, A : class, B : class, C : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -213,7 +213,7 @@ proof of neeq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction for inequality.  (Contributed by NM, 24-Jul-2012.) */
+/*Deduction for inequality.  (Contributed by NM, 24-Jul-2012.) */
 
 theorem neeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
 	hyp 1 : wff = |- ( ph → A = B ) ;;
@@ -229,7 +229,7 @@ proof of neeq12d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction eliminating inequality definition.  (Contributed by Jonathan
+/*Deduction eliminating inequality definition.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) */
 
 theorem neneqd (ph : wff, A : class, B : class)  {
@@ -244,7 +244,7 @@ proof of neneqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem eqnetri (A : class, B : class, C : class)  {
@@ -260,7 +260,7 @@ proof of eqnetri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem eqnetrd (ph : wff, A : class, B : class, C : class)  {
@@ -276,7 +276,7 @@ proof of eqnetrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem eqnetrri (A : class, B : class, C : class)  {
@@ -292,7 +292,7 @@ proof of eqnetrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem eqnetrrd (ph : wff, A : class, B : class, C : class)  {
@@ -308,7 +308,7 @@ proof of eqnetrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem neeqtri (A : class, B : class, C : class)  {
@@ -324,7 +324,7 @@ proof of neeqtri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem neeqtrd (ph : wff, A : class, B : class, C : class)  {
@@ -340,7 +340,7 @@ proof of neeqtrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem neeqtrri (A : class, B : class, C : class)  {
@@ -356,7 +356,7 @@ proof of neeqtrri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equal classes into an inequality.  (Contributed by NM,
+/*Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) */
 
 theorem neeqtrrd (ph : wff, A : class, B : class, C : class)  {
@@ -372,7 +372,7 @@ proof of neeqtrrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* B chained equality inference for inequality.  (Contributed by NM,
+/*B chained equality inference for inequality.  (Contributed by NM,
        6-Jun-2012.) */
 
 theorem syl5eqner (ph : wff, A : class, B : class, C : class)  {
@@ -388,7 +388,7 @@ proof of syl5eqner {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of an inequality.  (Contributed
+/*Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) */
 
 theorem 3netr3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -405,7 +405,7 @@ proof of 3netr3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of an inequality.  (Contributed
+/*Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) */
 
 theorem 3netr4d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -422,7 +422,7 @@ proof of 3netr4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of an inequality.  (Contributed
+/*Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) */
 
 theorem 3netr3g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -439,7 +439,7 @@ proof of 3netr3g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution of equality into both sides of an inequality.  (Contributed
+/*Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 14-Jun-2012.) */
 
 theorem 3netr4g (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -456,7 +456,7 @@ proof of 3netr4g {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to inequality.  (Contributed by NM,
+/*Deduction from equality to inequality.  (Contributed by NM,
        9-Nov-2007.) */
 
 theorem necon3abii (ph : wff, A : class, B : class)  {
@@ -471,7 +471,7 @@ proof of necon3abii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from equality to inequality.  (Contributed by NM,
+/*Deduction from equality to inequality.  (Contributed by NM,
        13-Apr-2007.) */
 
 theorem necon3bbii (ph : wff, A : class, B : class)  {
@@ -487,7 +487,7 @@ proof of necon3bbii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from equality to inequality.  (Contributed by NM,
+/*Inference from equality to inequality.  (Contributed by NM,
        23-Feb-2005.) */
 
 theorem necon3bii (A : class, B : class, C : class, D : class)  {
@@ -503,7 +503,7 @@ proof of necon3bii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction from equality to inequality.  (Contributed by NM,
+/*Deduction from equality to inequality.  (Contributed by NM,
        21-Mar-2007.) */
 
 theorem necon3abid (ph : wff, ps : wff, A : class, B : class)  {
@@ -519,7 +519,7 @@ proof of necon3abid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction from equality to inequality.  (Contributed by NM,
+/*Deduction from equality to inequality.  (Contributed by NM,
        2-Jun-2007.) */
 
 theorem necon3bbid (ph : wff, ps : wff, A : class, B : class)  {
@@ -535,7 +535,7 @@ proof of necon3bbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction from equality to inequality.  (Contributed by NM,
+/*Deduction from equality to inequality.  (Contributed by NM,
        23-Feb-2005.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon3bid (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -551,7 +551,7 @@ proof of necon3bid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon3ad (ph : wff, ps : wff, A : class, B : class)  {
@@ -567,7 +567,7 @@ proof of necon3ad {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon3bd (ph : wff, ps : wff, A : class, B : class)  {
@@ -583,7 +583,7 @@ proof of necon3bd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        10-Jun-2006.) */
 
 theorem necon3d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -599,7 +599,7 @@ proof of necon3d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        9-Aug-2006.) */
 
 theorem necon3i (A : class, B : class, C : class, D : class)  {
@@ -615,7 +615,7 @@ proof of necon3i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        23-May-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon3ai (ph : wff, A : class, B : class)  {
@@ -631,7 +631,7 @@ proof of necon3ai {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon3bi (ph : wff, A : class, B : class)  {
@@ -647,7 +647,7 @@ proof of necon3bi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        12-Feb-2007.) */
 
 theorem necon1ai (ph : wff, A : class, B : class)  {
@@ -663,7 +663,7 @@ proof of necon1ai {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon1bi (ph : wff, A : class, B : class)  {
@@ -679,7 +679,7 @@ proof of necon1bi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.) */
 
 theorem necon1i (A : class, B : class, C : class, D : class)  {
@@ -695,7 +695,7 @@ proof of necon1i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon2ai (ph : wff, A : class, B : class)  {
@@ -711,7 +711,7 @@ proof of necon2ai {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        1-Apr-2007.) */
 
 theorem necon2bi (ph : wff, A : class, B : class)  {
@@ -726,7 +726,7 @@ proof of necon2bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.) */
 
 theorem necon2i (A : class, B : class, C : class, D : class)  {
@@ -741,7 +741,7 @@ proof of necon2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        19-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon2ad (ph : wff, ps : wff, A : class, B : class)  {
@@ -757,7 +757,7 @@ proof of necon2ad {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        13-Apr-2007.) */
 
 theorem necon2bd (ph : wff, ps : wff, A : class, B : class)  {
@@ -773,7 +773,7 @@ proof of necon2bd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        28-Dec-2008.) */
 
 theorem necon2d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -789,7 +789,7 @@ proof of necon2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.) */
 
 theorem necon1abii (ph : wff, A : class, B : class)  {
@@ -805,7 +805,7 @@ proof of necon1abii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.) */
 
 theorem necon1bbii (ph : wff, A : class, B : class)  {
@@ -821,7 +821,7 @@ proof of necon1bbii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive deduction for inequality.  (Contributed by NM,
+/*Contrapositive deduction for inequality.  (Contributed by NM,
        21-Aug-2007.) */
 
 theorem necon1abid (ph : wff, ps : wff, A : class, B : class)  {
@@ -837,7 +837,7 @@ proof of necon1abid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        31-Jan-2008.) */
 
 theorem necon1bbid (ph : wff, ps : wff, A : class, B : class)  {
@@ -853,7 +853,7 @@ proof of necon1bbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        2-Mar-2007.) */
 
 theorem necon2abii (ph : wff, A : class, B : class)  {
@@ -869,7 +869,7 @@ proof of necon2abii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        13-Apr-2007.) */
 
 theorem necon2bbii (ph : wff, A : class, B : class)  {
@@ -885,7 +885,7 @@ proof of necon2bbii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive deduction for inequality.  (Contributed by NM,
+/*Contrapositive deduction for inequality.  (Contributed by NM,
        18-Jul-2007.) */
 
 theorem necon2abid (ph : wff, ps : wff, A : class, B : class)  {
@@ -901,7 +901,7 @@ proof of necon2abid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive deduction for inequality.  (Contributed by NM,
+/*Contrapositive deduction for inequality.  (Contributed by NM,
        13-Apr-2007.) */
 
 theorem necon2bbid (ph : wff, ps : wff, A : class, B : class)  {
@@ -917,7 +917,7 @@ proof of necon2bbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon4ai (ph : wff, A : class, B : class)  {
@@ -933,7 +933,7 @@ proof of necon4ai {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon4i (A : class, B : class, C : class, D : class)  {
@@ -949,7 +949,7 @@ proof of necon4i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon4ad (ph : wff, ps : wff, A : class, B : class)  {
@@ -965,7 +965,7 @@ proof of necon4ad {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon4bd (ph : wff, ps : wff, A : class, B : class)  {
@@ -981,7 +981,7 @@ proof of necon4bd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive inference for inequality.  (Contributed by NM,
+/*Contrapositive inference for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon4d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -997,7 +997,7 @@ proof of necon4d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        11-Jan-2008.) */
 
 theorem necon4abid (ph : wff, ps : wff, A : class, B : class)  {
@@ -1013,7 +1013,7 @@ proof of necon4abid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        9-May-2012.) */
 
 theorem necon4bbid (ph : wff, ps : wff, A : class, B : class)  {
@@ -1029,7 +1029,7 @@ proof of necon4bbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        29-Jun-2007.) */
 
 theorem necon4bid (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1045,7 +1045,7 @@ proof of necon4bid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive deduction for inequality.  (Contributed by NM,
+/*Contrapositive deduction for inequality.  (Contributed by NM,
        2-Apr-2007.) */
 
 theorem necon1ad (ph : wff, ps : wff, A : class, B : class)  {
@@ -1061,7 +1061,7 @@ proof of necon1ad {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive deduction for inequality.  (Contributed by NM,
+/*Contrapositive deduction for inequality.  (Contributed by NM,
        21-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon1bd (ph : wff, ps : wff, A : class, B : class)  {
@@ -1077,7 +1077,7 @@ proof of necon1bd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contrapositive law deduction for inequality.  (Contributed by NM,
+/*Contrapositive law deduction for inequality.  (Contributed by NM,
        28-Dec-2008.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem necon1d (ph : wff, A : class, B : class, C : class, D : class)  {
@@ -1093,7 +1093,7 @@ proof of necon1d {
 	qed prop 1 = step 3 ;;
 }
 
-/* If it is not the case that two classes are equal, they are unequal.
+/*If it is not the case that two classes are equal, they are unequal.
        Converse of ~ neneqd .  One-way deduction form of ~ df-ne .
        (Contributed by David Moews, 28-Feb-2017.) */
 
@@ -1109,7 +1109,7 @@ proof of neneqad {
 	qed prop 1 = step 2 ;;
 }
 
-/* Contraposition law for inequality.  (Contributed by NM, 28-Dec-2008.) */
+/*Contraposition law for inequality.  (Contributed by NM, 28-Dec-2008.) */
 
 theorem nebi (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A = B ↔ C = D ) ↔ ( A ≠ B ↔ C ≠ D ) ) ;;
@@ -1124,7 +1124,7 @@ proof of nebi {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem *13.18 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+/*Theorem *13.18 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
      Salmon, 3-Jun-2011.) */
 
 theorem pm13.18 (A : class, B : class, C : class)  {
@@ -1139,7 +1139,7 @@ proof of pm13.18 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *13.181 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+/*Theorem *13.181 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
      Salmon, 3-Jun-2011.) */
 
 theorem pm13.181 (A : class, B : class, C : class)  {
@@ -1153,7 +1153,7 @@ proof of pm13.181 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A contradiction implies anything.  Equality/inequality deduction form.
+/*A contradiction implies anything.  Equality/inequality deduction form.
        (Contributed by David Moews, 28-Feb-2017.) */
 
 theorem pm2.21ddne (ph : wff, ps : wff, A : class, B : class)  {
@@ -1169,7 +1169,7 @@ proof of pm2.21ddne {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+/*Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 24-May-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem pm2.61ne (ph : wff, ps : wff, ch : wff, A : class, B : class)  {
@@ -1189,7 +1189,7 @@ proof of pm2.61ne {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference eliminating an inequality in an antecedent.  (Contributed by
+/*Inference eliminating an inequality in an antecedent.  (Contributed by
        NM, 16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem pm2.61ine (ph : wff, A : class, B : class)  {
@@ -1206,7 +1206,7 @@ proof of pm2.61ine {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+/*Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem pm2.61dne (ph : wff, ps : wff, A : class, B : class)  {
@@ -1223,7 +1223,7 @@ proof of pm2.61dne {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+/*Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 30-Nov-2011.) */
 
 theorem pm2.61dane (ph : wff, ps : wff, A : class, B : class)  {
@@ -1240,7 +1240,7 @@ proof of pm2.61dane {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction eliminating two inequalities in an antecedent.  (Contributed
+/*Deduction eliminating two inequalities in an antecedent.  (Contributed
        by NM, 29-May-2013.) */
 
 theorem pm2.61da2ne (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
@@ -1259,7 +1259,7 @@ proof of pm2.61da2ne {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction eliminating three inequalities in an antecedent.  (Contributed
+/*Deduction eliminating three inequalities in an antecedent.  (Contributed
        by NM, 15-Jun-2013.) */
 
 theorem pm2.61da3ne (ph : wff, ps : wff, A : class, B : class, C : class, D : class, E : class, F : class)  {
@@ -1283,7 +1283,7 @@ proof of pm2.61da3ne {
 	qed prop 1 = step 8 ;;
 }
 
-/* Commutation of inequality.  (Contributed by NM, 14-May-1999.) */
+/*Commutation of inequality.  (Contributed by NM, 14-May-1999.) */
 
 theorem necom (A : class, B : class)  {
 	prop 1 : wff = |- ( A ≠ B ↔ B ≠ A ) ;;
@@ -1295,7 +1295,7 @@ proof of necom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from commutative law for inequality.  (Contributed by NM,
+/*Inference from commutative law for inequality.  (Contributed by NM,
        17-Oct-2012.) */
 
 theorem necomi (A : class, B : class)  {
@@ -1310,7 +1310,7 @@ proof of necomi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from commutative law for inequality.  (Contributed by NM,
+/*Deduction from commutative law for inequality.  (Contributed by NM,
        12-Feb-2008.) */
 
 theorem necomd (ph : wff, A : class, B : class)  {
@@ -1325,7 +1325,7 @@ proof of necomd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Logical OR with an equality.  (Contributed by NM, 29-Apr-2007.) */
+/*Logical OR with an equality.  (Contributed by NM, 29-Apr-2007.) */
 
 theorem neor (ps : wff, A : class, B : class)  {
 	prop 1 : wff = |- ( ( A = B ∨ ps ) ↔ ( A ≠ B → ps ) ) ;;
@@ -1339,7 +1339,7 @@ proof of neor {
 	qed prop 1 = step 4 ;;
 }
 
-/* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+/*A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
 
 theorem neanior (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A ≠ B ∧ C ≠ D ) ↔ ¬ ( A = B ∨ C = D ) ) ;;
@@ -1354,7 +1354,7 @@ proof of neanior {
 	qed prop 1 = step 5 ;;
 }
 
-/* A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) */
+/*A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) */
 
 theorem ne3anior (A : class, B : class, C : class, D : class, E : class, F : class)  {
 	prop 1 : wff = |- ( ( A ≠ B ∧ C ≠ D ∧ E ≠ F ) ↔ ¬ ( A = B ∨ C = D ∨ E = F ) ) ;;
@@ -1370,7 +1370,7 @@ proof of ne3anior {
 	qed prop 1 = step 6 ;;
 }
 
-/* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+/*A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
 
 theorem neorian (A : class, B : class, C : class, D : class)  {
 	prop 1 : wff = |- ( ( A ≠ B ∨ C ≠ D ) ↔ ¬ ( A = B ∧ C = D ) ) ;;
@@ -1385,7 +1385,7 @@ proof of neorian {
 	qed prop 1 = step 5 ;;
 }
 
-/* An inference from an inequality, related to modus tollens.  (Contributed
+/*An inference from an inequality, related to modus tollens.  (Contributed
        by NM, 13-Apr-2007.) */
 
 theorem nemtbir (ph : wff, A : class, B : class)  {
@@ -1402,7 +1402,7 @@ proof of nemtbir {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two classes are different if they don't contain the same element.
+/*Two classes are different if they don't contain the same element.
      (Contributed by NM, 3-Feb-2012.) */
 
 theorem nelne1 (A : class, B : class, C : class)  {
@@ -1417,7 +1417,7 @@ proof of nelne1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two classes are different if they don't belong to the same class.
+/*Two classes are different if they don't belong to the same class.
      (Contributed by NM, 25-Jun-2012.) */
 
 theorem nelne2 (A : class, B : class, C : class)  {
@@ -1432,7 +1432,7 @@ proof of nelne2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality theorem for negated membership.  (Contributed by NM,
+/*Equality theorem for negated membership.  (Contributed by NM,
      20-Nov-1994.) */
 
 theorem neleq1 (A : class, B : class, C : class)  {
@@ -1448,7 +1448,7 @@ proof of neleq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality theorem for negated membership.  (Contributed by NM,
+/*Equality theorem for negated membership.  (Contributed by NM,
      20-Nov-1994.) */
 
 theorem neleq2 (A : class, B : class, C : class)  {
@@ -1464,10 +1464,10 @@ proof of neleq2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+/*Bound-variable hypothesis builder for inequality.  (Contributed by NM,
        10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
-theorem nfne (x : set, A : class, B : class)  {
+theorem nfne (x : set, A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -1482,10 +1482,10 @@ proof of nfne {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for inequality.  (Contributed by David
+/*Bound-variable hypothesis builder for inequality.  (Contributed by David
        Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
-theorem nfnel (x : set, A : class, B : class)  {
+theorem nfnel (x : set, A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- F/_ x A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	-----------------------
@@ -1500,10 +1500,10 @@ proof of nfnel {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+/*Bound-variable hypothesis builder for inequality.  (Contributed by NM,
        10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
-theorem nfned (ph : wff, x : set, A : class, B : class)  {
+theorem nfned (ph : wff, x : set, A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
 	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
 	-----------------------
@@ -1518,10 +1518,10 @@ proof of nfned {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for inequality.  (Contributed by David
+/*Bound-variable hypothesis builder for inequality.  (Contributed by David
        Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
-theorem nfneld (ph : wff, x : set, A : class, B : class)  {
+theorem nfneld (ph : wff, x : set, A : class, B : class) disjointed(A, B) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
 	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
 	-----------------------

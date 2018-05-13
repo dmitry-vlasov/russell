@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     Universal quantifier; define "exists" and "not free"
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare new symbols needed for pure predicate calculus. */
+/*Declare new symbols needed for pure predicate calculus. */
 
 constant {
 	symbol ∀ ;;
@@ -14,32 +14,32 @@ constant {
 	latex \forall ;;
 }
 
-/* "inverted A" universal quantifier (read:  "for all") */
+/*"inverted A" universal quantifier (read:  "for all") */
 
-/* Individual variable type (read:  "the following is an
+/*Individual variable type (read:  "the following is an
              individual (set) variable" */
 
-/* Add 'set' as a typecode. */
+/*Add 'set' as a typecode. */
 
-/* $j syntax 'set'; */
+/*$j syntax 'set'; */
 
-/* Declare some names for individual variables. */
+/*Declare some names for individual variables. */
 
-/* Let ` x ` be an individual variable. */
+/*Let ` x ` be an individual variable. */
 
-/* Let ` y ` be an individual variable. */
+/*Let ` y ` be an individual variable. */
 
-/* Let ` z ` be an individual variable. */
+/*Let ` z ` be an individual variable. */
 
-/* Let ` w ` be an individual variable. */
+/*Let ` w ` be an individual variable. */
 
-/* Let ` v ` be an individual variable. */
+/*Let ` v ` be an individual variable. */
 
-/* Let ` u ` be an individual variable. */
+/*Let ` u ` be an individual variable. */
 
-/* Let ` t ` be an individual variable. */
+/*Let ` t ` be an individual variable. */
 
-/* Extend wff definition to include the universal quantifier ('for all').
+/*Extend wff definition to include the universal quantifier ('for all').
      ` A. x ph ` is read " ` ph ` (phi) is true for all ` x ` ."  Typically, in
      its final application ` ph ` would be replaced with a wff containing a
      (free) occurrence of the variable ` x ` , for example ` x = y ` .  In a
@@ -57,11 +57,11 @@ rule wal (ph : wff, x : set) {
 	term : wff = # ∀ x ph ;;
 }
 
-/* Register 'A.' as a primitive expression (lacking a definition). */
+/*Register 'A.' as a primitive expression (lacking a definition). */
 
-/* $j primitive 'wal'; */
+/*$j primitive 'wal'; */
 
-/* Declare the existential quantifier symbol. */
+/*Declare the existential quantifier symbol. */
 
 constant {
 	symbol ∃ ;;
@@ -69,16 +69,16 @@ constant {
 	latex \exists ;;
 }
 
-/* Backwards E (read:  "there exists") */
+/*Backwards E (read:  "there exists") */
 
-/* Extend wff definition to include the existential quantifier ("there
+/*Extend wff definition to include the existential quantifier ("there
      exists"). */
 
 rule wex (ph : wff, x : set) {
 	term : wff = # ∃ x ph ;;
 }
 
-/* Define existential quantification. ` E. x ph ` means "there exists at
+/*Define existential quantification. ` E. x ph ` means "there exists at
      least one set ` x ` such that ` ph ` is true."  Definition of [Margaris]
      p. 49.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -89,7 +89,7 @@ definition df-ex (ph : wff, x : set)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Theorem 19.7 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.7 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem alnex (ph : wff, x : set)  {
 	prop 1 : wff = |- ( ∀ x ¬ ph ↔ ¬ ∃ x ph ) ;;
@@ -105,15 +105,15 @@ constant {
 	symbol F/ ;;
 }
 
-/* The not-free symbol. */
+/*The not-free symbol. */
 
-/* Extend wff definition to include the not-free predicate. */
+/*Extend wff definition to include the not-free predicate. */
 
 rule wnf (ph : wff, x : set) {
 	term : wff = # F/ x ph ;;
 }
 
-/* Define the not-free predicate for wffs.  This is read " ` x ` is not free
+/*Define the not-free predicate for wffs.  This is read " ` x ` is not free
      in ` ph ` ".  Not-free means that the value of ` x ` cannot affect the
      value of ` ph ` , e.g., any occurrence of ` x ` in ` ph ` is effectively
      bound by a "for all" or something that expands to one (such as "there

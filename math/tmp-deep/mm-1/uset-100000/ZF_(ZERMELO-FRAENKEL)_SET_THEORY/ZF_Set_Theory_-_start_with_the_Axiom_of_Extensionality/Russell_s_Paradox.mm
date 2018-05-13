@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Conditional_equality_(experimental).mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Russell's Paradox
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
+
+$(Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
 
        In the late 1800s, Frege's Axiom of (unrestricted) Comprehension,
        expressed in our notation as ` A e. _V ` , asserted that any collection
@@ -62,12 +65,13 @@ $( Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
        class equals the universe ` _V ` (theorem ~ ruv ).  See ~ ruALT for an
        alternate proof of ~ ru derived from that fact.  (Contributed by NM,
        7-Aug-1994.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$d x y $.
-	iru_0 $f set y $.
-	fru_0 $f set x $.
-	ru $p |- { x | x e/ x } e/ _V $= fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab cvv wnel fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab cvv wcel wn fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab cvv wcel iru_0 sup_set_class fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab wceq iru_0 wex iru_0 sup_set_class fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab wceq iru_0 iru_0 sup_set_class fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab wceq fru_0 sup_set_class iru_0 sup_set_class wcel fru_0 sup_set_class fru_0 sup_set_class wnel wb fru_0 wal fru_0 sup_set_class iru_0 sup_set_class wcel fru_0 sup_set_class fru_0 sup_set_class wnel wb fru_0 wal iru_0 sup_set_class iru_0 sup_set_class wcel iru_0 sup_set_class iru_0 sup_set_class wcel wn wb iru_0 sup_set_class iru_0 sup_set_class wcel pm5.19 fru_0 sup_set_class iru_0 sup_set_class wcel fru_0 sup_set_class fru_0 sup_set_class wnel wb iru_0 sup_set_class iru_0 sup_set_class wcel iru_0 sup_set_class iru_0 sup_set_class wcel wn wb fru_0 iru_0 fru_0 sup_set_class iru_0 sup_set_class wceq fru_0 sup_set_class iru_0 sup_set_class wcel iru_0 sup_set_class iru_0 sup_set_class wcel fru_0 sup_set_class fru_0 sup_set_class wnel iru_0 sup_set_class iru_0 sup_set_class wcel wn fru_0 sup_set_class iru_0 sup_set_class iru_0 sup_set_class eleq1 fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 sup_set_class fru_0 sup_set_class wcel wn fru_0 sup_set_class iru_0 sup_set_class wceq iru_0 sup_set_class iru_0 sup_set_class wcel wn fru_0 sup_set_class fru_0 sup_set_class df-nel fru_0 sup_set_class iru_0 sup_set_class wceq fru_0 sup_set_class fru_0 sup_set_class wcel iru_0 sup_set_class iru_0 sup_set_class wcel fru_0 sup_set_class iru_0 sup_set_class wceq fru_0 sup_set_class iru_0 sup_set_class fru_0 sup_set_class iru_0 sup_set_class fru_0 sup_set_class iru_0 sup_set_class wceq id fru_0 sup_set_class iru_0 sup_set_class wceq id eleq12d notbid syl5bb bibi12d spv mto fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 iru_0 sup_set_class abeq2 mtbir nex iru_0 fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab isset mtbir fru_0 sup_set_class fru_0 sup_set_class wnel fru_0 cab cvv df-nel mpbir $.
+	$v x  $.
+	$d x y  $.
+	f0_ru $f set x $.
+	i0_ru $f set y $.
+	p_ru $p |- { x | x e/ x } e/ _V $= i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel p_pm5.19 f0_ru a_sup_set_class i0_ru a_sup_set_class i0_ru a_sup_set_class p_eleq1 f0_ru a_sup_set_class f0_ru a_sup_set_class a_df-nel f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq p_id f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq p_id f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq f0_ru a_sup_set_class i0_ru a_sup_set_class f0_ru a_sup_set_class i0_ru a_sup_set_class p_eleq12d f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq f0_ru a_sup_set_class f0_ru a_sup_set_class a_wcel i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel p_notbid f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wcel a_wn f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel a_wn p_syl5bb f0_ru a_sup_set_class i0_ru a_sup_set_class a_wceq f0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel a_wn p_bibi12d f0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel a_wb i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel a_wn a_wb f0_ru i0_ru p_spv f0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel a_wb f0_ru a_wal i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel i0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel a_wn a_wb p_mto f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru i0_ru a_sup_set_class p_abeq2 i0_ru a_sup_set_class f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_wceq f0_ru a_sup_set_class i0_ru a_sup_set_class a_wcel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel a_wb f0_ru a_wal p_mtbir i0_ru a_sup_set_class f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_wceq i0_ru p_nex i0_ru f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab p_isset f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_cvv a_wcel i0_ru a_sup_set_class f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_wceq i0_ru a_wex p_mtbir f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_cvv a_df-nel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_cvv a_wnel f0_ru a_sup_set_class f0_ru a_sup_set_class a_wnel f0_ru a_cab a_cvv a_wcel a_wn p_mpbir $.
 $}
+
 

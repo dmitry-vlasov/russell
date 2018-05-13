@@ -1,6 +1,8 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Recursively_define_primitive_wffs_for_propositional_calculus.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The axioms of propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -32,37 +34,39 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   found manually.
 
 $)
-$( Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
+
+$(Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  The 3 axioms are also given as Definition 2.1 of
      [Hamilton] p. 28.  This axiom is called _Simp_ or "the principle of
      simplification" in _Principia Mathematica_ (Theorem *2.02 of
      [WhiteheadRussell] p. 100) because "it enables us to pass from the joint
      assertion of ` ph ` and ` ps ` to the assertion of ` ph ` simply."
      (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fax-1_0 $f wff ph $.
-	fax-1_1 $f wff ps $.
-	ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
+	$v ph ps  $.
+	f0_ax-1 $f wff ph $.
+	f1_ax-1 $f wff ps $.
+	a_ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
 $}
-$( Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
+
+$(Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It "distributes" an antecedent over two
      consequents.  This axiom was part of Frege's original system and is known
      as _Frege_ in the literature.  It is also proved as Theorem *2.77 of
      [WhiteheadRussell] p. 108.  The other direction of this axiom also turns
      out to be true, as demonstrated by ~ pm5.41 .  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fax-2_0 $f wff ph $.
-	fax-2_1 $f wff ps $.
-	fax-2_2 $f wff ch $.
-	ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
+	$v ph ps ch  $.
+	f0_ax-2 $f wff ph $.
+	f1_ax-2 $f wff ps $.
+	f2_ax-2 $f wff ch $.
+	a_ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
 $}
-$( Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
+
+$(Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It swaps or "transposes" the order of the
      consequents when negation is removed.  An informal example is that the
      statement "if there are no clouds in the sky, it is not raining" implies
@@ -72,18 +76,22 @@ $( Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      use the term "contraposition" for this principle, although the reader is
      advised that in the field of philosophical logic, "contraposition" has a
      different technical meaning.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fax-3_0 $f wff ph $.
-	fax-3_1 $f wff ps $.
-	ax-3 $a |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $.
+	$v ph ps  $.
+	f0_ax-3 $f wff ph $.
+	f1_ax-3 $f wff ps $.
+	a_ax-3 $a |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $.
 $}
-$( Postulate the modus ponens rule of inference.
+
+$(Postulate the modus ponens rule of inference.
   $)
-$( Minor premise for modus ponens. $)
-$( Major premise for modus ponens. $)
-$( Rule of Modus Ponens.  The postulated inference rule of propositional
+
+$(Minor premise for modus ponens. $)
+
+$(Major premise for modus ponens. $)
+
+$(Rule of Modus Ponens.  The postulated inference rule of propositional
        calculus.  See e.g.  Rule 1 of [Hamilton] p. 73.  The rule says, "if
        ` ph ` is true, and ` ph ` implies ` ps ` , then ` ps ` must also be
        true."  This rule is sometimes called "detachment," since it detaches
@@ -97,13 +105,14 @@ $( Rule of Modus Ponens.  The postulated inference rule of propositional
        and the assertion (conclusion), abbreviating the English words "and" and
        "implies."  They are not part of the formal language.  (Contributed by
        NM, 5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fax-mp_0 $f wff ph $.
-	fax-mp_1 $f wff ps $.
-	eax-mp_0 $e |- ph $.
-	eax-mp_1 $e |- ( ph -> ps ) $.
-	ax-mp $a |- ps $.
+	$v ph ps  $.
+	f0_ax-mp $f wff ph $.
+	f1_ax-mp $f wff ps $.
+	e0_ax-mp $e |- ph $.
+	e1_ax-mp $e |- ( ph -> ps ) $.
+	a_ax-mp $a |- ps $.
 $}
+
 

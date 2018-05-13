@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Introduce the Axiom of Extensionality
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Extensionality.  An axiom of Zermelo-Fraenkel set theory.  It
+/*Axiom of Extensionality.  An axiom of Zermelo-Fraenkel set theory.  It
        states that two sets are identical if they contain the same elements.
        Axiom Ext of [BellMachover] p. 461.
 
@@ -54,7 +54,7 @@ axiom ax-ext (x : set, y : set, z : set) disjointed(x y z) {
 	prop 1 : wff = |- ( ∀ z ( z ∈ x ↔ z ∈ y ) → x = y ) ;;
 }
 
-/* The Axiom of Extensionality ( ~ ax-ext ) restated so that it postulates
+/*The Axiom of Extensionality ( ~ ax-ext ) restated so that it postulates
        the existence of a set ` z ` given two arbitrary sets ` x ` and ` y ` .
        This way to express it follows the general idea of the other ZFC axioms,
        which is to postulate the existence of sets given other sets.
@@ -71,7 +71,7 @@ proof of axext2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A generalization of the Axiom of Extensionality in which ` x ` and ` y `
+/*A generalization of the Axiom of Extensionality in which ` x ` and ` y `
        need not be distinct.  (Contributed by NM, 15-Sep-1993.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) */
 
@@ -91,7 +91,7 @@ proof of axext3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* A bidirectional version of Extensionality.  Although this theorem
+/*A bidirectional version of Extensionality.  Although this theorem
        "looks" like it is just a definition of equality, it requires the Axiom
        of Extensionality for its proof under our axiomatization.  See the
        comments for ~ ax-ext and ~ df-cleq .  (Contributed by NM,
@@ -109,7 +109,7 @@ proof of axext4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Any set defined by a property is the only set defined by that property.
+/*Any set defined by a property is the only set defined by that property.
        Theorem 1.1 of [BellMachover] p. 462.  (Contributed by NM,
        30-Jun-1994.) */
 

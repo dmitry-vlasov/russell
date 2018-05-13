@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Iota_properties.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Cantor's Theorem
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
+/*No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
        no function can map ` A ` it onto its power set.  Compare Theorem 6B(b)
        of [Enderton] p. 132.  For the equinumerosity version, see ~ canth2 .
        Note that ` A ` must be a set: this theorem does not hold when ` A ` is
@@ -46,7 +46,7 @@ proof of canth {
 	qed prop 1 = step 21 ;;
 }
 
-/* Cantor's theorem fails for the universal class (which is not a set but a
+/*Cantor's theorem fails for the universal class (which is not a set but a
      proper class by ~ vprc ).  Specifically, the identity function maps the
      universe onto its power class.  Compare ~ canth that works for sets.  See
      also the remark in ~ ru about NF, in which Cantor's theorem fails for sets

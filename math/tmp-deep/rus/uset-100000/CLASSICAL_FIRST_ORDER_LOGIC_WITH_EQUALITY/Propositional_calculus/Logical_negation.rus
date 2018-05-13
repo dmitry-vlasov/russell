@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_implication.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical negation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,7 +10,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
 
 */
 
-/* Deduction derived from axiom ~ ax-3 .  (Contributed by NM,
+/*Deduction derived from axiom ~ ax-3 .  (Contributed by NM,
        26-Mar-1995.) */
 
 theorem con4d (ph : wff, ps : wff, ch : wff)  {
@@ -25,7 +25,7 @@ proof of con4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contradiction implies anything.  Deduction from ~ pm2.21 .
+/*A contradiction implies anything.  Deduction from ~ pm2.21 .
        (Contributed by NM, 10-Feb-1996.) */
 
 theorem pm2.21d (ph : wff, ps : wff, ch : wff)  {
@@ -40,7 +40,7 @@ proof of pm2.21d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contradiction implies anything.  Deduction from ~ pm2.21 .
+/*A contradiction implies anything.  Deduction from ~ pm2.21 .
        (Contributed by Mario Carneiro, 9-Feb-2017.) */
 
 theorem pm2.21dd (ph : wff, ps : wff, ch : wff)  {
@@ -56,7 +56,7 @@ proof of pm2.21dd {
 	qed prop 1 = step 2 ;;
 }
 
-/* From a wff and its negation, anything is true.  Theorem *2.21 of
+/*From a wff and its negation, anything is true.  Theorem *2.21 of
      [WhiteheadRussell] p. 104.  Also called the Duns Scotus law.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 14-Sep-2012.) */
 
@@ -70,7 +70,7 @@ proof of pm2.21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.24 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+/*Theorem *2.24 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.24 (ph : wff, ps : wff)  {
@@ -83,7 +83,7 @@ proof of pm2.24 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Proof by contradiction.  Theorem *2.18 of [WhiteheadRussell] p. 103.  Also
+/*Proof by contradiction.  Theorem *2.18 of [WhiteheadRussell] p. 103.  Also
      called the Law of Clavius.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pm2.18 (ph : wff)  {
@@ -98,7 +98,7 @@ proof of pm2.18 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction based on reductio ad absurdum.  (Contributed by FL,
+/*Deduction based on reductio ad absurdum.  (Contributed by FL,
        12-Jul-2009.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem pm2.18d (ph : wff, ps : wff)  {
@@ -113,7 +113,7 @@ proof of pm2.18d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Converse of double negation.  Theorem *2.14 of [WhiteheadRussell] p. 102.
+/*Converse of double negation.  Theorem *2.14 of [WhiteheadRussell] p. 102.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by David Harvey,
      5-Sep-1999.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
 
@@ -127,7 +127,7 @@ proof of notnot2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction converting double-negation into the original wff, aka the
+/*Deduction converting double-negation into the original wff, aka the
        double negation rule.  A translation of natural deduction rule ` -. -. `
        -C, ` _G |- -. -. ps ` => ` _G |- ps ` ; see ~ natded .  This is
        definition NNC in [Pfenning] p. 17.  This rule is valid in classical
@@ -146,7 +146,7 @@ proof of notnotrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from double negation.  (Contributed by NM, 27-Feb-2008.) */
+/*Inference from double negation.  (Contributed by NM, 27-Feb-2008.) */
 
 theorem notnotri (ph : wff)  {
 	hyp 1 : wff = |- ¬ ¬ ph ;;
@@ -160,7 +160,7 @@ proof of notnotri {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 19-Aug-1993.) */
+/*A contraposition deduction.  (Contributed by NM, 19-Aug-1993.) */
 
 theorem con2d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ¬ ch ) ) ;;
@@ -175,7 +175,7 @@ proof of con2d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Theorem *2.03 of [WhiteheadRussell] p. 100.  (Contributed
+/*Contraposition.  Theorem *2.03 of [WhiteheadRussell] p. 100.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) */
 
 theorem con2 (ph : wff, ps : wff)  {
@@ -188,7 +188,7 @@ proof of con2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens deduction.  (Contributed by NM, 4-Jul-1994.) */
+/*Modus tollens deduction.  (Contributed by NM, 4-Jul-1994.) */
 
 theorem mt2d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -203,7 +203,7 @@ proof of mt2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
+/*Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) */
 
 theorem mt2i (ph : wff, ps : wff, ch : wff)  {
@@ -219,7 +219,7 @@ proof of mt2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism inference.  (Contributed by NM, 1-Dec-1995.) */
+/*A negated syllogism inference.  (Contributed by NM, 1-Dec-1995.) */
 
 theorem nsyl3 (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
@@ -234,7 +234,7 @@ proof of nsyl3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
        13-Jun-2013.) */
 
@@ -250,7 +250,7 @@ proof of con2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism inference.  (Contributed by NM, 31-Dec-1993.)
+/*A negated syllogism inference.  (Contributed by NM, 31-Dec-1993.)
        (Proof shortened by Wolf Lammen, 2-Mar-2013.) */
 
 theorem nsyl (ph : wff, ps : wff, ch : wff)  {
@@ -266,7 +266,7 @@ proof of nsyl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Converse of double negation.  Theorem *2.12 of [WhiteheadRussell] p. 101.
+/*Converse of double negation.  Theorem *2.12 of [WhiteheadRussell] p. 101.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      2-Mar-2013.) */
 
@@ -280,7 +280,7 @@ proof of notnot1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Infer double negation.  (Contributed by NM, 27-Feb-2008.) */
+/*Infer double negation.  (Contributed by NM, 27-Feb-2008.) */
 
 theorem notnoti (ph : wff)  {
 	hyp 1 : wff = |- ph ;;
@@ -294,7 +294,7 @@ proof of notnoti {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem con1d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ¬ ps → ch ) ) ;;
@@ -309,7 +309,7 @@ proof of con1d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Modus tollens deduction.  (Contributed by NM, 26-Mar-1995.) */
+/*Modus tollens deduction.  (Contributed by NM, 26-Mar-1995.) */
 
 theorem mt3d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ¬ ch ) ;;
@@ -324,7 +324,7 @@ proof of mt3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
+/*Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) */
 
 theorem mt3i (ph : wff, ps : wff, ch : wff)  {
@@ -340,7 +340,7 @@ proof of mt3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism inference.  (Contributed by NM, 26-Jun-1994.) */
+/*A negated syllogism inference.  (Contributed by NM, 26-Jun-1994.) */
 
 theorem nsyl2 (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
@@ -355,7 +355,7 @@ proof of nsyl2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Contraposition.  Theorem *2.15 of [WhiteheadRussell] p. 102.  (Contributed
+/*Contraposition.  Theorem *2.15 of [WhiteheadRussell] p. 102.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) */
 
 theorem con1 (ph : wff, ps : wff)  {
@@ -368,7 +368,7 @@ proof of con1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
        19-Jun-2013.) */
 
@@ -384,7 +384,7 @@ proof of con1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference rule derived from axiom ~ ax-3 .  (Contributed by NM,
+/*Inference rule derived from axiom ~ ax-3 .  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 21-Jun-2013.) */
 
 theorem con4i (ph : wff, ps : wff)  {
@@ -399,7 +399,7 @@ proof of con4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contradiction implies anything.  Inference from ~ pm2.21 .
+/*A contradiction implies anything.  Inference from ~ pm2.21 .
        (Contributed by NM, 16-Sep-1993.) */
 
 theorem pm2.21i (ph : wff, ps : wff)  {
@@ -414,7 +414,7 @@ proof of pm2.21i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contradiction implies anything.  Inference from ~ pm2.24 .
+/*A contradiction implies anything.  Inference from ~ pm2.24 .
        (Contributed by NM, 27-Feb-2008.) */
 
 theorem pm2.24ii (ph : wff, ps : wff)  {
@@ -430,7 +430,7 @@ proof of pm2.24ii {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
+/*A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem con3d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -445,7 +445,7 @@ proof of con3d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  (Contributed
+/*Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Feb-2013.) */
 
 theorem con3 (ph : wff, ps : wff)  {
@@ -458,7 +458,7 @@ proof of con3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 20-Jun-2013.) */
 
 theorem con3i (ph : wff, ps : wff)  {
@@ -473,7 +473,7 @@ proof of con3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Rotate through consequent right.  (Contributed by Wolf Lammen,
+/*Rotate through consequent right.  (Contributed by Wolf Lammen,
        3-Nov-2013.) */
 
 theorem con3rr3 (ph : wff, ps : wff, ch : wff)  {
@@ -488,7 +488,7 @@ proof of con3rr3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The rule of modus tollens.  (Contributed by Wolf Lammen,
+/*The rule of modus tollens.  (Contributed by Wolf Lammen,
        12-May-2013.) */
 
 theorem mt4 (ph : wff, ps : wff)  {
@@ -504,7 +504,7 @@ proof of mt4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens deduction.  (Contributed by NM, 9-Jun-2006.) */
+/*Modus tollens deduction.  (Contributed by NM, 9-Jun-2006.) */
 
 theorem mt4d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -519,7 +519,7 @@ proof of mt4d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens inference.  (Contributed by Wolf Lammen, 12-May-2013.) */
+/*Modus tollens inference.  (Contributed by Wolf Lammen, 12-May-2013.) */
 
 theorem mt4i (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ch ;;
@@ -534,7 +534,7 @@ proof of mt4i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism deduction.  (Contributed by NM, 9-Apr-2005.) */
+/*A negated syllogism deduction.  (Contributed by NM, 9-Apr-2005.) */
 
 theorem nsyld (ph : wff, ps : wff, ch : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ¬ ch ) ) ;;
@@ -549,7 +549,7 @@ proof of nsyld {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism inference.  (Contributed by NM, 3-May-1994.) */
+/*A negated syllogism inference.  (Contributed by NM, 3-May-1994.) */
 
 theorem nsyli (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -564,7 +564,7 @@ proof of nsyli {
 	qed prop 1 = step 2 ;;
 }
 
-/* A negated syllogism inference.  (Contributed by NM, 15-Feb-1996.) */
+/*A negated syllogism inference.  (Contributed by NM, 15-Feb-1996.) */
 
 theorem nsyl4 (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -579,7 +579,7 @@ proof of nsyl4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction version of ~ pm2.24 .  (Contributed by NM, 30-Jan-2006.) */
+/*Deduction version of ~ pm2.24 .  (Contributed by NM, 30-Jan-2006.) */
 
 theorem pm2.24d (ph : wff, ps : wff, ch : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -593,7 +593,7 @@ proof of pm2.24d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference version of ~ pm2.24 .  (Contributed by NM, 20-Aug-2001.) */
+/*Inference version of ~ pm2.24 .  (Contributed by NM, 20-Aug-2001.) */
 
 theorem pm2.24i (ph : wff, ps : wff)  {
 	hyp 1 : wff = |- ph ;;
@@ -607,7 +607,7 @@ proof of pm2.24i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *3.2 of [WhiteheadRussell] p. 111, expressed with primitive
+/*Theorem *3.2 of [WhiteheadRussell] p. 111, expressed with primitive
      connectives.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Josh
      Purinton, 29-Dec-2000.) */
 
@@ -621,7 +621,7 @@ proof of pm3.2im {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 8 of [Margaris] p. 60.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Theorem 8 of [Margaris] p. 60.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Josh Purinton, 29-Dec-2000.) */
 
 theorem mth8 (ph : wff, ps : wff)  {
@@ -634,7 +634,7 @@ proof of mth8 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference joining the consequents of two premises.  (Contributed by NM,
+/*Inference joining the consequents of two premises.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem jc (ph : wff, ps : wff, ch : wff)  {
@@ -650,7 +650,7 @@ proof of jc {
 	qed prop 1 = step 2 ;;
 }
 
-/* An importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*An importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 20-Jul-2013.) */
 
 theorem impi (ph : wff, ps : wff, ch : wff)  {
@@ -665,7 +665,7 @@ proof of impi {
 	qed prop 1 = step 2 ;;
 }
 
-/* An exportation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*An exportation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.) */
 
 theorem expi (ph : wff, ps : wff, ch : wff)  {
@@ -680,7 +680,7 @@ proof of expi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification.  Similar to Theorem *3.27 (Simp) of [WhiteheadRussell]
+/*Simplification.  Similar to Theorem *3.27 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 13-Nov-2012.) */
 
@@ -694,7 +694,7 @@ proof of simprim {
 	qed prop 1 = step 2 ;;
 }
 
-/* Simplification.  Similar to Theorem *3.26 (Simp) of [WhiteheadRussell]
+/*Simplification.  Similar to Theorem *3.26 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 21-Jul-2012.) */
 
@@ -708,7 +708,7 @@ proof of simplim {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.5 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.5 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 9-Oct-2012.) */
 
 theorem pm2.5 (ph : wff, ps : wff)  {
@@ -721,7 +721,7 @@ proof of pm2.5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.51 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.51 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.51 (ph : wff, ps : wff)  {
@@ -735,7 +735,7 @@ proof of pm2.51 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.521 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.521 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) */
 
 theorem pm2.521 (ph : wff, ps : wff)  {
@@ -748,7 +748,7 @@ proof of pm2.521 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.52 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.52 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) */
 
 theorem pm2.52 (ph : wff, ps : wff)  {
@@ -761,7 +761,7 @@ proof of pm2.52 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Exportation theorem expressed with primitive connectives.  (Contributed by
+/*Exportation theorem expressed with primitive connectives.  (Contributed by
      NM, 5-Aug-1993.) */
 
 theorem expt (ph : wff, ps : wff, ch : wff)  {
@@ -775,7 +775,7 @@ proof of expt {
 	qed prop 1 = step 3 ;;
 }
 
-/* Importation theorem expressed with primitive connectives.  (Contributed by
+/*Importation theorem expressed with primitive connectives.  (Contributed by
      NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen, 20-Jul-2013.) */
 
 theorem impt (ph : wff, ps : wff, ch : wff)  {
@@ -790,7 +790,7 @@ proof of impt {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction eliminating an antecedent.  (Contributed by NM, 27-Apr-1994.)
+/*Deduction eliminating an antecedent.  (Contributed by NM, 27-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2013.) */
 
 theorem pm2.61d (ph : wff, ps : wff, ch : wff)  {
@@ -807,7 +807,7 @@ proof of pm2.61d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference eliminating an antecedent.  (Contributed by NM,
+/*Inference eliminating an antecedent.  (Contributed by NM,
        15-Jul-2005.) */
 
 theorem pm2.61d1 (ph : wff, ps : wff, ch : wff)  {
@@ -823,7 +823,7 @@ proof of pm2.61d1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating an antecedent.  (Contributed by NM,
+/*Inference eliminating an antecedent.  (Contributed by NM,
        18-Aug-1993.) */
 
 theorem pm2.61d2 (ph : wff, ps : wff, ch : wff)  {
@@ -839,7 +839,7 @@ proof of pm2.61d2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference joining the antecedents of two premises.  (Contributed by NM,
+/*Inference joining the antecedents of two premises.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by O'Cat, 19-Feb-2008.) */
 
 theorem ja (ph : wff, ps : wff, ch : wff)  {
@@ -855,7 +855,7 @@ proof of ja {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction form of ~ ja .  (Contributed by Scott Fenton, 13-Dec-2010.)
+/*Deduction form of ~ ja .  (Contributed by Scott Fenton, 13-Dec-2010.)
        (Proof shortened by Andrew Salmon, 17-Sep-2011.) */
 
 theorem jad (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -873,7 +873,7 @@ proof of jad {
 	qed prop 1 = step 4 ;;
 }
 
-/* Elimination of a nested antecedent as a kind of reversal of inference
+/*Elimination of a nested antecedent as a kind of reversal of inference
      ~ ja .  (Contributed by Wolf Lammen, 10-May-2013.) */
 
 theorem jarl (ph : wff, ps : wff, ch : wff)  {
@@ -886,7 +886,7 @@ proof of jarl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating an antecedent.  (Contributed by NM, 5-Apr-1994.)
+/*Inference eliminating an antecedent.  (Contributed by NM, 5-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2013.) */
 
 theorem pm2.61i (ph : wff, ps : wff)  {
@@ -903,7 +903,7 @@ proof of pm2.61i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference eliminating two antecedents.  (Contributed by NM,
+/*Inference eliminating two antecedents.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
 
 theorem pm2.61ii (ph : wff, ps : wff, ch : wff)  {
@@ -920,7 +920,7 @@ proof of pm2.61ii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating two antecedents.  (Contributed by NM,
+/*Inference eliminating two antecedents.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.)  (Proof
        shortened by Wolf Lammen, 13-Nov-2012.) */
 
@@ -938,7 +938,7 @@ proof of pm2.61nii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference eliminating three antecedents.  (Contributed by NM,
+/*Inference eliminating three antecedents.  (Contributed by NM,
        2-Jan-2002.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) */
 
 theorem pm2.61iii (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -958,7 +958,7 @@ proof of pm2.61iii {
 	qed prop 1 = step 4 ;;
 }
 
-/* Reductio ad absurdum.  Theorem *2.01 of [WhiteheadRussell] p. 100.
+/*Reductio ad absurdum.  Theorem *2.01 of [WhiteheadRussell] p. 100.
      (Contributed by NM, 18-Aug-1993.)  (Proof shortened by O'Cat,
      21-Nov-2008.)  (Proof shortened by Wolf Lammen, 31-Oct-2012.) */
 
@@ -973,7 +973,7 @@ proof of pm2.01 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction based on reductio ad absurdum.  (Contributed by NM,
+/*Deduction based on reductio ad absurdum.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by Wolf Lammen, 5-Mar-2013.) */
 
 theorem pm2.01d (ph : wff, ps : wff)  {
@@ -988,7 +988,7 @@ proof of pm2.01d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.6 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+/*Theorem *2.6 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.6 (ph : wff, ps : wff)  {
@@ -1002,7 +1002,7 @@ proof of pm2.6 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *2.61 of [WhiteheadRussell] p. 107.  Useful for eliminating an
+/*Theorem *2.61 of [WhiteheadRussell] p. 107.  Useful for eliminating an
      antecedent.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 22-Sep-2013.) */
 
@@ -1016,7 +1016,7 @@ proof of pm2.61 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.65 of [WhiteheadRussell] p. 107.  Proof by contradiction.
+/*Theorem *2.65 of [WhiteheadRussell] p. 107.  Proof by contradiction.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      8-Mar-2013.) */
 
@@ -1031,7 +1031,7 @@ proof of pm2.65 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference rule for proof by contradiction.  (Contributed by NM,
+/*Inference rule for proof by contradiction.  (Contributed by NM,
        18-May-1994.)  (Proof shortened by Wolf Lammen, 11-Sep-2013.) */
 
 theorem pm2.65i (ph : wff, ps : wff)  {
@@ -1048,7 +1048,7 @@ proof of pm2.65i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction rule for proof by contradiction.  (Contributed by NM,
+/*Deduction rule for proof by contradiction.  (Contributed by NM,
        26-Jun-1994.)  (Proof shortened by Wolf Lammen, 26-May-2013.) */
 
 theorem pm2.65d (ph : wff, ps : wff, ch : wff)  {
@@ -1064,7 +1064,7 @@ proof of pm2.65d {
 	qed prop 1 = step 2 ;;
 }
 
-/* The rule of modus tollens.  The rule says, "if ` ps ` is not true, and
+/*The rule of modus tollens.  The rule says, "if ` ps ` is not true, and
        ` ph ` implies ` ps ` , then ` ps ` must also be not true."  Modus
        tollens is short for "modus tollendo tollens," a Latin phrase that means
        "the mood that by denying affirms" [Sanford] p. 39.  It is also called
@@ -1085,7 +1085,7 @@ proof of mto {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens deduction.  (Contributed by NM, 3-Apr-1994.)  (Proof
+/*Modus tollens deduction.  (Contributed by NM, 3-Apr-1994.)  (Proof
        shortened by Wolf Lammen, 11-Sep-2013.) */
 
 theorem mtod (ph : wff, ps : wff, ch : wff)  {
@@ -1101,7 +1101,7 @@ proof of mtod {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus tollens inference.  (Contributed by NM, 5-Jul-1994.)  (Proof
+/*Modus tollens inference.  (Contributed by NM, 5-Jul-1994.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) */
 
 theorem mtoi (ph : wff, ps : wff, ch : wff)  {
@@ -1117,7 +1117,7 @@ proof of mtoi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A rule similar to modus tollens.  (Contributed by NM, 19-Aug-1993.)
+/*A rule similar to modus tollens.  (Contributed by NM, 19-Aug-1993.)
        (Proof shortened by Wolf Lammen, 10-Sep-2013.) */
 
 theorem mt2 (ph : wff, ps : wff)  {
@@ -1133,7 +1133,7 @@ proof of mt2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A rule similar to modus tollens.  (Contributed by NM, 18-May-1994.)
+/*A rule similar to modus tollens.  (Contributed by NM, 18-May-1994.)
        (Proof shortened by Wolf Lammen, 11-Sep-2013.) */
 
 theorem mt3 (ph : wff, ps : wff)  {
@@ -1149,7 +1149,7 @@ proof of mt3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Peirce's axiom.  This odd-looking theorem is the "difference" between an
+/*Peirce's axiom.  This odd-looking theorem is the "difference" between an
      intuitionistic system of propositional calculus and a classical system and
      is not accepted by intuitionists.  When Peirce's axiom is added to an
      intuitionistic system, the system becomes equivalent to our classical
@@ -1169,7 +1169,7 @@ proof of peirce {
 	qed prop 1 = step 3 ;;
 }
 
-/* The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
+/*The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
      of Lukasiewicz.  For a version not using ~ ax-3 , see ~ loolinALT .
      (Contributed by O'Cat, 12-Aug-2004.)  (Proof shortened by Wolf Lammen,
      2-Nov-2012.) */
@@ -1185,7 +1185,7 @@ proof of loolin {
 	qed prop 1 = step 3 ;;
 }
 
-/* The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
+/*The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
      of Lukasiewicz.  Using ~ dfor2 , we can see that this essentially
      expresses "disjunction commutes."  Theorem *2.69 of [WhiteheadRussell]
      p. 108.  (Contributed by NM, 12-Aug-2004.) */
@@ -1201,7 +1201,7 @@ proof of looinv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem used to justify definition of biconditional ~ df-bi .
+/*Theorem used to justify definition of biconditional ~ df-bi .
      (Contributed by NM, 11-May-1999.)  (Proof shortened by Josh Purinton,
      29-Dec-2000.) */
 

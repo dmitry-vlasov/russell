@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-9_(Existence).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Axiom scheme ax-8 (Equality)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Equality.  One of the equality and substitution axioms of
+/*Axiom of Equality.  One of the equality and substitution axioms of
      predicate calculus with equality.  This is similar to, but not quite, a
      transitive law for equality (proved later as ~ equtr ).  This axiom scheme
      is a sub-scheme of Axiom Scheme B8 of system S2 of [Tarski], p. 75, whose
@@ -28,7 +28,7 @@ axiom ax-8 (x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( x = y → ( x = z → y = z ) ) ;;
 }
 
-/* Identity law for equality.  Lemma 2 of [KalishMontague] p. 85.  See also
+/*Identity law for equality.  Lemma 2 of [KalishMontague] p. 85.  See also
        Lemma 6 of [Tarski] p. 68.  (Contributed by NM, 1-Apr-2005.)  (Revised
        by NM, 9-Apr-2017.) */
 
@@ -49,7 +49,7 @@ proof of equid {
 	qed prop 1 = step 8 ;;
 }
 
-/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+/*Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      that any variable, including ` x ` , is effectively not free in
      ` x = x ` , even though ` x ` is technically free according to the
      traditional definition of free variable.  (Contributed by NM,
@@ -65,11 +65,11 @@ proof of nfequid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutative law for equality.  Lemma 3 of [KalishMontague] p. 85.  See
+/*Commutative law for equality.  Lemma 3 of [KalishMontague] p. 85.  See
        also Lemma 7 of [Tarski] p. 69.  (Contributed by NM, 5-Aug-1993.)
        (Revised by NM, 9-Apr-2017.) */
 
-theorem equcomi (x : set, y : set)  {
+theorem equcomi (x : set, y : set) disjointed(x) {
 	prop 1 : wff = |- ( x = y → y = x ) ;;
 }
 
@@ -80,7 +80,7 @@ proof of equcomi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutative law for equality.  (Contributed by NM, 20-Aug-1993.) */
+/*Commutative law for equality.  (Contributed by NM, 20-Aug-1993.) */
 
 theorem equcom (x : set, y : set)  {
 	prop 1 : wff = |- ( x = y ↔ y = x ) ;;
@@ -93,7 +93,7 @@ proof of equcom {
 	qed prop 1 = step 3 ;;
 }
 
-/* An inference commuting equality in antecedent.  Used to eliminate the
+/*An inference commuting equality in antecedent.  Used to eliminate the
        need for a syllogism.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem equcoms (ph : wff, x : set, y : set)  {
@@ -108,7 +108,7 @@ proof of equcoms {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 12-Nov-2017.) */
 
 theorem equequ1 (x : set, y : set, z : set)  {
@@ -123,7 +123,7 @@ proof of equequ1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)
+/*An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.)  (Proof modification is discouraged.) */
 
 theorem equequ1OLD (x : set, y : set, z : set)  {
@@ -139,7 +139,7 @@ proof of equequ1OLD {
 	qed prop 1 = step 5 ;;
 }
 
-/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 4-Aug-2017.) */
 
 theorem equequ2 (x : set, y : set, z : set)  {
@@ -154,7 +154,7 @@ proof of equequ2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* One of the two equality axioms of standard predicate calculus, called
+/*One of the two equality axioms of standard predicate calculus, called
      reflexivity of equality.  (The other one is ~ stdpc7 .)  Axiom 6 of
      [Mendelson] p. 95.  Mendelson doesn't say why he prepended the redundant
      quantifier, but it was probably to be compatible with free logic (which is
@@ -170,7 +170,7 @@ proof of stdpc6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transitive law for equality.  (Contributed by NM, 23-Aug-1993.) */
+/*A transitive law for equality.  (Contributed by NM, 23-Aug-1993.) */
 
 theorem equtr (x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( x = y → ( y = z → x = z ) ) ;;
@@ -182,7 +182,7 @@ proof of equtr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transitive law for equality.  Lemma L17 in [Megill] p. 446 (p. 14 of the
+/*A transitive law for equality.  Lemma L17 in [Megill] p. 446 (p. 14 of the
      preprint).  (Contributed by NM, 23-Aug-1993.) */
 
 theorem equtrr (x : set, y : set, z : set)  {
@@ -195,7 +195,7 @@ proof of equtrr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transitive law for equality.  (Contributed by NM, 12-Aug-1993.)  (Proof
+/*A transitive law for equality.  (Contributed by NM, 12-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem equtr2 (x : set, y : set, z : set)  {
@@ -209,7 +209,7 @@ proof of equtr2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Two equivalent ways of expressing ~ ax-12 .  See the comment for
+/*Two equivalent ways of expressing ~ ax-12 .  See the comment for
      ~ ax-12 .  (Contributed by NM, 2-May-2017.)  (Proof shortened by Wolf
      Lammen, 12-Aug-2017.) */
 
@@ -232,7 +232,7 @@ proof of ax12b {
 	qed prop 1 = step 11 ;;
 }
 
-/* Obsolete version of ~ ax12b as of 12-Aug-2017.  (Contributed by NM,
+/*Obsolete version of ~ ax12b as of 12-Aug-2017.  (Contributed by NM,
      2-May-2017.)  (New usage is discouraged.) */
 
 theorem ax12bOLD (x : set, y : set, z : set)  {
@@ -255,7 +255,7 @@ proof of ax12bOLD {
 	qed prop 1 = step 12 ;;
 }
 
-/* Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Lemma 9
+/*Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Lemma 9
        of [KalishMontague] p. 87.  This may be the best we can do with minimal
        distinct variable conditions.  TO DO:  Do we need this theorem?  If not,
        maybe it should be deleted.  (Contributed by NM, 19-Apr-2017.) */
@@ -281,7 +281,7 @@ proof of spfw {
 	qed prop 1 = step 8 ;;
 }
 
-/* Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Obsolete
+/*Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Obsolete
        version of ~ spnfw as of 13-Aug-2017.  (Contributed by NM, 1-Aug-2017.)
        (New usage is discouraged.) */
 
@@ -300,7 +300,7 @@ proof of spnfwOLD {
 	qed prop 1 = step 4 ;;
 }
 
-/* Weak version of ~ 19.8a .  Uses only Tarski's FOL axiom schemes.
+/*Weak version of ~ 19.8a .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 1-Aug-2017.) */
 
 theorem 19.8w (ph : wff, x : set)  {
@@ -321,7 +321,7 @@ proof of 19.8w {
 	qed prop 1 = step 8 ;;
 }
 
-/* Weak version of specialization scheme ~ sp .  Lemma 9 of
+/*Weak version of specialization scheme ~ sp .  Lemma 9 of
        [KalishMontague] p. 87.  While it appears that ~ sp in its general form
        does not follow from Tarski's FOL axiom schemes, from this theorem we
        can prove any instance of ~ sp having no wff metavariables and mutually
@@ -351,7 +351,7 @@ proof of spw {
 	qed prop 1 = step 9 ;;
 }
 
-/* Version of ~ sp when ` x ` does not occur in ` ph ` .  This provides the
+/*Version of ~ sp when ` x ` does not occur in ` ph ` .  This provides the
        other direction of ~ ax-17 .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 10-Apr-2017.) */
 
@@ -366,7 +366,7 @@ proof of spvw {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case of Theorem 19.3 of [Margaris] p. 89.  (Contributed by NM,
+/*Special case of Theorem 19.3 of [Margaris] p. 89.  (Contributed by NM,
        1-Aug-2017.) */
 
 theorem 19.3v (ph : wff, x : set) disjointed(x ph) {
@@ -380,7 +380,7 @@ proof of 19.3v {
 	qed prop 1 = step 3 ;;
 }
 
-/* Special case of Theorem 19.9 of [Margaris] p. 89.  (Contributed by NM,
+/*Special case of Theorem 19.9 of [Margaris] p. 89.  (Contributed by NM,
        28-May-1995.)  (Revised by NM, 1-Aug-2017.) */
 
 theorem 19.9v (ph : wff, x : set) disjointed(x ph) {
@@ -395,7 +395,7 @@ proof of 19.9v {
 	qed prop 1 = step 4 ;;
 }
 
-/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-1994.) */
 
 theorem exlimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ch, x ph) {
@@ -411,7 +411,7 @@ proof of exlimdv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existential elimination rule of natural deduction.  (Contributed by
+/*Existential elimination rule of natural deduction.  (Contributed by
        Mario Carneiro, 15-Jun-2016.) */
 
 theorem exlimddv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ch, x ph) {
@@ -428,7 +428,7 @@ proof of exlimddv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from Theorem 19.23 of [Margaris] p. 90.
+/*Inference from Theorem 19.23 of [Margaris] p. 90.
 
        This inference, along with our many variants such as ~ rexlimdv , is
        used to implement a metatheorem called "Rule C" that is given in many
@@ -468,7 +468,7 @@ proof of exlimiv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        1-Aug-1995.) */
 
 theorem exlimivv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
@@ -483,7 +483,7 @@ proof of exlimivv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        31-Jul-1995.) */
 
 theorem exlimdvv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ch, x ph, y ch, y ph) {
@@ -498,7 +498,7 @@ proof of exlimdvv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Version of ~ sp when ` ph ` is true.  Uses only Tarski's FOL axiom
+/*Version of ~ sp when ` ph ` is true.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 23-Apr-1017.) */
 
 theorem sptruw (ph : wff, x : set)  {
@@ -512,7 +512,7 @@ proof of sptruw {
 	qed prop 1 = step 1 ;;
 }
 
-/* Version of ~ sp when ` ph ` is false.  Uses only Tarski's FOL axiom
+/*Version of ~ sp when ` ph ` is false.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 23-Apr-1017.) */
 
 theorem spfalw (ph : wff, x : set) disjointed(x y, y ph) {
@@ -529,7 +529,7 @@ proof of spfalw {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.2 of [Margaris] p. 89.  Note:  This proof is very different
+/*Theorem 19.2 of [Margaris] p. 89.  Note:  This proof is very different
      from Margaris' because we only have Tarski's FOL axiom schemes available
      at this point.  See the later ~ 19.2g for a more conventional proof.
      (Contributed by NM, 2-Aug-2017.) */
@@ -550,7 +550,7 @@ proof of 19.2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.39 (ph : wff, ps : wff, x : set)  {
 	prop 1 : wff = |- ( ( ∃ x ph → ∃ x ps ) → ∃ x ( ph → ps ) ) ;;
@@ -564,7 +564,7 @@ proof of 19.39 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.24 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.24 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.24 (ph : wff, ps : wff, x : set)  {
 	prop 1 : wff = |- ( ( ∀ x ph → ∀ x ps ) → ∃ x ( ph → ps ) ) ;;
@@ -578,7 +578,7 @@ proof of 19.24 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.34 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.34 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.34 (ph : wff, ps : wff, x : set)  {
 	prop 1 : wff = |- ( ( ∀ x ph ∨ ∃ x ps ) → ∃ x ( ph ∨ ps ) ) ;;
@@ -592,7 +592,7 @@ proof of 19.34 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+/*Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) */
 
 theorem cbvalw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
@@ -615,7 +615,7 @@ proof of cbvalw {
 	qed prop 1 = step 6 ;;
 }
 
-/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+/*Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) */
 
 theorem cbvalvw (ph : wff, ps : wff, x : set, y : set) disjointed(x y, x ps, y ph) {
@@ -634,7 +634,7 @@ proof of cbvalvw {
 	qed prop 1 = step 6 ;;
 }
 
-/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+/*Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 19-Apr-2017.) */
 
 theorem cbvexvw (ph : wff, ps : wff, x : set, y : set) disjointed(x y, x ps, y ph) {
@@ -653,7 +653,7 @@ proof of cbvexvw {
 	qed prop 1 = step 6 ;;
 }
 
-/* Weak version of ~ alcom .  Uses only Tarski's FOL axiom schemes.
+/*Weak version of ~ alcom .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 10-Apr-2017.) */
 
 theorem alcomiw (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y z, x y, z ph, y ps) {
@@ -676,7 +676,7 @@ proof of alcomiw {
 	qed prop 1 = step 10 ;;
 }
 
-/* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+/*Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 19-Apr-2017.) */
 
@@ -703,7 +703,7 @@ proof of hbn1fw {
 	qed prop 1 = step 8 ;;
 }
 
-/* Weak version of ~ hbn1 .  Uses only Tarski's FOL axiom schemes.
+/*Weak version of ~ hbn1 .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) */
 
 theorem hbn1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
@@ -722,7 +722,7 @@ proof of hbn1w {
 	qed prop 1 = step 6 ;;
 }
 
-/* Weak version of ~ hba1 .  See comments for ~ ax6w .  Uses only Tarski's
+/*Weak version of ~ hba1 .  See comments for ~ ax6w .  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) */
 
 theorem hba1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
@@ -748,7 +748,7 @@ proof of hba1w {
 	qed prop 1 = step 13 ;;
 }
 
-/* Weak version of ~ hbe1 .  See comments for ~ ax6w .  Uses only Tarski's
+/*Weak version of ~ hbe1 .  See comments for ~ ax6w .  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.) */
 
 theorem hbe1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
@@ -765,7 +765,7 @@ proof of hbe1w {
 	qed prop 1 = step 4 ;;
 }
 
-/* Weak version of ~ hbal .  Uses only Tarski's FOL axiom schemes.  Unlike
+/*Weak version of ~ hbal .  Uses only Tarski's FOL axiom schemes.  Unlike
        ~ hbal , this theorem requires that ` x ` and ` y ` be distinct i.e. are
        not bundled.  (Contributed by NM, 19-Apr-2017.) */
 

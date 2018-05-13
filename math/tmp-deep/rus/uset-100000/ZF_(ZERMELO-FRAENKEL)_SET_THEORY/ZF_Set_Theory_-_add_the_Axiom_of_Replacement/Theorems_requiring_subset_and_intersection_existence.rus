@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Derive_the_Null_Set_Axiom.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            Theorems requiring subset and intersection existence
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* No set contains all sets.  Theorem 41 of [Suppes] p. 30.  (Contributed
+/*No set contains all sets.  Theorem 41 of [Suppes] p. 30.  (Contributed
        by NM, 23-Aug-1993.) */
 
 theorem nalset (x : set, y : set) disjointed(x y z) {
@@ -34,7 +34,7 @@ proof of nalset {
 	qed prop 1 = step 16 ;;
 }
 
-/* The universal class is not a member of itself (and thus is not a set).
+/*The universal class is not a member of itself (and thus is not a set).
        Proposition 5.21 of [TakeutiZaring] p. 21; our proof, however, does not
        depend on the Axiom of Regularity.  (Contributed by NM, 23-Aug-1993.) */
 
@@ -57,7 +57,7 @@ proof of vprc {
 	qed prop 1 = step 10 ;;
 }
 
-/* The universal class doesn't belong to any class.  (Contributed by FL,
+/*The universal class doesn't belong to any class.  (Contributed by FL,
      31-Dec-2006.) */
 
 theorem nvel (A : class)  {
@@ -71,7 +71,7 @@ proof of nvel {
 	qed prop 1 = step 3 ;;
 }
 
-/* The universal class does not exist.  (Contributed by NM, 4-Jul-2005.) */
+/*The universal class does not exist.  (Contributed by NM, 4-Jul-2005.) */
 
 theorem vnex (x : set)  {
 	prop 1 : wff = |- ¬ ∃ x x = _V ;;
@@ -84,7 +84,7 @@ proof of vnex {
 	qed prop 1 = step 3 ;;
 }
 
-/* Separation Scheme (Aussonderung) using class notation.  Compare Exercise
+/*Separation Scheme (Aussonderung) using class notation.  Compare Exercise
        4 of [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem inex1 (A : class, B : class) disjointed(A x y, B x y) {
@@ -107,7 +107,7 @@ proof of inex1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Separation Scheme (Aussonderung) using class notation.  (Contributed by
+/*Separation Scheme (Aussonderung) using class notation.  (Contributed by
        NM, 27-Apr-1994.) */
 
 theorem inex2 (A : class, B : class)  {
@@ -123,7 +123,7 @@ proof of inex2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Closed-form, generalized Separation Scheme.  (Contributed by NM,
+/*Closed-form, generalized Separation Scheme.  (Contributed by NM,
        7-Apr-1995.) */
 
 theorem inex1g (A : class, B : class, V : class) disjointed(x A, x B) {
@@ -140,7 +140,7 @@ proof of inex1g {
 	qed prop 1 = step 5 ;;
 }
 
-/* The subset of a set is also a set.  Exercise 3 of [TakeutiZaring]
+/*The subset of a set is also a set.  Exercise 3 of [TakeutiZaring]
        p. 22.  This is one way to express the Axiom of Separation ~ ax-sep
        (a.k.a.  Subset Axiom).  (Contributed by NM, 27-Apr-1994.) */
 
@@ -159,7 +159,7 @@ proof of ssex {
 	qed prop 1 = step 5 ;;
 }
 
-/* The subset of a set is also a set.  (Contributed by NM, 9-Sep-1993.) */
+/*The subset of a set is also a set.  (Contributed by NM, 9-Sep-1993.) */
 
 theorem ssexi (A : class, B : class)  {
 	hyp 1 : wff = |- B ∈ _V ;;
@@ -174,7 +174,7 @@ proof of ssexi {
 	qed prop 1 = step 2 ;;
 }
 
-/* The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
+/*The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
        (generalized).  (Contributed by NM, 14-Aug-1994.) */
 
 theorem ssexg (A : class, B : class, C : class) disjointed(x A, x B) {
@@ -192,7 +192,7 @@ proof of ssexg {
 	qed prop 1 = step 6 ;;
 }
 
-/* A subclass of a set is a set.  Deduction form of ~ ssexg .  (Contributed
+/*A subclass of a set is a set.  Deduction form of ~ ssexg .  (Contributed
        by David Moews, 1-May-2017.) */
 
 theorem ssexd (ph : wff, A : class, B : class, C : class)  {
@@ -208,7 +208,7 @@ proof of ssexd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existence of a difference.  (Contributed by NM, 26-May-1998.) */
+/*Existence of a difference.  (Contributed by NM, 26-May-1998.) */
 
 theorem difexg (A : class, B : class, V : class)  {
 	prop 1 : wff = |- ( A ∈ V → ( A ∖ B ) ∈ _V ) ;;
@@ -221,10 +221,10 @@ proof of difexg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Separation Scheme (Aussonderung) in terms of a class abstraction.
+/*Separation Scheme (Aussonderung) in terms of a class abstraction.
        (Contributed by NM, 8-Jun-1994.) */
 
-theorem zfausab (ph : wff, x : set, A : class) disjointed(x A) {
+theorem zfausab (ph : wff, x : set, A : class) disjointed(x A, ph) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	-----------------------
 	prop 1 : wff = |- { x | ( x ∈ A ∧ ph ) } ∈ _V ;;
@@ -236,7 +236,7 @@ proof of zfausab {
 	qed prop 1 = step 2 ;;
 }
 
-/* Separation Scheme in terms of a restricted class abstraction.
+/*Separation Scheme in terms of a restricted class abstraction.
        (Contributed by NM, 23-Oct-1999.) */
 
 theorem rabexg (ph : wff, x : set, A : class, V : class) disjointed(x A) {
@@ -250,7 +250,7 @@ proof of rabexg {
 	qed prop 1 = step 3 ;;
 }
 
-/* Separation Scheme in terms of a restricted class abstraction.
+/*Separation Scheme in terms of a restricted class abstraction.
        (Contributed by NM, 19-Jul-1996.) */
 
 theorem rabex (ph : wff, x : set, A : class) disjointed(x A) {
@@ -265,7 +265,7 @@ proof of rabex {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a class abstraction involving a subset.  Unlike ~ elabg ,
+/*Membership in a class abstraction involving a subset.  Unlike ~ elabg ,
        ` A ` does not have to be a set.  (Contributed by NM, 29-Aug-2006.) */
 
 theorem elssabg (ph : wff, ps : wff, x : set, A : class, B : class, V : class) disjointed(x A, x B, x ps) {
@@ -285,7 +285,7 @@ proof of elssabg {
 	qed prop 1 = step 7 ;;
 }
 
-/* The intersection of a non-empty class exists.  Exercise 5 of
+/*The intersection of a non-empty class exists.  Exercise 5 of
        [TakeutiZaring] p. 44 and its converse.  (Contributed by NM,
        13-Aug-2002.) */
 
@@ -313,7 +313,7 @@ proof of intex {
 	qed prop 1 = step 15 ;;
 }
 
-/* If a class intersection is not a set, it must be the universe.
+/*If a class intersection is not a set, it must be the universe.
      (Contributed by NM, 3-Jul-2005.) */
 
 theorem intnex (A : class)  {
@@ -334,10 +334,10 @@ proof of intnex {
 	qed prop 1 = step 10 ;;
 }
 
-/* The intersection of a non-empty class abstraction exists.  (Contributed
+/*The intersection of a non-empty class abstraction exists.  (Contributed
        by NM, 21-Oct-2003.) */
 
-theorem intexab (ph : wff, x : set)  {
+theorem intexab (ph : wff, x : set) disjointed(x, ph) {
 	prop 1 : wff = |- ( ∃ x ph ↔ ⋂ { x | ph } ∈ _V ) ;;
 }
 
@@ -348,7 +348,7 @@ proof of intexab {
 	qed prop 1 = step 3 ;;
 }
 
-/* The intersection of a non-empty restricted class abstraction exists.
+/*The intersection of a non-empty restricted class abstraction exists.
      (Contributed by NM, 21-Oct-2003.) */
 
 theorem intexrab (ph : wff, x : set, A : class)  {
@@ -365,7 +365,7 @@ proof of intexrab {
 	qed prop 1 = step 6 ;;
 }
 
-/* The existence of an indexed union. ` x ` is normally a free-variable
+/*The existence of an indexed union. ` x ` is normally a free-variable
        parameter in ` B ` , which should be read ` B ( x ) ` .  (Contributed by
        FL, 19-Sep-2011.) */
 
@@ -394,7 +394,7 @@ proof of iinexg {
 	qed prop 1 = step 16 ;;
 }
 
-/* Absorption of a redundant conjunct in the intersection of a class
+/*Absorption of a redundant conjunct in the intersection of a class
        abstraction.  (Contributed by NM, 3-Jul-2005.) */
 
 theorem intabs (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, x A, y ph, x ps, x ch) {
@@ -426,7 +426,7 @@ proof of intabs {
 	qed prop 1 = step 17 ;;
 }
 
-/* The intersection of a union ` U. A ` with a class ` B ` is equal to the
+/*The intersection of a union ` U. A ` with a class ` B ` is equal to the
        union of the intersections of each element of ` A ` with ` B ` .
        (Contributed by FL, 24-Mar-2007.) */
 
@@ -462,7 +462,7 @@ proof of inuni {
 	qed prop 1 = step 23 ;;
 }
 
-/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.  (Contributed
+/*Membership in a power class.  Theorem 86 of [Suppes] p. 47.  (Contributed
      by NM, 7-Aug-2000.) */
 
 theorem elpw2g (A : class, B : class, V : class)  {
@@ -480,7 +480,7 @@ proof of elpw2g {
 	qed prop 1 = step 7 ;;
 }
 
-/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.
+/*Membership in a power class.  Theorem 86 of [Suppes] p. 47.
        (Contributed by NM, 11-Oct-2007.) */
 
 theorem elpw2 (A : class, B : class)  {
@@ -495,7 +495,7 @@ proof of elpw2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The power set of a set is never a subset.  (Contributed by Stefan
+/*The power set of a set is never a subset.  (Contributed by Stefan
        O'Rear, 22-Feb-2015.) */
 
 theorem pwnss (A : class, V : class) disjointed(A x y, V x y) {
@@ -525,7 +525,7 @@ proof of pwnss {
 	qed prop 1 = step 18 ;;
 }
 
-/* No set equals its power set.  The sethood antecedent is necessary; compare
+/*No set equals its power set.  The sethood antecedent is necessary; compare
      ~ pwv .  (Contributed by NM, 17-Nov-2008.)  (Proof shortened by Mario
      Carneiro, 23-Dec-2016.) */
 

@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/The_axioms_of_propositional_calculus.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical implication
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -16,7 +16,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calcu
 
 */
 
-/* A double modus ponens inference.  (Contributed by Mario Carneiro,
+/*A double modus ponens inference.  (Contributed by Mario Carneiro,
        24-Jan-2013.) */
 
 theorem mp2b (ph : wff, ps : wff, ch : wff)  {
@@ -33,9 +33,9 @@ proof of mp2b {
 	qed prop 1 = step 2 ;;
 }
 
-/* Premise for ~ a1i . */
+/*Premise for ~ a1i . */
 
-/* Inference derived from axiom ~ ax-1 .  See ~ a1d for an explanation of
+/*Inference derived from axiom ~ ax-1 .  See ~ a1d for an explanation of
        our informal use of the terms "inference" and "deduction."  See also the
        comment in ~ syld .  (Contributed by NM, 5-Aug-1993.) */
 
@@ -51,7 +51,7 @@ proof of a1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Drop and replace an antecedent.  (Contributed by Stefan O'Rear,
+/*Drop and replace an antecedent.  (Contributed by Stefan O'Rear,
        29-Jan-2015.) */
 
 theorem mp1i (ph : wff, ps : wff, ch : wff)  {
@@ -67,9 +67,9 @@ proof of mp1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Premise for ~ a2i . */
+/*Premise for ~ a2i . */
 
-/* Inference derived from axiom ~ ax-2 .  (Contributed by NM,
+/*Inference derived from axiom ~ ax-2 .  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem a2i (ph : wff, ps : wff, ch : wff)  {
@@ -84,7 +84,7 @@ proof of a2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding common antecedents in an implication.  (Contributed by
+/*Inference adding common antecedents in an implication.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem imim2i (ph : wff, ps : wff, ch : wff)  {
@@ -99,7 +99,7 @@ proof of imim2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A modus ponens deduction.  A translation of natural deduction rule
+/*A modus ponens deduction.  A translation of natural deduction rule
        ` -> ` E ( ` -> ` elimination), see ~ natded .  (Contributed by NM,
        5-Aug-1993.) */
 
@@ -116,11 +116,11 @@ proof of mpd {
 	qed prop 1 = step 2 ;;
 }
 
-/* First of 2 premises for ~ syl . */
+/*First of 2 premises for ~ syl . */
 
-/* Second of 2 premises for ~ syl . */
+/*Second of 2 premises for ~ syl . */
 
-/* An inference version of the transitive laws for implication ~ imim2 and
+/*An inference version of the transitive laws for implication ~ imim2 and
        ~ imim1 , which Russell and Whitehead call "the principle of the
        syllogism...because...the syllogism in Barbara is derived from them"
        (quote after Theorem *2.06 of [WhiteheadRussell] p. 101).  Some authors
@@ -146,7 +146,7 @@ proof of syl {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested modus ponens inference.  (Contributed by NM, 5-Aug-1993.)
+/*A nested modus ponens inference.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Stefan Allan, 20-Mar-2006.) */
 
 theorem mpi (ph : wff, ps : wff, ch : wff)  {
@@ -162,7 +162,7 @@ proof of mpi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.)
+/*A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.)
        (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
 
 theorem mp2 (ph : wff, ps : wff, ch : wff)  {
@@ -179,7 +179,7 @@ proof of mp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference chaining two syllogisms.  (Contributed by NM, 5-Aug-1993.) */
+/*Inference chaining two syllogisms.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 3syl (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -195,7 +195,7 @@ proof of 3syl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  For
+/*Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  For
      another version of the proof directly from axioms, see ~ id1 .
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Stefan Allan,
      20-Mar-2006.) */
@@ -211,7 +211,7 @@ proof of id {
 	qed prop 1 = step 3 ;;
 }
 
-/* Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
+/*Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
      version is proved directly from the axioms for demonstration purposes.
      This proof is a popular example in the literature and is identical, step
      for step, to the proofs of Theorem 1 of [Margaris] p. 51, Example 2.7(a)
@@ -236,7 +236,7 @@ proof of id1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Principle of identity with antecedent.  (Contributed by NM,
+/*Principle of identity with antecedent.  (Contributed by NM,
      26-Nov-1995.) */
 
 theorem idd (ph : wff, ps : wff)  {
@@ -249,7 +249,7 @@ proof of idd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing an embedded antecedent.
+/*Deduction introducing an embedded antecedent.
 
        _Naming convention_:  We often call a theorem a "deduction" and suffix
        its label with "d" whenever the hypotheses and conclusion are each
@@ -280,7 +280,7 @@ proof of a1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction distributing an embedded antecedent.  (Contributed by NM,
+/*Deduction distributing an embedded antecedent.  (Contributed by NM,
        23-Jun-1994.) */
 
 theorem a2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -295,7 +295,7 @@ proof of a2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Add two antecedents to a wff.  (Contributed by Jeff Hankins,
+/*Add two antecedents to a wff.  (Contributed by Jeff Hankins,
        4-Aug-2009.)  (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
 
 theorem a1ii (ph : wff, ps : wff, ch : wff)  {
@@ -310,7 +310,7 @@ proof of a1ii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference with commutation of antecedents.  (Contributed by
+/*Syllogism inference with commutation of antecedents.  (Contributed by
        NM, 29-Aug-2004.)  (Proof shortened by O'Cat, 2-Feb-2006.)  (Proof
        shortened by Stefan Allan, 23-Feb-2006.) */
 
@@ -327,7 +327,7 @@ proof of sylcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference with commuted antecedents.  (Contributed by NM,
+/*Syllogism inference with commuted antecedents.  (Contributed by NM,
        24-May-2005.) */
 
 theorem syl5com (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -343,9 +343,9 @@ proof of syl5com {
 	qed prop 1 = step 2 ;;
 }
 
-/* Premise for ~ com12 .  See ~ pm2.04 for the theorem form. */
+/*Premise for ~ com12 .  See ~ pm2.04 for the theorem form. */
 
-/* Inference that swaps (commutes) antecedents in an implication.
+/*Inference that swaps (commutes) antecedents in an implication.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        4-Aug-2012.) */
 
@@ -361,7 +361,7 @@ proof of com12 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism rule of inference.  The first premise is used to replace the
+/*A syllogism rule of inference.  The first premise is used to replace the
        second antecedent of the second premise.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-May-2013.) */
 
@@ -378,7 +378,7 @@ proof of syl5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism rule of inference.  The second premise is used to replace
+/*A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Wolf Lammen, 30-Jul-2012.) */
 
@@ -395,7 +395,7 @@ proof of syl6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Combine ~ syl5 and ~ syl6 .  (Contributed by NM, 14-Nov-2013.) */
+/*Combine ~ syl5 and ~ syl6 .  (Contributed by NM, 14-Nov-2013.) */
 
 theorem syl56 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -411,7 +411,7 @@ proof of syl56 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference with commuted antecedents.  (Contributed by NM,
+/*Syllogism inference with commuted antecedents.  (Contributed by NM,
        25-May-2005.) */
 
 theorem syl6com (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -427,7 +427,7 @@ proof of syl6com {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens inference with commutation of antecedents.  (Contributed by
+/*Modus ponens inference with commutation of antecedents.  (Contributed by
        NM, 17-Mar-1996.) */
 
 theorem mpcom (ph : wff, ps : wff, ch : wff)  {
@@ -443,7 +443,7 @@ proof of mpcom {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism inference with common nested antecedent.  (Contributed by NM,
+/*Syllogism inference with common nested antecedent.  (Contributed by NM,
        4-Nov-2004.) */
 
 theorem syli (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -459,7 +459,7 @@ proof of syli {
 	qed prop 1 = step 2 ;;
 }
 
-/* Replace two antecedents.  Implication-only version of ~ syl2an .
+/*Replace two antecedents.  Implication-only version of ~ syl2an .
        (Contributed by Wolf Lammen, 14-May-2013.) */
 
 theorem syl2im (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -476,7 +476,7 @@ proof of syl2im {
 	qed prop 1 = step 2 ;;
 }
 
-/* This theorem, called "Assertion," can be thought of as closed form of
+/*This theorem, called "Assertion," can be thought of as closed form of
      modus ponens ~ ax-mp .  Theorem *2.27 of [WhiteheadRussell] p. 104.
      (Contributed by NM, 5-Aug-1993.) */
 
@@ -490,7 +490,7 @@ proof of pm2.27 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested modus ponens deduction.  (Contributed by NM, 12-Dec-2004.) */
+/*A nested modus ponens deduction.  (Contributed by NM, 12-Dec-2004.) */
 
 theorem mpdd (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -505,7 +505,7 @@ proof of mpdd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested modus ponens deduction.  (Contributed by NM, 14-Dec-2004.) */
+/*A nested modus ponens deduction.  (Contributed by NM, 14-Dec-2004.) */
 
 theorem mpid (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ch ) ;;
@@ -520,7 +520,7 @@ proof of mpid {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested modus ponens deduction.  (Contributed by NM, 16-Apr-2005.)
+/*A nested modus ponens deduction.  (Contributed by NM, 16-Apr-2005.)
        (Proof shortened by O'Cat, 15-Jan-2008.) */
 
 theorem mpdi (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -536,7 +536,7 @@ proof of mpdi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A doubly nested modus ponens inference.  (Contributed by NM,
+/*A doubly nested modus ponens inference.  (Contributed by NM,
        31-Dec-1993.)  (Proof shortened by Wolf Lammen, 31-Jul-2012.) */
 
 theorem mpii (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -552,7 +552,7 @@ proof of mpii {
 	qed prop 1 = step 2 ;;
 }
 
-/* Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
+/*Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        by O'Cat, 19-Feb-2008.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.)
 
        Notice that ~ syld has the same form as ~ syl with ` ph ` added in front
@@ -576,7 +576,7 @@ proof of syld {
 	qed prop 1 = step 2 ;;
 }
 
-/* A double modus ponens deduction.  (Contributed by NM, 23-May-2013.)
+/*A double modus ponens deduction.  (Contributed by NM, 23-May-2013.)
        (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
 
 theorem mp2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -593,7 +593,7 @@ proof of mp2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction introducing a nested embedded antecedent.  (Contributed by NM,
+/*Deduction introducing a nested embedded antecedent.  (Contributed by NM,
        17-Dec-2004.)  (Proof shortened by O'Cat, 15-Jan-2008.) */
 
 theorem a1dd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -608,7 +608,7 @@ proof of a1dd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference absorbing redundant antecedent.  (Contributed by NM,
+/*Inference absorbing redundant antecedent.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
 
 theorem pm2.43i (ph : wff, ps : wff)  {
@@ -623,7 +623,7 @@ proof of pm2.43i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction absorbing redundant antecedent.  (Contributed by NM,
+/*Deduction absorbing redundant antecedent.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
 
 theorem pm2.43d (ph : wff, ps : wff, ch : wff)  {
@@ -638,7 +638,7 @@ proof of pm2.43d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference absorbing redundant antecedent.  (Contributed by NM,
+/*Inference absorbing redundant antecedent.  (Contributed by NM,
        7-Nov-1995.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
 
 theorem pm2.43a (ph : wff, ps : wff, ch : wff)  {
@@ -653,7 +653,7 @@ proof of pm2.43a {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference absorbing redundant antecedent.  (Contributed by NM,
+/*Inference absorbing redundant antecedent.  (Contributed by NM,
        31-Oct-1995.) */
 
 theorem pm2.43b (ph : wff, ps : wff, ch : wff)  {
@@ -668,7 +668,7 @@ proof of pm2.43b {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of redundant antecedent.  Also called the "Contraction" or
+/*Absorption of redundant antecedent.  Also called the "Contraction" or
      "Hilbert" axiom.  Theorem *2.43 of [WhiteheadRussell] p. 106.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by O'Cat,
      15-Aug-2004.) */
@@ -683,7 +683,7 @@ proof of pm2.43 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding nested antecedents.  (Contributed by NM,
+/*Deduction adding nested antecedents.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem imim2d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -698,7 +698,7 @@ proof of imim2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A closed form of syllogism (see ~ syl ).  Theorem *2.05 of
+/*A closed form of syllogism (see ~ syl ).  Theorem *2.05 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 6-Sep-2012.) */
 
@@ -712,7 +712,7 @@ proof of imim2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction embedding an antecedent.  (Contributed by Wolf Lammen,
+/*Deduction embedding an antecedent.  (Contributed by Wolf Lammen,
        4-Oct-2013.) */
 
 theorem embantd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -728,7 +728,7 @@ proof of embantd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Triple syllogism deduction.  (Contributed by Jeff Hankins,
+/*Triple syllogism deduction.  (Contributed by Jeff Hankins,
        4-Aug-2009.) */
 
 theorem 3syld (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -745,7 +745,7 @@ proof of 3syld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Virtual deduction rule ~ e12 without virtual deduction symbols.
+/*Virtual deduction rule ~ e12 without virtual deduction symbols.
        (Contributed by Alan Sare, 20-Apr-2011.) */
 
 theorem sylsyld (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -762,7 +762,7 @@ proof of sylsyld {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference joining two implications.  (Contributed by NM, 5-Aug-1993.)
+/*Inference joining two implications.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by O'Cat, 29-Oct-2011.) */
 
 theorem imim12i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -778,7 +778,7 @@ proof of imim12i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding common consequents in an implication, thereby
+/*Inference adding common consequents in an implication, thereby
        interchanging the original antecedent and consequent.  (Contributed by
        NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) */
 
@@ -794,7 +794,7 @@ proof of imim1i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference adding three nested antecedents.  (Contributed by NM,
+/*Inference adding three nested antecedents.  (Contributed by NM,
        19-Dec-2006.) */
 
 theorem imim3i (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -809,7 +809,7 @@ proof of imim3i {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference combined with contraction.  (Contributed by NM,
+/*A syllogism inference combined with contraction.  (Contributed by NM,
        4-May-1994.)  (Revised by NM, 13-Jul-2013.) */
 
 theorem sylc (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -826,7 +826,7 @@ proof of sylc {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism inference combined with contraction. ~ e111 without virtual
+/*A syllogism inference combined with contraction. ~ e111 without virtual
        deductions.  (Contributed by Alan Sare, 7-Jul-2011.) */
 
 theorem syl3c (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -844,7 +844,7 @@ proof of syl3c {
 	qed prop 1 = step 2 ;;
 }
 
-/* ~ e20 without virtual deductions.  (Contributed by Alan Sare,
+/*~ e20 without virtual deductions.  (Contributed by Alan Sare,
        8-Jul-2011.)  (Proof shortened by Wolf Lammen, 13-Sep-2012.) */
 
 theorem syl6mpi (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -861,7 +861,7 @@ proof of syl6mpi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Modus ponens combined with a syllogism inference.  (Contributed by Alan
+/*Modus ponens combined with a syllogism inference.  (Contributed by Alan
        Sare, 20-Apr-2011.) */
 
 theorem mpsyl (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -878,7 +878,7 @@ proof of mpsyl {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference combining ~ syl6 with contraction.  (Contributed by Alan Sare,
+/*Inference combining ~ syl6 with contraction.  (Contributed by Alan Sare,
        2-May-2011.) */
 
 theorem syl6c (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -895,7 +895,7 @@ proof of syl6c {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nested syllogism deduction.  (Contributed by NM, 12-Dec-2004.)  (Proof
+/*Nested syllogism deduction.  (Contributed by NM, 12-Dec-2004.)  (Proof
        shortened by Wolf Lammen, 11-May-2013.) */
 
 theorem syldd (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -911,7 +911,7 @@ proof of syldd {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
        2-Feb-2006.) */
 
@@ -928,7 +928,7 @@ proof of syl5d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism rule of inference.  The first premise is used to replace the
+/*A syllogism rule of inference.  The first premise is used to replace the
        third antecedent of the second premise.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.) */
 
@@ -945,7 +945,7 @@ proof of syl7 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
        2-Feb-2006.) */
 
@@ -962,7 +962,7 @@ proof of syl6d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A syllogism rule of inference.  The second premise is used to replace
+/*A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 1-Aug-1994.)
        (Proof shortened by Wolf Lammen, 3-Aug-2012.) */
 
@@ -979,7 +979,7 @@ proof of syl8 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested syllogism inference with different antecedents.  (Contributed
+/*A nested syllogism inference with different antecedents.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
 
 theorem syl9 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -995,7 +995,7 @@ proof of syl9 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A nested syllogism inference with different antecedents.  (Contributed
+/*A nested syllogism inference with different antecedents.  (Contributed
        by NM, 5-Aug-1993.) */
 
 theorem syl9r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1011,7 +1011,7 @@ proof of syl9r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction combining antecedents and consequents.  (Contributed by NM,
+/*Deduction combining antecedents and consequents.  (Contributed by NM,
        7-Aug-1994.)  (Proof shortened by O'Cat, 30-Oct-2011.) */
 
 theorem imim12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1027,7 +1027,7 @@ proof of imim12d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction adding nested consequents.  (Contributed by NM, 3-Apr-1994.)
+/*Deduction adding nested consequents.  (Contributed by NM, 3-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2012.) */
 
 theorem imim1d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1042,7 +1042,7 @@ proof of imim1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* A closed form of syllogism (see ~ syl ).  Theorem *2.06 of
+/*A closed form of syllogism (see ~ syl ).  Theorem *2.06 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 25-May-2013.) */
 
@@ -1056,7 +1056,7 @@ proof of imim1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *2.83 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+/*Theorem *2.83 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm2.83 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1069,7 +1069,7 @@ proof of pm2.83 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 2nd and 3rd.  (Contributed by NM,
+/*Commutation of antecedents.  Swap 2nd and 3rd.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) */
 
 theorem com23 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1084,7 +1084,7 @@ proof of com23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate right.  (Contributed by NM,
+/*Commutation of antecedents.  Rotate right.  (Contributed by NM,
        25-Apr-1994.) */
 
 theorem com3r (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1099,7 +1099,7 @@ proof of com3r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 1st and 3rd.  (Contributed by NM,
+/*Commutation of antecedents.  Swap 1st and 3rd.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
 
 theorem com13 (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1114,7 +1114,7 @@ proof of com13 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate left.  (Contributed by NM,
+/*Commutation of antecedents.  Rotate left.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
 
 theorem com3l (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1129,7 +1129,7 @@ proof of com3l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Swap antecedents.  Theorem *2.04 of [WhiteheadRussell] p. 100.
+/*Swap antecedents.  Theorem *2.04 of [WhiteheadRussell] p. 100.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      12-Sep-2012.) */
 
@@ -1143,7 +1143,7 @@ proof of pm2.04 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 3rd and 4th.  (Contributed by NM,
+/*Commutation of antecedents.  Swap 3rd and 4th.  (Contributed by NM,
        25-Apr-1994.) */
 
 theorem com34 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1158,7 +1158,7 @@ proof of com34 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate left.  (Contributed by NM,
+/*Commutation of antecedents.  Rotate left.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by O'Cat, 15-Aug-2004.) */
 
 theorem com4l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1173,7 +1173,7 @@ proof of com4l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate twice.  (Contributed by NM,
+/*Commutation of antecedents.  Rotate twice.  (Contributed by NM,
        25-Apr-1994.) */
 
 theorem com4t (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1188,7 +1188,7 @@ proof of com4t {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate right.  (Contributed by NM,
+/*Commutation of antecedents.  Rotate right.  (Contributed by NM,
        25-Apr-1994.) */
 
 theorem com4r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1203,7 +1203,7 @@ proof of com4r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 2nd and 4th.  (Contributed by NM,
+/*Commutation of antecedents.  Swap 2nd and 4th.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
 
 theorem com24 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1218,7 +1218,7 @@ proof of com24 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 1st and 4th.  (Contributed by NM,
+/*Commutation of antecedents.  Swap 1st and 4th.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
 
 theorem com14 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1233,7 +1233,7 @@ proof of com14 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 4th and 5th.  (Contributed by Jeff
+/*Commutation of antecedents.  Swap 4th and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) */
 
 theorem com45 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1248,7 +1248,7 @@ proof of com45 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 3rd and 5th.  (Contributed by Jeff
+/*Commutation of antecedents.  Swap 3rd and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) */
 
 theorem com35 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1264,7 +1264,7 @@ proof of com35 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation of antecedents.  Swap 2nd and 5th.  (Contributed by Jeff
+/*Commutation of antecedents.  Swap 2nd and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) */
 
 theorem com25 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1280,7 +1280,7 @@ proof of com25 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Commutation of antecedents.  Rotate left.  (Contributed by Jeff Hankins,
+/*Commutation of antecedents.  Rotate left.  (Contributed by Jeff Hankins,
        28-Jun-2009.)  (Proof shortened by Wolf Lammen, 29-Jul-2012.) */
 
 theorem com5l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1295,7 +1295,7 @@ proof of com5l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Swap 1st and 5th.  (Contributed by Jeff
+/*Commutation of antecedents.  Swap 1st and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.)  (Proof shortened by Wolf Lammen,
        29-Jul-2012.) */
 
@@ -1311,7 +1311,7 @@ proof of com15 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate left twice.  (Contributed by Jeff
+/*Commutation of antecedents.  Rotate left twice.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) */
 
 theorem com52l (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1326,7 +1326,7 @@ proof of com52l {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate right twice.  (Contributed by Jeff
+/*Commutation of antecedents.  Rotate right twice.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) */
 
 theorem com52r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1341,7 +1341,7 @@ proof of com52r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Commutation of antecedents.  Rotate right.  (Contributed by Wolf Lammen,
+/*Commutation of antecedents.  Rotate right.  (Contributed by Wolf Lammen,
        29-Jul-2012.) */
 
 theorem com5r (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
@@ -1356,7 +1356,7 @@ proof of com5r {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of a nested antecedent as a kind of reversal of inference
+/*Elimination of a nested antecedent as a kind of reversal of inference
      ~ ja .  (Contributed by Wolf Lammen, 9-May-2013.) */
 
 theorem jarr (ph : wff, ps : wff, ch : wff)  {
@@ -1369,7 +1369,7 @@ proof of jarr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference based on ~ pm2.86 .  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Inference based on ~ pm2.86 .  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 3-Apr-2013.) */
 
 theorem pm2.86i (ph : wff, ps : wff, ch : wff)  {
@@ -1385,7 +1385,7 @@ proof of pm2.86i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction based on ~ pm2.86 .  (Contributed by NM, 29-Jun-1995.)  (Proof
+/*Deduction based on ~ pm2.86 .  (Contributed by NM, 29-Jun-1995.)  (Proof
        shortened by Wolf Lammen, 3-Apr-2013.) */
 
 theorem pm2.86d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1401,7 +1401,7 @@ proof of pm2.86d {
 	qed prop 1 = step 3 ;;
 }
 
-/* Converse of axiom ~ ax-2 .  Theorem *2.86 of [WhiteheadRussell] p. 108.
+/*Converse of axiom ~ ax-2 .  Theorem *2.86 of [WhiteheadRussell] p. 108.
      (Contributed by NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen,
      3-Apr-2013.) */
 
@@ -1415,7 +1415,7 @@ proof of pm2.86 {
 	qed prop 1 = step 2 ;;
 }
 
-/* The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
+/*The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
      of Lukasiewicz.  This version of ~ loolin does not use ~ ax-3 , meaning
      that this theorem is intuitionistically valid.  (Contributed by O'Cat,
      12-Aug-2004.)  (New usage is discouraged.)
@@ -1431,7 +1431,7 @@ proof of loolinALT {
 	qed prop 1 = step 2 ;;
 }
 
-/* An alternate for the Linearity Axiom of the infinite-valued sentential
+/*An alternate for the Linearity Axiom of the infinite-valued sentential
      logic (L-infinity) of Lukasiewicz, due to Barbara Wozniakowska, _Reports
      on Mathematical Logic_ 10, 129-137 (1978).  (Contributed by O'Cat,
      8-Aug-2004.) */

@@ -1,210 +1,229 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Ordered-pair_class_abstractions_(class_builders).mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Transitive classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Declare a new symbol. $)
-$c Tr  $.
-$( Transitive predicate (read:  "the following class is
+
+$(Declare a new symbol. $)
+
+$c Tr $.
+
+$(Transitive predicate (read:  "the following class is
               transitive") $)
-$( Extend wff notation to include transitive classes.  Notation from
+
+$(Extend wff notation to include transitive classes.  Notation from
      [TakeutiZaring] p. 35. $)
+
 ${
-	$v A $.
-	fwtr_0 $f class A $.
-	wtr $a wff Tr A $.
+	$v A  $.
+	f0_wtr $f class A $.
+	a_wtr $a wff Tr A $.
 $}
-$( Define the transitive class predicate.  Not to be confused with a
+
+$(Define the transitive class predicate.  Not to be confused with a
      transitive relation (see ~ cotr ).  Definition of [Enderton] p. 71
      extended to arbitrary classes.  For alternate definitions, see ~ dftr2
      (which is suggestive of the word "transitive"), ~ dftr3 , ~ dftr4 ,
      ~ dftr5 , and (when ` A ` is a set) ~ unisuc .  The term "complete" is
      used instead of "transitive" in Definition 3 of [Suppes] p. 130.
      (Contributed by NM, 29-Aug-1993.) $)
+
 ${
-	$v A $.
-	fdf-tr_0 $f class A $.
-	df-tr $a |- ( Tr A <-> U. A C_ A ) $.
+	$v A  $.
+	f0_df-tr $f class A $.
+	a_df-tr $a |- ( Tr A <-> U. A C_ A ) $.
 $}
-$( An alternate way of defining a transitive class.  Exercise 7 of
+
+$(An alternate way of defining a transitive class.  Exercise 7 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 24-Apr-1994.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y A $.
-	fdftr2_0 $f set x $.
-	fdftr2_1 $f set y $.
-	fdftr2_2 $f class A $.
-	dftr2 $p |- ( Tr A <-> A. x A. y ( ( x e. y /\ y e. A ) -> x e. A ) ) $= fdftr2_2 cuni fdftr2_2 wss fdftr2_0 sup_set_class fdftr2_2 cuni wcel fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_0 wal fdftr2_2 wtr fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_1 wal fdftr2_0 wal fdftr2_0 fdftr2_2 cuni fdftr2_2 dfss2 fdftr2_2 df-tr fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_1 wal fdftr2_0 sup_set_class fdftr2_2 cuni wcel fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_0 fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_1 wal fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_1 wex fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_0 sup_set_class fdftr2_2 cuni wcel fdftr2_0 sup_set_class fdftr2_2 wcel wi fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_0 sup_set_class fdftr2_2 wcel fdftr2_1 19.23v fdftr2_0 sup_set_class fdftr2_2 cuni wcel fdftr2_0 sup_set_class fdftr2_1 sup_set_class wcel fdftr2_1 sup_set_class fdftr2_2 wcel wa fdftr2_1 wex fdftr2_0 sup_set_class fdftr2_2 wcel fdftr2_1 fdftr2_0 sup_set_class fdftr2_2 eluni imbi1i bitr4i albii 3bitr4i $.
+	$v x y A  $.
+	$d x y A  $.
+	f0_dftr2 $f set x $.
+	f1_dftr2 $f set y $.
+	f2_dftr2 $f class A $.
+	p_dftr2 $p |- ( Tr A <-> A. x A. y ( ( x e. y /\ y e. A ) -> x e. A ) ) $= f0_dftr2 f2_dftr2 a_cuni f2_dftr2 p_dfss2 f2_dftr2 a_df-tr f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f0_dftr2 a_sup_set_class f2_dftr2 a_wcel f1_dftr2 p_19.23v f1_dftr2 f0_dftr2 a_sup_set_class f2_dftr2 p_eluni f0_dftr2 a_sup_set_class f2_dftr2 a_cuni a_wcel f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f1_dftr2 a_wex f0_dftr2 a_sup_set_class f2_dftr2 a_wcel p_imbi1i f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f1_dftr2 a_wal f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f1_dftr2 a_wex f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f0_dftr2 a_sup_set_class f2_dftr2 a_cuni a_wcel f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi p_bitr4i f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f1_dftr2 a_wal f0_dftr2 a_sup_set_class f2_dftr2 a_cuni a_wcel f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f0_dftr2 p_albii f2_dftr2 a_cuni f2_dftr2 a_wss f0_dftr2 a_sup_set_class f2_dftr2 a_cuni a_wcel f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f0_dftr2 a_wal f2_dftr2 a_wtr f0_dftr2 a_sup_set_class f1_dftr2 a_sup_set_class a_wcel f1_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wa f0_dftr2 a_sup_set_class f2_dftr2 a_wcel a_wi f1_dftr2 a_wal f0_dftr2 a_wal p_3bitr4i $.
 $}
-$( An alternate way of defining a transitive class.  (Contributed by NM,
+
+$(An alternate way of defining a transitive class.  (Contributed by NM,
        20-Mar-2004.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$d x y A $.
-	fdftr5_0 $f set x $.
-	fdftr5_1 $f set y $.
-	fdftr5_2 $f class A $.
-	dftr5 $p |- ( Tr A <-> A. x e. A A. y e. x y e. A ) $= fdftr5_2 wtr fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_0 wal fdftr5_1 wal fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_0 fdftr5_2 wral fdftr5_1 fdftr5_0 fdftr5_2 dftr2 fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_0 wal fdftr5_1 wal fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 wal fdftr5_0 wal fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_0 fdftr5_2 wral fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 fdftr5_0 alcom fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 wal fdftr5_0 wal fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral wi fdftr5_0 wal fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_0 fdftr5_2 wral fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 wal fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral wi fdftr5_0 fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 wal fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral wi fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 wal fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel wi wi fdftr5_1 wal fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel wa fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel wi wi fdftr5_1 fdftr5_1 sup_set_class fdftr5_0 sup_set_class wcel fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel impexp albii fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel wi fdftr5_1 fdftr5_0 sup_set_class df-ral bitr4i fdftr5_0 sup_set_class fdftr5_2 wcel fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class r19.21v bitri albii fdftr5_1 sup_set_class fdftr5_2 wcel fdftr5_1 fdftr5_0 sup_set_class wral fdftr5_0 fdftr5_2 df-ral bitr4i bitri bitri $.
+	$v x y A  $.
+	$d x y A  $.
+	f0_dftr5 $f set x $.
+	f1_dftr5 $f set y $.
+	f2_dftr5 $f class A $.
+	p_dftr5 $p |- ( Tr A <-> A. x e. A A. y e. x y e. A ) $= f1_dftr5 f0_dftr5 f2_dftr5 p_dftr2 f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 f0_dftr5 p_alcom f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel p_impexp f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi a_wi f1_dftr5 p_albii f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 f0_dftr5 a_sup_set_class a_df-ral f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_wal f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi a_wi f1_dftr5 a_wal f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 f0_dftr5 a_sup_set_class a_wral p_bitr4i f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class p_r19.21v f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_wal f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 f0_dftr5 a_sup_set_class a_wral f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral a_wi p_bitri f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_wal f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral a_wi f0_dftr5 p_albii f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral f0_dftr5 f2_dftr5 a_df-ral f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_wal f0_dftr5 a_wal f0_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral a_wi f0_dftr5 a_wal f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral f0_dftr5 f2_dftr5 a_wral p_bitr4i f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f0_dftr5 a_wal f1_dftr5 a_wal f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f1_dftr5 a_wal f0_dftr5 a_wal f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral f0_dftr5 f2_dftr5 a_wral p_bitri f2_dftr5 a_wtr f1_dftr5 a_sup_set_class f0_dftr5 a_sup_set_class a_wcel f0_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wa f1_dftr5 a_sup_set_class f2_dftr5 a_wcel a_wi f0_dftr5 a_wal f1_dftr5 a_wal f1_dftr5 a_sup_set_class f2_dftr5 a_wcel f1_dftr5 f0_dftr5 a_sup_set_class a_wral f0_dftr5 f2_dftr5 a_wral p_bitri $.
 $}
-$( An alternate way of defining a transitive class.  Definition 7.1 of
+
+$(An alternate way of defining a transitive class.  Definition 7.1 of
        [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	idftr3_0 $f set y $.
-	fdftr3_0 $f set x $.
-	fdftr3_1 $f class A $.
-	dftr3 $p |- ( Tr A <-> A. x e. A x C_ A ) $= fdftr3_1 wtr idftr3_0 sup_set_class fdftr3_1 wcel idftr3_0 fdftr3_0 sup_set_class wral fdftr3_0 fdftr3_1 wral fdftr3_0 sup_set_class fdftr3_1 wss fdftr3_0 fdftr3_1 wral fdftr3_0 idftr3_0 fdftr3_1 dftr5 fdftr3_0 sup_set_class fdftr3_1 wss idftr3_0 sup_set_class fdftr3_1 wcel idftr3_0 fdftr3_0 sup_set_class wral fdftr3_0 fdftr3_1 idftr3_0 fdftr3_0 sup_set_class fdftr3_1 dfss3 ralbii bitr4i $.
+	$v x A  $.
+	$d x y A  $.
+	f0_dftr3 $f set x $.
+	f1_dftr3 $f class A $.
+	i0_dftr3 $f set y $.
+	p_dftr3 $p |- ( Tr A <-> A. x e. A x C_ A ) $= f0_dftr3 i0_dftr3 f1_dftr3 p_dftr5 i0_dftr3 f0_dftr3 a_sup_set_class f1_dftr3 p_dfss3 f0_dftr3 a_sup_set_class f1_dftr3 a_wss i0_dftr3 a_sup_set_class f1_dftr3 a_wcel i0_dftr3 f0_dftr3 a_sup_set_class a_wral f0_dftr3 f1_dftr3 p_ralbii f1_dftr3 a_wtr i0_dftr3 a_sup_set_class f1_dftr3 a_wcel i0_dftr3 f0_dftr3 a_sup_set_class a_wral f0_dftr3 f1_dftr3 a_wral f0_dftr3 a_sup_set_class f1_dftr3 a_wss f0_dftr3 f1_dftr3 a_wral p_bitr4i $.
 $}
-$( An alternate way of defining a transitive class.  Definition of [Enderton]
+
+$(An alternate way of defining a transitive class.  Definition of [Enderton]
      p. 71.  (Contributed by NM, 29-Aug-1993.) $)
+
 ${
-	$v A $.
-	fdftr4_0 $f class A $.
-	dftr4 $p |- ( Tr A <-> A C_ ~P A ) $= fdftr4_0 wtr fdftr4_0 cuni fdftr4_0 wss fdftr4_0 fdftr4_0 cpw wss fdftr4_0 df-tr fdftr4_0 fdftr4_0 sspwuni bitr4i $.
+	$v A  $.
+	f0_dftr4 $f class A $.
+	p_dftr4 $p |- ( Tr A <-> A C_ ~P A ) $= f0_dftr4 a_df-tr f0_dftr4 f0_dftr4 p_sspwuni f0_dftr4 a_wtr f0_dftr4 a_cuni f0_dftr4 a_wss f0_dftr4 f0_dftr4 a_cpw a_wss p_bitr4i $.
 $}
-$( Equality theorem for the transitive class predicate.  (Contributed by NM,
+
+$(Equality theorem for the transitive class predicate.  (Contributed by NM,
      17-Sep-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	ftreq_0 $f class A $.
-	ftreq_1 $f class B $.
-	treq $p |- ( A = B -> ( Tr A <-> Tr B ) ) $= ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_0 wss ftreq_1 cuni ftreq_1 wss ftreq_0 wtr ftreq_1 wtr ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_0 wss ftreq_1 cuni ftreq_0 wss ftreq_1 cuni ftreq_1 wss ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_1 cuni ftreq_0 ftreq_0 ftreq_1 unieq sseq1d ftreq_0 ftreq_1 ftreq_1 cuni sseq2 bitrd ftreq_0 df-tr ftreq_1 df-tr 3bitr4g $.
+	$v A B  $.
+	f0_treq $f class A $.
+	f1_treq $f class B $.
+	p_treq $p |- ( A = B -> ( Tr A <-> Tr B ) ) $= f0_treq f1_treq p_unieq f0_treq f1_treq a_wceq f0_treq a_cuni f1_treq a_cuni f0_treq p_sseq1d f0_treq f1_treq f1_treq a_cuni p_sseq2 f0_treq f1_treq a_wceq f0_treq a_cuni f0_treq a_wss f1_treq a_cuni f0_treq a_wss f1_treq a_cuni f1_treq a_wss p_bitrd f0_treq a_df-tr f1_treq a_df-tr f0_treq f1_treq a_wceq f0_treq a_cuni f0_treq a_wss f1_treq a_cuni f1_treq a_wss f0_treq a_wtr f1_treq a_wtr p_3bitr4g $.
 $}
-$( In a transitive class, the membership relation is transitive.
+
+$(In a transitive class, the membership relation is transitive.
        (Contributed by NM, 19-Apr-1994.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	$d x y B $.
-	$d x y C $.
-	itrel_0 $f set x $.
-	itrel_1 $f set y $.
-	ftrel_0 $f class A $.
-	ftrel_1 $f class B $.
-	ftrel_2 $f class C $.
-	trel $p |- ( Tr A -> ( ( B e. C /\ C e. A ) -> B e. A ) ) $= ftrel_0 wtr itrel_1 sup_set_class itrel_0 sup_set_class wcel itrel_0 sup_set_class ftrel_0 wcel wa itrel_1 sup_set_class ftrel_0 wcel wi itrel_0 wal itrel_1 wal ftrel_1 ftrel_2 wcel ftrel_2 ftrel_0 wcel wa ftrel_1 ftrel_0 wcel wi itrel_1 itrel_0 ftrel_0 dftr2 itrel_1 sup_set_class itrel_0 sup_set_class wcel itrel_0 sup_set_class ftrel_0 wcel wa itrel_1 sup_set_class ftrel_0 wcel wi itrel_0 wal itrel_1 wal ftrel_1 ftrel_2 wcel ftrel_2 ftrel_0 wcel wa ftrel_1 ftrel_0 wcel itrel_1 sup_set_class itrel_0 sup_set_class wcel itrel_0 sup_set_class ftrel_0 wcel wa itrel_1 sup_set_class ftrel_0 wcel wi ftrel_1 ftrel_2 wcel ftrel_2 ftrel_0 wcel wa ftrel_1 ftrel_0 wcel wi itrel_1 itrel_0 ftrel_1 ftrel_2 ftrel_2 ftrel_0 itrel_1 sup_set_class ftrel_1 wceq itrel_0 sup_set_class ftrel_2 wceq wa itrel_1 sup_set_class itrel_0 sup_set_class wcel itrel_0 sup_set_class ftrel_0 wcel wa ftrel_1 ftrel_2 wcel ftrel_2 ftrel_0 wcel wa itrel_1 sup_set_class ftrel_0 wcel ftrel_1 ftrel_0 wcel itrel_1 sup_set_class ftrel_1 wceq itrel_0 sup_set_class ftrel_2 wceq wa itrel_1 sup_set_class itrel_0 sup_set_class wcel ftrel_1 ftrel_2 wcel itrel_0 sup_set_class ftrel_0 wcel ftrel_2 ftrel_0 wcel itrel_1 sup_set_class ftrel_1 itrel_0 sup_set_class ftrel_2 eleq12 itrel_0 sup_set_class ftrel_2 wceq itrel_0 sup_set_class ftrel_0 wcel ftrel_2 ftrel_0 wcel wb itrel_1 sup_set_class ftrel_1 wceq itrel_0 sup_set_class ftrel_2 ftrel_0 eleq1 adantl anbi12d itrel_1 sup_set_class ftrel_1 wceq itrel_1 sup_set_class ftrel_0 wcel ftrel_1 ftrel_0 wcel wb itrel_0 sup_set_class ftrel_2 wceq itrel_1 sup_set_class ftrel_1 ftrel_0 eleq1 adantr imbi12d spc2gv pm2.43b sylbi $.
+	$v A B C  $.
+	$d x y A  $.
+	$d x y B  $.
+	$d x y C  $.
+	f0_trel $f class A $.
+	f1_trel $f class B $.
+	f2_trel $f class C $.
+	i0_trel $f set x $.
+	i1_trel $f set y $.
+	p_trel $p |- ( Tr A -> ( ( B e. C /\ C e. A ) -> B e. A ) ) $= i1_trel i0_trel f0_trel p_dftr2 i1_trel a_sup_set_class f1_trel i0_trel a_sup_set_class f2_trel p_eleq12 i0_trel a_sup_set_class f2_trel f0_trel p_eleq1 i0_trel a_sup_set_class f2_trel a_wceq i0_trel a_sup_set_class f0_trel a_wcel f2_trel f0_trel a_wcel a_wb i1_trel a_sup_set_class f1_trel a_wceq p_adantl i1_trel a_sup_set_class f1_trel a_wceq i0_trel a_sup_set_class f2_trel a_wceq a_wa i1_trel a_sup_set_class i0_trel a_sup_set_class a_wcel f1_trel f2_trel a_wcel i0_trel a_sup_set_class f0_trel a_wcel f2_trel f0_trel a_wcel p_anbi12d i1_trel a_sup_set_class f1_trel f0_trel p_eleq1 i1_trel a_sup_set_class f1_trel a_wceq i1_trel a_sup_set_class f0_trel a_wcel f1_trel f0_trel a_wcel a_wb i0_trel a_sup_set_class f2_trel a_wceq p_adantr i1_trel a_sup_set_class f1_trel a_wceq i0_trel a_sup_set_class f2_trel a_wceq a_wa i1_trel a_sup_set_class i0_trel a_sup_set_class a_wcel i0_trel a_sup_set_class f0_trel a_wcel a_wa f1_trel f2_trel a_wcel f2_trel f0_trel a_wcel a_wa i1_trel a_sup_set_class f0_trel a_wcel f1_trel f0_trel a_wcel p_imbi12d i1_trel a_sup_set_class i0_trel a_sup_set_class a_wcel i0_trel a_sup_set_class f0_trel a_wcel a_wa i1_trel a_sup_set_class f0_trel a_wcel a_wi f1_trel f2_trel a_wcel f2_trel f0_trel a_wcel a_wa f1_trel f0_trel a_wcel a_wi i1_trel i0_trel f1_trel f2_trel f2_trel f0_trel p_spc2gv i1_trel a_sup_set_class i0_trel a_sup_set_class a_wcel i0_trel a_sup_set_class f0_trel a_wcel a_wa i1_trel a_sup_set_class f0_trel a_wcel a_wi i0_trel a_wal i1_trel a_wal f1_trel f2_trel a_wcel f2_trel f0_trel a_wcel a_wa f1_trel f0_trel a_wcel p_pm2.43b f0_trel a_wtr i1_trel a_sup_set_class i0_trel a_sup_set_class a_wcel i0_trel a_sup_set_class f0_trel a_wcel a_wa i1_trel a_sup_set_class f0_trel a_wcel a_wi i0_trel a_wal i1_trel a_wal f1_trel f2_trel a_wcel f2_trel f0_trel a_wcel a_wa f1_trel f0_trel a_wcel a_wi p_sylbi $.
 $}
-$( In a transitive class, the membership relation is transitive.
+
+$(In a transitive class, the membership relation is transitive.
      (Contributed by NM, 19-Apr-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	ftrel3_0 $f class A $.
-	ftrel3_1 $f class B $.
-	ftrel3_2 $f class C $.
-	ftrel3_3 $f class D $.
-	trel3 $p |- ( Tr A -> ( ( B e. C /\ C e. D /\ D e. A ) -> B e. A ) ) $= ftrel3_0 wtr ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_3 wcel ftrel3_3 ftrel3_0 wcel w3a ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_0 wcel wa ftrel3_1 ftrel3_0 wcel ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_3 wcel ftrel3_3 ftrel3_0 wcel w3a ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_3 wcel ftrel3_3 ftrel3_0 wcel wa wa ftrel3_0 wtr ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_0 wcel wa ftrel3_1 ftrel3_2 wcel ftrel3_2 ftrel3_3 wcel ftrel3_3 ftrel3_0 wcel 3anass ftrel3_0 wtr ftrel3_2 ftrel3_3 wcel ftrel3_3 ftrel3_0 wcel wa ftrel3_2 ftrel3_0 wcel ftrel3_1 ftrel3_2 wcel ftrel3_0 ftrel3_2 ftrel3_3 trel anim2d syl5bi ftrel3_0 ftrel3_1 ftrel3_2 trel syld $.
+	$v A B C D  $.
+	f0_trel3 $f class A $.
+	f1_trel3 $f class B $.
+	f2_trel3 $f class C $.
+	f3_trel3 $f class D $.
+	p_trel3 $p |- ( Tr A -> ( ( B e. C /\ C e. D /\ D e. A ) -> B e. A ) ) $= f1_trel3 f2_trel3 a_wcel f2_trel3 f3_trel3 a_wcel f3_trel3 f0_trel3 a_wcel p_3anass f0_trel3 f2_trel3 f3_trel3 p_trel f0_trel3 a_wtr f2_trel3 f3_trel3 a_wcel f3_trel3 f0_trel3 a_wcel a_wa f2_trel3 f0_trel3 a_wcel f1_trel3 f2_trel3 a_wcel p_anim2d f1_trel3 f2_trel3 a_wcel f2_trel3 f3_trel3 a_wcel f3_trel3 f0_trel3 a_wcel a_w3a f1_trel3 f2_trel3 a_wcel f2_trel3 f3_trel3 a_wcel f3_trel3 f0_trel3 a_wcel a_wa a_wa f0_trel3 a_wtr f1_trel3 f2_trel3 a_wcel f2_trel3 f0_trel3 a_wcel a_wa p_syl5bi f0_trel3 f1_trel3 f2_trel3 p_trel f0_trel3 a_wtr f1_trel3 f2_trel3 a_wcel f2_trel3 f3_trel3 a_wcel f3_trel3 f0_trel3 a_wcel a_w3a f1_trel3 f2_trel3 a_wcel f2_trel3 f0_trel3 a_wcel a_wa f1_trel3 f0_trel3 a_wcel p_syld $.
 $}
-$( An element of a transitive class is a subset of the class.  (Contributed
+
+$(An element of a transitive class is a subset of the class.  (Contributed
        by NM, 7-Aug-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	itrss_0 $f set x $.
-	ftrss_0 $f class A $.
-	ftrss_1 $f class B $.
-	trss $p |- ( Tr A -> ( B e. A -> B C_ A ) ) $= ftrss_0 wtr ftrss_1 ftrss_0 wcel ftrss_1 ftrss_0 wss ftrss_0 wtr itrss_0 sup_set_class ftrss_0 wcel itrss_0 sup_set_class ftrss_0 wss wi wi ftrss_0 wtr ftrss_1 ftrss_0 wcel ftrss_1 ftrss_0 wss wi wi itrss_0 ftrss_1 ftrss_0 itrss_0 sup_set_class ftrss_1 wceq itrss_0 sup_set_class ftrss_0 wcel itrss_0 sup_set_class ftrss_0 wss wi ftrss_1 ftrss_0 wcel ftrss_1 ftrss_0 wss wi ftrss_0 wtr itrss_0 sup_set_class ftrss_1 wceq itrss_0 sup_set_class ftrss_0 wcel ftrss_1 ftrss_0 wcel itrss_0 sup_set_class ftrss_0 wss ftrss_1 ftrss_0 wss itrss_0 sup_set_class ftrss_1 ftrss_0 eleq1 itrss_0 sup_set_class ftrss_1 ftrss_0 sseq1 imbi12d imbi2d ftrss_0 wtr itrss_0 sup_set_class ftrss_0 wss itrss_0 ftrss_0 wral itrss_0 sup_set_class ftrss_0 wcel itrss_0 sup_set_class ftrss_0 wss wi itrss_0 ftrss_0 dftr3 itrss_0 sup_set_class ftrss_0 wss itrss_0 ftrss_0 rsp sylbi vtoclg pm2.43b $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_trss $f class A $.
+	f1_trss $f class B $.
+	i0_trss $f set x $.
+	p_trss $p |- ( Tr A -> ( B e. A -> B C_ A ) ) $= i0_trss a_sup_set_class f1_trss f0_trss p_eleq1 i0_trss a_sup_set_class f1_trss f0_trss p_sseq1 i0_trss a_sup_set_class f1_trss a_wceq i0_trss a_sup_set_class f0_trss a_wcel f1_trss f0_trss a_wcel i0_trss a_sup_set_class f0_trss a_wss f1_trss f0_trss a_wss p_imbi12d i0_trss a_sup_set_class f1_trss a_wceq i0_trss a_sup_set_class f0_trss a_wcel i0_trss a_sup_set_class f0_trss a_wss a_wi f1_trss f0_trss a_wcel f1_trss f0_trss a_wss a_wi f0_trss a_wtr p_imbi2d i0_trss f0_trss p_dftr3 i0_trss a_sup_set_class f0_trss a_wss i0_trss f0_trss p_rsp f0_trss a_wtr i0_trss a_sup_set_class f0_trss a_wss i0_trss f0_trss a_wral i0_trss a_sup_set_class f0_trss a_wcel i0_trss a_sup_set_class f0_trss a_wss a_wi p_sylbi f0_trss a_wtr i0_trss a_sup_set_class f0_trss a_wcel i0_trss a_sup_set_class f0_trss a_wss a_wi a_wi f0_trss a_wtr f1_trss f0_trss a_wcel f1_trss f0_trss a_wss a_wi a_wi i0_trss f1_trss f0_trss p_vtoclg f0_trss a_wtr f1_trss f0_trss a_wcel f1_trss f0_trss a_wss p_pm2.43b $.
 $}
-$( The intersection of transitive classes is transitive.  (Contributed by
+
+$(The intersection of transitive classes is transitive.  (Contributed by
        NM, 9-May-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	itrin_0 $f set x $.
-	ftrin_0 $f class A $.
-	ftrin_1 $f class B $.
-	trin $p |- ( ( Tr A /\ Tr B ) -> Tr ( A i^i B ) ) $= ftrin_0 wtr ftrin_1 wtr wa itrin_0 sup_set_class ftrin_0 ftrin_1 cin wss itrin_0 ftrin_0 ftrin_1 cin wral ftrin_0 ftrin_1 cin wtr ftrin_0 wtr ftrin_1 wtr wa itrin_0 sup_set_class ftrin_0 ftrin_1 cin wss itrin_0 ftrin_0 ftrin_1 cin ftrin_0 wtr ftrin_1 wtr wa itrin_0 sup_set_class ftrin_0 ftrin_1 cin wcel itrin_0 sup_set_class ftrin_0 wss itrin_0 sup_set_class ftrin_1 wss wa itrin_0 sup_set_class ftrin_0 ftrin_1 cin wss itrin_0 sup_set_class ftrin_0 ftrin_1 cin wcel itrin_0 sup_set_class ftrin_0 wcel itrin_0 sup_set_class ftrin_1 wcel wa ftrin_0 wtr ftrin_1 wtr wa itrin_0 sup_set_class ftrin_0 wss itrin_0 sup_set_class ftrin_1 wss wa itrin_0 sup_set_class ftrin_0 ftrin_1 elin ftrin_0 wtr itrin_0 sup_set_class ftrin_0 wcel itrin_0 sup_set_class ftrin_0 wss ftrin_1 wtr itrin_0 sup_set_class ftrin_1 wcel itrin_0 sup_set_class ftrin_1 wss ftrin_0 itrin_0 sup_set_class trss ftrin_1 itrin_0 sup_set_class trss im2anan9 syl5bi itrin_0 sup_set_class ftrin_0 ftrin_1 ssin syl6ib ralrimiv itrin_0 ftrin_0 ftrin_1 cin dftr3 sylibr $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_trin $f class A $.
+	f1_trin $f class B $.
+	i0_trin $f set x $.
+	p_trin $p |- ( ( Tr A /\ Tr B ) -> Tr ( A i^i B ) ) $= i0_trin a_sup_set_class f0_trin f1_trin p_elin f0_trin i0_trin a_sup_set_class p_trss f1_trin i0_trin a_sup_set_class p_trss f0_trin a_wtr i0_trin a_sup_set_class f0_trin a_wcel i0_trin a_sup_set_class f0_trin a_wss f1_trin a_wtr i0_trin a_sup_set_class f1_trin a_wcel i0_trin a_sup_set_class f1_trin a_wss p_im2anan9 i0_trin a_sup_set_class f0_trin f1_trin a_cin a_wcel i0_trin a_sup_set_class f0_trin a_wcel i0_trin a_sup_set_class f1_trin a_wcel a_wa f0_trin a_wtr f1_trin a_wtr a_wa i0_trin a_sup_set_class f0_trin a_wss i0_trin a_sup_set_class f1_trin a_wss a_wa p_syl5bi i0_trin a_sup_set_class f0_trin f1_trin p_ssin f0_trin a_wtr f1_trin a_wtr a_wa i0_trin a_sup_set_class f0_trin f1_trin a_cin a_wcel i0_trin a_sup_set_class f0_trin a_wss i0_trin a_sup_set_class f1_trin a_wss a_wa i0_trin a_sup_set_class f0_trin f1_trin a_cin a_wss p_syl6ib f0_trin a_wtr f1_trin a_wtr a_wa i0_trin a_sup_set_class f0_trin f1_trin a_cin a_wss i0_trin f0_trin f1_trin a_cin p_ralrimiv i0_trin f0_trin f1_trin a_cin p_dftr3 f0_trin a_wtr f1_trin a_wtr a_wa i0_trin a_sup_set_class f0_trin f1_trin a_cin a_wss i0_trin f0_trin f1_trin a_cin a_wral f0_trin f1_trin a_cin a_wtr p_sylibr $.
 $}
-$( The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) $)
+
+$(The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) $)
+
 ${
-	tr0 $p |- Tr (/) $= c0 wtr c0 c0 cpw wss c0 cpw 0ss c0 dftr4 mpbir $.
+	$v  $.
+	p_tr0 $p |- Tr (/) $= a_c0 a_cpw p_0ss a_c0 p_dftr4 a_c0 a_wtr a_c0 a_c0 a_cpw a_wss p_mpbir $.
 $}
-$( The universe is transitive.  (Contributed by NM, 14-Sep-2003.) $)
+
+$(The universe is transitive.  (Contributed by NM, 14-Sep-2003.) $)
+
 ${
-	trv $p |- Tr _V $= cvv wtr cvv cuni cvv wss cvv cuni ssv cvv df-tr mpbir $.
+	$v  $.
+	p_trv $p |- Tr _V $= a_cvv a_cuni p_ssv a_cvv a_df-tr a_cvv a_wtr a_cvv a_cuni a_cvv a_wss p_mpbir $.
 $}
-$( The indexed union of a class of transitive sets is transitive.
+
+$(The indexed union of a class of transitive sets is transitive.
        (Contributed by Mario Carneiro, 16-Nov-2014.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	itriun_0 $f set y $.
-	ftriun_0 $f set x $.
-	ftriun_1 $f class A $.
-	ftriun_2 $f class B $.
-	triun $p |- ( A. x e. A Tr B -> Tr U_ x e. A B ) $= ftriun_2 wtr ftriun_0 ftriun_1 wral itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss itriun_0 ftriun_0 ftriun_1 ftriun_2 ciun wral ftriun_0 ftriun_1 ftriun_2 ciun wtr ftriun_2 wtr ftriun_0 ftriun_1 wral itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss itriun_0 ftriun_0 ftriun_1 ftriun_2 ciun itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wcel ftriun_2 wtr ftriun_0 ftriun_1 wral itriun_0 sup_set_class ftriun_2 wcel ftriun_0 ftriun_1 wrex itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss ftriun_0 itriun_0 sup_set_class ftriun_1 ftriun_2 eliun ftriun_2 wtr ftriun_0 ftriun_1 wral itriun_0 sup_set_class ftriun_2 wcel ftriun_0 ftriun_1 wrex wa ftriun_2 wtr itriun_0 sup_set_class ftriun_2 wcel wa ftriun_0 ftriun_1 wrex itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss ftriun_2 wtr itriun_0 sup_set_class ftriun_2 wcel ftriun_0 ftriun_1 r19.29 ftriun_2 wtr itriun_0 sup_set_class ftriun_2 wcel wa itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss ftriun_0 ftriun_1 ftriun_0 itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun ftriun_0 itriun_0 sup_set_class nfcv ftriun_0 ftriun_1 ftriun_2 nfiu1 nfss ftriun_2 wtr itriun_0 sup_set_class ftriun_2 wcel wa itriun_0 sup_set_class ftriun_2 wss ftriun_0 sup_set_class ftriun_1 wcel itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss ftriun_2 wtr itriun_0 sup_set_class ftriun_2 wcel itriun_0 sup_set_class ftriun_2 wss ftriun_2 itriun_0 sup_set_class trss imp ftriun_0 sup_set_class ftriun_1 wcel ftriun_2 ftriun_0 ftriun_1 ftriun_2 ciun wss itriun_0 sup_set_class ftriun_2 wss itriun_0 sup_set_class ftriun_0 ftriun_1 ftriun_2 ciun wss ftriun_0 ftriun_1 ftriun_2 ssiun2 itriun_0 sup_set_class ftriun_2 ftriun_0 ftriun_1 ftriun_2 ciun sstr2 syl5com syl5 rexlimi syl sylan2b ralrimiva itriun_0 ftriun_0 ftriun_1 ftriun_2 ciun dftr3 sylibr $.
+	$v x A B  $.
+	$d x y A  $.
+	$d y B  $.
+	f0_triun $f set x $.
+	f1_triun $f class A $.
+	f2_triun $f class B $.
+	i0_triun $f set y $.
+	p_triun $p |- ( A. x e. A Tr B -> Tr U_ x e. A B ) $= f0_triun i0_triun a_sup_set_class f1_triun f2_triun p_eliun f2_triun a_wtr i0_triun a_sup_set_class f2_triun a_wcel f0_triun f1_triun p_r19.29 f0_triun i0_triun a_sup_set_class p_nfcv f0_triun f1_triun f2_triun p_nfiu1 f0_triun i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun p_nfss f2_triun i0_triun a_sup_set_class p_trss f2_triun a_wtr i0_triun a_sup_set_class f2_triun a_wcel i0_triun a_sup_set_class f2_triun a_wss p_imp f0_triun f1_triun f2_triun p_ssiun2 i0_triun a_sup_set_class f2_triun f0_triun f1_triun f2_triun a_ciun p_sstr2 f0_triun a_sup_set_class f1_triun a_wcel f2_triun f0_triun f1_triun f2_triun a_ciun a_wss i0_triun a_sup_set_class f2_triun a_wss i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss p_syl5com f2_triun a_wtr i0_triun a_sup_set_class f2_triun a_wcel a_wa i0_triun a_sup_set_class f2_triun a_wss f0_triun a_sup_set_class f1_triun a_wcel i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss p_syl5 f2_triun a_wtr i0_triun a_sup_set_class f2_triun a_wcel a_wa i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss f0_triun f1_triun p_rexlimi f2_triun a_wtr f0_triun f1_triun a_wral i0_triun a_sup_set_class f2_triun a_wcel f0_triun f1_triun a_wrex a_wa f2_triun a_wtr i0_triun a_sup_set_class f2_triun a_wcel a_wa f0_triun f1_triun a_wrex i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss p_syl i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wcel f2_triun a_wtr f0_triun f1_triun a_wral i0_triun a_sup_set_class f2_triun a_wcel f0_triun f1_triun a_wrex i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss p_sylan2b f2_triun a_wtr f0_triun f1_triun a_wral i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss i0_triun f0_triun f1_triun f2_triun a_ciun p_ralrimiva i0_triun f0_triun f1_triun f2_triun a_ciun p_dftr3 f2_triun a_wtr f0_triun f1_triun a_wral i0_triun a_sup_set_class f0_triun f1_triun f2_triun a_ciun a_wss i0_triun f0_triun f1_triun f2_triun a_ciun a_wral f0_triun f1_triun f2_triun a_ciun a_wtr p_sylibr $.
 $}
-$( The union of a class of transitive sets is transitive.  Exercise 5(a) of
+
+$(The union of a class of transitive sets is transitive.  Exercise 5(a) of
        [Enderton] p. 73.  (Contributed by Scott Fenton, 21-Feb-2011.)  (Proof
        shortened by Mario Carneiro, 26-Apr-2014.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$d x A $.
-	ftruni_0 $f set x $.
-	ftruni_1 $f class A $.
-	truni $p |- ( A. x e. A Tr x -> Tr U. A ) $= ftruni_0 sup_set_class wtr ftruni_0 ftruni_1 wral ftruni_0 ftruni_1 ftruni_0 sup_set_class ciun wtr ftruni_1 cuni wtr ftruni_0 ftruni_1 ftruni_0 sup_set_class triun ftruni_1 cuni ftruni_0 ftruni_1 ftruni_0 sup_set_class ciun wceq ftruni_1 cuni wtr ftruni_0 ftruni_1 ftruni_0 sup_set_class ciun wtr wb ftruni_0 ftruni_1 uniiun ftruni_1 cuni ftruni_0 ftruni_1 ftruni_0 sup_set_class ciun treq ax-mp sylibr $.
+	$v x A  $.
+	$d x A  $.
+	f0_truni $f set x $.
+	f1_truni $f class A $.
+	p_truni $p |- ( A. x e. A Tr x -> Tr U. A ) $= f0_truni f1_truni f0_truni a_sup_set_class p_triun f0_truni f1_truni p_uniiun f1_truni a_cuni f0_truni f1_truni f0_truni a_sup_set_class a_ciun p_treq f1_truni a_cuni f0_truni f1_truni f0_truni a_sup_set_class a_ciun a_wceq f1_truni a_cuni a_wtr f0_truni f1_truni f0_truni a_sup_set_class a_ciun a_wtr a_wb a_ax-mp f0_truni a_sup_set_class a_wtr f0_truni f1_truni a_wral f0_truni f1_truni f0_truni a_sup_set_class a_ciun a_wtr f1_truni a_cuni a_wtr p_sylibr $.
 $}
-$( The intersection of a class of transitive sets is transitive.  Exercise
+
+$(The intersection of a class of transitive sets is transitive.  Exercise
        5(b) of [Enderton] p. 73.  (Contributed by Scott Fenton,
        25-Feb-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v y $.
-	$d x y A $.
-	itrint_0 $f set y $.
-	ftrint_0 $f set x $.
-	ftrint_1 $f class A $.
-	trint $p |- ( A. x e. A Tr x -> Tr |^| A ) $= ftrint_0 sup_set_class wtr ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 wal ftrint_1 cint wtr ftrint_0 sup_set_class wtr ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi ftrint_0 ftrint_1 wral itrint_0 wal itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 wal ftrint_0 sup_set_class wtr ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class wral ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi ftrint_0 ftrint_1 wral itrint_0 wal ftrint_0 sup_set_class wtr ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class wral ftrint_0 ftrint_1 wral ftrint_0 sup_set_class wtr itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class wral ftrint_0 ftrint_1 itrint_0 ftrint_0 sup_set_class dftr3 ralbii biimpi itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class wral ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi itrint_0 wal ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi ftrint_0 ftrint_1 wral itrint_0 wal itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi itrint_0 wal ftrint_0 ftrint_1 itrint_0 sup_set_class ftrint_0 sup_set_class wss itrint_0 ftrint_0 sup_set_class df-ral ralbii itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi ftrint_0 itrint_0 ftrint_1 ralcom4 bitri sylib itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss wi ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 itrint_0 sup_set_class ftrint_0 sup_set_class wcel itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 ralim alimi syl ftrint_1 cint wtr itrint_0 sup_set_class ftrint_1 cint wss itrint_0 ftrint_1 cint wral itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 wal itrint_0 ftrint_1 cint dftr3 itrint_0 sup_set_class ftrint_1 cint wss itrint_0 ftrint_1 cint wral itrint_0 sup_set_class ftrint_1 cint wcel itrint_0 sup_set_class ftrint_1 cint wss wi itrint_0 wal itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 wal itrint_0 sup_set_class ftrint_1 cint wss itrint_0 ftrint_1 cint df-ral itrint_0 sup_set_class ftrint_1 cint wcel itrint_0 sup_set_class ftrint_1 cint wss wi itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral wi itrint_0 itrint_0 sup_set_class ftrint_1 cint wcel itrint_0 sup_set_class ftrint_0 sup_set_class wcel ftrint_0 ftrint_1 wral itrint_0 sup_set_class ftrint_1 cint wss itrint_0 sup_set_class ftrint_0 sup_set_class wss ftrint_0 ftrint_1 wral ftrint_0 itrint_0 sup_set_class ftrint_1 itrint_0 vex elint2 ftrint_0 itrint_0 sup_set_class ftrint_1 ssint imbi12i albii bitri bitri sylibr $.
+	$v x A  $.
+	$d x y A  $.
+	$d y  $.
+	f0_trint $f set x $.
+	f1_trint $f class A $.
+	i0_trint $f set y $.
+	p_trint $p |- ( A. x e. A Tr x -> Tr |^| A ) $= i0_trint f0_trint a_sup_set_class p_dftr3 f0_trint a_sup_set_class a_wtr i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_wral f0_trint f1_trint p_ralbii f0_trint a_sup_set_class a_wtr f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_wral f0_trint f1_trint a_wral p_biimpi i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_df-ral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi i0_trint a_wal f0_trint f1_trint p_ralbii i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi f0_trint i0_trint f1_trint p_ralcom4 i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_wral f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi i0_trint a_wal f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi f0_trint f1_trint a_wral i0_trint a_wal p_bitri f0_trint a_sup_set_class a_wtr f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss i0_trint f0_trint a_sup_set_class a_wral f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi f0_trint f1_trint a_wral i0_trint a_wal p_sylib i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint p_ralim i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint p_alimi f0_trint a_sup_set_class a_wtr f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss a_wi f0_trint f1_trint a_wral i0_trint a_wal i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint a_wal p_syl i0_trint f1_trint a_cint p_dftr3 i0_trint a_sup_set_class f1_trint a_cint a_wss i0_trint f1_trint a_cint a_df-ral i0_trint p_vex f0_trint i0_trint a_sup_set_class f1_trint p_elint2 f0_trint i0_trint a_sup_set_class f1_trint p_ssint i0_trint a_sup_set_class f1_trint a_cint a_wcel i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f1_trint a_cint a_wss i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral p_imbi12i i0_trint a_sup_set_class f1_trint a_cint a_wcel i0_trint a_sup_set_class f1_trint a_cint a_wss a_wi i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint p_albii i0_trint a_sup_set_class f1_trint a_cint a_wss i0_trint f1_trint a_cint a_wral i0_trint a_sup_set_class f1_trint a_cint a_wcel i0_trint a_sup_set_class f1_trint a_cint a_wss a_wi i0_trint a_wal i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint a_wal p_bitri f1_trint a_cint a_wtr i0_trint a_sup_set_class f1_trint a_cint a_wss i0_trint f1_trint a_cint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint a_wal p_bitri f0_trint a_sup_set_class a_wtr f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wcel f0_trint f1_trint a_wral i0_trint a_sup_set_class f0_trint a_sup_set_class a_wss f0_trint f1_trint a_wral a_wi i0_trint a_wal f1_trint a_cint a_wtr p_sylibr $.
 $}
-$( If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
+
+$(If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
        ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	itrintss_0 $f set x $.
-	itrintss_1 $f set y $.
-	ftrintss_0 $f class A $.
-	trintss $p |- ( ( A =/= (/) /\ Tr A ) -> |^| A C_ A ) $= ftrintss_0 c0 wne ftrintss_0 wtr wa itrintss_1 ftrintss_0 cint ftrintss_0 itrintss_1 sup_set_class ftrintss_0 cint wcel itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 wral ftrintss_0 c0 wne ftrintss_0 wtr wa itrintss_1 sup_set_class ftrintss_0 wcel itrintss_0 itrintss_1 sup_set_class ftrintss_0 itrintss_1 vex elint2 ftrintss_0 c0 wne itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 wral itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 wrex ftrintss_0 wtr itrintss_1 sup_set_class ftrintss_0 wcel ftrintss_0 c0 wne itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 wral itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 wrex itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 ftrintss_0 r19.2z ex ftrintss_0 wtr itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_1 sup_set_class ftrintss_0 wcel itrintss_0 ftrintss_0 ftrintss_0 wtr itrintss_1 sup_set_class itrintss_0 sup_set_class wcel itrintss_0 sup_set_class ftrintss_0 wcel itrintss_1 sup_set_class ftrintss_0 wcel ftrintss_0 itrintss_1 sup_set_class itrintss_0 sup_set_class trel exp3acom23 rexlimdv sylan9 syl5bi ssrdv $.
+	$v A  $.
+	$d x y A  $.
+	$d y  $.
+	f0_trintss $f class A $.
+	i0_trintss $f set x $.
+	i1_trintss $f set y $.
+	p_trintss $p |- ( ( A =/= (/) /\ Tr A ) -> |^| A C_ A ) $= i1_trintss p_vex i0_trintss i1_trintss a_sup_set_class f0_trintss p_elint2 i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss p_r19.2z f0_trintss a_c0 a_wne i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss a_wral i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss a_wrex p_ex f0_trintss i1_trintss a_sup_set_class i0_trintss a_sup_set_class p_trel f0_trintss a_wtr i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss a_sup_set_class f0_trintss a_wcel i1_trintss a_sup_set_class f0_trintss a_wcel p_exp3acom23 f0_trintss a_wtr i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i1_trintss a_sup_set_class f0_trintss a_wcel i0_trintss f0_trintss p_rexlimdv f0_trintss a_c0 a_wne i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss a_wral i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss a_wrex f0_trintss a_wtr i1_trintss a_sup_set_class f0_trintss a_wcel p_sylan9 i1_trintss a_sup_set_class f0_trintss a_cint a_wcel i1_trintss a_sup_set_class i0_trintss a_sup_set_class a_wcel i0_trintss f0_trintss a_wral f0_trintss a_c0 a_wne f0_trintss a_wtr a_wa i1_trintss a_sup_set_class f0_trintss a_wcel p_syl5bi f0_trintss a_c0 a_wne f0_trintss a_wtr a_wa i1_trintss f0_trintss a_cint f0_trintss p_ssrdv $.
 $}
-$( Any non-empty transitive class includes its intersection.  Exercise 2 in
+
+$(Any non-empty transitive class includes its intersection.  Exercise 2 in
        [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d x A $.
-	itrint0_0 $f set x $.
-	ftrint0_0 $f class A $.
-	trint0 $p |- ( ( Tr A /\ A =/= (/) ) -> |^| A C_ A ) $= ftrint0_0 c0 wne ftrint0_0 wtr ftrint0_0 cint ftrint0_0 wss ftrint0_0 c0 wne itrint0_0 sup_set_class ftrint0_0 wcel itrint0_0 wex ftrint0_0 wtr ftrint0_0 cint ftrint0_0 wss wi itrint0_0 ftrint0_0 n0 itrint0_0 sup_set_class ftrint0_0 wcel ftrint0_0 wtr ftrint0_0 cint ftrint0_0 wss wi itrint0_0 itrint0_0 sup_set_class ftrint0_0 wcel ftrint0_0 cint itrint0_0 sup_set_class wss ftrint0_0 wtr itrint0_0 sup_set_class ftrint0_0 wss ftrint0_0 cint ftrint0_0 wss itrint0_0 sup_set_class ftrint0_0 intss1 ftrint0_0 wtr itrint0_0 sup_set_class ftrint0_0 wcel itrint0_0 sup_set_class ftrint0_0 wss ftrint0_0 itrint0_0 sup_set_class trss com12 ftrint0_0 cint itrint0_0 sup_set_class ftrint0_0 sstr2 sylsyld exlimiv sylbi impcom $.
+	$v A  $.
+	$d x A  $.
+	f0_trint0 $f class A $.
+	i0_trint0 $f set x $.
+	p_trint0 $p |- ( ( Tr A /\ A =/= (/) ) -> |^| A C_ A ) $= i0_trint0 f0_trint0 p_n0 i0_trint0 a_sup_set_class f0_trint0 p_intss1 f0_trint0 i0_trint0 a_sup_set_class p_trss f0_trint0 a_wtr i0_trint0 a_sup_set_class f0_trint0 a_wcel i0_trint0 a_sup_set_class f0_trint0 a_wss p_com12 f0_trint0 a_cint i0_trint0 a_sup_set_class f0_trint0 p_sstr2 i0_trint0 a_sup_set_class f0_trint0 a_wcel f0_trint0 a_cint i0_trint0 a_sup_set_class a_wss f0_trint0 a_wtr i0_trint0 a_sup_set_class f0_trint0 a_wss f0_trint0 a_cint f0_trint0 a_wss p_sylsyld i0_trint0 a_sup_set_class f0_trint0 a_wcel f0_trint0 a_wtr f0_trint0 a_cint f0_trint0 a_wss a_wi i0_trint0 p_exlimiv f0_trint0 a_c0 a_wne i0_trint0 a_sup_set_class f0_trint0 a_wcel i0_trint0 a_wex f0_trint0 a_wtr f0_trint0 a_cint f0_trint0 a_wss a_wi p_sylbi f0_trint0 a_c0 a_wne f0_trint0 a_wtr f0_trint0 a_cint f0_trint0 a_wss p_impcom $.
 $}
+
 

@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_standard_axioms_from_the_Lukasiewicz_axioms.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            Derive Nicod's axiom from the standard axioms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -9,7 +9,7 @@ Prove Nicod's axiom and implication and negation definitions.
 
 */
 
-/* Define implication in terms of 'nand'.  Analogous to
+/*Define implication in terms of 'nand'.  Analogous to
      ` ( ( ph -/\ ( ps -/\ ps ) ) <-> ( ph -> ps ) ) ` .  In a pure
      (standalone) treatment of Nicod's axiom, this theorem would be changed to
      a definition ($a statement).  (Contributed by NM, 11-Dec-2008.)
@@ -27,7 +27,7 @@ proof of nic-dfim {
 	qed prop 1 = step 4 ;;
 }
 
-/* Define negation in terms of 'nand'.  Analogous to
+/*Define negation in terms of 'nand'.  Analogous to
      ` ( ( ph -/\ ph ) <-> -. ph ) ` .  In a pure (standalone) treatment of
      Nicod's axiom, this theorem would be changed to a definition ($a
      statement).  (Contributed by NM, 11-Dec-2008.)
@@ -45,11 +45,11 @@ proof of nic-dfneg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Minor premise. */
+/*Minor premise. */
 
-/* Major premise. */
+/*Major premise. */
 
-/* Derive Nicod's rule of modus ponens using 'nand', from the standard
+/*Derive Nicod's rule of modus ponens using 'nand', from the standard
        one.  Although the major and minor premise together also imply ` ch ` ,
        this form is necessary for useful derivations from ~ nic-ax .  In a pure
        (standalone) treatment of Nicod's axiom, this theorem would be changed
@@ -72,7 +72,7 @@ proof of nic-mp {
 	qed prop 1 = step 4 ;;
 }
 
-/* A direct proof of ~ nic-mp .  (Contributed by NM, 30-Dec-2008.)
+/*A direct proof of ~ nic-mp .  (Contributed by NM, 30-Dec-2008.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem nic-mpALT (ph : wff, ps : wff, ch : wff)  {
@@ -95,7 +95,7 @@ proof of nic-mpALT {
 	qed prop 1 = step 9 ;;
 }
 
-/* Nicod's axiom derived from the standard ones.  See _Intro. to Math.
+/*Nicod's axiom derived from the standard ones.  See _Intro. to Math.
      Phil._ by B. Russell, p. 152.  Like ~ meredith , the usual axioms can be
      derived from this and vice versa.  Unlike ~ meredith , Nicod uses a
      different connective ('nand'), so another form of modus ponens must be
@@ -138,7 +138,7 @@ proof of nic-ax {
 	qed prop 1 = step 25 ;;
 }
 
-/* A direct proof of ~ nic-ax .  (Contributed by NM, 11-Dec-2008.)
+/*A direct proof of ~ nic-ax .  (Contributed by NM, 11-Dec-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem nic-axALT (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {

@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Membership_predicate.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Axiom schemes ax-13 (Left Membership Equality)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Left Membership Equality.  One of the equality and substitution
+/*Axiom of Left Membership Equality.  One of the equality and substitution
      axioms for a non-logical predicate in our predicate calculus with
      equality.  It substitutes equal variables into the left-hand side of the
      ` e. ` binary predicate.  This axiom scheme is a sub-scheme of Axiom
@@ -24,7 +24,7 @@ axiom ax-13 (x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( x = y → ( x ∈ z → y ∈ z ) ) ;;
 }
 
-/* An identity law for the non-logical predicate.  (Contributed by NM,
+/*An identity law for the non-logical predicate.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem elequ1 (x : set, y : set, z : set)  {

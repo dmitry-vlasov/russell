@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_intersection_of_a_class.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Indexed union and intersection
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -12,7 +12,7 @@ constant {
 	latex \bigcup ;;
 }
 
-/* Underlined big cup. */
+/*Underlined big cup. */
 
 constant {
 	symbol ⋂_ ;;
@@ -20,9 +20,9 @@ constant {
 	latex \bigcap ;;
 }
 
-/* Underlined big cap. */
+/*Underlined big cap. */
 
-/* Extend class notation to include indexed union.  Note:  Historically
+/*Extend class notation to include indexed union.  Note:  Historically
      (prior to 21-Oct-2005), set.mm used the notation ` U. x e. A B ` , with
      the same union symbol as ~ cuni .  While that syntax was unambiguous, it
      did not allow for LALR parsing of the syntax constructions in set.mm.  The
@@ -33,7 +33,7 @@ rule ciun (x : set, A : class, B : class) {
 	term : class = # ⋃_ x ∈ A B ;;
 }
 
-/* Extend class notation to include indexed intersection.  Note:
+/*Extend class notation to include indexed intersection.  Note:
      Historically (prior to 21-Oct-2005), set.mm used the notation
      ` |^| x e. A B ` , with the same intersection symbol as ~ cint .  Although
      that syntax was unambiguous, it did not allow for LALR parsing of the
@@ -45,7 +45,7 @@ rule ciin (x : set, A : class, B : class) {
 	term : class = # ⋂_ x ∈ A B ;;
 }
 
-/* Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
+/*Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
        most applications, ` A ` is independent of ` x ` (although this is not
        required by the definition), and ` B ` depends on ` x ` i.e. can be read
        informally as ` B ( x ) ` .  We call ` x ` the index, ` A ` the index
@@ -69,7 +69,7 @@ definition df-iun (x : set, y : set, A : class, B : class) disjointed(x y, y A, 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define indexed intersection.  Definition of [Stoll] p. 45.  See the
+/*Define indexed intersection.  Definition of [Stoll] p. 45.  See the
        remarks for its sibling operation of indexed union ~ df-iun .  An
        alternate definition tying indexed intersection to ordinary intersection
        is ~ dfiin2 .  Theorem ~ intiin provides a definition of ordinary
@@ -83,7 +83,7 @@ definition df-iin (x : set, y : set, A : class, B : class) disjointed(x y, y A, 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) */
+/*Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) */
 
 theorem eliun (x : set, A : class, B : class, C : class) disjointed(x y A, y B, y C) {
 	prop 1 : wff = |- ( A ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B A ∈ C ) ;;
@@ -102,7 +102,7 @@ proof of eliun {
 	qed prop 1 = step 8 ;;
 }
 
-/* Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) */
+/*Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) */
 
 theorem eliin (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, y B, y C) {
 	prop 1 : wff = |- ( A ∈ V → ( A ∈ ⋂_ x ∈ B C ↔ ∀ x ∈ B A ∈ C ) ) ;;
@@ -117,7 +117,7 @@ proof of eliin {
 	qed prop 1 = step 4 ;;
 }
 
-/* Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) */
+/*Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) */
 
 theorem iuncom (x : set, y : set, A : class, B : class, C : class) disjointed(y z A, x z B, z C, x y) {
 	prop 1 : wff = |- ⋃_ x ∈ A ⋃_ y ∈ B C = ⋃_ y ∈ B ⋃_ x ∈ A C ;;
@@ -138,7 +138,7 @@ proof of iuncom {
 	qed prop 1 = step 10 ;;
 }
 
-/* Commutation of union with indexed union.  (Contributed by Mario
+/*Commutation of union with indexed union.  (Contributed by Mario
        Carneiro, 18-Jan-2014.) */
 
 theorem iuncom4 (x : set, A : class, B : class) disjointed(y z A, y z B, x y z) {
@@ -169,7 +169,7 @@ proof of iuncom4 {
 	qed prop 1 = step 19 ;;
 }
 
-/* Indexed union of a constant class, i.e. where ` B ` does not depend on
+/*Indexed union of a constant class, i.e. where ` B ` does not depend on
        ` x ` .  (Contributed by NM, 5-Sep-2004.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) */
 
@@ -186,7 +186,7 @@ proof of iunconst {
 	qed prop 1 = step 4 ;;
 }
 
-/* Indexed intersection of a constant class, i.e. where ` B ` does not
+/*Indexed intersection of a constant class, i.e. where ` B ` does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 6-Feb-2015.) */
 
 theorem iinconst (x : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -204,7 +204,7 @@ proof of iinconst {
 	qed prop 1 = step 6 ;;
 }
 
-/* Law combining indexed union with indexed intersection.  Eq. 14 in
+/*Law combining indexed union with indexed intersection.  Eq. 14 in
        [KuratowskiMostowski] p. 109.  This theorem also appears as the last
        example at ~ http://en.wikipedia.org/wiki/Union%5F%28set%5Ftheory%29 .
        (Contributed by NM, 17-Aug-2004.)  (Proof shortened by Andrew Salmon,
@@ -233,7 +233,7 @@ proof of iuniin {
 	qed prop 1 = step 14 ;;
 }
 
-/* Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
+/*Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem iunss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
@@ -250,7 +250,7 @@ proof of iunss1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subclass theorem for indexed union.  (Contributed by NM,
+/*Subclass theorem for indexed union.  (Contributed by NM,
        24-Jan-2012.) */
 
 theorem iinss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
@@ -271,10 +271,10 @@ proof of iinss1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for indexed union.  (Contributed by NM,
+/*Equality theorem for indexed union.  (Contributed by NM,
        27-Jun-1998.) */
 
-theorem iuneq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+theorem iuneq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B, C) {
 	prop 1 : wff = |- ( A = B → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
 }
 
@@ -288,7 +288,7 @@ proof of iuneq1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equality theorem for restricted existential quantifier.  (Contributed by
+/*Equality theorem for restricted existential quantifier.  (Contributed by
        NM, 27-Jun-1998.) */
 
 theorem iineq1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
@@ -305,7 +305,7 @@ proof of iineq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
+/*Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem ss2iun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
@@ -325,10 +325,10 @@ proof of ss2iun {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality theorem for indexed union.  (Contributed by NM,
+/*Equality theorem for indexed union.  (Contributed by NM,
        22-Oct-2003.) */
 
-theorem iuneq2 (x : set, A : class, B : class, C : class)  {
+theorem iuneq2 (x : set, A : class, B : class, C : class) disjointed(x, A, B, C) {
 	prop 1 : wff = |- ( ∀ x ∈ A B = C → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
 }
 
@@ -345,7 +345,7 @@ proof of iuneq2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equality theorem for indexed intersection.  (Contributed by NM,
+/*Equality theorem for indexed intersection.  (Contributed by NM,
        22-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem iineq2 (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
@@ -365,7 +365,7 @@ proof of iineq2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equality inference for indexed union.  (Contributed by NM,
+/*Equality inference for indexed union.  (Contributed by NM,
        22-Oct-2003.) */
 
 theorem iuneq2i (x : set, A : class, B : class, C : class)  {
@@ -380,7 +380,7 @@ proof of iuneq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality inference for indexed intersection.  (Contributed by NM,
+/*Equality inference for indexed intersection.  (Contributed by NM,
        22-Oct-2003.) */
 
 theorem iineq2i (x : set, A : class, B : class, C : class)  {
@@ -395,7 +395,7 @@ proof of iineq2i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for indexed intersection.  (Contributed by NM,
+/*Equality deduction for indexed intersection.  (Contributed by NM,
        7-Dec-2011.) */
 
 theorem iineq2d (ph : wff, x : set, A : class, B : class, C : class)  {
@@ -413,7 +413,7 @@ proof of iineq2d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality deduction for indexed union.  (Contributed by NM,
+/*Equality deduction for indexed union.  (Contributed by NM,
        3-Aug-2004.) */
 
 theorem iuneq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -429,7 +429,7 @@ proof of iuneq2dv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for indexed intersection.  (Contributed by NM,
+/*Equality deduction for indexed intersection.  (Contributed by NM,
        3-Aug-2004.) */
 
 theorem iineq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -444,7 +444,7 @@ proof of iineq2dv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality theorem for indexed union, deduction version.  (Contributed by
+/*Equality theorem for indexed union, deduction version.  (Contributed by
        Drahflow, 22-Oct-2015.) */
 
 theorem iuneq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
@@ -459,7 +459,7 @@ proof of iuneq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for indexed union, deduction version.  (Contributed
+/*Equality deduction for indexed union, deduction version.  (Contributed
          by Drahflow, 22-Oct-2015.) */
 
 theorem iuneq12d (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ph) {
@@ -477,7 +477,7 @@ proof of iuneq12d {
 	qed prop 1 = step 4 ;;
 }
 
-/* Equality deduction for indexed union.  (Contributed by Drahflow,
+/*Equality deduction for indexed union.  (Contributed by Drahflow,
        22-Oct-2015.) */
 
 theorem iuneq2d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph, x A) {
@@ -492,7 +492,7 @@ proof of iuneq2d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for indexed union.  (Contributed by
+/*Bound-variable hypothesis builder for indexed union.  (Contributed by
        Mario Carneiro, 25-Jan-2014.) */
 
 theorem nfiun (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
@@ -512,7 +512,7 @@ proof of nfiun {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for indexed intersection.
+/*Bound-variable hypothesis builder for indexed intersection.
        (Contributed by Mario Carneiro, 25-Jan-2014.) */
 
 theorem nfiin (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
@@ -532,7 +532,7 @@ proof of nfiin {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for indexed union.  (Contributed by
+/*Bound-variable hypothesis builder for indexed union.  (Contributed by
        NM, 12-Oct-2003.) */
 
 theorem nfiu1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -548,7 +548,7 @@ proof of nfiu1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for indexed intersection.
+/*Bound-variable hypothesis builder for indexed intersection.
        (Contributed by NM, 15-Oct-2003.) */
 
 theorem nfii1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -564,7 +564,7 @@ proof of nfii1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Alternate definition of indexed union when ` B ` is a set.  Definition
+/*Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 23-Mar-2006.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -594,7 +594,7 @@ proof of dfiun2g {
 	qed prop 1 = step 17 ;;
 }
 
-/* Alternate definition of indexed intersection when ` B ` is a set.
+/*Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Jeff Hankins, 27-Aug-2009.) */
 
 theorem dfiin2g (x : set, y : set, A : class, B : class, C : class) disjointed(y z w A, y z w B, w C z, w x y z) {
@@ -645,7 +645,7 @@ proof of dfiin2g {
 	qed prop 1 = step 39 ;;
 }
 
-/* Alternate definition of indexed union when ` B ` is a set.  Definition
+/*Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 27-Jun-1998.)  (Revised by
        David Abernethy, 19-Jun-2012.) */
 
@@ -662,7 +662,7 @@ proof of dfiun2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Alternate definition of indexed intersection when ` B ` is a set.
+/*Alternate definition of indexed intersection when ` B ` is a set.
        Definition 15(b) of [Suppes] p. 44.  (Contributed by NM, 28-Jun-1998.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -679,7 +679,7 @@ proof of dfiin2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change the bound variables in an indexed union, with the
+/*Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by Andrew Salmon, 25-Jul-2011.) */
 
@@ -704,7 +704,7 @@ proof of cbviun {
 	qed prop 1 = step 8 ;;
 }
 
-/* Change bound variables in an indexed intersection.  (Contributed by Jeff
+/*Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
 
 theorem cbviin (x : set, y : set, A : class, B : class, C : class) disjointed(z y A, z x A, z B, z C) {
@@ -728,7 +728,7 @@ proof of cbviin {
 	qed prop 1 = step 8 ;;
 }
 
-/* Rule used to change the bound variables in an indexed union, with the
+/*Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 15-Sep-2003.) */
 
@@ -745,7 +745,7 @@ proof of cbviunv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Change bound variables in an indexed intersection.  (Contributed by Jeff
+/*Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.) */
 
 theorem cbviinv (x : set, y : set, A : class, B : class, C : class) disjointed(x A, y A, y B, x C) {
@@ -761,7 +761,7 @@ proof of cbviinv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
+/*Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem iunss (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
@@ -783,7 +783,7 @@ proof of iunss {
 	qed prop 1 = step 10 ;;
 }
 
-/* Subset implication for an indexed union.  (Contributed by NM,
+/*Subset implication for an indexed union.  (Contributed by NM,
        3-Sep-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem ssiun (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
@@ -802,7 +802,7 @@ proof of ssiun {
 	qed prop 1 = step 7 ;;
 }
 
-/* Identity law for subset of an indexed union.  (Contributed by NM,
+/*Identity law for subset of an indexed union.  (Contributed by NM,
        12-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem ssiun2 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
@@ -819,7 +819,7 @@ proof of ssiun2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subset relationship for an indexed union.  (Contributed by NM,
+/*Subset relationship for an indexed union.  (Contributed by NM,
        26-Oct-2003.) */
 
 theorem ssiun2s (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C, x D) {
@@ -839,7 +839,7 @@ proof of ssiun2s {
 	qed prop 1 = step 7 ;;
 }
 
-/* A subclass condition on the members of two indexed classes ` C ( x ) `
+/*A subclass condition on the members of two indexed classes ` C ( x ) `
        and ` D ( y ) ` that implies a subclass relation on their indexed
        unions.  Generalization of Proposition 8.6 of [TakeutiZaring] p. 59.
        Compare ~ uniss2 .  (Contributed by NM, 9-Dec-2004.) */
@@ -856,10 +856,10 @@ proof of iunss2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The indexed union of a class abstraction.  (Contributed by NM,
+/*The indexed union of a class abstraction.  (Contributed by NM,
        27-Dec-2004.) */
 
-theorem iunab (ph : wff, x : set, y : set, A : class) disjointed(y A, x y) {
+theorem iunab (ph : wff, x : set, y : set, A : class) disjointed(y A, x y, x) {
 	prop 1 : wff = |- ⋃_ x ∈ A { y | ph } = { y | ∃ x ∈ A ph } ;;
 }
 
@@ -878,7 +878,7 @@ proof of iunab {
 	qed prop 1 = step 11 ;;
 }
 
-/* The indexed union of a restricted class abstraction.  (Contributed by
+/*The indexed union of a restricted class abstraction.  (Contributed by
        NM, 3-Jan-2004.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) */
 
 theorem iunrab (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x B) {
@@ -898,7 +898,7 @@ proof of iunrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Indexed union with a class difference as its index.  (Contributed by NM,
+/*Indexed union with a class difference as its index.  (Contributed by NM,
        10-Dec-2004.) */
 
 theorem iunxdif2 (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, y C, x D) {
@@ -920,7 +920,7 @@ proof of iunxdif2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Subset theorem for an indexed intersection.  (Contributed by FL,
+/*Subset theorem for an indexed intersection.  (Contributed by FL,
        15-Oct-2012.)  (Proof shortened by Mario Carneiro, 14-Oct-2016.) */
 
 theorem ssiinf (x : set, A : class, B : class, C : class) disjointed(y A, y B, y C, x y) {
@@ -945,7 +945,7 @@ proof of ssiinf {
 	qed prop 1 = step 11 ;;
 }
 
-/* Subset theorem for an indexed intersection.  (Contributed by NM,
+/*Subset theorem for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.) */
 
 theorem ssiin (x : set, A : class, B : class, C : class) disjointed(x C) {
@@ -958,7 +958,7 @@ proof of ssiin {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subset implication for an indexed intersection.  (Contributed by NM,
+/*Subset implication for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem iinss (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
@@ -979,7 +979,7 @@ proof of iinss {
 	qed prop 1 = step 9 ;;
 }
 
-/* An indexed intersection is included in any of its members.  (Contributed
+/*An indexed intersection is included in any of its members.  (Contributed
        by FL, 15-Oct-2012.) */
 
 theorem iinss2 (x : set, A : class, B : class) disjointed(A y, B y, x y) {
@@ -998,7 +998,7 @@ proof of iinss2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Class union in terms of indexed union.  Definition in [Stoll] p. 43.
+/*Class union in terms of indexed union.  Definition in [Stoll] p. 43.
        (Contributed by NM, 28-Jun-1998.) */
 
 theorem uniiun (x : set, A : class) disjointed(x y A) {
@@ -1013,7 +1013,7 @@ proof of uniiun {
 	qed prop 1 = step 3 ;;
 }
 
-/* Class intersection in terms of indexed intersection.  Definition in
+/*Class intersection in terms of indexed intersection.  Definition in
        [Stoll] p. 44.  (Contributed by NM, 28-Jun-1998.) */
 
 theorem intiin (x : set, A : class) disjointed(x y A) {
@@ -1028,7 +1028,7 @@ proof of intiin {
 	qed prop 1 = step 3 ;;
 }
 
-/* An indexed union of singletons recovers the index set.  (Contributed by
+/*An indexed union of singletons recovers the index set.  (Contributed by
        NM, 6-Sep-2005.) */
 
 theorem iunid (x : set, A : class) disjointed(x y A) {
@@ -1052,7 +1052,7 @@ proof of iunid {
 	qed prop 1 = step 12 ;;
 }
 
-/* An indexed union of the empty set is empty.  (Contributed by NM,
+/*An indexed union of the empty set is empty.  (Contributed by NM,
        26-Mar-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem iun0 (x : set, A : class) disjointed(x y, y A) {
@@ -1072,7 +1072,7 @@ proof of iun0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
+/*An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
 theorem 0iun (x : set, A : class) disjointed(x y, y A) {
@@ -1090,7 +1090,7 @@ proof of 0iun {
 	qed prop 1 = step 6 ;;
 }
 
-/* An empty indexed intersection is the universal class.  (Contributed by
+/*An empty indexed intersection is the universal class.  (Contributed by
        NM, 20-Oct-2005.) */
 
 theorem 0iin (x : set, A : class) disjointed(x y, y A) {
@@ -1108,7 +1108,7 @@ proof of 0iin {
 	qed prop 1 = step 6 ;;
 }
 
-/* Indexed intersection with a universal index class.  When ` A ` doesn't
+/*Indexed intersection with a universal index class.  When ` A ` doesn't
        depend on ` x ` , this evaluates to ` A ` by ~ 19.3 and ~ abid2 .  When
        ` A = x ` , this evaluates to ` (/) ` by ~ intiin and ~ intv .
        (Contributed by NM, 11-Sep-2008.) */
@@ -1125,7 +1125,7 @@ proof of viin {
 	qed prop 1 = step 4 ;;
 }
 
-/* There is a non-empty class in an indexed collection ` B ( x ) ` iff the
+/*There is a non-empty class in an indexed collection ` B ( x ) ` iff the
        indexed union of them is non-empty.  (Contributed by NM, 15-Oct-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
 
@@ -1146,7 +1146,7 @@ proof of iunn0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Indexed intersection of a class builder.  (Contributed by NM,
+/*Indexed intersection of a class builder.  (Contributed by NM,
        6-Dec-2011.) */
 
 theorem iinab (ph : wff, x : set, y : set, A : class) disjointed(y A, x y) {
@@ -1170,7 +1170,7 @@ proof of iinab {
 	qed prop 1 = step 13 ;;
 }
 
-/* Indexed intersection of a restricted class builder.  (Contributed by NM,
+/*Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) */
 
 theorem iinrab (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x A, x B) {
@@ -1190,7 +1190,7 @@ proof of iinrab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Indexed intersection of a restricted class builder.  (Contributed by NM,
+/*Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) */
 
 theorem iinrab2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x A, x B, y B) {
@@ -1222,7 +1222,7 @@ proof of iinrab2 {
 	qed prop 1 = step 21 ;;
 }
 
-/* Indexed union of intersection.  Generalization of half of theorem
+/*Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 26-Mar-2004.) */
 
@@ -1245,11 +1245,11 @@ proof of iunin2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Indexed union of intersection.  Generalization of half of theorem
+/*Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 30-Aug-2015.) */
 
-theorem iunin1 (x : set, A : class, B : class, C : class) disjointed(x B) {
+theorem iunin1 (x : set, A : class, B : class, C : class) disjointed(A, x B, C) {
 	prop 1 : wff = |- ⋃_ x ∈ A ( C ∩ B ) = ( ⋃_ x ∈ A C ∩ B ) ;;
 }
 
@@ -1263,7 +1263,7 @@ proof of iunin1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Indexed intersection of union.  Generalization of half of theorem
+/*Indexed intersection of union.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) */
 
@@ -1290,7 +1290,7 @@ proof of iinun2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Indexed union of class difference.  Generalization of half of theorem
+/*Indexed union of class difference.  Generalization of half of theorem
        "De Morgan's laws" in [Enderton] p. 31.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) */
 
@@ -1317,7 +1317,7 @@ proof of iundif2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Rearrange indexed unions over intersection.  (Contributed by NM,
+/*Rearrange indexed unions over intersection.  (Contributed by NM,
        18-Dec-2008.) */
 
 theorem 2iunin (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x B, y C, x D, x y) {
@@ -1333,7 +1333,7 @@ proof of 2iunin {
 	qed prop 1 = step 5 ;;
 }
 
-/* Indexed intersection of class difference.  Generalization of half of
+/*Indexed intersection of class difference.  Generalization of half of
        theorem "De Morgan's laws" in [Enderton] p. 31.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 5-Oct-2006.) */
 
@@ -1361,7 +1361,7 @@ proof of iindif2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Indexed intersection of intersection.  Generalization of half of theorem
+/*Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) */
 
@@ -1388,11 +1388,11 @@ proof of iinin2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Indexed intersection of intersection.  Generalization of half of theorem
+/*Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) */
 
-theorem iinin1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+theorem iinin1 (x : set, A : class, B : class, C : class) disjointed(x A, x B, C) {
 	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A ( C ∩ B ) = ( ⋂_ x ∈ A C ∩ B ) ) ;;
 }
 
@@ -1406,7 +1406,7 @@ proof of iinin1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
+/*Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
        30-Dec-2016.) */
 
 theorem elriin (x : set, A : class, B : class, S : class, X : class) disjointed(A x, X x, B x) {
@@ -1421,10 +1421,10 @@ proof of elriin {
 	qed prop 1 = step 4 ;;
 }
 
-/* Relative intersection of an empty family.  (Contributed by Stefan
+/*Relative intersection of an empty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) */
 
-theorem riin0 (x : set, A : class, S : class, X : class) disjointed(A x, X x) {
+theorem riin0 (x : set, A : class, S : class, X : class) disjointed(A x, X x, x) {
 	prop 1 : wff = |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X S ) = A ) ;;
 }
 
@@ -1439,10 +1439,10 @@ proof of riin0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Relative intersection of a nonempty family.  (Contributed by Stefan
+/*Relative intersection of a nonempty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) */
 
-theorem riinn0 (x : set, A : class, S : class, X : class) disjointed(A x, X x) {
+theorem riinn0 (x : set, A : class, S : class, X : class) disjointed(A x, X x, x) {
 	prop 1 : wff = |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ( A ∩ ⋂_ x ∈ X S ) = ⋂_ x ∈ X S ) ;;
 }
 
@@ -1458,10 +1458,10 @@ proof of riinn0 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Relative intersection of a relative abstraction.  (Contributed by Stefan
+/*Relative intersection of a relative abstraction.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) */
 
-theorem riinrab (ph : wff, x : set, y : set, A : class, X : class) disjointed(A x y, X x y) {
+theorem riinrab (ph : wff, x : set, y : set, A : class, X : class) disjointed(A x y, X x y, x) {
 	prop 1 : wff = |- ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = { y ∈ A | ∀ x ∈ X ph } ;;
 }
 
@@ -1482,7 +1482,7 @@ proof of riinrab {
 	qed prop 1 = step 13 ;;
 }
 
-/* A singleton index picks out an instance of an indexed intersection's
+/*A singleton index picks out an instance of an indexed intersection's
        argument.  (Contributed by NM, 15-Jan-2012.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) */
 
@@ -1502,7 +1502,7 @@ proof of iinxsng {
 	qed prop 1 = step 5 ;;
 }
 
-/* Indexed intersection with an unordered pair index.  (Contributed by NM,
+/*Indexed intersection with an unordered pair index.  (Contributed by NM,
        25-Jan-2012.) */
 
 theorem iinxprg (x : set, A : class, B : class, C : class, D : class, E : class, V : class, W : class) disjointed(x y A, x y B, y C, x y D, x y E, y V, y W) {
@@ -1524,7 +1524,7 @@ proof of iinxprg {
 	qed prop 1 = step 7 ;;
 }
 
-/* A singleton index picks out an instance of an indexed union's argument.
+/*A singleton index picks out an instance of an indexed union's argument.
        (Contributed by Mario Carneiro, 25-Jun-2016.) */
 
 theorem iunxsng (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, y B, x y C, y V) {
@@ -1543,11 +1543,11 @@ proof of iunxsng {
 	qed prop 1 = step 5 ;;
 }
 
-/* A singleton index picks out an instance of an indexed union's argument.
+/*A singleton index picks out an instance of an indexed union's argument.
        (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Mario Carneiro,
        25-Jun-2016.) */
 
-theorem iunxsn (x : set, A : class, B : class, C : class) disjointed(x A, x C) {
+theorem iunxsn (x : set, A : class, B : class, C : class) disjointed(x A, B, x C) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- ( x = A → B = C ) ;;
 	-----------------------
@@ -1560,7 +1560,7 @@ proof of iunxsn {
 	qed prop 1 = step 2 ;;
 }
 
-/* Separate a union in an indexed union.  (Contributed by NM,
+/*Separate a union in an indexed union.  (Contributed by NM,
        27-Dec-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
 
 theorem iunun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
@@ -1583,7 +1583,7 @@ proof of iunun {
 	qed prop 1 = step 11 ;;
 }
 
-/* Separate a union in the index of an indexed union.  (Contributed by NM,
+/*Separate a union in the index of an indexed union.  (Contributed by NM,
        26-Mar-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
 
 theorem iunxun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
@@ -1604,7 +1604,7 @@ proof of iunxun {
 	qed prop 1 = step 9 ;;
 }
 
-/* Separate an indexed union in the index of an indexed union.
+/*Separate an indexed union in the index of an indexed union.
        (Contributed by Mario Carneiro, 5-Dec-2016.) */
 
 theorem iunxiun (x : set, y : set, A : class, B : class, C : class) disjointed(x y z, x z A, z B, y z C) {
@@ -1633,7 +1633,7 @@ proof of iunxiun {
 	qed prop 1 = step 17 ;;
 }
 
-/* A relationship involving union and indexed intersection.  Exercise 23 of
+/*A relationship involving union and indexed intersection.  Exercise 23 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) */
 
@@ -1657,7 +1657,7 @@ proof of iinuni {
 	qed prop 1 = step 11 ;;
 }
 
-/* A relationship involving union and indexed union.  Exercise 25 of
+/*A relationship involving union and indexed union.  Exercise 25 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) */
 
@@ -1696,7 +1696,7 @@ proof of iununi {
 	qed prop 1 = step 27 ;;
 }
 
-/* Subclass relationship for power class and union.  (Contributed by NM,
+/*Subclass relationship for power class and union.  (Contributed by NM,
        18-Jul-2006.) */
 
 theorem sspwuni (A : class, B : class) disjointed(x A, x B) {
@@ -1714,7 +1714,7 @@ proof of sspwuni {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways to express a collection of subclasses.  (Contributed by NM,
+/*Two ways to express a collection of subclasses.  (Contributed by NM,
        19-Jul-2006.) */
 
 theorem pwssb (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -1728,7 +1728,7 @@ proof of pwssb {
 	qed prop 1 = step 3 ;;
 }
 
-/* Relationship for power class and union.  (Contributed by NM,
+/*Relationship for power class and union.  (Contributed by NM,
      18-Jul-2006.) */
 
 theorem elpwuni (A : class, B : class)  {
@@ -1745,7 +1745,7 @@ proof of elpwuni {
 	qed prop 1 = step 6 ;;
 }
 
-/* The power class of an intersection in terms of indexed intersection.
+/*The power class of an intersection in terms of indexed intersection.
        Exercise 24(a) of [Enderton] p. 33.  (Contributed by NM,
        29-Nov-2003.) */
 
@@ -1770,7 +1770,7 @@ proof of iinpw {
 	qed prop 1 = step 12 ;;
 }
 
-/* Inclusion of an indexed union of a power class in the power class of the
+/*Inclusion of an indexed union of a power class in the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 25-Nov-2003.) */
 
@@ -1796,7 +1796,7 @@ proof of iunpwss {
 	qed prop 1 = step 13 ;;
 }
 
-/* Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
+/*Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
      3-Apr-2015.)  (Revised by Mario Carneiro, 5-Jun-2015.) */
 
 theorem rintn0 (A : class, X : class)  {

@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_disjunction_and_conjunction.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Miscellaneous theorems of propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Eliminate an antecedent implied by each side of a biconditional.
+/*Eliminate an antecedent implied by each side of a biconditional.
        (Contributed by NM, 20-Nov-2005.)  (Proof shortened by Wolf Lammen,
        4-Nov-2013.) */
 
@@ -26,7 +26,7 @@ proof of pm5.21nd {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.35 (ph : wff, ps : wff, ch : wff)  {
@@ -39,7 +39,7 @@ proof of pm5.35 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 7-Nov-2013.) */
 
 theorem pm5.54 (ph : wff, ps : wff)  {
@@ -57,7 +57,7 @@ proof of pm5.54 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by NM,
+/*Move conjunction outside of biconditional.  (Contributed by NM,
        13-May-1999.) */
 
 theorem baib (ph : wff, ps : wff, ch : wff)  {
@@ -72,7 +72,7 @@ proof of baib {
 	qed prop 1 = step 2 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by NM,
+/*Move conjunction outside of biconditional.  (Contributed by NM,
        11-Jul-1994.) */
 
 theorem baibr (ph : wff, ps : wff, ch : wff)  {
@@ -87,7 +87,7 @@ proof of baibr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by Mario
+/*Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) */
 
 theorem rbaib (ph : wff, ps : wff, ch : wff)  {
@@ -103,7 +103,7 @@ proof of rbaib {
 	qed prop 1 = step 3 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by Mario
+/*Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) */
 
 theorem rbaibr (ph : wff, ps : wff, ch : wff)  {
@@ -119,7 +119,7 @@ proof of rbaibr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by Mario
+/*Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) */
 
 theorem baibd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -135,7 +135,7 @@ proof of baibd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Move conjunction outside of biconditional.  (Contributed by Mario
+/*Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) */
 
 theorem rbaibd (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -151,7 +151,7 @@ proof of rbaibd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm5.44 (ph : wff, ps : wff, ch : wff)  {
@@ -164,7 +164,7 @@ proof of pm5.44 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
+/*Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
      of [WhiteheadRussell] p. 125.  (Contributed by NM, 8-Jun-1994.) */
 
 theorem pm5.6 (ph : wff, ps : wff, ch : wff)  {
@@ -179,7 +179,7 @@ proof of pm5.6 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Change disjunction in consequent to conjunction in antecedent.
+/*Change disjunction in consequent to conjunction in antecedent.
        (Contributed by NM, 8-Jun-1994.) */
 
 theorem orcanai (ph : wff, ps : wff, ch : wff)  {
@@ -194,7 +194,7 @@ proof of orcanai {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+/*Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        16-Sep-1993.) */
 
 theorem intnan (ph : wff, ps : wff)  {
@@ -209,7 +209,7 @@ proof of intnan {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+/*Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        3-Apr-1995.) */
 
 theorem intnanr (ph : wff, ps : wff)  {
@@ -224,7 +224,7 @@ proof of intnanr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+/*Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) */
 
 theorem intnand (ph : wff, ps : wff, ch : wff)  {
@@ -239,7 +239,7 @@ proof of intnand {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+/*Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) */
 
 theorem intnanrd (ph : wff, ps : wff, ch : wff)  {
@@ -254,7 +254,7 @@ proof of intnanrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach truth from conjunction in biconditional.  (Contributed by NM,
+/*Detach truth from conjunction in biconditional.  (Contributed by NM,
        27-Feb-1996.) */
 
 theorem mpbiran (ph : wff, ps : wff, ch : wff)  {
@@ -270,7 +270,7 @@ proof of mpbiran {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach truth from conjunction in biconditional.  (Contributed by NM,
+/*Detach truth from conjunction in biconditional.  (Contributed by NM,
        22-Feb-1996.) */
 
 theorem mpbiran2 (ph : wff, ps : wff, ch : wff)  {
@@ -286,7 +286,7 @@ proof of mpbiran2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+/*Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        10-May-2005.) */
 
 theorem mpbir2an (ph : wff, ps : wff, ch : wff)  {
@@ -303,7 +303,7 @@ proof of mpbir2an {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+/*Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem mpbi2and (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -320,7 +320,7 @@ proof of mpbi2and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+/*Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
 
 theorem mpbir2and (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -337,7 +337,7 @@ proof of mpbir2and {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+/*Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) */
 
 theorem pm5.62 (ph : wff, ps : wff)  {
@@ -351,7 +351,7 @@ proof of pm5.62 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+/*Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 25-Dec-2012.) */
 
 theorem pm5.63 (ph : wff, ps : wff)  {
@@ -366,7 +366,7 @@ proof of pm5.63 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A wff conjoined with falsehood is false.  (Contributed by NM,
+/*A wff conjoined with falsehood is false.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
 
 theorem bianfi (ph : wff, ps : wff)  {
@@ -381,7 +381,7 @@ proof of bianfi {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff conjoined with falsehood is false.  (Contributed by NM,
+/*A wff conjoined with falsehood is false.  (Contributed by NM,
        27-Mar-1995.)  (Proof shortened by Wolf Lammen, 5-Nov-2013.) */
 
 theorem bianfd (ph : wff, ps : wff, ch : wff)  {
@@ -396,7 +396,7 @@ proof of bianfd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+/*Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
 
 theorem pm4.43 (ph : wff, ps : wff)  {
@@ -411,7 +411,7 @@ proof of pm4.43 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.82 (ph : wff, ps : wff)  {
@@ -428,7 +428,7 @@ proof of pm4.82 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+/*Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) */
 
 theorem pm4.83 (ph : wff, ps : wff)  {
@@ -443,7 +443,7 @@ proof of pm4.83 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Negation inferred from embedded conjunct.  (Contributed by NM,
+/*Negation inferred from embedded conjunct.  (Contributed by NM,
      20-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Nov-2012.) */
 
 theorem pclem6 (ph : wff, ps : wff)  {
@@ -458,7 +458,7 @@ proof of pclem6 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A transitive law of equivalence.  Compare Theorem *4.22 of
+/*A transitive law of equivalence.  Compare Theorem *4.22 of
      [WhiteheadRussell] p. 117.  (Contributed by NM, 18-Aug-1993.) */
 
 theorem biantr (ph : wff, ps : wff, ch : wff)  {
@@ -472,7 +472,7 @@ proof of biantr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Disjunction distributes over the biconditional.  An axiom of system DS in
+/*Disjunction distributes over the biconditional.  An axiom of system DS in
      Vladimir Lifschitz, "On calculational proofs" (1998),
      ~ http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.25.3384 .
      (Contributed by NM, 8-Jan-2005.)  (Proof shortened by Wolf Lammen,
@@ -492,7 +492,7 @@ proof of orbidi {
 	qed prop 1 = step 6 ;;
 }
 
-/* Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
+/*Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
      ed., _Polish Logic 1920-1939_ (Oxford, 1967), p. 96.  (Contributed by NM,
      10-Jan-2005.) */
 
@@ -512,7 +512,7 @@ proof of biluk {
 	qed prop 1 = step 8 ;;
 }
 
-/* Disjunction distributes over the biconditional.  Theorem *5.7 of
+/*Disjunction distributes over the biconditional.  Theorem *5.7 of
      [WhiteheadRussell] p. 125.  This theorem is similar to ~ orbidi .
      (Contributed by Roy F. Longton, 21-Jun-2005.) */
 
@@ -529,7 +529,7 @@ proof of pm5.7 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
+/*Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
      NM, 10-Jan-2005.) */
 
 theorem bigolden (ph : wff, ps : wff)  {
@@ -544,7 +544,7 @@ proof of bigolden {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+/*Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 23-Jun-2005.) */
 
 theorem pm5.71 (ph : wff, ps : wff, ch : wff)  {
@@ -562,7 +562,7 @@ proof of pm5.71 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
+/*Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 23-Dec-2012.) */
 
@@ -584,7 +584,7 @@ proof of pm5.75 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Removal of conjunct from one side of an equivalence.  (Contributed by NM,
+/*Removal of conjunct from one side of an equivalence.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem bimsc1 (ph : wff, ps : wff, ch : wff)  {
@@ -600,7 +600,7 @@ proof of bimsc1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The disjunction of the four possible combinations of two wffs and their
+/*The disjunction of the four possible combinations of two wffs and their
      negations is always true.  (Contributed by David Abernethy,
      28-Jan-2014.) */
 
@@ -617,7 +617,7 @@ proof of 4exmid {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
+/*Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
        (Proof shortened by Wolf Lammen, 22-Dec-2012.) */
 
 theorem ecase2d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -640,7 +640,7 @@ proof of ecase2d {
 	qed prop 1 = step 7 ;;
 }
 
-/* Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
+/*Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
        (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
 
 theorem ecase3 (ph : wff, ps : wff, ch : wff)  {
@@ -657,7 +657,7 @@ proof of ecase3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference for elimination by cases.  (Contributed by NM,
+/*Inference for elimination by cases.  (Contributed by NM,
        13-Jul-2005.) */
 
 theorem ecase (ph : wff, ps : wff, ch : wff)  {
@@ -674,7 +674,7 @@ proof of ecase {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
+/*Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
        (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem ecase3d (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -691,7 +691,7 @@ proof of ecase3d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) */
+/*Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) */
 
 theorem ecased (ph : wff, ps : wff, ch : wff, th : wff)  {
 	hyp 1 : wff = |- ( ph → ( ¬ ps → th ) ) ;;
@@ -708,7 +708,7 @@ proof of ecased {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction for elimination by cases.  (Contributed by NM,
+/*Deduction for elimination by cases.  (Contributed by NM,
        24-May-2013.) */
 
 theorem ecase3ad (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -728,7 +728,7 @@ proof of ecase3ad {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
+/*Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
        (Proof shortened by Wolf Lammen, 6-Jan-2013.) */
 
 theorem ccase (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -747,7 +747,7 @@ proof of ccase {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction for combining cases.  (Contributed by NM, 9-May-2004.) */
+/*Deduction for combining cases.  (Contributed by NM, 9-May-2004.) */
 
 theorem ccased (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
 	hyp 1 : wff = |- ( ph → ( ( ps ∧ ch ) → et ) ) ;;
@@ -768,7 +768,7 @@ proof of ccased {
 	qed prop 1 = step 6 ;;
 }
 
-/* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) */
+/*Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) */
 
 theorem ccase2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
 	hyp 1 : wff = |- ( ( ph ∧ ps ) → ta ) ;;
@@ -786,7 +786,7 @@ proof of ccase2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference eliminating two antecedents from the four possible cases that
+/*Inference eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        25-Oct-2003.) */
 
@@ -806,7 +806,7 @@ proof of 4cases {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction eliminating two antecedents from the four possible cases that
+/*Deduction eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        19-Mar-2013.) */
 
@@ -828,7 +828,7 @@ proof of 4casesdan {
 	qed prop 1 = step 5 ;;
 }
 
-/* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+/*Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) */
 
 theorem niabn (ph : wff, ps : wff, ch : wff)  {
@@ -844,7 +844,7 @@ proof of niabn {
 	qed prop 1 = step 3 ;;
 }
 
-/* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+/*Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 4-Dec-2012.) */
 
@@ -861,7 +861,7 @@ proof of dedlem0a {
 	qed prop 1 = step 5 ;;
 }
 
-/* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+/*Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.) */
 
 theorem dedlem0b (ph : wff, ps : wff, ch : wff)  {
@@ -881,7 +881,7 @@ proof of dedlem0b {
 	qed prop 1 = step 9 ;;
 }
 
-/* Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
+/*Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem dedlema (ph : wff, ps : wff, ch : wff)  {
@@ -900,7 +900,7 @@ proof of dedlema {
 	qed prop 1 = step 8 ;;
 }
 
-/* Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
+/*Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) */
 
 theorem dedlemb (ph : wff, ps : wff, ch : wff)  {
@@ -919,7 +919,7 @@ proof of dedlemb {
 	qed prop 1 = step 8 ;;
 }
 
-/* Hypothesis builder for weak deduction theorem.  For more information,
+/*Hypothesis builder for weak deduction theorem.  For more information,
        see the Deduction Theorem link on the Metamath Proof Explorer home
        page.  (Contributed by NM, 26-Jun-2002.) */
 
@@ -942,7 +942,7 @@ proof of elimh {
 	qed prop 1 = step 7 ;;
 }
 
-/* The weak deduction theorem.  For more information, see the Deduction
+/*The weak deduction theorem.  For more information, see the Deduction
        Theorem link on the Metamath Proof Explorer home page.  (Contributed by
        NM, 26-Jun-2002.) */
 
@@ -960,7 +960,7 @@ proof of dedt {
 	qed prop 1 = step 3 ;;
 }
 
-/* Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
+/*Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
      of ~ con3 demonstrates the use of the weak deduction theorem ~ dedt to
      derive it from ~ con3i .  (Contributed by NM, 27-Jun-2002.)
      (Proof modification is discouraged.) */
@@ -984,7 +984,7 @@ proof of con3th {
 	qed prop 1 = step 11 ;;
 }
 
-/* The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
+/*The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
      interchanged) are commonly used in computer logic design to eliminate
      redundant terms from Boolean expressions.  Specifically, we prove that the
      term ` ( ps /\ ch ) ` on the left-hand side is redundant.  (Contributed by
@@ -1008,7 +1008,7 @@ proof of consensus {
 	qed prop 1 = step 9 ;;
 }
 
-/* Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
+/*Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) */
 
 theorem pm4.42 (ph : wff, ps : wff)  {
@@ -1022,7 +1022,7 @@ proof of pm4.42 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+/*Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) */
 
 theorem ninba (ph : wff, ps : wff, ch : wff)  {
@@ -1037,7 +1037,7 @@ proof of ninba {
 	qed prop 1 = step 2 ;;
 }
 
-/* A specialized lemma for set theory (to derive the Axiom of Pairing).
+/*A specialized lemma for set theory (to derive the Axiom of Pairing).
        (Contributed by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        13-May-2011.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) */
 
@@ -1058,7 +1058,7 @@ proof of prlem1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* A specialized lemma for set theory (to derive the Axiom of Pairing).
+/*A specialized lemma for set theory (to derive the Axiom of Pairing).
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
      13-May-2011.)  (Proof shortened by Wolf Lammen, 9-Dec-2012.) */
 
@@ -1074,7 +1074,7 @@ proof of prlem2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A specialized lemma for set theory (ordered pair theorem).  (Contributed
+/*A specialized lemma for set theory (ordered pair theorem).  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Wolf Lammen, 8-Dec-2012.) */
 
 theorem oplem1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -1099,7 +1099,7 @@ proof of oplem1 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Lemma used in construction of real numbers.  (Contributed by NM,
+/*Lemma used in construction of real numbers.  (Contributed by NM,
      4-Sep-1995.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
 
 theorem rnlem (ph : wff, ps : wff, ch : wff, th : wff)  {
@@ -1119,7 +1119,7 @@ proof of rnlem {
 	qed prop 1 = step 9 ;;
 }
 
-/* A single axiom for Boolean algebra known as DN_1.  See
+/*A single axiom for Boolean algebra known as DN_1.  See
      ~ http://www-unix.mcs.anl.gov/~~mccune/papers/basax/v12.pdf .
      (Contributed by Jeffrey Hankins, 3-Jul-2009.)  (Proof shortened by Andrew
      Salmon, 13-May-2011.)  (Proof shortened by Wolf Lammen, 6-Jan-2013.) */

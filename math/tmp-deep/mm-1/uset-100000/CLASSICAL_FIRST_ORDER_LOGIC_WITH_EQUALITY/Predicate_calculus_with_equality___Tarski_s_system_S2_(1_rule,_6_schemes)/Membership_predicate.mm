@@ -1,15 +1,22 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-8_(Equality).mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                   Membership predicate
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Declare the membership predicate symbol. $)
-$c e.  $.
-$( Stylized epsilon $)
-$( --- Start of patch to prevent connective overloading $)
-$( Extend wff definition to include the membership connective between
+
+$(Declare the membership predicate symbol. $)
+
+$c e. $.
+
+$(Stylized epsilon $)
+
+$(--- Start of patch to prevent connective overloading $)
+
+$(Extend wff definition to include the membership connective between
        classes.
 
        For a general discussion of the theory of classes, see
@@ -23,14 +30,15 @@ $( Extend wff definition to include the membership connective between
        ` B ` are introduced temporarily for the purpose of this definition but
        otherwise not used in predicate calculus.  See ~ df-clab for more
        information on the set theory usage of ~ wcel .) $)
+
 ${
-	$v A $.
-	$v B $.
-	fwcel_0 $f class A $.
-	fwcel_1 $f class B $.
-	wcel $a wff A e. B $.
+	$v A B  $.
+	f0_wcel $f class A $.
+	f1_wcel $f class B $.
+	a_wcel $a wff A e. B $.
 $}
-$( Extend wff definition to include atomic formulas with the epsilon
+
+$(Extend wff definition to include atomic formulas with the epsilon
      (membership) predicate.  This is read " ` x ` is an element of
      ` y ` ," " ` x ` is a member of ` y ` ," " ` x ` belongs to ` y ` ,"
      or " ` y ` contains ` x ` ."  Note:  The phrase " ` y ` includes
@@ -58,9 +66,12 @@ $( Extend wff definition to include atomic formulas with the epsilon
      ~ wcel .  Note:  To see the proof steps of this syntax proof, type "show
      proof wel /all" in the Metamath program.)  (Contributed by NM,
      24-Jan-2006.) $)
-$( --- End of patch to prevent connective overloading $)
-$( --- Start of old code before overloading prevention patch. $)
-$( @( Extend wff definition to include atomic formulas with the epsilon
+
+$(--- End of patch to prevent connective overloading $)
+
+$(--- Start of old code before overloading prevention patch. $)
+
+$(@( Extend wff definition to include atomic formulas with the epsilon
      (membership) predicate.  This is read " ` x ` is an element of ` y ` ,"
      " ` x ` is a member of ` y ` ," " ` x ` belongs to ` y ` ," or " ` y `
      contains ` x ` ."  Note:  The phrase " ` y ` includes ` x ` " means
@@ -72,10 +83,14 @@ $( @( Extend wff definition to include atomic formulas with the epsilon
      "vx cv vy cv wcel". @)
   wel @a wff x e. y @.
   $)
-$( --- End of old code before overloading prevention patch. $)
-$( Register class-to-set promotion and class equality and membership as
+
+$(--- End of old code before overloading prevention patch. $)
+
+$(Register class-to-set promotion and class equality and membership as
      primitive expressions. Although these are actually definitions, the above
      ambiguity prevention necessitates our taking class equality as the
      primitive, instead of set equality. $)
-$( $j primitive 'weq' 'wel'; $)
+
+$($j primitive 'weq' 'wel'; $)
+
 

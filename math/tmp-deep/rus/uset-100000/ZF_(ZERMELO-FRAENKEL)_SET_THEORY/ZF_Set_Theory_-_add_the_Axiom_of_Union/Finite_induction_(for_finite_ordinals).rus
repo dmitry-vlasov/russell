@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Peano_s_postulates.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
               Finite induction (for finite ordinals)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The Principle of Finite Induction (mathematical induction).  Corollary
+/*The Principle of Finite Induction (mathematical induction).  Corollary
        7.31 of [TakeutiZaring] p. 43.  The simpler hypothesis shown here was
        suggested in an email from "Colin" on 1-Oct-2001.  The hypothesis states
        that ` A ` is a set of natural numbers, zero belongs to ` A ` , and
@@ -36,13 +36,13 @@ proof of find {
 	qed prop 1 = step 11 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis. */
+/*Induction hypothesis. */
 
-/* Principle of Finite Induction (inference schema), using implicit
+/*Principle of Finite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last two are the basis and the induction hypothesis.  Theorem
        Schema 22 of [Suppes] p. 136.  (Contributed by NM, 14-Apr-1995.) */
@@ -77,13 +77,13 @@ proof of finds {
 	qed prop 1 = step 15 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis. */
+/*Induction hypothesis. */
 
-/* Principle of Finite Induction (inference schema), using implicit
+/*Principle of Finite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last two are the basis and the induction hypothesis.  The
        basis of this version is an arbitrary natural number ` B ` instead of
@@ -166,13 +166,13 @@ proof of findsg {
 	qed prop 1 = step 62 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis. */
+/*Induction hypothesis. */
 
-/* Principle of Finite Induction (inference schema), using implicit
+/*Principle of Finite Induction (inference schema), using implicit
        substitutions.  The first three hypotheses establish the substitutions
        we need.  The last two are the basis and the induction hypothesis.
        Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
@@ -211,13 +211,13 @@ proof of finds2 {
 	qed prop 1 = step 19 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis. */
+/*Induction hypothesis. */
 
-/* Principle of Finite Induction (inference schema), using implicit
+/*Principle of Finite Induction (inference schema), using implicit
        substitutions.  The first three hypotheses establish the substitutions
        we need.  The last two are the basis and the induction hypothesis.
        Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
@@ -242,7 +242,7 @@ proof of finds1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Finite induction with explicit substitution.  The first hypothesis is
+/*Finite induction with explicit substitution.  The first hypothesis is
        the basis and the second is the induction hypothesis.  Theorem Schema 22
        of [Suppes] p. 136.  See ~ tfindes for the transfinite version.
        (Contributed by Raph Levien, 9-Jul-2003.) */

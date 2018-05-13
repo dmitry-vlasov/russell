@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Function_operation.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         First and second members of an ordered pair
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,29 +10,29 @@ constant {
 	symbol 1st ;;
 }
 
-/* First member of an ordered pair */
+/*First member of an ordered pair */
 
 constant {
 	symbol 2nd ;;
 }
 
-/* Second member of an ordered pair */
+/*Second member of an ordered pair */
 
-/* Extend the definition of a class to include the first member an ordered
+/*Extend the definition of a class to include the first member an ordered
      pair function. */
 
 rule c1st () {
 	term : class = # 1st ;;
 }
 
-/* Extend the definition of a class to include the second member an ordered
+/*Extend the definition of a class to include the second member an ordered
      pair function. */
 
 rule c2nd () {
 	term : class = # 2nd ;;
 }
 
-/* Define a function that extracts the first member, or abscissa, of an
+/*Define a function that extracts the first member, or abscissa, of an
      ordered pair.  Theorem ~ op1st proves that it does this.  For example,
      ` ( 1st `` <. 3 , 4 >. ) = 3 ` .  Equivalent to Definition 5.13 (i) of
      [Monk1] p. 52 (compare ~ op1sta and ~ op1stb ).  The notation is the same
@@ -45,7 +45,7 @@ definition df-1st (x : set)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Define a function that extracts the second member, or ordinate, of an
+/*Define a function that extracts the second member, or ordinate, of an
      ordered pair.  Theorem ~ op2nd proves that it does this.  For example,
      ` ( 2nd `` <. 3 , 4 >. ) = 4 ` .  Equivalent to Definition 5.13 (ii) of
      [Monk1] p. 52 (compare ~ op2nda and ~ op2ndb ).  The notation is the same
@@ -58,11 +58,11 @@ definition df-2nd (x : set)  {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* The value of the function that extracts the first member of an ordered
+/*The value of the function that extracts the first member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) */
 
-theorem 1stval (A : class) disjointed(x A) {
+theorem 1stval (A : class) disjointed(x A, x) {
 	prop 1 : wff = |- ( 1st ` A ) = ⋃ dom { A } ;;
 }
 
@@ -90,11 +90,11 @@ proof of 1stval {
 	qed prop 1 = step 19 ;;
 }
 
-/* The value of the function that extracts the second member of an ordered
+/*The value of the function that extracts the second member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) */
 
-theorem 2ndval (A : class) disjointed(x A) {
+theorem 2ndval (A : class) disjointed(x A, x) {
 	prop 1 : wff = |- ( 2nd ` A ) = ⋃ ran { A } ;;
 }
 
@@ -122,7 +122,7 @@ proof of 2ndval {
 	qed prop 1 = step 19 ;;
 }
 
-/* The value of the first-member function at the empty set.  (Contributed by
+/*The value of the first-member function at the empty set.  (Contributed by
      NM, 23-Apr-2007.) */
 
 theorem 1st0 ()  {
@@ -138,7 +138,7 @@ proof of 1st0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* The value of the second-member function at the empty set.  (Contributed by
+/*The value of the second-member function at the empty set.  (Contributed by
      NM, 23-Apr-2007.) */
 
 theorem 2nd0 ()  {
@@ -156,7 +156,7 @@ proof of 2nd0 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Extract the first member of an ordered pair.  (Contributed by NM,
+/*Extract the first member of an ordered pair.  (Contributed by NM,
        5-Oct-2004.) */
 
 theorem op1st (A : class, B : class)  {
@@ -173,7 +173,7 @@ proof of op1st {
 	qed prop 1 = step 3 ;;
 }
 
-/* Extract the second member of an ordered pair.  (Contributed by NM,
+/*Extract the second member of an ordered pair.  (Contributed by NM,
        5-Oct-2004.) */
 
 theorem op2nd (A : class, B : class)  {
@@ -190,7 +190,7 @@ proof of op2nd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Extract the first member of an ordered pair.  (Contributed by Mario
+/*Extract the first member of an ordered pair.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) */
 
 theorem op1std (A : class, B : class, C : class)  {
@@ -207,7 +207,7 @@ proof of op1std {
 	qed prop 1 = step 3 ;;
 }
 
-/* Extract the second member of an ordered pair.  (Contributed by Mario
+/*Extract the second member of an ordered pair.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) */
 
 theorem op2ndd (A : class, B : class, C : class)  {
@@ -224,7 +224,7 @@ proof of op2ndd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Extract the first member of an ordered pair.  (Contributed by NM,
+/*Extract the first member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) */
 
 theorem op1stg (A : class, B : class, V : class, W : class) disjointed(x y A, x y B) {
@@ -247,7 +247,7 @@ proof of op1stg {
 	qed prop 1 = step 11 ;;
 }
 
-/* Extract the second member of an ordered pair.  (Contributed by NM,
+/*Extract the second member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) */
 
 theorem op2ndg (A : class, B : class, V : class, W : class) disjointed(x y A, x y B) {
@@ -270,13 +270,13 @@ proof of op2ndg {
 	qed prop 1 = step 11 ;;
 }
 
-/* Extract the first member of an ordered triple.  (Due to infrequent
+/*Extract the first member of an ordered triple.  (Due to infrequent
        usage, it isn't worthwhile at this point to define special extractors
        for triples, so we reuse the ordered pair extractors for ~ ot1stg ,
        ~ ot2ndg , ~ ot3rdg .)  (Contributed by NM, 3-Apr-2015.)  (Revised by
        Mario Carneiro, 2-May-2015.) */
 
-theorem ot1stg (A : class, B : class, C : class, V : class, W : class, X : class)  {
+theorem ot1stg (A : class, B : class, C : class, V : class, W : class, X : class) disjointed(A, B) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ∧ C ∈ X ) → ( 1st ` ( 1st ` 〈 A , B , C 〉 ) ) = A ) ;;
 }
 
@@ -294,11 +294,11 @@ proof of ot1stg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Extract the second member of an ordered triple.  (See ~ ot1stg
+/*Extract the second member of an ordered triple.  (See ~ ot1stg
        comment.)  (Contributed by NM, 3-Apr-2015.)  (Revised by Mario Carneiro,
        2-May-2015.) */
 
-theorem ot2ndg (A : class, B : class, C : class, V : class, W : class, X : class)  {
+theorem ot2ndg (A : class, B : class, C : class, V : class, W : class, X : class) disjointed(A, B) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ∧ C ∈ X ) → ( 2nd ` ( 1st ` 〈 A , B , C 〉 ) ) = B ) ;;
 }
 
@@ -316,10 +316,10 @@ proof of ot2ndg {
 	qed prop 1 = step 10 ;;
 }
 
-/* Extract the third member of an ordered triple.  (See ~ ot1stg comment.)
+/*Extract the third member of an ordered triple.  (See ~ ot1stg comment.)
        (Contributed by NM, 3-Apr-2015.) */
 
-theorem ot3rdg (A : class, B : class, C : class, V : class)  {
+theorem ot3rdg (A : class, B : class, C : class, V : class) disjointed(A, B) {
 	prop 1 : wff = |- ( C ∈ V → ( 2nd ` 〈 A , B , C 〉 ) = C ) ;;
 }
 
@@ -333,7 +333,7 @@ proof of ot3rdg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Alternate value of the function that extracts the first member of an
+/*Alternate value of the function that extracts the first member of an
        ordered pair.  Definition 5.13 (i) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) */
 
@@ -360,7 +360,7 @@ proof of 1stval2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Alternate value of the function that extracts the second member of an
+/*Alternate value of the function that extracts the second member of an
        ordered pair.  Definition 5.13 (ii) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) */
 
@@ -390,7 +390,7 @@ proof of 2ndval2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* The ` 1st ` function maps the universe onto the universe.  (Contributed
+/*The ` 1st ` function maps the universe onto the universe.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
 
 theorem fo1st () disjointed(x y, x y, x y) {
@@ -426,7 +426,7 @@ proof of fo1st {
 	qed prop 1 = step 24 ;;
 }
 
-/* The ` 2nd ` function maps the universe onto the universe.  (Contributed
+/*The ` 2nd ` function maps the universe onto the universe.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
 
 theorem fo2nd () disjointed(x y, x y, x y, x y, x y, x y) {
@@ -462,7 +462,7 @@ proof of fo2nd {
 	qed prop 1 = step 24 ;;
 }
 
-/* Mapping of a restriction of the ` 1st ` (first member of an ordered
+/*Mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 11-Oct-2004.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) */
 
@@ -496,7 +496,7 @@ proof of f1stres {
 	qed prop 1 = step 21 ;;
 }
 
-/* Mapping of a restriction of the ` 2nd ` (second member of an ordered
+/*Mapping of a restriction of the ` 2nd ` (second member of an ordered
        pair) function.  (Contributed by NM, 7-Aug-2006.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) */
 
@@ -530,7 +530,7 @@ proof of f2ndres {
 	qed prop 1 = step 21 ;;
 }
 
-/* Onto mapping of a restriction of the ` 1st ` (first member of an ordered
+/*Onto mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 14-Dec-2008.) */
 
 theorem fo1stres (A : class, B : class) disjointed(x y A, x y B, x y, x y A, x y B, x y) {
@@ -570,7 +570,7 @@ proof of fo1stres {
 	qed prop 1 = step 28 ;;
 }
 
-/* Onto mapping of a restriction of the ` 2nd ` (second member of an
+/*Onto mapping of a restriction of the ` 2nd ` (second member of an
        ordered pair) function.  (Contributed by NM, 14-Dec-2008.) */
 
 theorem fo2ndres (A : class, B : class) disjointed(x y A, x y B, x y, x y A, x y B, x y) {
@@ -610,7 +610,7 @@ proof of fo2ndres {
 	qed prop 1 = step 28 ;;
 }
 
-/* Value of an alternate definition of the ` 1st ` function.  (Contributed
+/*Value of an alternate definition of the ` 1st ` function.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 30-Dec-2014.) */
 
 theorem 1st2val (x : set, y : set, z : set, A : class) disjointed(x y z w v, v w A) {
@@ -663,7 +663,7 @@ proof of 1st2val {
 	qed prop 1 = step 41 ;;
 }
 
-/* Value of an alternate definition of the ` 2nd ` function.  (Contributed
+/*Value of an alternate definition of the ` 2nd ` function.  (Contributed
        by NM, 10-Aug-2006.)  (Revised by Mario Carneiro, 30-Dec-2014.) */
 
 theorem 2nd2val (x : set, y : set, z : set, A : class) disjointed(x y z w v, v w A) {
@@ -716,7 +716,7 @@ proof of 2nd2val {
 	qed prop 1 = step 41 ;;
 }
 
-/* Composition of the first member function with another function.
+/*Composition of the first member function with another function.
      (Contributed by NM, 12-Oct-2007.) */
 
 theorem 1stcof (A : class, B : class, C : class, F : class)  {
@@ -747,7 +747,7 @@ proof of 1stcof {
 	qed prop 1 = step 20 ;;
 }
 
-/* Composition of the first member function with another function.
+/*Composition of the first member function with another function.
      (Contributed by FL, 15-Oct-2012.) */
 
 theorem 2ndcof (A : class, B : class, C : class, F : class)  {
@@ -778,7 +778,7 @@ proof of 2ndcof {
 	qed prop 1 = step 20 ;;
 }
 
-/* Location of the first element of a Cartesian product.  (Contributed by
+/*Location of the first element of a Cartesian product.  (Contributed by
        Jeff Madsen, 2-Sep-2009.) */
 
 theorem xp1st (A : class, B : class, C : class) disjointed(A b c, B b c, C b c) {
@@ -799,7 +799,7 @@ proof of xp1st {
 	qed prop 1 = step 9 ;;
 }
 
-/* Location of the second element of a Cartesian product.  (Contributed by
+/*Location of the second element of a Cartesian product.  (Contributed by
        Jeff Madsen, 2-Sep-2009.) */
 
 theorem xp2nd (A : class, B : class, C : class) disjointed(A b c, B b c, C b c) {
@@ -820,7 +820,7 @@ proof of xp2nd {
 	qed prop 1 = step 9 ;;
 }
 
-/* Membership in a cross product.  This version requires no quantifiers or
+/*Membership in a cross product.  This version requires no quantifiers or
      dummy variables.  See also ~ elxp4 .  (Contributed by NM, 9-Oct-2004.) */
 
 theorem elxp6 (A : class, B : class, C : class)  {
@@ -843,7 +843,7 @@ proof of elxp6 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Membership in a cross product.  This version requires no quantifiers or
+/*Membership in a cross product.  This version requires no quantifiers or
      dummy variables.  See also ~ elxp4 .  (Contributed by NM, 19-Aug-2006.) */
 
 theorem elxp7 (A : class, B : class, C : class)  {
@@ -862,7 +862,7 @@ proof of elxp7 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Difference of Cartesian products, expressed in terms of a union of
+/*Difference of Cartesian products, expressed in terms of a union of
        Cartesian products of differences.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by Mario Carneiro, 26-Jun-2014.) */
 
@@ -908,7 +908,7 @@ proof of difxp {
 	qed prop 1 = step 33 ;;
 }
 
-/* Difference law for cross product.  (Contributed by Scott Fenton,
+/*Difference law for cross product.  (Contributed by Scott Fenton,
      18-Feb-2013.)  (Revised by Mario Carneiro, 26-Jun-2014.) */
 
 theorem difxp1 (A : class, B : class, C : class)  {
@@ -927,7 +927,7 @@ proof of difxp1 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Difference law for cross product.  (Contributed by Scott Fenton,
+/*Difference law for cross product.  (Contributed by Scott Fenton,
      18-Feb-2013.)  (Revised by Mario Carneiro, 26-Jun-2014.) */
 
 theorem difxp2 (A : class, B : class, C : class)  {
@@ -948,7 +948,7 @@ proof of difxp2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Equality with an ordered pair.  (Contributed by NM, 15-Dec-2008.)
+/*Equality with an ordered pair.  (Contributed by NM, 15-Dec-2008.)
      (Revised by Mario Carneiro, 23-Feb-2014.) */
 
 theorem eqopi (A : class, B : class, C : class, V : class, W : class)  {
@@ -966,7 +966,7 @@ proof of eqopi {
 	qed prop 1 = step 7 ;;
 }
 
-/* Representation of cross product based on ordered pair component
+/*Representation of cross product based on ordered pair component
        functions.  (Contributed by NM, 16-Sep-2006.) */
 
 theorem xp2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -981,7 +981,7 @@ proof of xp2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The membership relation for a cross product is inherited by union.
+/*The membership relation for a cross product is inherited by union.
        (Contributed by NM, 16-Sep-2006.) */
 
 theorem unielxp (A : class, B : class, C : class) disjointed(x A, x B, x C) {
@@ -1017,7 +1017,7 @@ proof of unielxp {
 	qed prop 1 = step 24 ;;
 }
 
-/* Reconstruction of a member of a cross product in terms of its ordered pair
+/*Reconstruction of a member of a cross product in terms of its ordered pair
      components.  (Contributed by NM, 20-Oct-2013.) */
 
 theorem 1st2nd2 (A : class, B : class, C : class)  {
@@ -1030,7 +1030,7 @@ proof of 1st2nd2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Reconstruction of an ordered pair in terms of its components.
+/*Reconstruction of an ordered pair in terms of its components.
      (Contributed by NM, 25-Feb-2014.) */
 
 theorem 1st2ndb (A : class)  {
@@ -1048,7 +1048,7 @@ proof of 1st2ndb {
 	qed prop 1 = step 7 ;;
 }
 
-/* An ordered pair theorem for members of cross products.  (Contributed by
+/*An ordered pair theorem for members of cross products.  (Contributed by
      NM, 20-Jun-2007.) */
 
 theorem xpopth (A : class, B : class, C : class, D : class, R : class, S : class)  {
@@ -1066,7 +1066,7 @@ proof of xpopth {
 	qed prop 1 = step 7 ;;
 }
 
-/* Two ways to express equality with an ordered pair.  (Contributed by NM,
+/*Two ways to express equality with an ordered pair.  (Contributed by NM,
      3-Sep-2007.)  (Proof shortened by Mario Carneiro, 26-Apr-2015.) */
 
 theorem eqop (A : class, B : class, C : class, V : class, W : class)  {
@@ -1083,7 +1083,7 @@ proof of eqop {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways to express equality with an ordered pair.  (Contributed by NM,
+/*Two ways to express equality with an ordered pair.  (Contributed by NM,
        25-Feb-2014.) */
 
 theorem eqop2 (A : class, B : class, C : class)  {
@@ -1102,7 +1102,7 @@ proof of eqop2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways of expressing that an element is the first member of an ordered
+/*Two ways of expressing that an element is the first member of an ordered
        pair.  (Contributed by NM, 22-Sep-2013.)  (Revised by Mario Carneiro,
        23-Feb-2014.) */
 
@@ -1131,7 +1131,7 @@ proof of op1steq {
 	qed prop 1 = step 17 ;;
 }
 
-/* Swap the members of an ordered pair.  (Contributed by NM, 31-Dec-2014.) */
+/*Swap the members of an ordered pair.  (Contributed by NM, 31-Dec-2014.) */
 
 theorem 2nd1st (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( A ∈ ( B × C ) → ⋃ ⁻¹ { A } = 〈 ( 2nd ` A ) , ( 1st ` A ) 〉 ) ;;
@@ -1147,7 +1147,7 @@ proof of 2nd1st {
 	qed prop 1 = step 6 ;;
 }
 
-/* Reconstruction of a member of a relation in terms of its ordered pair
+/*Reconstruction of a member of a relation in terms of its ordered pair
      components.  (Contributed by NM, 29-Aug-2006.) */
 
 theorem 1st2nd (A : class, B : class)  {
@@ -1163,7 +1163,7 @@ proof of 1st2nd {
 	qed prop 1 = step 5 ;;
 }
 
-/* The first ordered pair component of a member of a relation belongs to the
+/*The first ordered pair component of a member of a relation belongs to the
      domain of the relation.  (Contributed by NM, 17-Sep-2006.) */
 
 theorem 1stdm (A : class, R : class)  {
@@ -1181,7 +1181,7 @@ proof of 1stdm {
 	qed prop 1 = step 7 ;;
 }
 
-/* The second ordered pair component of a member of a relation belongs to the
+/*The second ordered pair component of a member of a relation belongs to the
      range of the relation.  (Contributed by NM, 17-Sep-2006.) */
 
 theorem 2ndrn (A : class, R : class)  {
@@ -1199,7 +1199,7 @@ proof of 2ndrn {
 	qed prop 1 = step 7 ;;
 }
 
-/* Express an element of a relation as a relationship between first and
+/*Express an element of a relation as a relationship between first and
      second components.  (Contributed by Mario Carneiro, 22-Jun-2016.) */
 
 theorem 1st2ndbr (A : class, B : class)  {
@@ -1215,7 +1215,7 @@ proof of 1st2ndbr {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways of expressing membership in the domain of a relation.
+/*Two ways of expressing membership in the domain of a relation.
        (Contributed by NM, 22-Sep-2013.) */
 
 theorem releldm2 (x : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -1251,7 +1251,7 @@ proof of releldm2 {
 	qed prop 1 = step 24 ;;
 }
 
-/* An expression for the domain of a relation.  (Contributed by NM,
+/*An expression for the domain of a relation.  (Contributed by NM,
        22-Sep-2013.) */
 
 theorem reldm (x : set, A : class) disjointed(x y z A) {
@@ -1279,7 +1279,7 @@ proof of reldm {
 	qed prop 1 = step 16 ;;
 }
 
-/* Equality theorem for substitution of a class for an ordered pair (analog
+/*Equality theorem for substitution of a class for an ordered pair (analog
      of ~ sbceq1a that avoids the existential quantifiers of ~ copsexg ).
      (Contributed by NM, 19-Aug-2006.)  (Revised by Mario Carneiro,
      31-Aug-2015.) */
@@ -1305,7 +1305,7 @@ proof of sbcopeq1a {
 	qed prop 1 = step 13 ;;
 }
 
-/* Equality theorem for substitution of a class ` A ` for an ordered pair
+/*Equality theorem for substitution of a class ` A ` for an ordered pair
      ` <. x , y >. ` in ` B ` (analog of ~ csbeq1a ).  (Contributed by NM,
      19-Aug-2006.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
@@ -1330,7 +1330,7 @@ proof of csbopeq1a {
 	qed prop 1 = step 13 ;;
 }
 
-/* A way to define an ordered-pair class abstraction without using
+/*A way to define an ordered-pair class abstraction without using
        existential quantifiers.  (Contributed by NM, 18-Aug-2006.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) */
 
@@ -1360,7 +1360,7 @@ proof of dfopab2 {
 	qed prop 1 = step 18 ;;
 }
 
-/* A way to define an operation class abstraction without using existential
+/*A way to define an operation class abstraction without using existential
        quantifiers.  (Contributed by NM, 18-Aug-2006.)  (Revised by Mario
        Carneiro, 31-Aug-2015.) */
 
@@ -1389,7 +1389,7 @@ proof of dfoprab3s {
 	qed prop 1 = step 17 ;;
 }
 
-/* Operation class abstraction expressed without existential quantifiers.
+/*Operation class abstraction expressed without existential quantifiers.
        (Contributed by NM, 16-Dec-2008.) */
 
 theorem dfoprab3 (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(x y ph, w ps, x y z w) {
@@ -1417,7 +1417,7 @@ proof of dfoprab3 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Operation class abstraction expressed without existential quantifiers.
+/*Operation class abstraction expressed without existential quantifiers.
        (Contributed by NM, 3-Sep-2007.)  (Revised by Mario Carneiro,
        31-Aug-2015.) */
 
@@ -1442,7 +1442,7 @@ proof of dfoprab4 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Operation class abstraction expressed without existential quantifiers.
+/*Operation class abstraction expressed without existential quantifiers.
        (Unnecessary distinct variable restrictions were removed by David
        Abernethy, 19-Jun-2012.)  (Contributed by NM, 20-Dec-2008.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) */
@@ -1499,7 +1499,7 @@ proof of dfoprab4f {
 	qed prop 1 = step 39 ;;
 }
 
-/* Define the cross product of three classes.  Compare ~ df-xp .
+/*Define the cross product of three classes.  Compare ~ df-xp .
        (Contributed by FL, 6-Nov-2013.)  (Proof shortened by Mario Carneiro,
        3-Nov-2015.) */
 
@@ -1518,7 +1518,7 @@ proof of dfxp3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution inference for ordered pairs.  Compare
+/*Implicit substitution inference for ordered pairs.  Compare
        ~ copsex2ga .  (Contributed by NM, 12-Mar-2014.) */
 
 theorem copsex2gb (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, x y ph) {
@@ -1537,7 +1537,7 @@ proof of copsex2gb {
 	qed prop 1 = step 6 ;;
 }
 
-/* Implicit substitution inference for ordered pairs.  Compare
+/*Implicit substitution inference for ordered pairs.  Compare
        ~ copsex2g .  (Contributed by NM, 26-Feb-2014.)  (Proof shortened by
        Mario Carneiro, 31-Aug-2015.) */
 
@@ -1556,7 +1556,7 @@ proof of copsex2ga {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership in an ordered pair class builder.  (Contributed by NM,
+/*Membership in an ordered pair class builder.  (Contributed by NM,
        25-Feb-2014.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem elopaba (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x y A, x y ph) {
@@ -1572,7 +1572,7 @@ proof of elopaba {
 	qed prop 1 = step 3 ;;
 }
 
-/* Transfer ordered-pair existence from/to single variable existence.
+/*Transfer ordered-pair existence from/to single variable existence.
        (Contributed by NM, 26-Feb-2014.)  (Proof shortened by Mario Carneiro,
        31-Aug-2015.) */
 
@@ -1591,7 +1591,7 @@ proof of exopxfr {
 	qed prop 1 = step 5 ;;
 }
 
-/* Transfer ordered-pair existence from/to single variable existence.
+/*Transfer ordered-pair existence from/to single variable existence.
        (Contributed by NM, 26-Feb-2014.) */
 
 theorem exopxfr2 (ph : wff, ps : wff, x : set, y : set, z : set, A : class) disjointed(x y z A, y z ph, x ps) {
@@ -1614,7 +1614,7 @@ proof of exopxfr2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* A consequence of membership in an ordered-pair class abstraction, using
+/*A consequence of membership in an ordered-pair class abstraction, using
        ordered pair extractors.  (Contributed by NM, 29-Aug-2006.) */
 
 theorem elopabi (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y A, x y ch) {
@@ -1637,7 +1637,7 @@ proof of elopabi {
 	qed prop 1 = step 9 ;;
 }
 
-/* A consequence of membership in an operation class abstraction, using
+/*A consequence of membership in an operation class abstraction, using
        ordered pair extractors.  (Contributed by NM, 6-Nov-2006.)  (Revised by
        David Abernethy, 19-Jun-2012.) */
 
@@ -1689,7 +1689,7 @@ proof of eloprabi {
 	qed prop 1 = step 35 ;;
 }
 
-/* Express a two-argument function as a one-argument function, or
+/*Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 24-Dec-2016.) */
 
 theorem mpt2mptsx (x : set, y : set, z : set, A : class, B : class, C : class) disjointed(u v x y z A, u v y z B, u v z C) {
@@ -1736,7 +1736,7 @@ proof of mpt2mptsx {
 	qed prop 1 = step 35 ;;
 }
 
-/* Express a two-argument function as a one-argument function, or
+/*Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 24-Sep-2015.) */
 
 theorem mpt2mpts (x : set, y : set, z : set, A : class, B : class, C : class) disjointed(x y z A, y z B, z C, x B) {
@@ -1752,7 +1752,7 @@ proof of mpt2mpts {
 	qed prop 1 = step 5 ;;
 }
 
-/* The domain of a mapping is a subset of its base class.  (Contributed by
+/*The domain of a mapping is a subset of its base class.  (Contributed by
        Mario Carneiro, 9-Feb-2015.) */
 
 theorem dmmpt2ssx (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(t u v x y A, t u v y B, t u v C, v x y) {
@@ -1801,7 +1801,7 @@ proof of dmmpt2ssx {
 	qed prop 1 = step 35 ;;
 }
 
-/* Functionality, domain and codomain of a class given by the "maps to"
+/*Functionality, domain and codomain of a class given by the "maps to"
        notation, where ` B ( x ) ` is not constant but depends on ` x ` .
        (Contributed by NM, 29-Dec-2014.) */
 
@@ -1900,10 +1900,10 @@ proof of fmpt2x {
 	qed prop 1 = step 84 ;;
 }
 
-/* Functionality, domain and range of a class given by the "maps to"
+/*Functionality, domain and range of a class given by the "maps to"
        notation.  (Contributed by FL, 17-May-2010.) */
 
-theorem fmpt2 (x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(A x y, B x y, D x y) {
+theorem fmpt2 (x : set, y : set, A : class, B : class, C : class, D : class, F : class) disjointed(A x y, B x y, C, D x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∀ x ∈ A ∀ y ∈ B C ∈ D ↔ F : ( A × B ) ⟶ D ) ;;
@@ -1917,10 +1917,10 @@ proof of fmpt2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Functionality and domain of a class given by the "maps to" notation.
+/*Functionality and domain of a class given by the "maps to" notation.
        (Contributed by FL, 17-May-2010.) */
 
-theorem fnmpt2 (x : set, y : set, A : class, B : class, C : class, F : class, V : class) disjointed(A x y, B x y, x y) {
+theorem fnmpt2 (x : set, y : set, A : class, B : class, C : class, F : class, V : class) disjointed(A x y, B x y, C, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ∀ x ∈ A ∀ y ∈ B C ∈ V → F Fn ( A × B ) ) ;;
@@ -1937,10 +1937,10 @@ proof of fnmpt2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Functionality and domain of a class given by the "maps to" notation.
+/*Functionality and domain of a class given by the "maps to" notation.
        (Contributed by FL, 17-May-2010.) */
 
-theorem fnmpt2i (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(A x y, B x y, x y) {
+theorem fnmpt2i (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(A x y, B x y, C, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	hyp 2 : wff = |- C ∈ _V ;;
 	-----------------------
@@ -1954,10 +1954,10 @@ proof of fnmpt2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* Domain of a class given by the "maps to" notation.  (Contributed by FL,
+/*Domain of a class given by the "maps to" notation.  (Contributed by FL,
        17-May-2010.) */
 
-theorem dmmpt2 (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(A x y, B x y, x y) {
+theorem dmmpt2 (x : set, y : set, A : class, B : class, C : class, F : class) disjointed(A x y, B x y, C, x y) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	hyp 2 : wff = |- C ∈ _V ;;
 	-----------------------
@@ -1971,10 +1971,10 @@ proof of dmmpt2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existence of an operation class abstraction (version for dependent
+/*Existence of an operation class abstraction (version for dependent
        domains).  (Contributed by Mario Carneiro, 30-Dec-2016.) */
 
-theorem mpt2exxg (x : set, y : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(A x y, B y) {
+theorem mpt2exxg (x : set, y : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(A x y, B y, C) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( A ∈ R ∧ ∀ x ∈ A B ∈ S ) → F ∈ _V ) ;;
@@ -1996,11 +1996,11 @@ proof of mpt2exxg {
 	qed prop 1 = step 12 ;;
 }
 
-/* Existence of an operation class abstraction (special case).
+/*Existence of an operation class abstraction (special case).
        (Contributed by FL, 17-May-2010.)  (Revised by Mario Carneiro,
        1-Sep-2015.) */
 
-theorem mpt2exg (x : set, y : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(A x y, B y, x B) {
+theorem mpt2exg (x : set, y : set, A : class, B : class, C : class, R : class, S : class, F : class) disjointed(A x y, B y, C, x B) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( A ∈ R ∧ B ∈ S ) → F ∈ _V ) ;;
@@ -2016,10 +2016,10 @@ proof of mpt2exg {
 	qed prop 1 = step 6 ;;
 }
 
-/* If the domain of a function given by maps-to notation is a set, the
+/*If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by NM, 12-Sep-2011.) */
 
-theorem mpt2exga (x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(x y A, x y B) {
+theorem mpt2exga (x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(x y A, x y B, C) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( x ∈ A , y ∈ B ↦ C ) ∈ _V ) ;;
 }
 
@@ -2029,7 +2029,7 @@ proof of mpt2exga {
 	qed prop 1 = step 2 ;;
 }
 
-/* If the domain of a function given by maps-to notation is a set, the
+/*If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by Mario Carneiro, 20-Dec-2013.) */
 
 theorem mpt2ex (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, y B) {
@@ -2047,7 +2047,7 @@ proof of mpt2ex {
 	qed prop 1 = step 4 ;;
 }
 
-/* A mapping operation with empty domain.  (Contributed by Stefan O'Rear,
+/*A mapping operation with empty domain.  (Contributed by Stefan O'Rear,
        29-Jan-2015.)  (Revised by Mario Carneiro, 15-May-2015.) */
 
 theorem mpt20 (x : set, y : set, B : class, C : class) disjointed(w x z, w y z, w z B, w z C) {
@@ -2069,7 +2069,7 @@ proof of mpt20 {
 	qed prop 1 = step 10 ;;
 }
 
-/* If all the values of the mapping are subsets of a class ` X ` , then so
+/*If all the values of the mapping are subsets of a class ` X ` , then so
        is any evaluation of the mapping.  (Contributed by Mario Carneiro,
        24-Dec-2016.) */
 
@@ -2131,10 +2131,10 @@ proof of ovmptss {
 	qed prop 1 = step 47 ;;
 }
 
-/* Any function to sets of ordered pairs produces a relation on function
+/*Any function to sets of ordered pairs produces a relation on function
        value unconditionally.  (Contributed by Mario Carneiro, 9-Feb-2015.) */
 
-theorem relmpt2opab (ph : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, F : class) disjointed(w x y z, y B, x y A) {
+theorem relmpt2opab (ph : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, F : class) disjointed(w x y z, y B, C, D, ph, x y A) {
 	hyp 1 : wff = |- F = ( x ∈ A , y ∈ B ↦ { 〈 z , w 〉 | ph } ) ;;
 	-----------------------
 	prop 1 : wff = |- Rel ( C F D ) ;;
@@ -2153,7 +2153,7 @@ proof of relmpt2opab {
 	qed prop 1 = step 9 ;;
 }
 
-/* Composition of two functions.  Variation of ~ fmptco when the second
+/*Composition of two functions.  Variation of ~ fmptco when the second
        function has two arguments.  (Contributed by Mario Carneiro,
        8-Feb-2015.) */
 
@@ -2258,7 +2258,7 @@ proof of fmpt2co {
 	qed prop 1 = step 87 ;;
 }
 
-/* Composition of a function with an operator abstraction.  (Contributed by
+/*Composition of a function with an operator abstraction.  (Contributed by
        Jeff Madsen, 2-Sep-2009.)  (Proof shortened by Mario Carneiro,
        26-Sep-2015.) */
 
@@ -2282,10 +2282,10 @@ proof of oprabco {
 	qed prop 1 = step 7 ;;
 }
 
-/* Composition of operator abstractions.  (Contributed by Jeff Madsen,
+/*Composition of operator abstractions.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by David Abernethy, 23-Apr-2013.) */
 
-theorem oprab2co (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, M : class) disjointed(x y A, x y B, x y M, x y R, x y S) {
+theorem oprab2co (x : set, y : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, M : class) disjointed(x y A, x y B, C, D, x y M, x y R, x y S) {
 	hyp 1 : wff = |- ( ( x ∈ A ∧ y ∈ B ) → C ∈ R ) ;;
 	hyp 2 : wff = |- ( ( x ∈ A ∧ y ∈ B ) → D ∈ S ) ;;
 	hyp 3 : wff = |- F = ( x ∈ A , y ∈ B ↦ 〈 C , D 〉 ) ;;
@@ -2305,7 +2305,7 @@ proof of oprab2co {
 	qed prop 1 = step 7 ;;
 }
 
-/* An alternate possible definition of the ` 1st ` function.  (Contributed
+/*An alternate possible definition of the ` 1st ` function.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem df1st2 (x : set, y : set, z : set) disjointed(w x y z) {
@@ -2332,7 +2332,7 @@ proof of df1st2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* An alternate possible definition of the ` 2nd ` function.  (Contributed
+/*An alternate possible definition of the ` 2nd ` function.  (Contributed
        by NM, 10-Aug-2006.)  (Revised by Mario Carneiro, 31-Aug-2015.) */
 
 theorem df2nd2 (x : set, y : set, z : set) disjointed(w x y z) {
@@ -2359,7 +2359,7 @@ proof of df2nd2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* The mapping of a restriction of the ` 1st ` function to a constant
+/*The mapping of a restriction of the ` 1st ` function to a constant
        function.  (Contributed by NM, 14-Dec-2008.) */
 
 theorem 1stconst (A : class, B : class, V : class) disjointed(x y A, x y B, x y V) {
@@ -2423,7 +2423,7 @@ proof of 1stconst {
 	qed prop 1 = step 52 ;;
 }
 
-/* The mapping of a restriction of the ` 2nd ` function to a converse
+/*The mapping of a restriction of the ` 2nd ` function to a converse
        constant function.  (Contributed by NM, 27-Mar-2008.) */
 
 theorem 2ndconst (A : class, B : class, V : class) disjointed(x y A, x y B, x y V) {
@@ -2487,7 +2487,7 @@ proof of 2ndconst {
 	qed prop 1 = step 52 ;;
 }
 
-/* Alternate definition for the "maps to" notation ~ df-mpt2 (although it
+/*Alternate definition for the "maps to" notation ~ df-mpt2 (although it
        requires that ` C ` be a set).  (Contributed by NM, 19-Dec-2008.)
        (Revised by Mario Carneiro, 31-Aug-2015.) */
 
@@ -2525,13 +2525,13 @@ proof of dfmpt2 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Composition with ` ``' ( 2nd |`` ( { C } X. _V ) ) ` turns any binary
+/*Composition with ` ``' ( 2nd |`` ( { C } X. _V ) ) ` turns any binary
        operation ` F ` with a constant first operand into a function ` G ` of
        the second operand only.  This transformation is called "currying."
        (Contributed by NM, 28-Mar-2008.)  (Revised by Mario Carneiro,
        26-Dec-2014.) */
 
-theorem curry1 (x : set, A : class, B : class, C : class, F : class, G : class) disjointed(x A, x B, x C, x F, x G) {
+theorem curry1 (x : set, A : class, B : class, C : class, F : class, G : class) disjointed(x A, x B, x C, x, x F, x G) {
 	hyp 1 : wff = |- G = ( F ∘ ⁻¹ ( 2nd ↾ ( { C } × _V ) ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( F Fn ( A × B ) ∧ C ∈ A ) → G = ( x ∈ B ↦ ( C F x ) ) ) ;;
@@ -2626,7 +2626,7 @@ proof of curry1 {
 	qed prop 1 = step 85 ;;
 }
 
-/* The value of a curried function with a constant first argument.
+/*The value of a curried function with a constant first argument.
        (Contributed by NM, 28-Mar-2008.)  (Revised by Mario Carneiro,
        26-Apr-2015.) */
 
@@ -2664,7 +2664,7 @@ proof of curry1val {
 	qed prop 1 = step 23 ;;
 }
 
-/* Functionality of a curried function with a constant first argument.
+/*Functionality of a curried function with a constant first argument.
        (Contributed by NM, 29-Mar-2008.) */
 
 theorem curry1f (A : class, B : class, C : class, D : class, F : class, G : class) disjointed(x A, x B, x C, x D, x F, x G) {
@@ -2687,13 +2687,13 @@ proof of curry1f {
 	qed prop 1 = step 9 ;;
 }
 
-/* Composition with ` ``' ( 1st |`` ( _V X. { C } ) ) ` turns any binary
+/*Composition with ` ``' ( 1st |`` ( _V X. { C } ) ) ` turns any binary
        operation ` F ` with a constant second operand into a function ` G ` of
        the first operand only.  This transformation is called "currying."  (If
        this becomes frequently used, we can introduce a new notation for the
        hypothesis.)  (Contributed by NM, 16-Dec-2008.) */
 
-theorem curry2 (x : set, A : class, B : class, C : class, F : class, G : class) disjointed(x A, x B, x C, x F, x G) {
+theorem curry2 (x : set, A : class, B : class, C : class, F : class, G : class) disjointed(x A, x B, x C, x, x F, x G) {
 	hyp 1 : wff = |- G = ( F ∘ ⁻¹ ( 1st ↾ ( _V × { C } ) ) ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( F Fn ( A × B ) ∧ C ∈ B ) → G = ( x ∈ A ↦ ( x F C ) ) ) ;;
@@ -2786,7 +2786,7 @@ proof of curry2 {
 	qed prop 1 = step 83 ;;
 }
 
-/* Functionality of a curried function with a constant second argument.
+/*Functionality of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) */
 
 theorem curry2f (A : class, B : class, C : class, D : class, F : class, G : class) disjointed(x A, x B, x C, x D, x F, x G) {
@@ -2810,7 +2810,7 @@ proof of curry2f {
 	qed prop 1 = step 10 ;;
 }
 
-/* The value of a curried function with a constant second argument.
+/*The value of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) */
 
 theorem curry2val (A : class, B : class, C : class, D : class, F : class, G : class) disjointed(x A, x B, x C, x D, x F, x G) {
@@ -2847,7 +2847,7 @@ proof of curry2val {
 	qed prop 1 = step 23 ;;
 }
 
-/* Lemma for ~ cnvf1o .  (Contributed by Mario Carneiro, 27-Apr-2014.) */
+/*Lemma for ~ cnvf1o .  (Contributed by Mario Carneiro, 27-Apr-2014.) */
 
 theorem cnvf1olem (A : class, B : class, C : class)  {
 	prop 1 : wff = |- ( ( Rel A ∧ ( B ∈ A ∧ C = ⋃ ⁻¹ { B } ) ) → ( C ∈ ⁻¹ A ∧ B = ⋃ ⁻¹ { C } ) ) ;;
@@ -2893,7 +2893,7 @@ proof of cnvf1olem {
 	qed prop 1 = step 36 ;;
 }
 
-/* Describe a function that maps the elements of a set to its converse
+/*Describe a function that maps the elements of a set to its converse
        bijectively.  (Contributed by Mario Carneiro, 27-Apr-2014.) */
 
 theorem cnvf1o (x : set, A : class) disjointed(x y A) {
@@ -2927,10 +2927,10 @@ proof of cnvf1o {
 	qed prop 1 = step 22 ;;
 }
 
-/* Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
+/*Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
-theorem fparlem1 (x : set) disjointed(x y, x y, x y) {
+theorem fparlem1 (x : set) disjointed(x, y, x y, x y, x y) {
 	prop 1 : wff = |- ( ⁻¹ ( 1st ↾ ( _V × _V ) ) " { x } ) = ( { x } × _V ) ;;
 }
 
@@ -2955,10 +2955,10 @@ proof of fparlem1 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
+/*Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
-theorem fparlem2 (y : set) disjointed(x y, x y, x y) {
+theorem fparlem2 (y : set) disjointed(x, y, x y, x y, x y) {
 	prop 1 : wff = |- ( ⁻¹ ( 2nd ↾ ( _V × _V ) ) " { y } ) = ( _V × { y } ) ;;
 }
 
@@ -2983,10 +2983,10 @@ proof of fparlem2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
+/*Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
-theorem fparlem3 (x : set, A : class, F : class) disjointed(x A, x y F, x y, x y) {
+theorem fparlem3 (x : set, A : class, F : class) disjointed(x A, y, x y F, x y, x y) {
 	prop 1 : wff = |- ( F Fn A → ( ⁻¹ ( 1st ↾ ( _V × _V ) ) ∘ ( F ∘ ( 1st ↾ ( _V × _V ) ) ) ) = ⋃_ x ∈ A ( ( { x } × _V ) × ( { ( F ` x ) } × _V ) ) ) ;;
 }
 
@@ -3045,10 +3045,10 @@ proof of fparlem3 {
 	qed prop 1 = step 50 ;;
 }
 
-/* Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
+/*Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) */
 
-theorem fparlem4 (y : set, B : class, G : class) disjointed(y B, x y, x y G, x y) {
+theorem fparlem4 (y : set, B : class, G : class) disjointed(x, y B, x y, x y G, x y) {
 	prop 1 : wff = |- ( G Fn B → ( ⁻¹ ( 2nd ↾ ( _V × _V ) ) ∘ ( G ∘ ( 2nd ↾ ( _V × _V ) ) ) ) = ⋃_ y ∈ B ( ( _V × { y } ) × ( _V × { ( G ` y ) } ) ) ) ;;
 }
 
@@ -3107,7 +3107,7 @@ proof of fparlem4 {
 	qed prop 1 = step 50 ;;
 }
 
-/* Merge two functions in parallel.  Use as the second argument of a
+/*Merge two functions in parallel.  Use as the second argument of a
        composition with a (2-place) operation to build compound operations such
        as ` z = ( ( sqr `` x ) + ( abs `` y ) ) ` .  (Contributed by NM,
        17-Sep-2007.)  (Proof shortened by Mario Carneiro, 28-Apr-2015.) */
@@ -3160,7 +3160,7 @@ proof of fpar {
 	qed prop 1 = step 38 ;;
 }
 
-/* A function that can be used to feed a common value to both operands of
+/*A function that can be used to feed a common value to both operands of
        an operation.  Use as the second argument of a composition with the
        function of ~ fpar in order to build compound functions such as
        ` y = ( ( sqr `` x ) + ( abs `` x ) ) ` .  (Contributed by NM,
@@ -3220,7 +3220,7 @@ proof of fsplit {
 	qed prop 1 = step 45 ;;
 }
 
-/* Lemma for ~ algrf and related theorems.  (Contributed by Mario Carneiro,
+/*Lemma for ~ algrf and related theorems.  (Contributed by Mario Carneiro,
        28-May-2014.)  (Revised by Mario Carneiro, 30-Apr-2015.) */
 
 theorem algrflem (B : class, C : class, F : class)  {
@@ -3244,7 +3244,7 @@ proof of algrflem {
 	qed prop 1 = step 10 ;;
 }
 
-/* A lexicographical ordering of two well-founded classes.  (Contributed by
+/*A lexicographical ordering of two well-founded classes.  (Contributed by
        Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.)
        (Proof shortened by Wolf Lammen, 4-Oct-2014.) */
 
@@ -3482,7 +3482,7 @@ proof of frxp {
 	qed prop 1 = step 223 ;;
 }
 
-/* Lemma for lexicographical ordering theorems.  (Contributed by Scott
+/*Lemma for lexicographical ordering theorems.  (Contributed by Scott
        Fenton, 16-Mar-2011.) */
 
 theorem xporderlem (x : set, y : set, A : class, B : class, R : class, S : class, T : class, a : set, b : set, c : set, d : set) disjointed(A x y, B x y, R x y, S x y, a x y, b x y, c x y, d x y) {
@@ -3542,7 +3542,7 @@ proof of xporderlem {
 	qed prop 1 = step 47 ;;
 }
 
-/* A lexicographical ordering of two posets.  (Contributed by Scott Fenton,
+/*A lexicographical ordering of two posets.  (Contributed by Scott Fenton,
        16-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.) */
 
 theorem poxp (x : set, y : set, A : class, B : class, R : class, S : class, T : class) disjointed(A a b c d e f t u v x y, B a b c d e f t u v x y, R a b c d e f t u v x y, S a b c d e f t u v x y, T a b c d e f t u v) {
@@ -3653,7 +3653,7 @@ proof of poxp {
 	qed prop 1 = step 97 ;;
 }
 
-/* A lexicographical ordering of two strictly ordered classes.
+/*A lexicographical ordering of two strictly ordered classes.
        (Contributed by Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro,
        7-Mar-2013.) */
 
@@ -3763,7 +3763,7 @@ proof of soxp {
 	qed prop 1 = step 95 ;;
 }
 
-/* A lexicographical ordering of two well-ordered classes.  (Contributed by
+/*A lexicographical ordering of two well-ordered classes.  (Contributed by
        Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.) */
 
 theorem wexp (x : set, y : set, A : class, B : class, R : class, S : class, T : class) disjointed(A x y, B x y, R x y, S x y) {
@@ -3786,7 +3786,7 @@ proof of wexp {
 	qed prop 1 = step 10 ;;
 }
 
-/* Lemma for ~ fnwe .  (Contributed by Mario Carneiro, 10-Mar-2013.)
+/*Lemma for ~ fnwe .  (Contributed by Mario Carneiro, 10-Mar-2013.)
          (Revised by Mario Carneiro, 18-Nov-2014.) */
 
 theorem fnwelem (ph : wff, x : set, y : set, z : set, w : set, v : set, u : set, A : class, B : class, Q : class, R : class, S : class, T : class, F : class, G : class) disjointed(u v w x y z A, u v w x y z B, w x y G, w x z ph, u v w x y z F, w x y Q, u v w x y R, u v w x y S, w T) {
@@ -4081,7 +4081,7 @@ proof of fnwelem {
 	qed prop 1 = step 276 ;;
 }
 
-/* A variant on lexicographic order, which sorts first by some function of
+/*A variant on lexicographic order, which sorts first by some function of
        the base set, and then by a "backup" well-ordering when the function
        value is equal on both elements.  (Contributed by Mario Carneiro,
        10-Mar-2013.)  (Revised by Mario Carneiro, 18-Nov-2014.) */
@@ -4104,7 +4104,7 @@ proof of fnwe {
 	qed prop 1 = step 3 ;;
 }
 
-/* Condition for the well-order in ~ fnwe to be set-like.  (Contributed by
+/*Condition for the well-order in ~ fnwe to be set-like.  (Contributed by
        Mario Carneiro, 25-Jun-2015.) */
 
 theorem fnse (ph : wff, x : set, y : set, w : set, A : class, B : class, R : class, S : class, T : class, F : class) disjointed(x y z A, u w B, u w x y F, w z ph, u w x y R, u z, x y S, w z T) {

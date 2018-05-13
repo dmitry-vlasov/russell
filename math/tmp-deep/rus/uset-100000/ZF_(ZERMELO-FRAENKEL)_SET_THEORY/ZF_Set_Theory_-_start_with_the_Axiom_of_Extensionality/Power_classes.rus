@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/_Weak_deduction_theorem__for_set_theory.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                           Power classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare the symbol for power class. */
+/*Declare the symbol for power class. */
 
 constant {
 	symbol Pow ;;
@@ -14,20 +14,20 @@ constant {
 	latex \cal{P} ;;
 }
 
-/* Calligraphic P */
+/*Calligraphic P */
 
-/* Extend class notation to include power class.  (The tilde in the Metamath
+/*Extend class notation to include power class.  (The tilde in the Metamath
      token is meant to suggest the calligraphic font of the P.) */
 
 rule cpw (A : class) {
 	term : class = # Pow A ;;
 }
 
-/* Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
+/*Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
-theorem pwjust (x : set, y : set, A : class) disjointed(x A, y A, z x, z y, z A) {
+theorem pwjust (x : set, y : set, A : class) disjointed(x A, y A, x, y, A, z, z x, z y, z A) {
 	prop 1 : wff = |- { x | x ⊆ A } = { y | y ⊆ A } ;;
 }
 
@@ -41,7 +41,7 @@ proof of pwjust {
 	qed prop 1 = step 5 ;;
 }
 
-/* Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
+/*Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
        also let it apply to proper classes, i.e. those that are not members of
        ` _V ` .  When applied to a set, this produces its power set.  A power
        set of S is the set of all subsets of S, including the empty set and S
@@ -60,7 +60,7 @@ definition df-pw (x : set, A : class) disjointed(x A) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) */
+/*Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem pweq (A : class, B : class) disjointed(x A, x B) {
 	prop 1 : wff = |- ( A = B → Pow A = Pow B ) ;;
@@ -76,7 +76,7 @@ proof of pweq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equality inference for power class.  (Contributed by NM,
+/*Equality inference for power class.  (Contributed by NM,
        27-Nov-2013.) */
 
 theorem pweqi (A : class, B : class)  {
@@ -91,7 +91,7 @@ proof of pweqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equality deduction for power class.  (Contributed by NM,
+/*Equality deduction for power class.  (Contributed by NM,
        27-Nov-2013.) */
 
 theorem pweqd (ph : wff, A : class, B : class)  {
@@ -106,7 +106,7 @@ proof of pweqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.
+/*Membership in a power class.  Theorem 86 of [Suppes] p. 47.
          (Contributed by NM, 31-Dec-1993.) */
 
 theorem elpw (A : class, B : class) disjointed(A x, B x) {
@@ -123,7 +123,7 @@ proof of elpw {
 	qed prop 1 = step 3 ;;
 }
 
-/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
+/*Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
        ~ elpw2g .  (Contributed by NM, 6-Aug-2000.) */
 
 theorem elpwg (A : class, B : class, V : class) disjointed(A x, B x) {
@@ -140,7 +140,7 @@ proof of elpwg {
 	qed prop 1 = step 5 ;;
 }
 
-/* Subset relation implied by membership in a power class.  (Contributed by
+/*Subset relation implied by membership in a power class.  (Contributed by
      NM, 17-Feb-2007.) */
 
 theorem elpwi (A : class, B : class)  {
@@ -153,7 +153,7 @@ proof of elpwi {
 	qed prop 1 = step 2 ;;
 }
 
-/* An element of a power class is a subclass.  Deduction form of ~ elpwi .
+/*An element of a power class is a subclass.  Deduction form of ~ elpwi .
        (Contributed by David Moews, 1-May-2017.) */
 
 theorem elpwid (ph : wff, A : class, B : class)  {
@@ -168,7 +168,7 @@ proof of elpwid {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` A ` belongs to a part of ` C ` then ` A ` belongs to ` C ` .
+/*If ` A ` belongs to a part of ` C ` then ` A ` belongs to ` C ` .
      (Contributed by FL, 3-Aug-2009.) */
 
 theorem elelpwi (A : class, B : class, C : class)  {
@@ -182,7 +182,7 @@ proof of elelpwi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for power class.  (Contributed by NM,
+/*Bound-variable hypothesis builder for power class.  (Contributed by NM,
        28-Oct-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
 
 theorem nfpw (x : set, A : class) disjointed(y A, x y) {
@@ -201,7 +201,7 @@ proof of nfpw {
 	qed prop 1 = step 5 ;;
 }
 
-/* Membership of the original in a power set.  (Contributed by Stefan O'Rear,
+/*Membership of the original in a power set.  (Contributed by Stefan O'Rear,
      1-Feb-2015.) */
 
 theorem pwidg (A : class, V : class)  {
@@ -215,7 +215,7 @@ proof of pwidg {
 	qed prop 1 = step 3 ;;
 }
 
-/* A set is a member of its power class.  Theorem 87 of [Suppes] p. 47.
+/*A set is a member of its power class.  Theorem 87 of [Suppes] p. 47.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem pwid (A : class)  {
@@ -230,7 +230,7 @@ proof of pwid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass relationship for power class.  (Contributed by NM,
+/*Subclass relationship for power class.  (Contributed by NM,
        21-Jun-2009.) */
 
 theorem pwss (x : set, A : class, B : class) disjointed(x A, x B) {

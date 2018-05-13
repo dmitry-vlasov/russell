@@ -1,39 +1,44 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Iota_properties.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Cantor's Theorem
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
+
+$(No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
        no function can map ` A ` it onto its power set.  Compare Theorem 6B(b)
        of [Enderton] p. 132.  For the equinumerosity version, see ~ canth2 .
        Note that ` A ` must be a set: this theorem does not hold when ` A ` is
        too large to be a set; see ~ ncanth for a counterexample.  (Use ~ nex if
        you want the form ` -. E. f f : A -onto-> ~P A ` .)  (Contributed by NM,
        7-Aug-1994.)  (Proof shortened by Mario Carneiro, 7-Jun-2016.) $)
+
 ${
-	$v A $.
-	$v F $.
-	$v x $.
-	$v y $.
-	$d x y A $.
-	$d x y F $.
-	icanth_0 $f set x $.
-	icanth_1 $f set y $.
-	fcanth_0 $f class A $.
-	fcanth_1 $f class F $.
-	ecanth_0 $e |- A e. _V $.
-	canth $p |- -. F : A -onto-> ~P A $= fcanth_0 fcanth_0 cpw fcanth_1 wfo icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_1 crn wcel fcanth_0 fcanth_0 cpw fcanth_1 wfo icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_0 cpw fcanth_1 crn icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_0 cpw wcel icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_0 wss icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 ssrab2 icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_0 ecanth_0 elpw2 mpbir fcanth_0 fcanth_0 cpw fcanth_1 forn syl5eleqr fcanth_0 fcanth_0 cpw fcanth_1 wfo icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_1 crn wcel icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wceq icanth_1 fcanth_0 wrex icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wceq icanth_1 fcanth_0 icanth_1 sup_set_class fcanth_0 wcel icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel icanth_1 sup_set_class icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wcel wb icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wceq icanth_1 sup_set_class fcanth_0 wcel icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel wn icanth_1 sup_set_class icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wcel wb icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel icanth_1 sup_set_class icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wcel wb wn icanth_1 sup_set_class icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wcel icanth_1 sup_set_class fcanth_0 wcel icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel wn icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel wn icanth_0 icanth_1 sup_set_class fcanth_0 icanth_0 sup_set_class icanth_1 sup_set_class wceq icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel icanth_0 sup_set_class icanth_1 sup_set_class wceq icanth_0 sup_set_class icanth_1 sup_set_class icanth_0 sup_set_class fcanth_1 cfv icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_1 sup_set_class wceq id icanth_0 sup_set_class icanth_1 sup_set_class fcanth_1 fveq2 eleq12d notbid elrab baibr icanth_1 sup_set_class icanth_1 sup_set_class fcanth_1 cfv wcel icanth_1 sup_set_class icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wcel nbbn sylib icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab icanth_1 sup_set_class eleq2 nsyl nrex fcanth_0 fcanth_0 cpw fcanth_1 wfo fcanth_1 fcanth_0 wfn icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_1 crn wcel icanth_1 sup_set_class fcanth_1 cfv icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab wceq icanth_1 fcanth_0 wrex wb fcanth_0 fcanth_0 cpw fcanth_1 fofn icanth_1 fcanth_0 icanth_0 sup_set_class icanth_0 sup_set_class fcanth_1 cfv wcel wn icanth_0 fcanth_0 crab fcanth_1 fvelrnb syl mtbiri pm2.65i $.
+	$v A F  $.
+	$d x y A  $.
+	$d x y F  $.
+	f0_canth $f class A $.
+	f1_canth $f class F $.
+	i0_canth $f set x $.
+	i1_canth $f set y $.
+	e0_canth $e |- A e. _V $.
+	p_canth $p |- -. F : A -onto-> ~P A $= i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth p_ssrab2 e0_canth i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f0_canth p_elpw2 i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f0_canth a_cpw a_wcel i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f0_canth a_wss p_mpbir f0_canth f0_canth a_cpw f1_canth p_forn f0_canth f0_canth a_cpw f1_canth a_wfo i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f0_canth a_cpw f1_canth a_crn p_syl5eleqr i0_canth a_sup_set_class i1_canth a_sup_set_class a_wceq p_id i0_canth a_sup_set_class i1_canth a_sup_set_class f1_canth p_fveq2 i0_canth a_sup_set_class i1_canth a_sup_set_class a_wceq i0_canth a_sup_set_class i1_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv i1_canth a_sup_set_class f1_canth a_cfv p_eleq12d i0_canth a_sup_set_class i1_canth a_sup_set_class a_wceq i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel p_notbid i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth i1_canth a_sup_set_class f0_canth p_elrab i1_canth a_sup_set_class i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wcel i1_canth a_sup_set_class f0_canth a_wcel i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn p_baibr i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel i1_canth a_sup_set_class i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wcel p_nbbn i1_canth a_sup_set_class f0_canth a_wcel i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i1_canth a_sup_set_class i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wcel a_wb i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel i1_canth a_sup_set_class i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wcel a_wb a_wn p_sylib i1_canth a_sup_set_class f1_canth a_cfv i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab i1_canth a_sup_set_class p_eleq2 i1_canth a_sup_set_class f0_canth a_wcel i1_canth a_sup_set_class i1_canth a_sup_set_class f1_canth a_cfv a_wcel i1_canth a_sup_set_class i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wcel a_wb i1_canth a_sup_set_class f1_canth a_cfv i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wceq p_nsyl i1_canth a_sup_set_class f1_canth a_cfv i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wceq i1_canth f0_canth p_nrex f0_canth f0_canth a_cpw f1_canth p_fofn i1_canth f0_canth i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f1_canth p_fvelrnb f0_canth f0_canth a_cpw f1_canth a_wfo f1_canth f0_canth a_wfn i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f1_canth a_crn a_wcel i1_canth a_sup_set_class f1_canth a_cfv i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wceq i1_canth f0_canth a_wrex a_wb p_syl f0_canth f0_canth a_cpw f1_canth a_wfo i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f1_canth a_crn a_wcel i1_canth a_sup_set_class f1_canth a_cfv i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab a_wceq i1_canth f0_canth a_wrex p_mtbiri f0_canth f0_canth a_cpw f1_canth a_wfo i0_canth a_sup_set_class i0_canth a_sup_set_class f1_canth a_cfv a_wcel a_wn i0_canth f0_canth a_crab f1_canth a_crn a_wcel p_pm2.65i $.
 $}
-$( Cantor's theorem fails for the universal class (which is not a set but a
+
+$(Cantor's theorem fails for the universal class (which is not a set but a
      proper class by ~ vprc ).  Specifically, the identity function maps the
      universe onto its power class.  Compare ~ canth that works for sets.  See
      also the remark in ~ ru about NF, in which Cantor's theorem fails for sets
      that are "too large."  This theorem gives some intuition behind that
      failure: in NF the universal class is a set, and it equals its own power
      set.  (Contributed by NM, 29-Jun-2004.) $)
+
 ${
-	ncanth $p |- _I : _V -onto-> ~P _V $= cvv cvv cpw cid wf1o cvv cvv cpw cid wfo cvv cvv cpw cid wf1o cvv cvv cid wf1o f1ovi cvv cpw cvv wceq cvv cvv cpw cid wf1o cvv cvv cid wf1o wb pwv cvv cpw cvv cvv cid f1oeq3 ax-mp mpbir cvv cvv cpw cid f1ofo ax-mp $.
+	$v  $.
+	p_ncanth $p |- _I : _V -onto-> ~P _V $= p_f1ovi p_pwv a_cvv a_cpw a_cvv a_cvv a_cid p_f1oeq3 a_cvv a_cpw a_cvv a_wceq a_cvv a_cvv a_cpw a_cid a_wf1o a_cvv a_cvv a_cid a_wf1o a_wb a_ax-mp a_cvv a_cvv a_cpw a_cid a_wf1o a_cvv a_cvv a_cid a_wf1o p_mpbir a_cvv a_cvv a_cpw a_cid p_f1ofo a_cvv a_cvv a_cpw a_cid a_wf1o a_cvv a_cvv a_cpw a_cid a_wfo a_ax-mp $.
 $}
+
 

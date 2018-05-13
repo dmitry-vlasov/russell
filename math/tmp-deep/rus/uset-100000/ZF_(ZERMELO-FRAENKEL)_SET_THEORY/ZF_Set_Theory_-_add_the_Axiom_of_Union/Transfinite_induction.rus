@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Ordinals_(continued).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Transfinite induction
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
+/*The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
        p. 39.  This principle states that if ` A ` is a class of ordinal
        numbers with the property that every ordinal number included in ` A `
        also belongs to ` A ` , then every ordinal number is in ` A ` .
@@ -48,7 +48,7 @@ proof of tfi {
 	qed prop 1 = step 26 ;;
 }
 
-/* Transfinite Induction Schema.  If all ordinal numbers less than a given
+/*Transfinite Induction Schema.  If all ordinal numbers less than a given
        number ` x ` have a property (induction hypothesis), then all ordinal
        numbers have the property (conclusion).  Exercise 25 of [Enderton]
        p. 200.  (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
@@ -99,7 +99,7 @@ proof of tfis {
 	qed prop 1 = step 34 ;;
 }
 
-/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+/*Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 18-Aug-1994.) */
 
 theorem tfis2f (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x y) {
@@ -118,7 +118,7 @@ proof of tfis2f {
 	qed prop 1 = step 4 ;;
 }
 
-/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+/*Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 18-Aug-1994.) */
 
 theorem tfis2 (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph, x y) {
@@ -134,7 +134,7 @@ proof of tfis2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+/*Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 4-Nov-2003.) */
 
 theorem tfis3 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x ps, y ph, x ch, x A, x y) {
@@ -151,7 +151,7 @@ proof of tfis3 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A transfinite induction scheme in "implicit" form where the induction is
+/*A transfinite induction scheme in "implicit" form where the induction is
        done on an object derived from the object of interest.  (Contributed by
        Stefan O'Rear, 24-Aug-2015.) */
 
@@ -265,15 +265,15 @@ proof of tfisi {
 	qed prop 1 = step 93 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis for successors. */
+/*Induction hypothesis for successors. */
 
-/* Induction hypothesis for limit ordinals. */
+/*Induction hypothesis for limit ordinals. */
 
-/* Principle of Transfinite Induction (inference schema), using implicit
+/*Principle of Transfinite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last three are the basis, the induction hypothesis for
        successors, and the induction hypothesis for limit ordinals.  Theorem
@@ -333,15 +333,15 @@ proof of tfinds {
 	qed prop 1 = step 36 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis for successor ordinals. */
+/*Induction hypothesis for successor ordinals. */
 
-/* Induction hypothesis for limit ordinals. */
+/*Induction hypothesis for limit ordinals. */
 
-/* Transfinite Induction (inference schema), using implicit substitutions.
+/*Transfinite Induction (inference schema), using implicit substitutions.
        The first four hypotheses establish the substitutions we need.  The last
        three are the basis, the induction hypothesis for successors, and the
        induction hypothesis for limit ordinals.  The basis of this version is
@@ -431,15 +431,15 @@ proof of tfindsg {
 	qed prop 1 = step 67 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis for successor ordinals. */
+/*Induction hypothesis for successor ordinals. */
 
-/* Induction hypothesis for limit ordinals. */
+/*Induction hypothesis for limit ordinals. */
 
-/* Transfinite Induction (inference schema), using implicit substitutions.
+/*Transfinite Induction (inference schema), using implicit substitutions.
        The first four hypotheses establish the substitutions we need.  The last
        three are the basis, the induction hypothesis for successors, and the
        induction hypothesis for limit ordinals.  The basis of this version is
@@ -510,7 +510,7 @@ proof of tfindsg2 {
 	qed prop 1 = step 47 ;;
 }
 
-/* Transfinite Induction with explicit substitution.  The first hypothesis
+/*Transfinite Induction with explicit substitution.  The first hypothesis
        is the basis, the second is the induction hypothesis for successors, and
        the third is the induction hypothesis for limit ordinals.  Theorem
        Schema 4 of [Suppes] p. 197.  (Contributed by NM, 5-Mar-2004.) */
@@ -551,15 +551,15 @@ proof of tfindes {
 	qed prop 1 = step 23 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis for successors. */
+/*Induction hypothesis for successors. */
 
-/* Induction hypothesis for limit ordinals. */
+/*Induction hypothesis for limit ordinals. */
 
-/* Transfinite Induction (inference schema), using implicit substitutions.
+/*Transfinite Induction (inference schema), using implicit substitutions.
        The first three hypotheses establish the substitutions we need.  The
        last three are the basis and the induction hypotheses (for successor and
        limit ordinals respectively).  Theorem Schema 4 of [Suppes] p. 197.  The
@@ -639,15 +639,15 @@ proof of tfinds2 {
 	qed prop 1 = step 58 ;;
 }
 
-/* Substitutions. */
+/*Substitutions. */
 
-/* Basis. */
+/*Basis. */
 
-/* Induction hypothesis for successors. */
+/*Induction hypothesis for successors. */
 
-/* Induction hypothesis for limit ordinals. */
+/*Induction hypothesis for limit ordinals. */
 
-/* Principle of Transfinite Induction (inference schema), using implicit
+/*Principle of Transfinite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last three are the basis, the induction hypothesis for
        successors, and the induction hypothesis for limit ordinals.

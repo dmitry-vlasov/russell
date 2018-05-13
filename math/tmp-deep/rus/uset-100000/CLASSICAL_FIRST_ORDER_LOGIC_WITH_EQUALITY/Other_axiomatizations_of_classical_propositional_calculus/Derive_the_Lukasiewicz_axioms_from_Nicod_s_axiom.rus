@@ -1,14 +1,14 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_Nicod_s_axiom_from_the_standard_axioms.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Derive the Lukasiewicz axioms from Nicod's axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Minor premise. */
+/*Minor premise. */
 
-/* Inference for ~ nic-mp using ~ nic-ax as major premise.  (Contributed by
+/*Inference for ~ nic-mp using ~ nic-ax as major premise.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -25,7 +25,7 @@ proof of nic-imp {
 	qed prop 1 = step 2 ;;
 }
 
-/* Lemma for ~ nic-id .  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+/*Lemma for ~ nic-id .  (Contributed by Jeff Hoffman, 17-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem nic-idlem1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
@@ -38,7 +38,7 @@ proof of nic-idlem1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Lemma for ~ nic-id .  Inference used by ~ nic-id .  (Contributed by Jeff
+/*Lemma for ~ nic-id .  Inference used by ~ nic-id .  (Contributed by Jeff
        Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -56,7 +56,7 @@ proof of nic-idlem2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
+/*Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
      17-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -74,7 +74,7 @@ proof of nic-id {
 	qed prop 1 = step 5 ;;
 }
 
-/* ` -/\ ` is symmetric.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+/*` -/\ ` is symmetric.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem nic-swap (ph : wff, th : wff)  {
@@ -89,7 +89,7 @@ proof of nic-swap {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference version of ~ nic-swap .  (Contributed by Jeff Hoffman,
+/*Inference version of ~ nic-swap .  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -105,7 +105,7 @@ proof of nic-isw1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference for swapping nested terms.  (Contributed by Jeff Hoffman,
+/*Inference for swapping nested terms.  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -123,7 +123,7 @@ proof of nic-isw2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference version of ~ nic-imp using right-handed term.  (Contributed by
+/*Inference version of ~ nic-imp using right-handed term.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -141,7 +141,7 @@ proof of nic-iimp1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference version of ~ nic-imp using left-handed term.  (Contributed by
+/*Inference version of ~ nic-imp using left-handed term.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -158,7 +158,7 @@ proof of nic-iimp2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference to remove the trailing term.  (Contributed by Jeff Hoffman,
+/*Inference to remove the trailing term.  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -176,7 +176,7 @@ proof of nic-idel {
 	qed prop 1 = step 4 ;;
 }
 
-/* Chained inference.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+/*Chained inference.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem nic-ich (ph : wff, ps : wff, ch : wff)  {
@@ -193,7 +193,7 @@ proof of nic-ich {
 	qed prop 1 = step 3 ;;
 }
 
-/* Double the terms.  Since doubling is the same as negation, this can be
+/*Double the terms.  Since doubling is the same as negation, this can be
        viewed as a contraposition inference.  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -211,13 +211,13 @@ proof of nic-idbl {
 	qed prop 1 = step 3 ;;
 }
 
-/* (not in Table of Contents)
+/*(not in Table of Contents)
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Biconditional justification from Nicod's axiom
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* For nic-* definitions, the biconditional connective is not used.  Instead,
+/*For nic-* definitions, the biconditional connective is not used.  Instead,
      definitions are made based on this form. ~ nic-bi1 and ~ nic-bi2 are used
      to convert the definitions into usable theorems about one side of the
      implication.  (Contributed by Jeff Hoffman, 18-Nov-2007.)
@@ -232,9 +232,9 @@ proof of nic-bijust {
 	qed prop 1 = step 1 ;;
 }
 
-/* 'Biconditional' premise. */
+/*'Biconditional' premise. */
 
-/* Inference to extract one side of an implication from a definition.
+/*Inference to extract one side of an implication from a definition.
        (Contributed by Jeff Hoffman, 18-Nov-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -252,9 +252,9 @@ proof of nic-bi1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* 'Biconditional' premise.  */
+/*'Biconditional' premise.  */
 
-/* Inference to extract the other side of an implication from a
+/*Inference to extract the other side of an implication from a
        'biconditional' definition.  (Contributed by Jeff Hoffman,
        18-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -273,17 +273,17 @@ proof of nic-bi2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* (not in Table of Contents)
+/*(not in Table of Contents)
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
              Prove the Lukasiewicz axioms from Nicod's axiom
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Minor premise. */
+/*Minor premise. */
 
-/* Major premise. */
+/*Major premise. */
 
-/* Derive the standard modus ponens from ~ nic-mp .  (Contributed by Jeff
+/*Derive the standard modus ponens from ~ nic-mp .  (Contributed by Jeff
        Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -302,7 +302,7 @@ proof of nic-stdmp {
 	qed prop 1 = step 4 ;;
 }
 
-/* Proof of ~ luk-1 from ~ nic-ax and ~ nic-mp (and definitions ~ nic-dfim
+/*Proof of ~ luk-1 from ~ nic-ax and ~ nic-mp (and definitions ~ nic-dfim
      and ~ nic-dfneg ).  Note that the standard axioms ~ ax-1 , ~ ax-2 , and
      ~ ax-3 are proved from the Lukasiewicz axioms by theorems ~ ax1 , ~ ax2 ,
      and ~ ax3 .  (Contributed by Jeff Hoffman, 18-Nov-2007.)
@@ -340,7 +340,7 @@ proof of nic-luk1 {
 	qed prop 1 = step 23 ;;
 }
 
-/* Proof of ~ luk-2 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+/*Proof of ~ luk-2 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
      Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -363,7 +363,7 @@ proof of nic-luk2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Proof of ~ luk-3 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+/*Proof of ~ luk-3 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
      Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 

@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_Nicod_s_Axiom_from_Lukasiewicz_s_First_Sheffer_Stroke_Axiom.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Derive the Lukasiewicz Axioms from the Tarski-Bernays-Wajsberg Axioms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Justification for ~ tbw-negdf .  (Contributed by Anthony Hart,
+/*Justification for ~ tbw-negdf .  (Contributed by Anthony Hart,
      15-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -34,7 +34,7 @@ proof of tbw-bijust {
 	qed prop 1 = step 16 ;;
 }
 
-/* The definition of negation, in terms of ` -> ` and ` F. ` .  (Contributed
+/*The definition of negation, in terms of ` -> ` and ` F. ` .  (Contributed
      by Anthony Hart, 15-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -54,7 +54,7 @@ proof of tbw-negdf {
 	qed prop 1 = step 8 ;;
 }
 
-/* The first of four axioms in the Tarski-Bernays-Wajsberg system.
+/*The first of four axioms in the Tarski-Bernays-Wajsberg system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -67,7 +67,7 @@ proof of tbw-ax1 {
 	qed prop 1 = step 1 ;;
 }
 
-/* The second of four axioms in the Tarski-Bernays-Wajsberg system.
+/*The second of four axioms in the Tarski-Bernays-Wajsberg system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -80,7 +80,7 @@ proof of tbw-ax2 {
 	qed prop 1 = step 1 ;;
 }
 
-/* The third of four axioms in the Tarski-Bernays-Wajsberg system.
+/*The third of four axioms in the Tarski-Bernays-Wajsberg system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -93,7 +93,7 @@ proof of tbw-ax3 {
 	qed prop 1 = step 1 ;;
 }
 
-/* The fourth of four axioms in the Tarski-Bernays-Wajsberg system.
+/*The fourth of four axioms in the Tarski-Bernays-Wajsberg system.
 
      This axiom was added to the Tarski-Bernays axiom system ( see ~ tb-ax1 ,
      ~ tb-ax2 , and ~ tb-ax3 ) by Wajsberg for completeness.  (Contributed by
@@ -109,7 +109,7 @@ proof of tbw-ax4 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
        (Contributed by Anthony Hart, 16-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -127,7 +127,7 @@ proof of tbwsyl {
 	qed prop 1 = step 3 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -149,7 +149,7 @@ proof of tbwlem1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -173,7 +173,7 @@ proof of tbwlem2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -194,7 +194,7 @@ proof of tbwlem3 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -221,7 +221,7 @@ proof of tbwlem4 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+/*Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -240,7 +240,7 @@ proof of tbwlem5 {
 	qed prop 1 = step 7 ;;
 }
 
-/* ~ luk-1 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
+/*~ luk-1 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
      Anthony Hart, 16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -253,7 +253,7 @@ proof of re1luk1 {
 	qed prop 1 = step 1 ;;
 }
 
-/* ~ luk-2 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
+/*~ luk-2 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
      Anthony Hart, 16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -274,7 +274,7 @@ proof of re1luk2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* ~ luk-3 derived from the Tarski-Bernays-Wajsberg axioms.
+/*~ luk-3 derived from the Tarski-Bernays-Wajsberg axioms.
 
      This theorem, along with ~ re1luk1 and ~ re1luk2 proves that ~ tbw-ax1 ,
      ~ tbw-ax2 , ~ tbw-ax3 , and ~ tbw-ax4 , with ~ ax-mp can be used as a

@@ -1,855 +1,842 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_disjunction_and_conjunction.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Miscellaneous theorems of propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Eliminate an antecedent implied by each side of a biconditional.
+
+$(Eliminate an antecedent implied by each side of a biconditional.
        (Contributed by NM, 20-Nov-2005.)  (Proof shortened by Wolf Lammen,
        4-Nov-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fpm5.21nd_0 $f wff ph $.
-	fpm5.21nd_1 $f wff ps $.
-	fpm5.21nd_2 $f wff ch $.
-	fpm5.21nd_3 $f wff th $.
-	epm5.21nd_0 $e |- ( ( ph /\ ps ) -> th ) $.
-	epm5.21nd_1 $e |- ( ( ph /\ ch ) -> th ) $.
-	epm5.21nd_2 $e |- ( th -> ( ps <-> ch ) ) $.
-	pm5.21nd $p |- ( ph -> ( ps <-> ch ) ) $= fpm5.21nd_0 fpm5.21nd_3 fpm5.21nd_1 fpm5.21nd_2 fpm5.21nd_0 fpm5.21nd_1 fpm5.21nd_3 epm5.21nd_0 ex fpm5.21nd_0 fpm5.21nd_2 fpm5.21nd_3 epm5.21nd_1 ex fpm5.21nd_3 fpm5.21nd_1 fpm5.21nd_2 wb wi fpm5.21nd_0 epm5.21nd_2 a1i pm5.21ndd $.
+	$v ph ps ch th  $.
+	f0_pm5.21nd $f wff ph $.
+	f1_pm5.21nd $f wff ps $.
+	f2_pm5.21nd $f wff ch $.
+	f3_pm5.21nd $f wff th $.
+	e0_pm5.21nd $e |- ( ( ph /\ ps ) -> th ) $.
+	e1_pm5.21nd $e |- ( ( ph /\ ch ) -> th ) $.
+	e2_pm5.21nd $e |- ( th -> ( ps <-> ch ) ) $.
+	p_pm5.21nd $p |- ( ph -> ( ps <-> ch ) ) $= e0_pm5.21nd f0_pm5.21nd f1_pm5.21nd f3_pm5.21nd p_ex e1_pm5.21nd f0_pm5.21nd f2_pm5.21nd f3_pm5.21nd p_ex e2_pm5.21nd f3_pm5.21nd f1_pm5.21nd f2_pm5.21nd a_wb a_wi f0_pm5.21nd p_a1i f0_pm5.21nd f3_pm5.21nd f1_pm5.21nd f2_pm5.21nd p_pm5.21ndd $.
 $}
-$( Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+
+$(Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.35_0 $f wff ph $.
-	fpm5.35_1 $f wff ps $.
-	fpm5.35_2 $f wff ch $.
-	pm5.35 $p |- ( ( ( ph -> ps ) /\ ( ph -> ch ) ) -> ( ph -> ( ps <-> ch ) ) ) $= fpm5.35_0 fpm5.35_1 wi fpm5.35_0 fpm5.35_2 wi wa fpm5.35_0 fpm5.35_1 fpm5.35_2 fpm5.35_0 fpm5.35_1 wi fpm5.35_0 fpm5.35_2 wi pm5.1 pm5.74rd $.
+	$v ph ps ch  $.
+	f0_pm5.35 $f wff ph $.
+	f1_pm5.35 $f wff ps $.
+	f2_pm5.35 $f wff ch $.
+	p_pm5.35 $p |- ( ( ( ph -> ps ) /\ ( ph -> ch ) ) -> ( ph -> ( ps <-> ch ) ) ) $= f0_pm5.35 f1_pm5.35 a_wi f0_pm5.35 f2_pm5.35 a_wi p_pm5.1 f0_pm5.35 f1_pm5.35 a_wi f0_pm5.35 f2_pm5.35 a_wi a_wa f0_pm5.35 f1_pm5.35 f2_pm5.35 p_pm5.74rd $.
 $}
-$( Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+
+$(Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 7-Nov-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm5.54_0 $f wff ph $.
-	fpm5.54_1 $f wff ps $.
-	pm5.54 $p |- ( ( ( ph /\ ps ) <-> ph ) \/ ( ( ph /\ ps ) <-> ps ) ) $= fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_0 fpm5.54_1 wa fpm5.54_1 wb fpm5.54_0 fpm5.54_1 wa fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_1 fpm5.54_1 fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_0 fpm5.54_1 fpm5.54_0 fpm5.54_0 fpm5.54_1 wa fpm5.54_1 fpm5.54_0 iba bicomd adantl fpm5.54_1 fpm5.54_0 fpm5.54_0 fpm5.54_1 wa fpm5.54_1 fpm5.54_0 iba bicomd pm5.21ni orri $.
+	$v ph ps  $.
+	f0_pm5.54 $f wff ph $.
+	f1_pm5.54 $f wff ps $.
+	p_pm5.54 $p |- ( ( ( ph /\ ps ) <-> ph ) \/ ( ( ph /\ ps ) <-> ps ) ) $= f1_pm5.54 f0_pm5.54 p_iba f1_pm5.54 f0_pm5.54 f0_pm5.54 f1_pm5.54 a_wa p_bicomd f1_pm5.54 f0_pm5.54 f1_pm5.54 a_wa f0_pm5.54 a_wb f0_pm5.54 p_adantl f1_pm5.54 f0_pm5.54 p_iba f1_pm5.54 f0_pm5.54 f0_pm5.54 f1_pm5.54 a_wa p_bicomd f0_pm5.54 f1_pm5.54 a_wa f0_pm5.54 f1_pm5.54 a_wa f0_pm5.54 a_wb f1_pm5.54 p_pm5.21ni f0_pm5.54 f1_pm5.54 a_wa f0_pm5.54 a_wb f0_pm5.54 f1_pm5.54 a_wa f1_pm5.54 a_wb p_orri $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by NM,
+
+$(Move conjunction outside of biconditional.  (Contributed by NM,
        13-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbaib_0 $f wff ph $.
-	fbaib_1 $f wff ps $.
-	fbaib_2 $f wff ch $.
-	ebaib_0 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	baib $p |- ( ps -> ( ph <-> ch ) ) $= fbaib_1 fbaib_2 fbaib_1 fbaib_2 wa fbaib_0 fbaib_1 fbaib_2 ibar ebaib_0 syl6rbbr $.
+	$v ph ps ch  $.
+	f0_baib $f wff ph $.
+	f1_baib $f wff ps $.
+	f2_baib $f wff ch $.
+	e0_baib $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_baib $p |- ( ps -> ( ph <-> ch ) ) $= f1_baib f2_baib p_ibar e0_baib f1_baib f2_baib f1_baib f2_baib a_wa f0_baib p_syl6rbbr $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by NM,
+
+$(Move conjunction outside of biconditional.  (Contributed by NM,
        11-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbaibr_0 $f wff ph $.
-	fbaibr_1 $f wff ps $.
-	fbaibr_2 $f wff ch $.
-	ebaibr_0 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	baibr $p |- ( ps -> ( ch <-> ph ) ) $= fbaibr_1 fbaibr_0 fbaibr_2 fbaibr_0 fbaibr_1 fbaibr_2 ebaibr_0 baib bicomd $.
+	$v ph ps ch  $.
+	f0_baibr $f wff ph $.
+	f1_baibr $f wff ps $.
+	f2_baibr $f wff ch $.
+	e0_baibr $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_baibr $p |- ( ps -> ( ch <-> ph ) ) $= e0_baibr f0_baibr f1_baibr f2_baibr p_baib f1_baibr f0_baibr f2_baibr p_bicomd $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by Mario
+
+$(Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	frbaib_0 $f wff ph $.
-	frbaib_1 $f wff ps $.
-	frbaib_2 $f wff ch $.
-	erbaib_0 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	rbaib $p |- ( ch -> ( ph <-> ps ) ) $= frbaib_0 frbaib_2 frbaib_1 frbaib_0 frbaib_1 frbaib_2 wa frbaib_2 frbaib_1 wa erbaib_0 frbaib_1 frbaib_2 ancom bitri baib $.
+	$v ph ps ch  $.
+	f0_rbaib $f wff ph $.
+	f1_rbaib $f wff ps $.
+	f2_rbaib $f wff ch $.
+	e0_rbaib $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_rbaib $p |- ( ch -> ( ph <-> ps ) ) $= e0_rbaib f1_rbaib f2_rbaib p_ancom f0_rbaib f1_rbaib f2_rbaib a_wa f2_rbaib f1_rbaib a_wa p_bitri f0_rbaib f2_rbaib f1_rbaib p_baib $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by Mario
+
+$(Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	frbaibr_0 $f wff ph $.
-	frbaibr_1 $f wff ps $.
-	frbaibr_2 $f wff ch $.
-	erbaibr_0 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	rbaibr $p |- ( ch -> ( ps <-> ph ) ) $= frbaibr_0 frbaibr_2 frbaibr_1 frbaibr_0 frbaibr_1 frbaibr_2 wa frbaibr_2 frbaibr_1 wa erbaibr_0 frbaibr_1 frbaibr_2 ancom bitri baibr $.
+	$v ph ps ch  $.
+	f0_rbaibr $f wff ph $.
+	f1_rbaibr $f wff ps $.
+	f2_rbaibr $f wff ch $.
+	e0_rbaibr $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_rbaibr $p |- ( ch -> ( ps <-> ph ) ) $= e0_rbaibr f1_rbaibr f2_rbaibr p_ancom f0_rbaibr f1_rbaibr f2_rbaibr a_wa f2_rbaibr f1_rbaibr a_wa p_bitri f0_rbaibr f2_rbaibr f1_rbaibr p_baibr $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by Mario
+
+$(Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fbaibd_0 $f wff ph $.
-	fbaibd_1 $f wff ps $.
-	fbaibd_2 $f wff ch $.
-	fbaibd_3 $f wff th $.
-	ebaibd_0 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
-	baibd $p |- ( ( ph /\ ch ) -> ( ps <-> th ) ) $= fbaibd_0 fbaibd_1 fbaibd_2 fbaibd_3 wa fbaibd_2 fbaibd_3 ebaibd_0 fbaibd_2 fbaibd_3 fbaibd_2 fbaibd_3 wa fbaibd_2 fbaibd_3 ibar bicomd sylan9bb $.
+	$v ph ps ch th  $.
+	f0_baibd $f wff ph $.
+	f1_baibd $f wff ps $.
+	f2_baibd $f wff ch $.
+	f3_baibd $f wff th $.
+	e0_baibd $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	p_baibd $p |- ( ( ph /\ ch ) -> ( ps <-> th ) ) $= e0_baibd f2_baibd f3_baibd p_ibar f2_baibd f3_baibd f2_baibd f3_baibd a_wa p_bicomd f0_baibd f1_baibd f2_baibd f3_baibd a_wa f2_baibd f3_baibd p_sylan9bb $.
 $}
-$( Move conjunction outside of biconditional.  (Contributed by Mario
+
+$(Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	frbaibd_0 $f wff ph $.
-	frbaibd_1 $f wff ps $.
-	frbaibd_2 $f wff ch $.
-	frbaibd_3 $f wff th $.
-	erbaibd_0 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
-	rbaibd $p |- ( ( ph /\ th ) -> ( ps <-> ch ) ) $= frbaibd_0 frbaibd_1 frbaibd_2 frbaibd_3 wa frbaibd_3 frbaibd_2 erbaibd_0 frbaibd_3 frbaibd_2 frbaibd_2 frbaibd_3 wa frbaibd_3 frbaibd_2 iba bicomd sylan9bb $.
+	$v ph ps ch th  $.
+	f0_rbaibd $f wff ph $.
+	f1_rbaibd $f wff ps $.
+	f2_rbaibd $f wff ch $.
+	f3_rbaibd $f wff th $.
+	e0_rbaibd $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	p_rbaibd $p |- ( ( ph /\ th ) -> ( ps <-> ch ) ) $= e0_rbaibd f3_rbaibd f2_rbaibd p_iba f3_rbaibd f2_rbaibd f2_rbaibd f3_rbaibd a_wa p_bicomd f0_rbaibd f1_rbaibd f2_rbaibd f3_rbaibd a_wa f3_rbaibd f2_rbaibd p_sylan9bb $.
 $}
-$( Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+
+$(Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.44_0 $f wff ph $.
-	fpm5.44_1 $f wff ps $.
-	fpm5.44_2 $f wff ch $.
-	pm5.44 $p |- ( ( ph -> ps ) -> ( ( ph -> ch ) <-> ( ph -> ( ps /\ ch ) ) ) ) $= fpm5.44_0 fpm5.44_1 fpm5.44_2 wa wi fpm5.44_0 fpm5.44_1 wi fpm5.44_0 fpm5.44_2 wi fpm5.44_0 fpm5.44_1 fpm5.44_2 jcab baibr $.
+	$v ph ps ch  $.
+	f0_pm5.44 $f wff ph $.
+	f1_pm5.44 $f wff ps $.
+	f2_pm5.44 $f wff ch $.
+	p_pm5.44 $p |- ( ( ph -> ps ) -> ( ( ph -> ch ) <-> ( ph -> ( ps /\ ch ) ) ) ) $= f0_pm5.44 f1_pm5.44 f2_pm5.44 p_jcab f0_pm5.44 f1_pm5.44 f2_pm5.44 a_wa a_wi f0_pm5.44 f1_pm5.44 a_wi f0_pm5.44 f2_pm5.44 a_wi p_baibr $.
 $}
-$( Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
+
+$(Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
      of [WhiteheadRussell] p. 125.  (Contributed by NM, 8-Jun-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.6_0 $f wff ph $.
-	fpm5.6_1 $f wff ps $.
-	fpm5.6_2 $f wff ch $.
-	pm5.6 $p |- ( ( ( ph /\ -. ps ) -> ch ) <-> ( ph -> ( ps \/ ch ) ) ) $= fpm5.6_0 fpm5.6_1 wn wa fpm5.6_2 wi fpm5.6_0 fpm5.6_1 wn fpm5.6_2 wi wi fpm5.6_0 fpm5.6_1 fpm5.6_2 wo wi fpm5.6_0 fpm5.6_1 wn fpm5.6_2 impexp fpm5.6_1 fpm5.6_2 wo fpm5.6_1 wn fpm5.6_2 wi fpm5.6_0 fpm5.6_1 fpm5.6_2 df-or imbi2i bitr4i $.
+	$v ph ps ch  $.
+	f0_pm5.6 $f wff ph $.
+	f1_pm5.6 $f wff ps $.
+	f2_pm5.6 $f wff ch $.
+	p_pm5.6 $p |- ( ( ( ph /\ -. ps ) -> ch ) <-> ( ph -> ( ps \/ ch ) ) ) $= f0_pm5.6 f1_pm5.6 a_wn f2_pm5.6 p_impexp f1_pm5.6 f2_pm5.6 a_df-or f1_pm5.6 f2_pm5.6 a_wo f1_pm5.6 a_wn f2_pm5.6 a_wi f0_pm5.6 p_imbi2i f0_pm5.6 f1_pm5.6 a_wn a_wa f2_pm5.6 a_wi f0_pm5.6 f1_pm5.6 a_wn f2_pm5.6 a_wi a_wi f0_pm5.6 f1_pm5.6 f2_pm5.6 a_wo a_wi p_bitr4i $.
 $}
-$( Change disjunction in consequent to conjunction in antecedent.
+
+$(Change disjunction in consequent to conjunction in antecedent.
        (Contributed by NM, 8-Jun-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	forcanai_0 $f wff ph $.
-	forcanai_1 $f wff ps $.
-	forcanai_2 $f wff ch $.
-	eorcanai_0 $e |- ( ph -> ( ps \/ ch ) ) $.
-	orcanai $p |- ( ( ph /\ -. ps ) -> ch ) $= forcanai_0 forcanai_1 wn forcanai_2 forcanai_0 forcanai_1 forcanai_2 eorcanai_0 ord imp $.
+	$v ph ps ch  $.
+	f0_orcanai $f wff ph $.
+	f1_orcanai $f wff ps $.
+	f2_orcanai $f wff ch $.
+	e0_orcanai $e |- ( ph -> ( ps \/ ch ) ) $.
+	p_orcanai $p |- ( ( ph /\ -. ps ) -> ch ) $= e0_orcanai f0_orcanai f1_orcanai f2_orcanai p_ord f0_orcanai f1_orcanai a_wn f2_orcanai p_imp $.
 $}
-$( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+
+$(Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        16-Sep-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fintnan_0 $f wff ph $.
-	fintnan_1 $f wff ps $.
-	eintnan_0 $e |- -. ph $.
-	intnan $p |- -. ( ps /\ ph ) $= fintnan_1 fintnan_0 wa fintnan_0 eintnan_0 fintnan_1 fintnan_0 simpr mto $.
+	$v ph ps  $.
+	f0_intnan $f wff ph $.
+	f1_intnan $f wff ps $.
+	e0_intnan $e |- -. ph $.
+	p_intnan $p |- -. ( ps /\ ph ) $= e0_intnan f1_intnan f0_intnan p_simpr f1_intnan f0_intnan a_wa f0_intnan p_mto $.
 $}
-$( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+
+$(Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        3-Apr-1995.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fintnanr_0 $f wff ph $.
-	fintnanr_1 $f wff ps $.
-	eintnanr_0 $e |- -. ph $.
-	intnanr $p |- -. ( ph /\ ps ) $= fintnanr_0 fintnanr_1 wa fintnanr_0 eintnanr_0 fintnanr_0 fintnanr_1 simpl mto $.
+	$v ph ps  $.
+	f0_intnanr $f wff ph $.
+	f1_intnanr $f wff ps $.
+	e0_intnanr $e |- -. ph $.
+	p_intnanr $p |- -. ( ph /\ ps ) $= e0_intnanr f0_intnanr f1_intnanr p_simpl f0_intnanr f1_intnanr a_wa f0_intnanr p_mto $.
 $}
-$( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+
+$(Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fintnand_0 $f wff ph $.
-	fintnand_1 $f wff ps $.
-	fintnand_2 $f wff ch $.
-	eintnand_0 $e |- ( ph -> -. ps ) $.
-	intnand $p |- ( ph -> -. ( ch /\ ps ) ) $= fintnand_0 fintnand_1 fintnand_2 fintnand_1 wa eintnand_0 fintnand_2 fintnand_1 simpr nsyl $.
+	$v ph ps ch  $.
+	f0_intnand $f wff ph $.
+	f1_intnand $f wff ps $.
+	f2_intnand $f wff ch $.
+	e0_intnand $e |- ( ph -> -. ps ) $.
+	p_intnand $p |- ( ph -> -. ( ch /\ ps ) ) $= e0_intnand f2_intnand f1_intnand p_simpr f0_intnand f1_intnand f2_intnand f1_intnand a_wa p_nsyl $.
 $}
-$( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+
+$(Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fintnanrd_0 $f wff ph $.
-	fintnanrd_1 $f wff ps $.
-	fintnanrd_2 $f wff ch $.
-	eintnanrd_0 $e |- ( ph -> -. ps ) $.
-	intnanrd $p |- ( ph -> -. ( ps /\ ch ) ) $= fintnanrd_0 fintnanrd_1 fintnanrd_1 fintnanrd_2 wa eintnanrd_0 fintnanrd_1 fintnanrd_2 simpl nsyl $.
+	$v ph ps ch  $.
+	f0_intnanrd $f wff ph $.
+	f1_intnanrd $f wff ps $.
+	f2_intnanrd $f wff ch $.
+	e0_intnanrd $e |- ( ph -> -. ps ) $.
+	p_intnanrd $p |- ( ph -> -. ( ps /\ ch ) ) $= e0_intnanrd f1_intnanrd f2_intnanrd p_simpl f0_intnanrd f1_intnanrd f1_intnanrd f2_intnanrd a_wa p_nsyl $.
 $}
-$( Detach truth from conjunction in biconditional.  (Contributed by NM,
+
+$(Detach truth from conjunction in biconditional.  (Contributed by NM,
        27-Feb-1996.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fmpbiran_0 $f wff ph $.
-	fmpbiran_1 $f wff ps $.
-	fmpbiran_2 $f wff ch $.
-	empbiran_0 $e |- ps $.
-	empbiran_1 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	mpbiran $p |- ( ph <-> ch ) $= fmpbiran_0 fmpbiran_1 fmpbiran_2 wa fmpbiran_2 empbiran_1 fmpbiran_1 fmpbiran_2 empbiran_0 biantrur bitr4i $.
+	$v ph ps ch  $.
+	f0_mpbiran $f wff ph $.
+	f1_mpbiran $f wff ps $.
+	f2_mpbiran $f wff ch $.
+	e0_mpbiran $e |- ps $.
+	e1_mpbiran $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_mpbiran $p |- ( ph <-> ch ) $= e1_mpbiran e0_mpbiran f1_mpbiran f2_mpbiran p_biantrur f0_mpbiran f1_mpbiran f2_mpbiran a_wa f2_mpbiran p_bitr4i $.
 $}
-$( Detach truth from conjunction in biconditional.  (Contributed by NM,
+
+$(Detach truth from conjunction in biconditional.  (Contributed by NM,
        22-Feb-1996.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fmpbiran2_0 $f wff ph $.
-	fmpbiran2_1 $f wff ps $.
-	fmpbiran2_2 $f wff ch $.
-	empbiran2_0 $e |- ch $.
-	empbiran2_1 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	mpbiran2 $p |- ( ph <-> ps ) $= fmpbiran2_0 fmpbiran2_1 fmpbiran2_2 wa fmpbiran2_1 empbiran2_1 fmpbiran2_2 fmpbiran2_1 empbiran2_0 biantru bitr4i $.
+	$v ph ps ch  $.
+	f0_mpbiran2 $f wff ph $.
+	f1_mpbiran2 $f wff ps $.
+	f2_mpbiran2 $f wff ch $.
+	e0_mpbiran2 $e |- ch $.
+	e1_mpbiran2 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_mpbiran2 $p |- ( ph <-> ps ) $= e1_mpbiran2 e0_mpbiran2 f2_mpbiran2 f1_mpbiran2 p_biantru f0_mpbiran2 f1_mpbiran2 f2_mpbiran2 a_wa f1_mpbiran2 p_bitr4i $.
 $}
-$( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+
+$(Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        10-May-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fmpbir2an_0 $f wff ph $.
-	fmpbir2an_1 $f wff ps $.
-	fmpbir2an_2 $f wff ch $.
-	empbir2an_0 $e |- ps $.
-	empbir2an_1 $e |- ch $.
-	empbir2an_2 $e |- ( ph <-> ( ps /\ ch ) ) $.
-	mpbir2an $p |- ph $= fmpbir2an_0 fmpbir2an_2 empbir2an_1 fmpbir2an_0 fmpbir2an_1 fmpbir2an_2 empbir2an_0 empbir2an_2 mpbiran mpbir $.
+	$v ph ps ch  $.
+	f0_mpbir2an $f wff ph $.
+	f1_mpbir2an $f wff ps $.
+	f2_mpbir2an $f wff ch $.
+	e0_mpbir2an $e |- ps $.
+	e1_mpbir2an $e |- ch $.
+	e2_mpbir2an $e |- ( ph <-> ( ps /\ ch ) ) $.
+	p_mpbir2an $p |- ph $= e1_mpbir2an e0_mpbir2an e2_mpbir2an f0_mpbir2an f1_mpbir2an f2_mpbir2an p_mpbiran f0_mpbir2an f2_mpbir2an p_mpbir $.
 $}
-$( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+
+$(Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fmpbi2and_0 $f wff ph $.
-	fmpbi2and_1 $f wff ps $.
-	fmpbi2and_2 $f wff ch $.
-	fmpbi2and_3 $f wff th $.
-	empbi2and_0 $e |- ( ph -> ps ) $.
-	empbi2and_1 $e |- ( ph -> ch ) $.
-	empbi2and_2 $e |- ( ph -> ( ( ps /\ ch ) <-> th ) ) $.
-	mpbi2and $p |- ( ph -> th ) $= fmpbi2and_0 fmpbi2and_1 fmpbi2and_2 wa fmpbi2and_3 fmpbi2and_0 fmpbi2and_1 fmpbi2and_2 empbi2and_0 empbi2and_1 jca empbi2and_2 mpbid $.
+	$v ph ps ch th  $.
+	f0_mpbi2and $f wff ph $.
+	f1_mpbi2and $f wff ps $.
+	f2_mpbi2and $f wff ch $.
+	f3_mpbi2and $f wff th $.
+	e0_mpbi2and $e |- ( ph -> ps ) $.
+	e1_mpbi2and $e |- ( ph -> ch ) $.
+	e2_mpbi2and $e |- ( ph -> ( ( ps /\ ch ) <-> th ) ) $.
+	p_mpbi2and $p |- ( ph -> th ) $= e0_mpbi2and e1_mpbi2and f0_mpbi2and f1_mpbi2and f2_mpbi2and p_jca e2_mpbi2and f0_mpbi2and f1_mpbi2and f2_mpbi2and a_wa f3_mpbi2and p_mpbid $.
 $}
-$( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+
+$(Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fmpbir2and_0 $f wff ph $.
-	fmpbir2and_1 $f wff ps $.
-	fmpbir2and_2 $f wff ch $.
-	fmpbir2and_3 $f wff th $.
-	empbir2and_0 $e |- ( ph -> ch ) $.
-	empbir2and_1 $e |- ( ph -> th ) $.
-	empbir2and_2 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
-	mpbir2and $p |- ( ph -> ps ) $= fmpbir2and_0 fmpbir2and_1 fmpbir2and_2 fmpbir2and_3 wa fmpbir2and_0 fmpbir2and_2 fmpbir2and_3 empbir2and_0 empbir2and_1 jca empbir2and_2 mpbird $.
+	$v ph ps ch th  $.
+	f0_mpbir2and $f wff ph $.
+	f1_mpbir2and $f wff ps $.
+	f2_mpbir2and $f wff ch $.
+	f3_mpbir2and $f wff th $.
+	e0_mpbir2and $e |- ( ph -> ch ) $.
+	e1_mpbir2and $e |- ( ph -> th ) $.
+	e2_mpbir2and $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	p_mpbir2and $p |- ( ph -> ps ) $= e0_mpbir2and e1_mpbir2and f0_mpbir2and f2_mpbir2and f3_mpbir2and p_jca e2_mpbir2and f0_mpbir2and f1_mpbir2and f2_mpbir2and f3_mpbir2and a_wa p_mpbird $.
 $}
-$( Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+
+$(Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm5.62_0 $f wff ph $.
-	fpm5.62_1 $f wff ps $.
-	pm5.62 $p |- ( ( ( ph /\ ps ) \/ -. ps ) <-> ( ph \/ -. ps ) ) $= fpm5.62_0 fpm5.62_1 wa fpm5.62_1 wn wo fpm5.62_0 fpm5.62_1 wn wo fpm5.62_1 fpm5.62_1 wn wo fpm5.62_1 exmid fpm5.62_0 fpm5.62_1 fpm5.62_1 wn ordir mpbiran2 $.
+	$v ph ps  $.
+	f0_pm5.62 $f wff ph $.
+	f1_pm5.62 $f wff ps $.
+	p_pm5.62 $p |- ( ( ( ph /\ ps ) \/ -. ps ) <-> ( ph \/ -. ps ) ) $= f1_pm5.62 p_exmid f0_pm5.62 f1_pm5.62 f1_pm5.62 a_wn p_ordir f0_pm5.62 f1_pm5.62 a_wa f1_pm5.62 a_wn a_wo f0_pm5.62 f1_pm5.62 a_wn a_wo f1_pm5.62 f1_pm5.62 a_wn a_wo p_mpbiran2 $.
 $}
-$( Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+
+$(Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 25-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm5.63_0 $f wff ph $.
-	fpm5.63_1 $f wff ps $.
-	pm5.63 $p |- ( ( ph \/ ps ) <-> ( ph \/ ( -. ph /\ ps ) ) ) $= fpm5.63_0 fpm5.63_0 wn fpm5.63_1 wa wo fpm5.63_0 fpm5.63_1 wo fpm5.63_0 fpm5.63_0 wn fpm5.63_1 wa wo fpm5.63_0 fpm5.63_0 wn wo fpm5.63_0 fpm5.63_1 wo fpm5.63_0 exmid fpm5.63_0 fpm5.63_0 wn fpm5.63_1 ordi mpbiran bicomi $.
+	$v ph ps  $.
+	f0_pm5.63 $f wff ph $.
+	f1_pm5.63 $f wff ps $.
+	p_pm5.63 $p |- ( ( ph \/ ps ) <-> ( ph \/ ( -. ph /\ ps ) ) ) $= f0_pm5.63 p_exmid f0_pm5.63 f0_pm5.63 a_wn f1_pm5.63 p_ordi f0_pm5.63 f0_pm5.63 a_wn f1_pm5.63 a_wa a_wo f0_pm5.63 f0_pm5.63 a_wn a_wo f0_pm5.63 f1_pm5.63 a_wo p_mpbiran f0_pm5.63 f0_pm5.63 a_wn f1_pm5.63 a_wa a_wo f0_pm5.63 f1_pm5.63 a_wo p_bicomi $.
 $}
-$( A wff conjoined with falsehood is false.  (Contributed by NM,
+
+$(A wff conjoined with falsehood is false.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fbianfi_0 $f wff ph $.
-	fbianfi_1 $f wff ps $.
-	ebianfi_0 $e |- -. ph $.
-	bianfi $p |- ( ph <-> ( ps /\ ph ) ) $= fbianfi_0 fbianfi_1 fbianfi_0 wa ebianfi_0 fbianfi_0 fbianfi_1 ebianfi_0 intnan 2false $.
+	$v ph ps  $.
+	f0_bianfi $f wff ph $.
+	f1_bianfi $f wff ps $.
+	e0_bianfi $e |- -. ph $.
+	p_bianfi $p |- ( ph <-> ( ps /\ ph ) ) $= e0_bianfi e0_bianfi f0_bianfi f1_bianfi p_intnan f0_bianfi f1_bianfi f0_bianfi a_wa p_2false $.
 $}
-$( A wff conjoined with falsehood is false.  (Contributed by NM,
+
+$(A wff conjoined with falsehood is false.  (Contributed by NM,
        27-Mar-1995.)  (Proof shortened by Wolf Lammen, 5-Nov-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbianfd_0 $f wff ph $.
-	fbianfd_1 $f wff ps $.
-	fbianfd_2 $f wff ch $.
-	ebianfd_0 $e |- ( ph -> -. ps ) $.
-	bianfd $p |- ( ph -> ( ps <-> ( ps /\ ch ) ) ) $= fbianfd_0 fbianfd_1 fbianfd_1 fbianfd_2 wa ebianfd_0 fbianfd_0 fbianfd_1 fbianfd_2 ebianfd_0 intnanrd 2falsed $.
+	$v ph ps ch  $.
+	f0_bianfd $f wff ph $.
+	f1_bianfd $f wff ps $.
+	f2_bianfd $f wff ch $.
+	e0_bianfd $e |- ( ph -> -. ps ) $.
+	p_bianfd $p |- ( ph -> ( ps <-> ( ps /\ ch ) ) ) $= e0_bianfd e0_bianfd f0_bianfd f1_bianfd f2_bianfd p_intnanrd f0_bianfd f1_bianfd f1_bianfd f2_bianfd a_wa p_2falsed $.
 $}
-$( Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+
+$(Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm4.43_0 $f wff ph $.
-	fpm4.43_1 $f wff ps $.
-	pm4.43 $p |- ( ph <-> ( ( ph \/ ps ) /\ ( ph \/ -. ps ) ) ) $= fpm4.43_0 fpm4.43_0 fpm4.43_1 fpm4.43_1 wn wa wo fpm4.43_0 fpm4.43_1 wo fpm4.43_0 fpm4.43_1 wn wo wa fpm4.43_1 fpm4.43_1 wn wa fpm4.43_0 fpm4.43_1 pm3.24 biorfi fpm4.43_0 fpm4.43_1 fpm4.43_1 wn ordi bitri $.
+	$v ph ps  $.
+	f0_pm4.43 $f wff ph $.
+	f1_pm4.43 $f wff ps $.
+	p_pm4.43 $p |- ( ph <-> ( ( ph \/ ps ) /\ ( ph \/ -. ps ) ) ) $= f1_pm4.43 p_pm3.24 f1_pm4.43 f1_pm4.43 a_wn a_wa f0_pm4.43 p_biorfi f0_pm4.43 f1_pm4.43 f1_pm4.43 a_wn p_ordi f0_pm4.43 f0_pm4.43 f1_pm4.43 f1_pm4.43 a_wn a_wa a_wo f0_pm4.43 f1_pm4.43 a_wo f0_pm4.43 f1_pm4.43 a_wn a_wo a_wa p_bitri $.
 $}
-$( Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+
+$(Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm4.82_0 $f wff ph $.
-	fpm4.82_1 $f wff ps $.
-	pm4.82 $p |- ( ( ( ph -> ps ) /\ ( ph -> -. ps ) ) <-> -. ph ) $= fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi wa fpm4.82_0 wn fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi fpm4.82_0 wn fpm4.82_0 fpm4.82_1 pm2.65 imp fpm4.82_0 wn fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi fpm4.82_0 fpm4.82_1 pm2.21 fpm4.82_0 fpm4.82_1 wn pm2.21 jca impbii $.
+	$v ph ps  $.
+	f0_pm4.82 $f wff ph $.
+	f1_pm4.82 $f wff ps $.
+	p_pm4.82 $p |- ( ( ( ph -> ps ) /\ ( ph -> -. ps ) ) <-> -. ph ) $= f0_pm4.82 f1_pm4.82 p_pm2.65 f0_pm4.82 f1_pm4.82 a_wi f0_pm4.82 f1_pm4.82 a_wn a_wi f0_pm4.82 a_wn p_imp f0_pm4.82 f1_pm4.82 p_pm2.21 f0_pm4.82 f1_pm4.82 a_wn p_pm2.21 f0_pm4.82 a_wn f0_pm4.82 f1_pm4.82 a_wi f0_pm4.82 f1_pm4.82 a_wn a_wi p_jca f0_pm4.82 f1_pm4.82 a_wi f0_pm4.82 f1_pm4.82 a_wn a_wi a_wa f0_pm4.82 a_wn p_impbii $.
 $}
-$( Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+
+$(Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm4.83_0 $f wff ph $.
-	fpm4.83_1 $f wff ps $.
-	pm4.83 $p |- ( ( ( ph -> ps ) /\ ( -. ph -> ps ) ) <-> ps ) $= fpm4.83_1 fpm4.83_0 fpm4.83_0 wn wo fpm4.83_1 wi fpm4.83_0 fpm4.83_1 wi fpm4.83_0 wn fpm4.83_1 wi wa fpm4.83_0 fpm4.83_0 wn wo fpm4.83_1 fpm4.83_0 exmid a1bi fpm4.83_0 fpm4.83_1 fpm4.83_0 wn jaob bitr2i $.
+	$v ph ps  $.
+	f0_pm4.83 $f wff ph $.
+	f1_pm4.83 $f wff ps $.
+	p_pm4.83 $p |- ( ( ( ph -> ps ) /\ ( -. ph -> ps ) ) <-> ps ) $= f0_pm4.83 p_exmid f0_pm4.83 f0_pm4.83 a_wn a_wo f1_pm4.83 p_a1bi f0_pm4.83 f1_pm4.83 f0_pm4.83 a_wn p_jaob f1_pm4.83 f0_pm4.83 f0_pm4.83 a_wn a_wo f1_pm4.83 a_wi f0_pm4.83 f1_pm4.83 a_wi f0_pm4.83 a_wn f1_pm4.83 a_wi a_wa p_bitr2i $.
 $}
-$( Negation inferred from embedded conjunct.  (Contributed by NM,
+
+$(Negation inferred from embedded conjunct.  (Contributed by NM,
      20-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpclem6_0 $f wff ph $.
-	fpclem6_1 $f wff ps $.
-	pclem6 $p |- ( ( ph <-> ( ps /\ -. ph ) ) -> -. ps ) $= fpclem6_1 fpclem6_0 fpclem6_1 fpclem6_0 wn wa wb fpclem6_1 fpclem6_0 wn fpclem6_1 fpclem6_0 wn wa wb fpclem6_0 fpclem6_1 fpclem6_0 wn wa wb wn fpclem6_1 fpclem6_0 wn ibar fpclem6_0 fpclem6_1 fpclem6_0 wn wa nbbn sylib con2i $.
+	$v ph ps  $.
+	f0_pclem6 $f wff ph $.
+	f1_pclem6 $f wff ps $.
+	p_pclem6 $p |- ( ( ph <-> ( ps /\ -. ph ) ) -> -. ps ) $= f1_pclem6 f0_pclem6 a_wn p_ibar f0_pclem6 f1_pclem6 f0_pclem6 a_wn a_wa p_nbbn f1_pclem6 f0_pclem6 a_wn f1_pclem6 f0_pclem6 a_wn a_wa a_wb f0_pclem6 f1_pclem6 f0_pclem6 a_wn a_wa a_wb a_wn p_sylib f1_pclem6 f0_pclem6 f1_pclem6 f0_pclem6 a_wn a_wa a_wb p_con2i $.
 $}
-$( A transitive law of equivalence.  Compare Theorem *4.22 of
+
+$(A transitive law of equivalence.  Compare Theorem *4.22 of
      [WhiteheadRussell] p. 117.  (Contributed by NM, 18-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbiantr_0 $f wff ph $.
-	fbiantr_1 $f wff ps $.
-	fbiantr_2 $f wff ch $.
-	biantr $p |- ( ( ( ph <-> ps ) /\ ( ch <-> ps ) ) -> ( ph <-> ch ) ) $= fbiantr_2 fbiantr_1 wb fbiantr_0 fbiantr_2 wb fbiantr_0 fbiantr_1 wb fbiantr_2 fbiantr_1 wb fbiantr_2 fbiantr_1 fbiantr_0 fbiantr_2 fbiantr_1 wb id bibi2d biimparc $.
+	$v ph ps ch  $.
+	f0_biantr $f wff ph $.
+	f1_biantr $f wff ps $.
+	f2_biantr $f wff ch $.
+	p_biantr $p |- ( ( ( ph <-> ps ) /\ ( ch <-> ps ) ) -> ( ph <-> ch ) ) $= f2_biantr f1_biantr a_wb p_id f2_biantr f1_biantr a_wb f2_biantr f1_biantr f0_biantr p_bibi2d f2_biantr f1_biantr a_wb f0_biantr f2_biantr a_wb f0_biantr f1_biantr a_wb p_biimparc $.
 $}
-$( Disjunction distributes over the biconditional.  An axiom of system DS in
+
+$(Disjunction distributes over the biconditional.  An axiom of system DS in
      Vladimir Lifschitz, "On calculational proofs" (1998),
      ~ http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.25.3384 .
      (Contributed by NM, 8-Jan-2005.)  (Proof shortened by Wolf Lammen,
      4-Feb-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	forbidi_0 $f wff ph $.
-	forbidi_1 $f wff ps $.
-	forbidi_2 $f wff ch $.
-	orbidi $p |- ( ( ph \/ ( ps <-> ch ) ) <-> ( ( ph \/ ps ) <-> ( ph \/ ch ) ) ) $= forbidi_0 wn forbidi_1 forbidi_2 wb wi forbidi_0 wn forbidi_1 wi forbidi_0 wn forbidi_2 wi wb forbidi_0 forbidi_1 forbidi_2 wb wo forbidi_0 forbidi_1 wo forbidi_0 forbidi_2 wo wb forbidi_0 wn forbidi_1 forbidi_2 pm5.74 forbidi_0 forbidi_1 forbidi_2 wb df-or forbidi_0 forbidi_1 wo forbidi_0 wn forbidi_1 wi forbidi_0 forbidi_2 wo forbidi_0 wn forbidi_2 wi forbidi_0 forbidi_1 df-or forbidi_0 forbidi_2 df-or bibi12i 3bitr4i $.
+	$v ph ps ch  $.
+	f0_orbidi $f wff ph $.
+	f1_orbidi $f wff ps $.
+	f2_orbidi $f wff ch $.
+	p_orbidi $p |- ( ( ph \/ ( ps <-> ch ) ) <-> ( ( ph \/ ps ) <-> ( ph \/ ch ) ) ) $= f0_orbidi a_wn f1_orbidi f2_orbidi p_pm5.74 f0_orbidi f1_orbidi f2_orbidi a_wb a_df-or f0_orbidi f1_orbidi a_df-or f0_orbidi f2_orbidi a_df-or f0_orbidi f1_orbidi a_wo f0_orbidi a_wn f1_orbidi a_wi f0_orbidi f2_orbidi a_wo f0_orbidi a_wn f2_orbidi a_wi p_bibi12i f0_orbidi a_wn f1_orbidi f2_orbidi a_wb a_wi f0_orbidi a_wn f1_orbidi a_wi f0_orbidi a_wn f2_orbidi a_wi a_wb f0_orbidi f1_orbidi f2_orbidi a_wb a_wo f0_orbidi f1_orbidi a_wo f0_orbidi f2_orbidi a_wo a_wb p_3bitr4i $.
 $}
-$( Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
+
+$(Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
      ed., _Polish Logic 1920-1939_ (Oxford, 1967), p. 96.  (Contributed by NM,
      10-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbiluk_0 $f wff ph $.
-	fbiluk_1 $f wff ps $.
-	fbiluk_2 $f wff ch $.
-	biluk $p |- ( ( ph <-> ps ) <-> ( ( ch <-> ps ) <-> ( ph <-> ch ) ) ) $= fbiluk_0 fbiluk_1 wb fbiluk_2 fbiluk_1 fbiluk_0 fbiluk_2 wb wb wb fbiluk_2 fbiluk_1 wb fbiluk_0 fbiluk_2 wb wb fbiluk_0 fbiluk_1 wb fbiluk_2 wb fbiluk_1 fbiluk_0 fbiluk_2 wb wb wb fbiluk_0 fbiluk_1 wb fbiluk_2 fbiluk_1 fbiluk_0 fbiluk_2 wb wb wb wb fbiluk_0 fbiluk_1 wb fbiluk_2 wb fbiluk_1 fbiluk_0 wb fbiluk_2 wb fbiluk_1 fbiluk_0 fbiluk_2 wb wb fbiluk_0 fbiluk_1 wb fbiluk_1 fbiluk_0 wb fbiluk_2 fbiluk_0 fbiluk_1 bicom bibi1i fbiluk_1 fbiluk_0 fbiluk_2 biass bitri fbiluk_0 fbiluk_1 wb fbiluk_2 fbiluk_1 fbiluk_0 fbiluk_2 wb wb biass mpbi fbiluk_2 fbiluk_1 fbiluk_0 fbiluk_2 wb biass bitr4i $.
+	$v ph ps ch  $.
+	f0_biluk $f wff ph $.
+	f1_biluk $f wff ps $.
+	f2_biluk $f wff ch $.
+	p_biluk $p |- ( ( ph <-> ps ) <-> ( ( ch <-> ps ) <-> ( ph <-> ch ) ) ) $= f0_biluk f1_biluk p_bicom f0_biluk f1_biluk a_wb f1_biluk f0_biluk a_wb f2_biluk p_bibi1i f1_biluk f0_biluk f2_biluk p_biass f0_biluk f1_biluk a_wb f2_biluk a_wb f1_biluk f0_biluk a_wb f2_biluk a_wb f1_biluk f0_biluk f2_biluk a_wb a_wb p_bitri f0_biluk f1_biluk a_wb f2_biluk f1_biluk f0_biluk f2_biluk a_wb a_wb p_biass f0_biluk f1_biluk a_wb f2_biluk a_wb f1_biluk f0_biluk f2_biluk a_wb a_wb a_wb f0_biluk f1_biluk a_wb f2_biluk f1_biluk f0_biluk f2_biluk a_wb a_wb a_wb a_wb p_mpbi f2_biluk f1_biluk f0_biluk f2_biluk a_wb p_biass f0_biluk f1_biluk a_wb f2_biluk f1_biluk f0_biluk f2_biluk a_wb a_wb a_wb f2_biluk f1_biluk a_wb f0_biluk f2_biluk a_wb a_wb p_bitr4i $.
 $}
-$( Disjunction distributes over the biconditional.  Theorem *5.7 of
+
+$(Disjunction distributes over the biconditional.  Theorem *5.7 of
      [WhiteheadRussell] p. 125.  This theorem is similar to ~ orbidi .
      (Contributed by Roy F. Longton, 21-Jun-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.7_0 $f wff ph $.
-	fpm5.7_1 $f wff ps $.
-	fpm5.7_2 $f wff ch $.
-	pm5.7 $p |- ( ( ( ph \/ ch ) <-> ( ps \/ ch ) ) <-> ( ch \/ ( ph <-> ps ) ) ) $= fpm5.7_2 fpm5.7_0 fpm5.7_1 wb wo fpm5.7_2 fpm5.7_0 wo fpm5.7_2 fpm5.7_1 wo wb fpm5.7_0 fpm5.7_2 wo fpm5.7_1 fpm5.7_2 wo wb fpm5.7_2 fpm5.7_0 fpm5.7_1 orbidi fpm5.7_2 fpm5.7_0 wo fpm5.7_0 fpm5.7_2 wo fpm5.7_2 fpm5.7_1 wo fpm5.7_1 fpm5.7_2 wo fpm5.7_2 fpm5.7_0 orcom fpm5.7_2 fpm5.7_1 orcom bibi12i bitr2i $.
+	$v ph ps ch  $.
+	f0_pm5.7 $f wff ph $.
+	f1_pm5.7 $f wff ps $.
+	f2_pm5.7 $f wff ch $.
+	p_pm5.7 $p |- ( ( ( ph \/ ch ) <-> ( ps \/ ch ) ) <-> ( ch \/ ( ph <-> ps ) ) ) $= f2_pm5.7 f0_pm5.7 f1_pm5.7 p_orbidi f2_pm5.7 f0_pm5.7 p_orcom f2_pm5.7 f1_pm5.7 p_orcom f2_pm5.7 f0_pm5.7 a_wo f0_pm5.7 f2_pm5.7 a_wo f2_pm5.7 f1_pm5.7 a_wo f1_pm5.7 f2_pm5.7 a_wo p_bibi12i f2_pm5.7 f0_pm5.7 f1_pm5.7 a_wb a_wo f2_pm5.7 f0_pm5.7 a_wo f2_pm5.7 f1_pm5.7 a_wo a_wb f0_pm5.7 f2_pm5.7 a_wo f1_pm5.7 f2_pm5.7 a_wo a_wb p_bitr2i $.
 $}
-$( Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
+
+$(Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
      NM, 10-Jan-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fbigolden_0 $f wff ph $.
-	fbigolden_1 $f wff ps $.
-	bigolden $p |- ( ( ( ph /\ ps ) <-> ph ) <-> ( ps <-> ( ph \/ ps ) ) ) $= fbigolden_0 fbigolden_1 wi fbigolden_0 fbigolden_0 fbigolden_1 wa wb fbigolden_1 fbigolden_0 fbigolden_1 wo wb fbigolden_0 fbigolden_1 wa fbigolden_0 wb fbigolden_0 fbigolden_1 pm4.71 fbigolden_0 fbigolden_1 pm4.72 fbigolden_0 fbigolden_0 fbigolden_1 wa bicom 3bitr3ri $.
+	$v ph ps  $.
+	f0_bigolden $f wff ph $.
+	f1_bigolden $f wff ps $.
+	p_bigolden $p |- ( ( ( ph /\ ps ) <-> ph ) <-> ( ps <-> ( ph \/ ps ) ) ) $= f0_bigolden f1_bigolden p_pm4.71 f0_bigolden f1_bigolden p_pm4.72 f0_bigolden f0_bigolden f1_bigolden a_wa p_bicom f0_bigolden f1_bigolden a_wi f0_bigolden f0_bigolden f1_bigolden a_wa a_wb f1_bigolden f0_bigolden f1_bigolden a_wo a_wb f0_bigolden f1_bigolden a_wa f0_bigolden a_wb p_3bitr3ri $.
 $}
-$( Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+
+$(Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 23-Jun-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.71_0 $f wff ph $.
-	fpm5.71_1 $f wff ps $.
-	fpm5.71_2 $f wff ch $.
-	pm5.71 $p |- ( ( ps -> -. ch ) -> ( ( ( ph \/ ps ) /\ ch ) <-> ( ph /\ ch ) ) ) $= fpm5.71_1 fpm5.71_2 wn fpm5.71_0 fpm5.71_1 wo fpm5.71_2 wa fpm5.71_0 fpm5.71_2 wa wb fpm5.71_1 wn fpm5.71_0 fpm5.71_1 wo fpm5.71_0 fpm5.71_2 fpm5.71_1 wn fpm5.71_0 fpm5.71_1 wo fpm5.71_0 fpm5.71_1 fpm5.71_0 orel2 fpm5.71_0 fpm5.71_1 orc impbid1 anbi1d fpm5.71_2 wn fpm5.71_2 fpm5.71_0 fpm5.71_1 wo fpm5.71_0 fpm5.71_2 fpm5.71_0 fpm5.71_1 wo fpm5.71_0 wb pm2.21 pm5.32rd ja $.
+	$v ph ps ch  $.
+	f0_pm5.71 $f wff ph $.
+	f1_pm5.71 $f wff ps $.
+	f2_pm5.71 $f wff ch $.
+	p_pm5.71 $p |- ( ( ps -> -. ch ) -> ( ( ( ph \/ ps ) /\ ch ) <-> ( ph /\ ch ) ) ) $= f1_pm5.71 f0_pm5.71 p_orel2 f0_pm5.71 f1_pm5.71 p_orc f1_pm5.71 a_wn f0_pm5.71 f1_pm5.71 a_wo f0_pm5.71 p_impbid1 f1_pm5.71 a_wn f0_pm5.71 f1_pm5.71 a_wo f0_pm5.71 f2_pm5.71 p_anbi1d f2_pm5.71 f0_pm5.71 f1_pm5.71 a_wo f0_pm5.71 a_wb p_pm2.21 f2_pm5.71 a_wn f2_pm5.71 f0_pm5.71 f1_pm5.71 a_wo f0_pm5.71 p_pm5.32rd f1_pm5.71 f2_pm5.71 a_wn f0_pm5.71 f1_pm5.71 a_wo f2_pm5.71 a_wa f0_pm5.71 f2_pm5.71 a_wa a_wb p_ja $.
 $}
-$( Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
+
+$(Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 23-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fpm5.75_0 $f wff ph $.
-	fpm5.75_1 $f wff ps $.
-	fpm5.75_2 $f wff ch $.
-	pm5.75 $p |- ( ( ( ch -> -. ps ) /\ ( ph <-> ( ps \/ ch ) ) ) -> ( ( ph /\ -. ps ) <-> ch ) ) $= fpm5.75_0 fpm5.75_1 fpm5.75_2 wo wb fpm5.75_0 fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wn wi fpm5.75_2 fpm5.75_0 fpm5.75_1 fpm5.75_2 wo wb fpm5.75_0 fpm5.75_1 wn wa fpm5.75_1 fpm5.75_2 wo fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wn wa fpm5.75_0 fpm5.75_1 fpm5.75_2 wo fpm5.75_1 wn anbi1 fpm5.75_1 fpm5.75_2 wo fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wo fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wn wa fpm5.75_1 fpm5.75_2 wo fpm5.75_2 fpm5.75_1 wo fpm5.75_1 wn fpm5.75_1 fpm5.75_2 orcom anbi1i fpm5.75_2 fpm5.75_1 pm5.61 bitri syl6bb fpm5.75_2 fpm5.75_1 wn wi fpm5.75_2 fpm5.75_2 fpm5.75_1 wn wa fpm5.75_2 fpm5.75_1 wn wi fpm5.75_2 fpm5.75_2 fpm5.75_1 wn wa wb fpm5.75_2 fpm5.75_1 wn pm4.71 biimpi bicomd sylan9bbr $.
+	$v ph ps ch  $.
+	f0_pm5.75 $f wff ph $.
+	f1_pm5.75 $f wff ps $.
+	f2_pm5.75 $f wff ch $.
+	p_pm5.75 $p |- ( ( ( ch -> -. ps ) /\ ( ph <-> ( ps \/ ch ) ) ) -> ( ( ph /\ -. ps ) <-> ch ) ) $= f0_pm5.75 f1_pm5.75 f2_pm5.75 a_wo f1_pm5.75 a_wn p_anbi1 f1_pm5.75 f2_pm5.75 p_orcom f1_pm5.75 f2_pm5.75 a_wo f2_pm5.75 f1_pm5.75 a_wo f1_pm5.75 a_wn p_anbi1i f2_pm5.75 f1_pm5.75 p_pm5.61 f1_pm5.75 f2_pm5.75 a_wo f1_pm5.75 a_wn a_wa f2_pm5.75 f1_pm5.75 a_wo f1_pm5.75 a_wn a_wa f2_pm5.75 f1_pm5.75 a_wn a_wa p_bitri f0_pm5.75 f1_pm5.75 f2_pm5.75 a_wo a_wb f0_pm5.75 f1_pm5.75 a_wn a_wa f1_pm5.75 f2_pm5.75 a_wo f1_pm5.75 a_wn a_wa f2_pm5.75 f1_pm5.75 a_wn a_wa p_syl6bb f2_pm5.75 f1_pm5.75 a_wn p_pm4.71 f2_pm5.75 f1_pm5.75 a_wn a_wi f2_pm5.75 f2_pm5.75 f1_pm5.75 a_wn a_wa a_wb p_biimpi f2_pm5.75 f1_pm5.75 a_wn a_wi f2_pm5.75 f2_pm5.75 f1_pm5.75 a_wn a_wa p_bicomd f0_pm5.75 f1_pm5.75 f2_pm5.75 a_wo a_wb f0_pm5.75 f1_pm5.75 a_wn a_wa f2_pm5.75 f1_pm5.75 a_wn a_wa f2_pm5.75 f1_pm5.75 a_wn a_wi f2_pm5.75 p_sylan9bbr $.
 $}
-$( Removal of conjunct from one side of an equivalence.  (Contributed by NM,
+
+$(Removal of conjunct from one side of an equivalence.  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fbimsc1_0 $f wff ph $.
-	fbimsc1_1 $f wff ps $.
-	fbimsc1_2 $f wff ch $.
-	bimsc1 $p |- ( ( ( ph -> ps ) /\ ( ch <-> ( ps /\ ph ) ) ) -> ( ch <-> ph ) ) $= fbimsc1_0 fbimsc1_1 wi fbimsc1_2 fbimsc1_1 fbimsc1_0 wa wb fbimsc1_2 fbimsc1_0 wb fbimsc1_0 fbimsc1_1 wi fbimsc1_1 fbimsc1_0 wa fbimsc1_0 fbimsc1_2 fbimsc1_0 fbimsc1_1 wi fbimsc1_1 fbimsc1_0 wa fbimsc1_0 fbimsc1_1 fbimsc1_0 simpr fbimsc1_0 fbimsc1_1 ancr impbid2 bibi2d biimpa $.
+	$v ph ps ch  $.
+	f0_bimsc1 $f wff ph $.
+	f1_bimsc1 $f wff ps $.
+	f2_bimsc1 $f wff ch $.
+	p_bimsc1 $p |- ( ( ( ph -> ps ) /\ ( ch <-> ( ps /\ ph ) ) ) -> ( ch <-> ph ) ) $= f1_bimsc1 f0_bimsc1 p_simpr f0_bimsc1 f1_bimsc1 p_ancr f0_bimsc1 f1_bimsc1 a_wi f1_bimsc1 f0_bimsc1 a_wa f0_bimsc1 p_impbid2 f0_bimsc1 f1_bimsc1 a_wi f1_bimsc1 f0_bimsc1 a_wa f0_bimsc1 f2_bimsc1 p_bibi2d f0_bimsc1 f1_bimsc1 a_wi f2_bimsc1 f1_bimsc1 f0_bimsc1 a_wa a_wb f2_bimsc1 f0_bimsc1 a_wb p_biimpa $.
 $}
-$( The disjunction of the four possible combinations of two wffs and their
+
+$(The disjunction of the four possible combinations of two wffs and their
      negations is always true.  (Contributed by David Abernethy,
      28-Jan-2014.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	f4exmid_0 $f wff ph $.
-	f4exmid_1 $f wff ps $.
-	4exmid $p |- ( ( ( ph /\ ps ) \/ ( -. ph /\ -. ps ) ) \/ ( ( ph /\ -. ps ) \/ ( ps /\ -. ph ) ) ) $= f4exmid_0 f4exmid_1 wb f4exmid_0 f4exmid_1 wb wn wo f4exmid_0 f4exmid_1 wa f4exmid_0 wn f4exmid_1 wn wa wo f4exmid_0 f4exmid_1 wn wa f4exmid_1 f4exmid_0 wn wa wo wo f4exmid_0 f4exmid_1 wb exmid f4exmid_0 f4exmid_1 wb f4exmid_0 f4exmid_1 wa f4exmid_0 wn f4exmid_1 wn wa wo f4exmid_0 f4exmid_1 wb wn f4exmid_0 f4exmid_1 wn wa f4exmid_1 f4exmid_0 wn wa wo f4exmid_0 f4exmid_1 dfbi3 f4exmid_0 f4exmid_1 xor orbi12i mpbi $.
+	$v ph ps  $.
+	f0_4exmid $f wff ph $.
+	f1_4exmid $f wff ps $.
+	p_4exmid $p |- ( ( ( ph /\ ps ) \/ ( -. ph /\ -. ps ) ) \/ ( ( ph /\ -. ps ) \/ ( ps /\ -. ph ) ) ) $= f0_4exmid f1_4exmid a_wb p_exmid f0_4exmid f1_4exmid p_dfbi3 f0_4exmid f1_4exmid p_xor f0_4exmid f1_4exmid a_wb f0_4exmid f1_4exmid a_wa f0_4exmid a_wn f1_4exmid a_wn a_wa a_wo f0_4exmid f1_4exmid a_wb a_wn f0_4exmid f1_4exmid a_wn a_wa f1_4exmid f0_4exmid a_wn a_wa a_wo p_orbi12i f0_4exmid f1_4exmid a_wb f0_4exmid f1_4exmid a_wb a_wn a_wo f0_4exmid f1_4exmid a_wa f0_4exmid a_wn f1_4exmid a_wn a_wa a_wo f0_4exmid f1_4exmid a_wn a_wa f1_4exmid f0_4exmid a_wn a_wa a_wo a_wo p_mpbi $.
 $}
-$( Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
+
+$(Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
        (Proof shortened by Wolf Lammen, 22-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fecase2d_0 $f wff ph $.
-	fecase2d_1 $f wff ps $.
-	fecase2d_2 $f wff ch $.
-	fecase2d_3 $f wff th $.
-	fecase2d_4 $f wff ta $.
-	eecase2d_0 $e |- ( ph -> ps ) $.
-	eecase2d_1 $e |- ( ph -> -. ( ps /\ ch ) ) $.
-	eecase2d_2 $e |- ( ph -> -. ( ps /\ th ) ) $.
-	eecase2d_3 $e |- ( ph -> ( ta \/ ( ch \/ th ) ) ) $.
-	ecase2d $p |- ( ph -> ta ) $= fecase2d_0 fecase2d_4 fecase2d_4 fecase2d_2 fecase2d_3 wo fecase2d_0 fecase2d_4 idd fecase2d_0 fecase2d_2 fecase2d_4 fecase2d_3 fecase2d_0 fecase2d_1 fecase2d_2 fecase2d_4 eecase2d_0 fecase2d_0 fecase2d_1 fecase2d_2 wa fecase2d_4 eecase2d_1 pm2.21d mpand fecase2d_0 fecase2d_1 fecase2d_3 fecase2d_4 eecase2d_0 fecase2d_0 fecase2d_1 fecase2d_3 wa fecase2d_4 eecase2d_2 pm2.21d mpand jaod eecase2d_3 mpjaod $.
+	$v ph ps ch th ta  $.
+	f0_ecase2d $f wff ph $.
+	f1_ecase2d $f wff ps $.
+	f2_ecase2d $f wff ch $.
+	f3_ecase2d $f wff th $.
+	f4_ecase2d $f wff ta $.
+	e0_ecase2d $e |- ( ph -> ps ) $.
+	e1_ecase2d $e |- ( ph -> -. ( ps /\ ch ) ) $.
+	e2_ecase2d $e |- ( ph -> -. ( ps /\ th ) ) $.
+	e3_ecase2d $e |- ( ph -> ( ta \/ ( ch \/ th ) ) ) $.
+	p_ecase2d $p |- ( ph -> ta ) $= f0_ecase2d f4_ecase2d p_idd e0_ecase2d e1_ecase2d f0_ecase2d f1_ecase2d f2_ecase2d a_wa f4_ecase2d p_pm2.21d f0_ecase2d f1_ecase2d f2_ecase2d f4_ecase2d p_mpand e0_ecase2d e2_ecase2d f0_ecase2d f1_ecase2d f3_ecase2d a_wa f4_ecase2d p_pm2.21d f0_ecase2d f1_ecase2d f3_ecase2d f4_ecase2d p_mpand f0_ecase2d f2_ecase2d f4_ecase2d f3_ecase2d p_jaod e3_ecase2d f0_ecase2d f4_ecase2d f4_ecase2d f2_ecase2d f3_ecase2d a_wo p_mpjaod $.
 $}
-$( Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
+
+$(Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
        (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fecase3_0 $f wff ph $.
-	fecase3_1 $f wff ps $.
-	fecase3_2 $f wff ch $.
-	eecase3_0 $e |- ( ph -> ch ) $.
-	eecase3_1 $e |- ( ps -> ch ) $.
-	eecase3_2 $e |- ( -. ( ph \/ ps ) -> ch ) $.
-	ecase3 $p |- ch $= fecase3_0 fecase3_1 wo fecase3_2 fecase3_0 fecase3_2 fecase3_1 eecase3_0 eecase3_1 jaoi eecase3_2 pm2.61i $.
+	$v ph ps ch  $.
+	f0_ecase3 $f wff ph $.
+	f1_ecase3 $f wff ps $.
+	f2_ecase3 $f wff ch $.
+	e0_ecase3 $e |- ( ph -> ch ) $.
+	e1_ecase3 $e |- ( ps -> ch ) $.
+	e2_ecase3 $e |- ( -. ( ph \/ ps ) -> ch ) $.
+	p_ecase3 $p |- ch $= e0_ecase3 e1_ecase3 f0_ecase3 f2_ecase3 f1_ecase3 p_jaoi e2_ecase3 f0_ecase3 f1_ecase3 a_wo f2_ecase3 p_pm2.61i $.
 $}
-$( Inference for elimination by cases.  (Contributed by NM,
+
+$(Inference for elimination by cases.  (Contributed by NM,
        13-Jul-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fecase_0 $f wff ph $.
-	fecase_1 $f wff ps $.
-	fecase_2 $f wff ch $.
-	eecase_0 $e |- ( -. ph -> ch ) $.
-	eecase_1 $e |- ( -. ps -> ch ) $.
-	eecase_2 $e |- ( ( ph /\ ps ) -> ch ) $.
-	ecase $p |- ch $= fecase_0 fecase_1 fecase_2 fecase_0 fecase_1 fecase_2 eecase_2 ex eecase_0 eecase_1 pm2.61nii $.
+	$v ph ps ch  $.
+	f0_ecase $f wff ph $.
+	f1_ecase $f wff ps $.
+	f2_ecase $f wff ch $.
+	e0_ecase $e |- ( -. ph -> ch ) $.
+	e1_ecase $e |- ( -. ps -> ch ) $.
+	e2_ecase $e |- ( ( ph /\ ps ) -> ch ) $.
+	p_ecase $p |- ch $= e2_ecase f0_ecase f1_ecase f2_ecase p_ex e0_ecase e1_ecase f0_ecase f1_ecase f2_ecase p_pm2.61nii $.
 $}
-$( Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
+
+$(Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
        (Proof shortened by Andrew Salmon, 7-May-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fecase3d_0 $f wff ph $.
-	fecase3d_1 $f wff ps $.
-	fecase3d_2 $f wff ch $.
-	fecase3d_3 $f wff th $.
-	eecase3d_0 $e |- ( ph -> ( ps -> th ) ) $.
-	eecase3d_1 $e |- ( ph -> ( ch -> th ) ) $.
-	eecase3d_2 $e |- ( ph -> ( -. ( ps \/ ch ) -> th ) ) $.
-	ecase3d $p |- ( ph -> th ) $= fecase3d_0 fecase3d_1 fecase3d_2 wo fecase3d_3 fecase3d_0 fecase3d_1 fecase3d_3 fecase3d_2 eecase3d_0 eecase3d_1 jaod eecase3d_2 pm2.61d $.
+	$v ph ps ch th  $.
+	f0_ecase3d $f wff ph $.
+	f1_ecase3d $f wff ps $.
+	f2_ecase3d $f wff ch $.
+	f3_ecase3d $f wff th $.
+	e0_ecase3d $e |- ( ph -> ( ps -> th ) ) $.
+	e1_ecase3d $e |- ( ph -> ( ch -> th ) ) $.
+	e2_ecase3d $e |- ( ph -> ( -. ( ps \/ ch ) -> th ) ) $.
+	p_ecase3d $p |- ( ph -> th ) $= e0_ecase3d e1_ecase3d f0_ecase3d f1_ecase3d f3_ecase3d f2_ecase3d p_jaod e2_ecase3d f0_ecase3d f1_ecase3d f2_ecase3d a_wo f3_ecase3d p_pm2.61d $.
 $}
-$( Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) $)
+
+$(Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fecased_0 $f wff ph $.
-	fecased_1 $f wff ps $.
-	fecased_2 $f wff ch $.
-	fecased_3 $f wff th $.
-	eecased_0 $e |- ( ph -> ( -. ps -> th ) ) $.
-	eecased_1 $e |- ( ph -> ( -. ch -> th ) ) $.
-	eecased_2 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
-	ecased $p |- ( ph -> th ) $= fecased_0 fecased_1 wn fecased_2 wn fecased_3 eecased_0 eecased_1 fecased_1 wn fecased_2 wn wo wn fecased_1 fecased_2 wa fecased_0 fecased_3 fecased_1 fecased_2 pm3.11 eecased_2 syl5 ecase3d $.
+	$v ph ps ch th  $.
+	f0_ecased $f wff ph $.
+	f1_ecased $f wff ps $.
+	f2_ecased $f wff ch $.
+	f3_ecased $f wff th $.
+	e0_ecased $e |- ( ph -> ( -. ps -> th ) ) $.
+	e1_ecased $e |- ( ph -> ( -. ch -> th ) ) $.
+	e2_ecased $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	p_ecased $p |- ( ph -> th ) $= e0_ecased e1_ecased f1_ecased f2_ecased p_pm3.11 e2_ecased f1_ecased a_wn f2_ecased a_wn a_wo a_wn f1_ecased f2_ecased a_wa f0_ecased f3_ecased p_syl5 f0_ecased f1_ecased a_wn f2_ecased a_wn f3_ecased p_ecase3d $.
 $}
-$( Deduction for elimination by cases.  (Contributed by NM,
+
+$(Deduction for elimination by cases.  (Contributed by NM,
        24-May-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fecase3ad_0 $f wff ph $.
-	fecase3ad_1 $f wff ps $.
-	fecase3ad_2 $f wff ch $.
-	fecase3ad_3 $f wff th $.
-	eecase3ad_0 $e |- ( ph -> ( ps -> th ) ) $.
-	eecase3ad_1 $e |- ( ph -> ( ch -> th ) ) $.
-	eecase3ad_2 $e |- ( ph -> ( ( -. ps /\ -. ch ) -> th ) ) $.
-	ecase3ad $p |- ( ph -> th ) $= fecase3ad_0 fecase3ad_1 wn fecase3ad_2 wn fecase3ad_3 fecase3ad_1 wn wn fecase3ad_1 fecase3ad_0 fecase3ad_3 fecase3ad_1 notnot2 eecase3ad_0 syl5 fecase3ad_2 wn wn fecase3ad_2 fecase3ad_0 fecase3ad_3 fecase3ad_2 notnot2 eecase3ad_1 syl5 eecase3ad_2 ecased $.
+	$v ph ps ch th  $.
+	f0_ecase3ad $f wff ph $.
+	f1_ecase3ad $f wff ps $.
+	f2_ecase3ad $f wff ch $.
+	f3_ecase3ad $f wff th $.
+	e0_ecase3ad $e |- ( ph -> ( ps -> th ) ) $.
+	e1_ecase3ad $e |- ( ph -> ( ch -> th ) ) $.
+	e2_ecase3ad $e |- ( ph -> ( ( -. ps /\ -. ch ) -> th ) ) $.
+	p_ecase3ad $p |- ( ph -> th ) $= f1_ecase3ad p_notnot2 e0_ecase3ad f1_ecase3ad a_wn a_wn f1_ecase3ad f0_ecase3ad f3_ecase3ad p_syl5 f2_ecase3ad p_notnot2 e1_ecase3ad f2_ecase3ad a_wn a_wn f2_ecase3ad f0_ecase3ad f3_ecase3ad p_syl5 e2_ecase3ad f0_ecase3ad f1_ecase3ad a_wn f2_ecase3ad a_wn f3_ecase3ad p_ecased $.
 $}
-$( Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
+
+$(Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
        (Proof shortened by Wolf Lammen, 6-Jan-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fccase_0 $f wff ph $.
-	fccase_1 $f wff ps $.
-	fccase_2 $f wff ch $.
-	fccase_3 $f wff th $.
-	fccase_4 $f wff ta $.
-	eccase_0 $e |- ( ( ph /\ ps ) -> ta ) $.
-	eccase_1 $e |- ( ( ch /\ ps ) -> ta ) $.
-	eccase_2 $e |- ( ( ph /\ th ) -> ta ) $.
-	eccase_3 $e |- ( ( ch /\ th ) -> ta ) $.
-	ccase $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $= fccase_0 fccase_2 wo fccase_1 fccase_4 fccase_3 fccase_0 fccase_1 fccase_4 fccase_2 eccase_0 eccase_1 jaoian fccase_0 fccase_3 fccase_4 fccase_2 eccase_2 eccase_3 jaoian jaodan $.
+	$v ph ps ch th ta  $.
+	f0_ccase $f wff ph $.
+	f1_ccase $f wff ps $.
+	f2_ccase $f wff ch $.
+	f3_ccase $f wff th $.
+	f4_ccase $f wff ta $.
+	e0_ccase $e |- ( ( ph /\ ps ) -> ta ) $.
+	e1_ccase $e |- ( ( ch /\ ps ) -> ta ) $.
+	e2_ccase $e |- ( ( ph /\ th ) -> ta ) $.
+	e3_ccase $e |- ( ( ch /\ th ) -> ta ) $.
+	p_ccase $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $= e0_ccase e1_ccase f0_ccase f1_ccase f4_ccase f2_ccase p_jaoian e2_ccase e3_ccase f0_ccase f3_ccase f4_ccase f2_ccase p_jaoian f0_ccase f2_ccase a_wo f1_ccase f4_ccase f3_ccase p_jaodan $.
 $}
-$( Deduction for combining cases.  (Contributed by NM, 9-May-2004.) $)
+
+$(Deduction for combining cases.  (Contributed by NM, 9-May-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	fccased_0 $f wff ph $.
-	fccased_1 $f wff ps $.
-	fccased_2 $f wff ch $.
-	fccased_3 $f wff th $.
-	fccased_4 $f wff ta $.
-	fccased_5 $f wff et $.
-	eccased_0 $e |- ( ph -> ( ( ps /\ ch ) -> et ) ) $.
-	eccased_1 $e |- ( ph -> ( ( th /\ ch ) -> et ) ) $.
-	eccased_2 $e |- ( ph -> ( ( ps /\ ta ) -> et ) ) $.
-	eccased_3 $e |- ( ph -> ( ( th /\ ta ) -> et ) ) $.
-	ccased $p |- ( ph -> ( ( ( ps \/ th ) /\ ( ch \/ ta ) ) -> et ) ) $= fccased_1 fccased_3 wo fccased_2 fccased_4 wo wa fccased_0 fccased_5 fccased_1 fccased_2 fccased_3 fccased_4 fccased_0 fccased_5 wi fccased_0 fccased_1 fccased_2 wa fccased_5 eccased_0 com12 fccased_0 fccased_3 fccased_2 wa fccased_5 eccased_1 com12 fccased_0 fccased_1 fccased_4 wa fccased_5 eccased_2 com12 fccased_0 fccased_3 fccased_4 wa fccased_5 eccased_3 com12 ccase com12 $.
+	$v ph ps ch th ta et  $.
+	f0_ccased $f wff ph $.
+	f1_ccased $f wff ps $.
+	f2_ccased $f wff ch $.
+	f3_ccased $f wff th $.
+	f4_ccased $f wff ta $.
+	f5_ccased $f wff et $.
+	e0_ccased $e |- ( ph -> ( ( ps /\ ch ) -> et ) ) $.
+	e1_ccased $e |- ( ph -> ( ( th /\ ch ) -> et ) ) $.
+	e2_ccased $e |- ( ph -> ( ( ps /\ ta ) -> et ) ) $.
+	e3_ccased $e |- ( ph -> ( ( th /\ ta ) -> et ) ) $.
+	p_ccased $p |- ( ph -> ( ( ( ps \/ th ) /\ ( ch \/ ta ) ) -> et ) ) $= e0_ccased f0_ccased f1_ccased f2_ccased a_wa f5_ccased p_com12 e1_ccased f0_ccased f3_ccased f2_ccased a_wa f5_ccased p_com12 e2_ccased f0_ccased f1_ccased f4_ccased a_wa f5_ccased p_com12 e3_ccased f0_ccased f3_ccased f4_ccased a_wa f5_ccased p_com12 f1_ccased f2_ccased f3_ccased f4_ccased f0_ccased f5_ccased a_wi p_ccase f1_ccased f3_ccased a_wo f2_ccased f4_ccased a_wo a_wa f0_ccased f5_ccased p_com12 $.
 $}
-$( Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) $)
+
+$(Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fccase2_0 $f wff ph $.
-	fccase2_1 $f wff ps $.
-	fccase2_2 $f wff ch $.
-	fccase2_3 $f wff th $.
-	fccase2_4 $f wff ta $.
-	eccase2_0 $e |- ( ( ph /\ ps ) -> ta ) $.
-	eccase2_1 $e |- ( ch -> ta ) $.
-	eccase2_2 $e |- ( th -> ta ) $.
-	ccase2 $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $= fccase2_0 fccase2_1 fccase2_2 fccase2_3 fccase2_4 eccase2_0 fccase2_2 fccase2_4 fccase2_1 eccase2_1 adantr fccase2_3 fccase2_4 fccase2_0 eccase2_2 adantl fccase2_3 fccase2_4 fccase2_2 eccase2_2 adantl ccase $.
+	$v ph ps ch th ta  $.
+	f0_ccase2 $f wff ph $.
+	f1_ccase2 $f wff ps $.
+	f2_ccase2 $f wff ch $.
+	f3_ccase2 $f wff th $.
+	f4_ccase2 $f wff ta $.
+	e0_ccase2 $e |- ( ( ph /\ ps ) -> ta ) $.
+	e1_ccase2 $e |- ( ch -> ta ) $.
+	e2_ccase2 $e |- ( th -> ta ) $.
+	p_ccase2 $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $= e0_ccase2 e1_ccase2 f2_ccase2 f4_ccase2 f1_ccase2 p_adantr e2_ccase2 f3_ccase2 f4_ccase2 f0_ccase2 p_adantl e2_ccase2 f3_ccase2 f4_ccase2 f2_ccase2 p_adantl f0_ccase2 f1_ccase2 f2_ccase2 f3_ccase2 f4_ccase2 p_ccase $.
 $}
-$( Inference eliminating two antecedents from the four possible cases that
+
+$(Inference eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        25-Oct-2003.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	f4cases_0 $f wff ph $.
-	f4cases_1 $f wff ps $.
-	f4cases_2 $f wff ch $.
-	e4cases_0 $e |- ( ( ph /\ ps ) -> ch ) $.
-	e4cases_1 $e |- ( ( ph /\ -. ps ) -> ch ) $.
-	e4cases_2 $e |- ( ( -. ph /\ ps ) -> ch ) $.
-	e4cases_3 $e |- ( ( -. ph /\ -. ps ) -> ch ) $.
-	4cases $p |- ch $= f4cases_1 f4cases_2 f4cases_0 f4cases_1 f4cases_2 e4cases_0 e4cases_2 pm2.61ian f4cases_0 f4cases_1 wn f4cases_2 e4cases_1 e4cases_3 pm2.61ian pm2.61i $.
+	$v ph ps ch  $.
+	f0_4cases $f wff ph $.
+	f1_4cases $f wff ps $.
+	f2_4cases $f wff ch $.
+	e0_4cases $e |- ( ( ph /\ ps ) -> ch ) $.
+	e1_4cases $e |- ( ( ph /\ -. ps ) -> ch ) $.
+	e2_4cases $e |- ( ( -. ph /\ ps ) -> ch ) $.
+	e3_4cases $e |- ( ( -. ph /\ -. ps ) -> ch ) $.
+	p_4cases $p |- ch $= e0_4cases e2_4cases f0_4cases f1_4cases f2_4cases p_pm2.61ian e1_4cases e3_4cases f0_4cases f1_4cases a_wn f2_4cases p_pm2.61ian f1_4cases f2_4cases p_pm2.61i $.
 $}
-$( Deduction eliminating two antecedents from the four possible cases that
+
+$(Deduction eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        19-Mar-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	f4casesdan_0 $f wff ph $.
-	f4casesdan_1 $f wff ps $.
-	f4casesdan_2 $f wff ch $.
-	f4casesdan_3 $f wff th $.
-	e4casesdan_0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
-	e4casesdan_1 $e |- ( ( ph /\ ( ps /\ -. ch ) ) -> th ) $.
-	e4casesdan_2 $e |- ( ( ph /\ ( -. ps /\ ch ) ) -> th ) $.
-	e4casesdan_3 $e |- ( ( ph /\ ( -. ps /\ -. ch ) ) -> th ) $.
-	4casesdan $p |- ( ph -> th ) $= f4casesdan_1 f4casesdan_2 f4casesdan_0 f4casesdan_3 wi f4casesdan_0 f4casesdan_1 f4casesdan_2 wa f4casesdan_3 e4casesdan_0 expcom f4casesdan_0 f4casesdan_1 f4casesdan_2 wn wa f4casesdan_3 e4casesdan_1 expcom f4casesdan_0 f4casesdan_1 wn f4casesdan_2 wa f4casesdan_3 e4casesdan_2 expcom f4casesdan_0 f4casesdan_1 wn f4casesdan_2 wn wa f4casesdan_3 e4casesdan_3 expcom 4cases $.
+	$v ph ps ch th  $.
+	f0_4casesdan $f wff ph $.
+	f1_4casesdan $f wff ps $.
+	f2_4casesdan $f wff ch $.
+	f3_4casesdan $f wff th $.
+	e0_4casesdan $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
+	e1_4casesdan $e |- ( ( ph /\ ( ps /\ -. ch ) ) -> th ) $.
+	e2_4casesdan $e |- ( ( ph /\ ( -. ps /\ ch ) ) -> th ) $.
+	e3_4casesdan $e |- ( ( ph /\ ( -. ps /\ -. ch ) ) -> th ) $.
+	p_4casesdan $p |- ( ph -> th ) $= e0_4casesdan f0_4casesdan f1_4casesdan f2_4casesdan a_wa f3_4casesdan p_expcom e1_4casesdan f0_4casesdan f1_4casesdan f2_4casesdan a_wn a_wa f3_4casesdan p_expcom e2_4casesdan f0_4casesdan f1_4casesdan a_wn f2_4casesdan a_wa f3_4casesdan p_expcom e3_4casesdan f0_4casesdan f1_4casesdan a_wn f2_4casesdan a_wn a_wa f3_4casesdan p_expcom f1_4casesdan f2_4casesdan f0_4casesdan f3_4casesdan a_wi p_4cases $.
 $}
-$( Miscellaneous inference relating falsehoods.  (Contributed by NM,
+
+$(Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fniabn_0 $f wff ph $.
-	fniabn_1 $f wff ps $.
-	fniabn_2 $f wff ch $.
-	eniabn_0 $e |- ph $.
-	niabn $p |- ( -. ps -> ( ( ch /\ ps ) <-> -. ph ) ) $= fniabn_2 fniabn_1 wa fniabn_1 fniabn_0 wn fniabn_2 fniabn_1 simpr fniabn_0 fniabn_1 eniabn_0 pm2.24i pm5.21ni $.
+	$v ph ps ch  $.
+	f0_niabn $f wff ph $.
+	f1_niabn $f wff ps $.
+	f2_niabn $f wff ch $.
+	e0_niabn $e |- ph $.
+	p_niabn $p |- ( -. ps -> ( ( ch /\ ps ) <-> -. ph ) ) $= f2_niabn f1_niabn p_simpr e0_niabn f0_niabn f1_niabn p_pm2.24i f2_niabn f1_niabn a_wa f1_niabn f0_niabn a_wn p_pm5.21ni $.
 $}
-$( Lemma for an alternate version of weak deduction theorem.  (Contributed by
+
+$(Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 4-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fdedlem0a_0 $f wff ph $.
-	fdedlem0a_1 $f wff ps $.
-	fdedlem0a_2 $f wff ch $.
-	dedlem0a $p |- ( ph -> ( ps <-> ( ( ch -> ph ) -> ( ps /\ ph ) ) ) ) $= fdedlem0a_0 fdedlem0a_1 fdedlem0a_1 fdedlem0a_0 wa fdedlem0a_2 fdedlem0a_0 wi fdedlem0a_1 fdedlem0a_0 wa wi fdedlem0a_0 fdedlem0a_1 iba fdedlem0a_0 fdedlem0a_2 fdedlem0a_0 wi fdedlem0a_1 fdedlem0a_0 wa fdedlem0a_2 fdedlem0a_0 wi fdedlem0a_1 fdedlem0a_0 wa wi wb fdedlem0a_0 fdedlem0a_2 ax-1 fdedlem0a_2 fdedlem0a_0 wi fdedlem0a_1 fdedlem0a_0 wa biimt syl bitrd $.
+	$v ph ps ch  $.
+	f0_dedlem0a $f wff ph $.
+	f1_dedlem0a $f wff ps $.
+	f2_dedlem0a $f wff ch $.
+	p_dedlem0a $p |- ( ph -> ( ps <-> ( ( ch -> ph ) -> ( ps /\ ph ) ) ) ) $= f0_dedlem0a f1_dedlem0a p_iba f0_dedlem0a f2_dedlem0a a_ax-1 f2_dedlem0a f0_dedlem0a a_wi f1_dedlem0a f0_dedlem0a a_wa p_biimt f0_dedlem0a f2_dedlem0a f0_dedlem0a a_wi f1_dedlem0a f0_dedlem0a a_wa f2_dedlem0a f0_dedlem0a a_wi f1_dedlem0a f0_dedlem0a a_wa a_wi a_wb p_syl f0_dedlem0a f1_dedlem0a f1_dedlem0a f0_dedlem0a a_wa f2_dedlem0a f0_dedlem0a a_wi f1_dedlem0a f0_dedlem0a a_wa a_wi p_bitrd $.
 $}
-$( Lemma for an alternate version of weak deduction theorem.  (Contributed by
+
+$(Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fdedlem0b_0 $f wff ph $.
-	fdedlem0b_1 $f wff ps $.
-	fdedlem0b_2 $f wff ch $.
-	dedlem0b $p |- ( -. ph -> ( ps <-> ( ( ps -> ph ) -> ( ch /\ ph ) ) ) ) $= fdedlem0b_0 wn fdedlem0b_1 fdedlem0b_1 fdedlem0b_0 wi fdedlem0b_2 fdedlem0b_0 wa wi fdedlem0b_0 wn fdedlem0b_1 fdedlem0b_0 wi fdedlem0b_1 fdedlem0b_2 fdedlem0b_0 wa fdedlem0b_0 wn fdedlem0b_0 fdedlem0b_2 fdedlem0b_0 wa fdedlem0b_1 fdedlem0b_0 fdedlem0b_2 fdedlem0b_0 wa pm2.21 imim2d com23 fdedlem0b_1 fdedlem0b_0 wi fdedlem0b_2 fdedlem0b_0 wa wi fdedlem0b_0 wn fdedlem0b_1 fdedlem0b_1 fdedlem0b_0 wi fdedlem0b_2 fdedlem0b_0 wa wi fdedlem0b_1 fdedlem0b_0 fdedlem0b_1 wn fdedlem0b_1 fdedlem0b_0 wi fdedlem0b_2 fdedlem0b_0 wa fdedlem0b_0 fdedlem0b_1 fdedlem0b_0 pm2.21 fdedlem0b_2 fdedlem0b_0 simpr imim12i con1d com12 impbid $.
+	$v ph ps ch  $.
+	f0_dedlem0b $f wff ph $.
+	f1_dedlem0b $f wff ps $.
+	f2_dedlem0b $f wff ch $.
+	p_dedlem0b $p |- ( -. ph -> ( ps <-> ( ( ps -> ph ) -> ( ch /\ ph ) ) ) ) $= f0_dedlem0b f2_dedlem0b f0_dedlem0b a_wa p_pm2.21 f0_dedlem0b a_wn f0_dedlem0b f2_dedlem0b f0_dedlem0b a_wa f1_dedlem0b p_imim2d f0_dedlem0b a_wn f1_dedlem0b f0_dedlem0b a_wi f1_dedlem0b f2_dedlem0b f0_dedlem0b a_wa p_com23 f1_dedlem0b f0_dedlem0b p_pm2.21 f2_dedlem0b f0_dedlem0b p_simpr f1_dedlem0b a_wn f1_dedlem0b f0_dedlem0b a_wi f2_dedlem0b f0_dedlem0b a_wa f0_dedlem0b p_imim12i f1_dedlem0b f0_dedlem0b a_wi f2_dedlem0b f0_dedlem0b a_wa a_wi f1_dedlem0b f0_dedlem0b p_con1d f1_dedlem0b f0_dedlem0b a_wi f2_dedlem0b f0_dedlem0b a_wa a_wi f0_dedlem0b a_wn f1_dedlem0b p_com12 f0_dedlem0b a_wn f1_dedlem0b f1_dedlem0b f0_dedlem0b a_wi f2_dedlem0b f0_dedlem0b a_wa a_wi p_impbid $.
 $}
-$( Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
+
+$(Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fdedlema_0 $f wff ph $.
-	fdedlema_1 $f wff ps $.
-	fdedlema_2 $f wff ch $.
-	dedlema $p |- ( ph -> ( ps <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $= fdedlema_0 fdedlema_1 fdedlema_1 fdedlema_0 wa fdedlema_2 fdedlema_0 wn wa wo fdedlema_1 fdedlema_0 fdedlema_1 fdedlema_0 wa fdedlema_2 fdedlema_0 wn wa wo fdedlema_1 fdedlema_0 wa fdedlema_2 fdedlema_0 wn wa orc expcom fdedlema_0 fdedlema_1 fdedlema_0 wa fdedlema_1 fdedlema_2 fdedlema_0 wn wa fdedlema_1 fdedlema_0 wa fdedlema_1 wi fdedlema_0 fdedlema_1 fdedlema_0 simpl a1i fdedlema_0 fdedlema_0 wn fdedlema_1 fdedlema_2 fdedlema_0 fdedlema_1 pm2.24 adantld jaod impbid $.
+	$v ph ps ch  $.
+	f0_dedlema $f wff ph $.
+	f1_dedlema $f wff ps $.
+	f2_dedlema $f wff ch $.
+	p_dedlema $p |- ( ph -> ( ps <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $= f1_dedlema f0_dedlema a_wa f2_dedlema f0_dedlema a_wn a_wa p_orc f1_dedlema f0_dedlema f1_dedlema f0_dedlema a_wa f2_dedlema f0_dedlema a_wn a_wa a_wo p_expcom f1_dedlema f0_dedlema p_simpl f1_dedlema f0_dedlema a_wa f1_dedlema a_wi f0_dedlema p_a1i f0_dedlema f1_dedlema p_pm2.24 f0_dedlema f0_dedlema a_wn f1_dedlema f2_dedlema p_adantld f0_dedlema f1_dedlema f0_dedlema a_wa f1_dedlema f2_dedlema f0_dedlema a_wn a_wa p_jaod f0_dedlema f1_dedlema f1_dedlema f0_dedlema a_wa f2_dedlema f0_dedlema a_wn a_wa a_wo p_impbid $.
 $}
-$( Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
+
+$(Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fdedlemb_0 $f wff ph $.
-	fdedlemb_1 $f wff ps $.
-	fdedlemb_2 $f wff ch $.
-	dedlemb $p |- ( -. ph -> ( ch <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $= fdedlemb_0 wn fdedlemb_2 fdedlemb_1 fdedlemb_0 wa fdedlemb_2 fdedlemb_0 wn wa wo fdedlemb_2 fdedlemb_0 wn fdedlemb_1 fdedlemb_0 wa fdedlemb_2 fdedlemb_0 wn wa wo fdedlemb_2 fdedlemb_0 wn wa fdedlemb_1 fdedlemb_0 wa olc expcom fdedlemb_0 wn fdedlemb_1 fdedlemb_0 wa fdedlemb_2 fdedlemb_2 fdedlemb_0 wn wa fdedlemb_0 wn fdedlemb_0 fdedlemb_2 fdedlemb_1 fdedlemb_0 fdedlemb_2 pm2.21 adantld fdedlemb_2 fdedlemb_0 wn wa fdedlemb_2 wi fdedlemb_0 wn fdedlemb_2 fdedlemb_0 wn simpl a1i jaod impbid $.
+	$v ph ps ch  $.
+	f0_dedlemb $f wff ph $.
+	f1_dedlemb $f wff ps $.
+	f2_dedlemb $f wff ch $.
+	p_dedlemb $p |- ( -. ph -> ( ch <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $= f2_dedlemb f0_dedlemb a_wn a_wa f1_dedlemb f0_dedlemb a_wa p_olc f2_dedlemb f0_dedlemb a_wn f1_dedlemb f0_dedlemb a_wa f2_dedlemb f0_dedlemb a_wn a_wa a_wo p_expcom f0_dedlemb f2_dedlemb p_pm2.21 f0_dedlemb a_wn f0_dedlemb f2_dedlemb f1_dedlemb p_adantld f2_dedlemb f0_dedlemb a_wn p_simpl f2_dedlemb f0_dedlemb a_wn a_wa f2_dedlemb a_wi f0_dedlemb a_wn p_a1i f0_dedlemb a_wn f1_dedlemb f0_dedlemb a_wa f2_dedlemb f2_dedlemb f0_dedlemb a_wn a_wa p_jaod f0_dedlemb a_wn f2_dedlemb f1_dedlemb f0_dedlemb a_wa f2_dedlemb f0_dedlemb a_wn a_wa a_wo p_impbid $.
 $}
-$( Hypothesis builder for weak deduction theorem.  For more information,
+
+$(Hypothesis builder for weak deduction theorem.  For more information,
        see the Deduction Theorem link on the Metamath Proof Explorer home
        page.  (Contributed by NM, 26-Jun-2002.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	felimh_0 $f wff ph $.
-	felimh_1 $f wff ps $.
-	felimh_2 $f wff ch $.
-	felimh_3 $f wff th $.
-	felimh_4 $f wff ta $.
-	eelimh_0 $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( ch <-> ta ) ) $.
-	eelimh_1 $e |- ( ( ps <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
-	eelimh_2 $e |- th $.
-	elimh $p |- ta $= felimh_2 felimh_4 felimh_2 felimh_4 felimh_2 felimh_0 felimh_0 felimh_2 wa felimh_1 felimh_2 wn wa wo wb felimh_2 felimh_4 wb felimh_2 felimh_0 felimh_1 dedlema eelimh_0 syl ibi felimh_2 wn felimh_3 felimh_4 eelimh_2 felimh_2 wn felimh_1 felimh_0 felimh_2 wa felimh_1 felimh_2 wn wa wo wb felimh_3 felimh_4 wb felimh_2 felimh_0 felimh_1 dedlemb eelimh_1 syl mpbii pm2.61i $.
+	$v ph ps ch th ta  $.
+	f0_elimh $f wff ph $.
+	f1_elimh $f wff ps $.
+	f2_elimh $f wff ch $.
+	f3_elimh $f wff th $.
+	f4_elimh $f wff ta $.
+	e0_elimh $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( ch <-> ta ) ) $.
+	e1_elimh $e |- ( ( ps <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
+	e2_elimh $e |- th $.
+	p_elimh $p |- ta $= f2_elimh f0_elimh f1_elimh p_dedlema e0_elimh f2_elimh f0_elimh f0_elimh f2_elimh a_wa f1_elimh f2_elimh a_wn a_wa a_wo a_wb f2_elimh f4_elimh a_wb p_syl f2_elimh f4_elimh p_ibi e2_elimh f2_elimh f0_elimh f1_elimh p_dedlemb e1_elimh f2_elimh a_wn f1_elimh f0_elimh f2_elimh a_wa f1_elimh f2_elimh a_wn a_wa a_wo a_wb f3_elimh f4_elimh a_wb p_syl f2_elimh a_wn f3_elimh f4_elimh p_mpbii f2_elimh f4_elimh p_pm2.61i $.
 $}
-$( The weak deduction theorem.  For more information, see the Deduction
+
+$(The weak deduction theorem.  For more information, see the Deduction
        Theorem link on the Metamath Proof Explorer home page.  (Contributed by
        NM, 26-Jun-2002.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	fdedt_0 $f wff ph $.
-	fdedt_1 $f wff ps $.
-	fdedt_2 $f wff ch $.
-	fdedt_3 $f wff th $.
-	fdedt_4 $f wff ta $.
-	ededt_0 $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
-	ededt_1 $e |- ta $.
-	dedt $p |- ( ch -> th ) $= fdedt_2 fdedt_0 fdedt_0 fdedt_2 wa fdedt_1 fdedt_2 wn wa wo wb fdedt_3 fdedt_2 fdedt_0 fdedt_1 dedlema fdedt_0 fdedt_0 fdedt_2 wa fdedt_1 fdedt_2 wn wa wo wb fdedt_3 fdedt_4 ededt_1 ededt_0 mpbiri syl $.
+	$v ph ps ch th ta  $.
+	f0_dedt $f wff ph $.
+	f1_dedt $f wff ps $.
+	f2_dedt $f wff ch $.
+	f3_dedt $f wff th $.
+	f4_dedt $f wff ta $.
+	e0_dedt $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
+	e1_dedt $e |- ta $.
+	p_dedt $p |- ( ch -> th ) $= f2_dedt f0_dedt f1_dedt p_dedlema e1_dedt e0_dedt f0_dedt f0_dedt f2_dedt a_wa f1_dedt f2_dedt a_wn a_wa a_wo a_wb f3_dedt f4_dedt p_mpbiri f2_dedt f0_dedt f0_dedt f2_dedt a_wa f1_dedt f2_dedt a_wn a_wa a_wo a_wb f3_dedt p_syl $.
 $}
-$( Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
+
+$(Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
      of ~ con3 demonstrates the use of the weak deduction theorem ~ dedt to
      derive it from ~ con3i .  (Contributed by NM, 27-Jun-2002.)
      (Proof modification is discouraged.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fcon3th_0 $f wff ph $.
-	fcon3th_1 $f wff ps $.
-	con3th $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $= fcon3th_1 fcon3th_0 fcon3th_0 fcon3th_1 wi fcon3th_1 wn fcon3th_0 wn wi fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wn fcon3th_0 wn wi fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 wn fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wn fcon3th_0 wn fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id notbid imbi1d fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_1 fcon3th_0 fcon3th_0 fcon3th_1 wi fcon3th_0 fcon3th_0 wi fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wi fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_0 fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id imbi2d fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_0 fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id imbi2d fcon3th_0 id elimh con3i dedt $.
+	$v ph ps  $.
+	f0_con3th $f wff ph $.
+	f1_con3th $f wff ps $.
+	p_con3th $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $= f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb p_id f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo p_notbid f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb f1_con3th a_wn f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wn f0_con3th a_wn p_imbi1d f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb p_id f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb f1_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo f0_con3th p_imbi2d f0_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb p_id f0_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wb f0_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo f0_con3th p_imbi2d f0_con3th p_id f1_con3th f0_con3th f0_con3th f1_con3th a_wi f0_con3th f0_con3th a_wi f0_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wi p_elimh f0_con3th f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo p_con3i f1_con3th f0_con3th f0_con3th f1_con3th a_wi f1_con3th a_wn f0_con3th a_wn a_wi f1_con3th f0_con3th f1_con3th a_wi a_wa f0_con3th f0_con3th f1_con3th a_wi a_wn a_wa a_wo a_wn f0_con3th a_wn a_wi p_dedt $.
 $}
-$( The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
+
+$(The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
      interchanged) are commonly used in computer logic design to eliminate
      redundant terms from Boolean expressions.  Specifically, we prove that the
      term ` ( ps /\ ch ) ` on the left-hand side is redundant.  (Contributed by
      NM, 16-May-2003.)  (Proof shortened by Andrew Salmon, 13-May-2011.)
      (Proof shortened by Wolf Lammen, 20-Jan-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fconsensus_0 $f wff ph $.
-	fconsensus_1 $f wff ps $.
-	fconsensus_2 $f wff ch $.
-	consensus $p |- ( ( ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) \/ ( ps /\ ch ) ) <-> ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) ) $= fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_1 fconsensus_2 wa wo fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_1 fconsensus_2 wa fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo id fconsensus_0 fconsensus_1 fconsensus_2 wa fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_0 fconsensus_1 fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_2 fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa orc adantrr fconsensus_0 wn fconsensus_2 fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_1 fconsensus_0 wn fconsensus_2 wa fconsensus_0 fconsensus_1 wa olc adantrl pm2.61ian jaoi fconsensus_0 fconsensus_1 wa fconsensus_0 wn fconsensus_2 wa wo fconsensus_1 fconsensus_2 wa orc impbii $.
+	$v ph ps ch  $.
+	f0_consensus $f wff ph $.
+	f1_consensus $f wff ps $.
+	f2_consensus $f wff ch $.
+	p_consensus $p |- ( ( ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) \/ ( ps /\ ch ) ) <-> ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) ) $= f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo p_id f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa p_orc f0_consensus f1_consensus f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f2_consensus p_adantrr f0_consensus a_wn f2_consensus a_wa f0_consensus f1_consensus a_wa p_olc f0_consensus a_wn f2_consensus f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f1_consensus p_adantrl f0_consensus f1_consensus f2_consensus a_wa f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo p_pm2.61ian f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f1_consensus f2_consensus a_wa p_jaoi f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f1_consensus f2_consensus a_wa p_orc f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo f1_consensus f2_consensus a_wa a_wo f0_consensus f1_consensus a_wa f0_consensus a_wn f2_consensus a_wa a_wo p_impbii $.
 $}
-$( Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
+
+$(Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	fpm4.42_0 $f wff ph $.
-	fpm4.42_1 $f wff ps $.
-	pm4.42 $p |- ( ph <-> ( ( ph /\ ps ) \/ ( ph /\ -. ps ) ) ) $= fpm4.42_1 fpm4.42_0 fpm4.42_0 fpm4.42_1 wa fpm4.42_0 fpm4.42_1 wn wa wo wb fpm4.42_1 fpm4.42_0 fpm4.42_0 dedlema fpm4.42_1 fpm4.42_0 fpm4.42_0 dedlemb pm2.61i $.
+	$v ph ps  $.
+	f0_pm4.42 $f wff ph $.
+	f1_pm4.42 $f wff ps $.
+	p_pm4.42 $p |- ( ph <-> ( ( ph /\ ps ) \/ ( ph /\ -. ps ) ) ) $= f1_pm4.42 f0_pm4.42 f0_pm4.42 p_dedlema f1_pm4.42 f0_pm4.42 f0_pm4.42 p_dedlemb f1_pm4.42 f0_pm4.42 f0_pm4.42 f1_pm4.42 a_wa f0_pm4.42 f1_pm4.42 a_wn a_wa a_wo a_wb p_pm2.61i $.
 $}
-$( Miscellaneous inference relating falsehoods.  (Contributed by NM,
+
+$(Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	fninba_0 $f wff ph $.
-	fninba_1 $f wff ps $.
-	fninba_2 $f wff ch $.
-	eninba_0 $e |- ph $.
-	ninba $p |- ( -. ps -> ( -. ph <-> ( ch /\ ps ) ) ) $= fninba_1 wn fninba_2 fninba_1 wa fninba_0 wn fninba_0 fninba_1 fninba_2 eninba_0 niabn bicomd $.
+	$v ph ps ch  $.
+	f0_ninba $f wff ph $.
+	f1_ninba $f wff ps $.
+	f2_ninba $f wff ch $.
+	e0_ninba $e |- ph $.
+	p_ninba $p |- ( -. ps -> ( -. ph <-> ( ch /\ ps ) ) ) $= e0_ninba f0_ninba f1_ninba f2_ninba p_niabn f1_ninba a_wn f2_ninba f1_ninba a_wa f0_ninba a_wn p_bicomd $.
 $}
-$( A specialized lemma for set theory (to derive the Axiom of Pairing).
+
+$(A specialized lemma for set theory (to derive the Axiom of Pairing).
        (Contributed by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        13-May-2011.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	$v et $.
-	fprlem1_0 $f wff ph $.
-	fprlem1_1 $f wff ps $.
-	fprlem1_2 $f wff ch $.
-	fprlem1_3 $f wff th $.
-	fprlem1_4 $f wff ta $.
-	fprlem1_5 $f wff et $.
-	eprlem1_0 $e |- ( ph -> ( et <-> ch ) ) $.
-	eprlem1_1 $e |- ( ps -> -. th ) $.
-	prlem1 $p |- ( ph -> ( ps -> ( ( ( ps /\ ch ) \/ ( th /\ ta ) ) -> et ) ) ) $= fprlem1_0 fprlem1_1 fprlem1_1 fprlem1_2 wa fprlem1_3 fprlem1_4 wa wo fprlem1_5 wi fprlem1_0 fprlem1_1 fprlem1_2 wa fprlem1_5 fprlem1_1 fprlem1_3 fprlem1_4 wa fprlem1_0 fprlem1_2 fprlem1_5 fprlem1_1 fprlem1_0 fprlem1_5 fprlem1_2 eprlem1_0 biimprd adantld fprlem1_1 fprlem1_3 fprlem1_5 fprlem1_4 fprlem1_1 fprlem1_3 fprlem1_5 eprlem1_1 pm2.21d adantrd jaao ex $.
+	$v ph ps ch th ta et  $.
+	f0_prlem1 $f wff ph $.
+	f1_prlem1 $f wff ps $.
+	f2_prlem1 $f wff ch $.
+	f3_prlem1 $f wff th $.
+	f4_prlem1 $f wff ta $.
+	f5_prlem1 $f wff et $.
+	e0_prlem1 $e |- ( ph -> ( et <-> ch ) ) $.
+	e1_prlem1 $e |- ( ps -> -. th ) $.
+	p_prlem1 $p |- ( ph -> ( ps -> ( ( ( ps /\ ch ) \/ ( th /\ ta ) ) -> et ) ) ) $= e0_prlem1 f0_prlem1 f5_prlem1 f2_prlem1 p_biimprd f0_prlem1 f2_prlem1 f5_prlem1 f1_prlem1 p_adantld e1_prlem1 f1_prlem1 f3_prlem1 f5_prlem1 p_pm2.21d f1_prlem1 f3_prlem1 f5_prlem1 f4_prlem1 p_adantrd f0_prlem1 f1_prlem1 f2_prlem1 a_wa f5_prlem1 f1_prlem1 f3_prlem1 f4_prlem1 a_wa p_jaao f0_prlem1 f1_prlem1 f1_prlem1 f2_prlem1 a_wa f3_prlem1 f4_prlem1 a_wa a_wo f5_prlem1 a_wi p_ex $.
 $}
-$( A specialized lemma for set theory (to derive the Axiom of Pairing).
+
+$(A specialized lemma for set theory (to derive the Axiom of Pairing).
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
      13-May-2011.)  (Proof shortened by Wolf Lammen, 9-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fprlem2_0 $f wff ph $.
-	fprlem2_1 $f wff ps $.
-	fprlem2_2 $f wff ch $.
-	fprlem2_3 $f wff th $.
-	prlem2 $p |- ( ( ( ph /\ ps ) \/ ( ch /\ th ) ) <-> ( ( ph \/ ch ) /\ ( ( ph /\ ps ) \/ ( ch /\ th ) ) ) ) $= fprlem2_0 fprlem2_1 wa fprlem2_2 fprlem2_3 wa wo fprlem2_0 fprlem2_2 wo fprlem2_0 fprlem2_1 wa fprlem2_0 fprlem2_2 fprlem2_3 wa fprlem2_2 fprlem2_0 fprlem2_1 simpl fprlem2_2 fprlem2_3 simpl orim12i pm4.71ri $.
+	$v ph ps ch th  $.
+	f0_prlem2 $f wff ph $.
+	f1_prlem2 $f wff ps $.
+	f2_prlem2 $f wff ch $.
+	f3_prlem2 $f wff th $.
+	p_prlem2 $p |- ( ( ( ph /\ ps ) \/ ( ch /\ th ) ) <-> ( ( ph \/ ch ) /\ ( ( ph /\ ps ) \/ ( ch /\ th ) ) ) ) $= f0_prlem2 f1_prlem2 p_simpl f2_prlem2 f3_prlem2 p_simpl f0_prlem2 f1_prlem2 a_wa f0_prlem2 f2_prlem2 f3_prlem2 a_wa f2_prlem2 p_orim12i f0_prlem2 f1_prlem2 a_wa f2_prlem2 f3_prlem2 a_wa a_wo f0_prlem2 f2_prlem2 a_wo p_pm4.71ri $.
 $}
-$( A specialized lemma for set theory (ordered pair theorem).  (Contributed
+
+$(A specialized lemma for set theory (ordered pair theorem).  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Wolf Lammen, 8-Dec-2012.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	$v ta $.
-	foplem1_0 $f wff ph $.
-	foplem1_1 $f wff ps $.
-	foplem1_2 $f wff ch $.
-	foplem1_3 $f wff th $.
-	foplem1_4 $f wff ta $.
-	eoplem1_0 $e |- ( ph -> ( ps \/ ch ) ) $.
-	eoplem1_1 $e |- ( ph -> ( th \/ ta ) ) $.
-	eoplem1_2 $e |- ( ps <-> th ) $.
-	eoplem1_3 $e |- ( ch -> ( th <-> ta ) ) $.
-	oplem1 $p |- ( ph -> ps ) $= foplem1_0 foplem1_3 foplem1_1 foplem1_0 foplem1_3 foplem1_0 foplem1_3 wn foplem1_2 foplem1_4 wa foplem1_3 foplem1_0 foplem1_3 wn foplem1_2 foplem1_4 foplem1_3 wn foplem1_1 wn foplem1_0 foplem1_2 foplem1_1 foplem1_3 eoplem1_2 notbii foplem1_0 foplem1_1 foplem1_2 eoplem1_0 ord syl5bir foplem1_0 foplem1_3 foplem1_4 eoplem1_1 ord jcad foplem1_2 foplem1_3 foplem1_4 eoplem1_3 biimpar syl6 pm2.18d eoplem1_2 sylibr $.
+	$v ph ps ch th ta  $.
+	f0_oplem1 $f wff ph $.
+	f1_oplem1 $f wff ps $.
+	f2_oplem1 $f wff ch $.
+	f3_oplem1 $f wff th $.
+	f4_oplem1 $f wff ta $.
+	e0_oplem1 $e |- ( ph -> ( ps \/ ch ) ) $.
+	e1_oplem1 $e |- ( ph -> ( th \/ ta ) ) $.
+	e2_oplem1 $e |- ( ps <-> th ) $.
+	e3_oplem1 $e |- ( ch -> ( th <-> ta ) ) $.
+	p_oplem1 $p |- ( ph -> ps ) $= e2_oplem1 f1_oplem1 f3_oplem1 p_notbii e0_oplem1 f0_oplem1 f1_oplem1 f2_oplem1 p_ord f3_oplem1 a_wn f1_oplem1 a_wn f0_oplem1 f2_oplem1 p_syl5bir e1_oplem1 f0_oplem1 f3_oplem1 f4_oplem1 p_ord f0_oplem1 f3_oplem1 a_wn f2_oplem1 f4_oplem1 p_jcad e3_oplem1 f2_oplem1 f3_oplem1 f4_oplem1 p_biimpar f0_oplem1 f3_oplem1 a_wn f2_oplem1 f4_oplem1 a_wa f3_oplem1 p_syl6 f0_oplem1 f3_oplem1 p_pm2.18d e2_oplem1 f0_oplem1 f3_oplem1 f1_oplem1 p_sylibr $.
 $}
-$( Lemma used in construction of real numbers.  (Contributed by NM,
+
+$(Lemma used in construction of real numbers.  (Contributed by NM,
      4-Sep-1995.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	frnlem_0 $f wff ph $.
-	frnlem_1 $f wff ps $.
-	frnlem_2 $f wff ch $.
-	frnlem_3 $f wff th $.
-	rnlem $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) <-> ( ( ( ph /\ ch ) /\ ( ps /\ th ) ) /\ ( ( ph /\ th ) /\ ( ps /\ ch ) ) ) ) $= frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_2 wa frnlem_1 frnlem_3 wa wa frnlem_0 frnlem_3 wa frnlem_1 frnlem_2 wa wa wa frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_2 wa frnlem_1 frnlem_3 wa wa frnlem_0 frnlem_3 wa frnlem_1 frnlem_2 wa wa frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_2 wa frnlem_1 frnlem_3 wa wa frnlem_0 frnlem_1 frnlem_2 frnlem_3 an4 biimpi frnlem_0 frnlem_3 wa frnlem_1 frnlem_2 wa wa frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_3 frnlem_1 frnlem_2 an42 biimpri jca frnlem_0 frnlem_3 wa frnlem_1 frnlem_2 wa wa frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_2 wa frnlem_1 frnlem_3 wa wa frnlem_0 frnlem_3 wa frnlem_1 frnlem_2 wa wa frnlem_0 frnlem_1 wa frnlem_2 frnlem_3 wa wa frnlem_0 frnlem_3 frnlem_1 frnlem_2 an42 biimpi adantl impbii $.
+	$v ph ps ch th  $.
+	f0_rnlem $f wff ph $.
+	f1_rnlem $f wff ps $.
+	f2_rnlem $f wff ch $.
+	f3_rnlem $f wff th $.
+	p_rnlem $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) <-> ( ( ( ph /\ ch ) /\ ( ps /\ th ) ) /\ ( ( ph /\ th ) /\ ( ps /\ ch ) ) ) ) $= f0_rnlem f1_rnlem f2_rnlem f3_rnlem p_an4 f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa f0_rnlem f2_rnlem a_wa f1_rnlem f3_rnlem a_wa a_wa p_biimpi f0_rnlem f3_rnlem f1_rnlem f2_rnlem p_an42 f0_rnlem f3_rnlem a_wa f1_rnlem f2_rnlem a_wa a_wa f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa p_biimpri f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa f0_rnlem f2_rnlem a_wa f1_rnlem f3_rnlem a_wa a_wa f0_rnlem f3_rnlem a_wa f1_rnlem f2_rnlem a_wa a_wa p_jca f0_rnlem f3_rnlem f1_rnlem f2_rnlem p_an42 f0_rnlem f3_rnlem a_wa f1_rnlem f2_rnlem a_wa a_wa f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa p_biimpi f0_rnlem f3_rnlem a_wa f1_rnlem f2_rnlem a_wa a_wa f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa f0_rnlem f2_rnlem a_wa f1_rnlem f3_rnlem a_wa a_wa p_adantl f0_rnlem f1_rnlem a_wa f2_rnlem f3_rnlem a_wa a_wa f0_rnlem f2_rnlem a_wa f1_rnlem f3_rnlem a_wa a_wa f0_rnlem f3_rnlem a_wa f1_rnlem f2_rnlem a_wa a_wa a_wa p_impbii $.
 $}
-$( A single axiom for Boolean algebra known as DN_1.  See
+
+$(A single axiom for Boolean algebra known as DN_1.  See
      ~ http://www-unix.mcs.anl.gov/~~mccune/papers/basax/v12.pdf .
      (Contributed by Jeffrey Hankins, 3-Jul-2009.)  (Proof shortened by Andrew
      Salmon, 13-May-2011.)  (Proof shortened by Wolf Lammen, 6-Jan-2013.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v th $.
-	fdn1_0 $f wff ph $.
-	fdn1_1 $f wff ps $.
-	fdn1_2 $f wff ch $.
-	fdn1_3 $f wff th $.
-	dn1 $p |- ( -. ( -. ( -. ( ph \/ ps ) \/ ch ) \/ -. ( ph \/ -. ( -. ch \/ -. ( ch \/ th ) ) ) ) <-> ch ) $= fdn1_2 fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_0 fdn1_2 wo wa fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_0 fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn wo wa fdn1_0 fdn1_1 wo wn fdn1_2 wo wn fdn1_0 fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn wo wn wo wn fdn1_2 fdn1_2 fdn1_0 fdn1_1 wo wn fdn1_0 wa wo fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_0 fdn1_2 wo wa fdn1_0 fdn1_1 wo wn fdn1_0 wa fdn1_2 fdn1_0 fdn1_1 wo wn fdn1_0 wn wi fdn1_0 fdn1_1 wo wn fdn1_0 wa wn fdn1_0 fdn1_1 pm2.45 fdn1_0 fdn1_1 wo wn fdn1_0 imnan mpbi biorfi fdn1_2 fdn1_0 fdn1_1 wo wn fdn1_0 wa wo fdn1_0 fdn1_1 wo wn fdn1_0 wa fdn1_2 wo fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_0 fdn1_2 wo wa fdn1_2 fdn1_0 fdn1_1 wo wn fdn1_0 wa orcom fdn1_0 fdn1_1 wo wn fdn1_0 fdn1_2 ordir bitri bitri fdn1_0 fdn1_2 wo fdn1_0 fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn wo fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_2 fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn fdn1_0 fdn1_2 fdn1_2 fdn1_2 fdn1_3 wo wa fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn fdn1_2 fdn1_3 pm4.45 fdn1_2 fdn1_2 fdn1_3 wo anor bitri orbi2i anbi2i fdn1_0 fdn1_1 wo wn fdn1_2 wo fdn1_0 fdn1_2 wn fdn1_2 fdn1_3 wo wn wo wn wo anor 3bitrri $.
+	$v ph ps ch th  $.
+	f0_dn1 $f wff ph $.
+	f1_dn1 $f wff ps $.
+	f2_dn1 $f wff ch $.
+	f3_dn1 $f wff th $.
+	p_dn1 $p |- ( -. ( -. ( -. ( ph \/ ps ) \/ ch ) \/ -. ( ph \/ -. ( -. ch \/ -. ( ch \/ th ) ) ) ) <-> ch ) $= f0_dn1 f1_dn1 p_pm2.45 f0_dn1 f1_dn1 a_wo a_wn f0_dn1 p_imnan f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wn a_wi f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa a_wn p_mpbi f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa f2_dn1 p_biorfi f2_dn1 f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa p_orcom f0_dn1 f1_dn1 a_wo a_wn f0_dn1 f2_dn1 p_ordir f2_dn1 f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa a_wo f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa f2_dn1 a_wo f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo f0_dn1 f2_dn1 a_wo a_wa p_bitri f2_dn1 f2_dn1 f0_dn1 f1_dn1 a_wo a_wn f0_dn1 a_wa a_wo f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo f0_dn1 f2_dn1 a_wo a_wa p_bitri f2_dn1 f3_dn1 p_pm4.45 f2_dn1 f2_dn1 f3_dn1 a_wo p_anor f2_dn1 f2_dn1 f2_dn1 f3_dn1 a_wo a_wa f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn p_bitri f2_dn1 f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn f0_dn1 p_orbi2i f0_dn1 f2_dn1 a_wo f0_dn1 f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn a_wo f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo p_anbi2i f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo f0_dn1 f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn a_wo p_anor f2_dn1 f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo f0_dn1 f2_dn1 a_wo a_wa f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo f0_dn1 f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn a_wo a_wa f0_dn1 f1_dn1 a_wo a_wn f2_dn1 a_wo a_wn f0_dn1 f2_dn1 a_wn f2_dn1 f3_dn1 a_wo a_wn a_wo a_wn a_wo a_wn a_wo a_wn p_3bitrri $.
 $}
+
 

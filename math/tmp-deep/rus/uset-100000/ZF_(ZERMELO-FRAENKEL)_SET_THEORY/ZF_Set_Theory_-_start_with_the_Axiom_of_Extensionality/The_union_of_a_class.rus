@@ -1,12 +1,12 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Unordered_and_ordered_pairs.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                        The union of a class
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare class union symbol. */
+/*Declare class union symbol. */
 
 constant {
 	symbol ⋃ ;;
@@ -14,16 +14,16 @@ constant {
 	latex \bigcup ;;
 }
 
-/* Big cup */
+/*Big cup */
 
-/* Extend class notation to include the union of a class (read:  'union
+/*Extend class notation to include the union of a class (read:  'union
      ` A ` ') */
 
 rule cuni (A : class) {
 	term : class = # ⋃ A ;;
 }
 
-/* Define the union of a class i.e. the collection of all members of the
+/*Define the union of a class i.e. the collection of all members of the
        members of the class.  Definition 5.5 of [TakeutiZaring] p. 16.  For
        example, ` U. { { 1 , 3 } , { 1 , 8 } } = { 1 , 3 , 8 } ` ( ~ ex-uni ).
        This is similar to the union of two classes ~ df-un .  (Contributed by
@@ -36,7 +36,7 @@ definition df-uni (x : set, y : set, A : class) disjointed(x y A) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate definition of class union.  (Contributed by NM,
+/*Alternate definition of class union.  (Contributed by NM,
        28-Jun-1998.) */
 
 theorem dfuni2 (x : set, y : set, A : class) disjointed(x y A) {
@@ -53,7 +53,7 @@ proof of dfuni2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Membership in class union.  (Contributed by NM, 22-May-1994.) */
+/*Membership in class union.  (Contributed by NM, 22-May-1994.) */
 
 theorem eluni (x : set, A : class, B : class) disjointed(x A y, x B y) {
 	prop 1 : wff = |- ( A ∈ ⋃ B ↔ ∃ x ( A ∈ x ∧ x ∈ B ) ) ;;
@@ -74,7 +74,7 @@ proof of eluni {
 	qed prop 1 = step 10 ;;
 }
 
-/* Membership in class union.  Restricted quantifier version.  (Contributed
+/*Membership in class union.  Restricted quantifier version.  (Contributed
        by NM, 31-Aug-1999.) */
 
 theorem eluni2 (x : set, A : class, B : class) disjointed(x A, x B) {
@@ -89,7 +89,7 @@ proof of eluni2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Membership in class union.  (Contributed by NM, 24-Mar-1995.) */
+/*Membership in class union.  (Contributed by NM, 24-Mar-1995.) */
 
 theorem elunii (A : class, B : class, C : class) disjointed(x A, x B, x C) {
 	prop 1 : wff = |- ( ( A ∈ B ∧ B ∈ C ) → A ∈ ⋃ C ) ;;
@@ -107,7 +107,7 @@ proof of elunii {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bound-variable hypothesis builder for union.  (Contributed by NM,
+/*Bound-variable hypothesis builder for union.  (Contributed by NM,
        30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
 
 theorem nfuni (x : set, A : class) disjointed(y z A, x y z) {
@@ -126,7 +126,7 @@ proof of nfuni {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction version of ~ nfuni .  (Contributed by NM, 18-Feb-2013.) */
+/*Deduction version of ~ nfuni .  (Contributed by NM, 18-Feb-2013.) */
 
 theorem nfunid (ph : wff, x : set, A : class) disjointed(y z A, x y z, y z ph) {
 	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
@@ -146,7 +146,7 @@ proof of nfunid {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distribute proper substitution through the union of a class.
+/*Distribute proper substitution through the union of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) */
 
 theorem csbunig (x : set, A : class, B : class, V : class) disjointed(A y z, B y z, V y z, x y z) {
@@ -173,7 +173,7 @@ proof of csbunig {
 	qed prop 1 = step 15 ;;
 }
 
-/* Equality theorem for class union.  Exercise 15 of [TakeutiZaring]
+/*Equality theorem for class union.  Exercise 15 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 10-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 29-Jun-2011.) */
 
@@ -191,7 +191,7 @@ proof of unieq {
 	qed prop 1 = step 5 ;;
 }
 
-/* Inference of equality of two class unions.  (Contributed by NM,
+/*Inference of equality of two class unions.  (Contributed by NM,
        30-Aug-1993.) */
 
 theorem unieqi (A : class, B : class)  {
@@ -206,7 +206,7 @@ proof of unieqi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction of equality of two class unions.  (Contributed by NM,
+/*Deduction of equality of two class unions.  (Contributed by NM,
        21-Apr-1995.) */
 
 theorem unieqd (ph : wff, A : class, B : class)  {
@@ -221,7 +221,7 @@ proof of unieqd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Membership in union of a class abstraction.  (Contributed by NM,
+/*Membership in union of a class abstraction.  (Contributed by NM,
        11-Aug-1994.)  (Revised by Mario Carneiro, 14-Nov-2016.) */
 
 theorem eluniab (ph : wff, x : set, A : class) disjointed(x A y, ph y) {
@@ -245,10 +245,10 @@ proof of eluniab {
 	qed prop 1 = step 12 ;;
 }
 
-/* Membership in union of a class abstraction.  (Contributed by NM,
+/*Membership in union of a class abstraction.  (Contributed by NM,
        4-Oct-2006.) */
 
-theorem elunirab (ph : wff, x : set, A : class, B : class) disjointed(x A) {
+theorem elunirab (ph : wff, x : set, A : class, B : class) disjointed(x A, ph) {
 	prop 1 : wff = |- ( A ∈ ⋃ { x ∈ B | ph } ↔ ∃ x ∈ B ( A ∈ x ∧ ph ) ) ;;
 }
 
@@ -265,7 +265,7 @@ proof of elunirab {
 	qed prop 1 = step 9 ;;
 }
 
-/* The union of a pair is the union of its members.  Proposition 5.7 of
+/*The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 23-Aug-1993.) */
 
 theorem unipr (A : class, B : class) disjointed(x y A, x y B) {
@@ -299,7 +299,7 @@ proof of unipr {
 	qed prop 1 = step 19 ;;
 }
 
-/* The union of a pair is the union of its members.  Proposition 5.7 of
+/*The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 25-Aug-2006.) */
 
 theorem uniprg (A : class, B : class, V : class, W : class) disjointed(x y A, y B) {
@@ -323,7 +323,7 @@ proof of uniprg {
 	qed prop 1 = step 12 ;;
 }
 
-/* A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
+/*A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
        (Contributed by NM, 30-Aug-1993.) */
 
 theorem unisn (A : class)  {
@@ -341,7 +341,7 @@ proof of unisn {
 	qed prop 1 = step 5 ;;
 }
 
-/* A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
+/*A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
        (Contributed by NM, 13-Aug-2002.) */
 
 theorem unisng (A : class, V : class) disjointed(x A) {
@@ -360,7 +360,7 @@ proof of unisng {
 	qed prop 1 = step 7 ;;
 }
 
-/* An alternative statement of the effective freeness of a class ` A ` ,
+/*An alternative statement of the effective freeness of a class ` A ` ,
        when it is a set.  (Contributed by Mario Carneiro, 14-Oct-2016.) */
 
 theorem dfnfc2 (x : set, y : set, A : class, V : class) disjointed(x y, y A) {
@@ -394,7 +394,7 @@ proof of dfnfc2 {
 	qed prop 1 = step 23 ;;
 }
 
-/* The class union of the union of two classes.  Theorem 8.3 of [Quine]
+/*The class union of the union of two classes.  Theorem 8.3 of [Quine]
        p. 53.  (Contributed by NM, 20-Aug-1993.) */
 
 theorem uniun (A : class, B : class) disjointed(x y A, x y B) {
@@ -420,7 +420,7 @@ proof of uniun {
 	qed prop 1 = step 14 ;;
 }
 
-/* The class union of the intersection of two classes.  Exercise 4.12(n) of
+/*The class union of the intersection of two classes.  Exercise 4.12(n) of
        [Mendelson] p. 235.  See ~ uninqs for a condition where equality holds.
        (Contributed by NM, 4-Dec-2003.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
@@ -448,7 +448,7 @@ proof of uniin {
 	qed prop 1 = step 14 ;;
 }
 
-/* Subclass relationship for class union.  Theorem 61 of [Suppes] p. 39.
+/*Subclass relationship for class union.  Theorem 61 of [Suppes] p. 39.
        (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -468,7 +468,7 @@ proof of uniss {
 	qed prop 1 = step 7 ;;
 }
 
-/* Subclass relationship for class union.  (Contributed by NM,
+/*Subclass relationship for class union.  (Contributed by NM,
        24-May-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem ssuni (A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
@@ -491,7 +491,7 @@ proof of ssuni {
 	qed prop 1 = step 11 ;;
 }
 
-/* Subclass relationship for subclass union.  Inference form of ~ uniss .
+/*Subclass relationship for subclass union.  Inference form of ~ uniss .
        (Contributed by David Moews, 1-May-2017.) */
 
 theorem unissi (A : class, B : class)  {
@@ -506,7 +506,7 @@ proof of unissi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Subclass relationship for subclass union.  Deduction form of ~ uniss .
+/*Subclass relationship for subclass union.  Deduction form of ~ uniss .
        (Contributed by David Moews, 1-May-2017.) */
 
 theorem unissd (ph : wff, A : class, B : class)  {
@@ -521,7 +521,7 @@ proof of unissd {
 	qed prop 1 = step 2 ;;
 }
 
-/* The union of a set is empty iff the set is included in the singleton of
+/*The union of a set is empty iff the set is included in the singleton of
        the empty set.  (Contributed by NM, 12-Sep-2004.) */
 
 theorem uni0b (A : class) disjointed(x y A) {
@@ -547,7 +547,7 @@ proof of uni0b {
 	qed prop 1 = step 14 ;;
 }
 
-/* The union of a set is empty iff all of its members are empty.
+/*The union of a set is empty iff all of its members are empty.
        (Contributed by NM, 16-Aug-2006.) */
 
 theorem uni0c (x : set, A : class) disjointed(x A) {
@@ -563,7 +563,7 @@ proof of uni0c {
 	qed prop 1 = step 5 ;;
 }
 
-/* The union of the empty set is the empty set.  Theorem 8.7 of [Quine]
+/*The union of the empty set is the empty set.  Theorem 8.7 of [Quine]
      p. 54.  (Reproved without relying on ~ ax-nul by Eric Schmidt.)
      (Contributed by NM, 16-Sep-1993.)  (Revised by Eric Schmidt,
      4-Apr-2007.) */
@@ -579,7 +579,7 @@ proof of uni0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An element of a class is a subclass of its union.  Theorem 8.6 of [Quine]
+/*An element of a class is a subclass of its union.  Theorem 8.6 of [Quine]
      p. 54.  Also the basis for Proposition 7.20 of [TakeutiZaring] p. 40.
      (Contributed by NM, 6-Jun-1994.) */
 
@@ -594,7 +594,7 @@ proof of elssuni {
 	qed prop 1 = step 3 ;;
 }
 
-/* Condition turning a subclass relationship for union into an equality.
+/*Condition turning a subclass relationship for union into an equality.
      (Contributed by NM, 18-Jul-2006.) */
 
 theorem unissel (A : class, B : class)  {
@@ -609,7 +609,7 @@ proof of unissel {
 	qed prop 1 = step 4 ;;
 }
 
-/* Relationship involving membership, subset, and union.  Exercise 5 of
+/*Relationship involving membership, subset, and union.  Exercise 5 of
        [Enderton] p. 26 and its converse.  (Contributed by NM, 20-Sep-2003.) */
 
 theorem unissb (x : set, A : class, B : class) disjointed(x y A, x y B) {
@@ -641,7 +641,7 @@ proof of unissb {
 	qed prop 1 = step 20 ;;
 }
 
-/* A subclass condition on the members of two classes that implies a
+/*A subclass condition on the members of two classes that implies a
        subclass relation on their unions.  Proposition 8.6 of [TakeutiZaring]
        p. 59.  See ~ iunss2 for a generalization to indexed unions.
        (Contributed by NM, 22-Mar-2004.) */
@@ -660,7 +660,7 @@ proof of uniss2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* If the difference ` A \ B ` contains the largest members of ` A ` , then
+/*If the difference ` A \ B ` contains the largest members of ` A ` , then
        the union of the difference is the union of ` A ` .  (Contributed by NM,
        22-Mar-2004.) */
 
@@ -679,7 +679,7 @@ proof of unidif {
 	qed prop 1 = step 7 ;;
 }
 
-/* Relationship implying union.  (Contributed by NM, 10-Nov-1999.) */
+/*Relationship implying union.  (Contributed by NM, 10-Nov-1999.) */
 
 theorem ssunieq (x : set, A : class, B : class) disjointed(x A, x B) {
 	prop 1 : wff = |- ( ( A ∈ B ∧ ∀ x ∈ B x ⊆ A ) → A = ⋃ B ) ;;
@@ -695,7 +695,7 @@ proof of ssunieq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Any member of a class is the largest of those members that it includes.
+/*Any member of a class is the largest of those members that it includes.
        (Contributed by NM, 13-Aug-2002.) */
 
 theorem unimax (x : set, A : class, B : class) disjointed(x y A, x y B) {

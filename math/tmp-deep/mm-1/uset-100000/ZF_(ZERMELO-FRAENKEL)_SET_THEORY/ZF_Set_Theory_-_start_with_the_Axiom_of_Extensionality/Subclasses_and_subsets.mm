@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Define_basic_set_operations_and_relations.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Subclasses and subsets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
+
+$(Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
      For example, ` { 1 , 2 } C_ { 1 , 2 , 3 } ` ( ~ ex-ss ).  Note that
      ` A C_ A ` (proved in ~ ssid ).  Contrast this relationship with the
      relationship ` A C. B ` (as will be defined in ~ df-pss ).  For a more
@@ -13,1629 +16,1591 @@ $( Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
      Other possible definitions are given by ~ dfss3 , ~ dfss4 , ~ sspss ,
      ~ ssequn1 , ~ ssequn2 , ~ sseqin2 , and ~ ssdif0 .  (Contributed by NM,
      27-Apr-1994.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fdf-ss_0 $f class A $.
-	fdf-ss_1 $f class B $.
-	df-ss $a |- ( A C_ B <-> ( A i^i B ) = A ) $.
+	$v A B  $.
+	f0_df-ss $f class A $.
+	f1_df-ss $f class B $.
+	a_df-ss $a |- ( A C_ B <-> ( A i^i B ) = A ) $.
 $}
-$( Variant of subclass definition ~ df-ss .  (Contributed by NM,
+
+$(Variant of subclass definition ~ df-ss .  (Contributed by NM,
      3-Sep-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fdfss_0 $f class A $.
-	fdfss_1 $f class B $.
-	dfss $p |- ( A C_ B <-> A = ( A i^i B ) ) $= fdfss_0 fdfss_1 wss fdfss_0 fdfss_1 cin fdfss_0 wceq fdfss_0 fdfss_0 fdfss_1 cin wceq fdfss_0 fdfss_1 df-ss fdfss_0 fdfss_1 cin fdfss_0 eqcom bitri $.
+	$v A B  $.
+	f0_dfss $f class A $.
+	f1_dfss $f class B $.
+	p_dfss $p |- ( A C_ B <-> A = ( A i^i B ) ) $= f0_dfss f1_dfss a_df-ss f0_dfss f1_dfss a_cin f0_dfss p_eqcom f0_dfss f1_dfss a_wss f0_dfss f1_dfss a_cin f0_dfss a_wceq f0_dfss f0_dfss f1_dfss a_cin a_wceq p_bitri $.
 $}
-$( Define proper subclass relationship between two classes.  Definition 5.9
+
+$(Define proper subclass relationship between two classes.  Definition 5.9
      of [TakeutiZaring] p. 17.  For example, ` { 1 , 2 } C. { 1 , 2 , 3 } `
      ( ~ ex-pss ).  Note that ` -. A C. A ` (proved in ~ pssirr ).  Contrast
      this relationship with the relationship ` A C_ B ` (as defined in
      ~ df-ss ).  Other possible definitions are given by ~ dfpss2 and
      ~ dfpss3 .  (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fdf-pss_0 $f class A $.
-	fdf-pss_1 $f class B $.
-	df-pss $a |- ( A C. B <-> ( A C_ B /\ A =/= B ) ) $.
+	$v A B  $.
+	f0_df-pss $f class A $.
+	f1_df-pss $f class B $.
+	a_df-pss $a |- ( A C. B <-> ( A C_ B /\ A =/= B ) ) $.
 $}
-$( Alternate definition of the subclass relationship between two classes.
+
+$(Alternate definition of the subclass relationship between two classes.
        Definition 5.9 of [TakeutiZaring] p. 17.  (Contributed by NM,
        8-Jan-2002.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fdfss2_0 $f set x $.
-	fdfss2_1 $f class A $.
-	fdfss2_2 $f class B $.
-	dfss2 $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $= fdfss2_1 fdfss2_2 wss fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa wb fdfss2_0 wal fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wi fdfss2_0 wal fdfss2_1 fdfss2_2 wss fdfss2_1 fdfss2_1 fdfss2_2 cin wceq fdfss2_1 fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa fdfss2_0 cab wceq fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa wb fdfss2_0 wal fdfss2_1 fdfss2_2 dfss fdfss2_1 fdfss2_2 cin fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa fdfss2_0 cab fdfss2_1 fdfss2_0 fdfss2_1 fdfss2_2 df-in eqeq2i fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa fdfss2_0 fdfss2_1 abeq2 3bitri fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wi fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel wa wb fdfss2_0 fdfss2_0 sup_set_class fdfss2_1 wcel fdfss2_0 sup_set_class fdfss2_2 wcel pm4.71 albii bitr4i $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_dfss2 $f set x $.
+	f1_dfss2 $f class A $.
+	f2_dfss2 $f class B $.
+	p_dfss2 $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $= f1_dfss2 f2_dfss2 p_dfss f0_dfss2 f1_dfss2 f2_dfss2 a_df-in f1_dfss2 f2_dfss2 a_cin f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa f0_dfss2 a_cab f1_dfss2 p_eqeq2i f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa f0_dfss2 f1_dfss2 p_abeq2 f1_dfss2 f2_dfss2 a_wss f1_dfss2 f1_dfss2 f2_dfss2 a_cin a_wceq f1_dfss2 f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa f0_dfss2 a_cab a_wceq f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa a_wb f0_dfss2 a_wal p_3bitri f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel p_pm4.71 f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wi f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa a_wb f0_dfss2 p_albii f1_dfss2 f2_dfss2 a_wss f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wa a_wb f0_dfss2 a_wal f0_dfss2 a_sup_set_class f1_dfss2 a_wcel f0_dfss2 a_sup_set_class f2_dfss2 a_wcel a_wi f0_dfss2 a_wal p_bitr4i $.
 $}
-$( Alternate definition of subclass relationship.  (Contributed by NM,
+
+$(Alternate definition of subclass relationship.  (Contributed by NM,
        14-Oct-1999.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fdfss3_0 $f set x $.
-	fdfss3_1 $f class A $.
-	fdfss3_2 $f class B $.
-	dfss3 $p |- ( A C_ B <-> A. x e. A x e. B ) $= fdfss3_1 fdfss3_2 wss fdfss3_0 sup_set_class fdfss3_1 wcel fdfss3_0 sup_set_class fdfss3_2 wcel wi fdfss3_0 wal fdfss3_0 sup_set_class fdfss3_2 wcel fdfss3_0 fdfss3_1 wral fdfss3_0 fdfss3_1 fdfss3_2 dfss2 fdfss3_0 sup_set_class fdfss3_2 wcel fdfss3_0 fdfss3_1 df-ral bitr4i $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_dfss3 $f set x $.
+	f1_dfss3 $f class A $.
+	f2_dfss3 $f class B $.
+	p_dfss3 $p |- ( A C_ B <-> A. x e. A x e. B ) $= f0_dfss3 f1_dfss3 f2_dfss3 p_dfss2 f0_dfss3 a_sup_set_class f2_dfss3 a_wcel f0_dfss3 f1_dfss3 a_df-ral f1_dfss3 f2_dfss3 a_wss f0_dfss3 a_sup_set_class f1_dfss3 a_wcel f0_dfss3 a_sup_set_class f2_dfss3 a_wcel a_wi f0_dfss3 a_wal f0_dfss3 a_sup_set_class f2_dfss3 a_wcel f0_dfss3 f1_dfss3 a_wral p_bitr4i $.
 $}
-$( Equivalence for subclass relation, using bound-variable hypotheses
+
+$(Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$v z $.
-	$d z A $.
-	$d z B $.
-	$d x z $.
-	idfss2f_0 $f set z $.
-	fdfss2f_0 $f set x $.
-	fdfss2f_1 $f class A $.
-	fdfss2f_2 $f class B $.
-	edfss2f_0 $e |- F/_ x A $.
-	edfss2f_1 $e |- F/_ x B $.
-	dfss2f $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $= fdfss2f_1 fdfss2f_2 wss idfss2f_0 sup_set_class fdfss2f_1 wcel idfss2f_0 sup_set_class fdfss2f_2 wcel wi idfss2f_0 wal fdfss2f_0 sup_set_class fdfss2f_1 wcel fdfss2f_0 sup_set_class fdfss2f_2 wcel wi fdfss2f_0 wal idfss2f_0 fdfss2f_1 fdfss2f_2 dfss2 idfss2f_0 sup_set_class fdfss2f_1 wcel idfss2f_0 sup_set_class fdfss2f_2 wcel wi fdfss2f_0 sup_set_class fdfss2f_1 wcel fdfss2f_0 sup_set_class fdfss2f_2 wcel wi idfss2f_0 fdfss2f_0 idfss2f_0 sup_set_class fdfss2f_1 wcel idfss2f_0 sup_set_class fdfss2f_2 wcel fdfss2f_0 fdfss2f_0 idfss2f_0 fdfss2f_1 edfss2f_0 nfcri fdfss2f_0 idfss2f_0 fdfss2f_2 edfss2f_1 nfcri nfim fdfss2f_0 sup_set_class fdfss2f_1 wcel fdfss2f_0 sup_set_class fdfss2f_2 wcel wi idfss2f_0 nfv idfss2f_0 sup_set_class fdfss2f_0 sup_set_class wceq idfss2f_0 sup_set_class fdfss2f_1 wcel fdfss2f_0 sup_set_class fdfss2f_1 wcel idfss2f_0 sup_set_class fdfss2f_2 wcel fdfss2f_0 sup_set_class fdfss2f_2 wcel idfss2f_0 sup_set_class fdfss2f_0 sup_set_class fdfss2f_1 eleq1 idfss2f_0 sup_set_class fdfss2f_0 sup_set_class fdfss2f_2 eleq1 imbi12d cbval bitri $.
+	$v x A B  $.
+	$d z A  $.
+	$d z B  $.
+	$d x z  $.
+	f0_dfss2f $f set x $.
+	f1_dfss2f $f class A $.
+	f2_dfss2f $f class B $.
+	i0_dfss2f $f set z $.
+	e0_dfss2f $e |- F/_ x A $.
+	e1_dfss2f $e |- F/_ x B $.
+	p_dfss2f $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $= i0_dfss2f f1_dfss2f f2_dfss2f p_dfss2 e0_dfss2f f0_dfss2f i0_dfss2f f1_dfss2f p_nfcri e1_dfss2f f0_dfss2f i0_dfss2f f2_dfss2f p_nfcri i0_dfss2f a_sup_set_class f1_dfss2f a_wcel i0_dfss2f a_sup_set_class f2_dfss2f a_wcel f0_dfss2f p_nfim f0_dfss2f a_sup_set_class f1_dfss2f a_wcel f0_dfss2f a_sup_set_class f2_dfss2f a_wcel a_wi i0_dfss2f p_nfv i0_dfss2f a_sup_set_class f0_dfss2f a_sup_set_class f1_dfss2f p_eleq1 i0_dfss2f a_sup_set_class f0_dfss2f a_sup_set_class f2_dfss2f p_eleq1 i0_dfss2f a_sup_set_class f0_dfss2f a_sup_set_class a_wceq i0_dfss2f a_sup_set_class f1_dfss2f a_wcel f0_dfss2f a_sup_set_class f1_dfss2f a_wcel i0_dfss2f a_sup_set_class f2_dfss2f a_wcel f0_dfss2f a_sup_set_class f2_dfss2f a_wcel p_imbi12d i0_dfss2f a_sup_set_class f1_dfss2f a_wcel i0_dfss2f a_sup_set_class f2_dfss2f a_wcel a_wi f0_dfss2f a_sup_set_class f1_dfss2f a_wcel f0_dfss2f a_sup_set_class f2_dfss2f a_wcel a_wi i0_dfss2f f0_dfss2f p_cbval f1_dfss2f f2_dfss2f a_wss i0_dfss2f a_sup_set_class f1_dfss2f a_wcel i0_dfss2f a_sup_set_class f2_dfss2f a_wcel a_wi i0_dfss2f a_wal f0_dfss2f a_sup_set_class f1_dfss2f a_wcel f0_dfss2f a_sup_set_class f2_dfss2f a_wcel a_wi f0_dfss2f a_wal p_bitri $.
 $}
-$( Equivalence for subclass relation, using bound-variable hypotheses
+
+$(Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        20-Mar-2004.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	fdfss3f_0 $f set x $.
-	fdfss3f_1 $f class A $.
-	fdfss3f_2 $f class B $.
-	edfss3f_0 $e |- F/_ x A $.
-	edfss3f_1 $e |- F/_ x B $.
-	dfss3f $p |- ( A C_ B <-> A. x e. A x e. B ) $= fdfss3f_1 fdfss3f_2 wss fdfss3f_0 sup_set_class fdfss3f_1 wcel fdfss3f_0 sup_set_class fdfss3f_2 wcel wi fdfss3f_0 wal fdfss3f_0 sup_set_class fdfss3f_2 wcel fdfss3f_0 fdfss3f_1 wral fdfss3f_0 fdfss3f_1 fdfss3f_2 edfss3f_0 edfss3f_1 dfss2f fdfss3f_0 sup_set_class fdfss3f_2 wcel fdfss3f_0 fdfss3f_1 df-ral bitr4i $.
+	$v x A B  $.
+	$d A  $.
+	$d B  $.
+	$d x  $.
+	$d A  $.
+	$d B  $.
+	f0_dfss3f $f set x $.
+	f1_dfss3f $f class A $.
+	f2_dfss3f $f class B $.
+	e0_dfss3f $e |- F/_ x A $.
+	e1_dfss3f $e |- F/_ x B $.
+	p_dfss3f $p |- ( A C_ B <-> A. x e. A x e. B ) $= e0_dfss3f e1_dfss3f f0_dfss3f f1_dfss3f f2_dfss3f p_dfss2f f0_dfss3f a_sup_set_class f2_dfss3f a_wcel f0_dfss3f f1_dfss3f a_df-ral f1_dfss3f f2_dfss3f a_wss f0_dfss3f a_sup_set_class f1_dfss3f a_wcel f0_dfss3f a_sup_set_class f2_dfss3f a_wcel a_wi f0_dfss3f a_wal f0_dfss3f a_sup_set_class f2_dfss3f a_wcel f0_dfss3f f1_dfss3f a_wral p_bitr4i $.
 $}
-$( If ` x ` is not free in ` A ` and ` B ` , it is not free in
+
+$(If ` x ` is not free in ` A ` and ` B ` , it is not free in
        ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	fnfss_0 $f set x $.
-	fnfss_1 $f class A $.
-	fnfss_2 $f class B $.
-	enfss_0 $e |- F/_ x A $.
-	enfss_1 $e |- F/_ x B $.
-	nfss $p |- F/ x A C_ B $= fnfss_1 fnfss_2 wss fnfss_0 sup_set_class fnfss_2 wcel fnfss_0 fnfss_1 wral fnfss_0 fnfss_0 fnfss_1 fnfss_2 enfss_0 enfss_1 dfss3f fnfss_0 sup_set_class fnfss_2 wcel fnfss_0 fnfss_1 nfra1 nfxfr $.
+	$v x A B  $.
+	$d A  $.
+	$d B  $.
+	$d x  $.
+	$d A  $.
+	$d B  $.
+	f0_nfss $f set x $.
+	f1_nfss $f class A $.
+	f2_nfss $f class B $.
+	e0_nfss $e |- F/_ x A $.
+	e1_nfss $e |- F/_ x B $.
+	p_nfss $p |- F/ x A C_ B $= e0_nfss e1_nfss f0_nfss f1_nfss f2_nfss p_dfss3f f0_nfss a_sup_set_class f2_nfss a_wcel f0_nfss f1_nfss p_nfra1 f1_nfss f2_nfss a_wss f0_nfss a_sup_set_class f2_nfss a_wcel f0_nfss f1_nfss a_wral f0_nfss p_nfxfr $.
 $}
-$( Membership relationships follow from a subclass relationship.
+
+$(Membership relationships follow from a subclass relationship.
        (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	issel_0 $f set x $.
-	fssel_0 $f class A $.
-	fssel_1 $f class B $.
-	fssel_2 $f class C $.
-	ssel $p |- ( A C_ B -> ( C e. A -> C e. B ) ) $= fssel_0 fssel_1 wss issel_0 sup_set_class fssel_2 wceq issel_0 sup_set_class fssel_0 wcel wa issel_0 wex issel_0 sup_set_class fssel_2 wceq issel_0 sup_set_class fssel_1 wcel wa issel_0 wex fssel_2 fssel_0 wcel fssel_2 fssel_1 wcel fssel_0 fssel_1 wss issel_0 sup_set_class fssel_2 wceq issel_0 sup_set_class fssel_0 wcel wa issel_0 sup_set_class fssel_2 wceq issel_0 sup_set_class fssel_1 wcel wa issel_0 fssel_0 fssel_1 wss issel_0 sup_set_class fssel_0 wcel issel_0 sup_set_class fssel_1 wcel issel_0 sup_set_class fssel_2 wceq fssel_0 fssel_1 wss issel_0 sup_set_class fssel_0 wcel issel_0 sup_set_class fssel_1 wcel wi issel_0 fssel_0 fssel_1 wss issel_0 sup_set_class fssel_0 wcel issel_0 sup_set_class fssel_1 wcel wi issel_0 wal issel_0 fssel_0 fssel_1 dfss2 biimpi 19.21bi anim2d eximdv issel_0 fssel_2 fssel_0 df-clel issel_0 fssel_2 fssel_1 df-clel 3imtr4g $.
+	$v A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_ssel $f class A $.
+	f1_ssel $f class B $.
+	f2_ssel $f class C $.
+	i0_ssel $f set x $.
+	p_ssel $p |- ( A C_ B -> ( C e. A -> C e. B ) ) $= i0_ssel f0_ssel f1_ssel p_dfss2 f0_ssel f1_ssel a_wss i0_ssel a_sup_set_class f0_ssel a_wcel i0_ssel a_sup_set_class f1_ssel a_wcel a_wi i0_ssel a_wal p_biimpi f0_ssel f1_ssel a_wss i0_ssel a_sup_set_class f0_ssel a_wcel i0_ssel a_sup_set_class f1_ssel a_wcel a_wi i0_ssel p_19.21bi f0_ssel f1_ssel a_wss i0_ssel a_sup_set_class f0_ssel a_wcel i0_ssel a_sup_set_class f1_ssel a_wcel i0_ssel a_sup_set_class f2_ssel a_wceq p_anim2d f0_ssel f1_ssel a_wss i0_ssel a_sup_set_class f2_ssel a_wceq i0_ssel a_sup_set_class f0_ssel a_wcel a_wa i0_ssel a_sup_set_class f2_ssel a_wceq i0_ssel a_sup_set_class f1_ssel a_wcel a_wa i0_ssel p_eximdv i0_ssel f2_ssel f0_ssel a_df-clel i0_ssel f2_ssel f1_ssel a_df-clel f0_ssel f1_ssel a_wss i0_ssel a_sup_set_class f2_ssel a_wceq i0_ssel a_sup_set_class f0_ssel a_wcel a_wa i0_ssel a_wex i0_ssel a_sup_set_class f2_ssel a_wceq i0_ssel a_sup_set_class f1_ssel a_wcel a_wa i0_ssel a_wex f2_ssel f0_ssel a_wcel f2_ssel f1_ssel a_wcel p_3imtr4g $.
 $}
-$( Membership relationships follow from a subclass relationship.
+
+$(Membership relationships follow from a subclass relationship.
      (Contributed by NM, 7-Jun-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fssel2_0 $f class A $.
-	fssel2_1 $f class B $.
-	fssel2_2 $f class C $.
-	ssel2 $p |- ( ( A C_ B /\ C e. A ) -> C e. B ) $= fssel2_0 fssel2_1 wss fssel2_2 fssel2_0 wcel fssel2_2 fssel2_1 wcel fssel2_0 fssel2_1 fssel2_2 ssel imp $.
+	$v A B C  $.
+	f0_ssel2 $f class A $.
+	f1_ssel2 $f class B $.
+	f2_ssel2 $f class C $.
+	p_ssel2 $p |- ( ( A C_ B /\ C e. A ) -> C e. B ) $= f0_ssel2 f1_ssel2 f2_ssel2 p_ssel f0_ssel2 f1_ssel2 a_wss f2_ssel2 f0_ssel2 a_wcel f2_ssel2 f1_ssel2 a_wcel p_imp $.
 $}
-$( Membership inference from subclass relationship.  (Contributed by NM,
+
+$(Membership inference from subclass relationship.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseli_0 $f class A $.
-	fsseli_1 $f class B $.
-	fsseli_2 $f class C $.
-	esseli_0 $e |- A C_ B $.
-	sseli $p |- ( C e. A -> C e. B ) $= fsseli_0 fsseli_1 wss fsseli_2 fsseli_0 wcel fsseli_2 fsseli_1 wcel wi esseli_0 fsseli_0 fsseli_1 fsseli_2 ssel ax-mp $.
+	$v A B C  $.
+	f0_sseli $f class A $.
+	f1_sseli $f class B $.
+	f2_sseli $f class C $.
+	e0_sseli $e |- A C_ B $.
+	p_sseli $p |- ( C e. A -> C e. B ) $= e0_sseli f0_sseli f1_sseli f2_sseli p_ssel f0_sseli f1_sseli a_wss f2_sseli f0_sseli a_wcel f2_sseli f1_sseli a_wcel a_wi a_ax-mp $.
 $}
-$( Membership inference from subclass relationship.  (Contributed by NM,
+
+$(Membership inference from subclass relationship.  (Contributed by NM,
          31-May-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsselii_0 $f class A $.
-	fsselii_1 $f class B $.
-	fsselii_2 $f class C $.
-	esselii_0 $e |- A C_ B $.
-	esselii_1 $e |- C e. A $.
-	sselii $p |- C e. B $= fsselii_2 fsselii_0 wcel fsselii_2 fsselii_1 wcel esselii_1 fsselii_0 fsselii_1 fsselii_2 esselii_0 sseli ax-mp $.
+	$v A B C  $.
+	f0_sselii $f class A $.
+	f1_sselii $f class B $.
+	f2_sselii $f class C $.
+	e0_sselii $e |- A C_ B $.
+	e1_sselii $e |- C e. A $.
+	p_sselii $p |- C e. B $= e1_sselii e0_sselii f0_sselii f1_sselii f2_sselii p_sseli f2_sselii f0_sselii a_wcel f2_sselii f1_sselii a_wcel a_ax-mp $.
 $}
-$( Membership inference from subclass relationship.  (Contributed by NM,
+
+$(Membership inference from subclass relationship.  (Contributed by NM,
          25-Jun-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseldi_0 $f wff ph $.
-	fsseldi_1 $f class A $.
-	fsseldi_2 $f class B $.
-	fsseldi_3 $f class C $.
-	esseldi_0 $e |- A C_ B $.
-	esseldi_1 $e |- ( ph -> C e. A ) $.
-	sseldi $p |- ( ph -> C e. B ) $= fsseldi_0 fsseldi_3 fsseldi_1 wcel fsseldi_3 fsseldi_2 wcel esseldi_1 fsseldi_1 fsseldi_2 fsseldi_3 esseldi_0 sseli syl $.
+	$v ph A B C  $.
+	f0_sseldi $f wff ph $.
+	f1_sseldi $f class A $.
+	f2_sseldi $f class B $.
+	f3_sseldi $f class C $.
+	e0_sseldi $e |- A C_ B $.
+	e1_sseldi $e |- ( ph -> C e. A ) $.
+	p_sseldi $p |- ( ph -> C e. B ) $= e1_sseldi e0_sseldi f1_sseldi f2_sseldi f3_sseldi p_sseli f0_sseldi f3_sseldi f1_sseldi a_wcel f3_sseldi f2_sseldi a_wcel p_syl $.
 $}
-$( Membership deduction from subclass relationship.  (Contributed by NM,
+
+$(Membership deduction from subclass relationship.  (Contributed by NM,
        15-Nov-1995.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseld_0 $f wff ph $.
-	fsseld_1 $f class A $.
-	fsseld_2 $f class B $.
-	fsseld_3 $f class C $.
-	esseld_0 $e |- ( ph -> A C_ B ) $.
-	sseld $p |- ( ph -> ( C e. A -> C e. B ) ) $= fsseld_0 fsseld_1 fsseld_2 wss fsseld_3 fsseld_1 wcel fsseld_3 fsseld_2 wcel wi esseld_0 fsseld_1 fsseld_2 fsseld_3 ssel syl $.
+	$v ph A B C  $.
+	f0_sseld $f wff ph $.
+	f1_sseld $f class A $.
+	f2_sseld $f class B $.
+	f3_sseld $f class C $.
+	e0_sseld $e |- ( ph -> A C_ B ) $.
+	p_sseld $p |- ( ph -> ( C e. A -> C e. B ) ) $= e0_sseld f1_sseld f2_sseld f3_sseld p_ssel f0_sseld f1_sseld f2_sseld a_wss f3_sseld f1_sseld a_wcel f3_sseld f2_sseld a_wcel a_wi p_syl $.
 $}
-$( Membership deduction from subclass relationship.  (Contributed by NM,
+
+$(Membership deduction from subclass relationship.  (Contributed by NM,
        26-Jun-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsselda_0 $f wff ph $.
-	fsselda_1 $f class A $.
-	fsselda_2 $f class B $.
-	fsselda_3 $f class C $.
-	esselda_0 $e |- ( ph -> A C_ B ) $.
-	sselda $p |- ( ( ph /\ C e. A ) -> C e. B ) $= fsselda_0 fsselda_3 fsselda_1 wcel fsselda_3 fsselda_2 wcel fsselda_0 fsselda_1 fsselda_2 fsselda_3 esselda_0 sseld imp $.
+	$v ph A B C  $.
+	f0_sselda $f wff ph $.
+	f1_sselda $f class A $.
+	f2_sselda $f class B $.
+	f3_sselda $f class C $.
+	e0_sselda $e |- ( ph -> A C_ B ) $.
+	p_sselda $p |- ( ( ph /\ C e. A ) -> C e. B ) $= e0_sselda f0_sselda f1_sselda f2_sselda f3_sselda p_sseld f0_sselda f3_sselda f1_sselda a_wcel f3_sselda f2_sselda a_wcel p_imp $.
 $}
-$( Membership inference from subclass relationship.  (Contributed by NM,
+
+$(Membership inference from subclass relationship.  (Contributed by NM,
          14-Dec-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseldd_0 $f wff ph $.
-	fsseldd_1 $f class A $.
-	fsseldd_2 $f class B $.
-	fsseldd_3 $f class C $.
-	esseldd_0 $e |- ( ph -> A C_ B ) $.
-	esseldd_1 $e |- ( ph -> C e. A ) $.
-	sseldd $p |- ( ph -> C e. B ) $= fsseldd_0 fsseldd_3 fsseldd_1 wcel fsseldd_3 fsseldd_2 wcel esseldd_1 fsseldd_0 fsseldd_1 fsseldd_2 fsseldd_3 esseldd_0 sseld mpd $.
+	$v ph A B C  $.
+	f0_sseldd $f wff ph $.
+	f1_sseldd $f class A $.
+	f2_sseldd $f class B $.
+	f3_sseldd $f class C $.
+	e0_sseldd $e |- ( ph -> A C_ B ) $.
+	e1_sseldd $e |- ( ph -> C e. A ) $.
+	p_sseldd $p |- ( ph -> C e. B ) $= e1_sseldd e0_sseldd f0_sseldd f1_sseldd f2_sseldd f3_sseldd p_sseld f0_sseldd f3_sseldd f1_sseldd a_wcel f3_sseldd f2_sseldd a_wcel p_mpd $.
 $}
-$( If a class is not in another class, it is also not in a subclass of that
+
+$(If a class is not in another class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fssneld_0 $f wff ph $.
-	fssneld_1 $f class A $.
-	fssneld_2 $f class B $.
-	fssneld_3 $f class C $.
-	essneld_0 $e |- ( ph -> A C_ B ) $.
-	ssneld $p |- ( ph -> ( -. C e. B -> -. C e. A ) ) $= fssneld_0 fssneld_3 fssneld_1 wcel fssneld_3 fssneld_2 wcel fssneld_0 fssneld_1 fssneld_2 fssneld_3 essneld_0 sseld con3d $.
+	$v ph A B C  $.
+	f0_ssneld $f wff ph $.
+	f1_ssneld $f class A $.
+	f2_ssneld $f class B $.
+	f3_ssneld $f class C $.
+	e0_ssneld $e |- ( ph -> A C_ B ) $.
+	p_ssneld $p |- ( ph -> ( -. C e. B -> -. C e. A ) ) $= e0_ssneld f0_ssneld f1_ssneld f2_ssneld f3_ssneld p_sseld f0_ssneld f3_ssneld f1_ssneld a_wcel f3_ssneld f2_ssneld a_wcel p_con3d $.
 $}
-$( If an element is not in a class, it is also not in a subclass of that
+
+$(If an element is not in a class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fssneldd_0 $f wff ph $.
-	fssneldd_1 $f class A $.
-	fssneldd_2 $f class B $.
-	fssneldd_3 $f class C $.
-	essneldd_0 $e |- ( ph -> A C_ B ) $.
-	essneldd_1 $e |- ( ph -> -. C e. B ) $.
-	ssneldd $p |- ( ph -> -. C e. A ) $= fssneldd_0 fssneldd_3 fssneldd_2 wcel wn fssneldd_3 fssneldd_1 wcel wn essneldd_1 fssneldd_0 fssneldd_1 fssneldd_2 fssneldd_3 essneldd_0 ssneld mpd $.
+	$v ph A B C  $.
+	f0_ssneldd $f wff ph $.
+	f1_ssneldd $f class A $.
+	f2_ssneldd $f class B $.
+	f3_ssneldd $f class C $.
+	e0_ssneldd $e |- ( ph -> A C_ B ) $.
+	e1_ssneldd $e |- ( ph -> -. C e. B ) $.
+	p_ssneldd $p |- ( ph -> -. C e. A ) $= e1_ssneldd e0_ssneldd f0_ssneldd f1_ssneldd f2_ssneldd f3_ssneldd p_ssneld f0_ssneldd f3_ssneldd f2_ssneldd a_wcel a_wn f3_ssneldd f1_ssneldd a_wcel a_wn p_mpd $.
 $}
-$( Inference rule based on subclass definition.  (Contributed by NM,
+
+$(Inference rule based on subclass definition.  (Contributed by NM,
        5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fssriv_0 $f set x $.
-	fssriv_1 $f class A $.
-	fssriv_2 $f class B $.
-	essriv_0 $e |- ( x e. A -> x e. B ) $.
-	ssriv $p |- A C_ B $= fssriv_1 fssriv_2 wss fssriv_0 sup_set_class fssriv_1 wcel fssriv_0 sup_set_class fssriv_2 wcel wi fssriv_0 fssriv_0 fssriv_1 fssriv_2 dfss2 essriv_0 mpgbir $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ssriv $f set x $.
+	f1_ssriv $f class A $.
+	f2_ssriv $f class B $.
+	e0_ssriv $e |- ( x e. A -> x e. B ) $.
+	p_ssriv $p |- A C_ B $= f0_ssriv f1_ssriv f2_ssriv p_dfss2 e0_ssriv f1_ssriv f2_ssriv a_wss f0_ssriv a_sup_set_class f1_ssriv a_wcel f0_ssriv a_sup_set_class f2_ssriv a_wcel a_wi f0_ssriv p_mpgbir $.
 $}
-$( Deduction rule based on subclass definition.  (Contributed by NM,
+
+$(Deduction rule based on subclass definition.  (Contributed by NM,
        15-Nov-1995.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	$d x ph $.
-	fssrdv_0 $f wff ph $.
-	fssrdv_1 $f set x $.
-	fssrdv_2 $f class A $.
-	fssrdv_3 $f class B $.
-	essrdv_0 $e |- ( ph -> ( x e. A -> x e. B ) ) $.
-	ssrdv $p |- ( ph -> A C_ B ) $= fssrdv_0 fssrdv_1 sup_set_class fssrdv_2 wcel fssrdv_1 sup_set_class fssrdv_3 wcel wi fssrdv_1 wal fssrdv_2 fssrdv_3 wss fssrdv_0 fssrdv_1 sup_set_class fssrdv_2 wcel fssrdv_1 sup_set_class fssrdv_3 wcel wi fssrdv_1 essrdv_0 alrimiv fssrdv_1 fssrdv_2 fssrdv_3 dfss2 sylibr $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_ssrdv $f wff ph $.
+	f1_ssrdv $f set x $.
+	f2_ssrdv $f class A $.
+	f3_ssrdv $f class B $.
+	e0_ssrdv $e |- ( ph -> ( x e. A -> x e. B ) ) $.
+	p_ssrdv $p |- ( ph -> A C_ B ) $= e0_ssrdv f0_ssrdv f1_ssrdv a_sup_set_class f2_ssrdv a_wcel f1_ssrdv a_sup_set_class f3_ssrdv a_wcel a_wi f1_ssrdv p_alrimiv f1_ssrdv f2_ssrdv f3_ssrdv p_dfss2 f0_ssrdv f1_ssrdv a_sup_set_class f2_ssrdv a_wcel f1_ssrdv a_sup_set_class f3_ssrdv a_wcel a_wi f1_ssrdv a_wal f2_ssrdv f3_ssrdv a_wss p_sylibr $.
 $}
-$( Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
+
+$(Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	isstr2_0 $f set x $.
-	fsstr2_0 $f class A $.
-	fsstr2_1 $f class B $.
-	fsstr2_2 $f class C $.
-	sstr2 $p |- ( A C_ B -> ( B C_ C -> A C_ C ) ) $= fsstr2_0 fsstr2_1 wss isstr2_0 sup_set_class fsstr2_1 wcel isstr2_0 sup_set_class fsstr2_2 wcel wi isstr2_0 wal isstr2_0 sup_set_class fsstr2_0 wcel isstr2_0 sup_set_class fsstr2_2 wcel wi isstr2_0 wal fsstr2_1 fsstr2_2 wss fsstr2_0 fsstr2_2 wss fsstr2_0 fsstr2_1 wss isstr2_0 sup_set_class fsstr2_1 wcel isstr2_0 sup_set_class fsstr2_2 wcel wi isstr2_0 sup_set_class fsstr2_0 wcel isstr2_0 sup_set_class fsstr2_2 wcel wi isstr2_0 fsstr2_0 fsstr2_1 wss isstr2_0 sup_set_class fsstr2_0 wcel isstr2_0 sup_set_class fsstr2_1 wcel isstr2_0 sup_set_class fsstr2_2 wcel fsstr2_0 fsstr2_1 isstr2_0 sup_set_class ssel imim1d alimdv isstr2_0 fsstr2_1 fsstr2_2 dfss2 isstr2_0 fsstr2_0 fsstr2_2 dfss2 3imtr4g $.
+	$v A B C  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	f0_sstr2 $f class A $.
+	f1_sstr2 $f class B $.
+	f2_sstr2 $f class C $.
+	i0_sstr2 $f set x $.
+	p_sstr2 $p |- ( A C_ B -> ( B C_ C -> A C_ C ) ) $= f0_sstr2 f1_sstr2 i0_sstr2 a_sup_set_class p_ssel f0_sstr2 f1_sstr2 a_wss i0_sstr2 a_sup_set_class f0_sstr2 a_wcel i0_sstr2 a_sup_set_class f1_sstr2 a_wcel i0_sstr2 a_sup_set_class f2_sstr2 a_wcel p_imim1d f0_sstr2 f1_sstr2 a_wss i0_sstr2 a_sup_set_class f1_sstr2 a_wcel i0_sstr2 a_sup_set_class f2_sstr2 a_wcel a_wi i0_sstr2 a_sup_set_class f0_sstr2 a_wcel i0_sstr2 a_sup_set_class f2_sstr2 a_wcel a_wi i0_sstr2 p_alimdv i0_sstr2 f1_sstr2 f2_sstr2 p_dfss2 i0_sstr2 f0_sstr2 f2_sstr2 p_dfss2 f0_sstr2 f1_sstr2 a_wss i0_sstr2 a_sup_set_class f1_sstr2 a_wcel i0_sstr2 a_sup_set_class f2_sstr2 a_wcel a_wi i0_sstr2 a_wal i0_sstr2 a_sup_set_class f0_sstr2 a_wcel i0_sstr2 a_sup_set_class f2_sstr2 a_wcel a_wi i0_sstr2 a_wal f1_sstr2 f2_sstr2 a_wss f0_sstr2 f2_sstr2 a_wss p_3imtr4g $.
 $}
-$( Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
+
+$(Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
      NM, 5-Sep-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsstr_0 $f class A $.
-	fsstr_1 $f class B $.
-	fsstr_2 $f class C $.
-	sstr $p |- ( ( A C_ B /\ B C_ C ) -> A C_ C ) $= fsstr_0 fsstr_1 wss fsstr_1 fsstr_2 wss fsstr_0 fsstr_2 wss fsstr_0 fsstr_1 fsstr_2 sstr2 imp $.
+	$v A B C  $.
+	f0_sstr $f class A $.
+	f1_sstr $f class B $.
+	f2_sstr $f class C $.
+	p_sstr $p |- ( ( A C_ B /\ B C_ C ) -> A C_ C ) $= f0_sstr f1_sstr f2_sstr p_sstr2 f0_sstr f1_sstr a_wss f1_sstr f2_sstr a_wss f0_sstr f2_sstr a_wss p_imp $.
 $}
-$( Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) $)
+
+$(Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsstri_0 $f class A $.
-	fsstri_1 $f class B $.
-	fsstri_2 $f class C $.
-	esstri_0 $e |- A C_ B $.
-	esstri_1 $e |- B C_ C $.
-	sstri $p |- A C_ C $= fsstri_0 fsstri_1 wss fsstri_1 fsstri_2 wss fsstri_0 fsstri_2 wss esstri_0 esstri_1 fsstri_0 fsstri_1 fsstri_2 sstr2 mp2 $.
+	$v A B C  $.
+	f0_sstri $f class A $.
+	f1_sstri $f class B $.
+	f2_sstri $f class C $.
+	e0_sstri $e |- A C_ B $.
+	e1_sstri $e |- B C_ C $.
+	p_sstri $p |- A C_ C $= e0_sstri e1_sstri f0_sstri f1_sstri f2_sstri p_sstr2 f0_sstri f1_sstri a_wss f1_sstri f2_sstri a_wss f0_sstri f2_sstri a_wss p_mp2 $.
 $}
-$( Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) $)
+
+$(Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsstrd_0 $f wff ph $.
-	fsstrd_1 $f class A $.
-	fsstrd_2 $f class B $.
-	fsstrd_3 $f class C $.
-	esstrd_0 $e |- ( ph -> A C_ B ) $.
-	esstrd_1 $e |- ( ph -> B C_ C ) $.
-	sstrd $p |- ( ph -> A C_ C ) $= fsstrd_0 fsstrd_1 fsstrd_2 wss fsstrd_2 fsstrd_3 wss fsstrd_1 fsstrd_3 wss esstrd_0 esstrd_1 fsstrd_1 fsstrd_2 fsstrd_3 sstr syl2anc $.
+	$v ph A B C  $.
+	f0_sstrd $f wff ph $.
+	f1_sstrd $f class A $.
+	f2_sstrd $f class B $.
+	f3_sstrd $f class C $.
+	e0_sstrd $e |- ( ph -> A C_ B ) $.
+	e1_sstrd $e |- ( ph -> B C_ C ) $.
+	p_sstrd $p |- ( ph -> A C_ C ) $= e0_sstrd e1_sstrd f1_sstrd f2_sstrd f3_sstrd p_sstr f0_sstrd f1_sstrd f2_sstrd a_wss f2_sstrd f3_sstrd a_wss f1_sstrd f3_sstrd a_wss p_syl2anc $.
 $}
-$( Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) $)
+
+$(Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5ss_0 $f wff ph $.
-	fsyl5ss_1 $f class A $.
-	fsyl5ss_2 $f class B $.
-	fsyl5ss_3 $f class C $.
-	esyl5ss_0 $e |- A C_ B $.
-	esyl5ss_1 $e |- ( ph -> B C_ C ) $.
-	syl5ss $p |- ( ph -> A C_ C ) $= fsyl5ss_0 fsyl5ss_1 fsyl5ss_2 fsyl5ss_3 fsyl5ss_1 fsyl5ss_2 wss fsyl5ss_0 esyl5ss_0 a1i esyl5ss_1 sstrd $.
+	$v ph A B C  $.
+	f0_syl5ss $f wff ph $.
+	f1_syl5ss $f class A $.
+	f2_syl5ss $f class B $.
+	f3_syl5ss $f class C $.
+	e0_syl5ss $e |- A C_ B $.
+	e1_syl5ss $e |- ( ph -> B C_ C ) $.
+	p_syl5ss $p |- ( ph -> A C_ C ) $= e0_syl5ss f1_syl5ss f2_syl5ss a_wss f0_syl5ss p_a1i e1_syl5ss f0_syl5ss f1_syl5ss f2_syl5ss f3_syl5ss p_sstrd $.
 $}
-$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+
+$(Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6ss_0 $f wff ph $.
-	fsyl6ss_1 $f class A $.
-	fsyl6ss_2 $f class B $.
-	fsyl6ss_3 $f class C $.
-	esyl6ss_0 $e |- ( ph -> A C_ B ) $.
-	esyl6ss_1 $e |- B C_ C $.
-	syl6ss $p |- ( ph -> A C_ C ) $= fsyl6ss_0 fsyl6ss_1 fsyl6ss_2 fsyl6ss_3 esyl6ss_0 fsyl6ss_2 fsyl6ss_3 wss fsyl6ss_0 esyl6ss_1 a1i sstrd $.
+	$v ph A B C  $.
+	f0_syl6ss $f wff ph $.
+	f1_syl6ss $f class A $.
+	f2_syl6ss $f class B $.
+	f3_syl6ss $f class C $.
+	e0_syl6ss $e |- ( ph -> A C_ B ) $.
+	e1_syl6ss $e |- B C_ C $.
+	p_syl6ss $p |- ( ph -> A C_ C ) $= e0_syl6ss e1_syl6ss f2_syl6ss f3_syl6ss a_wss f0_syl6ss p_a1i f0_syl6ss f1_syl6ss f2_syl6ss f3_syl6ss p_sstrd $.
 $}
-$( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
+
+$(A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsylan9ss_0 $f wff ph $.
-	fsylan9ss_1 $f wff ps $.
-	fsylan9ss_2 $f class A $.
-	fsylan9ss_3 $f class B $.
-	fsylan9ss_4 $f class C $.
-	esylan9ss_0 $e |- ( ph -> A C_ B ) $.
-	esylan9ss_1 $e |- ( ps -> B C_ C ) $.
-	sylan9ss $p |- ( ( ph /\ ps ) -> A C_ C ) $= fsylan9ss_0 fsylan9ss_2 fsylan9ss_3 wss fsylan9ss_3 fsylan9ss_4 wss fsylan9ss_2 fsylan9ss_4 wss fsylan9ss_1 esylan9ss_0 esylan9ss_1 fsylan9ss_2 fsylan9ss_3 fsylan9ss_4 sstr syl2an $.
+	$v ph ps A B C  $.
+	f0_sylan9ss $f wff ph $.
+	f1_sylan9ss $f wff ps $.
+	f2_sylan9ss $f class A $.
+	f3_sylan9ss $f class B $.
+	f4_sylan9ss $f class C $.
+	e0_sylan9ss $e |- ( ph -> A C_ B ) $.
+	e1_sylan9ss $e |- ( ps -> B C_ C ) $.
+	p_sylan9ss $p |- ( ( ph /\ ps ) -> A C_ C ) $= e0_sylan9ss e1_sylan9ss f2_sylan9ss f3_sylan9ss f4_sylan9ss p_sstr f0_sylan9ss f2_sylan9ss f3_sylan9ss a_wss f3_sylan9ss f4_sylan9ss a_wss f2_sylan9ss f4_sylan9ss a_wss f1_sylan9ss p_syl2an $.
 $}
-$( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) $)
+
+$(A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsylan9ssr_0 $f wff ph $.
-	fsylan9ssr_1 $f wff ps $.
-	fsylan9ssr_2 $f class A $.
-	fsylan9ssr_3 $f class B $.
-	fsylan9ssr_4 $f class C $.
-	esylan9ssr_0 $e |- ( ph -> A C_ B ) $.
-	esylan9ssr_1 $e |- ( ps -> B C_ C ) $.
-	sylan9ssr $p |- ( ( ps /\ ph ) -> A C_ C ) $= fsylan9ssr_0 fsylan9ssr_1 fsylan9ssr_2 fsylan9ssr_4 wss fsylan9ssr_0 fsylan9ssr_1 fsylan9ssr_2 fsylan9ssr_3 fsylan9ssr_4 esylan9ssr_0 esylan9ssr_1 sylan9ss ancoms $.
+	$v ph ps A B C  $.
+	f0_sylan9ssr $f wff ph $.
+	f1_sylan9ssr $f wff ps $.
+	f2_sylan9ssr $f class A $.
+	f3_sylan9ssr $f class B $.
+	f4_sylan9ssr $f class C $.
+	e0_sylan9ssr $e |- ( ph -> A C_ B ) $.
+	e1_sylan9ssr $e |- ( ps -> B C_ C ) $.
+	p_sylan9ssr $p |- ( ( ps /\ ph ) -> A C_ C ) $= e0_sylan9ssr e1_sylan9ssr f0_sylan9ssr f1_sylan9ssr f2_sylan9ssr f3_sylan9ssr f4_sylan9ssr p_sylan9ss f0_sylan9ssr f1_sylan9ssr f2_sylan9ssr f4_sylan9ssr a_wss p_ancoms $.
 $}
-$( The subclass relationship is antisymmetric.  Compare Theorem 4 of
+
+$(The subclass relationship is antisymmetric.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	ieqss_0 $f set x $.
-	feqss_0 $f class A $.
-	feqss_1 $f class B $.
-	eqss $p |- ( A = B <-> ( A C_ B /\ B C_ A ) ) $= ieqss_0 sup_set_class feqss_0 wcel ieqss_0 sup_set_class feqss_1 wcel wb ieqss_0 wal ieqss_0 sup_set_class feqss_0 wcel ieqss_0 sup_set_class feqss_1 wcel wi ieqss_0 wal ieqss_0 sup_set_class feqss_1 wcel ieqss_0 sup_set_class feqss_0 wcel wi ieqss_0 wal wa feqss_0 feqss_1 wceq feqss_0 feqss_1 wss feqss_1 feqss_0 wss wa ieqss_0 sup_set_class feqss_0 wcel ieqss_0 sup_set_class feqss_1 wcel ieqss_0 albiim ieqss_0 feqss_0 feqss_1 dfcleq feqss_0 feqss_1 wss ieqss_0 sup_set_class feqss_0 wcel ieqss_0 sup_set_class feqss_1 wcel wi ieqss_0 wal feqss_1 feqss_0 wss ieqss_0 sup_set_class feqss_1 wcel ieqss_0 sup_set_class feqss_0 wcel wi ieqss_0 wal ieqss_0 feqss_0 feqss_1 dfss2 ieqss_0 feqss_1 feqss_0 dfss2 anbi12i 3bitr4i $.
+	$v A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_eqss $f class A $.
+	f1_eqss $f class B $.
+	i0_eqss $f set x $.
+	p_eqss $p |- ( A = B <-> ( A C_ B /\ B C_ A ) ) $= i0_eqss a_sup_set_class f0_eqss a_wcel i0_eqss a_sup_set_class f1_eqss a_wcel i0_eqss p_albiim i0_eqss f0_eqss f1_eqss p_dfcleq i0_eqss f0_eqss f1_eqss p_dfss2 i0_eqss f1_eqss f0_eqss p_dfss2 f0_eqss f1_eqss a_wss i0_eqss a_sup_set_class f0_eqss a_wcel i0_eqss a_sup_set_class f1_eqss a_wcel a_wi i0_eqss a_wal f1_eqss f0_eqss a_wss i0_eqss a_sup_set_class f1_eqss a_wcel i0_eqss a_sup_set_class f0_eqss a_wcel a_wi i0_eqss a_wal p_anbi12i i0_eqss a_sup_set_class f0_eqss a_wcel i0_eqss a_sup_set_class f1_eqss a_wcel a_wb i0_eqss a_wal i0_eqss a_sup_set_class f0_eqss a_wcel i0_eqss a_sup_set_class f1_eqss a_wcel a_wi i0_eqss a_wal i0_eqss a_sup_set_class f1_eqss a_wcel i0_eqss a_sup_set_class f0_eqss a_wcel a_wi i0_eqss a_wal a_wa f0_eqss f1_eqss a_wceq f0_eqss f1_eqss a_wss f1_eqss f0_eqss a_wss a_wa p_3bitr4i $.
 $}
-$( Infer equality from two subclass relationships.  Compare Theorem 4 of
+
+$(Infer equality from two subclass relationships.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqssi_0 $f class A $.
-	feqssi_1 $f class B $.
-	eeqssi_0 $e |- A C_ B $.
-	eeqssi_1 $e |- B C_ A $.
-	eqssi $p |- A = B $= feqssi_0 feqssi_1 wceq feqssi_0 feqssi_1 wss feqssi_1 feqssi_0 wss eeqssi_0 eeqssi_1 feqssi_0 feqssi_1 eqss mpbir2an $.
+	$v A B  $.
+	f0_eqssi $f class A $.
+	f1_eqssi $f class B $.
+	e0_eqssi $e |- A C_ B $.
+	e1_eqssi $e |- B C_ A $.
+	p_eqssi $p |- A = B $= e0_eqssi e1_eqssi f0_eqssi f1_eqssi p_eqss f0_eqssi f1_eqssi a_wceq f0_eqssi f1_eqssi a_wss f1_eqssi f0_eqssi a_wss p_mpbir2an $.
 $}
-$( Equality deduction from two subclass relationships.  Compare Theorem 4
+
+$(Equality deduction from two subclass relationships.  Compare Theorem 4
        of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	feqssd_0 $f wff ph $.
-	feqssd_1 $f class A $.
-	feqssd_2 $f class B $.
-	eeqssd_0 $e |- ( ph -> A C_ B ) $.
-	eeqssd_1 $e |- ( ph -> B C_ A ) $.
-	eqssd $p |- ( ph -> A = B ) $= feqssd_0 feqssd_1 feqssd_2 wss feqssd_2 feqssd_1 wss feqssd_1 feqssd_2 wceq eeqssd_0 eeqssd_1 feqssd_1 feqssd_2 eqss sylanbrc $.
+	$v ph A B  $.
+	f0_eqssd $f wff ph $.
+	f1_eqssd $f class A $.
+	f2_eqssd $f class B $.
+	e0_eqssd $e |- ( ph -> A C_ B ) $.
+	e1_eqssd $e |- ( ph -> B C_ A ) $.
+	p_eqssd $p |- ( ph -> A = B ) $= e0_eqssd e1_eqssd f1_eqssd f2_eqssd p_eqss f0_eqssd f1_eqssd f2_eqssd a_wss f2_eqssd f1_eqssd a_wss f1_eqssd f2_eqssd a_wceq p_sylanbrc $.
 $}
-$( Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
+
+$(Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 14-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d A x $.
-	issid_0 $f set x $.
-	fssid_0 $f class A $.
-	ssid $p |- A C_ A $= issid_0 fssid_0 fssid_0 issid_0 sup_set_class fssid_0 wcel id ssriv $.
+	$v A  $.
+	$d A x  $.
+	f0_ssid $f class A $.
+	i0_ssid $f set x $.
+	p_ssid $p |- A C_ A $= i0_ssid a_sup_set_class f0_ssid a_wcel p_id i0_ssid f0_ssid f0_ssid p_ssriv $.
 $}
-$( Any class is a subclass of the universal class.  (Contributed by NM,
+
+$(Any class is a subclass of the universal class.  (Contributed by NM,
        31-Oct-1995.) $)
+
 ${
-	$v A $.
-	$v x $.
-	$d A x $.
-	issv_0 $f set x $.
-	fssv_0 $f class A $.
-	ssv $p |- A C_ _V $= issv_0 fssv_0 cvv issv_0 sup_set_class fssv_0 elex ssriv $.
+	$v A  $.
+	$d A x  $.
+	f0_ssv $f class A $.
+	i0_ssv $f set x $.
+	p_ssv $p |- A C_ _V $= i0_ssv a_sup_set_class f0_ssv p_elex i0_ssv f0_ssv a_cvv p_ssriv $.
 $}
-$( Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
+
+$(Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 21-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq1_0 $f class A $.
-	fsseq1_1 $f class B $.
-	fsseq1_2 $f class C $.
-	sseq1 $p |- ( A = B -> ( A C_ C <-> B C_ C ) ) $= fsseq1_0 fsseq1_1 wceq fsseq1_0 fsseq1_1 wss fsseq1_1 fsseq1_0 wss wa fsseq1_0 fsseq1_2 wss fsseq1_1 fsseq1_2 wss wb fsseq1_0 fsseq1_1 eqss fsseq1_0 fsseq1_1 wss fsseq1_1 fsseq1_0 wss wa fsseq1_0 fsseq1_2 wss fsseq1_1 fsseq1_2 wss fsseq1_1 fsseq1_0 wss fsseq1_0 fsseq1_2 wss fsseq1_1 fsseq1_2 wss wi fsseq1_0 fsseq1_1 wss fsseq1_1 fsseq1_0 fsseq1_2 sstr2 adantl fsseq1_0 fsseq1_1 wss fsseq1_1 fsseq1_2 wss fsseq1_0 fsseq1_2 wss wi fsseq1_1 fsseq1_0 wss fsseq1_0 fsseq1_1 fsseq1_2 sstr2 adantr impbid sylbi $.
+	$v A B C  $.
+	f0_sseq1 $f class A $.
+	f1_sseq1 $f class B $.
+	f2_sseq1 $f class C $.
+	p_sseq1 $p |- ( A = B -> ( A C_ C <-> B C_ C ) ) $= f0_sseq1 f1_sseq1 p_eqss f1_sseq1 f0_sseq1 f2_sseq1 p_sstr2 f1_sseq1 f0_sseq1 a_wss f0_sseq1 f2_sseq1 a_wss f1_sseq1 f2_sseq1 a_wss a_wi f0_sseq1 f1_sseq1 a_wss p_adantl f0_sseq1 f1_sseq1 f2_sseq1 p_sstr2 f0_sseq1 f1_sseq1 a_wss f1_sseq1 f2_sseq1 a_wss f0_sseq1 f2_sseq1 a_wss a_wi f1_sseq1 f0_sseq1 a_wss p_adantr f0_sseq1 f1_sseq1 a_wss f1_sseq1 f0_sseq1 a_wss a_wa f0_sseq1 f2_sseq1 a_wss f1_sseq1 f2_sseq1 a_wss p_impbid f0_sseq1 f1_sseq1 a_wceq f0_sseq1 f1_sseq1 a_wss f1_sseq1 f0_sseq1 a_wss a_wa f0_sseq1 f2_sseq1 a_wss f1_sseq1 f2_sseq1 a_wss a_wb p_sylbi $.
 $}
-$( Equality theorem for the subclass relationship.  (Contributed by NM,
+
+$(Equality theorem for the subclass relationship.  (Contributed by NM,
      25-Jun-1998.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq2_0 $f class A $.
-	fsseq2_1 $f class B $.
-	fsseq2_2 $f class C $.
-	sseq2 $p |- ( A = B -> ( C C_ A <-> C C_ B ) ) $= fsseq2_0 fsseq2_1 wss fsseq2_1 fsseq2_0 wss wa fsseq2_2 fsseq2_0 wss fsseq2_2 fsseq2_1 wss wi fsseq2_2 fsseq2_1 wss fsseq2_2 fsseq2_0 wss wi wa fsseq2_0 fsseq2_1 wceq fsseq2_2 fsseq2_0 wss fsseq2_2 fsseq2_1 wss wb fsseq2_0 fsseq2_1 wss fsseq2_2 fsseq2_0 wss fsseq2_2 fsseq2_1 wss wi fsseq2_1 fsseq2_0 wss fsseq2_2 fsseq2_1 wss fsseq2_2 fsseq2_0 wss wi fsseq2_2 fsseq2_0 wss fsseq2_0 fsseq2_1 wss fsseq2_2 fsseq2_1 wss fsseq2_2 fsseq2_0 fsseq2_1 sstr2 com12 fsseq2_2 fsseq2_1 wss fsseq2_1 fsseq2_0 wss fsseq2_2 fsseq2_0 wss fsseq2_2 fsseq2_1 fsseq2_0 sstr2 com12 anim12i fsseq2_0 fsseq2_1 eqss fsseq2_2 fsseq2_0 wss fsseq2_2 fsseq2_1 wss dfbi2 3imtr4i $.
+	$v A B C  $.
+	f0_sseq2 $f class A $.
+	f1_sseq2 $f class B $.
+	f2_sseq2 $f class C $.
+	p_sseq2 $p |- ( A = B -> ( C C_ A <-> C C_ B ) ) $= f2_sseq2 f0_sseq2 f1_sseq2 p_sstr2 f2_sseq2 f0_sseq2 a_wss f0_sseq2 f1_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss p_com12 f2_sseq2 f1_sseq2 f0_sseq2 p_sstr2 f2_sseq2 f1_sseq2 a_wss f1_sseq2 f0_sseq2 a_wss f2_sseq2 f0_sseq2 a_wss p_com12 f0_sseq2 f1_sseq2 a_wss f2_sseq2 f0_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss a_wi f1_sseq2 f0_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss f2_sseq2 f0_sseq2 a_wss a_wi p_anim12i f0_sseq2 f1_sseq2 p_eqss f2_sseq2 f0_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss p_dfbi2 f0_sseq2 f1_sseq2 a_wss f1_sseq2 f0_sseq2 a_wss a_wa f2_sseq2 f0_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss a_wi f2_sseq2 f1_sseq2 a_wss f2_sseq2 f0_sseq2 a_wss a_wi a_wa f0_sseq2 f1_sseq2 a_wceq f2_sseq2 f0_sseq2 a_wss f2_sseq2 f1_sseq2 a_wss a_wb p_3imtr4i $.
 $}
-$( Equality theorem for the subclass relationship.  (Contributed by NM,
+
+$(Equality theorem for the subclass relationship.  (Contributed by NM,
      31-May-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fsseq12_0 $f class A $.
-	fsseq12_1 $f class B $.
-	fsseq12_2 $f class C $.
-	fsseq12_3 $f class D $.
-	sseq12 $p |- ( ( A = B /\ C = D ) -> ( A C_ C <-> B C_ D ) ) $= fsseq12_0 fsseq12_1 wceq fsseq12_0 fsseq12_2 wss fsseq12_1 fsseq12_2 wss fsseq12_2 fsseq12_3 wceq fsseq12_1 fsseq12_3 wss fsseq12_0 fsseq12_1 fsseq12_2 sseq1 fsseq12_2 fsseq12_3 fsseq12_1 sseq2 sylan9bb $.
+	$v A B C D  $.
+	f0_sseq12 $f class A $.
+	f1_sseq12 $f class B $.
+	f2_sseq12 $f class C $.
+	f3_sseq12 $f class D $.
+	p_sseq12 $p |- ( ( A = B /\ C = D ) -> ( A C_ C <-> B C_ D ) ) $= f0_sseq12 f1_sseq12 f2_sseq12 p_sseq1 f2_sseq12 f3_sseq12 f1_sseq12 p_sseq2 f0_sseq12 f1_sseq12 a_wceq f0_sseq12 f2_sseq12 a_wss f1_sseq12 f2_sseq12 a_wss f2_sseq12 f3_sseq12 a_wceq f1_sseq12 f3_sseq12 a_wss p_sylan9bb $.
 $}
-$( An equality inference for the subclass relationship.  (Contributed by
+
+$(An equality inference for the subclass relationship.  (Contributed by
        NM, 18-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq1i_0 $f class A $.
-	fsseq1i_1 $f class B $.
-	fsseq1i_2 $f class C $.
-	esseq1i_0 $e |- A = B $.
-	sseq1i $p |- ( A C_ C <-> B C_ C ) $= fsseq1i_0 fsseq1i_1 wceq fsseq1i_0 fsseq1i_2 wss fsseq1i_1 fsseq1i_2 wss wb esseq1i_0 fsseq1i_0 fsseq1i_1 fsseq1i_2 sseq1 ax-mp $.
+	$v A B C  $.
+	f0_sseq1i $f class A $.
+	f1_sseq1i $f class B $.
+	f2_sseq1i $f class C $.
+	e0_sseq1i $e |- A = B $.
+	p_sseq1i $p |- ( A C_ C <-> B C_ C ) $= e0_sseq1i f0_sseq1i f1_sseq1i f2_sseq1i p_sseq1 f0_sseq1i f1_sseq1i a_wceq f0_sseq1i f2_sseq1i a_wss f1_sseq1i f2_sseq1i a_wss a_wb a_ax-mp $.
 $}
-$( An equality inference for the subclass relationship.  (Contributed by
+
+$(An equality inference for the subclass relationship.  (Contributed by
        NM, 30-Aug-1993.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq2i_0 $f class A $.
-	fsseq2i_1 $f class B $.
-	fsseq2i_2 $f class C $.
-	esseq2i_0 $e |- A = B $.
-	sseq2i $p |- ( C C_ A <-> C C_ B ) $= fsseq2i_0 fsseq2i_1 wceq fsseq2i_2 fsseq2i_0 wss fsseq2i_2 fsseq2i_1 wss wb esseq2i_0 fsseq2i_0 fsseq2i_1 fsseq2i_2 sseq2 ax-mp $.
+	$v A B C  $.
+	f0_sseq2i $f class A $.
+	f1_sseq2i $f class B $.
+	f2_sseq2i $f class C $.
+	e0_sseq2i $e |- A = B $.
+	p_sseq2i $p |- ( C C_ A <-> C C_ B ) $= e0_sseq2i f0_sseq2i f1_sseq2i f2_sseq2i p_sseq2 f0_sseq2i f1_sseq2i a_wceq f2_sseq2i f0_sseq2i a_wss f2_sseq2i f1_sseq2i a_wss a_wb a_ax-mp $.
 $}
-$( An equality inference for the subclass relationship.  (Contributed by
+
+$(An equality inference for the subclass relationship.  (Contributed by
          NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fsseq12i_0 $f class A $.
-	fsseq12i_1 $f class B $.
-	fsseq12i_2 $f class C $.
-	fsseq12i_3 $f class D $.
-	esseq12i_0 $e |- A = B $.
-	esseq12i_1 $e |- C = D $.
-	sseq12i $p |- ( A C_ C <-> B C_ D ) $= fsseq12i_0 fsseq12i_1 wceq fsseq12i_2 fsseq12i_3 wceq fsseq12i_0 fsseq12i_2 wss fsseq12i_1 fsseq12i_3 wss wb esseq12i_0 esseq12i_1 fsseq12i_0 fsseq12i_1 fsseq12i_2 fsseq12i_3 sseq12 mp2an $.
+	$v A B C D  $.
+	f0_sseq12i $f class A $.
+	f1_sseq12i $f class B $.
+	f2_sseq12i $f class C $.
+	f3_sseq12i $f class D $.
+	e0_sseq12i $e |- A = B $.
+	e1_sseq12i $e |- C = D $.
+	p_sseq12i $p |- ( A C_ C <-> B C_ D ) $= e0_sseq12i e1_sseq12i f0_sseq12i f1_sseq12i f2_sseq12i f3_sseq12i p_sseq12 f0_sseq12i f1_sseq12i a_wceq f2_sseq12i f3_sseq12i a_wceq f0_sseq12i f2_sseq12i a_wss f1_sseq12i f3_sseq12i a_wss a_wb p_mp2an $.
 $}
-$( An equality deduction for the subclass relationship.  (Contributed by
+
+$(An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq1d_0 $f wff ph $.
-	fsseq1d_1 $f class A $.
-	fsseq1d_2 $f class B $.
-	fsseq1d_3 $f class C $.
-	esseq1d_0 $e |- ( ph -> A = B ) $.
-	sseq1d $p |- ( ph -> ( A C_ C <-> B C_ C ) ) $= fsseq1d_0 fsseq1d_1 fsseq1d_2 wceq fsseq1d_1 fsseq1d_3 wss fsseq1d_2 fsseq1d_3 wss wb esseq1d_0 fsseq1d_1 fsseq1d_2 fsseq1d_3 sseq1 syl $.
+	$v ph A B C  $.
+	f0_sseq1d $f wff ph $.
+	f1_sseq1d $f class A $.
+	f2_sseq1d $f class B $.
+	f3_sseq1d $f class C $.
+	e0_sseq1d $e |- ( ph -> A = B ) $.
+	p_sseq1d $p |- ( ph -> ( A C_ C <-> B C_ C ) ) $= e0_sseq1d f1_sseq1d f2_sseq1d f3_sseq1d p_sseq1 f0_sseq1d f1_sseq1d f2_sseq1d a_wceq f1_sseq1d f3_sseq1d a_wss f2_sseq1d f3_sseq1d a_wss a_wb p_syl $.
 $}
-$( An equality deduction for the subclass relationship.  (Contributed by
+
+$(An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseq2d_0 $f wff ph $.
-	fsseq2d_1 $f class A $.
-	fsseq2d_2 $f class B $.
-	fsseq2d_3 $f class C $.
-	esseq2d_0 $e |- ( ph -> A = B ) $.
-	sseq2d $p |- ( ph -> ( C C_ A <-> C C_ B ) ) $= fsseq2d_0 fsseq2d_1 fsseq2d_2 wceq fsseq2d_3 fsseq2d_1 wss fsseq2d_3 fsseq2d_2 wss wb esseq2d_0 fsseq2d_1 fsseq2d_2 fsseq2d_3 sseq2 syl $.
+	$v ph A B C  $.
+	f0_sseq2d $f wff ph $.
+	f1_sseq2d $f class A $.
+	f2_sseq2d $f class B $.
+	f3_sseq2d $f class C $.
+	e0_sseq2d $e |- ( ph -> A = B ) $.
+	p_sseq2d $p |- ( ph -> ( C C_ A <-> C C_ B ) ) $= e0_sseq2d f1_sseq2d f2_sseq2d f3_sseq2d p_sseq2 f0_sseq2d f1_sseq2d f2_sseq2d a_wceq f3_sseq2d f1_sseq2d a_wss f3_sseq2d f2_sseq2d a_wss a_wb p_syl $.
 $}
-$( An equality deduction for the subclass relationship.  (Contributed by
+
+$(An equality deduction for the subclass relationship.  (Contributed by
          NM, 31-May-1999.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fsseq12d_0 $f wff ph $.
-	fsseq12d_1 $f class A $.
-	fsseq12d_2 $f class B $.
-	fsseq12d_3 $f class C $.
-	fsseq12d_4 $f class D $.
-	esseq12d_0 $e |- ( ph -> A = B ) $.
-	esseq12d_1 $e |- ( ph -> C = D ) $.
-	sseq12d $p |- ( ph -> ( A C_ C <-> B C_ D ) ) $= fsseq12d_0 fsseq12d_1 fsseq12d_3 wss fsseq12d_2 fsseq12d_3 wss fsseq12d_2 fsseq12d_4 wss fsseq12d_0 fsseq12d_1 fsseq12d_2 fsseq12d_3 esseq12d_0 sseq1d fsseq12d_0 fsseq12d_3 fsseq12d_4 fsseq12d_2 esseq12d_1 sseq2d bitrd $.
+	$v ph A B C D  $.
+	f0_sseq12d $f wff ph $.
+	f1_sseq12d $f class A $.
+	f2_sseq12d $f class B $.
+	f3_sseq12d $f class C $.
+	f4_sseq12d $f class D $.
+	e0_sseq12d $e |- ( ph -> A = B ) $.
+	e1_sseq12d $e |- ( ph -> C = D ) $.
+	p_sseq12d $p |- ( ph -> ( A C_ C <-> B C_ D ) ) $= e0_sseq12d f0_sseq12d f1_sseq12d f2_sseq12d f3_sseq12d p_sseq1d e1_sseq12d f0_sseq12d f3_sseq12d f4_sseq12d f2_sseq12d p_sseq2d f0_sseq12d f1_sseq12d f3_sseq12d a_wss f2_sseq12d f3_sseq12d a_wss f2_sseq12d f4_sseq12d a_wss p_bitrd $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 16-Jul-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqsstri_0 $f class A $.
-	feqsstri_1 $f class B $.
-	feqsstri_2 $f class C $.
-	eeqsstri_0 $e |- A = B $.
-	eeqsstri_1 $e |- B C_ C $.
-	eqsstri $p |- A C_ C $= feqsstri_0 feqsstri_2 wss feqsstri_1 feqsstri_2 wss eeqsstri_1 feqsstri_0 feqsstri_1 feqsstri_2 eeqsstri_0 sseq1i mpbir $.
+	$v A B C  $.
+	f0_eqsstri $f class A $.
+	f1_eqsstri $f class B $.
+	f2_eqsstri $f class C $.
+	e0_eqsstri $e |- A = B $.
+	e1_eqsstri $e |- B C_ C $.
+	p_eqsstri $p |- A C_ C $= e1_eqsstri e0_eqsstri f0_eqsstri f1_eqsstri f2_eqsstri p_sseq1i f0_eqsstri f2_eqsstri a_wss f1_eqsstri f2_eqsstri a_wss p_mpbir $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 19-Oct-1999.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	feqsstr3i_0 $f class A $.
-	feqsstr3i_1 $f class B $.
-	feqsstr3i_2 $f class C $.
-	eeqsstr3i_0 $e |- B = A $.
-	eeqsstr3i_1 $e |- B C_ C $.
-	eqsstr3i $p |- A C_ C $= feqsstr3i_0 feqsstr3i_1 feqsstr3i_2 feqsstr3i_1 feqsstr3i_0 eeqsstr3i_0 eqcomi eeqsstr3i_1 eqsstri $.
+	$v A B C  $.
+	f0_eqsstr3i $f class A $.
+	f1_eqsstr3i $f class B $.
+	f2_eqsstr3i $f class C $.
+	e0_eqsstr3i $e |- B = A $.
+	e1_eqsstr3i $e |- B C_ C $.
+	p_eqsstr3i $p |- A C_ C $= e0_eqsstr3i f1_eqsstr3i f0_eqsstr3i p_eqcomi e1_eqsstr3i f0_eqsstr3i f1_eqsstr3i f2_eqsstr3i p_eqsstri $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 28-Jul-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseqtri_0 $f class A $.
-	fsseqtri_1 $f class B $.
-	fsseqtri_2 $f class C $.
-	esseqtri_0 $e |- A C_ B $.
-	esseqtri_1 $e |- B = C $.
-	sseqtri $p |- A C_ C $= fsseqtri_0 fsseqtri_1 wss fsseqtri_0 fsseqtri_2 wss esseqtri_0 fsseqtri_1 fsseqtri_2 fsseqtri_0 esseqtri_1 sseq2i mpbi $.
+	$v A B C  $.
+	f0_sseqtri $f class A $.
+	f1_sseqtri $f class B $.
+	f2_sseqtri $f class C $.
+	e0_sseqtri $e |- A C_ B $.
+	e1_sseqtri $e |- B = C $.
+	p_sseqtri $p |- A C_ C $= e0_sseqtri e1_sseqtri f1_sseqtri f2_sseqtri f0_sseqtri p_sseq2i f0_sseqtri f1_sseqtri a_wss f0_sseqtri f2_sseqtri a_wss p_mpbi $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 4-Apr-1995.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseqtr4i_0 $f class A $.
-	fsseqtr4i_1 $f class B $.
-	fsseqtr4i_2 $f class C $.
-	esseqtr4i_0 $e |- A C_ B $.
-	esseqtr4i_1 $e |- C = B $.
-	sseqtr4i $p |- A C_ C $= fsseqtr4i_0 fsseqtr4i_1 fsseqtr4i_2 esseqtr4i_0 fsseqtr4i_2 fsseqtr4i_1 esseqtr4i_1 eqcomi sseqtri $.
+	$v A B C  $.
+	f0_sseqtr4i $f class A $.
+	f1_sseqtr4i $f class B $.
+	f2_sseqtr4i $f class C $.
+	e0_sseqtr4i $e |- A C_ B $.
+	e1_sseqtr4i $e |- C = B $.
+	p_sseqtr4i $p |- A C_ C $= e0_sseqtr4i e1_sseqtr4i f2_sseqtr4i f1_sseqtr4i p_eqcomi f0_sseqtr4i f1_sseqtr4i f2_sseqtr4i p_sseqtri $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqsstrd_0 $f wff ph $.
-	feqsstrd_1 $f class A $.
-	feqsstrd_2 $f class B $.
-	feqsstrd_3 $f class C $.
-	eeqsstrd_0 $e |- ( ph -> A = B ) $.
-	eeqsstrd_1 $e |- ( ph -> B C_ C ) $.
-	eqsstrd $p |- ( ph -> A C_ C ) $= feqsstrd_0 feqsstrd_1 feqsstrd_3 wss feqsstrd_2 feqsstrd_3 wss eeqsstrd_1 feqsstrd_0 feqsstrd_1 feqsstrd_2 feqsstrd_3 eeqsstrd_0 sseq1d mpbird $.
+	$v ph A B C  $.
+	f0_eqsstrd $f wff ph $.
+	f1_eqsstrd $f class A $.
+	f2_eqsstrd $f class B $.
+	f3_eqsstrd $f class C $.
+	e0_eqsstrd $e |- ( ph -> A = B ) $.
+	e1_eqsstrd $e |- ( ph -> B C_ C ) $.
+	p_eqsstrd $p |- ( ph -> A C_ C ) $= e1_eqsstrd e0_eqsstrd f0_eqsstrd f1_eqsstrd f2_eqsstrd f3_eqsstrd p_sseq1d f0_eqsstrd f1_eqsstrd f3_eqsstrd a_wss f2_eqsstrd f3_eqsstrd a_wss p_mpbird $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	feqsstr3d_0 $f wff ph $.
-	feqsstr3d_1 $f class A $.
-	feqsstr3d_2 $f class B $.
-	feqsstr3d_3 $f class C $.
-	eeqsstr3d_0 $e |- ( ph -> B = A ) $.
-	eeqsstr3d_1 $e |- ( ph -> B C_ C ) $.
-	eqsstr3d $p |- ( ph -> A C_ C ) $= feqsstr3d_0 feqsstr3d_1 feqsstr3d_2 feqsstr3d_3 feqsstr3d_0 feqsstr3d_2 feqsstr3d_1 eeqsstr3d_0 eqcomd eeqsstr3d_1 eqsstrd $.
+	$v ph A B C  $.
+	f0_eqsstr3d $f wff ph $.
+	f1_eqsstr3d $f class A $.
+	f2_eqsstr3d $f class B $.
+	f3_eqsstr3d $f class C $.
+	e0_eqsstr3d $e |- ( ph -> B = A ) $.
+	e1_eqsstr3d $e |- ( ph -> B C_ C ) $.
+	p_eqsstr3d $p |- ( ph -> A C_ C ) $= e0_eqsstr3d f0_eqsstr3d f2_eqsstr3d f1_eqsstr3d p_eqcomd e1_eqsstr3d f0_eqsstr3d f1_eqsstr3d f2_eqsstr3d f3_eqsstr3d p_eqsstrd $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseqtrd_0 $f wff ph $.
-	fsseqtrd_1 $f class A $.
-	fsseqtrd_2 $f class B $.
-	fsseqtrd_3 $f class C $.
-	esseqtrd_0 $e |- ( ph -> A C_ B ) $.
-	esseqtrd_1 $e |- ( ph -> B = C ) $.
-	sseqtrd $p |- ( ph -> A C_ C ) $= fsseqtrd_0 fsseqtrd_1 fsseqtrd_2 wss fsseqtrd_1 fsseqtrd_3 wss esseqtrd_0 fsseqtrd_0 fsseqtrd_2 fsseqtrd_3 fsseqtrd_1 esseqtrd_1 sseq2d mpbid $.
+	$v ph A B C  $.
+	f0_sseqtrd $f wff ph $.
+	f1_sseqtrd $f class A $.
+	f2_sseqtrd $f class B $.
+	f3_sseqtrd $f class C $.
+	e0_sseqtrd $e |- ( ph -> A C_ B ) $.
+	e1_sseqtrd $e |- ( ph -> B = C ) $.
+	p_sseqtrd $p |- ( ph -> A C_ C ) $= e0_sseqtrd e1_sseqtrd f0_sseqtrd f2_sseqtrd f3_sseqtrd f1_sseqtrd p_sseq2d f0_sseqtrd f1_sseqtrd f2_sseqtrd a_wss f1_sseqtrd f3_sseqtrd a_wss p_mpbid $.
 $}
-$( Substitution of equality into a subclass relationship.  (Contributed by
+
+$(Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsseqtr4d_0 $f wff ph $.
-	fsseqtr4d_1 $f class A $.
-	fsseqtr4d_2 $f class B $.
-	fsseqtr4d_3 $f class C $.
-	esseqtr4d_0 $e |- ( ph -> A C_ B ) $.
-	esseqtr4d_1 $e |- ( ph -> C = B ) $.
-	sseqtr4d $p |- ( ph -> A C_ C ) $= fsseqtr4d_0 fsseqtr4d_1 fsseqtr4d_2 fsseqtr4d_3 esseqtr4d_0 fsseqtr4d_0 fsseqtr4d_3 fsseqtr4d_2 esseqtr4d_1 eqcomd sseqtrd $.
+	$v ph A B C  $.
+	f0_sseqtr4d $f wff ph $.
+	f1_sseqtr4d $f class A $.
+	f2_sseqtr4d $f class B $.
+	f3_sseqtr4d $f class C $.
+	e0_sseqtr4d $e |- ( ph -> A C_ B ) $.
+	e1_sseqtr4d $e |- ( ph -> C = B ) $.
+	p_sseqtr4d $p |- ( ph -> A C_ C ) $= e0_sseqtr4d e1_sseqtr4d f0_sseqtr4d f3_sseqtr4d f2_sseqtr4d p_eqcomd f0_sseqtr4d f1_sseqtr4d f2_sseqtr4d f3_sseqtr4d p_sseqtrd $.
 $}
-$( Substitution of equality in both sides of a subclass relationship.
+
+$(Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr3i_0 $f class A $.
-	f3sstr3i_1 $f class B $.
-	f3sstr3i_2 $f class C $.
-	f3sstr3i_3 $f class D $.
-	e3sstr3i_0 $e |- A C_ B $.
-	e3sstr3i_1 $e |- A = C $.
-	e3sstr3i_2 $e |- B = D $.
-	3sstr3i $p |- C C_ D $= f3sstr3i_0 f3sstr3i_1 wss f3sstr3i_2 f3sstr3i_3 wss e3sstr3i_0 f3sstr3i_0 f3sstr3i_2 f3sstr3i_1 f3sstr3i_3 e3sstr3i_1 e3sstr3i_2 sseq12i mpbi $.
+	$v A B C D  $.
+	f0_3sstr3i $f class A $.
+	f1_3sstr3i $f class B $.
+	f2_3sstr3i $f class C $.
+	f3_3sstr3i $f class D $.
+	e0_3sstr3i $e |- A C_ B $.
+	e1_3sstr3i $e |- A = C $.
+	e2_3sstr3i $e |- B = D $.
+	p_3sstr3i $p |- C C_ D $= e0_3sstr3i e1_3sstr3i e2_3sstr3i f0_3sstr3i f2_3sstr3i f1_3sstr3i f3_3sstr3i p_sseq12i f0_3sstr3i f1_3sstr3i a_wss f2_3sstr3i f3_3sstr3i a_wss p_mpbi $.
 $}
-$( Substitution of equality in both sides of a subclass relationship.
+
+$(Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr4i_0 $f class A $.
-	f3sstr4i_1 $f class B $.
-	f3sstr4i_2 $f class C $.
-	f3sstr4i_3 $f class D $.
-	e3sstr4i_0 $e |- A C_ B $.
-	e3sstr4i_1 $e |- C = A $.
-	e3sstr4i_2 $e |- D = B $.
-	3sstr4i $p |- C C_ D $= f3sstr4i_2 f3sstr4i_3 wss f3sstr4i_0 f3sstr4i_1 wss e3sstr4i_0 f3sstr4i_2 f3sstr4i_0 f3sstr4i_3 f3sstr4i_1 e3sstr4i_1 e3sstr4i_2 sseq12i mpbir $.
+	$v A B C D  $.
+	f0_3sstr4i $f class A $.
+	f1_3sstr4i $f class B $.
+	f2_3sstr4i $f class C $.
+	f3_3sstr4i $f class D $.
+	e0_3sstr4i $e |- A C_ B $.
+	e1_3sstr4i $e |- C = A $.
+	e2_3sstr4i $e |- D = B $.
+	p_3sstr4i $p |- C C_ D $= e0_3sstr4i e1_3sstr4i e2_3sstr4i f2_3sstr4i f0_3sstr4i f3_3sstr4i f1_3sstr4i p_sseq12i f2_3sstr4i f3_3sstr4i a_wss f0_3sstr4i f1_3sstr4i a_wss p_mpbir $.
 $}
-$( Substitution of equality into both sides of a subclass relationship.
+
+$(Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr3g_0 $f wff ph $.
-	f3sstr3g_1 $f class A $.
-	f3sstr3g_2 $f class B $.
-	f3sstr3g_3 $f class C $.
-	f3sstr3g_4 $f class D $.
-	e3sstr3g_0 $e |- ( ph -> A C_ B ) $.
-	e3sstr3g_1 $e |- A = C $.
-	e3sstr3g_2 $e |- B = D $.
-	3sstr3g $p |- ( ph -> C C_ D ) $= f3sstr3g_0 f3sstr3g_1 f3sstr3g_2 wss f3sstr3g_3 f3sstr3g_4 wss e3sstr3g_0 f3sstr3g_1 f3sstr3g_3 f3sstr3g_2 f3sstr3g_4 e3sstr3g_1 e3sstr3g_2 sseq12i sylib $.
+	$v ph A B C D  $.
+	f0_3sstr3g $f wff ph $.
+	f1_3sstr3g $f class A $.
+	f2_3sstr3g $f class B $.
+	f3_3sstr3g $f class C $.
+	f4_3sstr3g $f class D $.
+	e0_3sstr3g $e |- ( ph -> A C_ B ) $.
+	e1_3sstr3g $e |- A = C $.
+	e2_3sstr3g $e |- B = D $.
+	p_3sstr3g $p |- ( ph -> C C_ D ) $= e0_3sstr3g e1_3sstr3g e2_3sstr3g f1_3sstr3g f3_3sstr3g f2_3sstr3g f4_3sstr3g p_sseq12i f0_3sstr3g f1_3sstr3g f2_3sstr3g a_wss f3_3sstr3g f4_3sstr3g a_wss p_sylib $.
 $}
-$( Substitution of equality into both sides of a subclass relationship.
+
+$(Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 16-Aug-1994.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr4g_0 $f wff ph $.
-	f3sstr4g_1 $f class A $.
-	f3sstr4g_2 $f class B $.
-	f3sstr4g_3 $f class C $.
-	f3sstr4g_4 $f class D $.
-	e3sstr4g_0 $e |- ( ph -> A C_ B ) $.
-	e3sstr4g_1 $e |- C = A $.
-	e3sstr4g_2 $e |- D = B $.
-	3sstr4g $p |- ( ph -> C C_ D ) $= f3sstr4g_0 f3sstr4g_1 f3sstr4g_2 wss f3sstr4g_3 f3sstr4g_4 wss e3sstr4g_0 f3sstr4g_3 f3sstr4g_1 f3sstr4g_4 f3sstr4g_2 e3sstr4g_1 e3sstr4g_2 sseq12i sylibr $.
+	$v ph A B C D  $.
+	f0_3sstr4g $f wff ph $.
+	f1_3sstr4g $f class A $.
+	f2_3sstr4g $f class B $.
+	f3_3sstr4g $f class C $.
+	f4_3sstr4g $f class D $.
+	e0_3sstr4g $e |- ( ph -> A C_ B ) $.
+	e1_3sstr4g $e |- C = A $.
+	e2_3sstr4g $e |- D = B $.
+	p_3sstr4g $p |- ( ph -> C C_ D ) $= e0_3sstr4g e1_3sstr4g e2_3sstr4g f3_3sstr4g f1_3sstr4g f4_3sstr4g f2_3sstr4g p_sseq12i f0_3sstr4g f1_3sstr4g f2_3sstr4g a_wss f3_3sstr4g f4_3sstr4g a_wss p_sylibr $.
 $}
-$( Substitution of equality into both sides of a subclass relationship.
+
+$(Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr3d_0 $f wff ph $.
-	f3sstr3d_1 $f class A $.
-	f3sstr3d_2 $f class B $.
-	f3sstr3d_3 $f class C $.
-	f3sstr3d_4 $f class D $.
-	e3sstr3d_0 $e |- ( ph -> A C_ B ) $.
-	e3sstr3d_1 $e |- ( ph -> A = C ) $.
-	e3sstr3d_2 $e |- ( ph -> B = D ) $.
-	3sstr3d $p |- ( ph -> C C_ D ) $= f3sstr3d_0 f3sstr3d_1 f3sstr3d_2 wss f3sstr3d_3 f3sstr3d_4 wss e3sstr3d_0 f3sstr3d_0 f3sstr3d_1 f3sstr3d_3 f3sstr3d_2 f3sstr3d_4 e3sstr3d_1 e3sstr3d_2 sseq12d mpbid $.
+	$v ph A B C D  $.
+	f0_3sstr3d $f wff ph $.
+	f1_3sstr3d $f class A $.
+	f2_3sstr3d $f class B $.
+	f3_3sstr3d $f class C $.
+	f4_3sstr3d $f class D $.
+	e0_3sstr3d $e |- ( ph -> A C_ B ) $.
+	e1_3sstr3d $e |- ( ph -> A = C ) $.
+	e2_3sstr3d $e |- ( ph -> B = D ) $.
+	p_3sstr3d $p |- ( ph -> C C_ D ) $= e0_3sstr3d e1_3sstr3d e2_3sstr3d f0_3sstr3d f1_3sstr3d f3_3sstr3d f2_3sstr3d f4_3sstr3d p_sseq12d f0_3sstr3d f1_3sstr3d f2_3sstr3d a_wss f3_3sstr3d f4_3sstr3d a_wss p_mpbid $.
 $}
-$( Substitution of equality into both sides of a subclass relationship.
+
+$(Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 30-Nov-1995.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	f3sstr4d_0 $f wff ph $.
-	f3sstr4d_1 $f class A $.
-	f3sstr4d_2 $f class B $.
-	f3sstr4d_3 $f class C $.
-	f3sstr4d_4 $f class D $.
-	e3sstr4d_0 $e |- ( ph -> A C_ B ) $.
-	e3sstr4d_1 $e |- ( ph -> C = A ) $.
-	e3sstr4d_2 $e |- ( ph -> D = B ) $.
-	3sstr4d $p |- ( ph -> C C_ D ) $= f3sstr4d_0 f3sstr4d_3 f3sstr4d_4 wss f3sstr4d_1 f3sstr4d_2 wss e3sstr4d_0 f3sstr4d_0 f3sstr4d_3 f3sstr4d_1 f3sstr4d_4 f3sstr4d_2 e3sstr4d_1 e3sstr4d_2 sseq12d mpbird $.
+	$v ph A B C D  $.
+	f0_3sstr4d $f wff ph $.
+	f1_3sstr4d $f class A $.
+	f2_3sstr4d $f class B $.
+	f3_3sstr4d $f class C $.
+	f4_3sstr4d $f class D $.
+	e0_3sstr4d $e |- ( ph -> A C_ B ) $.
+	e1_3sstr4d $e |- ( ph -> C = A ) $.
+	e2_3sstr4d $e |- ( ph -> D = B ) $.
+	p_3sstr4d $p |- ( ph -> C C_ D ) $= e0_3sstr4d e1_3sstr4d e2_3sstr4d f0_3sstr4d f3_3sstr4d f1_3sstr4d f4_3sstr4d f2_3sstr4d p_sseq12d f0_3sstr4d f3_3sstr4d f4_3sstr4d a_wss f1_3sstr4d f2_3sstr4d a_wss p_mpbird $.
 $}
-$( B chained subclass and equality deduction.  (Contributed by NM,
+
+$(B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eqss_0 $f wff ph $.
-	fsyl5eqss_1 $f class A $.
-	fsyl5eqss_2 $f class B $.
-	fsyl5eqss_3 $f class C $.
-	esyl5eqss_0 $e |- A = B $.
-	esyl5eqss_1 $e |- ( ph -> B C_ C ) $.
-	syl5eqss $p |- ( ph -> A C_ C ) $= fsyl5eqss_0 fsyl5eqss_2 fsyl5eqss_3 wss fsyl5eqss_1 fsyl5eqss_3 wss esyl5eqss_1 fsyl5eqss_1 fsyl5eqss_2 fsyl5eqss_3 esyl5eqss_0 sseq1i sylibr $.
+	$v ph A B C  $.
+	f0_syl5eqss $f wff ph $.
+	f1_syl5eqss $f class A $.
+	f2_syl5eqss $f class B $.
+	f3_syl5eqss $f class C $.
+	e0_syl5eqss $e |- A = B $.
+	e1_syl5eqss $e |- ( ph -> B C_ C ) $.
+	p_syl5eqss $p |- ( ph -> A C_ C ) $= e1_syl5eqss e0_syl5eqss f1_syl5eqss f2_syl5eqss f3_syl5eqss p_sseq1i f0_syl5eqss f2_syl5eqss f3_syl5eqss a_wss f1_syl5eqss f3_syl5eqss a_wss p_sylibr $.
 $}
-$( B chained subclass and equality deduction.  (Contributed by NM,
+
+$(B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5eqssr_0 $f wff ph $.
-	fsyl5eqssr_1 $f class A $.
-	fsyl5eqssr_2 $f class B $.
-	fsyl5eqssr_3 $f class C $.
-	esyl5eqssr_0 $e |- B = A $.
-	esyl5eqssr_1 $e |- ( ph -> B C_ C ) $.
-	syl5eqssr $p |- ( ph -> A C_ C ) $= fsyl5eqssr_0 fsyl5eqssr_1 fsyl5eqssr_2 fsyl5eqssr_3 fsyl5eqssr_2 fsyl5eqssr_1 esyl5eqssr_0 eqcomi esyl5eqssr_1 syl5eqss $.
+	$v ph A B C  $.
+	f0_syl5eqssr $f wff ph $.
+	f1_syl5eqssr $f class A $.
+	f2_syl5eqssr $f class B $.
+	f3_syl5eqssr $f class C $.
+	e0_syl5eqssr $e |- B = A $.
+	e1_syl5eqssr $e |- ( ph -> B C_ C ) $.
+	p_syl5eqssr $p |- ( ph -> A C_ C ) $= e0_syl5eqssr f2_syl5eqssr f1_syl5eqssr p_eqcomi e1_syl5eqssr f0_syl5eqssr f1_syl5eqssr f2_syl5eqssr f3_syl5eqssr p_syl5eqss $.
 $}
-$( A chained subclass and equality deduction.  (Contributed by NM,
+
+$(A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6sseq_0 $f wff ph $.
-	fsyl6sseq_1 $f class A $.
-	fsyl6sseq_2 $f class B $.
-	fsyl6sseq_3 $f class C $.
-	esyl6sseq_0 $e |- ( ph -> A C_ B ) $.
-	esyl6sseq_1 $e |- B = C $.
-	syl6sseq $p |- ( ph -> A C_ C ) $= fsyl6sseq_0 fsyl6sseq_1 fsyl6sseq_2 wss fsyl6sseq_1 fsyl6sseq_3 wss esyl6sseq_0 fsyl6sseq_2 fsyl6sseq_3 fsyl6sseq_1 esyl6sseq_1 sseq2i sylib $.
+	$v ph A B C  $.
+	f0_syl6sseq $f wff ph $.
+	f1_syl6sseq $f class A $.
+	f2_syl6sseq $f class B $.
+	f3_syl6sseq $f class C $.
+	e0_syl6sseq $e |- ( ph -> A C_ B ) $.
+	e1_syl6sseq $e |- B = C $.
+	p_syl6sseq $p |- ( ph -> A C_ C ) $= e0_syl6sseq e1_syl6sseq f2_syl6sseq f3_syl6sseq f1_syl6sseq p_sseq2i f0_syl6sseq f1_syl6sseq f2_syl6sseq a_wss f1_syl6sseq f3_syl6sseq a_wss p_sylib $.
 $}
-$( A chained subclass and equality deduction.  (Contributed by NM,
+
+$(A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6sseqr_0 $f wff ph $.
-	fsyl6sseqr_1 $f class A $.
-	fsyl6sseqr_2 $f class B $.
-	fsyl6sseqr_3 $f class C $.
-	esyl6sseqr_0 $e |- ( ph -> A C_ B ) $.
-	esyl6sseqr_1 $e |- C = B $.
-	syl6sseqr $p |- ( ph -> A C_ C ) $= fsyl6sseqr_0 fsyl6sseqr_1 fsyl6sseqr_2 fsyl6sseqr_3 esyl6sseqr_0 fsyl6sseqr_3 fsyl6sseqr_2 esyl6sseqr_1 eqcomi syl6sseq $.
+	$v ph A B C  $.
+	f0_syl6sseqr $f wff ph $.
+	f1_syl6sseqr $f class A $.
+	f2_syl6sseqr $f class B $.
+	f3_syl6sseqr $f class C $.
+	e0_syl6sseqr $e |- ( ph -> A C_ B ) $.
+	e1_syl6sseqr $e |- C = B $.
+	p_syl6sseqr $p |- ( ph -> A C_ C ) $= e0_syl6sseqr e1_syl6sseqr f3_syl6sseqr f2_syl6sseqr p_eqcomi f0_syl6sseqr f1_syl6sseqr f2_syl6sseqr f3_syl6sseqr p_syl6sseq $.
 $}
-$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+
+$(Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5sseq_0 $f wff ph $.
-	fsyl5sseq_1 $f class A $.
-	fsyl5sseq_2 $f class B $.
-	fsyl5sseq_3 $f class C $.
-	esyl5sseq_0 $e |- B C_ A $.
-	esyl5sseq_1 $e |- ( ph -> A = C ) $.
-	syl5sseq $p |- ( ph -> B C_ C ) $= fsyl5sseq_0 fsyl5sseq_1 fsyl5sseq_3 wceq fsyl5sseq_2 fsyl5sseq_1 wss fsyl5sseq_2 fsyl5sseq_3 wss esyl5sseq_1 esyl5sseq_0 fsyl5sseq_1 fsyl5sseq_3 wceq fsyl5sseq_2 fsyl5sseq_1 wss fsyl5sseq_2 fsyl5sseq_3 wss fsyl5sseq_1 fsyl5sseq_3 fsyl5sseq_2 sseq2 biimpa sylancl $.
+	$v ph A B C  $.
+	f0_syl5sseq $f wff ph $.
+	f1_syl5sseq $f class A $.
+	f2_syl5sseq $f class B $.
+	f3_syl5sseq $f class C $.
+	e0_syl5sseq $e |- B C_ A $.
+	e1_syl5sseq $e |- ( ph -> A = C ) $.
+	p_syl5sseq $p |- ( ph -> B C_ C ) $= e1_syl5sseq e0_syl5sseq f1_syl5sseq f3_syl5sseq f2_syl5sseq p_sseq2 f1_syl5sseq f3_syl5sseq a_wceq f2_syl5sseq f1_syl5sseq a_wss f2_syl5sseq f3_syl5sseq a_wss p_biimpa f0_syl5sseq f1_syl5sseq f3_syl5sseq a_wceq f2_syl5sseq f1_syl5sseq a_wss f2_syl5sseq f3_syl5sseq a_wss p_sylancl $.
 $}
-$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+
+$(Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl5sseqr_0 $f wff ph $.
-	fsyl5sseqr_1 $f class A $.
-	fsyl5sseqr_2 $f class B $.
-	fsyl5sseqr_3 $f class C $.
-	esyl5sseqr_0 $e |- B C_ A $.
-	esyl5sseqr_1 $e |- ( ph -> C = A ) $.
-	syl5sseqr $p |- ( ph -> B C_ C ) $= fsyl5sseqr_0 fsyl5sseqr_2 fsyl5sseqr_1 fsyl5sseqr_3 fsyl5sseqr_2 fsyl5sseqr_1 wss fsyl5sseqr_0 esyl5sseqr_0 a1i esyl5sseqr_1 sseqtr4d $.
+	$v ph A B C  $.
+	f0_syl5sseqr $f wff ph $.
+	f1_syl5sseqr $f class A $.
+	f2_syl5sseqr $f class B $.
+	f3_syl5sseqr $f class C $.
+	e0_syl5sseqr $e |- B C_ A $.
+	e1_syl5sseqr $e |- ( ph -> C = A ) $.
+	p_syl5sseqr $p |- ( ph -> B C_ C ) $= e0_syl5sseqr f2_syl5sseqr f1_syl5sseqr a_wss f0_syl5sseqr p_a1i e1_syl5sseqr f0_syl5sseqr f2_syl5sseqr f1_syl5sseqr f3_syl5sseqr p_sseqtr4d $.
 $}
-$( A chained subclass and equality deduction.  (Contributed by Mario
+
+$(A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eqss_0 $f wff ph $.
-	fsyl6eqss_1 $f class A $.
-	fsyl6eqss_2 $f class B $.
-	fsyl6eqss_3 $f class C $.
-	esyl6eqss_0 $e |- ( ph -> A = B ) $.
-	esyl6eqss_1 $e |- B C_ C $.
-	syl6eqss $p |- ( ph -> A C_ C ) $= fsyl6eqss_0 fsyl6eqss_1 fsyl6eqss_2 fsyl6eqss_3 esyl6eqss_0 fsyl6eqss_2 fsyl6eqss_3 wss fsyl6eqss_0 esyl6eqss_1 a1i eqsstrd $.
+	$v ph A B C  $.
+	f0_syl6eqss $f wff ph $.
+	f1_syl6eqss $f class A $.
+	f2_syl6eqss $f class B $.
+	f3_syl6eqss $f class C $.
+	e0_syl6eqss $e |- ( ph -> A = B ) $.
+	e1_syl6eqss $e |- B C_ C $.
+	p_syl6eqss $p |- ( ph -> A C_ C ) $= e0_syl6eqss e1_syl6eqss f2_syl6eqss f3_syl6eqss a_wss f0_syl6eqss p_a1i f0_syl6eqss f1_syl6eqss f2_syl6eqss f3_syl6eqss p_eqsstrd $.
 $}
-$( A chained subclass and equality deduction.  (Contributed by Mario
+
+$(A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsyl6eqssr_0 $f wff ph $.
-	fsyl6eqssr_1 $f class A $.
-	fsyl6eqssr_2 $f class B $.
-	fsyl6eqssr_3 $f class C $.
-	esyl6eqssr_0 $e |- ( ph -> B = A ) $.
-	esyl6eqssr_1 $e |- B C_ C $.
-	syl6eqssr $p |- ( ph -> A C_ C ) $= fsyl6eqssr_0 fsyl6eqssr_1 fsyl6eqssr_2 fsyl6eqssr_3 fsyl6eqssr_0 fsyl6eqssr_2 fsyl6eqssr_1 esyl6eqssr_0 eqcomd esyl6eqssr_1 syl6eqss $.
+	$v ph A B C  $.
+	f0_syl6eqssr $f wff ph $.
+	f1_syl6eqssr $f class A $.
+	f2_syl6eqssr $f class B $.
+	f3_syl6eqssr $f class C $.
+	e0_syl6eqssr $e |- ( ph -> B = A ) $.
+	e1_syl6eqssr $e |- B C_ C $.
+	p_syl6eqssr $p |- ( ph -> A C_ C ) $= e0_syl6eqssr f0_syl6eqssr f2_syl6eqssr f1_syl6eqssr p_eqcomd e1_syl6eqssr f0_syl6eqssr f1_syl6eqssr f2_syl6eqssr f3_syl6eqssr p_syl6eqss $.
 $}
-$( Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
+
+$(Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqimss_0 $f class A $.
-	feqimss_1 $f class B $.
-	eqimss $p |- ( A = B -> A C_ B ) $= feqimss_0 feqimss_1 wceq feqimss_0 feqimss_1 wss feqimss_1 feqimss_0 wss feqimss_0 feqimss_1 eqss simplbi $.
+	$v A B  $.
+	f0_eqimss $f class A $.
+	f1_eqimss $f class B $.
+	p_eqimss $p |- ( A = B -> A C_ B ) $= f0_eqimss f1_eqimss p_eqss f0_eqimss f1_eqimss a_wceq f0_eqimss f1_eqimss a_wss f1_eqimss f0_eqimss a_wss p_simplbi $.
 $}
-$( Equality implies the subclass relation.  (Contributed by NM,
+
+$(Equality implies the subclass relation.  (Contributed by NM,
      23-Nov-2003.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqimss2_0 $f class A $.
-	feqimss2_1 $f class B $.
-	eqimss2 $p |- ( B = A -> A C_ B ) $= feqimss2_0 feqimss2_1 wss feqimss2_0 feqimss2_1 feqimss2_0 feqimss2_1 eqimss eqcoms $.
+	$v A B  $.
+	f0_eqimss2 $f class A $.
+	f1_eqimss2 $f class B $.
+	p_eqimss2 $p |- ( B = A -> A C_ B ) $= f0_eqimss2 f1_eqimss2 p_eqimss f0_eqimss2 f1_eqimss2 a_wss f0_eqimss2 f1_eqimss2 p_eqcoms $.
 $}
-$( Infer subclass relationship from equality.  (Contributed by NM,
+
+$(Infer subclass relationship from equality.  (Contributed by NM,
        6-Jan-2007.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqimssi_0 $f class A $.
-	feqimssi_1 $f class B $.
-	eeqimssi_0 $e |- A = B $.
-	eqimssi $p |- A C_ B $= feqimssi_0 feqimssi_0 feqimssi_1 feqimssi_0 ssid eeqimssi_0 sseqtri $.
+	$v A B  $.
+	f0_eqimssi $f class A $.
+	f1_eqimssi $f class B $.
+	e0_eqimssi $e |- A = B $.
+	p_eqimssi $p |- A C_ B $= f0_eqimssi p_ssid e0_eqimssi f0_eqimssi f0_eqimssi f1_eqimssi p_sseqtri $.
 $}
-$( Infer subclass relationship from equality.  (Contributed by NM,
+
+$(Infer subclass relationship from equality.  (Contributed by NM,
        7-Jan-2007.) $)
+
 ${
-	$v A $.
-	$v B $.
-	feqimss2i_0 $f class A $.
-	feqimss2i_1 $f class B $.
-	eeqimss2i_0 $e |- A = B $.
-	eqimss2i $p |- B C_ A $= feqimss2i_1 feqimss2i_1 feqimss2i_0 feqimss2i_1 ssid eeqimss2i_0 sseqtr4i $.
+	$v A B  $.
+	f0_eqimss2i $f class A $.
+	f1_eqimss2i $f class B $.
+	e0_eqimss2i $e |- A = B $.
+	p_eqimss2i $p |- B C_ A $= f1_eqimss2i p_ssid e0_eqimss2i f1_eqimss2i f1_eqimss2i f0_eqimss2i p_sseqtr4i $.
 $}
-$( Two classes are different if they don't include the same class.
+
+$(Two classes are different if they don't include the same class.
      (Contributed by NM, 23-Apr-2015.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fnssne1_0 $f class A $.
-	fnssne1_1 $f class B $.
-	fnssne1_2 $f class C $.
-	nssne1 $p |- ( ( A C_ B /\ -. A C_ C ) -> B =/= C ) $= fnssne1_0 fnssne1_1 wss fnssne1_0 fnssne1_2 wss wn fnssne1_1 fnssne1_2 wne fnssne1_0 fnssne1_1 wss fnssne1_0 fnssne1_2 wss fnssne1_1 fnssne1_2 fnssne1_1 fnssne1_2 wceq fnssne1_0 fnssne1_1 wss fnssne1_0 fnssne1_2 wss fnssne1_1 fnssne1_2 fnssne1_0 sseq2 biimpcd necon3bd imp $.
+	$v A B C  $.
+	f0_nssne1 $f class A $.
+	f1_nssne1 $f class B $.
+	f2_nssne1 $f class C $.
+	p_nssne1 $p |- ( ( A C_ B /\ -. A C_ C ) -> B =/= C ) $= f1_nssne1 f2_nssne1 f0_nssne1 p_sseq2 f1_nssne1 f2_nssne1 a_wceq f0_nssne1 f1_nssne1 a_wss f0_nssne1 f2_nssne1 a_wss p_biimpcd f0_nssne1 f1_nssne1 a_wss f0_nssne1 f2_nssne1 a_wss f1_nssne1 f2_nssne1 p_necon3bd f0_nssne1 f1_nssne1 a_wss f0_nssne1 f2_nssne1 a_wss a_wn f1_nssne1 f2_nssne1 a_wne p_imp $.
 $}
-$( Two classes are different if they are not subclasses of the same class.
+
+$(Two classes are different if they are not subclasses of the same class.
      (Contributed by NM, 23-Apr-2015.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fnssne2_0 $f class A $.
-	fnssne2_1 $f class B $.
-	fnssne2_2 $f class C $.
-	nssne2 $p |- ( ( A C_ C /\ -. B C_ C ) -> A =/= B ) $= fnssne2_0 fnssne2_2 wss fnssne2_1 fnssne2_2 wss wn fnssne2_0 fnssne2_1 wne fnssne2_0 fnssne2_2 wss fnssne2_1 fnssne2_2 wss fnssne2_0 fnssne2_1 fnssne2_0 fnssne2_1 wceq fnssne2_0 fnssne2_2 wss fnssne2_1 fnssne2_2 wss fnssne2_0 fnssne2_1 fnssne2_2 sseq1 biimpcd necon3bd imp $.
+	$v A B C  $.
+	f0_nssne2 $f class A $.
+	f1_nssne2 $f class B $.
+	f2_nssne2 $f class C $.
+	p_nssne2 $p |- ( ( A C_ C /\ -. B C_ C ) -> A =/= B ) $= f0_nssne2 f1_nssne2 f2_nssne2 p_sseq1 f0_nssne2 f1_nssne2 a_wceq f0_nssne2 f2_nssne2 a_wss f1_nssne2 f2_nssne2 a_wss p_biimpcd f0_nssne2 f2_nssne2 a_wss f1_nssne2 f2_nssne2 a_wss f0_nssne2 f1_nssne2 p_necon3bd f0_nssne2 f2_nssne2 a_wss f1_nssne2 f2_nssne2 a_wss a_wn f0_nssne2 f1_nssne2 a_wne p_imp $.
 $}
-$( Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
+
+$(Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 25-Feb-1996.)  (Proof shortened by Andrew
        Salmon, 21-Jun-2011.) $)
+
 ${
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fnss_0 $f set x $.
-	fnss_1 $f class A $.
-	fnss_2 $f class B $.
-	nss $p |- ( -. A C_ B <-> E. x ( x e. A /\ -. x e. B ) ) $= fnss_0 sup_set_class fnss_1 wcel fnss_0 sup_set_class fnss_2 wcel wn wa fnss_0 wex fnss_1 fnss_2 wss wn fnss_0 sup_set_class fnss_1 wcel fnss_0 sup_set_class fnss_2 wcel wn wa fnss_0 wex fnss_0 sup_set_class fnss_1 wcel fnss_0 sup_set_class fnss_2 wcel wi fnss_0 wal fnss_1 fnss_2 wss fnss_0 sup_set_class fnss_1 wcel fnss_0 sup_set_class fnss_2 wcel fnss_0 exanali fnss_0 fnss_1 fnss_2 dfss2 xchbinxr bicomi $.
+	$v x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_nss $f set x $.
+	f1_nss $f class A $.
+	f2_nss $f class B $.
+	p_nss $p |- ( -. A C_ B <-> E. x ( x e. A /\ -. x e. B ) ) $= f0_nss a_sup_set_class f1_nss a_wcel f0_nss a_sup_set_class f2_nss a_wcel f0_nss p_exanali f0_nss f1_nss f2_nss p_dfss2 f0_nss a_sup_set_class f1_nss a_wcel f0_nss a_sup_set_class f2_nss a_wcel a_wn a_wa f0_nss a_wex f0_nss a_sup_set_class f1_nss a_wcel f0_nss a_sup_set_class f2_nss a_wcel a_wi f0_nss a_wal f1_nss f2_nss a_wss p_xchbinxr f0_nss a_sup_set_class f1_nss a_wcel f0_nss a_sup_set_class f2_nss a_wcel a_wn a_wa f0_nss a_wex f1_nss f2_nss a_wss a_wn p_bicomi $.
 $}
-$( Quantification restricted to a subclass.  (Contributed by NM,
+
+$(Quantification restricted to a subclass.  (Contributed by NM,
        11-Mar-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fssralv_0 $f wff ph $.
-	fssralv_1 $f set x $.
-	fssralv_2 $f class A $.
-	fssralv_3 $f class B $.
-	ssralv $p |- ( A C_ B -> ( A. x e. B ph -> A. x e. A ph ) ) $= fssralv_2 fssralv_3 wss fssralv_0 fssralv_0 fssralv_1 fssralv_3 fssralv_2 fssralv_2 fssralv_3 wss fssralv_1 sup_set_class fssralv_2 wcel fssralv_1 sup_set_class fssralv_3 wcel fssralv_0 fssralv_2 fssralv_3 fssralv_1 sup_set_class ssel imim1d ralimdv2 $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ssralv $f wff ph $.
+	f1_ssralv $f set x $.
+	f2_ssralv $f class A $.
+	f3_ssralv $f class B $.
+	p_ssralv $p |- ( A C_ B -> ( A. x e. B ph -> A. x e. A ph ) ) $= f2_ssralv f3_ssralv f1_ssralv a_sup_set_class p_ssel f2_ssralv f3_ssralv a_wss f1_ssralv a_sup_set_class f2_ssralv a_wcel f1_ssralv a_sup_set_class f3_ssralv a_wcel f0_ssralv p_imim1d f2_ssralv f3_ssralv a_wss f0_ssralv f0_ssralv f1_ssralv f3_ssralv f2_ssralv p_ralimdv2 $.
 $}
-$( Existential quantification restricted to a subclass.  (Contributed by
+
+$(Existential quantification restricted to a subclass.  (Contributed by
        NM, 11-Jan-2007.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fssrexv_0 $f wff ph $.
-	fssrexv_1 $f set x $.
-	fssrexv_2 $f class A $.
-	fssrexv_3 $f class B $.
-	ssrexv $p |- ( A C_ B -> ( E. x e. A ph -> E. x e. B ph ) ) $= fssrexv_2 fssrexv_3 wss fssrexv_0 fssrexv_0 fssrexv_1 fssrexv_2 fssrexv_3 fssrexv_2 fssrexv_3 wss fssrexv_1 sup_set_class fssrexv_2 wcel fssrexv_1 sup_set_class fssrexv_3 wcel fssrexv_0 fssrexv_2 fssrexv_3 fssrexv_1 sup_set_class ssel anim1d reximdv2 $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ssrexv $f wff ph $.
+	f1_ssrexv $f set x $.
+	f2_ssrexv $f class A $.
+	f3_ssrexv $f class B $.
+	p_ssrexv $p |- ( A C_ B -> ( E. x e. A ph -> E. x e. B ph ) ) $= f2_ssrexv f3_ssrexv f1_ssrexv a_sup_set_class p_ssel f2_ssrexv f3_ssrexv a_wss f1_ssrexv a_sup_set_class f2_ssrexv a_wcel f1_ssrexv a_sup_set_class f3_ssrexv a_wcel f0_ssrexv p_anim1d f2_ssrexv f3_ssrexv a_wss f0_ssrexv f0_ssrexv f1_ssrexv f2_ssrexv f3_ssrexv p_reximdv2 $.
 $}
-$( Restricted universal quantification on a subset in terms of superset.
+
+$(Restricted universal quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d A x $.
-	$d B x $.
-	fralss_0 $f wff ph $.
-	fralss_1 $f set x $.
-	fralss_2 $f class A $.
-	fralss_3 $f class B $.
-	ralss $p |- ( A C_ B -> ( A. x e. A ph <-> A. x e. B ( x e. A -> ph ) ) ) $= fralss_2 fralss_3 wss fralss_0 fralss_1 sup_set_class fralss_2 wcel fralss_0 wi fralss_1 fralss_2 fralss_3 fralss_2 fralss_3 wss fralss_1 sup_set_class fralss_2 wcel fralss_0 wi fralss_1 sup_set_class fralss_3 wcel fralss_1 sup_set_class fralss_2 wcel wa fralss_0 wi fralss_1 sup_set_class fralss_3 wcel fralss_1 sup_set_class fralss_2 wcel fralss_0 wi wi fralss_2 fralss_3 wss fralss_1 sup_set_class fralss_2 wcel fralss_1 sup_set_class fralss_3 wcel fralss_1 sup_set_class fralss_2 wcel wa fralss_0 fralss_2 fralss_3 wss fralss_1 sup_set_class fralss_2 wcel fralss_1 sup_set_class fralss_3 wcel fralss_2 fralss_3 fralss_1 sup_set_class ssel pm4.71rd imbi1d fralss_1 sup_set_class fralss_3 wcel fralss_1 sup_set_class fralss_2 wcel fralss_0 impexp syl6bb ralbidv2 $.
+	$v ph x A B  $.
+	$d A x  $.
+	$d B x  $.
+	f0_ralss $f wff ph $.
+	f1_ralss $f set x $.
+	f2_ralss $f class A $.
+	f3_ralss $f class B $.
+	p_ralss $p |- ( A C_ B -> ( A. x e. A ph <-> A. x e. B ( x e. A -> ph ) ) ) $= f2_ralss f3_ralss f1_ralss a_sup_set_class p_ssel f2_ralss f3_ralss a_wss f1_ralss a_sup_set_class f2_ralss a_wcel f1_ralss a_sup_set_class f3_ralss a_wcel p_pm4.71rd f2_ralss f3_ralss a_wss f1_ralss a_sup_set_class f2_ralss a_wcel f1_ralss a_sup_set_class f3_ralss a_wcel f1_ralss a_sup_set_class f2_ralss a_wcel a_wa f0_ralss p_imbi1d f1_ralss a_sup_set_class f3_ralss a_wcel f1_ralss a_sup_set_class f2_ralss a_wcel f0_ralss p_impexp f2_ralss f3_ralss a_wss f1_ralss a_sup_set_class f2_ralss a_wcel f0_ralss a_wi f1_ralss a_sup_set_class f3_ralss a_wcel f1_ralss a_sup_set_class f2_ralss a_wcel a_wa f0_ralss a_wi f1_ralss a_sup_set_class f3_ralss a_wcel f1_ralss a_sup_set_class f2_ralss a_wcel f0_ralss a_wi a_wi p_syl6bb f2_ralss f3_ralss a_wss f0_ralss f1_ralss a_sup_set_class f2_ralss a_wcel f0_ralss a_wi f1_ralss f2_ralss f3_ralss p_ralbidv2 $.
 $}
-$( Restricted existential quantification on a subset in terms of superset.
+
+$(Restricted existential quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d A x $.
-	$d B x $.
-	frexss_0 $f wff ph $.
-	frexss_1 $f set x $.
-	frexss_2 $f class A $.
-	frexss_3 $f class B $.
-	rexss $p |- ( A C_ B -> ( E. x e. A ph <-> E. x e. B ( x e. A /\ ph ) ) ) $= frexss_2 frexss_3 wss frexss_0 frexss_1 sup_set_class frexss_2 wcel frexss_0 wa frexss_1 frexss_2 frexss_3 frexss_2 frexss_3 wss frexss_1 sup_set_class frexss_2 wcel frexss_0 wa frexss_1 sup_set_class frexss_3 wcel frexss_1 sup_set_class frexss_2 wcel wa frexss_0 wa frexss_1 sup_set_class frexss_3 wcel frexss_1 sup_set_class frexss_2 wcel frexss_0 wa wa frexss_2 frexss_3 wss frexss_1 sup_set_class frexss_2 wcel frexss_1 sup_set_class frexss_3 wcel frexss_1 sup_set_class frexss_2 wcel wa frexss_0 frexss_2 frexss_3 wss frexss_1 sup_set_class frexss_2 wcel frexss_1 sup_set_class frexss_3 wcel frexss_2 frexss_3 frexss_1 sup_set_class ssel pm4.71rd anbi1d frexss_1 sup_set_class frexss_3 wcel frexss_1 sup_set_class frexss_2 wcel frexss_0 anass syl6bb rexbidv2 $.
+	$v ph x A B  $.
+	$d A x  $.
+	$d B x  $.
+	f0_rexss $f wff ph $.
+	f1_rexss $f set x $.
+	f2_rexss $f class A $.
+	f3_rexss $f class B $.
+	p_rexss $p |- ( A C_ B -> ( E. x e. A ph <-> E. x e. B ( x e. A /\ ph ) ) ) $= f2_rexss f3_rexss f1_rexss a_sup_set_class p_ssel f2_rexss f3_rexss a_wss f1_rexss a_sup_set_class f2_rexss a_wcel f1_rexss a_sup_set_class f3_rexss a_wcel p_pm4.71rd f2_rexss f3_rexss a_wss f1_rexss a_sup_set_class f2_rexss a_wcel f1_rexss a_sup_set_class f3_rexss a_wcel f1_rexss a_sup_set_class f2_rexss a_wcel a_wa f0_rexss p_anbi1d f1_rexss a_sup_set_class f3_rexss a_wcel f1_rexss a_sup_set_class f2_rexss a_wcel f0_rexss p_anass f2_rexss f3_rexss a_wss f1_rexss a_sup_set_class f2_rexss a_wcel f0_rexss a_wa f1_rexss a_sup_set_class f3_rexss a_wcel f1_rexss a_sup_set_class f2_rexss a_wcel a_wa f0_rexss a_wa f1_rexss a_sup_set_class f3_rexss a_wcel f1_rexss a_sup_set_class f2_rexss a_wcel f0_rexss a_wa a_wa p_syl6bb f2_rexss f3_rexss a_wss f0_rexss f1_rexss a_sup_set_class f2_rexss a_wcel f0_rexss a_wa f1_rexss f2_rexss f3_rexss p_rexbidv2 $.
 $}
-$( Class abstractions in a subclass relationship.  (Contributed by NM,
+
+$(Class abstractions in a subclass relationship.  (Contributed by NM,
        3-Jul-1994.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fss2ab_0 $f wff ph $.
-	fss2ab_1 $f wff ps $.
-	fss2ab_2 $f set x $.
-	ss2ab $p |- ( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) ) $= fss2ab_0 fss2ab_2 cab fss2ab_1 fss2ab_2 cab wss fss2ab_2 sup_set_class fss2ab_0 fss2ab_2 cab wcel fss2ab_2 sup_set_class fss2ab_1 fss2ab_2 cab wcel wi fss2ab_2 wal fss2ab_0 fss2ab_1 wi fss2ab_2 wal fss2ab_2 fss2ab_0 fss2ab_2 cab fss2ab_1 fss2ab_2 cab fss2ab_0 fss2ab_2 nfab1 fss2ab_1 fss2ab_2 nfab1 dfss2f fss2ab_2 sup_set_class fss2ab_0 fss2ab_2 cab wcel fss2ab_2 sup_set_class fss2ab_1 fss2ab_2 cab wcel wi fss2ab_0 fss2ab_1 wi fss2ab_2 fss2ab_2 sup_set_class fss2ab_0 fss2ab_2 cab wcel fss2ab_0 fss2ab_2 sup_set_class fss2ab_1 fss2ab_2 cab wcel fss2ab_1 fss2ab_0 fss2ab_2 abid fss2ab_1 fss2ab_2 abid imbi12i albii bitri $.
+	$v ph ps x  $.
+	$d ph  $.
+	$d ps  $.
+	$d x  $.
+	f0_ss2ab $f wff ph $.
+	f1_ss2ab $f wff ps $.
+	f2_ss2ab $f set x $.
+	p_ss2ab $p |- ( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) ) $= f0_ss2ab f2_ss2ab p_nfab1 f1_ss2ab f2_ss2ab p_nfab1 f2_ss2ab f0_ss2ab f2_ss2ab a_cab f1_ss2ab f2_ss2ab a_cab p_dfss2f f0_ss2ab f2_ss2ab p_abid f1_ss2ab f2_ss2ab p_abid f2_ss2ab a_sup_set_class f0_ss2ab f2_ss2ab a_cab a_wcel f0_ss2ab f2_ss2ab a_sup_set_class f1_ss2ab f2_ss2ab a_cab a_wcel f1_ss2ab p_imbi12i f2_ss2ab a_sup_set_class f0_ss2ab f2_ss2ab a_cab a_wcel f2_ss2ab a_sup_set_class f1_ss2ab f2_ss2ab a_cab a_wcel a_wi f0_ss2ab f1_ss2ab a_wi f2_ss2ab p_albii f0_ss2ab f2_ss2ab a_cab f1_ss2ab f2_ss2ab a_cab a_wss f2_ss2ab a_sup_set_class f0_ss2ab f2_ss2ab a_cab a_wcel f2_ss2ab a_sup_set_class f1_ss2ab f2_ss2ab a_cab a_wcel a_wi f2_ss2ab a_wal f0_ss2ab f1_ss2ab a_wi f2_ss2ab a_wal p_bitri $.
 $}
-$( Class abstraction in a subclass relationship.  (Contributed by NM,
+
+$(Class abstraction in a subclass relationship.  (Contributed by NM,
        16-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fabss_0 $f wff ph $.
-	fabss_1 $f set x $.
-	fabss_2 $f class A $.
-	abss $p |- ( { x | ph } C_ A <-> A. x ( ph -> x e. A ) ) $= fabss_0 fabss_1 cab fabss_2 wss fabss_0 fabss_1 cab fabss_1 sup_set_class fabss_2 wcel fabss_1 cab wss fabss_0 fabss_1 sup_set_class fabss_2 wcel wi fabss_1 wal fabss_1 sup_set_class fabss_2 wcel fabss_1 cab fabss_2 fabss_0 fabss_1 cab fabss_1 fabss_2 abid2 sseq2i fabss_0 fabss_1 sup_set_class fabss_2 wcel fabss_1 ss2ab bitr3i $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_abss $f wff ph $.
+	f1_abss $f set x $.
+	f2_abss $f class A $.
+	p_abss $p |- ( { x | ph } C_ A <-> A. x ( ph -> x e. A ) ) $= f1_abss f2_abss p_abid2 f1_abss a_sup_set_class f2_abss a_wcel f1_abss a_cab f2_abss f0_abss f1_abss a_cab p_sseq2i f0_abss f1_abss a_sup_set_class f2_abss a_wcel f1_abss p_ss2ab f0_abss f1_abss a_cab f2_abss a_wss f0_abss f1_abss a_cab f1_abss a_sup_set_class f2_abss a_wcel f1_abss a_cab a_wss f0_abss f1_abss a_sup_set_class f2_abss a_wcel a_wi f1_abss a_wal p_bitr3i $.
 $}
-$( Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) $)
+
+$(Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fssab_0 $f wff ph $.
-	fssab_1 $f set x $.
-	fssab_2 $f class A $.
-	ssab $p |- ( A C_ { x | ph } <-> A. x ( x e. A -> ph ) ) $= fssab_2 fssab_0 fssab_1 cab wss fssab_1 sup_set_class fssab_2 wcel fssab_1 cab fssab_0 fssab_1 cab wss fssab_1 sup_set_class fssab_2 wcel fssab_0 wi fssab_1 wal fssab_1 sup_set_class fssab_2 wcel fssab_1 cab fssab_2 fssab_0 fssab_1 cab fssab_1 fssab_2 abid2 sseq1i fssab_1 sup_set_class fssab_2 wcel fssab_0 fssab_1 ss2ab bitr3i $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_ssab $f wff ph $.
+	f1_ssab $f set x $.
+	f2_ssab $f class A $.
+	p_ssab $p |- ( A C_ { x | ph } <-> A. x ( x e. A -> ph ) ) $= f1_ssab f2_ssab p_abid2 f1_ssab a_sup_set_class f2_ssab a_wcel f1_ssab a_cab f2_ssab f0_ssab f1_ssab a_cab p_sseq1i f1_ssab a_sup_set_class f2_ssab a_wcel f0_ssab f1_ssab p_ss2ab f2_ssab f0_ssab f1_ssab a_cab a_wss f1_ssab a_sup_set_class f2_ssab a_wcel f1_ssab a_cab f0_ssab f1_ssab a_cab a_wss f1_ssab a_sup_set_class f2_ssab a_wcel f0_ssab a_wi f1_ssab a_wal p_bitr3i $.
 $}
-$( The relation for a subclass of a class abstraction is equivalent to
+
+$(The relation for a subclass of a class abstraction is equivalent to
        restricted quantification.  (Contributed by NM, 6-Sep-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fssabral_0 $f wff ph $.
-	fssabral_1 $f set x $.
-	fssabral_2 $f class A $.
-	ssabral $p |- ( A C_ { x | ph } <-> A. x e. A ph ) $= fssabral_2 fssabral_0 fssabral_1 cab wss fssabral_1 sup_set_class fssabral_2 wcel fssabral_0 wi fssabral_1 wal fssabral_0 fssabral_1 fssabral_2 wral fssabral_0 fssabral_1 fssabral_2 ssab fssabral_0 fssabral_1 fssabral_2 df-ral bitr4i $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_ssabral $f wff ph $.
+	f1_ssabral $f set x $.
+	f2_ssabral $f class A $.
+	p_ssabral $p |- ( A C_ { x | ph } <-> A. x e. A ph ) $= f0_ssabral f1_ssabral f2_ssabral p_ssab f0_ssabral f1_ssabral f2_ssabral a_df-ral f2_ssabral f0_ssabral f1_ssabral a_cab a_wss f1_ssabral a_sup_set_class f2_ssabral a_wcel f0_ssabral a_wi f1_ssabral a_wal f0_ssabral f1_ssabral f2_ssabral a_wral p_bitr4i $.
 $}
-$( Inference of abstraction subclass from implication.  (Contributed by NM,
+
+$(Inference of abstraction subclass from implication.  (Contributed by NM,
        31-Mar-1995.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	fss2abi_0 $f wff ph $.
-	fss2abi_1 $f wff ps $.
-	fss2abi_2 $f set x $.
-	ess2abi_0 $e |- ( ph -> ps ) $.
-	ss2abi $p |- { x | ph } C_ { x | ps } $= fss2abi_0 fss2abi_2 cab fss2abi_1 fss2abi_2 cab wss fss2abi_0 fss2abi_1 wi fss2abi_2 fss2abi_0 fss2abi_1 fss2abi_2 ss2ab ess2abi_0 mpgbir $.
+	$v ph ps x  $.
+	f0_ss2abi $f wff ph $.
+	f1_ss2abi $f wff ps $.
+	f2_ss2abi $f set x $.
+	e0_ss2abi $e |- ( ph -> ps ) $.
+	p_ss2abi $p |- { x | ph } C_ { x | ps } $= f0_ss2abi f1_ss2abi f2_ss2abi p_ss2ab e0_ss2abi f0_ss2abi f2_ss2abi a_cab f1_ss2abi f2_ss2abi a_cab a_wss f0_ss2abi f1_ss2abi a_wi f2_ss2abi p_mpgbir $.
 $}
-$( Deduction of abstraction subclass from implication.  (Contributed by NM,
+
+$(Deduction of abstraction subclass from implication.  (Contributed by NM,
        29-Jul-2011.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$d x ph $.
-	fss2abdv_0 $f wff ph $.
-	fss2abdv_1 $f wff ps $.
-	fss2abdv_2 $f wff ch $.
-	fss2abdv_3 $f set x $.
-	ess2abdv_0 $e |- ( ph -> ( ps -> ch ) ) $.
-	ss2abdv $p |- ( ph -> { x | ps } C_ { x | ch } ) $= fss2abdv_0 fss2abdv_1 fss2abdv_2 wi fss2abdv_3 wal fss2abdv_1 fss2abdv_3 cab fss2abdv_2 fss2abdv_3 cab wss fss2abdv_0 fss2abdv_1 fss2abdv_2 wi fss2abdv_3 ess2abdv_0 alrimiv fss2abdv_1 fss2abdv_2 fss2abdv_3 ss2ab sylibr $.
+	$v ph ps ch x  $.
+	$d x ph  $.
+	f0_ss2abdv $f wff ph $.
+	f1_ss2abdv $f wff ps $.
+	f2_ss2abdv $f wff ch $.
+	f3_ss2abdv $f set x $.
+	e0_ss2abdv $e |- ( ph -> ( ps -> ch ) ) $.
+	p_ss2abdv $p |- ( ph -> { x | ps } C_ { x | ch } ) $= e0_ss2abdv f0_ss2abdv f1_ss2abdv f2_ss2abdv a_wi f3_ss2abdv p_alrimiv f1_ss2abdv f2_ss2abdv f3_ss2abdv p_ss2ab f0_ss2abdv f1_ss2abdv f2_ss2abdv a_wi f3_ss2abdv a_wal f1_ss2abdv f3_ss2abdv a_cab f2_ss2abdv f3_ss2abdv a_cab a_wss p_sylibr $.
 $}
-$( Deduction of abstraction subclass from implication.  (Contributed by NM,
+
+$(Deduction of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$d x ph $.
-	$d x A $.
-	fabssdv_0 $f wff ph $.
-	fabssdv_1 $f wff ps $.
-	fabssdv_2 $f set x $.
-	fabssdv_3 $f class A $.
-	eabssdv_0 $e |- ( ph -> ( ps -> x e. A ) ) $.
-	abssdv $p |- ( ph -> { x | ps } C_ A ) $= fabssdv_0 fabssdv_1 fabssdv_2 sup_set_class fabssdv_3 wcel wi fabssdv_2 wal fabssdv_1 fabssdv_2 cab fabssdv_3 wss fabssdv_0 fabssdv_1 fabssdv_2 sup_set_class fabssdv_3 wcel wi fabssdv_2 eabssdv_0 alrimiv fabssdv_1 fabssdv_2 fabssdv_3 abss sylibr $.
+	$v ph ps x A  $.
+	$d x ph  $.
+	$d x A  $.
+	f0_abssdv $f wff ph $.
+	f1_abssdv $f wff ps $.
+	f2_abssdv $f set x $.
+	f3_abssdv $f class A $.
+	e0_abssdv $e |- ( ph -> ( ps -> x e. A ) ) $.
+	p_abssdv $p |- ( ph -> { x | ps } C_ A ) $= e0_abssdv f0_abssdv f1_abssdv f2_abssdv a_sup_set_class f3_abssdv a_wcel a_wi f2_abssdv p_alrimiv f1_abssdv f2_abssdv f3_abssdv p_abss f0_abssdv f1_abssdv f2_abssdv a_sup_set_class f3_abssdv a_wcel a_wi f2_abssdv a_wal f1_abssdv f2_abssdv a_cab f3_abssdv a_wss p_sylibr $.
 $}
-$( Inference of abstraction subclass from implication.  (Contributed by NM,
+
+$(Inference of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fabssi_0 $f wff ph $.
-	fabssi_1 $f set x $.
-	fabssi_2 $f class A $.
-	eabssi_0 $e |- ( ph -> x e. A ) $.
-	abssi $p |- { x | ph } C_ A $= fabssi_0 fabssi_1 cab fabssi_1 sup_set_class fabssi_2 wcel fabssi_1 cab fabssi_2 fabssi_0 fabssi_1 sup_set_class fabssi_2 wcel fabssi_1 eabssi_0 ss2abi fabssi_1 fabssi_2 abid2 sseqtri $.
+	$v ph x A  $.
+	$d x A  $.
+	f0_abssi $f wff ph $.
+	f1_abssi $f set x $.
+	f2_abssi $f class A $.
+	e0_abssi $e |- ( ph -> x e. A ) $.
+	p_abssi $p |- { x | ph } C_ A $= e0_abssi f0_abssi f1_abssi a_sup_set_class f2_abssi a_wcel f1_abssi p_ss2abi f1_abssi f2_abssi p_abid2 f0_abssi f1_abssi a_cab f1_abssi a_sup_set_class f2_abssi a_wcel f1_abssi a_cab f2_abssi p_sseqtri $.
 $}
-$( Restricted abstraction classes in a subclass relationship.  (Contributed
+
+$(Restricted abstraction classes in a subclass relationship.  (Contributed
      by NM, 30-May-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fss2rab_0 $f wff ph $.
-	fss2rab_1 $f wff ps $.
-	fss2rab_2 $f set x $.
-	fss2rab_3 $f class A $.
-	ss2rab $p |- ( { x e. A | ph } C_ { x e. A | ps } <-> A. x e. A ( ph -> ps ) ) $= fss2rab_0 fss2rab_2 fss2rab_3 crab fss2rab_1 fss2rab_2 fss2rab_3 crab wss fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 cab fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa fss2rab_2 cab wss fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa wi fss2rab_2 wal fss2rab_0 fss2rab_1 wi fss2rab_2 fss2rab_3 wral fss2rab_0 fss2rab_2 fss2rab_3 crab fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 cab fss2rab_1 fss2rab_2 fss2rab_3 crab fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa fss2rab_2 cab fss2rab_0 fss2rab_2 fss2rab_3 df-rab fss2rab_1 fss2rab_2 fss2rab_3 df-rab sseq12i fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa fss2rab_2 ss2ab fss2rab_0 fss2rab_1 wi fss2rab_2 fss2rab_3 wral fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 fss2rab_1 wi wi fss2rab_2 wal fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa wi fss2rab_2 wal fss2rab_0 fss2rab_1 wi fss2rab_2 fss2rab_3 df-ral fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 fss2rab_1 wi wi fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 wa fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_1 wa wi fss2rab_2 fss2rab_2 sup_set_class fss2rab_3 wcel fss2rab_0 fss2rab_1 imdistan albii bitr2i 3bitri $.
+	$v ph ps x A  $.
+	f0_ss2rab $f wff ph $.
+	f1_ss2rab $f wff ps $.
+	f2_ss2rab $f set x $.
+	f3_ss2rab $f class A $.
+	p_ss2rab $p |- ( { x e. A | ph } C_ { x e. A | ps } <-> A. x e. A ( ph -> ps ) ) $= f0_ss2rab f2_ss2rab f3_ss2rab a_df-rab f1_ss2rab f2_ss2rab f3_ss2rab a_df-rab f0_ss2rab f2_ss2rab f3_ss2rab a_crab f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_cab f1_ss2rab f2_ss2rab f3_ss2rab a_crab f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa f2_ss2rab a_cab p_sseq12i f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa f2_ss2rab p_ss2ab f0_ss2rab f1_ss2rab a_wi f2_ss2rab f3_ss2rab a_df-ral f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab f1_ss2rab p_imdistan f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab f1_ss2rab a_wi a_wi f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa a_wi f2_ss2rab p_albii f0_ss2rab f1_ss2rab a_wi f2_ss2rab f3_ss2rab a_wral f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab f1_ss2rab a_wi a_wi f2_ss2rab a_wal f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa a_wi f2_ss2rab a_wal p_bitr2i f0_ss2rab f2_ss2rab f3_ss2rab a_crab f1_ss2rab f2_ss2rab f3_ss2rab a_crab a_wss f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_cab f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa f2_ss2rab a_cab a_wss f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f0_ss2rab a_wa f2_ss2rab a_sup_set_class f3_ss2rab a_wcel f1_ss2rab a_wa a_wi f2_ss2rab a_wal f0_ss2rab f1_ss2rab a_wi f2_ss2rab f3_ss2rab a_wral p_3bitri $.
 $}
-$( Restricted class abstraction in a subclass relationship.  (Contributed
+
+$(Restricted class abstraction in a subclass relationship.  (Contributed
        by NM, 16-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x B $.
-	frabss_0 $f wff ph $.
-	frabss_1 $f set x $.
-	frabss_2 $f class A $.
-	frabss_3 $f class B $.
-	rabss $p |- ( { x e. A | ph } C_ B <-> A. x e. A ( ph -> x e. B ) ) $= frabss_0 frabss_1 frabss_2 crab frabss_3 wss frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 cab frabss_3 wss frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 sup_set_class frabss_3 wcel wi frabss_1 wal frabss_0 frabss_1 sup_set_class frabss_3 wcel wi frabss_1 frabss_2 wral frabss_0 frabss_1 frabss_2 crab frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 cab frabss_3 frabss_0 frabss_1 frabss_2 df-rab sseq1i frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 frabss_3 abss frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 sup_set_class frabss_3 wcel wi frabss_1 wal frabss_1 sup_set_class frabss_2 wcel frabss_0 frabss_1 sup_set_class frabss_3 wcel wi wi frabss_1 wal frabss_0 frabss_1 sup_set_class frabss_3 wcel wi frabss_1 frabss_2 wral frabss_1 sup_set_class frabss_2 wcel frabss_0 wa frabss_1 sup_set_class frabss_3 wcel wi frabss_1 sup_set_class frabss_2 wcel frabss_0 frabss_1 sup_set_class frabss_3 wcel wi wi frabss_1 frabss_1 sup_set_class frabss_2 wcel frabss_0 frabss_1 sup_set_class frabss_3 wcel impexp albii frabss_0 frabss_1 sup_set_class frabss_3 wcel wi frabss_1 frabss_2 df-ral bitr4i 3bitri $.
+	$v ph x A B  $.
+	$d x B  $.
+	f0_rabss $f wff ph $.
+	f1_rabss $f set x $.
+	f2_rabss $f class A $.
+	f3_rabss $f class B $.
+	p_rabss $p |- ( { x e. A | ph } C_ B <-> A. x e. A ( ph -> x e. B ) ) $= f0_rabss f1_rabss f2_rabss a_df-rab f0_rabss f1_rabss f2_rabss a_crab f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss a_cab f3_rabss p_sseq1i f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss f3_rabss p_abss f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel p_impexp f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel a_wi a_wi f1_rabss p_albii f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss f2_rabss a_df-ral f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss a_wal f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel a_wi a_wi f1_rabss a_wal f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss f2_rabss a_wral p_bitr4i f0_rabss f1_rabss f2_rabss a_crab f3_rabss a_wss f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss a_cab f3_rabss a_wss f1_rabss a_sup_set_class f2_rabss a_wcel f0_rabss a_wa f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss a_wal f0_rabss f1_rabss a_sup_set_class f3_rabss a_wcel a_wi f1_rabss f2_rabss a_wral p_3bitri $.
 $}
-$( Subclass of a restricted class abstraction.  (Contributed by NM,
+
+$(Subclass of a restricted class abstraction.  (Contributed by NM,
        16-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	fssrab_0 $f wff ph $.
-	fssrab_1 $f set x $.
-	fssrab_2 $f class A $.
-	fssrab_3 $f class B $.
-	ssrab $p |- ( B C_ { x e. A | ph } <-> ( B C_ A /\ A. x e. B ph ) ) $= fssrab_3 fssrab_0 fssrab_1 fssrab_2 crab wss fssrab_3 fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa fssrab_1 cab wss fssrab_1 sup_set_class fssrab_3 wcel fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa wi fssrab_1 wal fssrab_3 fssrab_2 wss fssrab_0 fssrab_1 fssrab_3 wral wa fssrab_0 fssrab_1 fssrab_2 crab fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa fssrab_1 cab fssrab_3 fssrab_0 fssrab_1 fssrab_2 df-rab sseq2i fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa fssrab_1 fssrab_3 ssab fssrab_3 fssrab_2 wss fssrab_0 fssrab_1 fssrab_3 wral wa fssrab_1 sup_set_class fssrab_2 wcel fssrab_1 fssrab_3 wral fssrab_0 fssrab_1 fssrab_3 wral wa fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa fssrab_1 fssrab_3 wral fssrab_1 sup_set_class fssrab_3 wcel fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa wi fssrab_1 wal fssrab_3 fssrab_2 wss fssrab_1 sup_set_class fssrab_2 wcel fssrab_1 fssrab_3 wral fssrab_0 fssrab_1 fssrab_3 wral fssrab_1 fssrab_3 fssrab_2 dfss3 anbi1i fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 fssrab_1 fssrab_3 r19.26 fssrab_1 sup_set_class fssrab_2 wcel fssrab_0 wa fssrab_1 fssrab_3 df-ral 3bitr2ri 3bitri $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_ssrab $f wff ph $.
+	f1_ssrab $f set x $.
+	f2_ssrab $f class A $.
+	f3_ssrab $f class B $.
+	p_ssrab $p |- ( B C_ { x e. A | ph } <-> ( B C_ A /\ A. x e. B ph ) ) $= f0_ssrab f1_ssrab f2_ssrab a_df-rab f0_ssrab f1_ssrab f2_ssrab a_crab f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa f1_ssrab a_cab f3_ssrab p_sseq2i f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa f1_ssrab f3_ssrab p_ssab f1_ssrab f3_ssrab f2_ssrab p_dfss3 f3_ssrab f2_ssrab a_wss f1_ssrab a_sup_set_class f2_ssrab a_wcel f1_ssrab f3_ssrab a_wral f0_ssrab f1_ssrab f3_ssrab a_wral p_anbi1i f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab f1_ssrab f3_ssrab p_r19.26 f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa f1_ssrab f3_ssrab a_df-ral f3_ssrab f2_ssrab a_wss f0_ssrab f1_ssrab f3_ssrab a_wral a_wa f1_ssrab a_sup_set_class f2_ssrab a_wcel f1_ssrab f3_ssrab a_wral f0_ssrab f1_ssrab f3_ssrab a_wral a_wa f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa f1_ssrab f3_ssrab a_wral f1_ssrab a_sup_set_class f3_ssrab a_wcel f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa a_wi f1_ssrab a_wal p_3bitr2ri f3_ssrab f0_ssrab f1_ssrab f2_ssrab a_crab a_wss f3_ssrab f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa f1_ssrab a_cab a_wss f1_ssrab a_sup_set_class f3_ssrab a_wcel f1_ssrab a_sup_set_class f2_ssrab a_wcel f0_ssrab a_wa a_wi f1_ssrab a_wal f3_ssrab f2_ssrab a_wss f0_ssrab f1_ssrab f3_ssrab a_wral a_wa p_3bitri $.
 $}
-$( Subclass of a restricted class abstraction (deduction rule).
+
+$(Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 31-Aug-2006.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	$d x ph $.
-	fssrabdv_0 $f wff ph $.
-	fssrabdv_1 $f wff ps $.
-	fssrabdv_2 $f set x $.
-	fssrabdv_3 $f class A $.
-	fssrabdv_4 $f class B $.
-	essrabdv_0 $e |- ( ph -> B C_ A ) $.
-	essrabdv_1 $e |- ( ( ph /\ x e. B ) -> ps ) $.
-	ssrabdv $p |- ( ph -> B C_ { x e. A | ps } ) $= fssrabdv_0 fssrabdv_4 fssrabdv_3 wss fssrabdv_1 fssrabdv_2 fssrabdv_4 wral fssrabdv_4 fssrabdv_1 fssrabdv_2 fssrabdv_3 crab wss essrabdv_0 fssrabdv_0 fssrabdv_1 fssrabdv_2 fssrabdv_4 essrabdv_1 ralrimiva fssrabdv_1 fssrabdv_2 fssrabdv_3 fssrabdv_4 ssrab sylanbrc $.
+	$v ph ps x A B  $.
+	$d x A  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_ssrabdv $f wff ph $.
+	f1_ssrabdv $f wff ps $.
+	f2_ssrabdv $f set x $.
+	f3_ssrabdv $f class A $.
+	f4_ssrabdv $f class B $.
+	e0_ssrabdv $e |- ( ph -> B C_ A ) $.
+	e1_ssrabdv $e |- ( ( ph /\ x e. B ) -> ps ) $.
+	p_ssrabdv $p |- ( ph -> B C_ { x e. A | ps } ) $= e0_ssrabdv e1_ssrabdv f0_ssrabdv f1_ssrabdv f2_ssrabdv f4_ssrabdv p_ralrimiva f1_ssrabdv f2_ssrabdv f3_ssrabdv f4_ssrabdv p_ssrab f0_ssrabdv f4_ssrabdv f3_ssrabdv a_wss f1_ssrabdv f2_ssrabdv f4_ssrabdv a_wral f4_ssrabdv f1_ssrabdv f2_ssrabdv f3_ssrabdv a_crab a_wss p_sylanbrc $.
 $}
-$( Subclass of a restricted class abstraction (deduction rule).
+
+$(Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 2-Feb-2015.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x B $.
-	$d x ph $.
-	frabssdv_0 $f wff ph $.
-	frabssdv_1 $f wff ps $.
-	frabssdv_2 $f set x $.
-	frabssdv_3 $f class A $.
-	frabssdv_4 $f class B $.
-	erabssdv_0 $e |- ( ( ph /\ x e. A /\ ps ) -> x e. B ) $.
-	rabssdv $p |- ( ph -> { x e. A | ps } C_ B ) $= frabssdv_0 frabssdv_1 frabssdv_2 sup_set_class frabssdv_4 wcel wi frabssdv_2 frabssdv_3 wral frabssdv_1 frabssdv_2 frabssdv_3 crab frabssdv_4 wss frabssdv_0 frabssdv_1 frabssdv_2 sup_set_class frabssdv_4 wcel wi frabssdv_2 frabssdv_3 frabssdv_0 frabssdv_2 sup_set_class frabssdv_3 wcel frabssdv_1 frabssdv_2 sup_set_class frabssdv_4 wcel erabssdv_0 3exp ralrimiv frabssdv_1 frabssdv_2 frabssdv_3 frabssdv_4 rabss sylibr $.
+	$v ph ps x A B  $.
+	$d x B  $.
+	$d x ph  $.
+	f0_rabssdv $f wff ph $.
+	f1_rabssdv $f wff ps $.
+	f2_rabssdv $f set x $.
+	f3_rabssdv $f class A $.
+	f4_rabssdv $f class B $.
+	e0_rabssdv $e |- ( ( ph /\ x e. A /\ ps ) -> x e. B ) $.
+	p_rabssdv $p |- ( ph -> { x e. A | ps } C_ B ) $= e0_rabssdv f0_rabssdv f2_rabssdv a_sup_set_class f3_rabssdv a_wcel f1_rabssdv f2_rabssdv a_sup_set_class f4_rabssdv a_wcel p_3exp f0_rabssdv f1_rabssdv f2_rabssdv a_sup_set_class f4_rabssdv a_wcel a_wi f2_rabssdv f3_rabssdv p_ralrimiv f1_rabssdv f2_rabssdv f3_rabssdv f4_rabssdv p_rabss f0_rabssdv f1_rabssdv f2_rabssdv a_sup_set_class f4_rabssdv a_wcel a_wi f2_rabssdv f3_rabssdv a_wral f1_rabssdv f2_rabssdv f3_rabssdv a_crab f4_rabssdv a_wss p_sylibr $.
 $}
-$( Deduction of restricted abstraction subclass from implication.
+
+$(Deduction of restricted abstraction subclass from implication.
        (Contributed by NM, 30-May-2006.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v ch $.
-	$v x $.
-	$v A $.
-	$d x ph $.
-	fss2rabdv_0 $f wff ph $.
-	fss2rabdv_1 $f wff ps $.
-	fss2rabdv_2 $f wff ch $.
-	fss2rabdv_3 $f set x $.
-	fss2rabdv_4 $f class A $.
-	ess2rabdv_0 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
-	ss2rabdv $p |- ( ph -> { x e. A | ps } C_ { x e. A | ch } ) $= fss2rabdv_0 fss2rabdv_1 fss2rabdv_2 wi fss2rabdv_3 fss2rabdv_4 wral fss2rabdv_1 fss2rabdv_3 fss2rabdv_4 crab fss2rabdv_2 fss2rabdv_3 fss2rabdv_4 crab wss fss2rabdv_0 fss2rabdv_1 fss2rabdv_2 wi fss2rabdv_3 fss2rabdv_4 ess2rabdv_0 ralrimiva fss2rabdv_1 fss2rabdv_2 fss2rabdv_3 fss2rabdv_4 ss2rab sylibr $.
+	$v ph ps ch x A  $.
+	$d x ph  $.
+	f0_ss2rabdv $f wff ph $.
+	f1_ss2rabdv $f wff ps $.
+	f2_ss2rabdv $f wff ch $.
+	f3_ss2rabdv $f set x $.
+	f4_ss2rabdv $f class A $.
+	e0_ss2rabdv $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	p_ss2rabdv $p |- ( ph -> { x e. A | ps } C_ { x e. A | ch } ) $= e0_ss2rabdv f0_ss2rabdv f1_ss2rabdv f2_ss2rabdv a_wi f3_ss2rabdv f4_ss2rabdv p_ralrimiva f1_ss2rabdv f2_ss2rabdv f3_ss2rabdv f4_ss2rabdv p_ss2rab f0_ss2rabdv f1_ss2rabdv f2_ss2rabdv a_wi f3_ss2rabdv f4_ss2rabdv a_wral f1_ss2rabdv f3_ss2rabdv f4_ss2rabdv a_crab f2_ss2rabdv f3_ss2rabdv f4_ss2rabdv a_crab a_wss p_sylibr $.
 $}
-$( Inference of restricted abstraction subclass from implication.
+
+$(Inference of restricted abstraction subclass from implication.
        (Contributed by NM, 14-Oct-1999.) $)
+
 ${
-	$v ph $.
-	$v ps $.
-	$v x $.
-	$v A $.
-	fss2rabi_0 $f wff ph $.
-	fss2rabi_1 $f wff ps $.
-	fss2rabi_2 $f set x $.
-	fss2rabi_3 $f class A $.
-	ess2rabi_0 $e |- ( x e. A -> ( ph -> ps ) ) $.
-	ss2rabi $p |- { x e. A | ph } C_ { x e. A | ps } $= fss2rabi_0 fss2rabi_2 fss2rabi_3 crab fss2rabi_1 fss2rabi_2 fss2rabi_3 crab wss fss2rabi_0 fss2rabi_1 wi fss2rabi_2 fss2rabi_3 fss2rabi_0 fss2rabi_1 fss2rabi_2 fss2rabi_3 ss2rab ess2rabi_0 mprgbir $.
+	$v ph ps x A  $.
+	f0_ss2rabi $f wff ph $.
+	f1_ss2rabi $f wff ps $.
+	f2_ss2rabi $f set x $.
+	f3_ss2rabi $f class A $.
+	e0_ss2rabi $e |- ( x e. A -> ( ph -> ps ) ) $.
+	p_ss2rabi $p |- { x e. A | ph } C_ { x e. A | ps } $= f0_ss2rabi f1_ss2rabi f2_ss2rabi f3_ss2rabi p_ss2rab e0_ss2rabi f0_ss2rabi f2_ss2rabi f3_ss2rabi a_crab f1_ss2rabi f2_ss2rabi f3_ss2rabi a_crab a_wss f0_ss2rabi f1_ss2rabi a_wi f2_ss2rabi f3_ss2rabi p_mprgbir $.
 $}
-$( Subclass law for restricted abstraction.  (Contributed by NM,
+
+$(Subclass law for restricted abstraction.  (Contributed by NM,
        18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$d x A $.
-	$d x B $.
-	frabss2_0 $f wff ph $.
-	frabss2_1 $f set x $.
-	frabss2_2 $f class A $.
-	frabss2_3 $f class B $.
-	rabss2 $p |- ( A C_ B -> { x e. A | ph } C_ { x e. B | ph } ) $= frabss2_2 frabss2_3 wss frabss2_1 sup_set_class frabss2_2 wcel frabss2_0 wa frabss2_1 cab frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 wa frabss2_1 cab frabss2_0 frabss2_1 frabss2_2 crab frabss2_0 frabss2_1 frabss2_3 crab frabss2_1 sup_set_class frabss2_2 wcel frabss2_1 sup_set_class frabss2_3 wcel wi frabss2_1 wal frabss2_1 sup_set_class frabss2_2 wcel frabss2_0 wa frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 wa wi frabss2_1 wal frabss2_2 frabss2_3 wss frabss2_1 sup_set_class frabss2_2 wcel frabss2_0 wa frabss2_1 cab frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 wa frabss2_1 cab wss frabss2_1 sup_set_class frabss2_2 wcel frabss2_1 sup_set_class frabss2_3 wcel wi frabss2_1 sup_set_class frabss2_2 wcel frabss2_0 wa frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 wa wi frabss2_1 frabss2_1 sup_set_class frabss2_2 wcel frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 pm3.45 alimi frabss2_1 frabss2_2 frabss2_3 dfss2 frabss2_1 sup_set_class frabss2_2 wcel frabss2_0 wa frabss2_1 sup_set_class frabss2_3 wcel frabss2_0 wa frabss2_1 ss2ab 3imtr4i frabss2_0 frabss2_1 frabss2_2 df-rab frabss2_0 frabss2_1 frabss2_3 df-rab 3sstr4g $.
+	$v ph x A B  $.
+	$d x A  $.
+	$d x B  $.
+	f0_rabss2 $f wff ph $.
+	f1_rabss2 $f set x $.
+	f2_rabss2 $f class A $.
+	f3_rabss2 $f class B $.
+	p_rabss2 $p |- ( A C_ B -> { x e. A | ph } C_ { x e. B | ph } ) $= f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 p_pm3.45 f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f1_rabss2 a_sup_set_class f3_rabss2 a_wcel a_wi f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 a_wa a_wi f1_rabss2 p_alimi f1_rabss2 f2_rabss2 f3_rabss2 p_dfss2 f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 p_ss2ab f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f1_rabss2 a_sup_set_class f3_rabss2 a_wcel a_wi f1_rabss2 a_wal f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 a_wa a_wi f1_rabss2 a_wal f2_rabss2 f3_rabss2 a_wss f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_cab f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_cab a_wss p_3imtr4i f0_rabss2 f1_rabss2 f2_rabss2 a_df-rab f0_rabss2 f1_rabss2 f3_rabss2 a_df-rab f2_rabss2 f3_rabss2 a_wss f1_rabss2 a_sup_set_class f2_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_cab f1_rabss2 a_sup_set_class f3_rabss2 a_wcel f0_rabss2 a_wa f1_rabss2 a_cab f0_rabss2 f1_rabss2 f2_rabss2 a_crab f0_rabss2 f1_rabss2 f3_rabss2 a_crab p_3sstr4g $.
 $}
-$( Subclass relation for the restriction of a class abstraction.
+
+$(Subclass relation for the restriction of a class abstraction.
        (Contributed by NM, 31-Mar-1995.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fssab2_0 $f wff ph $.
-	fssab2_1 $f set x $.
-	fssab2_2 $f class A $.
-	ssab2 $p |- { x | ( x e. A /\ ph ) } C_ A $= fssab2_1 sup_set_class fssab2_2 wcel fssab2_0 wa fssab2_1 fssab2_2 fssab2_1 sup_set_class fssab2_2 wcel fssab2_0 simpl abssi $.
+	$v ph x A  $.
+	$d x A  $.
+	$d x  $.
+	f0_ssab2 $f wff ph $.
+	f1_ssab2 $f set x $.
+	f2_ssab2 $f class A $.
+	p_ssab2 $p |- { x | ( x e. A /\ ph ) } C_ A $= f1_ssab2 a_sup_set_class f2_ssab2 a_wcel f0_ssab2 p_simpl f1_ssab2 a_sup_set_class f2_ssab2 a_wcel f0_ssab2 a_wa f1_ssab2 f2_ssab2 p_abssi $.
 $}
-$( Subclass relation for a restricted class.  (Contributed by NM,
+
+$(Subclass relation for a restricted class.  (Contributed by NM,
        19-Mar-1997.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$d x A $.
-	fssrab2_0 $f wff ph $.
-	fssrab2_1 $f set x $.
-	fssrab2_2 $f class A $.
-	ssrab2 $p |- { x e. A | ph } C_ A $= fssrab2_0 fssrab2_1 fssrab2_2 crab fssrab2_1 sup_set_class fssrab2_2 wcel fssrab2_0 wa fssrab2_1 cab fssrab2_2 fssrab2_0 fssrab2_1 fssrab2_2 df-rab fssrab2_0 fssrab2_1 fssrab2_2 ssab2 eqsstri $.
+	$v ph x A  $.
+	$d x A  $.
+	$d x  $.
+	f0_ssrab2 $f wff ph $.
+	f1_ssrab2 $f set x $.
+	f2_ssrab2 $f class A $.
+	p_ssrab2 $p |- { x e. A | ph } C_ A $= f0_ssrab2 f1_ssrab2 f2_ssrab2 a_df-rab f0_ssrab2 f1_ssrab2 f2_ssrab2 p_ssab2 f0_ssrab2 f1_ssrab2 f2_ssrab2 a_crab f1_ssrab2 a_sup_set_class f2_ssrab2 a_wcel f0_ssrab2 a_wa f1_ssrab2 a_cab f2_ssrab2 p_eqsstri $.
 $}
-$( A restricted class is a subclass of the corresponding unrestricted class.
+
+$(A restricted class is a subclass of the corresponding unrestricted class.
      (Contributed by Mario Carneiro, 23-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	frabssab_0 $f wff ph $.
-	frabssab_1 $f set x $.
-	frabssab_2 $f class A $.
-	rabssab $p |- { x e. A | ph } C_ { x | ph } $= frabssab_0 frabssab_1 frabssab_2 crab frabssab_1 sup_set_class frabssab_2 wcel frabssab_0 wa frabssab_1 cab frabssab_0 frabssab_1 cab frabssab_0 frabssab_1 frabssab_2 df-rab frabssab_1 sup_set_class frabssab_2 wcel frabssab_0 wa frabssab_0 frabssab_1 frabssab_1 sup_set_class frabssab_2 wcel frabssab_0 simpr ss2abi eqsstri $.
+	$v ph x A  $.
+	f0_rabssab $f wff ph $.
+	f1_rabssab $f set x $.
+	f2_rabssab $f class A $.
+	p_rabssab $p |- { x e. A | ph } C_ { x | ph } $= f0_rabssab f1_rabssab f2_rabssab a_df-rab f1_rabssab a_sup_set_class f2_rabssab a_wcel f0_rabssab p_simpr f1_rabssab a_sup_set_class f2_rabssab a_wcel f0_rabssab a_wa f0_rabssab f1_rabssab p_ss2abi f0_rabssab f1_rabssab f2_rabssab a_crab f1_rabssab a_sup_set_class f2_rabssab a_wcel f0_rabssab a_wa f1_rabssab a_cab f0_rabssab f1_rabssab a_cab p_eqsstri $.
 $}
-$( A subset relationship useful for converting union to indexed union using
+
+$(A subset relationship useful for converting union to indexed union using
        ~ dfiun2 or ~ dfiun2g and intersection to indexed intersection using
        ~ dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
        Carneiro, 26-Sep-2015.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v z $.
-	$d x y $.
-	$d y z A $.
-	$d y z B $.
-	$d x z C $.
-	iuniiunlem_0 $f set z $.
-	funiiunlem_0 $f set x $.
-	funiiunlem_1 $f set y $.
-	funiiunlem_2 $f class A $.
-	funiiunlem_3 $f class B $.
-	funiiunlem_4 $f class C $.
-	funiiunlem_5 $f class D $.
-	uniiunlem $p |- ( A. x e. A B e. D -> ( A. x e. A B e. C <-> { y | E. x e. A y = B } C_ C ) ) $= funiiunlem_1 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex funiiunlem_1 cab funiiunlem_4 wss iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_0 funiiunlem_2 wral funiiunlem_3 funiiunlem_5 wcel funiiunlem_0 funiiunlem_2 wral funiiunlem_3 funiiunlem_4 wcel funiiunlem_0 funiiunlem_2 wral funiiunlem_1 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex funiiunlem_1 cab funiiunlem_4 wss iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 cab funiiunlem_4 wss iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_0 funiiunlem_2 wral funiiunlem_1 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex funiiunlem_1 cab iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 cab funiiunlem_4 funiiunlem_1 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex funiiunlem_1 iuniiunlem_0 funiiunlem_1 sup_set_class iuniiunlem_0 sup_set_class wceq funiiunlem_1 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 funiiunlem_1 sup_set_class iuniiunlem_0 sup_set_class funiiunlem_3 eqeq1 rexbidv cbvabv sseq1i iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi funiiunlem_0 funiiunlem_2 wral iuniiunlem_0 wal iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_0 funiiunlem_2 wral iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 cab funiiunlem_4 wss iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi funiiunlem_0 funiiunlem_2 wral iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel funiiunlem_0 funiiunlem_2 r19.23v albii iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi funiiunlem_0 iuniiunlem_0 funiiunlem_2 ralcom4 iuniiunlem_0 sup_set_class funiiunlem_3 wceq funiiunlem_0 funiiunlem_2 wrex iuniiunlem_0 funiiunlem_4 abss 3bitr4i bitr4i funiiunlem_3 funiiunlem_5 wcel funiiunlem_0 funiiunlem_2 wral iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_3 funiiunlem_4 wcel wb funiiunlem_0 funiiunlem_2 wral iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_0 funiiunlem_2 wral funiiunlem_3 funiiunlem_4 wcel funiiunlem_0 funiiunlem_2 wral wb funiiunlem_3 funiiunlem_5 wcel iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_3 funiiunlem_4 wcel wb funiiunlem_0 funiiunlem_2 iuniiunlem_0 sup_set_class funiiunlem_4 wcel funiiunlem_3 funiiunlem_4 wcel iuniiunlem_0 funiiunlem_3 funiiunlem_5 funiiunlem_3 funiiunlem_4 wcel iuniiunlem_0 nfv iuniiunlem_0 sup_set_class funiiunlem_3 funiiunlem_4 eleq1 ceqsalg ralimi iuniiunlem_0 sup_set_class funiiunlem_3 wceq iuniiunlem_0 sup_set_class funiiunlem_4 wcel wi iuniiunlem_0 wal funiiunlem_3 funiiunlem_4 wcel funiiunlem_0 funiiunlem_2 ralbi syl syl5rbb $.
+	$v x y A B C D  $.
+	$d x y  $.
+	$d y z A  $.
+	$d y z B  $.
+	$d x z C  $.
+	f0_uniiunlem $f set x $.
+	f1_uniiunlem $f set y $.
+	f2_uniiunlem $f class A $.
+	f3_uniiunlem $f class B $.
+	f4_uniiunlem $f class C $.
+	f5_uniiunlem $f class D $.
+	i0_uniiunlem $f set z $.
+	p_uniiunlem $p |- ( A. x e. A B e. D -> ( A. x e. A B e. C <-> { y | E. x e. A y = B } C_ C ) ) $= f1_uniiunlem a_sup_set_class i0_uniiunlem a_sup_set_class f3_uniiunlem p_eqeq1 f1_uniiunlem a_sup_set_class i0_uniiunlem a_sup_set_class a_wceq f1_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem p_rexbidv f1_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex f1_uniiunlem i0_uniiunlem p_cbvabv f1_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex f1_uniiunlem a_cab i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_cab f4_uniiunlem p_sseq1i i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem p_r19.23v i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi f0_uniiunlem f2_uniiunlem a_wral i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem p_albii i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi f0_uniiunlem i0_uniiunlem f2_uniiunlem p_ralcom4 i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem f4_uniiunlem p_abss i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi f0_uniiunlem f2_uniiunlem a_wral i0_uniiunlem a_wal i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f0_uniiunlem f2_uniiunlem a_wral i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_cab f4_uniiunlem a_wss p_3bitr4i f1_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex f1_uniiunlem a_cab f4_uniiunlem a_wss i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex i0_uniiunlem a_cab f4_uniiunlem a_wss i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f0_uniiunlem f2_uniiunlem a_wral p_bitr4i f3_uniiunlem f4_uniiunlem a_wcel i0_uniiunlem p_nfv i0_uniiunlem a_sup_set_class f3_uniiunlem f4_uniiunlem p_eleq1 i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel f3_uniiunlem f4_uniiunlem a_wcel i0_uniiunlem f3_uniiunlem f5_uniiunlem p_ceqsalg f3_uniiunlem f5_uniiunlem a_wcel i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f3_uniiunlem f4_uniiunlem a_wcel a_wb f0_uniiunlem f2_uniiunlem p_ralimi i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f3_uniiunlem f4_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem p_ralbi f3_uniiunlem f5_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem a_wral i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f3_uniiunlem f4_uniiunlem a_wcel a_wb f0_uniiunlem f2_uniiunlem a_wral i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f0_uniiunlem f2_uniiunlem a_wral f3_uniiunlem f4_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem a_wral a_wb p_syl f1_uniiunlem a_sup_set_class f3_uniiunlem a_wceq f0_uniiunlem f2_uniiunlem a_wrex f1_uniiunlem a_cab f4_uniiunlem a_wss i0_uniiunlem a_sup_set_class f3_uniiunlem a_wceq i0_uniiunlem a_sup_set_class f4_uniiunlem a_wcel a_wi i0_uniiunlem a_wal f0_uniiunlem f2_uniiunlem a_wral f3_uniiunlem f5_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem a_wral f3_uniiunlem f4_uniiunlem a_wcel f0_uniiunlem f2_uniiunlem a_wral p_syl5rbb $.
 $}
-$( Alternate definition of proper subclass.  (Contributed by NM,
+
+$(Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fdfpss2_0 $f class A $.
-	fdfpss2_1 $f class B $.
-	dfpss2 $p |- ( A C. B <-> ( A C_ B /\ -. A = B ) ) $= fdfpss2_0 fdfpss2_1 wpss fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 wne wa fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 wceq wn wa fdfpss2_0 fdfpss2_1 df-pss fdfpss2_0 fdfpss2_1 wne fdfpss2_0 fdfpss2_1 wceq wn fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 df-ne anbi2i bitri $.
+	$v A B  $.
+	f0_dfpss2 $f class A $.
+	f1_dfpss2 $f class B $.
+	p_dfpss2 $p |- ( A C. B <-> ( A C_ B /\ -. A = B ) ) $= f0_dfpss2 f1_dfpss2 a_df-pss f0_dfpss2 f1_dfpss2 a_df-ne f0_dfpss2 f1_dfpss2 a_wne f0_dfpss2 f1_dfpss2 a_wceq a_wn f0_dfpss2 f1_dfpss2 a_wss p_anbi2i f0_dfpss2 f1_dfpss2 a_wpss f0_dfpss2 f1_dfpss2 a_wss f0_dfpss2 f1_dfpss2 a_wne a_wa f0_dfpss2 f1_dfpss2 a_wss f0_dfpss2 f1_dfpss2 a_wceq a_wn a_wa p_bitri $.
 $}
-$( Alternate definition of proper subclass.  (Contributed by NM,
+
+$(Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fdfpss3_0 $f class A $.
-	fdfpss3_1 $f class B $.
-	dfpss3 $p |- ( A C. B <-> ( A C_ B /\ -. B C_ A ) ) $= fdfpss3_0 fdfpss3_1 wpss fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq wn wa fdfpss3_0 fdfpss3_1 wss fdfpss3_1 fdfpss3_0 wss wn wa fdfpss3_0 fdfpss3_1 dfpss2 fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq wn fdfpss3_1 fdfpss3_0 wss wn fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq fdfpss3_1 fdfpss3_0 wss fdfpss3_0 fdfpss3_1 wceq fdfpss3_0 fdfpss3_1 wss fdfpss3_1 fdfpss3_0 wss fdfpss3_0 fdfpss3_1 eqss baib notbid pm5.32i bitri $.
+	$v A B  $.
+	f0_dfpss3 $f class A $.
+	f1_dfpss3 $f class B $.
+	p_dfpss3 $p |- ( A C. B <-> ( A C_ B /\ -. B C_ A ) ) $= f0_dfpss3 f1_dfpss3 p_dfpss2 f0_dfpss3 f1_dfpss3 p_eqss f0_dfpss3 f1_dfpss3 a_wceq f0_dfpss3 f1_dfpss3 a_wss f1_dfpss3 f0_dfpss3 a_wss p_baib f0_dfpss3 f1_dfpss3 a_wss f0_dfpss3 f1_dfpss3 a_wceq f1_dfpss3 f0_dfpss3 a_wss p_notbid f0_dfpss3 f1_dfpss3 a_wss f0_dfpss3 f1_dfpss3 a_wceq a_wn f1_dfpss3 f0_dfpss3 a_wss a_wn p_pm5.32i f0_dfpss3 f1_dfpss3 a_wpss f0_dfpss3 f1_dfpss3 a_wss f0_dfpss3 f1_dfpss3 a_wceq a_wn a_wa f0_dfpss3 f1_dfpss3 a_wss f1_dfpss3 f0_dfpss3 a_wss a_wn a_wa p_bitri $.
 $}
-$( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+
+$(Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq1_0 $f class A $.
-	fpsseq1_1 $f class B $.
-	fpsseq1_2 $f class C $.
-	psseq1 $p |- ( A = B -> ( A C. C <-> B C. C ) ) $= fpsseq1_0 fpsseq1_1 wceq fpsseq1_0 fpsseq1_2 wss fpsseq1_0 fpsseq1_2 wne wa fpsseq1_1 fpsseq1_2 wss fpsseq1_1 fpsseq1_2 wne wa fpsseq1_0 fpsseq1_2 wpss fpsseq1_1 fpsseq1_2 wpss fpsseq1_0 fpsseq1_1 wceq fpsseq1_0 fpsseq1_2 wss fpsseq1_1 fpsseq1_2 wss fpsseq1_0 fpsseq1_2 wne fpsseq1_1 fpsseq1_2 wne fpsseq1_0 fpsseq1_1 fpsseq1_2 sseq1 fpsseq1_0 fpsseq1_1 fpsseq1_2 neeq1 anbi12d fpsseq1_0 fpsseq1_2 df-pss fpsseq1_1 fpsseq1_2 df-pss 3bitr4g $.
+	$v A B C  $.
+	f0_psseq1 $f class A $.
+	f1_psseq1 $f class B $.
+	f2_psseq1 $f class C $.
+	p_psseq1 $p |- ( A = B -> ( A C. C <-> B C. C ) ) $= f0_psseq1 f1_psseq1 f2_psseq1 p_sseq1 f0_psseq1 f1_psseq1 f2_psseq1 p_neeq1 f0_psseq1 f1_psseq1 a_wceq f0_psseq1 f2_psseq1 a_wss f1_psseq1 f2_psseq1 a_wss f0_psseq1 f2_psseq1 a_wne f1_psseq1 f2_psseq1 a_wne p_anbi12d f0_psseq1 f2_psseq1 a_df-pss f1_psseq1 f2_psseq1 a_df-pss f0_psseq1 f1_psseq1 a_wceq f0_psseq1 f2_psseq1 a_wss f0_psseq1 f2_psseq1 a_wne a_wa f1_psseq1 f2_psseq1 a_wss f1_psseq1 f2_psseq1 a_wne a_wa f0_psseq1 f2_psseq1 a_wpss f1_psseq1 f2_psseq1 a_wpss p_3bitr4g $.
 $}
-$( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+
+$(Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq2_0 $f class A $.
-	fpsseq2_1 $f class B $.
-	fpsseq2_2 $f class C $.
-	psseq2 $p |- ( A = B -> ( C C. A <-> C C. B ) ) $= fpsseq2_0 fpsseq2_1 wceq fpsseq2_2 fpsseq2_0 wss fpsseq2_2 fpsseq2_0 wne wa fpsseq2_2 fpsseq2_1 wss fpsseq2_2 fpsseq2_1 wne wa fpsseq2_2 fpsseq2_0 wpss fpsseq2_2 fpsseq2_1 wpss fpsseq2_0 fpsseq2_1 wceq fpsseq2_2 fpsseq2_0 wss fpsseq2_2 fpsseq2_1 wss fpsseq2_2 fpsseq2_0 wne fpsseq2_2 fpsseq2_1 wne fpsseq2_0 fpsseq2_1 fpsseq2_2 sseq2 fpsseq2_0 fpsseq2_1 fpsseq2_2 neeq2 anbi12d fpsseq2_2 fpsseq2_0 df-pss fpsseq2_2 fpsseq2_1 df-pss 3bitr4g $.
+	$v A B C  $.
+	f0_psseq2 $f class A $.
+	f1_psseq2 $f class B $.
+	f2_psseq2 $f class C $.
+	p_psseq2 $p |- ( A = B -> ( C C. A <-> C C. B ) ) $= f0_psseq2 f1_psseq2 f2_psseq2 p_sseq2 f0_psseq2 f1_psseq2 f2_psseq2 p_neeq2 f0_psseq2 f1_psseq2 a_wceq f2_psseq2 f0_psseq2 a_wss f2_psseq2 f1_psseq2 a_wss f2_psseq2 f0_psseq2 a_wne f2_psseq2 f1_psseq2 a_wne p_anbi12d f2_psseq2 f0_psseq2 a_df-pss f2_psseq2 f1_psseq2 a_df-pss f0_psseq2 f1_psseq2 a_wceq f2_psseq2 f0_psseq2 a_wss f2_psseq2 f0_psseq2 a_wne a_wa f2_psseq2 f1_psseq2 a_wss f2_psseq2 f1_psseq2 a_wne a_wa f2_psseq2 f0_psseq2 a_wpss f2_psseq2 f1_psseq2 a_wpss p_3bitr4g $.
 $}
-$( An equality inference for the proper subclass relationship.
+
+$(An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq1i_0 $f class A $.
-	fpsseq1i_1 $f class B $.
-	fpsseq1i_2 $f class C $.
-	epsseq1i_0 $e |- A = B $.
-	psseq1i $p |- ( A C. C <-> B C. C ) $= fpsseq1i_0 fpsseq1i_1 wceq fpsseq1i_0 fpsseq1i_2 wpss fpsseq1i_1 fpsseq1i_2 wpss wb epsseq1i_0 fpsseq1i_0 fpsseq1i_1 fpsseq1i_2 psseq1 ax-mp $.
+	$v A B C  $.
+	f0_psseq1i $f class A $.
+	f1_psseq1i $f class B $.
+	f2_psseq1i $f class C $.
+	e0_psseq1i $e |- A = B $.
+	p_psseq1i $p |- ( A C. C <-> B C. C ) $= e0_psseq1i f0_psseq1i f1_psseq1i f2_psseq1i p_psseq1 f0_psseq1i f1_psseq1i a_wceq f0_psseq1i f2_psseq1i a_wpss f1_psseq1i f2_psseq1i a_wpss a_wb a_ax-mp $.
 $}
-$( An equality inference for the proper subclass relationship.
+
+$(An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq2i_0 $f class A $.
-	fpsseq2i_1 $f class B $.
-	fpsseq2i_2 $f class C $.
-	epsseq2i_0 $e |- A = B $.
-	psseq2i $p |- ( C C. A <-> C C. B ) $= fpsseq2i_0 fpsseq2i_1 wceq fpsseq2i_2 fpsseq2i_0 wpss fpsseq2i_2 fpsseq2i_1 wpss wb epsseq2i_0 fpsseq2i_0 fpsseq2i_1 fpsseq2i_2 psseq2 ax-mp $.
+	$v A B C  $.
+	f0_psseq2i $f class A $.
+	f1_psseq2i $f class B $.
+	f2_psseq2i $f class C $.
+	e0_psseq2i $e |- A = B $.
+	p_psseq2i $p |- ( C C. A <-> C C. B ) $= e0_psseq2i f0_psseq2i f1_psseq2i f2_psseq2i p_psseq2 f0_psseq2i f1_psseq2i a_wceq f2_psseq2i f0_psseq2i a_wpss f2_psseq2i f1_psseq2i a_wpss a_wb a_ax-mp $.
 $}
-$( An equality inference for the proper subclass relationship.
+
+$(An equality inference for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fpsseq12i_0 $f class A $.
-	fpsseq12i_1 $f class B $.
-	fpsseq12i_2 $f class C $.
-	fpsseq12i_3 $f class D $.
-	epsseq12i_0 $e |- A = B $.
-	epsseq12i_1 $e |- C = D $.
-	psseq12i $p |- ( A C. C <-> B C. D ) $= fpsseq12i_0 fpsseq12i_2 wpss fpsseq12i_1 fpsseq12i_2 wpss fpsseq12i_1 fpsseq12i_3 wpss fpsseq12i_0 fpsseq12i_1 fpsseq12i_2 epsseq12i_0 psseq1i fpsseq12i_2 fpsseq12i_3 fpsseq12i_1 epsseq12i_1 psseq2i bitri $.
+	$v A B C D  $.
+	f0_psseq12i $f class A $.
+	f1_psseq12i $f class B $.
+	f2_psseq12i $f class C $.
+	f3_psseq12i $f class D $.
+	e0_psseq12i $e |- A = B $.
+	e1_psseq12i $e |- C = D $.
+	p_psseq12i $p |- ( A C. C <-> B C. D ) $= e0_psseq12i f0_psseq12i f1_psseq12i f2_psseq12i p_psseq1i e1_psseq12i f2_psseq12i f3_psseq12i f1_psseq12i p_psseq2i f0_psseq12i f2_psseq12i a_wpss f1_psseq12i f2_psseq12i a_wpss f1_psseq12i f3_psseq12i a_wpss p_bitri $.
 $}
-$( An equality deduction for the proper subclass relationship.
+
+$(An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq1d_0 $f wff ph $.
-	fpsseq1d_1 $f class A $.
-	fpsseq1d_2 $f class B $.
-	fpsseq1d_3 $f class C $.
-	epsseq1d_0 $e |- ( ph -> A = B ) $.
-	psseq1d $p |- ( ph -> ( A C. C <-> B C. C ) ) $= fpsseq1d_0 fpsseq1d_1 fpsseq1d_2 wceq fpsseq1d_1 fpsseq1d_3 wpss fpsseq1d_2 fpsseq1d_3 wpss wb epsseq1d_0 fpsseq1d_1 fpsseq1d_2 fpsseq1d_3 psseq1 syl $.
+	$v ph A B C  $.
+	f0_psseq1d $f wff ph $.
+	f1_psseq1d $f class A $.
+	f2_psseq1d $f class B $.
+	f3_psseq1d $f class C $.
+	e0_psseq1d $e |- ( ph -> A = B ) $.
+	p_psseq1d $p |- ( ph -> ( A C. C <-> B C. C ) ) $= e0_psseq1d f1_psseq1d f2_psseq1d f3_psseq1d p_psseq1 f0_psseq1d f1_psseq1d f2_psseq1d a_wceq f1_psseq1d f3_psseq1d a_wpss f2_psseq1d f3_psseq1d a_wpss a_wb p_syl $.
 $}
-$( An equality deduction for the proper subclass relationship.
+
+$(An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsseq2d_0 $f wff ph $.
-	fpsseq2d_1 $f class A $.
-	fpsseq2d_2 $f class B $.
-	fpsseq2d_3 $f class C $.
-	epsseq2d_0 $e |- ( ph -> A = B ) $.
-	psseq2d $p |- ( ph -> ( C C. A <-> C C. B ) ) $= fpsseq2d_0 fpsseq2d_1 fpsseq2d_2 wceq fpsseq2d_3 fpsseq2d_1 wpss fpsseq2d_3 fpsseq2d_2 wpss wb epsseq2d_0 fpsseq2d_1 fpsseq2d_2 fpsseq2d_3 psseq2 syl $.
+	$v ph A B C  $.
+	f0_psseq2d $f wff ph $.
+	f1_psseq2d $f class A $.
+	f2_psseq2d $f class B $.
+	f3_psseq2d $f class C $.
+	e0_psseq2d $e |- ( ph -> A = B ) $.
+	p_psseq2d $p |- ( ph -> ( C C. A <-> C C. B ) ) $= e0_psseq2d f1_psseq2d f2_psseq2d f3_psseq2d p_psseq2 f0_psseq2d f1_psseq2d f2_psseq2d a_wceq f3_psseq2d f1_psseq2d a_wpss f3_psseq2d f2_psseq2d a_wpss a_wb p_syl $.
 $}
-$( An equality deduction for the proper subclass relationship.
+
+$(An equality deduction for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	fpsseq12d_0 $f wff ph $.
-	fpsseq12d_1 $f class A $.
-	fpsseq12d_2 $f class B $.
-	fpsseq12d_3 $f class C $.
-	fpsseq12d_4 $f class D $.
-	epsseq12d_0 $e |- ( ph -> A = B ) $.
-	epsseq12d_1 $e |- ( ph -> C = D ) $.
-	psseq12d $p |- ( ph -> ( A C. C <-> B C. D ) ) $= fpsseq12d_0 fpsseq12d_1 fpsseq12d_3 wpss fpsseq12d_2 fpsseq12d_3 wpss fpsseq12d_2 fpsseq12d_4 wpss fpsseq12d_0 fpsseq12d_1 fpsseq12d_2 fpsseq12d_3 epsseq12d_0 psseq1d fpsseq12d_0 fpsseq12d_3 fpsseq12d_4 fpsseq12d_2 epsseq12d_1 psseq2d bitrd $.
+	$v ph A B C D  $.
+	f0_psseq12d $f wff ph $.
+	f1_psseq12d $f class A $.
+	f2_psseq12d $f class B $.
+	f3_psseq12d $f class C $.
+	f4_psseq12d $f class D $.
+	e0_psseq12d $e |- ( ph -> A = B ) $.
+	e1_psseq12d $e |- ( ph -> C = D ) $.
+	p_psseq12d $p |- ( ph -> ( A C. C <-> B C. D ) ) $= e0_psseq12d f0_psseq12d f1_psseq12d f2_psseq12d f3_psseq12d p_psseq1d e1_psseq12d f0_psseq12d f3_psseq12d f4_psseq12d f2_psseq12d p_psseq2d f0_psseq12d f1_psseq12d f3_psseq12d a_wpss f2_psseq12d f3_psseq12d a_wpss f2_psseq12d f4_psseq12d a_wpss p_bitrd $.
 $}
-$( A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
+
+$(A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fpssss_0 $f class A $.
-	fpssss_1 $f class B $.
-	pssss $p |- ( A C. B -> A C_ B ) $= fpssss_0 fpssss_1 wpss fpssss_0 fpssss_1 wss fpssss_0 fpssss_1 wne fpssss_0 fpssss_1 df-pss simplbi $.
+	$v A B  $.
+	f0_pssss $f class A $.
+	f1_pssss $f class B $.
+	p_pssss $p |- ( A C. B -> A C_ B ) $= f0_pssss f1_pssss a_df-pss f0_pssss f1_pssss a_wpss f0_pssss f1_pssss a_wss f0_pssss f1_pssss a_wne p_simplbi $.
 $}
-$( Two classes in a proper subclass relationship are not equal.  (Contributed
+
+$(Two classes in a proper subclass relationship are not equal.  (Contributed
      by NM, 16-Feb-2015.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fpssne_0 $f class A $.
-	fpssne_1 $f class B $.
-	pssne $p |- ( A C. B -> A =/= B ) $= fpssne_0 fpssne_1 wpss fpssne_0 fpssne_1 wss fpssne_0 fpssne_1 wne fpssne_0 fpssne_1 df-pss simprbi $.
+	$v A B  $.
+	f0_pssne $f class A $.
+	f1_pssne $f class B $.
+	p_pssne $p |- ( A C. B -> A =/= B ) $= f0_pssne f1_pssne a_df-pss f0_pssne f1_pssne a_wpss f0_pssne f1_pssne a_wss f0_pssne f1_pssne a_wne p_simprbi $.
 $}
-$( Deduce subclass from proper subclass.  (Contributed by NM,
+
+$(Deduce subclass from proper subclass.  (Contributed by NM,
        29-Feb-1996.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fpssssd_0 $f wff ph $.
-	fpssssd_1 $f class A $.
-	fpssssd_2 $f class B $.
-	epssssd_0 $e |- ( ph -> A C. B ) $.
-	pssssd $p |- ( ph -> A C_ B ) $= fpssssd_0 fpssssd_1 fpssssd_2 wpss fpssssd_1 fpssssd_2 wss epssssd_0 fpssssd_1 fpssssd_2 pssss syl $.
+	$v ph A B  $.
+	f0_pssssd $f wff ph $.
+	f1_pssssd $f class A $.
+	f2_pssssd $f class B $.
+	e0_pssssd $e |- ( ph -> A C. B ) $.
+	p_pssssd $p |- ( ph -> A C_ B ) $= e0_pssssd f1_pssssd f2_pssssd p_pssss f0_pssssd f1_pssssd f2_pssssd a_wpss f1_pssssd f2_pssssd a_wss p_syl $.
 $}
-$( Proper subclasses are unequal.  Deduction form of ~ pssne .
+
+$(Proper subclasses are unequal.  Deduction form of ~ pssne .
        (Contributed by David Moews, 1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	fpssned_0 $f wff ph $.
-	fpssned_1 $f class A $.
-	fpssned_2 $f class B $.
-	epssned_0 $e |- ( ph -> A C. B ) $.
-	pssned $p |- ( ph -> A =/= B ) $= fpssned_0 fpssned_1 fpssned_2 wpss fpssned_1 fpssned_2 wne epssned_0 fpssned_1 fpssned_2 pssne syl $.
+	$v ph A B  $.
+	f0_pssned $f wff ph $.
+	f1_pssned $f class A $.
+	f2_pssned $f class B $.
+	e0_pssned $e |- ( ph -> A C. B ) $.
+	p_pssned $p |- ( ph -> A =/= B ) $= e0_pssned f1_pssned f2_pssned p_pssne f0_pssned f1_pssned f2_pssned a_wpss f1_pssned f2_pssned a_wne p_syl $.
 $}
-$( Subclass in terms of proper subclass.  (Contributed by NM,
+
+$(Subclass in terms of proper subclass.  (Contributed by NM,
      25-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fsspss_0 $f class A $.
-	fsspss_1 $f class B $.
-	sspss $p |- ( A C_ B <-> ( A C. B \/ A = B ) ) $= fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wceq wo fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq wn fsspss_0 fsspss_1 dfpss2 simplbi2 con1d orrd fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 pssss fsspss_0 fsspss_1 eqimss jaoi impbii $.
+	$v A B  $.
+	f0_sspss $f class A $.
+	f1_sspss $f class B $.
+	p_sspss $p |- ( A C_ B <-> ( A C. B \/ A = B ) ) $= f0_sspss f1_sspss p_dfpss2 f0_sspss f1_sspss a_wpss f0_sspss f1_sspss a_wss f0_sspss f1_sspss a_wceq a_wn p_simplbi2 f0_sspss f1_sspss a_wss f0_sspss f1_sspss a_wceq f0_sspss f1_sspss a_wpss p_con1d f0_sspss f1_sspss a_wss f0_sspss f1_sspss a_wpss f0_sspss f1_sspss a_wceq p_orrd f0_sspss f1_sspss p_pssss f0_sspss f1_sspss p_eqimss f0_sspss f1_sspss a_wpss f0_sspss f1_sspss a_wss f0_sspss f1_sspss a_wceq p_jaoi f0_sspss f1_sspss a_wss f0_sspss f1_sspss a_wpss f0_sspss f1_sspss a_wceq a_wo p_impbii $.
 $}
-$( Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
+
+$(Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	fpssirr_0 $f class A $.
-	pssirr $p |- -. A C. A $= fpssirr_0 fpssirr_0 wpss fpssirr_0 fpssirr_0 wss fpssirr_0 fpssirr_0 wss wn wa fpssirr_0 fpssirr_0 wss pm3.24 fpssirr_0 fpssirr_0 dfpss3 mtbir $.
+	$v A  $.
+	f0_pssirr $f class A $.
+	p_pssirr $p |- -. A C. A $= f0_pssirr f0_pssirr a_wss p_pm3.24 f0_pssirr f0_pssirr p_dfpss3 f0_pssirr f0_pssirr a_wpss f0_pssirr f0_pssirr a_wss f0_pssirr f0_pssirr a_wss a_wn a_wa p_mtbir $.
 $}
-$( Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
+
+$(Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
      p. 23.  (Contributed by NM, 7-Feb-1996.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fpssn2lp_0 $f class A $.
-	fpssn2lp_1 $f class B $.
-	pssn2lp $p |- -. ( A C. B /\ B C. A ) $= fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss wn wi fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss wa wn fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wss fpssn2lp_1 fpssn2lp_0 wpss fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_0 fpssn2lp_1 wss fpssn2lp_1 fpssn2lp_0 wss wn fpssn2lp_0 fpssn2lp_1 dfpss3 simprbi fpssn2lp_1 fpssn2lp_0 pssss nsyl fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss imnan mpbi $.
+	$v A B  $.
+	f0_pssn2lp $f class A $.
+	f1_pssn2lp $f class B $.
+	p_pssn2lp $p |- -. ( A C. B /\ B C. A ) $= f0_pssn2lp f1_pssn2lp p_dfpss3 f0_pssn2lp f1_pssn2lp a_wpss f0_pssn2lp f1_pssn2lp a_wss f1_pssn2lp f0_pssn2lp a_wss a_wn p_simprbi f1_pssn2lp f0_pssn2lp p_pssss f0_pssn2lp f1_pssn2lp a_wpss f1_pssn2lp f0_pssn2lp a_wss f1_pssn2lp f0_pssn2lp a_wpss p_nsyl f0_pssn2lp f1_pssn2lp a_wpss f1_pssn2lp f0_pssn2lp a_wpss p_imnan f0_pssn2lp f1_pssn2lp a_wpss f1_pssn2lp f0_pssn2lp a_wpss a_wn a_wi f0_pssn2lp f1_pssn2lp a_wpss f1_pssn2lp f0_pssn2lp a_wpss a_wa a_wn p_mpbi $.
 $}
-$( Two ways of stating trichotomy with respect to inclusion.  (Contributed by
+
+$(Two ways of stating trichotomy with respect to inclusion.  (Contributed by
      NM, 12-Aug-2004.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fsspsstri_0 $f class A $.
-	fsspsstri_1 $f class B $.
-	sspsstri $p |- ( ( A C_ B \/ B C_ A ) <-> ( A C. B \/ A = B \/ B C. A ) ) $= fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wss fsspsstri_1 fsspsstri_0 wss wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss w3o fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq or32 fsspsstri_0 fsspsstri_1 wss fsspsstri_1 fsspsstri_0 wss wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 wss fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 sspss fsspsstri_1 fsspsstri_0 wss fsspsstri_1 fsspsstri_0 wpss fsspsstri_1 fsspsstri_0 wceq wo fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 sspss fsspsstri_1 fsspsstri_0 wceq fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss fsspsstri_1 fsspsstri_0 eqcom orbi2i bitri orbi12i fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq orordir bitr4i fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss df-3or 3bitr4i $.
+	$v A B  $.
+	f0_sspsstri $f class A $.
+	f1_sspsstri $f class B $.
+	p_sspsstri $p |- ( ( A C_ B \/ B C_ A ) <-> ( A C. B \/ A = B \/ B C. A ) ) $= f0_sspsstri f1_sspsstri a_wpss f1_sspsstri f0_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq p_or32 f0_sspsstri f1_sspsstri p_sspss f1_sspsstri f0_sspsstri p_sspss f1_sspsstri f0_sspsstri p_eqcom f1_sspsstri f0_sspsstri a_wceq f0_sspsstri f1_sspsstri a_wceq f1_sspsstri f0_sspsstri a_wpss p_orbi2i f1_sspsstri f0_sspsstri a_wss f1_sspsstri f0_sspsstri a_wpss f1_sspsstri f0_sspsstri a_wceq a_wo f1_sspsstri f0_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo p_bitri f0_sspsstri f1_sspsstri a_wss f0_sspsstri f1_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo f1_sspsstri f0_sspsstri a_wss f1_sspsstri f0_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo p_orbi12i f0_sspsstri f1_sspsstri a_wpss f1_sspsstri f0_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq p_orordir f0_sspsstri f1_sspsstri a_wss f1_sspsstri f0_sspsstri a_wss a_wo f0_sspsstri f1_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo f1_sspsstri f0_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo a_wo f0_sspsstri f1_sspsstri a_wpss f1_sspsstri f0_sspsstri a_wpss a_wo f0_sspsstri f1_sspsstri a_wceq a_wo p_bitr4i f0_sspsstri f1_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq f1_sspsstri f0_sspsstri a_wpss a_df-3or f0_sspsstri f1_sspsstri a_wpss f1_sspsstri f0_sspsstri a_wpss a_wo f0_sspsstri f1_sspsstri a_wceq a_wo f0_sspsstri f1_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq a_wo f1_sspsstri f0_sspsstri a_wpss a_wo f0_sspsstri f1_sspsstri a_wss f1_sspsstri f0_sspsstri a_wss a_wo f0_sspsstri f1_sspsstri a_wpss f0_sspsstri f1_sspsstri a_wceq f1_sspsstri f0_sspsstri a_wpss a_w3o p_3bitr4i $.
 $}
-$( Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
+
+$(Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fssnpss_0 $f class A $.
-	fssnpss_1 $f class B $.
-	ssnpss $p |- ( A C_ B -> -. B C. A ) $= fssnpss_1 fssnpss_0 wpss fssnpss_0 fssnpss_1 wss fssnpss_1 fssnpss_0 wpss fssnpss_1 fssnpss_0 wss fssnpss_0 fssnpss_1 wss wn fssnpss_1 fssnpss_0 dfpss3 simprbi con2i $.
+	$v A B  $.
+	f0_ssnpss $f class A $.
+	f1_ssnpss $f class B $.
+	p_ssnpss $p |- ( A C_ B -> -. B C. A ) $= f1_ssnpss f0_ssnpss p_dfpss3 f1_ssnpss f0_ssnpss a_wpss f1_ssnpss f0_ssnpss a_wss f0_ssnpss f1_ssnpss a_wss a_wn p_simprbi f1_ssnpss f0_ssnpss a_wpss f0_ssnpss f1_ssnpss a_wss p_con2i $.
 $}
-$( Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
+
+$(Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsstr_0 $f class A $.
-	fpsstr_1 $f class B $.
-	fpsstr_2 $f class C $.
-	psstr $p |- ( ( A C. B /\ B C. C ) -> A C. C ) $= fpsstr_0 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss wa fpsstr_0 fpsstr_2 wss fpsstr_0 fpsstr_2 wceq wn fpsstr_0 fpsstr_2 wpss fpsstr_0 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss fpsstr_0 fpsstr_1 fpsstr_2 fpsstr_0 fpsstr_1 pssss fpsstr_1 fpsstr_2 pssss sylan9ss fpsstr_0 fpsstr_2 wceq fpsstr_0 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss wa fpsstr_0 fpsstr_2 wceq fpsstr_0 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss wa fpsstr_2 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss wa fpsstr_2 fpsstr_1 pssn2lp fpsstr_0 fpsstr_2 wceq fpsstr_0 fpsstr_1 wpss fpsstr_2 fpsstr_1 wpss fpsstr_1 fpsstr_2 wpss fpsstr_0 fpsstr_2 fpsstr_1 psseq1 anbi1d mtbiri con2i fpsstr_0 fpsstr_2 dfpss2 sylanbrc $.
+	$v A B C  $.
+	f0_psstr $f class A $.
+	f1_psstr $f class B $.
+	f2_psstr $f class C $.
+	p_psstr $p |- ( ( A C. B /\ B C. C ) -> A C. C ) $= f0_psstr f1_psstr p_pssss f1_psstr f2_psstr p_pssss f0_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss f0_psstr f1_psstr f2_psstr p_sylan9ss f2_psstr f1_psstr p_pssn2lp f0_psstr f2_psstr f1_psstr p_psseq1 f0_psstr f2_psstr a_wceq f0_psstr f1_psstr a_wpss f2_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss p_anbi1d f0_psstr f2_psstr a_wceq f0_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss a_wa f2_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss a_wa p_mtbiri f0_psstr f2_psstr a_wceq f0_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss a_wa p_con2i f0_psstr f2_psstr p_dfpss2 f0_psstr f1_psstr a_wpss f1_psstr f2_psstr a_wpss a_wa f0_psstr f2_psstr a_wss f0_psstr f2_psstr a_wceq a_wn f0_psstr f2_psstr a_wpss p_sylanbrc $.
 $}
-$( Transitive law for subclass and proper subclass.  (Contributed by NM,
+
+$(Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fsspsstr_0 $f class A $.
-	fsspsstr_1 $f class B $.
-	fsspsstr_2 $f class C $.
-	sspsstr $p |- ( ( A C_ B /\ B C. C ) -> A C. C ) $= fsspsstr_0 fsspsstr_1 wss fsspsstr_0 fsspsstr_1 wpss fsspsstr_0 fsspsstr_1 wceq wo fsspsstr_1 fsspsstr_2 wpss fsspsstr_0 fsspsstr_2 wpss fsspsstr_0 fsspsstr_1 sspss fsspsstr_0 fsspsstr_1 wpss fsspsstr_0 fsspsstr_1 wceq wo fsspsstr_1 fsspsstr_2 wpss fsspsstr_0 fsspsstr_2 wpss fsspsstr_0 fsspsstr_1 wpss fsspsstr_1 fsspsstr_2 wpss fsspsstr_0 fsspsstr_2 wpss wi fsspsstr_0 fsspsstr_1 wceq fsspsstr_0 fsspsstr_1 wpss fsspsstr_1 fsspsstr_2 wpss fsspsstr_0 fsspsstr_2 wpss fsspsstr_0 fsspsstr_1 fsspsstr_2 psstr ex fsspsstr_0 fsspsstr_1 wceq fsspsstr_0 fsspsstr_2 wpss fsspsstr_1 fsspsstr_2 wpss fsspsstr_0 fsspsstr_1 fsspsstr_2 psseq1 biimprd jaoi imp sylanb $.
+	$v A B C  $.
+	f0_sspsstr $f class A $.
+	f1_sspsstr $f class B $.
+	f2_sspsstr $f class C $.
+	p_sspsstr $p |- ( ( A C_ B /\ B C. C ) -> A C. C ) $= f0_sspsstr f1_sspsstr p_sspss f0_sspsstr f1_sspsstr f2_sspsstr p_psstr f0_sspsstr f1_sspsstr a_wpss f1_sspsstr f2_sspsstr a_wpss f0_sspsstr f2_sspsstr a_wpss p_ex f0_sspsstr f1_sspsstr f2_sspsstr p_psseq1 f0_sspsstr f1_sspsstr a_wceq f0_sspsstr f2_sspsstr a_wpss f1_sspsstr f2_sspsstr a_wpss p_biimprd f0_sspsstr f1_sspsstr a_wpss f1_sspsstr f2_sspsstr a_wpss f0_sspsstr f2_sspsstr a_wpss a_wi f0_sspsstr f1_sspsstr a_wceq p_jaoi f0_sspsstr f1_sspsstr a_wpss f0_sspsstr f1_sspsstr a_wceq a_wo f1_sspsstr f2_sspsstr a_wpss f0_sspsstr f2_sspsstr a_wpss p_imp f0_sspsstr f1_sspsstr a_wss f0_sspsstr f1_sspsstr a_wpss f0_sspsstr f1_sspsstr a_wceq a_wo f1_sspsstr f2_sspsstr a_wpss f0_sspsstr f2_sspsstr a_wpss p_sylanb $.
 $}
-$( Transitive law for subclass and proper subclass.  (Contributed by NM,
+
+$(Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsssstr_0 $f class A $.
-	fpsssstr_1 $f class B $.
-	fpsssstr_2 $f class C $.
-	psssstr $p |- ( ( A C. B /\ B C_ C ) -> A C. C ) $= fpsssstr_1 fpsssstr_2 wss fpsssstr_0 fpsssstr_1 wpss fpsssstr_1 fpsssstr_2 wpss fpsssstr_1 fpsssstr_2 wceq wo fpsssstr_0 fpsssstr_2 wpss fpsssstr_1 fpsssstr_2 sspss fpsssstr_0 fpsssstr_1 wpss fpsssstr_1 fpsssstr_2 wpss fpsssstr_1 fpsssstr_2 wceq wo fpsssstr_0 fpsssstr_2 wpss fpsssstr_0 fpsssstr_1 wpss fpsssstr_1 fpsssstr_2 wpss fpsssstr_0 fpsssstr_2 wpss fpsssstr_1 fpsssstr_2 wceq fpsssstr_0 fpsssstr_1 wpss fpsssstr_1 fpsssstr_2 wpss fpsssstr_0 fpsssstr_2 wpss fpsssstr_0 fpsssstr_1 fpsssstr_2 psstr ex fpsssstr_1 fpsssstr_2 wceq fpsssstr_0 fpsssstr_1 wpss fpsssstr_0 fpsssstr_2 wpss fpsssstr_1 fpsssstr_2 fpsssstr_0 psseq2 biimpcd jaod imp sylan2b $.
+	$v A B C  $.
+	f0_psssstr $f class A $.
+	f1_psssstr $f class B $.
+	f2_psssstr $f class C $.
+	p_psssstr $p |- ( ( A C. B /\ B C_ C ) -> A C. C ) $= f1_psssstr f2_psssstr p_sspss f0_psssstr f1_psssstr f2_psssstr p_psstr f0_psssstr f1_psssstr a_wpss f1_psssstr f2_psssstr a_wpss f0_psssstr f2_psssstr a_wpss p_ex f1_psssstr f2_psssstr f0_psssstr p_psseq2 f1_psssstr f2_psssstr a_wceq f0_psssstr f1_psssstr a_wpss f0_psssstr f2_psssstr a_wpss p_biimpcd f0_psssstr f1_psssstr a_wpss f1_psssstr f2_psssstr a_wpss f0_psssstr f2_psssstr a_wpss f1_psssstr f2_psssstr a_wceq p_jaod f0_psssstr f1_psssstr a_wpss f1_psssstr f2_psssstr a_wpss f1_psssstr f2_psssstr a_wceq a_wo f0_psssstr f2_psssstr a_wpss p_imp f1_psssstr f2_psssstr a_wss f0_psssstr f1_psssstr a_wpss f1_psssstr f2_psssstr a_wpss f1_psssstr f2_psssstr a_wceq a_wo f0_psssstr f2_psssstr a_wpss p_sylan2b $.
 $}
-$( Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
+
+$(Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
        (Contributed by David Moews, 1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsstrd_0 $f wff ph $.
-	fpsstrd_1 $f class A $.
-	fpsstrd_2 $f class B $.
-	fpsstrd_3 $f class C $.
-	epsstrd_0 $e |- ( ph -> A C. B ) $.
-	epsstrd_1 $e |- ( ph -> B C. C ) $.
-	psstrd $p |- ( ph -> A C. C ) $= fpsstrd_0 fpsstrd_1 fpsstrd_2 wpss fpsstrd_2 fpsstrd_3 wpss fpsstrd_1 fpsstrd_3 wpss epsstrd_0 epsstrd_1 fpsstrd_1 fpsstrd_2 fpsstrd_3 psstr syl2anc $.
+	$v ph A B C  $.
+	f0_psstrd $f wff ph $.
+	f1_psstrd $f class A $.
+	f2_psstrd $f class B $.
+	f3_psstrd $f class C $.
+	e0_psstrd $e |- ( ph -> A C. B ) $.
+	e1_psstrd $e |- ( ph -> B C. C ) $.
+	p_psstrd $p |- ( ph -> A C. C ) $= e0_psstrd e1_psstrd f1_psstrd f2_psstrd f3_psstrd p_psstr f0_psstrd f1_psstrd f2_psstrd a_wpss f2_psstrd f3_psstrd a_wpss f1_psstrd f3_psstrd a_wpss p_syl2anc $.
 $}
-$( Transitivity involving subclass and proper subclass inclusion.
+
+$(Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ sspsstr .  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fsspsstrd_0 $f wff ph $.
-	fsspsstrd_1 $f class A $.
-	fsspsstrd_2 $f class B $.
-	fsspsstrd_3 $f class C $.
-	esspsstrd_0 $e |- ( ph -> A C_ B ) $.
-	esspsstrd_1 $e |- ( ph -> B C. C ) $.
-	sspsstrd $p |- ( ph -> A C. C ) $= fsspsstrd_0 fsspsstrd_1 fsspsstrd_2 wss fsspsstrd_2 fsspsstrd_3 wpss fsspsstrd_1 fsspsstrd_3 wpss esspsstrd_0 esspsstrd_1 fsspsstrd_1 fsspsstrd_2 fsspsstrd_3 sspsstr syl2anc $.
+	$v ph A B C  $.
+	f0_sspsstrd $f wff ph $.
+	f1_sspsstrd $f class A $.
+	f2_sspsstrd $f class B $.
+	f3_sspsstrd $f class C $.
+	e0_sspsstrd $e |- ( ph -> A C_ B ) $.
+	e1_sspsstrd $e |- ( ph -> B C. C ) $.
+	p_sspsstrd $p |- ( ph -> A C. C ) $= e0_sspsstrd e1_sspsstrd f1_sspsstrd f2_sspsstrd f3_sspsstrd p_sspsstr f0_sspsstrd f1_sspsstrd f2_sspsstrd a_wss f2_sspsstrd f3_sspsstrd a_wpss f1_sspsstrd f3_sspsstrd a_wpss p_syl2anc $.
 $}
-$( Transitivity involving subclass and proper subclass inclusion.
+
+$(Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ psssstr .  (Contributed by David Moews,
        1-May-2017.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	fpsssstrd_0 $f wff ph $.
-	fpsssstrd_1 $f class A $.
-	fpsssstrd_2 $f class B $.
-	fpsssstrd_3 $f class C $.
-	epsssstrd_0 $e |- ( ph -> A C. B ) $.
-	epsssstrd_1 $e |- ( ph -> B C_ C ) $.
-	psssstrd $p |- ( ph -> A C. C ) $= fpsssstrd_0 fpsssstrd_1 fpsssstrd_2 wpss fpsssstrd_2 fpsssstrd_3 wss fpsssstrd_1 fpsssstrd_3 wpss epsssstrd_0 epsssstrd_1 fpsssstrd_1 fpsssstrd_2 fpsssstrd_3 psssstr syl2anc $.
+	$v ph A B C  $.
+	f0_psssstrd $f wff ph $.
+	f1_psssstrd $f class A $.
+	f2_psssstrd $f class B $.
+	f3_psssstrd $f class C $.
+	e0_psssstrd $e |- ( ph -> A C. B ) $.
+	e1_psssstrd $e |- ( ph -> B C_ C ) $.
+	p_psssstrd $p |- ( ph -> A C. C ) $= e0_psssstrd e1_psssstrd f1_psssstrd f2_psssstrd f3_psssstrd p_psssstr f0_psssstrd f1_psssstrd f2_psssstrd a_wpss f2_psssstrd f3_psssstrd a_wss f1_psssstrd f3_psssstrd a_wpss p_syl2anc $.
 $}
-$( A class is not a proper subclass of another iff it satisfies a
+
+$(A class is not a proper subclass of another iff it satisfies a
      one-directional form of ~ eqss .  (Contributed by Mario Carneiro,
      15-May-2015.) $)
+
 ${
-	$v A $.
-	$v B $.
-	fnpss_0 $f class A $.
-	fnpss_1 $f class B $.
-	npss $p |- ( -. A C. B <-> ( A C_ B -> A = B ) ) $= fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wi fnpss_0 fnpss_1 wpss fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wi wn fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wn wa fnpss_0 fnpss_1 wpss fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq pm4.61 fnpss_0 fnpss_1 dfpss2 bitr4i con1bii $.
+	$v A B  $.
+	f0_npss $f class A $.
+	f1_npss $f class B $.
+	p_npss $p |- ( -. A C. B <-> ( A C_ B -> A = B ) ) $= f0_npss f1_npss a_wss f0_npss f1_npss a_wceq p_pm4.61 f0_npss f1_npss p_dfpss2 f0_npss f1_npss a_wss f0_npss f1_npss a_wceq a_wi a_wn f0_npss f1_npss a_wss f0_npss f1_npss a_wceq a_wn a_wa f0_npss f1_npss a_wpss p_bitr4i f0_npss f1_npss a_wss f0_npss f1_npss a_wceq a_wi f0_npss f1_npss a_wpss p_con1bii $.
 $}
+
 

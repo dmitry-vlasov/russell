@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes)/Rederive_new_axioms_from_old__theorems_ax5_,_ax6_,_ax9from9o_,_ax11_,_ax12.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                Legacy theorems using obsolete axioms
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -12,7 +12,7 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_
 
 */
 
-/* Axiom to quantify a variable over a formula in which it does not occur.
+/*Axiom to quantify a variable over a formula in which it does not occur.
        Axiom C5 in [Megill] p. 444 (p. 11 of the preprint).  Also appears as
        Axiom B6 (p. 75) of system S2 of [Tarski] p. 77 and Axiom C5-1 of
        [Monk2] p. 113.
@@ -43,7 +43,7 @@ proof of ax17o {
 	qed prop 1 = step 1 ;;
 }
 
-/* Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.  This
+/*Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.  This
      is often an axiom of equality in textbook systems, but we don't need it as
      an axiom since it can be proved from our other axioms (although the proof,
      as you can see below, is not as obvious as you might think).  This proof
@@ -71,7 +71,7 @@ proof of equid1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.)
+/*Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem sps-o (ph : wff, ps : wff, x : set)  {
@@ -86,7 +86,7 @@ proof of sps-o {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+/*Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      that any variable, including ` x ` , is effectively not free in
      ` x = x ` , even though ` x ` is technically free according to the
      traditional definition of free variable.  (The proof does not use
@@ -112,7 +112,7 @@ proof of hbequid {
 	qed prop 1 = step 10 ;;
 }
 
-/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+/*Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      that any variable, including ` x ` , is effectively not free in
      ` x = x ` , even though ` x ` is technically free according to the
      traditional definition of free variable.  (The proof uses only ~ ax-5 ,
@@ -135,7 +135,7 @@ proof of nfequid-o {
 	qed prop 1 = step 2 ;;
 }
 
-/* Proof of a single axiom that can replace ~ ax-4 and ~ ax-6o .  See
+/*Proof of a single axiom that can replace ~ ax-4 and ~ ax-6o .  See
      ~ ax46to4 and ~ ax46to6 for the re-derivation of those axioms.
      (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -151,7 +151,7 @@ proof of ax46 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Re-derivation of ~ ax-4 from ~ ax46 .  Only propositional calculus is used
+/*Re-derivation of ~ ax-4 from ~ ax46 .  Only propositional calculus is used
      for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -166,7 +166,7 @@ proof of ax46to4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Re-derivation of ~ ax-6o from ~ ax46 .  Only propositional calculus is
+/*Re-derivation of ~ ax-6o from ~ ax46 .  Only propositional calculus is
      used for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -181,7 +181,7 @@ proof of ax46to6 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Proof of a single axiom that can replace both ~ ax-6o and ~ ax-7 .  See
+/*Proof of a single axiom that can replace both ~ ax-6o and ~ ax-7 .  See
      ~ ax67to6 and ~ ax67to7 for the re-derivation of those axioms.
      (Contributed by NM, 18-Nov-2006.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
@@ -200,7 +200,7 @@ proof of ax67 {
 	qed prop 1 = step 6 ;;
 }
 
-/* ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
+/*` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -214,7 +214,7 @@ proof of nfa1-o {
 	qed prop 1 = step 2 ;;
 }
 
-/* Re-derivation of ~ ax-6o from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
+/*Re-derivation of ~ ax-6o from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -233,7 +233,7 @@ proof of ax67to6 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Re-derivation of ~ ax-7 from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
+/*Re-derivation of ~ ax-7 from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -250,7 +250,7 @@ proof of ax67to7 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Proof of a single axiom that can replace ~ ax-4 , ~ ax-6o , and ~ ax-7 in
+/*Proof of a single axiom that can replace ~ ax-4 , ~ ax-6o , and ~ ax-7 in
      a subsystem that includes these axioms plus ~ ax-5o and ~ ax-gen (and
      propositional calculus).  See ~ ax467to4 , ~ ax467to6 , and ~ ax467to7 for
      the re-derivation of those axioms.  This theorem extends the idea in Scott
@@ -275,7 +275,7 @@ proof of ax467 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Re-derivation of ~ ax-4 from ~ ax467 .  Only propositional calculus is
+/*Re-derivation of ~ ax-4 from ~ ax467 .  Only propositional calculus is
      used by the re-derivation.  (Contributed by NM, 19-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -290,7 +290,7 @@ proof of ax467to4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Re-derivation of ~ ax-6o from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
+/*Re-derivation of ~ ax-6o from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  The use of ~ alimi (which uses ~ ax-4 ) is
      allowed since we have already proved ~ ax467to4 .  (Contributed by NM,
      19-Nov-2006.)  (Proof modification is discouraged.)
@@ -312,7 +312,7 @@ proof of ax467to6 {
 	qed prop 1 = step 8 ;;
 }
 
-/* Re-derivation of ~ ax-7 from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
+/*Re-derivation of ~ ax-7 from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  The use of ~ alimi (which uses ~ ax-4 ) is
      allowed since we have already proved ~ ax467to4 .  (Contributed by NM,
      19-Nov-2006.)  (Proof modification is discouraged.)
@@ -336,7 +336,7 @@ proof of ax467to7 {
 	qed prop 1 = step 10 ;;
 }
 
-/* ~ equid with existential quantifier without using ~ ax-4 or ~ ax-17 .
+/*~ equid with existential quantifier without using ~ ax-4 or ~ ax-17 .
      (Contributed by NM, 13-Jan-2011.)  (Proof shortened by Wolf Lammen,
      27-Feb-2014.)  (Proof modification is discouraged.) */
 
@@ -354,7 +354,7 @@ proof of equidqe {
 	qed prop 1 = step 6 ;;
 }
 
-/* A special case of ~ ax-4 without using ~ ax-4 or ~ ax-17 .  (Contributed
+/*A special case of ~ ax-4 without using ~ ax-4 or ~ ax-17 .  (Contributed
      by NM, 13-Jan-2011.)  (Proof modification is discouraged.) */
 
 theorem ax4sp1 (x : set, y : set)  {
@@ -367,7 +367,7 @@ proof of ax4sp1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* ~ equid with universal quantifier without using ~ ax-4 or ~ ax-17 .
+/*~ equid with universal quantifier without using ~ ax-4 or ~ ax-17 .
      (Contributed by NM, 13-Jan-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
 
@@ -385,7 +385,7 @@ proof of equidq {
 	qed prop 1 = step 6 ;;
 }
 
-/* Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.
+/*Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.
      Alternate proof of ~ equid1 from older axioms ~ ax-6o and ~ ax-9o .
      (Contributed by NM, 5-Aug-1993.)  (Proof modification is discouraged.)
      (New usage is discouraged.) */
@@ -405,7 +405,7 @@ proof of equid1ALT {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rederivation of ~ ax-10 from original version ~ ax-10o .  See theorem
+/*Rederivation of ~ ax-10 from original version ~ ax-10o .  See theorem
      ~ ax10o for the derivation of ~ ax-10o from ~ ax-10 .
 
      This theorem should not be referenced in any proof.  Instead, use ~ ax-10
@@ -427,7 +427,7 @@ proof of ax10from10o {
 	qed prop 1 = step 5 ;;
 }
 
-/* A commutation rule for distinct variable specifiers.  Version of
+/*A commutation rule for distinct variable specifiers.  Version of
        ~ naecoms using ~ ax-10o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -444,7 +444,7 @@ proof of naecoms-o {
 	qed prop 1 = step 3 ;;
 }
 
-/* All variables are effectively bound in a distinct variable specifier.
+/*All variables are effectively bound in a distinct variable specifier.
      Lemma L19 in [Megill] p. 446 (p. 14 of the preprint).  Version of ~ hbnae
      using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -459,7 +459,7 @@ proof of hbnae-o {
 	qed prop 1 = step 2 ;;
 }
 
-/* Proof of ~ dvelimh that uses ~ ax-10o but not ~ ax-11o , ~ ax-10 , or
+/*Proof of ~ dvelimh that uses ~ ax-10o but not ~ ax-11o , ~ ax-10 , or
        ~ ax-11 .  Version of ~ dvelimh using ~ ax-10o instead of ~ ax10o .
        (Contributed by NM, 12-Nov-2002.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -498,7 +498,7 @@ proof of dvelimf-o {
 	qed prop 1 = step 22 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  Version of
        ~ dral2 using ~ ax-10o .  (Contributed by NM, 27-Feb-2005.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -515,7 +515,7 @@ proof of dral2-o {
 	qed prop 1 = step 2 ;;
 }
 
-/* A "distinctor elimination" lemma with no restrictions on variables in
+/*A "distinctor elimination" lemma with no restrictions on variables in
        the consequent, proved without using ~ ax-16 .  Version of ~ aev using
        ~ ax-10o .  (Contributed by NM, 8-Nov-2006.)  (Proof shortened by Andrew
        Salmon, 21-Jun-2011.)  (Proof modification is discouraged.)
@@ -551,7 +551,7 @@ proof of aev-o {
 	qed prop 1 = step 21 ;;
 }
 
-/* Theorem to add distinct quantifier to atomic formula.  (This theorem
+/*Theorem to add distinct quantifier to atomic formula.  (This theorem
        demonstrates the induction basis for ~ ax-17 considered as a
        metatheorem.  Do not use it for later proofs - use ~ ax-17 instead, to
        avoid reference to the redundant axiom ~ ax-16 .)  (Contributed by NM,
@@ -570,7 +570,7 @@ proof of ax17eq {
 	qed prop 1 = step 4 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.  Version
+/*Quantifier introduction when one pair of variables is distinct.  Version
        of ~ dveeq2 using ~ ax-11o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -587,7 +587,7 @@ proof of dveeq2-o {
 	qed prop 1 = step 4 ;;
 }
 
-/* Version of ~ dveeq2 using ~ ax-16 instead of ~ ax-17 .  TO DO:  Recover
+/*Version of ~ dveeq2 using ~ ax-16 instead of ~ ax-17 .  TO DO:  Recover
        proof from older set.mm to remove use of ~ ax-17 .  (Contributed by NM,
        29-Apr-2008.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -604,7 +604,7 @@ proof of dveeq2-o16 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A generalization of axiom ~ ax-16 .  Version of ~ a16g using ~ ax-10o .
+/*A generalization of axiom ~ ax-16 .  Version of ~ a16g using ~ ax-10o .
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -623,7 +623,7 @@ proof of a16g-o {
 	qed prop 1 = step 6 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.  Version
+/*Quantifier introduction when one pair of variables is distinct.  Version
        of ~ dveeq1 using ax-10o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
@@ -640,7 +640,7 @@ proof of dveeq1-o {
 	qed prop 1 = step 4 ;;
 }
 
-/* Version of ~ dveeq1 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
+/*Version of ~ dveeq1 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
        NM, 29-Apr-2008.)  TO DO:  Recover proof from older set.mm to remove use
        of ~ ax-17 .  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -658,7 +658,7 @@ proof of dveeq1-o16 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem to add distinct quantifier to atomic formula.  This theorem
+/*Theorem to add distinct quantifier to atomic formula.  This theorem
        demonstrates the induction basis for ~ ax-17 considered as a
        metatheorem.)  (Contributed by NM, 5-Aug-1993.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -675,7 +675,7 @@ proof of ax17el {
 	qed prop 1 = step 4 ;;
 }
 
-/* This theorem shows that, given ~ ax-16 , we can derive a version of
+/*This theorem shows that, given ~ ax-16 , we can derive a version of
        ~ ax-10 .  However, it is weaker than ~ ax-10 because it has a distinct
        variable requirement.  (Contributed by Andrew Salmon, 27-Jul-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -716,7 +716,7 @@ proof of ax10-16 {
 	qed prop 1 = step 27 ;;
 }
 
-/* Version of ~ dveel2 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
+/*Version of ~ dveel2 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
        NM, 10-May-2008.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -733,7 +733,7 @@ proof of dveel2ALT {
 	qed prop 1 = step 4 ;;
 }
 
-/* Basis step for constructing a substitution instance of ~ ax-11o without
+/*Basis step for constructing a substitution instance of ~ ax-11o without
        using ~ ax-11o .  We can start with any formula ` ph ` in which ` x ` is
        not free.  (Contributed by NM, 21-Jan-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
@@ -751,7 +751,7 @@ proof of ax11f {
 	qed prop 1 = step 3 ;;
 }
 
-/* Basis step for constructing a substitution instance of ~ ax-11o without
+/*Basis step for constructing a substitution instance of ~ ax-11o without
        using ~ ax-11o .  Atomic formula for equality predicate.  (Contributed
        by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -859,7 +859,7 @@ proof of ax11eq {
 	qed prop 1 = step 94 ;;
 }
 
-/* Basis step for constructing a substitution instance of ~ ax-11o without
+/*Basis step for constructing a substitution instance of ~ ax-11o without
        using ~ ax-11o .  Atomic formula for membership predicate.  (Contributed
        by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -983,7 +983,7 @@ proof of ax11el {
 	qed prop 1 = step 110 ;;
 }
 
-/* Induction step for constructing a substitution instance of ~ ax-11o
+/*Induction step for constructing a substitution instance of ~ ax-11o
        without using ~ ax-11o .  Negation case.  (Contributed by NM,
        21-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -1009,7 +1009,7 @@ proof of ax11indn {
 	qed prop 1 = step 11 ;;
 }
 
-/* Induction step for constructing a substitution instance of ~ ax-11o
+/*Induction step for constructing a substitution instance of ~ ax-11o
          without using ~ ax-11o .  Implication case.  (Contributed by NM,
          21-Jan-2007.)  (Proof modification is discouraged.)
          (New usage is discouraged.) */
@@ -1038,7 +1038,7 @@ proof of ax11indi {
 	qed prop 1 = step 13 ;;
 }
 
-/* Lemma for ~ ax11inda2 and ~ ax11inda .  (Contributed by NM,
+/*Lemma for ~ ax11inda2 and ~ ax11inda .  (Contributed by NM,
        24-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -1107,7 +1107,7 @@ proof of ax11indalem {
 	qed prop 1 = step 55 ;;
 }
 
-/* A proof of ~ ax11inda2 that is slightly more direct.  (Contributed by
+/*A proof of ~ ax11inda2 that is slightly more direct.  (Contributed by
        NM, 4-May-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
 
@@ -1161,7 +1161,7 @@ proof of ax11inda2ALT {
 	qed prop 1 = step 40 ;;
 }
 
-/* Induction step for constructing a substitution instance of ~ ax-11o
+/*Induction step for constructing a substitution instance of ~ ax-11o
        without using ~ ax-11o .  Quantification case.  When ` z ` and ` y ` are
        distinct, this theorem avoids the dummy variables needed by the more
        general ~ ax11inda .  (Contributed by NM, 24-Jan-2007.)
@@ -1184,7 +1184,7 @@ proof of ax11inda2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Induction step for constructing a substitution instance of ~ ax-11o
+/*Induction step for constructing a substitution instance of ~ ax-11o
        without using ~ ax-11o .  Quantification case.  (When ` z ` and ` y `
        are distinct, ~ ax11inda2 may be used instead to avoid the dummy
        variable ` w ` in the proof.)  (Contributed by NM, 24-Jan-2007.)
@@ -1228,7 +1228,7 @@ proof of ax11inda {
 	qed prop 1 = step 28 ;;
 }
 
-/* Recovery of ~ ax-11o from ~ ax11v without using ~ ax-11o .  The
+/*Recovery of ~ ax-11o from ~ ax11v without using ~ ax-11o .  The
        hypothesis is even weaker than ~ ax11v , with ` z ` both distinct from
        ` x ` _and_ not occurring in ` ph ` .  Thus, the hypothesis provides an
        alternate axiom that can be used in place of ~ ax-11o .  (Contributed by
@@ -1262,7 +1262,7 @@ proof of ax11v2-o {
 	qed prop 1 = step 17 ;;
 }
 
-/* Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 , without using
+/*Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 , without using
        ~ ax-11 or ~ ax-11o .  The hypothesis is even weaker than ~ ax-11 , with
        ` z ` both distinct from ` x ` and not occurring in ` ph ` .  Thus, the
        hypothesis provides an alternate axiom that can be used in place of
@@ -1285,7 +1285,7 @@ proof of ax11a2-o {
 	qed prop 1 = step 3 ;;
 }
 
-/* Show that ~ ax-10o can be derived from ~ ax-10 .  An open problem is
+/*Show that ~ ax-10o can be derived from ~ ax-10 .  An open problem is
      whether this theorem can be derived from ~ ax-10 and the others when
      ~ ax-11 is replaced with ~ ax-11o .  See theorem ~ ax10from10o for the
      rederivation of ~ ax-10 from ~ ax10o .

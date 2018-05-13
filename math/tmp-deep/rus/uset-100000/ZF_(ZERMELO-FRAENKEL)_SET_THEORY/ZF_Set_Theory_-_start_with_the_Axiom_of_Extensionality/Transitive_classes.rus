@@ -1,28 +1,28 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Ordered-pair_class_abstractions_(class_builders).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Transitive classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Declare a new symbol. */
+/*Declare a new symbol. */
 
 constant {
 	symbol Tr ;;
 }
 
-/* Transitive predicate (read:  "the following class is
+/*Transitive predicate (read:  "the following class is
               transitive") */
 
-/* Extend wff notation to include transitive classes.  Notation from
+/*Extend wff notation to include transitive classes.  Notation from
      [TakeutiZaring] p. 35. */
 
 rule wtr (A : class) {
 	term : wff = # Tr A ;;
 }
 
-/* Define the transitive class predicate.  Not to be confused with a
+/*Define the transitive class predicate.  Not to be confused with a
      transitive relation (see ~ cotr ).  Definition of [Enderton] p. 71
      extended to arbitrary classes.  For alternate definitions, see ~ dftr2
      (which is suggestive of the word "transitive"), ~ dftr3 , ~ dftr4 ,
@@ -37,7 +37,7 @@ definition df-tr (A : class)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* An alternate way of defining a transitive class.  Exercise 7 of
+/*An alternate way of defining a transitive class.  Exercise 7 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 24-Apr-1994.) */
 
 theorem dftr2 (x : set, y : set, A : class) disjointed(x y A) {
@@ -56,7 +56,7 @@ proof of dftr2 {
 	qed prop 1 = step 8 ;;
 }
 
-/* An alternate way of defining a transitive class.  (Contributed by NM,
+/*An alternate way of defining a transitive class.  (Contributed by NM,
        20-Mar-2004.) */
 
 theorem dftr5 (x : set, y : set, A : class) disjointed(x y A) {
@@ -80,7 +80,7 @@ proof of dftr5 {
 	qed prop 1 = step 13 ;;
 }
 
-/* An alternate way of defining a transitive class.  Definition 7.1 of
+/*An alternate way of defining a transitive class.  Definition 7.1 of
        [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) */
 
 theorem dftr3 (x : set, A : class) disjointed(x y A) {
@@ -96,7 +96,7 @@ proof of dftr3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* An alternate way of defining a transitive class.  Definition of [Enderton]
+/*An alternate way of defining a transitive class.  Definition of [Enderton]
      p. 71.  (Contributed by NM, 29-Aug-1993.) */
 
 theorem dftr4 (A : class)  {
@@ -110,7 +110,7 @@ proof of dftr4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality theorem for the transitive class predicate.  (Contributed by NM,
+/*Equality theorem for the transitive class predicate.  (Contributed by NM,
      17-Sep-1993.) */
 
 theorem treq (A : class, B : class)  {
@@ -128,7 +128,7 @@ proof of treq {
 	qed prop 1 = step 7 ;;
 }
 
-/* In a transitive class, the membership relation is transitive.
+/*In a transitive class, the membership relation is transitive.
        (Contributed by NM, 19-Apr-1994.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) */
 
@@ -152,7 +152,7 @@ proof of trel {
 	qed prop 1 = step 11 ;;
 }
 
-/* In a transitive class, the membership relation is transitive.
+/*In a transitive class, the membership relation is transitive.
      (Contributed by NM, 19-Apr-1994.) */
 
 theorem trel3 (A : class, B : class, C : class, D : class)  {
@@ -169,7 +169,7 @@ proof of trel3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* An element of a transitive class is a subset of the class.  (Contributed
+/*An element of a transitive class is a subset of the class.  (Contributed
        by NM, 7-Aug-1994.) */
 
 theorem trss (A : class, B : class) disjointed(x A, x B) {
@@ -190,7 +190,7 @@ proof of trss {
 	qed prop 1 = step 9 ;;
 }
 
-/* The intersection of transitive classes is transitive.  (Contributed by
+/*The intersection of transitive classes is transitive.  (Contributed by
        NM, 9-May-1994.) */
 
 theorem trin (A : class, B : class) disjointed(x A, x B) {
@@ -212,7 +212,7 @@ proof of trin {
 	qed prop 1 = step 10 ;;
 }
 
-/* The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) */
+/*The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) */
 
 theorem tr0 ()  {
 	prop 1 : wff = |- Tr ∅ ;;
@@ -225,7 +225,7 @@ proof of tr0 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The universe is transitive.  (Contributed by NM, 14-Sep-2003.) */
+/*The universe is transitive.  (Contributed by NM, 14-Sep-2003.) */
 
 theorem trv ()  {
 	prop 1 : wff = |- Tr _V ;;
@@ -238,7 +238,7 @@ proof of trv {
 	qed prop 1 = step 3 ;;
 }
 
-/* The indexed union of a class of transitive sets is transitive.
+/*The indexed union of a class of transitive sets is transitive.
        (Contributed by Mario Carneiro, 16-Nov-2014.) */
 
 theorem triun (x : set, A : class, B : class) disjointed(x y A, y B) {
@@ -267,7 +267,7 @@ proof of triun {
 	qed prop 1 = step 17 ;;
 }
 
-/* The union of a class of transitive sets is transitive.  Exercise 5(a) of
+/*The union of a class of transitive sets is transitive.  Exercise 5(a) of
        [Enderton] p. 73.  (Contributed by Scott Fenton, 21-Feb-2011.)  (Proof
        shortened by Mario Carneiro, 26-Apr-2014.) */
 
@@ -284,11 +284,11 @@ proof of truni {
 	qed prop 1 = step 5 ;;
 }
 
-/* The intersection of a class of transitive sets is transitive.  Exercise
+/*The intersection of a class of transitive sets is transitive.  Exercise
        5(b) of [Enderton] p. 73.  (Contributed by Scott Fenton,
        25-Feb-2011.) */
 
-theorem trint (x : set, A : class) disjointed(x y A) {
+theorem trint (x : set, A : class) disjointed(x y A, y) {
 	prop 1 : wff = |- ( ∀ x ∈ A Tr x → Tr ⋂ A ) ;;
 }
 
@@ -318,10 +318,10 @@ proof of trint {
 	qed prop 1 = step 21 ;;
 }
 
-/* If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
+/*If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
        ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) */
 
-theorem trintss (A : class) disjointed(x y A) {
+theorem trintss (A : class) disjointed(x y A, y) {
 	prop 1 : wff = |- ( ( A ≠ ∅ ∧ Tr A ) → ⋂ A ⊆ A ) ;;
 }
 
@@ -340,7 +340,7 @@ proof of trintss {
 	qed prop 1 = step 10 ;;
 }
 
-/* Any non-empty transitive class includes its intersection.  Exercise 2 in
+/*Any non-empty transitive class includes its intersection.  Exercise 2 in
        [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) */
 
 theorem trint0 (A : class) disjointed(x A) {

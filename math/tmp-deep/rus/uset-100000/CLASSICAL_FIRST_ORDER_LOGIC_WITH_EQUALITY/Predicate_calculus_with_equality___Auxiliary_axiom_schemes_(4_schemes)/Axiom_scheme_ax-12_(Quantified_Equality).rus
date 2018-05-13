@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Auxiliary_axiom_schemes_(4_schemes)/Axiom_scheme_ax-11_(Substitution).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Axiom scheme ax-12 (Quantified Equality)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Quantified Equality.  One of the equality and substitution axioms
+/*Axiom of Quantified Equality.  One of the equality and substitution axioms
      of predicate calculus with equality.
 
      An equivalent way to express this axiom that may be easier to understand
@@ -50,7 +50,7 @@ axiom ax-12 (x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( ¬ x = y → ( y = z → ∀ x y = z ) ) ;;
 }
 
-/* A weaker version of ~ ax-12 with distinct variable restrictions on pairs
+/*A weaker version of ~ ax-12 with distinct variable restrictions on pairs
        ` x , z ` and ` y , z ` .  In order to show that this weakening is
        adequate, this should be the only theorem referencing ~ ax-12 directly.
        (Contributed by NM, 30-Jun-2016.) */
@@ -64,7 +64,7 @@ proof of ax12v {
 	qed prop 1 = step 1 ;;
 }
 
-/* Lemma for ~ ax12o .  Similar to ~ equvin but with a negated equality.
+/*Lemma for ~ ax12o .  Similar to ~ equvin but with a negated equality.
        (Contributed by NM, 24-Dec-2015.) */
 
 theorem ax12olem1 (y : set, z : set, w : set) disjointed(w y, w z) {
@@ -91,7 +91,7 @@ proof of ax12olem1 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Lemma for ~ ax12o .  Negate the equalities in ~ ax-12 , shown as the
+/*Lemma for ~ ax12o .  Negate the equalities in ~ ax-12 , shown as the
        hypothesis.  (Contributed by NM, 24-Dec-2015.) */
 
 theorem ax12olem2 (x : set, y : set, z : set, w : set) disjointed(w x z, w y) {
@@ -117,7 +117,7 @@ proof of ax12olem2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Lemma for ~ ax12o .  Show the equivalence of an intermediate equivalent to
+/*Lemma for ~ ax12o .  Show the equivalence of an intermediate equivalent to
      ~ ax12o with the conjunction of ~ ax-12 and a variant with negated
      equalities.  (Contributed by NM, 24-Dec-2015.) */
 
@@ -144,7 +144,7 @@ proof of ax12olem3 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Lemma for ~ ax12o .  Construct an intermediate equivalent to ~ ax-12
+/*Lemma for ~ ax12o .  Construct an intermediate equivalent to ~ ax-12
        from two instances of ~ ax-12 .  (Contributed by NM, 24-Dec-2015.) */
 
 theorem ax12olem4 (x : set, y : set, z : set, w : set) disjointed(w x z, w y z) {
@@ -161,7 +161,7 @@ proof of ax12olem4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Lemma for ~ ax12o .  See ~ ax12olem6 for derivation of ~ ax12o from the
+/*Lemma for ~ ax12o .  See ~ ax12olem6 for derivation of ~ ax12o from the
        conclusion.  (Contributed by NM, 24-Dec-2015.) */
 
 theorem ax12olem5 (x : set, y : set, z : set)  {
@@ -184,7 +184,7 @@ proof of ax12olem5 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
+/*Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
        using ~ ax12o .  (Contributed by Andrew Salmon, 21-Jul-2011.)  (Revised
        by NM, 24-Dec-2015.) */
 
@@ -211,7 +211,7 @@ proof of ax12olem6 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
+/*Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
        using ~ ax12o .  (Contributed by NM, 24-Dec-2015.) */
 
 theorem ax12olem7 (x : set, y : set, z : set, w : set) disjointed(w x, w y, w z) {
@@ -228,7 +228,7 @@ proof of ax12olem7 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Derive set.mm's original ~ ax-12o from the shorter ~ ax-12 .
+/*Derive set.mm's original ~ ax-12o from the shorter ~ ax-12 .
        (Contributed by NM, 29-Nov-2015.)  (Revised by NM, 24-Dec-2015.) */
 
 theorem ax12o (x : set, y : set, z : set) disjointed(x w v, y w v, z w v) {
@@ -247,7 +247,7 @@ proof of ax12o {
 	qed prop 1 = step 7 ;;
 }
 
-/* Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
+/*Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
        22-Jul-2015.) */
 
 theorem ax10lem1 (x : set, y : set, w : set) disjointed(x v w, y v w) {
@@ -264,7 +264,7 @@ proof of ax10lem1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Lemma for ~ ax10 .  Change free variable.  (Contributed by NM,
+/*Lemma for ~ ax10 .  Change free variable.  (Contributed by NM,
        25-Jul-2015.) */
 
 theorem ax10lem2 (x : set, y : set, z : set) disjointed(x y, x z) {
@@ -292,7 +292,7 @@ proof of ax10lem2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Lemma for ~ ax10 .  Similar to ~ ax-10 but with distinct variables.
+/*Lemma for ~ ax10 .  Similar to ~ ax-10 but with distinct variables.
        (Contributed by NM, 25-Jul-2015.) */
 
 theorem ax10lem3 (x : set, y : set) disjointed(w x y, w x z) {
@@ -311,7 +311,7 @@ proof of ax10lem3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Similar to ~ dvelim with first hypothesis replaced by distinct variable
+/*Similar to ~ dvelim with first hypothesis replaced by distinct variable
        condition.  (Contributed by NM, 25-Jul-2015.) */
 
 theorem dvelimv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, y z, z ps, x ph) {
@@ -371,7 +371,7 @@ proof of dvelimv {
 	qed prop 1 = step 47 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.
+/*Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.)  (Revised by NM, 20-Jul-2015.) */
 
 theorem dveeq2 (x : set, y : set, z : set) disjointed(w z x, w y) {
@@ -385,7 +385,7 @@ proof of dveeq2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
+/*Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
        8-Jul-2016.) */
 
 theorem ax10lem4 (x : set, y : set, w : set) disjointed(w z x, w z y) {
@@ -411,7 +411,7 @@ proof of ax10lem4 {
 	qed prop 1 = step 14 ;;
 }
 
-/* Lemma for ~ ax10 .  Change free and bound variables.  (Contributed by
+/*Lemma for ~ ax10 .  Change free and bound variables.  (Contributed by
        NM, 22-Jul-2015.) */
 
 theorem ax10lem5 (x : set, y : set, z : set, w : set) disjointed(w z, u v w, v x, v y) {
@@ -430,7 +430,7 @@ proof of ax10lem5 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Lemma for ~ ax10 .  Similar to ~ ax10o but with reversed antecedent.
+/*Lemma for ~ ax10 .  Similar to ~ ax10o but with reversed antecedent.
      (Contributed by NM, 25-Jul-2015.) */
 
 theorem ax10lem6 (ph : wff, x : set, y : set)  {
@@ -446,7 +446,7 @@ proof of ax10lem6 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Derive set.mm's original ~ ax-10 from others.  (Contributed by NM,
+/*Derive set.mm's original ~ ax-10 from others.  (Contributed by NM,
        25-Jul-2015.)  (Revised by NM, 7-Nov-2015.) */
 
 theorem ax10 (x : set, y : set) disjointed(x z, y z) {
@@ -474,7 +474,7 @@ proof of ax10 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Generalization of ~ ax16 .  (Contributed by NM, 25-Jul-2015.) */
+/*Generalization of ~ ax16 .  (Contributed by NM, 25-Jul-2015.) */
 
 theorem a16g (ph : wff, x : set, y : set, z : set) disjointed(x y, w ph, w z) {
 	prop 1 : wff = |- ( ∀ x x = y → ( ph → ∀ z ph ) ) ;;
@@ -505,7 +505,7 @@ proof of a16g {
 	qed prop 1 = step 20 ;;
 }
 
-/* Commutation law for identical variable specifiers.  The antecedent and
+/*Commutation law for identical variable specifiers.  The antecedent and
      consequent are true when ` x ` and ` y ` are substituted with the same
      variable.  Lemma L12 in [Megill] p. 445 (p. 12 of the preprint).
      (Contributed by NM, 5-Aug-1993.) */
@@ -519,7 +519,7 @@ proof of aecom {
 	qed prop 1 = step 1 ;;
 }
 
-/* A commutation rule for identical variable specifiers.  (Contributed by
+/*A commutation rule for identical variable specifiers.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem aecoms (ph : wff, x : set, y : set)  {
@@ -534,7 +534,7 @@ proof of aecoms {
 	qed prop 1 = step 2 ;;
 }
 
-/* A commutation rule for distinct variable specifiers.  (Contributed by
+/*A commutation rule for distinct variable specifiers.  (Contributed by
        NM, 2-Jan-2002.) */
 
 theorem naecoms (ph : wff, x : set, y : set)  {
@@ -550,7 +550,7 @@ proof of naecoms {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem showing that ~ ax-9 follows from the weaker version ~ ax9v .
+/*Theorem showing that ~ ax-9 follows from the weaker version ~ ax9v .
        (Even though this theorem depends on ~ ax-9 , all references of ~ ax-9
        are made via ~ ax9v .  An earlier version stated ~ ax9v as a separate
        axiom, but having two axioms caused some confusion.)
@@ -586,7 +586,7 @@ proof of ax9 {
 	qed prop 1 = step 18 ;;
 }
 
-/* Show that the original axiom ~ ax-9o can be derived from ~ ax9 and
+/*Show that the original axiom ~ ax-9o can be derived from ~ ax9 and
      others.  See ~ ax9from9o for the rederivation of ~ ax9 from ~ ax-9o .
 
      Normally, ~ ax9o should be used rather than ~ ax-9o , except by theorems
@@ -607,7 +607,7 @@ proof of ax9o {
 	qed prop 1 = step 6 ;;
 }
 
-/* At least one individual exists.  This is not a theorem of free logic,
+/*At least one individual exists.  This is not a theorem of free logic,
      which is sound in empty domains.  For such a logic, we would add this
      theorem as an axiom of set theory (Axiom 0 of [Kunen] p. 10).  In the
      system consisting of ~ ax-5 through ~ ax-14 and ~ ax-17 , all axioms other
@@ -626,7 +626,7 @@ proof of a9e {
 	qed prop 1 = step 3 ;;
 }
 
-/* Show that ~ ax-10o can be derived from ~ ax-10 in the form of ~ ax10 .
+/*Show that ~ ax-10o can be derived from ~ ax-10 in the form of ~ ax10 .
      Normally, ~ ax10o should be used rather than ~ ax-10o , except by theorems
      specifically studying the latter's properties.  (Contributed by NM,
      16-May-2008.)  (Proof modification is discouraged.) */
@@ -646,7 +646,7 @@ proof of ax10o {
 	qed prop 1 = step 7 ;;
 }
 
-/* All variables are effectively bound in an identical variable specifier.
+/*All variables are effectively bound in an identical variable specifier.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbae (x : set, y : set, z : set)  {
@@ -671,7 +671,7 @@ proof of hbae {
 	qed prop 1 = step 14 ;;
 }
 
-/* All variables are effectively bound in an identical variable specifier.
+/*All variables are effectively bound in an identical variable specifier.
      (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfae (x : set, y : set, z : set)  {
@@ -684,7 +684,7 @@ proof of nfae {
 	qed prop 1 = step 2 ;;
 }
 
-/* All variables are effectively bound in a distinct variable specifier.
+/*All variables are effectively bound in a distinct variable specifier.
      Lemma L19 in [Megill] p. 446 (p. 14 of the preprint).  (Contributed by NM,
      5-Aug-1993.) */
 
@@ -698,7 +698,7 @@ proof of hbnae {
 	qed prop 1 = step 2 ;;
 }
 
-/* All variables are effectively bound in a distinct variable specifier.
+/*All variables are effectively bound in a distinct variable specifier.
      (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfnae (x : set, y : set, z : set)  {
@@ -711,7 +711,7 @@ proof of nfnae {
 	qed prop 1 = step 2 ;;
 }
 
-/* Rule that applies ~ hbnae to antecedent.  (Contributed by NM,
+/*Rule that applies ~ hbnae to antecedent.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem hbnaes (ph : wff, x : set, y : set, z : set)  {
@@ -726,7 +726,7 @@ proof of hbnaes {
 	qed prop 1 = step 2 ;;
 }
 
-/* A variable is effectively not free in an equality if it is not either of
+/*A variable is effectively not free in an equality if it is not either of
      the involved variables. ` F/ ` version of ~ ax-12o .  (Contributed by
      Mario Carneiro, 6-Oct-2016.) */
 
@@ -744,7 +744,7 @@ proof of nfeqf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Lemma used in proofs of substitution properties.  (Contributed by NM,
+/*Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.)  (Proof shortened by Mario Carneiro, 20-May-2014.) */
 
 theorem equs4 (ph : wff, x : set, y : set)  {
@@ -762,7 +762,7 @@ proof of equs4 {
 	qed prop 1 = step 7 ;;
 }
 
-/* A useful equivalence related to substitution.  (Contributed by NM,
+/*A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.)  (Revised
        by Mario Carneiro, 3-Oct-2016.) */
 
@@ -787,7 +787,7 @@ proof of equsal {
 	qed prop 1 = step 10 ;;
 }
 
-/* A useful equivalence related to substitution.  (Contributed by NM,
+/*A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem equsalh (ph : wff, ps : wff, x : set, y : set)  {
@@ -803,7 +803,7 @@ proof of equsalh {
 	qed prop 1 = step 2 ;;
 }
 
-/* A useful equivalence related to substitution.  (Contributed by NM,
+/*A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 3-Oct-2016.) */
 
 theorem equsex (ph : wff, ps : wff, x : set, y : set)  {
@@ -825,7 +825,7 @@ proof of equsex {
 	qed prop 1 = step 8 ;;
 }
 
-/* A useful equivalence related to substitution.  (Contributed by NM,
+/*A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem equsexh (ph : wff, ps : wff, x : set, y : set)  {
@@ -841,7 +841,7 @@ proof of equsexh {
 	qed prop 1 = step 2 ;;
 }
 
-/* Version of ~ dvelim without any variable restrictions.  (Contributed by
+/*Version of ~ dvelim without any variable restrictions.  (Contributed by
        NM, 1-Oct-2002.) */
 
 theorem dvelimh (ph : wff, ps : wff, x : set, y : set, z : set)  {
@@ -878,7 +878,7 @@ proof of dvelimh {
 	qed prop 1 = step 22 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 24-Nov-1994.) */
 
@@ -904,7 +904,7 @@ proof of dral1 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) */
 
@@ -920,7 +920,7 @@ proof of dral2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) */
 
@@ -940,7 +940,7 @@ proof of drex1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) */
 
@@ -956,7 +956,7 @@ proof of drex2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 4-Oct-2016.) */
 
 theorem drnf1 (ph : wff, ps : wff, x : set, y : set)  {
@@ -975,7 +975,7 @@ proof of drnf1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 4-Oct-2016.) */
 
 theorem drnf2 (ph : wff, ps : wff, x : set, y : set, z : set)  {
@@ -994,7 +994,7 @@ proof of drnf2 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Distribution of existential quantifiers, with a bound-variable
+/*Distribution of existential quantifiers, with a bound-variable
        hypothesis saying that ` y ` is not free in ` ph ` , but ` x ` can be
        free in ` ph ` (and there is no distinct variable condition on ` x ` and
        ` y ` ).  (Contributed by Mario Carneiro, 20-Mar-2013.) */
@@ -1026,7 +1026,7 @@ proof of exdistrf {
 	qed prop 1 = step 17 ;;
 }
 
-/* Variation on ~ nfald which adds the hypothesis that ` x ` and ` y ` are
+/*Variation on ~ nfald which adds the hypothesis that ` x ` and ` y ` are
        distinct in the inner subproof.  (Contributed by Mario Carneiro,
        8-Oct-2016.) */
 
@@ -1050,7 +1050,7 @@ proof of nfald2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Variation on ~ nfexd which adds the hypothesis that ` x ` and ` y ` are
+/*Variation on ~ nfexd which adds the hypothesis that ` x ` and ` y ` are
        distinct in the inner subproof.  (Contributed by Mario Carneiro,
        8-Oct-2016.) */
 
@@ -1070,7 +1070,7 @@ proof of nfexd2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Closed theorem form of ~ spim .  (Contributed by NM, 15-Jan-2008.)
+/*Closed theorem form of ~ spim .  (Contributed by NM, 15-Jan-2008.)
      (Revised by Mario Carneiro, 17-Oct-2016.) */
 
 theorem spimt (ph : wff, ps : wff, x : set, y : set)  {
@@ -1094,7 +1094,7 @@ proof of spimt {
 	qed prop 1 = step 13 ;;
 }
 
-/* Specialization, using implicit substitution.  Compare Lemma 14 of
+/*Specialization, using implicit substitution.  Compare Lemma 14 of
        [Tarski] p. 70.  The ~ spim series of theorems requires that only one
        direction of the substitution hypothesis hold.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 3-Oct-2016.) */
@@ -1113,7 +1113,7 @@ proof of spim {
 	qed prop 1 = step 3 ;;
 }
 
-/* Existential introduction, using implicit substitution.  Compare Lemma 14
+/*Existential introduction, using implicit substitution.  Compare Lemma 14
        of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.)  (Revised by Mario
        Carneiro, 3-Oct-2016.) */
 
@@ -1134,7 +1134,7 @@ proof of spime {
 	qed prop 1 = step 6 ;;
 }
 
-/* Deduction version of ~ spime .  (Contributed by NM, 5-Aug-1993.)
+/*Deduction version of ~ spime .  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 3-Oct-2016.) */
 
 theorem spimed (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -1155,7 +1155,7 @@ proof of spimed {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbv1h (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -1182,7 +1182,7 @@ proof of cbv1h {
 	qed prop 1 = step 12 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) */
 
@@ -1201,7 +1201,7 @@ proof of cbv1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbv2h (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -1225,7 +1225,7 @@ proof of cbv2h {
 	qed prop 1 = step 9 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) */
 
@@ -1244,7 +1244,7 @@ proof of cbv2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution, that
+/*Rule used to change bound variables, using implicit substitution, that
        does not use ~ ax-12o .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbv3 (ph : wff, ps : wff, x : set, y : set)  {
@@ -1266,7 +1266,7 @@ proof of cbv3 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.)  (Proof modification is discouraged.) */
 
@@ -1288,7 +1288,7 @@ proof of cbv3h {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) */
 
@@ -1310,7 +1310,7 @@ proof of cbval {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbvex (ph : wff, ps : wff, x : set, y : set)  {
@@ -1333,7 +1333,7 @@ proof of cbvex {
 	qed prop 1 = step 8 ;;
 }
 
-/* Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
+/*Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
        by Raph Levien, 9-Jul-2003.)  (Revised by Mario Carneiro,
        3-Oct-2016.) */
 
@@ -1352,7 +1352,7 @@ proof of chvar {
 	qed prop 1 = step 3 ;;
 }
 
-/* A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109,
+/*A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109,
      however we do not require ` z ` to be distinct from ` x ` and ` y `
      (making the proof longer).  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) */
@@ -1388,7 +1388,7 @@ proof of equvini {
 	qed prop 1 = step 23 ;;
 }
 
-/* A variable elimination law for equality with no distinct variable
+/*A variable elimination law for equality with no distinct variable
      requirements.  (Compare ~ equvini .)  (Contributed by NM, 1-Mar-2013.)
      (Proof shortened by Mario Carneiro, 17-Oct-2016.) */
 
@@ -1438,7 +1438,7 @@ proof of equveli {
 	qed prop 1 = step 38 ;;
 }
 
-/* Two ways of expressing substitution when ` y ` is not free in ` ph ` .
+/*Two ways of expressing substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 25-Apr-2008.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -1459,7 +1459,7 @@ proof of equs45f {
 	qed prop 1 = step 7 ;;
 }
 
-/* A version of ~ spim with a distinct variable requirement instead of a
+/*A version of ~ spim with a distinct variable requirement instead of a
        bound variable hypothesis.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem spimv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps) {
@@ -1474,7 +1474,7 @@ proof of spimv {
 	qed prop 1 = step 2 ;;
 }
 
-/* A "distinctor elimination" lemma with no restrictions on variables in
+/*A "distinctor elimination" lemma with no restrictions on variables in
        the consequent.  (Contributed by NM, 8-Nov-2006.) */
 
 theorem aev (x : set, y : set, z : set, w : set, v : set) disjointed(u v, u x y, u w) {
@@ -1492,7 +1492,7 @@ proof of aev {
 	qed prop 1 = step 6 ;;
 }
 
-/* Recovery of ~ ax-11o from ~ ax11v .  This proof uses ~ ax-10 and
+/*Recovery of ~ ax-11o from ~ ax11v .  This proof uses ~ ax-10 and
        ~ ax-11 .  TODO: figure out if this is useful, or if it should be
        simplified or eliminated.  (Contributed by NM, 2-Feb-2007.) */
 
@@ -1523,7 +1523,7 @@ proof of ax11v2 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 . ~ ax-10 and
+/*Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 . ~ ax-10 and
        ~ ax-11 are used by the proof, but not ~ ax-10o or ~ ax-11o .  TODO:
        figure out if this is useful, or if it should be simplified or
        eliminated.  (Contributed by NM, 2-Feb-2007.) */
@@ -1541,7 +1541,7 @@ proof of ax11a2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Derivation of set.mm's original ~ ax-11o from ~ ax-10 and the shorter
+/*Derivation of set.mm's original ~ ax-11o from ~ ax-10 and the shorter
        ~ ax-11 that has replaced it.
 
        An open problem is whether this theorem can be proved without relying on
@@ -1568,7 +1568,7 @@ proof of ax11o {
 	qed prop 1 = step 2 ;;
 }
 
-/* A bidirectional version of ~ ax11o .  (Contributed by NM, 30-Jun-2006.) */
+/*A bidirectional version of ~ ax11o .  (Contributed by NM, 30-Jun-2006.) */
 
 theorem ax11b (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ph ↔ ∀ x ( x = y → ph ) ) ) ;;
@@ -1584,7 +1584,7 @@ proof of ax11b {
 	qed prop 1 = step 6 ;;
 }
 
-/* Lemma used in proofs of substitution properties.  (Contributed by NM,
+/*Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem equs5 (ph : wff, x : set, y : set)  {
@@ -1600,7 +1600,7 @@ proof of equs5 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Version of ~ dvelimv without any variable restrictions.  (Contributed by
+/*Version of ~ dvelimv without any variable restrictions.  (Contributed by
        NM, 1-Oct-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem dvelimf (ph : wff, ps : wff, x : set, y : set, z : set)  {
@@ -1628,7 +1628,7 @@ proof of dvelimf {
 	qed prop 1 = step 13 ;;
 }
 
-/* Specialization, using implicit substitution.  (Contributed by NM,
+/*Specialization, using implicit substitution.  (Contributed by NM,
        30-Aug-1993.) */
 
 theorem spv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps) {
@@ -1643,7 +1643,7 @@ proof of spv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distinct-variable version of ~ spime .  (Contributed by NM,
+/*Distinct-variable version of ~ spime .  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem spimev (ph : wff, ps : wff, x : set, y : set) disjointed(x ph) {
@@ -1658,7 +1658,7 @@ proof of spimev {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from existential specialization, using implicit substitution.
+/*Inference from existential specialization, using implicit substitution.
        (Contributed by NM, 19-Aug-1993.) */
 
 theorem speiv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps) {
@@ -1675,7 +1675,7 @@ proof of speiv {
 	qed prop 1 = step 3 ;;
 }
 
-/* A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109.
+/*A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem equvin (x : set, y : set, z : set) disjointed(x z, y z) {
@@ -1691,7 +1691,7 @@ proof of equvin {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbvalv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps) {
@@ -1707,7 +1707,7 @@ proof of cbvalv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem cbvexv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps) {
@@ -1723,7 +1723,7 @@ proof of cbvexv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 22-Dec-2003.)  (Revised by Mario Carneiro,
        6-Oct-2016.) */
 
@@ -1756,7 +1756,7 @@ proof of cbval2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 14-Sep-2003.)  (Revised by Mario Carneiro,
        6-Oct-2016.) */
 
@@ -1789,7 +1789,7 @@ proof of cbvex2 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 4-Feb-2005.) */
 
 theorem cbval2v (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(z w ph, x y ps, x w, z y) {
@@ -1807,7 +1807,7 @@ proof of cbval2v {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-Jul-1995.) */
 
 theorem cbvex2v (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(z w ph, x y ps, x w, z y) {
@@ -1825,7 +1825,7 @@ proof of cbvex2v {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction used to change bound variables, using implicit substitution,
+/*Deduction used to change bound variables, using implicit substitution,
        particularly useful in conjunction with ~ dvelim .  (Contributed by NM,
        2-Jan-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
@@ -1846,7 +1846,7 @@ proof of cbvald {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction used to change bound variables, using implicit substitution,
+/*Deduction used to change bound variables, using implicit substitution,
        particularly useful in conjunction with ~ dvelim .  (Contributed by NM,
        2-Jan-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
@@ -1870,7 +1870,7 @@ proof of cbvexd {
 	qed prop 1 = step 8 ;;
 }
 
-/* Rule used to change the bound variable in a universal quantifier with
+/*Rule used to change the bound variable in a universal quantifier with
        implicit substitution.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -1888,7 +1888,7 @@ proof of cbvaldva {
 	qed prop 1 = step 4 ;;
 }
 
-/* Rule used to change the bound variable in an existential quantifier with
+/*Rule used to change the bound variable in an existential quantifier with
        implicit substitution.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) */
 
@@ -1906,9 +1906,9 @@ proof of cbvexdva {
 	qed prop 1 = step 4 ;;
 }
 
-/* Define temporary individual variables. */
+/*Define temporary individual variables. */
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-Jul-1995.) */
 
 theorem cbvex4v (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, w : set, v : set, u : set, f : set, g : set) disjointed(w z ch, u v ph, x y ps, f g ps, f w, g z, u v w x y z) {
@@ -1927,7 +1927,7 @@ proof of cbvex4v {
 	qed prop 1 = step 5 ;;
 }
 
-/* Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
+/*Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
        by NM, 20-Apr-1994.) */
 
 theorem chvarv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps) {
@@ -1943,7 +1943,7 @@ proof of chvarv {
 	qed prop 1 = step 2 ;;
 }
 
-/* When the class variables in definition ~ df-clel are replaced with set
+/*When the class variables in definition ~ df-clel are replaced with set
        variables, this theorem of predicate calculus is the result.  This
        theorem provides part of the justification for the consistency of that
        definition, which "overloads" the set variables in ~ wel with the class
@@ -1963,7 +1963,7 @@ proof of cleljust {
 	qed prop 1 = step 4 ;;
 }
 
-/* When the class variables in definition ~ df-clel are replaced with set
+/*When the class variables in definition ~ df-clel are replaced with set
        variables, this theorem of predicate calculus is the result.  This
        theorem provides part of the justification for the consistency of that
        definition, which "overloads" the set variables in ~ wel with the class
@@ -1982,7 +1982,7 @@ proof of cleljustALT {
 	qed prop 1 = step 4 ;;
 }
 
-/* This theorem can be used to eliminate a distinct variable restriction on
+/*This theorem can be used to eliminate a distinct variable restriction on
        ` x ` and ` z ` and replace it with the "distinctor" ` -. A. x x = y `
        as an antecedent. ` ph ` normally has ` z ` free and can be read
        ` ph ( z ) ` , and ` ps ` substitutes ` y ` for ` z ` and can be read
@@ -2010,7 +2010,7 @@ proof of dvelim {
 	qed prop 1 = step 2 ;;
 }
 
-/* Version of ~ dvelim using "not free" notation.  (Contributed by Mario
+/*Version of ~ dvelim using "not free" notation.  (Contributed by Mario
        Carneiro, 9-Oct-2016.) */
 
 theorem dvelimnf (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(z ps) {
@@ -2026,7 +2026,7 @@ proof of dvelimnf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.
+/*Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) */
 
 theorem dveeq1 (x : set, y : set, z : set) disjointed(w z x, w y) {
@@ -2040,7 +2040,7 @@ proof of dveeq1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.
+/*Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) */
 
 theorem dveel1 (x : set, y : set, z : set) disjointed(w z x, w y) {
@@ -2054,7 +2054,7 @@ proof of dveel1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Quantifier introduction when one pair of variables is distinct.
+/*Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) */
 
 theorem dveel2 (x : set, y : set, z : set) disjointed(w z x, w y) {
@@ -2068,9 +2068,9 @@ proof of dveel2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` w ` is dummy. */
+/*` w ` is dummy. */
 
-/* Axiom ~ ax-15 is redundant if we assume ~ ax-17 .  Remark 9.6 in
+/*Axiom ~ ax-15 is redundant if we assume ~ ax-17 .  Remark 9.6 in
        [Megill] p. 448 (p. 16 of the preprint), regarding axiom scheme C14'.
 
        Note that ` w ` is a dummy variable introduced in the proof.  On the web
@@ -2101,7 +2101,7 @@ proof of ax15 {
 	qed prop 1 = step 11 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
      Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  (Contributed
      by NM, 5-Aug-1993.) */
 
@@ -2124,7 +2124,7 @@ proof of drsb1 {
 	qed prop 1 = step 11 ;;
 }
 
-/* One direction of a simplified definition of substitution.  (Contributed by
+/*One direction of a simplified definition of substitution.  (Contributed by
      NM, 5-Aug-1993.) */
 
 theorem sb2 (ph : wff, x : set, y : set)  {
@@ -2139,7 +2139,7 @@ proof of sb2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* The specialization axiom of standard predicate calculus.  It states that
+/*The specialization axiom of standard predicate calculus.  It states that
      if a statement ` ph ` holds for all ` x ` , then it also holds for the
      specific case of ` y ` (properly) substituted for ` x ` .  Translated to
      traditional notation, it can be read:  " ` A. x ph ( x ) -> ph ( y ) ` ,
@@ -2159,7 +2159,7 @@ proof of stdpc4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Substitution has no effect on a non-free variable.  (Contributed by NM,
+/*Substitution has no effect on a non-free variable.  (Contributed by NM,
      30-May-2009.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem sbft (ph : wff, x : set, y : set)  {
@@ -2180,7 +2180,7 @@ proof of sbft {
 	qed prop 1 = step 10 ;;
 }
 
-/* Substitution for a variable not free in a wff does not affect it.
+/*Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -2196,7 +2196,7 @@ proof of sbf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution for a variable not free in a wff does not affect it.
+/*Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbh (ph : wff, x : set, y : set)  {
@@ -2211,7 +2211,7 @@ proof of sbh {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution has no effect on a bound variable.  (Contributed by NM,
+/*Substitution has no effect on a bound variable.  (Contributed by NM,
      1-Jul-2005.) */
 
 theorem sbf2 (ph : wff, x : set, y : set)  {
@@ -2224,7 +2224,7 @@ proof of sbf2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Equivalence involving substitution for a variable not free.
+/*Equivalence involving substitution for a variable not free.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -2242,7 +2242,7 @@ proof of sb6x {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfs1f (ph : wff, x : set, y : set)  {
@@ -2257,7 +2257,7 @@ proof of nfs1f {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution does not change an identical variable specifier.
+/*Substitution does not change an identical variable specifier.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequ5 (x : set, y : set, z : set, w : set)  {
@@ -2270,7 +2270,7 @@ proof of sbequ5 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution does not change a distinctor.  (Contributed by NM,
+/*Substitution does not change a distinctor.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem sbequ6 (x : set, y : set, z : set, w : set)  {
@@ -2283,7 +2283,7 @@ proof of sbequ6 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A substitution into a theorem remains true.  (See ~ chvar and ~ chvarv
+/*A substitution into a theorem remains true.  (See ~ chvar and ~ chvarv
        for versions using implicit substitution.)  (Contributed by NM,
        21-Jan-2004.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
@@ -2300,7 +2300,7 @@ proof of sbt {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution applied to an atomic wff.  (Contributed by NM,
+/*Substitution applied to an atomic wff.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem equsb1 (x : set, y : set)  {
@@ -2314,7 +2314,7 @@ proof of equsb1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution applied to an atomic wff.  (Contributed by NM,
+/*Substitution applied to an atomic wff.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem equsb2 (x : set, y : set)  {
@@ -2328,7 +2328,7 @@ proof of equsb2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution (deduction
+/*Conversion of implicit substitution to explicit substitution (deduction
        version of ~ sbie ).  (Contributed by NM, 30-Jun-1994.)  (Revised by
        Mario Carneiro, 4-Oct-2016.) */
 
@@ -2361,7 +2361,7 @@ proof of sbied {
 	qed prop 1 = step 17 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution (deduction
+/*Conversion of implicit substitution to explicit substitution (deduction
        version of ~ sbie ).  (Contributed by NM, 7-Jan-2017.) */
 
 theorem sbiedv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, x ch) {
@@ -2378,7 +2378,7 @@ proof of sbiedv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution.
+/*Conversion of implicit substitution to explicit substitution.
        (Contributed by NM, 30-Jun-1994.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -2398,7 +2398,7 @@ proof of sbie {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equivalence for substitution when ` y ` is not free in ` ph ` .
+/*Equivalence for substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -2418,7 +2418,7 @@ proof of sb6f {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalence for substitution when ` y ` is not free in ` ph ` .
+/*Equivalence for substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -2435,7 +2435,7 @@ proof of sb5f {
 	qed prop 1 = step 3 ;;
 }
 
-/* Special case of a bound-variable hypothesis builder for substitution.
+/*Special case of a bound-variable hypothesis builder for substitution.
      (Contributed by NM, 2-Feb-2007.) */
 
 theorem hbsb2a (ph : wff, x : set, y : set)  {
@@ -2450,7 +2450,7 @@ proof of hbsb2a {
 	qed prop 1 = step 4 ;;
 }
 
-/* Special case of a bound-variable hypothesis builder for substitution.
+/*Special case of a bound-variable hypothesis builder for substitution.
      (Contributed by NM, 2-Feb-2007.) */
 
 theorem hbsb2e (ph : wff, x : set, y : set)  {
@@ -2465,7 +2465,7 @@ proof of hbsb2e {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` y ` is not free in ` ph ` , ` x ` is not free in
+/*If ` y ` is not free in ` ph ` , ` x ` is not free in
        ` [ y / x ] ph ` .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbsb3 (ph : wff, x : set, y : set)  {
@@ -2481,7 +2481,7 @@ proof of hbsb3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` y ` is not free in ` ph ` , ` x ` is not free in
+/*If ` y ` is not free in ` ph ` , ` x ` is not free in
        ` [ y / x ] ph ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfs1 (ph : wff, x : set, y : set)  {
@@ -2497,10 +2497,10 @@ proof of nfs1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Proof of older axiom ~ ax-16 .  (Contributed by NM, 8-Nov-2006.)
+/*Proof of older axiom ~ ax-16 .  (Contributed by NM, 8-Nov-2006.)
        (Revised by NM, 22-Sep-2017.) */
 
-theorem ax16 (ph : wff, x : set, y : set) disjointed(x y) {
+theorem ax16 (ph : wff, x : set, y : set) disjointed(x y, ph) {
 	prop 1 : wff = |- ( ∀ x x = y → ( ph → ∀ x ph ) ) ;;
 }
 
@@ -2509,7 +2509,7 @@ proof of ax16 {
 	qed prop 1 = step 1 ;;
 }
 
-/* Inference with ~ ax16 as its conclusion.  (Contributed by NM,
+/*Inference with ~ ax16 as its conclusion.  (Contributed by NM,
        20-May-2008.)  (Proof modification is discouraged.) */
 
 theorem ax16i (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x y z, z ph) {
@@ -2549,7 +2549,7 @@ proof of ax16i {
 	qed prop 1 = step 26 ;;
 }
 
-/* Alternate proof of ~ ax16 .  (Contributed by NM, 17-May-2008.)
+/*Alternate proof of ~ ax16 .  (Contributed by NM, 17-May-2008.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem ax16ALT (ph : wff, x : set, y : set) disjointed(x y z, z ph) {
@@ -2565,7 +2565,7 @@ proof of ax16ALT {
 	qed prop 1 = step 4 ;;
 }
 
-/* Alternate proof of ~ ax16 .  (Contributed by NM, 8-Nov-2006.)
+/*Alternate proof of ~ ax16 .  (Contributed by NM, 8-Nov-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) */
 
 theorem ax16ALT2 (ph : wff, x : set, y : set) disjointed(x y, z ph) {
@@ -2588,7 +2588,7 @@ proof of ax16ALT2 {
 	qed prop 1 = step 11 ;;
 }
 
-/* A generalization of axiom ~ ax-16 .  Alternate proof of ~ a16g that uses
+/*A generalization of axiom ~ ax-16 .  Alternate proof of ~ a16g that uses
        ~ df-sb .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 25-May-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) */
@@ -2607,7 +2607,7 @@ proof of a16gALT {
 	qed prop 1 = step 6 ;;
 }
 
-/* A generalization of axiom ~ ax-16 .  (Contributed by NM, 5-Aug-1993.) */
+/*A generalization of axiom ~ ax-16 .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem a16gb (ph : wff, x : set, y : set, z : set) disjointed(x y) {
 	prop 1 : wff = |- ( ∀ x x = y → ( ph ↔ ∀ z ph ) ) ;;
@@ -2620,7 +2620,7 @@ proof of a16gb {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ~ dtru is false, then there is only one element in the universe, so
+/*If ~ dtru is false, then there is only one element in the universe, so
        everything satisfies ` F/ ` .  (Contributed by Mario Carneiro,
        7-Oct-2016.) */
 
@@ -2635,7 +2635,7 @@ proof of a16nf {
 	qed prop 1 = step 3 ;;
 }
 
-/* One direction of a simplified definition of substitution when variables
+/*One direction of a simplified definition of substitution when variables
      are distinct.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sb3 (ph : wff, x : set, y : set)  {
@@ -2649,7 +2649,7 @@ proof of sb3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* One direction of a simplified definition of substitution when variables
+/*One direction of a simplified definition of substitution when variables
      are distinct.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sb4 (ph : wff, x : set, y : set)  {
@@ -2663,7 +2663,7 @@ proof of sb4 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Simplified definition of substitution when variables are distinct.
+/*Simplified definition of substitution when variables are distinct.
      (Contributed by NM, 27-May-1997.) */
 
 theorem sb4b (ph : wff, x : set, y : set)  {
@@ -2677,7 +2677,7 @@ proof of sb4b {
 	qed prop 1 = step 3 ;;
 }
 
-/* An alternate definition of proper substitution that, like ~ df-sb , mixes
+/*An alternate definition of proper substitution that, like ~ df-sb , mixes
      free and bound variables to avoid distinct variable requirements.
      (Contributed by NM, 17-Feb-2005.) */
 
@@ -2703,7 +2703,7 @@ proof of dfsb2 {
 	qed prop 1 = step 14 ;;
 }
 
-/* An alternate definition of proper substitution ~ df-sb that uses only
+/*An alternate definition of proper substitution ~ df-sb that uses only
      primitive connectives (no defined terms) on the right-hand side.
      (Contributed by NM, 6-Mar-2007.) */
 
@@ -2720,7 +2720,7 @@ proof of dfsb3 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution.  (Contributed by NM,
+/*Bound-variable hypothesis builder for substitution.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem hbsb2 (ph : wff, x : set, y : set)  {
@@ -2735,7 +2735,7 @@ proof of hbsb2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution.  (Contributed by Mario
+/*Bound-variable hypothesis builder for substitution.  (Contributed by Mario
      Carneiro, 4-Oct-2016.) */
 
 theorem nfsb2 (ph : wff, x : set, y : set)  {
@@ -2749,7 +2749,7 @@ proof of nfsb2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequi (ph : wff, x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( x = y → ( [ x / z ] ph → [ y / z ] ph ) ) ;;
@@ -2793,7 +2793,7 @@ proof of sbequi {
 	qed prop 1 = step 34 ;;
 }
 
-/* An equality theorem for substitution.  Used in proof of Theorem 9.7 in
+/*An equality theorem for substitution.  Used in proof of Theorem 9.7 in
      [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
      5-Aug-1993.) */
 
@@ -2809,7 +2809,7 @@ proof of sbequ {
 	qed prop 1 = step 4 ;;
 }
 
-/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+/*Formula-building lemma for use with the Distinctor Reduction Theorem.
      Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  (Contributed
      by NM, 27-Feb-2005.) */
 
@@ -2823,7 +2823,7 @@ proof of drsb2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Negation inside and outside of substitution are equivalent.  (Contributed
+/*Negation inside and outside of substitution are equivalent.  (Contributed
      by NM, 5-Aug-1993.) */
 
 theorem sbn (ph : wff, x : set, y : set)  {
@@ -2857,7 +2857,7 @@ proof of sbn {
 	qed prop 1 = step 23 ;;
 }
 
-/* Removal of implication from substitution.  (Contributed by NM,
+/*Removal of implication from substitution.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem sbi1 (ph : wff, ps : wff, x : set, y : set)  {
@@ -2883,7 +2883,7 @@ proof of sbi1 {
 	qed prop 1 = step 15 ;;
 }
 
-/* Introduction of implication into substitution.  (Contributed by NM,
+/*Introduction of implication into substitution.  (Contributed by NM,
      5-Aug-1993.) */
 
 theorem sbi2 (ph : wff, ps : wff, x : set, y : set)  {
@@ -2901,7 +2901,7 @@ proof of sbi2 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Implication inside and outside of substitution are equivalent.
+/*Implication inside and outside of substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbim (ph : wff, ps : wff, x : set, y : set)  {
@@ -2915,7 +2915,7 @@ proof of sbim {
 	qed prop 1 = step 3 ;;
 }
 
-/* Logical OR inside and outside of substitution are equivalent.
+/*Logical OR inside and outside of substitution are equivalent.
      (Contributed by NM, 29-Sep-2002.) */
 
 theorem sbor (ph : wff, ps : wff, x : set, y : set)  {
@@ -2934,7 +2934,7 @@ proof of sbor {
 	qed prop 1 = step 8 ;;
 }
 
-/* Substitution with a variable not free in antecedent affects only the
+/*Substitution with a variable not free in antecedent affects only the
        consequent.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
        Carneiro, 4-Oct-2016.) */
 
@@ -2952,7 +2952,7 @@ proof of sbrim {
 	qed prop 1 = step 4 ;;
 }
 
-/* Substitution with a variable not free in consequent affects only the
+/*Substitution with a variable not free in consequent affects only the
        antecedent.  (Contributed by NM, 14-Nov-2013.)  (Revised by Mario
        Carneiro, 4-Oct-2016.) */
 
@@ -2970,7 +2970,7 @@ proof of sblim {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conjunction inside and outside of a substitution are equivalent.
+/*Conjunction inside and outside of a substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem sban (ph : wff, ps : wff, x : set, y : set)  {
@@ -2991,7 +2991,7 @@ proof of sban {
 	qed prop 1 = step 10 ;;
 }
 
-/* Conjunction inside and outside of a substitution are equivalent.
+/*Conjunction inside and outside of a substitution are equivalent.
      (Contributed by NM, 14-Dec-2006.) */
 
 theorem sb3an (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -3010,7 +3010,7 @@ proof of sb3an {
 	qed prop 1 = step 8 ;;
 }
 
-/* Equivalence inside and outside of a substitution are equivalent.
+/*Equivalence inside and outside of a substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbbi (ph : wff, ps : wff, x : set, y : set)  {
@@ -3030,7 +3030,7 @@ proof of sbbi {
 	qed prop 1 = step 9 ;;
 }
 
-/* Introduce left biconditional inside of a substitution.  (Contributed by
+/*Introduce left biconditional inside of a substitution.  (Contributed by
        NM, 19-Aug-1993.) */
 
 theorem sblbis (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -3046,7 +3046,7 @@ proof of sblbis {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduce right biconditional inside of a substitution.  (Contributed by
+/*Introduce right biconditional inside of a substitution.  (Contributed by
        NM, 18-Aug-1993.) */
 
 theorem sbrbis (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -3062,7 +3062,7 @@ proof of sbrbis {
 	qed prop 1 = step 3 ;;
 }
 
-/* Introduce right biconditional inside of a substitution.  (Contributed by
+/*Introduce right biconditional inside of a substitution.  (Contributed by
        NM, 18-Aug-1993.)  (Revised by Mario Carneiro, 4-Oct-2016.) */
 
 theorem sbrbif (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -3080,7 +3080,7 @@ proof of sbrbif {
 	qed prop 1 = step 4 ;;
 }
 
-/* A specialization theorem.  (Contributed by NM, 5-Aug-1993.) */
+/*A specialization theorem.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem spsbe (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( [ y / x ] ph → ∃ x ph ) ;;
@@ -3096,7 +3096,7 @@ proof of spsbe {
 	qed prop 1 = step 6 ;;
 }
 
-/* Specialization of implication.  (Contributed by NM, 5-Aug-1993.)  (Proof
+/*Specialization of implication.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem spsbim (ph : wff, ps : wff, x : set, y : set)  {
@@ -3110,7 +3110,7 @@ proof of spsbim {
 	qed prop 1 = step 3 ;;
 }
 
-/* Specialization of biconditional.  (Contributed by NM, 5-Aug-1993.) */
+/*Specialization of biconditional.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem spsbbi (ph : wff, ps : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ∀ x ( ph ↔ ps ) → ( [ y / x ] ph ↔ [ y / x ] ps ) ) ;;
@@ -3123,7 +3123,7 @@ proof of spsbbi {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction substituting both sides of a biconditional.  (Contributed by
+/*Deduction substituting both sides of a biconditional.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem sbbid (ph : wff, ps : wff, ch : wff, x : set, y : set)  {
@@ -3140,7 +3140,7 @@ proof of sbbid {
 	qed prop 1 = step 3 ;;
 }
 
-/* Elimination of equality from antecedent after substitution.  (Contributed
+/*Elimination of equality from antecedent after substitution.  (Contributed
      by NM, 5-Aug-1993.) */
 
 theorem sbequ8 (ph : wff, x : set, y : set)  {
@@ -3155,7 +3155,7 @@ proof of sbequ8 {
 	qed prop 1 = step 4 ;;
 }
 
-/* A variable not free remains so after substitution with a distinct variable
+/*A variable not free remains so after substitution with a distinct variable
      (closed form of ~ nfsb4 ).  (Contributed by NM, 7-Apr-2004.)  (Revised by
      Mario Carneiro, 4-Oct-2016.) */
 
@@ -3197,7 +3197,7 @@ proof of nfsb4t {
 	qed prop 1 = step 30 ;;
 }
 
-/* A variable not free remains so after substitution with a distinct
+/*A variable not free remains so after substitution with a distinct
        variable.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) */
 
@@ -3213,7 +3213,7 @@ proof of nfsb4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction form of ~ dvelimf .  This version may be useful if we want to
+/*Deduction form of ~ dvelimf .  This version may be useful if we want to
        avoid ~ ax-17 and use ~ ax-16 instead.  (Contributed by NM,
        7-Apr-2004.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
@@ -3242,7 +3242,7 @@ proof of dvelimdf {
 	qed prop 1 = step 11 ;;
 }
 
-/* A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbco (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( [ y / x ] [ x / y ] ph ↔ [ y / x ] ph ) ;;
@@ -3259,7 +3259,7 @@ proof of sbco {
 	qed prop 1 = step 7 ;;
 }
 
-/* An identity law for substitution.  (Contributed by NM, 5-Aug-1993.)
+/*An identity law for substitution.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem sbid2 (ph : wff, x : set, y : set)  {
@@ -3275,7 +3275,7 @@ proof of sbid2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An idempotent law for substitution.  (Contributed by NM, 30-Jun-1994.)
+/*An idempotent law for substitution.  (Contributed by NM, 30-Jun-1994.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem sbidm (ph : wff, x : set, y : set)  {
@@ -3292,7 +3292,7 @@ proof of sbidm {
 	qed prop 1 = step 6 ;;
 }
 
-/* A composition law for substitution.  (Contributed by NM, 30-Jun-1994.)
+/*A composition law for substitution.  (Contributed by NM, 30-Jun-1994.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem sbco2 (ph : wff, x : set, y : set, z : set)  {
@@ -3321,7 +3321,7 @@ proof of sbco2 {
 	qed prop 1 = step 16 ;;
 }
 
-/* A composition law for substitution.  (Contributed by NM, 5-Aug-1993.)
+/*A composition law for substitution.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem sbco2d (ph : wff, ps : wff, x : set, y : set, z : set)  {
@@ -3345,7 +3345,7 @@ proof of sbco2d {
 	qed prop 1 = step 9 ;;
 }
 
-/* A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbco3 (ph : wff, x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( [ z / y ] [ y / x ] ph ↔ [ z / x ] [ x / y ] ph ) ;;
@@ -3369,7 +3369,7 @@ proof of sbco3 {
 	qed prop 1 = step 14 ;;
 }
 
-/* A commutativity law for substitution.  (Contributed by NM,
+/*A commutativity law for substitution.  (Contributed by NM,
      27-May-1997.) */
 
 theorem sbcom (ph : wff, x : set, y : set, z : set)  {
@@ -3443,7 +3443,7 @@ proof of sbcom {
 	qed prop 1 = step 63 ;;
 }
 
-/* Reversed substitution.  (Contributed by NM, 3-Feb-2005.)  (Revised by
+/*Reversed substitution.  (Contributed by NM, 3-Feb-2005.)  (Revised by
        Mario Carneiro, 6-Oct-2016.) */
 
 theorem sb5rf (ph : wff, x : set, y : set)  {
@@ -3463,7 +3463,7 @@ proof of sb5rf {
 	qed prop 1 = step 7 ;;
 }
 
-/* Reversed substitution.  (Contributed by NM, 5-Aug-1993.)  (Revised by
+/*Reversed substitution.  (Contributed by NM, 5-Aug-1993.)  (Revised by
        Mario Carneiro, 6-Oct-2016.) */
 
 theorem sb6rf (ph : wff, x : set, y : set)  {
@@ -3484,7 +3484,7 @@ proof of sb6rf {
 	qed prop 1 = step 8 ;;
 }
 
-/* Substitution of variable in universal quantifier.  (Contributed by NM,
+/*Substitution of variable in universal quantifier.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem sb8 (ph : wff, x : set, y : set)  {
@@ -3504,7 +3504,7 @@ proof of sb8 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Substitution of variable in existential quantifier.  (Contributed by NM,
+/*Substitution of variable in existential quantifier.  (Contributed by NM,
        12-Aug-1993.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem sb8e (ph : wff, x : set, y : set)  {
@@ -3526,7 +3526,7 @@ proof of sb8e {
 	qed prop 1 = step 9 ;;
 }
 
-/* Commutation of quantification and substitution variables.  (Contributed by
+/*Commutation of quantification and substitution variables.  (Contributed by
      NM, 5-Aug-1993.) */
 
 theorem sb9i (ph : wff, x : set, y : set)  {
@@ -3552,7 +3552,7 @@ proof of sb9i {
 	qed prop 1 = step 15 ;;
 }
 
-/* Commutation of quantification and substitution variables.  (Contributed by
+/*Commutation of quantification and substitution variables.  (Contributed by
      NM, 5-Aug-1993.) */
 
 theorem sb9 (ph : wff, x : set, y : set)  {
@@ -3566,7 +3566,7 @@ proof of sb9 {
 	qed prop 1 = step 3 ;;
 }
 
-/* This is a version of ~ ax-11o when the variables are distinct.  Axiom
+/*This is a version of ~ ax-11o when the variables are distinct.  Axiom
        (C8) of [Monk2] p. 105.  See theorem ~ ax11v2 for the rederivation of
        ~ ax-11o from this theorem.  (Contributed by NM, 5-Aug-1993.) */
 
@@ -3584,7 +3584,7 @@ proof of ax11v {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two equivalent ways of expressing the proper substitution of ` y ` for
+/*Two equivalent ways of expressing the proper substitution of ` y ` for
        ` x ` in ` ph ` , when ` x ` and ` y ` are distinct.  Theorem 6.2 of
        [Quine] p. 40.  The proof does not involve ~ df-sb .  (Contributed by
        NM, 14-Apr-2008.) */
@@ -3603,7 +3603,7 @@ proof of sb56 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalence for substitution.  Compare Theorem 6.2 of [Quine] p. 40.
+/*Equivalence for substitution.  Compare Theorem 6.2 of [Quine] p. 40.
        Also proved as Lemmas 16 and 17 of [Tarski] p. 70.  (Contributed by NM,
        18-Aug-1993.) */
 
@@ -3621,7 +3621,7 @@ proof of sb6 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Equivalence for substitution.  Similar to Theorem 6.1 of [Quine] p. 40.
+/*Equivalence for substitution.  Similar to Theorem 6.1 of [Quine] p. 40.
        (Contributed by NM, 18-Aug-1993.) */
 
 theorem sb5 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -3635,7 +3635,7 @@ proof of sb5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Lemma for ~ equsb3 .  (Contributed by Raph Levien and FL, 4-Dec-2005.)
+/*Lemma for ~ equsb3 .  (Contributed by Raph Levien and FL, 4-Dec-2005.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
 
 theorem equsb3lem (x : set, y : set, z : set) disjointed(y z, x y) {
@@ -3649,7 +3649,7 @@ proof of equsb3lem {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution applied to an atomic wff.  (Contributed by Raph Levien and
+/*Substitution applied to an atomic wff.  (Contributed by Raph Levien and
        FL, 4-Dec-2005.) */
 
 theorem equsb3 (x : set, y : set, z : set) disjointed(w y z, w x) {
@@ -3667,7 +3667,7 @@ proof of equsb3 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution applied to an atomic membership wff.  (Contributed by NM,
+/*Substitution applied to an atomic membership wff.  (Contributed by NM,
        7-Nov-2006.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
 
 theorem elsb3 (x : set, y : set, z : set) disjointed(w y z, w x) {
@@ -3689,7 +3689,7 @@ proof of elsb3 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Substitution applied to an atomic membership wff.  (Contributed by
+/*Substitution applied to an atomic membership wff.  (Contributed by
        Rodolfo Medina, 3-Apr-2010.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) */
 
@@ -3712,7 +3712,7 @@ proof of elsb4 {
 	qed prop 1 = step 10 ;;
 }
 
-/* ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
+/*` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbs1 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -3726,7 +3726,7 @@ proof of hbs1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
+/*` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfs1v (ph : wff, x : set, y : set) disjointed(x y) {
@@ -3739,7 +3739,7 @@ proof of nfs1v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
+/*Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
        (Contributed by NM, 29-May-2009.) */
 
 theorem sbhb (ph : wff, x : set, y : set) disjointed(y ph) {
@@ -3755,7 +3755,7 @@ proof of sbhb {
 	qed prop 1 = step 5 ;;
 }
 
-/* Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
+/*Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
        (Contributed by G&eacute;rard Lang, 14-Nov-2013.)  (Revised by Mario
        Carneiro, 6-Oct-2016.) */
 
@@ -3798,7 +3798,7 @@ proof of sbnf2 {
 	qed prop 1 = step 31 ;;
 }
 
-/* If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
+/*If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
        ` y ` and ` z ` are distinct.  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
@@ -3815,7 +3815,7 @@ proof of nfsb {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
+/*If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
        ` y ` and ` z ` are distinct.  (Contributed by NM, 12-Aug-1993.) */
 
 theorem hbsb (ph : wff, x : set, y : set, z : set) disjointed(y z) {
@@ -3831,7 +3831,7 @@ proof of hbsb {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction version of ~ nfsb .  (Contributed by NM, 15-Feb-2013.) */
+/*Deduction version of ~ nfsb .  (Contributed by NM, 15-Feb-2013.) */
 
 theorem nfsbd (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y z) {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -3849,7 +3849,7 @@ proof of nfsbd {
 	qed prop 1 = step 5 ;;
 }
 
-/* Equivalence for double substitution.  (Contributed by NM,
+/*Equivalence for double substitution.  (Contributed by NM,
        3-Feb-2005.) */
 
 theorem 2sb5 (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, w y) {
@@ -3869,7 +3869,7 @@ proof of 2sb5 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Equivalence for double substitution.  (Contributed by NM,
+/*Equivalence for double substitution.  (Contributed by NM,
        3-Feb-2005.) */
 
 theorem 2sb6 (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, w y) {
@@ -3889,7 +3889,7 @@ proof of 2sb6 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Commutativity law for substitution.  Used in proof of Theorem 9.7 of
+/*Commutativity law for substitution.  Used in proof of Theorem 9.7 of
        [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
        27-May-1997.) */
 
@@ -3938,7 +3938,7 @@ proof of sbcom2 {
 	qed prop 1 = step 37 ;;
 }
 
-/* Theorem *11.07 in [WhiteheadRussell] p. 159.  (Contributed by Andrew
+/*Theorem *11.07 in [WhiteheadRussell] p. 159.  (Contributed by Andrew
        Salmon, 17-Jun-2011.) */
 
 theorem pm11.07 (ph : wff, x : set, y : set, z : set, w : set) disjointed(ph x y z, w x z) {
@@ -3966,7 +3966,7 @@ proof of pm11.07 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Equivalence for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*Equivalence for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sb6a (ph : wff, x : set, y : set) disjointed(x y) {
 	prop 1 : wff = |- ( [ y / x ] ph ↔ ∀ x ( x = y → [ x / y ] ph ) ) ;;
@@ -3982,7 +3982,7 @@ proof of sb6a {
 	qed prop 1 = step 6 ;;
 }
 
-/* Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
+/*Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem 2sb5rf (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y, x w, y z, z w) {
@@ -4009,7 +4009,7 @@ proof of 2sb5rf {
 	qed prop 1 = step 13 ;;
 }
 
-/* Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
+/*Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem 2sb6rf (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y, x w, y z, z w) {
@@ -4036,7 +4036,7 @@ proof of 2sb6rf {
 	qed prop 1 = step 13 ;;
 }
 
-/* An alternate definition of proper substitution ~ df-sb .  By introducing
+/*An alternate definition of proper substitution ~ df-sb .  By introducing
        a dummy variable ` z ` in the definiens, we are able to eliminate any
        distinct variable restrictions among the variables ` x ` , ` y ` , and
        ` ph ` of the definiendum.  No distinct variable conflicts arise because
@@ -4061,7 +4061,7 @@ proof of dfsb7 {
 	qed prop 1 = step 6 ;;
 }
 
-/* This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
+/*This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
        distinct.  This permits it to be used as a definition for substitution
        in a formalization that omits the logically redundant axiom ~ ax-17 i.e.
        that doesn't have the concept of a variable not occurring in a wff.
@@ -4069,7 +4069,7 @@ proof of dfsb7 {
        is distasteful to some logicians.)  (Contributed by NM, 26-Jul-2006.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
-theorem sb7f (ph : wff, x : set, y : set, z : set) disjointed(x z, y z) {
+theorem sb7f (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, ph) {
 	hyp 1 : wff = |- F/ z ph ;;
 	-----------------------
 	prop 1 : wff = |- ( [ y / x ] ph ↔ ∃ z ( z = y ∧ ∃ x ( x = z ∧ ph ) ) ) ;;
@@ -4084,7 +4084,7 @@ proof of sb7f {
 	qed prop 1 = step 5 ;;
 }
 
-/* This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
+/*This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
        distinct.  This permits it to be used as a definition for substitution
        in a formalization that omits the logically redundant axiom ~ ax-17 i.e.
        that doesn't have the concept of a variable not occurring in a wff.
@@ -4092,7 +4092,7 @@ proof of sb7f {
        is distasteful to some logicians.)  (Contributed by NM, 26-Jul-2006.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
-theorem sb7h (ph : wff, x : set, y : set, z : set) disjointed(x z, y z) {
+theorem sb7h (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, ph) {
 	hyp 1 : wff = |- ( ph → ∀ z ph ) ;;
 	-----------------------
 	prop 1 : wff = |- ( [ y / x ] ph ↔ ∃ z ( z = y ∧ ∃ x ( x = z ∧ ph ) ) ) ;;
@@ -4104,7 +4104,7 @@ proof of sb7h {
 	qed prop 1 = step 2 ;;
 }
 
-/* Hao Wang's identity axiom P6 in Irving Copi, _Symbolic Logic_ (5th ed.,
+/*Hao Wang's identity axiom P6 in Irving Copi, _Symbolic Logic_ (5th ed.,
        1979), p. 328.  In traditional predicate calculus, this is a sole axiom
        for identity from which the usual ones can be derived.  (Contributed by
        NM, 9-May-2005.)  (Revised by Mario Carneiro, 6-Oct-2016.) */
@@ -4123,7 +4123,7 @@ proof of sb10f {
 	qed prop 1 = step 4 ;;
 }
 
-/* An identity law for substitution.  Used in proof of Theorem 9.7 of
+/*An identity law for substitution.  Used in proof of Theorem 9.7 of
        [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
        5-Aug-1993.) */
 
@@ -4137,7 +4137,7 @@ proof of sbid2v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Elimination of substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*Elimination of substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbelx (ph : wff, x : set, y : set) disjointed(x y, x ph) {
 	prop 1 : wff = |- ( ph ↔ ∃ x ( x = y ∧ [ x / y ] ph ) ) ;;
@@ -4150,11 +4150,11 @@ proof of sbelx {
 	qed prop 1 = step 3 ;;
 }
 
-/* Note:  A more general case could also be proved with
+/*Note:  A more general case could also be proved with
        "$d x z $.  $d y w $.  $d x ph $.  $d y ph $.", but with more
        difficulty. */
 
-/* Elimination of double substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*Elimination of double substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbel2x (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, w y, x y ph) {
 	prop 1 : wff = |- ( ph ↔ ∃ x ∃ y ( ( x = z ∧ y = w ) ∧ [ y / w ] [ x / z ] ph ) ) ;;
@@ -4173,7 +4173,7 @@ proof of sbel2x {
 	qed prop 1 = step 9 ;;
 }
 
-/* A theorem used in elimination of disjoint variable restriction on ` x `
+/*A theorem used in elimination of disjoint variable restriction on ` x `
        and ` y ` by replacing it with a distinctor ` -. A. x x = z ` .
        (Contributed by NM, 5-Aug-1993.) */
 
@@ -4216,7 +4216,7 @@ proof of sbal1 {
 	qed prop 1 = step 31 ;;
 }
 
-/* Move universal quantifier in and out of substitution.  (Contributed by
+/*Move universal quantifier in and out of substitution.  (Contributed by
        NM, 5-Aug-1993.) */
 
 theorem sbal (ph : wff, x : set, y : set, z : set) disjointed(x y, x z) {
@@ -4236,7 +4236,7 @@ proof of sbal {
 	qed prop 1 = step 9 ;;
 }
 
-/* Move existential quantifier in and out of substitution.  (Contributed by
+/*Move existential quantifier in and out of substitution.  (Contributed by
        NM, 27-Sep-2003.) */
 
 theorem sbex (ph : wff, x : set, y : set, z : set) disjointed(x y, x z) {
@@ -4257,7 +4257,7 @@ proof of sbex {
 	qed prop 1 = step 10 ;;
 }
 
-/* Quantify with new variable inside substitution.  (Contributed by NM,
+/*Quantify with new variable inside substitution.  (Contributed by NM,
        18-Aug-1993.) */
 
 theorem sbalv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, y z) {
@@ -4273,7 +4273,7 @@ proof of sbalv {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equivalent expression for existence.  (Contributed by NM,
+/*An equivalent expression for existence.  (Contributed by NM,
        2-Feb-2005.) */
 
 theorem exsb (ph : wff, x : set, y : set) disjointed(x y, y ph) {
@@ -4291,7 +4291,7 @@ proof of exsb {
 	qed prop 1 = step 7 ;;
 }
 
-/* An equivalent expression for existence.  Obsolete as of 19-Jun-2017.
+/*An equivalent expression for existence.  Obsolete as of 19-Jun-2017.
        (Contributed by NM, 2-Feb-2005.)  (New usage is discouraged.) */
 
 theorem exsbOLD (ph : wff, x : set, y : set) disjointed(x y, y ph) {
@@ -4307,7 +4307,7 @@ proof of exsbOLD {
 	qed prop 1 = step 5 ;;
 }
 
-/* An equivalent expression for double existence.  (Contributed by NM,
+/*An equivalent expression for double existence.  (Contributed by NM,
        2-Feb-2005.) */
 
 theorem 2exsb (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z, y w, z w ph) {
@@ -4334,7 +4334,7 @@ proof of 2exsb {
 	qed prop 1 = step 16 ;;
 }
 
-/* Version of ~ dvelim that doesn't use ~ ax-10 .  (See ~ dvelimh for a
+/*Version of ~ dvelim that doesn't use ~ ax-10 .  (See ~ dvelimh for a
        version that doesn't use ~ ax-11 .)  (Contributed by NM, 17-May-2008.)
        (New usage is discouraged.)  (Proof modification is discouraged.) */
 
@@ -4368,7 +4368,7 @@ proof of dvelimALT {
 	qed prop 1 = step 19 ;;
 }
 
-/* Move quantifier in and out of substitution.  (Contributed by NM,
+/*Move quantifier in and out of substitution.  (Contributed by NM,
        2-Jan-2002.) */
 
 theorem sbal2 (ph : wff, x : set, y : set, z : set) disjointed(z y, z x) {

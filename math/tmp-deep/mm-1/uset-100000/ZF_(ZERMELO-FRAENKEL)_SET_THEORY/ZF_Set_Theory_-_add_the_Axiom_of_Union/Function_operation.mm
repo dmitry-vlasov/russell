@@ -1,1514 +1,1251 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/_Maps_to__notation.mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                              Function operation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$c oF  $.
-$c oR  $.
-$( Extend class notation to include mapping of an operation to a function
+
+$c oF $.
+
+$c oR $.
+
+$(Extend class notation to include mapping of an operation to a function
      operation. $)
+
 ${
-	$v R $.
-	fcof_0 $f class R $.
-	cof $a class oF R $.
+	$v R  $.
+	f0_cof $f class R $.
+	a_cof $a class oF R $.
 $}
-$( Extend class notation to include mapping of a binary relation to a
+
+$(Extend class notation to include mapping of a binary relation to a
      function relation. $)
+
 ${
-	$v R $.
-	fcofr_0 $f class R $.
-	cofr $a class oR R $.
+	$v R  $.
+	f0_cofr $f class R $.
+	a_cofr $a class oR R $.
 $}
-$( Define the function operation map.  The definition is designed so that
+
+$(Define the function operation map.  The definition is designed so that
        if ` R ` is a binary operation, then ` oF R ` is the analogous operation
        on functions which corresponds to applying ` R ` pointwise to the values
        of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v R $.
-	$v f $.
-	$v g $.
-	$d f g x R $.
-	fdf-of_0 $f set x $.
-	fdf-of_1 $f class R $.
-	fdf-of_2 $f set f $.
-	fdf-of_3 $f set g $.
-	df-of $a |- oF R = ( f e. _V , g e. _V |-> ( x e. ( dom f i^i dom g ) |-> ( ( f ` x ) R ( g ` x ) ) ) ) $.
+	$v x R f g  $.
+	$d f g x R  $.
+	f0_df-of $f set x $.
+	f1_df-of $f class R $.
+	f2_df-of $f set f $.
+	f3_df-of $f set g $.
+	a_df-of $a |- oF R = ( f e. _V , g e. _V |-> ( x e. ( dom f i^i dom g ) |-> ( ( f ` x ) R ( g ` x ) ) ) ) $.
 $}
-$( Define the function relation map.  The definition is designed so that if
+
+$(Define the function relation map.  The definition is designed so that if
        ` R ` is a binary relation, then ` oF R ` is the analogous relation on
        functions which is true when each element of the left function relates
        to the corresponding element of the right function.  (Contributed by
        Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v R $.
-	$v f $.
-	$v g $.
-	$d f g x R $.
-	fdf-ofr_0 $f set x $.
-	fdf-ofr_1 $f class R $.
-	fdf-ofr_2 $f set f $.
-	fdf-ofr_3 $f set g $.
-	df-ofr $a |- oR R = { <. f , g >. | A. x e. ( dom f i^i dom g ) ( f ` x ) R ( g ` x ) } $.
+	$v x R f g  $.
+	$d f g x R  $.
+	f0_df-ofr $f set x $.
+	f1_df-ofr $f class R $.
+	f2_df-ofr $f set f $.
+	f3_df-ofr $f set g $.
+	a_df-ofr $a |- oR R = { <. f , g >. | A. x e. ( dom f i^i dom g ) ( f ` x ) R ( g ` x ) } $.
 $}
-$( Equality theorem for function operation.  (Contributed by Mario
+
+$(Equality theorem for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v R $.
-	$v S $.
-	$v x $.
-	$v f $.
-	$v g $.
-	$d f g x R $.
-	$d f g x S $.
-	iofeq_0 $f set x $.
-	iofeq_1 $f set f $.
-	iofeq_2 $f set g $.
-	fofeq_0 $f class R $.
-	fofeq_1 $f class S $.
-	ofeq $p |- ( R = S -> oF R = oF S ) $= fofeq_0 fofeq_1 wceq iofeq_1 iofeq_2 cvv cvv iofeq_0 iofeq_1 sup_set_class cdm iofeq_2 sup_set_class cdm cin iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_0 co cmpt cmpt2 iofeq_1 iofeq_2 cvv cvv iofeq_0 iofeq_1 sup_set_class cdm iofeq_2 sup_set_class cdm cin iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_1 co cmpt cmpt2 fofeq_0 cof fofeq_1 cof fofeq_0 fofeq_1 wceq iofeq_1 iofeq_2 cvv cvv iofeq_0 iofeq_1 sup_set_class cdm iofeq_2 sup_set_class cdm cin iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_0 co cmpt iofeq_0 iofeq_1 sup_set_class cdm iofeq_2 sup_set_class cdm cin iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_1 co cmpt fofeq_0 fofeq_1 wceq iofeq_1 sup_set_class cvv wcel iofeq_2 sup_set_class cvv wcel w3a iofeq_0 iofeq_1 sup_set_class cdm iofeq_2 sup_set_class cdm cin iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_0 co iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_1 co fofeq_0 fofeq_1 wceq iofeq_1 sup_set_class cvv wcel iofeq_2 sup_set_class cvv wcel w3a fofeq_0 fofeq_1 iofeq_0 sup_set_class iofeq_1 sup_set_class cfv iofeq_0 sup_set_class iofeq_2 sup_set_class cfv fofeq_0 fofeq_1 wceq iofeq_1 sup_set_class cvv wcel iofeq_2 sup_set_class cvv wcel simp1 oveqd mpteq2dv mpt2eq3dva iofeq_0 fofeq_0 iofeq_1 iofeq_2 df-of iofeq_0 fofeq_1 iofeq_1 iofeq_2 df-of 3eqtr4g $.
+	$v R S  $.
+	$d f g x R  $.
+	$d f g x S  $.
+	f0_ofeq $f class R $.
+	f1_ofeq $f class S $.
+	i0_ofeq $f set x $.
+	i1_ofeq $f set f $.
+	i2_ofeq $f set g $.
+	p_ofeq $p |- ( R = S -> oF R = oF S ) $= f0_ofeq f1_ofeq a_wceq i1_ofeq a_sup_set_class a_cvv a_wcel i2_ofeq a_sup_set_class a_cvv a_wcel p_simp1 f0_ofeq f1_ofeq a_wceq i1_ofeq a_sup_set_class a_cvv a_wcel i2_ofeq a_sup_set_class a_cvv a_wcel a_w3a f0_ofeq f1_ofeq i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv p_oveqd f0_ofeq f1_ofeq a_wceq i1_ofeq a_sup_set_class a_cvv a_wcel i2_ofeq a_sup_set_class a_cvv a_wcel a_w3a i0_ofeq i1_ofeq a_sup_set_class a_cdm i2_ofeq a_sup_set_class a_cdm a_cin i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f0_ofeq a_co i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f1_ofeq a_co p_mpteq2dv f0_ofeq f1_ofeq a_wceq i1_ofeq i2_ofeq a_cvv a_cvv i0_ofeq i1_ofeq a_sup_set_class a_cdm i2_ofeq a_sup_set_class a_cdm a_cin i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f0_ofeq a_co a_cmpt i0_ofeq i1_ofeq a_sup_set_class a_cdm i2_ofeq a_sup_set_class a_cdm a_cin i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f1_ofeq a_co a_cmpt p_mpt2eq3dva i0_ofeq f0_ofeq i1_ofeq i2_ofeq a_df-of i0_ofeq f1_ofeq i1_ofeq i2_ofeq a_df-of f0_ofeq f1_ofeq a_wceq i1_ofeq i2_ofeq a_cvv a_cvv i0_ofeq i1_ofeq a_sup_set_class a_cdm i2_ofeq a_sup_set_class a_cdm a_cin i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f0_ofeq a_co a_cmpt a_cmpt2 i1_ofeq i2_ofeq a_cvv a_cvv i0_ofeq i1_ofeq a_sup_set_class a_cdm i2_ofeq a_sup_set_class a_cdm a_cin i0_ofeq a_sup_set_class i1_ofeq a_sup_set_class a_cfv i0_ofeq a_sup_set_class i2_ofeq a_sup_set_class a_cfv f1_ofeq a_co a_cmpt a_cmpt2 f0_ofeq a_cof f1_ofeq a_cof p_3eqtr4g $.
 $}
-$( Equality theorem for function relation.  (Contributed by Mario Carneiro,
+
+$(Equality theorem for function relation.  (Contributed by Mario Carneiro,
        28-Jul-2014.) $)
+
 ${
-	$v R $.
-	$v S $.
-	$v x $.
-	$v f $.
-	$v g $.
-	$d f g x R $.
-	$d f g x S $.
-	iofreq_0 $f set x $.
-	iofreq_1 $f set f $.
-	iofreq_2 $f set g $.
-	fofreq_0 $f class R $.
-	fofreq_1 $f class S $.
-	ofreq $p |- ( R = S -> oR R = oR S ) $= fofreq_0 fofreq_1 wceq iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_0 wbr iofreq_0 iofreq_1 sup_set_class cdm iofreq_2 sup_set_class cdm cin wral iofreq_1 iofreq_2 copab iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_1 wbr iofreq_0 iofreq_1 sup_set_class cdm iofreq_2 sup_set_class cdm cin wral iofreq_1 iofreq_2 copab fofreq_0 cofr fofreq_1 cofr fofreq_0 fofreq_1 wceq iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_0 wbr iofreq_0 iofreq_1 sup_set_class cdm iofreq_2 sup_set_class cdm cin wral iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_1 wbr iofreq_0 iofreq_1 sup_set_class cdm iofreq_2 sup_set_class cdm cin wral iofreq_1 iofreq_2 fofreq_0 fofreq_1 wceq iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_0 wbr iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_1 wbr iofreq_0 iofreq_1 sup_set_class cdm iofreq_2 sup_set_class cdm cin iofreq_0 sup_set_class iofreq_1 sup_set_class cfv iofreq_0 sup_set_class iofreq_2 sup_set_class cfv fofreq_0 fofreq_1 breq ralbidv opabbidv iofreq_0 fofreq_0 iofreq_1 iofreq_2 df-ofr iofreq_0 fofreq_1 iofreq_1 iofreq_2 df-ofr 3eqtr4g $.
+	$v R S  $.
+	$d f g x R  $.
+	$d f g x S  $.
+	f0_ofreq $f class R $.
+	f1_ofreq $f class S $.
+	i0_ofreq $f set x $.
+	i1_ofreq $f set f $.
+	i2_ofreq $f set g $.
+	p_ofreq $p |- ( R = S -> oR R = oR S ) $= i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f0_ofreq f1_ofreq p_breq f0_ofreq f1_ofreq a_wceq i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f0_ofreq a_wbr i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f1_ofreq a_wbr i0_ofreq i1_ofreq a_sup_set_class a_cdm i2_ofreq a_sup_set_class a_cdm a_cin p_ralbidv f0_ofreq f1_ofreq a_wceq i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f0_ofreq a_wbr i0_ofreq i1_ofreq a_sup_set_class a_cdm i2_ofreq a_sup_set_class a_cdm a_cin a_wral i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f1_ofreq a_wbr i0_ofreq i1_ofreq a_sup_set_class a_cdm i2_ofreq a_sup_set_class a_cdm a_cin a_wral i1_ofreq i2_ofreq p_opabbidv i0_ofreq f0_ofreq i1_ofreq i2_ofreq a_df-ofr i0_ofreq f1_ofreq i1_ofreq i2_ofreq a_df-ofr f0_ofreq f1_ofreq a_wceq i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f0_ofreq a_wbr i0_ofreq i1_ofreq a_sup_set_class a_cdm i2_ofreq a_sup_set_class a_cdm a_cin a_wral i1_ofreq i2_ofreq a_copab i0_ofreq a_sup_set_class i1_ofreq a_sup_set_class a_cfv i0_ofreq a_sup_set_class i2_ofreq a_sup_set_class a_cfv f1_ofreq a_wbr i0_ofreq i1_ofreq a_sup_set_class a_cdm i2_ofreq a_sup_set_class a_cdm a_cin a_wral i1_ofreq i2_ofreq a_copab f0_ofreq a_cofr f1_ofreq a_cofr p_3eqtr4g $.
 $}
-$( A function operation restricted to a set is a set.  (Contributed by NM,
+
+$(A function operation restricted to a set is a set.  (Contributed by NM,
        28-Jul-2014.) $)
+
 ${
-	$v A $.
-	$v R $.
-	$v V $.
-	$v x $.
-	$v f $.
-	$v g $.
-	$d f g x R $.
-	$d f g x $.
-	iofexg_0 $f set x $.
-	iofexg_1 $f set f $.
-	iofexg_2 $f set g $.
-	fofexg_0 $f class A $.
-	fofexg_1 $f class R $.
-	fofexg_2 $f class V $.
-	ofexg $p |- ( A e. V -> ( oF R |` A ) e. _V ) $= fofexg_1 cof wfun fofexg_0 fofexg_2 wcel fofexg_1 cof fofexg_0 cres cvv wcel iofexg_1 iofexg_2 cvv cvv iofexg_0 iofexg_1 sup_set_class cdm iofexg_2 sup_set_class cdm cin iofexg_0 sup_set_class iofexg_1 sup_set_class cfv iofexg_0 sup_set_class iofexg_2 sup_set_class cfv fofexg_1 co cmpt fofexg_1 cof iofexg_0 fofexg_1 iofexg_1 iofexg_2 df-of mpt2fun fofexg_1 cof fofexg_0 fofexg_2 resfunexg mpan $.
+	$v A R V  $.
+	$d f g x R  $.
+	$d f g x  $.
+	f0_ofexg $f class A $.
+	f1_ofexg $f class R $.
+	f2_ofexg $f class V $.
+	i0_ofexg $f set x $.
+	i1_ofexg $f set f $.
+	i2_ofexg $f set g $.
+	p_ofexg $p |- ( A e. V -> ( oF R |` A ) e. _V ) $= i0_ofexg f1_ofexg i1_ofexg i2_ofexg a_df-of i1_ofexg i2_ofexg a_cvv a_cvv i0_ofexg i1_ofexg a_sup_set_class a_cdm i2_ofexg a_sup_set_class a_cdm a_cin i0_ofexg a_sup_set_class i1_ofexg a_sup_set_class a_cfv i0_ofexg a_sup_set_class i2_ofexg a_sup_set_class a_cfv f1_ofexg a_co a_cmpt f1_ofexg a_cof p_mpt2fun f1_ofexg a_cof f0_ofexg f2_ofexg p_resfunexg f1_ofexg a_cof a_wfun f0_ofexg f2_ofexg a_wcel f1_ofexg a_cof f0_ofexg a_cres a_cvv a_wcel p_mpan $.
 $}
-$( Hypothesis builder for function operation.  (Contributed by Mario
+
+$(Hypothesis builder for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v R $.
-	$v y $.
-	$v f $.
-	$v g $.
-	$d f g x y R $.
-	$d f g x y $.
-	infof_0 $f set y $.
-	infof_1 $f set f $.
-	infof_2 $f set g $.
-	fnfof_0 $f set x $.
-	fnfof_1 $f class R $.
-	enfof_0 $e |- F/_ x R $.
-	nfof $p |- F/_ x oF R $= fnfof_0 fnfof_1 cof infof_1 infof_2 cvv cvv infof_0 infof_1 sup_set_class cdm infof_2 sup_set_class cdm cin infof_0 sup_set_class infof_1 sup_set_class cfv infof_0 sup_set_class infof_2 sup_set_class cfv fnfof_1 co cmpt cmpt2 infof_0 fnfof_1 infof_1 infof_2 df-of infof_1 infof_2 fnfof_0 cvv cvv infof_0 infof_1 sup_set_class cdm infof_2 sup_set_class cdm cin infof_0 sup_set_class infof_1 sup_set_class cfv infof_0 sup_set_class infof_2 sup_set_class cfv fnfof_1 co cmpt fnfof_0 cvv nfcv fnfof_0 cvv nfcv fnfof_0 infof_0 infof_1 sup_set_class cdm infof_2 sup_set_class cdm cin infof_0 sup_set_class infof_1 sup_set_class cfv infof_0 sup_set_class infof_2 sup_set_class cfv fnfof_1 co fnfof_0 infof_1 sup_set_class cdm infof_2 sup_set_class cdm cin nfcv fnfof_0 infof_0 sup_set_class infof_1 sup_set_class cfv infof_0 sup_set_class infof_2 sup_set_class cfv fnfof_1 fnfof_0 infof_0 sup_set_class infof_1 sup_set_class cfv nfcv enfof_0 fnfof_0 infof_0 sup_set_class infof_2 sup_set_class cfv nfcv nfov nfmpt nfmpt2 nfcxfr $.
+	$v x R  $.
+	$d f g x y R  $.
+	$d f g x y  $.
+	f0_nfof $f set x $.
+	f1_nfof $f class R $.
+	i0_nfof $f set y $.
+	i1_nfof $f set f $.
+	i2_nfof $f set g $.
+	e0_nfof $e |- F/_ x R $.
+	p_nfof $p |- F/_ x oF R $= i0_nfof f1_nfof i1_nfof i2_nfof a_df-of f0_nfof a_cvv p_nfcv f0_nfof a_cvv p_nfcv f0_nfof i1_nfof a_sup_set_class a_cdm i2_nfof a_sup_set_class a_cdm a_cin p_nfcv f0_nfof i0_nfof a_sup_set_class i1_nfof a_sup_set_class a_cfv p_nfcv e0_nfof f0_nfof i0_nfof a_sup_set_class i2_nfof a_sup_set_class a_cfv p_nfcv f0_nfof i0_nfof a_sup_set_class i1_nfof a_sup_set_class a_cfv i0_nfof a_sup_set_class i2_nfof a_sup_set_class a_cfv f1_nfof p_nfov f0_nfof i0_nfof i1_nfof a_sup_set_class a_cdm i2_nfof a_sup_set_class a_cdm a_cin i0_nfof a_sup_set_class i1_nfof a_sup_set_class a_cfv i0_nfof a_sup_set_class i2_nfof a_sup_set_class a_cfv f1_nfof a_co p_nfmpt i1_nfof i2_nfof f0_nfof a_cvv a_cvv i0_nfof i1_nfof a_sup_set_class a_cdm i2_nfof a_sup_set_class a_cdm a_cin i0_nfof a_sup_set_class i1_nfof a_sup_set_class a_cfv i0_nfof a_sup_set_class i2_nfof a_sup_set_class a_cfv f1_nfof a_co a_cmpt p_nfmpt2 f0_nfof f1_nfof a_cof i1_nfof i2_nfof a_cvv a_cvv i0_nfof i1_nfof a_sup_set_class a_cdm i2_nfof a_sup_set_class a_cdm a_cin i0_nfof a_sup_set_class i1_nfof a_sup_set_class a_cfv i0_nfof a_sup_set_class i2_nfof a_sup_set_class a_cfv f1_nfof a_co a_cmpt a_cmpt2 p_nfcxfr $.
 $}
-$( Hypothesis builder for function relation.  (Contributed by Mario
+
+$(Hypothesis builder for function relation.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v x $.
-	$v R $.
-	$v y $.
-	$v f $.
-	$v g $.
-	$d f g x y R $.
-	$d f g x y $.
-	infofr_0 $f set y $.
-	infofr_1 $f set f $.
-	infofr_2 $f set g $.
-	fnfofr_0 $f set x $.
-	fnfofr_1 $f class R $.
-	enfofr_0 $e |- F/_ x R $.
-	nfofr $p |- F/_ x oR R $= fnfofr_0 fnfofr_1 cofr infofr_0 sup_set_class infofr_1 sup_set_class cfv infofr_0 sup_set_class infofr_2 sup_set_class cfv fnfofr_1 wbr infofr_0 infofr_1 sup_set_class cdm infofr_2 sup_set_class cdm cin wral infofr_1 infofr_2 copab infofr_0 fnfofr_1 infofr_1 infofr_2 df-ofr infofr_0 sup_set_class infofr_1 sup_set_class cfv infofr_0 sup_set_class infofr_2 sup_set_class cfv fnfofr_1 wbr infofr_0 infofr_1 sup_set_class cdm infofr_2 sup_set_class cdm cin wral infofr_1 infofr_2 fnfofr_0 infofr_0 sup_set_class infofr_1 sup_set_class cfv infofr_0 sup_set_class infofr_2 sup_set_class cfv fnfofr_1 wbr fnfofr_0 infofr_0 infofr_1 sup_set_class cdm infofr_2 sup_set_class cdm cin fnfofr_0 infofr_1 sup_set_class cdm infofr_2 sup_set_class cdm cin nfcv fnfofr_0 infofr_0 sup_set_class infofr_1 sup_set_class cfv infofr_0 sup_set_class infofr_2 sup_set_class cfv fnfofr_1 fnfofr_0 infofr_0 sup_set_class infofr_1 sup_set_class cfv nfcv enfofr_0 fnfofr_0 infofr_0 sup_set_class infofr_2 sup_set_class cfv nfcv nfbr nfral nfopab nfcxfr $.
+	$v x R  $.
+	$d f g x y R  $.
+	$d f g x y  $.
+	f0_nfofr $f set x $.
+	f1_nfofr $f class R $.
+	i0_nfofr $f set y $.
+	i1_nfofr $f set f $.
+	i2_nfofr $f set g $.
+	e0_nfofr $e |- F/_ x R $.
+	p_nfofr $p |- F/_ x oR R $= i0_nfofr f1_nfofr i1_nfofr i2_nfofr a_df-ofr f0_nfofr i1_nfofr a_sup_set_class a_cdm i2_nfofr a_sup_set_class a_cdm a_cin p_nfcv f0_nfofr i0_nfofr a_sup_set_class i1_nfofr a_sup_set_class a_cfv p_nfcv e0_nfofr f0_nfofr i0_nfofr a_sup_set_class i2_nfofr a_sup_set_class a_cfv p_nfcv f0_nfofr i0_nfofr a_sup_set_class i1_nfofr a_sup_set_class a_cfv i0_nfofr a_sup_set_class i2_nfofr a_sup_set_class a_cfv f1_nfofr p_nfbr i0_nfofr a_sup_set_class i1_nfofr a_sup_set_class a_cfv i0_nfofr a_sup_set_class i2_nfofr a_sup_set_class a_cfv f1_nfofr a_wbr f0_nfofr i0_nfofr i1_nfofr a_sup_set_class a_cdm i2_nfofr a_sup_set_class a_cdm a_cin p_nfral i0_nfofr a_sup_set_class i1_nfofr a_sup_set_class a_cfv i0_nfofr a_sup_set_class i2_nfofr a_sup_set_class a_cfv f1_nfofr a_wbr i0_nfofr i1_nfofr a_sup_set_class a_cdm i2_nfofr a_sup_set_class a_cdm a_cin a_wral i1_nfofr i2_nfofr f0_nfofr p_nfopab f0_nfofr f1_nfofr a_cofr i0_nfofr a_sup_set_class i1_nfofr a_sup_set_class a_cfv i0_nfofr a_sup_set_class i2_nfofr a_sup_set_class a_cfv f1_nfofr a_wbr i0_nfofr i1_nfofr a_sup_set_class a_cdm i2_nfofr a_sup_set_class a_cdm a_cin a_wral i1_nfofr i2_nfofr a_copab p_nfcxfr $.
 $}
-$( Value of an operation applied to two functions.  (Contributed by Mario
+
+$(Value of an operation applied to two functions.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v f $.
-	$v g $.
-	$d x A $.
-	$d f g x F $.
-	$d f g x G $.
-	$d x ph $.
-	$d x S $.
-	$d f g x R $.
-	ioffval_0 $f set f $.
-	ioffval_1 $f set g $.
-	foffval_0 $f wff ph $.
-	foffval_1 $f set x $.
-	foffval_2 $f class A $.
-	foffval_3 $f class B $.
-	foffval_4 $f class C $.
-	foffval_5 $f class D $.
-	foffval_6 $f class R $.
-	foffval_7 $f class S $.
-	foffval_8 $f class F $.
-	foffval_9 $f class G $.
-	foffval_10 $f class V $.
-	foffval_11 $f class W $.
-	eoffval_0 $e |- ( ph -> F Fn A ) $.
-	eoffval_1 $e |- ( ph -> G Fn B ) $.
-	eoffval_2 $e |- ( ph -> A e. V ) $.
-	eoffval_3 $e |- ( ph -> B e. W ) $.
-	eoffval_4 $e |- ( A i^i B ) = S $.
-	eoffval_5 $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = C ) $.
-	eoffval_6 $e |- ( ( ph /\ x e. B ) -> ( G ` x ) = D ) $.
-	offval $p |- ( ph -> ( F oF R G ) = ( x e. S |-> ( C R D ) ) ) $= foffval_0 foffval_8 foffval_9 foffval_6 cof co foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_1 foffval_7 foffval_4 foffval_5 foffval_6 co cmpt foffval_0 foffval_8 cvv wcel foffval_9 cvv wcel foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt cvv wcel foffval_8 foffval_9 foffval_6 cof co foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt wceq foffval_0 foffval_8 foffval_2 wfn foffval_2 foffval_10 wcel foffval_8 cvv wcel eoffval_0 eoffval_2 foffval_2 foffval_10 foffval_8 fnex syl2anc foffval_0 foffval_9 foffval_3 wfn foffval_3 foffval_11 wcel foffval_9 cvv wcel eoffval_1 eoffval_3 foffval_3 foffval_11 foffval_9 fnex syl2anc foffval_0 foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt cvv foffval_0 foffval_8 cdm foffval_9 cdm cin foffval_7 wceq foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt wceq foffval_0 foffval_8 cdm foffval_9 cdm cin foffval_2 foffval_3 cin foffval_7 foffval_0 foffval_8 cdm foffval_2 foffval_9 cdm foffval_3 foffval_0 foffval_8 foffval_2 wfn foffval_8 cdm foffval_2 wceq eoffval_0 foffval_2 foffval_8 fndm syl foffval_0 foffval_9 foffval_3 wfn foffval_9 cdm foffval_3 wceq eoffval_1 foffval_3 foffval_9 fndm syl ineq12d eoffval_4 syl6eq foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co mpteq1 syl foffval_0 foffval_2 foffval_10 wcel foffval_7 cvv wcel foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt cvv wcel eoffval_2 foffval_2 foffval_10 wcel foffval_7 foffval_2 foffval_3 cin cvv eoffval_4 foffval_2 foffval_3 foffval_10 inex1g syl5eqelr foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cvv mptexg 3syl eqeltrd ioffval_0 ioffval_1 foffval_8 foffval_9 cvv cvv foffval_1 ioffval_0 sup_set_class cdm ioffval_1 sup_set_class cdm cin foffval_1 sup_set_class ioffval_0 sup_set_class cfv foffval_1 sup_set_class ioffval_1 sup_set_class cfv foffval_6 co cmpt foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_6 cof cvv ioffval_0 sup_set_class foffval_8 wceq ioffval_1 sup_set_class foffval_9 wceq wa foffval_1 ioffval_0 sup_set_class cdm ioffval_1 sup_set_class cdm cin foffval_1 sup_set_class ioffval_0 sup_set_class cfv foffval_1 sup_set_class ioffval_1 sup_set_class cfv foffval_6 co foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co ioffval_0 sup_set_class foffval_8 wceq ioffval_1 sup_set_class foffval_9 wceq ioffval_0 sup_set_class cdm foffval_8 cdm ioffval_1 sup_set_class cdm foffval_9 cdm ioffval_0 sup_set_class foffval_8 dmeq ioffval_1 sup_set_class foffval_9 dmeq ineqan12d ioffval_0 sup_set_class foffval_8 wceq ioffval_1 sup_set_class foffval_9 wceq foffval_1 sup_set_class ioffval_0 sup_set_class cfv foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class ioffval_1 sup_set_class cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 foffval_1 sup_set_class ioffval_0 sup_set_class foffval_8 fveq1 foffval_1 sup_set_class ioffval_1 sup_set_class foffval_9 fveq1 oveqan12d mpteq12dv foffval_1 foffval_6 ioffval_0 ioffval_1 df-of ovmpt2ga syl3anc foffval_0 foffval_8 cdm foffval_9 cdm cin foffval_7 wceq foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co cmpt wceq foffval_0 foffval_8 cdm foffval_9 cdm cin foffval_2 foffval_3 cin foffval_7 foffval_0 foffval_8 cdm foffval_2 foffval_9 cdm foffval_3 foffval_0 foffval_8 foffval_2 wfn foffval_8 cdm foffval_2 wceq eoffval_0 foffval_2 foffval_8 fndm syl foffval_0 foffval_9 foffval_3 wfn foffval_9 cdm foffval_3 wceq eoffval_1 foffval_3 foffval_9 fndm syl ineq12d eoffval_4 syl6eq foffval_1 foffval_8 cdm foffval_9 cdm cin foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co mpteq1 syl foffval_0 foffval_1 foffval_7 foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co foffval_4 foffval_5 foffval_6 co foffval_1 sup_set_class foffval_7 wcel foffval_0 foffval_1 sup_set_class foffval_2 wcel foffval_1 sup_set_class foffval_3 wcel wa foffval_1 sup_set_class foffval_8 cfv foffval_1 sup_set_class foffval_9 cfv foffval_6 co foffval_4 foffval_5 foffval_6 co wceq foffval_1 sup_set_class foffval_7 wcel foffval_1 sup_set_class foffval_2 foffval_3 cin wcel foffval_1 sup_set_class foffval_2 wcel foffval_1 sup_set_class foffval_3 wcel wa foffval_2 foffval_3 cin foffval_7 foffval_1 sup_set_class eoffval_4 eleq2i foffval_1 sup_set_class foffval_2 foffval_3 elin bitr3i foffval_0 foffval_1 sup_set_class foffval_2 wcel foffval_1 sup_set_class foffval_3 wcel wa wa foffval_1 sup_set_class foffval_8 cfv foffval_4 foffval_1 sup_set_class foffval_9 cfv foffval_5 foffval_6 foffval_0 foffval_1 sup_set_class foffval_2 wcel foffval_1 sup_set_class foffval_8 cfv foffval_4 wceq foffval_1 sup_set_class foffval_3 wcel eoffval_5 adantrr foffval_0 foffval_1 sup_set_class foffval_3 wcel foffval_1 sup_set_class foffval_9 cfv foffval_5 wceq foffval_1 sup_set_class foffval_2 wcel eoffval_6 adantrl oveq12d sylan2b mpteq2dva 3eqtrd $.
+	$v ph x A B C D R S F G V W  $.
+	$d x A  $.
+	$d f g x F  $.
+	$d f g x G  $.
+	$d x ph  $.
+	$d x S  $.
+	$d x  $.
+	$d f g x R  $.
+	f0_offval $f wff ph $.
+	f1_offval $f set x $.
+	f2_offval $f class A $.
+	f3_offval $f class B $.
+	f4_offval $f class C $.
+	f5_offval $f class D $.
+	f6_offval $f class R $.
+	f7_offval $f class S $.
+	f8_offval $f class F $.
+	f9_offval $f class G $.
+	f10_offval $f class V $.
+	f11_offval $f class W $.
+	i0_offval $f set f $.
+	i1_offval $f set g $.
+	e0_offval $e |- ( ph -> F Fn A ) $.
+	e1_offval $e |- ( ph -> G Fn B ) $.
+	e2_offval $e |- ( ph -> A e. V ) $.
+	e3_offval $e |- ( ph -> B e. W ) $.
+	e4_offval $e |- ( A i^i B ) = S $.
+	e5_offval $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = C ) $.
+	e6_offval $e |- ( ( ph /\ x e. B ) -> ( G ` x ) = D ) $.
+	p_offval $p |- ( ph -> ( F oF R G ) = ( x e. S |-> ( C R D ) ) ) $= e0_offval e2_offval f2_offval f10_offval f8_offval p_fnex f0_offval f8_offval f2_offval a_wfn f2_offval f10_offval a_wcel f8_offval a_cvv a_wcel p_syl2anc e1_offval e3_offval f3_offval f11_offval f9_offval p_fnex f0_offval f9_offval f3_offval a_wfn f3_offval f11_offval a_wcel f9_offval a_cvv a_wcel p_syl2anc e0_offval f2_offval f8_offval p_fndm f0_offval f8_offval f2_offval a_wfn f8_offval a_cdm f2_offval a_wceq p_syl e1_offval f3_offval f9_offval p_fndm f0_offval f9_offval f3_offval a_wfn f9_offval a_cdm f3_offval a_wceq p_syl f0_offval f8_offval a_cdm f2_offval f9_offval a_cdm f3_offval p_ineq12d e4_offval f0_offval f8_offval a_cdm f9_offval a_cdm a_cin f2_offval f3_offval a_cin f7_offval p_syl6eq f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co p_mpteq1 f0_offval f8_offval a_cdm f9_offval a_cdm a_cin f7_offval a_wceq f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_wceq p_syl e2_offval e4_offval f2_offval f3_offval f10_offval p_inex1g f2_offval f10_offval a_wcel f7_offval f2_offval f3_offval a_cin a_cvv p_syl5eqelr f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cvv p_mptexg f0_offval f2_offval f10_offval a_wcel f7_offval a_cvv a_wcel f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_cvv a_wcel p_3syl f0_offval f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_cvv p_eqeltrd i0_offval a_sup_set_class f8_offval p_dmeq i1_offval a_sup_set_class f9_offval p_dmeq i0_offval a_sup_set_class f8_offval a_wceq i1_offval a_sup_set_class f9_offval a_wceq i0_offval a_sup_set_class a_cdm f8_offval a_cdm i1_offval a_sup_set_class a_cdm f9_offval a_cdm p_ineqan12d f1_offval a_sup_set_class i0_offval a_sup_set_class f8_offval p_fveq1 f1_offval a_sup_set_class i1_offval a_sup_set_class f9_offval p_fveq1 i0_offval a_sup_set_class f8_offval a_wceq i1_offval a_sup_set_class f9_offval a_wceq f1_offval a_sup_set_class i0_offval a_sup_set_class a_cfv f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class i1_offval a_sup_set_class a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval p_oveqan12d i0_offval a_sup_set_class f8_offval a_wceq i1_offval a_sup_set_class f9_offval a_wceq a_wa f1_offval i0_offval a_sup_set_class a_cdm i1_offval a_sup_set_class a_cdm a_cin f1_offval a_sup_set_class i0_offval a_sup_set_class a_cfv f1_offval a_sup_set_class i1_offval a_sup_set_class a_cfv f6_offval a_co f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co p_mpteq12dv f1_offval f6_offval i0_offval i1_offval a_df-of i0_offval i1_offval f8_offval f9_offval a_cvv a_cvv f1_offval i0_offval a_sup_set_class a_cdm i1_offval a_sup_set_class a_cdm a_cin f1_offval a_sup_set_class i0_offval a_sup_set_class a_cfv f1_offval a_sup_set_class i1_offval a_sup_set_class a_cfv f6_offval a_co a_cmpt f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f6_offval a_cof a_cvv p_ovmpt2ga f0_offval f8_offval a_cvv a_wcel f9_offval a_cvv a_wcel f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_cvv a_wcel f8_offval f9_offval f6_offval a_cof a_co f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_wceq p_syl3anc e0_offval f2_offval f8_offval p_fndm f0_offval f8_offval f2_offval a_wfn f8_offval a_cdm f2_offval a_wceq p_syl e1_offval f3_offval f9_offval p_fndm f0_offval f9_offval f3_offval a_wfn f9_offval a_cdm f3_offval a_wceq p_syl f0_offval f8_offval a_cdm f2_offval f9_offval a_cdm f3_offval p_ineq12d e4_offval f0_offval f8_offval a_cdm f9_offval a_cdm a_cin f2_offval f3_offval a_cin f7_offval p_syl6eq f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co p_mpteq1 f0_offval f8_offval a_cdm f9_offval a_cdm a_cin f7_offval a_wceq f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt a_wceq p_syl e4_offval f2_offval f3_offval a_cin f7_offval f1_offval a_sup_set_class p_eleq2i f1_offval a_sup_set_class f2_offval f3_offval p_elin f1_offval a_sup_set_class f7_offval a_wcel f1_offval a_sup_set_class f2_offval f3_offval a_cin a_wcel f1_offval a_sup_set_class f2_offval a_wcel f1_offval a_sup_set_class f3_offval a_wcel a_wa p_bitr3i e5_offval f0_offval f1_offval a_sup_set_class f2_offval a_wcel f1_offval a_sup_set_class f8_offval a_cfv f4_offval a_wceq f1_offval a_sup_set_class f3_offval a_wcel p_adantrr e6_offval f0_offval f1_offval a_sup_set_class f3_offval a_wcel f1_offval a_sup_set_class f9_offval a_cfv f5_offval a_wceq f1_offval a_sup_set_class f2_offval a_wcel p_adantrl f0_offval f1_offval a_sup_set_class f2_offval a_wcel f1_offval a_sup_set_class f3_offval a_wcel a_wa a_wa f1_offval a_sup_set_class f8_offval a_cfv f4_offval f1_offval a_sup_set_class f9_offval a_cfv f5_offval f6_offval p_oveq12d f1_offval a_sup_set_class f7_offval a_wcel f0_offval f1_offval a_sup_set_class f2_offval a_wcel f1_offval a_sup_set_class f3_offval a_wcel a_wa f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co f4_offval f5_offval f6_offval a_co a_wceq p_sylan2b f0_offval f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co f4_offval f5_offval f6_offval a_co p_mpteq2dva f0_offval f8_offval f9_offval f6_offval a_cof a_co f1_offval f8_offval a_cdm f9_offval a_cdm a_cin f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f1_offval f7_offval f1_offval a_sup_set_class f8_offval a_cfv f1_offval a_sup_set_class f9_offval a_cfv f6_offval a_co a_cmpt f1_offval f7_offval f4_offval f5_offval f6_offval a_co a_cmpt p_3eqtrd $.
 $}
-$( Value of a relation applied to two functions.  (Contributed by Mario
+
+$(Value of a relation applied to two functions.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v f $.
-	$v g $.
-	$d x A $.
-	$d f g x F $.
-	$d f g x G $.
-	$d x ph $.
-	$d x S $.
-	$d f g x R $.
-	iofrfval_0 $f set f $.
-	iofrfval_1 $f set g $.
-	fofrfval_0 $f wff ph $.
-	fofrfval_1 $f set x $.
-	fofrfval_2 $f class A $.
-	fofrfval_3 $f class B $.
-	fofrfval_4 $f class C $.
-	fofrfval_5 $f class D $.
-	fofrfval_6 $f class R $.
-	fofrfval_7 $f class S $.
-	fofrfval_8 $f class F $.
-	fofrfval_9 $f class G $.
-	fofrfval_10 $f class V $.
-	fofrfval_11 $f class W $.
-	eofrfval_0 $e |- ( ph -> F Fn A ) $.
-	eofrfval_1 $e |- ( ph -> G Fn B ) $.
-	eofrfval_2 $e |- ( ph -> A e. V ) $.
-	eofrfval_3 $e |- ( ph -> B e. W ) $.
-	eofrfval_4 $e |- ( A i^i B ) = S $.
-	eofrfval_5 $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = C ) $.
-	eofrfval_6 $e |- ( ( ph /\ x e. B ) -> ( G ` x ) = D ) $.
-	ofrfval $p |- ( ph -> ( F oR R G <-> A. x e. S C R D ) ) $= fofrfval_0 fofrfval_8 fofrfval_9 fofrfval_6 cofr wbr fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 fofrfval_8 cdm fofrfval_9 cdm cin wral fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 fofrfval_7 wral fofrfval_4 fofrfval_5 fofrfval_6 wbr fofrfval_1 fofrfval_7 wral fofrfval_0 fofrfval_8 cvv wcel fofrfval_9 cvv wcel fofrfval_8 fofrfval_9 fofrfval_6 cofr wbr fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 fofrfval_8 cdm fofrfval_9 cdm cin wral wb fofrfval_0 fofrfval_8 fofrfval_2 wfn fofrfval_2 fofrfval_10 wcel fofrfval_8 cvv wcel eofrfval_0 eofrfval_2 fofrfval_2 fofrfval_10 fofrfval_8 fnex syl2anc fofrfval_0 fofrfval_9 fofrfval_3 wfn fofrfval_3 fofrfval_11 wcel fofrfval_9 cvv wcel eofrfval_1 eofrfval_3 fofrfval_3 fofrfval_11 fofrfval_9 fnex syl2anc fofrfval_1 sup_set_class iofrfval_0 sup_set_class cfv fofrfval_1 sup_set_class iofrfval_1 sup_set_class cfv fofrfval_6 wbr fofrfval_1 iofrfval_0 sup_set_class cdm iofrfval_1 sup_set_class cdm cin wral fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 fofrfval_8 cdm fofrfval_9 cdm cin wral iofrfval_0 iofrfval_1 fofrfval_8 fofrfval_9 fofrfval_6 cofr cvv cvv iofrfval_0 sup_set_class fofrfval_8 wceq iofrfval_1 sup_set_class fofrfval_9 wceq wa fofrfval_1 sup_set_class iofrfval_0 sup_set_class cfv fofrfval_1 sup_set_class iofrfval_1 sup_set_class cfv fofrfval_6 wbr fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 iofrfval_0 sup_set_class cdm iofrfval_1 sup_set_class cdm cin fofrfval_8 cdm fofrfval_9 cdm cin iofrfval_0 sup_set_class fofrfval_8 wceq iofrfval_1 sup_set_class fofrfval_9 wceq iofrfval_0 sup_set_class cdm fofrfval_8 cdm iofrfval_1 sup_set_class cdm fofrfval_9 cdm iofrfval_0 sup_set_class fofrfval_8 dmeq iofrfval_1 sup_set_class fofrfval_9 dmeq ineqan12d iofrfval_0 sup_set_class fofrfval_8 wceq iofrfval_1 sup_set_class fofrfval_9 wceq fofrfval_1 sup_set_class iofrfval_0 sup_set_class cfv fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class iofrfval_1 sup_set_class cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 fofrfval_1 sup_set_class iofrfval_0 sup_set_class fofrfval_8 fveq1 fofrfval_1 sup_set_class iofrfval_1 sup_set_class fofrfval_9 fveq1 breqan12d raleqbidv fofrfval_1 fofrfval_6 iofrfval_0 iofrfval_1 df-ofr brabga syl2anc fofrfval_0 fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_1 fofrfval_8 cdm fofrfval_9 cdm cin fofrfval_7 fofrfval_0 fofrfval_8 cdm fofrfval_9 cdm cin fofrfval_2 fofrfval_3 cin fofrfval_7 fofrfval_0 fofrfval_8 cdm fofrfval_2 fofrfval_9 cdm fofrfval_3 fofrfval_0 fofrfval_8 fofrfval_2 wfn fofrfval_8 cdm fofrfval_2 wceq eofrfval_0 fofrfval_2 fofrfval_8 fndm syl fofrfval_0 fofrfval_9 fofrfval_3 wfn fofrfval_9 cdm fofrfval_3 wceq eofrfval_1 fofrfval_3 fofrfval_9 fndm syl ineq12d eofrfval_4 syl6eq raleqdv fofrfval_0 fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_6 wbr fofrfval_4 fofrfval_5 fofrfval_6 wbr fofrfval_1 fofrfval_7 fofrfval_0 fofrfval_1 sup_set_class fofrfval_7 wcel wa fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_4 fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_5 fofrfval_6 fofrfval_1 sup_set_class fofrfval_7 wcel fofrfval_0 fofrfval_1 sup_set_class fofrfval_2 wcel fofrfval_1 sup_set_class fofrfval_8 cfv fofrfval_4 wceq fofrfval_7 fofrfval_2 fofrfval_1 sup_set_class fofrfval_7 fofrfval_2 fofrfval_3 cin fofrfval_2 eofrfval_4 fofrfval_2 fofrfval_3 inss1 eqsstr3i sseli eofrfval_5 sylan2 fofrfval_1 sup_set_class fofrfval_7 wcel fofrfval_0 fofrfval_1 sup_set_class fofrfval_3 wcel fofrfval_1 sup_set_class fofrfval_9 cfv fofrfval_5 wceq fofrfval_7 fofrfval_3 fofrfval_1 sup_set_class fofrfval_7 fofrfval_2 fofrfval_3 cin fofrfval_3 eofrfval_4 fofrfval_2 fofrfval_3 inss2 eqsstr3i sseli eofrfval_6 sylan2 breq12d ralbidva 3bitrd $.
+	$v ph x A B C D R S F G V W  $.
+	$d x A  $.
+	$d f g x F  $.
+	$d f g x G  $.
+	$d x ph  $.
+	$d x S  $.
+	$d x  $.
+	$d f g x R  $.
+	f0_ofrfval $f wff ph $.
+	f1_ofrfval $f set x $.
+	f2_ofrfval $f class A $.
+	f3_ofrfval $f class B $.
+	f4_ofrfval $f class C $.
+	f5_ofrfval $f class D $.
+	f6_ofrfval $f class R $.
+	f7_ofrfval $f class S $.
+	f8_ofrfval $f class F $.
+	f9_ofrfval $f class G $.
+	f10_ofrfval $f class V $.
+	f11_ofrfval $f class W $.
+	i0_ofrfval $f set f $.
+	i1_ofrfval $f set g $.
+	e0_ofrfval $e |- ( ph -> F Fn A ) $.
+	e1_ofrfval $e |- ( ph -> G Fn B ) $.
+	e2_ofrfval $e |- ( ph -> A e. V ) $.
+	e3_ofrfval $e |- ( ph -> B e. W ) $.
+	e4_ofrfval $e |- ( A i^i B ) = S $.
+	e5_ofrfval $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = C ) $.
+	e6_ofrfval $e |- ( ( ph /\ x e. B ) -> ( G ` x ) = D ) $.
+	p_ofrfval $p |- ( ph -> ( F oR R G <-> A. x e. S C R D ) ) $= e0_ofrfval e2_ofrfval f2_ofrfval f10_ofrfval f8_ofrfval p_fnex f0_ofrfval f8_ofrfval f2_ofrfval a_wfn f2_ofrfval f10_ofrfval a_wcel f8_ofrfval a_cvv a_wcel p_syl2anc e1_ofrfval e3_ofrfval f3_ofrfval f11_ofrfval f9_ofrfval p_fnex f0_ofrfval f9_ofrfval f3_ofrfval a_wfn f3_ofrfval f11_ofrfval a_wcel f9_ofrfval a_cvv a_wcel p_syl2anc i0_ofrfval a_sup_set_class f8_ofrfval p_dmeq i1_ofrfval a_sup_set_class f9_ofrfval p_dmeq i0_ofrfval a_sup_set_class f8_ofrfval a_wceq i1_ofrfval a_sup_set_class f9_ofrfval a_wceq i0_ofrfval a_sup_set_class a_cdm f8_ofrfval a_cdm i1_ofrfval a_sup_set_class a_cdm f9_ofrfval a_cdm p_ineqan12d f1_ofrfval a_sup_set_class i0_ofrfval a_sup_set_class f8_ofrfval p_fveq1 f1_ofrfval a_sup_set_class i1_ofrfval a_sup_set_class f9_ofrfval p_fveq1 i0_ofrfval a_sup_set_class f8_ofrfval a_wceq i1_ofrfval a_sup_set_class f9_ofrfval a_wceq f1_ofrfval a_sup_set_class i0_ofrfval a_sup_set_class a_cfv f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class i1_ofrfval a_sup_set_class a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval p_breqan12d i0_ofrfval a_sup_set_class f8_ofrfval a_wceq i1_ofrfval a_sup_set_class f9_ofrfval a_wceq a_wa f1_ofrfval a_sup_set_class i0_ofrfval a_sup_set_class a_cfv f1_ofrfval a_sup_set_class i1_ofrfval a_sup_set_class a_cfv f6_ofrfval a_wbr f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval i0_ofrfval a_sup_set_class a_cdm i1_ofrfval a_sup_set_class a_cdm a_cin f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin p_raleqbidv f1_ofrfval f6_ofrfval i0_ofrfval i1_ofrfval a_df-ofr f1_ofrfval a_sup_set_class i0_ofrfval a_sup_set_class a_cfv f1_ofrfval a_sup_set_class i1_ofrfval a_sup_set_class a_cfv f6_ofrfval a_wbr f1_ofrfval i0_ofrfval a_sup_set_class a_cdm i1_ofrfval a_sup_set_class a_cdm a_cin a_wral f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin a_wral i0_ofrfval i1_ofrfval f8_ofrfval f9_ofrfval f6_ofrfval a_cofr a_cvv a_cvv p_brabga f0_ofrfval f8_ofrfval a_cvv a_wcel f9_ofrfval a_cvv a_wcel f8_ofrfval f9_ofrfval f6_ofrfval a_cofr a_wbr f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin a_wral a_wb p_syl2anc e0_ofrfval f2_ofrfval f8_ofrfval p_fndm f0_ofrfval f8_ofrfval f2_ofrfval a_wfn f8_ofrfval a_cdm f2_ofrfval a_wceq p_syl e1_ofrfval f3_ofrfval f9_ofrfval p_fndm f0_ofrfval f9_ofrfval f3_ofrfval a_wfn f9_ofrfval a_cdm f3_ofrfval a_wceq p_syl f0_ofrfval f8_ofrfval a_cdm f2_ofrfval f9_ofrfval a_cdm f3_ofrfval p_ineq12d e4_ofrfval f0_ofrfval f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin f2_ofrfval f3_ofrfval a_cin f7_ofrfval p_syl6eq f0_ofrfval f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin f7_ofrfval p_raleqdv e4_ofrfval f2_ofrfval f3_ofrfval p_inss1 f7_ofrfval f2_ofrfval f3_ofrfval a_cin f2_ofrfval p_eqsstr3i f7_ofrfval f2_ofrfval f1_ofrfval a_sup_set_class p_sseli e5_ofrfval f1_ofrfval a_sup_set_class f7_ofrfval a_wcel f0_ofrfval f1_ofrfval a_sup_set_class f2_ofrfval a_wcel f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f4_ofrfval a_wceq p_sylan2 e4_ofrfval f2_ofrfval f3_ofrfval p_inss2 f7_ofrfval f2_ofrfval f3_ofrfval a_cin f3_ofrfval p_eqsstr3i f7_ofrfval f3_ofrfval f1_ofrfval a_sup_set_class p_sseli e6_ofrfval f1_ofrfval a_sup_set_class f7_ofrfval a_wcel f0_ofrfval f1_ofrfval a_sup_set_class f3_ofrfval a_wcel f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f5_ofrfval a_wceq p_sylan2 f0_ofrfval f1_ofrfval a_sup_set_class f7_ofrfval a_wcel a_wa f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f4_ofrfval f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f5_ofrfval f6_ofrfval p_breq12d f0_ofrfval f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f4_ofrfval f5_ofrfval f6_ofrfval a_wbr f1_ofrfval f7_ofrfval p_ralbidva f0_ofrfval f8_ofrfval f9_ofrfval f6_ofrfval a_cofr a_wbr f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval f8_ofrfval a_cdm f9_ofrfval a_cdm a_cin a_wral f1_ofrfval a_sup_set_class f8_ofrfval a_cfv f1_ofrfval a_sup_set_class f9_ofrfval a_cfv f6_ofrfval a_wbr f1_ofrfval f7_ofrfval a_wral f4_ofrfval f5_ofrfval f6_ofrfval a_wbr f1_ofrfval f7_ofrfval a_wral p_3bitrd $.
 $}
-$( Evaluate a function operation at a point.  (Contributed by Mario
+
+$(Evaluate a function operation at a point.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v x $.
-	$d x A $.
-	$d x F $.
-	$d x G $.
-	$d x ph $.
-	$d x S $.
-	$d x X $.
-	$d x R $.
-	iofval_0 $f set x $.
-	fofval_0 $f wff ph $.
-	fofval_1 $f class A $.
-	fofval_2 $f class B $.
-	fofval_3 $f class C $.
-	fofval_4 $f class D $.
-	fofval_5 $f class R $.
-	fofval_6 $f class S $.
-	fofval_7 $f class F $.
-	fofval_8 $f class G $.
-	fofval_9 $f class V $.
-	fofval_10 $f class W $.
-	fofval_11 $f class X $.
-	eofval_0 $e |- ( ph -> F Fn A ) $.
-	eofval_1 $e |- ( ph -> G Fn B ) $.
-	eofval_2 $e |- ( ph -> A e. V ) $.
-	eofval_3 $e |- ( ph -> B e. W ) $.
-	eofval_4 $e |- ( A i^i B ) = S $.
-	eofval_5 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
-	eofval_6 $e |- ( ( ph /\ X e. B ) -> ( G ` X ) = D ) $.
-	ofval $p |- ( ( ph /\ X e. S ) -> ( ( F oF R G ) ` X ) = ( C R D ) ) $= fofval_0 fofval_11 fofval_6 wcel wa fofval_11 fofval_7 fofval_8 fofval_5 cof co cfv fofval_11 iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt cfv fofval_11 fofval_7 cfv fofval_11 fofval_8 cfv fofval_5 co fofval_3 fofval_4 fofval_5 co fofval_0 fofval_11 fofval_7 fofval_8 fofval_5 cof co cfv fofval_11 iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt cfv wceq fofval_11 fofval_6 wcel fofval_0 fofval_11 fofval_7 fofval_8 fofval_5 cof co iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt fofval_0 iofval_0 fofval_1 fofval_2 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 fofval_6 fofval_7 fofval_8 fofval_9 fofval_10 eofval_0 eofval_1 eofval_2 eofval_3 eofval_4 fofval_0 iofval_0 sup_set_class fofval_1 wcel wa iofval_0 sup_set_class fofval_7 cfv eqidd fofval_0 iofval_0 sup_set_class fofval_2 wcel wa iofval_0 sup_set_class fofval_8 cfv eqidd offval fveq1d adantr fofval_11 fofval_6 wcel fofval_11 iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt cfv fofval_11 fofval_7 cfv fofval_11 fofval_8 cfv fofval_5 co wceq fofval_0 iofval_0 fofval_11 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co fofval_11 fofval_7 cfv fofval_11 fofval_8 cfv fofval_5 co fofval_6 iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt iofval_0 sup_set_class fofval_11 wceq iofval_0 sup_set_class fofval_7 cfv fofval_11 fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_11 fofval_8 cfv fofval_5 iofval_0 sup_set_class fofval_11 fofval_7 fveq2 iofval_0 sup_set_class fofval_11 fofval_8 fveq2 oveq12d iofval_0 fofval_6 iofval_0 sup_set_class fofval_7 cfv iofval_0 sup_set_class fofval_8 cfv fofval_5 co cmpt eqid fofval_11 fofval_7 cfv fofval_11 fofval_8 cfv fofval_5 ovex fvmpt adantl fofval_0 fofval_11 fofval_6 wcel wa fofval_11 fofval_7 cfv fofval_3 fofval_11 fofval_8 cfv fofval_4 fofval_5 fofval_11 fofval_6 wcel fofval_0 fofval_11 fofval_1 wcel fofval_11 fofval_7 cfv fofval_3 wceq fofval_6 fofval_1 fofval_11 fofval_6 fofval_1 fofval_2 cin fofval_1 eofval_4 fofval_1 fofval_2 inss1 eqsstr3i sseli eofval_5 sylan2 fofval_11 fofval_6 wcel fofval_0 fofval_11 fofval_2 wcel fofval_11 fofval_8 cfv fofval_4 wceq fofval_6 fofval_2 fofval_11 fofval_6 fofval_1 fofval_2 cin fofval_2 eofval_4 fofval_1 fofval_2 inss2 eqsstr3i sseli eofval_6 sylan2 oveq12d 3eqtrd $.
+	$v ph A B C D R S F G V W X  $.
+	$d x A  $.
+	$d x F  $.
+	$d x G  $.
+	$d x ph  $.
+	$d x S  $.
+	$d x X  $.
+	$d x R  $.
+	f0_ofval $f wff ph $.
+	f1_ofval $f class A $.
+	f2_ofval $f class B $.
+	f3_ofval $f class C $.
+	f4_ofval $f class D $.
+	f5_ofval $f class R $.
+	f6_ofval $f class S $.
+	f7_ofval $f class F $.
+	f8_ofval $f class G $.
+	f9_ofval $f class V $.
+	f10_ofval $f class W $.
+	f11_ofval $f class X $.
+	i0_ofval $f set x $.
+	e0_ofval $e |- ( ph -> F Fn A ) $.
+	e1_ofval $e |- ( ph -> G Fn B ) $.
+	e2_ofval $e |- ( ph -> A e. V ) $.
+	e3_ofval $e |- ( ph -> B e. W ) $.
+	e4_ofval $e |- ( A i^i B ) = S $.
+	e5_ofval $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
+	e6_ofval $e |- ( ( ph /\ X e. B ) -> ( G ` X ) = D ) $.
+	p_ofval $p |- ( ( ph /\ X e. S ) -> ( ( F oF R G ) ` X ) = ( C R D ) ) $= e0_ofval e1_ofval e2_ofval e3_ofval e4_ofval f0_ofval i0_ofval a_sup_set_class f1_ofval a_wcel a_wa i0_ofval a_sup_set_class f7_ofval a_cfv p_eqidd f0_ofval i0_ofval a_sup_set_class f2_ofval a_wcel a_wa i0_ofval a_sup_set_class f8_ofval a_cfv p_eqidd f0_ofval i0_ofval f1_ofval f2_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval f6_ofval f7_ofval f8_ofval f9_ofval f10_ofval p_offval f0_ofval f11_ofval f7_ofval f8_ofval f5_ofval a_cof a_co i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt p_fveq1d f0_ofval f11_ofval f7_ofval f8_ofval f5_ofval a_cof a_co a_cfv f11_ofval i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt a_cfv a_wceq f11_ofval f6_ofval a_wcel p_adantr i0_ofval a_sup_set_class f11_ofval f7_ofval p_fveq2 i0_ofval a_sup_set_class f11_ofval f8_ofval p_fveq2 i0_ofval a_sup_set_class f11_ofval a_wceq i0_ofval a_sup_set_class f7_ofval a_cfv f11_ofval f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f11_ofval f8_ofval a_cfv f5_ofval p_oveq12d i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt p_eqid f11_ofval f7_ofval a_cfv f11_ofval f8_ofval a_cfv f5_ofval p_ovex i0_ofval f11_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co f11_ofval f7_ofval a_cfv f11_ofval f8_ofval a_cfv f5_ofval a_co f6_ofval i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt p_fvmpt f11_ofval f6_ofval a_wcel f11_ofval i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt a_cfv f11_ofval f7_ofval a_cfv f11_ofval f8_ofval a_cfv f5_ofval a_co a_wceq f0_ofval p_adantl e4_ofval f1_ofval f2_ofval p_inss1 f6_ofval f1_ofval f2_ofval a_cin f1_ofval p_eqsstr3i f6_ofval f1_ofval f11_ofval p_sseli e5_ofval f11_ofval f6_ofval a_wcel f0_ofval f11_ofval f1_ofval a_wcel f11_ofval f7_ofval a_cfv f3_ofval a_wceq p_sylan2 e4_ofval f1_ofval f2_ofval p_inss2 f6_ofval f1_ofval f2_ofval a_cin f2_ofval p_eqsstr3i f6_ofval f2_ofval f11_ofval p_sseli e6_ofval f11_ofval f6_ofval a_wcel f0_ofval f11_ofval f2_ofval a_wcel f11_ofval f8_ofval a_cfv f4_ofval a_wceq p_sylan2 f0_ofval f11_ofval f6_ofval a_wcel a_wa f11_ofval f7_ofval a_cfv f3_ofval f11_ofval f8_ofval a_cfv f4_ofval f5_ofval p_oveq12d f0_ofval f11_ofval f6_ofval a_wcel a_wa f11_ofval f7_ofval f8_ofval f5_ofval a_cof a_co a_cfv f11_ofval i0_ofval f6_ofval i0_ofval a_sup_set_class f7_ofval a_cfv i0_ofval a_sup_set_class f8_ofval a_cfv f5_ofval a_co a_cmpt a_cfv f11_ofval f7_ofval a_cfv f11_ofval f8_ofval a_cfv f5_ofval a_co f3_ofval f4_ofval f5_ofval a_co p_3eqtrd $.
 $}
-$( Exhibit a function relation at a point.  (Contributed by Mario
+
+$(Exhibit a function relation at a point.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v x $.
-	$d x A $.
-	$d x F $.
-	$d x G $.
-	$d x ph $.
-	$d x S $.
-	$d x X $.
-	$d x R $.
-	iofrval_0 $f set x $.
-	fofrval_0 $f wff ph $.
-	fofrval_1 $f class A $.
-	fofrval_2 $f class B $.
-	fofrval_3 $f class C $.
-	fofrval_4 $f class D $.
-	fofrval_5 $f class R $.
-	fofrval_6 $f class S $.
-	fofrval_7 $f class F $.
-	fofrval_8 $f class G $.
-	fofrval_9 $f class V $.
-	fofrval_10 $f class W $.
-	fofrval_11 $f class X $.
-	eofrval_0 $e |- ( ph -> F Fn A ) $.
-	eofrval_1 $e |- ( ph -> G Fn B ) $.
-	eofrval_2 $e |- ( ph -> A e. V ) $.
-	eofrval_3 $e |- ( ph -> B e. W ) $.
-	eofrval_4 $e |- ( A i^i B ) = S $.
-	eofrval_5 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
-	eofrval_6 $e |- ( ( ph /\ X e. B ) -> ( G ` X ) = D ) $.
-	ofrval $p |- ( ( ph /\ F oR R G /\ X e. S ) -> C R D ) $= fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel w3a fofrval_11 fofrval_7 cfv fofrval_11 fofrval_8 cfv fofrval_3 fofrval_4 fofrval_5 fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel fofrval_11 fofrval_7 cfv fofrval_11 fofrval_8 cfv fofrval_5 wbr fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr wa iofrval_0 sup_set_class fofrval_7 cfv iofrval_0 sup_set_class fofrval_8 cfv fofrval_5 wbr iofrval_0 fofrval_6 wral fofrval_11 fofrval_6 wcel fofrval_11 fofrval_7 cfv fofrval_11 fofrval_8 cfv fofrval_5 wbr wi fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr iofrval_0 sup_set_class fofrval_7 cfv iofrval_0 sup_set_class fofrval_8 cfv fofrval_5 wbr iofrval_0 fofrval_6 wral fofrval_0 iofrval_0 fofrval_1 fofrval_2 iofrval_0 sup_set_class fofrval_7 cfv iofrval_0 sup_set_class fofrval_8 cfv fofrval_5 fofrval_6 fofrval_7 fofrval_8 fofrval_9 fofrval_10 eofrval_0 eofrval_1 eofrval_2 eofrval_3 eofrval_4 fofrval_0 iofrval_0 sup_set_class fofrval_1 wcel wa iofrval_0 sup_set_class fofrval_7 cfv eqidd fofrval_0 iofrval_0 sup_set_class fofrval_2 wcel wa iofrval_0 sup_set_class fofrval_8 cfv eqidd ofrfval biimpa iofrval_0 sup_set_class fofrval_7 cfv iofrval_0 sup_set_class fofrval_8 cfv fofrval_5 wbr fofrval_11 fofrval_7 cfv fofrval_11 fofrval_8 cfv fofrval_5 wbr iofrval_0 fofrval_11 fofrval_6 iofrval_0 sup_set_class fofrval_11 wceq iofrval_0 sup_set_class fofrval_7 cfv fofrval_11 fofrval_7 cfv iofrval_0 sup_set_class fofrval_8 cfv fofrval_11 fofrval_8 cfv fofrval_5 iofrval_0 sup_set_class fofrval_11 fofrval_7 fveq2 iofrval_0 sup_set_class fofrval_11 fofrval_8 fveq2 breq12d rspccv syl 3impia fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel w3a fofrval_0 fofrval_11 fofrval_1 wcel fofrval_11 fofrval_7 cfv fofrval_3 wceq fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel simp1 fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel w3a fofrval_6 fofrval_1 fofrval_11 fofrval_6 fofrval_1 fofrval_2 cin fofrval_1 eofrval_4 fofrval_1 fofrval_2 inss1 eqsstr3i fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel simp3 sseldi eofrval_5 syl2anc fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel w3a fofrval_0 fofrval_11 fofrval_2 wcel fofrval_11 fofrval_8 cfv fofrval_4 wceq fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel simp1 fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel w3a fofrval_6 fofrval_2 fofrval_11 fofrval_6 fofrval_1 fofrval_2 cin fofrval_2 eofrval_4 fofrval_1 fofrval_2 inss2 eqsstr3i fofrval_0 fofrval_7 fofrval_8 fofrval_5 cofr wbr fofrval_11 fofrval_6 wcel simp3 sseldi eofrval_6 syl2anc 3brtr3d $.
+	$v ph A B C D R S F G V W X  $.
+	$d x A  $.
+	$d x F  $.
+	$d x G  $.
+	$d x ph  $.
+	$d x S  $.
+	$d x X  $.
+	$d x R  $.
+	f0_ofrval $f wff ph $.
+	f1_ofrval $f class A $.
+	f2_ofrval $f class B $.
+	f3_ofrval $f class C $.
+	f4_ofrval $f class D $.
+	f5_ofrval $f class R $.
+	f6_ofrval $f class S $.
+	f7_ofrval $f class F $.
+	f8_ofrval $f class G $.
+	f9_ofrval $f class V $.
+	f10_ofrval $f class W $.
+	f11_ofrval $f class X $.
+	i0_ofrval $f set x $.
+	e0_ofrval $e |- ( ph -> F Fn A ) $.
+	e1_ofrval $e |- ( ph -> G Fn B ) $.
+	e2_ofrval $e |- ( ph -> A e. V ) $.
+	e3_ofrval $e |- ( ph -> B e. W ) $.
+	e4_ofrval $e |- ( A i^i B ) = S $.
+	e5_ofrval $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
+	e6_ofrval $e |- ( ( ph /\ X e. B ) -> ( G ` X ) = D ) $.
+	p_ofrval $p |- ( ( ph /\ F oR R G /\ X e. S ) -> C R D ) $= e0_ofrval e1_ofrval e2_ofrval e3_ofrval e4_ofrval f0_ofrval i0_ofrval a_sup_set_class f1_ofrval a_wcel a_wa i0_ofrval a_sup_set_class f7_ofrval a_cfv p_eqidd f0_ofrval i0_ofrval a_sup_set_class f2_ofrval a_wcel a_wa i0_ofrval a_sup_set_class f8_ofrval a_cfv p_eqidd f0_ofrval i0_ofrval f1_ofrval f2_ofrval i0_ofrval a_sup_set_class f7_ofrval a_cfv i0_ofrval a_sup_set_class f8_ofrval a_cfv f5_ofrval f6_ofrval f7_ofrval f8_ofrval f9_ofrval f10_ofrval p_ofrfval f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr i0_ofrval a_sup_set_class f7_ofrval a_cfv i0_ofrval a_sup_set_class f8_ofrval a_cfv f5_ofrval a_wbr i0_ofrval f6_ofrval a_wral p_biimpa i0_ofrval a_sup_set_class f11_ofrval f7_ofrval p_fveq2 i0_ofrval a_sup_set_class f11_ofrval f8_ofrval p_fveq2 i0_ofrval a_sup_set_class f11_ofrval a_wceq i0_ofrval a_sup_set_class f7_ofrval a_cfv f11_ofrval f7_ofrval a_cfv i0_ofrval a_sup_set_class f8_ofrval a_cfv f11_ofrval f8_ofrval a_cfv f5_ofrval p_breq12d i0_ofrval a_sup_set_class f7_ofrval a_cfv i0_ofrval a_sup_set_class f8_ofrval a_cfv f5_ofrval a_wbr f11_ofrval f7_ofrval a_cfv f11_ofrval f8_ofrval a_cfv f5_ofrval a_wbr i0_ofrval f11_ofrval f6_ofrval p_rspccv f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr a_wa i0_ofrval a_sup_set_class f7_ofrval a_cfv i0_ofrval a_sup_set_class f8_ofrval a_cfv f5_ofrval a_wbr i0_ofrval f6_ofrval a_wral f11_ofrval f6_ofrval a_wcel f11_ofrval f7_ofrval a_cfv f11_ofrval f8_ofrval a_cfv f5_ofrval a_wbr a_wi p_syl f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel f11_ofrval f7_ofrval a_cfv f11_ofrval f8_ofrval a_cfv f5_ofrval a_wbr p_3impia f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel p_simp1 e4_ofrval f1_ofrval f2_ofrval p_inss1 f6_ofrval f1_ofrval f2_ofrval a_cin f1_ofrval p_eqsstr3i f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel p_simp3 f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel a_w3a f6_ofrval f1_ofrval f11_ofrval p_sseldi e5_ofrval f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel a_w3a f0_ofrval f11_ofrval f1_ofrval a_wcel f11_ofrval f7_ofrval a_cfv f3_ofrval a_wceq p_syl2anc f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel p_simp1 e4_ofrval f1_ofrval f2_ofrval p_inss2 f6_ofrval f1_ofrval f2_ofrval a_cin f2_ofrval p_eqsstr3i f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel p_simp3 f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel a_w3a f6_ofrval f2_ofrval f11_ofrval p_sseldi e6_ofrval f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel a_w3a f0_ofrval f11_ofrval f2_ofrval a_wcel f11_ofrval f8_ofrval a_cfv f4_ofrval a_wceq p_syl2anc f0_ofrval f7_ofrval f8_ofrval f5_ofrval a_cofr a_wbr f11_ofrval f6_ofrval a_wcel a_w3a f11_ofrval f7_ofrval a_cfv f11_ofrval f8_ofrval a_cfv f3_ofrval f4_ofrval f5_ofrval p_3brtr3d $.
 $}
-$( The function operation produces a function.  (Contributed by Mario
+
+$(The function operation produces a function.  (Contributed by Mario
        Carneiro, 22-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v x $.
-	$d x A $.
-	$d x F $.
-	$d x G $.
-	$d x ph $.
-	$d x S $.
-	$d x R $.
-	ioffn_0 $f set x $.
-	foffn_0 $f wff ph $.
-	foffn_1 $f class A $.
-	foffn_2 $f class B $.
-	foffn_3 $f class R $.
-	foffn_4 $f class S $.
-	foffn_5 $f class F $.
-	foffn_6 $f class G $.
-	foffn_7 $f class V $.
-	foffn_8 $f class W $.
-	eoffn_0 $e |- ( ph -> F Fn A ) $.
-	eoffn_1 $e |- ( ph -> G Fn B ) $.
-	eoffn_2 $e |- ( ph -> A e. V ) $.
-	eoffn_3 $e |- ( ph -> B e. W ) $.
-	eoffn_4 $e |- ( A i^i B ) = S $.
-	offn $p |- ( ph -> ( F oF R G ) Fn S ) $= foffn_0 foffn_5 foffn_6 foffn_3 cof co foffn_4 wfn ioffn_0 foffn_4 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 co cmpt foffn_4 wfn ioffn_0 foffn_4 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 co ioffn_0 foffn_4 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 co cmpt ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 ovex ioffn_0 foffn_4 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 co cmpt eqid fnmpti foffn_0 foffn_4 foffn_5 foffn_6 foffn_3 cof co ioffn_0 foffn_4 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 co cmpt foffn_0 ioffn_0 foffn_1 foffn_2 ioffn_0 sup_set_class foffn_5 cfv ioffn_0 sup_set_class foffn_6 cfv foffn_3 foffn_4 foffn_5 foffn_6 foffn_7 foffn_8 eoffn_0 eoffn_1 eoffn_2 eoffn_3 eoffn_4 foffn_0 ioffn_0 sup_set_class foffn_1 wcel wa ioffn_0 sup_set_class foffn_5 cfv eqidd foffn_0 ioffn_0 sup_set_class foffn_2 wcel wa ioffn_0 sup_set_class foffn_6 cfv eqidd offval fneq1d mpbiri $.
+	$v ph A B R S F G V W  $.
+	$d x A  $.
+	$d x F  $.
+	$d x G  $.
+	$d x ph  $.
+	$d x S  $.
+	$d x  $.
+	$d x R  $.
+	f0_offn $f wff ph $.
+	f1_offn $f class A $.
+	f2_offn $f class B $.
+	f3_offn $f class R $.
+	f4_offn $f class S $.
+	f5_offn $f class F $.
+	f6_offn $f class G $.
+	f7_offn $f class V $.
+	f8_offn $f class W $.
+	i0_offn $f set x $.
+	e0_offn $e |- ( ph -> F Fn A ) $.
+	e1_offn $e |- ( ph -> G Fn B ) $.
+	e2_offn $e |- ( ph -> A e. V ) $.
+	e3_offn $e |- ( ph -> B e. W ) $.
+	e4_offn $e |- ( A i^i B ) = S $.
+	p_offn $p |- ( ph -> ( F oF R G ) Fn S ) $= i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn p_ovex i0_offn f4_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn a_co a_cmpt p_eqid i0_offn f4_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn a_co i0_offn f4_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn a_co a_cmpt p_fnmpti e0_offn e1_offn e2_offn e3_offn e4_offn f0_offn i0_offn a_sup_set_class f1_offn a_wcel a_wa i0_offn a_sup_set_class f5_offn a_cfv p_eqidd f0_offn i0_offn a_sup_set_class f2_offn a_wcel a_wa i0_offn a_sup_set_class f6_offn a_cfv p_eqidd f0_offn i0_offn f1_offn f2_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn f4_offn f5_offn f6_offn f7_offn f8_offn p_offval f0_offn f4_offn f5_offn f6_offn f3_offn a_cof a_co i0_offn f4_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn a_co a_cmpt p_fneq1d f0_offn f5_offn f6_offn f3_offn a_cof a_co f4_offn a_wfn i0_offn f4_offn i0_offn a_sup_set_class f5_offn a_cfv i0_offn a_sup_set_class f6_offn a_cfv f3_offn a_co a_cmpt f4_offn a_wfn p_mpbiri $.
 $}
-$( Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
+
+$(Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
      5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) $)
+
 ${
-	$v A $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v X $.
-	ffnfvof_0 $f class A $.
-	ffnfvof_1 $f class R $.
-	ffnfvof_2 $f class F $.
-	ffnfvof_3 $f class G $.
-	ffnfvof_4 $f class V $.
-	ffnfvof_5 $f class X $.
-	fnfvof $p |- ( ( ( F Fn A /\ G Fn A ) /\ ( A e. V /\ X e. A ) ) -> ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) $= ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel ffnfvof_5 ffnfvof_0 wcel ffnfvof_5 ffnfvof_2 ffnfvof_3 ffnfvof_1 cof co cfv ffnfvof_5 ffnfvof_2 cfv ffnfvof_5 ffnfvof_3 cfv ffnfvof_1 co wceq ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel wa ffnfvof_0 ffnfvof_0 ffnfvof_5 ffnfvof_2 cfv ffnfvof_5 ffnfvof_3 cfv ffnfvof_1 ffnfvof_0 ffnfvof_2 ffnfvof_3 ffnfvof_4 ffnfvof_4 ffnfvof_5 ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn ffnfvof_0 ffnfvof_4 wcel simpll ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn ffnfvof_0 ffnfvof_4 wcel simplr ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel simpr ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel simpr ffnfvof_0 inidm ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel wa ffnfvof_5 ffnfvof_0 wcel wa ffnfvof_5 ffnfvof_2 cfv eqidd ffnfvof_2 ffnfvof_0 wfn ffnfvof_3 ffnfvof_0 wfn wa ffnfvof_0 ffnfvof_4 wcel wa ffnfvof_5 ffnfvof_0 wcel wa ffnfvof_5 ffnfvof_3 cfv eqidd ofval anasss $.
+	$v A R F G V X  $.
+	f0_fnfvof $f class A $.
+	f1_fnfvof $f class R $.
+	f2_fnfvof $f class F $.
+	f3_fnfvof $f class G $.
+	f4_fnfvof $f class V $.
+	f5_fnfvof $f class X $.
+	p_fnfvof $p |- ( ( ( F Fn A /\ G Fn A ) /\ ( A e. V /\ X e. A ) ) -> ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) $= f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn f0_fnfvof f4_fnfvof a_wcel p_simpll f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn f0_fnfvof f4_fnfvof a_wcel p_simplr f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel p_simpr f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel p_simpr f0_fnfvof p_inidm f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel a_wa f5_fnfvof f0_fnfvof a_wcel a_wa f5_fnfvof f2_fnfvof a_cfv p_eqidd f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel a_wa f5_fnfvof f0_fnfvof a_wcel a_wa f5_fnfvof f3_fnfvof a_cfv p_eqidd f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel a_wa f0_fnfvof f0_fnfvof f5_fnfvof f2_fnfvof a_cfv f5_fnfvof f3_fnfvof a_cfv f1_fnfvof f0_fnfvof f2_fnfvof f3_fnfvof f4_fnfvof f4_fnfvof f5_fnfvof p_ofval f2_fnfvof f0_fnfvof a_wfn f3_fnfvof f0_fnfvof a_wfn a_wa f0_fnfvof f4_fnfvof a_wcel f5_fnfvof f0_fnfvof a_wcel f5_fnfvof f2_fnfvof f3_fnfvof f1_fnfvof a_cof a_co a_cfv f5_fnfvof f2_fnfvof a_cfv f5_fnfvof f3_fnfvof a_cfv f1_fnfvof a_co a_wceq p_anasss $.
 $}
-$( General value of ` ( F oF R G ) ` with no assumptions on functionality
+
+$(General value of ` ( F oF R G ) ` with no assumptions on functionality
        of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) $)
+
 ${
-	$v x $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v a $.
-	$v b $.
-	$d F x a b $.
-	$d G x a b $.
-	$d V x $.
-	$d W x $.
-	$d R x a b $.
-	ioffval3_0 $f set a $.
-	ioffval3_1 $f set b $.
-	foffval3_0 $f set x $.
-	foffval3_1 $f class R $.
-	foffval3_2 $f class F $.
-	foffval3_3 $f class G $.
-	foffval3_4 $f class V $.
-	foffval3_5 $f class W $.
-	offval3 $p |- ( ( F e. V /\ G e. W ) -> ( F oF R G ) = ( x e. ( dom F i^i dom G ) |-> ( ( F ` x ) R ( G ` x ) ) ) ) $= foffval3_2 foffval3_4 wcel foffval3_3 foffval3_5 wcel wa foffval3_2 cvv wcel foffval3_3 cvv wcel foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cmpt cvv wcel foffval3_2 foffval3_3 foffval3_1 cof co foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cmpt wceq foffval3_2 foffval3_4 wcel foffval3_2 cvv wcel foffval3_3 foffval3_5 wcel foffval3_2 foffval3_4 elex adantr foffval3_3 foffval3_5 wcel foffval3_3 cvv wcel foffval3_2 foffval3_4 wcel foffval3_3 foffval3_5 elex adantl foffval3_2 foffval3_4 wcel foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cmpt cvv wcel foffval3_3 foffval3_5 wcel foffval3_2 foffval3_4 wcel foffval3_2 cdm cvv wcel foffval3_2 cdm foffval3_3 cdm cin cvv wcel foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cmpt cvv wcel foffval3_2 foffval3_4 dmexg foffval3_2 cdm foffval3_3 cdm cvv inex1g foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cvv mptexg 3syl adantr ioffval3_0 ioffval3_1 foffval3_2 foffval3_3 cvv cvv foffval3_0 ioffval3_0 sup_set_class cdm ioffval3_1 sup_set_class cdm cin foffval3_0 sup_set_class ioffval3_0 sup_set_class cfv foffval3_0 sup_set_class ioffval3_1 sup_set_class cfv foffval3_1 co cmpt foffval3_0 foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co cmpt foffval3_1 cof cvv ioffval3_0 sup_set_class foffval3_2 wceq ioffval3_1 sup_set_class foffval3_3 wceq wa foffval3_0 ioffval3_0 sup_set_class cdm ioffval3_1 sup_set_class cdm cin foffval3_0 sup_set_class ioffval3_0 sup_set_class cfv foffval3_0 sup_set_class ioffval3_1 sup_set_class cfv foffval3_1 co foffval3_2 cdm foffval3_3 cdm cin foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 co ioffval3_0 sup_set_class foffval3_2 wceq ioffval3_1 sup_set_class foffval3_3 wceq ioffval3_0 sup_set_class cdm foffval3_2 cdm ioffval3_1 sup_set_class cdm foffval3_3 cdm ioffval3_0 sup_set_class foffval3_2 dmeq ioffval3_1 sup_set_class foffval3_3 dmeq ineqan12d ioffval3_0 sup_set_class foffval3_2 wceq ioffval3_1 sup_set_class foffval3_3 wceq foffval3_0 sup_set_class ioffval3_0 sup_set_class cfv foffval3_0 sup_set_class foffval3_2 cfv foffval3_0 sup_set_class ioffval3_1 sup_set_class cfv foffval3_0 sup_set_class foffval3_3 cfv foffval3_1 foffval3_0 sup_set_class ioffval3_0 sup_set_class foffval3_2 fveq1 foffval3_0 sup_set_class ioffval3_1 sup_set_class foffval3_3 fveq1 oveqan12d mpteq12dv foffval3_0 foffval3_1 ioffval3_0 ioffval3_1 df-of ovmpt2ga syl3anc $.
+	$v x R F G V W  $.
+	$d F x a b  $.
+	$d G x a b  $.
+	$d V x  $.
+	$d W x  $.
+	$d R x a b  $.
+	$d x  $.
+	f0_offval3 $f set x $.
+	f1_offval3 $f class R $.
+	f2_offval3 $f class F $.
+	f3_offval3 $f class G $.
+	f4_offval3 $f class V $.
+	f5_offval3 $f class W $.
+	i0_offval3 $f set a $.
+	i1_offval3 $f set b $.
+	p_offval3 $p |- ( ( F e. V /\ G e. W ) -> ( F oF R G ) = ( x e. ( dom F i^i dom G ) |-> ( ( F ` x ) R ( G ` x ) ) ) ) $= f2_offval3 f4_offval3 p_elex f2_offval3 f4_offval3 a_wcel f2_offval3 a_cvv a_wcel f3_offval3 f5_offval3 a_wcel p_adantr f3_offval3 f5_offval3 p_elex f3_offval3 f5_offval3 a_wcel f3_offval3 a_cvv a_wcel f2_offval3 f4_offval3 a_wcel p_adantl f2_offval3 f4_offval3 p_dmexg f2_offval3 a_cdm f3_offval3 a_cdm a_cvv p_inex1g f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cvv p_mptexg f2_offval3 f4_offval3 a_wcel f2_offval3 a_cdm a_cvv a_wcel f2_offval3 a_cdm f3_offval3 a_cdm a_cin a_cvv a_wcel f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cmpt a_cvv a_wcel p_3syl f2_offval3 f4_offval3 a_wcel f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cmpt a_cvv a_wcel f3_offval3 f5_offval3 a_wcel p_adantr i0_offval3 a_sup_set_class f2_offval3 p_dmeq i1_offval3 a_sup_set_class f3_offval3 p_dmeq i0_offval3 a_sup_set_class f2_offval3 a_wceq i1_offval3 a_sup_set_class f3_offval3 a_wceq i0_offval3 a_sup_set_class a_cdm f2_offval3 a_cdm i1_offval3 a_sup_set_class a_cdm f3_offval3 a_cdm p_ineqan12d f0_offval3 a_sup_set_class i0_offval3 a_sup_set_class f2_offval3 p_fveq1 f0_offval3 a_sup_set_class i1_offval3 a_sup_set_class f3_offval3 p_fveq1 i0_offval3 a_sup_set_class f2_offval3 a_wceq i1_offval3 a_sup_set_class f3_offval3 a_wceq f0_offval3 a_sup_set_class i0_offval3 a_sup_set_class a_cfv f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class i1_offval3 a_sup_set_class a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 p_oveqan12d i0_offval3 a_sup_set_class f2_offval3 a_wceq i1_offval3 a_sup_set_class f3_offval3 a_wceq a_wa f0_offval3 i0_offval3 a_sup_set_class a_cdm i1_offval3 a_sup_set_class a_cdm a_cin f0_offval3 a_sup_set_class i0_offval3 a_sup_set_class a_cfv f0_offval3 a_sup_set_class i1_offval3 a_sup_set_class a_cfv f1_offval3 a_co f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co p_mpteq12dv f0_offval3 f1_offval3 i0_offval3 i1_offval3 a_df-of i0_offval3 i1_offval3 f2_offval3 f3_offval3 a_cvv a_cvv f0_offval3 i0_offval3 a_sup_set_class a_cdm i1_offval3 a_sup_set_class a_cdm a_cin f0_offval3 a_sup_set_class i0_offval3 a_sup_set_class a_cfv f0_offval3 a_sup_set_class i1_offval3 a_sup_set_class a_cfv f1_offval3 a_co a_cmpt f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cmpt f1_offval3 a_cof a_cvv p_ovmpt2ga f2_offval3 f4_offval3 a_wcel f3_offval3 f5_offval3 a_wcel a_wa f2_offval3 a_cvv a_wcel f3_offval3 a_cvv a_wcel f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cmpt a_cvv a_wcel f2_offval3 f3_offval3 f1_offval3 a_cof a_co f0_offval3 f2_offval3 a_cdm f3_offval3 a_cdm a_cin f0_offval3 a_sup_set_class f2_offval3 a_cfv f0_offval3 a_sup_set_class f3_offval3 a_cfv f1_offval3 a_co a_cmpt a_wceq p_syl3anc $.
 $}
-$( Pointwise combination commutes with restriction.  (Contributed by Stefan
+
+$(Pointwise combination commutes with restriction.  (Contributed by Stefan
        O'Rear, 24-Jan-2015.) $)
+
 ${
-	$v D $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v x $.
-	$d F x $.
-	$d G x $.
-	$d V x $.
-	$d W x $.
-	$d R x $.
-	$d D x $.
-	ioffres_0 $f set x $.
-	foffres_0 $f class D $.
-	foffres_1 $f class R $.
-	foffres_2 $f class F $.
-	foffres_3 $f class G $.
-	foffres_4 $f class V $.
-	foffres_5 $f class W $.
-	offres $p |- ( ( F e. V /\ G e. W ) -> ( ( F oF R G ) |` D ) = ( ( F |` D ) oF R ( G |` D ) ) ) $= foffres_2 foffres_4 wcel foffres_3 foffres_5 wcel wa ioffres_0 foffres_2 cdm foffres_3 cdm cin ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co cmpt foffres_0 cres ioffres_0 foffres_2 foffres_0 cres cdm foffres_3 foffres_0 cres cdm cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co cmpt foffres_2 foffres_3 foffres_1 cof co foffres_0 cres foffres_2 foffres_0 cres foffres_3 foffres_0 cres foffres_1 cof co ioffres_0 foffres_2 cdm foffres_3 cdm cin foffres_0 cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co cmpt ioffres_0 foffres_2 cdm foffres_3 cdm cin foffres_0 cin ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co cmpt ioffres_0 foffres_2 foffres_0 cres cdm foffres_3 foffres_0 cres cdm cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co cmpt ioffres_0 foffres_2 cdm foffres_3 cdm cin ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co cmpt foffres_0 cres ioffres_0 foffres_2 cdm foffres_3 cdm cin foffres_0 cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co ioffres_0 sup_set_class foffres_2 cdm foffres_3 cdm cin foffres_0 cin wcel ioffres_0 sup_set_class foffres_0 wcel ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co wceq foffres_2 cdm foffres_3 cdm cin foffres_0 cin foffres_0 ioffres_0 sup_set_class foffres_2 cdm foffres_3 cdm cin foffres_0 inss2 sseli ioffres_0 sup_set_class foffres_0 wcel ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 ioffres_0 sup_set_class foffres_0 foffres_2 fvres ioffres_0 sup_set_class foffres_0 foffres_3 fvres oveq12d syl mpteq2ia ioffres_0 foffres_2 foffres_0 cres cdm foffres_3 foffres_0 cres cdm cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co foffres_2 cdm foffres_3 cdm cin foffres_0 cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co foffres_0 foffres_2 cdm foffres_3 cdm cin cin foffres_0 foffres_2 cdm cin foffres_0 foffres_3 cdm cin cin foffres_2 cdm foffres_3 cdm cin foffres_0 cin foffres_2 foffres_0 cres cdm foffres_3 foffres_0 cres cdm cin foffres_0 foffres_2 cdm foffres_3 cdm inindi foffres_2 cdm foffres_3 cdm cin foffres_0 incom foffres_2 foffres_0 cres cdm foffres_0 foffres_2 cdm cin foffres_3 foffres_0 cres cdm foffres_0 foffres_3 cdm cin foffres_2 foffres_0 dmres foffres_3 foffres_0 dmres ineq12i 3eqtr4ri ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co eqid mpteq12i ioffres_0 foffres_2 cdm foffres_3 cdm cin foffres_0 ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co resmpt3 3eqtr4ri foffres_2 foffres_4 wcel foffres_3 foffres_5 wcel wa foffres_2 foffres_3 foffres_1 cof co ioffres_0 foffres_2 cdm foffres_3 cdm cin ioffres_0 sup_set_class foffres_2 cfv ioffres_0 sup_set_class foffres_3 cfv foffres_1 co cmpt foffres_0 ioffres_0 foffres_1 foffres_2 foffres_3 foffres_4 foffres_5 offval3 reseq1d foffres_2 foffres_4 wcel foffres_2 foffres_0 cres cvv wcel foffres_3 foffres_0 cres cvv wcel foffres_2 foffres_0 cres foffres_3 foffres_0 cres foffres_1 cof co ioffres_0 foffres_2 foffres_0 cres cdm foffres_3 foffres_0 cres cdm cin ioffres_0 sup_set_class foffres_2 foffres_0 cres cfv ioffres_0 sup_set_class foffres_3 foffres_0 cres cfv foffres_1 co cmpt wceq foffres_3 foffres_5 wcel foffres_2 foffres_0 foffres_4 resexg foffres_3 foffres_0 foffres_5 resexg ioffres_0 foffres_1 foffres_2 foffres_0 cres foffres_3 foffres_0 cres cvv cvv offval3 syl2an 3eqtr4a $.
+	$v D R F G V W  $.
+	$d F x  $.
+	$d G x  $.
+	$d V x  $.
+	$d W x  $.
+	$d R x  $.
+	$d D x  $.
+	f0_offres $f class D $.
+	f1_offres $f class R $.
+	f2_offres $f class F $.
+	f3_offres $f class G $.
+	f4_offres $f class V $.
+	f5_offres $f class W $.
+	i0_offres $f set x $.
+	p_offres $p |- ( ( F e. V /\ G e. W ) -> ( ( F oF R G ) |` D ) = ( ( F |` D ) oF R ( G |` D ) ) ) $= f2_offres a_cdm f3_offres a_cdm a_cin f0_offres p_inss2 f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin f0_offres i0_offres a_sup_set_class p_sseli i0_offres a_sup_set_class f0_offres f2_offres p_fvres i0_offres a_sup_set_class f0_offres f3_offres p_fvres i0_offres a_sup_set_class f0_offres a_wcel i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres p_oveq12d i0_offres a_sup_set_class f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin a_wcel i0_offres a_sup_set_class f0_offres a_wcel i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co a_wceq p_syl i0_offres f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co p_mpteq2ia f0_offres f2_offres a_cdm f3_offres a_cdm p_inindi f2_offres a_cdm f3_offres a_cdm a_cin f0_offres p_incom f2_offres f0_offres p_dmres f3_offres f0_offres p_dmres f2_offres f0_offres a_cres a_cdm f0_offres f2_offres a_cdm a_cin f3_offres f0_offres a_cres a_cdm f0_offres f3_offres a_cdm a_cin p_ineq12i f0_offres f2_offres a_cdm f3_offres a_cdm a_cin a_cin f0_offres f2_offres a_cdm a_cin f0_offres f3_offres a_cdm a_cin a_cin f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin f2_offres f0_offres a_cres a_cdm f3_offres f0_offres a_cres a_cdm a_cin p_3eqtr4ri i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co p_eqid i0_offres f2_offres f0_offres a_cres a_cdm f3_offres f0_offres a_cres a_cdm a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co p_mpteq12i i0_offres f2_offres a_cdm f3_offres a_cdm a_cin f0_offres i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co p_resmpt3 i0_offres f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co a_cmpt i0_offres f2_offres a_cdm f3_offres a_cdm a_cin f0_offres a_cin i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co a_cmpt i0_offres f2_offres f0_offres a_cres a_cdm f3_offres f0_offres a_cres a_cdm a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co a_cmpt i0_offres f2_offres a_cdm f3_offres a_cdm a_cin i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co a_cmpt f0_offres a_cres p_3eqtr4ri i0_offres f1_offres f2_offres f3_offres f4_offres f5_offres p_offval3 f2_offres f4_offres a_wcel f3_offres f5_offres a_wcel a_wa f2_offres f3_offres f1_offres a_cof a_co i0_offres f2_offres a_cdm f3_offres a_cdm a_cin i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co a_cmpt f0_offres p_reseq1d f2_offres f0_offres f4_offres p_resexg f3_offres f0_offres f5_offres p_resexg i0_offres f1_offres f2_offres f0_offres a_cres f3_offres f0_offres a_cres a_cvv a_cvv p_offval3 f2_offres f4_offres a_wcel f2_offres f0_offres a_cres a_cvv a_wcel f3_offres f0_offres a_cres a_cvv a_wcel f2_offres f0_offres a_cres f3_offres f0_offres a_cres f1_offres a_cof a_co i0_offres f2_offres f0_offres a_cres a_cdm f3_offres f0_offres a_cres a_cdm a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co a_cmpt a_wceq f3_offres f5_offres a_wcel p_syl2an f2_offres f4_offres a_wcel f3_offres f5_offres a_wcel a_wa i0_offres f2_offres a_cdm f3_offres a_cdm a_cin i0_offres a_sup_set_class f2_offres a_cfv i0_offres a_sup_set_class f3_offres a_cfv f1_offres a_co a_cmpt f0_offres a_cres i0_offres f2_offres f0_offres a_cres a_cdm f3_offres f0_offres a_cres a_cdm a_cin i0_offres a_sup_set_class f2_offres f0_offres a_cres a_cfv i0_offres a_sup_set_class f3_offres f0_offres a_cres a_cfv f1_offres a_co a_cmpt f2_offres f3_offres f1_offres a_cof a_co f0_offres a_cres f2_offres f0_offres a_cres f3_offres f0_offres a_cres f1_offres a_cof a_co p_3eqtr4a $.
 $}
-$( The function operation produces a function.  (Contributed by Mario
+
+$(The function operation produces a function.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v U $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v z $.
-	$d z A $.
-	$d z C $.
-	$d y z G $.
-	$d x y z ph $.
-	$d x y S $.
-	$d x y T $.
-	$d x y z F $.
-	$d x y z R $.
-	$d x y z U $.
-	ioff_0 $f set z $.
-	foff_0 $f wff ph $.
-	foff_1 $f set x $.
-	foff_2 $f set y $.
-	foff_3 $f class A $.
-	foff_4 $f class B $.
-	foff_5 $f class C $.
-	foff_6 $f class R $.
-	foff_7 $f class S $.
-	foff_8 $f class T $.
-	foff_9 $f class U $.
-	foff_10 $f class F $.
-	foff_11 $f class G $.
-	foff_12 $f class V $.
-	foff_13 $f class W $.
-	eoff_0 $e |- ( ( ph /\ ( x e. S /\ y e. T ) ) -> ( x R y ) e. U ) $.
-	eoff_1 $e |- ( ph -> F : A --> S ) $.
-	eoff_2 $e |- ( ph -> G : B --> T ) $.
-	eoff_3 $e |- ( ph -> A e. V ) $.
-	eoff_4 $e |- ( ph -> B e. W ) $.
-	eoff_5 $e |- ( A i^i B ) = C $.
-	off $p |- ( ph -> ( F oF R G ) : C --> U ) $= foff_0 foff_5 foff_9 foff_10 foff_11 foff_6 cof co wf foff_5 foff_9 ioff_0 foff_5 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co cmpt wf foff_0 ioff_0 foff_5 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co foff_9 ioff_0 foff_5 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co cmpt foff_0 ioff_0 sup_set_class foff_5 wcel wa ioff_0 sup_set_class foff_10 cfv foff_7 wcel ioff_0 sup_set_class foff_11 cfv foff_8 wcel foff_1 sup_set_class foff_2 sup_set_class foff_6 co foff_9 wcel foff_2 foff_8 wral foff_1 foff_7 wral ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co foff_9 wcel foff_0 foff_3 foff_7 foff_10 wf ioff_0 sup_set_class foff_3 wcel ioff_0 sup_set_class foff_10 cfv foff_7 wcel ioff_0 sup_set_class foff_5 wcel eoff_1 foff_5 foff_3 ioff_0 sup_set_class foff_5 foff_3 foff_4 cin foff_3 eoff_5 foff_3 foff_4 inss1 eqsstr3i sseli foff_3 foff_7 ioff_0 sup_set_class foff_10 ffvelrn syl2an foff_0 foff_4 foff_8 foff_11 wf ioff_0 sup_set_class foff_4 wcel ioff_0 sup_set_class foff_11 cfv foff_8 wcel ioff_0 sup_set_class foff_5 wcel eoff_2 foff_5 foff_4 ioff_0 sup_set_class foff_5 foff_3 foff_4 cin foff_4 eoff_5 foff_3 foff_4 inss2 eqsstr3i sseli foff_4 foff_8 ioff_0 sup_set_class foff_11 ffvelrn syl2an foff_0 foff_1 sup_set_class foff_2 sup_set_class foff_6 co foff_9 wcel foff_2 foff_8 wral foff_1 foff_7 wral ioff_0 sup_set_class foff_5 wcel foff_0 foff_1 sup_set_class foff_2 sup_set_class foff_6 co foff_9 wcel foff_1 foff_2 foff_7 foff_8 eoff_0 ralrimivva adantr foff_1 sup_set_class foff_2 sup_set_class foff_6 co foff_9 wcel ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co foff_9 wcel ioff_0 sup_set_class foff_10 cfv foff_2 sup_set_class foff_6 co foff_9 wcel foff_1 foff_2 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_7 foff_8 foff_1 sup_set_class ioff_0 sup_set_class foff_10 cfv wceq foff_1 sup_set_class foff_2 sup_set_class foff_6 co ioff_0 sup_set_class foff_10 cfv foff_2 sup_set_class foff_6 co foff_9 foff_1 sup_set_class ioff_0 sup_set_class foff_10 cfv foff_2 sup_set_class foff_6 oveq1 eleq1d foff_2 sup_set_class ioff_0 sup_set_class foff_11 cfv wceq ioff_0 sup_set_class foff_10 cfv foff_2 sup_set_class foff_6 co ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co foff_9 foff_2 sup_set_class ioff_0 sup_set_class foff_11 cfv ioff_0 sup_set_class foff_10 cfv foff_6 oveq2 eleq1d rspc2va syl21anc ioff_0 foff_5 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co cmpt eqid fmptd foff_0 foff_5 foff_9 foff_10 foff_11 foff_6 cof co ioff_0 foff_5 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 co cmpt foff_0 ioff_0 foff_3 foff_4 ioff_0 sup_set_class foff_10 cfv ioff_0 sup_set_class foff_11 cfv foff_6 foff_5 foff_10 foff_11 foff_12 foff_13 foff_0 foff_3 foff_7 foff_10 wf foff_10 foff_3 wfn eoff_1 foff_3 foff_7 foff_10 ffn syl foff_0 foff_4 foff_8 foff_11 wf foff_11 foff_4 wfn eoff_2 foff_4 foff_8 foff_11 ffn syl eoff_3 eoff_4 eoff_5 foff_0 ioff_0 sup_set_class foff_3 wcel wa ioff_0 sup_set_class foff_10 cfv eqidd foff_0 ioff_0 sup_set_class foff_4 wcel wa ioff_0 sup_set_class foff_11 cfv eqidd offval feq1d mpbird $.
+	$v ph x y A B C R S T U F G V W  $.
+	$d z A  $.
+	$d z C  $.
+	$d y z G  $.
+	$d x y z ph  $.
+	$d x y S  $.
+	$d x y T  $.
+	$d x y z F  $.
+	$d x y z R  $.
+	$d x y z U  $.
+	f0_off $f wff ph $.
+	f1_off $f set x $.
+	f2_off $f set y $.
+	f3_off $f class A $.
+	f4_off $f class B $.
+	f5_off $f class C $.
+	f6_off $f class R $.
+	f7_off $f class S $.
+	f8_off $f class T $.
+	f9_off $f class U $.
+	f10_off $f class F $.
+	f11_off $f class G $.
+	f12_off $f class V $.
+	f13_off $f class W $.
+	i0_off $f set z $.
+	e0_off $e |- ( ( ph /\ ( x e. S /\ y e. T ) ) -> ( x R y ) e. U ) $.
+	e1_off $e |- ( ph -> F : A --> S ) $.
+	e2_off $e |- ( ph -> G : B --> T ) $.
+	e3_off $e |- ( ph -> A e. V ) $.
+	e4_off $e |- ( ph -> B e. W ) $.
+	e5_off $e |- ( A i^i B ) = C $.
+	p_off $p |- ( ph -> ( F oF R G ) : C --> U ) $= e1_off e5_off f3_off f4_off p_inss1 f5_off f3_off f4_off a_cin f3_off p_eqsstr3i f5_off f3_off i0_off a_sup_set_class p_sseli f3_off f7_off i0_off a_sup_set_class f10_off p_ffvelrn f0_off f3_off f7_off f10_off a_wf i0_off a_sup_set_class f3_off a_wcel i0_off a_sup_set_class f10_off a_cfv f7_off a_wcel i0_off a_sup_set_class f5_off a_wcel p_syl2an e2_off e5_off f3_off f4_off p_inss2 f5_off f3_off f4_off a_cin f4_off p_eqsstr3i f5_off f4_off i0_off a_sup_set_class p_sseli f4_off f8_off i0_off a_sup_set_class f11_off p_ffvelrn f0_off f4_off f8_off f11_off a_wf i0_off a_sup_set_class f4_off a_wcel i0_off a_sup_set_class f11_off a_cfv f8_off a_wcel i0_off a_sup_set_class f5_off a_wcel p_syl2an e0_off f0_off f1_off a_sup_set_class f2_off a_sup_set_class f6_off a_co f9_off a_wcel f1_off f2_off f7_off f8_off p_ralrimivva f0_off f1_off a_sup_set_class f2_off a_sup_set_class f6_off a_co f9_off a_wcel f2_off f8_off a_wral f1_off f7_off a_wral i0_off a_sup_set_class f5_off a_wcel p_adantr f1_off a_sup_set_class i0_off a_sup_set_class f10_off a_cfv f2_off a_sup_set_class f6_off p_oveq1 f1_off a_sup_set_class i0_off a_sup_set_class f10_off a_cfv a_wceq f1_off a_sup_set_class f2_off a_sup_set_class f6_off a_co i0_off a_sup_set_class f10_off a_cfv f2_off a_sup_set_class f6_off a_co f9_off p_eleq1d f2_off a_sup_set_class i0_off a_sup_set_class f11_off a_cfv i0_off a_sup_set_class f10_off a_cfv f6_off p_oveq2 f2_off a_sup_set_class i0_off a_sup_set_class f11_off a_cfv a_wceq i0_off a_sup_set_class f10_off a_cfv f2_off a_sup_set_class f6_off a_co i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co f9_off p_eleq1d f1_off a_sup_set_class f2_off a_sup_set_class f6_off a_co f9_off a_wcel i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co f9_off a_wcel i0_off a_sup_set_class f10_off a_cfv f2_off a_sup_set_class f6_off a_co f9_off a_wcel f1_off f2_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f7_off f8_off p_rspc2va f0_off i0_off a_sup_set_class f5_off a_wcel a_wa i0_off a_sup_set_class f10_off a_cfv f7_off a_wcel i0_off a_sup_set_class f11_off a_cfv f8_off a_wcel f1_off a_sup_set_class f2_off a_sup_set_class f6_off a_co f9_off a_wcel f2_off f8_off a_wral f1_off f7_off a_wral i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co f9_off a_wcel p_syl21anc i0_off f5_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co a_cmpt p_eqid f0_off i0_off f5_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co f9_off i0_off f5_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co a_cmpt p_fmptd e1_off f3_off f7_off f10_off p_ffn f0_off f3_off f7_off f10_off a_wf f10_off f3_off a_wfn p_syl e2_off f4_off f8_off f11_off p_ffn f0_off f4_off f8_off f11_off a_wf f11_off f4_off a_wfn p_syl e3_off e4_off e5_off f0_off i0_off a_sup_set_class f3_off a_wcel a_wa i0_off a_sup_set_class f10_off a_cfv p_eqidd f0_off i0_off a_sup_set_class f4_off a_wcel a_wa i0_off a_sup_set_class f11_off a_cfv p_eqidd f0_off i0_off f3_off f4_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off f5_off f10_off f11_off f12_off f13_off p_offval f0_off f5_off f9_off f10_off f11_off f6_off a_cof a_co i0_off f5_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co a_cmpt p_feq1d f0_off f5_off f9_off f10_off f11_off f6_off a_cof a_co a_wf f5_off f9_off i0_off f5_off i0_off a_sup_set_class f10_off a_cfv i0_off a_sup_set_class f11_off a_cfv f6_off a_co a_cmpt a_wf p_mpbird $.
 $}
-$( Restrict the operands of a function operation to the same domain as that
+
+$(Restrict the operands of a function operation to the same domain as that
        of the operation itself.  (Contributed by Mario Carneiro,
        15-Sep-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v x $.
-	$d x A $.
-	$d x C $.
-	$d x F $.
-	$d x G $.
-	$d x ph $.
-	$d x R $.
-	iofres_0 $f set x $.
-	fofres_0 $f wff ph $.
-	fofres_1 $f class A $.
-	fofres_2 $f class B $.
-	fofres_3 $f class C $.
-	fofres_4 $f class R $.
-	fofres_5 $f class F $.
-	fofres_6 $f class G $.
-	fofres_7 $f class V $.
-	fofres_8 $f class W $.
-	eofres_0 $e |- ( ph -> F Fn A ) $.
-	eofres_1 $e |- ( ph -> G Fn B ) $.
-	eofres_2 $e |- ( ph -> A e. V ) $.
-	eofres_3 $e |- ( ph -> B e. W ) $.
-	eofres_4 $e |- ( A i^i B ) = C $.
-	ofres $p |- ( ph -> ( F oF R G ) = ( ( F |` C ) oF R ( G |` C ) ) ) $= fofres_0 fofres_5 fofres_6 fofres_4 cof co iofres_0 fofres_3 iofres_0 sup_set_class fofres_5 cfv iofres_0 sup_set_class fofres_6 cfv fofres_4 co cmpt fofres_5 fofres_3 cres fofres_6 fofres_3 cres fofres_4 cof co fofres_0 iofres_0 fofres_1 fofres_2 iofres_0 sup_set_class fofres_5 cfv iofres_0 sup_set_class fofres_6 cfv fofres_4 fofres_3 fofres_5 fofres_6 fofres_7 fofres_8 eofres_0 eofres_1 eofres_2 eofres_3 eofres_4 fofres_0 iofres_0 sup_set_class fofres_1 wcel wa iofres_0 sup_set_class fofres_5 cfv eqidd fofres_0 iofres_0 sup_set_class fofres_2 wcel wa iofres_0 sup_set_class fofres_6 cfv eqidd offval fofres_0 iofres_0 fofres_3 fofres_3 iofres_0 sup_set_class fofres_5 cfv iofres_0 sup_set_class fofres_6 cfv fofres_4 fofres_3 fofres_5 fofres_3 cres fofres_6 fofres_3 cres cvv cvv fofres_0 fofres_5 fofres_1 wfn fofres_3 fofres_1 wss fofres_5 fofres_3 cres fofres_3 wfn eofres_0 fofres_3 fofres_1 fofres_2 cin fofres_1 eofres_4 fofres_1 fofres_2 inss1 eqsstr3i fofres_1 fofres_3 fofres_5 fnssres sylancl fofres_0 fofres_6 fofres_2 wfn fofres_3 fofres_2 wss fofres_6 fofres_3 cres fofres_3 wfn eofres_1 fofres_3 fofres_1 fofres_2 cin fofres_2 eofres_4 fofres_1 fofres_2 inss2 eqsstr3i fofres_2 fofres_3 fofres_6 fnssres sylancl fofres_0 fofres_3 fofres_1 wss fofres_1 fofres_7 wcel fofres_3 cvv wcel fofres_3 fofres_1 fofres_2 cin fofres_1 eofres_4 fofres_1 fofres_2 inss1 eqsstr3i eofres_2 fofres_3 fofres_1 fofres_7 ssexg sylancr fofres_0 fofres_3 fofres_1 wss fofres_1 fofres_7 wcel fofres_3 cvv wcel fofres_3 fofres_1 fofres_2 cin fofres_1 eofres_4 fofres_1 fofres_2 inss1 eqsstr3i eofres_2 fofres_3 fofres_1 fofres_7 ssexg sylancr fofres_3 inidm iofres_0 sup_set_class fofres_3 wcel iofres_0 sup_set_class fofres_5 fofres_3 cres cfv iofres_0 sup_set_class fofres_5 cfv wceq fofres_0 iofres_0 sup_set_class fofres_3 fofres_5 fvres adantl iofres_0 sup_set_class fofres_3 wcel iofres_0 sup_set_class fofres_6 fofres_3 cres cfv iofres_0 sup_set_class fofres_6 cfv wceq fofres_0 iofres_0 sup_set_class fofres_3 fofres_6 fvres adantl offval eqtr4d $.
+	$v ph A B C R F G V W  $.
+	$d x A  $.
+	$d x C  $.
+	$d x F  $.
+	$d x G  $.
+	$d x ph  $.
+	$d x R  $.
+	f0_ofres $f wff ph $.
+	f1_ofres $f class A $.
+	f2_ofres $f class B $.
+	f3_ofres $f class C $.
+	f4_ofres $f class R $.
+	f5_ofres $f class F $.
+	f6_ofres $f class G $.
+	f7_ofres $f class V $.
+	f8_ofres $f class W $.
+	i0_ofres $f set x $.
+	e0_ofres $e |- ( ph -> F Fn A ) $.
+	e1_ofres $e |- ( ph -> G Fn B ) $.
+	e2_ofres $e |- ( ph -> A e. V ) $.
+	e3_ofres $e |- ( ph -> B e. W ) $.
+	e4_ofres $e |- ( A i^i B ) = C $.
+	p_ofres $p |- ( ph -> ( F oF R G ) = ( ( F |` C ) oF R ( G |` C ) ) ) $= e0_ofres e1_ofres e2_ofres e3_ofres e4_ofres f0_ofres i0_ofres a_sup_set_class f1_ofres a_wcel a_wa i0_ofres a_sup_set_class f5_ofres a_cfv p_eqidd f0_ofres i0_ofres a_sup_set_class f2_ofres a_wcel a_wa i0_ofres a_sup_set_class f6_ofres a_cfv p_eqidd f0_ofres i0_ofres f1_ofres f2_ofres i0_ofres a_sup_set_class f5_ofres a_cfv i0_ofres a_sup_set_class f6_ofres a_cfv f4_ofres f3_ofres f5_ofres f6_ofres f7_ofres f8_ofres p_offval e0_ofres e4_ofres f1_ofres f2_ofres p_inss1 f3_ofres f1_ofres f2_ofres a_cin f1_ofres p_eqsstr3i f1_ofres f3_ofres f5_ofres p_fnssres f0_ofres f5_ofres f1_ofres a_wfn f3_ofres f1_ofres a_wss f5_ofres f3_ofres a_cres f3_ofres a_wfn p_sylancl e1_ofres e4_ofres f1_ofres f2_ofres p_inss2 f3_ofres f1_ofres f2_ofres a_cin f2_ofres p_eqsstr3i f2_ofres f3_ofres f6_ofres p_fnssres f0_ofres f6_ofres f2_ofres a_wfn f3_ofres f2_ofres a_wss f6_ofres f3_ofres a_cres f3_ofres a_wfn p_sylancl e4_ofres f1_ofres f2_ofres p_inss1 f3_ofres f1_ofres f2_ofres a_cin f1_ofres p_eqsstr3i e2_ofres f3_ofres f1_ofres f7_ofres p_ssexg f0_ofres f3_ofres f1_ofres a_wss f1_ofres f7_ofres a_wcel f3_ofres a_cvv a_wcel p_sylancr e4_ofres f1_ofres f2_ofres p_inss1 f3_ofres f1_ofres f2_ofres a_cin f1_ofres p_eqsstr3i e2_ofres f3_ofres f1_ofres f7_ofres p_ssexg f0_ofres f3_ofres f1_ofres a_wss f1_ofres f7_ofres a_wcel f3_ofres a_cvv a_wcel p_sylancr f3_ofres p_inidm i0_ofres a_sup_set_class f3_ofres f5_ofres p_fvres i0_ofres a_sup_set_class f3_ofres a_wcel i0_ofres a_sup_set_class f5_ofres f3_ofres a_cres a_cfv i0_ofres a_sup_set_class f5_ofres a_cfv a_wceq f0_ofres p_adantl i0_ofres a_sup_set_class f3_ofres f6_ofres p_fvres i0_ofres a_sup_set_class f3_ofres a_wcel i0_ofres a_sup_set_class f6_ofres f3_ofres a_cres a_cfv i0_ofres a_sup_set_class f6_ofres a_cfv a_wceq f0_ofres p_adantl f0_ofres i0_ofres f3_ofres f3_ofres i0_ofres a_sup_set_class f5_ofres a_cfv i0_ofres a_sup_set_class f6_ofres a_cfv f4_ofres f3_ofres f5_ofres f3_ofres a_cres f6_ofres f3_ofres a_cres a_cvv a_cvv p_offval f0_ofres f5_ofres f6_ofres f4_ofres a_cof a_co i0_ofres f3_ofres i0_ofres a_sup_set_class f5_ofres a_cfv i0_ofres a_sup_set_class f6_ofres a_cfv f4_ofres a_co a_cmpt f5_ofres f3_ofres a_cres f6_ofres f3_ofres a_cres f4_ofres a_cof a_co p_eqtr4d $.
 $}
-$( The function operation expressed as a mapping.  (Contributed by Mario
+
+$(The function operation expressed as a mapping.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d y C $.
-	$d y F $.
-	$d y G $.
-	$d x y ph $.
-	$d x y R $.
-	ioffval2_0 $f set y $.
-	foffval2_0 $f wff ph $.
-	foffval2_1 $f set x $.
-	foffval2_2 $f class A $.
-	foffval2_3 $f class B $.
-	foffval2_4 $f class C $.
-	foffval2_5 $f class R $.
-	foffval2_6 $f class F $.
-	foffval2_7 $f class G $.
-	foffval2_8 $f class V $.
-	foffval2_9 $f class W $.
-	foffval2_10 $f class X $.
-	eoffval2_0 $e |- ( ph -> A e. V ) $.
-	eoffval2_1 $e |- ( ( ph /\ x e. A ) -> B e. W ) $.
-	eoffval2_2 $e |- ( ( ph /\ x e. A ) -> C e. X ) $.
-	eoffval2_3 $e |- ( ph -> F = ( x e. A |-> B ) ) $.
-	eoffval2_4 $e |- ( ph -> G = ( x e. A |-> C ) ) $.
-	offval2 $p |- ( ph -> ( F oF R G ) = ( x e. A |-> ( B R C ) ) ) $= foffval2_0 foffval2_6 foffval2_7 foffval2_5 cof co ioffval2_0 foffval2_2 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co cmpt foffval2_1 foffval2_2 foffval2_3 foffval2_4 foffval2_5 co cmpt foffval2_0 ioffval2_0 foffval2_2 foffval2_2 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 foffval2_2 foffval2_6 foffval2_7 foffval2_8 foffval2_8 foffval2_0 foffval2_6 foffval2_2 wfn foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_2 wfn foffval2_0 foffval2_3 foffval2_9 wcel foffval2_1 foffval2_2 wral foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_2 wfn foffval2_0 foffval2_3 foffval2_9 wcel foffval2_1 foffval2_2 eoffval2_1 ralrimiva foffval2_1 foffval2_2 foffval2_3 foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_9 foffval2_1 foffval2_2 foffval2_3 cmpt eqid fnmpt syl foffval2_0 foffval2_2 foffval2_6 foffval2_1 foffval2_2 foffval2_3 cmpt eoffval2_3 fneq1d mpbird foffval2_0 foffval2_7 foffval2_2 wfn foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_2 wfn foffval2_0 foffval2_4 foffval2_10 wcel foffval2_1 foffval2_2 wral foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_2 wfn foffval2_0 foffval2_4 foffval2_10 wcel foffval2_1 foffval2_2 eoffval2_2 ralrimiva foffval2_1 foffval2_2 foffval2_4 foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_10 foffval2_1 foffval2_2 foffval2_4 cmpt eqid fnmpt syl foffval2_0 foffval2_2 foffval2_7 foffval2_1 foffval2_2 foffval2_4 cmpt eoffval2_4 fneq1d mpbird eoffval2_0 eoffval2_0 foffval2_2 inidm foffval2_0 ioffval2_0 sup_set_class foffval2_2 wcel wa ioffval2_0 sup_set_class foffval2_6 foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_0 foffval2_6 foffval2_1 foffval2_2 foffval2_3 cmpt wceq ioffval2_0 sup_set_class foffval2_2 wcel eoffval2_3 adantr fveq1d foffval2_0 ioffval2_0 sup_set_class foffval2_2 wcel wa ioffval2_0 sup_set_class foffval2_7 foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_0 foffval2_7 foffval2_1 foffval2_2 foffval2_4 cmpt wceq ioffval2_0 sup_set_class foffval2_2 wcel eoffval2_4 adantr fveq1d offval foffval2_0 ioffval2_0 foffval2_2 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co cmpt foffval2_1 foffval2_2 foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co cmpt foffval2_1 foffval2_2 foffval2_3 foffval2_4 foffval2_5 co cmpt ioffval2_0 foffval2_1 foffval2_2 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co foffval2_1 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 foffval2_1 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_1 foffval2_2 foffval2_3 nfmpt1 foffval2_1 ioffval2_0 sup_set_class nfcv nffv foffval2_1 foffval2_5 nfcv foffval2_1 ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_1 foffval2_2 foffval2_4 nfmpt1 foffval2_1 ioffval2_0 sup_set_class nfcv nffv nfov ioffval2_0 foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co nfcv ioffval2_0 sup_set_class foffval2_1 sup_set_class wceq ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv ioffval2_0 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 ioffval2_0 sup_set_class foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt fveq2 ioffval2_0 sup_set_class foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt fveq2 oveq12d cbvmpt foffval2_0 foffval2_1 foffval2_2 foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_5 co foffval2_3 foffval2_4 foffval2_5 co foffval2_0 foffval2_1 sup_set_class foffval2_2 wcel wa foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_3 foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_4 foffval2_5 foffval2_0 foffval2_1 sup_set_class foffval2_2 wcel wa foffval2_1 sup_set_class foffval2_2 wcel foffval2_3 foffval2_9 wcel foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_3 cmpt cfv foffval2_3 wceq foffval2_0 foffval2_1 sup_set_class foffval2_2 wcel simpr eoffval2_1 foffval2_1 foffval2_2 foffval2_3 foffval2_9 foffval2_1 foffval2_2 foffval2_3 cmpt foffval2_1 foffval2_2 foffval2_3 cmpt eqid fvmpt2 syl2anc foffval2_0 foffval2_1 sup_set_class foffval2_2 wcel wa foffval2_1 sup_set_class foffval2_2 wcel foffval2_4 foffval2_10 wcel foffval2_1 sup_set_class foffval2_1 foffval2_2 foffval2_4 cmpt cfv foffval2_4 wceq foffval2_0 foffval2_1 sup_set_class foffval2_2 wcel simpr eoffval2_2 foffval2_1 foffval2_2 foffval2_4 foffval2_10 foffval2_1 foffval2_2 foffval2_4 cmpt foffval2_1 foffval2_2 foffval2_4 cmpt eqid fvmpt2 syl2anc oveq12d mpteq2dva syl5eq eqtrd $.
+	$v ph x A B C R F G V W X  $.
+	$d x y A  $.
+	$d y B  $.
+	$d y C  $.
+	$d y F  $.
+	$d y G  $.
+	$d x y ph  $.
+	$d x y R  $.
+	f0_offval2 $f wff ph $.
+	f1_offval2 $f set x $.
+	f2_offval2 $f class A $.
+	f3_offval2 $f class B $.
+	f4_offval2 $f class C $.
+	f5_offval2 $f class R $.
+	f6_offval2 $f class F $.
+	f7_offval2 $f class G $.
+	f8_offval2 $f class V $.
+	f9_offval2 $f class W $.
+	f10_offval2 $f class X $.
+	i0_offval2 $f set y $.
+	e0_offval2 $e |- ( ph -> A e. V ) $.
+	e1_offval2 $e |- ( ( ph /\ x e. A ) -> B e. W ) $.
+	e2_offval2 $e |- ( ( ph /\ x e. A ) -> C e. X ) $.
+	e3_offval2 $e |- ( ph -> F = ( x e. A |-> B ) ) $.
+	e4_offval2 $e |- ( ph -> G = ( x e. A |-> C ) ) $.
+	p_offval2 $p |- ( ph -> ( F oF R G ) = ( x e. A |-> ( B R C ) ) ) $= e1_offval2 f0_offval2 f3_offval2 f9_offval2 a_wcel f1_offval2 f2_offval2 p_ralrimiva f1_offval2 f2_offval2 f3_offval2 a_cmpt p_eqid f1_offval2 f2_offval2 f3_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt f9_offval2 p_fnmpt f0_offval2 f3_offval2 f9_offval2 a_wcel f1_offval2 f2_offval2 a_wral f1_offval2 f2_offval2 f3_offval2 a_cmpt f2_offval2 a_wfn p_syl e3_offval2 f0_offval2 f2_offval2 f6_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt p_fneq1d f0_offval2 f6_offval2 f2_offval2 a_wfn f1_offval2 f2_offval2 f3_offval2 a_cmpt f2_offval2 a_wfn p_mpbird e2_offval2 f0_offval2 f4_offval2 f10_offval2 a_wcel f1_offval2 f2_offval2 p_ralrimiva f1_offval2 f2_offval2 f4_offval2 a_cmpt p_eqid f1_offval2 f2_offval2 f4_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt f10_offval2 p_fnmpt f0_offval2 f4_offval2 f10_offval2 a_wcel f1_offval2 f2_offval2 a_wral f1_offval2 f2_offval2 f4_offval2 a_cmpt f2_offval2 a_wfn p_syl e4_offval2 f0_offval2 f2_offval2 f7_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt p_fneq1d f0_offval2 f7_offval2 f2_offval2 a_wfn f1_offval2 f2_offval2 f4_offval2 a_cmpt f2_offval2 a_wfn p_mpbird e0_offval2 e0_offval2 f2_offval2 p_inidm e3_offval2 f0_offval2 f6_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt a_wceq i0_offval2 a_sup_set_class f2_offval2 a_wcel p_adantr f0_offval2 i0_offval2 a_sup_set_class f2_offval2 a_wcel a_wa i0_offval2 a_sup_set_class f6_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt p_fveq1d e4_offval2 f0_offval2 f7_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt a_wceq i0_offval2 a_sup_set_class f2_offval2 a_wcel p_adantr f0_offval2 i0_offval2 a_sup_set_class f2_offval2 a_wcel a_wa i0_offval2 a_sup_set_class f7_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt p_fveq1d f0_offval2 i0_offval2 f2_offval2 f2_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 f2_offval2 f6_offval2 f7_offval2 f8_offval2 f8_offval2 p_offval f1_offval2 f2_offval2 f3_offval2 p_nfmpt1 f1_offval2 i0_offval2 a_sup_set_class p_nfcv f1_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt p_nffv f1_offval2 f5_offval2 p_nfcv f1_offval2 f2_offval2 f4_offval2 p_nfmpt1 f1_offval2 i0_offval2 a_sup_set_class p_nfcv f1_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt p_nffv f1_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 p_nfov i0_offval2 f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co p_nfcv i0_offval2 a_sup_set_class f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt p_fveq2 i0_offval2 a_sup_set_class f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt p_fveq2 i0_offval2 a_sup_set_class f1_offval2 a_sup_set_class a_wceq i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 p_oveq12d i0_offval2 f1_offval2 f2_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co p_cbvmpt f0_offval2 f1_offval2 a_sup_set_class f2_offval2 a_wcel p_simpr e1_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt p_eqid f1_offval2 f2_offval2 f3_offval2 f9_offval2 f1_offval2 f2_offval2 f3_offval2 a_cmpt p_fvmpt2 f0_offval2 f1_offval2 a_sup_set_class f2_offval2 a_wcel a_wa f1_offval2 a_sup_set_class f2_offval2 a_wcel f3_offval2 f9_offval2 a_wcel f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f3_offval2 a_wceq p_syl2anc f0_offval2 f1_offval2 a_sup_set_class f2_offval2 a_wcel p_simpr e2_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt p_eqid f1_offval2 f2_offval2 f4_offval2 f10_offval2 f1_offval2 f2_offval2 f4_offval2 a_cmpt p_fvmpt2 f0_offval2 f1_offval2 a_sup_set_class f2_offval2 a_wcel a_wa f1_offval2 a_sup_set_class f2_offval2 a_wcel f4_offval2 f10_offval2 a_wcel f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f4_offval2 a_wceq p_syl2anc f0_offval2 f1_offval2 a_sup_set_class f2_offval2 a_wcel a_wa f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f3_offval2 f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f4_offval2 f5_offval2 p_oveq12d f0_offval2 f1_offval2 f2_offval2 f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co f3_offval2 f4_offval2 f5_offval2 a_co p_mpteq2dva f0_offval2 i0_offval2 f2_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co a_cmpt f1_offval2 f2_offval2 f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv f1_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co a_cmpt f1_offval2 f2_offval2 f3_offval2 f4_offval2 f5_offval2 a_co a_cmpt p_syl5eq f0_offval2 f6_offval2 f7_offval2 f5_offval2 a_cof a_co i0_offval2 f2_offval2 i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f3_offval2 a_cmpt a_cfv i0_offval2 a_sup_set_class f1_offval2 f2_offval2 f4_offval2 a_cmpt a_cfv f5_offval2 a_co a_cmpt f1_offval2 f2_offval2 f3_offval2 f4_offval2 f5_offval2 a_co a_cmpt p_eqtrd $.
 $}
-$( The function relation acting on maps.  (Contributed by Mario Carneiro,
+
+$(The function relation acting on maps.  (Contributed by Mario Carneiro,
        20-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v y $.
-	$d x y A $.
-	$d y B $.
-	$d y C $.
-	$d y F $.
-	$d y G $.
-	$d x y ph $.
-	$d x y R $.
-	iofrfval2_0 $f set y $.
-	fofrfval2_0 $f wff ph $.
-	fofrfval2_1 $f set x $.
-	fofrfval2_2 $f class A $.
-	fofrfval2_3 $f class B $.
-	fofrfval2_4 $f class C $.
-	fofrfval2_5 $f class R $.
-	fofrfval2_6 $f class F $.
-	fofrfval2_7 $f class G $.
-	fofrfval2_8 $f class V $.
-	fofrfval2_9 $f class W $.
-	fofrfval2_10 $f class X $.
-	eofrfval2_0 $e |- ( ph -> A e. V ) $.
-	eofrfval2_1 $e |- ( ( ph /\ x e. A ) -> B e. W ) $.
-	eofrfval2_2 $e |- ( ( ph /\ x e. A ) -> C e. X ) $.
-	eofrfval2_3 $e |- ( ph -> F = ( x e. A |-> B ) ) $.
-	eofrfval2_4 $e |- ( ph -> G = ( x e. A |-> C ) ) $.
-	ofrfval2 $p |- ( ph -> ( F oR R G <-> A. x e. A B R C ) ) $= fofrfval2_0 fofrfval2_6 fofrfval2_7 fofrfval2_5 cofr wbr iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr iofrfval2_0 fofrfval2_2 wral fofrfval2_3 fofrfval2_4 fofrfval2_5 wbr fofrfval2_1 fofrfval2_2 wral fofrfval2_0 iofrfval2_0 fofrfval2_2 fofrfval2_2 iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 fofrfval2_2 fofrfval2_6 fofrfval2_7 fofrfval2_8 fofrfval2_8 fofrfval2_0 fofrfval2_6 fofrfval2_2 wfn fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_2 wfn fofrfval2_0 fofrfval2_3 fofrfval2_9 wcel fofrfval2_1 fofrfval2_2 wral fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_2 wfn fofrfval2_0 fofrfval2_3 fofrfval2_9 wcel fofrfval2_1 fofrfval2_2 eofrfval2_1 ralrimiva fofrfval2_1 fofrfval2_2 fofrfval2_3 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_9 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt eqid fnmpt syl fofrfval2_0 fofrfval2_2 fofrfval2_6 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt eofrfval2_3 fneq1d mpbird fofrfval2_0 fofrfval2_7 fofrfval2_2 wfn fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_2 wfn fofrfval2_0 fofrfval2_4 fofrfval2_10 wcel fofrfval2_1 fofrfval2_2 wral fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_2 wfn fofrfval2_0 fofrfval2_4 fofrfval2_10 wcel fofrfval2_1 fofrfval2_2 eofrfval2_2 ralrimiva fofrfval2_1 fofrfval2_2 fofrfval2_4 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_10 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt eqid fnmpt syl fofrfval2_0 fofrfval2_2 fofrfval2_7 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt eofrfval2_4 fneq1d mpbird eofrfval2_0 eofrfval2_0 fofrfval2_2 inidm fofrfval2_0 iofrfval2_0 sup_set_class fofrfval2_2 wcel wa iofrfval2_0 sup_set_class fofrfval2_6 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_0 fofrfval2_6 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt wceq iofrfval2_0 sup_set_class fofrfval2_2 wcel eofrfval2_3 adantr fveq1d fofrfval2_0 iofrfval2_0 sup_set_class fofrfval2_2 wcel wa iofrfval2_0 sup_set_class fofrfval2_7 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_0 fofrfval2_7 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt wceq iofrfval2_0 sup_set_class fofrfval2_2 wcel eofrfval2_4 adantr fveq1d ofrfval iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr iofrfval2_0 fofrfval2_2 wral fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr fofrfval2_1 fofrfval2_2 wral fofrfval2_0 fofrfval2_3 fofrfval2_4 fofrfval2_5 wbr fofrfval2_1 fofrfval2_2 wral iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr iofrfval2_0 fofrfval2_1 fofrfval2_2 fofrfval2_1 iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 fofrfval2_1 iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_1 fofrfval2_2 fofrfval2_3 nfmpt1 fofrfval2_1 iofrfval2_0 sup_set_class nfcv nffv fofrfval2_1 fofrfval2_5 nfcv fofrfval2_1 iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_1 fofrfval2_2 fofrfval2_4 nfmpt1 fofrfval2_1 iofrfval2_0 sup_set_class nfcv nffv nfbr fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr iofrfval2_0 nfv iofrfval2_0 sup_set_class fofrfval2_1 sup_set_class wceq iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv iofrfval2_0 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 iofrfval2_0 sup_set_class fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fveq2 iofrfval2_0 sup_set_class fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fveq2 breq12d cbvral fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_5 wbr fofrfval2_3 fofrfval2_4 fofrfval2_5 wbr fofrfval2_1 fofrfval2_2 fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_2 wcel wa fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_3 fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_4 fofrfval2_5 fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_2 wcel wa fofrfval2_1 sup_set_class fofrfval2_2 wcel fofrfval2_3 fofrfval2_9 wcel fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt cfv fofrfval2_3 wceq fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_2 wcel simpr eofrfval2_1 fofrfval2_1 fofrfval2_2 fofrfval2_3 fofrfval2_9 fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt fofrfval2_1 fofrfval2_2 fofrfval2_3 cmpt eqid fvmpt2 syl2anc fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_2 wcel wa fofrfval2_1 sup_set_class fofrfval2_2 wcel fofrfval2_4 fofrfval2_10 wcel fofrfval2_1 sup_set_class fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt cfv fofrfval2_4 wceq fofrfval2_0 fofrfval2_1 sup_set_class fofrfval2_2 wcel simpr eofrfval2_2 fofrfval2_1 fofrfval2_2 fofrfval2_4 fofrfval2_10 fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt fofrfval2_1 fofrfval2_2 fofrfval2_4 cmpt eqid fvmpt2 syl2anc breq12d ralbidva syl5bb bitrd $.
+	$v ph x A B C R F G V W X  $.
+	$d x y A  $.
+	$d y B  $.
+	$d y C  $.
+	$d y F  $.
+	$d y G  $.
+	$d x y ph  $.
+	$d x y R  $.
+	f0_ofrfval2 $f wff ph $.
+	f1_ofrfval2 $f set x $.
+	f2_ofrfval2 $f class A $.
+	f3_ofrfval2 $f class B $.
+	f4_ofrfval2 $f class C $.
+	f5_ofrfval2 $f class R $.
+	f6_ofrfval2 $f class F $.
+	f7_ofrfval2 $f class G $.
+	f8_ofrfval2 $f class V $.
+	f9_ofrfval2 $f class W $.
+	f10_ofrfval2 $f class X $.
+	i0_ofrfval2 $f set y $.
+	e0_ofrfval2 $e |- ( ph -> A e. V ) $.
+	e1_ofrfval2 $e |- ( ( ph /\ x e. A ) -> B e. W ) $.
+	e2_ofrfval2 $e |- ( ( ph /\ x e. A ) -> C e. X ) $.
+	e3_ofrfval2 $e |- ( ph -> F = ( x e. A |-> B ) ) $.
+	e4_ofrfval2 $e |- ( ph -> G = ( x e. A |-> C ) ) $.
+	p_ofrfval2 $p |- ( ph -> ( F oR R G <-> A. x e. A B R C ) ) $= e1_ofrfval2 f0_ofrfval2 f3_ofrfval2 f9_ofrfval2 a_wcel f1_ofrfval2 f2_ofrfval2 p_ralrimiva f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_eqid f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt f9_ofrfval2 p_fnmpt f0_ofrfval2 f3_ofrfval2 f9_ofrfval2 a_wcel f1_ofrfval2 f2_ofrfval2 a_wral f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt f2_ofrfval2 a_wfn p_syl e3_ofrfval2 f0_ofrfval2 f2_ofrfval2 f6_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_fneq1d f0_ofrfval2 f6_ofrfval2 f2_ofrfval2 a_wfn f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt f2_ofrfval2 a_wfn p_mpbird e2_ofrfval2 f0_ofrfval2 f4_ofrfval2 f10_ofrfval2 a_wcel f1_ofrfval2 f2_ofrfval2 p_ralrimiva f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_eqid f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt f10_ofrfval2 p_fnmpt f0_ofrfval2 f4_ofrfval2 f10_ofrfval2 a_wcel f1_ofrfval2 f2_ofrfval2 a_wral f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt f2_ofrfval2 a_wfn p_syl e4_ofrfval2 f0_ofrfval2 f2_ofrfval2 f7_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_fneq1d f0_ofrfval2 f7_ofrfval2 f2_ofrfval2 a_wfn f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt f2_ofrfval2 a_wfn p_mpbird e0_ofrfval2 e0_ofrfval2 f2_ofrfval2 p_inidm e3_ofrfval2 f0_ofrfval2 f6_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_wceq i0_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel p_adantr f0_ofrfval2 i0_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel a_wa i0_ofrfval2 a_sup_set_class f6_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_fveq1d e4_ofrfval2 f0_ofrfval2 f7_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_wceq i0_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel p_adantr f0_ofrfval2 i0_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel a_wa i0_ofrfval2 a_sup_set_class f7_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_fveq1d f0_ofrfval2 i0_ofrfval2 f2_ofrfval2 f2_ofrfval2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 f2_ofrfval2 f6_ofrfval2 f7_ofrfval2 f8_ofrfval2 f8_ofrfval2 p_ofrfval f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 p_nfmpt1 f1_ofrfval2 i0_ofrfval2 a_sup_set_class p_nfcv f1_ofrfval2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_nffv f1_ofrfval2 f5_ofrfval2 p_nfcv f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 p_nfmpt1 f1_ofrfval2 i0_ofrfval2 a_sup_set_class p_nfcv f1_ofrfval2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_nffv f1_ofrfval2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 p_nfbr f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr i0_ofrfval2 p_nfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_fveq2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_fveq2 i0_ofrfval2 a_sup_set_class f1_ofrfval2 a_sup_set_class a_wceq i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 p_breq12d i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr i0_ofrfval2 f1_ofrfval2 f2_ofrfval2 p_cbvral f0_ofrfval2 f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel p_simpr e1_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_eqid f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 f9_ofrfval2 f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt p_fvmpt2 f0_ofrfval2 f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel a_wa f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel f3_ofrfval2 f9_ofrfval2 a_wcel f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f3_ofrfval2 a_wceq p_syl2anc f0_ofrfval2 f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel p_simpr e2_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_eqid f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 f10_ofrfval2 f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt p_fvmpt2 f0_ofrfval2 f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel a_wa f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel f4_ofrfval2 f10_ofrfval2 a_wcel f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f4_ofrfval2 a_wceq p_syl2anc f0_ofrfval2 f1_ofrfval2 a_sup_set_class f2_ofrfval2 a_wcel a_wa f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f3_ofrfval2 f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f4_ofrfval2 f5_ofrfval2 p_breq12d f0_ofrfval2 f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr f3_ofrfval2 f4_ofrfval2 f5_ofrfval2 a_wbr f1_ofrfval2 f2_ofrfval2 p_ralbidva i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr i0_ofrfval2 f2_ofrfval2 a_wral f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv f1_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr f1_ofrfval2 f2_ofrfval2 a_wral f0_ofrfval2 f3_ofrfval2 f4_ofrfval2 f5_ofrfval2 a_wbr f1_ofrfval2 f2_ofrfval2 a_wral p_syl5bb f0_ofrfval2 f6_ofrfval2 f7_ofrfval2 f5_ofrfval2 a_cofr a_wbr i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f3_ofrfval2 a_cmpt a_cfv i0_ofrfval2 a_sup_set_class f1_ofrfval2 f2_ofrfval2 f4_ofrfval2 a_cmpt a_cfv f5_ofrfval2 a_wbr i0_ofrfval2 f2_ofrfval2 a_wral f3_ofrfval2 f4_ofrfval2 f5_ofrfval2 a_wbr f1_ofrfval2 f2_ofrfval2 a_wral p_bitrd $.
 $}
-$( The composition of a function operation with another function.
+
+$(The composition of a function operation with another function.
        (Contributed by Mario Carneiro, 19-Dec-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v D $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v x $.
-	$v y $.
-	$d y A $.
-	$d x y C $.
-	$d x y F $.
-	$d x y G $.
-	$d x y H $.
-	$d x y ph $.
-	$d x D $.
-	$d x y R $.
-	iofco_0 $f set x $.
-	iofco_1 $f set y $.
-	fofco_0 $f wff ph $.
-	fofco_1 $f class A $.
-	fofco_2 $f class B $.
-	fofco_3 $f class C $.
-	fofco_4 $f class D $.
-	fofco_5 $f class R $.
-	fofco_6 $f class F $.
-	fofco_7 $f class G $.
-	fofco_8 $f class H $.
-	fofco_9 $f class V $.
-	fofco_10 $f class W $.
-	fofco_11 $f class X $.
-	eofco_0 $e |- ( ph -> F Fn A ) $.
-	eofco_1 $e |- ( ph -> G Fn B ) $.
-	eofco_2 $e |- ( ph -> H : D --> C ) $.
-	eofco_3 $e |- ( ph -> A e. V ) $.
-	eofco_4 $e |- ( ph -> B e. W ) $.
-	eofco_5 $e |- ( ph -> D e. X ) $.
-	eofco_6 $e |- ( A i^i B ) = C $.
-	ofco $p |- ( ph -> ( ( F oF R G ) o. H ) = ( ( F o. H ) oF R ( G o. H ) ) ) $= fofco_0 fofco_6 fofco_7 fofco_5 cof co fofco_8 ccom iofco_0 fofco_4 iofco_0 sup_set_class fofco_8 cfv fofco_6 cfv iofco_0 sup_set_class fofco_8 cfv fofco_7 cfv fofco_5 co cmpt fofco_6 fofco_8 ccom fofco_7 fofco_8 ccom fofco_5 cof co fofco_0 iofco_0 iofco_1 fofco_4 fofco_3 iofco_0 sup_set_class fofco_8 cfv iofco_1 sup_set_class fofco_6 cfv iofco_1 sup_set_class fofco_7 cfv fofco_5 co iofco_0 sup_set_class fofco_8 cfv fofco_6 cfv iofco_0 sup_set_class fofco_8 cfv fofco_7 cfv fofco_5 co fofco_8 fofco_6 fofco_7 fofco_5 cof co fofco_0 fofco_4 fofco_3 fofco_8 wf iofco_0 sup_set_class fofco_4 wcel iofco_0 sup_set_class fofco_8 cfv fofco_3 wcel eofco_2 fofco_4 fofco_3 iofco_0 sup_set_class fofco_8 ffvelrn sylan fofco_0 iofco_0 fofco_4 fofco_3 fofco_8 eofco_2 feqmptd fofco_0 iofco_1 fofco_1 fofco_2 iofco_1 sup_set_class fofco_6 cfv iofco_1 sup_set_class fofco_7 cfv fofco_5 fofco_3 fofco_6 fofco_7 fofco_9 fofco_10 eofco_0 eofco_1 eofco_3 eofco_4 eofco_6 fofco_0 iofco_1 sup_set_class fofco_1 wcel wa iofco_1 sup_set_class fofco_6 cfv eqidd fofco_0 iofco_1 sup_set_class fofco_2 wcel wa iofco_1 sup_set_class fofco_7 cfv eqidd offval iofco_1 sup_set_class iofco_0 sup_set_class fofco_8 cfv wceq iofco_1 sup_set_class fofco_6 cfv iofco_0 sup_set_class fofco_8 cfv fofco_6 cfv iofco_1 sup_set_class fofco_7 cfv iofco_0 sup_set_class fofco_8 cfv fofco_7 cfv fofco_5 iofco_1 sup_set_class iofco_0 sup_set_class fofco_8 cfv fofco_6 fveq2 iofco_1 sup_set_class iofco_0 sup_set_class fofco_8 cfv fofco_7 fveq2 oveq12d fmptco fofco_0 iofco_0 fofco_4 fofco_4 iofco_0 sup_set_class fofco_8 cfv fofco_6 cfv iofco_0 sup_set_class fofco_8 cfv fofco_7 cfv fofco_5 fofco_4 fofco_6 fofco_8 ccom fofco_7 fofco_8 ccom fofco_11 fofco_11 fofco_0 fofco_6 fofco_1 wfn fofco_4 fofco_1 fofco_8 wf fofco_6 fofco_8 ccom fofco_4 wfn eofco_0 fofco_0 fofco_4 fofco_3 fofco_8 wf fofco_3 fofco_1 wss fofco_4 fofco_1 fofco_8 wf eofco_2 fofco_3 fofco_1 fofco_2 cin fofco_1 eofco_6 fofco_1 fofco_2 inss1 eqsstr3i fofco_4 fofco_3 fofco_1 fofco_8 fss sylancl fofco_1 fofco_4 fofco_6 fofco_8 fnfco syl2anc fofco_0 fofco_7 fofco_2 wfn fofco_4 fofco_2 fofco_8 wf fofco_7 fofco_8 ccom fofco_4 wfn eofco_1 fofco_0 fofco_4 fofco_3 fofco_8 wf fofco_3 fofco_2 wss fofco_4 fofco_2 fofco_8 wf eofco_2 fofco_3 fofco_1 fofco_2 cin fofco_2 eofco_6 fofco_1 fofco_2 inss2 eqsstr3i fofco_4 fofco_3 fofco_2 fofco_8 fss sylancl fofco_2 fofco_4 fofco_7 fofco_8 fnfco syl2anc eofco_5 eofco_5 fofco_4 inidm fofco_0 fofco_8 fofco_4 wfn iofco_0 sup_set_class fofco_4 wcel iofco_0 sup_set_class fofco_6 fofco_8 ccom cfv iofco_0 sup_set_class fofco_8 cfv fofco_6 cfv wceq fofco_0 fofco_4 fofco_3 fofco_8 wf fofco_8 fofco_4 wfn eofco_2 fofco_4 fofco_3 fofco_8 ffn syl fofco_4 fofco_6 fofco_8 iofco_0 sup_set_class fvco2 sylan fofco_0 fofco_8 fofco_4 wfn iofco_0 sup_set_class fofco_4 wcel iofco_0 sup_set_class fofco_7 fofco_8 ccom cfv iofco_0 sup_set_class fofco_8 cfv fofco_7 cfv wceq fofco_0 fofco_4 fofco_3 fofco_8 wf fofco_8 fofco_4 wfn eofco_2 fofco_4 fofco_3 fofco_8 ffn syl fofco_4 fofco_7 fofco_8 iofco_0 sup_set_class fvco2 sylan offval eqtr4d $.
+	$v ph A B C D R F G H V W X  $.
+	$d y A  $.
+	$d x y C  $.
+	$d x y F  $.
+	$d x y G  $.
+	$d x y H  $.
+	$d x y ph  $.
+	$d x D  $.
+	$d x y R  $.
+	f0_ofco $f wff ph $.
+	f1_ofco $f class A $.
+	f2_ofco $f class B $.
+	f3_ofco $f class C $.
+	f4_ofco $f class D $.
+	f5_ofco $f class R $.
+	f6_ofco $f class F $.
+	f7_ofco $f class G $.
+	f8_ofco $f class H $.
+	f9_ofco $f class V $.
+	f10_ofco $f class W $.
+	f11_ofco $f class X $.
+	i0_ofco $f set x $.
+	i1_ofco $f set y $.
+	e0_ofco $e |- ( ph -> F Fn A ) $.
+	e1_ofco $e |- ( ph -> G Fn B ) $.
+	e2_ofco $e |- ( ph -> H : D --> C ) $.
+	e3_ofco $e |- ( ph -> A e. V ) $.
+	e4_ofco $e |- ( ph -> B e. W ) $.
+	e5_ofco $e |- ( ph -> D e. X ) $.
+	e6_ofco $e |- ( A i^i B ) = C $.
+	p_ofco $p |- ( ph -> ( ( F oF R G ) o. H ) = ( ( F o. H ) oF R ( G o. H ) ) ) $= e2_ofco f4_ofco f3_ofco i0_ofco a_sup_set_class f8_ofco p_ffvelrn f0_ofco f4_ofco f3_ofco f8_ofco a_wf i0_ofco a_sup_set_class f4_ofco a_wcel i0_ofco a_sup_set_class f8_ofco a_cfv f3_ofco a_wcel p_sylan e2_ofco f0_ofco i0_ofco f4_ofco f3_ofco f8_ofco p_feqmptd e0_ofco e1_ofco e3_ofco e4_ofco e6_ofco f0_ofco i1_ofco a_sup_set_class f1_ofco a_wcel a_wa i1_ofco a_sup_set_class f6_ofco a_cfv p_eqidd f0_ofco i1_ofco a_sup_set_class f2_ofco a_wcel a_wa i1_ofco a_sup_set_class f7_ofco a_cfv p_eqidd f0_ofco i1_ofco f1_ofco f2_ofco i1_ofco a_sup_set_class f6_ofco a_cfv i1_ofco a_sup_set_class f7_ofco a_cfv f5_ofco f3_ofco f6_ofco f7_ofco f9_ofco f10_ofco p_offval i1_ofco a_sup_set_class i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco p_fveq2 i1_ofco a_sup_set_class i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco p_fveq2 i1_ofco a_sup_set_class i0_ofco a_sup_set_class f8_ofco a_cfv a_wceq i1_ofco a_sup_set_class f6_ofco a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco a_cfv i1_ofco a_sup_set_class f7_ofco a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco a_cfv f5_ofco p_oveq12d f0_ofco i0_ofco i1_ofco f4_ofco f3_ofco i0_ofco a_sup_set_class f8_ofco a_cfv i1_ofco a_sup_set_class f6_ofco a_cfv i1_ofco a_sup_set_class f7_ofco a_cfv f5_ofco a_co i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco a_cfv f5_ofco a_co f8_ofco f6_ofco f7_ofco f5_ofco a_cof a_co p_fmptco e0_ofco e2_ofco e6_ofco f1_ofco f2_ofco p_inss1 f3_ofco f1_ofco f2_ofco a_cin f1_ofco p_eqsstr3i f4_ofco f3_ofco f1_ofco f8_ofco p_fss f0_ofco f4_ofco f3_ofco f8_ofco a_wf f3_ofco f1_ofco a_wss f4_ofco f1_ofco f8_ofco a_wf p_sylancl f1_ofco f4_ofco f6_ofco f8_ofco p_fnfco f0_ofco f6_ofco f1_ofco a_wfn f4_ofco f1_ofco f8_ofco a_wf f6_ofco f8_ofco a_ccom f4_ofco a_wfn p_syl2anc e1_ofco e2_ofco e6_ofco f1_ofco f2_ofco p_inss2 f3_ofco f1_ofco f2_ofco a_cin f2_ofco p_eqsstr3i f4_ofco f3_ofco f2_ofco f8_ofco p_fss f0_ofco f4_ofco f3_ofco f8_ofco a_wf f3_ofco f2_ofco a_wss f4_ofco f2_ofco f8_ofco a_wf p_sylancl f2_ofco f4_ofco f7_ofco f8_ofco p_fnfco f0_ofco f7_ofco f2_ofco a_wfn f4_ofco f2_ofco f8_ofco a_wf f7_ofco f8_ofco a_ccom f4_ofco a_wfn p_syl2anc e5_ofco e5_ofco f4_ofco p_inidm e2_ofco f4_ofco f3_ofco f8_ofco p_ffn f0_ofco f4_ofco f3_ofco f8_ofco a_wf f8_ofco f4_ofco a_wfn p_syl f4_ofco f6_ofco f8_ofco i0_ofco a_sup_set_class p_fvco2 f0_ofco f8_ofco f4_ofco a_wfn i0_ofco a_sup_set_class f4_ofco a_wcel i0_ofco a_sup_set_class f6_ofco f8_ofco a_ccom a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco a_cfv a_wceq p_sylan e2_ofco f4_ofco f3_ofco f8_ofco p_ffn f0_ofco f4_ofco f3_ofco f8_ofco a_wf f8_ofco f4_ofco a_wfn p_syl f4_ofco f7_ofco f8_ofco i0_ofco a_sup_set_class p_fvco2 f0_ofco f8_ofco f4_ofco a_wfn i0_ofco a_sup_set_class f4_ofco a_wcel i0_ofco a_sup_set_class f7_ofco f8_ofco a_ccom a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco a_cfv a_wceq p_sylan f0_ofco i0_ofco f4_ofco f4_ofco i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco a_cfv f5_ofco f4_ofco f6_ofco f8_ofco a_ccom f7_ofco f8_ofco a_ccom f11_ofco f11_ofco p_offval f0_ofco f6_ofco f7_ofco f5_ofco a_cof a_co f8_ofco a_ccom i0_ofco f4_ofco i0_ofco a_sup_set_class f8_ofco a_cfv f6_ofco a_cfv i0_ofco a_sup_set_class f8_ofco a_cfv f7_ofco a_cfv f5_ofco a_co a_cmpt f6_ofco f8_ofco a_ccom f7_ofco f8_ofco a_ccom f5_ofco a_cof a_co p_eqtr4d $.
 $}
-$( Convert an identity of the operation to the analogous identity on the
+
+$(Convert an identity of the operation to the analogous identity on the
          function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v V $.
-	$d x A $.
-	$d x F $.
-	$d x G $.
-	$d x H $.
-	$d x ph $.
-	$d x R $.
-	foffveq_0 $f wff ph $.
-	foffveq_1 $f set x $.
-	foffveq_2 $f class A $.
-	foffveq_3 $f class B $.
-	foffveq_4 $f class C $.
-	foffveq_5 $f class R $.
-	foffveq_6 $f class F $.
-	foffveq_7 $f class G $.
-	foffveq_8 $f class H $.
-	foffveq_9 $f class V $.
-	eoffveq_0 $e |- ( ph -> A e. V ) $.
-	eoffveq_1 $e |- ( ph -> F Fn A ) $.
-	eoffveq_2 $e |- ( ph -> G Fn A ) $.
-	eoffveq_3 $e |- ( ph -> H Fn A ) $.
-	eoffveq_4 $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = B ) $.
-	eoffveq_5 $e |- ( ( ph /\ x e. A ) -> ( G ` x ) = C ) $.
-	eoffveq_6 $e |- ( ( ph /\ x e. A ) -> ( B R C ) = ( H ` x ) ) $.
-	offveq $p |- ( ph -> ( F oF R G ) = H ) $= foffveq_0 foffveq_1 foffveq_2 foffveq_6 foffveq_7 foffveq_5 cof co foffveq_8 foffveq_0 foffveq_2 foffveq_2 foffveq_5 foffveq_2 foffveq_6 foffveq_7 foffveq_9 foffveq_9 eoffveq_1 eoffveq_2 eoffveq_0 eoffveq_0 foffveq_2 inidm offn eoffveq_3 foffveq_0 foffveq_1 sup_set_class foffveq_2 wcel wa foffveq_1 sup_set_class foffveq_6 foffveq_7 foffveq_5 cof co cfv foffveq_3 foffveq_4 foffveq_5 co foffveq_1 sup_set_class foffveq_8 cfv foffveq_0 foffveq_2 foffveq_2 foffveq_3 foffveq_4 foffveq_5 foffveq_2 foffveq_6 foffveq_7 foffveq_9 foffveq_9 foffveq_1 sup_set_class eoffveq_1 eoffveq_2 eoffveq_0 eoffveq_0 foffveq_2 inidm eoffveq_4 eoffveq_5 ofval eoffveq_6 eqtrd eqfnfvd $.
+	$v ph x A B C R F G H V  $.
+	$d x A  $.
+	$d x F  $.
+	$d x G  $.
+	$d x H  $.
+	$d x ph  $.
+	$d x R  $.
+	f0_offveq $f wff ph $.
+	f1_offveq $f set x $.
+	f2_offveq $f class A $.
+	f3_offveq $f class B $.
+	f4_offveq $f class C $.
+	f5_offveq $f class R $.
+	f6_offveq $f class F $.
+	f7_offveq $f class G $.
+	f8_offveq $f class H $.
+	f9_offveq $f class V $.
+	e0_offveq $e |- ( ph -> A e. V ) $.
+	e1_offveq $e |- ( ph -> F Fn A ) $.
+	e2_offveq $e |- ( ph -> G Fn A ) $.
+	e3_offveq $e |- ( ph -> H Fn A ) $.
+	e4_offveq $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = B ) $.
+	e5_offveq $e |- ( ( ph /\ x e. A ) -> ( G ` x ) = C ) $.
+	e6_offveq $e |- ( ( ph /\ x e. A ) -> ( B R C ) = ( H ` x ) ) $.
+	p_offveq $p |- ( ph -> ( F oF R G ) = H ) $= e1_offveq e2_offveq e0_offveq e0_offveq f2_offveq p_inidm f0_offveq f2_offveq f2_offveq f5_offveq f2_offveq f6_offveq f7_offveq f9_offveq f9_offveq p_offn e3_offveq e1_offveq e2_offveq e0_offveq e0_offveq f2_offveq p_inidm e4_offveq e5_offveq f0_offveq f2_offveq f2_offveq f3_offveq f4_offveq f5_offveq f2_offveq f6_offveq f7_offveq f9_offveq f9_offveq f1_offveq a_sup_set_class p_ofval e6_offveq f0_offveq f1_offveq a_sup_set_class f2_offveq a_wcel a_wa f1_offveq a_sup_set_class f6_offveq f7_offveq f5_offveq a_cof a_co a_cfv f3_offveq f4_offveq f5_offveq a_co f1_offveq a_sup_set_class f8_offveq a_cfv p_eqtrd f0_offveq f1_offveq f2_offveq f6_offveq f7_offveq f5_offveq a_cof a_co f8_offveq p_eqfnfvd $.
 $}
-$( Equivalent expressions for equality with a function operation.
+
+$(Equivalent expressions for equality with a function operation.
        (Contributed by NM, 9-Oct-2014.)  (Proof shortened by Mario Carneiro,
        5-Dec-2016.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v V $.
-	$d x A $.
-	$d x F $.
-	$d x G $.
-	$d x H $.
-	$d x ph $.
-	$d x R $.
-	$d x F $.
-	foffveqb_0 $f wff ph $.
-	foffveqb_1 $f set x $.
-	foffveqb_2 $f class A $.
-	foffveqb_3 $f class B $.
-	foffveqb_4 $f class C $.
-	foffveqb_5 $f class R $.
-	foffveqb_6 $f class F $.
-	foffveqb_7 $f class G $.
-	foffveqb_8 $f class H $.
-	foffveqb_9 $f class V $.
-	eoffveqb_0 $e |- ( ph -> A e. V ) $.
-	eoffveqb_1 $e |- ( ph -> F Fn A ) $.
-	eoffveqb_2 $e |- ( ph -> G Fn A ) $.
-	eoffveqb_3 $e |- ( ph -> H Fn A ) $.
-	eoffveqb_4 $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = B ) $.
-	eoffveqb_5 $e |- ( ( ph /\ x e. A ) -> ( G ` x ) = C ) $.
-	offveqb $p |- ( ph -> ( H = ( F oF R G ) <-> A. x e. A ( H ` x ) = ( B R C ) ) ) $= foffveqb_0 foffveqb_8 foffveqb_6 foffveqb_7 foffveqb_5 cof co wceq foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv cmpt foffveqb_1 foffveqb_2 foffveqb_3 foffveqb_4 foffveqb_5 co cmpt wceq foffveqb_1 sup_set_class foffveqb_8 cfv foffveqb_3 foffveqb_4 foffveqb_5 co wceq foffveqb_1 foffveqb_2 wral foffveqb_0 foffveqb_8 foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv cmpt foffveqb_6 foffveqb_7 foffveqb_5 cof co foffveqb_1 foffveqb_2 foffveqb_3 foffveqb_4 foffveqb_5 co cmpt foffveqb_0 foffveqb_8 foffveqb_2 wfn foffveqb_8 foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv cmpt wceq eoffveqb_3 foffveqb_1 foffveqb_2 foffveqb_8 dffn5 sylib foffveqb_0 foffveqb_1 foffveqb_2 foffveqb_2 foffveqb_3 foffveqb_4 foffveqb_5 foffveqb_2 foffveqb_6 foffveqb_7 foffveqb_9 foffveqb_9 eoffveqb_1 eoffveqb_2 eoffveqb_0 eoffveqb_0 foffveqb_2 inidm eoffveqb_4 eoffveqb_5 offval eqeq12d foffveqb_0 foffveqb_1 sup_set_class foffveqb_8 cfv cvv wcel foffveqb_1 foffveqb_2 wral foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv cmpt foffveqb_1 foffveqb_2 foffveqb_3 foffveqb_4 foffveqb_5 co cmpt wceq foffveqb_1 sup_set_class foffveqb_8 cfv foffveqb_3 foffveqb_4 foffveqb_5 co wceq foffveqb_1 foffveqb_2 wral wb foffveqb_0 foffveqb_1 sup_set_class foffveqb_8 cfv cvv wcel foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv cvv wcel foffveqb_0 foffveqb_1 sup_set_class foffveqb_8 fvex a1i ralrimivw foffveqb_1 foffveqb_2 foffveqb_1 sup_set_class foffveqb_8 cfv foffveqb_3 foffveqb_4 foffveqb_5 co cvv mpteqb syl bitrd $.
+	$v ph x A B C R F G H V  $.
+	$d x A  $.
+	$d x F  $.
+	$d x G  $.
+	$d x H  $.
+	$d x ph  $.
+	$d x R  $.
+	$d A  $.
+	$d B  $.
+	$d C  $.
+	$d x F  $.
+	$d G  $.
+	$d H  $.
+	$d R  $.
+	$d ph  $.
+	f0_offveqb $f wff ph $.
+	f1_offveqb $f set x $.
+	f2_offveqb $f class A $.
+	f3_offveqb $f class B $.
+	f4_offveqb $f class C $.
+	f5_offveqb $f class R $.
+	f6_offveqb $f class F $.
+	f7_offveqb $f class G $.
+	f8_offveqb $f class H $.
+	f9_offveqb $f class V $.
+	e0_offveqb $e |- ( ph -> A e. V ) $.
+	e1_offveqb $e |- ( ph -> F Fn A ) $.
+	e2_offveqb $e |- ( ph -> G Fn A ) $.
+	e3_offveqb $e |- ( ph -> H Fn A ) $.
+	e4_offveqb $e |- ( ( ph /\ x e. A ) -> ( F ` x ) = B ) $.
+	e5_offveqb $e |- ( ( ph /\ x e. A ) -> ( G ` x ) = C ) $.
+	p_offveqb $p |- ( ph -> ( H = ( F oF R G ) <-> A. x e. A ( H ` x ) = ( B R C ) ) ) $= e3_offveqb f1_offveqb f2_offveqb f8_offveqb p_dffn5 f0_offveqb f8_offveqb f2_offveqb a_wfn f8_offveqb f1_offveqb f2_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cmpt a_wceq p_sylib e1_offveqb e2_offveqb e0_offveqb e0_offveqb f2_offveqb p_inidm e4_offveqb e5_offveqb f0_offveqb f1_offveqb f2_offveqb f2_offveqb f3_offveqb f4_offveqb f5_offveqb f2_offveqb f6_offveqb f7_offveqb f9_offveqb f9_offveqb p_offval f0_offveqb f8_offveqb f1_offveqb f2_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cmpt f6_offveqb f7_offveqb f5_offveqb a_cof a_co f1_offveqb f2_offveqb f3_offveqb f4_offveqb f5_offveqb a_co a_cmpt p_eqeq12d f1_offveqb a_sup_set_class f8_offveqb p_fvex f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cvv a_wcel f0_offveqb p_a1i f0_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cvv a_wcel f1_offveqb f2_offveqb p_ralrimivw f1_offveqb f2_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv f3_offveqb f4_offveqb f5_offveqb a_co a_cvv p_mpteqb f0_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cvv a_wcel f1_offveqb f2_offveqb a_wral f1_offveqb f2_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cmpt f1_offveqb f2_offveqb f3_offveqb f4_offveqb f5_offveqb a_co a_cmpt a_wceq f1_offveqb a_sup_set_class f8_offveqb a_cfv f3_offveqb f4_offveqb f5_offveqb a_co a_wceq f1_offveqb f2_offveqb a_wral a_wb p_syl f0_offveqb f8_offveqb f6_offveqb f7_offveqb f5_offveqb a_cof a_co a_wceq f1_offveqb f2_offveqb f1_offveqb a_sup_set_class f8_offveqb a_cfv a_cmpt f1_offveqb f2_offveqb f3_offveqb f4_offveqb f5_offveqb a_co a_cmpt a_wceq f1_offveqb a_sup_set_class f8_offveqb a_cfv f3_offveqb f4_offveqb f5_offveqb a_co a_wceq f1_offveqb f2_offveqb a_wral p_bitrd $.
 $}
-$( Left operation by a constant.  (Contributed by Mario Carneiro,
+
+$(Left operation by a constant.  (Contributed by Mario Carneiro,
        24-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v X $.
-	fofc1_0 $f wff ph $.
-	fofc1_1 $f class A $.
-	fofc1_2 $f class B $.
-	fofc1_3 $f class C $.
-	fofc1_4 $f class R $.
-	fofc1_5 $f class F $.
-	fofc1_6 $f class V $.
-	fofc1_7 $f class W $.
-	fofc1_8 $f class X $.
-	eofc1_0 $e |- ( ph -> A e. V ) $.
-	eofc1_1 $e |- ( ph -> B e. W ) $.
-	eofc1_2 $e |- ( ph -> F Fn A ) $.
-	eofc1_3 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
-	ofc1 $p |- ( ( ph /\ X e. A ) -> ( ( ( A X. { B } ) oF R F ) ` X ) = ( B R C ) ) $= fofc1_0 fofc1_1 fofc1_1 fofc1_2 fofc1_3 fofc1_4 fofc1_1 fofc1_1 fofc1_2 csn cxp fofc1_5 fofc1_6 fofc1_6 fofc1_8 fofc1_0 fofc1_2 fofc1_7 wcel fofc1_1 fofc1_2 csn cxp fofc1_1 wfn eofc1_1 fofc1_1 fofc1_2 fofc1_7 fnconstg syl eofc1_2 eofc1_0 eofc1_0 fofc1_1 inidm fofc1_0 fofc1_2 fofc1_7 wcel fofc1_8 fofc1_1 wcel fofc1_8 fofc1_1 fofc1_2 csn cxp cfv fofc1_2 wceq eofc1_1 fofc1_1 fofc1_2 fofc1_8 fofc1_7 fvconst2g sylan eofc1_3 ofval $.
+	$v ph A B C R F V W X  $.
+	f0_ofc1 $f wff ph $.
+	f1_ofc1 $f class A $.
+	f2_ofc1 $f class B $.
+	f3_ofc1 $f class C $.
+	f4_ofc1 $f class R $.
+	f5_ofc1 $f class F $.
+	f6_ofc1 $f class V $.
+	f7_ofc1 $f class W $.
+	f8_ofc1 $f class X $.
+	e0_ofc1 $e |- ( ph -> A e. V ) $.
+	e1_ofc1 $e |- ( ph -> B e. W ) $.
+	e2_ofc1 $e |- ( ph -> F Fn A ) $.
+	e3_ofc1 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
+	p_ofc1 $p |- ( ( ph /\ X e. A ) -> ( ( ( A X. { B } ) oF R F ) ` X ) = ( B R C ) ) $= e1_ofc1 f1_ofc1 f2_ofc1 f7_ofc1 p_fnconstg f0_ofc1 f2_ofc1 f7_ofc1 a_wcel f1_ofc1 f2_ofc1 a_csn a_cxp f1_ofc1 a_wfn p_syl e2_ofc1 e0_ofc1 e0_ofc1 f1_ofc1 p_inidm e1_ofc1 f1_ofc1 f2_ofc1 f8_ofc1 f7_ofc1 p_fvconst2g f0_ofc1 f2_ofc1 f7_ofc1 a_wcel f8_ofc1 f1_ofc1 a_wcel f8_ofc1 f1_ofc1 f2_ofc1 a_csn a_cxp a_cfv f2_ofc1 a_wceq p_sylan e3_ofc1 f0_ofc1 f1_ofc1 f1_ofc1 f2_ofc1 f3_ofc1 f4_ofc1 f1_ofc1 f1_ofc1 f2_ofc1 a_csn a_cxp f5_ofc1 f6_ofc1 f6_ofc1 f8_ofc1 p_ofval $.
 $}
-$( Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) $)
+
+$(Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v X $.
-	fofc2_0 $f wff ph $.
-	fofc2_1 $f class A $.
-	fofc2_2 $f class B $.
-	fofc2_3 $f class C $.
-	fofc2_4 $f class R $.
-	fofc2_5 $f class F $.
-	fofc2_6 $f class V $.
-	fofc2_7 $f class W $.
-	fofc2_8 $f class X $.
-	eofc2_0 $e |- ( ph -> A e. V ) $.
-	eofc2_1 $e |- ( ph -> B e. W ) $.
-	eofc2_2 $e |- ( ph -> F Fn A ) $.
-	eofc2_3 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
-	ofc2 $p |- ( ( ph /\ X e. A ) -> ( ( F oF R ( A X. { B } ) ) ` X ) = ( C R B ) ) $= fofc2_0 fofc2_1 fofc2_1 fofc2_3 fofc2_2 fofc2_4 fofc2_1 fofc2_5 fofc2_1 fofc2_2 csn cxp fofc2_6 fofc2_6 fofc2_8 eofc2_2 fofc2_0 fofc2_2 fofc2_7 wcel fofc2_1 fofc2_2 csn cxp fofc2_1 wfn eofc2_1 fofc2_1 fofc2_2 fofc2_7 fnconstg syl eofc2_0 eofc2_0 fofc2_1 inidm eofc2_3 fofc2_0 fofc2_2 fofc2_7 wcel fofc2_8 fofc2_1 wcel fofc2_8 fofc2_1 fofc2_2 csn cxp cfv fofc2_2 wceq eofc2_1 fofc2_1 fofc2_2 fofc2_8 fofc2_7 fvconst2g sylan ofval $.
+	$v ph A B C R F V W X  $.
+	f0_ofc2 $f wff ph $.
+	f1_ofc2 $f class A $.
+	f2_ofc2 $f class B $.
+	f3_ofc2 $f class C $.
+	f4_ofc2 $f class R $.
+	f5_ofc2 $f class F $.
+	f6_ofc2 $f class V $.
+	f7_ofc2 $f class W $.
+	f8_ofc2 $f class X $.
+	e0_ofc2 $e |- ( ph -> A e. V ) $.
+	e1_ofc2 $e |- ( ph -> B e. W ) $.
+	e2_ofc2 $e |- ( ph -> F Fn A ) $.
+	e3_ofc2 $e |- ( ( ph /\ X e. A ) -> ( F ` X ) = C ) $.
+	p_ofc2 $p |- ( ( ph /\ X e. A ) -> ( ( F oF R ( A X. { B } ) ) ` X ) = ( C R B ) ) $= e2_ofc2 e1_ofc2 f1_ofc2 f2_ofc2 f7_ofc2 p_fnconstg f0_ofc2 f2_ofc2 f7_ofc2 a_wcel f1_ofc2 f2_ofc2 a_csn a_cxp f1_ofc2 a_wfn p_syl e0_ofc2 e0_ofc2 f1_ofc2 p_inidm e3_ofc2 e1_ofc2 f1_ofc2 f2_ofc2 f8_ofc2 f7_ofc2 p_fvconst2g f0_ofc2 f2_ofc2 f7_ofc2 a_wcel f8_ofc2 f1_ofc2 a_wcel f8_ofc2 f1_ofc2 f2_ofc2 a_csn a_cxp a_cfv f2_ofc2 a_wceq p_sylan f0_ofc2 f1_ofc2 f1_ofc2 f3_ofc2 f2_ofc2 f4_ofc2 f1_ofc2 f5_ofc2 f1_ofc2 f2_ofc2 a_csn a_cxp f6_ofc2 f6_ofc2 f8_ofc2 p_ofval $.
 $}
-$( Function operation on two constant functions.  (Contributed by Mario
+
+$(Function operation on two constant functions.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v x $.
-	$d x A $.
-	$d x B $.
-	$d x C $.
-	$d x ph $.
-	$d x R $.
-	$d x W $.
-	$d x X $.
-	iofc12_0 $f set x $.
-	fofc12_0 $f wff ph $.
-	fofc12_1 $f class A $.
-	fofc12_2 $f class B $.
-	fofc12_3 $f class C $.
-	fofc12_4 $f class R $.
-	fofc12_5 $f class V $.
-	fofc12_6 $f class W $.
-	fofc12_7 $f class X $.
-	eofc12_0 $e |- ( ph -> A e. V ) $.
-	eofc12_1 $e |- ( ph -> B e. W ) $.
-	eofc12_2 $e |- ( ph -> C e. X ) $.
-	ofc12 $p |- ( ph -> ( ( A X. { B } ) oF R ( A X. { C } ) ) = ( A X. { ( B R C ) } ) ) $= fofc12_0 fofc12_1 fofc12_2 csn cxp fofc12_1 fofc12_3 csn cxp fofc12_4 cof co iofc12_0 fofc12_1 fofc12_2 fofc12_3 fofc12_4 co cmpt fofc12_1 fofc12_2 fofc12_3 fofc12_4 co csn cxp fofc12_0 iofc12_0 fofc12_1 fofc12_2 fofc12_3 fofc12_4 fofc12_1 fofc12_2 csn cxp fofc12_1 fofc12_3 csn cxp fofc12_5 fofc12_6 fofc12_7 eofc12_0 fofc12_0 fofc12_2 fofc12_6 wcel iofc12_0 sup_set_class fofc12_1 wcel eofc12_1 adantr fofc12_0 fofc12_3 fofc12_7 wcel iofc12_0 sup_set_class fofc12_1 wcel eofc12_2 adantr fofc12_1 fofc12_2 csn cxp iofc12_0 fofc12_1 fofc12_2 cmpt wceq fofc12_0 iofc12_0 fofc12_1 fofc12_2 fconstmpt a1i fofc12_1 fofc12_3 csn cxp iofc12_0 fofc12_1 fofc12_3 cmpt wceq fofc12_0 iofc12_0 fofc12_1 fofc12_3 fconstmpt a1i offval2 iofc12_0 fofc12_1 fofc12_2 fofc12_3 fofc12_4 co fconstmpt syl6eqr $.
+	$v ph A B C R V W X  $.
+	$d x A  $.
+	$d x B  $.
+	$d x C  $.
+	$d x ph  $.
+	$d x R  $.
+	$d x W  $.
+	$d x X  $.
+	f0_ofc12 $f wff ph $.
+	f1_ofc12 $f class A $.
+	f2_ofc12 $f class B $.
+	f3_ofc12 $f class C $.
+	f4_ofc12 $f class R $.
+	f5_ofc12 $f class V $.
+	f6_ofc12 $f class W $.
+	f7_ofc12 $f class X $.
+	i0_ofc12 $f set x $.
+	e0_ofc12 $e |- ( ph -> A e. V ) $.
+	e1_ofc12 $e |- ( ph -> B e. W ) $.
+	e2_ofc12 $e |- ( ph -> C e. X ) $.
+	p_ofc12 $p |- ( ph -> ( ( A X. { B } ) oF R ( A X. { C } ) ) = ( A X. { ( B R C ) } ) ) $= e0_ofc12 e1_ofc12 f0_ofc12 f2_ofc12 f6_ofc12 a_wcel i0_ofc12 a_sup_set_class f1_ofc12 a_wcel p_adantr e2_ofc12 f0_ofc12 f3_ofc12 f7_ofc12 a_wcel i0_ofc12 a_sup_set_class f1_ofc12 a_wcel p_adantr i0_ofc12 f1_ofc12 f2_ofc12 p_fconstmpt f1_ofc12 f2_ofc12 a_csn a_cxp i0_ofc12 f1_ofc12 f2_ofc12 a_cmpt a_wceq f0_ofc12 p_a1i i0_ofc12 f1_ofc12 f3_ofc12 p_fconstmpt f1_ofc12 f3_ofc12 a_csn a_cxp i0_ofc12 f1_ofc12 f3_ofc12 a_cmpt a_wceq f0_ofc12 p_a1i f0_ofc12 i0_ofc12 f1_ofc12 f2_ofc12 f3_ofc12 f4_ofc12 f1_ofc12 f2_ofc12 a_csn a_cxp f1_ofc12 f3_ofc12 a_csn a_cxp f5_ofc12 f6_ofc12 f7_ofc12 p_offval2 i0_ofc12 f1_ofc12 f2_ofc12 f3_ofc12 f4_ofc12 a_co p_fconstmpt f0_ofc12 f1_ofc12 f2_ofc12 a_csn a_cxp f1_ofc12 f3_ofc12 a_csn a_cxp f4_ofc12 a_cof a_co i0_ofc12 f1_ofc12 f2_ofc12 f3_ofc12 f4_ofc12 a_co a_cmpt f1_ofc12 f2_ofc12 f3_ofc12 f4_ofc12 a_co a_csn a_cxp p_syl6eqr $.
 $}
-$( Transfer a reflexive law to the function relation.  (Contributed by
+
+$(Transfer a reflexive law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v V $.
-	$v w $.
-	$d w x $.
-	$d w x $.
-	$d w x F $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	icaofref_0 $f set w $.
-	fcaofref_0 $f wff ph $.
-	fcaofref_1 $f set x $.
-	fcaofref_2 $f class A $.
-	fcaofref_3 $f class R $.
-	fcaofref_4 $f class S $.
-	fcaofref_5 $f class F $.
-	fcaofref_6 $f class V $.
-	ecaofref_0 $e |- ( ph -> A e. V ) $.
-	ecaofref_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofref_2 $e |- ( ( ph /\ x e. S ) -> x R x ) $.
-	caofref $p |- ( ph -> F oR R F ) $= fcaofref_0 fcaofref_5 fcaofref_5 fcaofref_3 cofr wbr icaofref_0 sup_set_class fcaofref_5 cfv icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 wbr icaofref_0 fcaofref_2 wral fcaofref_0 icaofref_0 sup_set_class fcaofref_5 cfv icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 wbr icaofref_0 fcaofref_2 fcaofref_0 icaofref_0 sup_set_class fcaofref_2 wcel wa icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_4 wcel fcaofref_1 sup_set_class fcaofref_1 sup_set_class fcaofref_3 wbr fcaofref_1 fcaofref_4 wral icaofref_0 sup_set_class fcaofref_5 cfv icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 wbr fcaofref_0 fcaofref_2 fcaofref_4 fcaofref_5 wf icaofref_0 sup_set_class fcaofref_2 wcel icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_4 wcel ecaofref_1 fcaofref_2 fcaofref_4 icaofref_0 sup_set_class fcaofref_5 ffvelrn sylan fcaofref_0 fcaofref_1 sup_set_class fcaofref_1 sup_set_class fcaofref_3 wbr fcaofref_1 fcaofref_4 wral icaofref_0 sup_set_class fcaofref_2 wcel fcaofref_0 fcaofref_1 sup_set_class fcaofref_1 sup_set_class fcaofref_3 wbr fcaofref_1 fcaofref_4 ecaofref_2 ralrimiva adantr fcaofref_1 sup_set_class fcaofref_1 sup_set_class fcaofref_3 wbr icaofref_0 sup_set_class fcaofref_5 cfv icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 wbr fcaofref_1 icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_4 fcaofref_1 sup_set_class icaofref_0 sup_set_class fcaofref_5 cfv wceq fcaofref_1 sup_set_class icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_1 sup_set_class icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 fcaofref_1 sup_set_class icaofref_0 sup_set_class fcaofref_5 cfv wceq id fcaofref_1 sup_set_class icaofref_0 sup_set_class fcaofref_5 cfv wceq id breq12d rspcv sylc ralrimiva fcaofref_0 icaofref_0 fcaofref_2 fcaofref_2 icaofref_0 sup_set_class fcaofref_5 cfv icaofref_0 sup_set_class fcaofref_5 cfv fcaofref_3 fcaofref_2 fcaofref_5 fcaofref_5 fcaofref_6 fcaofref_6 fcaofref_0 fcaofref_2 fcaofref_4 fcaofref_5 wf fcaofref_5 fcaofref_2 wfn ecaofref_1 fcaofref_2 fcaofref_4 fcaofref_5 ffn syl fcaofref_0 fcaofref_2 fcaofref_4 fcaofref_5 wf fcaofref_5 fcaofref_2 wfn ecaofref_1 fcaofref_2 fcaofref_4 fcaofref_5 ffn syl ecaofref_0 ecaofref_0 fcaofref_2 inidm fcaofref_0 icaofref_0 sup_set_class fcaofref_2 wcel wa icaofref_0 sup_set_class fcaofref_5 cfv eqidd fcaofref_0 icaofref_0 sup_set_class fcaofref_2 wcel wa icaofref_0 sup_set_class fcaofref_5 cfv eqidd ofrfval mpbird $.
+	$v ph x A R S F V  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x F  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	f0_caofref $f wff ph $.
+	f1_caofref $f set x $.
+	f2_caofref $f class A $.
+	f3_caofref $f class R $.
+	f4_caofref $f class S $.
+	f5_caofref $f class F $.
+	f6_caofref $f class V $.
+	i0_caofref $f set w $.
+	e0_caofref $e |- ( ph -> A e. V ) $.
+	e1_caofref $e |- ( ph -> F : A --> S ) $.
+	e2_caofref $e |- ( ( ph /\ x e. S ) -> x R x ) $.
+	p_caofref $p |- ( ph -> F oR R F ) $= e1_caofref f2_caofref f4_caofref i0_caofref a_sup_set_class f5_caofref p_ffvelrn f0_caofref f2_caofref f4_caofref f5_caofref a_wf i0_caofref a_sup_set_class f2_caofref a_wcel i0_caofref a_sup_set_class f5_caofref a_cfv f4_caofref a_wcel p_sylan e2_caofref f0_caofref f1_caofref a_sup_set_class f1_caofref a_sup_set_class f3_caofref a_wbr f1_caofref f4_caofref p_ralrimiva f0_caofref f1_caofref a_sup_set_class f1_caofref a_sup_set_class f3_caofref a_wbr f1_caofref f4_caofref a_wral i0_caofref a_sup_set_class f2_caofref a_wcel p_adantr f1_caofref a_sup_set_class i0_caofref a_sup_set_class f5_caofref a_cfv a_wceq p_id f1_caofref a_sup_set_class i0_caofref a_sup_set_class f5_caofref a_cfv a_wceq p_id f1_caofref a_sup_set_class i0_caofref a_sup_set_class f5_caofref a_cfv a_wceq f1_caofref a_sup_set_class i0_caofref a_sup_set_class f5_caofref a_cfv f1_caofref a_sup_set_class i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref p_breq12d f1_caofref a_sup_set_class f1_caofref a_sup_set_class f3_caofref a_wbr i0_caofref a_sup_set_class f5_caofref a_cfv i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref a_wbr f1_caofref i0_caofref a_sup_set_class f5_caofref a_cfv f4_caofref p_rspcv f0_caofref i0_caofref a_sup_set_class f2_caofref a_wcel a_wa i0_caofref a_sup_set_class f5_caofref a_cfv f4_caofref a_wcel f1_caofref a_sup_set_class f1_caofref a_sup_set_class f3_caofref a_wbr f1_caofref f4_caofref a_wral i0_caofref a_sup_set_class f5_caofref a_cfv i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref a_wbr p_sylc f0_caofref i0_caofref a_sup_set_class f5_caofref a_cfv i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref a_wbr i0_caofref f2_caofref p_ralrimiva e1_caofref f2_caofref f4_caofref f5_caofref p_ffn f0_caofref f2_caofref f4_caofref f5_caofref a_wf f5_caofref f2_caofref a_wfn p_syl e1_caofref f2_caofref f4_caofref f5_caofref p_ffn f0_caofref f2_caofref f4_caofref f5_caofref a_wf f5_caofref f2_caofref a_wfn p_syl e0_caofref e0_caofref f2_caofref p_inidm f0_caofref i0_caofref a_sup_set_class f2_caofref a_wcel a_wa i0_caofref a_sup_set_class f5_caofref a_cfv p_eqidd f0_caofref i0_caofref a_sup_set_class f2_caofref a_wcel a_wa i0_caofref a_sup_set_class f5_caofref a_cfv p_eqidd f0_caofref i0_caofref f2_caofref f2_caofref i0_caofref a_sup_set_class f5_caofref a_cfv i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref f2_caofref f5_caofref f5_caofref f6_caofref f6_caofref p_ofrfval f0_caofref f5_caofref f5_caofref f3_caofref a_cofr a_wbr i0_caofref a_sup_set_class f5_caofref a_cfv i0_caofref a_sup_set_class f5_caofref a_cfv f3_caofref a_wbr i0_caofref f2_caofref a_wral p_mpbird $.
 $}
-$( Transfer a left inverse law to the function operation.  (Contributed
+
+$(Transfer a left inverse law to the function operation.  (Contributed
            by NM, 22-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v v $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v N $.
-	$v V $.
-	$v W $.
-	$v w $.
-	$d w x B $.
-	$d w x $.
-	$d w x F $.
-	$d w x G $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	$d v A $.
-	$d v F $.
-	$d x v N $.
-	$d v S $.
-	$d v ph $.
-	$d v w $.
-	icaofinvl_0 $f set w $.
-	fcaofinvl_0 $f wff ph $.
-	fcaofinvl_1 $f set x $.
-	fcaofinvl_2 $f set v $.
-	fcaofinvl_3 $f class A $.
-	fcaofinvl_4 $f class B $.
-	fcaofinvl_5 $f class R $.
-	fcaofinvl_6 $f class S $.
-	fcaofinvl_7 $f class F $.
-	fcaofinvl_8 $f class G $.
-	fcaofinvl_9 $f class N $.
-	fcaofinvl_10 $f class V $.
-	fcaofinvl_11 $f class W $.
-	ecaofinvl_0 $e |- ( ph -> A e. V ) $.
-	ecaofinvl_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofinvl_2 $e |- ( ph -> B e. W ) $.
-	ecaofinvl_3 $e |- ( ph -> N : S --> S ) $.
-	ecaofinvl_4 $e |- ( ph -> G = ( v e. A |-> ( N ` ( F ` v ) ) ) ) $.
-	ecaofinvl_5 $e |- ( ( ph /\ x e. S ) -> ( ( N ` x ) R x ) = B ) $.
-	caofinvl $p |- ( ph -> ( G oF R F ) = ( A X. { B } ) ) $= fcaofinvl_0 fcaofinvl_8 fcaofinvl_7 fcaofinvl_5 cof co icaofinvl_0 fcaofinvl_3 fcaofinvl_4 cmpt fcaofinvl_3 fcaofinvl_4 csn cxp fcaofinvl_0 fcaofinvl_8 fcaofinvl_7 fcaofinvl_5 cof co icaofinvl_0 fcaofinvl_3 icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co cmpt icaofinvl_0 fcaofinvl_3 fcaofinvl_4 cmpt fcaofinvl_0 icaofinvl_0 fcaofinvl_3 icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 fcaofinvl_8 fcaofinvl_7 fcaofinvl_10 fcaofinvl_6 fcaofinvl_6 ecaofinvl_0 fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_8 wf icaofinvl_0 sup_set_class fcaofinvl_3 wcel icaofinvl_0 sup_set_class fcaofinvl_8 cfv fcaofinvl_6 wcel fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_8 wf fcaofinvl_3 fcaofinvl_6 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt wf fcaofinvl_0 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_6 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt fcaofinvl_0 fcaofinvl_2 sup_set_class fcaofinvl_3 wcel wa fcaofinvl_6 fcaofinvl_6 fcaofinvl_9 wf fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 wcel fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_6 wcel fcaofinvl_0 fcaofinvl_6 fcaofinvl_6 fcaofinvl_9 wf fcaofinvl_2 sup_set_class fcaofinvl_3 wcel ecaofinvl_3 adantr fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_7 wf fcaofinvl_2 sup_set_class fcaofinvl_3 wcel fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 wcel ecaofinvl_1 fcaofinvl_3 fcaofinvl_6 fcaofinvl_2 sup_set_class fcaofinvl_7 ffvelrn sylan fcaofinvl_6 fcaofinvl_6 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 ffvelrn syl2anc fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt eqid fmptd fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_8 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt ecaofinvl_4 feq1d mpbird fcaofinvl_3 fcaofinvl_6 icaofinvl_0 sup_set_class fcaofinvl_8 ffvelrn sylan fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_7 wf icaofinvl_0 sup_set_class fcaofinvl_3 wcel icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 wcel ecaofinvl_1 fcaofinvl_3 fcaofinvl_6 icaofinvl_0 sup_set_class fcaofinvl_7 ffvelrn sylan fcaofinvl_0 fcaofinvl_8 fcaofinvl_3 wfn fcaofinvl_8 icaofinvl_0 fcaofinvl_3 icaofinvl_0 sup_set_class fcaofinvl_8 cfv cmpt wceq fcaofinvl_0 fcaofinvl_8 fcaofinvl_3 wfn fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt fcaofinvl_3 wfn fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 fvex fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt eqid fnmpti fcaofinvl_0 fcaofinvl_3 fcaofinvl_8 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt ecaofinvl_4 fneq1d mpbiri icaofinvl_0 fcaofinvl_3 fcaofinvl_8 dffn5 sylib fcaofinvl_0 icaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_7 ecaofinvl_1 feqmptd offval2 fcaofinvl_0 icaofinvl_0 fcaofinvl_3 icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co fcaofinvl_4 fcaofinvl_0 icaofinvl_0 sup_set_class fcaofinvl_3 wcel wa icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co fcaofinvl_4 fcaofinvl_0 icaofinvl_0 sup_set_class fcaofinvl_3 wcel wa icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 fcaofinvl_0 icaofinvl_0 sup_set_class fcaofinvl_3 wcel icaofinvl_0 sup_set_class fcaofinvl_8 cfv icaofinvl_0 sup_set_class fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_0 icaofinvl_0 sup_set_class fcaofinvl_8 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt ecaofinvl_4 fveq1d fcaofinvl_2 icaofinvl_0 sup_set_class fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_3 fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt fcaofinvl_2 sup_set_class icaofinvl_0 sup_set_class wceq fcaofinvl_2 sup_set_class fcaofinvl_7 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 fcaofinvl_2 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 fveq2 fveq2d fcaofinvl_2 fcaofinvl_3 fcaofinvl_2 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv cmpt eqid icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 fvex fvmpt sylan9eq oveq1d fcaofinvl_0 icaofinvl_0 sup_set_class fcaofinvl_3 wcel wa icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 wcel fcaofinvl_1 sup_set_class fcaofinvl_9 cfv fcaofinvl_1 sup_set_class fcaofinvl_5 co fcaofinvl_4 wceq fcaofinvl_1 fcaofinvl_6 wral icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co fcaofinvl_4 wceq fcaofinvl_0 fcaofinvl_3 fcaofinvl_6 fcaofinvl_7 wf icaofinvl_0 sup_set_class fcaofinvl_3 wcel icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 wcel ecaofinvl_1 fcaofinvl_3 fcaofinvl_6 icaofinvl_0 sup_set_class fcaofinvl_7 ffvelrn sylan fcaofinvl_0 fcaofinvl_1 sup_set_class fcaofinvl_9 cfv fcaofinvl_1 sup_set_class fcaofinvl_5 co fcaofinvl_4 wceq fcaofinvl_1 fcaofinvl_6 wral icaofinvl_0 sup_set_class fcaofinvl_3 wcel fcaofinvl_0 fcaofinvl_1 sup_set_class fcaofinvl_9 cfv fcaofinvl_1 sup_set_class fcaofinvl_5 co fcaofinvl_4 wceq fcaofinvl_1 fcaofinvl_6 ecaofinvl_5 ralrimiva adantr fcaofinvl_1 sup_set_class fcaofinvl_9 cfv fcaofinvl_1 sup_set_class fcaofinvl_5 co fcaofinvl_4 wceq icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co fcaofinvl_4 wceq fcaofinvl_1 icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_6 fcaofinvl_1 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 cfv wceq fcaofinvl_1 sup_set_class fcaofinvl_9 cfv fcaofinvl_1 sup_set_class fcaofinvl_5 co icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 co fcaofinvl_4 fcaofinvl_1 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 cfv wceq fcaofinvl_1 sup_set_class fcaofinvl_9 cfv icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 cfv fcaofinvl_1 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_5 fcaofinvl_1 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 cfv fcaofinvl_9 fveq2 fcaofinvl_1 sup_set_class icaofinvl_0 sup_set_class fcaofinvl_7 cfv wceq id oveq12d eqeq1d rspcva syl2anc eqtrd mpteq2dva eqtrd icaofinvl_0 fcaofinvl_3 fcaofinvl_4 fconstmpt syl6eqr $.
+	$v ph x v A B R S F G N V W  $.
+	$d w x B  $.
+	$d w x  $.
+	$d w x F  $.
+	$d w x G  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	$d v A  $.
+	$d v F  $.
+	$d x v N  $.
+	$d v S  $.
+	$d v ph  $.
+	$d v w  $.
+	f0_caofinvl $f wff ph $.
+	f1_caofinvl $f set x $.
+	f2_caofinvl $f set v $.
+	f3_caofinvl $f class A $.
+	f4_caofinvl $f class B $.
+	f5_caofinvl $f class R $.
+	f6_caofinvl $f class S $.
+	f7_caofinvl $f class F $.
+	f8_caofinvl $f class G $.
+	f9_caofinvl $f class N $.
+	f10_caofinvl $f class V $.
+	f11_caofinvl $f class W $.
+	i0_caofinvl $f set w $.
+	e0_caofinvl $e |- ( ph -> A e. V ) $.
+	e1_caofinvl $e |- ( ph -> F : A --> S ) $.
+	e2_caofinvl $e |- ( ph -> B e. W ) $.
+	e3_caofinvl $e |- ( ph -> N : S --> S ) $.
+	e4_caofinvl $e |- ( ph -> G = ( v e. A |-> ( N ` ( F ` v ) ) ) ) $.
+	e5_caofinvl $e |- ( ( ph /\ x e. S ) -> ( ( N ` x ) R x ) = B ) $.
+	p_caofinvl $p |- ( ph -> ( G oF R F ) = ( A X. { B } ) ) $= e0_caofinvl e3_caofinvl f0_caofinvl f6_caofinvl f6_caofinvl f9_caofinvl a_wf f2_caofinvl a_sup_set_class f3_caofinvl a_wcel p_adantr e1_caofinvl f3_caofinvl f6_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl p_ffvelrn f0_caofinvl f3_caofinvl f6_caofinvl f7_caofinvl a_wf f2_caofinvl a_sup_set_class f3_caofinvl a_wcel f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl a_wcel p_sylan f6_caofinvl f6_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl p_ffvelrn f0_caofinvl f2_caofinvl a_sup_set_class f3_caofinvl a_wcel a_wa f6_caofinvl f6_caofinvl f9_caofinvl a_wf f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl a_wcel f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv f6_caofinvl a_wcel p_syl2anc f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_eqid f0_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv f6_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_fmptd e4_caofinvl f0_caofinvl f3_caofinvl f6_caofinvl f8_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_feq1d f0_caofinvl f3_caofinvl f6_caofinvl f8_caofinvl a_wf f3_caofinvl f6_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt a_wf p_mpbird f3_caofinvl f6_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl p_ffvelrn f0_caofinvl f3_caofinvl f6_caofinvl f8_caofinvl a_wf i0_caofinvl a_sup_set_class f3_caofinvl a_wcel i0_caofinvl a_sup_set_class f8_caofinvl a_cfv f6_caofinvl a_wcel p_sylan e1_caofinvl f3_caofinvl f6_caofinvl i0_caofinvl a_sup_set_class f7_caofinvl p_ffvelrn f0_caofinvl f3_caofinvl f6_caofinvl f7_caofinvl a_wf i0_caofinvl a_sup_set_class f3_caofinvl a_wcel i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl a_wcel p_sylan f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl p_fvex f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_eqid f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_fnmpti e4_caofinvl f0_caofinvl f3_caofinvl f8_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_fneq1d f0_caofinvl f8_caofinvl f3_caofinvl a_wfn f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt f3_caofinvl a_wfn p_mpbiri i0_caofinvl f3_caofinvl f8_caofinvl p_dffn5 f0_caofinvl f8_caofinvl f3_caofinvl a_wfn f8_caofinvl i0_caofinvl f3_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl a_cfv a_cmpt a_wceq p_sylib e1_caofinvl f0_caofinvl i0_caofinvl f3_caofinvl f6_caofinvl f7_caofinvl p_feqmptd f0_caofinvl i0_caofinvl f3_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl f8_caofinvl f7_caofinvl f10_caofinvl f6_caofinvl f6_caofinvl p_offval2 e4_caofinvl f0_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_fveq1d f2_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl p_fveq2 f2_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class a_wceq f2_caofinvl a_sup_set_class f7_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl p_fveq2d f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_eqid i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl p_fvex f2_caofinvl i0_caofinvl a_sup_set_class f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv f3_caofinvl f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt p_fvmpt f0_caofinvl i0_caofinvl a_sup_set_class f3_caofinvl a_wcel i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f2_caofinvl f3_caofinvl f2_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv a_cmpt a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv p_sylan9eq f0_caofinvl i0_caofinvl a_sup_set_class f3_caofinvl a_wcel a_wa i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl p_oveq1d e1_caofinvl f3_caofinvl f6_caofinvl i0_caofinvl a_sup_set_class f7_caofinvl p_ffvelrn f0_caofinvl f3_caofinvl f6_caofinvl f7_caofinvl a_wf i0_caofinvl a_sup_set_class f3_caofinvl a_wcel i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl a_wcel p_sylan e5_caofinvl f0_caofinvl f1_caofinvl a_sup_set_class f9_caofinvl a_cfv f1_caofinvl a_sup_set_class f5_caofinvl a_co f4_caofinvl a_wceq f1_caofinvl f6_caofinvl p_ralrimiva f0_caofinvl f1_caofinvl a_sup_set_class f9_caofinvl a_cfv f1_caofinvl a_sup_set_class f5_caofinvl a_co f4_caofinvl a_wceq f1_caofinvl f6_caofinvl a_wral i0_caofinvl a_sup_set_class f3_caofinvl a_wcel p_adantr f1_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl p_fveq2 f1_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl a_cfv a_wceq p_id f1_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl a_cfv a_wceq f1_caofinvl a_sup_set_class f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv f1_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl p_oveq12d f1_caofinvl a_sup_set_class i0_caofinvl a_sup_set_class f7_caofinvl a_cfv a_wceq f1_caofinvl a_sup_set_class f9_caofinvl a_cfv f1_caofinvl a_sup_set_class f5_caofinvl a_co i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co f4_caofinvl p_eqeq1d f1_caofinvl a_sup_set_class f9_caofinvl a_cfv f1_caofinvl a_sup_set_class f5_caofinvl a_co f4_caofinvl a_wceq i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co f4_caofinvl a_wceq f1_caofinvl i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl p_rspcva f0_caofinvl i0_caofinvl a_sup_set_class f3_caofinvl a_wcel a_wa i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f6_caofinvl a_wcel f1_caofinvl a_sup_set_class f9_caofinvl a_cfv f1_caofinvl a_sup_set_class f5_caofinvl a_co f4_caofinvl a_wceq f1_caofinvl f6_caofinvl a_wral i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co f4_caofinvl a_wceq p_syl2anc f0_caofinvl i0_caofinvl a_sup_set_class f3_caofinvl a_wcel a_wa i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f9_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co f4_caofinvl p_eqtrd f0_caofinvl i0_caofinvl f3_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co f4_caofinvl p_mpteq2dva f0_caofinvl f8_caofinvl f7_caofinvl f5_caofinvl a_cof a_co i0_caofinvl f3_caofinvl i0_caofinvl a_sup_set_class f8_caofinvl a_cfv i0_caofinvl a_sup_set_class f7_caofinvl a_cfv f5_caofinvl a_co a_cmpt i0_caofinvl f3_caofinvl f4_caofinvl a_cmpt p_eqtrd i0_caofinvl f3_caofinvl f4_caofinvl p_fconstmpt f0_caofinvl f8_caofinvl f7_caofinvl f5_caofinvl a_cof a_co i0_caofinvl f3_caofinvl f4_caofinvl a_cmpt f3_caofinvl f4_caofinvl a_csn a_cxp p_syl6eqr $.
 $}
-$( Transfer a left identity law to the function operation.
+
+$(Transfer a left identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v w $.
-	$d w x B $.
-	$d w x $.
-	$d w x F $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	icaofid0l_0 $f set w $.
-	fcaofid0l_0 $f wff ph $.
-	fcaofid0l_1 $f set x $.
-	fcaofid0l_2 $f class A $.
-	fcaofid0l_3 $f class B $.
-	fcaofid0l_4 $f class R $.
-	fcaofid0l_5 $f class S $.
-	fcaofid0l_6 $f class F $.
-	fcaofid0l_7 $f class V $.
-	fcaofid0l_8 $f class W $.
-	ecaofid0l_0 $e |- ( ph -> A e. V ) $.
-	ecaofid0l_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofid0l_2 $e |- ( ph -> B e. W ) $.
-	ecaofid0l_3 $e |- ( ( ph /\ x e. S ) -> ( B R x ) = x ) $.
-	caofid0l $p |- ( ph -> ( ( A X. { B } ) oF R F ) = F ) $= fcaofid0l_0 icaofid0l_0 fcaofid0l_2 fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_4 fcaofid0l_2 fcaofid0l_3 csn cxp fcaofid0l_6 fcaofid0l_6 fcaofid0l_7 ecaofid0l_0 fcaofid0l_0 fcaofid0l_3 fcaofid0l_8 wcel fcaofid0l_2 fcaofid0l_3 csn cxp fcaofid0l_2 wfn ecaofid0l_2 fcaofid0l_2 fcaofid0l_3 fcaofid0l_8 fnconstg syl fcaofid0l_0 fcaofid0l_2 fcaofid0l_5 fcaofid0l_6 wf fcaofid0l_6 fcaofid0l_2 wfn ecaofid0l_1 fcaofid0l_2 fcaofid0l_5 fcaofid0l_6 ffn syl fcaofid0l_0 fcaofid0l_2 fcaofid0l_5 fcaofid0l_6 wf fcaofid0l_6 fcaofid0l_2 wfn ecaofid0l_1 fcaofid0l_2 fcaofid0l_5 fcaofid0l_6 ffn syl fcaofid0l_0 fcaofid0l_3 fcaofid0l_8 wcel icaofid0l_0 sup_set_class fcaofid0l_2 wcel icaofid0l_0 sup_set_class fcaofid0l_2 fcaofid0l_3 csn cxp cfv fcaofid0l_3 wceq ecaofid0l_2 fcaofid0l_2 fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_8 fvconst2g sylan fcaofid0l_0 icaofid0l_0 sup_set_class fcaofid0l_2 wcel wa icaofid0l_0 sup_set_class fcaofid0l_6 cfv eqidd fcaofid0l_0 icaofid0l_0 sup_set_class fcaofid0l_2 wcel icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_5 wcel fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_4 co icaofid0l_0 sup_set_class fcaofid0l_6 cfv wceq fcaofid0l_0 fcaofid0l_2 fcaofid0l_5 fcaofid0l_6 wf icaofid0l_0 sup_set_class fcaofid0l_2 wcel icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_5 wcel ecaofid0l_1 fcaofid0l_2 fcaofid0l_5 icaofid0l_0 sup_set_class fcaofid0l_6 ffvelrn sylan fcaofid0l_0 fcaofid0l_3 fcaofid0l_1 sup_set_class fcaofid0l_4 co fcaofid0l_1 sup_set_class wceq fcaofid0l_1 fcaofid0l_5 wral icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_5 wcel fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_4 co icaofid0l_0 sup_set_class fcaofid0l_6 cfv wceq fcaofid0l_0 fcaofid0l_3 fcaofid0l_1 sup_set_class fcaofid0l_4 co fcaofid0l_1 sup_set_class wceq fcaofid0l_1 fcaofid0l_5 ecaofid0l_3 ralrimiva fcaofid0l_3 fcaofid0l_1 sup_set_class fcaofid0l_4 co fcaofid0l_1 sup_set_class wceq fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_4 co icaofid0l_0 sup_set_class fcaofid0l_6 cfv wceq fcaofid0l_1 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_5 fcaofid0l_1 sup_set_class icaofid0l_0 sup_set_class fcaofid0l_6 cfv wceq fcaofid0l_3 fcaofid0l_1 sup_set_class fcaofid0l_4 co fcaofid0l_3 icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_4 co fcaofid0l_1 sup_set_class icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_1 sup_set_class icaofid0l_0 sup_set_class fcaofid0l_6 cfv fcaofid0l_3 fcaofid0l_4 oveq2 fcaofid0l_1 sup_set_class icaofid0l_0 sup_set_class fcaofid0l_6 cfv wceq id eqeq12d rspccva sylan syldan offveq $.
+	$v ph x A B R S F V W  $.
+	$d w x B  $.
+	$d w x  $.
+	$d w x F  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	f0_caofid0l $f wff ph $.
+	f1_caofid0l $f set x $.
+	f2_caofid0l $f class A $.
+	f3_caofid0l $f class B $.
+	f4_caofid0l $f class R $.
+	f5_caofid0l $f class S $.
+	f6_caofid0l $f class F $.
+	f7_caofid0l $f class V $.
+	f8_caofid0l $f class W $.
+	i0_caofid0l $f set w $.
+	e0_caofid0l $e |- ( ph -> A e. V ) $.
+	e1_caofid0l $e |- ( ph -> F : A --> S ) $.
+	e2_caofid0l $e |- ( ph -> B e. W ) $.
+	e3_caofid0l $e |- ( ( ph /\ x e. S ) -> ( B R x ) = x ) $.
+	p_caofid0l $p |- ( ph -> ( ( A X. { B } ) oF R F ) = F ) $= e0_caofid0l e2_caofid0l f2_caofid0l f3_caofid0l f8_caofid0l p_fnconstg f0_caofid0l f3_caofid0l f8_caofid0l a_wcel f2_caofid0l f3_caofid0l a_csn a_cxp f2_caofid0l a_wfn p_syl e1_caofid0l f2_caofid0l f5_caofid0l f6_caofid0l p_ffn f0_caofid0l f2_caofid0l f5_caofid0l f6_caofid0l a_wf f6_caofid0l f2_caofid0l a_wfn p_syl e1_caofid0l f2_caofid0l f5_caofid0l f6_caofid0l p_ffn f0_caofid0l f2_caofid0l f5_caofid0l f6_caofid0l a_wf f6_caofid0l f2_caofid0l a_wfn p_syl e2_caofid0l f2_caofid0l f3_caofid0l i0_caofid0l a_sup_set_class f8_caofid0l p_fvconst2g f0_caofid0l f3_caofid0l f8_caofid0l a_wcel i0_caofid0l a_sup_set_class f2_caofid0l a_wcel i0_caofid0l a_sup_set_class f2_caofid0l f3_caofid0l a_csn a_cxp a_cfv f3_caofid0l a_wceq p_sylan f0_caofid0l i0_caofid0l a_sup_set_class f2_caofid0l a_wcel a_wa i0_caofid0l a_sup_set_class f6_caofid0l a_cfv p_eqidd e1_caofid0l f2_caofid0l f5_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l p_ffvelrn f0_caofid0l f2_caofid0l f5_caofid0l f6_caofid0l a_wf i0_caofid0l a_sup_set_class f2_caofid0l a_wcel i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f5_caofid0l a_wcel p_sylan e3_caofid0l f0_caofid0l f3_caofid0l f1_caofid0l a_sup_set_class f4_caofid0l a_co f1_caofid0l a_sup_set_class a_wceq f1_caofid0l f5_caofid0l p_ralrimiva f1_caofid0l a_sup_set_class i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f3_caofid0l f4_caofid0l p_oveq2 f1_caofid0l a_sup_set_class i0_caofid0l a_sup_set_class f6_caofid0l a_cfv a_wceq p_id f1_caofid0l a_sup_set_class i0_caofid0l a_sup_set_class f6_caofid0l a_cfv a_wceq f3_caofid0l f1_caofid0l a_sup_set_class f4_caofid0l a_co f3_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f4_caofid0l a_co f1_caofid0l a_sup_set_class i0_caofid0l a_sup_set_class f6_caofid0l a_cfv p_eqeq12d f3_caofid0l f1_caofid0l a_sup_set_class f4_caofid0l a_co f1_caofid0l a_sup_set_class a_wceq f3_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f4_caofid0l a_co i0_caofid0l a_sup_set_class f6_caofid0l a_cfv a_wceq f1_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f5_caofid0l p_rspccva f0_caofid0l f3_caofid0l f1_caofid0l a_sup_set_class f4_caofid0l a_co f1_caofid0l a_sup_set_class a_wceq f1_caofid0l f5_caofid0l a_wral i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f5_caofid0l a_wcel f3_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f4_caofid0l a_co i0_caofid0l a_sup_set_class f6_caofid0l a_cfv a_wceq p_sylan f0_caofid0l i0_caofid0l a_sup_set_class f2_caofid0l a_wcel i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f5_caofid0l a_wcel f3_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f4_caofid0l a_co i0_caofid0l a_sup_set_class f6_caofid0l a_cfv a_wceq p_syldan f0_caofid0l i0_caofid0l f2_caofid0l f3_caofid0l i0_caofid0l a_sup_set_class f6_caofid0l a_cfv f4_caofid0l f2_caofid0l f3_caofid0l a_csn a_cxp f6_caofid0l f6_caofid0l f7_caofid0l p_offveq $.
 $}
-$( Transfer a right identity law to the function operation.
+
+$(Transfer a right identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v w $.
-	$d w x B $.
-	$d w x $.
-	$d w x F $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	icaofid0r_0 $f set w $.
-	fcaofid0r_0 $f wff ph $.
-	fcaofid0r_1 $f set x $.
-	fcaofid0r_2 $f class A $.
-	fcaofid0r_3 $f class B $.
-	fcaofid0r_4 $f class R $.
-	fcaofid0r_5 $f class S $.
-	fcaofid0r_6 $f class F $.
-	fcaofid0r_7 $f class V $.
-	fcaofid0r_8 $f class W $.
-	ecaofid0r_0 $e |- ( ph -> A e. V ) $.
-	ecaofid0r_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofid0r_2 $e |- ( ph -> B e. W ) $.
-	ecaofid0r_3 $e |- ( ( ph /\ x e. S ) -> ( x R B ) = x ) $.
-	caofid0r $p |- ( ph -> ( F oF R ( A X. { B } ) ) = F ) $= fcaofid0r_0 icaofid0r_0 fcaofid0r_2 icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 fcaofid0r_6 fcaofid0r_2 fcaofid0r_3 csn cxp fcaofid0r_6 fcaofid0r_7 ecaofid0r_0 fcaofid0r_0 fcaofid0r_2 fcaofid0r_5 fcaofid0r_6 wf fcaofid0r_6 fcaofid0r_2 wfn ecaofid0r_1 fcaofid0r_2 fcaofid0r_5 fcaofid0r_6 ffn syl fcaofid0r_0 fcaofid0r_3 fcaofid0r_8 wcel fcaofid0r_2 fcaofid0r_3 csn cxp fcaofid0r_2 wfn ecaofid0r_2 fcaofid0r_2 fcaofid0r_3 fcaofid0r_8 fnconstg syl fcaofid0r_0 fcaofid0r_2 fcaofid0r_5 fcaofid0r_6 wf fcaofid0r_6 fcaofid0r_2 wfn ecaofid0r_1 fcaofid0r_2 fcaofid0r_5 fcaofid0r_6 ffn syl fcaofid0r_0 icaofid0r_0 sup_set_class fcaofid0r_2 wcel wa icaofid0r_0 sup_set_class fcaofid0r_6 cfv eqidd fcaofid0r_0 fcaofid0r_3 fcaofid0r_8 wcel icaofid0r_0 sup_set_class fcaofid0r_2 wcel icaofid0r_0 sup_set_class fcaofid0r_2 fcaofid0r_3 csn cxp cfv fcaofid0r_3 wceq ecaofid0r_2 fcaofid0r_2 fcaofid0r_3 icaofid0r_0 sup_set_class fcaofid0r_8 fvconst2g sylan fcaofid0r_0 icaofid0r_0 sup_set_class fcaofid0r_2 wcel icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_5 wcel icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 co icaofid0r_0 sup_set_class fcaofid0r_6 cfv wceq fcaofid0r_0 fcaofid0r_2 fcaofid0r_5 fcaofid0r_6 wf icaofid0r_0 sup_set_class fcaofid0r_2 wcel icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_5 wcel ecaofid0r_1 fcaofid0r_2 fcaofid0r_5 icaofid0r_0 sup_set_class fcaofid0r_6 ffvelrn sylan fcaofid0r_0 fcaofid0r_1 sup_set_class fcaofid0r_3 fcaofid0r_4 co fcaofid0r_1 sup_set_class wceq fcaofid0r_1 fcaofid0r_5 wral icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_5 wcel icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 co icaofid0r_0 sup_set_class fcaofid0r_6 cfv wceq fcaofid0r_0 fcaofid0r_1 sup_set_class fcaofid0r_3 fcaofid0r_4 co fcaofid0r_1 sup_set_class wceq fcaofid0r_1 fcaofid0r_5 ecaofid0r_3 ralrimiva fcaofid0r_1 sup_set_class fcaofid0r_3 fcaofid0r_4 co fcaofid0r_1 sup_set_class wceq icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 co icaofid0r_0 sup_set_class fcaofid0r_6 cfv wceq fcaofid0r_1 icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_5 fcaofid0r_1 sup_set_class icaofid0r_0 sup_set_class fcaofid0r_6 cfv wceq fcaofid0r_1 sup_set_class fcaofid0r_3 fcaofid0r_4 co icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 co fcaofid0r_1 sup_set_class icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_1 sup_set_class icaofid0r_0 sup_set_class fcaofid0r_6 cfv fcaofid0r_3 fcaofid0r_4 oveq1 fcaofid0r_1 sup_set_class icaofid0r_0 sup_set_class fcaofid0r_6 cfv wceq id eqeq12d rspccva sylan syldan offveq $.
+	$v ph x A B R S F V W  $.
+	$d w x B  $.
+	$d w x  $.
+	$d w x F  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	f0_caofid0r $f wff ph $.
+	f1_caofid0r $f set x $.
+	f2_caofid0r $f class A $.
+	f3_caofid0r $f class B $.
+	f4_caofid0r $f class R $.
+	f5_caofid0r $f class S $.
+	f6_caofid0r $f class F $.
+	f7_caofid0r $f class V $.
+	f8_caofid0r $f class W $.
+	i0_caofid0r $f set w $.
+	e0_caofid0r $e |- ( ph -> A e. V ) $.
+	e1_caofid0r $e |- ( ph -> F : A --> S ) $.
+	e2_caofid0r $e |- ( ph -> B e. W ) $.
+	e3_caofid0r $e |- ( ( ph /\ x e. S ) -> ( x R B ) = x ) $.
+	p_caofid0r $p |- ( ph -> ( F oF R ( A X. { B } ) ) = F ) $= e0_caofid0r e1_caofid0r f2_caofid0r f5_caofid0r f6_caofid0r p_ffn f0_caofid0r f2_caofid0r f5_caofid0r f6_caofid0r a_wf f6_caofid0r f2_caofid0r a_wfn p_syl e2_caofid0r f2_caofid0r f3_caofid0r f8_caofid0r p_fnconstg f0_caofid0r f3_caofid0r f8_caofid0r a_wcel f2_caofid0r f3_caofid0r a_csn a_cxp f2_caofid0r a_wfn p_syl e1_caofid0r f2_caofid0r f5_caofid0r f6_caofid0r p_ffn f0_caofid0r f2_caofid0r f5_caofid0r f6_caofid0r a_wf f6_caofid0r f2_caofid0r a_wfn p_syl f0_caofid0r i0_caofid0r a_sup_set_class f2_caofid0r a_wcel a_wa i0_caofid0r a_sup_set_class f6_caofid0r a_cfv p_eqidd e2_caofid0r f2_caofid0r f3_caofid0r i0_caofid0r a_sup_set_class f8_caofid0r p_fvconst2g f0_caofid0r f3_caofid0r f8_caofid0r a_wcel i0_caofid0r a_sup_set_class f2_caofid0r a_wcel i0_caofid0r a_sup_set_class f2_caofid0r f3_caofid0r a_csn a_cxp a_cfv f3_caofid0r a_wceq p_sylan e1_caofid0r f2_caofid0r f5_caofid0r i0_caofid0r a_sup_set_class f6_caofid0r p_ffvelrn f0_caofid0r f2_caofid0r f5_caofid0r f6_caofid0r a_wf i0_caofid0r a_sup_set_class f2_caofid0r a_wcel i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f5_caofid0r a_wcel p_sylan e3_caofid0r f0_caofid0r f1_caofid0r a_sup_set_class f3_caofid0r f4_caofid0r a_co f1_caofid0r a_sup_set_class a_wceq f1_caofid0r f5_caofid0r p_ralrimiva f1_caofid0r a_sup_set_class i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r p_oveq1 f1_caofid0r a_sup_set_class i0_caofid0r a_sup_set_class f6_caofid0r a_cfv a_wceq p_id f1_caofid0r a_sup_set_class i0_caofid0r a_sup_set_class f6_caofid0r a_cfv a_wceq f1_caofid0r a_sup_set_class f3_caofid0r f4_caofid0r a_co i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r a_co f1_caofid0r a_sup_set_class i0_caofid0r a_sup_set_class f6_caofid0r a_cfv p_eqeq12d f1_caofid0r a_sup_set_class f3_caofid0r f4_caofid0r a_co f1_caofid0r a_sup_set_class a_wceq i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r a_co i0_caofid0r a_sup_set_class f6_caofid0r a_cfv a_wceq f1_caofid0r i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f5_caofid0r p_rspccva f0_caofid0r f1_caofid0r a_sup_set_class f3_caofid0r f4_caofid0r a_co f1_caofid0r a_sup_set_class a_wceq f1_caofid0r f5_caofid0r a_wral i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f5_caofid0r a_wcel i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r a_co i0_caofid0r a_sup_set_class f6_caofid0r a_cfv a_wceq p_sylan f0_caofid0r i0_caofid0r a_sup_set_class f2_caofid0r a_wcel i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f5_caofid0r a_wcel i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r a_co i0_caofid0r a_sup_set_class f6_caofid0r a_cfv a_wceq p_syldan f0_caofid0r i0_caofid0r f2_caofid0r i0_caofid0r a_sup_set_class f6_caofid0r a_cfv f3_caofid0r f4_caofid0r f6_caofid0r f2_caofid0r f3_caofid0r a_csn a_cxp f6_caofid0r f7_caofid0r p_offveq $.
 $}
-$( Transfer a right absorption law to the function operation.
+
+$(Transfer a right absorption law to the function operation.
            (Contributed by Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v w $.
-	$d w x B $.
-	$d w x C $.
-	$d w x F $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	icaofid1_0 $f set w $.
-	fcaofid1_0 $f wff ph $.
-	fcaofid1_1 $f set x $.
-	fcaofid1_2 $f class A $.
-	fcaofid1_3 $f class B $.
-	fcaofid1_4 $f class C $.
-	fcaofid1_5 $f class R $.
-	fcaofid1_6 $f class S $.
-	fcaofid1_7 $f class F $.
-	fcaofid1_8 $f class V $.
-	fcaofid1_9 $f class W $.
-	fcaofid1_10 $f class X $.
-	ecaofid1_0 $e |- ( ph -> A e. V ) $.
-	ecaofid1_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofid1_2 $e |- ( ph -> B e. W ) $.
-	ecaofid1_3 $e |- ( ph -> C e. X ) $.
-	ecaofid1_4 $e |- ( ( ph /\ x e. S ) -> ( x R B ) = C ) $.
-	caofid1 $p |- ( ph -> ( F oF R ( A X. { B } ) ) = ( A X. { C } ) ) $= fcaofid1_0 icaofid1_0 fcaofid1_2 icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 fcaofid1_7 fcaofid1_2 fcaofid1_3 csn cxp fcaofid1_2 fcaofid1_4 csn cxp fcaofid1_8 ecaofid1_0 fcaofid1_0 fcaofid1_2 fcaofid1_6 fcaofid1_7 wf fcaofid1_7 fcaofid1_2 wfn ecaofid1_1 fcaofid1_2 fcaofid1_6 fcaofid1_7 ffn syl fcaofid1_0 fcaofid1_3 fcaofid1_9 wcel fcaofid1_2 fcaofid1_3 csn cxp fcaofid1_2 wfn ecaofid1_2 fcaofid1_2 fcaofid1_3 fcaofid1_9 fnconstg syl fcaofid1_0 fcaofid1_4 fcaofid1_10 wcel fcaofid1_2 fcaofid1_4 csn cxp fcaofid1_2 wfn ecaofid1_3 fcaofid1_2 fcaofid1_4 fcaofid1_10 fnconstg syl fcaofid1_0 icaofid1_0 sup_set_class fcaofid1_2 wcel wa icaofid1_0 sup_set_class fcaofid1_7 cfv eqidd fcaofid1_0 fcaofid1_3 fcaofid1_9 wcel icaofid1_0 sup_set_class fcaofid1_2 wcel icaofid1_0 sup_set_class fcaofid1_2 fcaofid1_3 csn cxp cfv fcaofid1_3 wceq ecaofid1_2 fcaofid1_2 fcaofid1_3 icaofid1_0 sup_set_class fcaofid1_9 fvconst2g sylan fcaofid1_0 icaofid1_0 sup_set_class fcaofid1_2 wcel wa icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 co fcaofid1_4 icaofid1_0 sup_set_class fcaofid1_2 fcaofid1_4 csn cxp cfv fcaofid1_0 icaofid1_0 sup_set_class fcaofid1_2 wcel icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_6 wcel icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq fcaofid1_0 fcaofid1_2 fcaofid1_6 fcaofid1_7 wf icaofid1_0 sup_set_class fcaofid1_2 wcel icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_6 wcel ecaofid1_1 fcaofid1_2 fcaofid1_6 icaofid1_0 sup_set_class fcaofid1_7 ffvelrn sylan fcaofid1_0 fcaofid1_1 sup_set_class fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq fcaofid1_1 fcaofid1_6 wral icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_6 wcel icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq fcaofid1_0 fcaofid1_1 sup_set_class fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq fcaofid1_1 fcaofid1_6 ecaofid1_4 ralrimiva fcaofid1_1 sup_set_class fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 co fcaofid1_4 wceq fcaofid1_1 icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_6 fcaofid1_1 sup_set_class icaofid1_0 sup_set_class fcaofid1_7 cfv wceq fcaofid1_1 sup_set_class fcaofid1_3 fcaofid1_5 co icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 co fcaofid1_4 fcaofid1_1 sup_set_class icaofid1_0 sup_set_class fcaofid1_7 cfv fcaofid1_3 fcaofid1_5 oveq1 eqeq1d rspccva sylan syldan fcaofid1_0 fcaofid1_4 fcaofid1_10 wcel icaofid1_0 sup_set_class fcaofid1_2 wcel icaofid1_0 sup_set_class fcaofid1_2 fcaofid1_4 csn cxp cfv fcaofid1_4 wceq ecaofid1_3 fcaofid1_2 fcaofid1_4 icaofid1_0 sup_set_class fcaofid1_10 fvconst2g sylan eqtr4d offveq $.
+	$v ph x A B C R S F V W X  $.
+	$d w x B  $.
+	$d w x C  $.
+	$d w x F  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	f0_caofid1 $f wff ph $.
+	f1_caofid1 $f set x $.
+	f2_caofid1 $f class A $.
+	f3_caofid1 $f class B $.
+	f4_caofid1 $f class C $.
+	f5_caofid1 $f class R $.
+	f6_caofid1 $f class S $.
+	f7_caofid1 $f class F $.
+	f8_caofid1 $f class V $.
+	f9_caofid1 $f class W $.
+	f10_caofid1 $f class X $.
+	i0_caofid1 $f set w $.
+	e0_caofid1 $e |- ( ph -> A e. V ) $.
+	e1_caofid1 $e |- ( ph -> F : A --> S ) $.
+	e2_caofid1 $e |- ( ph -> B e. W ) $.
+	e3_caofid1 $e |- ( ph -> C e. X ) $.
+	e4_caofid1 $e |- ( ( ph /\ x e. S ) -> ( x R B ) = C ) $.
+	p_caofid1 $p |- ( ph -> ( F oF R ( A X. { B } ) ) = ( A X. { C } ) ) $= e0_caofid1 e1_caofid1 f2_caofid1 f6_caofid1 f7_caofid1 p_ffn f0_caofid1 f2_caofid1 f6_caofid1 f7_caofid1 a_wf f7_caofid1 f2_caofid1 a_wfn p_syl e2_caofid1 f2_caofid1 f3_caofid1 f9_caofid1 p_fnconstg f0_caofid1 f3_caofid1 f9_caofid1 a_wcel f2_caofid1 f3_caofid1 a_csn a_cxp f2_caofid1 a_wfn p_syl e3_caofid1 f2_caofid1 f4_caofid1 f10_caofid1 p_fnconstg f0_caofid1 f4_caofid1 f10_caofid1 a_wcel f2_caofid1 f4_caofid1 a_csn a_cxp f2_caofid1 a_wfn p_syl f0_caofid1 i0_caofid1 a_sup_set_class f2_caofid1 a_wcel a_wa i0_caofid1 a_sup_set_class f7_caofid1 a_cfv p_eqidd e2_caofid1 f2_caofid1 f3_caofid1 i0_caofid1 a_sup_set_class f9_caofid1 p_fvconst2g f0_caofid1 f3_caofid1 f9_caofid1 a_wcel i0_caofid1 a_sup_set_class f2_caofid1 a_wcel i0_caofid1 a_sup_set_class f2_caofid1 f3_caofid1 a_csn a_cxp a_cfv f3_caofid1 a_wceq p_sylan e1_caofid1 f2_caofid1 f6_caofid1 i0_caofid1 a_sup_set_class f7_caofid1 p_ffvelrn f0_caofid1 f2_caofid1 f6_caofid1 f7_caofid1 a_wf i0_caofid1 a_sup_set_class f2_caofid1 a_wcel i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f6_caofid1 a_wcel p_sylan e4_caofid1 f0_caofid1 f1_caofid1 a_sup_set_class f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq f1_caofid1 f6_caofid1 p_ralrimiva f1_caofid1 a_sup_set_class i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 p_oveq1 f1_caofid1 a_sup_set_class i0_caofid1 a_sup_set_class f7_caofid1 a_cfv a_wceq f1_caofid1 a_sup_set_class f3_caofid1 f5_caofid1 a_co i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 a_co f4_caofid1 p_eqeq1d f1_caofid1 a_sup_set_class f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq f1_caofid1 i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f6_caofid1 p_rspccva f0_caofid1 f1_caofid1 a_sup_set_class f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq f1_caofid1 f6_caofid1 a_wral i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f6_caofid1 a_wcel i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq p_sylan f0_caofid1 i0_caofid1 a_sup_set_class f2_caofid1 a_wcel i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f6_caofid1 a_wcel i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 a_co f4_caofid1 a_wceq p_syldan e3_caofid1 f2_caofid1 f4_caofid1 i0_caofid1 a_sup_set_class f10_caofid1 p_fvconst2g f0_caofid1 f4_caofid1 f10_caofid1 a_wcel i0_caofid1 a_sup_set_class f2_caofid1 a_wcel i0_caofid1 a_sup_set_class f2_caofid1 f4_caofid1 a_csn a_cxp a_cfv f4_caofid1 a_wceq p_sylan f0_caofid1 i0_caofid1 a_sup_set_class f2_caofid1 a_wcel a_wa i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 a_co f4_caofid1 i0_caofid1 a_sup_set_class f2_caofid1 f4_caofid1 a_csn a_cxp a_cfv p_eqtr4d f0_caofid1 i0_caofid1 f2_caofid1 i0_caofid1 a_sup_set_class f7_caofid1 a_cfv f3_caofid1 f5_caofid1 f7_caofid1 f2_caofid1 f3_caofid1 a_csn a_cxp f2_caofid1 f4_caofid1 a_csn a_cxp f8_caofid1 p_offveq $.
 $}
-$( Transfer a right absorption law to the function operation.
+
+$(Transfer a right absorption law to the function operation.
          (Contributed by Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v A $.
-	$v B $.
-	$v C $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v V $.
-	$v W $.
-	$v X $.
-	$v w $.
-	$d w x B $.
-	$d w x C $.
-	$d w x F $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x $.
-	$d w x ph $.
-	$d w x R $.
-	$d w A $.
-	$d w x S $.
-	$d w x $.
-	$d w x $.
-	icaofid2_0 $f set w $.
-	fcaofid2_0 $f wff ph $.
-	fcaofid2_1 $f set x $.
-	fcaofid2_2 $f class A $.
-	fcaofid2_3 $f class B $.
-	fcaofid2_4 $f class C $.
-	fcaofid2_5 $f class R $.
-	fcaofid2_6 $f class S $.
-	fcaofid2_7 $f class F $.
-	fcaofid2_8 $f class V $.
-	fcaofid2_9 $f class W $.
-	fcaofid2_10 $f class X $.
-	ecaofid2_0 $e |- ( ph -> A e. V ) $.
-	ecaofid2_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofid2_2 $e |- ( ph -> B e. W ) $.
-	ecaofid2_3 $e |- ( ph -> C e. X ) $.
-	ecaofid2_4 $e |- ( ( ph /\ x e. S ) -> ( B R x ) = C ) $.
-	caofid2 $p |- ( ph -> ( ( A X. { B } ) oF R F ) = ( A X. { C } ) ) $= fcaofid2_0 icaofid2_0 fcaofid2_2 fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 fcaofid2_2 fcaofid2_3 csn cxp fcaofid2_7 fcaofid2_2 fcaofid2_4 csn cxp fcaofid2_8 ecaofid2_0 fcaofid2_0 fcaofid2_3 fcaofid2_9 wcel fcaofid2_2 fcaofid2_3 csn cxp fcaofid2_2 wfn ecaofid2_2 fcaofid2_2 fcaofid2_3 fcaofid2_9 fnconstg syl fcaofid2_0 fcaofid2_2 fcaofid2_6 fcaofid2_7 wf fcaofid2_7 fcaofid2_2 wfn ecaofid2_1 fcaofid2_2 fcaofid2_6 fcaofid2_7 ffn syl fcaofid2_0 fcaofid2_4 fcaofid2_10 wcel fcaofid2_2 fcaofid2_4 csn cxp fcaofid2_2 wfn ecaofid2_3 fcaofid2_2 fcaofid2_4 fcaofid2_10 fnconstg syl fcaofid2_0 fcaofid2_3 fcaofid2_9 wcel icaofid2_0 sup_set_class fcaofid2_2 wcel icaofid2_0 sup_set_class fcaofid2_2 fcaofid2_3 csn cxp cfv fcaofid2_3 wceq ecaofid2_2 fcaofid2_2 fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_9 fvconst2g sylan fcaofid2_0 icaofid2_0 sup_set_class fcaofid2_2 wcel wa icaofid2_0 sup_set_class fcaofid2_7 cfv eqidd fcaofid2_0 icaofid2_0 sup_set_class fcaofid2_2 wcel wa fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 co fcaofid2_4 icaofid2_0 sup_set_class fcaofid2_2 fcaofid2_4 csn cxp cfv fcaofid2_0 icaofid2_0 sup_set_class fcaofid2_2 wcel icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_6 wcel fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 co fcaofid2_4 wceq fcaofid2_0 fcaofid2_2 fcaofid2_6 fcaofid2_7 wf icaofid2_0 sup_set_class fcaofid2_2 wcel icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_6 wcel ecaofid2_1 fcaofid2_2 fcaofid2_6 icaofid2_0 sup_set_class fcaofid2_7 ffvelrn sylan fcaofid2_0 fcaofid2_3 fcaofid2_1 sup_set_class fcaofid2_5 co fcaofid2_4 wceq fcaofid2_1 fcaofid2_6 wral icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_6 wcel fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 co fcaofid2_4 wceq fcaofid2_0 fcaofid2_3 fcaofid2_1 sup_set_class fcaofid2_5 co fcaofid2_4 wceq fcaofid2_1 fcaofid2_6 ecaofid2_4 ralrimiva fcaofid2_3 fcaofid2_1 sup_set_class fcaofid2_5 co fcaofid2_4 wceq fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 co fcaofid2_4 wceq fcaofid2_1 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_6 fcaofid2_1 sup_set_class icaofid2_0 sup_set_class fcaofid2_7 cfv wceq fcaofid2_3 fcaofid2_1 sup_set_class fcaofid2_5 co fcaofid2_3 icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_5 co fcaofid2_4 fcaofid2_1 sup_set_class icaofid2_0 sup_set_class fcaofid2_7 cfv fcaofid2_3 fcaofid2_5 oveq2 eqeq1d rspccva sylan syldan fcaofid2_0 fcaofid2_4 fcaofid2_10 wcel icaofid2_0 sup_set_class fcaofid2_2 wcel icaofid2_0 sup_set_class fcaofid2_2 fcaofid2_4 csn cxp cfv fcaofid2_4 wceq ecaofid2_3 fcaofid2_2 fcaofid2_4 icaofid2_0 sup_set_class fcaofid2_10 fvconst2g sylan eqtr4d offveq $.
+	$v ph x A B C R S F V W X  $.
+	$d w x B  $.
+	$d w x C  $.
+	$d w x F  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x ph  $.
+	$d w x R  $.
+	$d w A  $.
+	$d w x S  $.
+	$d w x  $.
+	$d w x  $.
+	f0_caofid2 $f wff ph $.
+	f1_caofid2 $f set x $.
+	f2_caofid2 $f class A $.
+	f3_caofid2 $f class B $.
+	f4_caofid2 $f class C $.
+	f5_caofid2 $f class R $.
+	f6_caofid2 $f class S $.
+	f7_caofid2 $f class F $.
+	f8_caofid2 $f class V $.
+	f9_caofid2 $f class W $.
+	f10_caofid2 $f class X $.
+	i0_caofid2 $f set w $.
+	e0_caofid2 $e |- ( ph -> A e. V ) $.
+	e1_caofid2 $e |- ( ph -> F : A --> S ) $.
+	e2_caofid2 $e |- ( ph -> B e. W ) $.
+	e3_caofid2 $e |- ( ph -> C e. X ) $.
+	e4_caofid2 $e |- ( ( ph /\ x e. S ) -> ( B R x ) = C ) $.
+	p_caofid2 $p |- ( ph -> ( ( A X. { B } ) oF R F ) = ( A X. { C } ) ) $= e0_caofid2 e2_caofid2 f2_caofid2 f3_caofid2 f9_caofid2 p_fnconstg f0_caofid2 f3_caofid2 f9_caofid2 a_wcel f2_caofid2 f3_caofid2 a_csn a_cxp f2_caofid2 a_wfn p_syl e1_caofid2 f2_caofid2 f6_caofid2 f7_caofid2 p_ffn f0_caofid2 f2_caofid2 f6_caofid2 f7_caofid2 a_wf f7_caofid2 f2_caofid2 a_wfn p_syl e3_caofid2 f2_caofid2 f4_caofid2 f10_caofid2 p_fnconstg f0_caofid2 f4_caofid2 f10_caofid2 a_wcel f2_caofid2 f4_caofid2 a_csn a_cxp f2_caofid2 a_wfn p_syl e2_caofid2 f2_caofid2 f3_caofid2 i0_caofid2 a_sup_set_class f9_caofid2 p_fvconst2g f0_caofid2 f3_caofid2 f9_caofid2 a_wcel i0_caofid2 a_sup_set_class f2_caofid2 a_wcel i0_caofid2 a_sup_set_class f2_caofid2 f3_caofid2 a_csn a_cxp a_cfv f3_caofid2 a_wceq p_sylan f0_caofid2 i0_caofid2 a_sup_set_class f2_caofid2 a_wcel a_wa i0_caofid2 a_sup_set_class f7_caofid2 a_cfv p_eqidd e1_caofid2 f2_caofid2 f6_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 p_ffvelrn f0_caofid2 f2_caofid2 f6_caofid2 f7_caofid2 a_wf i0_caofid2 a_sup_set_class f2_caofid2 a_wcel i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f6_caofid2 a_wcel p_sylan e4_caofid2 f0_caofid2 f3_caofid2 f1_caofid2 a_sup_set_class f5_caofid2 a_co f4_caofid2 a_wceq f1_caofid2 f6_caofid2 p_ralrimiva f1_caofid2 a_sup_set_class i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f3_caofid2 f5_caofid2 p_oveq2 f1_caofid2 a_sup_set_class i0_caofid2 a_sup_set_class f7_caofid2 a_cfv a_wceq f3_caofid2 f1_caofid2 a_sup_set_class f5_caofid2 a_co f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 a_co f4_caofid2 p_eqeq1d f3_caofid2 f1_caofid2 a_sup_set_class f5_caofid2 a_co f4_caofid2 a_wceq f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 a_co f4_caofid2 a_wceq f1_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f6_caofid2 p_rspccva f0_caofid2 f3_caofid2 f1_caofid2 a_sup_set_class f5_caofid2 a_co f4_caofid2 a_wceq f1_caofid2 f6_caofid2 a_wral i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f6_caofid2 a_wcel f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 a_co f4_caofid2 a_wceq p_sylan f0_caofid2 i0_caofid2 a_sup_set_class f2_caofid2 a_wcel i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f6_caofid2 a_wcel f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 a_co f4_caofid2 a_wceq p_syldan e3_caofid2 f2_caofid2 f4_caofid2 i0_caofid2 a_sup_set_class f10_caofid2 p_fvconst2g f0_caofid2 f4_caofid2 f10_caofid2 a_wcel i0_caofid2 a_sup_set_class f2_caofid2 a_wcel i0_caofid2 a_sup_set_class f2_caofid2 f4_caofid2 a_csn a_cxp a_cfv f4_caofid2 a_wceq p_sylan f0_caofid2 i0_caofid2 a_sup_set_class f2_caofid2 a_wcel a_wa f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 a_co f4_caofid2 i0_caofid2 a_sup_set_class f2_caofid2 f4_caofid2 a_csn a_cxp a_cfv p_eqtr4d f0_caofid2 i0_caofid2 f2_caofid2 f3_caofid2 i0_caofid2 a_sup_set_class f7_caofid2 a_cfv f5_caofid2 f2_caofid2 f3_caofid2 a_csn a_cxp f7_caofid2 f2_caofid2 f4_caofid2 a_csn a_cxp f8_caofid2 p_offveq $.
 $}
-$( Transfer a commutative law to the function operation.  (Contributed by
+
+$(Transfer a commutative law to the function operation.  (Contributed by
          Mario Carneiro, 26-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v w $.
-	$d w x $.
-	$d w x $.
-	$d w x y F $.
-	$d w x y G $.
-	$d w x y $.
-	$d w x y $.
-	$d w x y $.
-	$d w x y ph $.
-	$d w x y R $.
-	$d w A $.
-	$d w x y S $.
-	$d w x y $.
-	$d w x y $.
-	icaofcom_0 $f set w $.
-	fcaofcom_0 $f wff ph $.
-	fcaofcom_1 $f set x $.
-	fcaofcom_2 $f set y $.
-	fcaofcom_3 $f class A $.
-	fcaofcom_4 $f class R $.
-	fcaofcom_5 $f class S $.
-	fcaofcom_6 $f class F $.
-	fcaofcom_7 $f class G $.
-	fcaofcom_8 $f class V $.
-	ecaofcom_0 $e |- ( ph -> A e. V ) $.
-	ecaofcom_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofcom_2 $e |- ( ph -> G : A --> S ) $.
-	ecaofcom_3 $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x R y ) = ( y R x ) ) $.
-	caofcom $p |- ( ph -> ( F oF R G ) = ( G oF R F ) ) $= fcaofcom_0 icaofcom_0 fcaofcom_3 icaofcom_0 sup_set_class fcaofcom_6 cfv icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_4 co cmpt icaofcom_0 fcaofcom_3 icaofcom_0 sup_set_class fcaofcom_7 cfv icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_4 co cmpt fcaofcom_6 fcaofcom_7 fcaofcom_4 cof co fcaofcom_7 fcaofcom_6 fcaofcom_4 cof co fcaofcom_0 icaofcom_0 fcaofcom_3 icaofcom_0 sup_set_class fcaofcom_6 cfv icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_4 co icaofcom_0 sup_set_class fcaofcom_7 cfv icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_4 co fcaofcom_0 icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_5 wcel icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 wcel wa icaofcom_0 sup_set_class fcaofcom_6 cfv icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_4 co icaofcom_0 sup_set_class fcaofcom_7 cfv icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_4 co wceq fcaofcom_0 icaofcom_0 sup_set_class fcaofcom_3 wcel wa icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_5 wcel icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 wcel fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_6 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_5 wcel ecaofcom_1 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_6 ffvelrn sylan fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_7 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 wcel ecaofcom_2 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_7 ffvelrn sylan jca fcaofcom_0 fcaofcom_1 fcaofcom_2 icaofcom_0 sup_set_class fcaofcom_6 cfv icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 fcaofcom_4 ecaofcom_3 caovcomg syldan mpteq2dva fcaofcom_0 icaofcom_0 fcaofcom_3 icaofcom_0 sup_set_class fcaofcom_6 cfv icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_4 fcaofcom_6 fcaofcom_7 fcaofcom_8 fcaofcom_5 fcaofcom_5 ecaofcom_0 fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_6 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_5 wcel ecaofcom_1 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_6 ffvelrn sylan fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_7 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 wcel ecaofcom_2 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_7 ffvelrn sylan fcaofcom_0 icaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_6 ecaofcom_1 feqmptd fcaofcom_0 icaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_7 ecaofcom_2 feqmptd offval2 fcaofcom_0 icaofcom_0 fcaofcom_3 icaofcom_0 sup_set_class fcaofcom_7 cfv icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_4 fcaofcom_7 fcaofcom_6 fcaofcom_8 fcaofcom_5 fcaofcom_5 ecaofcom_0 fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_7 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_7 cfv fcaofcom_5 wcel ecaofcom_2 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_7 ffvelrn sylan fcaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_6 wf icaofcom_0 sup_set_class fcaofcom_3 wcel icaofcom_0 sup_set_class fcaofcom_6 cfv fcaofcom_5 wcel ecaofcom_1 fcaofcom_3 fcaofcom_5 icaofcom_0 sup_set_class fcaofcom_6 ffvelrn sylan fcaofcom_0 icaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_7 ecaofcom_2 feqmptd fcaofcom_0 icaofcom_0 fcaofcom_3 fcaofcom_5 fcaofcom_6 ecaofcom_1 feqmptd offval2 3eqtr4d $.
+	$v ph x y A R S F G V  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x y F  $.
+	$d w x y G  $.
+	$d w x y  $.
+	$d w x y  $.
+	$d w x y  $.
+	$d w x y ph  $.
+	$d w x y R  $.
+	$d w A  $.
+	$d w x y S  $.
+	$d w x y  $.
+	$d w x y  $.
+	f0_caofcom $f wff ph $.
+	f1_caofcom $f set x $.
+	f2_caofcom $f set y $.
+	f3_caofcom $f class A $.
+	f4_caofcom $f class R $.
+	f5_caofcom $f class S $.
+	f6_caofcom $f class F $.
+	f7_caofcom $f class G $.
+	f8_caofcom $f class V $.
+	i0_caofcom $f set w $.
+	e0_caofcom $e |- ( ph -> A e. V ) $.
+	e1_caofcom $e |- ( ph -> F : A --> S ) $.
+	e2_caofcom $e |- ( ph -> G : A --> S ) $.
+	e3_caofcom $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x R y ) = ( y R x ) ) $.
+	p_caofcom $p |- ( ph -> ( F oF R G ) = ( G oF R F ) ) $= e1_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f6_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f6_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f6_caofcom a_cfv f5_caofcom a_wcel p_sylan e2_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f7_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f7_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom a_wcel p_sylan f0_caofcom i0_caofcom a_sup_set_class f3_caofcom a_wcel a_wa i0_caofcom a_sup_set_class f6_caofcom a_cfv f5_caofcom a_wcel i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom a_wcel p_jca e3_caofcom f0_caofcom f1_caofcom f2_caofcom i0_caofcom a_sup_set_class f6_caofcom a_cfv i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom f4_caofcom p_caovcomg f0_caofcom i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f6_caofcom a_cfv f5_caofcom a_wcel i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom a_wcel a_wa i0_caofcom a_sup_set_class f6_caofcom a_cfv i0_caofcom a_sup_set_class f7_caofcom a_cfv f4_caofcom a_co i0_caofcom a_sup_set_class f7_caofcom a_cfv i0_caofcom a_sup_set_class f6_caofcom a_cfv f4_caofcom a_co a_wceq p_syldan f0_caofcom i0_caofcom f3_caofcom i0_caofcom a_sup_set_class f6_caofcom a_cfv i0_caofcom a_sup_set_class f7_caofcom a_cfv f4_caofcom a_co i0_caofcom a_sup_set_class f7_caofcom a_cfv i0_caofcom a_sup_set_class f6_caofcom a_cfv f4_caofcom a_co p_mpteq2dva e0_caofcom e1_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f6_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f6_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f6_caofcom a_cfv f5_caofcom a_wcel p_sylan e2_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f7_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f7_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom a_wcel p_sylan e1_caofcom f0_caofcom i0_caofcom f3_caofcom f5_caofcom f6_caofcom p_feqmptd e2_caofcom f0_caofcom i0_caofcom f3_caofcom f5_caofcom f7_caofcom p_feqmptd f0_caofcom i0_caofcom f3_caofcom i0_caofcom a_sup_set_class f6_caofcom a_cfv i0_caofcom a_sup_set_class f7_caofcom a_cfv f4_caofcom f6_caofcom f7_caofcom f8_caofcom f5_caofcom f5_caofcom p_offval2 e0_caofcom e2_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f7_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f7_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f7_caofcom a_cfv f5_caofcom a_wcel p_sylan e1_caofcom f3_caofcom f5_caofcom i0_caofcom a_sup_set_class f6_caofcom p_ffvelrn f0_caofcom f3_caofcom f5_caofcom f6_caofcom a_wf i0_caofcom a_sup_set_class f3_caofcom a_wcel i0_caofcom a_sup_set_class f6_caofcom a_cfv f5_caofcom a_wcel p_sylan e2_caofcom f0_caofcom i0_caofcom f3_caofcom f5_caofcom f7_caofcom p_feqmptd e1_caofcom f0_caofcom i0_caofcom f3_caofcom f5_caofcom f6_caofcom p_feqmptd f0_caofcom i0_caofcom f3_caofcom i0_caofcom a_sup_set_class f7_caofcom a_cfv i0_caofcom a_sup_set_class f6_caofcom a_cfv f4_caofcom f7_caofcom f6_caofcom f8_caofcom f5_caofcom f5_caofcom p_offval2 f0_caofcom i0_caofcom f3_caofcom i0_caofcom a_sup_set_class f6_caofcom a_cfv i0_caofcom a_sup_set_class f7_caofcom a_cfv f4_caofcom a_co a_cmpt i0_caofcom f3_caofcom i0_caofcom a_sup_set_class f7_caofcom a_cfv i0_caofcom a_sup_set_class f6_caofcom a_cfv f4_caofcom a_co a_cmpt f6_caofcom f7_caofcom f4_caofcom a_cof a_co f7_caofcom f6_caofcom f4_caofcom a_cof a_co p_3eqtr4d $.
 $}
-$( Transfer a relation subset law to the function relation.  (Contributed
+
+$(Transfer a relation subset law to the function relation.  (Contributed
          by Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v F $.
-	$v G $.
-	$v V $.
-	$v w $.
-	$d w x $.
-	$d w x $.
-	$d w x y F $.
-	$d w x y G $.
-	$d w x y $.
-	$d w x y $.
-	$d w x y $.
-	$d w x y ph $.
-	$d w x y R $.
-	$d w A $.
-	$d w x y S $.
-	$d w x y T $.
-	$d w x y $.
-	icaofrss_0 $f set w $.
-	fcaofrss_0 $f wff ph $.
-	fcaofrss_1 $f set x $.
-	fcaofrss_2 $f set y $.
-	fcaofrss_3 $f class A $.
-	fcaofrss_4 $f class R $.
-	fcaofrss_5 $f class S $.
-	fcaofrss_6 $f class T $.
-	fcaofrss_7 $f class F $.
-	fcaofrss_8 $f class G $.
-	fcaofrss_9 $f class V $.
-	ecaofrss_0 $e |- ( ph -> A e. V ) $.
-	ecaofrss_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofrss_2 $e |- ( ph -> G : A --> S ) $.
-	ecaofrss_3 $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x R y -> x T y ) ) $.
-	caofrss $p |- ( ph -> ( F oR R G -> F oR T G ) ) $= fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 wbr icaofrss_0 fcaofrss_3 wral icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 wbr icaofrss_0 fcaofrss_3 wral fcaofrss_7 fcaofrss_8 fcaofrss_4 cofr wbr fcaofrss_7 fcaofrss_8 fcaofrss_6 cofr wbr fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 wbr icaofrss_0 fcaofrss_3 fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_3 wcel wa icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_5 wcel icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_5 wcel fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_4 wbr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_6 wbr wi fcaofrss_2 fcaofrss_5 wral fcaofrss_1 fcaofrss_5 wral icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 wbr wi fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_7 wf icaofrss_0 sup_set_class fcaofrss_3 wcel icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_5 wcel ecaofrss_1 fcaofrss_3 fcaofrss_5 icaofrss_0 sup_set_class fcaofrss_7 ffvelrn sylan fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_8 wf icaofrss_0 sup_set_class fcaofrss_3 wcel icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_5 wcel ecaofrss_2 fcaofrss_3 fcaofrss_5 icaofrss_0 sup_set_class fcaofrss_8 ffvelrn sylan fcaofrss_0 fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_4 wbr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_6 wbr wi fcaofrss_2 fcaofrss_5 wral fcaofrss_1 fcaofrss_5 wral icaofrss_0 sup_set_class fcaofrss_3 wcel fcaofrss_0 fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_4 wbr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_6 wbr wi fcaofrss_1 fcaofrss_2 fcaofrss_5 fcaofrss_5 ecaofrss_3 ralrimivva adantr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_4 wbr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_6 wbr wi icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 wbr wi icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_6 wbr wi fcaofrss_1 fcaofrss_2 icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_5 fcaofrss_5 fcaofrss_1 sup_set_class icaofrss_0 sup_set_class fcaofrss_7 cfv wceq fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_4 wbr fcaofrss_1 sup_set_class fcaofrss_2 sup_set_class fcaofrss_6 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_6 wbr fcaofrss_1 sup_set_class icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_4 breq1 fcaofrss_1 sup_set_class icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_6 breq1 imbi12d fcaofrss_2 sup_set_class icaofrss_0 sup_set_class fcaofrss_8 cfv wceq icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_2 sup_set_class fcaofrss_6 wbr icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 wbr fcaofrss_2 sup_set_class icaofrss_0 sup_set_class fcaofrss_8 cfv icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_4 breq2 fcaofrss_2 sup_set_class icaofrss_0 sup_set_class fcaofrss_8 cfv icaofrss_0 sup_set_class fcaofrss_7 cfv fcaofrss_6 breq2 imbi12d rspc2va syl21anc ralimdva fcaofrss_0 icaofrss_0 fcaofrss_3 fcaofrss_3 icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_4 fcaofrss_3 fcaofrss_7 fcaofrss_8 fcaofrss_9 fcaofrss_9 fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_7 wf fcaofrss_7 fcaofrss_3 wfn ecaofrss_1 fcaofrss_3 fcaofrss_5 fcaofrss_7 ffn syl fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_8 wf fcaofrss_8 fcaofrss_3 wfn ecaofrss_2 fcaofrss_3 fcaofrss_5 fcaofrss_8 ffn syl ecaofrss_0 ecaofrss_0 fcaofrss_3 inidm fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_3 wcel wa icaofrss_0 sup_set_class fcaofrss_7 cfv eqidd fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_3 wcel wa icaofrss_0 sup_set_class fcaofrss_8 cfv eqidd ofrfval fcaofrss_0 icaofrss_0 fcaofrss_3 fcaofrss_3 icaofrss_0 sup_set_class fcaofrss_7 cfv icaofrss_0 sup_set_class fcaofrss_8 cfv fcaofrss_6 fcaofrss_3 fcaofrss_7 fcaofrss_8 fcaofrss_9 fcaofrss_9 fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_7 wf fcaofrss_7 fcaofrss_3 wfn ecaofrss_1 fcaofrss_3 fcaofrss_5 fcaofrss_7 ffn syl fcaofrss_0 fcaofrss_3 fcaofrss_5 fcaofrss_8 wf fcaofrss_8 fcaofrss_3 wfn ecaofrss_2 fcaofrss_3 fcaofrss_5 fcaofrss_8 ffn syl ecaofrss_0 ecaofrss_0 fcaofrss_3 inidm fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_3 wcel wa icaofrss_0 sup_set_class fcaofrss_7 cfv eqidd fcaofrss_0 icaofrss_0 sup_set_class fcaofrss_3 wcel wa icaofrss_0 sup_set_class fcaofrss_8 cfv eqidd ofrfval 3imtr4d $.
+	$v ph x y A R S T F G V  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x y F  $.
+	$d w x y G  $.
+	$d w x y  $.
+	$d w x y  $.
+	$d w x y  $.
+	$d w x y ph  $.
+	$d w x y R  $.
+	$d w A  $.
+	$d w x y S  $.
+	$d w x y T  $.
+	$d w x y  $.
+	f0_caofrss $f wff ph $.
+	f1_caofrss $f set x $.
+	f2_caofrss $f set y $.
+	f3_caofrss $f class A $.
+	f4_caofrss $f class R $.
+	f5_caofrss $f class S $.
+	f6_caofrss $f class T $.
+	f7_caofrss $f class F $.
+	f8_caofrss $f class G $.
+	f9_caofrss $f class V $.
+	i0_caofrss $f set w $.
+	e0_caofrss $e |- ( ph -> A e. V ) $.
+	e1_caofrss $e |- ( ph -> F : A --> S ) $.
+	e2_caofrss $e |- ( ph -> G : A --> S ) $.
+	e3_caofrss $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x R y -> x T y ) ) $.
+	p_caofrss $p |- ( ph -> ( F oR R G -> F oR T G ) ) $= e1_caofrss f3_caofrss f5_caofrss i0_caofrss a_sup_set_class f7_caofrss p_ffvelrn f0_caofrss f3_caofrss f5_caofrss f7_caofrss a_wf i0_caofrss a_sup_set_class f3_caofrss a_wcel i0_caofrss a_sup_set_class f7_caofrss a_cfv f5_caofrss a_wcel p_sylan e2_caofrss f3_caofrss f5_caofrss i0_caofrss a_sup_set_class f8_caofrss p_ffvelrn f0_caofrss f3_caofrss f5_caofrss f8_caofrss a_wf i0_caofrss a_sup_set_class f3_caofrss a_wcel i0_caofrss a_sup_set_class f8_caofrss a_cfv f5_caofrss a_wcel p_sylan e3_caofrss f0_caofrss f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f4_caofrss a_wbr f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f6_caofrss a_wbr a_wi f1_caofrss f2_caofrss f5_caofrss f5_caofrss p_ralrimivva f0_caofrss f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f4_caofrss a_wbr f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f6_caofrss a_wbr a_wi f2_caofrss f5_caofrss a_wral f1_caofrss f5_caofrss a_wral i0_caofrss a_sup_set_class f3_caofrss a_wcel p_adantr f1_caofrss a_sup_set_class i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f4_caofrss p_breq1 f1_caofrss a_sup_set_class i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f6_caofrss p_breq1 f1_caofrss a_sup_set_class i0_caofrss a_sup_set_class f7_caofrss a_cfv a_wceq f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f4_caofrss a_wbr f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f6_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f6_caofrss a_wbr p_imbi12d f2_caofrss a_sup_set_class i0_caofrss a_sup_set_class f8_caofrss a_cfv i0_caofrss a_sup_set_class f7_caofrss a_cfv f4_caofrss p_breq2 f2_caofrss a_sup_set_class i0_caofrss a_sup_set_class f8_caofrss a_cfv i0_caofrss a_sup_set_class f7_caofrss a_cfv f6_caofrss p_breq2 f2_caofrss a_sup_set_class i0_caofrss a_sup_set_class f8_caofrss a_cfv a_wceq i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f6_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss a_wbr p_imbi12d f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f4_caofrss a_wbr f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f6_caofrss a_wbr a_wi i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss a_wbr a_wi i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv f2_caofrss a_sup_set_class f6_caofrss a_wbr a_wi f1_caofrss f2_caofrss i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f5_caofrss f5_caofrss p_rspc2va f0_caofrss i0_caofrss a_sup_set_class f3_caofrss a_wcel a_wa i0_caofrss a_sup_set_class f7_caofrss a_cfv f5_caofrss a_wcel i0_caofrss a_sup_set_class f8_caofrss a_cfv f5_caofrss a_wcel f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f4_caofrss a_wbr f1_caofrss a_sup_set_class f2_caofrss a_sup_set_class f6_caofrss a_wbr a_wi f2_caofrss f5_caofrss a_wral f1_caofrss f5_caofrss a_wral i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss a_wbr a_wi p_syl21anc f0_caofrss i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss a_wbr i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss a_wbr i0_caofrss f3_caofrss p_ralimdva e1_caofrss f3_caofrss f5_caofrss f7_caofrss p_ffn f0_caofrss f3_caofrss f5_caofrss f7_caofrss a_wf f7_caofrss f3_caofrss a_wfn p_syl e2_caofrss f3_caofrss f5_caofrss f8_caofrss p_ffn f0_caofrss f3_caofrss f5_caofrss f8_caofrss a_wf f8_caofrss f3_caofrss a_wfn p_syl e0_caofrss e0_caofrss f3_caofrss p_inidm f0_caofrss i0_caofrss a_sup_set_class f3_caofrss a_wcel a_wa i0_caofrss a_sup_set_class f7_caofrss a_cfv p_eqidd f0_caofrss i0_caofrss a_sup_set_class f3_caofrss a_wcel a_wa i0_caofrss a_sup_set_class f8_caofrss a_cfv p_eqidd f0_caofrss i0_caofrss f3_caofrss f3_caofrss i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss f3_caofrss f7_caofrss f8_caofrss f9_caofrss f9_caofrss p_ofrfval e1_caofrss f3_caofrss f5_caofrss f7_caofrss p_ffn f0_caofrss f3_caofrss f5_caofrss f7_caofrss a_wf f7_caofrss f3_caofrss a_wfn p_syl e2_caofrss f3_caofrss f5_caofrss f8_caofrss p_ffn f0_caofrss f3_caofrss f5_caofrss f8_caofrss a_wf f8_caofrss f3_caofrss a_wfn p_syl e0_caofrss e0_caofrss f3_caofrss p_inidm f0_caofrss i0_caofrss a_sup_set_class f3_caofrss a_wcel a_wa i0_caofrss a_sup_set_class f7_caofrss a_cfv p_eqidd f0_caofrss i0_caofrss a_sup_set_class f3_caofrss a_wcel a_wa i0_caofrss a_sup_set_class f8_caofrss a_cfv p_eqidd f0_caofrss i0_caofrss f3_caofrss f3_caofrss i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss f3_caofrss f7_caofrss f8_caofrss f9_caofrss f9_caofrss p_ofrfval f0_caofrss i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f4_caofrss a_wbr i0_caofrss f3_caofrss a_wral i0_caofrss a_sup_set_class f7_caofrss a_cfv i0_caofrss a_sup_set_class f8_caofrss a_cfv f6_caofrss a_wbr i0_caofrss f3_caofrss a_wral f7_caofrss f8_caofrss f4_caofrss a_cofr a_wbr f7_caofrss f8_caofrss f6_caofrss a_cofr a_wbr p_3imtr4d $.
 $}
-$( Transfer an associative law to the function operation.  (Contributed
+
+$(Transfer an associative law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v P $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v O $.
-	$v V $.
-	$v w $.
-	$d w x $.
-	$d w x $.
-	$d w x y z F $.
-	$d w x y z G $.
-	$d w x y z H $.
-	$d w x y z O $.
-	$d w x y z P $.
-	$d w x y z ph $.
-	$d w x y z R $.
-	$d w A $.
-	$d w x y z S $.
-	$d w x y z T $.
-	$d w x y z $.
-	icaofass_0 $f set w $.
-	fcaofass_0 $f wff ph $.
-	fcaofass_1 $f set x $.
-	fcaofass_2 $f set y $.
-	fcaofass_3 $f set z $.
-	fcaofass_4 $f class A $.
-	fcaofass_5 $f class P $.
-	fcaofass_6 $f class R $.
-	fcaofass_7 $f class S $.
-	fcaofass_8 $f class T $.
-	fcaofass_9 $f class F $.
-	fcaofass_10 $f class G $.
-	fcaofass_11 $f class H $.
-	fcaofass_12 $f class O $.
-	fcaofass_13 $f class V $.
-	ecaofass_0 $e |- ( ph -> A e. V ) $.
-	ecaofass_1 $e |- ( ph -> F : A --> S ) $.
-	ecaofass_2 $e |- ( ph -> G : A --> S ) $.
-	ecaofass_3 $e |- ( ph -> H : A --> S ) $.
-	ecaofass_4 $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. S ) ) -> ( ( x R y ) T z ) = ( x O ( y P z ) ) ) $.
-	caofass $p |- ( ph -> ( ( F oF R G ) oF T H ) = ( F oF O ( G oF P H ) ) ) $= fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co cmpt icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co cmpt fcaofass_9 fcaofass_10 fcaofass_6 cof co fcaofass_11 fcaofass_8 cof co fcaofass_9 fcaofass_10 fcaofass_11 fcaofass_5 cof co fcaofass_12 cof co fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co fcaofass_0 icaofass_0 sup_set_class fcaofass_4 wcel wa fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq fcaofass_3 fcaofass_7 wral fcaofass_2 fcaofass_7 wral fcaofass_1 fcaofass_7 wral icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co wceq fcaofass_0 fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq fcaofass_3 fcaofass_7 wral fcaofass_2 fcaofass_7 wral fcaofass_1 fcaofass_7 wral icaofass_0 sup_set_class fcaofass_4 wcel fcaofass_0 fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq fcaofass_1 fcaofass_2 fcaofass_3 fcaofass_7 fcaofass_7 fcaofass_7 ecaofass_4 ralrimivvva adantr fcaofass_0 icaofass_0 sup_set_class fcaofass_4 wcel wa icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_7 wcel icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_7 wcel icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_7 wcel fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq fcaofass_3 fcaofass_7 wral fcaofass_2 fcaofass_7 wral fcaofass_1 fcaofass_7 wral icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co wceq wi fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_9 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_7 wcel ecaofass_1 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_9 ffvelrn sylan fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_10 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_7 wcel ecaofass_2 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_10 ffvelrn sylan fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_11 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_7 wcel ecaofass_3 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_11 ffvelrn sylan fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co wceq icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co wceq fcaofass_1 fcaofass_2 fcaofass_3 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_7 fcaofass_7 fcaofass_7 fcaofass_1 sup_set_class icaofass_0 sup_set_class fcaofass_9 cfv wceq fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co fcaofass_1 sup_set_class icaofass_0 sup_set_class fcaofass_9 cfv wceq fcaofass_1 sup_set_class fcaofass_2 sup_set_class fcaofass_6 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 fcaofass_1 sup_set_class icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 oveq1 oveq1d fcaofass_1 sup_set_class icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 oveq1 eqeq12d fcaofass_2 sup_set_class icaofass_0 sup_set_class fcaofass_10 cfv wceq icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co fcaofass_2 sup_set_class icaofass_0 sup_set_class fcaofass_10 cfv wceq icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_2 sup_set_class fcaofass_6 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 fcaofass_2 sup_set_class icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_6 oveq2 oveq1d fcaofass_2 sup_set_class icaofass_0 sup_set_class fcaofass_10 cfv wceq fcaofass_2 sup_set_class fcaofass_3 sup_set_class fcaofass_5 co icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_12 fcaofass_2 sup_set_class icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 oveq1 oveq2d eqeq12d fcaofass_3 sup_set_class icaofass_0 sup_set_class fcaofass_11 cfv wceq icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co fcaofass_3 sup_set_class fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 co fcaofass_12 co icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 co fcaofass_3 sup_set_class icaofass_0 sup_set_class fcaofass_11 cfv icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co fcaofass_8 oveq2 fcaofass_3 sup_set_class icaofass_0 sup_set_class fcaofass_11 cfv wceq icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_3 sup_set_class fcaofass_5 co icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_12 fcaofass_3 sup_set_class icaofass_0 sup_set_class fcaofass_11 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_5 oveq2 oveq2d eqeq12d rspc3v syl3anc mpd mpteq2dva fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_8 fcaofass_9 fcaofass_10 fcaofass_6 cof co fcaofass_11 fcaofass_13 cvv fcaofass_7 ecaofass_0 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 co cvv wcel fcaofass_0 icaofass_0 sup_set_class fcaofass_4 wcel wa icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 ovex a1i fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_11 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_7 wcel ecaofass_3 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_11 ffvelrn sylan fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_6 fcaofass_9 fcaofass_10 fcaofass_13 fcaofass_7 fcaofass_7 ecaofass_0 fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_9 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_7 wcel ecaofass_1 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_9 ffvelrn sylan fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_10 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_7 wcel ecaofass_2 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_10 ffvelrn sylan fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_9 ecaofass_1 feqmptd fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_10 ecaofass_2 feqmptd offval2 fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_11 ecaofass_3 feqmptd offval2 fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_9 cfv icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co fcaofass_12 fcaofass_9 fcaofass_10 fcaofass_11 fcaofass_5 cof co fcaofass_13 fcaofass_7 cvv ecaofass_0 fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_9 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_9 cfv fcaofass_7 wcel ecaofass_1 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_9 ffvelrn sylan icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 co cvv wcel fcaofass_0 icaofass_0 sup_set_class fcaofass_4 wcel wa icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 ovex a1i fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_9 ecaofass_1 feqmptd fcaofass_0 icaofass_0 fcaofass_4 icaofass_0 sup_set_class fcaofass_10 cfv icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_5 fcaofass_10 fcaofass_11 fcaofass_13 fcaofass_7 fcaofass_7 ecaofass_0 fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_10 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_10 cfv fcaofass_7 wcel ecaofass_2 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_10 ffvelrn sylan fcaofass_0 fcaofass_4 fcaofass_7 fcaofass_11 wf icaofass_0 sup_set_class fcaofass_4 wcel icaofass_0 sup_set_class fcaofass_11 cfv fcaofass_7 wcel ecaofass_3 fcaofass_4 fcaofass_7 icaofass_0 sup_set_class fcaofass_11 ffvelrn sylan fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_10 ecaofass_2 feqmptd fcaofass_0 icaofass_0 fcaofass_4 fcaofass_7 fcaofass_11 ecaofass_3 feqmptd offval2 offval2 3eqtr4d $.
+	$v ph x y z A P R S T F G H O V  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x y z F  $.
+	$d w x y z G  $.
+	$d w x y z H  $.
+	$d w x y z O  $.
+	$d w x y z P  $.
+	$d w x y z ph  $.
+	$d w x y z R  $.
+	$d w A  $.
+	$d w x y z S  $.
+	$d w x y z T  $.
+	$d w x y z  $.
+	f0_caofass $f wff ph $.
+	f1_caofass $f set x $.
+	f2_caofass $f set y $.
+	f3_caofass $f set z $.
+	f4_caofass $f class A $.
+	f5_caofass $f class P $.
+	f6_caofass $f class R $.
+	f7_caofass $f class S $.
+	f8_caofass $f class T $.
+	f9_caofass $f class F $.
+	f10_caofass $f class G $.
+	f11_caofass $f class H $.
+	f12_caofass $f class O $.
+	f13_caofass $f class V $.
+	i0_caofass $f set w $.
+	e0_caofass $e |- ( ph -> A e. V ) $.
+	e1_caofass $e |- ( ph -> F : A --> S ) $.
+	e2_caofass $e |- ( ph -> G : A --> S ) $.
+	e3_caofass $e |- ( ph -> H : A --> S ) $.
+	e4_caofass $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. S ) ) -> ( ( x R y ) T z ) = ( x O ( y P z ) ) ) $.
+	p_caofass $p |- ( ph -> ( ( F oF R G ) oF T H ) = ( F oF O ( G oF P H ) ) ) $= e4_caofass f0_caofass f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq f1_caofass f2_caofass f3_caofass f7_caofass f7_caofass f7_caofass p_ralrimivvva f0_caofass f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq f3_caofass f7_caofass a_wral f2_caofass f7_caofass a_wral f1_caofass f7_caofass a_wral i0_caofass a_sup_set_class f4_caofass a_wcel p_adantr e1_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f9_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f9_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f9_caofass a_cfv f7_caofass a_wcel p_sylan e2_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f10_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f10_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f10_caofass a_cfv f7_caofass a_wcel p_sylan e3_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f11_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f11_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f11_caofass a_cfv f7_caofass a_wcel p_sylan f1_caofass a_sup_set_class i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass p_oveq1 f1_caofass a_sup_set_class i0_caofass a_sup_set_class f9_caofass a_cfv a_wceq f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass p_oveq1d f1_caofass a_sup_set_class i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass p_oveq1 f1_caofass a_sup_set_class i0_caofass a_sup_set_class f9_caofass a_cfv a_wceq f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co p_eqeq12d f2_caofass a_sup_set_class i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f9_caofass a_cfv f6_caofass p_oveq2 f2_caofass a_sup_set_class i0_caofass a_sup_set_class f10_caofass a_cfv a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co f3_caofass a_sup_set_class f8_caofass p_oveq1d f2_caofass a_sup_set_class i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass p_oveq1 f2_caofass a_sup_set_class i0_caofass a_sup_set_class f10_caofass a_cfv a_wceq f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f12_caofass p_oveq2d f2_caofass a_sup_set_class i0_caofass a_sup_set_class f10_caofass a_cfv a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co p_eqeq12d f3_caofass a_sup_set_class i0_caofass a_sup_set_class f11_caofass a_cfv i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co f8_caofass p_oveq2 f3_caofass a_sup_set_class i0_caofass a_sup_set_class f11_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f5_caofass p_oveq2 f3_caofass a_sup_set_class i0_caofass a_sup_set_class f11_caofass a_cfv a_wceq i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass a_co i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f12_caofass p_oveq2d f3_caofass a_sup_set_class i0_caofass a_sup_set_class f11_caofass a_cfv a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co p_eqeq12d f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq f1_caofass f2_caofass f3_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f7_caofass f7_caofass f7_caofass p_rspc3v f0_caofass i0_caofass a_sup_set_class f4_caofass a_wcel a_wa i0_caofass a_sup_set_class f9_caofass a_cfv f7_caofass a_wcel i0_caofass a_sup_set_class f10_caofass a_cfv f7_caofass a_wcel i0_caofass a_sup_set_class f11_caofass a_cfv f7_caofass a_wcel f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq f3_caofass f7_caofass a_wral f2_caofass f7_caofass a_wral f1_caofass f7_caofass a_wral i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co a_wceq a_wi p_syl3anc f0_caofass i0_caofass a_sup_set_class f4_caofass a_wcel a_wa f1_caofass a_sup_set_class f2_caofass a_sup_set_class f6_caofass a_co f3_caofass a_sup_set_class f8_caofass a_co f1_caofass a_sup_set_class f2_caofass a_sup_set_class f3_caofass a_sup_set_class f5_caofass a_co f12_caofass a_co a_wceq f3_caofass f7_caofass a_wral f2_caofass f7_caofass a_wral f1_caofass f7_caofass a_wral i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co a_wceq p_mpd f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co p_mpteq2dva e0_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass p_ovex i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co a_cvv a_wcel f0_caofass i0_caofass a_sup_set_class f4_caofass a_wcel a_wa p_a1i e3_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f11_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f11_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f11_caofass a_cfv f7_caofass a_wcel p_sylan e0_caofass e1_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f9_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f9_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f9_caofass a_cfv f7_caofass a_wcel p_sylan e2_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f10_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f10_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f10_caofass a_cfv f7_caofass a_wcel p_sylan e1_caofass f0_caofass i0_caofass f4_caofass f7_caofass f9_caofass p_feqmptd e2_caofass f0_caofass i0_caofass f4_caofass f7_caofass f10_caofass p_feqmptd f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass f9_caofass f10_caofass f13_caofass f7_caofass f7_caofass p_offval2 e3_caofass f0_caofass i0_caofass f4_caofass f7_caofass f11_caofass p_feqmptd f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass f9_caofass f10_caofass f6_caofass a_cof a_co f11_caofass f13_caofass a_cvv f7_caofass p_offval2 e0_caofass e1_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f9_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f9_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f9_caofass a_cfv f7_caofass a_wcel p_sylan i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass p_ovex i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co a_cvv a_wcel f0_caofass i0_caofass a_sup_set_class f4_caofass a_wcel a_wa p_a1i e1_caofass f0_caofass i0_caofass f4_caofass f7_caofass f9_caofass p_feqmptd e0_caofass e2_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f10_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f10_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f10_caofass a_cfv f7_caofass a_wcel p_sylan e3_caofass f4_caofass f7_caofass i0_caofass a_sup_set_class f11_caofass p_ffvelrn f0_caofass f4_caofass f7_caofass f11_caofass a_wf i0_caofass a_sup_set_class f4_caofass a_wcel i0_caofass a_sup_set_class f11_caofass a_cfv f7_caofass a_wcel p_sylan e2_caofass f0_caofass i0_caofass f4_caofass f7_caofass f10_caofass p_feqmptd e3_caofass f0_caofass i0_caofass f4_caofass f7_caofass f11_caofass p_feqmptd f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass f10_caofass f11_caofass f13_caofass f7_caofass f7_caofass p_offval2 f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass f9_caofass f10_caofass f11_caofass f5_caofass a_cof a_co f13_caofass f7_caofass a_cvv p_offval2 f0_caofass i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv f6_caofass a_co i0_caofass a_sup_set_class f11_caofass a_cfv f8_caofass a_co a_cmpt i0_caofass f4_caofass i0_caofass a_sup_set_class f9_caofass a_cfv i0_caofass a_sup_set_class f10_caofass a_cfv i0_caofass a_sup_set_class f11_caofass a_cfv f5_caofass a_co f12_caofass a_co a_cmpt f9_caofass f10_caofass f6_caofass a_cof a_co f11_caofass f8_caofass a_cof a_co f9_caofass f10_caofass f11_caofass f5_caofass a_cof a_co f12_caofass a_cof a_co p_3eqtr4d $.
 $}
-$( Transfer a transitivity law to the function relation.  (Contributed by
+
+$(Transfer a transitivity law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v U $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v V $.
-	$v w $.
-	$d w x $.
-	$d w x $.
-	$d w x y z F $.
-	$d w x y z G $.
-	$d w x y z H $.
-	$d w x y z $.
-	$d w x y z $.
-	$d w x y z ph $.
-	$d w x y z R $.
-	$d w A $.
-	$d w x y z S $.
-	$d w x y z T $.
-	$d w x y z U $.
-	icaoftrn_0 $f set w $.
-	fcaoftrn_0 $f wff ph $.
-	fcaoftrn_1 $f set x $.
-	fcaoftrn_2 $f set y $.
-	fcaoftrn_3 $f set z $.
-	fcaoftrn_4 $f class A $.
-	fcaoftrn_5 $f class R $.
-	fcaoftrn_6 $f class S $.
-	fcaoftrn_7 $f class T $.
-	fcaoftrn_8 $f class U $.
-	fcaoftrn_9 $f class F $.
-	fcaoftrn_10 $f class G $.
-	fcaoftrn_11 $f class H $.
-	fcaoftrn_12 $f class V $.
-	ecaoftrn_0 $e |- ( ph -> A e. V ) $.
-	ecaoftrn_1 $e |- ( ph -> F : A --> S ) $.
-	ecaoftrn_2 $e |- ( ph -> G : A --> S ) $.
-	ecaoftrn_3 $e |- ( ph -> H : A --> S ) $.
-	ecaoftrn_4 $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. S ) ) -> ( ( x R y /\ y T z ) -> x U z ) ) $.
-	caoftrn $p |- ( ph -> ( ( F oR R G /\ G oR T H ) -> F oR U H ) ) $= fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 fcaoftrn_4 wral icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr icaoftrn_0 fcaoftrn_4 wral fcaoftrn_9 fcaoftrn_10 fcaoftrn_5 cofr wbr fcaoftrn_10 fcaoftrn_11 fcaoftrn_7 cofr wbr wa fcaoftrn_9 fcaoftrn_11 fcaoftrn_8 cofr wbr fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr icaoftrn_0 fcaoftrn_4 fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi fcaoftrn_3 fcaoftrn_6 wral fcaoftrn_2 fcaoftrn_6 wral fcaoftrn_1 fcaoftrn_6 wral icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr wi fcaoftrn_0 fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi fcaoftrn_3 fcaoftrn_6 wral fcaoftrn_2 fcaoftrn_6 wral fcaoftrn_1 fcaoftrn_6 wral icaoftrn_0 sup_set_class fcaoftrn_4 wcel fcaoftrn_0 fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi fcaoftrn_1 fcaoftrn_2 fcaoftrn_3 fcaoftrn_6 fcaoftrn_6 fcaoftrn_6 ecaoftrn_4 ralrimivvva adantr fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_6 wcel icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_6 wcel icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_6 wcel fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi fcaoftrn_3 fcaoftrn_6 wral fcaoftrn_2 fcaoftrn_6 wral fcaoftrn_1 fcaoftrn_6 wral icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr wi wi fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_9 wf icaoftrn_0 sup_set_class fcaoftrn_4 wcel icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_6 wcel ecaoftrn_1 fcaoftrn_4 fcaoftrn_6 icaoftrn_0 sup_set_class fcaoftrn_9 ffvelrn sylan fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_10 wf icaoftrn_0 sup_set_class fcaoftrn_4 wcel icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_6 wcel ecaoftrn_2 fcaoftrn_4 fcaoftrn_6 icaoftrn_0 sup_set_class fcaoftrn_10 ffvelrn sylan fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_11 wf icaoftrn_0 sup_set_class fcaoftrn_4 wcel icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_6 wcel ecaoftrn_3 fcaoftrn_4 fcaoftrn_6 icaoftrn_0 sup_set_class fcaoftrn_11 ffvelrn sylan fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr wi icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 wbr wi fcaoftrn_1 fcaoftrn_2 fcaoftrn_3 icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_6 fcaoftrn_6 fcaoftrn_6 fcaoftrn_1 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_9 cfv wceq fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa fcaoftrn_1 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_8 wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 wbr fcaoftrn_1 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_9 cfv wceq fcaoftrn_1 sup_set_class fcaoftrn_2 sup_set_class fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr fcaoftrn_1 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 breq1 anbi1d fcaoftrn_1 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 breq1 imbi12d fcaoftrn_2 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_10 cfv wceq icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 wbr fcaoftrn_2 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_10 cfv wceq icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_2 sup_set_class fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr fcaoftrn_2 sup_set_class fcaoftrn_3 sup_set_class fcaoftrn_7 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 wbr fcaoftrn_2 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_5 breq2 fcaoftrn_2 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 breq1 anbi12d imbi1d fcaoftrn_3 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_11 cfv wceq icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_3 sup_set_class fcaoftrn_8 wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 wbr fcaoftrn_3 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_11 cfv wceq icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_3 sup_set_class fcaoftrn_7 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr fcaoftrn_3 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_11 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_7 breq2 anbi2d fcaoftrn_3 sup_set_class icaoftrn_0 sup_set_class fcaoftrn_11 cfv icaoftrn_0 sup_set_class fcaoftrn_9 cfv fcaoftrn_8 breq2 imbi12d rspc3v syl3anc mpd ralimdva fcaoftrn_0 fcaoftrn_9 fcaoftrn_10 fcaoftrn_5 cofr wbr fcaoftrn_10 fcaoftrn_11 fcaoftrn_7 cofr wbr wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 fcaoftrn_4 wral icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr icaoftrn_0 fcaoftrn_4 wral wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr wa icaoftrn_0 fcaoftrn_4 wral fcaoftrn_0 fcaoftrn_9 fcaoftrn_10 fcaoftrn_5 cofr wbr icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 fcaoftrn_4 wral fcaoftrn_10 fcaoftrn_11 fcaoftrn_7 cofr wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr icaoftrn_0 fcaoftrn_4 wral fcaoftrn_0 icaoftrn_0 fcaoftrn_4 fcaoftrn_4 icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 fcaoftrn_4 fcaoftrn_9 fcaoftrn_10 fcaoftrn_12 fcaoftrn_12 fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_9 wf fcaoftrn_9 fcaoftrn_4 wfn ecaoftrn_1 fcaoftrn_4 fcaoftrn_6 fcaoftrn_9 ffn syl fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_10 wf fcaoftrn_10 fcaoftrn_4 wfn ecaoftrn_2 fcaoftrn_4 fcaoftrn_6 fcaoftrn_10 ffn syl ecaoftrn_0 ecaoftrn_0 fcaoftrn_4 inidm fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv eqidd fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_10 cfv eqidd ofrfval fcaoftrn_0 icaoftrn_0 fcaoftrn_4 fcaoftrn_4 icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 fcaoftrn_4 fcaoftrn_10 fcaoftrn_11 fcaoftrn_12 fcaoftrn_12 fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_10 wf fcaoftrn_10 fcaoftrn_4 wfn ecaoftrn_2 fcaoftrn_4 fcaoftrn_6 fcaoftrn_10 ffn syl fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_11 wf fcaoftrn_11 fcaoftrn_4 wfn ecaoftrn_3 fcaoftrn_4 fcaoftrn_6 fcaoftrn_11 ffn syl ecaoftrn_0 ecaoftrn_0 fcaoftrn_4 inidm fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_10 cfv eqidd fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_11 cfv eqidd ofrfval anbi12d icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_10 cfv fcaoftrn_5 wbr icaoftrn_0 sup_set_class fcaoftrn_10 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_7 wbr icaoftrn_0 fcaoftrn_4 r19.26 syl6bbr fcaoftrn_0 icaoftrn_0 fcaoftrn_4 fcaoftrn_4 icaoftrn_0 sup_set_class fcaoftrn_9 cfv icaoftrn_0 sup_set_class fcaoftrn_11 cfv fcaoftrn_8 fcaoftrn_4 fcaoftrn_9 fcaoftrn_11 fcaoftrn_12 fcaoftrn_12 fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_9 wf fcaoftrn_9 fcaoftrn_4 wfn ecaoftrn_1 fcaoftrn_4 fcaoftrn_6 fcaoftrn_9 ffn syl fcaoftrn_0 fcaoftrn_4 fcaoftrn_6 fcaoftrn_11 wf fcaoftrn_11 fcaoftrn_4 wfn ecaoftrn_3 fcaoftrn_4 fcaoftrn_6 fcaoftrn_11 ffn syl ecaoftrn_0 ecaoftrn_0 fcaoftrn_4 inidm fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_9 cfv eqidd fcaoftrn_0 icaoftrn_0 sup_set_class fcaoftrn_4 wcel wa icaoftrn_0 sup_set_class fcaoftrn_11 cfv eqidd ofrfval 3imtr4d $.
+	$v ph x y z A R S T U F G H V  $.
+	$d w x  $.
+	$d w x  $.
+	$d w x y z F  $.
+	$d w x y z G  $.
+	$d w x y z H  $.
+	$d w x y z  $.
+	$d w x y z  $.
+	$d w x y z ph  $.
+	$d w x y z R  $.
+	$d w A  $.
+	$d w x y z S  $.
+	$d w x y z T  $.
+	$d w x y z U  $.
+	f0_caoftrn $f wff ph $.
+	f1_caoftrn $f set x $.
+	f2_caoftrn $f set y $.
+	f3_caoftrn $f set z $.
+	f4_caoftrn $f class A $.
+	f5_caoftrn $f class R $.
+	f6_caoftrn $f class S $.
+	f7_caoftrn $f class T $.
+	f8_caoftrn $f class U $.
+	f9_caoftrn $f class F $.
+	f10_caoftrn $f class G $.
+	f11_caoftrn $f class H $.
+	f12_caoftrn $f class V $.
+	i0_caoftrn $f set w $.
+	e0_caoftrn $e |- ( ph -> A e. V ) $.
+	e1_caoftrn $e |- ( ph -> F : A --> S ) $.
+	e2_caoftrn $e |- ( ph -> G : A --> S ) $.
+	e3_caoftrn $e |- ( ph -> H : A --> S ) $.
+	e4_caoftrn $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. S ) ) -> ( ( x R y /\ y T z ) -> x U z ) ) $.
+	p_caoftrn $p |- ( ph -> ( ( F oR R G /\ G oR T H ) -> F oR U H ) ) $= e4_caoftrn f0_caoftrn f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi f1_caoftrn f2_caoftrn f3_caoftrn f6_caoftrn f6_caoftrn f6_caoftrn p_ralrimivvva f0_caoftrn f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi f3_caoftrn f6_caoftrn a_wral f2_caoftrn f6_caoftrn a_wral f1_caoftrn f6_caoftrn a_wral i0_caoftrn a_sup_set_class f4_caoftrn a_wcel p_adantr e1_caoftrn f4_caoftrn f6_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn p_ffvelrn f0_caoftrn f4_caoftrn f6_caoftrn f9_caoftrn a_wf i0_caoftrn a_sup_set_class f4_caoftrn a_wcel i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f6_caoftrn a_wcel p_sylan e2_caoftrn f4_caoftrn f6_caoftrn i0_caoftrn a_sup_set_class f10_caoftrn p_ffvelrn f0_caoftrn f4_caoftrn f6_caoftrn f10_caoftrn a_wf i0_caoftrn a_sup_set_class f4_caoftrn a_wcel i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f6_caoftrn a_wcel p_sylan e3_caoftrn f4_caoftrn f6_caoftrn i0_caoftrn a_sup_set_class f11_caoftrn p_ffvelrn f0_caoftrn f4_caoftrn f6_caoftrn f11_caoftrn a_wf i0_caoftrn a_sup_set_class f4_caoftrn a_wcel i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f6_caoftrn a_wcel p_sylan f1_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn p_breq1 f1_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f9_caoftrn a_cfv a_wceq f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr p_anbi1d f1_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn p_breq1 f1_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f9_caoftrn a_cfv a_wceq f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn a_wbr p_imbi12d f2_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f5_caoftrn p_breq2 f2_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn p_breq1 f2_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f10_caoftrn a_cfv a_wceq i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn a_wbr p_anbi12d f2_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f10_caoftrn a_cfv a_wceq i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn a_wbr p_imbi1d f3_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f11_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f7_caoftrn p_breq2 f3_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f11_caoftrn a_cfv a_wceq i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr p_anbi2d f3_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f11_caoftrn a_cfv i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f8_caoftrn p_breq2 f3_caoftrn a_sup_set_class i0_caoftrn a_sup_set_class f11_caoftrn a_cfv a_wceq i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr p_imbi12d f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr a_wi i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi f1_caoftrn f2_caoftrn f3_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f6_caoftrn f6_caoftrn f6_caoftrn p_rspc3v f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv f6_caoftrn a_wcel i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f6_caoftrn a_wcel i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f6_caoftrn a_wcel f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi f3_caoftrn f6_caoftrn a_wral f2_caoftrn f6_caoftrn a_wral f1_caoftrn f6_caoftrn a_wral i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr a_wi a_wi p_syl3anc f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa f1_caoftrn a_sup_set_class f2_caoftrn a_sup_set_class f5_caoftrn a_wbr f2_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f7_caoftrn a_wbr a_wa f1_caoftrn a_sup_set_class f3_caoftrn a_sup_set_class f8_caoftrn a_wbr a_wi f3_caoftrn f6_caoftrn a_wral f2_caoftrn f6_caoftrn a_wral f1_caoftrn f6_caoftrn a_wral i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr a_wi p_mpd f0_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr i0_caoftrn f4_caoftrn p_ralimdva e1_caoftrn f4_caoftrn f6_caoftrn f9_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f9_caoftrn a_wf f9_caoftrn f4_caoftrn a_wfn p_syl e2_caoftrn f4_caoftrn f6_caoftrn f10_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f10_caoftrn a_wf f10_caoftrn f4_caoftrn a_wfn p_syl e0_caoftrn e0_caoftrn f4_caoftrn p_inidm f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f10_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn f4_caoftrn f4_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn f4_caoftrn f9_caoftrn f10_caoftrn f12_caoftrn f12_caoftrn p_ofrfval e2_caoftrn f4_caoftrn f6_caoftrn f10_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f10_caoftrn a_wf f10_caoftrn f4_caoftrn a_wfn p_syl e3_caoftrn f4_caoftrn f6_caoftrn f11_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f11_caoftrn a_wf f11_caoftrn f4_caoftrn a_wfn p_syl e0_caoftrn e0_caoftrn f4_caoftrn p_inidm f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f10_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f11_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn f4_caoftrn f4_caoftrn i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn f4_caoftrn f10_caoftrn f11_caoftrn f12_caoftrn f12_caoftrn p_ofrfval f0_caoftrn f9_caoftrn f10_caoftrn f5_caoftrn a_cofr a_wbr i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn f4_caoftrn a_wral f10_caoftrn f11_caoftrn f7_caoftrn a_cofr a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr i0_caoftrn f4_caoftrn a_wral p_anbi12d i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr i0_caoftrn f4_caoftrn p_r19.26 f0_caoftrn f9_caoftrn f10_caoftrn f5_caoftrn a_cofr a_wbr f10_caoftrn f11_caoftrn f7_caoftrn a_cofr a_wbr a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn f4_caoftrn a_wral i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr i0_caoftrn f4_caoftrn a_wral a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn f4_caoftrn a_wral p_syl6bbr e1_caoftrn f4_caoftrn f6_caoftrn f9_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f9_caoftrn a_wf f9_caoftrn f4_caoftrn a_wfn p_syl e3_caoftrn f4_caoftrn f6_caoftrn f11_caoftrn p_ffn f0_caoftrn f4_caoftrn f6_caoftrn f11_caoftrn a_wf f11_caoftrn f4_caoftrn a_wfn p_syl e0_caoftrn e0_caoftrn f4_caoftrn p_inidm f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f9_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn a_sup_set_class f4_caoftrn a_wcel a_wa i0_caoftrn a_sup_set_class f11_caoftrn a_cfv p_eqidd f0_caoftrn i0_caoftrn f4_caoftrn f4_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn f4_caoftrn f9_caoftrn f11_caoftrn f12_caoftrn f12_caoftrn p_ofrfval f0_caoftrn i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f10_caoftrn a_cfv f5_caoftrn a_wbr i0_caoftrn a_sup_set_class f10_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f7_caoftrn a_wbr a_wa i0_caoftrn f4_caoftrn a_wral i0_caoftrn a_sup_set_class f9_caoftrn a_cfv i0_caoftrn a_sup_set_class f11_caoftrn a_cfv f8_caoftrn a_wbr i0_caoftrn f4_caoftrn a_wral f9_caoftrn f10_caoftrn f5_caoftrn a_cofr a_wbr f10_caoftrn f11_caoftrn f7_caoftrn a_cofr a_wbr a_wa f9_caoftrn f11_caoftrn f8_caoftrn a_cofr a_wbr p_3imtr4d $.
 $}
-$( Transfer a distributive law to the function operation.  (Contributed
+
+$(Transfer a distributive law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v K $.
-	$v O $.
-	$v V $.
-	$v w $.
-	$d w x y z A $.
-	$d w x y z F $.
-	$d w x y z G $.
-	$d w x y z ph $.
-	$d w x y z H $.
-	$d w x y z K $.
-	$d w x y z O $.
-	$d w x y z R $.
-	$d w x y z S $.
-	$d w x y z T $.
-	icaofdi_0 $f set w $.
-	fcaofdi_0 $f wff ph $.
-	fcaofdi_1 $f set x $.
-	fcaofdi_2 $f set y $.
-	fcaofdi_3 $f set z $.
-	fcaofdi_4 $f class A $.
-	fcaofdi_5 $f class R $.
-	fcaofdi_6 $f class S $.
-	fcaofdi_7 $f class T $.
-	fcaofdi_8 $f class F $.
-	fcaofdi_9 $f class G $.
-	fcaofdi_10 $f class H $.
-	fcaofdi_11 $f class K $.
-	fcaofdi_12 $f class O $.
-	fcaofdi_13 $f class V $.
-	ecaofdi_0 $e |- ( ph -> A e. V ) $.
-	ecaofdi_1 $e |- ( ph -> F : A --> K ) $.
-	ecaofdi_2 $e |- ( ph -> G : A --> S ) $.
-	ecaofdi_3 $e |- ( ph -> H : A --> S ) $.
-	ecaofdi_4 $e |- ( ( ph /\ ( x e. K /\ y e. S /\ z e. S ) ) -> ( x T ( y R z ) ) = ( ( x T y ) O ( x T z ) ) ) $.
-	caofdi $p |- ( ph -> ( F oF T ( G oF R H ) ) = ( ( F oF T G ) oF O ( F oF T H ) ) ) $= fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 co fcaofdi_7 co cmpt icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 co icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 co fcaofdi_12 co cmpt fcaofdi_8 fcaofdi_9 fcaofdi_10 fcaofdi_5 cof co fcaofdi_7 cof co fcaofdi_8 fcaofdi_9 fcaofdi_7 cof co fcaofdi_8 fcaofdi_10 fcaofdi_7 cof co fcaofdi_12 cof co fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 co fcaofdi_7 co icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 co icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 co fcaofdi_12 co fcaofdi_0 icaofdi_0 sup_set_class fcaofdi_4 wcel wa fcaofdi_1 fcaofdi_2 fcaofdi_3 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_6 fcaofdi_5 fcaofdi_7 fcaofdi_12 fcaofdi_11 fcaofdi_0 fcaofdi_1 sup_set_class fcaofdi_11 wcel fcaofdi_2 sup_set_class fcaofdi_6 wcel fcaofdi_3 sup_set_class fcaofdi_6 wcel w3a fcaofdi_1 sup_set_class fcaofdi_2 sup_set_class fcaofdi_3 sup_set_class fcaofdi_5 co fcaofdi_7 co fcaofdi_1 sup_set_class fcaofdi_2 sup_set_class fcaofdi_7 co fcaofdi_1 sup_set_class fcaofdi_3 sup_set_class fcaofdi_7 co fcaofdi_12 co wceq icaofdi_0 sup_set_class fcaofdi_4 wcel ecaofdi_4 adantlr fcaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_8 cfv fcaofdi_11 wcel ecaofdi_1 fcaofdi_4 fcaofdi_11 icaofdi_0 sup_set_class fcaofdi_8 ffvelrn sylan fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_9 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_6 wcel ecaofdi_2 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_9 ffvelrn sylan fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_10 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_6 wcel ecaofdi_3 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_10 ffvelrn sylan caovdid mpteq2dva fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 co fcaofdi_7 fcaofdi_8 fcaofdi_9 fcaofdi_10 fcaofdi_5 cof co fcaofdi_13 fcaofdi_11 cvv ecaofdi_0 fcaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_8 cfv fcaofdi_11 wcel ecaofdi_1 fcaofdi_4 fcaofdi_11 icaofdi_0 sup_set_class fcaofdi_8 ffvelrn sylan icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 co cvv wcel fcaofdi_0 icaofdi_0 sup_set_class fcaofdi_4 wcel wa icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 ovex a1i fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 ecaofdi_1 feqmptd fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_9 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_5 fcaofdi_9 fcaofdi_10 fcaofdi_13 fcaofdi_6 fcaofdi_6 ecaofdi_0 fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_9 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_6 wcel ecaofdi_2 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_9 ffvelrn sylan fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_10 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_6 wcel ecaofdi_3 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_10 ffvelrn sylan fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_9 ecaofdi_2 feqmptd fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_10 ecaofdi_3 feqmptd offval2 offval2 fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 co icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 co fcaofdi_12 fcaofdi_8 fcaofdi_9 fcaofdi_7 cof co fcaofdi_8 fcaofdi_10 fcaofdi_7 cof co fcaofdi_13 cvv cvv ecaofdi_0 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 co cvv wcel fcaofdi_0 icaofdi_0 sup_set_class fcaofdi_4 wcel wa icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 ovex a1i icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 co cvv wcel fcaofdi_0 icaofdi_0 sup_set_class fcaofdi_4 wcel wa icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 ovex a1i fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_7 fcaofdi_8 fcaofdi_9 fcaofdi_13 fcaofdi_11 fcaofdi_6 ecaofdi_0 fcaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_8 cfv fcaofdi_11 wcel ecaofdi_1 fcaofdi_4 fcaofdi_11 icaofdi_0 sup_set_class fcaofdi_8 ffvelrn sylan fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_9 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_9 cfv fcaofdi_6 wcel ecaofdi_2 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_9 ffvelrn sylan fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 ecaofdi_1 feqmptd fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_9 ecaofdi_2 feqmptd offval2 fcaofdi_0 icaofdi_0 fcaofdi_4 icaofdi_0 sup_set_class fcaofdi_8 cfv icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_7 fcaofdi_8 fcaofdi_10 fcaofdi_13 fcaofdi_11 fcaofdi_6 ecaofdi_0 fcaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_8 cfv fcaofdi_11 wcel ecaofdi_1 fcaofdi_4 fcaofdi_11 icaofdi_0 sup_set_class fcaofdi_8 ffvelrn sylan fcaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_10 wf icaofdi_0 sup_set_class fcaofdi_4 wcel icaofdi_0 sup_set_class fcaofdi_10 cfv fcaofdi_6 wcel ecaofdi_3 fcaofdi_4 fcaofdi_6 icaofdi_0 sup_set_class fcaofdi_10 ffvelrn sylan fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_11 fcaofdi_8 ecaofdi_1 feqmptd fcaofdi_0 icaofdi_0 fcaofdi_4 fcaofdi_6 fcaofdi_10 ecaofdi_3 feqmptd offval2 offval2 3eqtr4d $.
+	$v ph x y z A R S T F G H K O V  $.
+	$d w x y z A  $.
+	$d w x y z F  $.
+	$d w x y z G  $.
+	$d w x y z ph  $.
+	$d w x y z H  $.
+	$d w x y z K  $.
+	$d w x y z O  $.
+	$d w x y z R  $.
+	$d w x y z S  $.
+	$d w x y z T  $.
+	f0_caofdi $f wff ph $.
+	f1_caofdi $f set x $.
+	f2_caofdi $f set y $.
+	f3_caofdi $f set z $.
+	f4_caofdi $f class A $.
+	f5_caofdi $f class R $.
+	f6_caofdi $f class S $.
+	f7_caofdi $f class T $.
+	f8_caofdi $f class F $.
+	f9_caofdi $f class G $.
+	f10_caofdi $f class H $.
+	f11_caofdi $f class K $.
+	f12_caofdi $f class O $.
+	f13_caofdi $f class V $.
+	i0_caofdi $f set w $.
+	e0_caofdi $e |- ( ph -> A e. V ) $.
+	e1_caofdi $e |- ( ph -> F : A --> K ) $.
+	e2_caofdi $e |- ( ph -> G : A --> S ) $.
+	e3_caofdi $e |- ( ph -> H : A --> S ) $.
+	e4_caofdi $e |- ( ( ph /\ ( x e. K /\ y e. S /\ z e. S ) ) -> ( x T ( y R z ) ) = ( ( x T y ) O ( x T z ) ) ) $.
+	p_caofdi $p |- ( ph -> ( F oF T ( G oF R H ) ) = ( ( F oF T G ) oF O ( F oF T H ) ) ) $= e4_caofdi f0_caofdi f1_caofdi a_sup_set_class f11_caofdi a_wcel f2_caofdi a_sup_set_class f6_caofdi a_wcel f3_caofdi a_sup_set_class f6_caofdi a_wcel a_w3a f1_caofdi a_sup_set_class f2_caofdi a_sup_set_class f3_caofdi a_sup_set_class f5_caofdi a_co f7_caofdi a_co f1_caofdi a_sup_set_class f2_caofdi a_sup_set_class f7_caofdi a_co f1_caofdi a_sup_set_class f3_caofdi a_sup_set_class f7_caofdi a_co f12_caofdi a_co a_wceq i0_caofdi a_sup_set_class f4_caofdi a_wcel p_adantlr e1_caofdi f4_caofdi f11_caofdi i0_caofdi a_sup_set_class f8_caofdi p_ffvelrn f0_caofdi f4_caofdi f11_caofdi f8_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f8_caofdi a_cfv f11_caofdi a_wcel p_sylan e2_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f9_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f9_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f9_caofdi a_cfv f6_caofdi a_wcel p_sylan e3_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f10_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f10_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f10_caofdi a_cfv f6_caofdi a_wcel p_sylan f0_caofdi i0_caofdi a_sup_set_class f4_caofdi a_wcel a_wa f1_caofdi f2_caofdi f3_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f6_caofdi f5_caofdi f7_caofdi f12_caofdi f11_caofdi p_caovdid f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi a_co f7_caofdi a_co i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi a_co i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi a_co f12_caofdi a_co p_mpteq2dva e0_caofdi e1_caofdi f4_caofdi f11_caofdi i0_caofdi a_sup_set_class f8_caofdi p_ffvelrn f0_caofdi f4_caofdi f11_caofdi f8_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f8_caofdi a_cfv f11_caofdi a_wcel p_sylan i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi p_ovex i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi a_co a_cvv a_wcel f0_caofdi i0_caofdi a_sup_set_class f4_caofdi a_wcel a_wa p_a1i e1_caofdi f0_caofdi i0_caofdi f4_caofdi f11_caofdi f8_caofdi p_feqmptd e0_caofdi e2_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f9_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f9_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f9_caofdi a_cfv f6_caofdi a_wcel p_sylan e3_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f10_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f10_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f10_caofdi a_cfv f6_caofdi a_wcel p_sylan e2_caofdi f0_caofdi i0_caofdi f4_caofdi f6_caofdi f9_caofdi p_feqmptd e3_caofdi f0_caofdi i0_caofdi f4_caofdi f6_caofdi f10_caofdi p_feqmptd f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi f9_caofdi f10_caofdi f13_caofdi f6_caofdi f6_caofdi p_offval2 f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi a_co f7_caofdi f8_caofdi f9_caofdi f10_caofdi f5_caofdi a_cof a_co f13_caofdi f11_caofdi a_cvv p_offval2 e0_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi p_ovex i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi a_co a_cvv a_wcel f0_caofdi i0_caofdi a_sup_set_class f4_caofdi a_wcel a_wa p_a1i i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi p_ovex i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi a_co a_cvv a_wcel f0_caofdi i0_caofdi a_sup_set_class f4_caofdi a_wcel a_wa p_a1i e0_caofdi e1_caofdi f4_caofdi f11_caofdi i0_caofdi a_sup_set_class f8_caofdi p_ffvelrn f0_caofdi f4_caofdi f11_caofdi f8_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f8_caofdi a_cfv f11_caofdi a_wcel p_sylan e2_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f9_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f9_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f9_caofdi a_cfv f6_caofdi a_wcel p_sylan e1_caofdi f0_caofdi i0_caofdi f4_caofdi f11_caofdi f8_caofdi p_feqmptd e2_caofdi f0_caofdi i0_caofdi f4_caofdi f6_caofdi f9_caofdi p_feqmptd f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi f8_caofdi f9_caofdi f13_caofdi f11_caofdi f6_caofdi p_offval2 e0_caofdi e1_caofdi f4_caofdi f11_caofdi i0_caofdi a_sup_set_class f8_caofdi p_ffvelrn f0_caofdi f4_caofdi f11_caofdi f8_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f8_caofdi a_cfv f11_caofdi a_wcel p_sylan e3_caofdi f4_caofdi f6_caofdi i0_caofdi a_sup_set_class f10_caofdi p_ffvelrn f0_caofdi f4_caofdi f6_caofdi f10_caofdi a_wf i0_caofdi a_sup_set_class f4_caofdi a_wcel i0_caofdi a_sup_set_class f10_caofdi a_cfv f6_caofdi a_wcel p_sylan e1_caofdi f0_caofdi i0_caofdi f4_caofdi f11_caofdi f8_caofdi p_feqmptd e3_caofdi f0_caofdi i0_caofdi f4_caofdi f6_caofdi f10_caofdi p_feqmptd f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi f8_caofdi f10_caofdi f13_caofdi f11_caofdi f6_caofdi p_offval2 f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi a_co i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi a_co f12_caofdi f8_caofdi f9_caofdi f7_caofdi a_cof a_co f8_caofdi f10_caofdi f7_caofdi a_cof a_co f13_caofdi a_cvv a_cvv p_offval2 f0_caofdi i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f5_caofdi a_co f7_caofdi a_co a_cmpt i0_caofdi f4_caofdi i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f9_caofdi a_cfv f7_caofdi a_co i0_caofdi a_sup_set_class f8_caofdi a_cfv i0_caofdi a_sup_set_class f10_caofdi a_cfv f7_caofdi a_co f12_caofdi a_co a_cmpt f8_caofdi f9_caofdi f10_caofdi f5_caofdi a_cof a_co f7_caofdi a_cof a_co f8_caofdi f9_caofdi f7_caofdi a_cof a_co f8_caofdi f10_caofdi f7_caofdi a_cof a_co f12_caofdi a_cof a_co p_3eqtr4d $.
 $}
-$( Transfer a reverse distributive law to the function operation.
+
+$(Transfer a reverse distributive law to the function operation.
          (Contributed by NM, 19-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v z $.
-	$v A $.
-	$v R $.
-	$v S $.
-	$v T $.
-	$v F $.
-	$v G $.
-	$v H $.
-	$v K $.
-	$v O $.
-	$v V $.
-	$v w $.
-	$d w x y z A $.
-	$d w x y z F $.
-	$d w x y z G $.
-	$d w x y z ph $.
-	$d w x y z H $.
-	$d w x y z K $.
-	$d w x y z O $.
-	$d w x y z R $.
-	$d w x y z S $.
-	$d w x y z T $.
-	icaofdir_0 $f set w $.
-	fcaofdir_0 $f wff ph $.
-	fcaofdir_1 $f set x $.
-	fcaofdir_2 $f set y $.
-	fcaofdir_3 $f set z $.
-	fcaofdir_4 $f class A $.
-	fcaofdir_5 $f class R $.
-	fcaofdir_6 $f class S $.
-	fcaofdir_7 $f class T $.
-	fcaofdir_8 $f class F $.
-	fcaofdir_9 $f class G $.
-	fcaofdir_10 $f class H $.
-	fcaofdir_11 $f class K $.
-	fcaofdir_12 $f class O $.
-	fcaofdir_13 $f class V $.
-	ecaofdir_0 $e |- ( ph -> A e. V ) $.
-	ecaofdir_1 $e |- ( ph -> F : A --> K ) $.
-	ecaofdir_2 $e |- ( ph -> G : A --> S ) $.
-	ecaofdir_3 $e |- ( ph -> H : A --> S ) $.
-	ecaofdir_4 $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. K ) ) -> ( ( x R y ) T z ) = ( ( x T z ) O ( y T z ) ) ) $.
-	caofdir $p |- ( ph -> ( ( G oF R H ) oF T F ) = ( ( G oF T F ) oF O ( H oF T F ) ) ) $= fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 co icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co cmpt icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co fcaofdir_12 co cmpt fcaofdir_9 fcaofdir_10 fcaofdir_5 cof co fcaofdir_8 fcaofdir_7 cof co fcaofdir_9 fcaofdir_8 fcaofdir_7 cof co fcaofdir_10 fcaofdir_8 fcaofdir_7 cof co fcaofdir_12 cof co fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 co icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co fcaofdir_12 co fcaofdir_0 icaofdir_0 sup_set_class fcaofdir_4 wcel wa fcaofdir_1 fcaofdir_2 fcaofdir_3 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_6 fcaofdir_5 fcaofdir_7 fcaofdir_12 fcaofdir_11 fcaofdir_0 fcaofdir_1 sup_set_class fcaofdir_6 wcel fcaofdir_2 sup_set_class fcaofdir_6 wcel fcaofdir_3 sup_set_class fcaofdir_11 wcel w3a fcaofdir_1 sup_set_class fcaofdir_2 sup_set_class fcaofdir_5 co fcaofdir_3 sup_set_class fcaofdir_7 co fcaofdir_1 sup_set_class fcaofdir_3 sup_set_class fcaofdir_7 co fcaofdir_2 sup_set_class fcaofdir_3 sup_set_class fcaofdir_7 co fcaofdir_12 co wceq icaofdir_0 sup_set_class fcaofdir_4 wcel ecaofdir_4 adantlr fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_9 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_9 cfv fcaofdir_6 wcel ecaofdir_2 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_9 ffvelrn sylan fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_10 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_6 wcel ecaofdir_3 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_10 ffvelrn sylan fcaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_11 wcel ecaofdir_1 fcaofdir_4 fcaofdir_11 icaofdir_0 sup_set_class fcaofdir_8 ffvelrn sylan caovdird mpteq2dva fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 co icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 fcaofdir_9 fcaofdir_10 fcaofdir_5 cof co fcaofdir_8 fcaofdir_13 cvv fcaofdir_11 ecaofdir_0 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 co cvv wcel fcaofdir_0 icaofdir_0 sup_set_class fcaofdir_4 wcel wa icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 ovex a1i fcaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_11 wcel ecaofdir_1 fcaofdir_4 fcaofdir_11 icaofdir_0 sup_set_class fcaofdir_8 ffvelrn sylan fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_5 fcaofdir_9 fcaofdir_10 fcaofdir_13 fcaofdir_6 fcaofdir_6 ecaofdir_0 fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_9 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_9 cfv fcaofdir_6 wcel ecaofdir_2 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_9 ffvelrn sylan fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_10 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_6 wcel ecaofdir_3 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_10 ffvelrn sylan fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_9 ecaofdir_2 feqmptd fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_10 ecaofdir_3 feqmptd offval2 fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 ecaofdir_1 feqmptd offval2 fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co fcaofdir_12 fcaofdir_9 fcaofdir_8 fcaofdir_7 cof co fcaofdir_10 fcaofdir_8 fcaofdir_7 cof co fcaofdir_13 cvv cvv ecaofdir_0 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co cvv wcel fcaofdir_0 icaofdir_0 sup_set_class fcaofdir_4 wcel wa icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 ovex a1i icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 co cvv wcel fcaofdir_0 icaofdir_0 sup_set_class fcaofdir_4 wcel wa icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 ovex a1i fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_9 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 fcaofdir_9 fcaofdir_8 fcaofdir_13 fcaofdir_6 fcaofdir_11 ecaofdir_0 fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_9 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_9 cfv fcaofdir_6 wcel ecaofdir_2 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_9 ffvelrn sylan fcaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_11 wcel ecaofdir_1 fcaofdir_4 fcaofdir_11 icaofdir_0 sup_set_class fcaofdir_8 ffvelrn sylan fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_9 ecaofdir_2 feqmptd fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 ecaofdir_1 feqmptd offval2 fcaofdir_0 icaofdir_0 fcaofdir_4 icaofdir_0 sup_set_class fcaofdir_10 cfv icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_7 fcaofdir_10 fcaofdir_8 fcaofdir_13 fcaofdir_6 fcaofdir_11 ecaofdir_0 fcaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_10 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_10 cfv fcaofdir_6 wcel ecaofdir_3 fcaofdir_4 fcaofdir_6 icaofdir_0 sup_set_class fcaofdir_10 ffvelrn sylan fcaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 wf icaofdir_0 sup_set_class fcaofdir_4 wcel icaofdir_0 sup_set_class fcaofdir_8 cfv fcaofdir_11 wcel ecaofdir_1 fcaofdir_4 fcaofdir_11 icaofdir_0 sup_set_class fcaofdir_8 ffvelrn sylan fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_6 fcaofdir_10 ecaofdir_3 feqmptd fcaofdir_0 icaofdir_0 fcaofdir_4 fcaofdir_11 fcaofdir_8 ecaofdir_1 feqmptd offval2 offval2 3eqtr4d $.
+	$v ph x y z A R S T F G H K O V  $.
+	$d w x y z A  $.
+	$d w x y z F  $.
+	$d w x y z G  $.
+	$d w x y z ph  $.
+	$d w x y z H  $.
+	$d w x y z K  $.
+	$d w x y z O  $.
+	$d w x y z R  $.
+	$d w x y z S  $.
+	$d w x y z T  $.
+	f0_caofdir $f wff ph $.
+	f1_caofdir $f set x $.
+	f2_caofdir $f set y $.
+	f3_caofdir $f set z $.
+	f4_caofdir $f class A $.
+	f5_caofdir $f class R $.
+	f6_caofdir $f class S $.
+	f7_caofdir $f class T $.
+	f8_caofdir $f class F $.
+	f9_caofdir $f class G $.
+	f10_caofdir $f class H $.
+	f11_caofdir $f class K $.
+	f12_caofdir $f class O $.
+	f13_caofdir $f class V $.
+	i0_caofdir $f set w $.
+	e0_caofdir $e |- ( ph -> A e. V ) $.
+	e1_caofdir $e |- ( ph -> F : A --> K ) $.
+	e2_caofdir $e |- ( ph -> G : A --> S ) $.
+	e3_caofdir $e |- ( ph -> H : A --> S ) $.
+	e4_caofdir $e |- ( ( ph /\ ( x e. S /\ y e. S /\ z e. K ) ) -> ( ( x R y ) T z ) = ( ( x T z ) O ( y T z ) ) ) $.
+	p_caofdir $p |- ( ph -> ( ( G oF R H ) oF T F ) = ( ( G oF T F ) oF O ( H oF T F ) ) ) $= e4_caofdir f0_caofdir f1_caofdir a_sup_set_class f6_caofdir a_wcel f2_caofdir a_sup_set_class f6_caofdir a_wcel f3_caofdir a_sup_set_class f11_caofdir a_wcel a_w3a f1_caofdir a_sup_set_class f2_caofdir a_sup_set_class f5_caofdir a_co f3_caofdir a_sup_set_class f7_caofdir a_co f1_caofdir a_sup_set_class f3_caofdir a_sup_set_class f7_caofdir a_co f2_caofdir a_sup_set_class f3_caofdir a_sup_set_class f7_caofdir a_co f12_caofdir a_co a_wceq i0_caofdir a_sup_set_class f4_caofdir a_wcel p_adantlr e2_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f9_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f9_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f9_caofdir a_cfv f6_caofdir a_wcel p_sylan e3_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f10_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f10_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f10_caofdir a_cfv f6_caofdir a_wcel p_sylan e1_caofdir f4_caofdir f11_caofdir i0_caofdir a_sup_set_class f8_caofdir p_ffvelrn f0_caofdir f4_caofdir f11_caofdir f8_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f8_caofdir a_cfv f11_caofdir a_wcel p_sylan f0_caofdir i0_caofdir a_sup_set_class f4_caofdir a_wcel a_wa f1_caofdir f2_caofdir f3_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f6_caofdir f5_caofdir f7_caofdir f12_caofdir f11_caofdir p_caovdird f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir a_co i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co f12_caofdir a_co p_mpteq2dva e0_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir p_ovex i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir a_co a_cvv a_wcel f0_caofdir i0_caofdir a_sup_set_class f4_caofdir a_wcel a_wa p_a1i e1_caofdir f4_caofdir f11_caofdir i0_caofdir a_sup_set_class f8_caofdir p_ffvelrn f0_caofdir f4_caofdir f11_caofdir f8_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f8_caofdir a_cfv f11_caofdir a_wcel p_sylan e0_caofdir e2_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f9_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f9_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f9_caofdir a_cfv f6_caofdir a_wcel p_sylan e3_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f10_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f10_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f10_caofdir a_cfv f6_caofdir a_wcel p_sylan e2_caofdir f0_caofdir i0_caofdir f4_caofdir f6_caofdir f9_caofdir p_feqmptd e3_caofdir f0_caofdir i0_caofdir f4_caofdir f6_caofdir f10_caofdir p_feqmptd f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir f9_caofdir f10_caofdir f13_caofdir f6_caofdir f6_caofdir p_offval2 e1_caofdir f0_caofdir i0_caofdir f4_caofdir f11_caofdir f8_caofdir p_feqmptd f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir a_co i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir f9_caofdir f10_caofdir f5_caofdir a_cof a_co f8_caofdir f13_caofdir a_cvv f11_caofdir p_offval2 e0_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir p_ovex i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co a_cvv a_wcel f0_caofdir i0_caofdir a_sup_set_class f4_caofdir a_wcel a_wa p_a1i i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir p_ovex i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co a_cvv a_wcel f0_caofdir i0_caofdir a_sup_set_class f4_caofdir a_wcel a_wa p_a1i e0_caofdir e2_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f9_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f9_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f9_caofdir a_cfv f6_caofdir a_wcel p_sylan e1_caofdir f4_caofdir f11_caofdir i0_caofdir a_sup_set_class f8_caofdir p_ffvelrn f0_caofdir f4_caofdir f11_caofdir f8_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f8_caofdir a_cfv f11_caofdir a_wcel p_sylan e2_caofdir f0_caofdir i0_caofdir f4_caofdir f6_caofdir f9_caofdir p_feqmptd e1_caofdir f0_caofdir i0_caofdir f4_caofdir f11_caofdir f8_caofdir p_feqmptd f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir f9_caofdir f8_caofdir f13_caofdir f6_caofdir f11_caofdir p_offval2 e0_caofdir e3_caofdir f4_caofdir f6_caofdir i0_caofdir a_sup_set_class f10_caofdir p_ffvelrn f0_caofdir f4_caofdir f6_caofdir f10_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f10_caofdir a_cfv f6_caofdir a_wcel p_sylan e1_caofdir f4_caofdir f11_caofdir i0_caofdir a_sup_set_class f8_caofdir p_ffvelrn f0_caofdir f4_caofdir f11_caofdir f8_caofdir a_wf i0_caofdir a_sup_set_class f4_caofdir a_wcel i0_caofdir a_sup_set_class f8_caofdir a_cfv f11_caofdir a_wcel p_sylan e3_caofdir f0_caofdir i0_caofdir f4_caofdir f6_caofdir f10_caofdir p_feqmptd e1_caofdir f0_caofdir i0_caofdir f4_caofdir f11_caofdir f8_caofdir p_feqmptd f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir f10_caofdir f8_caofdir f13_caofdir f6_caofdir f11_caofdir p_offval2 f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co f12_caofdir f9_caofdir f8_caofdir f7_caofdir a_cof a_co f10_caofdir f8_caofdir f7_caofdir a_cof a_co f13_caofdir a_cvv a_cvv p_offval2 f0_caofdir i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f10_caofdir a_cfv f5_caofdir a_co i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co a_cmpt i0_caofdir f4_caofdir i0_caofdir a_sup_set_class f9_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co i0_caofdir a_sup_set_class f10_caofdir a_cfv i0_caofdir a_sup_set_class f8_caofdir a_cfv f7_caofdir a_co f12_caofdir a_co a_cmpt f9_caofdir f10_caofdir f5_caofdir a_cof a_co f8_caofdir f7_caofdir a_cof a_co f9_caofdir f8_caofdir f7_caofdir a_cof a_co f10_caofdir f8_caofdir f7_caofdir a_cof a_co f12_caofdir a_cof a_co p_3eqtr4d $.
 $}
-$( Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
+
+$(Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
        Stefan O'Rear, 27-Mar-2015.) $)
+
 ${
-	$v ph $.
-	$v x $.
-	$v y $.
-	$v A $.
-	$v B $.
-	$v S $.
-	$v I $.
-	$v M $.
-	$v V $.
-	$v z $.
-	$d ph x y z $.
-	$d A x y z $.
-	$d B y z $.
-	$d I z $.
-	$d M x y z $.
-	$d S x y $.
-	icaonncan_0 $f set z $.
-	fcaonncan_0 $f wff ph $.
-	fcaonncan_1 $f set x $.
-	fcaonncan_2 $f set y $.
-	fcaonncan_3 $f class A $.
-	fcaonncan_4 $f class B $.
-	fcaonncan_5 $f class S $.
-	fcaonncan_6 $f class I $.
-	fcaonncan_7 $f class M $.
-	fcaonncan_8 $f class V $.
-	ecaonncan_0 $e |- ( ph -> I e. V ) $.
-	ecaonncan_1 $e |- ( ph -> A : I --> S ) $.
-	ecaonncan_2 $e |- ( ph -> B : I --> S ) $.
-	ecaonncan_3 $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x M ( x M y ) ) = y ) $.
-	caonncan $p |- ( ph -> ( A oF M ( A oF M B ) ) = B ) $= fcaonncan_0 icaonncan_0 fcaonncan_6 icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 co cmpt icaonncan_0 fcaonncan_6 icaonncan_0 sup_set_class fcaonncan_4 cfv cmpt fcaonncan_3 fcaonncan_3 fcaonncan_4 fcaonncan_7 cof co fcaonncan_7 cof co fcaonncan_4 fcaonncan_0 icaonncan_0 fcaonncan_6 icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_0 icaonncan_0 sup_set_class fcaonncan_6 wcel wa icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_5 wcel icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_5 wcel fcaonncan_1 sup_set_class fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class wceq fcaonncan_2 fcaonncan_5 wral fcaonncan_1 fcaonncan_5 wral icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_4 cfv wceq fcaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_3 wf icaonncan_0 sup_set_class fcaonncan_6 wcel icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_5 wcel ecaonncan_1 fcaonncan_6 fcaonncan_5 icaonncan_0 sup_set_class fcaonncan_3 ffvelrn sylan fcaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_4 wf icaonncan_0 sup_set_class fcaonncan_6 wcel icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_5 wcel ecaonncan_2 fcaonncan_6 fcaonncan_5 icaonncan_0 sup_set_class fcaonncan_4 ffvelrn sylan fcaonncan_0 fcaonncan_1 sup_set_class fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class wceq fcaonncan_2 fcaonncan_5 wral fcaonncan_1 fcaonncan_5 wral icaonncan_0 sup_set_class fcaonncan_6 wcel fcaonncan_0 fcaonncan_1 sup_set_class fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class wceq fcaonncan_1 fcaonncan_2 fcaonncan_5 fcaonncan_5 ecaonncan_3 ralrimivva adantr fcaonncan_1 sup_set_class fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class wceq icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_4 cfv wceq icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class wceq fcaonncan_1 fcaonncan_2 icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_5 fcaonncan_5 fcaonncan_1 sup_set_class icaonncan_0 sup_set_class fcaonncan_3 cfv wceq fcaonncan_1 sup_set_class fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class fcaonncan_1 sup_set_class icaonncan_0 sup_set_class fcaonncan_3 cfv wceq fcaonncan_1 sup_set_class icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_1 sup_set_class fcaonncan_2 sup_set_class fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 fcaonncan_1 sup_set_class icaonncan_0 sup_set_class fcaonncan_3 cfv wceq id fcaonncan_1 sup_set_class icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 oveq1 oveq12d eqeq1d fcaonncan_2 sup_set_class icaonncan_0 sup_set_class fcaonncan_4 cfv wceq icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 co fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 co fcaonncan_2 sup_set_class icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_2 sup_set_class icaonncan_0 sup_set_class fcaonncan_4 cfv wceq icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_2 sup_set_class fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_7 fcaonncan_2 sup_set_class icaonncan_0 sup_set_class fcaonncan_4 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv fcaonncan_7 oveq2 oveq2d fcaonncan_2 sup_set_class icaonncan_0 sup_set_class fcaonncan_4 cfv wceq id eqeq12d rspc2va syl21anc mpteq2dva fcaonncan_0 icaonncan_0 fcaonncan_6 icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co fcaonncan_7 fcaonncan_3 fcaonncan_3 fcaonncan_4 fcaonncan_7 cof co fcaonncan_8 cvv cvv ecaonncan_0 icaonncan_0 sup_set_class fcaonncan_3 cfv cvv wcel fcaonncan_0 icaonncan_0 sup_set_class fcaonncan_6 wcel wa icaonncan_0 sup_set_class fcaonncan_3 fvex a1i icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 co cvv wcel fcaonncan_0 icaonncan_0 sup_set_class fcaonncan_6 wcel wa icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 ovex a1i fcaonncan_0 icaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_3 ecaonncan_1 feqmptd fcaonncan_0 icaonncan_0 fcaonncan_6 icaonncan_0 sup_set_class fcaonncan_3 cfv icaonncan_0 sup_set_class fcaonncan_4 cfv fcaonncan_7 fcaonncan_3 fcaonncan_4 fcaonncan_8 cvv cvv ecaonncan_0 icaonncan_0 sup_set_class fcaonncan_3 cfv cvv wcel fcaonncan_0 icaonncan_0 sup_set_class fcaonncan_6 wcel wa icaonncan_0 sup_set_class fcaonncan_3 fvex a1i icaonncan_0 sup_set_class fcaonncan_4 cfv cvv wcel fcaonncan_0 icaonncan_0 sup_set_class fcaonncan_6 wcel wa icaonncan_0 sup_set_class fcaonncan_4 fvex a1i fcaonncan_0 icaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_3 ecaonncan_1 feqmptd fcaonncan_0 icaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_4 ecaonncan_2 feqmptd offval2 offval2 fcaonncan_0 icaonncan_0 fcaonncan_6 fcaonncan_5 fcaonncan_4 ecaonncan_2 feqmptd 3eqtr4d $.
+	$v ph x y A B S I M V  $.
+	$d ph x y z  $.
+	$d A x y z  $.
+	$d B y z  $.
+	$d I z  $.
+	$d M x y z  $.
+	$d S x y  $.
+	f0_caonncan $f wff ph $.
+	f1_caonncan $f set x $.
+	f2_caonncan $f set y $.
+	f3_caonncan $f class A $.
+	f4_caonncan $f class B $.
+	f5_caonncan $f class S $.
+	f6_caonncan $f class I $.
+	f7_caonncan $f class M $.
+	f8_caonncan $f class V $.
+	i0_caonncan $f set z $.
+	e0_caonncan $e |- ( ph -> I e. V ) $.
+	e1_caonncan $e |- ( ph -> A : I --> S ) $.
+	e2_caonncan $e |- ( ph -> B : I --> S ) $.
+	e3_caonncan $e |- ( ( ph /\ ( x e. S /\ y e. S ) ) -> ( x M ( x M y ) ) = y ) $.
+	p_caonncan $p |- ( ph -> ( A oF M ( A oF M B ) ) = B ) $= e1_caonncan f6_caonncan f5_caonncan i0_caonncan a_sup_set_class f3_caonncan p_ffvelrn f0_caonncan f6_caonncan f5_caonncan f3_caonncan a_wf i0_caonncan a_sup_set_class f6_caonncan a_wcel i0_caonncan a_sup_set_class f3_caonncan a_cfv f5_caonncan a_wcel p_sylan e2_caonncan f6_caonncan f5_caonncan i0_caonncan a_sup_set_class f4_caonncan p_ffvelrn f0_caonncan f6_caonncan f5_caonncan f4_caonncan a_wf i0_caonncan a_sup_set_class f6_caonncan a_wcel i0_caonncan a_sup_set_class f4_caonncan a_cfv f5_caonncan a_wcel p_sylan e3_caonncan f0_caonncan f1_caonncan a_sup_set_class f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class a_wceq f1_caonncan f2_caonncan f5_caonncan f5_caonncan p_ralrimivva f0_caonncan f1_caonncan a_sup_set_class f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class a_wceq f2_caonncan f5_caonncan a_wral f1_caonncan f5_caonncan a_wral i0_caonncan a_sup_set_class f6_caonncan a_wcel p_adantr f1_caonncan a_sup_set_class i0_caonncan a_sup_set_class f3_caonncan a_cfv a_wceq p_id f1_caonncan a_sup_set_class i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan p_oveq1 f1_caonncan a_sup_set_class i0_caonncan a_sup_set_class f3_caonncan a_cfv a_wceq f1_caonncan a_sup_set_class i0_caonncan a_sup_set_class f3_caonncan a_cfv f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan p_oveq12d f1_caonncan a_sup_set_class i0_caonncan a_sup_set_class f3_caonncan a_cfv a_wceq f1_caonncan a_sup_set_class f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class p_eqeq1d f2_caonncan a_sup_set_class i0_caonncan a_sup_set_class f4_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv f7_caonncan p_oveq2 f2_caonncan a_sup_set_class i0_caonncan a_sup_set_class f4_caonncan a_cfv a_wceq i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan a_co i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co i0_caonncan a_sup_set_class f3_caonncan a_cfv f7_caonncan p_oveq2d f2_caonncan a_sup_set_class i0_caonncan a_sup_set_class f4_caonncan a_cfv a_wceq p_id f2_caonncan a_sup_set_class i0_caonncan a_sup_set_class f4_caonncan a_cfv a_wceq i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class i0_caonncan a_sup_set_class f4_caonncan a_cfv p_eqeq12d f1_caonncan a_sup_set_class f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class a_wceq i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan a_co i0_caonncan a_sup_set_class f4_caonncan a_cfv a_wceq i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class a_wceq f1_caonncan f2_caonncan i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f5_caonncan f5_caonncan p_rspc2va f0_caonncan i0_caonncan a_sup_set_class f6_caonncan a_wcel a_wa i0_caonncan a_sup_set_class f3_caonncan a_cfv f5_caonncan a_wcel i0_caonncan a_sup_set_class f4_caonncan a_cfv f5_caonncan a_wcel f1_caonncan a_sup_set_class f1_caonncan a_sup_set_class f2_caonncan a_sup_set_class f7_caonncan a_co f7_caonncan a_co f2_caonncan a_sup_set_class a_wceq f2_caonncan f5_caonncan a_wral f1_caonncan f5_caonncan a_wral i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan a_co i0_caonncan a_sup_set_class f4_caonncan a_cfv a_wceq p_syl21anc f0_caonncan i0_caonncan f6_caonncan i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan a_co i0_caonncan a_sup_set_class f4_caonncan a_cfv p_mpteq2dva e0_caonncan i0_caonncan a_sup_set_class f3_caonncan p_fvex i0_caonncan a_sup_set_class f3_caonncan a_cfv a_cvv a_wcel f0_caonncan i0_caonncan a_sup_set_class f6_caonncan a_wcel a_wa p_a1i i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan p_ovex i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co a_cvv a_wcel f0_caonncan i0_caonncan a_sup_set_class f6_caonncan a_wcel a_wa p_a1i e1_caonncan f0_caonncan i0_caonncan f6_caonncan f5_caonncan f3_caonncan p_feqmptd e0_caonncan i0_caonncan a_sup_set_class f3_caonncan p_fvex i0_caonncan a_sup_set_class f3_caonncan a_cfv a_cvv a_wcel f0_caonncan i0_caonncan a_sup_set_class f6_caonncan a_wcel a_wa p_a1i i0_caonncan a_sup_set_class f4_caonncan p_fvex i0_caonncan a_sup_set_class f4_caonncan a_cfv a_cvv a_wcel f0_caonncan i0_caonncan a_sup_set_class f6_caonncan a_wcel a_wa p_a1i e1_caonncan f0_caonncan i0_caonncan f6_caonncan f5_caonncan f3_caonncan p_feqmptd e2_caonncan f0_caonncan i0_caonncan f6_caonncan f5_caonncan f4_caonncan p_feqmptd f0_caonncan i0_caonncan f6_caonncan i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan f3_caonncan f4_caonncan f8_caonncan a_cvv a_cvv p_offval2 f0_caonncan i0_caonncan f6_caonncan i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan f3_caonncan f3_caonncan f4_caonncan f7_caonncan a_cof a_co f8_caonncan a_cvv a_cvv p_offval2 e2_caonncan f0_caonncan i0_caonncan f6_caonncan f5_caonncan f4_caonncan p_feqmptd f0_caonncan i0_caonncan f6_caonncan i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f3_caonncan a_cfv i0_caonncan a_sup_set_class f4_caonncan a_cfv f7_caonncan a_co f7_caonncan a_co a_cmpt i0_caonncan f6_caonncan i0_caonncan a_sup_set_class f4_caonncan a_cfv a_cmpt f3_caonncan f3_caonncan f4_caonncan f7_caonncan a_cof a_co f7_caonncan a_cof a_co f4_caonncan p_3eqtr4d $.
 $}
-$( Equivalent expressions for a restriction of the function operation map.
+
+$(Equivalent expressions for a restriction of the function operation map.
        Unlike ` oF R ` which is a proper class, ` ( oF R | `` ( A X. B ) ) `
        can be a set by ~ ofmresex , allowing it to be used as a function or
        structure argument.  By ~ ofmresval , the restricted operation map
        values are the same as the original values, allowing theorems for
        ` oF R ` to be reused.  (Contributed by NM, 20-Oct-2014.) $)
+
 ${
-	$v A $.
-	$v B $.
-	$v R $.
-	$v f $.
-	$v g $.
-	$v x $.
-	$d f g A $.
-	$d f g B $.
-	$d f g x R $.
-	iofmres_0 $f set x $.
-	fofmres_0 $f class A $.
-	fofmres_1 $f class B $.
-	fofmres_2 $f class R $.
-	fofmres_3 $f set f $.
-	fofmres_4 $f set g $.
-	ofmres $p |- ( oF R |` ( A X. B ) ) = ( f e. A , g e. B |-> ( f oF R g ) ) $= fofmres_3 fofmres_4 cvv cvv iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cmpt2 fofmres_0 fofmres_1 cxp cres fofmres_3 fofmres_4 fofmres_0 fofmres_1 iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cmpt2 fofmres_2 cof fofmres_0 fofmres_1 cxp cres fofmres_3 fofmres_4 fofmres_0 fofmres_1 fofmres_3 sup_set_class fofmres_4 sup_set_class fofmres_2 cof co cmpt2 fofmres_0 cvv wss fofmres_1 cvv wss fofmres_3 fofmres_4 cvv cvv iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cmpt2 fofmres_0 fofmres_1 cxp cres fofmres_3 fofmres_4 fofmres_0 fofmres_1 iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cmpt2 wceq fofmres_0 ssv fofmres_1 ssv fofmres_3 fofmres_4 cvv cvv fofmres_0 fofmres_1 iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt resmpt2 mp2an fofmres_2 cof fofmres_3 fofmres_4 cvv cvv iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cmpt2 fofmres_0 fofmres_1 cxp iofmres_0 fofmres_2 fofmres_3 fofmres_4 df-of reseq1i fofmres_3 fofmres_4 fofmres_0 fofmres_1 fofmres_3 sup_set_class fofmres_4 sup_set_class fofmres_2 cof co fofmres_0 fofmres_1 iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt fofmres_0 eqid fofmres_1 eqid fofmres_3 sup_set_class cvv wcel fofmres_4 sup_set_class cvv wcel iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt cvv wcel fofmres_3 sup_set_class fofmres_4 sup_set_class fofmres_2 cof co iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt wceq fofmres_3 vex fofmres_4 vex iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm fofmres_3 sup_set_class fofmres_3 vex dmex inex1 mptex fofmres_3 fofmres_4 cvv cvv iofmres_0 fofmres_3 sup_set_class cdm fofmres_4 sup_set_class cdm cin iofmres_0 sup_set_class fofmres_3 sup_set_class cfv iofmres_0 sup_set_class fofmres_4 sup_set_class cfv fofmres_2 co cmpt fofmres_2 cof cvv iofmres_0 fofmres_2 fofmres_3 fofmres_4 df-of ovmpt4g mp3an mpt2eq123i 3eqtr4i $.
+	$v A B R f g  $.
+	$d f g A  $.
+	$d f g B  $.
+	$d f g x R  $.
+	f0_ofmres $f class A $.
+	f1_ofmres $f class B $.
+	f2_ofmres $f class R $.
+	f3_ofmres $f set f $.
+	f4_ofmres $f set g $.
+	i0_ofmres $f set x $.
+	p_ofmres $p |- ( oF R |` ( A X. B ) ) = ( f e. A , g e. B |-> ( f oF R g ) ) $= f0_ofmres p_ssv f1_ofmres p_ssv f3_ofmres f4_ofmres a_cvv a_cvv f0_ofmres f1_ofmres i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt p_resmpt2 f0_ofmres a_cvv a_wss f1_ofmres a_cvv a_wss f3_ofmres f4_ofmres a_cvv a_cvv i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cmpt2 f0_ofmres f1_ofmres a_cxp a_cres f3_ofmres f4_ofmres f0_ofmres f1_ofmres i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cmpt2 a_wceq p_mp2an i0_ofmres f2_ofmres f3_ofmres f4_ofmres a_df-of f2_ofmres a_cof f3_ofmres f4_ofmres a_cvv a_cvv i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cmpt2 f0_ofmres f1_ofmres a_cxp p_reseq1i f0_ofmres p_eqid f1_ofmres p_eqid f3_ofmres p_vex f4_ofmres p_vex f3_ofmres p_vex f3_ofmres a_sup_set_class p_dmex f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm p_inex1 i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co p_mptex i0_ofmres f2_ofmres f3_ofmres f4_ofmres a_df-of f3_ofmres f4_ofmres a_cvv a_cvv i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt f2_ofmres a_cof a_cvv p_ovmpt4g f3_ofmres a_sup_set_class a_cvv a_wcel f4_ofmres a_sup_set_class a_cvv a_wcel i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cvv a_wcel f3_ofmres a_sup_set_class f4_ofmres a_sup_set_class f2_ofmres a_cof a_co i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_wceq p_mp3an f3_ofmres f4_ofmres f0_ofmres f1_ofmres f3_ofmres a_sup_set_class f4_ofmres a_sup_set_class f2_ofmres a_cof a_co f0_ofmres f1_ofmres i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt p_mpt2eq123i f3_ofmres f4_ofmres a_cvv a_cvv i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cmpt2 f0_ofmres f1_ofmres a_cxp a_cres f3_ofmres f4_ofmres f0_ofmres f1_ofmres i0_ofmres f3_ofmres a_sup_set_class a_cdm f4_ofmres a_sup_set_class a_cdm a_cin i0_ofmres a_sup_set_class f3_ofmres a_sup_set_class a_cfv i0_ofmres a_sup_set_class f4_ofmres a_sup_set_class a_cfv f2_ofmres a_co a_cmpt a_cmpt2 f2_ofmres a_cof f0_ofmres f1_ofmres a_cxp a_cres f3_ofmres f4_ofmres f0_ofmres f1_ofmres f3_ofmres a_sup_set_class f4_ofmres a_sup_set_class f2_ofmres a_cof a_co a_cmpt2 p_3eqtr4i $.
 $}
-$( Value of a restriction of the function operation map.  (Contributed by
+
+$(Value of a restriction of the function operation map.  (Contributed by
        NM, 20-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v F $.
-	$v G $.
-	fofmresval_0 $f wff ph $.
-	fofmresval_1 $f class A $.
-	fofmresval_2 $f class B $.
-	fofmresval_3 $f class R $.
-	fofmresval_4 $f class F $.
-	fofmresval_5 $f class G $.
-	eofmresval_0 $e |- ( ph -> F e. A ) $.
-	eofmresval_1 $e |- ( ph -> G e. B ) $.
-	ofmresval $p |- ( ph -> ( F ( oF R |` ( A X. B ) ) G ) = ( F oF R G ) ) $= fofmresval_0 fofmresval_4 fofmresval_1 wcel fofmresval_5 fofmresval_2 wcel fofmresval_4 fofmresval_5 fofmresval_3 cof fofmresval_1 fofmresval_2 cxp cres co fofmresval_4 fofmresval_5 fofmresval_3 cof co wceq eofmresval_0 eofmresval_1 fofmresval_4 fofmresval_5 fofmresval_1 fofmresval_2 fofmresval_3 cof ovres syl2anc $.
+	$v ph A B R F G  $.
+	$d A  $.
+	$d B  $.
+	$d R  $.
+	f0_ofmresval $f wff ph $.
+	f1_ofmresval $f class A $.
+	f2_ofmresval $f class B $.
+	f3_ofmresval $f class R $.
+	f4_ofmresval $f class F $.
+	f5_ofmresval $f class G $.
+	e0_ofmresval $e |- ( ph -> F e. A ) $.
+	e1_ofmresval $e |- ( ph -> G e. B ) $.
+	p_ofmresval $p |- ( ph -> ( F ( oF R |` ( A X. B ) ) G ) = ( F oF R G ) ) $= e0_ofmresval e1_ofmresval f4_ofmresval f5_ofmresval f1_ofmresval f2_ofmresval f3_ofmresval a_cof p_ovres f0_ofmresval f4_ofmresval f1_ofmresval a_wcel f5_ofmresval f2_ofmresval a_wcel f4_ofmresval f5_ofmresval f3_ofmresval a_cof f1_ofmresval f2_ofmresval a_cxp a_cres a_co f4_ofmresval f5_ofmresval f3_ofmresval a_cof a_co a_wceq p_syl2anc $.
 $}
-$( Existence of a restriction of the function operation map.  (Contributed
+
+$(Existence of a restriction of the function operation map.  (Contributed
        by NM, 20-Oct-2014.) $)
+
 ${
-	$v ph $.
-	$v A $.
-	$v B $.
-	$v R $.
-	$v V $.
-	$v W $.
-	fofmresex_0 $f wff ph $.
-	fofmresex_1 $f class A $.
-	fofmresex_2 $f class B $.
-	fofmresex_3 $f class R $.
-	fofmresex_4 $f class V $.
-	fofmresex_5 $f class W $.
-	eofmresex_0 $e |- ( ph -> A e. V ) $.
-	eofmresex_1 $e |- ( ph -> B e. W ) $.
-	ofmresex $p |- ( ph -> ( oF R |` ( A X. B ) ) e. _V ) $= fofmresex_0 fofmresex_1 fofmresex_2 cxp cvv wcel fofmresex_3 cof fofmresex_1 fofmresex_2 cxp cres cvv wcel fofmresex_0 fofmresex_1 fofmresex_4 wcel fofmresex_2 fofmresex_5 wcel fofmresex_1 fofmresex_2 cxp cvv wcel eofmresex_0 eofmresex_1 fofmresex_1 fofmresex_2 fofmresex_4 fofmresex_5 xpexg syl2anc fofmresex_1 fofmresex_2 cxp fofmresex_3 cvv ofexg syl $.
+	$v ph A B R V W  $.
+	$d A  $.
+	$d B  $.
+	$d R  $.
+	f0_ofmresex $f wff ph $.
+	f1_ofmresex $f class A $.
+	f2_ofmresex $f class B $.
+	f3_ofmresex $f class R $.
+	f4_ofmresex $f class V $.
+	f5_ofmresex $f class W $.
+	e0_ofmresex $e |- ( ph -> A e. V ) $.
+	e1_ofmresex $e |- ( ph -> B e. W ) $.
+	p_ofmresex $p |- ( ph -> ( oF R |` ( A X. B ) ) e. _V ) $= e0_ofmresex e1_ofmresex f1_ofmresex f2_ofmresex f4_ofmresex f5_ofmresex p_xpexg f0_ofmresex f1_ofmresex f4_ofmresex a_wcel f2_ofmresex f5_ofmresex a_wcel f1_ofmresex f2_ofmresex a_cxp a_cvv a_wcel p_syl2anc f1_ofmresex f2_ofmresex a_cxp f3_ofmresex a_cvv p_ofexg f0_ofmresex f1_ofmresex f2_ofmresex a_cxp a_cvv a_wcel f3_ofmresex a_cof f1_ofmresex f2_ofmresex a_cxp a_cres a_cvv a_wcel p_syl $.
 $}
-$( Formula building theorem for support restrictions: vector operation with
+
+$(Formula building theorem for support restrictions: vector operation with
        left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
+
 ${
-	$v ph $.
-	$v v $.
-	$v A $.
-	$v B $.
-	$v D $.
-	$v R $.
-	$v L $.
-	$v O $.
-	$v V $.
-	$v W $.
-	$v Y $.
-	$v Z $.
-	$v x $.
-	$d ph v x $.
-	$d A x $.
-	$d B v x $.
-	$d D x $.
-	$d O v x $.
-	$d R v $.
-	$d Y v x $.
-	$d Z v x $.
-	isuppssof1_0 $f set x $.
-	fsuppssof1_0 $f wff ph $.
-	fsuppssof1_1 $f set v $.
-	fsuppssof1_2 $f class A $.
-	fsuppssof1_3 $f class B $.
-	fsuppssof1_4 $f class D $.
-	fsuppssof1_5 $f class R $.
-	fsuppssof1_6 $f class L $.
-	fsuppssof1_7 $f class O $.
-	fsuppssof1_8 $f class V $.
-	fsuppssof1_9 $f class W $.
-	fsuppssof1_10 $f class Y $.
-	fsuppssof1_11 $f class Z $.
-	esuppssof1_0 $e |- ( ph -> ( `' A " ( _V \ { Y } ) ) C_ L ) $.
-	esuppssof1_1 $e |- ( ( ph /\ v e. R ) -> ( Y O v ) = Z ) $.
-	esuppssof1_2 $e |- ( ph -> A : D --> V ) $.
-	esuppssof1_3 $e |- ( ph -> B : D --> R ) $.
-	esuppssof1_4 $e |- ( ph -> D e. W ) $.
-	suppssof1 $p |- ( ph -> ( `' ( A oF O B ) " ( _V \ { Z } ) ) C_ L ) $= fsuppssof1_0 fsuppssof1_2 fsuppssof1_3 fsuppssof1_7 cof co ccnv cvv fsuppssof1_11 csn cdif cima isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_7 co cmpt ccnv cvv fsuppssof1_11 csn cdif cima fsuppssof1_6 fsuppssof1_0 fsuppssof1_2 fsuppssof1_3 fsuppssof1_7 cof co ccnv isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_7 co cmpt ccnv cvv fsuppssof1_11 csn cdif fsuppssof1_0 fsuppssof1_2 fsuppssof1_3 fsuppssof1_7 cof co isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_7 co cmpt fsuppssof1_0 isuppssof1_0 fsuppssof1_4 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_7 fsuppssof1_4 fsuppssof1_2 fsuppssof1_3 fsuppssof1_9 fsuppssof1_9 fsuppssof1_0 fsuppssof1_4 fsuppssof1_8 fsuppssof1_2 wf fsuppssof1_2 fsuppssof1_4 wfn esuppssof1_2 fsuppssof1_4 fsuppssof1_8 fsuppssof1_2 ffn syl fsuppssof1_0 fsuppssof1_4 fsuppssof1_5 fsuppssof1_3 wf fsuppssof1_3 fsuppssof1_4 wfn esuppssof1_3 fsuppssof1_4 fsuppssof1_5 fsuppssof1_3 ffn syl esuppssof1_4 esuppssof1_4 fsuppssof1_4 inidm fsuppssof1_0 isuppssof1_0 sup_set_class fsuppssof1_4 wcel wa isuppssof1_0 sup_set_class fsuppssof1_2 cfv eqidd fsuppssof1_0 isuppssof1_0 sup_set_class fsuppssof1_4 wcel wa isuppssof1_0 sup_set_class fsuppssof1_3 cfv eqidd offval cnveqd imaeq1d fsuppssof1_0 isuppssof1_0 fsuppssof1_1 isuppssof1_0 sup_set_class fsuppssof1_2 cfv isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_4 fsuppssof1_5 fsuppssof1_6 fsuppssof1_7 cvv fsuppssof1_10 fsuppssof1_11 fsuppssof1_0 isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv cmpt ccnv cvv fsuppssof1_10 csn cdif cima fsuppssof1_2 ccnv cvv fsuppssof1_10 csn cdif cima fsuppssof1_6 fsuppssof1_0 fsuppssof1_2 ccnv isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv cmpt ccnv cvv fsuppssof1_10 csn cdif fsuppssof1_0 fsuppssof1_2 isuppssof1_0 fsuppssof1_4 isuppssof1_0 sup_set_class fsuppssof1_2 cfv cmpt fsuppssof1_0 isuppssof1_0 fsuppssof1_4 fsuppssof1_8 fsuppssof1_2 esuppssof1_2 feqmptd cnveqd imaeq1d esuppssof1_0 eqsstr3d esuppssof1_1 isuppssof1_0 sup_set_class fsuppssof1_2 cfv cvv wcel fsuppssof1_0 isuppssof1_0 sup_set_class fsuppssof1_4 wcel wa isuppssof1_0 sup_set_class fsuppssof1_2 fvex a1i fsuppssof1_0 fsuppssof1_4 fsuppssof1_5 fsuppssof1_3 wf isuppssof1_0 sup_set_class fsuppssof1_4 wcel isuppssof1_0 sup_set_class fsuppssof1_3 cfv fsuppssof1_5 wcel esuppssof1_3 fsuppssof1_4 fsuppssof1_5 isuppssof1_0 sup_set_class fsuppssof1_3 ffvelrn sylan suppssov1 eqsstrd $.
+	$v ph v A B D R L O V W Y Z  $.
+	$d ph v x  $.
+	$d A x  $.
+	$d B v x  $.
+	$d D x  $.
+	$d O v x  $.
+	$d R v  $.
+	$d Y v x  $.
+	$d Z v x  $.
+	f0_suppssof1 $f wff ph $.
+	f1_suppssof1 $f set v $.
+	f2_suppssof1 $f class A $.
+	f3_suppssof1 $f class B $.
+	f4_suppssof1 $f class D $.
+	f5_suppssof1 $f class R $.
+	f6_suppssof1 $f class L $.
+	f7_suppssof1 $f class O $.
+	f8_suppssof1 $f class V $.
+	f9_suppssof1 $f class W $.
+	f10_suppssof1 $f class Y $.
+	f11_suppssof1 $f class Z $.
+	i0_suppssof1 $f set x $.
+	e0_suppssof1 $e |- ( ph -> ( `' A " ( _V \ { Y } ) ) C_ L ) $.
+	e1_suppssof1 $e |- ( ( ph /\ v e. R ) -> ( Y O v ) = Z ) $.
+	e2_suppssof1 $e |- ( ph -> A : D --> V ) $.
+	e3_suppssof1 $e |- ( ph -> B : D --> R ) $.
+	e4_suppssof1 $e |- ( ph -> D e. W ) $.
+	p_suppssof1 $p |- ( ph -> ( `' ( A oF O B ) " ( _V \ { Z } ) ) C_ L ) $= e2_suppssof1 f4_suppssof1 f8_suppssof1 f2_suppssof1 p_ffn f0_suppssof1 f4_suppssof1 f8_suppssof1 f2_suppssof1 a_wf f2_suppssof1 f4_suppssof1 a_wfn p_syl e3_suppssof1 f4_suppssof1 f5_suppssof1 f3_suppssof1 p_ffn f0_suppssof1 f4_suppssof1 f5_suppssof1 f3_suppssof1 a_wf f3_suppssof1 f4_suppssof1 a_wfn p_syl e4_suppssof1 e4_suppssof1 f4_suppssof1 p_inidm f0_suppssof1 i0_suppssof1 a_sup_set_class f4_suppssof1 a_wcel a_wa i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv p_eqidd f0_suppssof1 i0_suppssof1 a_sup_set_class f4_suppssof1 a_wcel a_wa i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv p_eqidd f0_suppssof1 i0_suppssof1 f4_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f7_suppssof1 f4_suppssof1 f2_suppssof1 f3_suppssof1 f9_suppssof1 f9_suppssof1 p_offval f0_suppssof1 f2_suppssof1 f3_suppssof1 f7_suppssof1 a_cof a_co i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f7_suppssof1 a_co a_cmpt p_cnveqd f0_suppssof1 f2_suppssof1 f3_suppssof1 f7_suppssof1 a_cof a_co a_ccnv i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f7_suppssof1 a_co a_cmpt a_ccnv a_cvv f11_suppssof1 a_csn a_cdif p_imaeq1d e2_suppssof1 f0_suppssof1 i0_suppssof1 f4_suppssof1 f8_suppssof1 f2_suppssof1 p_feqmptd f0_suppssof1 f2_suppssof1 i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv a_cmpt p_cnveqd f0_suppssof1 f2_suppssof1 a_ccnv i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv a_cmpt a_ccnv a_cvv f10_suppssof1 a_csn a_cdif p_imaeq1d e0_suppssof1 f0_suppssof1 i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv a_cmpt a_ccnv a_cvv f10_suppssof1 a_csn a_cdif a_cima f2_suppssof1 a_ccnv a_cvv f10_suppssof1 a_csn a_cdif a_cima f6_suppssof1 p_eqsstr3d e1_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 p_fvex i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv a_cvv a_wcel f0_suppssof1 i0_suppssof1 a_sup_set_class f4_suppssof1 a_wcel a_wa p_a1i e3_suppssof1 f4_suppssof1 f5_suppssof1 i0_suppssof1 a_sup_set_class f3_suppssof1 p_ffvelrn f0_suppssof1 f4_suppssof1 f5_suppssof1 f3_suppssof1 a_wf i0_suppssof1 a_sup_set_class f4_suppssof1 a_wcel i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f5_suppssof1 a_wcel p_sylan f0_suppssof1 i0_suppssof1 f1_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f4_suppssof1 f5_suppssof1 f6_suppssof1 f7_suppssof1 a_cvv f10_suppssof1 f11_suppssof1 p_suppssov1 f0_suppssof1 f2_suppssof1 f3_suppssof1 f7_suppssof1 a_cof a_co a_ccnv a_cvv f11_suppssof1 a_csn a_cdif a_cima i0_suppssof1 f4_suppssof1 i0_suppssof1 a_sup_set_class f2_suppssof1 a_cfv i0_suppssof1 a_sup_set_class f3_suppssof1 a_cfv f7_suppssof1 a_co a_cmpt a_ccnv a_cvv f11_suppssof1 a_csn a_cdif a_cima f6_suppssof1 p_eqsstrd $.
 $}
+
 

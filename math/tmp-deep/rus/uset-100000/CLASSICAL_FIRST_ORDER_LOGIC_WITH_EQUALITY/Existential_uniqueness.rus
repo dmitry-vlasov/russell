@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes).rus;;
 
-/* #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+/*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
                Existential uniqueness
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 */
 
-/* Declare new symbols needed for uniqueness notation. */
+/*Declare new symbols needed for uniqueness notation. */
 
 constant {
 	symbol ∃! ;;
@@ -14,7 +14,7 @@ constant {
 	latex \exists{!} ;;
 }
 
-/* Backwards E exclamation point. */
+/*Backwards E exclamation point. */
 
 constant {
 	symbol ∃* ;;
@@ -22,23 +22,23 @@ constant {
 	latex \exists^{\ast} ;;
 }
 
-/* Backwards E superscript *. */
+/*Backwards E superscript *. */
 
-/* Extend wff definition to include existential uniqueness ("there exists a
+/*Extend wff definition to include existential uniqueness ("there exists a
      unique ` x ` such that ` ph ` "). */
 
 rule weu (ph : wff, x : set) {
 	term : wff = # ∃! x ph ;;
 }
 
-/* Extend wff definition to include uniqueness ("there exists at most one
+/*Extend wff definition to include uniqueness ("there exists at most one
      ` x ` such that ` ph ` "). */
 
 rule wmo (ph : wff, x : set) {
 	term : wff = # ∃* x ph ;;
 }
 
-/* A soundness justification theorem for ~ df-eu , showing that the
+/*A soundness justification theorem for ~ df-eu , showing that the
        definition is equivalent to itself with its dummy variable renamed.
        Note that ` y ` and ` z ` needn't be distinct variables.  See
        ~ eujustALT for a proof that provides an example of how it can be
@@ -63,7 +63,7 @@ proof of eujust {
 	qed prop 1 = step 9 ;;
 }
 
-/* A soundness justification theorem for ~ df-eu , showing that the
+/*A soundness justification theorem for ~ df-eu , showing that the
        definition is equivalent to itself with its dummy variable renamed.
        Note that ` y ` and ` z ` needn't be distinct variables.  While this
        isn't strictly necessary for soundness, the proof provides an example of
@@ -113,7 +113,7 @@ proof of eujustALT {
 	qed prop 1 = step 33 ;;
 }
 
-/* Define existential uniqueness, i.e.  "there exists exactly one ` x `
+/*Define existential uniqueness, i.e.  "there exists exactly one ` x `
        such that ` ph ` ."  Definition 10.1 of [BellMachover] p. 97; also
        Definition *14.02 of [WhiteheadRussell] p. 175.  Other possible
        definitions are given by ~ eu1 , ~ eu2 , ~ eu3 , and ~ eu5 (which in
@@ -129,7 +129,7 @@ definition df-eu (ph : wff, x : set, y : set) disjointed(x y, y ph) {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Define "there exists at most one ` x ` such that ` ph ` ."  Here we define
+/*Define "there exists at most one ` x ` such that ` ph ` ."  Here we define
      it in terms of existential uniqueness.  Notation of [BellMachover] p. 460,
      whose definition we show as ~ mo3 .  For other possible definitions see
      ~ mo2 and ~ mo4 .  (Contributed by NM, 8-Mar-1995.) */
@@ -141,7 +141,7 @@ definition df-mo (ph : wff, x : set)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* A version of the existential uniqueness definition with a hypothesis
+/*A version of the existential uniqueness definition with a hypothesis
        instead of a distinct variable condition.  (Contributed by NM,
        12-Aug-1993.) */
 
@@ -169,7 +169,7 @@ proof of euf {
 	qed prop 1 = step 13 ;;
 }
 
-/* Formula-building rule for uniqueness quantifier (deduction rule).
+/*Formula-building rule for uniqueness quantifier (deduction rule).
        (Contributed by NM, 9-Jul-1994.) */
 
 theorem eubid (ph : wff, ps : wff, ch : wff, x : set) disjointed(x y, y ph, y ps, y ch) {
@@ -190,7 +190,7 @@ proof of eubid {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building rule for uniqueness quantifier (deduction rule).
+/*Formula-building rule for uniqueness quantifier (deduction rule).
        (Contributed by NM, 9-Jul-1994.) */
 
 theorem eubidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -205,7 +205,7 @@ proof of eubidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Introduce uniqueness quantifier to both sides of an equivalence.
+/*Introduce uniqueness quantifier to both sides of an equivalence.
        (Contributed by NM, 9-Jul-1994.)  (Revised by Mario Carneiro,
        6-Oct-2016.) */
 
@@ -222,7 +222,7 @@ proof of eubii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for uniqueness.  (Contributed by NM,
+/*Bound-variable hypothesis builder for uniqueness.  (Contributed by NM,
        9-Jul-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
 theorem nfeu1 (ph : wff, x : set) disjointed(x y, y ph) {
@@ -238,7 +238,7 @@ proof of nfeu1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for "at most one."  (Contributed by NM,
+/*Bound-variable hypothesis builder for "at most one."  (Contributed by NM,
      8-Mar-1995.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
 theorem nfmo1 (ph : wff, x : set)  {
@@ -254,7 +254,7 @@ proof of nfmo1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
+/*Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
 theorem nfeud2 (ph : wff, ps : wff, x : set, y : set) disjointed(y z, z ph, z ps) {
@@ -281,10 +281,10 @@ proof of nfeud2 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
+/*Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) */
 
-theorem nfmod2 (ph : wff, ps : wff, x : set, y : set)  {
+theorem nfmod2 (ph : wff, ps : wff, x : set, y : set) disjointed(y, ph, ps) {
 	hyp 1 : wff = |- F/ y ph ;;
 	hyp 2 : wff = |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x ps ) ;;
 	-----------------------
@@ -300,7 +300,7 @@ proof of nfmod2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction version of ~ nfeu .  (Contributed by NM, 15-Feb-2013.)
+/*Deduction version of ~ nfeu .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 7-Oct-2016.) */
 
 theorem nfeud (ph : wff, ps : wff, x : set, y : set)  {
@@ -316,7 +316,7 @@ proof of nfeud {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for "at most one."  (Contributed by
+/*Bound-variable hypothesis builder for "at most one."  (Contributed by
        Mario Carneiro, 14-Nov-2016.) */
 
 theorem nfmod (ph : wff, ps : wff, x : set, y : set)  {
@@ -332,12 +332,12 @@ proof of nfmod {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bound-variable hypothesis builder for "at most one."  Note that ` x `
+/*Bound-variable hypothesis builder for "at most one."  Note that ` x `
        and ` y ` needn't be distinct (this makes the proof more difficult).
        (Contributed by NM, 8-Mar-1995.)  (Revised by Mario Carneiro,
        7-Oct-2016.) */
 
-theorem nfeu (ph : wff, x : set, y : set)  {
+theorem nfeu (ph : wff, x : set, y : set) disjointed(y, x, ph) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- F/ x ∃! y ph ;;
@@ -351,10 +351,10 @@ proof of nfeu {
 	qed prop 1 = step 4 ;;
 }
 
-/* Bound-variable hypothesis builder for "at most one."  (Contributed by
+/*Bound-variable hypothesis builder for "at most one."  (Contributed by
        NM, 9-Mar-1995.) */
 
-theorem nfmo (ph : wff, x : set, y : set)  {
+theorem nfmo (ph : wff, x : set, y : set) disjointed(y, x, ph) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- F/ x ∃* y ph ;;
@@ -368,7 +368,7 @@ proof of nfmo {
 	qed prop 1 = step 4 ;;
 }
 
-/* Variable substitution in uniqueness quantifier.  (Contributed by NM,
+/*Variable substitution in uniqueness quantifier.  (Contributed by NM,
        7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
 theorem sb8eu (ph : wff, x : set, y : set) disjointed(w y z, ph z w, w x z) {
@@ -402,10 +402,10 @@ proof of sb8eu {
 	qed prop 1 = step 20 ;;
 }
 
-/* Variable substitution in uniqueness quantifier.  (Contributed by
+/*Variable substitution in uniqueness quantifier.  (Contributed by
        Alexander van der Vekens, 17-Jun-2017.) */
 
-theorem sb8mo (ph : wff, x : set, y : set)  {
+theorem sb8mo (ph : wff, x : set, y : set) disjointed(y, ph, x) {
 	hyp 1 : wff = |- F/ y ph ;;
 	-----------------------
 	prop 1 : wff = |- ( ∃* x ph ↔ ∃* y [ y / x ] ph ) ;;
@@ -421,7 +421,7 @@ proof of sb8mo {
 	qed prop 1 = step 6 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 25-Nov-1994.)  (Revised by Mario Carneiro,
        7-Oct-2016.) */
 
@@ -441,7 +441,7 @@ proof of cbveu {
 	qed prop 1 = step 4 ;;
 }
 
-/* An alternate way to express uniqueness used by some authors.  Exercise
+/*An alternate way to express uniqueness used by some authors.  Exercise
        2(b) of [Margaris] p. 110.  (Contributed by NM, 20-Aug-1993.)  (Revised
        by Mario Carneiro, 7-Oct-2016.) */
 
@@ -468,7 +468,7 @@ proof of eu1 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Equivalent definitions of "there exists at most one."  (Contributed by
+/*Equivalent definitions of "there exists at most one."  (Contributed by
        NM, 7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
 
 theorem mo (ph : wff, x : set, y : set) disjointed(x y z, ph z) {
@@ -537,7 +537,7 @@ proof of mo {
 	qed prop 1 = step 55 ;;
 }
 
-/* Existential uniqueness implies existence.  (Contributed by NM,
+/*Existential uniqueness implies existence.  (Contributed by NM,
        15-Sep-1993.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem euex (ph : wff, x : set) disjointed(x y, ph y) {
@@ -553,7 +553,7 @@ proof of euex {
 	qed prop 1 = step 4 ;;
 }
 
-/* Existential uniqueness implies "at most one."  (Contributed by NM,
+/*Existential uniqueness implies "at most one."  (Contributed by NM,
        8-Jul-1994.) */
 
 theorem eumo0 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -571,7 +571,7 @@ proof of eumo0 {
 	qed prop 1 = step 5 ;;
 }
 
-/* An alternate way of defining existential uniqueness.  Definition 6.10 of
+/*An alternate way of defining existential uniqueness.  Definition 6.10 of
        [TakeutiZaring] p. 26.  (Contributed by NM, 8-Jul-1994.) */
 
 theorem eu2 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -602,7 +602,7 @@ proof of eu2 {
 	qed prop 1 = step 18 ;;
 }
 
-/* An alternate way to express existential uniqueness.  (Contributed by NM,
+/*An alternate way to express existential uniqueness.  (Contributed by NM,
        8-Jul-1994.) */
 
 theorem eu3 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -619,7 +619,7 @@ proof of eu3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
+/*Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
        21-Oct-2005.) */
 
 theorem euor (ph : wff, ps : wff, x : set)  {
@@ -636,7 +636,7 @@ proof of euor {
 	qed prop 1 = step 4 ;;
 }
 
-/* Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
+/*Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
        23-Mar-1995.) */
 
 theorem euorv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -649,7 +649,7 @@ proof of euorv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Alternate definition of "at most one."  (Contributed by NM,
+/*Alternate definition of "at most one."  (Contributed by NM,
        8-Mar-1995.) */
 
 theorem mo2 (ph : wff, x : set, y : set) disjointed(x y) {
@@ -675,7 +675,7 @@ proof of mo2 {
 	qed prop 1 = step 13 ;;
 }
 
-/* Substitution into "at most one".  (Contributed by Jeff Madsen,
+/*Substitution into "at most one".  (Contributed by Jeff Madsen,
        2-Sep-2009.) */
 
 theorem sbmo (ph : wff, x : set, y : set, z : set) disjointed(w x z, w y z, w ph) {
@@ -699,7 +699,7 @@ proof of sbmo {
 	qed prop 1 = step 12 ;;
 }
 
-/* Alternate definition of "at most one."  Definition of [BellMachover]
+/*Alternate definition of "at most one."  Definition of [BellMachover]
        p. 460, except that definition has the side condition that ` y ` not
        occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
        8-Mar-1995.) */
@@ -717,7 +717,7 @@ proof of mo3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* "At most one" expressed using implicit substitution.  (Contributed by
+/*"At most one" expressed using implicit substitution.  (Contributed by
        NM, 10-Apr-2004.) */
 
 theorem mo4f (ph : wff, ps : wff, x : set, y : set) disjointed(x y, y ph) {
@@ -738,7 +738,7 @@ proof of mo4f {
 	qed prop 1 = step 7 ;;
 }
 
-/* "At most one" expressed using implicit substitution.  (Contributed by
+/*"At most one" expressed using implicit substitution.  (Contributed by
        NM, 26-Jul-1995.) */
 
 theorem mo4 (ph : wff, ps : wff, x : set, y : set) disjointed(x y, y ph, x ps) {
@@ -753,7 +753,7 @@ proof of mo4 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for "at most one" quantifier (deduction rule).
+/*Formula-building rule for "at most one" quantifier (deduction rule).
        (Contributed by NM, 8-Mar-1995.) */
 
 theorem mobid (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -773,7 +773,7 @@ proof of mobid {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building rule for "at most one" quantifier (deduction rule).
+/*Formula-building rule for "at most one" quantifier (deduction rule).
        (Contributed by Mario Carneiro, 7-Oct-2016.) */
 
 theorem mobidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
@@ -788,7 +788,7 @@ proof of mobidv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for "at most one" quantifier (inference rule).
+/*Formula-building rule for "at most one" quantifier (inference rule).
        (Contributed by NM, 9-Mar-1995.)  (Revised by Mario Carneiro,
        17-Oct-2016.) */
 
@@ -805,7 +805,7 @@ proof of mobii {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rule used to change bound variables, using implicit substitution.
+/*Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 9-Mar-1995.)  (Revised by Andrew Salmon,
        8-Jun-2011.) */
 
@@ -827,7 +827,7 @@ proof of cbvmo {
 	qed prop 1 = step 6 ;;
 }
 
-/* Uniqueness in terms of "at most one."  (Contributed by NM,
+/*Uniqueness in terms of "at most one."  (Contributed by NM,
        23-Mar-1995.) */
 
 theorem eu5 (ph : wff, x : set) disjointed(x y, y ph) {
@@ -845,7 +845,7 @@ proof of eu5 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Uniqueness using implicit substitution.  (Contributed by NM,
+/*Uniqueness using implicit substitution.  (Contributed by NM,
        26-Jul-1995.) */
 
 theorem eu4 (ph : wff, ps : wff, x : set, y : set) disjointed(x y, y ph, x ps) {
@@ -862,7 +862,7 @@ proof of eu4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Existential uniqueness implies "at most one."  (Contributed by NM,
+/*Existential uniqueness implies "at most one."  (Contributed by NM,
      23-Mar-1995.) */
 
 theorem eumo (ph : wff, x : set)  {
@@ -875,7 +875,7 @@ proof of eumo {
 	qed prop 1 = step 2 ;;
 }
 
-/* "At most one" inferred from existential uniqueness.  (Contributed by NM,
+/*"At most one" inferred from existential uniqueness.  (Contributed by NM,
        5-Apr-1995.) */
 
 theorem eumoi (ph : wff, x : set)  {
@@ -890,7 +890,7 @@ proof of eumoi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Existence in terms of "at most one" and uniqueness.  (Contributed by NM,
+/*Existence in terms of "at most one" and uniqueness.  (Contributed by NM,
      5-Apr-2004.) */
 
 theorem exmoeu (ph : wff, x : set)  {
@@ -911,7 +911,7 @@ proof of exmoeu {
 	qed prop 1 = step 10 ;;
 }
 
-/* Existence implies "at most one" is equivalent to uniqueness.  (Contributed
+/*Existence implies "at most one" is equivalent to uniqueness.  (Contributed
      by NM, 5-Apr-2004.) */
 
 theorem exmoeu2 (ph : wff, x : set)  {
@@ -924,7 +924,7 @@ proof of exmoeu2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Absorption of existence condition by "at most one."  (Contributed by NM,
+/*Absorption of existence condition by "at most one."  (Contributed by NM,
      4-Nov-2002.) */
 
 theorem moabs (ph : wff, x : set)  {
@@ -940,7 +940,7 @@ proof of moabs {
 	qed prop 1 = step 5 ;;
 }
 
-/* Something exists or at most one exists.  (Contributed by NM,
+/*Something exists or at most one exists.  (Contributed by NM,
      8-Mar-1995.) */
 
 theorem exmo (ph : wff, x : set)  {
@@ -955,7 +955,7 @@ proof of exmo {
 	qed prop 1 = step 4 ;;
 }
 
-/* "At most one" is preserved through implication (notice wff reversal).
+/*"At most one" is preserved through implication (notice wff reversal).
        (Contributed by NM, 22-Apr-1995.) */
 
 theorem moim (ph : wff, ps : wff, x : set) disjointed(x y, y ph, y ps) {
@@ -975,7 +975,7 @@ proof of moim {
 	qed prop 1 = step 8 ;;
 }
 
-/* "At most one" is preserved through implication (notice wff reversal).
+/*"At most one" is preserved through implication (notice wff reversal).
        (Contributed by NM, 15-Feb-2006.) */
 
 theorem moimi (ph : wff, ps : wff, x : set)  {
@@ -990,7 +990,7 @@ proof of moimi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Move antecedent outside of "at most one."  (Contributed by NM,
+/*Move antecedent outside of "at most one."  (Contributed by NM,
        28-Jul-1995.) */
 
 theorem morimv (ph : wff, ps : wff, x : set) disjointed(x y, x y ph, y ps) {
@@ -1013,7 +1013,7 @@ proof of morimv {
 	qed prop 1 = step 11 ;;
 }
 
-/* Uniqueness implies "at most one" through implication.  (Contributed by NM,
+/*Uniqueness implies "at most one" through implication.  (Contributed by NM,
      22-Apr-1995.) */
 
 theorem euimmo (ph : wff, ps : wff, x : set)  {
@@ -1027,7 +1027,7 @@ proof of euimmo {
 	qed prop 1 = step 3 ;;
 }
 
-/* Add existential uniqueness quantifiers to an implication.  Note the
+/*Add existential uniqueness quantifiers to an implication.  Note the
      reversed implication in the antecedent.  (Contributed by NM,
      19-Oct-2005.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
 
@@ -1044,7 +1044,7 @@ proof of euim {
 	qed prop 1 = step 5 ;;
 }
 
-/* "At most one" is still the case when a conjunct is added.  (Contributed by
+/*"At most one" is still the case when a conjunct is added.  (Contributed by
      NM, 22-Apr-1995.) */
 
 theorem moan (ph : wff, ps : wff, x : set)  {
@@ -1057,7 +1057,7 @@ proof of moan {
 	qed prop 1 = step 2 ;;
 }
 
-/* "At most one" is still true when a conjunct is added.  (Contributed by
+/*"At most one" is still true when a conjunct is added.  (Contributed by
        NM, 9-Mar-1995.) */
 
 theorem moani (ph : wff, ps : wff, x : set)  {
@@ -1072,7 +1072,7 @@ proof of moani {
 	qed prop 1 = step 2 ;;
 }
 
-/* "At most one" is still the case when a disjunct is removed.  (Contributed
+/*"At most one" is still the case when a disjunct is removed.  (Contributed
      by NM, 5-Apr-2004.) */
 
 theorem moor (ph : wff, ps : wff, x : set)  {
@@ -1085,7 +1085,7 @@ proof of moor {
 	qed prop 1 = step 2 ;;
 }
 
-/* "At most one" imports disjunction to conjunction.  (Contributed by NM,
+/*"At most one" imports disjunction to conjunction.  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem mooran1 (ph : wff, ps : wff, x : set)  {
@@ -1100,7 +1100,7 @@ proof of mooran1 {
 	qed prop 1 = step 4 ;;
 }
 
-/* "At most one" exports disjunction to conjunction.  (Contributed by NM,
+/*"At most one" exports disjunction to conjunction.  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem mooran2 (ph : wff, ps : wff, x : set)  {
@@ -1115,7 +1115,7 @@ proof of mooran2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Introduction of a conjunct into "at most one" quantifier.  (Contributed
+/*Introduction of a conjunct into "at most one" quantifier.  (Contributed
        by NM, 3-Dec-2001.) */
 
 theorem moanim (ph : wff, ps : wff, x : set) disjointed(x y, y ph, y ps) {
@@ -1142,10 +1142,10 @@ proof of moanim {
 	qed prop 1 = step 13 ;;
 }
 
-/* Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+/*Introduction of a conjunct into uniqueness quantifier.  (Contributed by
        NM, 19-Feb-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
-theorem euan (ph : wff, ps : wff, x : set)  {
+theorem euan (ph : wff, ps : wff, x : set) disjointed(x, ph, ps) {
 	hyp 1 : wff = |- F/ x ph ;;
 	-----------------------
 	prop 1 : wff = |- ( ∃! x ( ph ∧ ps ) ↔ ( ph ∧ ∃! x ps ) ) ;;
@@ -1179,10 +1179,10 @@ proof of euan {
 	qed prop 1 = step 24 ;;
 }
 
-/* Introduction of a conjunct into "at most one" quantifier.  (Contributed
+/*Introduction of a conjunct into "at most one" quantifier.  (Contributed
        by NM, 23-Mar-1995.) */
 
-theorem moanimv (ph : wff, ps : wff, x : set) disjointed(x ph) {
+theorem moanimv (ph : wff, ps : wff, x : set) disjointed(x ph, ps) {
 	prop 1 : wff = |- ( ∃* x ( ph ∧ ps ) ↔ ( ph → ∃* x ps ) ) ;;
 }
 
@@ -1192,7 +1192,7 @@ proof of moanimv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
+/*Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
      25-Jan-2006.) */
 
 theorem moaneu (ph : wff, x : set)  {
@@ -1210,7 +1210,7 @@ proof of moaneu {
 	qed prop 1 = step 7 ;;
 }
 
-/* Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) */
+/*Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) */
 
 theorem moanmo (ph : wff, x : set)  {
 	prop 1 : wff = |- ∃* x ( ph ∧ ∃* x ph ) ;;
@@ -1227,7 +1227,7 @@ proof of moanmo {
 	qed prop 1 = step 7 ;;
 }
 
-/* Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+/*Introduction of a conjunct into uniqueness quantifier.  (Contributed by
        NM, 23-Mar-1995.) */
 
 theorem euanv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -1240,7 +1240,7 @@ proof of euanv {
 	qed prop 1 = step 2 ;;
 }
 
-/* "At most one" picks a variable value, eliminating an existential
+/*"At most one" picks a variable value, eliminating an existential
        quantifier.  (Contributed by NM, 27-Jan-1997.) */
 
 theorem mopick (ph : wff, ps : wff, x : set) disjointed(x y, y ph, y ps) {
@@ -1274,7 +1274,7 @@ proof of mopick {
 	qed prop 1 = step 22 ;;
 }
 
-/* Existential uniqueness "picks" a variable value for which another wff is
+/*Existential uniqueness "picks" a variable value for which another wff is
      true.  If there is only one thing ` x ` such that ` ph ` is true, and
      there is also an ` x ` (actually the same one) such that ` ph ` and ` ps `
      are both true, then ` ph ` implies ` ps ` regardless of ` x ` .  This
@@ -1293,7 +1293,7 @@ proof of eupick {
 	qed prop 1 = step 3 ;;
 }
 
-/* Version of ~ eupick with closed formulas.  (Contributed by NM,
+/*Version of ~ eupick with closed formulas.  (Contributed by NM,
      6-Sep-2008.) */
 
 theorem eupicka (ph : wff, ps : wff, x : set)  {
@@ -1309,7 +1309,7 @@ proof of eupicka {
 	qed prop 1 = step 5 ;;
 }
 
-/* Existential uniqueness "pick" showing wff equivalence.  (Contributed by
+/*Existential uniqueness "pick" showing wff equivalence.  (Contributed by
      NM, 25-Nov-1994.) */
 
 theorem eupickb (ph : wff, ps : wff, x : set)  {
@@ -1329,7 +1329,7 @@ proof of eupickb {
 	qed prop 1 = step 9 ;;
 }
 
-/* Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
+/*Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
      Salmon, 11-Jul-2011.) */
 
 theorem eupickbi (ph : wff, ps : wff, x : set)  {
@@ -1352,7 +1352,7 @@ proof of eupickbi {
 	qed prop 1 = step 12 ;;
 }
 
-/* "At most one" can show the existence of a common value.  In this case we
+/*"At most one" can show the existence of a common value.  In this case we
      can infer existence of conjunction from a conjunction of existence, and it
      is one way to achieve the converse of ~ 19.40 .  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
@@ -1375,7 +1375,7 @@ proof of mopick2 {
 	qed prop 1 = step 10 ;;
 }
 
-/* Introduce or eliminate a disjunct in a uniqueness quantifier.
+/*Introduce or eliminate a disjunct in a uniqueness quantifier.
      (Contributed by NM, 21-Oct-2005.)  (Proof shortened by Andrew Salmon,
      9-Jul-2011.) */
 
@@ -1396,7 +1396,7 @@ proof of euor2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* "At most one" double quantification.  (Contributed by NM,
+/*"At most one" double quantification.  (Contributed by NM,
        3-Dec-2001.) */
 
 theorem moexex (ph : wff, ps : wff, x : set, y : set)  {
@@ -1435,7 +1435,7 @@ proof of moexex {
 	qed prop 1 = step 26 ;;
 }
 
-/* "At most one" double quantification.  (Contributed by NM,
+/*"At most one" double quantification.  (Contributed by NM,
        26-Jan-1997.) */
 
 theorem moexexv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph) {
@@ -1448,7 +1448,7 @@ proof of moexexv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Double quantification with "at most one."  (Contributed by NM,
+/*Double quantification with "at most one."  (Contributed by NM,
      3-Dec-2001.) */
 
 theorem 2moex (ph : wff, x : set, y : set)  {
@@ -1464,7 +1464,7 @@ proof of 2moex {
 	qed prop 1 = step 5 ;;
 }
 
-/* Double quantification with existential uniqueness.  (Contributed by NM,
+/*Double quantification with existential uniqueness.  (Contributed by NM,
      3-Dec-2001.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem 2euex (ph : wff, x : set, y : set)  {
@@ -1487,7 +1487,7 @@ proof of 2euex {
 	qed prop 1 = step 12 ;;
 }
 
-/* Double quantification with existential uniqueness and "at most one."
+/*Double quantification with existential uniqueness and "at most one."
      (Contributed by NM, 3-Dec-2001.) */
 
 theorem 2eumo (ph : wff, x : set, y : set)  {
@@ -1501,7 +1501,7 @@ proof of 2eumo {
 	qed prop 1 = step 3 ;;
 }
 
-/* Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
+/*Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
 
 theorem 2eu2ex (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ∃! x ∃! y ph → ∃ x ∃ y ph ) ;;
@@ -1515,7 +1515,7 @@ proof of 2eu2ex {
 	qed prop 1 = step 4 ;;
 }
 
-/* A condition allowing swap of "at most one" and existential quantifiers.
+/*A condition allowing swap of "at most one" and existential quantifiers.
      (Contributed by NM, 10-Apr-2004.) */
 
 theorem 2moswap (ph : wff, x : set, y : set)  {
@@ -1534,7 +1534,7 @@ proof of 2moswap {
 	qed prop 1 = step 8 ;;
 }
 
-/* A condition allowing swap of uniqueness and existential quantifiers.
+/*A condition allowing swap of uniqueness and existential quantifiers.
      (Contributed by NM, 10-Apr-2004.) */
 
 theorem 2euswap (ph : wff, x : set, y : set)  {
@@ -1552,7 +1552,7 @@ proof of 2euswap {
 	qed prop 1 = step 7 ;;
 }
 
-/* Double existential uniqueness implies double uniqueness quantification.
+/*Double existential uniqueness implies double uniqueness quantification.
      (Contributed by NM, 3-Dec-2001.)  (Proof shortened by Mario Carneiro,
      22-Dec-2016.) */
 
@@ -1572,7 +1572,7 @@ proof of 2exeu {
 	qed prop 1 = step 8 ;;
 }
 
-/* Two equivalent expressions for double "at most one."  (Contributed by
+/*Two equivalent expressions for double "at most one."  (Contributed by
        NM, 2-Feb-2005.)  (Revised by Mario Carneiro, 17-Oct-2016.) */
 
 theorem 2mo (ph : wff, x : set, y : set, z : set, w : set) disjointed(x y z w v u, z w v u ph) {
@@ -1679,7 +1679,7 @@ proof of 2mo {
 	qed prop 1 = step 95 ;;
 }
 
-/* Double "exists at most one", using implicit substitution.  (Contributed
+/*Double "exists at most one", using implicit substitution.  (Contributed
        by NM, 10-Feb-2005.) */
 
 theorem 2mos (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(z w ph, x y ps, x y z w) {
@@ -1708,7 +1708,7 @@ proof of 2mos {
 	qed prop 1 = step 16 ;;
 }
 
-/* Double existential uniqueness.  This theorem shows a condition under which
+/*Double existential uniqueness.  This theorem shows a condition under which
      a "naive" definition matches the correct one.  (Contributed by NM,
      3-Dec-2001.) */
 
@@ -1756,7 +1756,7 @@ proof of 2eu1 {
 	qed prop 1 = step 36 ;;
 }
 
-/* Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
+/*Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
 
 theorem 2eu2 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ∃! y ∃ x ph → ( ∃! x ∃! y ph ↔ ∃! x ∃ y ph ) ) ;;
@@ -1775,7 +1775,7 @@ proof of 2eu2 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
+/*Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) */
 
 theorem 2eu3 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ∀ x ∀ y ( ∃* x ph ∨ ∃* y ph ) → ( ( ∃! x ∃! y ph ∧ ∃! y ∃! x ph ) ↔ ( ∃! x ∃ y ph ∧ ∃! y ∃ x ph ) ) ) ;;
@@ -1807,7 +1807,7 @@ proof of 2eu3 {
 	qed prop 1 = step 22 ;;
 }
 
-/* This theorem provides us with a definition of double existential
+/*This theorem provides us with a definition of double existential
        uniqueness ("exactly one ` x ` and exactly one ` y ` ").  Naively one
        might think (incorrectly) that it could be defined by
        ` E! x E! y ph ` .  See ~ 2eu1 for a condition under which the naive
@@ -1870,7 +1870,7 @@ proof of 2eu4 {
 	qed prop 1 = step 48 ;;
 }
 
-/* An alternate definition of double existential uniqueness (see ~ 2eu4 ).
+/*An alternate definition of double existential uniqueness (see ~ 2eu4 ).
        A mistake sometimes made in the literature is to use ` E! x E! y ` to
        mean "exactly one ` x ` and exactly one ` y ` ."  (For example, see
        Proposition 7.53 of [TakeutiZaring] p. 53.)  It turns out that this is
@@ -1897,7 +1897,7 @@ proof of 2eu5 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Two equivalent expressions for double existential uniqueness.
+/*Two equivalent expressions for double existential uniqueness.
        (Contributed by NM, 2-Feb-2005.)  (Revised by Mario Carneiro,
        17-Oct-2016.) */
 
@@ -2023,7 +2023,7 @@ proof of 2eu6 {
 	qed prop 1 = step 113 ;;
 }
 
-/* Two equivalent expressions for double existential uniqueness.
+/*Two equivalent expressions for double existential uniqueness.
      (Contributed by NM, 19-Feb-2005.) */
 
 theorem 2eu7 (ph : wff, x : set, y : set)  {
@@ -2046,7 +2046,7 @@ proof of 2eu7 {
 	qed prop 1 = step 12 ;;
 }
 
-/* Two equivalent expressions for double existential uniqueness.  Curiously,
+/*Two equivalent expressions for double existential uniqueness.  Curiously,
      we can put ` E! ` on either of the internal conjuncts but not both.  We
      can also commute ` E! x E! y ` using ~ 2eu7 .  (Contributed by NM,
      20-Feb-2005.) */
@@ -2075,7 +2075,7 @@ proof of 2eu8 {
 	qed prop 1 = step 16 ;;
 }
 
-/* Equality has existential uniqueness.  Special case of ~ eueq1 proved
+/*Equality has existential uniqueness.  Special case of ~ eueq1 proved
        using only predicate calculus.  (Contributed by Stefan Allan,
        4-Dec-2008.) */
 
@@ -2094,7 +2094,7 @@ proof of euequ1 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Two ways to express "only one thing exists."  The left-hand side
+/*Two ways to express "only one thing exists."  The left-hand side
        requires only one variable to express this.  Both sides are false in set
        theory; see theorem ~ dtru .  (Contributed by NM, 5-Apr-2004.) */
 
@@ -2116,7 +2116,7 @@ proof of exists1 {
 	qed prop 1 = step 10 ;;
 }
 
-/* A condition implying that at least two things exist.  (Contributed by
+/*A condition implying that at least two things exist.  (Contributed by
        NM, 10-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem exists2 (ph : wff, x : set) disjointed(x y) {

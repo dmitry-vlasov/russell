@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_axioms_from_the_The_Russell-Bernays_Axioms.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Stoic logic indemonstrables (Chrysippus of Soli)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,11 +44,11 @@ import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizatio
 
 */
 
-/* Minor premise for modus ponendo tollens 1. */
+/*Minor premise for modus ponendo tollens 1. */
 
-/* Major premise for modus ponendo tollens 1. */
+/*Major premise for modus ponendo tollens 1. */
 
-/* Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
+/*Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
        See rule 1 on [Lopez-Astorga] p. 12 , rule 1 on [Sanford] p. 40, and
        rule A3 in [Hitchcock] p. 5.  Sanford describes this rule second (after
        ~ mpto2 ) as a "safer, and these days much more common" version of modus
@@ -68,11 +68,11 @@ proof of mpto1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Minor premise for modus ponendo tollens 2. */
+/*Minor premise for modus ponendo tollens 2. */
 
-/* Major premise for modus ponendo tollens 2. */
+/*Major premise for modus ponendo tollens 2. */
 
-/* Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+/*Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
@@ -94,11 +94,11 @@ proof of mpto2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Minor premise for modus ponendo tollens 2. */
+/*Minor premise for modus ponendo tollens 2. */
 
-/* Major premise for modus ponendo tollens 2. */
+/*Major premise for modus ponendo tollens 2. */
 
-/* Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+/*Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
@@ -121,13 +121,13 @@ proof of mpto2OLD {
 	qed prop 1 = step 6 ;;
 }
 
-/* Minor premise for modus tollendo ponens (original exclusive-or version).
+/*Minor premise for modus tollendo ponens (original exclusive-or version).
     */
 
-/* Major premise for modus tollendo ponens (original exclusive-or version).
+/*Major premise for modus tollendo ponens (original exclusive-or version).
     */
 
-/* Modus tollendo ponens (original exclusive-or version), aka disjunctive
+/*Modus tollendo ponens (original exclusive-or version), aka disjunctive
        syllogism, one of the five "indemonstrables" in Stoic logic.  The rule
        says, "if ` ph ` is not true, and either ` ph ` or ` ps ` (exclusively)
        are true, then ` ps ` must be true."  Today the name "modus tollendo
@@ -155,7 +155,7 @@ proof of mtp-xor {
 	qed prop 1 = step 4 ;;
 }
 
-/* Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
+/*Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 4-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) */
 
@@ -177,11 +177,11 @@ proof of mtp-xorOLD {
 	qed prop 1 = step 7 ;;
 }
 
-/* Minor premise for modus tollendo ponens (inclusive-or version). */
+/*Minor premise for modus tollendo ponens (inclusive-or version). */
 
-/* Major premise for modus tollendo ponens (inclusive-or version). */
+/*Major premise for modus tollendo ponens (inclusive-or version). */
 
-/* Modus tollendo ponens (inclusive-or version), aka disjunctive
+/*Modus tollendo ponens (inclusive-or version), aka disjunctive
        syllogism.  This is similar to ~ mtp-xor , one of the five original
        "indemonstrables" in Stoic logic.  However, in Stoic logic this rule
        used exclusive-or, while the name modus tollendo ponens often refers to
@@ -206,7 +206,7 @@ proof of mtp-or {
 	qed prop 1 = step 2 ;;
 }
 
-/* Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
+/*Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 3-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) */
 

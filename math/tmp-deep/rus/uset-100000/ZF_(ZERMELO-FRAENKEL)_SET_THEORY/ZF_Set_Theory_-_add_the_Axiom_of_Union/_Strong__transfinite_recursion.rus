@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Functions_on_ordinals__strictly_monotone_ordinal_functions.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     "Strong" transfinite recursion
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -10,13 +10,13 @@ constant {
 	symbol recs ;;
 }
 
-/* Notation for a function defined by strong transfinite recursion. */
+/*Notation for a function defined by strong transfinite recursion. */
 
 rule crecs (F : class) {
 	term : class = # recs ( F ) ;;
 }
 
-/* Define a function ` recs ( F ) ` on ` On ` , the class of ordinal
+/*Define a function ` recs ( F ) ` on ` On ` , the class of ordinal
        numbers, by transfinite recursion given a rule ` F ` which sets the next
        value given all values so far.  See ~ df-rdg for more details on why
        this definition is desirable.  Unlike ~ df-rdg which restricts the
@@ -37,7 +37,7 @@ definition df-recs (x : set, y : set, f : set, F : class) disjointed(F f x y) {
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Equality theorem for ` recs ` .  (Contributed by Stefan O'Rear,
+/*Equality theorem for ` recs ` .  (Contributed by Stefan O'Rear,
        18-Jan-2015.) */
 
 theorem recseq (F : class, G : class) disjointed(F a b c, G a b c, a b c) {
@@ -59,7 +59,7 @@ proof of recseq {
 	qed prop 1 = step 10 ;;
 }
 
-/* Bound-variable hypothesis builder for ` recs ` .  (Contributed by Stefan
+/*Bound-variable hypothesis builder for ` recs ` .  (Contributed by Stefan
        O'Rear, 18-Jan-2015.) */
 
 theorem nfrecs (x : set, F : class) disjointed(F a b c, a b c, x a b c) {
@@ -86,7 +86,7 @@ proof of nfrecs {
 	qed prop 1 = step 13 ;;
 }
 
-/* A technical lemma for transfinite recursion.  Compare Lemma 1 of
+/*A technical lemma for transfinite recursion.  Compare Lemma 1 of
        [TakeutiZaring] p. 47.  (Contributed by NM, 23-Mar-1995.)  (Revised by
        David Abernethy, 19-Jun-2012.) */
 
@@ -158,7 +158,7 @@ proof of tfrlem1 {
 	qed prop 1 = step 59 ;;
 }
 
-/* Lemma for transfinite recursion.  This provides some messy details
+/*Lemma for transfinite recursion.  This provides some messy details
        needed to link ~ tfrlem1 into the main proof.  (Contributed by NM,
        23-Mar-1995.)  (Revised by David Abernethy, 19-Jun-2012.) */
 
@@ -207,7 +207,7 @@ proof of tfrlem2 {
 	qed prop 1 = step 37 ;;
 }
 
-/* Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
+/*Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
        functions.  The final thing we're interested in is the union of all
        these acceptable functions.  This lemma just changes some bound
        variables in ` A ` for later use.  (Contributed by NM, 9-Apr-1995.) */
@@ -239,7 +239,7 @@ proof of tfrlem3 {
 	qed prop 1 = step 17 ;;
 }
 
-/* Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
+/*Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
        functions.  The final thing we're interested in is the union of all
        these acceptable functions.  This lemma just changes some bound
        variables in ` A ` for later use.  (Contributed by NM, 22-Jul-2012.) */

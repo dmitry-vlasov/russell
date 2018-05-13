@@ -1,12 +1,12 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Auxiliary_axiom_schemes_(4_schemes)/Axiom_scheme_ax-7_(Quantifier_Commutation).rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            Axiom scheme ax-11 (Substitution)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* Axiom of Substitution.  One of the 5 equality axioms of predicate
+/*Axiom of Substitution.  One of the 5 equality axioms of predicate
      calculus.  The final consequent ` A. x ( x = y -> ph ) ` is a way of
      expressing " ` y ` substituted for ` x ` in wff ` ph ` " (cf. ~ sb6 ).  It
      is based on Lemma 16 of [Tarski] p. 70 and Axiom C8 of [Monk2] p. 105,
@@ -32,7 +32,7 @@ axiom ax-11 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
 }
 
-/* Specialization.  A universally quantified wff implies the wff without a
+/*Specialization.  A universally quantified wff implies the wff without a
        quantifier Axiom scheme B5 of [Tarski] p. 67 (under his system S2,
        defined in the last paragraph on p. 77).  Also appears as Axiom scheme
        C5' in [Megill] p. 448 (p. 16 of the preprint).
@@ -72,7 +72,7 @@ proof of sp {
 	qed prop 1 = step 14 ;;
 }
 
-/* Show that the original axiom ~ ax-5o can be derived from ~ ax-5 and
+/*Show that the original axiom ~ ax-5o can be derived from ~ ax-5 and
      others.  See ~ ax5 for the rederivation of ~ ax-5 from ~ ax-5o .
 
      Part of the proof is based on the proof of Lemma 22 of [Monk2] p. 114.
@@ -95,7 +95,7 @@ proof of ax5o {
 	qed prop 1 = step 9 ;;
 }
 
-/* If a wff is true, it is true for at least one instance.  Special case of
+/*If a wff is true, it is true for at least one instance.  Special case of
      Theorem 19.8 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.8a (ph : wff, x : set)  {
@@ -110,7 +110,7 @@ proof of 19.8a {
 	qed prop 1 = step 4 ;;
 }
 
-/* ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
+/*` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
      (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
      by NM, 5-Aug-1993.) */
 
@@ -129,7 +129,7 @@ proof of hba1 {
 	qed prop 1 = step 7 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbn (ph : wff, x : set)  {
@@ -148,7 +148,7 @@ proof of hbn {
 	qed prop 1 = step 6 ;;
 }
 
-/* Deduction form of bound-variable hypothesis builder ~ hbim .
+/*Deduction form of bound-variable hypothesis builder ~ hbim .
        (Contributed by NM, 1-Jan-2002.) */
 
 theorem hbimd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -178,10 +178,10 @@ proof of hbimd {
 	qed prop 1 = step 15 ;;
 }
 
-/* Existential introduction, using implicit substitution.  Compare Lemma 14
+/*Existential introduction, using implicit substitution.  Compare Lemma 14
        of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.) */
 
-theorem spimeh (ph : wff, ps : wff, x : set, z : set) disjointed(x z) {
+theorem spimeh (ph : wff, ps : wff, x : set, z : set) disjointed(x z, ph) {
 	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
 	hyp 2 : wff = |- ( x = z → ( ph → ps ) ) ;;
 	-----------------------
@@ -211,7 +211,7 @@ proof of spimeh {
 	qed prop 1 = step 19 ;;
 }
 
-/* Show that the original axiom ~ ax-6o can be derived from ~ ax-6 and
+/*Show that the original axiom ~ ax-6o can be derived from ~ ax-6 and
      others.  See ~ ax6 for the rederivation of ~ ax-6 from ~ ax-6o .
 
      Normally, ~ ax6o should be used rather than ~ ax-6o , except by theorems
@@ -229,7 +229,7 @@ proof of ax6o {
 	qed prop 1 = step 3 ;;
 }
 
-/* Closed theorem version of bound-variable hypothesis builder ~ hbn .
+/*Closed theorem version of bound-variable hypothesis builder ~ hbn .
      (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbnt (ph : wff, x : set)  {
@@ -245,7 +245,7 @@ proof of hbnt {
 	qed prop 1 = step 5 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        by O'Cat, 3-Mar-2008.) */
 
@@ -266,7 +266,7 @@ proof of hbim {
 	qed prop 1 = step 6 ;;
 }
 
-/* A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.) */
+/*A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.9ht (ph : wff, x : set)  {
 	prop 1 : wff = |- ( ∀ x ( ph → ∀ x ph ) → ( ∃ x ph → ph ) ) ;;
@@ -280,7 +280,7 @@ proof of 19.9ht {
 	qed prop 1 = step 4 ;;
 }
 
-/* A wff may be existentially quantified with a variable not free in it.
+/*A wff may be existentially quantified with a variable not free in it.
        Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.) */
 
 theorem 19.9h (ph : wff, x : set)  {
@@ -297,7 +297,7 @@ proof of 19.9h {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+/*Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.23h (ph : wff, ps : wff, x : set)  {
@@ -319,7 +319,7 @@ proof of 19.23h {
 	qed prop 1 = step 9 ;;
 }
 
-/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) */
 
 theorem exlimih (ph : wff, ps : wff, x : set)  {
@@ -335,7 +335,7 @@ proof of exlimih {
 	qed prop 1 = step 2 ;;
 }
 
-/* Weaker version of ~ equsalh (requiring distinct variables) without using
+/*Weaker version of ~ equsalh (requiring distinct variables) without using
        ~ ax-12 .  (Contributed by NM, 29-Nov-2015.) */
 
 theorem equsalhw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
@@ -364,7 +364,7 @@ proof of equsalhw {
 	qed prop 1 = step 15 ;;
 }
 
-/* Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
+/*Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
        as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 1-Aug-2017.) */
 
 theorem 19.21h (ph : wff, ps : wff, x : set)  {
@@ -385,7 +385,7 @@ proof of 19.21h {
 	qed prop 1 = step 8 ;;
 }
 
-/* A closed form of ~ hbim .  (Contributed by NM, 5-Aug-1993.) */
+/*A closed form of ~ hbim .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbim1 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
@@ -401,7 +401,7 @@ proof of hbim1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by NM, 5-Aug-1993.) */
 
 theorem hbex (ph : wff, x : set, y : set)  {
@@ -419,7 +419,7 @@ proof of hbex {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem 19.12 of [Margaris] p. 89.  Assuming the converse is a mistake
+/*Theorem 19.12 of [Margaris] p. 89.  Assuming the converse is a mistake
      sometimes made by beginners!  But sometimes the converse does hold, as in
      ~ 19.12vv and ~ r19.12sn .  (Contributed by NM, 5-Aug-1993.) */
 
@@ -436,9 +436,9 @@ proof of 19.12 {
 	qed prop 1 = step 5 ;;
 }
 
-/* dvelimhw.4 $e |- ( -. A. x x = y -> ( z = y -> A. x z = y ) ) $. */
+/*dvelimhw.4 $e |- ( -. A. x x = y -> ( z = y -> A. x z = y ) ) $. */
 
-/* Proof of ~ dvelimh without using ~ ax-12 but with additional distinct
+/*Proof of ~ dvelimh without using ~ ax-12 but with additional distinct
        variable conditions.  (Contributed by Andrew Salmon, 21-Jul-2011.)
        (Revised by NM, 1-Aug-2017.) */
 
@@ -468,7 +468,7 @@ proof of dvelimhw {
 	qed prop 1 = step 13 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem hban (ph : wff, ps : wff, x : set)  {
@@ -487,7 +487,7 @@ proof of hban {
 	qed prop 1 = step 5 ;;
 }
 
-/* Lemma for ~ ax10 .  Similar to ~ cbv3h .  Requires distinct variables
+/*Lemma for ~ ax10 .  Similar to ~ cbv3h .  Requires distinct variables
        but avoids ~ ax-12 .  (Contributed by NM, 25-Jul-2015.) */
 
 theorem cbv3hv (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
@@ -515,7 +515,7 @@ proof of cbv3hv {
 	qed prop 1 = step 13 ;;
 }
 
-/* Inference rule reversing generalization.  (Contributed by NM,
+/*Inference rule reversing generalization.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem spi (ph : wff, x : set)  {
@@ -530,7 +530,7 @@ proof of spi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.) */
+/*Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sps (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- ( ph → ps ) ;;
@@ -544,7 +544,7 @@ proof of sps {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction generalizing antecedent.  (Contributed by NM, 17-Aug-1994.) */
+/*Deduction generalizing antecedent.  (Contributed by NM, 17-Aug-1994.) */
 
 theorem spsd (ph : wff, ps : wff, ch : wff, x : set)  {
 	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
@@ -558,7 +558,7 @@ proof of spsd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Consequence of the definition of not-free.  (Contributed by Mario
+/*Consequence of the definition of not-free.  (Contributed by Mario
      Carneiro, 26-Sep-2016.) */
 
 theorem nfr (ph : wff, x : set)  {
@@ -572,7 +572,7 @@ proof of nfr {
 	qed prop 1 = step 3 ;;
 }
 
-/* Consequence of the definition of not-free.  (Contributed by Mario
+/*Consequence of the definition of not-free.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) */
 
 theorem nfri (ph : wff, x : set)  {
@@ -587,7 +587,7 @@ proof of nfri {
 	qed prop 1 = step 2 ;;
 }
 
-/* Consequence of the definition of not-free in a context.  (Contributed by
+/*Consequence of the definition of not-free in a context.  (Contributed by
        Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfrd (ph : wff, ps : wff, x : set)  {
@@ -602,7 +602,7 @@ proof of nfrd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by Mario
+/*Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem alimd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -618,7 +618,7 @@ proof of alimd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+/*Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem alrimi (ph : wff, ps : wff, x : set)  {
@@ -634,7 +634,7 @@ proof of alrimi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
+/*Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfd (ph : wff, ps : wff, x : set)  {
@@ -651,7 +651,7 @@ proof of nfd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
+/*Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfdh (ph : wff, ps : wff, x : set)  {
@@ -667,7 +667,7 @@ proof of nfdh {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+/*Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem alrimdd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -685,7 +685,7 @@ proof of alrimdd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+/*Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem alrimd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -702,7 +702,7 @@ proof of alrimd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by Mario
+/*Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem eximd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -718,7 +718,7 @@ proof of eximd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction for generalization rule for negated wff.  (Contributed by
+/*Deduction for generalization rule for negated wff.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) */
 
 theorem nexd (ph : wff, ps : wff, x : set)  {
@@ -734,7 +734,7 @@ proof of nexd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for universal quantifier (deduction rule).
+/*Formula-building rule for universal quantifier (deduction rule).
        (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem albid (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -750,7 +750,7 @@ proof of albid {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building rule for existential quantifier (deduction rule).
+/*Formula-building rule for existential quantifier (deduction rule).
        (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem exbid (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -766,7 +766,7 @@ proof of exbid {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality theorem for effectively not free.  (Contributed by Mario
+/*An equality theorem for effectively not free.  (Contributed by Mario
        Carneiro, 4-Oct-2016.) */
 
 theorem nfbidf (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -786,7 +786,7 @@ proof of nfbidf {
 	qed prop 1 = step 6 ;;
 }
 
-/* Abbreviated version of ~ ax6o .  (Contributed by NM, 5-Aug-1993.) */
+/*Abbreviated version of ~ ax6o .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem a6e (ph : wff, x : set)  {
 	prop 1 : wff = |- ( ∃ x ∀ x ph → ph ) ;;
@@ -799,7 +799,7 @@ proof of a6e {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
+/*` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.) */
 
 theorem nfa1 (ph : wff, x : set)  {
@@ -812,7 +812,7 @@ proof of nfa1 {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` x ` is not free in ` F/ x ph ` .  (Contributed by Mario Carneiro,
+/*` x ` is not free in ` F/ x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.) */
 
 theorem nfnf1 (ph : wff, x : set)  {
@@ -826,7 +826,7 @@ proof of nfnf1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference version of ~ ax5o .  (Contributed by NM, 5-Aug-1993.) */
+/*Inference version of ~ ax5o .  (Contributed by NM, 5-Aug-1993.) */
 
 theorem a5i (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- ( ∀ x ph → ps ) ;;
@@ -840,7 +840,7 @@ proof of a5i {
 	qed prop 1 = step 2 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+/*If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph /\ ps /\ ch ) ` .  (Contributed by NM, 14-Sep-2003.) */
 
 theorem hb3an (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -859,7 +859,7 @@ proof of hb3an {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfnd (ph : wff, ps : wff, x : set)  {
@@ -882,7 +882,7 @@ proof of nfnd {
 	qed prop 1 = step 10 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfimd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -917,7 +917,7 @@ proof of nfimd {
 	qed prop 1 = step 21 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfbid (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -938,7 +938,7 @@ proof of nfbid {
 	qed prop 1 = step 7 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 7-Oct-2016.) */
 
 theorem nfand (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -957,7 +957,7 @@ proof of nfand {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction form of bound-variable hypothesis builder ~ nf3an .
+/*Deduction form of bound-variable hypothesis builder ~ nf3an .
        (Contributed by NM, 17-Feb-2013.)  (Revised by Mario Carneiro,
        16-Oct-2016.) */
 
@@ -977,7 +977,7 @@ proof of nf3and {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfn (ph : wff, x : set)  {
@@ -993,7 +993,7 @@ proof of nfn {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfal (ph : wff, x : set, y : set)  {
@@ -1009,7 +1009,7 @@ proof of nfal {
 	qed prop 1 = step 3 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfex (ph : wff, x : set, y : set)  {
@@ -1027,7 +1027,7 @@ proof of nfex {
 	qed prop 1 = step 5 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` F/ y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` F/ y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfnf (ph : wff, x : set, y : set)  {
@@ -1048,7 +1048,7 @@ proof of nfnf {
 	qed prop 1 = step 8 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfim (ph : wff, ps : wff, x : set)  {
@@ -1066,7 +1066,7 @@ proof of nfim {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph \/ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfor (ph : wff, ps : wff, x : set)  {
@@ -1084,7 +1084,7 @@ proof of nfor {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfan (ph : wff, ps : wff, x : set)  {
@@ -1103,7 +1103,7 @@ proof of nfan {
 	qed prop 1 = step 5 ;;
 }
 
-/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+/*If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph <-> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
 
 theorem nfbi (ph : wff, ps : wff, x : set)  {
@@ -1122,7 +1122,7 @@ proof of nfbi {
 	qed prop 1 = step 5 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+/*If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph \/ ps \/ ch ) ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
@@ -1142,7 +1142,7 @@ proof of nf3or {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+/*If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph /\ ps /\ ch ) ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) */
 
@@ -1162,7 +1162,7 @@ proof of nf3an {
 	qed prop 1 = step 4 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfald (ph : wff, ps : wff, x : set, y : set)  {
@@ -1185,7 +1185,7 @@ proof of nfald {
 	qed prop 1 = step 9 ;;
 }
 
-/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+/*If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfexd (ph : wff, ps : wff, x : set, y : set)  {
@@ -1204,7 +1204,7 @@ proof of nfexd {
 	qed prop 1 = step 5 ;;
 }
 
-/* Lemma 24 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
+/*Lemma 24 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
      24-Sep-2016.) */
 
 theorem nfa2 (ph : wff, x : set, y : set)  {
@@ -1217,7 +1217,7 @@ proof of nfa2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Lemma 23 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
+/*Lemma 23 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
      24-Sep-2016.) */
 
 theorem nfia1 (ph : wff, ps : wff, x : set)  {
@@ -1231,7 +1231,7 @@ proof of nfia1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* The analog in our "pure" predicate calculus of the Brouwer axiom (B) of
+/*The analog in our "pure" predicate calculus of the Brouwer axiom (B) of
      modal logic S5.  (Contributed by NM, 5-Oct-2005.) */
 
 theorem modal-b (ph : wff, x : set)  {
@@ -1244,7 +1244,7 @@ proof of modal-b {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.2 of [Margaris] p. 89, generalized to use two set variables.
+/*Theorem 19.2 of [Margaris] p. 89, generalized to use two set variables.
      (Contributed by O'Cat, 31-Mar-2008.) */
 
 theorem 19.2g (ph : wff, x : set, y : set)  {
@@ -1257,7 +1257,7 @@ proof of 19.2g {
 	qed prop 1 = step 2 ;;
 }
 
-/* A wff may be quantified with a variable not free in it.  Theorem 19.3 of
+/*A wff may be quantified with a variable not free in it.  Theorem 19.3 of
        [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
        Carneiro, 24-Sep-2016.) */
 
@@ -1274,7 +1274,7 @@ proof of 19.3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.)  (Revised
+/*A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.)  (Revised
      by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.9t (ph : wff, x : set)  {
@@ -1293,7 +1293,7 @@ proof of 19.9t {
 	qed prop 1 = step 8 ;;
 }
 
-/* A wff may be existentially quantified with a variable not free in it.
+/*A wff may be existentially quantified with a variable not free in it.
        Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.)
        (Revised by Mario Carneiro, 24-Sep-2016.) */
 
@@ -1309,7 +1309,7 @@ proof of 19.9 {
 	qed prop 1 = step 2 ;;
 }
 
-/* A deduction version of one direction of ~ 19.9 .  (Contributed by NM,
+/*A deduction version of one direction of ~ 19.9 .  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.9d (ph : wff, ps : wff, x : set)  {
@@ -1325,7 +1325,7 @@ proof of 19.9d {
 	qed prop 1 = step 3 ;;
 }
 
-/* One direction of Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM,
+/*One direction of Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM,
      5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem excomim (ph : wff, x : set, y : set)  {
@@ -1342,7 +1342,7 @@ proof of excomim {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem excom (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( ∃ x ∃ y ph ↔ ∃ y ∃ x ph ) ;;
@@ -1355,7 +1355,7 @@ proof of excom {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.16 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.16 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.16 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1370,7 +1370,7 @@ proof of 19.16 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.17 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.17 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.17 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ps ;;
@@ -1385,7 +1385,7 @@ proof of 19.17 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.19 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.19 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.19 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1400,7 +1400,7 @@ proof of 19.19 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Closed form of Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+/*Closed form of Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
      27-May-1997.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.21t (ph : wff, ps : wff, x : set)  {
@@ -1425,7 +1425,7 @@ proof of 19.21t {
 	qed prop 1 = step 14 ;;
 }
 
-/* Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
+/*Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
        as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) */
 
@@ -1441,7 +1441,7 @@ proof of 19.21 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.21 of [Margaris] p. 90 but with 2 quantifiers.  (Contributed
+/*Theorem 19.21 of [Margaris] p. 90 but with 2 quantifiers.  (Contributed
        by NM, 4-Feb-2005.) */
 
 theorem 19.21-2 (ph : wff, ps : wff, x : set, y : set)  {
@@ -1459,7 +1459,7 @@ proof of 19.21-2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* An axiom scheme of standard predicate calculus that emulates Axiom 5 of
+/*An axiom scheme of standard predicate calculus that emulates Axiom 5 of
        [Mendelson] p. 69.  The hypothesis ` F/ x ph ` can be thought of as
        emulating " ` x ` is not free in ` ph ` ."  With this definition, the
        meaning of "not free" is less restrictive than the usual textbook
@@ -1482,7 +1482,7 @@ proof of stdpc5 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.21bi (ph : wff, ps : wff, x : set)  {
@@ -1497,7 +1497,7 @@ proof of 19.21bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference removing double quantifier.  (Contributed by NM,
+/*Inference removing double quantifier.  (Contributed by NM,
        20-Apr-1994.) */
 
 theorem 19.21bbi (ph : wff, ps : wff, x : set, y : set)  {
@@ -1512,7 +1512,7 @@ proof of 19.21bbi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Closed form of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Closed form of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
      7-Nov-2005.) */
 
 theorem 19.23t (ph : wff, ps : wff, x : set)  {
@@ -1537,7 +1537,7 @@ proof of 19.23t {
 	qed prop 1 = step 14 ;;
 }
 
-/* Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+/*Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.23 (ph : wff, ps : wff, x : set)  {
@@ -1552,7 +1552,7 @@ proof of 19.23 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An alternative definition of ~ df-nf , which does not involve nested
+/*An alternative definition of ~ df-nf , which does not involve nested
      quantifiers on the same variable.  (Contributed by Mario Carneiro,
      24-Sep-2016.) */
 
@@ -1568,7 +1568,7 @@ proof of nf2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* An alternative definition of ~ df-nf .  (Contributed by Mario Carneiro,
+/*An alternative definition of ~ df-nf .  (Contributed by Mario Carneiro,
      24-Sep-2016.) */
 
 theorem nf3 (ph : wff, x : set)  {
@@ -1583,7 +1583,7 @@ proof of nf3 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
+/*Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
      or always false.  (Contributed by Mario Carneiro, 24-Sep-2016.) */
 
 theorem nf4 (ph : wff, x : set)  {
@@ -1601,7 +1601,7 @@ proof of nf4 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
+/*Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem exlimi (ph : wff, ps : wff, x : set)  {
@@ -1617,7 +1617,7 @@ proof of exlimi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.23bi (ph : wff, ps : wff, x : set)  {
@@ -1632,7 +1632,7 @@ proof of 19.23bi {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
+/*Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) */
 
 theorem exlimd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -1650,7 +1650,7 @@ proof of exlimd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        28-Jan-1997.) */
 
 theorem exlimdh (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -1668,7 +1668,7 @@ proof of exlimdh {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.27 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ps ;;
@@ -1684,7 +1684,7 @@ proof of 19.27 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.28 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1700,7 +1700,7 @@ proof of 19.28 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.36 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ps ;;
@@ -1716,7 +1716,7 @@ proof of 19.36 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.36i (ph : wff, ps : wff, x : set)  {
@@ -1732,7 +1732,7 @@ proof of 19.36i {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.37 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1748,7 +1748,7 @@ proof of 19.37 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.38 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.38 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.38 (ph : wff, ps : wff, x : set)  {
 	prop 1 : wff = |- ( ( ∃ x ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ;;
@@ -1765,7 +1765,7 @@ proof of 19.38 {
 	qed prop 1 = step 7 ;;
 }
 
-/* Theorem 19.32 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+/*Theorem 19.32 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) */
 
 theorem 19.32 (ph : wff, ps : wff, x : set)  {
@@ -1784,7 +1784,7 @@ proof of 19.32 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem 19.31 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.31 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.31 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ps ;;
@@ -1801,7 +1801,7 @@ proof of 19.31 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Theorem 19.44 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.44 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.44 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ps ;;
@@ -1817,7 +1817,7 @@ proof of 19.44 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.45 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+/*Theorem 19.45 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem 19.45 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1833,7 +1833,7 @@ proof of 19.45 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+/*Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 19.41 (ph : wff, ps : wff, x : set)  {
@@ -1855,7 +1855,7 @@ proof of 19.41 {
 	qed prop 1 = step 9 ;;
 }
 
-/* Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM, 18-Aug-1993.) */
+/*Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM, 18-Aug-1993.) */
 
 theorem 19.42 (ph : wff, ps : wff, x : set)  {
 	hyp 1 : wff = |- F/ x ph ;;
@@ -1871,7 +1871,7 @@ proof of 19.42 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Swap 1st and 3rd existential quantifiers.  (Contributed by NM,
+/*Swap 1st and 3rd existential quantifiers.  (Contributed by NM,
      9-Mar-1995.) */
 
 theorem excom13 (ph : wff, x : set, y : set, z : set)  {
@@ -1887,7 +1887,7 @@ proof of excom13 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rotate existential quantifiers.  (Contributed by NM, 17-Mar-1995.) */
+/*Rotate existential quantifiers.  (Contributed by NM, 17-Mar-1995.) */
 
 theorem exrot3 (ph : wff, x : set, y : set, z : set)  {
 	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ph ↔ ∃ y ∃ z ∃ x ph ) ;;
@@ -1900,7 +1900,7 @@ proof of exrot3 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rotate existential quantifiers twice.  (Contributed by NM, 9-Mar-1995.) */
+/*Rotate existential quantifiers twice.  (Contributed by NM, 9-Mar-1995.) */
 
 theorem exrot4 (ph : wff, x : set, y : set, z : set, w : set)  {
 	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ∃ w ph ↔ ∃ z ∃ w ∃ x ∃ y ph ) ;;
@@ -1914,7 +1914,7 @@ proof of exrot4 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Inference from ~ 19.8a .  (Contributed by Jeff Hankins, 26-Jul-2009.) */
+/*Inference from ~ 19.8a .  (Contributed by Jeff Hankins, 26-Jul-2009.) */
 
 theorem nexr (ph : wff, x : set)  {
 	hyp 1 : wff = |- ¬ ∃ x ph ;;
@@ -1928,7 +1928,7 @@ proof of nexr {
 	qed prop 1 = step 2 ;;
 }
 
-/* A closed form of ~ nfim .  (Contributed by NM, 5-Aug-1993.)  (Revised by
+/*A closed form of ~ nfim .  (Contributed by NM, 5-Aug-1993.)  (Revised by
        Mario Carneiro, 24-Sep-2016.) */
 
 theorem nfim1 (ph : wff, ps : wff, x : set)  {
@@ -1947,7 +1947,7 @@ proof of nfim1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* A closed form of ~ nfan .  (Contributed by Mario Carneiro,
+/*A closed form of ~ nfan .  (Contributed by Mario Carneiro,
        3-Oct-2016.) */
 
 theorem nfan1 (ph : wff, ps : wff, x : set)  {
@@ -1966,7 +1966,7 @@ proof of nfan1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Place a conjunct in the scope of an existential quantifier.
+/*Place a conjunct in the scope of an existential quantifier.
        (Contributed by NM, 18-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) */
 
@@ -1985,7 +1985,7 @@ proof of exan {
 	qed prop 1 = step 5 ;;
 }
 
-/* Deduction form of bound-variable hypothesis builder ~ hbn .
+/*Deduction form of bound-variable hypothesis builder ~ hbn .
        (Contributed by NM, 3-Jan-2002.) */
 
 theorem hbnd (ph : wff, ps : wff, x : set)  {
@@ -2002,7 +2002,7 @@ proof of hbnd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rearrange universal quantifiers.  (Contributed by NM, 12-Aug-1993.) */
+/*Rearrange universal quantifiers.  (Contributed by NM, 12-Aug-1993.) */
 
 theorem aaan (ph : wff, ps : wff, x : set, y : set)  {
 	hyp 1 : wff = |- F/ y ph ;;
@@ -2020,7 +2020,7 @@ proof of aaan {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange existential quantifiers.  (Contributed by NM, 8-Aug-1994.) */
+/*Rearrange existential quantifiers.  (Contributed by NM, 8-Aug-1994.) */
 
 theorem eeor (ph : wff, ps : wff, x : set, y : set)  {
 	hyp 1 : wff = |- F/ y ph ;;
@@ -2038,7 +2038,7 @@ proof of eeor {
 	qed prop 1 = step 5 ;;
 }
 
-/* Quantified "excluded middle."  Exercise 9.2a of Boolos, p. 111,
+/*Quantified "excluded middle."  Exercise 9.2a of Boolos, p. 111,
      _Computability and Logic_.  (Contributed by NM, 10-Dec-2000.) */
 
 theorem qexmid (ph : wff, x : set)  {
@@ -2051,7 +2051,7 @@ proof of qexmid {
 	qed prop 1 = step 2 ;;
 }
 
-/* A property related to substitution that unlike ~ equs5 doesn't require a
+/*A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) */
 
 theorem equs5a (ph : wff, x : set, y : set)  {
@@ -2066,7 +2066,7 @@ proof of equs5a {
 	qed prop 1 = step 4 ;;
 }
 
-/* A property related to substitution that unlike ~ equs5 doesn't require a
+/*A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) */
 
 theorem equs5e (ph : wff, x : set, y : set)  {
@@ -2085,7 +2085,7 @@ proof of equs5e {
 	qed prop 1 = step 8 ;;
 }
 
-/* Existential elimination rule of natural deduction.  (Contributed by
+/*Existential elimination rule of natural deduction.  (Contributed by
        Mario Carneiro, 9-Feb-2017.) */
 
 theorem exlimdd (ph : wff, ps : wff, ch : wff, x : set)  {
@@ -2104,7 +2104,7 @@ proof of exlimdd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Special case of Theorem 19.21 of [Margaris] p. 90. _Notational
+/*Special case of Theorem 19.21 of [Margaris] p. 90. _Notational
        convention_:  We sometimes suffix with "v" the label of a theorem
        eliminating a hypothesis such as ` F/ x ph ` in ~ 19.21 via the use of
        distinct variable conditions combined with ~ nfv .  Conversely, we
@@ -2124,7 +2124,7 @@ proof of 19.21v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+/*Special case of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        28-Jun-1998.) */
 
 theorem 19.23v (ph : wff, ps : wff, x : set) disjointed(x ps) {
@@ -2137,7 +2137,7 @@ proof of 19.23v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.23 of [Margaris] p. 90 extended to two variables.
+/*Theorem 19.23 of [Margaris] p. 90 extended to two variables.
        (Contributed by NM, 10-Aug-2004.) */
 
 theorem 19.23vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
@@ -2152,7 +2152,7 @@ proof of 19.23vv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem *11.53 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
+/*Theorem *11.53 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
        Salmon, 24-May-2011.) */
 
 theorem pm11.53 (ph : wff, ps : wff, x : set, y : set) disjointed(ph y, ps x) {
@@ -2169,7 +2169,7 @@ proof of pm11.53 {
 	qed prop 1 = step 6 ;;
 }
 
-/* Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 3-Jun-2004.) */
+/*Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 3-Jun-2004.) */
 
 theorem 19.27v (ph : wff, ps : wff, x : set) disjointed(x ps) {
 	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
@@ -2181,7 +2181,7 @@ proof of 19.27v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 25-Mar-2004.) */
+/*Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 25-Mar-2004.) */
 
 theorem 19.28v (ph : wff, ps : wff, x : set) disjointed(x ph) {
 	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
@@ -2193,7 +2193,7 @@ proof of 19.28v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case of Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+/*Special case of Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        18-Aug-1993.) */
 
 theorem 19.36v (ph : wff, ps : wff, x : set) disjointed(x ps) {
@@ -2206,7 +2206,7 @@ proof of 19.36v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.36aiv (ph : wff, ps : wff, x : set) disjointed(x ps) {
@@ -2221,7 +2221,7 @@ proof of 19.36aiv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case of ~ 19.12 where its converse holds.  (Contributed by NM,
+/*Special case of ~ 19.12 where its converse holds.  (Contributed by NM,
        18-Jul-2001.)  (Revised by Andrew Salmon, 11-Jul-2011.) */
 
 theorem 19.12vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph) {
@@ -2244,7 +2244,7 @@ proof of 19.12vv {
 	qed prop 1 = step 12 ;;
 }
 
-/* Special case of Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
+/*Special case of Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.37v (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -2257,7 +2257,7 @@ proof of 19.37v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Inference from Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
+/*Inference from Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.37aiv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -2272,7 +2272,7 @@ proof of 19.37aiv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case of Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM,
+/*Special case of Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.41v (ph : wff, ps : wff, x : set) disjointed(x ps) {
@@ -2285,7 +2285,7 @@ proof of 19.41v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.41 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
+/*Theorem 19.41 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
        NM, 30-Apr-1995.) */
 
 theorem 19.41vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
@@ -2300,7 +2300,7 @@ proof of 19.41vv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.41 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
+/*Theorem 19.41 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
        NM, 30-Apr-1995.) */
 
 theorem 19.41vvv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x ps, y ps, z ps) {
@@ -2315,7 +2315,7 @@ proof of 19.41vvv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Theorem 19.41 of [Margaris] p. 90 with 4 quantifiers.  (Contributed by
+/*Theorem 19.41 of [Margaris] p. 90 with 4 quantifiers.  (Contributed by
        FL, 14-Jul-2007.) */
 
 theorem 19.41vvvv (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(w ps, x ps, y ps, z ps) {
@@ -2330,7 +2330,7 @@ proof of 19.41vvvv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Special case of Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM,
+/*Special case of Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem 19.42v (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -2343,7 +2343,7 @@ proof of 19.42v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of existential quantifiers.  (Contributed by NM,
+/*Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.) */
 
 theorem exdistr (ph : wff, ps : wff, x : set, y : set) disjointed(y ph) {
@@ -2356,7 +2356,7 @@ proof of exdistr {
 	qed prop 1 = step 2 ;;
 }
 
-/* Theorem 19.42 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
+/*Theorem 19.42 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
        NM, 16-Mar-1995.) */
 
 theorem 19.42vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ph, y ph) {
@@ -2370,7 +2370,7 @@ proof of 19.42vv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Theorem 19.42 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
+/*Theorem 19.42 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
        NM, 21-Sep-2011.) */
 
 theorem 19.42vvv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x ph, y ph, z ph) {
@@ -2385,7 +2385,7 @@ proof of 19.42vvv {
 	qed prop 1 = step 4 ;;
 }
 
-/* Distribution of existential quantifiers.  (Contributed by NM,
+/*Distribution of existential quantifiers.  (Contributed by NM,
        17-Mar-1995.) */
 
 theorem exdistr2 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y ph, z ph) {
@@ -2398,7 +2398,7 @@ proof of exdistr2 {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribution of existential quantifiers.  (Contributed by NM,
+/*Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem 3exdistr (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(y ph, z ph, z ps) {
@@ -2416,7 +2416,7 @@ proof of 3exdistr {
 	qed prop 1 = step 7 ;;
 }
 
-/* Distribution of existential quantifiers.  (Contributed by NM,
+/*Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.) */
 
 theorem 4exdistr (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, w : set) disjointed(y ph, z ph, w ph, z ps, w ps, w ch) {
@@ -2446,7 +2446,7 @@ proof of 4exdistr {
 	qed prop 1 = step 19 ;;
 }
 
-/* Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
+/*Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
        (Revised by Mario Carneiro, 6-Oct-2016.) */
 
 theorem eean (ph : wff, ps : wff, x : set, y : set)  {
@@ -2465,7 +2465,7 @@ proof of eean {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.) */
+/*Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.) */
 
 theorem eeanv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps) {
 	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
@@ -2478,7 +2478,7 @@ proof of eeanv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.)
+/*Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) */
 
 theorem eeeanv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(y ph, z ph, x z ps, x y ch) {
@@ -2499,7 +2499,7 @@ proof of eeeanv {
 	qed prop 1 = step 10 ;;
 }
 
-/* Rearrange existential quantifiers.  (Contributed by NM, 31-Jul-1995.) */
+/*Rearrange existential quantifiers.  (Contributed by NM, 31-Jul-1995.) */
 
 theorem ee4anv (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(z ph, w ph, x ps, y ps, y z, w x) {
 	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ∃ w ( ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ∃ z ∃ w ps ) ) ;;
@@ -2515,7 +2515,7 @@ proof of ee4anv {
 	qed prop 1 = step 6 ;;
 }
 
-/* Deduction for generalization rule for negated wff.  (Contributed by NM,
+/*Deduction for generalization rule for negated wff.  (Contributed by NM,
        5-Aug-1993.) */
 
 theorem nexdv (ph : wff, ps : wff, x : set) disjointed(x ph) {
@@ -2530,7 +2530,7 @@ proof of nexdv {
 	qed prop 1 = step 2 ;;
 }
 
-/* One of the two equality axioms of standard predicate calculus, called
+/*One of the two equality axioms of standard predicate calculus, called
      substitutivity of equality.  (The other one is ~ stdpc6 .)  Translated to
      traditional notation, it can be
      read:  " ` x = y -> ( ph ( x , x ) -> ph ( x , y ) ) ` , provided that
@@ -2547,7 +2547,7 @@ proof of stdpc7 {
 	qed prop 1 = step 2 ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequ1 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( x = y → ( ph → [ y / x ] ph ) ) ;;
@@ -2562,7 +2562,7 @@ proof of sbequ1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequ12 (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( x = y → ( ph ↔ [ y / x ] ph ) ) ;;
@@ -2575,7 +2575,7 @@ proof of sbequ12 {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 6-Oct-2004.)
+/*An equality theorem for substitution.  (Contributed by NM, 6-Oct-2004.)
      (Proof shortened by Andrew Salmon, 21-Jun-2011.) */
 
 theorem sbequ12r (ph : wff, x : set, y : set)  {
@@ -2589,7 +2589,7 @@ proof of sbequ12r {
 	qed prop 1 = step 3 ;;
 }
 
-/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+/*An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbequ12a (ph : wff, x : set, y : set)  {
 	prop 1 : wff = |- ( x = y → ( [ y / x ] ph ↔ [ x / y ] ph ) ) ;;
@@ -2603,7 +2603,7 @@ proof of sbequ12a {
 	qed prop 1 = step 4 ;;
 }
 
-/* An identity theorem for substitution.  Remark 9.1 in [Megill] p. 447 (p.
+/*An identity theorem for substitution.  Remark 9.1 in [Megill] p. 447 (p.
      15 of the preprint).  (Contributed by NM, 5-Aug-1993.) */
 
 theorem sbid (ph : wff, x : set)  {
@@ -2618,7 +2618,7 @@ proof of sbid {
 	qed prop 1 = step 4 ;;
 }
 
-/* A version of ~ sb4 that doesn't require a distinctor antecedent.
+/*A version of ~ sb4 that doesn't require a distinctor antecedent.
      (Contributed by NM, 2-Feb-2007.) */
 
 theorem sb4a (ph : wff, x : set, y : set)  {
@@ -2632,7 +2632,7 @@ proof of sb4a {
 	qed prop 1 = step 3 ;;
 }
 
-/* One direction of a simplified definition of substitution that unlike ~ sb4
+/*One direction of a simplified definition of substitution that unlike ~ sb4
      doesn't require a distinctor antecedent.  (Contributed by NM,
      2-Feb-2007.) */
 

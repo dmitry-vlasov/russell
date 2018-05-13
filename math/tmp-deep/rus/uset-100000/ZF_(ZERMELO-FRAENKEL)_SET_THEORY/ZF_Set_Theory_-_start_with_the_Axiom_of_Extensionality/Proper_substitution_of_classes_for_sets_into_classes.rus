@@ -1,6 +1,6 @@
 import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Proper_substitution_of_classes_for_sets.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Proper substitution of classes for sets into classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -12,7 +12,7 @@ constant {
 	latex [ ;;
 }
 
-/* Underlined left bracket */
+/*Underlined left bracket */
 
 constant {
 	symbol ]_ ;;
@@ -20,16 +20,16 @@ constant {
 	latex ] ;;
 }
 
-/* Underlined right bracket */
+/*Underlined right bracket */
 
-/* Extend class notation to include the proper substitution of a class for a
+/*Extend class notation to include the proper substitution of a class for a
      set into another class. */
 
 rule csb (x : set, A : class, B : class) {
 	term : class = # [_ A / x ]_ B ;;
 }
 
-/* Define the proper substitution of a class for a set into another class.
+/*Define the proper substitution of a class for a set into another class.
        The underlined brackets distinguish it from the substitution into a wff,
        ~ wsbc , to prevent ambiguity.  Theorem ~ sbcel1g shows an example of
        how ambiguity could arise if we didn't use distinguished brackets.
@@ -43,7 +43,7 @@ definition df-csb (x : set, y : set, A : class, B : class) disjointed(y A, y B, 
 	prop : wff = |- defiendum = definiens ;;
 }
 
-/* Alternate expression for the proper substitution into a class, without
+/*Alternate expression for the proper substitution into a class, without
        referencing substitution into a wff.  Note that ` x ` can be free in
        ` B ` but cannot occur in ` A ` .  (Contributed by NM, 2-Dec-2013.) */
 
@@ -59,7 +59,7 @@ proof of csb2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
+/*Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
        by NM, 10-Nov-2005.) */
 
 theorem csbeq1 (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
@@ -76,7 +76,7 @@ proof of csbeq1 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Change bound variables in a class substitution.  Interestingly, this
+/*Change bound variables in a class substitution.  Interestingly, this
        does not require any bound variable conditions on ` A ` .  (Contributed
        by Jeff Hankins, 13-Sep-2009.)  (Revised by Mario Carneiro,
        11-Dec-2016.) */
@@ -102,11 +102,11 @@ proof of cbvcsb {
 	qed prop 1 = step 8 ;;
 }
 
-/* Change the bound variable of a proper substitution into a class using
+/*Change the bound variable of a proper substitution into a class using
        implicit substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by
        Mario Carneiro, 13-Oct-2016.) */
 
-theorem cbvcsbv (x : set, y : set, A : class, B : class, C : class) disjointed(x y, y B, x C) {
+theorem cbvcsbv (x : set, y : set, A : class, B : class, C : class) disjointed(x y, A, y B, x C) {
 	hyp 1 : wff = |- ( x = y → B = C ) ;;
 	-----------------------
 	prop 1 : wff = |- [_ A / x ]_ B = [_ A / y ]_ C ;;
@@ -119,7 +119,7 @@ proof of cbvcsbv {
 	qed prop 1 = step 3 ;;
 }
 
-/* Equality deduction for proper substitution into a class.  (Contributed
+/*Equality deduction for proper substitution into a class.  (Contributed
        by NM, 3-Dec-2005.) */
 
 theorem csbeq1d (ph : wff, x : set, A : class, B : class, C : class)  {
@@ -134,7 +134,7 @@ proof of csbeq1d {
 	qed prop 1 = step 2 ;;
 }
 
-/* Analog of ~ sbid for proper substitution into a class.  (Contributed by
+/*Analog of ~ sbid for proper substitution into a class.  (Contributed by
        NM, 10-Nov-2005.) */
 
 theorem csbid (x : set, A : class) disjointed(x y, y A) {
@@ -153,10 +153,10 @@ proof of csbid {
 	qed prop 1 = step 7 ;;
 }
 
-/* Equality theorem for proper substitution into a class.  (Contributed by
+/*Equality theorem for proper substitution into a class.  (Contributed by
        NM, 10-Nov-2005.) */
 
-theorem csbeq1a (x : set, A : class, B : class)  {
+theorem csbeq1a (x : set, A : class, B : class) disjointed(x, A, B) {
 	prop 1 : wff = |- ( x = A → B = [_ A / x ]_ B ) ;;
 }
 
@@ -167,10 +167,10 @@ proof of csbeq1a {
 	qed prop 1 = step 3 ;;
 }
 
-/* Composition law for chained substitutions into a class.  (Contributed by
+/*Composition law for chained substitutions into a class.  (Contributed by
        NM, 10-Nov-2005.) */
 
-theorem csbco (x : set, y : set, A : class, B : class) disjointed(z A, y z B, x z) {
+theorem csbco (x : set, y : set, A : class, B : class) disjointed(z A, y z B, z, x z) {
 	prop 1 : wff = |- [_ A / y ]_ [_ y / x ]_ B = [_ A / x ]_ B ;;
 }
 
@@ -188,7 +188,7 @@ proof of csbco {
 	qed prop 1 = step 9 ;;
 }
 
-/* The existence of proper substitution into a class.  (Contributed by NM,
+/*The existence of proper substitution into a class.  (Contributed by NM,
        10-Nov-2005.) */
 
 theorem csbexg (x : set, A : class, B : class, V : class, W : class) disjointed(y A, y B, x y) {
@@ -213,7 +213,7 @@ proof of csbexg {
 	qed prop 1 = step 13 ;;
 }
 
-/* The existence of proper substitution into a class.  (Contributed by NM,
+/*The existence of proper substitution into a class.  (Contributed by NM,
        7-Aug-2007.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
 
 theorem csbex (x : set, A : class, B : class)  {
@@ -230,7 +230,7 @@ proof of csbex {
 	qed prop 1 = step 3 ;;
 }
 
-/* Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+/*Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free).  (Contributed by Mario Carneiro, 14-Oct-2016.) */
 
 theorem csbtt (x : set, A : class, B : class, V : class) disjointed(y A, y B, y V, x y) {
@@ -248,7 +248,7 @@ proof of csbtt {
 	qed prop 1 = step 6 ;;
 }
 
-/* Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+/*Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free).  (Contributed by NM, 10-Nov-2005.) */
 
 theorem csbconstgf (x : set, A : class, B : class, V : class)  {
@@ -263,11 +263,11 @@ proof of csbconstgf {
 	qed prop 1 = step 2 ;;
 }
 
-/* Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+/*Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free). ~ csbconstgf with distinct variable requirement.  (Contributed by
        Alan Sare, 22-Jul-2012.) */
 
-theorem csbconstg (x : set, A : class, B : class, V : class) disjointed(B x) {
+theorem csbconstg (x : set, A : class, B : class, V : class) disjointed(A, B x, V) {
 	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ B = B ) ;;
 }
 
@@ -277,7 +277,7 @@ proof of csbconstg {
 	qed prop 1 = step 2 ;;
 }
 
-/* Distribute proper substitution through a membership relation.
+/*Distribute proper substitution through a membership relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -310,7 +310,7 @@ proof of sbcel12g {
 	qed prop 1 = step 20 ;;
 }
 
-/* Distribute proper substitution through an equality relation.
+/*Distribute proper substitution through an equality relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) */
 
@@ -343,7 +343,7 @@ proof of sbceqg {
 	qed prop 1 = step 20 ;;
 }
 
-/* Distribute proper substitution through negated membership.  (Contributed
+/*Distribute proper substitution through negated membership.  (Contributed
      by Andrew Salmon, 18-Jun-2011.) */
 
 theorem sbcnel12g (x : set, A : class, B : class, C : class, V : class)  {
@@ -363,7 +363,7 @@ proof of sbcnel12g {
 	qed prop 1 = step 9 ;;
 }
 
-/* Distribute proper substitution through an inequality.  (Contributed by
+/*Distribute proper substitution through an inequality.  (Contributed by
      Andrew Salmon, 18-Jun-2011.) */
 
 theorem sbcne12g (x : set, A : class, B : class, C : class, V : class)  {
@@ -383,12 +383,12 @@ proof of sbcne12g {
 	qed prop 1 = step 9 ;;
 }
 
-/* Move proper substitution in and out of a membership relation.  Note that
+/*Move proper substitution in and out of a membership relation.  Note that
        the scope of ` [. A / x ]. ` is the wff ` B e. C ` , whereas the scope
        of ` [_ A / x ]_ ` is the class ` B ` .  (Contributed by NM,
        10-Nov-2005.) */
 
-theorem sbcel1g (x : set, A : class, B : class, C : class, V : class) disjointed(x C) {
+theorem sbcel1g (x : set, A : class, B : class, C : class, V : class) disjointed(A, x C, V) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. B ∈ C ↔ [_ A / x ]_ B ∈ C ) ) ;;
 }
 
@@ -400,10 +400,10 @@ proof of sbcel1g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move proper substitution to first argument of an equality.  (Contributed
+/*Move proper substitution to first argument of an equality.  (Contributed
        by NM, 30-Nov-2005.) */
 
-theorem sbceq1g (x : set, A : class, B : class, C : class, V : class) disjointed(x C) {
+theorem sbceq1g (x : set, A : class, B : class, C : class, V : class) disjointed(A, x C, V) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. B = C ↔ [_ A / x ]_ B = C ) ) ;;
 }
 
@@ -415,10 +415,10 @@ proof of sbceq1g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move proper substitution in and out of a membership relation.
+/*Move proper substitution in and out of a membership relation.
        (Contributed by NM, 14-Nov-2005.) */
 
-theorem sbcel2g (x : set, A : class, B : class, C : class, V : class) disjointed(x B) {
+theorem sbcel2g (x : set, A : class, B : class, C : class, V : class) disjointed(A, x B, V) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. B ∈ C ↔ B ∈ [_ A / x ]_ C ) ) ;;
 }
 
@@ -430,10 +430,10 @@ proof of sbcel2g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Move proper substitution to second argument of an equality.
+/*Move proper substitution to second argument of an equality.
        (Contributed by NM, 30-Nov-2005.) */
 
-theorem sbceq2g (x : set, A : class, B : class, C : class, V : class) disjointed(x B) {
+theorem sbceq2g (x : set, A : class, B : class, C : class, V : class) disjointed(A, x B, V) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. B = C ↔ B = [_ A / x ]_ C ) ) ;;
 }
 
@@ -445,7 +445,7 @@ proof of sbceq2g {
 	qed prop 1 = step 4 ;;
 }
 
-/* Commutative law for double substitution into a class.  (Contributed by
+/*Commutative law for double substitution into a class.  (Contributed by
        NM, 14-Nov-2005.) */
 
 theorem csbcomg (x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(y z A, x z B, z C, x y) {
@@ -475,7 +475,7 @@ proof of csbcomg {
 	qed prop 1 = step 18 ;;
 }
 
-/* Formula-building deduction rule for class substitution.  (Contributed by
+/*Formula-building deduction rule for class substitution.  (Contributed by
        NM, 22-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) */
 
 theorem csbeq2d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C, y ph) {
@@ -496,7 +496,7 @@ proof of csbeq2d {
 	qed prop 1 = step 6 ;;
 }
 
-/* Formula-building deduction rule for class substitution.  (Contributed by
+/*Formula-building deduction rule for class substitution.  (Contributed by
        NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) */
 
 theorem csbeq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
@@ -511,7 +511,7 @@ proof of csbeq2dv {
 	qed prop 1 = step 2 ;;
 }
 
-/* Formula-building inference rule for class substitution.  (Contributed by
+/*Formula-building inference rule for class substitution.  (Contributed by
        NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) */
 
 theorem csbeq2i (x : set, A : class, B : class, C : class)  {
@@ -527,7 +527,7 @@ proof of csbeq2i {
 	qed prop 1 = step 3 ;;
 }
 
-/* The proper substitution of a class for set variable results in the class
+/*The proper substitution of a class for set variable results in the class
        (if the class exists).  (Contributed by NM, 10-Nov-2005.) */
 
 theorem csbvarg (x : set, A : class, V : class) disjointed(y z A, x y z) {
@@ -554,7 +554,7 @@ proof of csbvarg {
 	qed prop 1 = step 15 ;;
 }
 
-/* Substitution into a wff expressed in terms of substitution into a
+/*Substitution into a wff expressed in terms of substitution into a
        class.  (Contributed by NM, 15-Aug-2007.) */
 
 theorem sbccsbg (ph : wff, x : set, y : set, A : class, V : class) disjointed(x y) {
@@ -569,7 +569,7 @@ proof of sbccsbg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Substitution into a wff expressed in using substitution into a class.
+/*Substitution into a wff expressed in using substitution into a class.
      (Contributed by NM, 27-Nov-2005.) */
 
 theorem sbccsb2g (ph : wff, x : set, A : class, V : class)  {
@@ -587,7 +587,7 @@ proof of sbccsb2g {
 	qed prop 1 = step 7 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution into a class.
+/*Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfcsb1d (ph : wff, x : set, A : class, B : class) disjointed(x y, y A, y B, y ph) {
@@ -606,10 +606,10 @@ proof of nfcsb1d {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution into a class.
+/*Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) */
 
-theorem nfcsb1 (x : set, A : class, B : class)  {
+theorem nfcsb1 (x : set, A : class, B : class) disjointed(A, B, x) {
 	hyp 1 : wff = |- F/_ x A ;;
 	-----------------------
 	prop 1 : wff = |- F/_ x [_ A / x ]_ B ;;
@@ -622,7 +622,7 @@ proof of nfcsb1 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution into a class.
+/*Bound-variable hypothesis builder for substitution into a class.
        (Contributed by NM, 17-Aug-2006.)  (Revised by Mario Carneiro,
        12-Oct-2016.) */
 
@@ -636,7 +636,7 @@ proof of nfcsb1v {
 	qed prop 1 = step 2 ;;
 }
 
-/* Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
+/*Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfcsbd (ph : wff, x : set, y : set, A : class, B : class) disjointed(x z, y z, z A, z B, z ph) {
@@ -658,7 +658,7 @@ proof of nfcsbd {
 	qed prop 1 = step 6 ;;
 }
 
-/* Bound-variable hypothesis builder for substitution into a class.
+/*Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) */
 
 theorem nfcsb (x : set, y : set, A : class, B : class)  {
@@ -677,7 +677,7 @@ proof of nfcsb {
 	qed prop 1 = step 5 ;;
 }
 
-/* Introduce an explicit substitution into an implicit substitution
+/*Introduce an explicit substitution into an implicit substitution
        hypothesis.  See ~ sbhypf for class substitution version.  (Contributed
        by NM, 19-Dec-2008.) */
 
@@ -702,7 +702,7 @@ proof of csbhypf {
 	qed prop 1 = step 9 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Closed theorem version of ~ csbiegf .)  (Contributed by NM,
        11-Nov-2005.) */
 
@@ -747,7 +747,7 @@ proof of csbiebt {
 	qed prop 1 = step 33 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by Mario Carneiro, 13-Oct-2016.) */
 
 theorem csbiedf (ph : wff, x : set, A : class, B : class, C : class, V : class) disjointed(x A) {
@@ -768,11 +768,11 @@ proof of csbiedf {
 	qed prop 1 = step 5 ;;
 }
 
-/* Bidirectional conversion between an implicit class substitution
+/*Bidirectional conversion between an implicit class substitution
        hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
        (Contributed by NM, 2-Mar-2008.) */
 
-theorem csbieb (x : set, A : class, B : class, C : class) disjointed(x A) {
+theorem csbieb (x : set, A : class, B : class, C : class) disjointed(x A, B, C, x) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- F/_ x C ;;
 	-----------------------
@@ -785,12 +785,12 @@ proof of csbieb {
 	qed prop 1 = step 2 ;;
 }
 
-/* Bidirectional conversion between an implicit class substitution
+/*Bidirectional conversion between an implicit class substitution
        hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
        (Contributed by NM, 24-Mar-2013.)  (Revised by Mario Carneiro,
        11-Dec-2016.) */
 
-theorem csbiebg (x : set, A : class, B : class, C : class, V : class) disjointed(a x A, a B, a C) {
+theorem csbiebg (x : set, A : class, B : class, C : class, V : class) disjointed(a x A, a B, a C, x) {
 	hyp 1 : wff = |- F/_ x C ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ V → ( ∀ x ( x = A → B = C ) ↔ [_ A / x ]_ B = C ) ) ;;
@@ -809,11 +809,11 @@ proof of csbiebg {
 	qed prop 1 = step 8 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 11-Nov-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) */
 
-theorem csbiegf (x : set, A : class, B : class, C : class, V : class) disjointed(x A, x V) {
+theorem csbiegf (x : set, A : class, B : class, C : class, V : class) disjointed(x A, C, x V) {
 	hyp 1 : wff = |- ( A ∈ V → F/_ x C ) ;;
 	hyp 2 : wff = |- ( x = A → B = C ) ;;
 	-----------------------
@@ -828,11 +828,11 @@ proof of csbiegf {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 26-Nov-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) */
 
-theorem csbief (x : set, A : class, B : class, C : class) disjointed(x A) {
+theorem csbief (x : set, A : class, B : class, C : class) disjointed(x A, C, x) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- F/_ x C ;;
 	hyp 3 : wff = |- ( x = A → B = C ) ;;
@@ -847,7 +847,7 @@ proof of csbief {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by Mario Carneiro, 2-Dec-2014.)  (Revised by Mario
        Carneiro, 13-Oct-2016.) */
 
@@ -865,7 +865,7 @@ proof of csbied {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution,
+/*Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by Mario Carneiro, 2-Jan-2017.) */
 
 theorem csbied2 (ph : wff, x : set, A : class, B : class, C : class, D : class, V : class) disjointed(x A, x ph, x D) {
@@ -884,11 +884,11 @@ proof of csbied2 {
 	qed prop 1 = step 4 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class (closed form of ~ csbie2 ).  (Contributed by NM, 3-Sep-2007.)
        (Revised by Mario Carneiro, 13-Oct-2016.) */
 
-theorem csbie2t (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, x y D) {
+theorem csbie2t (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, C, x y D) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	-----------------------
@@ -912,10 +912,10 @@ proof of csbie2t {
 	qed prop 1 = step 13 ;;
 }
 
-/* Conversion of implicit substitution to explicit substitution into a
+/*Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 27-Aug-2007.) */
 
-theorem csbie2 (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, x y D) {
+theorem csbie2 (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, C, x y D) {
 	hyp 1 : wff = |- A ∈ _V ;;
 	hyp 2 : wff = |- B ∈ _V ;;
 	hyp 3 : wff = |- ( ( x = A ∧ y = B ) → C = D ) ;;
@@ -930,7 +930,7 @@ proof of csbie2 {
 	qed prop 1 = step 3 ;;
 }
 
-/* Conversion of implicit substitution to explicit class substitution.
+/*Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 11-Nov-2016.) */
 
@@ -952,10 +952,10 @@ proof of csbie2g {
 	qed prop 1 = step 6 ;;
 }
 
-/* Nest the composition of two substitutions.  (Contributed by Mario
+/*Nest the composition of two substitutions.  (Contributed by Mario
        Carneiro, 11-Nov-2016.) */
 
-theorem sbcnestgf (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x z, y z, z A, z B, z ph) {
+theorem sbcnestgf (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x z, y z, z A, z B, z, z ph) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ ∀ y F/ x ph ) → ( [. A / x ]. [. B / y ]. ph ↔ [. [_ A / x ]_ B / y ]. ph ) ) ;;
 }
 
@@ -986,10 +986,10 @@ proof of sbcnestgf {
 	qed prop 1 = step 22 ;;
 }
 
-/* Nest the composition of two substitutions.  (Contributed by NM,
+/*Nest the composition of two substitutions.  (Contributed by NM,
        23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) */
 
-theorem csbnestgf (x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x z, y z, z A, z B, z C) {
+theorem csbnestgf (x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x z, y z, z A, z B, z C, z) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ ∀ y F/_ x C ) → [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) ;;
 }
 
@@ -1012,10 +1012,10 @@ proof of csbnestgf {
 	qed prop 1 = step 14 ;;
 }
 
-/* Nest the composition of two substitutions.  (Contributed by NM,
+/*Nest the composition of two substitutions.  (Contributed by NM,
        27-Nov-2005.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) */
 
-theorem sbcnestg (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x ph) {
+theorem sbcnestg (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x, y, A, B, ph, x ph) {
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. [. B / y ]. ph ↔ [. [_ A / x ]_ B / y ]. ph ) ) ;;
 }
 
@@ -1027,10 +1027,10 @@ proof of sbcnestg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Nest the composition of two substitutions.  (Contributed by NM,
+/*Nest the composition of two substitutions.  (Contributed by NM,
        23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) */
 
-theorem csbnestg (x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x C) {
+theorem csbnestg (x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x, y, A, B, C, x, x C) {
 	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) ;;
 }
 
@@ -1042,7 +1042,7 @@ proof of csbnestg {
 	qed prop 1 = step 4 ;;
 }
 
-/* Nest the composition of two substitutions.  (New usage is discouraged.)
+/*Nest the composition of two substitutions.  (New usage is discouraged.)
        (Contributed by NM, 23-Nov-2005.) */
 
 theorem csbnestgOLD (x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(x C) {
@@ -1055,7 +1055,7 @@ proof of csbnestgOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* Nest the composition of two substitutions.  (Contributed by NM,
+/*Nest the composition of two substitutions.  (Contributed by NM,
        23-May-2006.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) */
 
 theorem csbnest1g (x : set, A : class, B : class, C : class, V : class) disjointed(x y, y C) {
@@ -1075,10 +1075,10 @@ proof of csbnest1g {
 	qed prop 1 = step 8 ;;
 }
 
-/* Nest the composition of two substitutions.  Obsolete as of 11-Nov-2016.
+/*Nest the composition of two substitutions.  Obsolete as of 11-Nov-2016.
        (Contributed by NM, 23-May-2006.)  (New usage is discouraged.) */
 
-theorem csbnest1gOLD (x : set, A : class, B : class, C : class, V : class, W : class) disjointed(x A) {
+theorem csbnest1gOLD (x : set, A : class, B : class, C : class, V : class, W : class) disjointed(x A, B, C, W) {
 	prop 1 : wff = |- ( ( A ∈ V ∧ ∀ x B ∈ W ) → [_ A / x ]_ [_ B / x ]_ C = [_ [_ A / x ]_ B / x ]_ C ) ;;
 }
 
@@ -1088,7 +1088,7 @@ proof of csbnest1gOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* Idempotent law for class substitutions.  (Contributed by NM,
+/*Idempotent law for class substitutions.  (Contributed by NM,
        1-Mar-2008.) */
 
 theorem csbidmg (x : set, A : class, B : class, V : class) disjointed(x A) {
@@ -1105,10 +1105,10 @@ proof of csbidmg {
 	qed prop 1 = step 6 ;;
 }
 
-/* Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+/*Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
        (Revised by Mario Carneiro, 11-Nov-2016.) */
 
-theorem sbcco3g (ph : wff, x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x A, x ph, x C) {
+theorem sbcco3g (ph : wff, x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x A, x ph, x C, x) {
 	hyp 1 : wff = |- ( x = A → B = C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. [. B / y ]. ph ↔ [. C / y ]. ph ) ) ;;
@@ -1125,10 +1125,10 @@ proof of sbcco3g {
 	qed prop 1 = step 7 ;;
 }
 
-/* Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+/*Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
        (New usage is discouraged.) */
 
-theorem sbcco3gOLD (ph : wff, x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(x A, x ph, x C) {
+theorem sbcco3gOLD (ph : wff, x : set, y : set, A : class, B : class, C : class, V : class, W : class) disjointed(x A, x ph, x C, x) {
 	hyp 1 : wff = |- ( x = A → B = C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( ( A ∈ V ∧ ∀ x B ∈ W ) → ( [. A / x ]. [. B / y ]. ph ↔ [. C / y ]. ph ) ) ;;
@@ -1140,10 +1140,10 @@ proof of sbcco3gOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* Composition of two class substitutions.  (Contributed by NM,
+/*Composition of two class substitutions.  (Contributed by NM,
        27-Nov-2005.)  (Revised by Mario Carneiro, 11-Nov-2016.) */
 
-theorem csbco3g (x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x A, x C, x D) {
+theorem csbco3g (x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x A, x, x C, x D) {
 	hyp 1 : wff = |- ( x = A → B = C ) ;;
 	-----------------------
 	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ [_ B / y ]_ D = [_ C / y ]_ D ) ;;
@@ -1160,7 +1160,7 @@ proof of csbco3g {
 	qed prop 1 = step 7 ;;
 }
 
-/* Composition of two class substitutions.  Obsolete as of 11-Nov-2016.
+/*Composition of two class substitutions.  Obsolete as of 11-Nov-2016.
        (Contributed by NM, 27-Nov-2005.)  (New usage is discouraged.) */
 
 theorem csbco3gOLD (x : set, y : set, A : class, B : class, C : class, D : class, V : class, W : class) disjointed(x A, x C, x D, x y) {
@@ -1175,7 +1175,7 @@ proof of csbco3gOLD {
 	qed prop 1 = step 2 ;;
 }
 
-/* Special case related to ~ rspsbc .  (Contributed by NM, 10-Dec-2005.)
+/*Special case related to ~ rspsbc .  (Contributed by NM, 10-Dec-2005.)
        (Proof shortened by Eric Schmidt, 17-Jan-2007.) */
 
 theorem rspcsbela (x : set, A : class, B : class, C : class, D : class) disjointed(x B, x D) {
@@ -1190,7 +1190,7 @@ proof of rspcsbela {
 	qed prop 1 = step 4 ;;
 }
 
-/* Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
+/*Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
        (Contributed by Mario Carneiro, 14-Oct-2016.) */
 
 theorem sbnfc2 (x : set, y : set, z : set, A : class) disjointed(w x y z, w y z A) {
@@ -1228,7 +1228,7 @@ proof of sbnfc2 {
 	qed prop 1 = step 26 ;;
 }
 
-/* Move substitution into a class abstraction.  (Contributed by NM,
+/*Move substitution into a class abstraction.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
 
 theorem csbabg (ph : wff, x : set, y : set, A : class, V : class) disjointed(y z A, z ph, x y z, V z) {
@@ -1252,7 +1252,7 @@ proof of csbabg {
 	qed prop 1 = step 12 ;;
 }
 
-/* A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
+/*A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
        to be distinct from ` x ` or ` y ` .  Changes bound variables using
        implicit substitution.  (Contributed by Andrew Salmon, 13-Jul-2011.) */
 
@@ -1313,12 +1313,12 @@ proof of cbvralcsf {
 	qed prop 1 = step 41 ;;
 }
 
-/* A more general version of ~ cbvrexf that has no distinct variable
+/*A more general version of ~ cbvrexf that has no distinct variable
        restrictions.  Changes bound variables using implicit substitution.
        (Contributed by Andrew Salmon, 13-Jul-2011.)  (Proof shortened by Mario
        Carneiro, 7-Dec-2014.) */
 
-theorem cbvrexcsf (ph : wff, ps : wff, x : set, y : set, A : class, B : class)  {
+theorem cbvrexcsf (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x, y, A, B, ph, ps) {
 	hyp 1 : wff = |- F/_ y A ;;
 	hyp 2 : wff = |- F/_ x B ;;
 	hyp 3 : wff = |- F/ y ph ;;
@@ -1341,7 +1341,7 @@ proof of cbvrexcsf {
 	qed prop 1 = step 8 ;;
 }
 
-/* A more general version of ~ cbvreuv that has no distinct variable
+/*A more general version of ~ cbvreuv that has no distinct variable
        rextrictions.  Changes bound variables using implicit substitution.
        (Contributed by Andrew Salmon, 13-Jul-2011.) */
 
@@ -1400,7 +1400,7 @@ proof of cbvreucsf {
 	qed prop 1 = step 39 ;;
 }
 
-/* A more general version of ~ cbvrab with no distinct variable
+/*A more general version of ~ cbvrab with no distinct variable
        restrictions.  (Contributed by Andrew Salmon, 13-Jul-2011.) */
 
 theorem cbvrabcsf (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x v z, y v z, A v z, B v z, ph v z, ps v z) {
@@ -1457,7 +1457,7 @@ proof of cbvrabcsf {
 	qed prop 1 = step 38 ;;
 }
 
-/* Rule used to change the bound variable in a restricted universal
+/*Rule used to change the bound variable in a restricted universal
        quantifier with implicit substitution which also changes the quantifier
        domain.  (Contributed by David Moews, 1-May-2017.) */
 
@@ -1477,7 +1477,7 @@ proof of cbvralv2 {
 	qed prop 1 = step 5 ;;
 }
 
-/* Rule used to change the bound variable in a restricted existential
+/*Rule used to change the bound variable in a restricted existential
        quantifier with implicit substitution which also changes the quantifier
        domain.  (Contributed by David Moews, 1-May-2017.) */
 

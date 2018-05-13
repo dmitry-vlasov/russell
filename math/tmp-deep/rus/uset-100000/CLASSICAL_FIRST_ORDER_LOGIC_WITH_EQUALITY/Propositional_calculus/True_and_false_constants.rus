@@ -1,6 +1,6 @@
 import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical__xor_.rus;;
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 True and false constants
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,19 +14,19 @@ constant {
 	symbol F. ;;
 }
 
-/* ` T. ` is a wff. */
+/*` T. ` is a wff. */
 
 rule wtru () {
 	term : wff = # T. ;;
 }
 
-/* ` F. ` is a wff. */
+/*` F. ` is a wff. */
 
 rule wfal () {
 	term : wff = # F. ;;
 }
 
-/* Soundness justification theorem for ~ df-tru .  (Contributed by Mario
+/*Soundness justification theorem for ~ df-tru .  (Contributed by Mario
      Carneiro, 17-Nov-2013.) */
 
 theorem trujust (ph : wff, ps : wff)  {
@@ -40,7 +40,7 @@ proof of trujust {
 	qed prop 1 = step 3 ;;
 }
 
-/* Definition of ` T. ` , a tautology. ` T. ` is a constant true.  In this
+/*Definition of ` T. ` , a tautology. ` T. ` is a constant true.  In this
      definition ~ biid is used as an antecedent, however, any true wff, such as
      an axiom, can be used in its place.  (Contributed by Anthony Hart,
      13-Oct-2010.) */
@@ -52,7 +52,7 @@ definition df-tru (ph : wff)  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* Definition of ` F. ` , a contradiction. ` F. ` is a constant false.
+/*Definition of ` F. ` , a contradiction. ` F. ` is a constant false.
      (Contributed by Anthony Hart, 22-Oct-2010.) */
 
 definition df-fal ()  {
@@ -62,7 +62,7 @@ definition df-fal ()  {
 	prop : wff = |- ( defiendum ↔ definiens ) ;;
 }
 
-/* ` T. ` is provable.  (Contributed by Anthony Hart, 13-Oct-2010.) */
+/*` T. ` is provable.  (Contributed by Anthony Hart, 13-Oct-2010.) */
 
 theorem tru ()  {
 	prop 1 : wff = |- T. ;;
@@ -76,7 +76,7 @@ proof of tru {
 	qed prop 1 = step 3 ;;
 }
 
-/* ` F. ` is refutable.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+/*` F. ` is refutable.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
      shortened by Mel L. O'Cat, 11-Mar-2012.) */
 
 theorem fal ()  {
@@ -91,7 +91,7 @@ proof of fal {
 	qed prop 1 = step 4 ;;
 }
 
-/* Eliminate ` T. ` as an antecedent.  (Contributed by Mario Carneiro,
+/*Eliminate ` T. ` as an antecedent.  (Contributed by Mario Carneiro,
        13-Mar-2014.) */
 
 theorem trud (ph : wff)  {
@@ -106,7 +106,7 @@ proof of trud {
 	qed prop 1 = step 2 ;;
 }
 
-/* If something is true, it outputs ` T. ` .  (Contributed by Anthony Hart,
+/*If something is true, it outputs ` T. ` .  (Contributed by Anthony Hart,
      14-Aug-2011.) */
 
 theorem tbtru (ph : wff)  {
@@ -119,7 +119,7 @@ proof of tbtru {
 	qed prop 1 = step 2 ;;
 }
 
-/* If something is not true, it outputs ` F. ` .  (Contributed by Anthony
+/*If something is not true, it outputs ` F. ` .  (Contributed by Anthony
      Hart, 14-Aug-2011.) */
 
 theorem nbfal (ph : wff)  {
@@ -132,7 +132,7 @@ proof of nbfal {
 	qed prop 1 = step 2 ;;
 }
 
-/* A theorem is equivalent to truth.  (Contributed by Mario Carneiro,
+/*A theorem is equivalent to truth.  (Contributed by Mario Carneiro,
        9-May-2015.) */
 
 theorem bitru (ph : wff)  {
@@ -147,7 +147,7 @@ proof of bitru {
 	qed prop 1 = step 2 ;;
 }
 
-/* A contradiction is equivalent to falsehood.  (Contributed by Mario
+/*A contradiction is equivalent to falsehood.  (Contributed by Mario
        Carneiro, 9-May-2015.) */
 
 theorem bifal (ph : wff)  {
@@ -162,7 +162,7 @@ proof of bifal {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` F. ` implies anything.  (Contributed by FL, 20-Mar-2011.)  (Proof
+/*` F. ` implies anything.  (Contributed by FL, 20-Mar-2011.)  (Proof
      shortened by Anthony Hart, 1-Aug-2011.) */
 
 theorem falim (ph : wff)  {
@@ -175,7 +175,7 @@ proof of falim {
 	qed prop 1 = step 2 ;;
 }
 
-/* ` F. ` implies anything.  (Contributed by Mario Carneiro, 9-Feb-2017.) */
+/*` F. ` implies anything.  (Contributed by Mario Carneiro, 9-Feb-2017.) */
 
 theorem falimd (ph : wff, ps : wff)  {
 	prop 1 : wff = |- ( ( ph ∧ F. ) → ps ) ;;
@@ -187,7 +187,7 @@ proof of falimd {
 	qed prop 1 = step 2 ;;
 }
 
-/* Anything implies ` T. ` .  (Contributed by FL, 20-Mar-2011.)  (Proof
+/*Anything implies ` T. ` .  (Contributed by FL, 20-Mar-2011.)  (Proof
      shortened by Anthony Hart, 1-Aug-2011.) */
 
 theorem a1tru (ph : wff)  {
@@ -200,7 +200,7 @@ proof of a1tru {
 	qed prop 1 = step 2 ;;
 }
 
-/* Given falsum, we can define the negation of a wff ` ph ` as the statement
+/*Given falsum, we can define the negation of a wff ` ph ` as the statement
      that a contradiction follows from assuming ` ph ` .  (Contributed by Mario
      Carneiro, 9-Feb-2017.) */
 
@@ -217,7 +217,7 @@ proof of dfnot {
 	qed prop 1 = step 5 ;;
 }
 
-/* Negation introduction rule from natural deduction.  (Contributed by
+/*Negation introduction rule from natural deduction.  (Contributed by
        Mario Carneiro, 9-Feb-2017.) */
 
 theorem inegd (ph : wff, ps : wff)  {
@@ -233,7 +233,7 @@ proof of inegd {
 	qed prop 1 = step 3 ;;
 }
 
-/* Deduction based on reductio ad absurdum.  (Contributed by Mario
+/*Deduction based on reductio ad absurdum.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) */
 
 theorem efald (ph : wff, ps : wff)  {
@@ -248,7 +248,7 @@ proof of efald {
 	qed prop 1 = step 2 ;;
 }
 
-/* If a wff and its negation are provable, then falsum is provable.
+/*If a wff and its negation are provable, then falsum is provable.
        (Contributed by Mario Carneiro, 9-Feb-2017.) */
 
 theorem pm2.21fal (ph : wff, ps : wff)  {

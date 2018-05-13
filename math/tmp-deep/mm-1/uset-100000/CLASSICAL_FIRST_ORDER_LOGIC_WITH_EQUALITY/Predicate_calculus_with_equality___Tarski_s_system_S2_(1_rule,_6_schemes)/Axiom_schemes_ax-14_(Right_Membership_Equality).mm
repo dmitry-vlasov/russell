@@ -1,11 +1,14 @@
 $[ turnstile_special_source.mm $]
+
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_schemes_ax-13_(Left_Membership_Equality).mm $]
-$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+$(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Axiom schemes ax-14 (Right Membership Equality)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-$( Axiom of Right Membership Equality.  One of the equality and substitution
+
+$(Axiom of Right Membership Equality.  One of the equality and substitution
      axioms for a non-logical predicate in our predicate calculus with
      equality.  It substitutes equal variables into the right-hand side of the
      ` e. ` binary predicate.  This axiom scheme is a sub-scheme of Axiom
@@ -13,24 +16,24 @@ $( Axiom of Right Membership Equality.  One of the equality and substitution
      represented with our notation.  Also appears as Axiom scheme C13' in
      [Megill] p. 448 (p. 16 of the preprint).  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	fax-14_0 $f set x $.
-	fax-14_1 $f set y $.
-	fax-14_2 $f set z $.
-	ax-14 $a |- ( x = y -> ( z e. x -> z e. y ) ) $.
+	$v x y z  $.
+	f0_ax-14 $f set x $.
+	f1_ax-14 $f set y $.
+	f2_ax-14 $f set z $.
+	a_ax-14 $a |- ( x = y -> ( z e. x -> z e. y ) ) $.
 $}
-$( An identity law for the non-logical predicate.  (Contributed by NM,
+
+$(An identity law for the non-logical predicate.  (Contributed by NM,
      5-Aug-1993.) $)
+
 ${
-	$v x $.
-	$v y $.
-	$v z $.
-	felequ2_0 $f set x $.
-	felequ2_1 $f set y $.
-	felequ2_2 $f set z $.
-	elequ2 $p |- ( x = y -> ( z e. x <-> z e. y ) ) $= felequ2_0 sup_set_class felequ2_1 sup_set_class wceq felequ2_2 sup_set_class felequ2_0 sup_set_class wcel felequ2_2 sup_set_class felequ2_1 sup_set_class wcel felequ2_0 felequ2_1 felequ2_2 ax-14 felequ2_2 sup_set_class felequ2_1 sup_set_class wcel felequ2_2 sup_set_class felequ2_0 sup_set_class wcel wi felequ2_1 felequ2_0 felequ2_1 felequ2_0 felequ2_2 ax-14 equcoms impbid $.
+	$v x y z  $.
+	f0_elequ2 $f set x $.
+	f1_elequ2 $f set y $.
+	f2_elequ2 $f set z $.
+	p_elequ2 $p |- ( x = y -> ( z e. x <-> z e. y ) ) $= f0_elequ2 f1_elequ2 f2_elequ2 a_ax-14 f1_elequ2 f0_elequ2 f2_elequ2 a_ax-14 f2_elequ2 a_sup_set_class f1_elequ2 a_sup_set_class a_wcel f2_elequ2 a_sup_set_class f0_elequ2 a_sup_set_class a_wcel a_wi f1_elequ2 f0_elequ2 p_equcoms f0_elequ2 a_sup_set_class f1_elequ2 a_sup_set_class a_wceq f2_elequ2 a_sup_set_class f0_elequ2 a_sup_set_class a_wcel f2_elequ2 a_sup_set_class f1_elequ2 a_sup_set_class a_wcel p_impbid $.
 $}
+
 
