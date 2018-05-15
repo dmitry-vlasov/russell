@@ -147,8 +147,9 @@ inline Function catch_exceptions(Function f) {
 
 inline Function reorder_args(Function f, Descr descr) {
 	return [f, descr](const Args& args) {
-		if (descr.arity > 0 && args.size() < descr.arity)
+		if (descr.arity > 0 && args.size() < descr.arity) {
 			return Return("wrong number of arguments, should be not less then " + to_string(descr.arity), false);
+		}
 		return f(descr.prepare(args));
 	};
 }

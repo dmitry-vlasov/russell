@@ -110,8 +110,9 @@ void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	while (!to_write.empty()) {
 		const Source* src = to_write.top();
 		if (!src->dir().empty() && !fs::exists(src->dir())) {
-			if (!fs::create_directories(src->dir()))
+			if (!fs::create_directories(src->dir())) {
 				throw Error("failure to create directory", src->dir());
+			}
 		}
 		ofstream out(src->path().path());
 		out << *src << endl;
@@ -134,9 +135,11 @@ void shallow_write(T* target) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
 	string dir = target->dir();
-	if (!dir.empty() && !fs::exists(dir))
-		if (!fs::create_directories(dir))
+	if (!dir.empty() && !fs::exists(dir)) {
+		if (!fs::create_directories(dir)) {
 			throw Error("failure to create directory", dir);
+		}
+	}
 	ofstream out(target->path().path());
 	out << *target << endl;
 	out.close();
@@ -206,8 +209,9 @@ struct Sys {
 	static Action help() {
 		return Action([](const Args&) {
 			Io::io().out() << endl << System::lang() << " actions:" << endl;
-			for (auto& a : System::actions())
+			for (auto& a : System::actions()) {
 				Io::io().out() << "\t" << a.first << ": " << a.second.show() << endl;
+			}
 			return Return();
 		}, Descr("show available actions"));
 	}
@@ -246,10 +250,14 @@ struct Sys {
 	Math       math;
 
 	static Return exec(const Args& all) {
-		if (all.empty()) return Return("no action is chosen", false);
+		if (all.empty()) {
+			return Return("no action is chosen", false);
+		}
 		Args args(all);
 		string action = args[0];
-		if (!System::actions().count(action)) return Return("action \"" + action +"\" is unknown", false);
+		if (!System::actions().count(action)) {
+			return Return("action \"" + action +"\" is unknown", false);
+		}
 		args.erase(args.begin());
 		timer()[action].start();
 		Return ret = System::actions().at(action)(args);
@@ -260,21 +268,26 @@ struct Sys {
 
 	static Return exec_and_show(const Args& args) {
 		bool verbose = conf().verbose();
-		if (verbose)
+		if (verbose) {
 			Io::io().out() << System::lang() << " doing: " << args << " ... " << flush;
+		}
 		Return ret = exec(args);
 		if (verbose && !args.empty()) {
-			if (timer()[args[0]].isNegligible())
-				Io::io().out() << endl;
-			else
+			if (timer()[args[0]].isNegligible()) {
+				Io::io().out() << "done.";
+			} else {
 				Io::io().out() << "done in " << timer()[args[0]] << ". ";
-				if (!ret.success()) Io::io().out() << "Failed, code: " << ret.code;
-				Io::io().out() << endl;
+			}
+			if (!ret.success()) {
+				Io::io().out() << "Failed, code: " << ret.code;
+			}
+			Io::io().out() << endl;
 		}
-		if (!ret && ret.msg.size())
+		if (!ret && ret.msg.size()) {
 			Io::io().err() << ret.msg << endl;
-		else if (verbose && ret.msg.size())
+		} else if (verbose && ret.msg.size()) {
 			Io::io().out() << ret.msg << endl;
+		}
 		return ret;
 	}
 
@@ -299,7 +312,9 @@ struct Sys {
 	}
 
 	static void release() {
-		for (auto s : Lib<System>::get().contents()) mod(s).math.destroy();
+		for (auto s : Lib<System>::get().contents()) {
+			mod(s).math.destroy();
+		}
 	}
 
 private:
@@ -613,6 +628,9 @@ struct Source : public Owner<Src, Sys> {
 		return includes_.find(User_(s)) != includes_.end();
 	}
 	void include(Src* src) {
+		if (src->id() == Owner_::id()) {
+			throw Error("source cannot include itself", Lex::toStr(src->id()));
+		}
 		includes_.insert(src);
 	}
 	const set<uint>& includeSet() const {
@@ -630,7 +648,8 @@ struct Source : public Owner<Src, Sys> {
 
 	void transitive_closure() {
 		if (closure_done) return;
-		for (auto s : includes_) {
+		for (typename SrcSet::iterator it = includes_.begin(); it != includes_.end(); ++ it) {
+			User_& s = const_cast<User_&>(*it);
 			s.get()->transitive_closure();
 			for (auto inc : s.get()->includes_) {
 				includes_.insert(inc);

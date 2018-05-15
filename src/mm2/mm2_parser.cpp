@@ -52,7 +52,7 @@ struct Block {
 		return vars;
 	}
 
-	Assertion* create_assertion(uint label, const vector<uint>& expr, const vector<uint>& proof) {
+	Assertion* create_assertion(uint label, const vector<uint>& expr, const vector<uint>& proof, const Token& token) {
 		static vector<const VarDecl*> initial_vars = create_initial_vars();
 
 		vector<const VarDecl*> all_floatings = gather<VarDecl>(initial_vars);
@@ -112,7 +112,7 @@ struct Block {
 			vars.insert(i);
 		}
 
-		Assertion* ass = new Assertion(label);
+		Assertion* ass = new Assertion(label, token);
 		ass->vars.vars.reserve(vars.size());
 		for (uint v : vars) ass->vars.vars.emplace_back(v);
 
@@ -273,13 +273,13 @@ public:
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
 			context.get<Context*>()->source->contents.emplace_back(
-				unique_ptr<Assertion>(c->blocks.top().create_assertion(sv[0].get<uint>(), sv[1].get<vector<uint>>(), vector<uint>()))
+				unique_ptr<Assertion>(c->blocks.top().create_assertion(sv[0].get<uint>(), sv[1].get<vector<uint>>(), vector<uint>(), c->token(sv)))
 			);
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
 			context.get<Context*>()->source->contents.emplace_back(
-				unique_ptr<Assertion>(c->blocks.top().create_assertion(sv[0].get<uint>(), sv[1].get<vector<uint>>(), sv[2].get<vector<uint>>()))
+				unique_ptr<Assertion>(c->blocks.top().create_assertion(sv[0].get<uint>(), sv[1].get<vector<uint>>(), sv[2].get<vector<uint>>(), c->token(sv)))
 			);
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {

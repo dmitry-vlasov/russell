@@ -40,6 +40,7 @@ else()
 		mm2/mm2_read.cpp
 		mm2/mm2_tree.cpp  
 		mm2/mm2_translate.cpp
+		mm2/mm2_inclusions.cpp
 		
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 

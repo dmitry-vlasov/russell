@@ -8,6 +8,7 @@ void cut(uint src, uint tgt, uint tgt_root);
 void read(uint src);
 void parse();
 void translate(uint src, uint tgt);
+void minimize_imports(uint src);
 
 void Math::destroy() { sources.destroy(); }
 
@@ -74,37 +75,39 @@ Return lookup(uint src, uint line, uint col, string what) {
 
 static Descr description(string name) {
 	static const map<string, Descr> m = {
-		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
-		{"parse",  Descr("parse all unparsed sources")},
-		{"clear",  Descr("clear the source",     Descr::Arg("in", "file"))},
-		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
-		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
-		{"info",   Descr("info about math")},
-		{"show",   Descr("show entity")},
-		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
-		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
-		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))}
+		{"read",     Descr("read the source",      Descr::Arg("in", "file"))},
+		{"parse",    Descr("parse all unparsed sources")},
+		{"clear",    Descr("clear the source",     Descr::Arg("in", "file"))},
+		{"transl",   Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
+		{"write",    Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
+		{"info",     Descr("info about math")},
+		{"show",     Descr("show entity")},
+		{"cut",      Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
+		{"merge",    Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
+		{"lookup",   Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
+		{"minimize", Descr("minimize imports",     Descr::Arg("in", "file"))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
 
 const Sys::Actions& Sys::actions() {
 	static Actions actions = {
-		{"systems", systems()},
-		{"help",   help()},
-		{"curr",   current()},
-		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
-		{"parse",  Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
-		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
-		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
-		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
-		{"info",   Action([](const Args& args) { return Return(info()); }, description("info"))},
-		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
-		{"cut",    Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
-		{"merge",  Action([](const Args& args) { merge(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
-		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
+		{"systems",  systems()},
+		{"help",     help()},
+		{"curr",     current()},
+		{"destroy",  destroy()},
+		{"read",     Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"parse",    Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
+		{"clear",    Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
+		{"transl",   Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
+		{"write",    Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"info",     Action([](const Args& args) { return Return(info()); }, description("info"))},
+		{"show",     Action([](const Args& args) { return Return(show()); }, description("show"))},
+		{"cut",      Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
+		{"merge",    Action([](const Args& args) { merge(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
+		{"opts",     Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
+		{"lookup",   Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
+		{"minimize", Action([](const Args& args) { minimize_imports(Sys::make_name(args[0])); return Return(); }, description("minimize"))},
 	};
 	return actions;
 }

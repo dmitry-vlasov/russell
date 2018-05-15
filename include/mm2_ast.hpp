@@ -179,6 +179,9 @@ struct Source : public mdl::Source<Source, Sys>, public Writable {
 		unique_ptr<Assertion>
 	> Node;
 
+	enum Kind { CONST, IMPORT, COMMENT, ASSERTION };
+	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
+
 	Source(uint l) : mdl::Source<Source, Sys>(l) { }
 
 	vector<Node> contents;
@@ -186,10 +189,10 @@ struct Source : public mdl::Source<Source, Sys>, public Writable {
 	void write(ostream& os) const override {
 		for (const Node& n : contents) {
 			switch (n.index()) {
-			case 0: std::get<unique_ptr<Const>>(n).get()->write(os);     break;
-			case 1: std::get<unique_ptr<Import>>(n).get()->write(os);    break;
-			case 2: std::get<unique_ptr<Comment>>(n).get()->write(os);   break;
-			case 3: std::get<unique_ptr<Assertion>>(n).get()->write(os); break;
+			case CONST:     std::get<unique_ptr<Const>>(n).get()->write(os);     break;
+			case IMPORT:    std::get<unique_ptr<Import>>(n).get()->write(os);    break;
+			case COMMENT:   std::get<unique_ptr<Comment>>(n).get()->write(os);   break;
+			case ASSERTION: std::get<unique_ptr<Assertion>>(n).get()->write(os); break;
 			}
 			os << '\n';
 		}
