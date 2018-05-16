@@ -3,6 +3,15 @@
 
 namespace mdl { namespace mm2 {
 
+typedef map<Symbol, Expr> Subst;
+
+inline string show (const Subst& subst) {
+	string str;
+	for (auto it : subst)
+		str += "\t" + show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
+	return str;
+}
+
 inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 	auto it = ex_2.cbegin();
 	++ it;
@@ -89,25 +98,6 @@ Proof* to_proof(const Tree* tree) {
 	Proof* proof = new Proof();
 	to_proof(tree, proof->refs);
 	return proof;
-}
-
-void transform(Tree* tree, bool forward) {
-	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
-		if (tree->nodes[i].type == Tree::Node::TREE)
-			transform(tree->nodes[i].val.tree, forward);
-	}
-	assert(tree->nodes.back().type == Tree::Node::REF);
-	const Ref* op = tree->nodes.back().val.ref;
-	if (op->is_assertion()) {
-		Perm perm = compute_permutation(op->ass());
-		assert(perm.size() + 1 == tree->nodes.size());
-		vector<Tree::Node> new_nodes = tree->nodes;
-		for (uint i = 0; i < new_nodes.size() - 1; ++ i) {
-			if (forward) new_nodes[perm[i]] = tree->nodes[i];
-			else         new_nodes[i] = tree->nodes[perm[i]];
-		}
-		tree->nodes = new_nodes;
-	}
 }
 
 Expr eval(Tree* proof);

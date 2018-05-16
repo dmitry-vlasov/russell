@@ -4,33 +4,6 @@
 
 namespace mdl { namespace mm2 {
 
-typedef map<uint, uint> Perm;
-typedef map<uint, Perm> Transform;
-typedef map<Symbol, Expr> Subst;
-
-inline string show (const Subst& subst) {
-	string str;
-	for (auto it : subst)
-		str += "\t" + show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
-	return str;
-}
-Expr apply_subst(const Subst& sub, const Expr& expr);
-
-inline Perm create_permutation(uint flos, uint esss) {
-	Perm perm;
-	for (uint i = 0; i < esss; ++ i) {
-		perm[i] = i + flos;
-	}
-	for (uint i = 0; i < flos; ++ i) {
-		perm[i + esss] = i;
-	}
-	return perm;
-}
-
-inline Perm compute_permutation(const Assertion* ass) {
-	return create_permutation(ass->outerVars.size(), ass->hyps.size());
-}
-
 struct Tree {
 	struct Node {
 		enum Type {
