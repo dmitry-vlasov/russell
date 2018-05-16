@@ -24,21 +24,22 @@ struct Maps {
 	stack<rus::Theory*>  theory;
 };
 
-inline rus::Symbol translate_const(uint s, const Maps& state) {
-	rus::Const* c = state.constants.at(s);
+inline rus::Symbol translate_const(uint s) {
 	auto p = math_consts().find(s);
-	if (p == math_consts().end())
-		return rus::Symbol(s, c->id(), rus::Symbol::CONST);
-	else
-		return rus::Symbol((*p).second.symb, c->id(), rus::Symbol::CONST);
+	if (p == math_consts().end()) {
+		return rus::Symbol(s, s, rus::Symbol::CONST);
+	} else {
+		return rus::Symbol((*p).second.symb, s, rus::Symbol::CONST);
+	}
 }
 
 inline rus::Symbol translate_var(uint s, rus::Type* t) {
 	auto p = math_vars().find(s);
-	if (p == math_vars().end())
+	if (p == math_vars().end()) {
 		return rus::Symbol(s, t->id(), rus::Symbol::VAR);
-	else
+	} else {
 		return rus::Symbol((*p).second.var, t->id(), rus::Symbol::VAR);
+	}
 }
 
 inline rus::Type* translate_var_type(uint v, const Maps& state, const Assertion* ass) {
@@ -57,13 +58,13 @@ inline rus::Type* translate_var_type(uint v, const Maps& state, const Assertion*
 	return nullptr;
 }
 
-inline rus::Symbol translate_symb(uint s, const Maps& state, const Assertion* ass) {
-	if (state.constants.count(s))
-		return translate_const(s, state);
-	else if (rus::Type* t = translate_var_type(s, state, ass))
-		return translate_var(s, t);
-	else
-		throw Error("symbol not constant nor variable", show_sy(s));
+inline rus::Symbol translate_symb(Symbol s, const Maps& state, const Assertion* ass) {
+	if (s.var) {
+		rus::Type* t = translate_var_type(s.lit, state, ass);
+		return translate_var(s.lit, t);
+	} else {
+		return translate_const(s.lit);
+	}
 }
 
 rus::Expr translate_expr(const Expr& ex, const Maps& state, const Assertion* ass) {
@@ -71,7 +72,7 @@ rus::Expr translate_expr(const Expr& ex, const Maps& state, const Assertion* ass
 	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
 		if (it == ex.begin()) continue;
-		e.push_back(translate_symb(it->lit, state, ass));
+		e.push_back(translate_symb(*it, state, ass));
 	}
 	// it's the best what we can do here ...
 	e.type = state.type_wff;
