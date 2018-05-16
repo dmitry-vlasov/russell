@@ -11,7 +11,7 @@ typedef map<Symbol, Expr> Subst;
 inline string show (const Subst& subst) {
 	string str;
 	for (auto it : subst)
-		str += show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
+		str += "\t" + show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
 	return str;
 }
 Expr apply_subst(const Subst& sub, const Expr& expr);
@@ -58,6 +58,9 @@ struct Tree {
 			case 1 : val.ref->hyp()->ref(oss); break;
 			case 2 : val.ref->ass()->ref(oss); break;
 			}
+			if (expr.size()) {
+				oss << "[[" << expr << "]]";
+			}
 			return oss.str();
 		}
 		Type type;
@@ -89,6 +92,7 @@ struct Tree {
 Tree* to_tree(const Proof*);
 Proof* to_proof(const Tree*);
 void transform(Tree*, bool forward = true);
+Tree* reduce(Tree* tree, const map<uint, Ref*>& red);
 Expr eval(Tree* proof);
 Expr eval(Ref*);
 

@@ -14,14 +14,38 @@ bool has_contents(const Source* s) {
 	return has;
 }
 
+void collect_included_labels(uint label, const Expr& expr, set<uint>& deps) {
+	const map<uint, uint>& consts = Sys::get().math.consts;
+	for (const auto& s : expr) {
+		auto it = consts.find(s.lit);
+		if (it != consts.end()) {
+			uint src_id = (*it).second;
+			if (src_id != label) {
+				deps.insert(src_id);
+			}
+		}
+	}
+}
+
 void collect_included_labels(uint label, const Assertion* ass, set<uint>& deps) {
 	for (const auto& ref : ass->proof.refs) {
 		if (ref.is_assertion()) {
+			if (!ref.ass()) {
+				string msg("\n");
+				msg += "ref: " + Lex::toStr(ref.label()) + "\n";
+				msg += "theorem: " + Lex::toStr(ass->id()) + "\n";
+				msg += "source: " + Lex::toStr(ass->token.src()->id()) + "\n";
+				throw Error("unresolved ref", msg);
+			}
 			uint src_id = ref.ass()->token.src()->id();
 			if (src_id != label) {
 				deps.insert(src_id);
 			}
 		}
+	}
+	collect_included_labels(label, ass->expr, deps);
+	for (const auto& h : ass->hyps) {
+		collect_included_labels(label, h.get()->expr, deps);
 	}
 }
 

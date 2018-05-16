@@ -250,9 +250,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")];
 	comment_ml =
-		   lit("/*")
+		   lit("/*") [_val = new_<Comment>()]
 		>> *(
-			comment_text [_val = new_<Comment>(qi::labels::_1)] |
+			comment_text [appendComment(_val, qi::labels::_1)] |
 			comment_ml [appendComment(_val, qi::labels::_1)]
 		)
 		>> lit("*/");

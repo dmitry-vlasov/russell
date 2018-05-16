@@ -3,10 +3,6 @@
 
 namespace mdl { namespace mm2 {
 
-typedef map<uint, uint> Perm;
-typedef map<uint, Perm> Transform;
-typedef map<Symbol, Expr> Subst;
-
 inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 	auto it = ex_2.cbegin();
 	++ it;
@@ -63,6 +59,29 @@ static void to_proof(const Tree* t, vector<Ref>& proof) {
 			break;
 		default : assert(false && "impossible"); break;
 		}
+	}
+}
+
+Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
+	assert(tree->nodes.back().type == Tree::Node::REF);
+	uint l = tree->nodes.back().val.ref->label();
+	if (red.count(l)) {
+		Ref* ref = red.at(l);
+		Tree* t = nullptr;
+		if (ref->is_assertion()) {
+			t = new Tree(ref);
+		} else {
+			const uint arg = tree->nodes.size() - 2;
+			assert(tree->nodes[arg].type == Tree::Node::TREE);
+			std::swap(tree->nodes[arg].val.tree, t);
+		}
+		delete tree;
+		return reduce(t, red);
+	} else {
+		for (auto& n : tree->nodes)
+			if (n.type == Tree::Node::TREE)
+				n.val.tree = reduce(n.val.tree, red);
+		return tree;
 	}
 }
 
@@ -124,12 +143,17 @@ Expr eval(Tree* tree) {
 		sub[flo.get()->var()] = eval(f);
 	}
 	for (const auto& ess : ass->hyps) {
-		if (apply_subst(sub, ess.get()->expr) != eval(tree->nodes[ind ++])) {
+		Expr from_ass = apply_subst(sub, ess.get()->expr);
+		Expr from_proof = eval(tree->nodes[ind ++]);
+		if (from_ass != from_proof) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show_ex(apply_subst(sub, ess.get()->expr)) + "\n";
+			msg += "hyp from assertion: " + show_ex(from_ass) + "\n";
 			msg += "and\n";
-			msg += show_ex(eval(tree->nodes[ind - 1])) + "\n";
+			msg += "hyp from proof: " + show_ex(from_proof) + "\n";
 			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
+			msg += show(*ass) + "\n";
+			msg += "substitution:\n"  + show(sub) + "\n";
+			msg += "tree: " + tree->show() + "\n";
 			throw Error("verification", msg);
 		}
 	}

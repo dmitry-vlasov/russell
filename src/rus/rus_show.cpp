@@ -209,7 +209,7 @@ string show(const Step& st) {
 	switch (st.kind()) {
 	case Step::NONE:  s += "? "; break;
 	case Step::CLAIM: s += "claim "; break;
-	case Step::ASS:   s += show_id(st.ass()->id()) + " "; break;
+	case Step::ASS:   s += show_id(st.ass_id()) + " "; break;
 	}
 	if (st.kind() != Step::NONE)
 		s += show_refs(st.refs) + " ";

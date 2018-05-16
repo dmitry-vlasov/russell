@@ -104,8 +104,11 @@ struct Ref : public Writable {
 	const Assertion* ass() const { return std::get<Ass>(val).get(); }
 
 	uint label() const {
-		assert(is_assertion() && "must be assertion");
-		return std::get<Ass>(val).id();
+		switch (val.index()) {
+		case 0 : return var()->label;
+		case 1 : return hyp()->label;
+		case 2 : return std::get<Ass>(val).id();
+		}
 	}
 	uint index() const {
 		switch (val.index()) {

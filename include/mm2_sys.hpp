@@ -21,6 +21,7 @@ class Math {
 	Table<Source>    sources;
 public:
 	vector<VarDecl> decls;
+	map<uint, uint> consts;
 
 	string show() const;
 	string info() const;

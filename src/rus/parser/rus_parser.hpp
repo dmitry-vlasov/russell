@@ -6,7 +6,7 @@
 
 namespace mdl { namespace rus {
 
-void parse_spirit(uint);
+void parse_src_spirit(uint);
 
 namespace parser {
 
@@ -163,7 +163,7 @@ struct ParseImport {
 		Source* imp_src = Sys::mod().math.get<Source>().access(id);
 		const bool primary = !imp_src->parsed;
 #ifndef PARALLEL_PARSE
-		if (primary) parse_spirit(id);
+		if (primary) parse_src_spirit(id);
 #endif
 		return new Import(id, primary);
 	}
@@ -264,6 +264,9 @@ struct AppendComment {
 	void operator()(Comment* c1, Comment* c2) const {
 		c1->text += show(*c2);
 		delete c2;
+	}
+	void operator()(Comment* c1, const string& c2) const {
+		c1->text += c2;
 	}
 };
 

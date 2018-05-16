@@ -278,10 +278,10 @@ struct Sys {
 			} else {
 				Io::io().out() << "done in " << timer()[args[0]] << ". ";
 			}
-			if (!ret.success()) {
-				Io::io().out() << "Failed, code: " << ret.code;
-			}
 			Io::io().out() << endl;
+			if (!ret.success()) {
+				Io::io().out() << "Failed, code: " << ret.code << endl;
+			}
 		}
 		if (!ret && ret.msg.size()) {
 			Io::io().err() << ret.msg << endl;

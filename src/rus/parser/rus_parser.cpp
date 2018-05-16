@@ -1,8 +1,8 @@
 #include "rus_parser_grammar.hpp"
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
 
-void parse_src(uint label) {
+void parse_src_spirit(uint label) {
 	Source* src = Sys::mod().math.get<Source>().access(label);
 
 	LocationIter iter(src->data().begin(), label);
@@ -15,8 +15,6 @@ void parse_src(uint label) {
 	src->parsed = true;
 }
 
-}
-
 void parse_src_spirit() {
 #ifdef PARALLEL_PARSE
 	vector<uint> labels;
@@ -25,12 +23,12 @@ void parse_src_spirit() {
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
 		[labels] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)
-				parse_src(labels[i]);
+				parse_src_spirit(labels[i]);
 		}
 	);
 #else
 	for (auto p : Sys::mod().math.get<Source>())
-		if (!p.second.data->parsed) parse_src(p.first);
+		if (!p.second.data->parsed) parse_src_spirit(p.first);
 #endif
 }
 

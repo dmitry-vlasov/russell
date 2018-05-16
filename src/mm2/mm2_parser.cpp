@@ -203,7 +203,8 @@ struct Parser {
 private:
 	struct Context {
 		stack<Block> blocks;
-		Source*      source;
+		Source*      source = nullptr;
+		bool         in_expr = false;
 
 		Token token(const peg::SemanticValues& sv) const {
 			return Token(source, sv.c_str(), sv.c_str() + sv.length());
@@ -249,11 +250,14 @@ public:
 			vector<uint> expr;
 			expr.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<uint>()) expr.emplace_back(s.get<uint>());
-				else delete s.get<Comment*>();
+				if (s.is_defined()) {
+					expr.emplace_back(s.get<uint>());
+				}
 			}
 			return expr;
 		};
+		parser["EXPR"].enter = [](peg::any& c) { c.get<Context*>()->in_expr = true; };
+		parser["EXPR"].leave = [](peg::any& c) { c.get<Context*>()->in_expr = false; };
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
 			c->source->contents.emplace_back(unique_ptr<Const>(new Const(sv[0].get<uint>())));
@@ -287,7 +291,9 @@ public:
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
-			c->source->contents.emplace_back(unique_ptr<Comment>(new Comment(sv.token())));
+			if (!c->in_expr) {
+				c->source->contents.emplace_back(unique_ptr<Comment>(new Comment(sv.token())));
+			}
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();

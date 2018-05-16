@@ -13,7 +13,7 @@ struct Import;
 struct Source;
 
 struct Comment : public Tokenable {
-	Comment(const string& txt, const Token& t = Token()) : Tokenable(t), text(txt) { }
+	Comment(const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt) { }
 	string text;
 };
 
@@ -190,6 +190,10 @@ struct Step : public Tokenable, public Verifiable {
 	const Assertion* ass() const {
 		if (kind_ != ASS) return nullptr;
 		return val_.ass->get();
+	}
+	uint ass_id() const {
+		if (kind_ != ASS) return -1;
+		return val_.ass->id();
 	}
 	Proof* claim() {
 		if (kind_ != CLAIM) return nullptr;
@@ -378,7 +382,6 @@ inline void Node::destroy() {
 	}
 	kind = NONE;
 }
-
 
 inline void Proof::Elem::destroy() {
 	switch (kind) {

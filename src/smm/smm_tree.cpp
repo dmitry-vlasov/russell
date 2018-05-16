@@ -60,8 +60,9 @@ Proof* to_proof(const Tree* tree) {
 
 void transform(Tree* tree, bool forward) {
 	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
-		if (tree->nodes[i].type == Tree::Node::TREE)
+		if (tree->nodes[i].type == Tree::Node::TREE) {
 			transform(tree->nodes[i].val.tree, forward);
+		}
 	}
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Ref* op = tree->nodes.back().val.ref;

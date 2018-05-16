@@ -330,7 +330,7 @@ private:
 	int index = 0;
 };
 
-void read(uint label) {
+void do_read(uint label, map<uint, set<uint>>& includes, vector<uint>& new_sources) {
 	if (const Source* src = Sys::get().math.get<Source>().access(label)) {
 		if (src->has_changed()) {
 			delete src;
@@ -338,68 +338,81 @@ void read(uint label) {
 			return; // Aready is read.
 		}
 	}
-	queue<uint> to_read;
-	to_read.push(label);
+	Source* src = new Source(label);
+	new_sources.push_back(label);
+	src->read(&const_patches);
 
-	map<uint, set<uint>> includes;
-	vector<uint> new_sources;
+	const string& data = src->data();
 
-	while (!to_read.empty()) {
-		label = to_read.front(); to_read.pop();
-		if (Sys::get().math.get<Source>().has(label)) continue;
+	bool inside_inc = false;
+	bool inside_comm = false;
+	bool inside_flo = false;
+	bool inside_const = false;
+	int  block_depth = 0;
+	auto word_begin = data.begin();
+	WordStack<3> wordStack;
 
-		Source* src = new Source(label);
-		new_sources.push_back(label);
-		src->read(&const_patches);
+	auto add_inc = [label, &new_sources](const WordStack<3>& wordStack, map<uint, set<uint>>& includes) {
+		string inc = wordStack.last();
+		boost::trim(inc);
+		uint inc_label = Lex::toInt(Path::trim_ext(inc));
+		includes[label].insert(inc_label);
+		do_read(inc_label, includes, new_sources);
+	};
 
-		const string& data = src->data();
+	auto add_const = [label](const WordStack<3>& wordStack) {
+		string constant = wordStack.last();
+		boost::trim(constant);
+		uint c = Lex::toInt(constant);
+		Sys::mod().math.consts[c] = label;
+	};
 
-		bool inside_inc = false;
-		bool inside_comm = false;
-		bool inside_flo = false;
-		int  block_depth = 0;
-		auto word_begin = data.begin();
-		WordStack<3> wordStack;
+	auto add_flo = [](const WordStack<3>& wordStack) {
+		string label = wordStack[0];
+		string type = wordStack[1];
+		string var = wordStack[2];
+		boost::trim(label);
+		boost::trim(type);
+		boost::trim(var);
+		Sys::mod().math.decls.emplace_back(Lex::toInt(label), Lex::toInt(type), Lex::toInt(var));
+	};
 
-		auto add_inc = [label](const WordStack<3>& wordStack, map<uint, set<uint>>& includes, queue<uint>& to_read) {
-			string inc = wordStack.last();
-			boost::trim(inc);
-			uint inc_label = Lex::toInt(Path::trim_ext(inc));
-			includes[label].insert(inc_label);
-			to_read.push(inc_label);
-		};
-
-		auto add_flo = [](const WordStack<3>& wordStack) {
-			string label = wordStack[0];
-			string type = wordStack[1];
-			string var = wordStack[2];
-			boost::trim(label);
-			boost::trim(type);
-			boost::trim(var);
-			Sys::mod().math.decls.emplace_back(Lex::toInt(label), Lex::toInt(type), Lex::toInt(var));
-		};
-
-		for (auto i = data.begin(); i != data.end(); ++ i) {
-			if (*i == '$') {
-				++i; word_begin = i;
-				switch (*i) {
-				case '[': ++i; word_begin = i; if (!inside_comm) inside_inc = true; break;
-				case ']': ++i; word_begin = i; if (!inside_comm && inside_inc) { inside_inc = false; add_inc(wordStack, includes, to_read); } break;
-				case '(': ++i; word_begin = i; inside_comm = true; break;
-				case ')': ++i; word_begin = i; inside_comm = false; break;
-				case '{': ++i; word_begin = i; if (!inside_comm) { ++block_depth; } break;
-				case '}': ++i; word_begin = i; if (!inside_comm) { --block_depth; } break;
-				case 'f': ++i; word_begin = i; if (!inside_comm && block_depth == 0) inside_flo = true; break;
-				case '.': ++i; word_begin = i; if (!inside_comm && inside_flo) { inside_flo = false; add_flo(wordStack); } break;
+	for (auto i = data.begin(); i != data.end(); ++ i) {
+		if (*i == '$') {
+			++i; word_begin = i;
+			switch (*i) {
+			case '[': ++i; word_begin = i; if (!inside_comm) inside_inc = true; break;
+			case ']': ++i; word_begin = i; if (!inside_comm && inside_inc) { inside_inc = false; add_inc(wordStack, includes); } break;
+			case '(': ++i; word_begin = i; inside_comm = true; break;
+			case ')': ++i; word_begin = i; inside_comm = false; break;
+			case '{': ++i; word_begin = i; if (!inside_comm) { ++block_depth; } break;
+			case '}': ++i; word_begin = i; if (!inside_comm) { --block_depth; } break;
+			case 'f': ++i; word_begin = i; if (!inside_comm && block_depth == 0) inside_flo = true; break;
+			case 'c': ++i; word_begin = i; if (!inside_comm) inside_const = true; break;
+			case '.': ++i; word_begin = i; if (!inside_comm) {
+				if (inside_flo) {
+					inside_flo = false;
+					add_flo(wordStack);
 				}
-			} else {
-				if (isspace(*i)) {
-					wordStack.push(&*word_begin, &*i);
-					word_begin = i;
+				if (inside_const) {
+					inside_const = false;
+					add_const(wordStack);
 				}
+			} break;
+			}
+		} else {
+			if (isspace(*i)) {
+				wordStack.push(&*word_begin, &*i);
+				word_begin = i;
 			}
 		}
 	}
+}
+
+void read(uint label) {
+	map<uint, set<uint>> includes;
+	vector<uint> new_sources;
+	do_read(label, includes, new_sources);
 	for (auto s : new_sources) {
 		for (auto inc : includes[s]) {
 			auto inc_src = Sys::mod().math.get<Source>().access(inc);
@@ -407,5 +420,6 @@ void read(uint label) {
 		}
 	}
 }
+
 
 }}

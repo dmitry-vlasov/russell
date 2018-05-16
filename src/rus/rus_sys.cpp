@@ -65,10 +65,18 @@ void parse_src() {
 void parse_expr() {
 	expr::parse();
 
-	for (auto& p : Sys::mod().math.get<Assertion>())
+	for (auto& p : Sys::mod().math.get<Assertion>()) {
+		if (!p.second.data) {
+			throw Error("undefined reference to assertion", Lex::toStr(p.first));
+		}
 		prover::add_to_index(p.second.data);
-	for (auto& p : Sys::mod().math.get<Proof>())
+	}
+	for (auto& p : Sys::mod().math.get<Proof>()) {
+		if (!p.second.data) {
+			throw Error("undefined reference to proof", Lex::toStr(p.first));
+		}
 		prover::add_to_index(p.second.data);
+	}
 }
 
 

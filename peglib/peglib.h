@@ -90,6 +90,10 @@ public:
         return content_ == nullptr;
     }
 
+    bool is_defined() const {
+        return content_ != nullptr;
+    }
+
     template <typename T>
     bool is() const {
         if (!content_) return false;

@@ -61,12 +61,12 @@ check "${binpath}/mdl
     \"rus opts verbose root=rus\" 
     \"mm2 read in=${file}.mm\"
     \"mm2 parse \"
-    \"mm2 minimize in=${file}.mm\"
     \"mm2 transl in=${file}.mm out=${file}.rus\"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
 
+#\"mm2 minimize in=${file}.mm\"
 
 echo "----------------------"
 echo "RUS -> MM TRANSLATION"

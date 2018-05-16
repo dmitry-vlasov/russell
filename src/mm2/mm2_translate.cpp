@@ -19,7 +19,8 @@ struct Maps {
 	rus::Type*  type_wff;
 	rus::Type*  type_set;
 	rus::Type*  type_class;
-	set<mm2::Symbol> redundant_consts;
+	set<mm2::Symbol>     redundant_consts;
+	map<uint, mm2::Ref*> redundant_assertions;
 	stack<rus::Theory*>  theory;
 };
 
@@ -382,7 +383,13 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 
 void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	Tree* tree = to_tree(&ass->proof);
-	eval(tree);
+	tree = reduce(tree, state.redundant_assertions);
+	try {
+		eval(tree);
+	} catch (Error& err) {
+		err.msg += "in proof of " + Lex::toStr(ass->id()) + "\n";
+		throw err;
+	}
 	rus::Proof* p = new rus::Proof(thm->id());
 	p->vars = translate_vars(ass->innerVars, state);
 	translate_step(tree, p, thm, state, ass);
@@ -394,7 +401,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 }
 
 void translate_theorem(const Assertion* ass, Maps& state) {
-	if (ass->proof.refs.size() == 1) {
+	if (ass->proof.refs.size() == 1 /*&& !ass->proof.refs[0].is_assertion()*/) {
 		// Dummy theorem
 		return;
 	}
@@ -474,6 +481,12 @@ void translate(uint src, uint tgt) {
 	rus::Source* target = new rus::Source(tgt);
 	target->theory = new rus::Theory();
 	Maps state;
+	for (auto& p : Sys::get().math.get<Assertion>()) {
+		Assertion* a = p.second.data;
+		if (a->proof.refs.size() == 1) {
+			state.redundant_assertions[a->id()] = &a->proof.refs[0];
+		}
+	}
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
 	state.type_class = nullptr;
