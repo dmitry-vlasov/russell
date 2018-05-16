@@ -12,7 +12,6 @@ struct Maps {
 	map<const rus::Type*,  rus::Theory*> type_theory;
 	map<const mm2::Source*,rus::Source*> sources;
 	map<mm2::Symbol, rus::Type*>         types;
-	map<mm2::Symbol, rus::Const*>        constants;
 	set<rus::Rule*>                      rules;
 	map<const rus::Type*, uint>          inds;
 
@@ -84,16 +83,12 @@ void translate_constant(const Const* constant, Maps& state) {
 	if (state.redundant_consts.count(s)) return;
 	rus::Const* c = nullptr;
 	auto p = math_consts().find(s);
-	if (p == math_consts().end())
+	if (p == math_consts().end()) {
 		c = new rus::Const(s, rus::Symbol::undef(), rus::Symbol::undef());
-	else
+	} else {
 		c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
-	if (state.constants.count(c->symb))
-		delete c;
-	else {
-		state.constants[s] = c;
-		state.theory.top()->nodes.emplace_back(c);
 	}
+	state.theory.top()->nodes.emplace_back(c);
 }
 
 rus::Type* translate_type(Symbol type_sy, Maps& state);
