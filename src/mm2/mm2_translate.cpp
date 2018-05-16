@@ -92,11 +92,10 @@ void translate_constant(const Const* constant, Maps& state) {
 rus::Type* translate_type(Symbol type_sy, Maps& state);
 
 template<typename T>
-rus::Vars translate_vars(const vector<T>& decls, Maps& state) {
+rus::Vars translate_vars(const vector<T>& decls) {
 	rus::Vars rus_vars;
-	for (auto& flo : decls) {
-		rus::Type* type = translate_type(flo.get()->type(), state);
-		rus_vars.v.push_back(translate_var(flo.get()->var(), type->id()));
+	for (const auto& flo : decls) {
+		rus_vars.v.push_back(translate_var(flo.get()->var(), flo.get()->type()));
 	}
 	return rus_vars;
 }
@@ -208,7 +207,7 @@ void translate_rule(const Assertion* ass, Maps& state) {
 
 	rus::Rule* rule = new rus::Rule(
 		ass->id(),
-		translate_vars(ass->outerVars, state),
+		translate_vars(ass->outerVars),
 		translate_expr(ass->expr, state, ass)
 	);
 	rule->term.type = rus::User<rus::Type>(type->id());
@@ -235,7 +234,7 @@ void translate_rule(const Assertion* ass, Maps& state) {
 
 template<class T>
 void translate_assertion(const Assertion* ass, T* a, Maps& state) {
-	a->vars = translate_vars(ass->outerVars, state);
+	a->vars = translate_vars(ass->outerVars);
 	a->disj = translate_disj(ass, state);
 	uint hc = 0;
 	for (const auto& ess : ass->hyps) {
@@ -380,7 +379,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 		throw err;
 	}
 	rus::Proof* p = new rus::Proof(thm->id());
-	p->vars = translate_vars(ass->innerVars, state);
+	p->vars = translate_vars(ass->innerVars);
 	translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->props.front();
 	rus::Step* st = p->elems.back().val.step;
