@@ -32,35 +32,33 @@ inline rus::Symbol translate_const(uint s) {
 	}
 }
 
-inline rus::Symbol translate_var(uint s, rus::Type* t) {
-	auto p = math_vars().find(s);
+inline rus::Symbol translate_var(uint symb, uint type) {
+	auto p = math_vars().find(symb);
 	if (p == math_vars().end()) {
-		return rus::Symbol(s, t->id(), rus::Symbol::VAR);
+		return rus::Symbol(symb, type, rus::Symbol::VAR);
 	} else {
-		return rus::Symbol((*p).second.var, t->id(), rus::Symbol::VAR);
+		return rus::Symbol((*p).second.var, type, rus::Symbol::VAR);
 	}
 }
 
-inline rus::Type* translate_var_type(uint v, const Maps& state, const Assertion* ass) {
+inline uint translate_var_type(uint v, const Assertion* ass) {
 	for (const auto& f : ass->outerVars) {
 		if (f.get()->var() == v) {
-			assert(state.types.count(f.get()->type()));
-			return state.types.find(f.get()->type())->second;
+			return f.get()->type();
 		}
 	}
 	for (const auto& i : ass->innerVars) {
 		if (i.get()->var() == v) {
-			assert(state.types.count(i.get()->type()));
-			return state.types.find(i.get()->type())->second;
+			return i.get()->type();
 		}
 	}
-	return nullptr;
+	throw Error("no type is given for variable", Lex::toStr(v));
+	return -1;
 }
 
-inline rus::Symbol translate_symb(Symbol s, const Maps& state, const Assertion* ass) {
+inline rus::Symbol translate_symb(Symbol s, const Assertion* ass) {
 	if (s.var) {
-		rus::Type* t = translate_var_type(s.lit, state, ass);
-		return translate_var(s.lit, t);
+		return translate_var(s.lit, translate_var_type(s.lit, ass));
 	} else {
 		return translate_const(s.lit);
 	}
@@ -71,7 +69,7 @@ rus::Expr translate_expr(const Expr& ex, const Maps& state, const Assertion* ass
 	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
 		if (it == ex.begin()) continue;
-		e.push_back(translate_symb(*it, state, ass));
+		e.push_back(translate_symb(*it, ass));
 	}
 	// it's the best what we can do here ...
 	e.type = state.type_wff;
@@ -98,7 +96,7 @@ rus::Vars translate_vars(const vector<T>& decls, Maps& state) {
 	rus::Vars rus_vars;
 	for (auto& flo : decls) {
 		rus::Type* type = translate_type(flo.get()->type(), state);
-		rus_vars.v.push_back(translate_var(flo.get()->var(), type));
+		rus_vars.v.push_back(translate_var(flo.get()->var(), type->id()));
 	}
 	return rus_vars;
 }
@@ -123,7 +121,7 @@ rus::Disj translate_disj(const Assertion* ass, Maps& state) {
 			if (!type) {
 				throw Error("untyped var", show_sy(v));
 			}
-			rus::Symbol rv = translate_var(v, type);
+			rus::Symbol rv = translate_var(v, type->id());
 			rus_dis.push_back(rv);
 		}
 	}
@@ -316,13 +314,13 @@ void translate_def(const Assertion* ass, Maps& state) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it)
 				def->prop.push_back(rus::Symbol(dfm().lit));
-			def->dfm.push_back(translate_symb(it->lit, state, ass));
+			def->dfm.push_back(translate_symb(it->lit, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it)
 				def->prop.push_back(rus::Symbol(dfs().lit));
-			def->dfs.push_back(translate_symb(it->lit, state, ass));
+			def->dfs.push_back(translate_symb(it->lit, ass));
 		} else {
-			def->prop.push_back(translate_symb(it->lit, state, ass));
+			def->prop.push_back(translate_symb(it->lit, ass));
 		}
 	}
 	state.theory.top()->nodes.push_back(def);
