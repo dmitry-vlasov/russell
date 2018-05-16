@@ -14,12 +14,22 @@ bool has_contents(const Source* s) {
 	return has;
 }
 
-void collect_included_labels(uint label, const Expr& expr, set<uint>& deps) {
+void collect_included_labels(uint label, const Expr& expr, set<uint>& deps, const map<uint, set<uint>>& rule_deps) {
 	const map<uint, uint>& consts = Sys::get().math.consts;
+	Symbol first = expr.front();
 	for (const auto& s : expr) {
-		auto it = consts.find(s.lit);
-		if (it != consts.end()) {
-			uint src_id = (*it).second;
+		if (s == first) continue;
+		auto rit = rule_deps.find(s.lit);
+		if (rit != rule_deps.end()) {
+			for (uint src_id : (*rit).second) {
+				if (src_id != label) {
+					deps.insert(src_id);
+				}
+			}
+		}
+		auto cit = consts.find(s.lit);
+		if (cit != consts.end()) {
+			uint src_id = (*cit).second;
 			if (src_id != label) {
 				deps.insert(src_id);
 			}
@@ -27,7 +37,7 @@ void collect_included_labels(uint label, const Expr& expr, set<uint>& deps) {
 	}
 }
 
-void collect_included_labels(uint label, const Assertion* ass, set<uint>& deps) {
+void collect_included_labels(uint label, const Assertion* ass, set<uint>& deps, const map<uint, set<uint>>& rule_deps) {
 	for (const auto& ref : ass->proof.refs) {
 		if (ref.is_assertion()) {
 			if (!ref.ass()) {
@@ -43,9 +53,9 @@ void collect_included_labels(uint label, const Assertion* ass, set<uint>& deps) 
 			}
 		}
 	}
-	collect_included_labels(label, ass->expr, deps);
+	collect_included_labels(label, ass->expr, deps, rule_deps);
 	for (const auto& h : ass->hyps) {
-		collect_included_labels(label, h.get()->expr, deps);
+		collect_included_labels(label, h.get()->expr, deps, rule_deps);
 	}
 }
 
@@ -88,7 +98,7 @@ set<uint> minimize_deps(uint label, const set<uint>& deps, map<uint, set<uint>>&
 	return minimized;
 }
 
-void minimize_imports(uint label, map<uint, set<uint>>& resolved) {
+void minimize_imports(uint label, map<uint, set<uint>>& resolved, const map<uint, set<uint>>& rule_deps) {
 	Source* s = Sys::mod().math.get<Source>().access(label);
 	if (has_contents(s)) {
 		set<uint> deps;
@@ -97,12 +107,12 @@ void minimize_imports(uint label, map<uint, set<uint>>& resolved) {
 				Import* imp = std::get<unique_ptr<Import>>(n).get();
 				uint imported_id = imp->source.id();
 				if (!resolved.count(imported_id)) {
-					minimize_imports(imported_id, resolved);
+					minimize_imports(imported_id, resolved, rule_deps);
 				}
 			}
 			if (Source::kind(n) == Source::ASSERTION) {
 				Assertion* ass = std::get<unique_ptr<Assertion>>(n).get();
-				collect_included_labels(label, ass, deps);
+				collect_included_labels(label, ass, deps, rule_deps);
 			}
 		}
 		if (deps.size()) {
@@ -128,11 +138,59 @@ void minimize_imports(uint label, map<uint, set<uint>>& resolved) {
 				Import* imp = std::get<unique_ptr<Import>>(n).get();
 				uint imported_id = imp->source.id();
 				if (!resolved.count(imported_id)) {
-					minimize_imports(imported_id, resolved);
+					minimize_imports(imported_id, resolved, rule_deps);
 				}
 			}
 		}
 	}
+}
+
+map<uint, set<uint>> create_rule_deps() {
+	vector<const Assertion*> rules;
+	for (const auto& p : Sys::get().math.get<Assertion>()) {
+		const Assertion* a = p.second.data;
+		Symbol first = a->expr.front();
+		if (!is_turnstile(first)) {
+			rules.push_back(a);
+		}
+	}
+
+	map<uint, set<uint>> rule_deps;
+	for (auto a : rules) {
+		Symbol first = a->expr.front();
+		if (!is_turnstile(first)) {
+			for (auto s : a->expr) {
+				if (!s.var && s != first) {
+					bool is_unique = true;
+					for (auto b : rules) {
+						if (a == b) continue;
+						for (auto t : b->expr) {
+							if (t == b->expr.front()) continue;
+							if (t == s) {
+								is_unique = false;
+								break;
+							}
+						}
+						if (!is_unique) {
+							break;
+						}
+					}
+					if (is_unique) {
+						rule_deps[s.lit].insert(a->token.src()->id());
+					}
+				}
+			}
+		}
+	}
+	for (const auto& p : rule_deps) {
+		uint rule_symb = p.first;
+		cout << Lex::toStr(p.first) << ":" << endl;
+		for (uint s : p.second) {
+			cout << "\t" << Lex::toStr(s) << endl;
+		}
+	}
+	cout << endl;
+	return rule_deps;
 }
 
 }
@@ -140,7 +198,8 @@ void minimize_imports(uint label, map<uint, set<uint>>& resolved) {
 void minimize_imports(uint label) {
 	Sys::timer()["minimize"].start();
 	map<uint, set<uint>> resolved;
-	minimize_imports(label, resolved);
+	map<uint, set<uint>> rule_deps = std::move(create_rule_deps());
+	minimize_imports(label, resolved, rule_deps);
 	Sys::timer()["minimize"].start();
 }
 

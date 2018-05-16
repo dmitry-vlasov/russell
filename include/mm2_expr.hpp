@@ -20,6 +20,11 @@ struct Symbol {
 	bool var:1;
 };
 
+inline bool is_turnstile(Symbol s) {
+	static Symbol t(Lex::toInt("|-"));
+	return s == t;
+}
+
 typedef vector<Symbol> Expr;
 
 inline bool contains(const Expr& vect, uint lit) {

@@ -95,11 +95,6 @@ void translate_constant(const Const* constant, Maps& state) {
 	}
 }
 
-inline bool is_turnstile(Symbol s) {
-	Symbol t(Lex::toInt("|-"));
-	return s == t;
-}
-
 rus::Type* translate_type(Symbol type_sy, Maps& state);
 
 template<typename T>
@@ -422,6 +417,7 @@ void translate_assertion(const Assertion* ass, Maps& state) {
 		}
 	} catch (Error& err) {
 		err.msg += "\nat assertion: " + Lex::toStr(ass->id()) + "\n";
+		err.msg += "\nsource file: " + Lex::toStr(ass->token.src()->id()) + "\n";
 		throw err;
 	}
 }
