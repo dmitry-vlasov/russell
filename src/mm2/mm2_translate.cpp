@@ -16,6 +16,18 @@ struct Maps {
 	stack<rus::Theory*>  theory;
 };
 
+inline uint open_brace()  { static uint ret = Lex::toInt("{"); return ret; }
+inline uint close_brace() { static uint ret = Lex::toInt("}"); return ret; }
+inline uint open_brack()  { static uint ret = Lex::toInt("("); return ret; }
+inline uint close_brack() { static uint ret = Lex::toInt(")"); return ret; }
+inline uint turnstile()   { static uint ret = Lex::toInt("|-"); return ret; }
+inline uint eqty() { static uint ret = Lex::toInt("="); return ret; }
+inline uint eqiv() { static uint ret = Lex::toInt("<->"); return ret; }
+inline uint dfm()  { static uint ret = Lex::toInt("defiendum"); return ret; }
+inline uint dfs()  { static uint ret = Lex::toInt("definiens"); return ret; }
+inline uint wff()  { static uint ret = Lex::toInt("wff"); return ret; }
+inline uint clas() { static uint ret = Lex::toInt("class"); return ret; }
+
 inline rus::Symbol translate_const(uint s) {
 	auto p = math_consts().find(s);
 	if (p == math_consts().end()) {
@@ -65,16 +77,15 @@ rus::Expr translate_expr(const Expr& ex, const Assertion* ass) {
 		e.push_back(translate_symb(*it, ass));
 	}
 	// it's the best what we can do here ...
-	e.type.set(Lex::toInt("wff"));
+	e.type.set(wff());
 	return e;
 }
 
 void translate_constant(const Const* constant, Maps& state) {
-	static uint turnstile = Lex::toInt("|-");
 	uint s = constant->symb;
 	auto t = state.type_defs.find(s);
 	if (t == state.type_defs.end()) {
-		if (s != turnstile) {
+		if (s != turnstile()) {
 			rus::Const* c = nullptr;
 			auto p = math_consts().find(s);
 			if (p == math_consts().end()) {
@@ -193,16 +204,8 @@ void translate_axiom(const Assertion* ass, Maps& state) {
 	state.theory.top()->nodes.push_back(ax);
 }
 
-inline Symbol open_brace() { return Symbol(Lex::toInt("{")); }
-inline Symbol close_brace() {return Symbol(Lex::toInt("}")); }
-inline Symbol open_brack() { return Symbol(Lex::toInt("(")); }
-inline Symbol close_brack() { return Symbol(Lex::toInt(")")); }
-inline Symbol eqty() { return Symbol(Lex::toInt("=")); }
-inline Symbol eqiv() { return Symbol(Lex::toInt("<->")); }
-inline Symbol dfm() { return Symbol(Lex::toInt("defiendum")); }
-inline Symbol dfs() { return Symbol(Lex::toInt("definiens")); }
 
-inline void count_br(Symbol s, uint& brack_depth, uint& brace_depth) {
+inline void count_br(uint s, uint& brack_depth, uint& brace_depth) {
 	if (s == open_brace())  ++ brace_depth;
 	if (s == close_brace()) -- brace_depth;
 	if (s == open_brack())  ++ brack_depth;
@@ -218,14 +221,14 @@ vector<Symbol>::const_iterator eq_position(const Expr& ex) {
 	uint brack_depth = 0;
 	uint brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
-		count_br(*it, brack_depth, brace_depth);
-		if (*it == eqiv() && low_depth(brack_depth, brace_depth)) return it;
+		count_br(it->lit, brack_depth, brace_depth);
+		if (it->lit == eqiv() && low_depth(brack_depth, brace_depth)) return it;
 	}
 	brack_depth = 0;
 	brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
-		count_br(*it, brack_depth, brace_depth);
-		if (*it == eqty() && low_depth(brack_depth, brace_depth)) return it;
+		count_br(it->lit, brack_depth, brace_depth);
+		if (it->lit == eqty() && low_depth(brack_depth, brace_depth)) return it;
 	}
 	return ex.end();
 }
@@ -244,21 +247,21 @@ void translate_def(const Assertion* ass, Maps& state) {
 	if (*eq_pos == eqiv()) {
 		++ dfm_beg;
 		-- dfs_end;
-		def->dfm.type.set(Lex::toInt("wff"));
-		def->dfs.type.set(Lex::toInt("wff"));
+		def->dfm.type.set(wff());
+		def->dfs.type.set(wff());
 	} else {
-		def->dfm.type.set(Lex::toInt("class"));
-		def->dfs.type.set(Lex::toInt("class"));
+		def->dfm.type.set(clas());
+		def->dfs.type.set(clas());
 	}
-	def->prop.type.set(Lex::toInt("wff"));
+	def->prop.type.set(wff());
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it)
-				def->prop.push_back(rus::Symbol(dfm().lit));
+				def->prop.push_back(rus::Symbol(dfm()));
 			def->dfm.push_back(translate_symb(it->lit, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it)
-				def->prop.push_back(rus::Symbol(dfs().lit));
+				def->prop.push_back(rus::Symbol(dfs()));
 			def->dfs.push_back(translate_symb(it->lit, ass));
 		} else {
 			def->prop.push_back(translate_symb(it->lit, ass));
