@@ -1,5 +1,4 @@
 #include <mm2_ast.hpp>
-#include <smm_ast.hpp>
 
 namespace mdl { namespace mm2  {
 

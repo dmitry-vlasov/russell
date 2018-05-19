@@ -6,15 +6,13 @@
 
 namespace mdl {
 
-enum class Lang { NONE, MM, SMM, RUS, MM2 };
+enum class Lang { NONE, MM, RUS };
 
 inline Lang chooseLang(const string& lang) {
 	if (lang.length() >= 2) {
 		if (lang.length() >= 3) {
 			auto lastThreeChars = lang.substr(lang.length() - 3);
 			if (lastThreeChars == "rus") return Lang::RUS;
-			if (lastThreeChars == "smm") return Lang::SMM;
-			if (lastThreeChars == "mm2") return Lang::MM2;
 		}
 		auto lastTwoChars = lang.substr(lang.length() - 2);
 		if (lastTwoChars == "mm") return Lang::MM;
@@ -40,8 +38,6 @@ public :
 		const string& l = opts.at("target");
 		if (l == "rus") return Lang::RUS;
 		if (l == "mm")  return Lang::MM;
-		if (l == "smm") return Lang::SMM;
-		if (l == "mm2") return Lang::MM2;
 		return Lang::NONE;
 	}
 

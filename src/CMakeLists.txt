@@ -24,15 +24,6 @@ else()
 		
 		daem.cpp 
 		
-		mm/mm_cut.cpp 
-		mm/mm_ast.cpp 
-		mm/mm_sys.cpp 
-		mm/mm_merge.cpp 
-		mm/mm_parser.cpp 
-		mm/mm_read.cpp 
-		mm/mm_show.cpp  
-		mm/mm_translate_smm.cpp 
-		
 		mm2/mm2_cut.cpp 
 		mm2/mm2_sys.cpp 
 		mm2/mm2_merge.cpp 
@@ -63,16 +54,6 @@ else()
 		rus/rus_translate.cpp 
 		rus/rus_verify.cpp 
 		rus/rus_xml.cpp 
-		
-		smm/smm_ast.cpp 
-		smm/smm_sys.cpp 
-		smm/smm_parser.cpp 
-		smm/smm_read.cpp 
-		smm/smm_show.cpp 
-		smm/smm_translate_mm.cpp 
-		smm/smm_translate_rus.cpp 
-		smm/smm_tree.cpp 
-		smm/smm_verify.cpp 
 		
 		main.cpp
 	)

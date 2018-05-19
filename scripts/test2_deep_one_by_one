@@ -45,8 +45,8 @@ echo "----------------------"
 
 echo "cut: mm (plain) -> mm (deep)"
 check "${binpath}/mdl 
-    \"mm2 opts verbose\"
-    \"mm2 cut in=${file}.mm out=${file}.smm out-root=mm\"
+    \"mm opts verbose\"
+    \"mm cut in=${file}.mm out=${file}.smm out-root=mm\"
     exit"
 
 echo -e 'done\n\n'
@@ -57,12 +57,12 @@ echo "----------------------"
 
 echo "mm -> rus"
 check "${binpath}/mdl 
-    \"mm2 opts verbose root=mm\" 
+    \"mm opts verbose root=mm\" 
     \"rus opts verbose root=rus\" 
-    \"mm2 read in=${file}.mm\"
-    \"mm2 parse \"
-    \"mm2 verify \"
-    \"mm2 transl in=${file}.mm out=${file}.rus\"
+    \"mm read in=${file}.mm\"
+    \"mm parse \"
+    \"mm verify \"
+    \"mm transl in=${file}.mm out=${file}.rus\"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
@@ -75,15 +75,15 @@ echo "----------------------"
 
 echo "rus -> mm"
 check "${binpath}/mdl 
-    \"mm2 opts verbose root=mm-1\" 
+    \"mm opts verbose root=mm-1\" 
     \"rus opts verbose root=rus\" 
     \"rus read in=${file}.rus\"
     \"rus parse_src \"
     \"rus parse_expr \"
     \"rus verify \"
     \"rus transl in=${file}.rus out=${file}.mm\" 
-    \"mm2 write in=${file}.mm deep=true\"
-    \"mm2 merge in=${file}.mm out=${file}-1.mm out-root=\"
+    \"mm write in=${file}.mm deep=true\"
+    \"mm merge in=${file}.mm out=${file}-1.mm out-root=\"
     exit"
 echo -e 'done\n\n'
 
@@ -93,10 +93,10 @@ echo "----------------------"
 
 echo "verify mm-1 with mm2"
 check "${binpath}/mdl 
-    \"mm2 opts verbose root=mm-1\" 
-    \"mm2 read in=${file}.mm\"
-    \"mm2 parse \"
-    \"mm2 verify \"
+    \"mm opts verbose root=mm-1\" 
+    \"mm read in=${file}.mm\"
+    \"mm parse \"
+    \"mm verify \"
     exit"
 echo -e 'done\n\n'
 

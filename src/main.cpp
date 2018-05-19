@@ -1,7 +1,6 @@
 #include <daem.hpp>
-#include <mm_sys.hpp>
+#include <mm2_sys.hpp>
 #include <rus_sys.hpp>
-#include <smm_sys.hpp>
 
 #ifdef BUILD_SOLID
 	#include "all.cpp"
@@ -49,8 +48,6 @@ int main (int argc, const char* argv[])
 		case Mode::HELP: cout << descr << endl;      break;
 		}
 		rus::Sys::release();
-		smm::Sys::release();
-		mm::Sys::release();
 		mm2::Sys::release();
 	} catch (const Error& err) {
 		cerr << err.what();
