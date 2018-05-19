@@ -175,7 +175,7 @@ inline void Ref::write(ostream& os, const Indent& i) const {
 	}
 }
 
-struct Source : public mdl::Source<Source, Sys>, public Writable {
+struct Source : public mdl::Source<Source, Sys> {
 	typedef variant<
 		unique_ptr<Const>,
 		unique_ptr<Import>,

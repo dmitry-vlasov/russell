@@ -387,7 +387,7 @@ struct Theory : public Tokenable, public Verifiable, public Writable {
 	Theory*      parent;
 };
 
-struct Source : public mdl::Source<Source, Sys>, public Writable {
+struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~Source();
 	Tokenable* find(const Token& t);

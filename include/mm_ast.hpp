@@ -205,7 +205,7 @@ struct Block {
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~Source() override { if (block) delete block; }
-	void write(ostream& os) const;
+	void write(ostream& os, const Indent& = Indent()) const override;
 
 	Block* block;
 };
@@ -251,7 +251,7 @@ ostream& operator << (ostream& os, const Source& source);
 ostream& operator << (ostream& os, const Inclusion& inc);
 ostream& operator << (ostream& os, const Comment& com);
 
-inline void Source::write(ostream& os) const {
+inline void Source::write(ostream& os, const Indent&) const {
 	os << *this;
 }
 

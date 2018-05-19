@@ -144,8 +144,7 @@ void shallow_write(T* target) {
 		}
 	}
 	ofstream out(target->path().path());
-	out << *target << endl;
-	out.close();
+	target->write(out);
 }
 
 
@@ -604,7 +603,7 @@ public:
 };
 
 template<class Src, class Sys>
-struct Source : public Owner<Src, Sys> {
+struct Source : public Owner<Src, Sys>, public Writable {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
 	typedef set<User_>     SrcSet;
@@ -624,7 +623,7 @@ struct Source : public Owner<Src, Sys> {
 		timestamp_ = efs::last_write_time(path().path());
 		parsed = false;
 	}
-	void write() const { path().write(data_); }
+	//void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
 	bool includes(const Src* s) const {
@@ -662,12 +661,22 @@ struct Source : public Owner<Src, Sys> {
 	}
 
 	bool has_changed() const {
-		return timestamp_ != efs::last_write_time(path().path());
+		return !boost::filesystem::exists(path().path()) || timestamp_ != efs::last_write_time(path().path());
 	}
 
-	template<class S1, class S2>
+	/*template<class S1, class S2>
 	bool has_changed_compared_to(const Source<S1, S2>* s) const {
 		return timestamp_ != s->timestamp_;
+	}*/
+	void rewrite() const {
+		namespace fs = boost::filesystem;
+		if (dir().empty() || !fs::exists(dir())) {
+			if (!fs::create_directories(dir())) {
+				throw Error("failure to create directory", dir());
+			}
+		}
+		ofstream out(path().path());
+		write(out);
 	}
 
 private:

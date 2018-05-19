@@ -186,7 +186,7 @@ struct Node {
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~ Source();
-	void write(ostream& os) const;
+	void write(ostream& os, const Indent& = Indent()) const;
 
 	vector<Node> contents;
 };
@@ -225,7 +225,7 @@ ostream& operator << (ostream& os, const Source& src);
 ostream& operator << (ostream& os, const Comment& com);
 ostream& operator << (ostream& os, const Inclusion& inc);
 
-inline void Source::write(ostream& os) const {
+inline void Source::write(ostream& os, const Indent&) const {
 	os << *this;
 }
 
