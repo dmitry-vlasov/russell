@@ -36,276 +36,211 @@ string show(Symbol s, bool full) {
 
 string show(const Expr& ex) {
 	string str;
-	for (auto s : ex.symbols) str += show(s) + " ";
+	for (const auto& s : ex.symbols) str += Lex::toStr(s.lit) + " ";
 	return str;
 }
 
-string show(const Comment& c) {
-	if (c.multiline) {
-		return string("/*") + c.text + "*/";
+void Comment::write(ostream& os, const Indent& i) const {
+	if (multiline) {
+		os << i << "/* " << text << " */\n";
 	} else {
-		return string("//") + c.text + "\n";
+		os << i << "// " << text << " \n";
 	}
 }
 
-string show(const Const& c) {
-	string s = "constant {\n";
-	s += "\tsymbol " + Lex::toStr(c.symb) + " " + END_MARKER + "\n";
-	if (!Symbol::is_undef(c.ascii))
-		s += "\tascii " + Lex::toStr(c.ascii) + " " + END_MARKER + "\n";
-	if (!Symbol::is_undef(c.latex))
-		s += "\tlatex " + Lex::toStr(c.latex) + " " + END_MARKER + "\n";
-	s += "}";
-	return s;
-}
-
-string show(const Vars& vars) {
-	string s;
-	for (uint i = 0; i < vars.v.size(); ++ i) {
-		Symbol var = vars.v[i];
-		s += show(var) + " : " + show_id(var.type()->id());
-		if (i + 1 < vars.v.size())
-			s += ", ";
+void Const::write(ostream& os, const Indent& i) const {
+	os << i << "constant {\n";
+	os << i + 1 << "symbol " << Lex::toStr(symb) << " " << END_MARKER << "\n";
+	if (!Symbol::is_undef(ascii)) {
+		os << i + 1 << "ascii " << Lex::toStr(ascii) << " " << END_MARKER << "\n";
 	}
-	return s;
+	if (!Symbol::is_undef(latex)) {
+		os << i + 1 << "latex " << Lex::toStr(latex) << " " << END_MARKER << "\n";
+	}
+	os << i << "}\n";
 }
 
-string show(const Disj& disj) {
-	if (disj.d.size() == 0) return "";
-	string s;
-	s += "disjointed(";
-	for (uint i = 0; i < disj.d.size(); ++ i) {
-		const vector<Symbol>& dis = disj.d[i];
+void Vars::write(ostream& os, const Indent&) const {
+	for (uint i = 0; i < v.size(); ++ i) {
+		os << Lex::toStr(v.at(i).lit) << " : " << Lex::toStr(v.at(i).type_id());
+		if (i + 1 < v.size()) os << ", ";
+	}
+}
+
+void Disj::write(ostream& os, const Indent&) const {
+	if (d.size() == 0) return;
+	os << "disjointed(";
+	for (uint i = 0; i < d.size(); ++ i) {
+		const vector<Symbol>& dis = d[i];
 		for (uint j = 0; j < dis.size(); ++ j) {
-			Symbol var = dis[j];
-			s += show(var);
-			if (j + 1 < dis.size())	s += " ";
+			os << Lex::toStr(dis[j].lit);
+			if (j + 1 < dis.size())	os << " ";
 		}
-		if (i + 1 < disj.d.size())	s += ", ";
+		if (i + 1 < d.size()) os << ", ";
 	}
-	s += ")";
-	return s;
+	os << ")";
 }
 
-string show(const Type& type) {
-	string s;
-	s += "type " + show_id(type.id());
-	if (type.sup.size() > 0) {
-		s += " : ";
-		for (uint i = 0; i < type.sup.size(); ++ i) {
-			s += show_id(type.sup[i].id());
-			if (i + 1 < type.sup.size()) s += ", ";
+void Type::write(ostream& os, const Indent& i) const {
+	os << i << "type " << Lex::toStr(id());
+	if (sup.size() > 0) {
+		os << " : ";
+		for (uint i = 0; i < sup.size(); ++ i) {
+			os << Lex::toStr(sup[i].id());
+			if (i + 1 < sup.size()) os << ", ";
 		}
 	}
-	s += END_MARKER;
-	return s;
+	os << END_MARKER << "\n";
 }
 
-string show(const Rule& r) {
-	string s;
-	s += "rule " + show_id(r.id()) + " ";
-	s += "(" + show(r.vars) + ") {\n";
-	s += "\tterm : " + show_id(r.term.type.get()->id()) + " = ";
-	s += "# " + show(r.term) + END_MARKER + "\n";
-	s += "}";
-	return s;
+void Rule::write(ostream& os, const Indent& i) const {
+	os << i << "rule " << Lex::toStr(id()) << " ";
+	os << "("; vars.write(os); os << ") {\n";
+	os << i + 1 << "term : " << Lex::toStr(term.type.id()) << " = ";
+	os << "# " << term << END_MARKER << "\n";
+	os << i << "}\n";
 }
 
-inline string show_type(const Expr& ex) {
-	return show_id(ex.type.id());
+void Hyp::write(ostream& os, const Indent& i) const {
+	os << i << "hyp " << (ind + 1) << " : ";
+	os << Lex::toStr(expr.type.id()) << " = |- " << expr << END_MARKER << "\n";
 }
 
-string show(const Hyp& h) {
-	string s;
-	s += "hyp " + to_string(h.ind + 1) + " : ";
-	s += show_type(h.expr) + " = ";
-	s += "|- " + show(h.expr) + END_MARKER;
-	return s;
+void Prop::write(ostream& os, const Indent& i) const {
+	os << i << "prop " << (ind + 1) << " : ";
+	os << Lex::toStr(expr.type.id()) << " = |- " << expr << END_MARKER << "\n";
 }
 
-string show(const Prop& p) {
-	string s;
-	s += "prop " + to_string(p.ind + 1) + " : ";
-	s += show_type(p.expr) + " = ";
-	s += "|- " + show(p.expr) + END_MARKER;
-	return s;
-}
-
-string show(const Assertion& a) {
-	string s;
-	s += show_id(a.id()) + " ";
-	s += "(" + show(a.vars) + ") " + show(a.disj) + " {\n";
-	if (a.hyps.size() > 0) {
-		for (Hyp* h : a.hyps)
-			s += "\t" + show(*h) + "\n";
-		s += "\t-----------------------\n";
+void Assertion::write(ostream& os, const Indent& i) const {
+	os << Lex::toStr(id()) << " ";
+	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
+	if (hyps.size() > 0) {
+		for (const Hyp* h : hyps) {
+			h->write(os, i + 1);
+		}
+		os << i + 1 << "-----------------------\n";
 	}
-	for (const Prop* p : a.props)
-		s += "\t" + show(*p) + "\n";
-	s += "}";
-	return s;
-}
-
-string show(const Axiom& ax) {
-	string s;
-	s += "axiom " + show(static_cast<const Assertion&>(ax));
-	return s;
-}
-
-string show(const Theorem& thm) {
-	string s;
-	s += "theorem " + show(static_cast<const Assertion&>(thm));
-	return s;
-}
-
-string show(const Def& def) {
-	string s;
-	s += "definition ";
-	s += show_id(def.id()) + " ";
-	s += "(" + show(def.vars) + ") " + show(def.disj) + " {\n";
-	if (def.hyps.size() > 0) {
-		for (Hyp* h : def.hyps)
-			s += "\t" + show(*h) + "\n";
+	for (const Prop* p : props) {
+		p->write(os, i + 1);
 	}
-	s += "\tdefiendum : " + show_id(def.dfm.type.id()) + " ";
-	s += "= # " + show(def.dfm) + END_MARKER + "\n";
-	s += "\tdefiniens : " + show_id(def.dfs.type.id()) + " ";
-	s += "= # " + show(def.dfs) + END_MARKER + "\n";
-	s += "\t-----------------------\n";
-	s += "\tprop : " + show_id(def.prop.type.id()) + " ";
-	s += "= |- " + show(def.prop) + END_MARKER + "\n";
-	s += "}";
-	return s;
+	os << i << "}\n";
 }
 
-string show(const Ref& ref) {
-	switch (ref.kind) {
-	case Ref::HYP:  return "hyp "  + to_string(ref.val.hyp->ind + 1);
-	case Ref::PROP: return "prop " + to_string(ref.val.prop->ind + 1);
-	case Ref::STEP: return "step " + to_string(ref.val.step->ind() + 1);
-	default : assert(false && "impossible"); return string();
+void Def::write(ostream& os, const Indent& i) const {
+	os << i << "definition " << Lex::toStr(id()) << " ";
+	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
+	for (Hyp* h : hyps) {
+		h->write(os, i + 1);
+	}
+	os << i + 1 << "defiendum : " << Lex::toStr(dfm.type.id()) << " ";
+	os << "= # " << dfm << END_MARKER << "\n";
+	os << i + 1 << "definiens : " << Lex::toStr(dfs.type.id()) << " ";
+	os << "= # " << dfs << END_MARKER << "\n";
+	os << i + 1 << "-----------------------\n";
+	os << i + 1 << "prop : " << Lex::toStr(prop.type.id()) << " ";
+	os << "= |- " << prop << END_MARKER << "\n";
+	os << i << "}\n";
+}
+
+void Axiom::write(ostream& os, const Indent& i) const {
+	os << i << "axiom "; Assertion::write(os, i);
+}
+
+void Theorem::write(ostream& os, const Indent& i) const {
+	os << i << "theorem "; Assertion::write(os, i);
+}
+
+void Ref::write(ostream& os, const Indent& i) const {
+	switch (kind) {
+		case Ref::HYP:  os << "hyp " << (val.hyp->ind + 1);     break;
+		case Ref::PROP: os << "prop " << (val.prop->ind + 1);   break;
+		case Ref::STEP: os << "step " << (val.step->ind() + 1); break;
+		default : assert(false && "impossible");
 	}
 }
 
-static string show_refs(const vector<Ref*>& refs) {
-	string s = "(";
-	for (uint i = 0; i < refs.size(); ++ i) {
-		s += show(*refs[i]);
-		if (i + 1 < refs.size()) s += ", ";
-	}
-	s += ")";
-	return s;
+void Qed::write(ostream& os, const Indent& i) const {
+	os << i << "qed prop " << (prop->ind + 1) << " = ";
+	os << "step " << (step->ind() + 1) << " " << END_MARKER << "\n";
 }
 
-string show(const Proof::Elem& el) {
-	switch (el.kind) {
-	case Proof::Elem::VARS:  return show(*el.val.vars);
-	case Proof::Elem::STEP:  return show(*el.val.step);
-	case Proof::Elem::QED:   return show(*el.val.qed);
+void Proof::write(ostream& os, const Indent& i) const {
+	os << i << "proof ";
+	if (!inner) {
+		const string& name = Lex::toStr(id());
+		if (name.size() > 1 && name[0] != '_') {
+			os << name << " ";
+		}
+		os << "of " << Lex::toStr(thm.id()) << " ";
+	}
+	os << "{\n";
+	if (vars.v.size()) {
+		os << i + 1 << "var ";
+		vars.write(os, i + 1);
+		os << END_MARKER << "\n";
+	}
+	for (const auto& st : elems) {
+		st.write(os, i + 1);
+	}
+	os << "}\n";
+}
+
+void Step::write(ostream& os, const Indent& i) const {
+	os << i << "step " << (ind_ + 1) << " : ";
+	os << Lex::toStr(expr.type.id()) << " = ";
+	switch (kind_) {
+	case Step::NONE:  os << "? "; break;
+	case Step::CLAIM: os << "claim "; break;
+	case Step::ASS:   os << Lex::toStr(ass_id()) << " "; break;
+	}
+	if (kind_ != Step::NONE) {
+		os << "(";
+		for (uint i = 0; i < refs.size(); ++ i) {
+			refs[i]->write(os);
+			if (i + 1 < refs.size()) os << ", ";
+		}
+		os << ") ";
+	}
+	os << "|- " << expr << END_MARKER;
+	if (kind_ == Step::CLAIM) {
+		os << " "; claim()->write(os, i + 1);
+	} else {
+		os << "\n";
+	}
+}
+
+void Import::write(ostream& os, const Indent& i) const {
+	os << i << "import " << Lex::toStr(source.id()) << ".rus" << END_MARKER << "\n";
+}
+
+void Node::write(ostream& os, const Indent& i) const {
+	switch(kind) {
+	case CONST:   val.cst->write(os, i); break;
+	case TYPE:    val.tp->write(os, i);  break;
+	case RULE:    val.rul->write(os, i); break;
+	case AXIOM:   val.ax->write(os, i);  break;
+	case DEF:     val.def->write(os, i); break;
+	case THEOREM: val.thm->write(os, i); break;
+	case PROOF:   val.prf->write(os, i); break;
+	case THEORY:  val.thy->write(os, i); break;
+	case IMPORT:  val.imp->write(os, i); break;
+	case COMMENT: val.com->write(os, i); break;
 	default : assert(false && "impossible"); break;
 	}
-	return "";
 }
 
-string show(const Step& st) {
-	string s = "step " + to_string(st.ind() + 1) + " : ";
-	s += show_type(st.expr) + " = ";
-	switch (st.kind()) {
-	case Step::NONE:  s += "? "; break;
-	case Step::CLAIM: s += "claim "; break;
-	case Step::ASS:   s += show_id(st.ass_id()) + " "; break;
+void Theory::write(ostream& os, const Indent& i) const {
+	os << i << "theory " << Lex::toStr(id) << " {";
+	for (const auto& n : nodes) {
+		n.write(os, i + 1);
 	}
-	if (st.kind() != Step::NONE)
-		s += show_refs(st.refs) + " ";
-	s += "|- " + show(st.expr) + END_MARKER;
-	if (st.kind() == Step::CLAIM) {
-		s += " {\n";
-		for (auto& el : st.proof()->elems)
-			s += "\t" + show(el) + "\n";
-		s += "}";
+	os << "}\n";
+}
+
+void Source::write(ostream& os, const Indent& i) const {
+	for (const auto& n : theory->nodes) {
+		n.write(os, i + 1);
 	}
-	return s;
 }
-
-string show(const Qed& q) {
-	string s = "qed ";
-	s += "prop " + to_string(q.prop->ind + 1) + " = ";
-	s += "step " + to_string(q.step->ind() + 1) + " " + END_MARKER;
-	return s;
-}
-
-string show(const Proof& p) {
-	string s = "proof ";
-	const string& name = Lex::toStr(p.id());
-	if (name.size() > 1 && name[0] != '_') s += name + " ";
-	s += "of " + show_id(p.thm.id()) + " {\n";
-	if (p.vars.v.size())
-		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
-	for (auto& st : p.elems)
-		s += "\t" + show(st) + "\n";
-	s += "}";
-	return s;
-}
-
-string show(const Import& imp) {
-	return string("import ") + imp.source.get()->name() + ".rus" + END_MARKER;
-}
-
-string show(const Node& n) {
-	switch (n.kind) {
-	case Node::CONST:   return show(*n.val.cst);
-	case Node::TYPE:    return show(*n.val.tp);
-	case Node::RULE:    return show(*n.val.rul);
-	case Node::AXIOM:   return show(*n.val.ax);
-	case Node::DEF:     return show(*n.val.def);
-	case Node::THEOREM: return show(*n.val.thm);
-	case Node::PROOF:   return show(*n.val.prf);
-	case Node::THEORY:  return show(*n.val.thy);
-	case Node::IMPORT:  return show(*n.val.imp);
-	case Node::COMMENT: return show(*n.val.com);
-	default : assert(false && "impossible");
-	}
-	return ""; // pacify the compiler
-}
-
-string show(const Theory& thy) {
-	string s = "theory " + show_id(thy.id) + "{";
-	for (auto& n : thy.nodes) {
-		//s += indent::paragraph("\n" + show(n));
-		s += show(n) + "\n\n";
-	}
-	s += "}";
-	return s;
-}
-
-string show(const Source& c) {
-	string s;
-	for (auto& n : c.theory->nodes) {
-		s += show(n) + "\n\n";
-	}
-	return s;
-}
-
-
-void dump(const Const& c)     { cout << show(c) << endl; }
-void dump(const Vars& v)      { cout << show(v) << endl; }
-void dump(const Disj& d)      { cout << show(d) << endl; }
-void dump(const Type& t)      { cout << show(t) << endl; }
-void dump(const Rule& r)      { cout << show(r) << endl; }
-void dump(const Axiom& a)     { cout << show(a) << endl; }
-void dump(const Def& d)       { cout << show(d) << endl; }
-void dump(const Assertion& a) { cout << show(a) << endl; }
-void dump(const Theorem& t)   { cout << show(t) << endl; }
-void dump(const Proof& p)     { cout << show(p) << endl; }
-void dump(const Step& s)      { cout << show(s) << endl; }
-void dump(const Ref& r)       { cout << show(r) << endl; }
-void dump(const Qed& q)       { cout << show(q) << endl; }
-void dump(const Hyp& h)       { cout << show(h) << endl; }
-void dump(const Prop& p)      { cout << show(p) << endl; }
-void dump(const Node& n)      { cout << show(n) << endl; }
-void dump(const Import& i)    { cout << show(i) << endl; }
-void dump(const Theory& t)    { cout << show(t) << endl; }
-void dump(const Source& s)    { cout << show(s) << endl; }
-void dump(const Comment& c)   { cout << show(c) << endl; }
 
 }} // mdl::smm

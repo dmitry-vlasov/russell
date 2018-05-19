@@ -90,8 +90,8 @@ struct Symbol : public Literal {
 		s.val.type = nullptr;
 	}
 
-	uint type_id() { return var ? val.type->id() : UNDEF_UINT; }
-	uint constant_id() { return cst ? val.constant->id() : UNDEF_UINT; }
+	uint type_id() const { return var ? val.type->id() : UNDEF_UINT; }
+	uint constant_id() const { return cst ? val.constant->id() : UNDEF_UINT; }
 	Type* type() { return var ? val.type->get() : nullptr; }
 	Const* constant() { return cst ? val.constant->get() : nullptr; }
 	const Type* type() const { return var ? val.type->get() : nullptr; }
@@ -159,9 +159,8 @@ typedef vector<Symbol> Symbols;
 
 string show(Symbol s, bool full = false);
 
-inline ostream& operator << (ostream& os, Symbol s) {
-	os << show(s);
-	return os;
+inline ostream& operator << (ostream& os, const Symbol& s) {
+	os << Lex::toStr(s.lit); return os;
 }
 
 struct Tree {
@@ -464,7 +463,9 @@ inline string show(const Substitution& s) {
 }
 
 inline ostream& operator << (ostream& os, const Expr& ex) {
-	os << show(ex);
+	for (const auto& s : ex.symbols) {
+		os << Lex::toStr(s.lit) << " ";
+	}
 	return os;
 }
 

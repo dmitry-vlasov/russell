@@ -12,13 +12,14 @@ struct Theory;
 struct Import;
 struct Source;
 
-struct Comment : public Tokenable {
+struct Comment : public Tokenable, public Writable  {
 	Comment(bool ml = false, const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt), multiline(ml) { }
 	string text;
 	bool multiline;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Const : Owner<Const> {
+struct Const : public Owner<Const>, public Writable {
 	Const(uint s, uint a, uint l, const Token& t = Token()) :
 		Owner(s, t), symb(s), ascii(a), latex(l) { }
 	Const(const Const& c) :
@@ -26,33 +27,37 @@ struct Const : Owner<Const> {
 	uint  symb;
 	uint  ascii;
 	uint  latex;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Vars : public Tokenable {
+struct Vars : public Tokenable, public Writable {
 	Vars(const vector<Symbol>& vars = vector<Symbol>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
 	Vars(const Vars& vars) : Tokenable(vars), v(vars.v) { }
 	vector<Symbol> v;
 	bool isDeclared(Symbol w) const {
 		return std::find(v.begin(), v.end(), w) != v.end();
 	}
+	void write(ostream& os, const Indent& = Indent()) const override;
 };
 
-struct Disj : public Tokenable {
+struct Disj : public Tokenable, public Writable {
 	Disj(const vector<vector<Symbol>>& disj = vector<vector<Symbol>>(), const Token& t = Token()) :
 		Tokenable(t), d(disj) { }
 	Disj(const Disj& disj) : Tokenable(disj), d(disj.d) { }
 	vector<vector<Symbol>> d;
+	void write(ostream& os, const Indent& = Indent()) const override;
 };
 
 void parse_expr(Expr& ex);
 
-struct Type : public Owner<Type> {
+struct Type : public Owner<Type>, public Writable {
 	typedef map<const Type*, Rule*> Supers;
 	Type(Id id, const vector<Id>& sup = vector<Id>(), const Token& t = Token());
 	~Type() override;
 	vector<User<Type>> sup;
 	Supers supers;
 	Rules  rules;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 inline bool operator < (const Type& t1, const Type& t2) {
@@ -60,13 +65,14 @@ inline bool operator < (const Type& t1, const Type& t2) {
 	return false;
 }
 
-struct Rule : public Owner<Rule> {
+struct Rule : public Owner<Rule>, public Writable {
 	Rule(Id id, const Vars& v, const Expr& e, const Token& t = Token());
 	Vars vars;
 	Expr term;
 	Type* type() { return term.type.get(); }
 	const Type* type() const { return term.type.get(); }
 	uint arity() const { return term.tree.arity(); }
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 Rule* find_super(const Type* type, const Type* super);
@@ -74,18 +80,20 @@ Rule* find_super(const Type* type, const Type* super);
 inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
 inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
 
-struct Hyp : public Tokenable {
+struct Hyp : public Tokenable, public Writable {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
 	uint ind;
 	Expr expr;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Prop : public Tokenable {
+struct Prop : public Tokenable, public Writable {
 	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
 	uint ind;
 	Expr expr;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 struct Assertion : public Owner<Assertion> {
@@ -107,28 +115,32 @@ struct Assertion : public Owner<Assertion> {
 	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
+	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
-struct Axiom : public Assertion {
+struct Axiom : public Assertion, public Writable {
 	Axiom(Id id, const Token& t = Token());
 	Kind kind() const { return AXM; }
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Def : public Assertion {
+struct Def : public Assertion, public Writable {
 	Def(Id id, const Token& t = Token());
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
 	Expr prop;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Theorem : public Assertion {
+struct Theorem : public Assertion, public Writable {
 	Theorem(Id id, const Token& t = Token());
 	Kind kind() const { return THM; }
 	vector<User<Proof>> proofs;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Ref : public Tokenable {
+struct Ref : public Tokenable, public Writable {
 	enum Kind {
 		NONE,
 		HYP,
@@ -154,6 +166,7 @@ struct Ref : public Tokenable {
 
 	Kind kind;
 	Value val;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 struct Verifiable {
@@ -169,7 +182,7 @@ struct Verifiable {
 	}
 };
 
-struct Step : public Tokenable, public Verifiable {
+struct Step : public Tokenable, public Verifiable, public Writable {
 	enum Kind {
 		NONE,
 		ASS,
@@ -210,6 +223,7 @@ struct Step : public Tokenable, public Verifiable {
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
 	void verify() const override;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Expr         expr;
 	vector<Ref*> refs;
@@ -241,15 +255,16 @@ inline const Expr& Ref::expr() const {
 	return val.step->expr;
 }
 
-struct Qed : public Tokenable, public Verifiable {
+struct Qed : public Tokenable, public Verifiable, public Writable {
 	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
 		Tokenable(t), prop(p), step(s) { }
 	void verify() const override;
 	Prop* prop;
 	Step* step;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Proof : public Owner<Proof>, public Verifiable {
+struct Proof : public Owner<Proof>, public Verifiable, public Writable {
 	//typedef boost::variant<Step, Qed> Elem;
 
 	struct Elem {
@@ -270,6 +285,13 @@ struct Proof : public Owner<Proof>, public Verifiable {
 		Elem(Step* s)  : kind(STEP), val()  { val.step = s; }
 		Elem(Qed* q)   : kind(QED), val()   { val.qed = q; }
 		void destroy();
+		void write(ostream& os, const Indent& i) const {
+			switch (kind) {
+			case VARS: val.vars->write(os, i); break;
+			case STEP: val.step->write(os, i); break;
+			case QED:  val.qed->write(os, i); break;
+			}
+		}
 
 		Kind kind;
 		Value val;
@@ -285,14 +307,17 @@ struct Proof : public Owner<Proof>, public Verifiable {
 		for (auto& e : elems) if (e.kind == Elem::QED) ret.push_back(e.val.qed);
 		return ret;
 	}
+	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Vars            vars;
 	vector<Elem>    elems;
 	User<Assertion> thm;
 	Proof*          par;
+	bool            inner;
+
 };
 
-struct Node {
+struct Node : public Writable {
 	enum Kind {
 		NONE,
 		CONST,
@@ -334,37 +359,41 @@ struct Node {
 	void destroy();
 
 	bool operator==(const Node& n) { return val.non == n.val.non; }
+	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Kind kind;
 	Value val;
 };
 
-struct Import : public Tokenable {
+struct Import : public Tokenable, public Writable {
 	Import(uint src, bool prim, const Token& t = Token()) :
 		Tokenable(t), source(src), primary(prim) { }
 	User<Source> source;
 	bool         primary;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Theory : public Tokenable, public Verifiable {
+struct Theory : public Tokenable, public Verifiable, public Writable {
 	Theory(const Token& t = Token()) :
 		Tokenable(t), id(-1), nodes(), parent(nullptr) { }
 	Theory(uint n, Theory* p, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
 	~ Theory() { for (auto& n : nodes) n.destroy(); }
 	void verify() const override;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;
 };
 
-struct Source : public mdl::Source<Source, Sys> {
+struct Source : public mdl::Source<Source, Sys>, public Writable {
 	Source(uint l);
 	~Source();
 	Tokenable* find(const Token& t);
 
 	Theory* theory;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 inline void Node::destroy() {
@@ -394,27 +423,6 @@ inline void Proof::Elem::destroy() {
 	kind = NONE;
 }
 
-string show(const Const&);
-string show(const Vars&);
-string show(const Disj&);
-string show(const Type&);
-string show(const Rule&);
-string show(const Axiom&);
-string show(const Def&);
-string show(const Assertion&);
-string show(const Theorem&);
-string show(const Proof&);
-string show(const Step&);
-string show(const Ref&);
-string show(const Qed&);
-string show(const Hyp&);
-string show(const Prop&);
-string show(const Node&);
-string show(const Import&);
-string show(const Theory&);
-string show(const Source&);
-string show(const Comment&);
-
 string xml(const Const&, uint);
 //string xml(const Vars&, uint);
 //string xml(const Disj&, uint);
@@ -435,47 +443,6 @@ string xml(const Import&, uint);
 string xml(const Theory&, uint);
 string xml_outline(const Source&, uint);
 //string xml(const Comment&, uint);
-
-inline ostream& operator << (ostream& os, const Const& c)   { os << show(c); return os; }
-inline ostream& operator << (ostream& os, const Vars& v)    { os << show(v); return os; }
-inline ostream& operator << (ostream& os, const Disj& d)    { os << show(d); return os; }
-inline ostream& operator << (ostream& os, const Type& t)    { os << show(t); return os; }
-inline ostream& operator << (ostream& os, const Rule& r)    { os << show(r); return os; }
-inline ostream& operator << (ostream& os, const Axiom& a)   { os << show(a); return os; }
-inline ostream& operator << (ostream& os, const Def& d)     { os << show(d); return os; }
-inline ostream& operator << (ostream& os, const Theorem& t) { os << show(t); return os; }
-inline ostream& operator << (ostream& os, const Proof& p)   { os << show(p); return os; }
-inline ostream& operator << (ostream& os, const Step& s)    { os << show(s); return os; }
-inline ostream& operator << (ostream& os, const Ref& r)     { os << show(r); return os; }
-inline ostream& operator << (ostream& os, const Qed& q)     { os << show(q); return os; }
-inline ostream& operator << (ostream& os, const Hyp& h)     { os << show(h); return os; }
-inline ostream& operator << (ostream& os, const Prop& p)    { os << show(p); return os; }
-inline ostream& operator << (ostream& os, const Node& n)    { os << show(n); return os; }
-inline ostream& operator << (ostream& os, const Import& i)  { os << show(i); return os; }
-inline ostream& operator << (ostream& os, const Theory& t)  { os << show(t); return os; }
-inline ostream& operator << (ostream& os, const Source& s)  { os << show(s); return os; }
-inline ostream& operator << (ostream& os, const Comment& c) { os << show(c); return os; }
-
-void dump(const Const& c);
-void dump(const Vars& v);
-void dump(const Disj& d);
-void dump(const Type& t);
-void dump(const Rule& r);
-void dump(const Axiom& a);
-void dump(const Def& d);
-void dump(const Assertion& a);
-void dump(const Theorem& t);
-void dump(const Proof& p);
-void dump(const Step& s);
-void dump(const Ref& r);
-void dump(const Qed& q);
-void dump(const Hyp& h);
-void dump(const Prop& p);
-void dump(const Node& n);
-void dump(const Import& i);
-void dump(const Theory& t);
-void dump(const Source& s);
-void dump(const Comment& c);
 
 size_t memvol(const Const&);
 size_t memvol(const Vars&);

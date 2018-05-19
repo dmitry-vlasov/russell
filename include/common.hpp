@@ -100,6 +100,10 @@ inline string show(const Writable& w) {
 	ostringstream ss; w.write(ss); return ss.str();
 }
 
+inline void dump(const Writable& w) {
+	w.write(cout);
+}
+
 template<class T>
 void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
@@ -115,8 +119,7 @@ void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 			}
 		}
 		ofstream out(src->path().path());
-		out << *src << endl;
-		out.close();
+		src->write(out);
 		written.insert(src);
 		to_write.pop();
 		for (const auto& n : get_cont(src)) {

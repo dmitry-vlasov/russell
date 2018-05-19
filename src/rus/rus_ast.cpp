@@ -74,7 +74,7 @@ inline uint make_proof_id(uint id, Id th) {
 }
 
 Proof::Proof(Id th, Id i, const Token& t) :
-	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr) {
+	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr), inner(false) {
 	theorem()->proofs.emplace_back(User<Proof>(id()));
 	assert(this == theorem()->proofs.back().get());
 }

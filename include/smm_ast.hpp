@@ -186,6 +186,7 @@ struct Node {
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~ Source();
+	void write(ostream& os) const;
 
 	vector<Node> contents;
 };
@@ -223,6 +224,10 @@ ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Source& src);
 ostream& operator << (ostream& os, const Comment& com);
 ostream& operator << (ostream& os, const Inclusion& inc);
+
+inline void Source::write(ostream& os) const {
+	os << *this;
+}
 
 }} // mdl::smm
 
