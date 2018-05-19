@@ -10,7 +10,7 @@ struct Indent {
 	int  num;
 	char del;
 
-	Indent(int n = 1, char d = '\t') : num(n), del(d) {
+	Indent(int n = 0, char d = '\t') : num(n), del(d) {
 	}
 	void write(ostream& os) const {
 		int n = num;
@@ -31,8 +31,10 @@ struct Indent {
 		while (n--) s += del;
 		return s;
 	}
+	Indent operator + (int k) const {
+		return Indent(num + k, del);
+	}
 };
-
 
 inline ostream& operator << (ostream& os, Indent ind) {
 	ind.write(os);

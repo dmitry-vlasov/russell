@@ -14,41 +14,41 @@ class Assertion;
 struct Comment : public Writable {
 	string text;
 	Comment(const string& t) : text(t) { }
-	void write(ostream& os) const override {
-		os << "$( " << text << " $)\n";
+	void write(ostream& os, const Indent& i = Indent()) const override {
+		os << i << "$( " << text << " $)\n";
 	}
 };
 
 struct Import : public Writable {
 	User<Source> source;
 	Import(uint id) : source(id) { }
-	void write(ostream& os) const override {
-		os << "$[ " << Lex::toStr(source.id()) << ".mm $]\n";
+	void write(ostream& os, const Indent& i = Indent()) const override {
+		os << i << "$[ " << Lex::toStr(source.id()) << ".mm $]\n";
 	}
 };
 
 struct Const : public Writable {
 	uint symb;
 	Const(uint s) : symb(s) { }
-	void write(ostream& os) const override {
-		os << "$c " << Lex::toStr(symb) << " $.\n";
+	void write(ostream& os, const Indent& i = Indent()) const override {
+		os << i << "$c " << Lex::toStr(symb) << " $.\n";
 	}
 };
 
 struct Vars : public Writable {
 	vector<uint> vars;
-	void write(ostream& os) const override {
+	void write(ostream& os, const Indent& i) const override {
 		if (vars.size()) {
-			os << "\t$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
+			os << i << "$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
 		}
 	}
 };
 
 struct Disj : public Writable {
 	vector<unique_ptr<vector<uint>>> vect;
-	void write(ostream& os) const override {
+	void write(ostream& os, const Indent& i = Indent()) const override {
 		for (const auto& vars : vect) {
-			os << "\t$d "; for (uint v : *vars.get()) os << Lex::toStr(v) << " "; os << " $.\n";
+			os << i << "$d "; for (uint v : *vars.get()) os << Lex::toStr(v) << " "; os << " $.\n";
 		}
 	}
 };
@@ -58,9 +58,8 @@ struct Hyp : public Writable, public Referable {
 	uint label;
 	Expr expr;
 	Hyp(uint i, uint l) : index(i), label(l) { }
-	void write(ostream& os) const override {
-		os << "\t"; ref(os);
-		os << "$e " << expr << "$.\n";
+	void write(ostream& os, const Indent& i = Indent()) const override {
+		os << i; ref(os); os << "$e " << expr << "$.\n";
 	}
 	void ref(ostream& os) const override {
 		os << 'e' << index << '_' << Lex::toStr(label) << ' ';
@@ -79,9 +78,8 @@ struct Var : public Writable, public Referable {
 		expr.emplace_back(t, false);
 		expr.emplace_back(v, true);
 	}
-	void write(ostream& os) const override {
-		os << "\t" << (inner ? 'i' : 'f') << index << "_" << Lex::toStr(label);
-		os << " $f " << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
+	void write(ostream& os, const Indent& i = Indent()) const override {
+		os << i; ref(os); os << " $f " << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
 	}
 	void ref(ostream& os) const override {
 		os << (inner ? 'i' : 'f') << index << '_' << Lex::toStr(label) << ' ';
@@ -118,7 +116,7 @@ struct Ref : public Writable {
 		}
 	}
 
-	void write(ostream& os) const override;
+	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	variant<Var*, Hyp*, Ass> val;
 };
@@ -126,9 +124,11 @@ struct Ref : public Writable {
 struct Proof : public Writable {
 	vector<Ref> refs;
 	Assertion*  theorem;
-	void write(ostream& os) const override {
+	void write(ostream& os, const Indent& i = Indent()) const override {
 		if (refs.size()) {
-			os << " "; for (const auto& r : refs) os << r;  os << "$.\n";
+			os << i;
+			for (const auto& r : refs) os << r;
+			os << "$.\n";
 		}
 	}
 };
@@ -148,24 +148,25 @@ struct Assertion : public Owner<Assertion>, public Writable, public Referable {
 	Expr  expr;
 	Proof proof;
 
-	void write(ostream& os) const override {
-		os << "${\n";
-		os << vars;
-		os << disj;
-		for (const auto& o : outerVars) o.get()->write(os);
-		for (const auto& i : innerVars) i.get()->write(os);
-		for (const auto& h : hyps) h.get()->write(os);
-		os << '\t'; ref(os);
-		os << (axiom() ? "$a " : "$p ") << expr << (axiom() ? "$.\n" : "$=");
-		proof.write(os);
-		os << "$}\n";
+	void write(ostream& os, const Indent& ind = Indent()) const override {
+		Indent incInd = ind + 1;
+		os << ind << "${\n";
+		vars.write(os, incInd);
+		disj.write(os, incInd);
+		for (const auto& o : outerVars) o.get()->write(os, incInd);
+		for (const auto& i : innerVars) i.get()->write(os, incInd);
+		for (const auto& h : hyps) h.get()->write(os, incInd);
+		os << incInd; ref(os);
+		os << (axiom() ? "$a " : "$p ") << expr << (axiom() ? "$." : "$=") << "\n";
+		proof.write(os, incInd);
+		os << ind << "$}\n";
 	}
 	void ref(ostream& os) const override {
 		os << (axiom() ? 'a' : 'p') << '_' << Lex::toStr(id()) << ' ';
 	}
 };
 
-inline void Ref::write(ostream& os) const {
+inline void Ref::write(ostream& os, const Indent& i) const {
 	switch (val.index()) {
 	case 0 : var()->ref(os); break;
 	case 1 : hyp()->ref(os); break;
@@ -189,13 +190,13 @@ struct Source : public mdl::Source<Source, Sys>, public Writable {
 
 	vector<Node> contents;
 
-	void write(ostream& os) const override {
+	void write(ostream& os, const Indent& i = Indent()) const override {
 		for (const Node& n : contents) {
 			switch (n.index()) {
-			case CONST:     std::get<unique_ptr<Const>>(n).get()->write(os);     break;
-			case IMPORT:    std::get<unique_ptr<Import>>(n).get()->write(os);    break;
-			case COMMENT:   std::get<unique_ptr<Comment>>(n).get()->write(os);   break;
-			case ASSERTION: std::get<unique_ptr<Assertion>>(n).get()->write(os); break;
+			case CONST:     std::get<unique_ptr<Const>>(n).get()->write(os, i);     break;
+			case IMPORT:    std::get<unique_ptr<Import>>(n).get()->write(os, i);    break;
+			case COMMENT:   std::get<unique_ptr<Comment>>(n).get()->write(os, i);   break;
+			case ASSERTION: std::get<unique_ptr<Assertion>>(n).get()->write(os, i); break;
 			}
 			os << '\n';
 		}

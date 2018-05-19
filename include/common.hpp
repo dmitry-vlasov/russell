@@ -84,7 +84,7 @@ inline string showmem(size_t s) {
 
 struct Writable {
 	virtual ~Writable() { }
-	virtual void write(ostream&) const = 0;
+	virtual void write(ostream&, const Indent& = Indent()) const = 0;
 };
 
 struct Referable {
