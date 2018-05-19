@@ -104,49 +104,30 @@ inline void dump(const Writable& w) {
 	w.write(cout);
 }
 
-template<class T>
-void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
-	typedef T Source;
-	namespace fs = boost::filesystem;
-	set<const Source*> written;
-	stack<const Source*> to_write;
-	to_write.push(target);
-	while (!to_write.empty()) {
-		const Source* src = to_write.top();
-		if (!src->dir().empty() && !fs::exists(src->dir())) {
-			if (!fs::create_directories(src->dir())) {
-				throw Error("failure to create directory", src->dir());
-			}
+template<class Sys>
+void write(uint src, bool deep) {
+	typedef typename Sys::Src Source;
+	if (deep) {
+		vector<const Source*> sources;
+		for (const auto& p : Sys::get().math.template get<Source>()) {
+			const Source* s = p.second.data;
+			s->ensure_dir_exists();
+			sources.push_back(s);
 		}
-		ofstream out(src->path().path());
-		src->write(out);
-		written.insert(src);
-		to_write.pop();
-		for (const auto& n : get_cont(src)) {
-			if (is_inc(n)) {
-				const Source* inc = get_inc(n);
-				if (!written.count(inc)) {
-					to_write.push(inc);
-				}
+		tbb::parallel_for (tbb::blocked_range<size_t>(0, sources.size()),
+			[sources] (const tbb::blocked_range<size_t>& r) {
+				for (size_t i = r.begin(); i != r.end(); ++i)
+					sources[i]->write_self();
 			}
+		);
+	} else {
+		if (const Source* s = Sys::get().math.template get<Source>().access(src)) {
+			s->write_self();
+		} else {
+			throw Error("unknown source", Lex::toStr(src));
 		}
 	}
 }
-
-template<class T>
-void shallow_write(T* target) {
-	typedef T Source;
-	namespace fs = boost::filesystem;
-	string dir = target->dir();
-	if (!dir.empty() && !fs::exists(dir)) {
-		if (!fs::create_directories(dir)) {
-			throw Error("failure to create directory", dir);
-		}
-	}
-	ofstream out(target->path().path());
-	target->write(out);
-}
-
 
 // Library, singleton, which contains a variety of deductive systems
 template<typename T>
@@ -623,7 +604,6 @@ struct Source : public Owner<Src, Sys>, public Writable {
 		timestamp_ = efs::last_write_time(path().path());
 		parsed = false;
 	}
-	//void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
 	bool includes(const Src* s) const {
@@ -664,17 +644,16 @@ struct Source : public Owner<Src, Sys>, public Writable {
 		return !boost::filesystem::exists(path().path()) || timestamp_ != efs::last_write_time(path().path());
 	}
 
-	/*template<class S1, class S2>
-	bool has_changed_compared_to(const Source<S1, S2>* s) const {
-		return timestamp_ != s->timestamp_;
-	}*/
-	void rewrite() const {
+	void ensure_dir_exists() const {
 		namespace fs = boost::filesystem;
 		if (dir().empty() || !fs::exists(dir())) {
 			if (!fs::create_directories(dir())) {
 				throw Error("failure to create directory", dir());
 			}
 		}
+	}
+
+	void write_self() const {
 		ofstream out(path().path());
 		write(out);
 	}

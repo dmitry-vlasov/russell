@@ -29,23 +29,6 @@ string Math::show() const {
 	return info();
 }
 
-void write(uint s, bool deep) {
-	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
-		if (deep) {
-			deep_write(
-				src,
-				[](const Source* src) -> const vector<Source::Node>& { return src->contents; },
-				[](const Source::Node& n) -> const Source* { return std::get<unique_ptr<Import>>(n).get()->source.get(); },
-				[](const Source::Node& n) -> bool { return std::holds_alternative<unique_ptr<Import>>(n); }
-			);
-		} else {
-			shallow_write(src);
-		}
-	} else {
-		throw Error("unknown source", Lex::toStr(s));
-	}
-}
-
 string info() {
 	string stats;
 	stats += Sys::get().timers.show();
@@ -100,7 +83,7 @@ const Sys::Actions& Sys::actions() {
 		{"parse",    Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
 		{"clear",    Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"transl",   Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
-		{"write",    Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"write",    Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",     Action([](const Args& args) { return Return(info()); }, description("info"))},
 		{"show",     Action([](const Args& args) { return Return(show()); }, description("show"))},
 		{"cut",      Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},

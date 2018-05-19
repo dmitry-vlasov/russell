@@ -46,23 +46,6 @@ void translate(uint src, uint tgt, Lang lang) {
 	}
 }
 
-void write(uint s, bool deep) {
-	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
-		if (deep) {
-			deep_write(
-				src,
-				[](const Source* src) -> const vector<Node>& { return src->contents; },
-				[](Node n) -> Source* { return n.val.inc->source.get(); },
-				[](Node n) -> bool { return n.type == Node::INCLUSION; }
-			);
-		} else {
-			shallow_write(src);
-		}
-	} else {
-		throw Error("unknown source", Lex::toStr(s));
-	}
-}
-
 string info() {
 	string stats;
 	stats += Sys::get().timers.show();
@@ -116,7 +99,7 @@ const Sys::Actions& Sys::actions() {
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"verify", Action([](const Args& args) { verify(); return Return(); }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1]), chooseLang(args[1])); return Return(); }, description("transl"))},
-		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"write",  Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",   Action([](const Args& args) { return Return(info()); }, description("info"))},
 		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},

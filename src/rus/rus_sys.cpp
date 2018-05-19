@@ -53,7 +53,8 @@ void verify();
 smm::Source* translate(uint src, uint tgt);
 void parse_src_peg();
 void parse_src_spirit();
-void read(uint label);
+void read(uint src);
+//void write(uint src, bool deep);
 
 namespace {
 
@@ -86,21 +87,6 @@ void verify_(uint src) {
 
 void translate_(uint src, uint tgt) {
 	rus::translate(src, tgt);
-}
-
-void write(uint s, bool deep) {
-	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
-		if (deep) {
-			deep_write(
-				src,
-				[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
-				[](Node n) -> Source* { return n.val.imp->source.get(); },
-				[](Node n) -> bool { return n.kind == Node::IMPORT; }
-			);
-		} else shallow_write(src);
-	} else {
-		throw Error("unknown source", Lex::toStr(s));
-	}
 }
 
 Return lookup(uint src, uint line, uint col, string what) {
@@ -275,7 +261,7 @@ const Sys::Actions& Sys::actions() {
 		{"parse_expr", Action([](const Args& args) { parse_expr(); return Return(); }, description("parse_expr"))},
 		{"verify",     Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
 		{"transl",     Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
-		{"write",      Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
 		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
 		{"test",       Action([](const Args& args) { Return ret = test(args[0]); return ret; }, description("test"))},

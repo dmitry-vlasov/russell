@@ -20,6 +20,7 @@ void Path::read(string& data, const vector<Patch>* patches) const {
 	ifstream in(path());
 	if (!in) throw Error("cannot read", path());
 	in.unsetf(std::ios::skipws);
+	data.clear();
 	std::copy(
 		std::istream_iterator<char>(in),
 		std::istream_iterator<char>(),
