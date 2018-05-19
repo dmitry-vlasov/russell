@@ -1,6 +1,6 @@
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 { namespace {
+namespace mdl { namespace mm { namespace {
 
 struct Merged {
 	stringstream contents;

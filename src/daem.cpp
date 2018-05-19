@@ -4,11 +4,11 @@
 #include <actions.hpp>
 #include <daem.hpp>
 
-#include <rus_sys.hpp>
+#include "rus_sys.hpp"
 #include "boost/iostreams/stream.hpp"
 #include "boost/iostreams/device/null.hpp"
 #include "boost/asio.hpp"
-#include "../include/mm_sys.hpp"
+#include "mm_sys.hpp"
 
 namespace mdl {
 
@@ -76,7 +76,7 @@ Return execute_command(const string& command) {
 	Return ret;
 	switch (lang) {
 	case Lang::RUS : ret = rus::Sys::exec_and_show(args); break;
-	case Lang::MM  : ret = mm2::Sys::exec_and_show(args); break;
+	case Lang::MM  : ret = mm::Sys::exec_and_show(args); break;
 	case Lang::NONE: {
 		if (command == "help" || command == "systems" || command == "current" || command == "destroy") {
 			execute_command("rus " + command);

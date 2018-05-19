@@ -2,7 +2,7 @@
 
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 struct Symbol {
 	Symbol(): lit(undef()), var(false) { }

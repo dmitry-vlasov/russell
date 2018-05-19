@@ -3,16 +3,16 @@
 #include "mm_math_symb.hpp"
 #include "mm_tree.hpp"
 
-namespace mdl { namespace mm2 { namespace {
+namespace mdl { namespace mm { namespace {
 
 typedef vector<rus::Node>::iterator NodeIter;
 
 struct Maps {
-	map<const mm2::Source*,rus::Source*> sources;
+	map<const mm::Source*,rus::Source*> sources;
 	map<uint, deque<rus::Type*>> type_defs;
 	map<uint, rus::Type*> types;
 	map<uint, rus::Rule*> rules;
-	map<uint, mm2::Ref*> redundant_assertions;
+	map<uint, mm::Ref*> redundant_assertions;
 	stack<rus::Theory*>  theory;
 };
 
@@ -472,7 +472,7 @@ Maps create_maps() {
 
 void translate_source(uint src, Maps maps, uint tgt) {
 	tgt = (tgt == -1) ? src : tgt;
-	const mm2::Source* source = Sys::get().math.get<Source>().access(src);
+	const mm::Source* source = Sys::get().math.get<Source>().access(src);
 	rus::Source* target = rus::Sys::mod().math.get<rus::Source>().access(tgt);
 	if (target) {
 		delete target;

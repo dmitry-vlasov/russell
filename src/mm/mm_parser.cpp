@@ -1,10 +1,10 @@
 #include "mm_ast.hpp"
 #include "peglib.h"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 Var* VarDecl::make(bool inner, uint index) const {
-	return new mm2::Var(inner, index, label, type, var);
+	return new mm::Var(inner, index, label, type, var);
 }
 
 namespace {
@@ -28,8 +28,8 @@ struct Disj {
 struct Hyp  {
 	uint label;
 	vector<uint> expr;
-	mm2::Hyp* make(uint index, const set<uint>& vars) const {
-		mm2::Hyp* h = new mm2::Hyp(index, label);
+	mm::Hyp* make(uint index, const set<uint>& vars) const {
+		mm::Hyp* h = new mm::Hyp(index, label);
 		h->expr.reserve(expr.size());
 		for (uint s : expr) {
 			h->expr.emplace_back(s, vars.find(s) != vars.end());
@@ -128,8 +128,8 @@ struct Block {
 
 		// Make final set of essentials.
 		uint i = 0;
-		map<uint, mm2::Hyp*> hyps_map;
-		map<uint, mm2::Var*> vars_map;
+		map<uint, mm::Hyp*> hyps_map;
+		map<uint, mm::Var*> vars_map;
 		ass->hyps.reserve(essentials.size());
 		for (const Hyp* hyp : essentials) {
 			ass->hyps.emplace_back(hyp->make(i++, vars));

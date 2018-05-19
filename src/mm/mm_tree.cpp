@@ -1,7 +1,7 @@
 #include "mm_tree.hpp"
 #include "mm_ast.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 	auto it = ex_2.cbegin();

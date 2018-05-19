@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 class Source;
 class Assertion;

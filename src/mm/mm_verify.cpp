@@ -3,7 +3,7 @@
 #include "mm_sys.hpp"
 #include "mm_tree.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 inline bool vect_contains(const vector<uint>& v, uint s) {
 	for (uint x : v) {

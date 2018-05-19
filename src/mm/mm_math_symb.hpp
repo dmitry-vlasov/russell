@@ -1,9 +1,9 @@
 #pragma once
 
-#include "rus_ast.hpp"
+//#include "rus_ast.hpp"
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 struct Constant {
 	Constant(uint s, uint a, uint l) :

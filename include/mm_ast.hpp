@@ -2,7 +2,7 @@
 
 #include "mm_expr.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 typedef mdl::Token<Source> Token;
 typedef mdl::Tokenable<Source> Tokenable;

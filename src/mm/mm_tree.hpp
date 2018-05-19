@@ -2,7 +2,7 @@
 
 #include "mm_ast.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 struct Tree {
 	struct Node {

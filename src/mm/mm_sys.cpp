@@ -1,6 +1,6 @@
 #include "mm_ast.hpp"
 
-namespace mdl { namespace mm2  {
+namespace mdl { namespace mm  {
 
 void merge(uint src, uint tgt, uint tgt_root);
 void cut(uint src, uint tgt, uint tgt_root);

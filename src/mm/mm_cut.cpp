@@ -4,7 +4,7 @@
 #include "boost.hpp"
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 #define PARAGRAPH_STR "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
 #define CHAPTER_STR   "#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#"
@@ -202,7 +202,7 @@ private:
 
 #include "mm_cut_adaptor.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;

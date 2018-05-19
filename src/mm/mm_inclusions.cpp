@@ -1,7 +1,7 @@
 #include "mm_ast.hpp"
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 { namespace {
+namespace mdl { namespace mm { namespace {
 
 bool has_contents(const Source* s) {
 	bool has = false;

@@ -1,7 +1,7 @@
 #include "mm_ast.hpp"
 #include "mm_sys.hpp"
 
-namespace mdl { namespace mm2 {
+namespace mdl { namespace mm {
 
 static vector<Patch> const_patches = {
 {
