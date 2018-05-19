@@ -29,9 +29,9 @@ void Oracle::add(Node* n) {
 				if (props.count(grand)) {
 					rus::Step* st = props.at(grand);
 					for (auto r : st->refs) {
-						if (r->kind == rus::Ref::STEP && ass == r->val.step->ass()) {
+						if (r->kind() == rus::Ref::STEP && ass == r->step()->ass()) {
 							leafs.push_back(p);
-							props[p] = r->val.step;
+							props[p] = r->step();
 						}
 					}
 				}

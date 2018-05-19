@@ -141,26 +141,18 @@ struct Theorem : public Assertion, public Writable {
 };
 
 struct Ref : public Tokenable, public Writable {
-	enum Kind {
-		HYP,
-		PROP,
-		STEP
-	};
-	union Value {
-		Value(Hyp* h) : hyp(h) { }
-		Value(Prop* p) : prop(p) { }
-		Value(Step* s) : step(s) { }
-		Hyp*   hyp;
-		Prop*  prop;
-		Step*  step;
-	};
-	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), kind(HYP),  val(h)  { }
-	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), kind(PROP), val(p)  { }
-	Ref(Step* s, const Token& t = Token()) : Tokenable(t), kind(STEP), val(s)  { }
+	enum Kind { HYP, PROP, STEP };
+	Kind kind() const { return static_cast<Kind>(val.index()); }
+	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), val(h)  { }
+	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), val(p)  { }
+	Ref(Step* s, const Token& t = Token()) : Tokenable(t), val(s)  { }
 	Expr& expr();
 	const Expr& expr() const;
+	Hyp* hyp() const { return std::get<Hyp*>(val); }
+	Prop* prop() const { return std::get<Prop*>(val); }
+	Step* step() const { return std::get<Step*>(val); }
 
-	Kind kind;
+	typedef variant<Hyp*, Prop*, Step*> Value;
 	Value val;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
@@ -232,23 +224,23 @@ private:
 };
 
 inline Expr& Ref::expr() {
-	switch (kind) {
-	case HYP : return val.hyp->expr;
-	case PROP: return val.prop->expr;
-	case STEP: return val.step->expr;
+	switch (kind()) {
+	case HYP : return hyp()->expr;
+	case PROP: return prop()->expr;
+	case STEP: return step()->expr;
 	default  : assert(false && "impossible");
 	}
-	return val.step->expr;
+	return step()->expr;
 }
 
 inline const Expr& Ref::expr() const {
-	switch (kind) {
-	case HYP : return val.hyp->expr;
-	case PROP: return val.prop->expr;
-	case STEP: return val.step->expr;
+	switch (kind()) {
+	case HYP : return hyp()->expr;
+	case PROP: return prop()->expr;
+	case STEP: return step()->expr;
 	default  : assert(false && "impossible");
 	}
-	return val.step->expr;
+	return step()->expr;
 }
 
 struct Qed : public Tokenable, public Verifiable, public Writable {

@@ -92,16 +92,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Ref::Value,
-	(void*,  non)
-	(mdl::rus::Hyp*,   hyp)
-	(mdl::rus::Prop*,  prop)
-	(mdl::rus::Step*,  step)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Ref,
-	(mdl::rus::Ref::Kind, kind)
 	(mdl::rus::Ref::Value, val)
 )
 

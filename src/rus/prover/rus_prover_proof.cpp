@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover {
 void apply_recursively(const Substitution& sub, rus::Step* step) {
 	apply(sub, step->expr);
 	for (auto r : step->refs)
-		if (r->kind == rus::Ref::STEP) apply_recursively(sub, r->val.step);
+		if (r->kind() == rus::Ref::STEP) apply_recursively(sub, r->step());
 }
 
 rus::Ref* ProofHyp::ref() {
@@ -29,8 +29,8 @@ rus::Ref* ProofStep::ref() {
 
 static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	for (auto r : step->refs) {
-		if (r->kind == rus::Ref::STEP)
-			fill_in_proof(r->val.step, proof);
+		if (r->kind() == rus::Ref::STEP)
+			fill_in_proof(r->step(), proof);
 	}
 	for (auto& s : step->expr.symbols) {
 		if (s.kind() != Symbol::VAR) continue;

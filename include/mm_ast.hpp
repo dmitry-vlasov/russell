@@ -96,11 +96,8 @@ struct Ref : public Writable {
 
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 	bool is_assertion() const { return kind() == ASS; }
-	Hyp* hyp() { return std::get<Hyp*>(val); }
-	Var* var() { return std::get<Var*>(val); }
-	Assertion* ass() { return std::get<Ass>(val).get(); }
-	const Hyp* hyp() const { return std::get<Hyp*>(val); }
-	const Var* var() const { return std::get<Var*>(val); }
+	Hyp* hyp() const { return std::get<Hyp*>(val); }
+	Var* var() const { return std::get<Var*>(val); }
 	const Assertion* ass() const { return std::get<Ass>(val).get(); }
 
 	uint label() const {

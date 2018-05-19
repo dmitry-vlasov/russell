@@ -38,8 +38,8 @@ rus::Proof* Space::prove() {
 
 void delete_steps_recursively(rus::Step* s) {
 	for (auto r : s->refs) {
-		if (r->kind == rus::Ref::STEP) {
-			delete_steps_recursively(r->val.step);
+		if (r->kind() == rus::Ref::STEP) {
+			delete_steps_recursively(r->step());
 		}
 	}
 	delete s;
