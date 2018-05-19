@@ -41,7 +41,11 @@ string show(const Expr& ex) {
 }
 
 string show(const Comment& c) {
-	return string("/*") + c.text + "*/";
+	if (c.multiline) {
+		return string("/*") + c.text + "*/";
+	} else {
+		return string("//") + c.text + "\n";
+	}
 }
 
 string show(const Const& c) {

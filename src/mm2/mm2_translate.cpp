@@ -367,7 +367,7 @@ inline rus::Import* translate_import(const Import* inc, Maps& s) {
 }
 
 inline void translate_comment(const Comment* com, Maps& s) {
-	rus::Comment* comment = new rus::Comment { com->text };
+	rus::Comment* comment = new rus::Comment { true, com->text };
 	s.theory.top()->nodes.push_back(comment);
 }
 

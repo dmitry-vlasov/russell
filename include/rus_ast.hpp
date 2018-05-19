@@ -13,8 +13,9 @@ struct Import;
 struct Source;
 
 struct Comment : public Tokenable {
-	Comment(const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt) { }
+	Comment(bool ml = false, const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt), multiline(ml) { }
 	string text;
+	bool multiline;
 };
 
 struct Const : Owner<Const> {

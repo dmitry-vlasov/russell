@@ -496,9 +496,13 @@ private:
 			enqueue_expr(p);
 			return p;
 		};
-		parser_["COMMENT"] = [](const peg::SemanticValues& sv) {
+		parser_["COMMENT_ML"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
-			return new Comment(text.front() == ' ' ? text : " " + text);
+			return new Comment(true, text.front() == ' ' ? text : " " + text);
+		};
+		parser_["COMMENT_SL"] = [](const peg::SemanticValues& sv) {
+			string text = sv.token();
+			return new Comment(false, text.front() == ' ' ? text : " " + text);
 		};
 		// ELEMENT <- COMMENT / IMPORT / CONST / TYPE / RULE / AXIOM / DEF / THEOREM / PROOF / THEORY
 		parser_["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& ctx) {

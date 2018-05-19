@@ -250,7 +250,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")];
 	comment_ml =
-		   lit("/*") [_val = new_<Comment>()]
+		   lit("/*") [_val = new_<Comment>(phoenix::val(true))]
 		>> *(
 			comment_text [appendComment(_val, qi::labels::_1)] |
 			comment_ml [appendComment(_val, qi::labels::_1)]
@@ -259,7 +259,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	comment_sl =
 		   lit("//")
-		>> lexeme[+(unicode::char_ - "\n")] [_val = new_<Comment>(makeString(qi::labels::_1))];
+		>> lexeme[+(unicode::char_ - "\n")] [_val = new_<Comment>(phoenix::val(false), makeString(qi::labels::_1))];
 
 	comment %= comment_ml | comment_sl;
 
