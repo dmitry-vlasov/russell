@@ -15,6 +15,7 @@ struct Symbol {
 	bool is_undef() const { return lit == undef(); }
 	static bool is_undef(uint lit) { return lit == undef(); }
 	static uint undef() { return 0x7FFFFFFF; }
+	uint literal() const { return static_cast<uint>(lit); }
 
 	uint lit:31;
 	bool var:1;
@@ -57,4 +58,17 @@ inline ostream& operator << (ostream& os, const Expr& ex) {
 	for (auto s : ex) os << s;
 	return os;
 }
+
+typedef map<Symbol, Expr> Subst;
+
+inline string show(const Subst& subst) {
+	string str;
+	for (const auto& p : subst) {
+		str += "\t" + show_sy(p.first) + " = > " + show_ex(p.second) + "\n";
+	}
+	return str;
+}
+
+Expr apply_subst(const Subst& sub, const Expr& expr);
+
 }} // mdl::mm2

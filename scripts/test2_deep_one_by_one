@@ -61,6 +61,7 @@ check "${binpath}/mdl
     \"rus opts verbose root=rus\" 
     \"mm2 read in=${file}.mm\"
     \"mm2 parse \"
+    \"mm2 verify \"
     \"mm2 transl in=${file}.mm out=${file}.rus\"
     \"rus write in=${file}.rus deep=true\"
     exit"
@@ -87,10 +88,24 @@ check "${binpath}/mdl
 echo -e 'done\n\n'
 
 echo "----------------------"
-echo "       MM VERIFY      "
+echo "      MM VERIFY       "
 echo "----------------------"
 
-echo "verify mm-1 (plain)"
+echo "verify mm-1 with mm2"
+check "${binpath}/mdl 
+    \"mm2 opts verbose root=mm-1\" 
+    \"mm2 read in=${file}.mm\"
+    \"mm2 parse \"
+    \"mm2 verify \"
+    exit"
+echo -e 'done\n\n'
+
+
+echo "----------------------"
+echo "   Metamath VERIFY    "
+echo "----------------------"
+
+echo "verify mm-1 (plain) with metamath"
 ${binpath}/metamath "read ${file}-1.mm" 'verify proof *' 'exit'
 echo -e 'done\n'
 

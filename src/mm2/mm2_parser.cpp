@@ -222,7 +222,7 @@ public:
 			ELEMENT <- COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE 
 			EXPR    <- (SYMB / COMMENT)+
 			CONST   <-      '$c' SYMB '$.'
-			VAR     <-      '$v' SYMB '$.'
+			VAR     <-      '$v' EXPR '$.'
 			DISJ    <-      '$d' EXPR '$.'
 			FLO     <- LAB  '$f' SYMB SYMB '$.'
 			ESS     <- LAB  '$e' EXPR '$.'

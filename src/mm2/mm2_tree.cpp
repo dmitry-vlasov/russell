@@ -3,15 +3,6 @@
 
 namespace mdl { namespace mm2 {
 
-typedef map<Symbol, Expr> Subst;
-
-inline string show (const Subst& subst) {
-	string str;
-	for (auto it : subst)
-		str += "\t" + show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
-	return str;
-}
-
 inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 	auto it = ex_2.cbegin();
 	++ it;

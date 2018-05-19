@@ -41,4 +41,11 @@ inline void dump(const Symbol& s) { cout << s; }
 inline void dump(const Expr& e) { cout << e; }
 inline size_t memvol(const Expr& ex) { return ex.capacity() * sizeof(Symbol); }
 
+/*inline void append_expr(Expr& ex_1, const Expr& ex_2) {
+	auto it = ex_2.cbegin();
+	++ it;
+	for (; it != ex_2.cend(); ++ it)
+		ex_1.push_back(*it);
+}*/
+
 }} // mdl::mm

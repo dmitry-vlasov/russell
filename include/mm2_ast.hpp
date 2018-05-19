@@ -88,12 +88,14 @@ struct Var : public Writable, public Referable {
 
 struct Ref : public Writable {
 	typedef User<Assertion> Ass;
+	enum Kind { VAR, HYP, ASS };
 
 	Ref(Hyp* h) : val(h) { }
 	Ref(Var* v) : val(v) { }
 	Ref(uint l) : val(Ass(l)) { }
 
-	bool is_assertion() const { return val.index() == 2; }
+	Kind kind() const { return static_cast<Kind>(val.index()); }
+	bool is_assertion() const { return kind() == ASS; }
 	Hyp* hyp() { return std::get<Hyp*>(val); }
 	Var* var() { return std::get<Var*>(val); }
 	Assertion* ass() { return std::get<Ass>(val).get(); }
@@ -102,16 +104,16 @@ struct Ref : public Writable {
 	const Assertion* ass() const { return std::get<Ass>(val).get(); }
 
 	uint label() const {
-		switch (val.index()) {
-		case 0 : return var()->label;
-		case 1 : return hyp()->label;
-		case 2 : return std::get<Ass>(val).id();
+		switch (kind()) {
+		case VAR : return var()->label;
+		case HYP : return hyp()->label;
+		case ASS : return std::get<Ass>(val).id();
 		}
 	}
 	uint index() const {
 		switch (val.index()) {
-		case 0 : return var()->index;
-		case 1 : return hyp()->index;
+		case VAR : return var()->index;
+		case HYP : return hyp()->index;
 		default : assert(false && "must not be assertion"); return -1;
 		}
 	}

@@ -7,6 +7,7 @@ void merge(uint src, uint tgt, uint tgt_root);
 void cut(uint src, uint tgt, uint tgt_root);
 void read(uint src);
 void parse();
+void verify();
 void translate(uint src, uint tgt);
 void minimize_imports(uint src);
 
@@ -63,6 +64,7 @@ static Descr description(string name) {
 		{"clear",    Descr("clear the source",     Descr::Arg("in", "file"))},
 		{"transl",   Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
 		{"write",    Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
+		{"verify",   Descr("verify all theorems")},
 		{"info",     Descr("info about math")},
 		{"show",     Descr("show entity")},
 		{"cut",      Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
@@ -82,6 +84,7 @@ const Sys::Actions& Sys::actions() {
 		{"read",     Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"parse",    Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
 		{"clear",    Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
+		{"verify",   Action([](const Args& args) { verify(); return Return(); }, description("verify"))},
 		{"transl",   Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",    Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",     Action([](const Args& args) { return Return(info()); }, description("info"))},
