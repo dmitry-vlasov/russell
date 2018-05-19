@@ -11,11 +11,6 @@ Rule* find_super(const Type* type, const Type* super) {
 		return nullptr;
 }
 
-//inline Rule* find_super(const Type* type, const Type* super) {
-//	return type->supers.count(super) ? type->supers.at(super) : nullptr;
-//}
-
-
 Substitution unify_forth(const Tree& p, const Tree& q) {
 	switch (p.kind) {
 	case Tree::VAR: {

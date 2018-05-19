@@ -142,22 +142,18 @@ struct Theorem : public Assertion, public Writable {
 
 struct Ref : public Tokenable, public Writable {
 	enum Kind {
-		NONE,
 		HYP,
 		PROP,
 		STEP
 	};
 	union Value {
-		Value() : non(nullptr) { }
 		Value(Hyp* h) : hyp(h) { }
 		Value(Prop* p) : prop(p) { }
 		Value(Step* s) : step(s) { }
-		void*  non;
 		Hyp*   hyp;
 		Prop*  prop;
 		Step*  step;
 	};
-	Ref(const Token& t = Token()) : Tokenable(t), kind(NONE), val() { }
 	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), kind(HYP),  val(h)  { }
 	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), kind(PROP), val(p)  { }
 	Ref(Step* s, const Token& t = Token()) : Tokenable(t), kind(STEP), val(s)  { }
