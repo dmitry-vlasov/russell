@@ -1,5 +1,4 @@
-//#include <boost/variant/recursive_variant.hpp>
-#include <mm2_ast.hpp>
+#include "mm_ast.hpp"
 #include "peglib.h"
 
 namespace mdl { namespace mm2 {

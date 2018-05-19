@@ -1,7 +1,7 @@
-#include <rus_ast.hpp>
-#include <mm2_sys.hpp>
-#include "mm2_math_symb.hpp"
-#include "mm2_tree.hpp"
+#include "rus_ast.hpp"
+#include "mm_sys.hpp"
+#include "mm_math_symb.hpp"
+#include "mm_tree.hpp"
 
 namespace mdl { namespace mm2 { namespace {
 

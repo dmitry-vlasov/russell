@@ -2,7 +2,7 @@
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
 #include "boost.hpp"
-#include <mm2_sys.hpp>
+#include "mm_sys.hpp"
 
 namespace mdl { namespace mm2 {
 
@@ -200,7 +200,7 @@ private:
 
 }} // mdl::mm::cut
 
-#include "mm2_cut_adaptor.hpp"
+#include "mm_cut_adaptor.hpp"
 
 namespace mdl { namespace mm2 {
 

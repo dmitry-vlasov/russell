@@ -1,6 +1,6 @@
 #include <daem.hpp>
-#include <mm2_sys.hpp>
 #include <rus_sys.hpp>
+#include "../include/mm_sys.hpp"
 
 #ifdef BUILD_SOLID
 	#include "all.cpp"

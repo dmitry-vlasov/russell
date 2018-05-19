@@ -1,6 +1,7 @@
 #include <boost/range/adaptor/reversed.hpp>
-#include <mm2_sys.hpp>
-#include "mm2_tree.hpp"
+
+#include "mm_sys.hpp"
+#include "mm_tree.hpp"
 
 namespace mdl { namespace mm2 {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mm2_ast.hpp>
+#include "mm_ast.hpp"
 
 namespace mdl { namespace mm2 {
 

@@ -24,15 +24,15 @@ else()
 		
 		daem.cpp 
 		
-		mm2/mm2_cut.cpp 
-		mm2/mm2_sys.cpp 
-		mm2/mm2_merge.cpp 
-		mm2/mm2_parser.cpp 
-		mm2/mm2_read.cpp
-		mm2/mm2_tree.cpp  
-		mm2/mm2_translate.cpp
-		mm2/mm2_inclusions.cpp
-		mm2/mm2_verify.cpp
+		mm/mm_cut.cpp 
+		mm/mm_sys.cpp 
+		mm/mm_merge.cpp 
+		mm/mm_parser.cpp 
+		mm/mm_read.cpp
+		mm/mm_tree.cpp  
+		mm/mm_translate.cpp
+		mm/mm_inclusions.cpp
+		mm/mm_verify.cpp
 		
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 
