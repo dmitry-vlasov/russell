@@ -258,11 +258,11 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 }
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps, uint ind) {
-	maps.local.thm->innerVars = std::move(translate_inners(proof->vars, maps, thm, maps.local.thm->innerVars.size()));
+	maps.local.thm->innerVars = std::move(translate_inners(proof->allvars, maps, thm, maps.local.thm->innerVars.size()));
 	//join(maps.local.thm->inner, );
-	for (auto el : proof->elems) {
-		if (el.kind == Proof::Elem::QED && el.val.qed->prop->ind == ind) {
-			translate_step(el.val.qed->step, thm, mm2_proof, maps);
+	for (const auto& el : proof->elems) {
+		if (Proof::kind(el) == Proof::QED && Proof::qed(el)->prop->ind == ind) {
+			translate_step(Proof::qed(el)->step, thm, mm2_proof, maps);
 			break;
 		}
 	}

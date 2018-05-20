@@ -58,10 +58,10 @@ void Qed::verify() const {
 }
 
 void Proof::verify() const {
-	for (auto el : elems) {
-		switch (el.kind){
-		case Proof::Elem::STEP: el.val.step->verify(); break;
-		case Proof::Elem::QED:  el.val.qed->verify();  break;
+	for (const auto& el : elems) {
+		switch (kind(el)){
+		case Proof::STEP: step(el)->verify(); break;
+		case Proof::QED: qed(el)->verify();  break;
 		default : break;
 		}
 	}

@@ -78,8 +78,15 @@ Proof::Proof(Id th, Id i, const Token& t) :
 	theorem()->proofs.emplace_back(User<Proof>(id()));
 	assert(this == theorem()->proofs.back().get());
 }
-Proof::~Proof() {
-	for (auto& e : elems) e.destroy();
+
+vector<Qed*> Proof::qeds() const {
+	vector<Qed*> ret;
+	for (const auto& e : elems) {
+		if (kind(e) == QED) {
+			ret.push_back(qed(e));
+		}
+	}
+	return ret;
 }
 
 inline Tokenable* find(Const* c, const Token& t) {
@@ -127,17 +134,21 @@ inline Tokenable* find(Vars* v, const Token& t) {
 }
 
 inline Tokenable* find(Proof::Elem& e, const Token& t) {
-	switch (e.kind) {
-	case Proof::Elem::QED: return find(e.val.qed, t);
-	case Proof::Elem::STEP: return find(e.val.step, t);
-	case Proof::Elem::VARS: return find(e.val.vars, t);
+	switch (Proof::kind(e)) {
+	case Proof::QED: return find(Proof::qed(e), t);
+	case Proof::STEP: return find(Proof::step(e), t);
+	case Proof::VARS: return find(Proof::vars(e), t);
 	default: return nullptr;
 	}
 }
 
 inline Tokenable* find(Proof* p, const Token& t) {
 	if (!p->token.includes(t)) return nullptr;
-	for (auto e : p->elems) if (Tokenable* ret = find(e, t)) return ret;
+	for (auto& e : p->elems) {
+		if (Tokenable* ret = find(e, t)) {
+			return ret;
+		}
+	}
 	return p;
 }
 

@@ -253,51 +253,24 @@ struct Qed : public Tokenable, public Verifiable, public Writable {
 };
 
 struct Proof : public Owner<Proof>, public Verifiable, public Writable {
-	//typedef boost::variant<Step, Qed> Elem;
 
-	struct Elem {
-		enum Kind {
-			//NONE,
-			VARS,
-			STEP,
-			QED
-		};
-		union Value {
-			//void* non;
-			Vars* vars;
-			Step* step;
-			Qed*  qed;
-		};
-		Elem() : kind(VARS), val() { val.vars = nullptr; }
-		Elem(Vars* v)  : kind(VARS), val()  { val.vars = v; }
-		Elem(Step* s)  : kind(STEP), val()  { val.step = s; }
-		Elem(Qed* q)   : kind(QED), val()   { val.qed = q; }
-		void destroy();
-		void write(ostream& os, const Indent& i) const {
-			switch (kind) {
-			case VARS: val.vars->write(os, i); break;
-			case STEP: val.step->write(os, i); break;
-			case QED:  val.qed->write(os, i); break;
-			}
-		}
+	enum Kind { VARS, STEP, QED };
+	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
 
-		Kind kind;
-		Value val;
-	};
+	static Kind  kind(const Elem& e) { return static_cast<Kind>(e.index()); }
+	static Vars* vars(const Elem& e) { return std::get<unique_ptr<Vars>>(e).get(); }
+	static Step* step(const Elem& e) { return std::get<unique_ptr<Step>>(e).get(); }
+	static Qed*  qed(const Elem& e) { return std::get<unique_ptr<Qed>>(e).get(); }
 
 	Proof(Id thm, Id id = Id(), const Token& t = Token());
-	~ Proof();
+
 	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
 	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
 	void verify() const override;
-	vector<Qed*> qeds() const {
-		vector<Qed*> ret;
-		for (auto& e : elems) if (e.kind == Elem::QED) ret.push_back(e.val.qed);
-		return ret;
-	}
+	vector<Qed*> qeds() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
-	Vars            vars;
+	Vars            allvars;
 	vector<Elem>    elems;
 	User<Assertion> thm;
 	Proof*          par;
@@ -401,14 +374,6 @@ inline void Node::destroy() {
 	kind = NONE;
 }
 
-inline void Proof::Elem::destroy() {
-	switch (kind) {
-	case STEP : delete val.step; break;
-	case VARS:  delete val.vars; break;
-	case QED:   delete val.qed; break;
-	default : assert(false && "impossible"); break;
-	}
-}
 
 string xml(const Const&, uint);
 //string xml(const Vars&, uint);

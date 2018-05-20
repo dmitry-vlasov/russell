@@ -53,6 +53,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<SetToken<Iterator>> setToken;
 	const phoenix::function<MakeString>  makeString;
 	const phoenix::function<AppendComment> appendComment;
+	const phoenix::function<AddProofElem> addProofElem;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
@@ -118,28 +119,28 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		)
 		> eps [_val = new_<Step>(_a, _c, _d, _r1)]
 		> refs(_r1) [phoenix::at_c<4>(*_val) = qi::labels::_1]
-		> "|-"
-		> expr(_b) [phoenix::at_c<1>(*_val) = qi::labels::_1]
+		> lit("|-") [addProofElem(_r1, _val)]
+		> expr(_b)  [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> lit(END_MARKER);
 
 	qed =
-		lit("prop") [_val = new_<Qed>()]
-		> eps       [_a =  0]
-		> - uint_   [_a = qi::labels::_1]
-		> lit("=")  [phoenix::at_c<0>(*_val) = getProp(_a - 1, _r1)]
-		> "step"
-		> uint_     [phoenix::at_c<1>(*_val) = getStep(qi::labels::_1 - 1, _r1)]
+		lit("prop")   [_val = new_<Qed>()]
+		> eps         [_a =  0]
+		> - uint_     [_a = qi::labels::_1]
+		> lit("=")    [phoenix::at_c<0>(*_val) = getProp(_a - 1, _r1)]
+		> lit("step") [addProofElem(_r1, _val)]
+		> uint_       [phoenix::at_c<1>(*_val) = getStep(qi::labels::_1 - 1, _r1)]
 		> END_MARKER;
 
 	proof_elem = (
-		("step"  > step(_r1) [_val = phoenix::construct<Proof::Elem>(qi::labels::_1)]) |
-		("qed"   > qed(_r1)  [_val = phoenix::construct<Proof::Elem>(qi::labels::_1)])
+		("step" > step(_r1)) |
+		("qed"  > qed(_r1))
 	);
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
 		> - ("var" > vars [phoenix::at_c<1>(*_r1) = qi::labels::_1] > lit(END_MARKER))
-		> + proof_elem(_r1)[push_back(phoenix::at_c<2>(*_r1), qi::labels::_1)]
+		> + proof_elem(_r1)
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
 	proof =

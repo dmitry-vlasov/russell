@@ -414,11 +414,11 @@ private:
 			if (ind >= p->elems.size()) {
 				throw Error("invalid step index", sv.token());
 			}
-			Proof::Elem el = p->elems[ind];
-			if (el.kind != Proof::Elem::STEP) {
+			Proof::Elem& e = p->elems[ind];
+			if (Proof::kind(e) != Proof::STEP) {
 				throw Error("by reference is not a step", sv.token());
 			}
-			return new Ref(el.val.step);
+			return new Ref(Proof::step(e));
 		};
 		// REF <- REF_HYP / REF_PROP / REF_STEP
 		parser_["REF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
@@ -434,30 +434,32 @@ private:
 			uint prop = sv[0].get<uint>();
 			uint step = sv[1].get<uint>();
 			Proof* p = c->stacks.proof();
-			return new Qed(p->theorem()->props[prop - 1], p->elems[step - 1].val.step);
+			return new Qed(
+				p->theorem()->props[prop - 1],
+				Proof::step(p->elems[step - 1])
+			);
 		};
 		// PROOF_ELEM <- VAR_DECL / STEP / QED
 		parser_["PROOF_ELEM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			Proof::Elem el;
-			switch (sv.choice()) {
-			case 0: el = Proof::Elem(sv[0].get<Vars*>()); break;
-			case 1: el = Proof::Elem(sv[0].get<Step*>()); break;
-			case 2: el = Proof::Elem(sv[0].get<Qed*>());  break;
-			}
 			Proof* p = c->stacks.proof();
+			switch (sv.choice()) {
+			case 0: p->elems.emplace_back(unique_ptr<Vars>(sv[0].get<Vars*>())); break;
+			case 1: p->elems.emplace_back(unique_ptr<Step>(sv[0].get<Step*>())); break;
+			case 2: p->elems.emplace_back(unique_ptr<Qed>(sv[0].get<Qed*>()));  break;
+			}
+			Proof::Elem& e = p->elems.back();
 
 			// TODO: Do a right var/elem tracking!
-			if (el.kind == Proof::Elem::VARS) {
-				for (auto& v : el.val.vars->v) p->vars.v.push_back(v);
-			} else {
-				p->elems.push_back(el);
+			if (Proof::kind(e) == Proof::VARS) {
+				for (const auto& v : Proof::vars(e)->v) {
+					p->allvars.v.push_back(v);
+				}
 			}
-			return el;
 		};
 		// PROOF_BODY <- PROOF_ELEM+
 		parser_["PROOF_BD"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			return sv.transform<Proof::Elem>();
+			//return sv.transform<Proof::Elem>();
 		};
 		// PROOF_NAME -> ID_NAME?
 		parser_["PROOF_NAME"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
@@ -557,9 +559,9 @@ private:
 			expr::enqueue(prop->expr);
 	}
 	static void enqueue_expr(Proof* proof) {
-		for (auto& el : proof->elems) {
-			if (el.kind == Proof::Elem::STEP) {
-				Step* step = el.val.step;
+		for (const auto& e : proof->elems) {
+			if (Proof::kind(e) == Proof::STEP) {
+				Step* step = Proof::step(e);
 				expr::enqueue(step->expr);
 				if (step->kind() == Step::CLAIM)
 					enqueue_expr(step->claim());

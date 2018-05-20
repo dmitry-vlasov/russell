@@ -34,18 +34,18 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	}
 	for (auto& s : step->expr.symbols) {
 		if (s.kind() != Symbol::VAR) continue;
-		if (proof->vars.isDeclared(s)) continue;
+		if (proof->allvars.isDeclared(s)) continue;
 		if (proof->theorem()->vars.isDeclared(s)) continue;
-		proof->vars.v.push_back(s);
+		proof->allvars.v.push_back(s);
 	}
 	step->set_ind(proof->elems.size());
-	proof->elems.push_back(step);
+	proof->elems.emplace_back(unique_ptr<Step>(step));
 }
 
 rus::Proof* make_proof(rus::Step* step, uint th, rus::Prop* prop) {
 	rus::Proof* ret = new rus::Proof(th);
 	fill_in_proof(step, ret);
-	ret->elems.push_back(new Qed(prop, step));
+	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(prop, step)));
 	return ret;
 }
 

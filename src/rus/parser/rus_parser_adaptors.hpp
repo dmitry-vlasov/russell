@@ -120,23 +120,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Proof::Elem::Value,
-	(void*, non)
-	(mdl::rus::Vars*, vars)
-	(mdl::rus::Step*, step)
-	(mdl::rus::Qed*,  qed)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Proof::Elem,
-	(mdl::rus::Proof::Elem::Kind, kind)
-	(mdl::rus::Proof::Elem::Value, val)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Proof,
 	(mdl::uint, id)
-	(mdl::rus::Vars, vars)
+	(mdl::rus::Vars, allvars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
 	(mdl::rus::User<mdl::rus::Assertion>, thm)
 	(mdl::rus::Proof*, par)

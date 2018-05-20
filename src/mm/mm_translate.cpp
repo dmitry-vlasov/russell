@@ -289,12 +289,12 @@ rus::Node::Kind node_kind(const Assertion* ass) {
 	}
 }
 
-rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps& state, const Assertion* a) {
+rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps& state, const Assertion* a) {
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	const Assertion* ass = node.val.ref->ass();
-	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof));
+	rus::Step* step = new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof);
 
 	for (uint i = 0; i < ass->hyps.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i + ass->outerVars.size()];
@@ -304,14 +304,14 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 		assert(h.type == Tree::Node::REF);
 		rus::Ref* hr =
 			h.val.ref->is_assertion() ?
-			new rus::Ref(translate_step(t, proof, thm, state, a).val.step) :
+			new rus::Ref(translate_step(t, proof, thm, state, a)) :
 			new rus::Ref(thm->hyps[h.val.ref->index()]);
-		el.val.step->refs.push_back(hr);
+		step->refs.push_back(hr);
 	}
-	el.val.step->set_ind(elems.size());
-	el.val.step->expr = translate_expr(node.expr, a);
-	elems.push_back(el);
-	return el;
+	step->set_ind(elems.size());
+	step->expr = translate_expr(node.expr, a);
+	elems.emplace_back(unique_ptr<rus::Step>(step));
+	return step;
 }
 
 void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
@@ -324,11 +324,10 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 		throw err;
 	}
 	rus::Proof* p = new rus::Proof(thm->id());
-	p->vars = translate_vars(ass->innerVars);
-	translate_step(tree, p, thm, state, ass);
+	p->allvars = translate_vars(ass->innerVars);
+	rus::Step* st = translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->props.front();
-	rus::Step* st = p->elems.back().val.step;
-	p->elems.push_back(new rus::Qed(pr, st));
+	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));
 	state.theory.top()->nodes.push_back(p);
 	delete tree;
 }

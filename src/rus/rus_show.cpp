@@ -174,13 +174,17 @@ void Proof::write(ostream& os, const Indent& i) const {
 		os << "of " << Lex::toStr(thm.id()) << " ";
 	}
 	os << "{\n";
-	if (vars.v.size()) {
+	if (allvars.v.size()) {
 		os << i + 1 << "var ";
-		vars.write(os, i + 1);
+		allvars.write(os, i + 1);
 		os << END_MARKER << "\n";
 	}
-	for (const auto& st : elems) {
-		st.write(os, i + 1);
+	for (const auto& e : elems) {
+		switch (kind(e)) {
+		case VARS: vars(e)->write(os, i + 1); break;
+		case STEP: step(e)->write(os, i + 1); break;
+		case QED: qed(e)->write(os, i + 1); break;
+		}
 	}
 	os << "}\n";
 }

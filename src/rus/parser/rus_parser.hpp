@@ -92,9 +92,9 @@ struct Enqueue {
 		operator()(static_cast<Assertion*>(def));
 	}
 	void operator()(Proof* proof) const {
-		for (auto& el : proof->elems) {
-			if (el.kind == Proof::Elem::STEP) {
-				Step* step = el.val.step;
+		for (auto& e : proof->elems) {
+			if (Proof::kind(e) == Proof::STEP) {
+				Step* step = Proof::step(e);
 				expr::enqueue(step->expr);
 				if (step->kind() == Step::CLAIM)
 					operator()(step->proof());
@@ -200,7 +200,7 @@ struct CreateStepRef {
 		switch (k) {
 		case Ref::HYP:  return new Ref(p->thm.get()->hyps[ind]);
 		case Ref::PROP: return new Ref(p->thm.get()->props[ind]);
-		case Ref::STEP: return new Ref(p->elems[ind].val.step);
+		case Ref::STEP: return new Ref(Proof::step(p->elems[ind]));
 		default : assert(false && "impossible"); break;
 		}
 		return nullptr;
@@ -219,7 +219,7 @@ struct GetStep {
 	template <typename T1, typename T2>
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
-		return p->elems[ind].val.step;
+		return Proof::step(p->elems[ind]);
 	}
 };
 
@@ -270,6 +270,17 @@ struct AppendComment {
 	}
 };
 
+struct AddProofElem {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Proof* p, Step* s) const {
+		p->elems.emplace_back(unique_ptr<Step>(s));
+	}
+	void operator()(Proof* p, Qed* q) const {
+		p->elems.emplace_back(unique_ptr<Qed>(q));
+	}
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	Grammar(Source*);
@@ -293,7 +304,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	qi::rule<Iterator, vector<Ref*>(Proof*), unicode::space_type> refs;
 	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Id, vector<Ref*>>, unicode::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
-	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
+	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), qi::locals<Id>, unicode::space_type> proof;
 	qi::rule<Iterator, Theorem*(), unicode::space_type> theorem;
