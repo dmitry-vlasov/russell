@@ -387,7 +387,7 @@ private:
 			uint ind = sv[0].get<uint>();
 			Id  type = sv[1].get<Id>();
 			vector<Symbol> expr = sv[4].get<vector<Symbol>>();
-			Step* s = new Step(ind, Step::NONE, Id(), c->stacks.proof(), c->token(sv));
+			Step* s = new Step(ind, Step::CLAIM, Id(), c->stacks.proof(), c->token(sv));
 			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
 			expr::enqueue(s->expr);
 			return s;

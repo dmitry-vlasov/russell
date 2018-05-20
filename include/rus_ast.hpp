@@ -171,13 +171,8 @@ struct Verifiable {
 };
 
 struct Step : public Tokenable, public Verifiable, public Writable {
-	enum Kind {
-		NONE,
-		ASS,
-		CLAIM
-	};
+	enum Kind { ASS, CLAIM };
 	union Value {
-		void*            non;
 		User<Assertion>* ass;
 		Proof*           prf;
 	};

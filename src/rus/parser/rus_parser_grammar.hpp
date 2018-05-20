@@ -114,7 +114,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		uint_ [_a = qi::labels::_1 - 1] > ":" > id [_b = qi::labels::_1] > "="
 		> (
 			(lit("claim") [_c = val(Step::CLAIM), _d = val(Id())]) |
-			(lit("?")     [_c = val(Step::NONE) , _d = val(Id())]) |
+			(lit("?")     [_c = val(Step::CLAIM) ,_d = val(Id())]) |
 			(id           [_c = val(Step::ASS),   _d = qi::labels::_1])
 		)
 		> eps [_val = new_<Step>(_a, _c, _d, _r1)]

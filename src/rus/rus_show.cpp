@@ -192,12 +192,12 @@ void Proof::write(ostream& os, const Indent& i) const {
 void Step::write(ostream& os, const Indent& i) const {
 	os << i << "step " << (ind_ + 1) << " : ";
 	os << Lex::toStr(expr.type.id()) << " = ";
+	bool undef = (kind_ == ASS) && (ass_id() == -1);
 	switch (kind_) {
-	case Step::NONE:  os << "? "; break;
-	case Step::CLAIM: os << "claim "; break;
-	case Step::ASS:   os << Lex::toStr(ass_id()) << " "; break;
+	case CLAIM: os << "claim "; break;
+	case ASS:   os << (undef ? "? " : Lex::toStr(ass_id())) << " "; break;
 	}
-	if (kind_ != Step::NONE) {
+	if (!undef) {
 		os << "(";
 		for (uint i = 0; i < refs.size(); ++ i) {
 			refs[i]->write(os);
