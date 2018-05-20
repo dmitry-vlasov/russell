@@ -257,18 +257,18 @@ struct Proof : public Owner<Proof>, public Verifiable, public Writable {
 
 	struct Elem {
 		enum Kind {
-			NONE,
+			//NONE,
 			VARS,
 			STEP,
 			QED
 		};
 		union Value {
-			void* non;
+			//void* non;
 			Vars* vars;
 			Step* step;
 			Qed*  qed;
 		};
-		Elem() : kind(NONE), val() { val.non = nullptr; }
+		Elem() : kind(VARS), val() { val.vars = nullptr; }
 		Elem(Vars* v)  : kind(VARS), val()  { val.vars = v; }
 		Elem(Step* s)  : kind(STEP), val()  { val.step = s; }
 		Elem(Qed* q)   : kind(QED), val()   { val.qed = q; }
@@ -408,7 +408,6 @@ inline void Proof::Elem::destroy() {
 	case QED:   delete val.qed; break;
 	default : assert(false && "impossible"); break;
 	}
-	kind = NONE;
 }
 
 string xml(const Const&, uint);
