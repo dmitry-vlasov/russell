@@ -16,7 +16,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
 	for (auto& p : prop.assertion()->props) {
-		hyps.add(p.get()->expr.tree, HypRef(a, c++));
+		hyps.add(p.get()->expr.tree(), HypRef(a, c++));
 	}
 	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);
 	buildUp(root);

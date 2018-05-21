@@ -70,14 +70,14 @@ struct Rule : public Owner<Rule>, public Writable {
 	Expr term;
 	Type* type() { return term.type.get(); }
 	const Type* type() const { return term.type.get(); }
-	uint arity() const { return term.tree.arity(); }
+	uint arity() const { return term.tree()->arity(); }
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 Rule* find_super(const Type* type, const Type* super);
 
-inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
-inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
+inline Type* Tree::type() { return kind() == VAR ? var()->type() : rule()->term.type.get(); }
+inline const Type* Tree::type() const { return kind() == VAR ? var()->type() : rule()->term.type.get(); }
 
 struct Hyp : public Tokenable, public Writable {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :

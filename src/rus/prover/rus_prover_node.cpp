@@ -40,7 +40,7 @@ Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.unify_back(expr_.tree)) {
+	for (const auto& p : space->hyps.unify_back(expr_.tree())) {
 		proof.push_back(new ProofHyp(p.first, p.second));
 	}
 	queue<Node*> downs;
@@ -55,7 +55,7 @@ void Hyp::complete() {
 
 vector<Node*> Hyp::buildUp() {
 	vector<Node*> ret;
-	for (const auto& p : assertion_index().unify_forth(expr_.tree)) {
+	for (const auto& p : assertion_index().unify_forth(expr_.tree())) {
 		cout << "unified assertion " << show_id(p.first.assertion()->id()) << endl;
 		ret.push_back(new Prop(p.first, p.second, this));
 	}
@@ -121,12 +121,12 @@ private:
 };
 
 struct UnifSym {
-	UnifSym() : sub(false) { }
+	UnifSym() : sub(false), term(nullptr) { }
 	operator bool() const{
 		return sub;
 	}
 	Substitution sub;
-	Tree term;
+	Tree* term;
 };
 
 UnifSym unify_both(const vector<const Tree*>& ex) {
@@ -134,7 +134,7 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 	vector<const Symbol*> vars;
 	vector<const Tree::Children*> rules;
 	for (const auto& t : ex) {
-		switch (t->kind) {
+		switch (t->kind()) {
 		case Tree::VAR: vars.push_back(t->var()); break;
 		case Tree::NODE:
 			if (!r) r = t->rule();
@@ -153,15 +153,17 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 				x.push_back((*t)[i].get());
 			}
 			UnifSym s = unify_both(x);
-			if (!ret.sub.join(s.sub)) return UnifSym();
-			ch.emplace_back(new Tree(ret.term));
+			if (!ret.sub.join(s.sub)) {
+				return UnifSym();
+			}
+			ch.emplace_back(new Tree(*ret.term));
 		}
-		ret.term = Tree(r->id(), ch);
+		ret.term = new Tree(r->id(), ch);
 		for (auto s : vars) {
 			if (r->type() == s->type()) {
-				ret.sub.join(Substitution(*s, ret.term));
+				ret.sub.join(Substitution(*s, *ret.term));
 			} else if (Rule* sup = find_super(r->type(), s->type())) {
-				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(ret.term)})));
+				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(*ret.term)})));
 			} else return UnifSym();
 		}
 	} else {
@@ -231,7 +233,7 @@ Substitution unify_subs(const MultyTree& t) {
 	Substitution gen;
 	for (auto& p : m.msub_) {
 		if (!com.join(p.second.sub)) return Substitution(false);
-		if (!gen.join(p.first, p.second.term)) Substitution(false);
+		if (!gen.join(p.first, *p.second.term)) Substitution(false);
 	}
 	if (!intersects(com, gen)) {
 		com.join(gen);

@@ -55,10 +55,11 @@ struct Symbol : public Literal {
 	Symbol(uint l) : Literal(l) { }
 	Symbol(uint l, Id i, Kind k) : Literal(l), val(i, k) { set_kind(k); }
 	Symbol(const Symbol& s) : Literal(s) {
-		if (s.var)
+		if (s.var) {
 			val.type = new User<Type>(*s.val.type);
-		else if (s.cst)
+		} else if (s.cst) {
 			val.constant = new User<Const>(*s.val.constant);
+		}
 	}
 	Symbol(Symbol&& s) : Literal(s) {
 		if (s.var)
@@ -165,7 +166,7 @@ inline ostream& operator << (ostream& os, const Symbol& s) {
 
 struct Tree {
 	typedef vector<unique_ptr<Tree>> Children;
-	enum Kind { NODE, VAR, NONE};
+	enum Kind { NODE, VAR };
 
 	struct Node {
 		Node(Id = Id());
@@ -179,85 +180,63 @@ struct Tree {
 		Children   children;
 	};
 
-	Tree();
-	Tree(const Symbol& v);
-	Tree(Id i, const Children& ch);
-	Tree(Id i, Tree* ch);
-	Tree(const Tree& ex);
-	Tree(Tree&& ex);
-	~Tree();
+	Tree() = delete;
+	Tree(const Symbol& v) : val(unique_ptr<Symbol>(new Symbol(v))) { }
+	Tree(Id i, const Children& ch) : val(unique_ptr<Node>(new Node(i, ch))) { }
+	Tree(Id i, Tree* ch) : val(unique_ptr<Node>(new Node(i, ch))) { }
+	Tree(const Tree& ex) { operator = (ex); }
+	Tree(Tree&& ex) { operator = (std::move(ex)); }
 
 	void operator = (Tree&& ex) {
-		delete_val();
-		kind = ex.kind;
-		val = ex.val;
-		ex.val.var = nullptr;
-		ex.kind = NONE;
+		val = std::move(ex.val);
 	}
 	void operator = (const Tree& ex) {
-		delete_val();
-		kind = ex.kind;
-		switch (kind) {
-		case NODE: val.node = new Node(*ex.val.node);  break;
-		case VAR:  val.var  = new Symbol(*ex.val.var); break;
+		switch (ex.kind()) {
+		case NODE: val = unique_ptr<Node>(new Node(*ex.node()));     break;
+		case VAR:  val = unique_ptr<Symbol>(new Symbol(*ex.var())); break;
 		}
 	}
 	bool operator == (const Tree& e) const {
-		if (kind != e.kind) return false;
-		switch (kind) {
+		if (kind() != e.kind()) return false;
+		switch (kind()) {
 		case NODE:
-			if (val.node->rule != e.val.node->rule) return false;
+			if (rule() != e.rule()) return false;
 			return std::equal(
-				val.node->children.begin(),val.node->children.end(),
-				e.val.node->children.begin(), e.val.node->children.end(),
+				children().begin(),children().end(),
+				e.children().begin(), e.children().end(),
 				[] (auto const& c1, auto const& c2) -> bool { return *c1 == *c2; }
 			);
-		case VAR: return *val.var == *e.val.var;
+		case VAR: return *var() == *e.var();
 		}
 		return true;
 	}
-	bool operator != (const Tree& e) const {
-		return !operator == (e);
-	}
-	bool leaf() const {
-		return kind == VAR || !children().size();
-	}
+	bool operator != (const Tree& e) const { return !operator == (e); }
+	bool leaf() const { return kind() == VAR || !children().size(); }
+	Kind kind() const { return static_cast<Kind>(val.index()); }
 
-	Kind kind;
-
-	Symbol*& var() { assert(kind == VAR); return val.var; }
-	Children& children() { assert(kind == NODE); return val.node->children; }
+	uint rule_id() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.id(); }
+	Symbol* var() { assert(kind() == VAR); return std::get<unique_ptr<Symbol>>(val).get(); }
+	Node* node() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get(); }
+	Rule* rule() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.get(); }
+	Children& children() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
 	Type* type();
 
-	const Symbol* var() const { assert(kind == VAR); return val.var; }
-	const Rule* rule() const { assert(kind == NODE); return val.node->rule.get(); }
-	const Children& children() const { assert(kind == NODE); return val.node->children; }
+	const Symbol* var() const { assert(kind() == VAR); return std::get<unique_ptr<Symbol>>(val).get(); }
+	const Node* node() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get(); }
+	const Rule* rule() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.get(); }
+	const Children& children() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
 	const Type* type() const;
 	uint arity() const {
-		switch (kind) {
-		case NODE: return val.node->children.size();
+		switch (kind()) {
+		case NODE: return children().size();
 		case VAR:  return 0;
-		default:   return -1;
+		default:   assert(0 && "impossible"); return -1;
 		}
 	}
 
 private:
-	union Value {
-		Value() : var(nullptr) { }
-		Value(Node* n) : node(n) { }
-		Value(Symbol* v) : var(v) { }
-		Node*   node;
-		Symbol* var;
-	};
-
+	typedef variant<unique_ptr<Node>, unique_ptr<Symbol>> Value;
 	Value val;
-	void delete_val() {
-		if (!val.var) return;
-		switch (kind) {
-		case NODE: delete val.node; break;
-		case VAR:  delete val.var;  break;
-		}
-	}
 };
 
 class Expr;
@@ -265,24 +244,26 @@ class Expr;
 namespace expr { void parse_LL(Expr*); }
 
 struct Expr : public Tokenable {
-	Expr(const Token& t = Token()) : Tokenable(t), tree(), symbols() { }
-	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()), tree(), symbols() { symbols.push_back(s); }
-	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), tree(), symbols(ss) { }
+	Expr(const Token& t = Token()) : Tokenable(t) { }
+	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()) { symbols.push_back(s); }
+	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), symbols(ss) { }
 	Expr(Id tp, Symbols&& ex, const Token& t = Token()) : Tokenable(t), type(tp), symbols(std::move(ex)) { }
-	Expr(Id tp, Symbols&& ex, Tree&& tr, const Token& t = Token()) : Tokenable(t), type(tp), tree(std::move(tr)), symbols(std::move(ex)) { }
-	Expr(const Expr& ex) : Tokenable(ex), type(ex.type), tree(ex.tree), symbols (ex.symbols) { }
-	Expr(Expr&& ex) : Tokenable(ex.token), type(ex.type), tree(std::move(ex.tree)), symbols (std::move(ex.symbols)) { }
+	Expr(Id tp, Symbols&& ex, Tree* tr, const Token& t = Token()) : Tokenable(t), type(tp), tree_(tr), symbols(std::move(ex)) { }
+	Expr(const Expr& ex) : Tokenable(ex) { operator = (ex); }
+	Expr(Expr&& ex) : Tokenable(ex.token) { operator = (std::move(ex)); }
 
 	void operator = (const Expr& ex) {
 		type = ex.type;
-		tree = ex.tree;
+		if (ex.tree()) {
+			tree_.reset(new Tree(*ex.tree_));
+		}
 		symbols = ex.symbols;
 		token = ex.token;
 	}
 
 	void operator = (Expr&& ex) {
 		type = ex.type;
-		tree = std::move(ex.tree);
+		tree_ = std::move(ex.tree_);
 		symbols = std::move(ex.symbols);
 		token = ex.token;
 	}
@@ -307,6 +288,9 @@ struct Expr : public Tokenable {
 	void parse() {
 		expr::parse_LL(this);
 	}
+	Tree* tree() { return tree_.get(); }
+	const Tree* tree() const { return tree_.get(); }
+	void set(Tree* t) { tree_.reset(t); }
 
 	typedef Symbols::iterator iterator;
 	typedef Symbols::const_iterator const_iterator;
@@ -318,8 +302,10 @@ struct Expr : public Tokenable {
 	const_iterator end() const { return symbols.cend(); }
 
 	User<Type> type;
-	Tree       tree;
 	Symbols    symbols;
+
+private:
+	unique_ptr<Tree> tree_;
 };
 
 struct Rules {
@@ -348,27 +334,26 @@ string show(const Rules& tr);
 struct Substitution {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
 	Substitution(Symbol v, Symbol t) : sub_(), ok_(true) {
-		sub_[v] = t;
+		sub_.emplace(v, t);
 	}
 	Substitution(Symbol v, const Tree& t) : sub_(), ok_(true) {
-		sub_[v] = t;
+		sub_.emplace(v, t);
 	}
 	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
-		operator =(s);
+		operator = (s);
 	}
 	Substitution(Substitution&& s) : sub_(), ok_(s.ok_) {
-		operator =(s);
+		operator = (std::move(s));
 	}
 	void operator = (const Substitution& s) {
 		ok_ = s.ok_;
-		if (ok_) for (const auto& p : s.sub_)
-			sub_[p.first] = p.second;
+		if (ok_) for (const auto& p : s.sub_) {
+			sub_.emplace(p.first, p.second);
+		}
 	}
 	void operator = (Substitution&& s) {
 		ok_ = s.ok_;
-		if (ok_) for (auto& p : s.sub_)
-			sub_[p.first] = std::move(p.second);
-		s.sub_.clear();
+		sub_ = std::move(s.sub_);
 		s.ok_ = true;
 	}
 	bool join(Symbol v, Symbol t) {
@@ -380,7 +365,7 @@ struct Substitution {
 		if (it != sub_.end()) {
 			if ((*it).second != t) ok_ = false;
 		} else {
-			sub_[v] = t;
+			sub_.emplace(v, t);
 		}
 		return ok_;
 	}
@@ -404,34 +389,33 @@ private:
 };
 
 
-Substitution unify_forth(const Tree& p, const Tree& q);
+Substitution unify_forth(const Tree* p, const Tree* q);
 inline Substitution unify_forth(const Expr& ex1, const Expr& ex2) {
-	return unify_forth(ex1.tree, ex2.tree);
+	return unify_forth(ex1.tree(), ex2.tree());
 }
-//Expr assemble(const Expr& ex);
-//Expr assemble(const Tree* t);
 
-void apply(const Substitution* s, Tree& t);
-void apply(const Substitution* s, Expr& e);
-
-Tree apply_(const Substitution*, const Tree&);
-Expr apply(const Substitution*, const Expr&);
+void  apply(const Substitution* s, Expr& e);
+Tree* apply(const Substitution*, const Tree*);
+Expr  apply(const Substitution*, const Expr&);
 inline Expr apply(const Substitution& s, const Expr& e) {
 	return apply(&s, e);
 }
 
-inline void make_non_replaceable(Tree& t) {
-	if (t.kind == Tree::VAR)
-		t.var()->rep = false;
-	else if (t.kind == Tree::NODE)
-		for (auto& c : t.children())
-			make_non_replaceable(*c.get());
+inline void make_non_replaceable(Tree* t) {
+	if (t->kind() == Tree::VAR) {
+		t->var()->rep = false;
+	} else if (t->kind() == Tree::NODE) {
+		for (auto& c : t->children()) {
+			make_non_replaceable(c.get());
+		}
+	}
 }
 
 inline void make_non_replaceable(Expr& e) {
-	for (auto& s : e.symbols)
+	for (auto& s : e.symbols) {
 		s.rep = false;
-	make_non_replaceable(e.tree);
+	}
+	make_non_replaceable(e.tree());
 }
 
 inline Expr create_non_replaceable(const Expr& e) {
@@ -446,18 +430,17 @@ namespace expr {
 }
 
 string show(const Expr&);
-string show_ast(const Tree&, bool full = false);
+string show(const Tree* t, bool full = false);
+string show_ast(const Tree*, bool full = false);
+
 inline string show_ast(const Expr& ex, bool full = false) {
-	return show_ast(ex.tree, full);
+	return show_ast(ex.tree(), full);
 }
-
-string show(const Tree& t, bool full = false);
-
 
 inline string show(const Substitution& s) {
 	string str;
 	for (const auto& p : s.sub()) {
-		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
+		str += show(p.first, true) + " --> " + show_ast(&p.second) + "\t ==\t"  + show(&p.second) + "\n";
 	}
 	return str;
 }
@@ -475,7 +458,6 @@ void dump_ast(const Expr& ex);
 void dump(const Tree* tm);
 void dump_ast(const Tree* tm);
 void dump(const Substitution& sb);
-
 
 size_t memvol(const Symbol& s);
 size_t memvol(const Tree& t);

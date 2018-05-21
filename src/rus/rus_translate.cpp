@@ -120,8 +120,8 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 	image.rule->expr = std::move(translate_term(rule->term, rule->term.type.get(), maps));
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto& ch : rule->term.tree.children()) {
-			if (ch->kind == Tree::VAR && *ch->var() == v) {
+		for (auto& ch : rule->term.tree()->children()) {
+			if (ch->kind() == Tree::VAR && *ch->var() == v) {
 				image.args[v] = i;
 				break;
 			}
@@ -201,7 +201,7 @@ void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, M
 }
 
 void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps) {
-	if (t.kind == Tree::VAR) {
+	if (t.kind() == Tree::VAR) {
 		if (maps.local.floatings[thm].count(*t.var())) {
 			mm2_proof.emplace_back(maps.local.floatings[thm][*t.var()]);
 		} else if (maps.local.inners[thm].count(*t.var())) {
@@ -214,7 +214,7 @@ void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& mm2_pr
 			translate_term(*t.children()[maps.global.rules[t.rule()].args[v]], thm, mm2_proof, maps);
 		}
 	}
-	if (t.kind == Tree::NODE) {
+	if (t.kind() == Tree::NODE) {
 		if (!maps.global.rules.count(t.rule())) {
 			throw Error("undefined reference to rule");
 		}

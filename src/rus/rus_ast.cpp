@@ -38,7 +38,7 @@ Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
 	for (auto& s : term.symbols) {
 		if (s.var) children.push_back(make_unique<Tree>(s));
 	}
-	term.tree = std::move(Tree(i, children));
+	term.set(new Tree(i, children));
 }
 
 inline uint make_proof_id(uint id, Id th) {

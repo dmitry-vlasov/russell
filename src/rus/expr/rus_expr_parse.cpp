@@ -49,8 +49,8 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				if (trace) cout << Indent(ch - beg) << "Parse: variable " << (*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL<trace>(ch, tp, e, beg)) {
-					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(*child) << " - success " << endl;
-					children.push_back(unique_ptr<Tree>(child));
+					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(child) << " - success " << endl;
+					children.emplace_back(child);
 					Action a = act<trace>(n, m, ch, e, beg);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
@@ -101,8 +101,7 @@ void parse(Expr* ex) {
 		(--ex->symbols.end())->end = true;
 		auto it = ex->symbols.begin();
 		if (Tree* tree = parse_LL<false>(it, ex->type.get(), ex, ex->symbols.begin())) {
-			ex->tree = std::move(*tree);
-			delete tree;
+			ex->set(tree);
 		} else {
  			cout << "parsing expr: " <<  show(*ex)  << endl << endl;
 			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin());

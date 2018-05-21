@@ -105,6 +105,7 @@ struct Ref : public Writable {
 		case VAR : return var()->label;
 		case HYP : return hyp()->label;
 		case ASS : return std::get<Ass>(val).id();
+		default : assert(false && "impossible"); return -1;
 		}
 	}
 	uint index() const {
