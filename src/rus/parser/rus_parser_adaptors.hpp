@@ -137,7 +137,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Source,
-	(mdl::rus::Theory*, theory)
+	(mdl::rus::Theory, theory)
 )
 
 

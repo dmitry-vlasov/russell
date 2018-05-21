@@ -71,11 +71,7 @@ void Theory::verify() const {
 	for (auto& n : nodes) {
 		switch (Theory::kind(n)) {
 		case Theory::THEORY: Theory::theory(n)->verify(); break;
-		case Theory::IMPORT: {
-			const Import* imp = Theory::import(n);
-			if (imp->primary) imp->source.get()->theory->verify();
-			break;
-		}
+		case Theory::IMPORT: break; // imports are verified as independent sources
 		case Theory::THEOREM: {
 			const Theorem* t = Theory::theorem(n);
 			if (!t->proofs.size()) throw Error("Theorem has no proof", show_id(t->id()));
@@ -89,7 +85,7 @@ void Theory::verify() const {
 
 void verify(uint src) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
-	source->theory->verify();
+	source->theory.verify();
 }
 
 #define PARALLEL_VERIFY

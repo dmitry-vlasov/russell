@@ -587,8 +587,7 @@ public:
 	static void parse(uint label) {
 		Context* ctx = new Context();
 		ctx->source = Sys::mod().math.get<Source>().access(label);
-		ctx->source->theory = new Theory();
-		ctx->theory = ctx->source->theory;
+		ctx->theory = &ctx->source->theory;
 		peg::any c(ctx);
 		Parser p(label);
 		if (!p.parser_.parse<Source*>(ctx->source->data().c_str(), c, ctx->source)) {

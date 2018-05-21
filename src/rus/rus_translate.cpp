@@ -358,14 +358,14 @@ mm::Source* translate_source(uint src, Maps maps, uint tgt = -1) {
 		delete target;
 	}
 	target = new mm::Source(tgt);
-	target->contents = std::move(translate_theory(source->theory, maps));
+	target->contents = std::move(translate_theory(&source->theory, maps));
 	return target;
 }
 
 static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
 	visited.insert(src);
 	const Source* source = Sys::get().math.get<Source>().access(src);
-	for (const auto& n : source->theory->nodes) {
+	for (const auto& n : source->theory.nodes) {
 		if (Theory::kind(n) == Theory::IMPORT) {
 			uint imp = Theory::import(n)->source.id();
 			if (!visited.count(imp)) {

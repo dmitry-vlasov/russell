@@ -475,8 +475,7 @@ void translate_source(uint src, Maps maps, uint tgt) {
 		delete target;
 	}
 	target = new rus::Source(tgt);
-	target->theory = new rus::Theory();
-	maps.theory.push(target->theory);
+	maps.theory.push(&target->theory);
 	translate_theory(Sys::get().math.get<Source>().access(src), maps);
 	maps.theory.pop();
 }

@@ -242,7 +242,7 @@ void Theory::write(ostream& os, const Indent& i) const {
 }
 
 void Source::write(ostream& os, const Indent& i) const {
-	for (const auto& n : theory->nodes) {
+	for (const auto& n : theory.nodes) {
 		write_node(os, i + 1, n);
 	}
 }

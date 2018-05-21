@@ -268,17 +268,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	comment %= comment_ml | comment_sl;
 
 	source =
-		eps [at_c<0>(*_val) = new_<Theory>()]
-		> +(
-			import   [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			constant [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			type     [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			rule     [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			axiom    [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			def      [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			theorem  [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			proof    [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
-			comment  [addToTheory(at_c<0>(*_val), qi::labels::_1)]
+		+(
+			import   [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			constant [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			type     [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			rule     [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			axiom    [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			def      [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			theorem  [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			proof    [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
+			comment  [addToTheory(&at_c<0>(*_val), qi::labels::_1)]
 		);
 
 	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

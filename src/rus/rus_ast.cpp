@@ -158,13 +158,8 @@ Tokenable* find(Theory::Node& n, const Token& t) {
 	return nullptr;
 }
 
-Source::Source(uint label) :
-	mdl::Source<Source, Sys>(label), theory(nullptr) { }
-Source::~Source() {
-	if (theory) delete theory;
-}
 Tokenable* Source::find(const Token& t) {
-	return theory ? rus::find(theory, t) : nullptr;
+	return rus::find(&theory, t);
 }
 
 

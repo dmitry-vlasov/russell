@@ -102,7 +102,7 @@ string xml_outline(const Source& s, uint bits) {
 	string ret;
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<outline>\n";
-	for (const auto& n : s.theory->nodes)
+	for (const auto& n : s.theory.nodes)
 		ret += Indent::paragraph(xml(n, bits));
 	ret += "</outline>\n\n";
 	return ret;

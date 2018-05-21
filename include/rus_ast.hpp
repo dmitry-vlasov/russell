@@ -174,26 +174,13 @@ struct Step : public Tokenable, public Verifiable, public Writable {
 
 	Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
 		Tokenable(t), ind_(i), proof_(p) {
-		if (k == ASS) {
-			val_ = std::move(User<Assertion>(id));
-		}
+		if (k == ASS) { val_ = std::move(User<Assertion>(id)); }
 	}
-
-	Assertion* ass() {
-		return (kind() == ASS) ? std::get<User<Assertion>>(val_).get() : nullptr;
-	}
-	const Assertion* ass() const {
-		return (kind() == ASS) ? std::get<User<Assertion>>(val_).get() : nullptr;
-	}
-	uint ass_id() const {
-		return (kind() == ASS) ? std::get<User<Assertion>>(val_).id() : -1;
-	}
-	Proof* claim() {
-		return (kind() == CLAIM) ? std::get<unique_ptr<Proof>>(val_).get() : nullptr;
-	}
-	const Proof* claim() const {
-		return (kind() == CLAIM) ? std::get<unique_ptr<Proof>>(val_).get() : nullptr;
-	}
+	uint ass_id() const { return std::get<User<Assertion>>(val_).id(); }
+	Assertion* ass() { return std::get<User<Assertion>>(val_).get(); }
+	Proof* claim() { return std::get<unique_ptr<Proof>>(val_).get(); }
+	const Assertion* ass() const { return std::get<User<Assertion>>(val_).get(); }
+	const Proof* claim() const { return std::get<unique_ptr<Proof>>(val_).get(); }
 	Proof* proof() { return proof_; }
 	const Proof* proof() const { return proof_; }
 	Kind kind() const { return static_cast<Kind>(val_.index()); }
@@ -289,7 +276,7 @@ struct Theory : public Tokenable, public Verifiable, public Writable {
 		unique_ptr<Comment>
 	> Node;
 
-	Theory(uint n = - 1, Theory* p = nullptr, const Token& t = Token()) :
+	Theory(uint n = -1, Theory* p = nullptr, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
 	void verify() const override;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -311,15 +298,17 @@ struct Theory : public Tokenable, public Verifiable, public Writable {
 };
 
 struct Source : public mdl::Source<Source, Sys> {
-	Source(uint l);
-	~Source();
+	Source(uint l) : mdl::Source<Source, Sys>(l) { }
 	Tokenable* find(const Token& t);
-
-	Theory* theory;
 	void write(ostream& os, const Indent& i = Indent()) const override;
+
+	Theory theory;
 };
 
 string xml_outline(const Source&, uint);
+string xml_structure(uint bits);
+template<class T> string xml_struct(uint bits);
+
 size_t memvol(const Source&);
 
 void add_to_index(Assertion*);
