@@ -237,8 +237,8 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_p
 		if (!hs) throw Error("hypothesis unification failed");
 		if (!ps.join(hs)) throw Error("substitution join failed");
 	}
-	for (auto v : ass->vars.v) {
-		translate_term(ps.sub().at(v), thm, mm2_proof, maps);
+	for (auto& v : ass->vars.v) {
+		translate_term(ps.sub().at(v.lit), thm, mm2_proof, maps);
 	}
 	for (const auto& ref : st->refs) {
 		translate_ref(ref.get(), thm, mm2_proof, maps);

@@ -135,11 +135,11 @@ Tree* apply(const Substitution* s, const Tree* t) {
 		}
 		return new Tree(t->rule()->id(), ch);
 	} else {
-		Symbol v = *t->var();
-		if (s->sub().count(v)) {
-			return new Tree(s->sub().at(v));
+		const Symbol* v = t->var();
+		if (s->sub().count(v->lit)) {
+			return new Tree(s->sub().at(v->lit));
 		} else {
-			return new Tree(v);
+			return new Tree(*v);
 		}
 	}
 }

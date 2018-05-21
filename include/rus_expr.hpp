@@ -291,10 +291,10 @@ string show(const Rules& tr);
 
 struct Substitution {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
-	Substitution(Symbol v, Symbol t) : sub_(), ok_(true) {
+	Substitution(uint v, const Symbol& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
 	}
-	Substitution(Symbol v, const Tree& t) : sub_(), ok_(true) {
+	Substitution(uint v, const Tree& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
 	}
 	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
@@ -314,10 +314,10 @@ struct Substitution {
 		sub_ = std::move(s.sub_);
 		s.ok_ = true;
 	}
-	bool join(Symbol v, Symbol t) {
+	bool join(uint v, const Symbol& t) {
 		return join(v, Tree(t));
 	}
-	bool join(Symbol v, const Tree& t) {
+	bool join(uint v, const Tree& t) {
 		if (!ok_) return false;
 		auto it = sub_.find(v);
 		if (it != sub_.end()) {
@@ -337,12 +337,12 @@ struct Substitution {
 		}
 		return ok_;
 	}
-	const map<Symbol, Tree>& sub() const { return sub_; }
+	const map<uint, Tree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
 
 private:
-	map<Symbol, Tree> sub_;
+	map<uint, Tree> sub_;
 	bool ok_;
 };
 

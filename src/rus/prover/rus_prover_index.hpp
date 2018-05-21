@@ -44,13 +44,13 @@ struct Index {
 	Unified<Data> unify_forth(const Tree* t) const {
 		Unified<Data> unif;
 		for (const auto& p : vars) {
-			Symbol v = p.first;
+			const Symbol& v = p.first;
 			if (v.type() == t->type()) {
 				for (const Data& d : p.second)
-					unif[d].join(v, *t);
+					unif[d].join(v.lit, *t);
 			} else if (Rule* super = find_super(t->type(), v.type())) {
 				for (const Data& d : p.second)
-					unif[d].join(v, Tree(super->id(), {new Tree(*t)}));
+					unif[d].join(v.lit, Tree(super->id(), {new Tree(*t)}));
 			}
 		}
 		if (t->kind() == Tree::NODE && rules.count(t->rule())) {
@@ -74,11 +74,11 @@ struct Index {
 				Symbol iv = p.first;
 				if (iv.type() == tv.type()) {
 					for (const Data& d : p.second)
-						unif[d].join(tv, iv);
+						unif[d].join(tv.lit, iv);
 				} else if (Rule* super = find_super(iv.type(), tv.type())) {
 					for (const Data& d : p.second) {
 						Tree tr(super->id(), {new Tree(iv)});
-						unif[d].join(tv, tr);
+						unif[d].join(tv.lit, tr);
 					}
 				}
 			}
@@ -87,11 +87,11 @@ struct Index {
 				const Node& n = p.second;
 				if (tv.type() == r->type()) {
 					for (const auto& q : gather_terms(r, n))
-						unif[q.first].join(tv, *q.second);
+						unif[q.first].join(tv.lit, *q.second);
 				} else if (Rule* super = find_super(r->type(), tv.type())) {
 					for (const auto& q : gather_terms(r, n)) {
 						Tree tr(super->id(), {new Tree(*q.second)});
-						unif[q.first].join(tv, tr);
+						unif[q.first].join(tv.lit, tr);
 					}
 				}
 			}

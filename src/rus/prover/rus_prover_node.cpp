@@ -25,10 +25,10 @@ inline Symbol fresh_var(Symbol v, uint n) {
 
 static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, uint>& vars) {
 	for (auto& v : a->vars.v) {
-		if (!s.sub().count(v)) {
+		if (!s.sub().count(v.lit)) {
 			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
 			vars[v.lit] = n;
-			s.join(v, fresh_var(v, n));
+			s.join(v.lit, fresh_var(v, n));
 		}
 	}
 }
@@ -161,9 +161,9 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 		ret.term = new Tree(r->id(), ch);
 		for (auto s : vars) {
 			if (r->type() == s->type()) {
-				ret.sub.join(Substitution(*s, *ret.term));
+				ret.sub.join(Substitution(s->lit, *ret.term));
 			} else if (Rule* sup = find_super(r->type(), s->type())) {
-				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(*ret.term)})));
+				ret.sub.join(Substitution(s->lit, Tree(sup->id(), {new Tree(*ret.term)})));
 			} else return UnifSym();
 		}
 	} else {
@@ -177,9 +177,9 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 		const Symbol* lv = *vars.begin();
 		for (auto s : vars) {
 			if (lv->type() == s->type()) {
-				ret.sub.join(Substitution(*s, *lv));
+				ret.sub.join(Substitution(s->lit, *lv));
 			} else if (Rule* sup = find_super(lv->type(), s->type())) {
-				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(*lv)})));
+				ret.sub.join(Substitution(s->lit, Tree(sup->id(), {new Tree(*lv)})));
 			} else return UnifSym();
 		}
 	}
@@ -188,7 +188,7 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 
 struct MultySub {
 	MultySub() : ok(true) { }
-	map<Symbol, UnifSym> msub_;
+	map<uint, UnifSym> msub_;
 	bool ok;
 };
 
@@ -204,7 +204,7 @@ struct MultyTree {
 		MultySub ret;
 		for (const auto& p : msub_) {
 			if (UnifSym s = unify_both(p.second)) {
-				ret.msub_[p.first] = s;
+				ret.msub_[p.first.lit] = s;
 			} else {
 				ret.ok = false;
 				break;
