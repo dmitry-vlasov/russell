@@ -172,37 +172,33 @@ struct Verifiable {
 
 struct Step : public Tokenable, public Verifiable, public Writable {
 	enum Kind { ASS, CLAIM };
-	union Value {
-		User<Assertion>* ass;
-		Proof*           prf;
-	};
+	typedef variant<User<Assertion>, unique_ptr<Proof>> Value;
 
-	Step(uint ind, Step::Kind, Id id, Proof* proof, const Token& t = Token());
-	~Step();
+	Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
+		Tokenable(t), ind_(i), proof_(p) {
+		if (k == ASS) {
+			val_ = std::move(User<Assertion>(id));
+		}
+	}
 
 	Assertion* ass() {
-		if (kind_ != ASS) return nullptr;
-		return val_.ass->get();
+		return (kind() == ASS) ? std::get<User<Assertion>>(val_).get() : nullptr;
 	}
 	const Assertion* ass() const {
-		if (kind_ != ASS) return nullptr;
-		return val_.ass->get();
+		return (kind() == ASS) ? std::get<User<Assertion>>(val_).get() : nullptr;
 	}
 	uint ass_id() const {
-		if (kind_ != ASS) return -1;
-		return val_.ass->id();
+		return (kind() == ASS) ? std::get<User<Assertion>>(val_).id() : -1;
 	}
 	Proof* claim() {
-		if (kind_ != CLAIM) return nullptr;
-		return val_.prf;
+		return (kind() == CLAIM) ? std::get<unique_ptr<Proof>>(val_).get() : nullptr;
 	}
 	const Proof* claim() const {
-		if (kind_ != CLAIM) return nullptr;
-		return val_.prf;
+		return (kind() == CLAIM) ? std::get<unique_ptr<Proof>>(val_).get() : nullptr;
 	}
 	Proof* proof() { return proof_; }
 	const Proof* proof() const { return proof_; }
-	Kind kind() const { return kind_; }
+	Kind kind() const { return static_cast<Kind>(val_.index()); }
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
 	void verify() const override;
@@ -213,7 +209,6 @@ struct Step : public Tokenable, public Verifiable, public Writable {
 
 private:
 	uint   ind_;
-	Kind   kind_;
 	Value  val_;
 	Proof* proof_;
 };

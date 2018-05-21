@@ -95,14 +95,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Ref,
 	(mdl::rus::Ref::Value, val)
 )
-
+/*
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Step::Value,
 	(void*,  non)
 	(mdl::rus::Assertion*, ass)
 	(mdl::rus::Proof*,     thm)
 )
-
+*/
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Step,
 	(mdl::uint, ind)

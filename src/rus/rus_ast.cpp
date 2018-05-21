@@ -54,15 +54,6 @@ Axiom::Axiom(Id id, const Token& t) : Assertion(id, t) { }
 Theorem::Theorem(Id id, const Token& t) : Assertion(id, t) { }
 Def::Def(Id id, const Token& t) : Assertion(id, t) { }
 
-Step::Step(uint i, Step::Kind sk, Id id, Proof* p, const Token& t) :
-	Tokenable(t), ind_(i), kind_(sk), proof_(p) {
-	val_.ass = new User<Assertion>(id);
-}
-Step::~Step() {
-	if (kind_ == ASS) delete val_.ass;
-	for (Ref* ref : refs) delete ref;
-}
-
 inline uint make_proof_id(uint id, Id th) {
 	if (Undef<uint>::is(id)) {
 		const string& th_name = Lex::toStr(th.id);
