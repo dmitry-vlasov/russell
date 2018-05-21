@@ -1,7 +1,6 @@
 #pragma once
 
 #include "rus_sys.hpp"
-//#include "mm_expr.hpp"
 
 namespace mdl { namespace rus {
 
@@ -53,70 +52,49 @@ struct Literal {
 struct Symbol : public Literal {
 	Symbol() : Literal() { }
 	Symbol(uint l) : Literal(l) { }
-	Symbol(uint l, Id i, Kind k) : Literal(l), val(i, k) { set_kind(k); }
-	Symbol(const Symbol& s) : Literal(s) {
-		if (s.var) {
-			val.type = new User<Type>(*s.val.type);
-		} else if (s.cst) {
-			val.constant = new User<Const>(*s.val.constant);
+	Symbol(uint l, Id i, Kind k) : Literal(l) {
+		set_kind(k);
+		if (var) {
+			val = unique_ptr<User<Type>>(new User<Type>(i));
+		} else if (cst) {
+			val = unique_ptr<User<Const>>(new User<Const>(i));
 		}
 	}
-	Symbol(Symbol&& s) : Literal(s) {
-		if (s.var)
-			val.type = s.val.type;
-		else if (s.cst)
-			val.constant = s.val.constant;
-		s.var = false;
-		s.cst = false;
-		s.val.type = nullptr;
-	}
-	~Symbol() { clear(); }
+	Symbol(const Symbol& s) : Literal(s) { operator = (s); }
+	Symbol(Symbol&& s) : Literal(s) { operator = (std::move(s)); }
 
 	void operator = (const Symbol& s) {
-		clear();
-		Literal::operator=(s);
-		switch (s.kind()) {
-		case VAR:   val.type = new User<Type>(*s.val.type);          break;
-		case CONST: val.constant = new User<Const>(*s.val.constant); break;
+		Literal::operator = (s);
+		if (var) {
+			val = unique_ptr<User<Type>>(new User<Type>(s.type_id()));
+		}
+		if (cst) {
+			val = unique_ptr<User<Const>>(new User<Const>(lit));
 		}
 	}
 	void operator = (Symbol&& s) {
-		clear();
-		Literal::operator=(s);
-		switch (s.kind()) {
-		case VAR:   val.type = s.val.type;         break;
-		case CONST: val.constant = s.val.constant; break;
-		}
-		s.set_kind(NONE);
-		s.val.type = nullptr;
+		Literal::operator = (s);
+		val = std::move(s.val);
 	}
 
-	uint type_id() const { return var ? val.type->id() : UNDEF_UINT; }
-	uint constant_id() const { return cst ? val.constant->id() : UNDEF_UINT; }
-	Type* type() { return var ? val.type->get() : nullptr; }
-	Const* constant() { return cst ? val.constant->get() : nullptr; }
-	const Type* type() const { return var ? val.type->get() : nullptr; }
-	const Const* constant() const { return cst ? val.constant->get() : nullptr; }
-
-	void set_type(Id i) {
-		clear();
-		val.type = new User<Type>(i);
-		var = true;
-		rep = true;
-	}
+	uint type_id() const { return var ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
+	uint constant_id() const { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
+	Type* type() { return var ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	Const* constant() { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	const Type* type() const { return var ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	const Const* constant() const { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	void set_type(Id i) { set_type(i.id); }
 
 	void set_type(uint t) {
-		clear();
 		if (t == UNDEF_UINT) return;
-		val.type = new User<Type>(t);
+		val = unique_ptr<User<Type>>(new User<Type>(t));
 		var = true;
 		rep = true;
 	}
 
 	void set_const() {
-		clear();
 		if (is_undef()) return;
-		val.constant = new User<Const>(lit);
+		val = unique_ptr<User<Const>>(new User<Const>(lit));
 		cst = true;
 		rep = false;
 	}
@@ -132,28 +110,8 @@ struct Symbol : public Literal {
 	};
 
 private:
-	union Value {
-		Value(): constant(nullptr) { }
-		Value(Id i, Kind k) {
-			switch (k) {
-			case VAR:   type = new User<Type>(i);      break;
-			case CONST: constant = new User<Const>(i); break;
-			default: break;
-			};
-		}
-		User<Const>* constant;
-		User<Type>*  type;
-	};
+	typedef variant<unique_ptr<User<Type>>, unique_ptr<User<Const>>> Value;
 	Value val;
-
-	void clear() {
-		switch (kind()) {
-		case VAR:   delete val.type;     break;
-		case CONST: delete val.constant; break;
-		}
-		val.type = nullptr;
-		set_kind(NONE);
-	}
 };
 
 typedef vector<Symbol> Symbols;
