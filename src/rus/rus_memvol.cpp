@@ -119,25 +119,26 @@ size_t memvol(const Theorem& th) {
 size_t memvol(const Import& imp) {
 	return 0;
 }
-size_t memvol(const Node& n) {
-	switch (n.kind) {
-	case Node::CONST   : return memvol(*n.val.cst);
-	case Node::TYPE    : return memvol(*n.val.tp);
-	case Node::RULE    : return memvol(*n.val.rul);
-	case Node::AXIOM   : return memvol(*n.val.ax);
-	case Node::DEF     : return memvol(*n.val.def);
-	case Node::THEOREM : return memvol(*n.val.thm);
-	case Node::PROOF   : return memvol(*n.val.prf);
-	case Node::THEORY  : return memvol(*n.val.thy);
-	case Node::IMPORT  : return memvol(*n.val.imp);
+size_t memvol(const Theory::Node& n) {
+	switch (Theory::kind(n)) {
+	case Theory::CONST   : return memvol(*Theory::const_(n));
+	case Theory::TYPE    : return memvol(*Theory::type(n));
+	case Theory::RULE    : return memvol(*Theory::rule(n));
+	case Theory::AXIOM   : return memvol(*Theory::axiom(n));
+	case Theory::DEF     : return memvol(*Theory::def(n));
+	case Theory::THEOREM : return memvol(*Theory::theorem(n));
+	case Theory::PROOF   : return memvol(*Theory::proof(n));
+	case Theory::THEORY  : return memvol(*Theory::theory(n));
+	case Theory::IMPORT  : return memvol(*Theory::import(n));
+	case Theory::COMMENT : return memvol(*Theory::comment(n));
 	default: return 0;
 	}
 }
 
 size_t memvol(const Theory& th) {
 	size_t s = 0;
-	s += th.nodes.capacity() * sizeof(Node);
-	for (const Node& n : th.nodes)
+	s += th.nodes.capacity() * sizeof(Theory::Node);
+	for (const Theory::Node& n : th.nodes)
 		s += memvol(n);
 	return s;
 }

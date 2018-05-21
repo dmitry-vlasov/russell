@@ -123,26 +123,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Node::Value,
-	(void*,      non)
-	(mdl::rus::Const*,   cst)
-	(mdl::rus::Type*,    tp)
-	(mdl::rus::Rule*,    rul)
-	(mdl::rus::Axiom*,   ax)
-	(mdl::rus::Def*,     def)
-	(mdl::rus::Theorem*, thm)
-	(mdl::rus::Proof*,   prf)
-	(mdl::rus::Theory*,  thy)
-	(mdl::rus::Import*,  imp)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Node,
-	(mdl::rus::Node::Kind, kind)
-	(mdl::rus::Node::Value, val)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Import,
 	(mdl::rus::Source*, source)
 	(bool, primary)
@@ -151,7 +131,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Theory,
 	(mdl::uint, id)
-	(mdl::vector<mdl::rus::Node>, nodes)
+	(mdl::vector<mdl::rus::Theory::Node>, nodes)
 	(mdl::rus::Theory*, parent)
 )
 

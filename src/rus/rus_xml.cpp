@@ -15,9 +15,6 @@ string xml(const Const& c, uint bits) {
 	return ret;
 }
 
-//string xml(const Vars& c, uint bits);
-//string xml(const Disj&, uint bits);
-
 string xml(const Type& t, uint bits) {
 	if (!xml_bit(bits, XmlNode::TYPE)) return "";
 	string ret = "<type ";
@@ -53,10 +50,6 @@ string xml(const Assertion& a, uint bits) {
 	return ret;
 }
 
-//string xml(const Def&, uint bits);
-//string xml(const Assertion&, uint bits);
-//string xml(const Theorem&, uint bits);
-
 string xml(const Proof& p, uint bits) {
 	if (!xml_bit(bits, XmlNode::PROOF)) return "";
 	string ret = "<proof ";
@@ -66,28 +59,6 @@ string xml(const Proof& p, uint bits) {
 	return ret;
 }
 
-//string xml(const Step&, uint bits);
-//string xml(const Ref&, uint bits);
-//string xml(const Qed&, uint bits);
-//string xml(const Hyp&, uint bits);
-//string xml(const Prop&, uint bits);
-
-string xml(const Node& n, uint bits) {
-	switch (n.kind) {
-	case Node::CONST:   return xml(*n.val.cst, bits);
-	case Node::TYPE:    return xml(*n.val.tp, bits);
-	case Node::RULE:    return xml(*n.val.rul, bits);
-	case Node::AXIOM:   return xml(*n.val.ax, bits);
-	case Node::DEF:     return xml(*n.val.def, bits);
-	case Node::THEOREM: return xml(*n.val.thm, bits);
-	case Node::PROOF:   return xml(*n.val.prf, bits);
-	case Node::THEORY:  return xml(*n.val.thy, bits);
-	case Node::IMPORT:  return xml(*n.val.imp, bits);
-	case Node::COMMENT: return "";
-	default : assert(false && "impossible"); return "";
-	}
-}
-
 string xml(const Import& i, uint bits) {
 	if (!xml_bit(bits, XmlNode::IMPORT)) return "";
 	string ret = "<import ";
@@ -95,6 +66,24 @@ string xml(const Import& i, uint bits) {
 	ret += i.token.locate().xml();
 	ret += "/>\n";
 	return ret;
+}
+
+string xml(const Theory& t, uint bits);
+
+string xml(const Theory::Node& n, uint bits) {
+	switch (Theory::kind(n)) {
+	case Theory::CONST:   return xml(*Theory::const_(n), bits);
+	case Theory::TYPE:    return xml(*Theory::type(n), bits);
+	case Theory::RULE:    return xml(*Theory::rule(n), bits);
+	case Theory::AXIOM:   return xml(*Theory::axiom(n), bits);
+	case Theory::DEF:     return xml(*Theory::def(n), bits);
+	case Theory::THEOREM: return xml(*Theory::theorem(n), bits);
+	case Theory::PROOF:   return xml(*Theory::proof(n), bits);
+	case Theory::THEORY:  return xml(*Theory::theory(n), bits);
+	case Theory::IMPORT:  return xml(*Theory::import(n), bits);
+	case Theory::COMMENT: return "";
+	default : assert(false && "impossible"); return "";
+	}
 }
 
 string xml(const Theory& t, uint bits) {
@@ -118,8 +107,6 @@ string xml_outline(const Source& s, uint bits) {
 	ret += "</outline>\n\n";
 	return ret;
 }
-//string xml(const Comment&, uint bits);
-
 
 template<class T>
 string xml_struct(uint bits) {

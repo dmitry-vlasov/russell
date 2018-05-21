@@ -5,8 +5,6 @@
 
 namespace mdl { namespace mm { namespace {
 
-typedef vector<rus::Node>::iterator NodeIter;
-
 struct Maps {
 	map<const mm::Source*,rus::Source*> sources;
 	map<uint, deque<rus::Type*>> type_defs;
@@ -93,11 +91,11 @@ void translate_constant(const Const* constant, Maps& state) {
 			} else {
 				c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 			}
-			state.theory.top()->nodes.emplace_back(c);
+			state.theory.top()->nodes.emplace_back(unique_ptr<rus::Const>(c));
 		}
 	} else {
 		for (rus::Type* type : t->second) {
-			state.theory.top()->nodes.emplace_back(type);
+			state.theory.top()->nodes.emplace_back(unique_ptr<rus::Type>(type));
 		}
 	}
 }
@@ -180,7 +178,7 @@ void translate_rule(const Assertion* ass, Maps& state) {
 	if (it != state.rules.end()) {
 		rus::Rule* rule = it->second;
 		if (rule) {
-			state.theory.top()->nodes.push_back(rule);
+			state.theory.top()->nodes.emplace_back(unique_ptr<rus::Rule>(rule));
 		}
 	}
 }
@@ -201,7 +199,7 @@ void translate_assertion(const Assertion* ass, T* a) {
 void translate_axiom(const Assertion* ass, Maps& state) {
 	rus::Axiom* ax = new rus::Axiom(ass->id());
 	translate_assertion<rus::Axiom>(ass, ax);
-	state.theory.top()->nodes.push_back(ax);
+	state.theory.top()->nodes.emplace_back(unique_ptr<rus::Axiom>(ax));
 }
 
 
@@ -267,7 +265,7 @@ void translate_def(const Assertion* ass, Maps& state) {
 			def->prop.push_back(translate_symb(it->lit, ass));
 		}
 	}
-	state.theory.top()->nodes.push_back(def);
+	state.theory.top()->nodes.emplace_back(unique_ptr<rus::Def>(def));
 }
 
 bool is_def(const Assertion* ass) {
@@ -277,15 +275,15 @@ bool is_def(const Assertion* ass) {
 	return eq_pos != ex.end();
 }
 
-rus::Node::Kind node_kind(const Assertion* ass) {
+rus::Theory::Kind node_kind(const Assertion* ass) {
 	if (!is_turnstile(ass->expr.front())) {
-		return rus::Node::RULE;
+		return rus::Theory::RULE;
 	} else if (is_def(ass)) {
-		return rus::Node::DEF;
+		return rus::Theory::DEF;
 	} else if (!ass->proof.refs.size()) {
-		return rus::Node::AXIOM;
+		return rus::Theory::AXIOM;
 	} else {
-		return rus::Node::THEOREM;
+		return rus::Theory::THEOREM;
 	}
 }
 
@@ -328,7 +326,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->props.front().get();
 	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));
-	state.theory.top()->nodes.push_back(p);
+	state.theory.top()->nodes.emplace_back(unique_ptr<rus::Proof>(p));
 	delete tree;
 }
 
@@ -339,17 +337,17 @@ void translate_theorem(const Assertion* ass, Maps& state) {
 	}
 	rus::Theorem* thm = new rus::Theorem(ass->id());
 	translate_assertion<rus::Theorem>(ass, thm);
-	state.theory.top()->nodes.push_back(thm);
+	state.theory.top()->nodes.emplace_back(unique_ptr<rus::Theorem>(thm));
 	translate_proof(ass, thm, state);
 }
 
 void translate_assertion(const Assertion* ass, Maps& state) {
 	try {
 		switch (node_kind(ass)) {
-		case rus::Node::RULE    : translate_rule(ass, state);    break;
-		case rus::Node::DEF     : translate_def(ass, state);     break;
-		case rus::Node::AXIOM   : translate_axiom(ass, state);   break;
-		case rus::Node::THEOREM : translate_theorem(ass, state); break;
+		case rus::Theory::RULE    : translate_rule(ass, state);    break;
+		case rus::Theory::DEF     : translate_def(ass, state);     break;
+		case rus::Theory::AXIOM   : translate_axiom(ass, state);   break;
+		case rus::Theory::THEOREM : translate_theorem(ass, state); break;
 		default : assert(false && "impossible"); break;
 		}
 	} catch (Error& err) {
@@ -367,13 +365,13 @@ inline rus::Import* translate_import(const Import* inc, Maps& s) {
 
 inline void translate_comment(const Comment* com, Maps& s) {
 	rus::Comment* comment = new rus::Comment { true, com->text };
-	s.theory.top()->nodes.push_back(comment);
+	s.theory.top()->nodes.emplace_back(unique_ptr<rus::Comment>(comment));
 }
 
 void translate_theory(const Source* source, Maps& state) {
 	for (const auto& node : source->contents) {
 		if (auto imp = std::get_if<unique_ptr<Import>>(&node)) {
-			state.theory.top()->nodes.push_back(translate_import(imp->get(), state));
+			state.theory.top()->nodes.emplace_back(unique_ptr<rus::Import>(translate_import(imp->get(), state)));
 		}
 	}
 	for (auto& node : source->contents) {
@@ -439,7 +437,7 @@ Maps create_maps() {
 		if (a->proof.refs.size() == 1) {
 			maps.redundant_assertions[a->id()] = &a->proof.refs[0];
 		} else {
-			if (node_kind(a) == rus::Node::RULE) {
+			if (node_kind(a) == rus::Theory::RULE) {
 				for (const auto& v : a->outerVars) {
 					translate_type(v.get()->type(), maps);
 				}

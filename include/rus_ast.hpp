@@ -266,54 +266,6 @@ struct Proof : public Owner<Proof>, public Verifiable, public Writable {
 
 };
 
-struct Node : public Writable {
-	enum Kind {
-		NONE,
-		CONST,
-		TYPE,
-		RULE,
-		AXIOM,
-		DEF,
-		THEOREM,
-		PROOF,
-		THEORY,
-		IMPORT,
-		COMMENT
-	};
-	union Value {
-		void*    non;
-		Const*   cst;
-		Type*    tp;
-		Rule*    rul;
-		Axiom*   ax;
-		Def*     def;
-		Theorem* thm;
-		Proof*   prf;
-		Theory*  thy;
-		Import*  imp;
-		Comment* com;
-	};
-
-	Node() : kind(NONE), val() { val.non = nullptr; }
-	Node(Const* c)   : kind(CONST),   val() { val.cst = c; }
-	Node(Type* t)    : kind(TYPE),    val() { val.tp  = t; }
-	Node(Rule* r)    : kind(RULE),    val() { val.rul = r; }
-	Node(Axiom* a)   : kind(AXIOM),   val() { val.ax  = a; }
-	Node(Def* d)     : kind(DEF),     val() { val.def = d; }
-	Node(Theorem* t) : kind(THEOREM), val() { val.thm = t; }
-	Node(Proof* p)   : kind(PROOF),   val() { val.prf = p; }
-	Node(Theory* t)  : kind(THEORY),  val() { val.thy = t; }
-	Node(Import* i)  : kind(IMPORT),  val() { val.imp = i; }
-	Node(Comment* c) : kind(COMMENT), val() { val.com = c; }
-	void destroy();
-
-	bool operator==(const Node& n) { return val.non == n.val.non; }
-	void write(ostream& os, const Indent& i = Indent()) const override;
-
-	Kind kind;
-	Value val;
-};
-
 struct Import : public Tokenable, public Writable {
 	Import(uint src, bool prim, const Token& t = Token()) :
 		Tokenable(t), source(src), primary(prim) { }
@@ -323,13 +275,35 @@ struct Import : public Tokenable, public Writable {
 };
 
 struct Theory : public Tokenable, public Verifiable, public Writable {
-	Theory(const Token& t = Token()) :
-		Tokenable(t), id(-1), nodes(), parent(nullptr) { }
-	Theory(uint n, Theory* p, const Token& t = Token()) :
+	enum Kind { CONST, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
+	typedef variant<
+		unique_ptr<Const>,
+		unique_ptr<Type>,
+		unique_ptr<Rule>,
+		unique_ptr<Axiom>,
+		unique_ptr<Def>,
+		unique_ptr<Theorem>,
+		unique_ptr<Proof>,
+		unique_ptr<Theory>,
+		unique_ptr<Import>,
+		unique_ptr<Comment>
+	> Node;
+
+	Theory(uint n = - 1, Theory* p = nullptr, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
-	~ Theory() { for (auto& n : nodes) n.destroy(); }
 	void verify() const override;
 	void write(ostream& os, const Indent& i = Indent()) const override;
+	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
+	static Const* const_(const Node& n) { return std::get<unique_ptr<Const>>(n).get(); }
+	static Type* type(const Node& n) { return std::get<unique_ptr<Type>>(n).get(); }
+	static Rule* rule(const Node& n) { return std::get<unique_ptr<Rule>>(n).get(); }
+	static Axiom* axiom(const Node& n) { return std::get<unique_ptr<Axiom>>(n).get(); }
+	static Def* def(const Node& n) { return std::get<unique_ptr<Def>>(n).get(); }
+	static Theorem* theorem(const Node& n) { return std::get<unique_ptr<Theorem>>(n).get(); }
+	static Proof* proof(const Node& n) { return std::get<unique_ptr<Proof>>(n).get(); }
+	static Theory* theory(const Node& n) { return std::get<unique_ptr<Theory>>(n).get(); }
+	static Import* import(const Node& n) { return std::get<unique_ptr<Import>>(n).get(); }
+	static Comment* comment(const Node& n) { return std::get<unique_ptr<Comment>>(n).get(); }
 
 	uint         id;
 	vector<Node> nodes;
@@ -345,65 +319,8 @@ struct Source : public mdl::Source<Source, Sys> {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-inline void Node::destroy() {
-	switch(kind) {
-	case CONST:   delete val.cst; break;
-	case TYPE:    delete val.tp;  break;
-	case RULE:    delete val.rul; break;
-	case AXIOM:   delete val.ax;  break;
-	case DEF:     delete val.def; break;
-	case THEOREM: delete val.thm; break;
-	case PROOF:   delete val.prf; break;
-	case THEORY:  delete val.thy; break;
-	case IMPORT:  delete val.imp; break;
-	case COMMENT: delete val.com; break;
-	default : assert(false && "impossible"); break;
-	}
-	kind = NONE;
-}
-
-
-string xml(const Const&, uint);
-//string xml(const Vars&, uint);
-//string xml(const Disj&, uint);
-string xml(const Type&, uint);
-string xml(const Rule&, uint);
-//string xml(const Axiom&, uint);
-//string xml(const Def&, uint);
-string xml(const Assertion&, uint);
-//string xml(const Theorem&, uint);
-string xml(const Proof&, uint);
-//string xml(const Step&, uint);
-//string xml(const Ref&, uint);
-//string xml(const Qed&, uint);
-//string xml(const Hyp&, uint);
-//string xml(const Prop&, uint);
-string xml(const Node&, uint);
-string xml(const Import&, uint);
-string xml(const Theory&, uint);
 string xml_outline(const Source&, uint);
-//string xml(const Comment&, uint);
-
-size_t memvol(const Const&);
-size_t memvol(const Vars&);
-size_t memvol(const Disj&);
-size_t memvol(const Type&);
-size_t memvol(const Rule&);
-size_t memvol(const Axiom&);
-size_t memvol(const Def&);
-size_t memvol(const Assertion&);
-size_t memvol(const Theorem&);
-size_t memvol(const Proof&);
-size_t memvol(const Step&);
-size_t memvol(const Ref&);
-size_t memvol(const Qed&);
-size_t memvol(const Hyp&);
-size_t memvol(const Prop&);
-size_t memvol(const Node&);
-size_t memvol(const Import&);
-size_t memvol(const Theory&);
 size_t memvol(const Source&);
-size_t memvol(const Comment&);
 
 void add_to_index(Assertion*);
 void add_to_index(Proof*);

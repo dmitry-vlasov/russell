@@ -331,19 +331,19 @@ inline void add_theory(vector<mm::Source::Node>& nodes, const Theory* t, Maps& m
 vector<mm::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<mm::Source::Node> nodes;
 	add_turnstile(nodes);
-	for (auto n : thy->nodes) {
-		switch (n.kind) {
-		case Node::CONST:   add_const(nodes, n.val.cst, maps); break;
-		case Node::TYPE:    add_type(nodes, n.val.tp, maps);   break;
-		case Node::RULE:    add_rule(nodes, n.val.rul, maps);  break;
+	for (auto& n : thy->nodes) {
+		switch (Theory::kind(n)) {
+		case Theory::CONST:   add_const(nodes, Theory::const_(n), maps); break;
+		case Theory::TYPE:    add_type(nodes, Theory::type(n), maps);   break;
+		case Theory::RULE:    add_rule(nodes, Theory::rule(n), maps);  break;
 
-		case Node::AXIOM:   add_assertion(nodes, n.val.ax, maps);  break;
-		case Node::DEF:     add_assertion(nodes, n.val.def, maps); break;
-		case Node::THEOREM: break;  // theorem is translated implicitly in proof
-		case Node::PROOF:   add_proof(nodes, n.val.prf, maps);  break;
-		case Node::THEORY:  add_theory(nodes, n.val.thy, maps); break;
-		case Node::IMPORT:  add_import(nodes, n.val.imp);       break;
-		case Node::COMMENT: add_comment(nodes, n.val.com);      break;
+		case Theory::AXIOM:   add_assertion(nodes, Theory::axiom(n), maps);  break;
+		case Theory::DEF:     add_assertion(nodes, Theory::def(n), maps); break;
+		case Theory::THEOREM: break;  // theorem is translated implicitly in proof
+		case Theory::PROOF:   add_proof(nodes, Theory::proof(n), maps);  break;
+		case Theory::THEORY:  add_theory(nodes, Theory::theory(n), maps); break;
+		case Theory::IMPORT:  add_import(nodes, Theory::import(n));       break;
+		case Theory::COMMENT: add_comment(nodes, Theory::comment(n));      break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -366,8 +366,8 @@ static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
 	visited.insert(src);
 	const Source* source = Sys::get().math.get<Source>().access(src);
 	for (const auto& n : source->theory->nodes) {
-		if (n.kind == Node::IMPORT) {
-			uint imp = n.val.imp->source.id();
+		if (Theory::kind(n) == Theory::IMPORT) {
+			uint imp = Theory::import(n)->source.id();
 			if (!visited.count(imp)) {
 				find_dependencies(imp, deps, visited);
 			}

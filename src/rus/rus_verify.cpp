@@ -68,16 +68,16 @@ void Proof::verify() const {
 }
 
 void Theory::verify() const {
-	for (auto n : nodes) {
-		switch (n.kind) {
-		case Node::THEORY: n.val.thy->verify(); break;
-		case Node::IMPORT: {
-			const Import* imp = n.val.imp;
+	for (auto& n : nodes) {
+		switch (Theory::kind(n)) {
+		case Theory::THEORY: Theory::theory(n)->verify(); break;
+		case Theory::IMPORT: {
+			const Import* imp = Theory::import(n);
 			if (imp->primary) imp->source.get()->theory->verify();
 			break;
 		}
-		case Node::THEOREM: {
-			const Theorem* t = n.val.thm;
+		case Theory::THEOREM: {
+			const Theorem* t = Theory::theorem(n);
 			if (!t->proofs.size()) throw Error("Theorem has no proof", show_id(t->id()));
 			for (const User<Proof>& p : t->proofs) p.get()->verify();
 			break;

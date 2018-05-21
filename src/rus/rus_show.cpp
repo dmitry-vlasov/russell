@@ -217,18 +217,18 @@ void Import::write(ostream& os, const Indent& i) const {
 	os << i << "import " << Lex::toStr(source.id()) << ".rus" << END_MARKER << "\n";
 }
 
-void Node::write(ostream& os, const Indent& i) const {
-	switch(kind) {
-	case CONST:   val.cst->write(os, i); break;
-	case TYPE:    val.tp->write(os, i);  break;
-	case RULE:    val.rul->write(os, i); break;
-	case AXIOM:   val.ax->write(os, i);  break;
-	case DEF:     val.def->write(os, i); break;
-	case THEOREM: val.thm->write(os, i); break;
-	case PROOF:   val.prf->write(os, i); break;
-	case THEORY:  val.thy->write(os, i); break;
-	case IMPORT:  val.imp->write(os, i); break;
-	case COMMENT: val.com->write(os, i); break;
+static void write_node(ostream& os, const Indent& i, const Theory::Node& n) {
+	switch(Theory::kind(n)) {
+	case Theory::CONST:   Theory::const_(n)->write(os, i); break;
+	case Theory::TYPE:    Theory::type(n)->write(os, i);  break;
+	case Theory::RULE:    Theory::rule(n)->write(os, i); break;
+	case Theory::AXIOM:   Theory::axiom(n)->write(os, i);  break;
+	case Theory::DEF:     Theory::def(n)->write(os, i); break;
+	case Theory::THEOREM: Theory::theorem(n)->write(os, i); break;
+	case Theory::PROOF:   Theory::proof(n)->write(os, i); break;
+	case Theory::THEORY:  Theory::theory(n)->write(os, i); break;
+	case Theory::IMPORT:  Theory::import(n)->write(os, i); break;
+	case Theory::COMMENT: Theory::comment(n)->write(os, i); break;
 	default : assert(false && "impossible"); break;
 	}
 }
@@ -236,14 +236,14 @@ void Node::write(ostream& os, const Indent& i) const {
 void Theory::write(ostream& os, const Indent& i) const {
 	os << i << "theory " << Lex::toStr(id) << " {";
 	for (const auto& n : nodes) {
-		n.write(os, i + 1);
+		write_node(os, i + 1, n);
 	}
 	os << "}\n";
 }
 
 void Source::write(ostream& os, const Indent& i) const {
 	for (const auto& n : theory->nodes) {
-		n.write(os, i + 1);
+		write_node(os, i + 1, n);
 	}
 }
 

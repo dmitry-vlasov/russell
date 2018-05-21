@@ -522,21 +522,18 @@ private:
 		// ELEMENT <- COMMENT / IMPORT / CONST / TYPE / RULE / AXIOM / DEF / THEOREM / PROOF / THEORY
 		parser_["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			Node node;
 			switch (sv.choice()) {
-			case 0: node = Node(sv[0].get<Comment*>()); break;
-			case 1: node = Node(sv[0].get<Import*>());  break;
-			case 2: node = Node(sv[0].get<Const*>());   break;
-			case 3: node = Node(sv[0].get<Type*>());    break;
-			case 4: node = Node(sv[0].get<Rule*>());    break;
-			case 5: node = Node(sv[0].get<Axiom*>());   break;
-			case 6: node = Node(sv[0].get<Def*>());     break;
-			case 7: node = Node(sv[0].get<Theorem*>()); break;
-			case 8: node = Node(sv[0].get<Proof*>());   break;
-			case 9: node = Node(sv[0].get<Theory*>());  break;
+			case 0: c->theory->nodes.emplace_back(unique_ptr<Comment>(sv[0].get<Comment*>())); break;
+			case 1: c->theory->nodes.emplace_back(unique_ptr<Import>(sv[0].get<Import*>()));   break;
+			case 2: c->theory->nodes.emplace_back(unique_ptr<Const>(sv[0].get<Const*>()));     break;
+			case 3: c->theory->nodes.emplace_back(unique_ptr<Type>(sv[0].get<Type*>()));       break;
+			case 4: c->theory->nodes.emplace_back(unique_ptr<Rule>(sv[0].get<Rule*>()));       break;
+			case 5: c->theory->nodes.emplace_back(unique_ptr<Axiom>(sv[0].get<Axiom*>()));     break;
+			case 6: c->theory->nodes.emplace_back(unique_ptr<Def>(sv[0].get<Def*>()));         break;
+			case 7: c->theory->nodes.emplace_back(unique_ptr<Theorem>(sv[0].get<Theorem*>())); break;
+			case 8: c->theory->nodes.emplace_back(unique_ptr<Proof>(sv[0].get<Proof*>()));     break;
+			case 9: c->theory->nodes.emplace_back(unique_ptr<Theory>(sv[0].get<Theory*>()));   break;
 			}
-			c->theory->nodes.push_back(node);
-			return node;
 		};
 		parser_["TH_DECL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
@@ -544,10 +541,7 @@ private:
 		};
 		parser_["THEORY"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			Theory* th = c->theory;
-			th->nodes = std::move(sv[1].get<vector<Node>&>());
-			c->theory = th->parent;
-			return th;
+			c->theory = c->theory->parent;
 		};
 		parser_["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();

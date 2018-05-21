@@ -47,16 +47,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<AddDisjVar>  addDisjVar;
 	const phoenix::function<NewDisjSet>  newDisjSet;
 
-	const phoenix::function<Enqueue>   enqueue;
-	const phoenix::function<ParseImport> parseImport;
-	const phoenix::function<AssembleDef> assembleDef;
+	const phoenix::function<Enqueue>        enqueue;
+	const phoenix::function<ParseImport>    parseImport;
+	const phoenix::function<AssembleDef>    assembleDef;
 	const phoenix::function<SetToken<Iterator>> setToken;
-	const phoenix::function<MakeString>  makeString;
-	const phoenix::function<AppendComment> appendComment;
-	const phoenix::function<AddProofElem> addProofElem;
-	const phoenix::function<AddStepRefs>  addStepRefs;
-	const phoenix::function<AddHyp>       addHyp;
-	const phoenix::function<AddProp>      addProp;
+	const phoenix::function<MakeString>     makeString;
+	const phoenix::function<AppendComment>  appendComment;
+	const phoenix::function<AddProofElem>   addProofElem;
+	const phoenix::function<AddStepRefs>    addStepRefs;
+	const phoenix::function<AddToAssertion> addToAssertion;
+	const phoenix::function<AddToTheory>    addToTheory;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
@@ -165,8 +165,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) > bar )
-		> + (prop    [addProp(_val, qi::labels::_1)])
+		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) > bar )
+		> + (prop    [addToAssertion(_val, qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];
 
@@ -178,8 +178,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) > bar )
-		> + (prop    [addProp(_val, qi::labels::_1)])
+		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) > bar )
+		> + (prop    [addToAssertion(_val, qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];
 
@@ -190,7 +190,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) )
+		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) )
 		> "defiendum" > ":"
 		> id         [_a = qi::labels::_1]
 		> "=" > "#"
@@ -270,15 +270,15 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	source =
 		eps [at_c<0>(*_val) = new_<Theory>()]
 		> +(
-			import   [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			constant [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			type     [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			rule     [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			axiom    [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			def      [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			theorem  [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			proof    [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			comment  [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))]
+			import   [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			constant [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			type     [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			rule     [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			axiom    [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			def      [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			theorem  [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			proof    [addToTheory(at_c<0>(*_val), qi::labels::_1)] |
+			comment  [addToTheory(at_c<0>(*_val), qi::labels::_1)]
 		);
 
 	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

@@ -286,19 +286,49 @@ struct AddStepRefs {
 	}
 };
 
-struct AddHyp {
+struct AddToAssertion {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Assertion* a, Hyp* h) const {
 		a->hyps.emplace_back(h);
 	}
-};
-
-struct AddProp {
-	template <typename T1, typename T2>
-	struct result { typedef void type; };
 	void operator()(Assertion* a, Prop* p) const {
 		a->props.emplace_back(p);
+	}
+};
+
+struct AddToTheory {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Theory* t, Const* c) const {
+		t->nodes.emplace_back(unique_ptr<Const>(c));
+	}
+	void operator()(Theory* t, Type* tp) const {
+		t->nodes.emplace_back(unique_ptr<Type>(tp));
+	}
+	void operator()(Theory* t, Rule* r) const {
+		t->nodes.emplace_back(unique_ptr<Rule>(r));
+	}
+	void operator()(Theory* t, Axiom* a) const {
+		t->nodes.emplace_back(unique_ptr<Axiom>(a));
+	}
+	void operator()(Theory* t, Def* d) const {
+		t->nodes.emplace_back(unique_ptr<Def>(d));
+	}
+	void operator()(Theory* t, Theorem* th) const {
+		t->nodes.emplace_back(unique_ptr<Theorem>(th));
+	}
+	void operator()(Theory* t, Proof* p) const {
+		t->nodes.emplace_back(unique_ptr<Proof>(p));
+	}
+	void operator()(Theory* t, Theory* th) const {
+		t->nodes.emplace_back(unique_ptr<Theory>(th));
+	}
+	void operator()(Theory* t, Import* i) const {
+		t->nodes.emplace_back(unique_ptr<Import>(i));
+	}
+	void operator()(Theory* t, Comment* c) const {
+		t->nodes.emplace_back(unique_ptr<Comment>(c));
 	}
 };
 
