@@ -205,7 +205,7 @@ struct Step : public Tokenable, public Verifiable, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Expr         expr;
-	vector<Ref*> refs;
+	vector<unique_ptr<Ref>> refs;
 
 private:
 	uint   ind_;

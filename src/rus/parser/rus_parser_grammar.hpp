@@ -54,6 +54,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<MakeString>  makeString;
 	const phoenix::function<AppendComment> appendComment;
 	const phoenix::function<AddProofElem> addProofElem;
+	const phoenix::function<AddStepRefs>  addStepRefs;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
@@ -118,7 +119,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 			(id           [_c = val(Step::ASS),   _d = qi::labels::_1])
 		)
 		> eps [_val = new_<Step>(_a, _c, _d, _r1)]
-		> refs(_r1) [phoenix::at_c<4>(*_val) = qi::labels::_1]
+		> refs(_r1) [addStepRefs(_val, qi::labels::_1)]
 		> lit("|-") [addProofElem(_r1, _val)]
 		> expr(_b)  [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> lit(END_MARKER);

@@ -28,10 +28,10 @@ void Oracle::add(Node* n) {
 				Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
 				if (props.count(grand)) {
 					rus::Step* st = props.at(grand);
-					for (auto r : st->refs) {
-						if (r->kind() == rus::Ref::STEP && ass == r->step()->ass()) {
+					for (auto& r : st->refs) {
+						if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
 							leafs.push_back(p);
-							props[p] = r->step();
+							props[p] = r.get()->step();
 						}
 					}
 				}

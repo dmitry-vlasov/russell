@@ -376,7 +376,10 @@ private:
 			vector<Symbol> expr = sv[4].get<vector<Symbol>>();
 			vector<Ref*> refs = sv[3].get<vector<Ref*>>();
 			Step* s = new Step(ind, Step::ASS, ass, c->stacks.proof(), c->token(sv));
-			s->refs = std::move(refs);
+			s->refs.reserve(refs.size());
+			for (Ref* r : refs) {
+				s->refs.emplace_back(r);
+			}
 			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
 			expr::enqueue(s->expr);
 			return s;

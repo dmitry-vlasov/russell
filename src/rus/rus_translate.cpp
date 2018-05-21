@@ -239,8 +239,8 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_p
 	for (auto v : ass->vars.v) {
 		translate_term(ps.sub().at(v), thm, mm2_proof, maps);
 	}
-	for (auto ref : st->refs) {
-		translate_ref(ref, thm, mm2_proof, maps);
+	for (const auto& ref : st->refs) {
+		translate_ref(ref.get(), thm, mm2_proof, maps);
 	}
 	mm2_proof.emplace_back(ass->id());
 }

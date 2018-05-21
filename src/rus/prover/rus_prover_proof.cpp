@@ -4,8 +4,9 @@ namespace mdl { namespace rus { namespace prover {
 
 void apply_recursively(const Substitution& sub, rus::Step* step) {
 	apply(sub, step->expr);
-	for (auto r : step->refs)
-		if (r->kind() == rus::Ref::STEP) apply_recursively(sub, r->step());
+	for (auto& r : step->refs) {
+		if (r.get()->kind() == rus::Ref::STEP) apply_recursively(sub, r.get()->step());
+	}
 }
 
 rus::Ref* ProofHyp::ref() {
@@ -13,8 +14,8 @@ rus::Ref* ProofHyp::ref() {
 }
 
 rus::Step* ProofStep::step() {
-	vector<rus::Ref*> refs;
-	for (auto ch : child_) refs.push_back(ch->ref());
+	vector<unique_ptr<rus::Ref>> refs;
+	for (auto ch : child_) refs.emplace_back(ch->ref());
 	const PropRef* p = node_->prop();
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p->id(), nullptr);
 	step->refs = std::move(refs);
@@ -28,9 +29,9 @@ rus::Ref* ProofStep::ref() {
 }
 
 static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
-	for (auto r : step->refs) {
-		if (r->kind() == rus::Ref::STEP)
-			fill_in_proof(r->step(), proof);
+	for (auto& r : step->refs) {
+		if (r.get()->kind() == rus::Ref::STEP)
+			fill_in_proof(r.get()->step(), proof);
 	}
 	for (auto& s : step->expr.symbols) {
 		if (s.kind() != Symbol::VAR) continue;

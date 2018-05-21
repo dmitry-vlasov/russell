@@ -306,7 +306,7 @@ rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps
 			h.val.ref->is_assertion() ?
 			new rus::Ref(translate_step(t, proof, thm, state, a)) :
 			new rus::Ref(thm->hyps[h.val.ref->index()]);
-		step->refs.push_back(hr);
+		step->refs.emplace_back(hr);
 	}
 	step->set_ind(elems.size());
 	step->expr = translate_expr(node.expr, a);

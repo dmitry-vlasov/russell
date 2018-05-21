@@ -66,14 +66,6 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		/*bool is_const = Sys::get().math.get<Const>().has(s.lit);
-		if (is_const && is_var)
-			throw Error("constant symbol is marked as variable");
-		if (!is_const && !is_var) {
-			string msg = "symbol " + Lex::toStr(s.lit) + " ";
-			msg += " neither constant nor variable";
-			throw Error(msg);
-		}*/
 		if (is_var) s.set_type(var_stack.mapping[s.lit]);
 		else s.set_const();
 	}
@@ -278,6 +270,17 @@ struct AddProofElem {
 	}
 	void operator()(Proof* p, Qed* q) const {
 		p->elems.emplace_back(unique_ptr<Qed>(q));
+	}
+};
+
+struct AddStepRefs {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Step* s, vector<Ref*> rs) const {
+		s->refs.reserve(rs.size());
+		for (Ref* r : rs) {
+			s->refs.emplace_back(r);
+		}
 	}
 };
 
