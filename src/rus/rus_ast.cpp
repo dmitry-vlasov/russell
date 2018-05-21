@@ -22,7 +22,7 @@ static Rule* create_super(Type* inf, Type* sup) {
 static void collect_super_rules(Type* inf, Type* s) {
 	for (auto& sup : s->sup) {
 		Rule* super = create_super(inf, sup.get());
-		inf->supers[sup.get()] = super;
+		inf->supers[sup.get()].reset(super);
 		collect_super_rules(inf, sup.get());
 	}
 }
@@ -30,9 +30,6 @@ static void collect_super_rules(Type* inf, Type* s) {
 Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 	for (auto t : s) sup.push_back(User<Type>(t));
 	collect_super_rules(this, this);
-}
-Type::~Type() {
-	for (auto p : supers) delete p.second;
 }
 
 Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :

@@ -51,9 +51,8 @@ struct Disj : public Tokenable, public Writable {
 void parse_expr(Expr& ex);
 
 struct Type : public Owner<Type>, public Writable {
-	typedef map<const Type*, Rule*> Supers;
+	typedef map<const Type*, unique_ptr<Rule>> Supers;
 	Type(Id id, const vector<Id>& sup = vector<Id>(), const Token& t = Token());
-	~Type() override;
 	vector<User<Type>> sup;
 	Supers supers;
 	Rules  rules;

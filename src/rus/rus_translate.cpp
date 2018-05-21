@@ -101,9 +101,9 @@ TypeImage translate_type(const Type* type, Maps& maps) {
 	mm::Const* type_const = new mm::Const(type->id());
 	vector<mm::Assertion*> type_supers;
 	type_supers.reserve(type->supers.size());
-	for (auto p : type->supers) {
-		RuleImage rule_image = translate_rule(p.second, maps);
-		maps.global.rules[p.second] = rule_image;
+	for (auto& p : type->supers) {
+		RuleImage rule_image = translate_rule(p.second.get(), maps);
+		maps.global.rules[p.second.get()] = rule_image;
 		type_supers.push_back(rule_image.rule);
 	}
 	return TypeImage{type_const, type_supers};

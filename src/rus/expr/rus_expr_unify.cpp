@@ -6,7 +6,7 @@ namespace rus {
 Rule* find_super(const Type* type, const Type* super) {
 	auto it =type->supers.find(super);
 	if (it != type->supers.end())
-		return it->second;
+		return it->second.get();
 	else
 		return nullptr;
 }
