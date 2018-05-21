@@ -277,7 +277,7 @@ struct Rules {
 };
 
 struct Rules::Node {
-	Node(Symbol s, Node* p) : symb(s), parent(p), min_dist(-1) { }
+	Node(const Symbol& s, Node* p) : symb(s), parent(p), min_dist(-1) { }
 	vector<string> show() const;
 	Symbol     symb;
 	Rules      tree;

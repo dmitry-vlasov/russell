@@ -29,7 +29,6 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<IdToInt>     idToInt;
 	const phoenix::function<SymbToInt>   symbToInt;
 	const phoenix::function<AddSymbol>   addSymbol;
-	const phoenix::function<CreateSymb>  createSymb;
 
 	const phoenix::function<ParseExpr>   parseExpr;
 	const phoenix::function<ParsePlain>  parsePlain;
@@ -60,8 +59,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
-	var   = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [_val = createSymb(qi::labels::_1)];
-	symb  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = createSymb(qi::labels::_1)];
+	var   = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [_val = symbToInt(qi::labels::_1)];
+	symb  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
 	id    = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]              [_val = idToInt(qi::labels::_1)];
 	path  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 

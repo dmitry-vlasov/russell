@@ -118,17 +118,8 @@ struct IdToInt {
 struct AddSymbol {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Symbol s) const {
-		ex.push_back(s);
-	}
-};
-
-struct CreateSymb {
-	template <typename T>
-	struct result { typedef Symbol type; };
-	Symbol operator()(const std::vector<uint>& s) const {
-		string symb(s.begin(), s.end());
-		return Symbol(Lex::toInt(symb));
+	void operator()(Expr& ex, uint s) const {
+		ex.symbols.emplace_back(s);
 	}
 };
 
@@ -174,8 +165,8 @@ struct SetType {
 struct AddDisjVar {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(vector<vector<Symbol>>& disj, Symbol v) const {
-		disj.back().push_back(v);
+	void operator()(vector<vector<Symbol>>& disj, uint v) const {
+		disj.back().emplace_back(v);
 	}
 };
 
@@ -340,8 +331,8 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	VarStack var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, uint(), unicode::space_type> liter;
-	qi::rule<Iterator, Symbol(), unicode::space_type> var;
-	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
+	qi::rule<Iterator, uint(), unicode::space_type> var;
+	qi::rule<Iterator, uint(), unicode::space_type> symb;
 	qi::rule<Iterator, Id(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
 	qi::rule<Iterator, Expr(Id), unicode::space_type> term;
