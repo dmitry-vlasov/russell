@@ -44,16 +44,6 @@ Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
 	term.tree = std::move(Tree(i, children));
 }
 
-Assertion::Assertion(Id i, const Token& t) : Owner(i.id, t) { }
-Assertion::~Assertion() {
-	for (auto h : hyps) delete h;
-	for (auto p : props) delete p;
-}
-
-Axiom::Axiom(Id id, const Token& t) : Assertion(id, t) { }
-Theorem::Theorem(Id id, const Token& t) : Assertion(id, t) { }
-Def::Def(Id id, const Token& t) : Assertion(id, t) { }
-
 inline uint make_proof_id(uint id, Id th) {
 	if (Undef<uint>::is(id)) {
 		const string& th_name = Lex::toStr(th.id);
@@ -99,8 +89,8 @@ inline Tokenable* find(Assertion* a, const Token& t) {
 	if (!a->token.includes(t)) return nullptr;
 	if (a->vars.token.includes(t)) return &a->vars;
 	if (a->disj.token.includes(t)) return &a->disj;
-	for (auto h : a->hyps) if (h->token.includes(t)) return h;
-	for (auto p : a->props) if (p->token.includes(t)) return p;
+	for (auto& h : a->hyps) if (h.get()->token.includes(t)) return h.get();
+	for (auto& p : a->props) if (p.get()->token.includes(t)) return p.get();
 	return a;
 }
 

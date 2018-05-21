@@ -64,8 +64,9 @@ vector<Node*> Hyp::buildUp() {
 
 vector<Node*> Prop::buildUp() {
 	vector<Node*> ret;
-	for (rus::Hyp* h : prop_.assertion()->hyps)
-		ret.push_back(new Hyp(apply(sub_, h->expr), this));
+	for (auto& h : prop_.assertion()->hyps) {
+		ret.push_back(new Hyp(apply(sub_, h.get()->expr), this));
+	}
 	return ret;
 }
 

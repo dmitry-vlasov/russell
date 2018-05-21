@@ -69,15 +69,15 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Axiom,
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
-	(mdl::vector<mdl::rus::Hyp*>,  hyps)
-	(mdl::vector<mdl::rus::Prop*>, props)
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Prop>>, props)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Def,
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
-	(mdl::vector<mdl::rus::Hyp*>,  hyps)
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
 	(mdl::rus::Expr, dfm)
 	(mdl::rus::Expr, dfs)
 	(mdl::rus::Expr, prop)
@@ -87,22 +87,15 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Theorem,
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
-	(mdl::vector<mdl::rus::Hyp*>,  hyps)
-	(mdl::vector<mdl::rus::Prop*>, props)
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Prop>>, props)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Ref,
 	(mdl::rus::Ref::Value, val)
 )
-/*
-BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Step::Value,
-	(void*,  non)
-	(mdl::rus::Assertion*, ass)
-	(mdl::rus::Proof*,     thm)
-)
-*/
+
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Step,
 	(mdl::uint, ind)

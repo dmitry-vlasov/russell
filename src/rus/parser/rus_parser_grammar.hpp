@@ -55,6 +55,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<AppendComment> appendComment;
 	const phoenix::function<AddProofElem> addProofElem;
 	const phoenix::function<AddStepRefs>  addStepRefs;
+	const phoenix::function<AddHyp>       addHyp;
+	const phoenix::function<AddProp>      addProp;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
@@ -163,8 +165,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
+		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) > bar )
+		> + (prop    [addProp(_val, qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];
 
@@ -176,8 +178,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
+		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) > bar )
+		> + (prop    [addProp(_val, qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];
 
@@ -188,7 +190,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> ")"
 		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) )
+		> - ( + (hyp [addHyp(_val, qi::labels::_1)]) )
 		> "defiendum" > ":"
 		> id         [_a = qi::labels::_1]
 		> "=" > "#"

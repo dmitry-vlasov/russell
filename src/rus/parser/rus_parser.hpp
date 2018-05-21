@@ -73,10 +73,12 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 
 struct Enqueue {
 	void operator()(Assertion* ass) const {
-		for (Hyp* hyp : ass->hyps)
-			expr::enqueue(hyp->expr);
-		for (Prop* prop : ass->props)
-			expr::enqueue(prop->expr);
+		for (auto& h : ass->hyps) {
+			expr::enqueue(h.get()->expr);
+		}
+		for (auto& p : ass->props) {
+			expr::enqueue(p.get()->expr);
+		}
 	}
 	void operator()(Def* def) const {
 		expr::enqueue(def->dfm);
@@ -190,8 +192,8 @@ struct CreateStepRef {
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return new Ref(p->thm.get()->hyps[ind]);
-		case Ref::PROP: return new Ref(p->thm.get()->props[ind]);
+		case Ref::HYP:  return new Ref(p->thm.get()->hyps[ind].get());
+		case Ref::PROP: return new Ref(p->thm.get()->props[ind].get());
 		case Ref::STEP: return new Ref(Proof::step(p->elems[ind]));
 		default : assert(false && "impossible"); break;
 		}
@@ -203,7 +205,7 @@ struct GetProp {
 	template <typename T1, typename T2>
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
-		return p->thm.get()->props[ind];
+		return p->thm.get()->props[ind].get();
 	}
 };
 
@@ -246,7 +248,7 @@ struct AssembleDef {
 		prop->expr.type = d->prop.type;
 		prop->expr.token = d->prop.token;
 		mark_vars(prop->expr, varsStack);
-		d->props.push_back(prop);
+		d->props.emplace_back(prop);
 	}
 };
 
@@ -281,6 +283,22 @@ struct AddStepRefs {
 		for (Ref* r : rs) {
 			s->refs.emplace_back(r);
 		}
+	}
+};
+
+struct AddHyp {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Assertion* a, Hyp* h) const {
+		a->hyps.emplace_back(h);
+	}
+};
+
+struct AddProp {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Assertion* a, Prop* p) const {
+		a->props.emplace_back(p);
 	}
 };
 

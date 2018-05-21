@@ -134,11 +134,11 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 vector<unique_ptr<mm::Hyp>> translate_essentials(const Assertion* ass, Maps& maps) {
 	vector<unique_ptr<mm::Hyp>> ess_vect;
 	ess_vect.reserve(ass->hyps.size());
-	for (auto hyp : ass->hyps) {
-		mm::Hyp* ess = new mm::Hyp(hyp->ind, ass->id());
+	for (auto& hyp : ass->hyps) {
+		mm::Hyp* ess = new mm::Hyp(hyp.get()->ind, ass->id());
 		ess->expr = std::move(translate_expr(hyp->expr, maps));
 		ess_vect.emplace_back(ess);
-		maps.local.essentials[ass][hyp] = ess;
+		maps.local.essentials[ass][hyp.get()] = ess;
 	}
 	return ess_vect;
 }
@@ -159,7 +159,8 @@ vector<unique_ptr<mm::Var>> translate_floatings(const Vars& vars, Maps& maps, ui
 vector<mm::Assertion*> translate_assertion(const Assertion* ass, Maps& maps) {
 	vector<mm::Assertion*> image;
 	image.reserve(ass->props.size());
-	for (auto prop : ass->props) {
+	for (auto& p : ass->props) {
+		const Prop* prop = p.get();
 		string ass_str = Lex::toStr(ass->id());
 		if (prop->ind) {
 			ass_str += "_" + to_string(prop->ind);

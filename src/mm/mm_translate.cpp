@@ -192,10 +192,10 @@ void translate_assertion(const Assertion* ass, T* a) {
 	uint hc = 0;
 	for (const auto& ess : ass->hyps) {
 		rus::Expr&& ex = translate_expr(ess.get()->expr, ass);
-		a->hyps.push_back(new rus::Hyp{hc++, ex});
+		a->hyps.emplace_back(new rus::Hyp{hc++, ex});
 	}
 	rus::Expr&& ex = translate_expr(ass->expr, ass);
-	a->props.push_back(new rus::Prop{0, ex});
+	a->props.emplace_back(new rus::Prop{0, ex});
 }
 
 void translate_axiom(const Assertion* ass, Maps& state) {
@@ -305,7 +305,7 @@ rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps
 		rus::Ref* hr =
 			h.val.ref->is_assertion() ?
 			new rus::Ref(translate_step(t, proof, thm, state, a)) :
-			new rus::Ref(thm->hyps[h.val.ref->index()]);
+			new rus::Ref(thm->hyps[h.val.ref->index()].get());
 		step->refs.emplace_back(hr);
 	}
 	step->set_ind(elems.size());
@@ -326,7 +326,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	rus::Proof* p = new rus::Proof(thm->id());
 	p->allvars = translate_vars(ass->innerVars);
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
-	rus::Prop* pr = thm->props.front();
+	rus::Prop* pr = thm->props.front().get();
 	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));
 	state.theory.top()->nodes.push_back(p);
 	delete tree;

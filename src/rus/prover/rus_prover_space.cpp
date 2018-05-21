@@ -4,7 +4,7 @@ namespace mdl { namespace rus { namespace prover {
 
 inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	uint c = 0;
-	for (auto x : a->props) if (x == p) return c; else ++c;
+	for (auto& x : a->props) if (x.get() == p) return c; else ++c;
 	throw Error("prop is not found");
 }
 
@@ -15,8 +15,8 @@ Space::Space(rus::Qed* q, Tactic* t) :
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
-	for (rus::Prop* p : prop.assertion()->props) {
-		hyps.add(p->expr.tree, HypRef(a, c++));
+	for (auto& p : prop.assertion()->props) {
+		hyps.add(p.get()->expr.tree, HypRef(a, c++));
 	}
 	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);
 	buildUp(root);

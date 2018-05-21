@@ -115,13 +115,13 @@ void Assertion::write(ostream& os, const Indent& i) const {
 	os << Lex::toStr(id()) << " ";
 	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
 	if (hyps.size() > 0) {
-		for (const Hyp* h : hyps) {
-			h->write(os, i + 1);
+		for (const auto& h : hyps) {
+			h.get()->write(os, i + 1);
 		}
 		os << i + 1 << "-----------------------\n";
 	}
-	for (const Prop* p : props) {
-		p->write(os, i + 1);
+	for (auto& p : props) {
+		p.get()->write(os, i + 1);
 	}
 	os << i << "}\n";
 }
@@ -129,8 +129,8 @@ void Assertion::write(ostream& os, const Indent& i) const {
 void Def::write(ostream& os, const Indent& i) const {
 	os << i << "definition " << Lex::toStr(id()) << " ";
 	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
-	for (Hyp* h : hyps) {
-		h->write(os, i + 1);
+	for (const auto& h : hyps) {
+		h.get()->write(os, i + 1);
 	}
 	os << i + 1 << "defiendum : " << Lex::toStr(dfm.type.id()) << " ";
 	os << "= # " << dfm << END_MARKER << "\n";

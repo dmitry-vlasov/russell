@@ -9,7 +9,7 @@ struct PropRef {
 	Assertion* assertion() { return ass.get(); }
 	const Assertion* assertion() const { return ass.get(); }
 	uint id() const { return ass.id(); }
-	rus::Prop* get() { return ass.get()->props[ind]; }
+	rus::Prop* get() { return ass.get()->props[ind].get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
 	}
@@ -21,7 +21,7 @@ private:
 struct HypRef {
 	HypRef(const Assertion* a, uint i) : ass(a->id()), ind(i) { }
 	Assertion* assertion() { return ass.get(); }
-	rus::Hyp* get() { return ass.get()->hyps[ind]; }
+	rus::Hyp* get() { return ass.get()->hyps[ind].get(); }
 	friend bool operator < (const HypRef& a1, const HypRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
 	}

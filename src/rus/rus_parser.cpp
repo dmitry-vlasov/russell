@@ -308,8 +308,12 @@ private:
 			Axiom* a = new Axiom(id, c->token(sv));
 			a->vars  = std::move(sv[1].get<Vars>());
 			a->disj  = std::move(sv[2].get<Disj>());
-			a->hyps  = std::move(sv[3].get<vector<Hyp*>>());
-			a->props = std::move(sv[4].get<vector<Prop*>>());
+			for (Hyp* h : sv[3].get<vector<Hyp*>>()) {
+				a->hyps.emplace_back(h);
+			}
+			for (Prop* p : sv[4].get<vector<Prop*>>()) {
+				a->props.emplace_back(p);
+			}
 			enqueue_expr(a);
 			return a;
 		};
@@ -319,8 +323,12 @@ private:
 			Theorem* t = new Theorem(id, c->token(sv));
 			t->vars  = std::move(sv[1].get<Vars>());
 			t->disj  = std::move(sv[2].get<Disj>());
-			t->hyps  = std::move(sv[3].get<vector<Hyp*>>());
-			t->props = std::move(sv[4].get<vector<Prop*>>());
+			for (Hyp* h : sv[3].get<vector<Hyp*>>()) {
+				t->hyps.emplace_back(h);
+			}
+			for (Prop* p : sv[4].get<vector<Prop*>>()) {
+				t->props.emplace_back(p);
+			}
 			enqueue_expr(t);
 			return t;
 		};
@@ -342,7 +350,9 @@ private:
 			Def* d = new Def(Id(sv[0].get<uint>()), c->token(sv));
 			d->vars = std::move(sv[1].get<Vars>());
 			d->disj = std::move(sv[2].get<Disj>());
-			d->hyps = std::move(sv[3].get<vector<Hyp*>>());
+			vector<Hyp*> hyps = sv[3].get<vector<Hyp*>>();
+			d->hyps.reserve(hyps.size());
+			for (Hyp* h : hyps) d->hyps.emplace_back(h);
 			d->dfm  = std::move(sv[4].get<Expr>());
 			d->dfs  = std::move(sv[5].get<Expr>());
 			d->prop = std::move(sv[7].get<Expr>());
@@ -359,7 +369,7 @@ private:
 			}
 			prop->expr.type = d->prop.type;
 			prop->expr.token = d->prop.token;
-			d->props.push_back(prop);
+			d->props.emplace_back(prop);
 			enqueue_expr(d);
 			return d;
 		};
@@ -400,14 +410,14 @@ private:
 			Context* c = ctx.get<Context*>();
 			uint ind = sv[0].get<uint>();
 			Proof* p = c->stacks.proof();
-			return new Ref(p->theorem()->hyps[ind - 1]);
+			return new Ref(p->theorem()->hyps[ind - 1].get());
 		};
 		// REF_PROP <- 'prop' IND
 		parser_["REF_PROP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			uint ind = sv[0].get<uint>();
 			Proof* p = c->stacks.proof();
-			return new Ref(p->theorem()->props[ind - 1]);
+			return new Ref(p->theorem()->props[ind - 1].get());
 		};
 		// REF_STEP <- 'step' IND
 		parser_["REF_STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
@@ -438,7 +448,7 @@ private:
 			uint step = sv[1].get<uint>();
 			Proof* p = c->stacks.proof();
 			return new Qed(
-				p->theorem()->props[prop - 1],
+				p->theorem()->props[prop - 1].get(),
 				Proof::step(p->elems[step - 1])
 			);
 		};
@@ -556,10 +566,12 @@ private:
 	}
 
 	static void enqueue_expr(Assertion* ass) {
-		for (Hyp* hyp : ass->hyps)
-			expr::enqueue(hyp->expr);
-		for (Prop* prop : ass->props)
-			expr::enqueue(prop->expr);
+		for (auto& h : ass->hyps) {
+			expr::enqueue(h.get()->expr);
+		}
+		for (auto& p : ass->props) {
+			expr::enqueue(p.get()->expr);
+		}
 	}
 	static void enqueue_expr(Proof* proof) {
 		for (const auto& e : proof->elems) {

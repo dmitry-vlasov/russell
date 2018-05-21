@@ -98,8 +98,7 @@ struct Prop : public Tokenable, public Writable {
 
 struct Assertion : public Owner<Assertion> {
 	enum Kind { AXM, THM, DEF };
-	Assertion(Id id, const Token& t = Token());
-	~ Assertion() override;
+	Assertion(Id i, const Token& t = Token()) : Owner(i.id, t) { }
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
 	string kindStr() const {
@@ -113,19 +112,19 @@ struct Assertion : public Owner<Assertion> {
 
 	Vars vars;
 	Disj disj;
-	vector<Hyp*>  hyps;
-	vector<Prop*> props;
+	vector<unique_ptr<Hyp>>  hyps;
+	vector<unique_ptr<Prop>> props;
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
 struct Axiom : public Assertion, public Writable {
-	Axiom(Id id, const Token& t = Token());
+	Axiom(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Kind kind() const { return AXM; }
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 struct Def : public Assertion, public Writable {
-	Def(Id id, const Token& t = Token());
+	Def(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
@@ -134,7 +133,7 @@ struct Def : public Assertion, public Writable {
 };
 
 struct Theorem : public Assertion, public Writable {
-	Theorem(Id id, const Token& t = Token());
+	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Kind kind() const { return THM; }
 	vector<User<Proof>> proofs;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -204,7 +203,7 @@ struct Step : public Tokenable, public Verifiable, public Writable {
 	void verify() const override;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
-	Expr         expr;
+	Expr expr;
 	vector<unique_ptr<Ref>> refs;
 
 private:

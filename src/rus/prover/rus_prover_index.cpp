@@ -9,8 +9,8 @@ Index<PropRef>& assertion_index() {
 
 void add_to_index(Assertion* a) {
 	uint c = 0;
-	for (rus::Prop* p : a->props) {
-		assertion_index().add(p->expr.tree, PropRef(a, c++));
+	for (auto& p : a->props) {
+		assertion_index().add(p.get()->expr.tree, PropRef(a, c++));
 	}
 }
 
