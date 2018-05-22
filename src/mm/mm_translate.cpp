@@ -359,8 +359,9 @@ void translate_assertion(const Assertion* ass, Maps& state) {
 
 void translate_source(uint src, Maps maps, uint tgt = -1);
 
-inline void translate_import(const Import* inc, Maps& s) {
-	s.theory.top()->nodes.emplace_back(unique_ptr<rus::Import>(new rus::Import(inc->source.id())));
+inline void translate_import(const Import* imp, Maps& s) {
+	rus::Import* import = new rus::Import(imp->source.id());
+	s.theory.top()->nodes.emplace_back(unique_ptr<rus::Import>(import));
 }
 
 inline void translate_comment(const Comment* com, Maps& s) {
@@ -369,17 +370,12 @@ inline void translate_comment(const Comment* com, Maps& s) {
 }
 
 void translate_theory(const Source* source, Maps& state) {
-	for (const auto& node : source->contents) {
-		if (auto imp = std::get_if<unique_ptr<Import>>(&node)) {
-			translate_import(imp->get(), state);
-		}
-	}
 	for (auto& node : source->contents) {
-		switch (node.index()) {
-		case 0 : translate_constant(std::get<unique_ptr<Const>>(node).get(), state);  break;
-		case 1 : break;
-		case 2 : translate_comment(std::get<unique_ptr<Comment>>(node).get(), state);   break;
-		case 3 : translate_assertion(std::get<unique_ptr<Assertion>>(node).get(), state); break;
+		switch (Source::kind(node)) {
+		case Source::CONST     : translate_constant(std::get<unique_ptr<Const>>(node).get(), state);      break;
+		case Source::IMPORT    : translate_import(std::get<unique_ptr<Import>>(node).get(), state);       break;
+		case Source::COMMENT   : translate_comment(std::get<unique_ptr<Comment>>(node).get(), state);     break;
+		case Source::ASSERTION : translate_assertion(std::get<unique_ptr<Assertion>>(node).get(), state); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
