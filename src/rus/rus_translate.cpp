@@ -19,16 +19,16 @@ struct Maps {
 		static uint turnstileName() {
 			static uint name = Lex::toInt("turnstile_special_source"); return name;
 		}
-		Global() : turnstile(mm::Symbol(Lex::toInt("|-"))) {
+		Global() : turnstile(Lex::toInt("|-")) {
 			if (!mm::Sys::get().math.get<mm::Source>().access(turnstileName())) {
 				mm::Source* turnstileSource = new mm::Source(turnstileName());
-				turnstileSource->contents.emplace_back(unique_ptr<mm::Const>(new mm::Const(turnstile.lit)));
+				turnstileSource->contents.emplace_back(unique_ptr<mm::Const>(new mm::Const(turnstile)));
 			}
 		}
 		map<const Const*, mm::Const*> constants;
 		map<const Type*, TypeImage>    types;
 		map<const Rule*, RuleImage>    rules;
-		mm::Symbol turnstile;
+		uint turnstile;
 	};
 	struct Local {
 		Local() : thm(nullptr) { }
@@ -37,7 +37,7 @@ struct Maps {
 		map<const Assertion*, map<uint, mm::Var*>> inners;
 		mm::Assertion* thm;
 	};
-	Maps() { }
+	Maps() = default;
 	Maps(const Global& g) : global(g) { }
 	Global global;
 	Local  local;
@@ -54,15 +54,19 @@ inline uint translate_symb(const Symbol& s) {
 
 mm::Expr translate_expr(const Expr& ex, Maps& maps) {
 	mm::Expr expr; expr.reserve(ex.symbols.size() + 1);
-	expr.push_back(maps.global.turnstile);
-	for (auto& s : ex.symbols) expr.push_back(mm::Symbol(translate_symb(s), s.type()));
+	expr.emplace_back(maps.global.turnstile);
+	for (auto& s : ex.symbols) {
+		expr.emplace_back(translate_symb(s), s.type());
+	}
 	return expr;
 }
 
-mm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
+mm::Expr translate_term(const Expr& ex, const Type* tp) {
 	mm::Expr expr; expr.reserve(ex.symbols.size() + 1);
 	expr.emplace_back(tp->id());
-	for (auto& s : ex.symbols) expr.emplace_back(translate_symb(s), s.type());
+	for (auto& s : ex.symbols) {
+		expr.emplace_back(translate_symb(s), s.type());
+	}
 	return expr;
 }
 
@@ -75,7 +79,7 @@ mm::Const* translate_const(const Const* c) {
 vector<uint> translate_vars(const Vars& rvars) {
 	vector<uint> vars;
 	vars.reserve(rvars.v.size());
-	for (auto s : rvars.v) {
+	for (auto& s : rvars.v) {
 		vars.push_back(s.lit);
 	}
 	return vars;
@@ -84,10 +88,10 @@ vector<uint> translate_vars(const Vars& rvars) {
 vector<unique_ptr<vector<uint>>> translate_disj(const Disj& rdisj) {
 	vector<unique_ptr<vector<uint>>> disj;
 	disj.reserve(rdisj.d.size());
-	for (auto d : rdisj.d) {
+	for (auto& d : rdisj.d) {
 		vector<uint>* dis = new vector<uint>;
 		dis->reserve(d.size());
-		for (auto s : d) {
+		for (auto& s : d) {
 			dis->push_back(s.lit);
 		}
 		disj.emplace_back(dis);
@@ -117,7 +121,7 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 		image.rule->vars.vars = std::move(translate_vars(rule->vars));
 	}
 	image.rule->outerVars = std::move(translate_floatings(rule->vars, maps, rule->id()));
-	image.rule->expr = std::move(translate_term(rule->term, rule->term.type.get(), maps));
+	image.rule->expr = std::move(translate_term(rule->term, rule->term.type.get()));
 	for (auto& v : rule->vars.v) {
 		uint i = 0;
 		bool found = false;
@@ -194,7 +198,7 @@ inline vector<mm::Assertion*> translate_def(const Def* def, Maps& maps) {
 	return translate_assertion(def, maps);
 }
 
-void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps);
+void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps);
 
 void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps) {
 	switch (ref->kind()) {
@@ -216,22 +220,23 @@ void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof,
 		}
 	} else {
 		for (auto& v : t.rule()->vars.v) {
-			translate_term(*t.children()[maps.global.rules[t.rule()].args[v.lit]], thm, proof, maps);
+			RuleImage rule = maps.global.rules.at(t.rule());
+			translate_term(*t.children()[rule.args[v.lit]], thm, proof, maps);
 		}
 	}
 	if (t.kind() == Tree::NODE) {
 		if (!maps.global.rules.count(t.rule())) {
 			throw Error("undefined reference to rule");
 		}
-		proof.emplace_back(maps.global.rules[t.rule()].rule->id());
+		proof.emplace_back(maps.global.rules.at(t.rule()).rule->id());
 	}
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps, uint ind = 0);
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps, uint ind = 0);
 
-void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps) {
+void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
 	if (st->kind() == Step::CLAIM) {
-		translate_proof(st->proof(), thm, mm2_proof, maps);
+		translate_proof(st->proof(), thm, proof, maps);
 		return;
 	}
 	const Assertion* ass = st->ass();
@@ -243,12 +248,12 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_p
 		if (!ps.join(hs)) throw Error("substitution join failed");
 	}
 	for (auto& v : ass->vars.v) {
-		translate_term(ps.sub().at(v.lit), thm, mm2_proof, maps);
+		translate_term(ps.sub().at(v.lit), thm, proof, maps);
 	}
 	for (const auto& ref : st->refs) {
-		translate_ref(ref.get(), thm, mm2_proof, maps);
+		translate_ref(ref.get(), thm, proof, maps);
 	}
-	mm2_proof.emplace_back(ass->id());
+	proof.emplace_back(ass->id());
 }
 
 vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
@@ -263,12 +268,11 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 	return inn_vect;
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps, uint ind) {
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps, uint ind) {
 	maps.local.thm->innerVars = std::move(translate_inners(proof->allvars, maps, thm, maps.local.thm->innerVars.size()));
-	//join(maps.local.thm->inner, );
 	for (const auto& el : proof->elems) {
 		if (Proof::kind(el) == Proof::QED && Proof::qed(el)->prop->ind == ind) {
-			translate_step(Proof::qed(el)->step, thm, mm2_proof, maps);
+			translate_step(Proof::qed(el)->step, thm, mm_proof, maps);
 			break;
 		}
 	}
@@ -291,11 +295,11 @@ inline void add_turnstile(vector<mm::Source::Node>& nodes) {
 }
 
 inline void add_const(vector<mm::Source::Node>& nodes, const Const* c, Maps& maps) {
-	nodes.emplace_back(unique_ptr<mm::Const>(maps.global.constants[c]));
+	nodes.emplace_back(unique_ptr<mm::Const>(maps.global.constants.at(c)));
 }
 
 inline void add_type(vector<mm::Source::Node>& nodes, const Type* t, Maps& maps) {
-	TypeImage image = maps.global.types[t];
+	TypeImage image = maps.global.types.at(t);
 	nodes.emplace_back(unique_ptr<mm::Const>(image.constant));
 	for (auto r : image.supers) {
 		nodes.emplace_back(unique_ptr<mm::Assertion>(r));
@@ -303,7 +307,7 @@ inline void add_type(vector<mm::Source::Node>& nodes, const Type* t, Maps& maps)
 }
 
 inline void add_rule(vector<mm::Source::Node>& nodes, const Rule* r, Maps& maps) {
-	nodes.emplace_back(unique_ptr<mm::Assertion>(maps.global.rules[r].rule));
+	nodes.emplace_back(unique_ptr<mm::Assertion>(maps.global.rules.at(r).rule));
 }
 
 inline void add_assertion(vector<mm::Source::Node>& nodes, const Assertion* a, Maps& maps) {
