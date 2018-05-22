@@ -6,7 +6,7 @@ namespace mdl { namespace rus { namespace {
 struct RuleImage {
 	RuleImage(mm::Assertion* r = nullptr) : rule(r) { }
 	mm::Assertion*   rule;
-	map<Symbol, uint> args;
+	map<uint, uint> args;
 };
 
 struct TypeImage {
@@ -33,8 +33,8 @@ struct Maps {
 	struct Local {
 		Local() : thm(nullptr) { }
 		map<const Assertion*, map<const Hyp*, mm::Hyp*>> essentials;
-		map<const Assertion*, map<Symbol, mm::Var*>> floatings;
-		map<const Assertion*, map<Symbol, mm::Var*>> inners;
+		map<const Assertion*, map<uint, mm::Var*>> floatings;
+		map<const Assertion*, map<uint, mm::Var*>> inners;
 		mm::Assertion* thm;
 	};
 	Maps() { }
@@ -118,14 +118,19 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 	}
 	image.rule->outerVars = std::move(translate_floatings(rule->vars, maps, rule->id()));
 	image.rule->expr = std::move(translate_term(rule->term, rule->term.type.get(), maps));
-	for (auto v : rule->vars.v) {
+	for (auto& v : rule->vars.v) {
 		uint i = 0;
+		bool found = false;
 		for (auto& ch : rule->term.tree()->children()) {
-			if (ch->kind() == Tree::VAR && *ch->var() == v) {
-				image.args[v] = i;
+			if (ch->kind() == Tree::VAR && ch->var()->lit == v.lit) {
+				image.args[v.lit] = i;
+				found = true;
 				break;
 			}
 			++ i;
+		}
+		if (!found) {
+			throw Error("rule arg is not found", Lex::toStr(v.lit));
 		}
 	}
 	return image;
@@ -146,11 +151,11 @@ vector<unique_ptr<mm::Hyp>> translate_essentials(const Assertion* ass, Maps& map
 vector<unique_ptr<mm::Var>> translate_floatings(const Vars& vars, Maps& maps, uint id, const Assertion* ass) {
 	vector<unique_ptr<mm::Var>> flo_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
-		Symbol v = vars.v[i];
+		const Symbol& v = vars.v[i];
 		mm::Var* flo = new mm::Var(false, i, id, v.type()->id(), v.literal());
 		flo_vect.emplace_back(flo);
 		if (ass) {
-			maps.local.floatings[ass][v] = flo;
+			maps.local.floatings[ass][v.lit] = flo;
 		}
 	}
 	return flo_vect;
@@ -200,25 +205,25 @@ void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, M
 	}
 }
 
-void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps) {
+void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
 	if (t.kind() == Tree::VAR) {
-		if (maps.local.floatings[thm].count(*t.var())) {
-			mm2_proof.emplace_back(maps.local.floatings[thm][*t.var()]);
-		} else if (maps.local.inners[thm].count(*t.var())) {
-			mm2_proof.emplace_back(maps.local.inners[thm][*t.var()]);
+		if (maps.local.floatings[thm].count(t.var()->lit)) {
+			proof.emplace_back(maps.local.floatings[thm][t.var()->lit]);
+		} else if (maps.local.inners[thm].count(t.var()->lit)) {
+			proof.emplace_back(maps.local.inners[thm][t.var()->lit]);
 		} else {
 			throw Error("undeclared variable", show(*t.var()));
 		}
 	} else {
-		for (auto v : t.rule()->vars.v) {
-			translate_term(*t.children()[maps.global.rules[t.rule()].args[v]], thm, mm2_proof, maps);
+		for (auto& v : t.rule()->vars.v) {
+			translate_term(*t.children()[maps.global.rules[t.rule()].args[v.lit]], thm, proof, maps);
 		}
 	}
 	if (t.kind() == Tree::NODE) {
 		if (!maps.global.rules.count(t.rule())) {
 			throw Error("undefined reference to rule");
 		}
-		mm2_proof.emplace_back(maps.global.rules[t.rule()].rule->id());
+		proof.emplace_back(maps.global.rules[t.rule()].rule->id());
 	}
 }
 
@@ -249,11 +254,11 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& mm2_p
 vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
 	vector<unique_ptr<mm::Var>> inn_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
-		Symbol v = vars.v[i];
+		const Symbol& v = vars.v[i];
 		mm::Var* inn = new mm::Var(true, i + ind_0, thm->id(), v.type()->id(), v.literal());
 		inn_vect.emplace_back(inn);
 		maps.local.thm->vars.vars.push_back(v.literal());
-		maps.local.inners[thm][v] = inn;
+		maps.local.inners[thm][v.lit] = inn;
 	}
 	return inn_vect;
 }

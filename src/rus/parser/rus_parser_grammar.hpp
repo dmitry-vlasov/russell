@@ -16,6 +16,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	using qi::labels::_val;
 	using qi::labels::_r1;
 	using qi::labels::_r2;
+	using qi::labels::_r3;
 	using qi::labels::_a;
 	using qi::labels::_b;
 	using qi::labels::_c;
@@ -28,15 +29,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	const phoenix::function<IdToInt>     idToInt;
 	const phoenix::function<SymbToInt>   symbToInt;
-	const phoenix::function<AddSymbol>   addSymbol;
-
 	const phoenix::function<ParseExpr>   parseExpr;
 	const phoenix::function<ParsePlain>  parsePlain;
+	const phoenix::function<ParseTerm>   parseTerm;
 
 	const phoenix::function<PushVars>    pushVars;
 	const phoenix::function<PopVars>     popVars;
 	const phoenix::function<AddVars>     addVars;
-
 	const phoenix::function<SetType>     setType;
 
 	const phoenix::function<CreateStepRef> createStepRef;
@@ -64,9 +63,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	id    = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]              [_val = idToInt(qi::labels::_1)];
 	path  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
-	term  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
-	expr  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parsePlain(_val, _r1)];
+	term  = + (symb [push_back(_a, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseTerm(_r3, _a, _r2, _r1, phoenix::ref(var_stack)), _val = &_r3];
+	expr  = + (symb [push_back(_a, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseExpr(_r2, _a, _r1, phoenix::ref(var_stack)), _val = &_r2];
+	plain = + (symb [push_back(_a, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parsePlain(_r2, _a, _r1), _val = &_r2];
 
 	disj =
 		lit("disjointed") > "("
@@ -89,9 +88,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - uint_    [_val = new_<Prop>(qi::labels::_1 - 1)]
 		> ":"
 		> id         [_a = qi::labels::_1]
-		> "=" > "|-"
-		> expr(_a)
-		             [phoenix::at_c<1>(*_val) = qi::labels::_1]
+		> "=" > "|-" > expr(_a, phoenix::at_c<1>(*_val))
 		> lit(END_MARKER);
 
 	hyp =
@@ -99,9 +96,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - uint_    [_val = new_<Hyp>(qi::labels::_1 - 1)]
 		> ":"
 		> id         [_a = qi::labels::_1]
-		> "=" > "|-"
-		> expr(_a)
-		             [phoenix::at_c<1>(*_val) = qi::labels::_1]
+		> "=" > "|-" > expr(_a, phoenix::at_c<1>(*_val))
 		> lit(END_MARKER);
 
 	ref =
@@ -122,7 +117,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> eps [_val = new_<Step>(_a, _c, _d, _r1)]
 		> refs(_r1) [addStepRefs(_val, qi::labels::_1)]
 		> lit("|-") [addProofElem(_r1, _val)]
-		> expr(_b)  [phoenix::at_c<1>(*_val) = qi::labels::_1]
+		> expr(_b, phoenix::at_c<1>(*_val))
 		> lit(END_MARKER);
 
 	qed =
@@ -192,20 +187,14 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) )
 		> "defiendum" > ":"
 		> id         [_a = qi::labels::_1]
-		> "=" > "#"
-		> expr(_a)   [phoenix::at_c<3>(*_val) = qi::labels::_1]
-		> END_MARKER
+		> "=" > "#" > expr(_a, phoenix::at_c<3>(*_val)) > END_MARKER
 		> "definiens" > ":"
 		> id         [_a = qi::labels::_1]
-		> "=" > "#"
-		> expr(_a)   [phoenix::at_c<4>(*_val) = qi::labels::_1]
-		> END_MARKER
+		> "=" > "#" > expr(_a, phoenix::at_c<4>(*_val)) > END_MARKER
 		> bar
 		> "prop" > ":"
 		> id         [_a = qi::labels::_1]
-		> "=" > "|-"
-		> plain(_a)  [phoenix::at_c<5>(*_val) = qi::labels::_1]
-		> END_MARKER
+		> "=" > "|-" > plain(_a, phoenix::at_c<5>(*_val)) > END_MARKER
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];
@@ -218,11 +207,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - vars     [_b = qi::labels::_1]
 		> ")" > "{" > "term" > ":"
 		> id         [_c = qi::labels::_1]
-		> "=" > lit("#")
-		> term(_c)   [_d = qi::labels::_1]
-		> END_MARKER
-		> lit("}")   [_val = new_<Rule>(_a, _b, _d)]
-		> eps        [popVars(phoenix::ref(var_stack))];
+		> "=" > lit("#") [_val = new_<Rule>(_a, _b)]
+		> term(_c, _a, phoenix::at_c<2>(*_val)) > END_MARKER
+		> lit("}")   [popVars(phoenix::ref(var_stack))];
 
 	type =
 		lit("type")
@@ -280,9 +267,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		);
 
 	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(term,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(expr,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(plain,     setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(term,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(expr,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(plain,     setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(comment,   setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(import,    setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(constant,  setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

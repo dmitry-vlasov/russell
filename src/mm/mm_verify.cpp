@@ -141,11 +141,14 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 	for (const auto& p : hypsPairs) {
 		if (apply_subst(sub, *p.first) != p.second) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show_ex(apply_subst(sub, *p.first)) + "\n";
+			msg += "from assertion: " + show_ex(apply_subst(sub, *p.first)) + "\n";
 			msg += "and\n";
-			msg += show_ex(p.second) + "\n";
+			msg += "on stack: " + show_ex(p.second) + "\n";
 			msg += "theorem " + Lex::toStr(th->id()) + "\n";
 			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
+			msg += show(*ass) + "\n";
+			msg += "substitution:\n";
+			msg += show(sub) + "\n";
 			throw Error("verification", msg, th->token);
 		}
 	}

@@ -65,7 +65,7 @@ inline bool operator < (const Type& t1, const Type& t2) {
 }
 
 struct Rule : public Owner<Rule>, public Writable {
-	Rule(Id id, const Vars& v, const Expr& e, const Token& t = Token());
+	Rule(Id id, const Vars& v, const Expr& e = Expr(), const Token& t = Token());
 	Vars vars;
 	Expr term;
 	Type* type() { return term.type.get(); }

@@ -115,28 +115,36 @@ struct IdToInt {
 	}
 };
 
-struct AddSymbol {
-	template <typename T1, typename T2>
+struct ParsePlain {
 	struct result { typedef void type; };
-	void operator()(Expr& ex, uint s) const {
-		ex.symbols.emplace_back(s);
+	void operator()(Expr& ex, const vector<uint>& symbs, Id tp) const {
+		ex.symbols.reserve(symbs.size());
+		for (uint s : symbs) {
+			ex.symbols.emplace_back(s);
+		}
+		ex.type.set(tp);
 	}
 };
 
 struct ParseExpr {
-	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Id tp, VarStack& var_stack) const {
-		ex.type.set(tp);
+	void operator()(Expr& ex, const vector<uint>& symbs, Id tp, VarStack& var_stack) const {
+		static ParsePlain plain;
+		plain(ex, symbs, tp);
 		mark_vars(ex, var_stack);
 	}
 };
 
-struct ParsePlain {
-	template <typename T1, typename T2>
+struct ParseTerm {
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Id tp) const {
-		ex.type.set(tp);
+	void operator()(Expr& ex, const vector<uint>& symbs, Id id, Id tp, VarStack& var_stack) const {
+		static ParseExpr expr;
+		expr(ex, symbs, tp, var_stack);
+		Tree::Children children;
+		for (auto& s : ex.symbols) {
+			if (s.var) children.push_back(make_unique<Tree>(s));
+		}
+		ex.set(new Tree(id, children));
 	}
 };
 
@@ -335,9 +343,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	qi::rule<Iterator, uint(), unicode::space_type> symb;
 	qi::rule<Iterator, Id(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
-	qi::rule<Iterator, Expr(Id), unicode::space_type> term;
-	qi::rule<Iterator, Expr(Id), unicode::space_type> expr;
-	qi::rule<Iterator, Expr(Id), unicode::space_type> plain;
+	qi::rule<Iterator, Expr*(Id, Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> term;
+	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
+	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
 	qi::rule<Iterator, Disj(), unicode::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
@@ -352,7 +360,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	qi::rule<Iterator, Theorem*(), unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Id>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), unicode::space_type> axiom;
-	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id, Expr>, unicode::space_type> rule;
+	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
