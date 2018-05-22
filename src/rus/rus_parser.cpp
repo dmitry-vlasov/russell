@@ -547,15 +547,13 @@ private:
 			Context* c = ctx.get<Context*>();
 			return c->source;
 		};
-		parser_["IMPORT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* c = ctx.get<Context*>();
+		parser_["IMPORT"] = [](const peg::SemanticValues& sv) {
 			uint id = sv[0].get<uint>();
-			Source* s = Sys::mod().math.get<Source>().access(id);
-			const bool primary = !s->parsed;
 #ifndef PARALLEL_PARSE
-			if (primary) parse(id);
+			Source* s = Sys::mod().math.get<Source>().access(id);
+			if (!s->parsed) parse(id);
 #endif
-			return new Import(id, primary);
+			return new Import(id);
 		};
 	}
 

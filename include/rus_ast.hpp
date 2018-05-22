@@ -254,10 +254,8 @@ struct Proof : public Owner<Proof>, public Verifiable, public Writable {
 };
 
 struct Import : public Tokenable, public Writable {
-	Import(uint src, bool prim, const Token& t = Token()) :
-		Tokenable(t), source(src), primary(prim) { }
+	Import(uint src, const Token& t = Token()) : Tokenable(t), source(src) { }
 	User<Source> source;
-	bool         primary;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 

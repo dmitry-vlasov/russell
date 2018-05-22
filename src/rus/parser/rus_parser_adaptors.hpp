@@ -125,7 +125,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Import,
 	(mdl::rus::Source*, source)
-	(bool, primary)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

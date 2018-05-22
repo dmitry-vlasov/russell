@@ -359,8 +359,8 @@ void translate_assertion(const Assertion* ass, Maps& state) {
 
 void translate_source(uint src, Maps maps, uint tgt = -1);
 
-inline rus::Import* translate_import(const Import* inc, Maps& s) {
-	return new rus::Import(inc->source.id(), false);
+inline void translate_import(const Import* inc, Maps& s) {
+	s.theory.top()->nodes.emplace_back(unique_ptr<rus::Import>(new rus::Import(inc->source.id())));
 }
 
 inline void translate_comment(const Comment* com, Maps& s) {
@@ -371,7 +371,7 @@ inline void translate_comment(const Comment* com, Maps& s) {
 void translate_theory(const Source* source, Maps& state) {
 	for (const auto& node : source->contents) {
 		if (auto imp = std::get_if<unique_ptr<Import>>(&node)) {
-			state.theory.top()->nodes.emplace_back(unique_ptr<rus::Import>(translate_import(imp->get(), state)));
+			translate_import(imp->get(), state);
 		}
 	}
 	for (auto& node : source->contents) {

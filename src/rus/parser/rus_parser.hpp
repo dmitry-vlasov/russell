@@ -153,12 +153,11 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
-		Source* imp_src = Sys::mod().math.get<Source>().access(id);
-		const bool primary = !imp_src->parsed;
 #ifndef PARALLEL_PARSE
-		if (primary) parse_src_spirit(id);
+		Source* imp_src = Sys::mod().math.get<Source>().access(id);
+		if (!imp_src->parsed) parse_src_spirit(id);
 #endif
-		return new Import(id, primary);
+		return new Import(id);
 	}
 };
 
