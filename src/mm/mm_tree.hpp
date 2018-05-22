@@ -26,10 +26,10 @@ struct Tree {
 		string show() const {
 			if (type == Tree::Node::TREE) return val.tree->show();
 			ostringstream oss;
-			switch (val.ref->val.index()) {
-			case 0 : val.ref->var()->ref(oss); break;
-			case 1 : val.ref->hyp()->ref(oss); break;
-			case 2 : val.ref->ass()->ref(oss); break;
+			switch (val.ref->kind()) {
+			case Ref::VAR : val.ref->var()->ref(oss); break;
+			case Ref::HYP : val.ref->hyp()->ref(oss); break;
+			case Ref::ASS : val.ref->ass()->ref(oss); break;
 			}
 			if (expr.size()) {
 				oss << "[[" << expr << "]]";

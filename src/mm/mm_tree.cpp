@@ -99,10 +99,10 @@ Expr eval(Tree::Node& n) {
 		case Tree::Node::TREE: n.expr = eval(n.val.tree); break;
 		case Tree::Node::REF: {
 			const Ref* ref = n.val.ref;
-			switch (ref->val.index()) {
-			case 0 : n.expr = ref->var()->expr; break;
-			case 1 : n.expr = ref->hyp()->expr; break;
-			case 2 : n.expr = ref->ass()->expr; break;
+			switch (ref->kind()) {
+			case Ref::VAR : n.expr = ref->var()->expr; break;
+			case Ref::HYP : n.expr = ref->hyp()->expr; break;
+			case Ref::ASS : n.expr = ref->ass()->expr; break;
 			default : assert(false && "impossible");
 			}
 		}}

@@ -167,10 +167,10 @@ struct Assertion : public Owner<Assertion>, public Writable, public Referable {
 };
 
 inline void Ref::write(ostream& os, const Indent& i) const {
-	switch (val.index()) {
-	case 0 : var()->ref(os); break;
-	case 1 : hyp()->ref(os); break;
-	case 2 : ass()->ref(os); break;
+	switch (kind()) {
+	case VAR : var()->ref(os); break;
+	case HYP : hyp()->ref(os); break;
+	case ASS : ass()->ref(os); break;
 	default : assert(false && "impossible");
 	}
 }

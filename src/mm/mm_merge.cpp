@@ -77,5 +77,4 @@ void merge(uint src, uint tgt, uint tgt_root) {
 	Sys::timer()["merge"].stop();
 }
 
-
 }} // mdl::mm2
