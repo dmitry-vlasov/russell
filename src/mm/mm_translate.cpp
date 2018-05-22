@@ -69,10 +69,27 @@ inline rus::Symbol translate_symb(Symbol s, const Assertion* ass) {
 
 rus::Expr translate_expr(const Expr& ex, const Assertion* ass) {
 	rus::Expr e;
+	e.symbols.reserve(ex.size() - 1);
 	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
 		if (it == ex.begin()) continue;
-		e.push_back(translate_symb(*it, ass));
+		uint s = it->lit;
+		if (it->var) {
+			uint type = translate_var_type(s, ass);
+			auto p = math_vars().find(s);
+			if (p == math_vars().end()) {
+				e.symbols.emplace_back(s, type, rus::Symbol::VAR);
+			} else {
+				e.symbols.emplace_back((*p).second.var, type, rus::Symbol::VAR);
+			}
+		} else {
+			auto p = math_consts().find(s);
+			if (p == math_consts().end()) {
+				e.symbols.emplace_back(s, s, rus::Symbol::CONST);
+			} else {
+				e.symbols.emplace_back((*p).second.symb, s, rus::Symbol::CONST);
+			}
+		}
 	}
 	// it's the best what we can do here ...
 	e.type.set(wff());
