@@ -10,6 +10,32 @@ inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 		ex_1.push_back(*it);
 }
 
+string Tree::Node::show() const {
+	if (kind() == Tree::Node::TREE) return tree()->show();
+	ostringstream oss;
+	switch (ref()->kind()) {
+	case Ref::VAR : ref()->var()->ref(oss); break;
+	case Ref::HYP : ref()->hyp()->ref(oss); break;
+	case Ref::ASS : ref()->ass()->ref(oss); break;
+	}
+	if (expr.size()) {
+		oss << "[[" << expr << "]]";
+	}
+	return oss.str();
+}
+
+string Tree::show() const {
+	string space = length() > 16 ? "\n" : " ";
+	assert(nodes.back().kind() == Tree::Node::REF);
+	const Node& n = nodes.back();
+	string str = n.show();
+	str += "(";
+	for (uint i = 0; i + 1 < nodes.size(); ++ i)
+		str += Indent::paragraph(space + nodes[i].show(), "  ");
+	str += space + ") ";
+	return str;
+}
+
 Expr apply_subst(const Subst& sub, const Expr& expr) {
 	Expr ret;
 	for (auto s : expr) {
@@ -49,13 +75,13 @@ Tree* to_tree(const Proof* proof) {
 }
 
 static void to_proof(const Tree* t, vector<Ref>& proof) {
-	for (auto n : t->nodes) {
-		switch(n.type) {
+	for (auto& n : t->nodes) {
+		switch(n.kind()) {
 		case Tree::Node::REF:
-			proof.emplace_back(*n.val.ref);
+			proof.emplace_back(*n.ref());
 			break;
 		case Tree::Node::TREE:
-			to_proof(n.val.tree, proof);
+			to_proof(n.tree(), proof);
 			break;
 		default : assert(false && "impossible"); break;
 		}
@@ -64,7 +90,7 @@ static void to_proof(const Tree* t, vector<Ref>& proof) {
 
 Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 	assert(tree->nodes.back().type == Tree::Node::REF);
-	uint l = tree->nodes.back().val.ref->label();
+	uint l = tree->nodes.back().ref()->label();
 	if (red.count(l)) {
 		Ref* ref = red.at(l);
 		Tree* t = nullptr;
@@ -73,14 +99,19 @@ Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 		} else {
 			const uint arg = tree->nodes.size() - 2;
 			assert(tree->nodes[arg].type == Tree::Node::TREE);
-			std::swap(tree->nodes[arg].val.tree, t);
+			t = tree->nodes[arg].tree();
+			tree->nodes[arg].set(nullptr);
 		}
-		delete tree;
 		return reduce(t, red);
 	} else {
-		for (auto& n : tree->nodes)
-			if (n.type == Tree::Node::TREE)
-				n.val.tree = reduce(n.val.tree, red);
+		for (auto& n : tree->nodes) {
+			if (n.kind() == Tree::Node::TREE) {
+				Tree* reduced = reduce(n.tree(), red);
+				if (reduced != n.tree()) {
+					n.set(reduced);
+				}
+			}
+		}
 		return tree;
 	}
 }
@@ -95,10 +126,10 @@ Expr eval(Tree* proof);
 
 Expr eval(Tree::Node& n) {
 	if (!n.expr.size()) {
-		switch (n.type) {
-		case Tree::Node::TREE: n.expr = eval(n.val.tree); break;
+		switch (n.kind()) {
+		case Tree::Node::TREE: n.expr = eval(n.tree()); break;
 		case Tree::Node::REF: {
-			const Ref* ref = n.val.ref;
+			const Ref* ref = n.ref();
 			switch (ref->kind()) {
 			case Ref::VAR : n.expr = ref->var()->expr; break;
 			case Ref::HYP : n.expr = ref->hyp()->expr; break;
@@ -114,7 +145,7 @@ Expr eval(Tree* tree) {
 	Tree::Node& n = tree->nodes.back();
 	if (n.expr.size()) return n.expr;
 	assert(n.type == Tree::Node::REF);
-	const Ref* ref = n.val.ref;
+	const Ref* ref = n.ref();
 	if (!ref->is_assertion()) return eval(n);
 	const Assertion* ass = ref->ass();
 	Subst sub;

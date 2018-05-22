@@ -291,19 +291,19 @@ rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
-	const Assertion* ass = node.val.ref->ass();
+	const Assertion* ass = node.ref()->ass();
 	rus::Step* step = new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof);
 
 	for (uint i = 0; i < ass->hyps.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i + ass->outerVars.size()];
 		assert(n.type == Tree::Node::TREE);
-		Tree* t = n.val.tree;
+		Tree* t = n.tree();
 		Tree::Node& h = t->nodes.back();
 		assert(h.type == Tree::Node::REF);
 		rus::Ref* hr =
-			h.val.ref->is_assertion() ?
+			h.ref()->is_assertion() ?
 			new rus::Ref(translate_step(t, proof, thm, state, a)) :
-			new rus::Ref(thm->hyps[h.val.ref->index()].get());
+			new rus::Ref(thm->hyps[h.ref()->index()].get());
 		step->refs.emplace_back(hr);
 	}
 	step->set_ind(elems.size());

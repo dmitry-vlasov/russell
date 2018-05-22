@@ -6,59 +6,31 @@ namespace mdl { namespace mm {
 
 struct Tree {
 	struct Node {
-		enum Type {
-			REF,
-			TREE
-		};
-		union Value {
-			Value(const Ref* r) : ref(r) { }
-			Value(Tree* t) : tree(t) { }
-			Value(const Value& v) : ref(v.ref) { }
-			const Ref* ref;
-			Tree* tree;
-		};
-		Node(const Ref* r) : type(REF), val(r) { }
-		Node(Tree* t) : type(TREE), val(t) { }
-		void destroy() { if (type == TREE) delete val.tree; }
+		enum Kind { REF, TREE };
+		typedef variant<const Ref*, unique_ptr<Tree>> Value;
+
+		Node(const Ref* r) : val(r) { }
+		Node(Tree* t) : val(unique_ptr<Tree>(t)) { }
 		uint length() const {
-			return (type == Tree::Node::TREE) ? val.tree->length() : 1;
+			return (kind() == Tree::Node::TREE) ? tree()->length() : 1;
 		}
-		string show() const {
-			if (type == Tree::Node::TREE) return val.tree->show();
-			ostringstream oss;
-			switch (val.ref->kind()) {
-			case Ref::VAR : val.ref->var()->ref(oss); break;
-			case Ref::HYP : val.ref->hyp()->ref(oss); break;
-			case Ref::ASS : val.ref->ass()->ref(oss); break;
-			}
-			if (expr.size()) {
-				oss << "[[" << expr << "]]";
-			}
-			return oss.str();
-		}
-		Type type;
+		Kind kind() const { return static_cast<Kind>(val.index()); }
+		string show() const;
+		const Ref* ref() const { return std::get<const Ref*>(val); }
+		Tree* tree() const { return std::get<unique_ptr<Tree>>(val).get(); }
+		void set(Tree* tree) { val = unique_ptr<Tree>(tree); }
 		Value val;
 		Expr expr;
 	};
 	Tree() = default;
 	Tree(const Ref* r) { nodes.push_back(r); }
-	~Tree() { for (auto& n : nodes) n.destroy(); }
+
 	uint length() const {
 		uint len = 0;
 		for (auto& n : nodes) len += n.length();
 		return len;
 	}
-	string show() const {
-		string space = length() > 16 ? "\n" : " ";
-		assert(nodes.back().type == Tree::Node::REF);
-		const Node& n = nodes.back();
-		string str = n.show();
-		str += "(";
-		for (uint i = 0; i + 1 < nodes.size(); ++ i)
-			str += Indent::paragraph(space + nodes[i].show(), "  ");
-		str += space + ") ";
-		return str;
-	}
+	string show() const;
 	vector<Node> nodes;
 };
 
