@@ -89,7 +89,7 @@ static void to_proof(const Tree* t, vector<Ref>& proof) {
 }
 
 Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
-	assert(tree->nodes.back().type == Tree::Node::REF);
+	assert(tree->nodes.back().kind() == Tree::Node::REF);
 	uint l = tree->nodes.back().ref()->label();
 	if (red.count(l)) {
 		Ref* ref = red.at(l);
@@ -98,9 +98,8 @@ Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 			t = new Tree(ref);
 		} else {
 			const uint arg = tree->nodes.size() - 2;
-			assert(tree->nodes[arg].type == Tree::Node::TREE);
-			t = tree->nodes[arg].tree();
-			tree->nodes[arg].set(nullptr);
+			assert(tree->nodes[arg].kind() == Tree::Node::TREE);
+			t = std::get<unique_ptr<Tree>>(tree->nodes[arg].val).release();
 		}
 		return reduce(t, red);
 	} else {
