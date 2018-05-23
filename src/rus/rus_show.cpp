@@ -4,9 +4,9 @@ namespace mdl { namespace rus {
 
 static vector<string> show_lines(const Rules& tr) {
 	vector<string> vect;
-	for (const Rules::Node* p : tr.map) {
+	for (const Rules::Node* p : tr.nodes) {
 		vector<string> v = show_lines(p->tree);
-		if (p->tree.map.size()) {
+		if (p->tree.nodes.size()) {
 			for (string& s : v)
 				vect.push_back(show(p->symb) + ' ' + s);
 		} else {

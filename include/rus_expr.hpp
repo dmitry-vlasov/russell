@@ -268,12 +268,17 @@ private:
 
 struct Rules {
 	struct Node;
-	typedef vector<Node*> Map;
+	typedef vector<Node*> Nodes;
+	typedef Nodes::const_iterator NodeIter;
+	typedef map<uint, NodeIter> ConstMap;
+
 	void add(const Expr& ex, uint id);
 	void sort();
 	vector<string> show() const;
 	~Rules();
-	Map map;
+	Nodes    nodes;
+	ConstMap constMap;
+	NodeIter varsBegin;
 };
 
 struct Rules::Node {

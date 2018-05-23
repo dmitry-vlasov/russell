@@ -4,7 +4,7 @@ namespace mdl {
 namespace rus {
 
 Rules::~Rules() {
-	for (auto n : map) delete n;
+	for (auto n : nodes) delete n;
 }
 
 void Rules::add(const Expr& ex, uint id) {
@@ -13,7 +13,7 @@ void Rules::add(const Expr& ex, uint id) {
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
-		for (Node* p : m->map) {
+		for (Node* p : m->nodes) {
 			if (p->symb == s) {
 				n = p;
 				m = &p->tree;
@@ -22,9 +22,9 @@ void Rules::add(const Expr& ex, uint id) {
 			}
 		}
 		if (new_symb) {
-			if (m->map.size()) m->map.back()->symb.fin = false;
-			m->map.push_back(new Node(s, n));
-			n = m->map.back();
+			if (m->nodes.size()) m->nodes.back()->symb.fin = false;
+			m->nodes.push_back(new Node(s, n));
+			n = m->nodes.back();
 			n->symb.fin = true;
 			m = &n->tree;
 		}
@@ -49,20 +49,36 @@ void Rules::add(const Expr& ex, uint id) {
 }
 
 void Rules::sort() {
-	if (!map.size()) return;
-	map.back()->symb.fin = false;
+	if (!nodes.size()) return;
+	nodes.back()->symb.fin = false;
 	std::sort(
-		map.begin(),
-		map.end(),
-		[](Node* n1, Node* n2) { return n1->min_dist < n2->min_dist; }
+		nodes.begin(),
+		nodes.end(),
+		[](Node* n1, Node* n2) {
+		    if (n1->symb.cst && n2->symb.var) {
+		    	return true;
+		    } else if (n1->symb.var && n2->symb.cst) {
+		    	return false;
+		    } else {
+		    	return n1->min_dist < n2->min_dist;
+		    }
+		}
 	);
-	map.back()->symb.fin = true;
-	for (Node* p : map) p->tree.sort();
+	nodes.back()->symb.fin = true;
+	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
+		Node* n = (*it);
+		if (n->symb.cst) {
+			constMap[n->symb.lit] = it;
+		} else if (n->symb.var && varsBegin == NodeIter()) {
+			varsBegin = it;
+		}
+		n->tree.sort();
+	}
 }
 
 vector<string> Rules::show() const {
 	vector<string> ret;
-	for (const auto& n : map)
+	for (const auto& n : nodes)
 		for (const auto& s : n->show())
 			ret.push_back(s);
 	return ret;

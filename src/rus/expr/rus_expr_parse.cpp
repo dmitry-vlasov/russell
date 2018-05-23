@@ -26,7 +26,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols
 		return Action::BREAK;
 	} else {
 		if (trace) cout << Indent(ch - beg) << "Act: go forward one step ..." << endl;
-		n.push((*n.top())->tree.map.begin());
+		n.push((*n.top())->tree.nodes.begin());
 		m.push(++ch);
 	}
 	return Action::CONT;
@@ -34,16 +34,26 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols
 
 template<bool trace>
 Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::iterator beg) {
-	if (type->rules.map.size()) {
-		typedef Rules::Map::const_iterator MapIter;
+	if (type->rules.nodes.size()) {
+		typedef Rules::NodeIter NodeIter;
 		Tree::Children children;
-		stack<MapIter> n;
+		stack<NodeIter> n;
 		stack<Symbols::iterator> m;
-		stack<MapIter> childnodes;
-		n.push(type->rules.map.begin());
+		stack<NodeIter> childnodes;
+		n.push(type->rules.nodes.begin());
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
+			if (ch->cst && (*n.top())->symb == *m.top()) {
+				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
+				if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
+				Action a = act<trace>(n, m, ch, e, beg);
+				switch (a.kind) {
+				case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
+				case Action::BREAK: goto out;
+				case Action::CONT : continue;
+				}
+			}
 			if (const Type* tp = (*n.top())->symb.type()) {
 				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
 				if (trace) cout << Indent(ch - beg) << "Parse: variable " << (*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
@@ -59,15 +69,6 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					}
 				} else {
 					childnodes.pop();
-				}
-			} else if ((*n.top())->symb == *m.top()) {
-				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
-				if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
-				Action a = act<trace>(n, m, ch, e, beg);
-				switch (a.kind) {
-				case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
-				case Action::BREAK: goto out;
-				case Action::CONT : continue;
 				}
 			}
 			while ((*n.top())->symb.fin) {

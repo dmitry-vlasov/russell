@@ -306,17 +306,17 @@ rus::Theory::Kind node_kind(const Assertion* ass) {
 
 rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps& state, const Assertion* a) {
 	vector<rus::Proof::Elem>& elems = proof->elems;
-	assert(tree->nodes.back().type == Tree::Node::REF);
+	assert(tree->nodes.back().kind() == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	const Assertion* ass = node.ref()->ass();
 	rus::Step* step = new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof);
 
 	for (uint i = 0; i < ass->hyps.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i + ass->outerVars.size()];
-		assert(n.type == Tree::Node::TREE);
+		assert(n.kind() == Tree::Node::TREE);
 		Tree* t = n.tree();
 		Tree::Node& h = t->nodes.back();
-		assert(h.type == Tree::Node::REF);
+		assert(h.kind() == Tree::Node::REF);
 		rus::Ref* hr =
 			h.ref()->is_assertion() ?
 			new rus::Ref(translate_step(t, proof, thm, state, a)) :

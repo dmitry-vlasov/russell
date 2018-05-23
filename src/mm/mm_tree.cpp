@@ -143,7 +143,7 @@ Expr eval(Tree::Node& n) {
 Expr eval(Tree* tree) {
 	Tree::Node& n = tree->nodes.back();
 	if (n.expr.size()) return n.expr;
-	assert(n.type == Tree::Node::REF);
+	assert(n.kind() == Tree::Node::REF);
 	const Ref* ref = n.ref();
 	if (!ref->is_assertion()) return eval(n);
 	const Assertion* ass = ref->ass();
