@@ -275,19 +275,21 @@ struct Rules {
 	void add(const Expr& ex, uint id);
 	void sort();
 	vector<string> show() const;
+	Rules(Node* p = nullptr) : parent(p) { }
 	~Rules();
+	Node*    parent;
 	Nodes    nodes;
 	ConstMap constMap;
-	NodeIter varsBegin;
+	NodeIter constLast;
 };
 
 struct Rules::Node {
-	Node(const Symbol& s, Node* p) : symb(s), parent(p), min_dist(-1) { }
+	Node(const Symbol& s, Rules* p) : symb(s), tree(this), parent(p), min_dist(-1) { }
 	vector<string> show() const;
 	Symbol     symb;
 	Rules      tree;
 	User<Rule> rule;
-	Node*      parent;
+	Rules*     parent;
 	uint       min_dist;
 };
 

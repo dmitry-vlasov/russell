@@ -12,8 +12,8 @@ struct Action {
 };
 
 template<bool trace>
-inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
-	if (const User<Rule>& r = (*n.top())->rule) {
+inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
+	if (const User<Rule>& r = (*ni)->rule) {
 		if (r.get()->token.preceeds(e->token)) {
 			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
 			return Action(Action::RET, r.get());
@@ -26,7 +26,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols
 		return Action::BREAK;
 	} else {
 		if (trace) cout << Indent(ch - beg) << "Act: go forward one step ..." << endl;
-		n.push((*n.top())->tree.nodes.begin());
+		n.push((*ni)->tree.nodes.begin());
 		m.push(++ch);
 	}
 	return Action::CONT;
@@ -44,14 +44,20 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (ch->cst && (*n.top())->symb == *m.top()) {
-				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
-				if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
-				Action a = act<trace>(n, m, ch, e, beg);
-				switch (a.kind) {
-				case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
-				case Action::BREAK: goto out;
-				case Action::CONT : continue;
+			if (ch->cst && (*n.top())->symb.cst) {
+				const Rules* par = (*n.top())->parent ? (*n.top())->parent : &type->rules;
+				auto constIter = par->constMap.find(ch->lit);
+				if (constIter != par->constMap.end()) {
+					n.top() = constIter->second;
+					if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
+					if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
+					n.top() = par->constLast;
+					Action a = act<trace>(n, m, constIter->second, ch, e, beg);
+					switch (a.kind) {
+					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
+					case Action::BREAK: goto out;
+					case Action::CONT : continue;
+					}
 				}
 			}
 			if (const Type* tp = (*n.top())->symb.type()) {
@@ -61,7 +67,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				if (Tree* child = parse_LL<trace>(ch, tp, e, beg)) {
 					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(child) << " - success " << endl;
 					children.emplace_back(child);
-					Action a = act<trace>(n, m, ch, e, beg);
+					Action a = act<trace>(n, m, n.top(), ch, e, beg);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 					case Action::BREAK: goto out;

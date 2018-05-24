@@ -14,7 +14,7 @@ void Rules::add(const Expr& ex, uint id) {
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
 		for (Node* p : m->nodes) {
-			if (p->symb == s) {
+			if ((s.cst && p->symb == s) || (s.var && p->symb.type_id() == s.type_id())) {
 				n = p;
 				m = &p->tree;
 				new_symb = false;
@@ -23,7 +23,7 @@ void Rules::add(const Expr& ex, uint id) {
 		}
 		if (new_symb) {
 			if (m->nodes.size()) m->nodes.back()->symb.fin = false;
-			m->nodes.push_back(new Node(s, n));
+			m->nodes.push_back(new Node(s, m));
 			n = m->nodes.back();
 			n->symb.fin = true;
 			m = &n->tree;
@@ -42,7 +42,7 @@ void Rules::add(const Expr& ex, uint id) {
 		uint min_dist = 0;
 		while (n) {
 			n->min_dist = min_dist < n->min_dist ? min_dist : n->min_dist;
-			n = n->parent;
+			n = n->parent->parent;
 			min_dist++;
 		}
 	}
@@ -65,12 +65,12 @@ void Rules::sort() {
 		}
 	);
 	nodes.back()->symb.fin = true;
+	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
 		Node* n = (*it);
 		if (n->symb.cst) {
 			constMap[n->symb.lit] = it;
-		} else if (n->symb.var && varsBegin == NodeIter()) {
-			varsBegin = it;
+			constLast = it;
 		}
 		n->tree.sort();
 	}
