@@ -210,11 +210,9 @@ struct GetStep {
 	}
 };
 
-
-template<typename Iterator>
 struct SetToken {
     struct result { typedef void type; };
-    void operator()(Tokenable& tokenable, Iterator beg, Iterator end, Source* src) const {
+    void operator()(Tokenable& tokenable, LocationIter beg, LocationIter end, Source* src) const {
     	tokenable.token.set(src, &*beg, &*end);
     }
 };
@@ -318,48 +316,46 @@ struct AddToTheory {
 	}
 };
 
-template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
+struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> {
 	Grammar(Source*);
 	void initNames();
 
 	VarStack var_stack;
-	qi::rule<Iterator, qi::unused_type> bar;
-	qi::rule<Iterator, uint(), unicode::space_type> liter;
-	qi::rule<Iterator, uint(), unicode::space_type> var;
-	qi::rule<Iterator, uint(), unicode::space_type> symb;
-	qi::rule<Iterator, Id(), unicode::space_type> id;
-	qi::rule<Iterator, string(), unicode::space_type> path;
-	qi::rule<Iterator, Expr*(Id, Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> term;
-	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
-	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
-	qi::rule<Iterator, Disj*(Disj&), unicode::space_type> disj;
-	qi::rule<Iterator, Vars*(Vars&), qi::locals<uint, Id>, unicode::space_type> vars;
-	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
-	qi::rule<Iterator, Prop*(), qi::locals<Id>, unicode::space_type> prop;
-	qi::rule<Iterator, Ref*(Proof*), unicode::space_type> ref;
-	qi::rule<Iterator, vector<Ref*>(Proof*), unicode::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Id, vector<Ref*>>, unicode::space_type> step;
-	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
-	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_elem;
-	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
-	qi::rule<Iterator, Proof*(), qi::locals<Id>, unicode::space_type> proof;
-	qi::rule<Iterator, Theorem*(), unicode::space_type> theorem;
-	qi::rule<Iterator, Def*(), qi::locals<Id>, unicode::space_type> def;
-	qi::rule<Iterator, Axiom*(), unicode::space_type> axiom;
-	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
-	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
-	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
-	qi::rule<Iterator, Import*(), unicode::space_type> import;
-	qi::rule<Iterator, string(), qi::unused_type> comment_text;
-	qi::rule<Iterator, Comment*(), qi::unused_type> comment_ml;
-	qi::rule<Iterator, Comment*(), qi::unused_type> comment_sl;
-	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
-	qi::rule<Iterator, Source*(), unicode::space_type> source;
+	qi::rule<LocationIter, qi::unused_type> bar;
+	qi::rule<LocationIter, uint(), unicode::space_type> liter;
+	qi::rule<LocationIter, uint(), unicode::space_type> var;
+	qi::rule<LocationIter, uint(), unicode::space_type> symb;
+	qi::rule<LocationIter, Id(), unicode::space_type> id;
+	qi::rule<LocationIter, string(), unicode::space_type> path;
+	qi::rule<LocationIter, Expr*(Id, Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> term;
+	qi::rule<LocationIter, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
+	qi::rule<LocationIter, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
+	qi::rule<LocationIter, Disj*(Disj&), unicode::space_type> disj;
+	qi::rule<LocationIter, Vars*(Vars&), qi::locals<uint, Id>, unicode::space_type> vars;
+	qi::rule<LocationIter, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
+	qi::rule<LocationIter, Prop*(), qi::locals<Id>, unicode::space_type> prop;
+	qi::rule<LocationIter, Ref*(Proof*), unicode::space_type> ref;
+	qi::rule<LocationIter, vector<Ref*>(Proof*), unicode::space_type> refs;
+	qi::rule<LocationIter, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Id, vector<Ref*>>, unicode::space_type> step;
+	qi::rule<LocationIter, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
+	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_elem;
+	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_body;
+	qi::rule<LocationIter, Proof*(), qi::locals<Id>, unicode::space_type> proof;
+	qi::rule<LocationIter, Theorem*(), unicode::space_type> theorem;
+	qi::rule<LocationIter, Def*(), qi::locals<Id>, unicode::space_type> def;
+	qi::rule<LocationIter, Axiom*(), unicode::space_type> axiom;
+	qi::rule<LocationIter, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
+	qi::rule<LocationIter, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
+	qi::rule<LocationIter, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
+	qi::rule<LocationIter, Import*(), unicode::space_type> import;
+	qi::rule<LocationIter, string(), qi::unused_type> comment_text;
+	qi::rule<LocationIter, Comment*(), qi::unused_type> comment_ml;
+	qi::rule<LocationIter, Comment*(), qi::unused_type> comment_sl;
+	qi::rule<LocationIter, Comment*(), qi::unused_type> comment;
+	qi::rule<LocationIter, Source*(), unicode::space_type> source;
 };
 
-template <typename Iterator>
-void Grammar<Iterator>::initNames() {
+inline void Grammar::initNames() {
 	bar.name("bar");
 	var.name("var");
 	symb.name("symbol");
