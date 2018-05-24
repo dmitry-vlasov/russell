@@ -7,7 +7,7 @@ Var* VarDecl::make(bool inner, uint index) const {
 	return new mm::Var(inner, index, label, type, var);
 }
 
-namespace {
+namespace parser {
 
 #define PARALLEL_PARSE
 
@@ -338,7 +338,9 @@ public:
 	}
 };
 
-}
+} // namespace parser
+
+using parser::Parser;
 
 void parse() {
 #ifdef PARALLEL_PARSE
