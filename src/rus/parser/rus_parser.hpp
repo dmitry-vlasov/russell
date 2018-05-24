@@ -15,7 +15,6 @@ namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
 
 struct MakeString {
-	template <typename T>
 	struct result { typedef string type; };
 	string operator()(const vector<uint>& s) const {
 		return string(s.begin(), s.end());
@@ -36,7 +35,6 @@ struct PushVars {
 };
 
 struct AddVars {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack, Vars& vars) const {
 		for (auto& v : vars.v) {
@@ -52,8 +50,14 @@ struct AddVars {
 	}
 };
 
+struct AddVar {
+	struct result { typedef void type; };
+	void operator()(vector<Symbol>& vars, uint var, Id type) const {
+		vars.emplace_back(var, type, Symbol::VAR);
+	}
+};
+
 struct PopVars {
-	template <typename T1>
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack) const {
 		vector<uint>& vars = var_stack.vstack.top();
@@ -98,7 +102,6 @@ struct Enqueue {
 };
 
 struct SymbToInt {
-	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
@@ -107,7 +110,6 @@ struct SymbToInt {
 };
 
 struct IdToInt {
-	template <typename T>
 	struct result { typedef Id type; };
 	Id operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
@@ -149,7 +151,6 @@ struct ParseTerm {
 };
 
 struct ParseImport {
-	template <typename T1, typename T2>
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
@@ -162,7 +163,6 @@ struct ParseImport {
 };
 
 struct SetType {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Symbol& s, Id t) const {
 		s.set_type(t);
@@ -184,7 +184,6 @@ struct NewDisjSet {
 };
 
 struct CreateStepRef {
-	template <typename T1, typename T2, typename T3>
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
@@ -198,7 +197,6 @@ struct CreateStepRef {
 };
 
 struct GetProp {
-	template <typename T1, typename T2>
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
 		return p->thm.get()->props[ind].get();
@@ -206,7 +204,6 @@ struct GetProp {
 };
 
 struct GetStep {
-	template <typename T1, typename T2>
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
 		return Proof::step(p->elems[ind]);
@@ -216,7 +213,6 @@ struct GetStep {
 
 template<typename Iterator>
 struct SetToken {
-    template <typename T1, typename T2, typename T3, typename T4>
     struct result { typedef void type; };
     void operator()(Tokenable& tokenable, Iterator beg, Iterator end, Source* src) const {
     	tokenable.token.set(src, &*beg, &*end);
@@ -227,7 +223,6 @@ static Symbol dfm(Lex::toInt("defiendum"));
 static Symbol dfs(Lex::toInt("definiens"));
 
 struct AssembleDef {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
 		Prop* prop = new Prop(0);
@@ -249,7 +244,6 @@ struct AssembleDef {
 };
 
 struct AppendComment {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Comment* c1, Comment* c2) const {
 		c1->text += show(*c2);
@@ -261,7 +255,6 @@ struct AppendComment {
 };
 
 struct AddProofElem {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Proof* p, Step* s) const {
 		p->elems.emplace_back(unique_ptr<Step>(s));
@@ -272,7 +265,6 @@ struct AddProofElem {
 };
 
 struct AddStepRefs {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Step* s, vector<Ref*> rs) const {
 		s->refs.reserve(rs.size());
@@ -283,7 +275,6 @@ struct AddStepRefs {
 };
 
 struct AddToAssertion {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Assertion* a, Hyp* h) const {
 		a->hyps.emplace_back(h);
@@ -294,7 +285,6 @@ struct AddToAssertion {
 };
 
 struct AddToTheory {
-	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Theory* t, Const* c) const {
 		t->nodes.emplace_back(unique_ptr<Const>(c));
@@ -344,7 +334,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
 	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
 	qi::rule<Iterator, Disj*(Disj&), unicode::space_type> disj;
-	qi::rule<Iterator, Vars*(Vars&), qi::locals<Symbol>, unicode::space_type> vars;
+	qi::rule<Iterator, Vars*(Vars&), qi::locals<uint, Id>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
 	qi::rule<Iterator, Prop*(), qi::locals<Id>, unicode::space_type> prop;
 	qi::rule<Iterator, Ref*(Proof*), unicode::space_type> ref;

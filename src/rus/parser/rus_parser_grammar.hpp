@@ -36,6 +36,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<PushVars>    pushVars;
 	const phoenix::function<PopVars>     popVars;
 	const phoenix::function<AddVars>     addVars;
+	const phoenix::function<AddVar>      addVar;
 	const phoenix::function<SetType>     setType;
 
 	const phoenix::function<CreateStepRef> createStepRef;
@@ -78,8 +79,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	vars =
 		( !lit(")")
 		> var        [_a = qi::labels::_1]
-		> ":" > id   [setType(_a, qi::labels::_1)]
-		> eps        [push_back(phoenix::at_c<0>(_r1), _a)]
+		> ":" > id   [_b = qi::labels::_1]
+		> eps        [addVar(phoenix::at_c<0>(_r1), _a, _b)]
 		) % ","
 		> eps        [addVars(phoenix::ref(var_stack), _r1), _val = &_r1];
 
