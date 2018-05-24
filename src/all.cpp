@@ -32,6 +32,7 @@
 #include "rus/rus_expr.cpp"
 #include "rus/rus_memvol.cpp"
 #include "rus/rus_show.cpp"
+#include "rus/rus_parser.cpp"
 #include "rus/rus_read.cpp"
 #include "rus/rus_test.cpp"
 #include "rus/rus_translate.cpp"
