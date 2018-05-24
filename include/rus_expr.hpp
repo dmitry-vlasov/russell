@@ -268,7 +268,7 @@ private:
 
 struct Rules {
 	struct Node;
-	typedef vector<Node*> Nodes;
+	typedef vector<unique_ptr<Node>> Nodes;
 	typedef Nodes::const_iterator NodeIter;
 	typedef map<uint, NodeIter> ConstMap;
 
@@ -276,7 +276,6 @@ struct Rules {
 	void sort();
 	vector<string> show() const;
 	Rules(Node* p = nullptr) : parent(p) { }
-	~Rules();
 	Node*    parent;
 	Nodes    nodes;
 	ConstMap constMap;

@@ -3,17 +3,14 @@
 namespace mdl {
 namespace rus {
 
-Rules::~Rules() {
-	for (auto n : nodes) delete n;
-}
-
 void Rules::add(const Expr& ex, uint id) {
 	assert(ex.symbols.size());
 	Rules* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
-		for (Node* p : m->nodes) {
+		for (auto& x : m->nodes) {
+			Node* p = x.get();
 			if ((s.cst && p->symb == s) || (s.var && p->symb.type_id() == s.type_id())) {
 				n = p;
 				m = &p->tree;
@@ -23,8 +20,8 @@ void Rules::add(const Expr& ex, uint id) {
 		}
 		if (new_symb) {
 			if (m->nodes.size()) m->nodes.back()->symb.fin = false;
-			m->nodes.push_back(new Node(s, m));
-			n = m->nodes.back();
+			m->nodes.emplace_back(new Node(s, m));
+			n = m->nodes.back().get();
 			n->symb.fin = true;
 			m = &n->tree;
 		}
@@ -50,11 +47,13 @@ void Rules::add(const Expr& ex, uint id) {
 
 void Rules::sort() {
 	if (!nodes.size()) return;
-	nodes.back()->symb.fin = false;
+	nodes.back().get()->symb.fin = false;
 	std::sort(
 		nodes.begin(),
 		nodes.end(),
-		[](Node* n1, Node* n2) {
+		[](const unique_ptr<Node>& p1, const unique_ptr<Node>& p2) {
+			auto n1 = p1.get();
+			auto n2 = p2.get();
 		    if (n1->symb.cst && n2->symb.var) {
 		    	return true;
 		    } else if (n1->symb.var && n2->symb.cst) {
@@ -64,10 +63,10 @@ void Rules::sort() {
 		    }
 		}
 	);
-	nodes.back()->symb.fin = true;
+	nodes.back().get()->symb.fin = true;
 	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
-		Node* n = (*it);
+		Node* n = it->get();
 		if (n->symb.cst) {
 			constMap[n->symb.lit] = it;
 			constLast = it;

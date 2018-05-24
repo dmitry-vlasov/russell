@@ -18,8 +18,8 @@ size_t memvol(const Tree& t) {
 size_t memvol(const Rules& rt) {
 	size_t vol = 0;
 	vol += rt.nodes.capacity() * sizeof (Rules::Node);
-	for (auto p : rt.nodes) {
-		vol += memvol(p->tree);
+	for (auto& p : rt.nodes) {
+		vol += memvol(p.get()->tree);
 	}
 	return vol;
 }

@@ -4,7 +4,8 @@ namespace mdl { namespace rus {
 
 static vector<string> show_lines(const Rules& tr) {
 	vector<string> vect;
-	for (const Rules::Node* p : tr.nodes) {
+	for (const auto& n : tr.nodes) {
+		const Rules::Node* p = n.get();
 		vector<string> v = show_lines(p->tree);
 		if (p->tree.nodes.size()) {
 			for (string& s : v)
