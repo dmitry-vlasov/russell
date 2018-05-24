@@ -344,7 +344,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
 	qi::rule<Iterator, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
 	qi::rule<Iterator, Disj*(Disj&), unicode::space_type> disj;
-	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
+	qi::rule<Iterator, Vars*(Vars&), qi::locals<Symbol>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
 	qi::rule<Iterator, Prop*(), qi::locals<Id>, unicode::space_type> prop;
 	qi::rule<Iterator, Ref*(Proof*), unicode::space_type> ref;

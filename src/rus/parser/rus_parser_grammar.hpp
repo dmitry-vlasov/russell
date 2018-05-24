@@ -79,9 +79,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		( !lit(")")
 		> var        [_a = qi::labels::_1]
 		> ":" > id   [setType(_a, qi::labels::_1)]
-		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
+		> eps        [push_back(phoenix::at_c<0>(_r1), _a)]
 		) % ","
-		> eps        [addVars(phoenix::ref(var_stack), _val)];
+		> eps        [addVars(phoenix::ref(var_stack), _r1), _val = &_r1];
 
 	prop =
 		lit("prop")
@@ -136,7 +136,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
-		> - ("var" > vars [phoenix::at_c<1>(*_r1) = qi::labels::_1] > lit(END_MARKER))
+		> - ("var" > vars(phoenix::at_c<1>(*_r1)) > lit(END_MARKER))
 		> + proof_elem(_r1)
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
@@ -155,7 +155,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("theorem")
 		> id         [_val = new_<Theorem>(qi::labels::_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
+		> - vars(phoenix::at_c<0>(*_val))
 		> lit(")") > - disj(phoenix::at_c<1>(*_val)) > "{"
 		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) > bar )
 		> + (prop    [addToAssertion(_val, qi::labels::_1)])
@@ -166,7 +166,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("axiom")
 		> id         [_val = new_<Axiom>(qi::labels::_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
+		> - vars(phoenix::at_c<0>(*_val))
 		> lit(")") > - disj(phoenix::at_c<1>(*_val)) > "{"
 		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) > bar )
 		> + (prop    [addToAssertion(_val, qi::labels::_1)])
@@ -176,7 +176,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	def = lit("definition")
 		> id         [_val = new_<Def>(qi::labels::_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
+		> - vars(phoenix::at_c<0>(*_val))
 		> lit(")") > - disj(phoenix::at_c<1>(*_val)) > "{"
 		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) )
 		> "defiendum" > ":"
@@ -195,12 +195,12 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	rule =
 		lit("rule")
-		> - id       [_a = qi::labels::_1]
+		> - id       [_a = qi::labels::_1, _val = new_<Rule>(_a)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [_b = qi::labels::_1]
-		> ")" > "{" > "term" > ":"
+		> - vars(phoenix::at_c<1>(*_val)) > ")" > "{"
+		> "term" > ":"
 		> id         [_c = qi::labels::_1]
-		> "=" > lit("#") [_val = new_<Rule>(_a, _b)]
+		> "=" > lit("#")
 		> term(_c, _a, phoenix::at_c<2>(*_val)) > END_MARKER
 		> lit("}")   [popVars(phoenix::ref(var_stack))];
 
@@ -266,7 +266,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	qi::on_success(comment,   setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(import,    setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(constant,  setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(vars,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(vars,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(disj,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(type,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(rule,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
