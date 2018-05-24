@@ -591,7 +591,7 @@ struct Source : public Owner<Src, Sys>, public Writable {
 
 	enum class Closure { UNKNOWN, IN_PROGRESS, DONE, };
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closure(Closure::UNKNOWN) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closureState(Closure::UNKNOWN) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
@@ -609,14 +609,14 @@ struct Source : public Owner<Src, Sys>, public Writable {
 
 	// Transitively closed inclusion relation:
 	bool includes(const Src* s) const {
-		return all_includes.find(s->id()) != all_includes.end();
+		return all_includes.find(User_(s)) != all_includes.end();
 	}
 	void include(Src* src) {
 		if (src->id() == Owner_::id()) {
 			throw Error("source cannot include itself", Lex::toStr(src->id()));
 		}
-		this_includes.insert(src->id());
-		all_includes.insert(src->id());
+		this_includes.emplace(src->id());
+		all_includes.emplace(src->id());
 	}
 	string showInclusionInfo() const {
 		string str;
@@ -631,19 +631,18 @@ struct Source : public Owner<Src, Sys>, public Writable {
 	bool parsed;
 
 	void transitive_closure() {
-		switch (closure) {
+		switch (closureState) {
 		case Closure::DONE: return;
 		case Closure::IN_PROGRESS: throw Error("Cyclic source dependency", Lex::toStr(Owner_::id()));
 		case Closure::UNKNOWN:
-			closure = Closure::IN_PROGRESS;
-			for (uint s : this_includes) {
-				Src* src = Sys::mod().math.template get<Src>().access(s);
-				src->transitive_closure();
-				for (uint inc : src->all_includes) {
-					all_includes.insert(inc);
+			closureState = Closure::IN_PROGRESS;
+			for (const auto& s : this_includes) {
+				const_cast<Src*>(s.get())->transitive_closure();
+				for (const auto& inc : s.get()->all_includes) {
+					all_includes.emplace(inc.id());
 				}
 			}
-			closure = Closure::DONE;
+			closureState = Closure::DONE;
 		}
 	}
 
@@ -668,10 +667,10 @@ struct Source : public Owner<Src, Sys>, public Writable {
 private:
 	template<class, class> friend struct Source;
 
-	Closure   closure;
-	set<uint> this_includes;
-	set<uint> all_includes;
-	string    data_;
+	Closure closureState;
+	SrcSet  this_includes;
+	SrcSet  all_includes;
+	string  data_;
 	efs::file_time_type timestamp_;
 };
 
