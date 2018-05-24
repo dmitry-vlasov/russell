@@ -1,4 +1,5 @@
-#include <rus_ast.hpp>
+#include "rus_ast.hpp"
+#include "mm_ast.hpp"
 #include "prover/rus_prover_space.hpp"
 
 namespace mdl { namespace rus {
@@ -49,7 +50,7 @@ template const Table<Assertion>& Math::get<Assertion>() const;
 
 void verify(uint src);
 void verify();
-smm::Source* translate(uint src, uint tgt);
+mm::Source* translate(uint src, uint tgt);
 void parse_src_peg();
 void parse_src_spirit();
 void read(uint src);

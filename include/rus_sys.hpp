@@ -2,11 +2,7 @@
 
 #include "common.hpp"
 
-namespace mdl {
-
-namespace smm { class Source; }
-
-namespace rus {
+namespace mdl { namespace rus {
 
 class Const;
 class Type;
