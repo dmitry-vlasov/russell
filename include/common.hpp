@@ -589,7 +589,9 @@ struct Source : public Owner<Src, Sys>, public Writable {
 	typedef User<Src, Sys> User_;
 	typedef set<User_>     SrcSet;
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closure_done(false) { }
+	enum class Closure { UNKNOWN, IN_PROGRESS, DONE, };
+
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closure(Closure::UNKNOWN) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
@@ -607,37 +609,42 @@ struct Source : public Owner<Src, Sys>, public Writable {
 
 	// Transitively closed inclusion relation:
 	bool includes(const Src* s) const {
-		return includes_.find(User_(s)) != includes_.end();
+		return all_includes.find(s->id()) != all_includes.end();
 	}
 	void include(Src* src) {
 		if (src->id() == Owner_::id()) {
 			throw Error("source cannot include itself", Lex::toStr(src->id()));
 		}
-		includes_.insert(src);
-	}
-	const set<uint>& includeSet() const {
-		return incs;
+		this_includes.insert(src->id());
+		all_includes.insert(src->id());
 	}
 	string showInclusionInfo() const {
 		string str;
-		str += string("Source: ") + Lex::toStr(Owner_::id()) + "\n\n";
-		str += "\nincludes_:\n";
-		for (auto s : includes_) str += Lex::toStr(s.get()->id()) + "\n";
+		str += string("Source: ") + Lex::toStr(Owner_::id()) + "\n";
+		str += "this_includes:\n";
+		for (auto s : this_includes) str += "\t" + Lex::toStr(s) + "\n";
+		str += "all_includes:\n";
+		for (auto s : all_includes) str += "\t" + Lex::toStr(s) + "\n";
 		return str;
 	}
 
 	bool parsed;
 
 	void transitive_closure() {
-		if (closure_done) return;
-		for (typename SrcSet::iterator it = includes_.begin(); it != includes_.end(); ++ it) {
-			User_& s = const_cast<User_&>(*it);
-			s.get()->transitive_closure();
-			for (auto inc : s.get()->includes_) {
-				includes_.insert(inc);
+		switch (closure) {
+		case Closure::DONE: return;
+		case Closure::IN_PROGRESS: throw Error("Cyclic source dependency", Lex::toStr(Owner_::id()));
+		case Closure::UNKNOWN:
+			closure = Closure::IN_PROGRESS;
+			for (uint s : this_includes) {
+				Src* src = Sys::mod().math.template get<Src>().access(s);
+				src->transitive_closure();
+				for (uint inc : src->all_includes) {
+					all_includes.insert(inc);
+				}
 			}
+			closure = Closure::DONE;
 		}
-		closure_done = true;
 	}
 
 	bool has_changed() const {
@@ -661,9 +668,9 @@ struct Source : public Owner<Src, Sys>, public Writable {
 private:
 	template<class, class> friend struct Source;
 
-	bool      closure_done;
-	SrcSet    includes_;
-	set<uint> incs;
+	Closure   closure;
+	set<uint> this_includes;
+	set<uint> all_includes;
 	string    data_;
 	efs::file_time_type timestamp_;
 };
@@ -680,5 +687,3 @@ inline void execute(queue<string>& commands) {
 }
 
 } // mdl
-
-  

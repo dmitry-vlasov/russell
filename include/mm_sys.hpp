@@ -36,8 +36,8 @@ public:
 struct Sys : public mdl::Sys<Sys, Math> {
 	typedef Source Src;
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
-	static string descr() { return "mm2"; }
-	static string lang() { return "mm(2)"; }
+	static string descr() { return "mm"; }
+	static string lang() { return "mm"; }
 	static string ext() { return "mm"; }
 	static const Actions& actions();
 };

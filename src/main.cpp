@@ -13,6 +13,8 @@ enum class Mode { DAEM, CONS, EXEC, HELP };
 int main (int argc, const char* argv[])
 {
 	try {
+		Timer timer;
+		timer.start();
 		po::options_description descr(
 			string("Russell language implementation - mdl\n") +
 			"Version: " + RUSSELL_VERSION_MAJOR + "." + RUSSELL_VERSION_MINOR + "\n" +
@@ -23,6 +25,7 @@ int main (int argc, const char* argv[])
 			("daem,d", "start a Russell daemon")
 			("cons,c", "start a Russell console")
 			("verb,v", "verbose daemon/console")
+			("cleanup", "release memory after execution")
 		;
 		po::variables_map vm;
 		po::store(po::parse_command_line(argc, argv, descr), vm);
@@ -47,8 +50,14 @@ int main (int argc, const char* argv[])
 		case Mode::EXEC: execute(commands);          break;
 		case Mode::HELP: cout << descr << endl;      break;
 		}
-		rus::Sys::release();
-		mm::Sys::release();
+		if (vm.count("cleanup")) {
+			rus::Sys::release();
+			mm::Sys::release();
+		}
+		timer.stop();
+		if (verb) {
+			cout << "total execution time: " << timer << endl;
+		}
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

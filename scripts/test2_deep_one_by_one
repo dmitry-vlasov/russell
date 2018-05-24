@@ -44,7 +44,7 @@ echo "      MM CUT "
 echo "----------------------"
 
 echo "cut: mm (plain) -> mm (deep)"
-check "${binpath}/mdl 
+check "${binpath}/mdl --verb
     \"mm opts verbose\"
     \"mm cut in=${file}.mm out=${file}.smm out-root=mm\"
     exit"
@@ -56,7 +56,7 @@ echo "MM -> RUS TRANSLATION"
 echo "----------------------"
 
 echo "mm -> rus"
-check "${binpath}/mdl 
+check "${binpath}/mdl --verb
     \"mm opts verbose root=mm\" 
     \"rus opts verbose root=rus\" 
     \"mm read in=${file}.mm\"
@@ -74,7 +74,7 @@ echo "RUS -> MM TRANSLATION"
 echo "----------------------"
 
 echo "rus -> mm"
-check "${binpath}/mdl 
+check "${binpath}/mdl --verb
     \"mm opts verbose root=mm-1\" 
     \"rus opts verbose root=rus\" 
     \"rus read in=${file}.rus\"
@@ -92,7 +92,7 @@ echo "      MM VERIFY       "
 echo "----------------------"
 
 echo "verify mm-1 with mm2"
-check "${binpath}/mdl 
+check "${binpath}/mdl --verb
     \"mm opts verbose root=mm-1\" 
     \"mm read in=${file}.mm\"
     \"mm parse \"
