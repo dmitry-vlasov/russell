@@ -29,7 +29,7 @@ Substitution unify_forth(const Tree* p, const Tree* q) {
 		auto q_ch = q->children().begin();
 		while (p_ch != p->children().end()) {
 			if (Substitution s = std::move(unify_forth(p_ch->get(), q_ch->get()))) {
-				if (!sub.join(s)) return sub;
+				if (!sub.join(std::move(s))) return sub;
 			} else {
 				return sub;
 			}

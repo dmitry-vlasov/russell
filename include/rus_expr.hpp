@@ -334,13 +334,38 @@ struct Substitution {
 		}
 		return ok_;
 	}
+	bool join(uint v, Tree&& t) {
+		if (!ok_) return false;
+		auto it = sub_.find(v);
+		if (it != sub_.end()) {
+			if ((*it).second != t) ok_ = false;
+		} else {
+			sub_.emplace(v, std::move(t));
+		}
+		return ok_;
+	}
 	bool join(const Substitution* s) {
 		return join(*s);
 	}
 	bool join(const Substitution& s) {
-		for (const auto& p : s.sub_) {
-			if (!ok_) return false;
-			join(p.first, p.second);
+		if (s.ok_) {
+			for (const auto& p : s.sub_) {
+				if (!ok_) return false;
+				join(p.first, p.second);
+			}
+		} else {
+			ok_ = false;
+		}
+		return ok_;
+	}
+	bool join(Substitution&& s) {
+		if (s.ok_) {
+			for (auto&& p : s.sub_) {
+				if (!ok_) return false;
+				join(p.first, std::move(p.second));
+			}
+		} else {
+			ok_ = false;
 		}
 		return ok_;
 	}
