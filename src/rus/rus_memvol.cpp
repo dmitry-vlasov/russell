@@ -46,8 +46,9 @@ size_t memvol(const Vars& vars) {
 }
 size_t memvol(const Disj& disj) {
 	size_t s = 0;
-	for (auto& d : disj.d)
-		s += d.capacity() * sizeof(Symbol);
+	for (auto& d : disj.d) {
+		s += d.size() * sizeof(uint);
+	}
 	return s;
 }
 size_t memvol(const Type& type) {

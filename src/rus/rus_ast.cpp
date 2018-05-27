@@ -51,6 +51,129 @@ inline uint make_proof_id(uint id, Id th) {
 	} else return id;
 }
 
+inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
+	if (s1.size() > s2.size()) return check_disjointed(s2, s1);
+	for (uint x : s1) {
+		if (s2.find(x) != s2.end()) {
+			throw Error("disjointed variable restriction violation", Lex::toStr(x));
+		}
+	}
+}
+
+void Disj::check(const Substitution& s, const Theorem* t) const {
+	for (const auto& dis : d) {
+		for (uint v1 : dis) {
+			if (!s.mapsVar(v1)) continue;
+			set<uint> v1_vars = s.sub().at(v1).vars();
+			for (uint v2 : dis) {
+				if (v1 == v2 || !s.mapsVar(v2)) continue;
+				set<uint> v2_vars = s.sub().at(v2).vars();
+				check_disjointed(v1_vars, v2_vars);
+				t->disj.pairs_are_disjointed(v1_vars, v2_vars);
+			}
+		}
+	}
+}
+
+void Disj::check(const Substitution& s, Theorem* t) const {
+	for (const auto& dis : d) {
+		for (uint v1 : dis) {
+			if (!s.mapsVar(v1)) continue;
+			set<uint> v1_vars = s.sub().at(v1).vars();
+			for (uint v2 : dis) {
+				if (v1 == v2 || !s.mapsVar(v2)) continue;
+				set<uint> v2_vars = s.sub().at(v2).vars();
+				check_disjointed(v1_vars, v2_vars);
+				t->disj.make_pairs_disjointed(v1_vars, v2_vars);
+			}
+		}
+	}
+}
+
+void Disj::pairs_are_disjointed(const set<uint>& vars1, const set<uint>& vars2) const {
+	if (vars1.empty() || vars2.empty()) return;
+	for (uint v1 : vars1) {
+		if (dmap.find(v1) == dmap.end()) {
+			throw Error("disjointed variable is not inherently disjointed", Lex::toStr(v1));
+		}
+		const set<uint>& dis = dmap.at(v1);
+		for (uint v2 : vars2) {
+			if (dis.find(v2) == dis.end()) {
+				throw Error("disjointed variable is not inherently disjointed", Lex::toStr(v1) + ", " + Lex::toStr(v2));
+			}
+		}
+	}
+}
+
+void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2) {
+	if (vars1.empty() || vars2.empty()) return;
+	for (uint v1 : vars1) {
+		for (uint v2 : vars2) {
+			if (v1 != v2) {
+				dmap[v1].insert(v2);
+				dmap[v2].insert(v1);
+			}
+		}
+	}
+}
+
+void Disj::init_dmap() {
+	for (const auto& dis : d) {
+		for (uint v1 : dis) {
+			for (uint v2 : dis) {
+				if (v1 != v2) {
+					dmap[v1].insert(v2);
+				}
+			}
+		}
+	}
+}
+
+inline bool are_disj(const map<uint, set<uint>>& dmap, uint v1, uint v2) {
+	auto p = dmap.find(v1);
+	if (p != dmap.end()) {
+		const set<uint>& dis = p->second;
+		return dis.find(v2) != dis.end();
+	} else {
+		return false;
+	}
+}
+
+void addPair(map<uint, set<uint>>& dmap, vector<set<uint>>& d, uint v1, uint v2) {
+
+	auto try_to_extend = [&dmap](set<uint>& dis, uint v1, uint v2) {
+		bool can_be_added = true;
+		if (dis.find(v1) != dis.end()) {
+			for (uint d : dis) {
+				if (!are_disj(dmap, d, v2)) {
+					can_be_added = false;
+				}
+			}
+		}
+		if (can_be_added) {
+			dis.insert(v2);
+		}
+		return can_be_added;
+	};
+
+	for (auto& dis : d) {
+		if (try_to_extend(dis, v1, v2)) return;
+		if (try_to_extend(dis, v2, v1)) return;
+	}
+	d.push_back(set<uint>());
+	d.back().insert(v1);
+	d.back().insert(v2);
+}
+
+void Disj::init_d() {
+	for (const auto& p : dmap) {
+		uint v1 = p.first;
+		for (uint v2 : p.second) {
+			addPair(dmap, d, v1, v2);
+		}
+	}
+}
+
 Proof::Proof(Id th, Id i, const Token& t) :
 	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr), inner(false) {
 	theorem()->proofs.emplace_back(User<Proof>(id()));

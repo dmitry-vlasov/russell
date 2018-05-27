@@ -191,6 +191,21 @@ struct Tree {
 		default:   assert(0 && "impossible"); return -1;
 		}
 	}
+	set<uint> vars() const {
+		set<uint> ret;
+		switch (kind()) {
+		case NODE:
+			for (const auto& c : node()->children) {
+				for (uint v : c.get()->vars()) {
+					ret.insert(v);
+				}
+			}
+			break;
+		case VAR:  ret.insert(var()->lit); break;
+		default:   assert(0 && "impossible"); return set<uint>();
+		}
+		return ret;
+	}
 
 private:
 	typedef variant<unique_ptr<Node>, unique_ptr<Symbol>> Value;
@@ -371,6 +386,7 @@ struct Substitution {
 	const map<uint, Tree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
+	bool mapsVar(uint v) const { return sub_.find(v) != sub_.end(); }
 
 private:
 	map<uint, Tree> sub_;

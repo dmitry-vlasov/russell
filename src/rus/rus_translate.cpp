@@ -91,8 +91,8 @@ vector<unique_ptr<vector<uint>>> translate_disj(const Disj& rdisj) {
 	for (auto& d : rdisj.d) {
 		vector<uint>* dis = new vector<uint>;
 		dis->reserve(d.size());
-		for (auto& s : d) {
-			dis->push_back(s.lit);
+		for (uint v : d) {
+			dis->push_back(v);
 		}
 		disj.emplace_back(dis);
 	}

@@ -72,10 +72,11 @@ void Disj::write(ostream& os, const Indent&) const {
 	if (d.size() == 0) return;
 	os << "disjointed(";
 	for (uint i = 0; i < d.size(); ++ i) {
-		const vector<Symbol>& dis = d[i];
-		for (uint j = 0; j < dis.size(); ++ j) {
-			os << Lex::toStr(dis[j].lit);
-			if (j + 1 < dis.size())	os << " ";
+		const set<uint>& dis = d[i];
+		uint j = 0;
+		for (uint v : dis) {
+			os << Lex::toStr(v);
+			if (++j < dis.size())	os << " ";
 		}
 		if (i + 1 < d.size()) os << ", ";
 	}

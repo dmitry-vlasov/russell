@@ -159,9 +159,8 @@ private:
 			Context* c = ctx.get<Context*>();
 			return c->stacks.makeSymb(Lex::toInt(sv.token()), true, c->token(sv));
 		};
-		parser_["DISJ_VAR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* c = ctx.get<Context*>();
-			return c->stacks.makeSymb(Lex::toInt(sv.token()), false, c->token(sv));
+		parser_["DISJ_VAR"] = [](const peg::SemanticValues& sv) {
+			return Lex::toInt(sv.token());
 		};
 		parser_["SYMB_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
@@ -240,12 +239,16 @@ private:
 			return new Vars(sv[0].get<Vars>());
 		};
 		parser_["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			return sv.transform<Symbol>();
+			set<uint> disj;
+			for (const auto& v : sv) {
+				disj.insert(v.get<uint>());
+			}
+			return disj;
 		};
 		parser_["DISJ"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			if (sv.size()) {
-				return Disj(sv.transform<vector<Symbol>>(), c->token(sv));
+				return Disj(sv.transform<set<uint>>(), c->token(sv));
 			} else {
 				return Disj();
 			}

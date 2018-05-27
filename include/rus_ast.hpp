@@ -41,11 +41,22 @@ struct Vars : public Tokenable, public Writable {
 };
 
 struct Disj : public Tokenable, public Writable {
-	Disj(const vector<vector<Symbol>>& disj = vector<vector<Symbol>>(), const Token& t = Token()) :
+	Disj(const vector<set<uint>>& disj = vector<set<uint>>(), const Token& t = Token()) :
 		Tokenable(t), d(disj) { }
-	Disj(const Disj& disj) : Tokenable(disj), d(disj.d) { }
-	vector<vector<Symbol>> d;
+	Disj(const Disj& disj) : Tokenable(disj), d(disj.d), dmap(disj.dmap) { }
+	vector<set<uint>> d;
+
+	void init_dmap();
+	void init_d();
+
 	void write(ostream& os, const Indent& = Indent()) const override;
+	void check(const Substitution&, const Theorem* t) const;
+	void check(const Substitution&, Theorem* t) const;
+	void pairs_are_disjointed(const set<uint>&, const set<uint>&) const;
+	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
+
+private:
+	map<uint, set<uint>> dmap;
 };
 
 void parse_expr(Expr& ex);
@@ -155,20 +166,7 @@ struct Ref : public Tokenable, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Verifiable {
-	virtual ~Verifiable() { }
-	virtual void verify() const = 0;
-	bool check() const {
-		try {
-			verify();
-			return true;
-		} catch (Error&) {
-			return false;
-		}
-	}
-};
-
-struct Step : public Tokenable, public Verifiable, public Writable {
+struct Step : public Tokenable, public Writable {
 	enum Kind { ASS, CLAIM };
 	typedef variant<User<Assertion>, unique_ptr<Proof>> Value;
 
@@ -186,7 +184,7 @@ struct Step : public Tokenable, public Verifiable, public Writable {
 	Kind kind() const { return static_cast<Kind>(val_.index()); }
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
-	void verify() const override;
+	void verify() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Expr expr;
@@ -218,16 +216,16 @@ inline const Expr& Ref::expr() const {
 	return step()->expr;
 }
 
-struct Qed : public Tokenable, public Verifiable, public Writable {
+struct Qed : public Tokenable, public Writable {
 	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
 		Tokenable(t), prop(p), step(s) { }
-	void verify() const override;
+	void verify() const;
 	Prop* prop;
 	Step* step;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Proof : public Owner<Proof>, public Verifiable, public Writable {
+struct Proof : public Owner<Proof>, public Writable {
 
 	enum Kind { VARS, STEP, QED };
 	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
@@ -241,7 +239,8 @@ struct Proof : public Owner<Proof>, public Verifiable, public Writable {
 
 	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
 	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
-	void verify() const override;
+	void verify() const;
+	bool check() const;
 	vector<Qed*> qeds() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
@@ -259,7 +258,7 @@ struct Import : public Tokenable, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Theory : public Tokenable, public Verifiable, public Writable {
+struct Theory : public Tokenable, public Writable {
 	enum Kind { CONST, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
 	typedef variant<
 		unique_ptr<Const>,
@@ -276,7 +275,7 @@ struct Theory : public Tokenable, public Verifiable, public Writable {
 
 	Theory(uint n = -1, Theory* p = nullptr, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
-	void verify() const override;
+	void verify() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
 	static Const* const_(const Node& n) { return std::get<unique_ptr<Const>>(n).get(); }

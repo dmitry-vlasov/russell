@@ -172,14 +172,14 @@ struct SetType {
 struct AddDisjVar {
 	struct result { typedef void type; };
 	void operator()(Disj& disj, uint v) const {
-		disj.d.back().emplace_back(v);
+		disj.d.back().insert(v);
 	}
 };
 
 struct NewDisjSet {
 	struct result { typedef void type; };
 	void operator()(Disj& disj) const {
-		disj.d.push_back(vector<Symbol>());
+		disj.d.emplace_back();
 	}
 };
 

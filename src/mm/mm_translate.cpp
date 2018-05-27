@@ -26,21 +26,21 @@ inline uint dfs()  { static uint ret = Lex::toInt("definiens"); return ret; }
 inline uint wff()  { static uint ret = Lex::toInt("wff"); return ret; }
 inline uint clas() { static uint ret = Lex::toInt("class"); return ret; }
 
-inline rus::Symbol translate_const(uint s) {
+inline uint translate_const_symb(uint s) {
 	auto p = math_consts().find(s);
 	if (p == math_consts().end()) {
-		return rus::Symbol(s, s, rus::Symbol::CONST);
+		return s;
 	} else {
-		return rus::Symbol((*p).second.symb, s, rus::Symbol::CONST);
+		return p->second.symb;
 	}
 }
 
-inline rus::Symbol translate_var(uint symb, uint type) {
-	auto p = math_vars().find(symb);
+inline uint translate_var_symb(uint s) {
+	auto p = math_vars().find(s);
 	if (p == math_vars().end()) {
-		return rus::Symbol(symb, type, rus::Symbol::VAR);
+		return s;
 	} else {
-		return rus::Symbol((*p).second.var, type, rus::Symbol::VAR);
+		return p->second.var;
 	}
 }
 
@@ -61,9 +61,12 @@ inline uint translate_var_type(uint v, const Assertion* ass) {
 
 inline rus::Symbol translate_symb(Symbol s, const Assertion* ass) {
 	if (s.var) {
-		return translate_var(s.lit, translate_var_type(s.lit, ass));
+		uint v = translate_var_symb(s.lit);
+		uint t = translate_var_type(s.lit, ass);
+		return rus::Symbol(v, t, rus::Symbol::VAR);
 	} else {
-		return translate_const(s.lit);
+		uint c = translate_const_symb(s.lit);
+		return rus::Symbol(c, c, rus::Symbol::CONST);
 	}
 }
 
@@ -80,14 +83,14 @@ rus::Expr translate_expr(const Expr& ex, const Assertion* ass) {
 			if (p == math_vars().end()) {
 				e.symbols.emplace_back(s, type, rus::Symbol::VAR);
 			} else {
-				e.symbols.emplace_back((*p).second.var, type, rus::Symbol::VAR);
+				e.symbols.emplace_back(p->second.var, type, rus::Symbol::VAR);
 			}
 		} else {
 			auto p = math_consts().find(s);
 			if (p == math_consts().end()) {
 				e.symbols.emplace_back(s, s, rus::Symbol::CONST);
 			} else {
-				e.symbols.emplace_back((*p).second.symb, s, rus::Symbol::CONST);
+				e.symbols.emplace_back(p->second.symb, s, rus::Symbol::CONST);
 			}
 		}
 	}
@@ -121,7 +124,11 @@ template<typename T>
 rus::Vars translate_vars(const vector<T>& decls) {
 	rus::Vars rus_vars;
 	for (const auto& flo : decls) {
-		rus_vars.v.push_back(translate_var(flo.get()->var(), flo.get()->type()));
+		rus_vars.v.emplace_back(
+			translate_var_symb(flo.get()->var()),
+			flo.get()->type(),
+			rus::Symbol::VAR
+		);
 	}
 	return rus_vars;
 }
@@ -129,12 +136,10 @@ rus::Vars translate_vars(const vector<T>& decls) {
 rus::Disj translate_disj(const Assertion* ass) {
 	rus::Disj rus_disj;
 	for (const auto& dis : ass->disj.vect) {
-		rus_disj.d.push_back(vector<rus::Symbol>());
-		vector<rus::Symbol>& rus_dis = rus_disj.d.back();
-		rus_dis.reserve(dis.get()->size());
+		rus_disj.d.emplace_back();
+		set<uint>& rus_dis = rus_disj.d.back();
 		for (auto v : *dis.get()) {
-			uint type = translate_var_type(v, ass);
-			rus_dis.push_back(translate_var(v, type));
+			rus_dis.insert(translate_var_symb(v));
 		}
 	}
 	return rus_disj;
@@ -203,7 +208,10 @@ void translate_rule(const Assertion* ass, Maps& state) {
 template<class T>
 void translate_assertion(const Assertion* ass, T* a) {
 	a->vars = std::move(translate_vars(ass->outerVars));
-	a->disj = std::move(translate_disj(ass));
+	// TODO
+	//if (a->kind() != rus::Assertion::THM) {
+		a->disj = std::move(translate_disj(ass));
+	//}
 	uint hc = 0;
 	for (const auto& ess : ass->hyps) {
 		rus::Expr&& ex = translate_expr(ess.get()->expr, ass);

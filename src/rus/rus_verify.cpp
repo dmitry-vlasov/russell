@@ -50,6 +50,7 @@ void Step::verify() const {
 			throw Error("substitution join failed", msg);
 		}
 	}
+	ass()->disj.check(ps, proof_->theorem());
 }
 
 void Qed::verify() const {
@@ -64,6 +65,15 @@ void Proof::verify() const {
 		case Proof::QED: qed(el)->verify();  break;
 		default : break;
 		}
+	}
+}
+
+bool Proof::check() const {
+	try {
+		verify();
+		return true;
+	} catch (Error&) {
+		return false;
 	}
 }
 
