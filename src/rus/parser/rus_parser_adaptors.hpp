@@ -100,6 +100,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Step,
 	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
+	(mdl::rus::Substitution, sub)
 	(mdl::rus::Step::Kind, kind)
 	(mdl::rus::Step::Value, val)
 	(mdl::vector<mdl::unique_ptr<mdl::rus::Ref>>, refs)

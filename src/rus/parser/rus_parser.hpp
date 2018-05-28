@@ -61,8 +61,9 @@ struct PopVars {
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack) const {
 		vector<uint>& vars = var_stack.vstack.top();
-		for (uint v : vars)
+		for (uint v : vars) {
 			var_stack.mapping.erase(v);
+		}
 		var_stack.vstack.pop();
 	}
 };
@@ -94,8 +95,9 @@ struct Enqueue {
 			if (Proof::kind(e) == Proof::STEP) {
 				Step* step = Proof::step(e);
 				expr::enqueue(step->expr);
-				if (step->kind() == Step::CLAIM)
+				if (step->kind() == Step::CLAIM) {
 					operator()(step->proof());
+				}
 			}
 		}
 	}
@@ -172,7 +174,11 @@ struct SetType {
 struct AddDisjVar {
 	struct result { typedef void type; };
 	void operator()(Disj& disj, uint v) const {
-		disj.d.back().insert(v);
+		set<uint>& dis = disj.d.back();
+		for (uint w : dis) {
+			disj.dmap.emplace(v, w);
+		}
+		dis.insert(v);
 	}
 };
 

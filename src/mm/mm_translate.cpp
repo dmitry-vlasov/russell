@@ -209,9 +209,9 @@ template<class T>
 void translate_assertion(const Assertion* ass, T* a) {
 	a->vars = std::move(translate_vars(ass->outerVars));
 	// TODO
-	//if (a->kind() != rus::Assertion::THM) {
+	if (a->kind() != rus::Assertion::THM) {
 		a->disj = std::move(translate_disj(ass));
-	//}
+	}
 	uint hc = 0;
 	for (const auto& ess : ass->hyps) {
 		rus::Expr&& ex = translate_expr(ess.get()->expr, ass);
