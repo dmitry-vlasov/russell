@@ -11,17 +11,21 @@ static const Symbol dfs(Lex::toInt("definiens"));
 struct Parser {
 private:
 	struct Stacks {
+		struct Var {
+			Var(uint s, uint t) : symb(s), type(t) { }
+			uint symb;
+			uint type;
+		};
 		void pushVars() {
-			vars.push_back(Vars());
+			vars.emplace_back();
 		}
 		void popVars() {
-			Vars& vs = vars.back();
-			for (auto v : vs.v) typing.erase(v.lit);
+			for (auto& v : vars.back()) typing.erase(v.symb);
 			vars.pop_back();
 		}
-		void addVar(Symbol v) {
-			vars.back().v.push_back(v);
-			typing[v.lit] = v.type_id();
+		void addVar(uint v, uint t) {
+			vars.back().emplace_back(v, t);
+			typing[v] = t;
 		}
 		void markType(Symbol& s) const {
 			if (typing.count(s.lit)) s.set_type(typing.at(s.lit));
@@ -49,9 +53,9 @@ private:
 		}
 
 	private:
-		vector<Vars>     vars;
-		vector<Proof*>   proofs;
-		map<uint, uint> typing;
+		vector<vector<Var>> vars;
+		vector<Proof*>      proofs;
+		map<uint, uint>     typing;
 	};
 	struct Context {
 		Context() : ind(0), stacks(), theory(nullptr), source(nullptr) { }
@@ -223,9 +227,8 @@ private:
 			Context* c = ctx.get<Context*>();
 			uint v = sv[0].get<uint>();
 			Id tp = sv[1].get<Id>();
-			Symbol va = Symbol(v, tp, Symbol::VAR);
-			c->stacks.addVar(va);
-			return va;
+			c->stacks.addVar(v, tp.id);
+			return Symbol(v, tp, Symbol::VAR);
 		};
 		parser_["VARS"].enter = [](peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
@@ -233,10 +236,10 @@ private:
 		};
 		parser_["VARS"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			return Vars(sv.transform<Symbol>());
+			return sv.transform<Symbol>();
 		};
 		parser_["VAR_DECL"] = [](const peg::SemanticValues& sv) {
-			return new Vars(sv[0].get<Vars>());
+			return new Vars(std::move(sv[0].get<vector<Symbol>>()));
 		};
 		parser_["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			set<uint>* disj = new set<uint>();
@@ -278,12 +281,10 @@ private:
 		parser_["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			c->stacks.popVars();
-			Rule* r = new Rule(
-				Id(sv[0].get<uint>()),
-				std::move(sv[1].get<Vars>()),
-				std::move(sv[2].get<Expr>()),
-				c->token(sv)
-			);
+			Rule* r = new Rule(Id(sv[0].get<uint>()));
+			r->vars = std::move(sv[1].get<Vars>());
+			r->term = std::move(sv[2].get<Expr>());
+			r->token = c->token(sv);
 			return r;
 		};
 		// HYP <- 'hyp'  IND  EX_STAT

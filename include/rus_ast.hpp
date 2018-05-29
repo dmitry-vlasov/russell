@@ -32,7 +32,7 @@ struct Const : public Owner<Const>, public Writable {
 
 struct Vars : public Tokenable, public Writable {
 	Vars(const vector<Symbol>& vars = vector<Symbol>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
-	Vars(const Vars& vars) : Tokenable(vars), v(vars.v) { }
+	Vars(const Vars&) = delete;
 	vector<Symbol> v;
 	bool isDeclared(Symbol w) const {
 		return std::find(v.begin(), v.end(), w) != v.end();
@@ -85,7 +85,7 @@ inline bool operator < (const Type& t1, const Type& t2) {
 }
 
 struct Rule : public Owner<Rule>, public Writable {
-	Rule(Id id, const Vars& v = Vars(), const Expr& e = Expr(), const Token& t = Token());
+	Rule(Id i, const Token& t = Token()) : Owner(i.id, t) { }
 	Rule(const Rule&) = delete;
 	Vars vars;
 	Expr term;

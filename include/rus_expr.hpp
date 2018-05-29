@@ -429,6 +429,14 @@ inline Expr create_non_replaceable(const Expr& e) {
 	return ex;
 }
 
+inline void create_rule_term(Expr& ex, Id id) {
+	Tree::Children children;
+	for (auto& s : ex.symbols) {
+		if (s.var) children.push_back(make_unique<Tree>(s));
+	}
+	ex.set(new Tree(id, children));
+}
+
 namespace expr {
 	void enqueue(Expr& ex);
 	void parse();

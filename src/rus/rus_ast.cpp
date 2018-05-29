@@ -16,7 +16,12 @@ inline Symbol create_const(string str, Const* c) {
 
 static Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
-	return new Rule(id, Vars({create_var("x", inf)}), Expr(sup->id(), {create_var("x", inf)}));
+	Rule* rule = new Rule(id);
+	rule->vars.v.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);
+	rule->term.symbols.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);
+	rule->term.type.set(sup->id());
+	create_rule_term(rule->term, id);
+	return rule;
 }
 
 static void collect_super_rules(Type* inf, Type* s) {
@@ -30,15 +35,6 @@ static void collect_super_rules(Type* inf, Type* s) {
 Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 	for (auto t : s) sup.push_back(User<Type>(t));
 	collect_super_rules(this, this);
-}
-
-Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
-	Owner(i.id, t), vars(v), term(e) {
-	Tree::Children children;
-	for (auto& s : term.symbols) {
-		if (s.var) children.push_back(make_unique<Tree>(s));
-	}
-	term.set(new Tree(i, children));
 }
 
 inline uint make_proof_id(uint id, Id th) {

@@ -468,12 +468,11 @@ Maps create_maps() {
 	}
 	for (Assertion* a : rules) {
 		uint id = a->id();
-		rus::Rule* rule = new rus::Rule(
-			id,
-			translate_vars(a->outerVars),
-			translate_expr(a->expr, a)
-		);
+		rus::Rule* rule = new rus::Rule(id);
+		rule->vars = std::move(translate_vars(a->outerVars));
+		rule->term = std::move(translate_expr(a->expr, a));
 		rule->term.type.set(a->expr[0].lit);
+		create_rule_term(rule->term, id);
 		maps.rules[id] = rule;
 		remove_less_general_rule(rule, maps);
 	}

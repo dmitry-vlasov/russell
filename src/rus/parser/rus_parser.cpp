@@ -197,9 +197,9 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars(phoenix::at_c<1>(*_val)) > ")" > "{"
 		> "term" > ":"
-		> id         [_c = qi::labels::_1]
+		> id         [_b = qi::labels::_1]
 		> "=" > lit("#")
-		> term(_c, _a, phoenix::at_c<2>(*_val)) > END_MARKER
+		> term(_b, _a, phoenix::at_c<2>(*_val)) > END_MARKER
 		> lit("}")   [popVars(phoenix::ref(var_stack))];
 
 	type =

@@ -144,11 +144,7 @@ struct ParseTerm {
 	void operator()(Expr& ex, const vector<uint>& symbs, Id id, Id tp, VarStack& var_stack) const {
 		static ParseExpr expr;
 		expr(ex, symbs, tp, var_stack);
-		Tree::Children children;
-		for (auto& s : ex.symbols) {
-			if (s.var) children.push_back(make_unique<Tree>(s));
-		}
-		ex.set(new Tree(id, children));
+		create_rule_term(ex, id);
 	}
 };
 
@@ -349,7 +345,7 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Theorem*(), unicode::space_type> theorem;
 	qi::rule<LocationIter, Def*(), qi::locals<Id>, unicode::space_type> def;
 	qi::rule<LocationIter, Axiom*(), unicode::space_type> axiom;
-	qi::rule<LocationIter, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
+	qi::rule<LocationIter, Rule*(), qi::locals<Id, Id>, unicode::space_type> rule;
 	qi::rule<LocationIter, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
 	qi::rule<LocationIter, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<LocationIter, Import*(), unicode::space_type> import;
