@@ -239,27 +239,20 @@ private:
 			return new Vars(sv[0].get<Vars>());
 		};
 		parser_["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			set<uint> disj;
+			set<uint>* disj = new set<uint>();
 			for (const auto& v : sv) {
-				disj.insert(v.get<uint>());
+				disj->insert(v.get<uint>());
 			}
 			return disj;
 		};
 		parser_["DISJ"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			if (sv.size()) {
-				Disj disj;
+				Disj::Vector dv;
 				for (const auto& dis : sv) {
-					const set<uint>& d = dis.get<set<uint>>();
-					for (auto v : d) {
-						for (auto w : d) {
-							if (v != w) {
-								disj.dvars.emplace(v, w);
-							}
-						}
-					}
+					dv.emplace_back(dis.get<set<uint>*>());
 				}
-				return disj;
+				return Disj(dv);
 			} else {
 				return Disj();
 			}

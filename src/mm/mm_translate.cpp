@@ -122,15 +122,15 @@ void translate_constant(const Const* constant, Maps& state) {
 
 template<typename T>
 rus::Vars translate_vars(const vector<T>& decls) {
-	rus::Vars rus_vars;
+	vector<rus::Symbol> vars;
 	for (const auto& flo : decls) {
-		rus_vars.v.emplace_back(
+		vars.emplace_back(
 			translate_var_symb(flo.get()->var()),
 			flo.get()->type(),
 			rus::Symbol::VAR
 		);
 	}
-	return rus_vars;
+	return rus::Vars(vars);
 }
 
 inline rus::Disj translate_disj(const Assertion* ass) {
@@ -339,7 +339,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 		throw err;
 	}
 	rus::Proof* p = new rus::Proof(thm->id());
-	p->allvars = translate_vars(ass->innerVars);
+	p->allvars = std::move(translate_vars(ass->innerVars));
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->props.front().get();
 	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));

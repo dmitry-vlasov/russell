@@ -14,6 +14,7 @@ struct Source;
 
 struct Comment : public Tokenable, public Writable  {
 	Comment(bool ml = false, const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt), multiline(ml) { }
+	Comment(const Comment&) = delete;
 	string text;
 	bool multiline;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -22,8 +23,7 @@ struct Comment : public Tokenable, public Writable  {
 struct Const : public Owner<Const>, public Writable {
 	Const(uint s, uint a, uint l, const Token& t = Token()) :
 		Owner(s, t), symb(s), ascii(a), latex(l) { }
-	Const(const Const& c) :
-		Owner(c.id(), c.token), symb(c.symb), ascii(c.ascii), latex(c.latex) { }
+	Const(const Const& c) = delete;
 	uint  symb;
 	uint  ascii;
 	uint  latex;
@@ -57,6 +57,7 @@ struct Disj : public Tokenable, public Writable {
 
 	Disj(const Vector& d = Vector(), const Token& t = Token());
 	Disj(const Disj& disj) : Tokenable(disj), dvars(disj.dvars) { }
+	//Disj(const Disj& disj) = delete;
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
@@ -71,6 +72,7 @@ void parse_expr(Expr& ex);
 struct Type : public Owner<Type>, public Writable {
 	typedef map<const Type*, unique_ptr<Rule>> Supers;
 	Type(Id id, const vector<Id>& sup = vector<Id>(), const Token& t = Token());
+	Type(const Type&) = delete;
 	vector<User<Type>> sup;
 	Supers supers;
 	Rules  rules;
@@ -84,6 +86,7 @@ inline bool operator < (const Type& t1, const Type& t2) {
 
 struct Rule : public Owner<Rule>, public Writable {
 	Rule(Id id, const Vars& v = Vars(), const Expr& e = Expr(), const Token& t = Token());
+	Rule(const Rule&) = delete;
 	Vars vars;
 	Expr term;
 	Type* type() { return term.type.get(); }
@@ -100,6 +103,7 @@ inline const Type* Tree::type() const { return kind() == VAR ? var()->type() : r
 struct Hyp : public Tokenable, public Writable {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
+	Hyp(const Hyp&) = delete;
 	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -108,6 +112,7 @@ struct Hyp : public Tokenable, public Writable {
 struct Prop : public Tokenable, public Writable {
 	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
+	Prop(const Prop&) = delete;
 	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -116,6 +121,7 @@ struct Prop : public Tokenable, public Writable {
 struct Assertion : public Owner<Assertion> {
 	enum Kind { AXM, THM, DEF };
 	Assertion(Id i, const Token& t = Token()) : Owner(i.id, t) { }
+	Assertion(const Assertion&) = delete;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
 	string kindStr() const {
@@ -136,12 +142,14 @@ struct Assertion : public Owner<Assertion> {
 
 struct Axiom : public Assertion, public Writable {
 	Axiom(Id id, const Token& t = Token()) : Assertion(id, t) { }
+	Axiom(const Axiom&) = delete;
 	Kind kind() const { return AXM; }
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 struct Def : public Assertion, public Writable {
 	Def(Id id, const Token& t = Token()) : Assertion(id, t) { }
+	Def(const Def&) = delete;
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
@@ -151,6 +159,7 @@ struct Def : public Assertion, public Writable {
 
 struct Theorem : public Assertion, public Writable {
 	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
+	Theorem(const Theorem&) = delete;
 	Kind kind() const { return THM; }
 	vector<User<Proof>> proofs;
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -162,6 +171,7 @@ struct Ref : public Tokenable, public Writable {
 	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), val(h)  { }
 	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), val(p)  { }
 	Ref(Step* s, const Token& t = Token()) : Tokenable(t), val(s)  { }
+	Ref(const Ref&) = delete;
 	Expr& expr();
 	const Expr& expr() const;
 	Hyp* hyp() const { return std::get<Hyp*>(val); }
@@ -195,6 +205,7 @@ struct Step : public Tokenable, public Writable {
 		Tokenable(t), sub(false), ind_(i), proof_(p) {
 		if (k == ASS) { val_ = std::move(User<Assertion>(id)); }
 	}
+	Step(const Step&) = delete;
 	uint ass_id() const { return std::get<User<Assertion>>(val_).id(); }
 	Assertion* ass() { return std::get<User<Assertion>>(val_).get(); }
 	Proof* claim() { return std::get<unique_ptr<Proof>>(val_).get(); }
@@ -241,6 +252,7 @@ inline const Expr& Ref::expr() const {
 struct Qed : public Tokenable, public Writable {
 	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
 		Tokenable(t), prop(p), step(s) { }
+	Qed(const Qed&) = delete;
 	void verify(uint mode = VERIFY_ALL) const;
 	Prop* prop;
 	Step* step;
@@ -258,6 +270,7 @@ struct Proof : public Owner<Proof>, public Writable {
 	static Qed*  qed(const Elem& e) { return std::get<unique_ptr<Qed>>(e).get(); }
 
 	Proof(Id thm, Id id = Id(), const Token& t = Token());
+	Proof(const Proof&) = delete;
 
 	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
 	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
@@ -276,6 +289,7 @@ struct Proof : public Owner<Proof>, public Writable {
 
 struct Import : public Tokenable, public Writable {
 	Import(uint src, const Token& t = Token()) : Tokenable(t), source(src) { }
+	Import(const Import&) = delete;
 	User<Source> source;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
@@ -297,6 +311,8 @@ struct Theory : public Tokenable, public Writable {
 
 	Theory(uint n = -1, Theory* p = nullptr, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
+	Theory(const Theory&) = delete;
+
 	void write(ostream& os, const Indent& i = Indent()) const override;
 	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
 	static Const* const_(const Node& n) { return std::get<unique_ptr<Const>>(n).get(); }
@@ -317,6 +333,7 @@ struct Theory : public Tokenable, public Writable {
 
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l) : mdl::Source<Source, Sys>(l) { }
+	Source(const Source&) = delete;
 	Tokenable* find(const Token& t);
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
