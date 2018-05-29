@@ -248,17 +248,8 @@ private:
 			}
 			return disj;
 		};
-		parser_["DISJ"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* c = ctx.get<Context*>();
-			if (sv.size()) {
-				Disj::Vector dv;
-				for (const auto& dis : sv) {
-					dv.emplace_back(dis.get<set<uint>*>());
-				}
-				return Disj(dv);
-			} else {
-				return Disj();
-			}
+		parser_["DISJ"] = [](const peg::SemanticValues& sv) {
+			return sv.transform<set<uint>*>();
 		};
 		parser_["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Const* c = nullptr;
@@ -315,7 +306,7 @@ private:
 			Id id(sv[0].get<uint>());
 			Axiom* a = new Axiom(id, c->token(sv));
 			a->vars  = std::move(sv[1].get<Vars>());
-			a->disj  = std::move(sv[2].get<Disj>());
+			a->disj  = std::move(Disj(sv[2].get<Disj::Vector>()));
 			for (Hyp* h : sv[3].get<vector<Hyp*>>()) {
 				a->hyps.emplace_back(h);
 			}

@@ -56,8 +56,7 @@ struct Disj : public Tokenable, public Writable {
 	typedef vector<unique_ptr<set<uint>>> Vector;
 
 	Disj(const Vector& d = Vector(), const Token& t = Token());
-	Disj(const Disj& disj) : Tokenable(disj), dvars(disj.dvars) { }
-	//Disj(const Disj& disj) = delete;
+	Disj(const Disj& disj) = delete;
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
