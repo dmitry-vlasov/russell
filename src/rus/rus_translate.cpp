@@ -85,7 +85,7 @@ vector<uint> translate_vars(const Vars& rvars) {
 	return vars;
 }
 
-Disj::Vector translate_disj(const Disj& rdisj) {
+inline Disj::Vector translate_disj(const Disj& rdisj) {
 	return rdisj.toVector();
 }
 
@@ -169,7 +169,7 @@ vector<mm::Assertion*> translate_assertion(const Assertion* ass, Maps& maps) {
 		if (ass->vars.v.size()) {
 			ra->vars.vars = std::move(translate_vars(ass->vars));
 		}
-		if (ass->disj.dmap.size()) {
+		if (ass->disj.dvars.size()) {
 			ra->disj.vect = std::move(translate_disj(ass->disj));
 		}
 		ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));

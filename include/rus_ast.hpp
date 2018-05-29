@@ -56,14 +56,14 @@ struct Disj : public Tokenable, public Writable {
 	typedef vector<unique_ptr<set<uint>>> Vector;
 
 	Disj(const Vector& d = Vector(), const Token& t = Token());
-	Disj(const Disj& disj) : Tokenable(disj), dmap(disj.dmap) { }
+	Disj(const Disj& disj) : Tokenable(disj), dvars(disj.dvars) { }
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
 	void check(const Substitution&, Assertion* t) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
 
-	set<Pair> dmap;
+	set<Pair> dvars;
 };
 
 void parse_expr(Expr& ex);

@@ -133,7 +133,7 @@ rus::Vars translate_vars(const vector<T>& decls) {
 	return rus_vars;
 }
 
-rus::Disj translate_disj(const Assertion* ass) {
+inline rus::Disj translate_disj(const Assertion* ass) {
 	return rus::Disj(ass->disj.vect);
 }
 

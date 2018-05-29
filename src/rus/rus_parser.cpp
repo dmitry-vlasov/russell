@@ -254,7 +254,7 @@ private:
 					for (auto v : d) {
 						for (auto w : d) {
 							if (v != w) {
-								disj.dmap.emplace(v, w);
+								disj.dvars.emplace(v, w);
 							}
 						}
 					}

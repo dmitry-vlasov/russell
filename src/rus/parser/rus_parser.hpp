@@ -175,7 +175,7 @@ struct AddDisjVar {
 	struct result { typedef void type; };
 	void operator()(Disj& disj, set<uint>& dis, uint v) const {
 		for (uint w : dis) {
-			disj.dmap.emplace(v, w);
+			disj.dvars.emplace(v, w);
 		}
 		dis.insert(v);
 	}

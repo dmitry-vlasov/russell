@@ -61,7 +61,7 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 }
 
 void Disj::check(const Substitution& s, Assertion* t) const {
-	for (const auto& p : dmap) {
+	for (const auto& p : dvars) {
 		if (!s.mapsVar(p.v) || !s.mapsVar(p.w)) continue;
 		set<uint> v1_vars = s.sub().at(p.v).vars();
 		set<uint> v2_vars = s.sub().at(p.w).vars();
@@ -75,7 +75,7 @@ void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2)
 	for (uint v1 : vars1) {
 		for (uint v2 : vars2) {
 			if (v1 != v2) {
-				dmap.emplace(v1, v2);
+				dvars.emplace(v1, v2);
 			}
 		}
 	}
@@ -87,7 +87,7 @@ Disj::Disj(const Vector& vect, const Token& t) : Tokenable(t) {
 		for (auto v : d) {
 			for (auto w : d) {
 				if (v != w) {
-					dmap.emplace(v, w);
+					dvars.emplace(v, w);
 				}
 			}
 		}
@@ -120,8 +120,8 @@ static void addPair(const set<Disj::Pair>& dmap, Disj::Vector& d, uint v1, uint 
 
 Disj::Vector Disj::toVector() const {
 	Vector v;
-	for (const auto& p : dmap) {
-		addPair(dmap, v, p.v, p.w);
+	for (const auto& p : dvars) {
+		addPair(dvars, v, p.v, p.w);
 	}
 	return v;
 }
