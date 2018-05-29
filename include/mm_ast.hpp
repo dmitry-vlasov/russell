@@ -14,6 +14,7 @@ class Assertion;
 struct Comment : public Writable {
 	string text;
 	Comment(const string& t) : text(t) { }
+	Comment(const Comment&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i << "$( " << text << " $)\n";
 	}
@@ -22,6 +23,7 @@ struct Comment : public Writable {
 struct Import : public Writable {
 	User<Source> source;
 	Import(uint id) : source(id) { }
+	Import(const Import&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i << "$[ " << Lex::toStr(source.id()) << ".mm $]\n";
 	}
@@ -30,6 +32,7 @@ struct Import : public Writable {
 struct Const : public Writable {
 	uint symb;
 	Const(uint s) : symb(s) { }
+	Const(const Const&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i << "$c " << Lex::toStr(symb) << " $.\n";
 	}
@@ -37,6 +40,8 @@ struct Const : public Writable {
 
 struct Vars : public Writable {
 	vector<uint> vars;
+	Vars() = default;
+	Vars(const Vars&) = delete;
 	void write(ostream& os, const Indent& i) const override {
 		if (vars.size()) {
 			os << i << "$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
@@ -46,6 +51,8 @@ struct Vars : public Writable {
 
 struct Disj : public Writable {
 	vector<unique_ptr<set<uint>>> vect;
+	Disj() = default;
+	Disj(const Disj&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		for (const auto& vars : vect) {
 			os << i << "$d "; for (uint v : *vars.get()) os << Lex::toStr(v) << " "; os << " $.\n";
@@ -58,6 +65,7 @@ struct Hyp : public Writable, public Referable {
 	uint label;
 	Expr expr;
 	Hyp(uint i, uint l) : index(i), label(l) { }
+	Hyp(const Hyp&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i; ref(os); os << "$e " << expr << "$.\n";
 	}
@@ -78,6 +86,7 @@ struct Var : public Writable, public Referable {
 		expr.emplace_back(t, false);
 		expr.emplace_back(v, true);
 	}
+	Var(const Var&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i; ref(os); os << " $f " << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
 	}
@@ -93,6 +102,7 @@ struct Ref : public Writable {
 	Ref(Hyp* h) : val(h) { }
 	Ref(Var* v) : val(v) { }
 	Ref(uint l) : val(Ass(l)) { }
+	Ref(const Ref&) = default;
 
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 	bool is_assertion() const { return kind() == ASS; }
@@ -122,6 +132,8 @@ struct Ref : public Writable {
 };
 
 struct Proof : public Writable {
+	Proof() : theorem(nullptr) { }
+	Proof(const Proof&) = delete;
 	vector<Ref> refs;
 	Assertion*  theorem;
 	void write(ostream& os, const Indent& i = Indent()) const override {
@@ -135,7 +147,7 @@ struct Proof : public Writable {
 
 struct Assertion : public Owner<Assertion>, public Writable, public Referable {
 	Assertion (uint label, const Token& t = Token()) : Owner(label, t) { }
-	~Assertion() override { }
+	Assertion(const Assertion&) = delete;
 
 	uint arity() const { return hyps.size() + outerVars.size(); }
 	bool axiom() const { return !proof.refs.size(); }
@@ -187,6 +199,7 @@ struct Source : public mdl::Source<Source, Sys> {
 	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
 
 	Source(uint l) : mdl::Source<Source, Sys>(l) { }
+	Source(const Source&) = delete;
 
 	vector<Node> contents;
 
