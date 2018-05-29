@@ -68,8 +68,8 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	disj =
 		lit("disjointed") > "("
 		> + ( (!(lit(")") | lit(",")))
-			> eps    [newDisjSet(_r1)]
-			> + var  [addDisjVar(_r1, qi::labels::_1)]
+			> eps    [newDisjSet(_a)]
+			> + var  [addDisjVar(_r1, _a, qi::labels::_1)]
 		) % ","
 		> lit(")") [_val = &_r1];
 

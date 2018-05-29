@@ -61,17 +61,12 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 }
 
 void Disj::check(const Substitution& s, Assertion* t) const {
-	for (const auto& dis : d) {
-		for (uint v1 : dis) {
-			if (!s.mapsVar(v1)) continue;
-			set<uint> v1_vars = s.sub().at(v1).vars();
-			for (uint v2 : dis) {
-				if (v1 == v2 || !s.mapsVar(v2)) continue;
-				set<uint> v2_vars = s.sub().at(v2).vars();
-				check_disjointed(v1_vars, v2_vars);
-				t->disj.make_pairs_disjointed(v1_vars, v2_vars);
-			}
-		}
+	for (const auto& p : dmap) {
+		if (!s.mapsVar(p.v) || !s.mapsVar(p.w)) continue;
+		set<uint> v1_vars = s.sub().at(p.v).vars();
+		set<uint> v2_vars = s.sub().at(p.w).vars();
+		check_disjointed(v1_vars, v2_vars);
+		t->disj.make_pairs_disjointed(v1_vars, v2_vars);
 	}
 }
 
@@ -86,45 +81,49 @@ void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2)
 	}
 }
 
-void Disj::init_dmap() {
-	for (const auto& dis : d) {
-		for (uint v1 : dis) {
-			for (uint v2 : dis) {
-				if (v1 != v2) {
-					dmap.emplace(v1, v2);
+Disj::Disj(const Vector& vect, const Token& t) : Tokenable(t) {
+	for (const auto& dis : vect) {
+		const set<uint>& d = *dis.get();
+		for (auto v : d) {
+			for (auto w : d) {
+				if (v != w) {
+					dmap.emplace(v, w);
 				}
 			}
 		}
 	}
 }
 
-void addPair(const set<Disj::Pair>& dmap, vector<set<uint>>& d, uint v1, uint v2) {
+static void addPair(const set<Disj::Pair>& dmap, Disj::Vector& d, uint v1, uint v2) {
 
-	auto try_to_extend = [&dmap](set<uint>& dis, uint v1, uint v2) {
-		if (dis.find(v1) == dis.end()) return false;
-		for (uint d : dis) {
+	auto try_to_extend = [&dmap](set<uint>* dis, uint v1, uint v2) {
+		if (dis->find(v1) == dis->end()) return false;
+		for (uint d : *dis) {
 			if (dmap.find(Disj::Pair(d, v2)) == dmap.end()) {
 				return false;
 			}
 		}
-		dis.insert(v2);
+		dis->insert(v2);
 		return true;
 	};
 
-	for (auto& dis : d) {
-		if (dis.count(v1) && dis.count(v2)) return;
+	for (auto& d : d) {
+		auto dis = d.get();
+		if (dis->count(v1) && dis->count(v2)) return;
 		if (try_to_extend(dis, v1, v2)) return;
 		if (try_to_extend(dis, v2, v1)) return;
 	}
-	d.emplace_back();
-	d.back().insert(v1);
-	d.back().insert(v2);
+	d.emplace_back(new set<uint>());
+	d.back()->insert(v1);
+	d.back()->insert(v2);
 }
 
-void Disj::init_d() {
+Disj::Vector Disj::toVector() const {
+	Vector v;
 	for (const auto& p : dmap) {
-		addPair(dmap, d, p.v, p.w);
+		addPair(dmap, v, p.v, p.w);
 	}
+	return v;
 }
 
 Proof::Proof(Id th, Id i, const Token& t) :

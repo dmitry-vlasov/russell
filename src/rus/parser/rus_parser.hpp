@@ -173,8 +173,7 @@ struct SetType {
 
 struct AddDisjVar {
 	struct result { typedef void type; };
-	void operator()(Disj& disj, uint v) const {
-		set<uint>& dis = disj.d.back();
+	void operator()(Disj& disj, set<uint>& dis, uint v) const {
 		for (uint w : dis) {
 			disj.dmap.emplace(v, w);
 		}
@@ -184,8 +183,8 @@ struct AddDisjVar {
 
 struct NewDisjSet {
 	struct result { typedef void type; };
-	void operator()(Disj& disj) const {
-		disj.d.emplace_back();
+	void operator()(set<uint>& dis) const {
+		dis.clear();
 	}
 };
 
@@ -336,7 +335,7 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Expr*(Id, Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> term;
 	qi::rule<LocationIter, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> expr;
 	qi::rule<LocationIter, Expr*(Id, Expr&), qi::locals<vector<uint>>, unicode::space_type> plain;
-	qi::rule<LocationIter, Disj*(Disj&), unicode::space_type> disj;
+	qi::rule<LocationIter, Disj*(Disj&), qi::locals<set<uint>>, unicode::space_type> disj;
 	qi::rule<LocationIter, Vars*(Vars&), qi::locals<uint, Id>, unicode::space_type> vars;
 	qi::rule<LocationIter, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
 	qi::rule<LocationIter, Prop*(), qi::locals<Id>, unicode::space_type> prop;

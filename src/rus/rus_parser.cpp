@@ -248,7 +248,18 @@ private:
 		parser_["DISJ"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			if (sv.size()) {
-				return Disj(sv.transform<set<uint>>(), c->token(sv));
+				Disj disj;
+				for (const auto& dis : sv) {
+					const set<uint>& d = dis.get<set<uint>>();
+					for (auto v : d) {
+						for (auto w : d) {
+							if (v != w) {
+								disj.dmap.emplace(v, w);
+							}
+						}
+					}
+				}
+				return disj;
 			} else {
 				return Disj();
 			}

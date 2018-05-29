@@ -85,17 +85,8 @@ vector<uint> translate_vars(const Vars& rvars) {
 	return vars;
 }
 
-vector<unique_ptr<set<uint>>> translate_disj(const Disj& rdisj) {
-	vector<unique_ptr<set<uint>>> disj;
-	disj.reserve(rdisj.d.size());
-	for (auto& d : rdisj.d) {
-		set<uint>* dis = new set<uint>;
-		for (uint v : d) {
-			dis->insert(v);
-		}
-		disj.emplace_back(dis);
-	}
-	return disj;
+Disj::Vector translate_disj(const Disj& rdisj) {
+	return rdisj.toVector();
 }
 
 RuleImage translate_rule(const Rule* rule, Maps& maps);
@@ -178,7 +169,7 @@ vector<mm::Assertion*> translate_assertion(const Assertion* ass, Maps& maps) {
 		if (ass->vars.v.size()) {
 			ra->vars.vars = std::move(translate_vars(ass->vars));
 		}
-		if (ass->disj.d.size()) {
+		if (ass->disj.dmap.size()) {
 			ra->disj.vect = std::move(translate_disj(ass->disj));
 		}
 		ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));

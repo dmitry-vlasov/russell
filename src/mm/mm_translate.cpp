@@ -134,15 +134,7 @@ rus::Vars translate_vars(const vector<T>& decls) {
 }
 
 rus::Disj translate_disj(const Assertion* ass) {
-	rus::Disj rus_disj;
-	for (const auto& dis : ass->disj.vect) {
-		rus_disj.d.emplace_back();
-		set<uint>& rus_dis = rus_disj.d.back();
-		for (auto v : *dis.get()) {
-			rus_dis.insert(translate_var_symb(v));
-		}
-	}
-	return rus_disj;
+	return rus::Disj(ass->disj.vect);
 }
 
 rus::Type* translate_type(uint t, Maps& state) {

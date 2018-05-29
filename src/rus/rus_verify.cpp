@@ -90,12 +90,9 @@ void verify_theory(Theory* theory, uint mode) {
 			}
 			for (const User<Proof>& p : t->proofs) {
 				if (mode & VERIFY_DISJ) {
-					t->disj.d.clear();
+					t->disj.dmap.clear();
 				}
 				p.get()->verify(mode);
-				if (mode & VERIFY_DISJ) {
-					t->disj.init_d();
-				}
 			}
 			break;
 		}

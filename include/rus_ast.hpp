@@ -53,16 +53,12 @@ struct Disj : public Tokenable, public Writable {
 			else return w < p.w;
 		}
 	};
+	typedef vector<unique_ptr<set<uint>>> Vector;
 
-	Disj(const vector<set<uint>>& disj = vector<set<uint>>(), const Token& t = Token()) :
-		Tokenable(t), d(disj) { init_dmap(); }
-	Disj(const Disj& disj) : Tokenable(disj), d(disj.d), dmap(disj.dmap) { }
+	Disj(const Vector& d = Vector(), const Token& t = Token());
+	Disj(const Disj& disj) : Tokenable(disj), dmap(disj.dmap) { }
 
-	vector<set<uint>> d;
-
-	void init_dmap();
-	void init_d();
-
+	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
 	void check(const Substitution&, Assertion* t) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);

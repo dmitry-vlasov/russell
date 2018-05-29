@@ -69,10 +69,11 @@ void Vars::write(ostream& os, const Indent&) const {
 }
 
 void Disj::write(ostream& os, const Indent&) const {
+	Disj::Vector d = toVector();
 	if (d.size() == 0) return;
 	os << "disjointed(";
 	for (uint i = 0; i < d.size(); ++ i) {
-		const set<uint>& dis = d[i];
+		const set<uint>& dis = *d[i];
 		uint j = 0;
 		for (uint v : dis) {
 			os << Lex::toStr(v);
