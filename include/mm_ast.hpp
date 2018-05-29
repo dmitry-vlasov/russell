@@ -45,7 +45,7 @@ struct Vars : public Writable {
 };
 
 struct Disj : public Writable {
-	vector<unique_ptr<vector<uint>>> vect;
+	vector<unique_ptr<set<uint>>> vect;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		for (const auto& vars : vect) {
 			os << i << "$d "; for (uint v : *vars.get()) os << Lex::toStr(v) << " "; os << " $.\n";

@@ -13,12 +13,11 @@ namespace parser {
 
 struct Disj {
 	vector<uint> disj;
-	vector<uint>* make(const set<uint>& vars) const {
-		vector<uint>* dvars = new vector<uint>();
-		dvars->reserve(disj.size());
+	set<uint>* make(const set<uint>& vars) const {
+		set<uint>* dvars = new set<uint>();
 		for (uint dv : disj) {
 			if (vars.find(dv) != vars.end()) {
-				dvars->emplace_back(dv);
+				dvars->insert(dv);
 			}
 		}
 		return dvars;
@@ -118,9 +117,9 @@ struct Block {
 		// Make final set of disjointeds.
 		ass->disj.vect.reserve(all_disjointed.size());
 		for (const Disj* disj : all_disjointed) {
-			vector<uint>* d = disj->make(vars);
+			set<uint>* d = disj->make(vars);
 			if (d->size() > 1) {
-				ass->disj.vect.emplace_back(disj->make(vars));
+				ass->disj.vect.emplace_back(d);
 			} else {
 				delete d;
 			}

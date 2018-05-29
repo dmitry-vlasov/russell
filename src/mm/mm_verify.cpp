@@ -5,16 +5,10 @@
 
 namespace mdl { namespace mm {
 
-inline bool vect_contains(const vector<uint>& v, uint s) {
-	for (uint x : v) {
-		if (x == s) return true;
-	}
-	return false;
-}
-
 bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
-	for (auto it = ass->disj.vect.cbegin(); it != ass->disj.vect.cend(); ++ it) {
-		if (vect_contains(*(*it).get(), s1.literal()) && vect_contains(*(*it).get(), s2.literal())) {
+	for (const auto& dis : ass->disj.vect) {
+		const set<uint>* d = dis.get();
+		if (d->find(s1.literal()) != d->end() && d->find(s2.literal()) != d->end()) {
 			return true;
 		}
 	}
@@ -55,9 +49,11 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 	for (auto s : expr) {
 		bool is_const = Sys::get().math.consts.count(s.lit);
 		bool is_var = false;
-		if (vect_contains(ass->vars.vars, s.literal())) {
-			is_var = true;
-			break;
+		for (uint v : ass->vars.vars) {
+			if (v == s.lit) {
+				is_var = true;
+				break;
+			}
 		}
 		if (is_const && is_var) {
 			throw Error("constant symbol is marked as variable", Lex::toStr(s.lit), ass->token);
@@ -90,9 +86,10 @@ static void checkFloating(const Assertion* ass, const vector<unique_ptr<Var>>& f
 }
 
 static void checkDisjointed(const Assertion* ass, Symbol var) {
-	if (!vect_contains(ass->vars.vars, var.literal())) {
-		throw Error("disjointed symbols must be variables", ass->token);
+	for (uint v : ass->vars.vars) {
+		if (v == var.lit) return;
 	}
+	throw Error("disjointed symbols must be variables", ass->token);
 }
 
 

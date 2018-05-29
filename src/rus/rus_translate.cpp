@@ -85,14 +85,13 @@ vector<uint> translate_vars(const Vars& rvars) {
 	return vars;
 }
 
-vector<unique_ptr<vector<uint>>> translate_disj(const Disj& rdisj) {
-	vector<unique_ptr<vector<uint>>> disj;
+vector<unique_ptr<set<uint>>> translate_disj(const Disj& rdisj) {
+	vector<unique_ptr<set<uint>>> disj;
 	disj.reserve(rdisj.d.size());
 	for (auto& d : rdisj.d) {
-		vector<uint>* dis = new vector<uint>;
-		dis->reserve(d.size());
+		set<uint>* dis = new set<uint>;
 		for (uint v : d) {
-			dis->push_back(v);
+			dis->insert(v);
 		}
 		disj.emplace_back(dis);
 	}
