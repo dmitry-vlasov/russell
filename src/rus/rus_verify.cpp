@@ -116,28 +116,28 @@ void verify_source(uint src, uint mode, set<uint>& verified) {
 }
 
 void verify(uint src) {
-	set<uint> verified;
-	verify_source(src, VERIFY_SUB | VERIFY_QED | VERIFY_DISJ, verified);
-}
-
-void verify() {
-	vector<const Proof*> proofs;
-	for (const auto& a : Sys::mod().math.get<Assertion>()) {
-		if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
-			if (!t->proofs.size()) throw Error("Theorem is not proved", show_id(t->id()));
-			for (const User<Proof>& p : t->proofs)
-				proofs.push_back(p.get());
+	if (src == -1) {
+		vector<const Proof*> proofs;
+		for (const auto& a : Sys::mod().math.get<Assertion>()) {
+			if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
+				if (!t->proofs.size()) throw Error("Theorem is not proved", show_id(t->id()));
+				for (const User<Proof>& p : t->proofs)
+					proofs.push_back(p.get());
+			}
 		}
-	}
-	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
-		[proofs] (const tbb::blocked_range<size_t>& r) {
-			for (size_t i = r.begin(); i != r.end(); ++i)
-				proofs[i]->verify(VERIFY_SUB | VERIFY_QED);
+		tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
+			[proofs] (const tbb::blocked_range<size_t>& r) {
+				for (size_t i = r.begin(); i != r.end(); ++i)
+					proofs[i]->verify(VERIFY_SUB | VERIFY_QED);
+			}
+		);
+		set<uint> verified;
+		for (const auto& s : Sys::mod().math.get<Source>()) {
+			verify_source(s.first, VERIFY_DISJ | VERIFY_DEEP, verified);
 		}
-	);
-	set<uint> verified;
-	for (const auto& s : Sys::mod().math.get<Source>()) {
-		verify_source(s.first, VERIFY_DISJ | VERIFY_DEEP, verified);
+	} else {
+		set<uint> verified;
+		verify_source(src, VERIFY_SUB | VERIFY_QED | VERIFY_DISJ, verified);
 	}
 }
 

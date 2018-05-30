@@ -49,12 +49,11 @@ template const Table<Source>& Math::get<Source>() const;
 template const Table<Assertion>& Math::get<Assertion>() const;
 
 void verify(uint src);
-void verify();
 mm::Source* translate(uint src, uint tgt);
 void parse_src_peg();
 void parse_src_spirit();
 void read(uint src);
-//void write(uint src, bool deep);
+void min_imports(uint src);
 
 namespace {
 
@@ -78,11 +77,6 @@ void parse_expr() {
 		}
 		prover::add_to_index(p.second.data);
 	}
-}
-
-
-void verify_(uint src) {
-	if (src == -1) rus::verify(); else rus::verify(src);
 }
 
 void translate_(uint src, uint tgt) {
@@ -244,6 +238,7 @@ static Descr description(string name) {
 			"show an info about proof node",
 			Descr::Arg("what", "index")
 		)},
+		{"min_imports", Descr("minimize imports",  Descr::Arg("in", "file", true, ""))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -259,7 +254,7 @@ const Sys::Actions& Sys::actions() {
 		{"parse",      Action([](const Args& args) { parse_src(); parse_expr(); return Return(); }, description("parse"))},
 		{"parse_src",  Action([](const Args& args) { parse_src(); return Return(); }, description("parse_src"))},
 		{"parse_expr", Action([](const Args& args) { parse_expr(); return Return(); }, description("parse_expr"))},
-		{"verify",     Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
+		{"verify",     Action([](const Args& args) { verify(Sys::make_name(args[0])); return Return(); }, description("verify"))},
 		{"transl",     Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
@@ -275,6 +270,8 @@ const Sys::Actions& Sys::actions() {
 		{"prove_confirm",  Action([](const Args& args) { Return ret = prove_confirm(stoul(args[0])); return ret; }, description("prove_confirm"))},
 		{"prove_stop",  Action([](const Args& args) { Return ret = prove_stop(); return ret; }, description("prove_stop"))},
 		{"prove_info",  Action([](const Args& args) { Return ret = prove_info(stoul(args[0])); return ret; }, description("prove_info"))},*/
+
+		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},
 	};
 	return actions;
 }
