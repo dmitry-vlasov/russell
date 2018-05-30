@@ -401,7 +401,7 @@ struct Token {
 		storage = t.storage;
 	}
 
-	void set(Source* s, const char* b, const char* e) { storage.set(s, b, e); }
+	void set(Source* s, const char* b = nullptr, const char* e = nullptr) { storage.set(s, b, e); }
 	const Source* src() const { return storage.src(); }
 	const char* beg() const { return storage.beg(); }
 	const char* end() const { return storage.end(); }

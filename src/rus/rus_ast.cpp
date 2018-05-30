@@ -14,8 +14,12 @@ inline Symbol create_const(string str, Const* c) {
 	return Symbol(Lex::toInt(str), c->id(), Symbol::CONST);
 }
 
-static Rule* create_super(Type* inf, Type* sup) {
-	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
+uint create_super_id(Type* inf, Type* sup) {
+	return create_id("sup", show_id(inf->id()), show_id(sup->id()));
+}
+
+Rule* create_super(Type* inf, Type* sup) {
+	uint id = create_super_id(inf, sup);
 	Rule* rule = new Rule(id);
 	rule->vars.v.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);
 	rule->term.symbols.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);

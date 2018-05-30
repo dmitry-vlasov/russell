@@ -18,7 +18,7 @@ inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, co
 			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
 			return Action(Action::RET, r.get());
 		} else {
-			if (trace) cout << Indent(ch - beg) << "Act: Rule follows: " << Lex::toStr(r.id()) << endl;
+			if (trace) cout << Indent(ch - beg) << "Act: Rule FAILS - follows: " << Lex::toStr(r.id()) << endl;
 			return Action::BREAK;
 		}
 	} else if (ch->end) {
@@ -49,7 +49,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				auto constIter = par->constMap.find(ch->lit);
 				if (constIter != par->constMap.end()) {
 					n.top() = constIter->second;
-					if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
+					if (trace) cout << Indent(ch - beg) << "Expr const symbol: " << *m.top() << endl;
 					if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
 					n.top() = par->constLast;
 					Action a = act<trace>(n, m, constIter->second, ch, e, beg);
@@ -111,6 +111,7 @@ void parse(Expr* ex) {
 			ex->set(tree);
 		} else {
  			cout << "parsing expr: " <<  show(*ex)  << endl << endl;
+ 			cout << "source: " << Lex::toStr(ex->token.src()->id())  << endl << endl;
 			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin());
 			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 		}
@@ -122,9 +123,10 @@ void parse(Expr* ex) {
 void parse() {
 	Sys::mod().math.get<Rule>().rehash();
 	for (const auto& p : Sys::get().math.get<Rule>()) {
-		Rule* r = p.second.data;
-		Type* tp = r->term.type.get();
-		tp->rules.add(r->term, r->id());
+		if (Rule* r = p.second.data) {
+			Type* tp = r->term.type.get();
+			tp->rules.add(r->term, r->id());
+		}
 	}
 	for (const auto& p : Sys::get().math.get<Type>()) {
 		Type* tp = p.second.data;

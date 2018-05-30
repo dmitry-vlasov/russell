@@ -4,7 +4,7 @@
 namespace mdl { namespace rus { namespace {
 
 inline void add_dep(const Tokenable* x, set<uint>& deps) {
-	if (x) deps.insert(x->token.src()->id());
+	if (x && x->token.src()) deps.insert(x->token.src()->id());
 }
 
 template<class T>
@@ -75,7 +75,7 @@ void proof_deps(const Proof* proof, set<uint>& deps);
 void step_deps(const Step* step, set<uint>& deps) {
 	expr_deps(step->expr, deps);
 	switch (step->kind()) {
-	case Step::ASS:   add_dep(step->ass(), deps);      break;
+	case Step::ASS:  add_dep(step->ass(), deps);       break;
 	case Step::CLAIM: proof_deps(step->claim(), deps); break;
 	}
 }
@@ -175,9 +175,10 @@ void minimize_imports(Source* src, map<uint, set<uint>>& minimized) {
 	if (has_contents(src)) {
 		set<uint> deps;
 		theory_deps(&src->theory, deps);
-		minimized[src->id()] = minimize_deps(src->id(), deps, minimized);
+		deps.erase(src->id());
+		set<uint> min_deps = minimize_deps(src->id(), deps, minimized);
 		vector<Theory::Node> new_nodes;
-		for (uint inc : minimized.at(src->id())) {
+		for (uint inc : min_deps) {
 			new_nodes.emplace_back(unique_ptr<Import>(new Import(inc)));
 		}
 		for (auto& n : src->theory.nodes) {
