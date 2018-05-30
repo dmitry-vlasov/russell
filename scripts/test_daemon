@@ -62,6 +62,8 @@ check "${binpath}/mdl -c
     \"mm parse \"
     \"mm verify \"
     \"mm transl in=${file}.mm out=${file}.rus\"
+    \"rus parse_expr \"
+    \"rus min_imports \"
     \"rus write in=${file}.rus deep=true\"
     
     \"rus curr proj=B\"
