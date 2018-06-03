@@ -47,14 +47,14 @@ private:
 	ostream& out();
 };
 
-struct Console {
+struct Client {
 	Conn conn;
 
 	void start(bool verb);
 	void enqueue(const string& com) { commands.push(com); }
 
-	static const Console& get() { return mod(); }
-	static Console& mod() { static Console c; return c; }
+	static const Client& get() { return mod(); }
+	static Client& mod() { static Client c; return c; }
 
 private:
 	boost::asio::io_service        service;
@@ -65,7 +65,7 @@ private:
 	bool verbose = false;
 
 	static void session();
-	Console();
+	Client();
 	string get_command();
 	string get_response();
 	void send_request(const string& request);

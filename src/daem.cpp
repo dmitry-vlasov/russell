@@ -176,8 +176,8 @@ ostream& Daemon::out() {
 	return verbose ? cout : nowhere;
 }
 
-void Console::session() {
-	Console& console = mod();
+void Client::session() {
+	Client& console = mod();
 	console.connect();
 	while (true) {
 		console.out() << "Console waiting for request...." << endl;
@@ -194,18 +194,18 @@ void Console::session() {
 	console.disconnect();
 }
 
-Console::Console() : resolver(service), socket(service),
+Client::Client() : resolver(service), socket(service),
 endpoint(*resolver.resolve({conn.host, to_string(conn.port)})) {
 }
 
-void Console::start(bool verb) {
+void Client::start(bool verb) {
 	verbose = verb;
 	out() << "Console started" << endl;
 	session();
 	//std::thread(Console::session).detach();
 }
 
-void Console::connect() {
+void Client::connect() {
 	out() << "Console connecting...." << endl;
 	boost::system::error_code error;
 	socket.connect(endpoint, error);
@@ -222,11 +222,11 @@ void Console::connect() {
 	}
 }
 
-void Console::disconnect() {
+void Client::disconnect() {
 	socket.close();
 }
 
-string Console::get_command() {
+string Client::get_command() {
 	string command;
 	if (!commands.empty()) {
 		command = commands.front();
@@ -237,7 +237,7 @@ string Console::get_command() {
 	return command;
 }
 
-string Console::get_response() {
+string Client::get_response() {
 	bool close = false;
 	string ret = receive_string(socket, close);
 	if (close) {
@@ -247,11 +247,11 @@ string Console::get_response() {
 	return ret;
 }
 
-void Console::send_request(const string& request) {
+void Client::send_request(const string& request) {
 	send_string(socket, request);
 }
 
-ostream& Console::out() {
+ostream& Client::out() {
 	static boost::iostreams::stream<boost::iostreams::null_sink> nowhere((boost::iostreams::null_sink()));
 	return verbose ? cout : nowhere;
 }
