@@ -16,6 +16,9 @@ struct Return {
 
 	bool success() const { return !code; }
 
+	string to_binary() const;
+	static Return from_binary(const string&);
+
 	string to_string() const;
 	static Return from_string(const string&);
 };

@@ -2,7 +2,7 @@
 
 namespace mdl {
 
-string Return::to_string() const {
+string Return::to_binary() const {
 	uint len = msg.size() + data.size() + sizeof(uint) * 3;
 	char array[len];
 	char* arr = array;
@@ -21,7 +21,7 @@ string Return::to_string() const {
 	return string(array, len);
 }
 
-Return Return::from_string(const string& str) {
+Return Return::from_binary(const string& str) {
 	const char* array = str.c_str();
 	Return ret;
 
@@ -38,6 +38,38 @@ Return Return::from_string(const string& str) {
 
 	return ret;
 }
+
+#define ERROR_HEADER "error: "
+#define DATA_HEADER  "***** DATA *****/n"
+
+string Return::to_string() const {
+	string ret;
+	if (!success()) {
+		ret += ERROR_HEADER + std::to_string(code) + "\n";
+	}
+	if (msg.size()) {
+		ret += msg;
+	}
+	if (data.size()) {
+		ret += DATA_HEADER;
+		ret += data;
+	}
+	return ret;
+}
+
+Return Return::from_string(const string& str) {
+	auto first_line = str.find('\n');
+	auto msg_start = (str.substr(0, strlen(ERROR_HEADER)) == ERROR_HEADER) ? (first_line == string::npos ? first_line : first_line + 1) : 0;
+	auto data_start = str.find(DATA_HEADER);
+	Return ret;
+	ret.msg = str.substr(msg_start, data_start);
+	ret.data = str.substr(data_start);
+	if (msg_start != 0) {
+		ret.code = stoi(str.substr(strlen(ERROR_HEADER), str.find('\n')));
+	}
+	return ret;
+}
+
 
 } // mdl
 

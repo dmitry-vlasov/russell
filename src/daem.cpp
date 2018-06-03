@@ -58,9 +58,6 @@ static void send_string(boost::asio::ip::tcp::socket& socket, const string& str)
 }
 
 Return execute_command(const string& command) {
-	if (command == "status") {
-		return Return("russell daemon is running ...");
-	}
 	Lang lang = Lang::NONE;
 	uint sys = -1;
 	Args args;
@@ -88,8 +85,8 @@ Return execute_command(const string& command) {
 	return ret;
 }
 
-Return execute(const string& coms) {
-	string com_list(coms);
+Return execute(const string& commands) {
+	string com_list(commands);
 	Return ret;
 	while (com_list.size()) {
 		string::size_type sep = com_list.find(';');
@@ -113,12 +110,16 @@ void Daemon::session() {
 			if ("daemon" == request.substr(0, strlen("daemon")))
 				request = request.substr(strlen("daemon"));
 			boost::trim(request);
-			if (request == "exit" || request == "cancel" || request == "quit") {
+			if (exit_command(request)) {
 				daemon.out() << "Daemon exiting" << endl;
 				daemon.state = EXIT;
 			}
-			Return ret = daemon.state == EXIT ? Return() : execute(request);
-			daemon.send_response(ret.to_string());
+			if (request == "status") {
+				daemon.send_response("russell daemon is running ...");
+			} else {
+				Return ret = daemon.state == EXIT ? Return() : execute(request);
+				daemon.send_response(ret.to_binary());
+			}
 			daemon.out() << "Daemon response is sent" << endl;
 		}
 	} catch (std::exception& e) {
@@ -180,15 +181,15 @@ void Client::session() {
 	Client& console = mod();
 	console.connect();
 	while (true) {
-		console.out() << "Console waiting for request...." << endl;
+		console.out() << "Client waiting for request...." << endl;
 		string request = console.get_command();
-		if (request == "exit" || request == "cancel" || request == "quit") return;
-		console.out() << "Console sending a request...." << endl;
+		if (exit_command(request)) return;
+		console.out() << "Client sending a request...." << endl;
 		console.send_request(request);
-		console.out() << "Console is waiting for response...." << endl;
+		console.out() << "Client is waiting for response...." << endl;
 		string response = console.get_response();
-		console.out() << "Console got a response: ";
-		Return ret = Return::from_string(response);
+		console.out() << "Client got a response: ";
+		Return ret = Return::from_binary(response);
 		console.out() << (ret ? "success" : "fail") << ": " << ret.msg << endl;
 	}
 	console.disconnect();
@@ -200,13 +201,13 @@ endpoint(*resolver.resolve({conn.host, to_string(conn.port)})) {
 
 void Client::start(bool verb) {
 	verbose = verb;
-	out() << "Console started" << endl;
+	out() << "Client started" << endl;
 	session();
 	//std::thread(Console::session).detach();
 }
 
 void Client::connect() {
-	out() << "Console connecting...." << endl;
+	out() << "Client connecting...." << endl;
 	boost::system::error_code error;
 	socket.connect(endpoint, error);
 	string err;
@@ -216,9 +217,9 @@ void Client::connect() {
 		err = e.what();
 	}
 	if (error) {
-		out() << "Console connection EEROR: " << err << endl;
+		out() << "Client connection EEROR: " << err << endl;
 	} else {
-		out() << "Console connected" << endl;
+		out() << "Client connected" << endl;
 	}
 }
 
@@ -256,5 +257,31 @@ ostream& Client::out() {
 	return verbose ? cout : nowhere;
 }
 
+void Console::start(bool verb) {
+	if (verb) {
+		cout << "Russell console started" << endl;
+	}
+	while (true) {
+		if (verb) cout << "> " << flush;
+		string command = get_command();
+		if (verb) cout << endl;
+		if (exit_command(command)) {
+			if (verb) cout << "console shut down." << endl;
+			break;
+		}
+		cout << execute(command).to_string() << endl;
+	}
+}
+
+string Console::get_command() {
+	string command;
+	if (!commands.empty()) {
+		command = commands.front();
+		commands.pop();
+		return command;
+	}
+	std::getline(std::cin, command);
+	return command;
+}
 
 }

@@ -41,17 +41,17 @@ int main (int argc, const char* argv[])
 		for (int i = 1; i < argc; ++ i) {
 			if (argv[i][0] == '-') continue;
 			switch (mode) {
-			case Mode::DAEM: Daemon::mod().enqueue(argv[i]); break;
-			case Mode::CLI:  Client::mod().enqueue(argv[i]); break;
+			case Mode::DAEM: Daemon::mod().enqueue(argv[i]);  break;
+			case Mode::CLI:  Client::mod().enqueue(argv[i]);  break;
+			case Mode::CONS: Console::mod().enqueue(argv[i]); break;
 			case Mode::EXEC: commands.push(argv[i]); break;
-			case Mode::CONS: commands.push(argv[i]); break;
 			}
 		}
 		switch (mode) {
 		case Mode::DAEM: Daemon::mod().start(verb);  break;
 		case Mode::CLI:  Client::mod().start(verb);  break;
+		case Mode::CONS: Console::mod().start(verb); break;
 		case Mode::EXEC: execute(commands);          break;
-		case Mode::CONS: execute(commands);          break;
 		case Mode::HELP: cout << descr << endl;      break;
 		}
 		if (vm.count("cleanup")) {

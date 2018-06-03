@@ -13,6 +13,10 @@ constexpr const char* default_logs() { return  "/var/tmp/mdld.log"; }
 constexpr const char* default_host() { return "localhost"; }
 constexpr uint default_port() { return 808011; }
 
+inline bool exit_command(const string& command) {
+	return (command == "bye" || command == "quit" || command == "exit" || command == "ciao" || command == "cancel");
+}
+
 struct Conn {
 	Conn() : port(default_port()), host(default_host()), logs(default_logs()) { }
 	uint   port;
@@ -72,6 +76,19 @@ private:
 	void connect();
 	void disconnect();
 	ostream& out();
+};
+
+struct Console {
+	void start(bool verb);
+	void enqueue(const string& com) { commands.push(com); }
+
+	static const Console& get() { return mod(); }
+	static Console& mod() { static Console c; return c; }
+
+private:
+	Console() { }
+	string get_command();
+	queue<string> commands;
 };
 
 } // mdl::daemon
