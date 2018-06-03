@@ -557,8 +557,8 @@ public:
 
 	operator bool() const { return ptr; }
 
-	T* get() { return ptr; }
-	const T* get() const { return ptr; }
+	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
+	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
 	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }

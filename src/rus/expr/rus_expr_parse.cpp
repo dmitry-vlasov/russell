@@ -14,6 +14,7 @@ struct Action {
 template<bool trace>
 inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
 	if (const User<Rule>& r = (*ni)->rule) {
+		if (!r) throw Error("unknown rule", Lex::toStr(r.id()));
 		if (r.get()->token.preceeds(e->token)) {
 			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
 			return Action(Action::RET, r.get());

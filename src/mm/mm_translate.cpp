@@ -102,7 +102,7 @@ rus::Expr translate_expr(const Expr& ex, const Assertion* ass, const Maps& maps)
 			if (p == math_consts().end()) {
 				e.symbols.emplace_back(s, s, rus::Symbol::CONST);
 			} else {
-				e.symbols.emplace_back(p->second.symb, s, rus::Symbol::CONST);
+				e.symbols.emplace_back(p->second.symb, p->second.symb, rus::Symbol::CONST);
 			}
 		}
 	}
