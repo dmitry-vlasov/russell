@@ -1,0 +1,147 @@
+#!/usr/bin/python
+
+import os
+import sys
+import shutil
+import subprocess
+import time
+
+usage = '''
+usage:
+	test_console <file> [config]
+where: "
+	file=<file>     is a mm source without .mm extension (obligatory)
+	conf=<config>   is a config of test launching (optional)
+'''
+
+def parseArgs():
+	args = {}
+	for arg in sys.argv:
+		name_val = arg.split('=')
+		if len(name_val) > 2:
+			toStdout(usage)
+			sys.stdout.flush()
+			sys.exit(1)
+		elif len(name_val) == 2:
+			args[name_val[0]] = val = name_val[1]
+	return args
+
+
+'''
+echo "----------------------"
+echo "   Metamath VERIFY    "
+echo "----------------------"
+
+echo "verify mm-1 (plain) with metamath"
+${binpath}/metamath "read {}-1.mm" 'verify proof *' 'exit'
+echo -e 'done\n'
+
+echo -e 'translation tests passed =)\n'
+'''
+
+commands = [
+	"mm cut in={0}.mm out={0}.smm out-root=mm",    
+	"rus curr proj=A",
+	"rus opts verbose root=rus",
+	"mm curr proj=A",
+	"mm opts verbose root=mm",
+	"mm read in={0}.mm",
+	"mm parse ",
+	"mm verify ",
+	"mm transl in={0}.mm out={0}.rus",
+	"rus parse_expr ",
+	"rus min_imports ",
+	"rus write in={0}.rus deep=true",
+	
+	"rus curr proj=B",
+	"rus opts verbose root=rus",
+	"mm curr proj=B", 
+	"mm opts verbose root=mm-1",
+	"rus read in={0}.rus",
+	"rus parse_src ",
+	"rus parse_expr ",
+	"rus verify ",
+	"rus transl in={0}.rus out={0}.mm",
+	"mm write in={0}.mm deep=true",
+	
+	"mm curr proj=C", 
+	"mm opts verbose root=mm-1", 
+	"mm read in={0}.mm",
+	"mm parse ",
+	"mm verify ",
+	"mm merge in={0}.mm out={0}-1.mm out-root=",
+	"exit",
+]
+
+
+prev_was_empty = False
+
+def exec_com(proc, com = ""):
+	global prev_was_empty 
+	if (com != ""):
+		proc.stdin.write(com + "\n")
+		#sys.stdout.write(com)
+	while proc.poll() is None:
+		output = proc.stdout.readline()
+		if output.strip():
+			if output == ">\n":
+				if not prev_was_empty:
+					sys.stdout.write("> ")
+				prev_was_empty = True
+				break
+			else:
+				prev_was_empty = False
+				sys.stdout.write(output)
+
+def main():
+	if len(sys.argv) < 2:
+		print(usage)
+		sys.exit(1)
+	args = parseArgs()
+	if not 'file' in args:
+		print(usage)
+		sys.exit(1)
+	src_file = args['file']
+	binpath='../build/release/bin'
+ 
+	## The relative path to the directory, containing math sources:
+	mathpath='../math'
+	#mathpath='../../../math'
+
+	## Run executables with valgrind memcheck
+	#memcheck='yes'
+
+	## Print command with arguments before execution
+	output_command='yes'
+	
+	os.chdir(mathpath)
+	shutil.rmtree('tmp', True)
+	os.mkdir('tmp')
+	shutil.copy(src_file + '.mm', 'tmp')
+	os.chdir('tmp')
+	
+	print("----------------------")
+	print("   MM -> RUS -> MM    ")
+	print("----------------------")
+	
+	proc = subprocess.Popen(['../' + binpath + '/mdl', '-c', '--verb'], stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE, cwd=os.getcwd())
+	exec_com(proc)
+	for comm in commands:
+		c = comm.format(src_file)
+		exec_com(proc, c)
+	print('\n\n')
+	
+	print("----------------------")
+	print("   Metamath VERIFY    ")
+	print("----------------------")
+	
+	proc = subprocess.Popen(['../' + binpath + '/metamath', "read {}-1.mm".format(src_file), 'verify proof *', 'exit'], stderr=subprocess.STDOUT, cwd=os.getcwd())
+	proc.communicate()
+	#print(out)
+	#print(err)
+	
+	print('translation tests passed =)\n')
+
+if __name__ == '__main__':
+	main()
+

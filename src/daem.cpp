@@ -262,9 +262,8 @@ void Console::start(bool verb) {
 		cout << "Russell console started" << endl;
 	}
 	while (true) {
-		if (verb) cout << "> " << flush;
+		if (verb) cout << ">" << endl;
 		string command = get_command();
-		if (verb) cout << endl;
 		if (exit_command(command)) {
 			if (verb) cout << "console shut down." << endl;
 			break;
