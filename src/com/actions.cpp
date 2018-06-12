@@ -40,7 +40,7 @@ Return Return::from_binary(const string& str) {
 }
 
 #define ERROR_HEADER "error: "
-#define DATA_HEADER  "***** DATA *****/n"
+#define DATA_HEADER  "***** DATA *****\n"
 
 string Return::to_string() const {
 	string ret;
@@ -49,6 +49,9 @@ string Return::to_string() const {
 	}
 	if (msg.size()) {
 		ret += msg;
+		if (msg[msg.size() - 1] != '\n') {
+			ret += '\n';
+		}
 	}
 	if (data.size()) {
 		ret += DATA_HEADER;

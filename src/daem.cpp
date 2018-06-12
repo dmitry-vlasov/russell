@@ -257,18 +257,15 @@ ostream& Client::out() {
 	return verbose ? cout : nowhere;
 }
 
-void Console::start(bool verb) {
-	if (verb) {
-		cout << "Russell console started" << endl;
-	}
+void Console::start() {
+	cout << "Russell console started\n>> " << flush;
 	while (true) {
-		if (verb) cout << ">" << endl;
 		string command = get_command();
 		if (exit_command(command)) {
-			if (verb) cout << "console shut down." << endl;
+			cout << "console shut down." << endl;
 			break;
 		}
-		cout << execute(command).to_string() << endl;
+		cout << execute(command).to_string() << "\n>> " << flush;
 	}
 }
 

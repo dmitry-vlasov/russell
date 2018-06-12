@@ -31,7 +31,7 @@ public :
 	string get(const string& name) const { return has(name) ? opts.at(name) : ""; }
 	void   set(const string& name, const string& value = "") { opts[name] = value; }
 
- 	bool verbose() const { return has("verbose"); }
+ 	bool verbose() const { return !has("silent"); }
 
 	Lang target() const {
 		if (!has("target")) return Lang::NONE;
@@ -54,7 +54,7 @@ public :
 	Descr descr() const {
 		static Descr d("options", -1, true);
 		if (d.args.empty()) {
-			d.args.push_back(Descr::Arg("verbose", "", true));
+			d.args.push_back(Descr::Arg("silent", "", true));
 			d.args.push_back(Descr::Arg("root", "dir", true));
 			d.args.push_back(Descr::Arg("target", "rus|mm|smm", true));
 		}

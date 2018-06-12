@@ -100,6 +100,7 @@ string xml(const Theory& t, uint bits) {
 
 string xml_outline(const Source& s, uint bits) {
 	string ret;
+	ret += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<outline>\n";
 	for (const auto& n : s.theory.nodes)
@@ -118,6 +119,7 @@ string xml_struct(uint bits) {
 
 string xml_structure(uint bits) {
 	string ret;
+	ret += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<structure>\n";
 	if (xml_bit(bits, XmlNode::CONST))

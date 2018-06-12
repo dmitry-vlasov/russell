@@ -74,24 +74,17 @@ commands = [
 ]
 
 
-prev_was_empty = False
-
 def exec_com(proc, com = ""):
-	global prev_was_empty 
 	if (com != ""):
 		proc.stdin.write(com + "\n")
-		#sys.stdout.write(com)
+		sys.stdout.write(com + "\n")
+	prev = ""
 	while proc.poll() is None:
-		output = proc.stdout.readline()
-		if output.strip():
-			if output == ">\n":
-				if not prev_was_empty:
-					sys.stdout.write("> ")
-				prev_was_empty = True
-				break
-			else:
-				prev_was_empty = False
-				sys.stdout.write(output)
+		output = os.read(proc.stdout.fileno(), 3)
+		sys.stdout.write(output)
+		if "\n>> " in prev + output:
+			break
+		prev = output
 
 def main():
 	if len(sys.argv) < 2:

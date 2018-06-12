@@ -79,7 +79,7 @@ private:
 };
 
 struct Console {
-	void start(bool verb);
+	void start();
 	void enqueue(const string& com) { commands.push(com); }
 
 	static const Console& get() { return mod(); }

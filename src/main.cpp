@@ -50,7 +50,7 @@ int main (int argc, const char* argv[])
 		switch (mode) {
 		case Mode::DAEM: Daemon::mod().start(verb);  break;
 		case Mode::CLI:  Client::mod().start(verb);  break;
-		case Mode::CONS: Console::mod().start(verb); break;
+		case Mode::CONS: Console::mod().start();     break;
 		case Mode::EXEC: execute(commands);          break;
 		case Mode::HELP: cout << descr << endl;      break;
 		}
