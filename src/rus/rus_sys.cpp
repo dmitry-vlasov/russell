@@ -55,6 +55,10 @@ void parse_src_spirit();
 void read(uint src);
 void min_imports(uint src);
 
+string xml_outline(const Source&, uint);
+string xml_structure(uint bits);
+string xml_types();
+
 namespace {
 
 void parse_src() {
@@ -96,11 +100,15 @@ Return lookup(uint src, uint line, uint col, string what) {
 Return outline(uint s, uint bits) {
 	const Source* src = Sys::get().math.get<Source>().access(s);
 	string outline = xml_outline(*src, bits);
-	return Return("source outline", outline);
+	return Return("", outline);
 }
 
 Return structure(uint bits) {
-	return Return("structure", xml_structure(bits));
+	return Return("", xml_structure(bits));
+}
+
+Return types() {
+	return Return("", xml_types());
 }
 
 Return test(string mode) {
@@ -211,6 +219,7 @@ static Descr description(string name) {
 		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
+		{"types",      Descr("type system")},
 		{"prove_start",  Descr(
 			"start proving theorem",
 			Descr::Arg("in", "file"),
@@ -259,11 +268,12 @@ const Sys::Actions& Sys::actions() {
 		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
 		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
-		{"test",       Action([](const Args& args) { Return ret = test(args[0]); return ret; }, description("test"))},
+		{"test",       Action([](const Args& args) { return test(args[0]); }, description("test"))},
 		{"opts",       Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup",     Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
-		{"outline",    Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))},
-		{"struct",     Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))},
+		{"lookup",     Action([](const Args& args) { return lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
+		{"outline",    Action([](const Args& args) { return outline(Sys::make_name(args[0]), xml_bits(args[1])); }, description("outline"))},
+		{"struct",     Action([](const Args& args) { return structure(xml_bits(args[0])); }, description("struct"))},
+		{"types",      Action([](const Args& args) { return types(); }, description("types"))},
 
 		{"prove_start", Action([](const Args& args) { Return ret = prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); return ret; }, description("prove_start"))},
 		/*{"prove_step",  Action([](const Args& args) { Return ret = prove_step(stoul(args[0])); return ret; }, description("prove_step"))},

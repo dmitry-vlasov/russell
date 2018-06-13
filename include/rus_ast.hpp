@@ -339,10 +339,6 @@ struct Source : public mdl::Source<Source, Sys> {
 	Theory theory;
 };
 
-string xml_outline(const Source&, uint);
-string xml_structure(uint bits);
-template<class T> string xml_struct(uint bits);
-
 size_t memvol(const Source&);
 
 void add_to_index(Assertion*);

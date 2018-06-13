@@ -134,5 +134,14 @@ string xml_structure(uint bits) {
 	return ret;
 }
 
+string xml_types() {
+	string ret;
+	ret += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	ret += "<!DOCTYPE russell_mining_output>\n";
+	ret += "<types>\n";
+	ret += Indent::paragraph(xml_struct<Type>(xml_bits("type")));
+	ret += "</types>\n";
+	return ret;
+}
 
 }}
