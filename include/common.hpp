@@ -457,6 +457,7 @@ public:
 		try {
 			if (t.is_defined()) {
 				Accessor a;
+				cout << "TOK: " << tk.show() << endl;
 				refs().insert(a, t);
 				a->second = r;
 			}
@@ -481,12 +482,17 @@ public:
 		}
 	}
 	static const Tokenable_* find(uint src, const uint line, const uint col) {
-		Src* s = Sys::mod().math.template get<Src>().access(src);
-		const char* c = locate_position(line, col, s->data().c_str());
-		Token_ t(s, c, c);
-		refs().rehash();
-		ConstAccessor a;
-		return refs().find(a, normalize(t)) ? (a->second ? a->second->ref() : nullptr) : nullptr;
+		if (Src* s = Sys::mod().math.template get<Src>().access(src)) {
+			const char* c = locate_position(line, col, s->data().c_str());
+			Token_ t(s, c, c);
+			t = normalize(t);
+			cout << "FIND: " << t.show() << endl;
+			refs().rehash();
+			ConstAccessor a;
+			return refs().find(a, t) ? (a->second ? a->second->ref() : nullptr) : nullptr;
+		} else {
+			throw Error("unknown source", Lex::toStr(src));
+		}
 	}
 
 private:

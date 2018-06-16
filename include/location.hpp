@@ -81,9 +81,9 @@ struct Location {
 
 	string show() const {
 		string s;
-		s += "path: " + root + "/" + Lex::toStr(file) + "." + ext + "\n";
-		s += "line: " + to_string(line + 1) + "\n";
-		s += "col: "  + to_string(col + 1) + "\n";
+		s += "line: " + to_string(line + 1) + " ";
+		s += "col: "  + to_string(col + 1) + " ";
+		s += "path: " + root + "/" + Lex::toStr(file) + "." + ext + " ";
 		return s;
 	}
 	string xml() const {

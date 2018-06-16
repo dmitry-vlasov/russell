@@ -37,7 +37,7 @@ static void collect_super_rules(Type* inf, Type* s) {
 }
 
 Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
-	for (auto t : s) sup.push_back(User<Type>(t));
+	for (auto t : s) sup.emplace_back(t);
 	collect_super_rules(this, this);
 }
 
