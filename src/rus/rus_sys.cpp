@@ -118,6 +118,21 @@ Return test(string mode) {
 	return Return();
 }
 
+Return prove(uint src, uint line, uint col, string tact) {
+	Source* s = Sys::mod().math.get<Source>().access(src);
+	const char* c = locate_position(line, col, s->data().c_str());
+	Tokenable* t = s->find(Token(s, c, c));
+	if (Qed* qed = dynamic_cast<Qed*>(t)) {
+		prover::Tactic* tactic = prover::make_tactic(tact);
+		return Return(prover::Space::create(qed, tactic));
+	} else if (Step* step = dynamic_cast<Step*>(t)) {
+		return Return();
+	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {
+		return Return();
+	}
+	return Return(false);
+}
+
 Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 	Source* s = Sys::mod().math.get<Source>().access(src);
 	const char* c = locate_position(line, col, s->data().c_str());
@@ -131,6 +146,27 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 		return Return();
 	}
 	return Return(false);
+}
+
+Return prove_step(uint index) {
+	return Return(true);
+}
+
+Return prove_tactic(string tact) {
+	prover::Tactic* tactic = prover::make_tactic(tact);
+	return Return(true);
+}
+
+Return prove_confirm(uint index) {
+	return Return(true);
+}
+
+Return prove_stop() {
+	return Return(true);
+}
+
+Return prove_info(uint index) {
+	return Return(true);
 }
 
 }
@@ -220,6 +256,13 @@ static Descr description(string name) {
 		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
 		{"types",      Descr("type system")},
+		{"prove",  Descr(
+			"prove theorem automatically",
+			Descr::Arg("in", "file"),
+			Descr::Arg("line", "row"),
+			Descr::Arg("col", "column"),
+			Descr::Arg("tact", "alter({tact})|proxy[bits](tact)|breadth|oracle", true, "breadth")
+		)},
 		{"prove_start",  Descr(
 			"start proving theorem",
 			Descr::Arg("in", "file"),
@@ -275,11 +318,14 @@ const Sys::Actions& Sys::actions() {
 		{"struct",     Action([](const Args& args) { return structure(xml_bits(args[0])); }, description("struct"))},
 		{"types",      Action([](const Args& args) { return types(); }, description("types"))},
 
-		{"prove_start", Action([](const Args& args) { Return ret = prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); return ret; }, description("prove_start"))},
-		/*{"prove_step",  Action([](const Args& args) { Return ret = prove_step(stoul(args[0])); return ret; }, description("prove_step"))},
-		{"prove_confirm",  Action([](const Args& args) { Return ret = prove_confirm(stoul(args[0])); return ret; }, description("prove_confirm"))},
-		{"prove_stop",  Action([](const Args& args) { Return ret = prove_stop(); return ret; }, description("prove_stop"))},
-		{"prove_info",  Action([](const Args& args) { Return ret = prove_info(stoul(args[0])); return ret; }, description("prove_info"))},*/
+		{"prove",      Action([](const Args& args) { return prove(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("prove"))},
+
+		{"prove_start", Action([](const Args& args) { return prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); }, description("prove_start"))},
+		{"prove_step",  Action([](const Args& args) { return prove_step(stoul(args[0])); }, description("prove_step"))},
+		{"prove_tactic", Action([](const Args& args) { return prove_tactic(args[0]); }, description("prove_tactic"))},
+		{"prove_confirm",  Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
+		{"prove_stop",  Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
+		{"prove_info",  Action([](const Args& args) { return prove_info(stoul(args[0])); }, description("prove_info"))},
 
 		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},
 	};
