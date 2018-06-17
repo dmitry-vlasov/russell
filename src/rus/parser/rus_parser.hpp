@@ -8,6 +8,8 @@ void parse_src_spirit(uint);
 
 namespace parser {
 
+#define PARALLEL_RUS_PARSE
+
 namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
@@ -150,7 +152,7 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
-#ifndef PARALLEL_PARSE
+#ifndef PARALLEL_RUS_PARSE
 		Source* imp_src = Sys::mod().math.get<Source>().access(id);
 		if (!imp_src->parsed) parse_src_spirit(id);
 #endif

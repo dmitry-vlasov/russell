@@ -45,7 +45,7 @@ Return Return::from_binary(const string& str) {
 string Return::to_string() const {
 	string ret;
 	if (!success()) {
-		ret += ERROR_HEADER + std::to_string(code) + "\n";
+		ret += ERROR_HEADER + (code == -1 ? "" : std::to_string(code)) + "\n";
 	}
 	if (msg.size()) {
 		ret += msg;

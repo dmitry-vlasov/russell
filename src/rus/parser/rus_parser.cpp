@@ -304,8 +304,6 @@ void parse_src_spirit(uint label) {
 	src->parsed = true;
 }
 
-#define PARALLEL_RUS_PARSE
-
 void parse_src_spirit() {
 #ifdef PARALLEL_RUS_PARSE
 	vector<uint> labels;

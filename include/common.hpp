@@ -263,7 +263,11 @@ struct Sys {
 			}
 			Io::io().out() << endl;
 			if (!ret.success()) {
-				Io::io().out() << "Failed, code: " << ret.code << endl;
+				Io::io().out() << "Failed";
+				if (ret.code != -1) {
+					Io::io().out() << ", code: " << ret.code;
+				}
+				Io::io().out() << endl;
 			}
 		}
 		if (!ret && ret.msg.size()) {
