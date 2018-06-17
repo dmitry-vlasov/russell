@@ -304,8 +304,10 @@ void parse_src_spirit(uint label) {
 	src->parsed = true;
 }
 
+#define PARALLEL_RUS_PARSE
+
 void parse_src_spirit() {
-#ifdef PARALLEL_PARSE
+#ifdef PARALLEL_RUS_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
 		if (!p.second.data->parsed) labels.push_back(p.first);

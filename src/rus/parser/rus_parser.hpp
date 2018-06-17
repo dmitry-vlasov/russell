@@ -1,5 +1,3 @@
-#define PARALLEL_PARSE
-
 #include <rus_ast.hpp>
 #include "boost.hpp"
 #include "rus_parser_adaptors.hpp"

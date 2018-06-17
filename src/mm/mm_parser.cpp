@@ -9,7 +9,7 @@ Var* VarDecl::make(bool inner, uint index) const {
 
 namespace parser {
 
-#define PARALLEL_PARSE
+#define PARALLEL_MM_PARSE
 
 struct Disj {
 	vector<uint> disj;
@@ -297,7 +297,7 @@ public:
 			Context* c = context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			c->source->contents.emplace_back(unique_ptr<Import>(new Import(id)));
-#ifndef PARALLEL_PARSE
+#ifndef PARALLEL_MM_PARSE
 			if (!Sys::get().math.get<Source>().access(id)->parsed) parse(id);
 #endif
 		};
@@ -342,7 +342,7 @@ public:
 using parser::Parser;
 
 void parse() {
-#ifdef PARALLEL_PARSE
+#ifdef PARALLEL_MM_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
 		if (!p.second.data->parsed) labels.push_back(p.first);

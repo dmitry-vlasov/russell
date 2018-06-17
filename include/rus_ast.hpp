@@ -198,17 +198,17 @@ enum Verify {
 
 struct Step : public Tokenable, public Writable {
 	enum Kind { ASS, CLAIM };
-	typedef variant<User<Assertion>, unique_ptr<Proof>> Value;
+	typedef variant<unique_ptr<User<Assertion>>, unique_ptr<Proof>> Value;
 
 	Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
 		Tokenable(t), sub(false), ind_(i), proof_(p) {
-		if (k == ASS) { val_ = std::move(User<Assertion>(id)); }
+		if (k == ASS) { val_ = unique_ptr<User<Assertion>>(new User<Assertion>(id)); }
 	}
 	Step(const Step&) = delete;
-	uint ass_id() const { return std::get<User<Assertion>>(val_).id(); }
-	Assertion* ass() { return std::get<User<Assertion>>(val_).get(); }
+	uint ass_id() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->id(); }
+	Assertion* ass() { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }
 	Proof* claim() { return std::get<unique_ptr<Proof>>(val_).get(); }
-	const Assertion* ass() const { return std::get<User<Assertion>>(val_).get(); }
+	const Assertion* ass() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }
 	const Proof* claim() const { return std::get<unique_ptr<Proof>>(val_).get(); }
 	Proof* proof() { return proof_; }
 	const Proof* proof() const { return proof_; }
