@@ -22,10 +22,14 @@ struct Space {
 	Index<HypRef>   hyps;
 	map<uint, uint> vars;
 
-	static bool create(rus::Qed* q, Tactic* t) {
+	static Return create(rus::Qed* q, Tactic* t) {
 		if (instance) return false;
 		instance = new Space(q, t);
-		return true;
+		string data;
+		data += "<tree>\n";
+		data += "\t<tree>\n";
+		data += "</tree>\n";
+		return Return("tree created", data);
 	}
 	static bool create(rus::Assertion* a, rus::Prop* p, Tactic* t) {
 		if (instance) return false;

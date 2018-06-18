@@ -124,7 +124,7 @@ Return prove(uint src, uint line, uint col, string tact) {
 	Tokenable* t = s->find(Token(s, c, c));
 	if (Qed* qed = dynamic_cast<Qed*>(t)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		return Return(prover::Space::create(qed, tactic));
+		return prover::Space::create(qed, tactic);
 	} else if (Step* step = dynamic_cast<Step*>(t)) {
 		return Return();
 	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {
