@@ -118,8 +118,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 	for (const auto& ess : boost::adaptors::reverse(ass->hyps)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (essential):\n";
-			msg += "theorem " + Lex::toStr(th->id()) + "\n";
-			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
+			msg += "\ttheorem: " + Lex::toStr(th->id()) + "\n";
+			msg += "\tassertion: " + Lex::toStr(ass->id()) + "\n";
 			throw Error("verification", msg, th->token);
 		}
 		hypsPairs.emplace_back(&ess->expr, expr_stack.top());
@@ -128,8 +128,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 	for (const auto& flo : boost::adaptors::reverse(ass->outerVars)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (floating):\n";
-			msg += "theorem " + Lex::toStr(th->id()) + "\n";
-			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
+			msg += "\ttheorem: " + Lex::toStr(th->id()) + "\n";
+			msg += "\tassertion: " + Lex::toStr(ass->id()) + "\n";
 			throw Error("verification", msg, th->token);
 		}
 		sub[flo->var()] = expr_stack.top();

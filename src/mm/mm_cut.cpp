@@ -16,7 +16,7 @@ namespace mdl { namespace mm {
 
 enum class Type { PARAGRAPH, CHAPTER, PART, SOURCE };
 
-inline string border(const Type tp) {
+inline const char* border(const Type tp) {
 	switch (tp) {
 	case Type::PARAGRAPH : return PARAGRAPH_STR;
 	case Type::CHAPTER   : return CHAPTER_STR;
@@ -118,11 +118,12 @@ struct Section {
 		dir = init_dir();
 		bool has_endline = (*name.rbegin() == '\n');
 
+		boost::trim(name);
 		string orig_name = name;
 		boost::trim_right(orig_name);
 		for (int i = 0; names.count(dir + name); ++i) {
 			name = orig_name + "_" + to_string(i);
-			//cout << "making new name: " << sect->name << endl;
+			//cout << "making new name: " << name << endl;
 		}
 		names.insert(dir + name);
 		if (has_endline) name += '\n';
