@@ -66,10 +66,10 @@ struct Symbol : public Literal {
 	void operator = (const Symbol& s) {
 		Literal::operator = (s);
 		if (var) {
-			val = unique_ptr<User<Type>>(new User<Type>(s.type_id()));
+			val = unique_ptr<User<Type>>(new User<Type>(*std::get<unique_ptr<User<Type>>>(s.val).get()));
 		}
 		if (cst) {
-			val = unique_ptr<User<Const>>(new User<Const>(lit));
+			val = unique_ptr<User<Const>>(new User<Const>(*std::get<unique_ptr<User<Const>>>(s.val).get()));
 		}
 	}
 	void operator = (Symbol&& s) {
@@ -83,6 +83,12 @@ struct Symbol : public Literal {
 	Const* constant() { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
 	const Type* type() const { return var ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
 	const Const* constant() const { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	const Token* token() const {
+		if (cst) return &std::get<unique_ptr<User<Const>>>(val).get()->token;
+		else if (var) return &std::get<unique_ptr<User<Type>>>(val).get()->token;
+		else return nullptr;
+	}
+	const Tokenable* tokenable() const;
 	void set_type(Id i) { set_type(i.id); }
 
 	void set_type(uint t) {

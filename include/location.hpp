@@ -351,15 +351,19 @@ struct Token {
 	Token(const Source* s, const char* b, const char* e) : storage(s, b, e) { }
 	Token(const Token& t) : storage(t.storage) { }
 
-	bool preceeds (const Token<S>& t) const {
+	bool preceeds(const Token<S>& t) const {
 		if (!src() || !t.src()) return false;
 		if (t.src()->includes(src())) return true;
 		if (t.src() == src()) return end() <= t.beg();
 		return false;
 	}
-	bool includes (const Token<S>& t) const {
+	bool includes(const Token<S>& t) const {
 		if (!src() || !t.src() || t.src() != src()) return false;
 		return beg() <= t.beg() && t.end() <= end();
+	}
+	bool includes(const char* pos) const {
+		if (!src()) return false;
+		return beg() <= pos && pos <= end();
 	}
 
 	string show(bool full = false) const {
@@ -433,6 +437,7 @@ struct Tokenable {
 template<class S>
 struct Id : public Tokenable<S> {
 	Id(uint i = -1, const Token<S>& t = Token<S>()) : Tokenable<S>(t), id(i) { }
+	Id(const Id& i) : Tokenable<S>(i.token), id(i.id) { }
 	uint id;
 	string toStr() const { return Lex::toStr(id); }
 };
@@ -478,7 +483,7 @@ private :
 
 inline const char* locate_position(const uint line, const uint col, const char* src) {
 	uint l = 0, c = 0;
-	while (src) {
+	while (src && *src != '\0') {
 		if (*src++ == '\n') { ++l; c = 0; } else ++c;
 		if (l == line && c == col) return src;
 	}

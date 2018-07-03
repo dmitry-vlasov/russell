@@ -1,7 +1,12 @@
 #include <rus_ast.hpp>
 
-namespace mdl {
-namespace rus {
+namespace mdl { namespace rus {
+
+const Tokenable* Symbol::tokenable() const {
+	if (cst) return constant();
+	else if (var) return type();
+	else return nullptr;
+}
 
 void Rules::add(const Expr& ex, uint id) {
 	assert(ex.symbols.size());

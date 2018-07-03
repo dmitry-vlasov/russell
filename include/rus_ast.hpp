@@ -206,6 +206,7 @@ struct Step : public Tokenable, public Writable {
 	}
 	Step(const Step&) = delete;
 	uint ass_id() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->id(); }
+	const Token& ass_token() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->token; }
 	Assertion* ass() { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }
 	Proof* claim() { return std::get<unique_ptr<Proof>>(val_).get(); }
 	const Assertion* ass() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }

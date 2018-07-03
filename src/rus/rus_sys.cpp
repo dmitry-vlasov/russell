@@ -54,6 +54,7 @@ void parse_src_peg();
 void parse_src_spirit();
 void read(uint src);
 void min_imports(uint src);
+Return lookup_ref(uint src, uint line, uint col, string what);
 
 string xml_outline(const Source&, uint);
 string xml_structure(uint bits);
@@ -85,16 +86,6 @@ void parse_expr() {
 
 void translate_(uint src, uint tgt) {
 	rus::translate(src, tgt);
-}
-
-Return lookup(uint src, uint line, uint col, string what) {
-	const Tokenable* tok = Refs<Sys>::get().find(src, line, col);
-	if (what == "def")
-		return tok ? Return("definition found", tok->token.str()) : Return("definition not found", false);
-	else if (what == "loc")
-		return tok ? Return("location found", tok->token.locate().show()) : Return("definition not found", false);
-	else
-		return Return("incorrect lookup mode: " + what, false);
 }
 
 Return outline(uint s, uint bits) {
@@ -313,7 +304,7 @@ const Sys::Actions& Sys::actions() {
 		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
 		{"test",       Action([](const Args& args) { return test(args[0]); }, description("test"))},
 		{"opts",       Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup",     Action([](const Args& args) { return lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
+		{"lookup",     Action([](const Args& args) { return lookup_ref(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
 		{"outline",    Action([](const Args& args) { return outline(Sys::make_name(args[0]), xml_bits(args[1])); }, description("outline"))},
 		{"struct",     Action([](const Args& args) { return structure(xml_bits(args[0])); }, description("struct"))},
 		{"types",      Action([](const Args& args) { return types(); }, description("types"))},

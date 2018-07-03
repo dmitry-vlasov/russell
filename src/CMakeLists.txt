@@ -47,6 +47,7 @@ else()
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
 		rus/rus_imports.cpp
+		rus/rus_lookup.cpp
 		rus/rus_memvol.cpp  
 		rus/rus_sys.cpp 
 		rus/rus_parser.cpp

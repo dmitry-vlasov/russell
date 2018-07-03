@@ -444,95 +444,20 @@ public:
 	string xml_id() const { return xml_sys_id(sys_, id_); }
 };
 
-template<class S>
-class Refs {
-	typedef S Sys;
-	typedef typename S::Src Src;
-	typedef Token<Src> Token_;
-	typedef Tokenable<Src> Tokenable_;
-	typedef cmap<Token_, const Tokenable_*, typename Token_::HashCompare> Refs_;
-	typedef typename Refs_::accessor Accessor;
-	typedef typename Refs_::const_accessor ConstAccessor;
-
-public:
-	static Refs& get() {
-		static Refs r; return r;
-	}
-
-	void add(const Token_& tk, const Tokenable_* r) {
-		Token_ t = normalize(tk);
-		try {
-			if (t.is_defined()) {
-				Accessor a;
-				refs_.insert(a, t);
-				a->second = r;
-			}
-		} catch (Error& err) {
-			err.msg += "token: " + t.show(true) + "\n";
-			throw err;
-		}
-	}
-	void del(const Token_& tk) {
-		Token_ t = normalize(tk);
-		try {
-			if (t.is_defined()) {
-				Accessor a;
-				if (!refs_.insert(a, t)) {
-					a->second = nullptr;
-				}
-				refs_.erase(a);
-			}
-		} catch (Error& err) {
-			err.msg += "token: " + t.show(true) + "\n";
-			throw err;
-		}
-	}
-	const Tokenable_* find(uint src, const uint line, const uint col) {
-		if (Src* s = Sys::mod().math.template get<Src>().access(src)) {
-			const char* c = locate_position(line, col, s->data().c_str());
-			Token_ t(s, c, c);
-			refs_.rehash();
-			ConstAccessor a;
-			return refs_.find(a, normalize(t)) ? (a->second ? a->second->ref() : nullptr) : nullptr;
-		} else {
-			throw Error("unknown source", Lex::toStr(src));
-		}
-	}
-
-private:
-	static Token_ normalize(const Token_& t) {
-		static auto idchar = [](char c) { return isalnum(c) || c == '_' || c == '-' || c == '.'; };
-		const char* b = t.beg();
-		if (b) {
-			while (isspace(*b)) ++b;
-			while (idchar(*(b - 1))) --b;
-		}
-		const char* e = t.end();
-		if (e) {
-			while (isspace(*e)) --e;
-			while (idchar(*e)) ++e;
-		}
-		return Token_(t.src(), b, e);
-	}
-	Refs_ refs_;
-};
-
 template<class T, class S>
-class User : public Tokenable<typename S::Src> {
+class User : public Id<typename S::Src> {
 	uint sys_;
-	uint id_;
 	T*   ptr;
 public:
 	typedef S Sys;
 	typedef typename S::Src Src;
-	typedef Refs<Sys> Refs_;
 	typedef Tokenable<Src> Tokenable_;
 	typedef Id<Src> Id_;
 
-	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Tokenable_(t), sys_(-1), id_(-1), ptr(nullptr) { use(id); }
-	explicit User(Id_ i) : Tokenable_(i.token), sys_(-1), id_(-1), ptr(nullptr) { use(i.id); }
+	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Id_(-1, t), sys_(-1), ptr(nullptr) { use(id); }
+	explicit User(Id_ i) : Id_(-1, i.token), sys_(-1), ptr(nullptr) { use(i.id); }
 
-	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t), sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
+	User(const T* p, const Token<Src>& t = Token<Src>()) : Id_(-1, t), sys_(-1), ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
 	~User() { unuse(); }
@@ -565,7 +490,7 @@ public:
 
 	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
 	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
-	uint id() const { return id_; }
+	uint id() const { return Id_::id; }
 	uint sys() const { return sys_; }
 	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }
 	const Tokenable_* ref() const override { return ptr; }
@@ -573,17 +498,15 @@ public:
 	void use(uint id) {
 		unuse();
 		sys_ = Sys::get().id;
-		id_ = id;
-		if (id_ != -1) {
-			Sys::mod(sys_).math.template get<T>().use(id_, ptr);
-			Refs_::get().add(Tokenable_::token, this);
+		Id_::id = id;
+		if (Id_::id != -1) {
+			Sys::mod(sys_).math.template get<T>().use(Id_::id, ptr);
 		}
 	}
 	void unuse() {
-		if (id_ != -1) {
-			Sys::mod(sys_).math.template get<T>().unuse(id_, ptr);
-			Refs_::get().del(Tokenable_::token);
-			id_ = -1;
+		if (Id_::id != -1) {
+			Sys::mod(sys_).math.template get<T>().unuse(Id_::id, ptr);
+			Id_::id = -1;
 		}
 		ptr = nullptr;
 	}
