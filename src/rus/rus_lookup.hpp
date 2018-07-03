@@ -3,8 +3,8 @@
 namespace mdl { namespace rus {
 
 template<class U, class T>
-static T* find_obj(User<T>& user, const char* pos) {
-	return user.token.includes(pos) ? dynamic_cast<T>(user.get()) : nullptr;
+static T* find_obj(User<U>& user, const char* pos) {
+	return user.token.includes(pos) ? dynamic_cast<T*>(user.get()) : nullptr;
 }
 
 template<class T>
@@ -50,7 +50,7 @@ static T* find_obj(Rule* rule, const char* pos) {
 template<class T>
 static T* find_obj(Hyp* hyp, const char* pos) {
 	if (hyp->token.includes(pos)) {
-		if (T* t = find_obj<T>(hyp->expr.type, pos)) {
+		if (T* t = find_obj<Type, T>(hyp->expr.type, pos)) {
 			return t;
 		}
 		if (T* t = find_obj<T>(hyp->expr, pos)) {
@@ -64,7 +64,7 @@ static T* find_obj(Hyp* hyp, const char* pos) {
 template<class T>
 static T* find_obj(Prop* prop, const char* pos) {
 	if (prop->token.includes(pos)) {
-		if (T* t = find_obj<T>(prop->expr.type, pos)) {
+		if (T* t = find_obj<Type, T>(prop->expr.type, pos)) {
 			return t;
 		}
 		if (T* t = find_obj<T>(prop->expr, pos)) {
@@ -100,12 +100,12 @@ template<class T>
 static T* find_obj(Step* step, const char* pos) {
 	if (step->token.includes(pos)) {
 		if (step->kind() == Step::ASS && step->ass_token().includes(pos)) {
-			return step->ass();
+			return dynamic_cast<T*>(step->ass());
 		}
 		if (T* t = find_obj<T>(step->expr, pos)) {
 			return t;
 		}
-		if (T* t = find_obj<T>(step->expr.type, pos)) {
+		if (T* t = find_obj<Type, T>(step->expr.type, pos)) {
 			return t;
 		}
 		return dynamic_cast<T*>(step);
@@ -155,7 +155,12 @@ static T* find_obj(Comment* comment, const char* pos) {
 }
 
 template<class T>
-static const T* find_obj(Theory* theory, const char* pos);
+static T* find_obj(Const* cons, const char* pos) {
+	return cons->token.includes(pos) ? dynamic_cast<T*>(cons) : nullptr;
+}
+
+template<class T>
+static T* find_obj(Theory* theory, const char* pos);
 
 template<class T>
 static T* find_obj(Theory::Node& n, const char* pos) {

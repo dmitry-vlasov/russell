@@ -1,5 +1,6 @@
 #include "rus_ast.hpp"
 #include "mm_ast.hpp"
+#include "rus_lookup.hpp"
 #include "prover/rus_prover_space.hpp"
 
 namespace mdl { namespace rus {
@@ -110,30 +111,28 @@ Return test(string mode) {
 }
 
 Return prove(uint src, uint line, uint col, string tact) {
-	Source* s = Sys::mod().math.get<Source>().access(src);
-	const char* c = locate_position(line, col, s->data().c_str());
-	Tokenable* t = s->find(Token(s, c, c));
-	if (Qed* qed = dynamic_cast<Qed*>(t)) {
+	Source* source = Sys::mod().math.get<Source>().access(src);
+	const char* pos = locate_position(line, col, source->data().c_str());
+	if (Step* step = find_obj<Step>(source, pos)) {
+		return Return();
+	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
 		return prover::Space::create(qed, tactic);
-	} else if (Step* step = dynamic_cast<Step*>(t)) {
-		return Return();
-	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {
+	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
 	return Return(false);
 }
 
 Return prove_start(uint src, uint line, uint col, string mode, string tact) {
-	Source* s = Sys::mod().math.get<Source>().access(src);
-	const char* c = locate_position(line, col, s->data().c_str());
-	Tokenable* t = s->find(Token(s, c, c));
-	if (Qed* qed = dynamic_cast<Qed*>(t)) {
+	Source* source = Sys::mod().math.get<Source>().access(src);
+	const char* pos = locate_position(line, col, source->data().c_str());
+	if (Step* step = find_obj<Step>(source, pos)) {
+		return Return();
+	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
 		return prover::Space::create(qed, tactic);
-	} else if (Step* step = dynamic_cast<Step*>(t)) {
-		return Return();
-	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {
+	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
 	return Return(false);
