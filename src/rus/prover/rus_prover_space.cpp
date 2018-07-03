@@ -16,6 +16,9 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
 	for (auto& p : prop.assertion()->props) {
+		if (!p.get()->expr.tree()) {
+			throw Error("unparsed expression", show(p.get()->expr));
+		}
 		hyps.add(p.get()->expr.tree(), HypRef(a, c++));
 	}
 	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);

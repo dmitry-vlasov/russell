@@ -106,7 +106,8 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		lit("(") > - (ref(_r1) [push_back(_val, qi::labels::_1)] % ",") > ")";
 
 	step =
-		uint_ [_a = qi::labels::_1 - 1] > ":" > id [_b = qi::labels::_1] > "="
+		lit("step")
+		> uint_ [_a = qi::labels::_1 - 1] > ":" > id [_b = qi::labels::_1] > "="
 		> (
 			(lit("claim") [_c = val(Step::CLAIM), _d = val(Id())]) |
 			(lit("?")     [_c = val(Step::CLAIM) ,_d = val(Id())]) |
@@ -119,7 +120,8 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> lit(END_MARKER);
 
 	qed =
-		lit("prop")   [_val = new_<Qed>()]
+		lit("qed")
+		> lit("prop")   [_val = new_<Qed>()]
 		> eps         [_a =  0]
 		> - uint_     [_a = qi::labels::_1]
 		> lit("=")    [phoenix::at_c<0>(*_val) = getProp(_a - 1, _r1)]
@@ -127,10 +129,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> uint_       [phoenix::at_c<1>(*_val) = getStep(qi::labels::_1 - 1, _r1)]
 		> END_MARKER;
 
-	proof_elem = (
-		("step" > step(_r1)) |
-		("qed"  > qed(_r1))
-	);
+	proof_elem = (step(_r1) | qed(_r1));
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]

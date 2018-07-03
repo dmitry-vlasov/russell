@@ -56,7 +56,7 @@ void Hyp::complete() {
 vector<Node*> Hyp::buildUp() {
 	vector<Node*> ret;
 	for (const auto& p : assertion_index().unify_forth(expr_.tree())) {
-		cout << "unified assertion " << show_id(p.first.assertion()->id()) << endl;
+		//cout << "unified assertion " << show_id(p.first.assertion()->id()) << endl;
 		ret.push_back(new Prop(p.first, p.second, this));
 	}
 	return ret;

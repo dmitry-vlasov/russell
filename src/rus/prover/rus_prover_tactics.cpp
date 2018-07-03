@@ -12,7 +12,7 @@ static rus::Step* root_step(rus::Proof* p) {
 	return nullptr;
 }
 */
-Oracle::Oracle(rus::Proof* p) : proof(p), root((*p->qeds().begin())->step) { }
+Oracle::Oracle(rus::Proof* p) : proof(p), root(p ? (*p->qeds().begin())->step : nullptr) { }
 
 void Oracle::add(Node* n) {
 	if (Prop* p = dynamic_cast<Prop*>(n)) {
@@ -47,13 +47,18 @@ struct TacticsParser {
 		
             TACTIC  <- BREADTH / ALTER / PROXY / ORACLE
 			BREADTH <- 'breadth'
-			ALTER   <- 'alter(' (TACTIC {',' TACTIC})? ')'
+			ALTER   <- 'alter(' (TACTIC (',' TACTIC)*)? ')'
             PROXY   <- 'proxy[' BITS '](' TACTIC ')'
             ORACLE  <- 'oracle'
             BITS    <- < (![ \]] .)+ >
 		)";
 	}
-	TacticsParser() : parser(tactics_syntax()) {
+	TacticsParser() {
+		parser.load_grammar(tactics_syntax());
+		if (!parser) {
+			cerr << "Tactics grammar is not correct" << endl;
+			exit(1);
+		}
 
 		parser["BREADTH"] = [](const peg::SemanticValues& sv) {
 			return new BreadthSearch;
@@ -64,8 +69,16 @@ struct TacticsParser {
 		parser["PROXY"] = [](const peg::SemanticValues& sv) {
 			return new ProxyTactic(sv[1].get<Tactic*>(), sv[0].get<string>());
 		};
+		parser["ORACLE"] = [](const peg::SemanticValues& sv) {
+			return new Oracle;
+		};
 		parser["TACTIC"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			return sv[0].get<Tactic*>();
+			switch (sv.choice()) {
+			case 0: return static_cast<Tactic*>(sv[0].get<BreadthSearch*>());
+			case 1: return static_cast<Tactic*>(sv[0].get<AlterTactic*>());
+			case 2: return static_cast<Tactic*>(sv[0].get<ProxyTactic*>());
+			case 3: return static_cast<Tactic*>(sv[0].get<Oracle*>());
+			}
 		};
 		parser.log = [](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;
@@ -83,7 +96,7 @@ private:
 	peg::parser parser;
 };
 
-Tactic* make_tactic(string descr) {
+Tactic* make_tactic(const string& descr) {
 	static TacticsParser p;
 	return p.parse(descr);
 }

@@ -13,7 +13,7 @@ struct Tactic {
 	virtual Node* next() = 0;
 };
 
-Tactic* make_tactic(string);
+Tactic* make_tactic(const string&);
 
 struct Space {
 	Proof*          proof = nullptr; // for Oracle tactic

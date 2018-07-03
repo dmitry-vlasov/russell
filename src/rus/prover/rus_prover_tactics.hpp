@@ -31,8 +31,9 @@ struct BreadthSearch : public QueueTactic {
 };
 
 struct Oracle : public QueueTactic {
-	Oracle(rus::Proof*);
+	Oracle(rus::Proof* = nullptr);
 	void add(Node* n) override;
+	void setProof(rus::Proof* p) { proof = p; }
 
 private:
 	rus::Proof*   proof;
