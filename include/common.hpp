@@ -455,13 +455,16 @@ class Refs {
 	typedef typename Refs_::const_accessor ConstAccessor;
 
 public:
+	static Refs& get() {
+		static Refs r; return r;
+	}
 
-	static void add(const Token_& tk, const Tokenable_* r) {
+	void add(const Token_& tk, const Tokenable_* r) {
 		Token_ t = normalize(tk);
 		try {
 			if (t.is_defined()) {
 				Accessor a;
-				refs().insert(a, t);
+				refs_.insert(a, t);
 				a->second = r;
 			}
 		} catch (Error& err) {
@@ -469,28 +472,28 @@ public:
 			throw err;
 		}
 	}
-	static void del(const Token_& tk) {
+	void del(const Token_& tk) {
 		Token_ t = normalize(tk);
 		try {
 			if (t.is_defined()) {
 				Accessor a;
-				if (!refs().insert(a, t)) {
+				if (!refs_.insert(a, t)) {
 					a->second = nullptr;
 				}
-				refs().erase(a);
+				refs_.erase(a);
 			}
 		} catch (Error& err) {
 			err.msg += "token: " + t.show(true) + "\n";
 			throw err;
 		}
 	}
-	static const Tokenable_* find(uint src, const uint line, const uint col) {
+	const Tokenable_* find(uint src, const uint line, const uint col) {
 		if (Src* s = Sys::mod().math.template get<Src>().access(src)) {
 			const char* c = locate_position(line, col, s->data().c_str());
 			Token_ t(s, c, c);
-			refs().rehash();
+			refs_.rehash();
 			ConstAccessor a;
-			return refs().find(a, normalize(t)) ? (a->second ? a->second->ref() : nullptr) : nullptr;
+			return refs_.find(a, normalize(t)) ? (a->second ? a->second->ref() : nullptr) : nullptr;
 		} else {
 			throw Error("unknown source", Lex::toStr(src));
 		}
@@ -511,11 +514,7 @@ private:
 		}
 		return Token_(t.src(), b, e);
 	}
-
-	Refs() { }
-	static Refs_& refs() {
-		static Refs_ r; return r;
-	}
+	Refs_ refs_;
 };
 
 template<class T, class S>
@@ -577,13 +576,13 @@ public:
 		id_ = id;
 		if (id_ != -1) {
 			Sys::mod(sys_).math.template get<T>().use(id_, ptr);
-			Refs_::add(Tokenable_::token, this);
+			Refs_::get().add(Tokenable_::token, this);
 		}
 	}
 	void unuse() {
 		if (id_ != -1) {
 			Sys::mod(sys_).math.template get<T>().unuse(id_, ptr);
-			Refs_::del(Tokenable_::token);
+			Refs_::get().del(Tokenable_::token);
 			id_ = -1;
 		}
 		ptr = nullptr;

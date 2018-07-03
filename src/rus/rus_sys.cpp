@@ -88,7 +88,7 @@ void translate_(uint src, uint tgt) {
 }
 
 Return lookup(uint src, uint line, uint col, string what) {
-	const Tokenable* tok = Refs<Sys>::find(src, line, col);
+	const Tokenable* tok = Refs<Sys>::get().find(src, line, col);
 	if (what == "def")
 		return tok ? Return("definition found", tok->token.str()) : Return("definition not found", false);
 	else if (what == "loc")
@@ -139,7 +139,7 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 	Tokenable* t = s->find(Token(s, c, c));
 	if (Qed* qed = dynamic_cast<Qed*>(t)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		return Return(prover::Space::create(qed, tactic));
+		return prover::Space::create(qed, tactic);
 	} else if (Step* step = dynamic_cast<Step*>(t)) {
 		return Return();
 	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {

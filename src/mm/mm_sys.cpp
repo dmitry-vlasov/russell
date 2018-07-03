@@ -47,7 +47,7 @@ Return options(const vector<string>& args) {
 }
 
 Return lookup(uint src, uint line, uint col, string what) {
-	const Tokenable* tok = Refs<Sys>::find(src, line, col);
+	const Tokenable* tok = Refs<Sys>::get().find(src, line, col);
 	if (what == "def")
 		return tok ? Return("definition found", tok->token.str()) : Return("definition not found", false);
 	else if (what == "loc")
