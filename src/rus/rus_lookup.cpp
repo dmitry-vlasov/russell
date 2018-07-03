@@ -1,4 +1,4 @@
-#include <rus_ast.hpp>
+#include "rus_lookup.hpp"
 
 namespace mdl { namespace rus {
 
@@ -55,8 +55,8 @@ static const Tokenable* find_ref(const Assertion* ass, const char* pos) {
 				return tok;
 			}
 		}
-		for (const auto& hyp : ass->hyps) {
-			if (const Tokenable* tok = find_ref(hyp.get()->expr.type, pos)) {
+		for (const auto& prop : ass->props) {
+			if (const Tokenable* tok = find_ref(prop.get()->expr.type, pos)) {
 				return tok;
 			}
 		}
