@@ -27,11 +27,12 @@ else()
 		mm/mm_cut.cpp 
 		mm/mm_sys.cpp 
 		mm/mm_merge.cpp 
+		mm/mm_inclusions.cpp
+		mm/mm_lookup.cpp
 		mm/mm_parser.cpp 
 		mm/mm_read.cpp
 		mm/mm_tree.cpp  
 		mm/mm_translate.cpp
-		mm/mm_inclusions.cpp
 		mm/mm_verify.cpp
 		
 		rus/expr/rus_expr_parse.cpp 
