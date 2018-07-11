@@ -15,23 +15,22 @@ Space::Space(rus::Qed* q, Tactic* t) :
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
-	for (auto& p : prop.assertion()->props) {
+	for (auto& p : prop.ass->props) {
 		if (!p.get()->expr.tree()) {
 			throw Error("unparsed expression", show(p.get()->expr));
 		}
 		hyps.add(p.get()->expr.tree(), HypRef(a, c++));
 	}
 	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);
-	buildUp(root);
-}
-
-void Space::buildUp(Node* n) {
-	for (auto m : n->buildUp()) m->buildUp();
+	root->buildUp();
 }
 
 rus::Proof* Space::prove() {
-	while (Node* n = tactic_->next()) {
-		buildUp(n);
+	while (Prop* p = tactic_->next()) {
+		p->buildUp();
+		for (auto& h : p->premises) {
+			h.get()->buildUp();
+		}
 		if (rus::Proof* ret = checkProved()) {
 			return ret;
 		}
@@ -49,18 +48,17 @@ void delete_steps_recursively(rus::Step* s) {
 }
 
 rus::Proof* Space::checkProved() {
-	if (!root->proof.size()) return nullptr;
-	for (auto& p : root->proof) {
-		if (ProofStep* ps = dynamic_cast<ProofStep*>(p)) {
+	if (!root->proofs.size()) return nullptr;
+	for (auto& p : root->proofs) {
+		if (ProofProp* ps = dynamic_cast<ProofProp*>(p)) {
 			rus::Step* s = ps->step();
-			if (rus::Proof* pr = make_proof(s, prop.assertion()->id(), prop.get())) {
+			if (rus::Proof* pr = make_proof(s, prop.ass->id(), prop.get())) {
 				if (pr->check()) return pr;
 			}
 			delete_steps_recursively(s);
 		}
-		delete p;
 	}
-	root->proof.clear();
+	root->proofs.clear();
 	return nullptr;
 }
 

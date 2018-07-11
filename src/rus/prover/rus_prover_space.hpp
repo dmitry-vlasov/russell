@@ -8,9 +8,9 @@ class Space;
 
 struct Tactic {
 	virtual ~Tactic() { }
-	virtual void add(Node*) = 0;
-	virtual void del(Node*) = 0;
-	virtual Node* next() = 0;
+	virtual void add(Prop*) = 0;
+	virtual void del(Prop*) = 0;
+	virtual Prop* next() = 0;
 };
 
 Tactic* make_tactic(const string&);
@@ -26,9 +26,17 @@ struct Space {
 		if (instance) return false;
 		instance = new Space(q, t);
 		string data;
-		data += "<tree>\n";
-		data += "\t<tree>\n";
-		data += "</tree>\n";
+		//data += "<tree>\n";
+		data += "<sprout>\n";
+		data += "\t<up>\n";
+		data += "\t\t<root types=\"\" index=\"0\" hint=\"+\" >\n";
+		data += "\t\t\t<expression>\n";
+		data += "\t\t\t\t" + show(instance->root->expr) + "\n";
+		data += "\t\t\t</expression>\n";
+		data += "\t\t</root>\n";
+		data += "\t</up>\n";
+		data += "</sprout>\n";
+		//data += "</tree>\n";
 		return Return("tree created", data);
 	}
 	static bool create(rus::Assertion* a, rus::Prop* p, Tactic* t) {
@@ -54,7 +62,15 @@ struct Space {
 	void registerNode(Node* n) {
 		n->ind = nodes_.size();
 		nodes_.push_back(n);
-		tactic_->add(n);
+		if (Prop* p = dynamic_cast<Prop*>(n)) {
+			tactic_->add(p);
+		}
+	}
+	void unregisterNode(Node* n) {
+		nodes_.erase(nodes_.begin() + n->ind);
+		if (Prop* p = dynamic_cast<Prop*>(n)) {
+			tactic_->del(p);
+		}
 	}
 	uint count() const { return nodes_.size(); }
 	Node* getNode(uint i) { return nodes_[i]; }
@@ -68,7 +84,6 @@ private:
 
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
-	void buildUp(Node*);
 	rus::Proof* checkProved();
 
 	static Space* instance;

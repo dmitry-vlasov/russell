@@ -9,22 +9,44 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 	}
 }
 
-rus::Ref* ProofHyp::ref() {
-	return new rus::Ref(hyp_.get());
+ProofHyp::ProofHyp(Hyp& h, const Substitution& s) :
+	ProofNode(s), parent(nullptr), node(h) {
 }
 
-rus::Step* ProofStep::step() {
+rus::Ref* ProofTop::ref() {
+	return new rus::Ref(hyp.get());
+}
+
+ProofExp::ProofExp(Hyp& n, ProofProp* c, const Substitution& s) :
+	ProofHyp(n, s), child(c) {
+	child->parent = this;
+}
+
+rus::Ref* ProofHyp::ref() {
+	return parent->ref();
+}
+
+ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Substitution& s) :
+	ProofNode(s), parent(nullptr), node(n), premises(p) {
+	for (auto p : premises) {
+		p->parent = this;
+	}
+}
+
+rus::Step* ProofProp::step() {
 	vector<unique_ptr<rus::Ref>> refs;
-	for (auto ch : child_) refs.emplace_back(ch->ref());
-	const PropRef* p = node_->prop();
-	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p->id(), nullptr);
+	for (auto ch : premises) {
+		refs.emplace_back(ch->ref());
+	}
+	const PropRef& p = node.prop;
+	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
-	step->expr = *node_->expr();
-	apply_recursively(sub_, step);
+	step->expr = parent->node.expr;
+	apply_recursively(sub, step);
 	return step;
 }
 
-rus::Ref* ProofStep::ref() {
+rus::Ref* ProofProp::ref() {
 	return new rus::Ref(step());
 }
 

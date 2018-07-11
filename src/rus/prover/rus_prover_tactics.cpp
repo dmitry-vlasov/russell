@@ -14,25 +14,23 @@ static rus::Step* root_step(rus::Proof* p) {
 */
 Oracle::Oracle(rus::Proof* p) : proof(p), root(p ? (*p->qeds().begin())->step : nullptr) { }
 
-void Oracle::add(Node* n) {
-	if (Prop* p = dynamic_cast<Prop*>(n)) {
-		const Assertion* ass = p->prop()->assertion();
-		cout << endl << "orcale observing: " << show_id(ass->id()) << " ";
-		if (props.empty()) {
-			if (ass == root->ass()) {
-				leafs.push_back(p);
-				props[p] = root;
-			}
-		} else {
-			if (p->parent && p->parent->parent) {
-				Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
-				if (props.count(grand)) {
-					rus::Step* st = props.at(grand);
-					for (auto& r : st->refs) {
-						if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
-							leafs.push_back(p);
-							props[p] = r.get()->step();
-						}
+void Oracle::add(Prop* p) {
+	const Assertion* ass = p->prop.ass;
+	cout << endl << "orcale observing: " << show_id(ass->id()) << " ";
+	if (props.empty()) {
+		if (ass == root->ass()) {
+			leafs.push_back(p);
+			props[p] = root;
+		}
+	} else {
+		if (p->parent && p->parent->parent) {
+			Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
+			if (props.count(grand)) {
+				rus::Step* st = props.at(grand);
+				for (auto& r : st->refs) {
+					if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
+						leafs.push_back(p);
+						props[p] = r.get()->step();
 					}
 				}
 			}

@@ -61,13 +61,13 @@ bool show_bit(uint m, ShowMode n) {
 
 string Node::show(uint m) const {
 	string ret;
-	if (show_bit(m, ShowMode::RECURS)) {
+	/*if (show_bit(m, ShowMode::RECURS)) {
 		for (const auto& n : child) {
 			ret += n->show(m);
 		}
 	}
 	if (show_bit(m, ShowMode::THIS_IDX)) {
-		ret += string("this=") + to_string(ind) + " ";
+		ret += string("index=\"") + to_string(ind) + "\" ";
 	}
 	if (show_bit(m, ShowMode::CHILD_IDX)) {
 		ret += "children=(";
@@ -81,7 +81,7 @@ string Node::show(uint m) const {
 	}
 	if (show_bit(m, ShowMode::PARNT_IDX)) {
 		ret += string("parent=") + (parent ? to_string(parent->ind) : "<none>") + " ";
-	}
+	}*/
 	return ret + "\n";
 }
 
@@ -89,12 +89,12 @@ string Prop::show(uint m) const {
 	string ret;
 	ret += "Prop: ";
 	ret += Node::show(m);
-	if (show_bit(m, ShowMode::ASS)) {
+	/*if (show_bit(m, ShowMode::ASS)) {
 		ret += string("ass=") + show_id(prop_.assertion()->id()) + " ";
 	}
 	if (show_bit(m, ShowMode::SUB)) {
 		ret += string("sub=") + show(sub_) + " ";
-	}
+	}*/
 	return ret + "\n";
 }
 
@@ -103,31 +103,31 @@ string Hyp::show(uint m) const {
 	ret += "Hyp: ";
 	ret += Node::show(m);
 	if (show_bit(m, ShowMode::EXPR)) {
-		ret += string("expr=") + rus::show(expr_) + " ";
+		//ret += string("expr=") + rus::show(expr_) + " ";
 	}
 	return ret + "\n";
 }
 
-string Ref::show(uint m) const {
+/*string Ref::show(uint m) const {
 	string ret;
 	ret += "Ref: ";
 	ret += Node::show(m);
 	return ret + "\n";
-}
+}*/
 
-string ProofElem::show(uint m) const {
+string ProofTop::show(uint m) const {
 	string ret;
-	ret += "ProofElem: ";
+	ret += "ProofTop: ";
 	return ret + "\n";
 }
 
-string ProofHyp::show(uint m) const {
+string ProofExp::show(uint m) const {
 	string ret;
 	ret += "ProofHyp: ";
 	return ret + "\n";
 }
 
-string ProofStep::show(uint m) const {
+string ProofProp::show(uint m) const {
 	string ret;
 	ret += "ProofStep: ";
 	return ret + "\n";

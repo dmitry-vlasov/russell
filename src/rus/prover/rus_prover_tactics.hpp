@@ -7,32 +7,31 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct QueueTactic : public Tactic {
-	void del(Node* n) override {
+	void del(Prop* n) override {
 		if (n) {
 			auto it = std::find(leafs.begin(), leafs.end(), n);
 			if (it != leafs.end()) leafs.erase(it);
 		}
 	}
-	Node* next() override {
+	Prop* next() override {
 		if (leafs.empty()) return nullptr;
-		Prop* n = leafs.front();
+		Prop* p = leafs.front();
 		leafs.erase(leafs.begin());
-		return n;
+		return p;
 	}
 protected:
 	vector<Prop*> leafs;
 };
 
 struct BreadthSearch : public QueueTactic {
-	void add(Node* n) override {
-		if (Prop* p = dynamic_cast<Prop*>(n))
-			leafs.push_back(p);
+	void add(Prop* p) override {
+		leafs.push_back(p);
 	}
 };
 
 struct Oracle : public QueueTactic {
 	Oracle(rus::Proof* = nullptr);
-	void add(Node* n) override;
+	void add(Prop* p) override;
 	void setProof(rus::Proof* p) { proof = p; }
 
 private:
@@ -45,17 +44,17 @@ struct ProxyTactic : public Tactic {
 	ProxyTactic(Tactic* t, uint m) : tactic(t), mode(m) { }
 	ProxyTactic(Tactic* t, string m) : tactic(t), mode(show_bits(m)) { }
 	~ProxyTactic() { delete tactic; }
-	void add(Node* n) override {
-		tactic->add(n);
+	void add(Prop* p) override {
+		tactic->add(p);
 	}
-	void del(Node* n) override {
-		tactic->del(n);
+	void del(Prop* p) override {
+		tactic->del(p);
 	}
-	Node* next() override {
-		Node* n = tactic->next();
-		del(n);
-		if (n) cout << n->space->root->show(mode) << endl;
-		return n;
+	Prop* next() override {
+		Prop* p = tactic->next();
+		del(p);
+		if (p) cout << p->space->root->show(mode) << endl;
+		return p;
 	}
 
 protected:
@@ -68,13 +67,13 @@ struct MetaTactic : public Tactic {
 	~MetaTactic() override {
 		for (auto t : tactics) delete t;
 	}
-	void add(Node* n) override {
-		for (auto t : tactics) t->add(n);
+	void add(Prop* p) override {
+		for (auto t : tactics) t->add(p);
 	}
-	void del(Node* n) override {
-		if (n) for (auto t : tactics) t->del(n);
+	void del(Prop* p) override {
+		if (p) for (auto t : tactics) t->del(p);
 	}
-	Node* next() override {
+	Prop* next() override {
 		return tactics[tactic()]->next();
 	}
 	virtual uint tactic() = 0;

@@ -2,17 +2,16 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Node::Node(Space* s) :
-	parent(nullptr), space(s), ind(-1) {
+Node::Node(Space* s) : space(s), ind(-1) {
+	space->registerNode(this);
 }
-Node::Node(Node* p) :
-	parent(p), space(p->space), ind(-1) {
-	if (p) p->child.push_back(this);
+
+Node::Node(Node* n) : space(n->space), ind(-1) {
+	space->registerNode(this);
 }
 
 Node::~Node() {
-	for (auto n : child) delete n;
-	for (auto p : proof) delete p;
+	space->unregisterNode(this);
 }
 
 inline Symbol fresh_var(Symbol v, uint n) {
@@ -33,46 +32,34 @@ static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, 
 	}
 }
 
-Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
-	Node(p), prop_(r), sub_(s) {
-	make_free_vars_fresh(r.assertion(), sub_, space->vars);
-	space->registerNode(this);
+Prop::Prop(const PropRef& r, const Substitution& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
+	make_free_vars_fresh(r.ass, sub, space->vars);
+}
+
+void Prop::buildUp() {
+	for (auto& h : prop.ass->hyps) {
+		premises.emplace_back(new Hyp(apply(sub, h.get()->expr), this));
+	}
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.unify_back(expr_.tree())) {
-		proof.push_back(new ProofHyp(p.first, p.second));
+	for (const auto& p : space->hyps.unify_back(expr.tree())) {
+		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
 	}
 	queue<Node*> downs;
 	downs.push(this);
-	while (true) {
+	while (!downs.empty()) {
 		Node* n = downs.front(); downs.pop();
-		for (auto x: n->buildDown()) downs.push(x);
-		if (downs.empty()) break;
+		for (auto x : n->buildDown()) {
+			downs.push(x);
+		}
 	}
-	space->registerNode(this);
 }
 
-vector<Node*> Hyp::buildUp() {
-	vector<Node*> ret;
-	for (const auto& p : assertion_index().unify_forth(expr_.tree())) {
-		//cout << "unified assertion " << show_id(p.first.assertion()->id()) << endl;
-		ret.push_back(new Prop(p.first, p.second, this));
+void Hyp::buildUp() {
+	for (const auto& p : assertion_index().unify_forth(expr.tree())) {
+		variants.emplace_back(new Prop(p.first, p.second, this));
 	}
-	return ret;
-}
-
-vector<Node*> Prop::buildUp() {
-	vector<Node*> ret;
-	for (auto& h : prop_.assertion()->hyps) {
-		ret.push_back(new Hyp(apply(sub_, h.get()->expr), this));
-	}
-	return ret;
-}
-
-vector<Node*> Ref::buildUp() {
-	vector<Node*> ret;
-	return ret;
 }
 
 struct Ind {
@@ -197,8 +184,10 @@ struct MultyTree {
 		add(s1);
 		add(s2);
 	}
-	MultyTree(const vector<ProofElem*>& ch) {
-		for (auto p : ch) add(p->sub());
+	MultyTree(const vector<ProofHyp*>& ch) {
+		for (auto p : ch) {
+			add(p->sub);
+		}
 	}
 	MultySub makeSubs() const {
 		MultySub ret;
@@ -222,8 +211,9 @@ private:
 };
 
 inline bool intersects(const Substitution& s1, const Substitution& s2) {
-	for (const auto& p : s1.sub())
+	for (const auto& p : s1.sub()) {
 		if (s2.sub().count(p.first)) return true;
+	}
 	return false;
 }
 
@@ -244,58 +234,61 @@ Substitution unify_subs(const MultyTree& t) {
 	}
 }
 
-ProofElem* unify_subs(Node* pr, ProofElem* p, vector<ProofElem*> ch) {
-	MultyTree t(ch);
-	Substitution sub = unify_subs(t);
-	return new ProofStep(pr, std::move(ch), sub);
-}
-
-inline uint find_index(const vector<ProofElem*> pv, const ProofElem* p) {
+template<class T>
+inline uint find_index(const vector<T*> pv, const ProofNode* p) {
 	return std::find(pv.begin(), pv.end(), p) - pv.begin();
 }
 
-vector<Node*> unify_subs(Node* n, ProofElem* p) {
-	if (!n->parent) return vector<Node*>();
-	vector<ProofElem*> proofs;
-	assert(n->kind() == Node::HYP);
-	Prop* pr = prop(n->parent);
-	Ind ind;
-	for (auto x : pr->child) {
-		if (x != n) ind.addDim(x->proof.size());
-		else ind.addFixed(find_index(x->proof, p));
+vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
+	if (!h->parent) {
+		return vector<Node*>();
 	}
-	if (ind.empty()) return vector<Node*>();
+	vector<ProofHyp*> proofs;
+	Ind ind;
+	for (auto& x : pr->premises) {
+		if (x.get() != &h->node) {
+			ind.addDim(x.get()->proofs.size());
+		} else {
+			ind.addFixed(find_index(x.get()->proofs, h));
+		}
+	}
+	if (ind.empty()) {
+		return vector<Node*>();
+	}
 	while (true) {
-		vector<ProofElem*> ch;
-		for (uint i = 0; i < ind.size(); ++ i)
-			ch.push_back(pr->child[i]->proof[ind[i]]);
-		pr->proof.push_back(unify_subs(pr, p, ch));
-		if (!ind.hasNext()) break;
+		vector<ProofHyp*> ch;
+		for (uint i = 0; i < ind.size(); ++ i) {
+			ch.push_back(pr->premises[i].get()->proofs[ind[i]]);
+		}
+		MultyTree t(ch);
+		Substitution sub = unify_subs(t);
+		pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
+		if (!ind.hasNext()) {
+			break;
+		}
 		ind.makeNext();
 	}
 	return {pr};
 }
 
 vector<Node*> Prop::buildDown() {
-	for (auto p : proof)
-		if (p->isNew()) {
-			parent->proof.push_back(new ProofStep(this, {p}));
+	for (auto& p : proofs) {
+		if (p->new_) {
+			parent->proofs.push_back(new ProofExp(*parent, {p}));
 		}
+	}
 	return {parent};
 }
 
 vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
-	for (auto p : proof)
-		if (p->isNew()) {
-			for (auto q : unify_subs(this, p))
+	for (auto& p : proofs) {
+		if (p->new_) {
+			for (auto& q : unify_subs(parent, p)) {
 				ret.push_back(q);
+			}
 		}
-	return ret;
-}
-
-vector<Node*> Ref::buildDown() {
-	vector<Node*> ret;
+	}
 	return ret;
 }
 
