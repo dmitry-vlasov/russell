@@ -46,7 +46,7 @@ struct Node {
 
 struct Prop : public Node {
 	typedef vector<unique_ptr<Hyp>> Premises;
-	typedef vector<ProofProp*> Proofs;
+	typedef vector<unique_ptr<ProofProp>> Proofs;
 	Hyp*         parent;
 	Premises     premises;
 	Proofs       proofs;
@@ -61,7 +61,7 @@ struct Prop : public Node {
 
 struct Hyp : public Node {
 	typedef vector<unique_ptr<Prop>> Variants;
-	typedef vector<ProofHyp*> Proofs;
+	typedef vector<unique_ptr<ProofHyp>> Proofs;
 	Prop*    parent;
 	Variants variants;
 	Proofs   proofs;

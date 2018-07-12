@@ -50,7 +50,7 @@ void delete_steps_recursively(rus::Step* s) {
 rus::Proof* Space::checkProved() {
 	if (!root->proofs.size()) return nullptr;
 	for (auto& p : root->proofs) {
-		if (ProofProp* ps = dynamic_cast<ProofProp*>(p)) {
+		if (ProofProp* ps = dynamic_cast<ProofProp*>(p.get())) {
 			rus::Step* s = ps->step();
 			if (rus::Proof* pr = make_proof(s, prop.ass->id(), prop.get())) {
 				if (pr->check()) return pr;

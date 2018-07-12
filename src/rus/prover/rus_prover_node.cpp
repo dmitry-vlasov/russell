@@ -235,8 +235,15 @@ Substitution unify_subs(const MultyTree& t) {
 }
 
 template<class T>
-inline uint find_index(const vector<T*> pv, const ProofNode* p) {
-	return std::find(pv.begin(), pv.end(), p) - pv.begin();
+inline uint find_index(const vector<unique_ptr<T>>& pv, const ProofNode* pn) {
+	uint i = 0;
+	for (auto& p : pv) {
+		if (p.get() == pn) {
+			break;
+		}
+		++i;
+	}
+	return i;
 }
 
 vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
@@ -258,7 +265,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	while (true) {
 		vector<ProofHyp*> ch;
 		for (uint i = 0; i < ind.size(); ++ i) {
-			ch.push_back(pr->premises[i].get()->proofs[ind[i]]);
+			ch.push_back(pr->premises[i].get()->proofs[ind[i]].get());
 		}
 		MultyTree t(ch);
 		Substitution sub = unify_subs(t);
@@ -274,7 +281,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 vector<Node*> Prop::buildDown() {
 	for (auto& p : proofs) {
 		if (p->new_) {
-			parent->proofs.push_back(new ProofExp(*parent, {p}));
+			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get()));
 		}
 	}
 	return {parent};
@@ -284,7 +291,7 @@ vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
 	for (auto& p : proofs) {
 		if (p->new_) {
-			for (auto& q : unify_subs(parent, p)) {
+			for (auto& q : unify_subs(parent, p.get())) {
 				ret.push_back(q);
 			}
 		}

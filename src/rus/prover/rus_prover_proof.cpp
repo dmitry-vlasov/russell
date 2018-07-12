@@ -13,6 +13,10 @@ ProofHyp::ProofHyp(Hyp& h, const Substitution& s) :
 	ProofNode(s), parent(nullptr), node(h) {
 }
 
+rus::Ref* ProofHyp::ref() {
+	return parent->ref();
+}
+
 rus::Ref* ProofTop::ref() {
 	return new rus::Ref(hyp.get());
 }
@@ -20,10 +24,6 @@ rus::Ref* ProofTop::ref() {
 ProofExp::ProofExp(Hyp& n, ProofProp* c, const Substitution& s) :
 	ProofHyp(n, s), child(c) {
 	child->parent = this;
-}
-
-rus::Ref* ProofHyp::ref() {
-	return parent->ref();
 }
 
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Substitution& s) :
