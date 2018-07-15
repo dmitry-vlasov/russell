@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rus_prover_index.hpp"
+#include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -22,22 +23,14 @@ struct Space {
 	Index<HypRef>   hyps;
 	map<uint, uint> vars;
 
-	static Return create(rus::Qed* q, Tactic* t) {
+	Return init();
+	Return info(uint index, string what);
+	Return expand(uint index);
+
+	static bool create(rus::Qed* q, Tactic* t) {
 		if (instance) return false;
 		instance = new Space(q, t);
-		string data;
-		//data += "<tree>\n";
-		data += "<sprout>\n";
-		data += "\t<up>\n";
-		data += "\t\t<root types=\"\" index=\"0\" hint=\"+\" >\n";
-		data += "\t\t\t<expression>\n";
-		data += "\t\t\t\t" + show(instance->root->expr) + "\n";
-		data += "\t\t\t</expression>\n";
-		data += "\t\t</root>\n";
-		data += "\t</up>\n";
-		data += "</sprout>\n";
-		//data += "</tree>\n";
-		return Return("tree created", data);
+		return true;
 	}
 	static bool create(rus::Assertion* a, rus::Prop* p, Tactic* t) {
 		if (instance) return false;

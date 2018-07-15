@@ -7,8 +7,8 @@ bool test_proof_with_oracle(Proof* p) {
 	prover::Space::create(
 		*p->qeds().begin(),
 		new prover::ProxyTactic(
-			new prover::Oracle(p),
-			prover::show_bits("idx,ch_idx,recurs,ass,expr")
+			new prover::Oracle(p)
+			/*prover::show_bits("idx,ch_idx,recurs,ass,expr")*/
 		)
 	);
 	Proof* reproved = prover::Space::get()->prove();

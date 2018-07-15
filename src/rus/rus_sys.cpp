@@ -131,7 +131,11 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		return prover::Space::create(qed, tactic);
+		if (prover::Space::create(qed, tactic)) {
+			return prover::Space::get()->init();
+		} else {
+			return false;
+		}
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
@@ -139,7 +143,7 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 }
 
 Return prove_step(uint index) {
-	return Return(true);
+	return prover::Space::get()->expand(index);
 }
 
 Return prove_tactic(string tact) {
@@ -152,11 +156,11 @@ Return prove_confirm(uint index) {
 }
 
 Return prove_stop() {
-	return Return(true);
+	return prover::Space::destroy();
 }
 
-Return prove_info(uint index) {
-	return Return(true);
+Return prove_info(uint index, string what) {
+	return prover::Space::get()->info(index, what);
 }
 
 }
@@ -263,7 +267,7 @@ static Descr description(string name) {
 		)},
 		{"prove_step",  Descr(
 			"make a step in proving",
-			Descr::Arg("what", "index")
+			Descr::Arg("index", "index")
 		)},
 		{"prove_tactic",  Descr(
 			"switch to some tactic",
@@ -271,14 +275,15 @@ static Descr description(string name) {
 		)},
 		{"prove_confirm",  Descr(
 			"confirm a proof",
-			Descr::Arg("what", "index")
+			Descr::Arg("index", "index")
 		)},
 		{"prove_stop",  Descr(
 			"stop proving theorem"
 		)},
 		{"prove_info",  Descr(
-			"show an info about proof node",
-			Descr::Arg("what", "index")
+			"show an info about node",
+			Descr::Arg("index", "integer"),
+			Descr::Arg("what", "tree|node|children|proofs")
 		)},
 		{"min_imports", Descr("minimize imports",  Descr::Arg("in", "file", true, ""))},
 	};
@@ -315,7 +320,7 @@ const Sys::Actions& Sys::actions() {
 		{"prove_tactic", Action([](const Args& args) { return prove_tactic(args[0]); }, description("prove_tactic"))},
 		{"prove_confirm",  Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
 		{"prove_stop",  Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
-		{"prove_info",  Action([](const Args& args) { return prove_info(stoul(args[0])); }, description("prove_info"))},
+		{"prove_info",  Action([](const Args& args) { return prove_info(stoul(args[0]), args[1]); }, description("prove_info"))},
 
 		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},
 	};

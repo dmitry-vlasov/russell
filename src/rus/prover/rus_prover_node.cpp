@@ -234,29 +234,16 @@ Substitution unify_subs(const MultyTree& t) {
 	}
 }
 
-template<class T>
-inline uint find_index(const vector<unique_ptr<T>>& pv, const ProofNode* pn) {
-	uint i = 0;
-	for (auto& p : pv) {
-		if (p.get() == pn) {
-			break;
-		}
-		++i;
-	}
-	return i;
-}
+
 
 vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
-	if (!h->parent) {
-		return vector<Node*>();
-	}
 	vector<ProofHyp*> proofs;
 	Ind ind;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {
 			ind.addDim(x.get()->proofs.size());
 		} else {
-			ind.addFixed(find_index(x.get()->proofs, h));
+			ind.addFixed(find_in_vector(x.get()->proofs, h));
 		}
 	}
 	if (ind.empty()) {
@@ -289,10 +276,12 @@ vector<Node*> Prop::buildDown() {
 
 vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
-	for (auto& p : proofs) {
-		if (p->new_) {
-			for (auto& q : unify_subs(parent, p.get())) {
-				ret.push_back(q);
+	if (parent) {
+		for (auto& p : proofs) {
+			if (p->new_) {
+				for (auto& q : unify_subs(parent, p.get())) {
+					ret.push_back(q);
+				}
 			}
 		}
 	}

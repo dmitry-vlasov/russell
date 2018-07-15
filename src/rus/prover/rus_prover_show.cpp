@@ -1,42 +1,16 @@
 #include "rus_prover_space.hpp"
+#include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
-
-// THIS_IDX, CHILD_IDX, PARNT_IDX, RECURS, ASS, EXPR, SUB, PRFSIZE
-
-constexpr uint THIS_IDX_BIT   = 0x001;
-constexpr uint CHILD_IDX_BIT  = 0x002;
-constexpr uint PARNT_IDX_BIT  = 0x004;
-constexpr uint RECURS_BIT     = 0x008;
-constexpr uint ASS_BIT        = 0x010;
-constexpr uint EXPR_BIT       = 0x020;
-constexpr uint SUB_BIT        = 0x040;
-constexpr uint PRF_SZ_BIT     = 0x080;
-
-struct ShowModeDescr {
-	string str;
-	uint   bit;
-};
-
-static map<ShowMode, ShowModeDescr> show_nodes = {
-	{ShowMode::THIS_IDX,  {"idx",     THIS_IDX_BIT}},
-	{ShowMode::CHILD_IDX, {"ch_idx",  CHILD_IDX_BIT}},
-	{ShowMode::PARNT_IDX, {"par_idx", PARNT_IDX_BIT}},
-	{ShowMode::RECURS,    {"recurs",  RECURS_BIT}},
-	{ShowMode::ASS,       {"ass",     ASS_BIT}},
-	{ShowMode::EXPR,      {"expr",    EXPR_BIT}},
-	{ShowMode::SUB,       {"sub",     SUB_BIT}},
-	{ShowMode::PRF_SZ,    {"prf_sz",  PRF_SZ_BIT}},
-};
 
 uint show_bits(string str) {
 	uint ret = 0;
 	while (str.size()) {
 		string::size_type i = str.find(',');
 		string s = str.substr(0, str.find(','));
-		for (auto p : show_nodes) {
+		for (auto p : show_nodes()) {
 			if (p.second.str == s) {
-				ret += p.second.bit;
+				ret += uint(p.second.bit);
 				break;
 			}
 		}
@@ -47,8 +21,8 @@ uint show_bits(string str) {
 
 string show_bits(uint m) {
 	string ret;
-	for (auto p : show_nodes) {
-		if (m & p.second.bit) {
+	for (auto p : show_nodes()) {
+		if (m & uint(p.second.bit)) {
 			ret += (ret.size()? "," : "") + p.second.str;
 		}
 	}
@@ -56,83 +30,89 @@ string show_bits(uint m) {
 }
 
 bool show_bit(uint m, ShowMode n) {
-	return show_nodes[n].bit & m;
+	return uint(show_nodes().at(n).bit) & m;
 }
 
-string Node::show(uint m) const {
-	string ret;
-	/*if (show_bit(m, ShowMode::RECURS)) {
-		for (const auto& n : child) {
-			ret += n->show(m);
-		}
+static string show_assertion(const Assertion* a) {
+	if (const Axiom* ax = dynamic_cast<const Axiom*>(a)) {
+		return mdl::show(*ax);
+	} else if (const Theorem* th = dynamic_cast<const Theorem*>(a)) {
+		return mdl::show(*th);
+	} else if (const Def* df = dynamic_cast<const Def*>(a)) {
+		return mdl::show(*df);
+	} else {
+		assert(false && "impossible");
+		throw Error("impossible");
 	}
-	if (show_bit(m, ShowMode::THIS_IDX)) {
-		ret += string("index=\"") + to_string(ind) + "\" ";
-	}
-	if (show_bit(m, ShowMode::CHILD_IDX)) {
-		ret += "children=(";
-		bool first = true;
-		for (const auto& n : child) {
-			if (!first) ret += ", ";
-			ret += to_string(n->ind);
-			first = false;
-		}
-		ret += ") ";
-	}
-	if (show_bit(m, ShowMode::PARNT_IDX)) {
-		ret += string("parent=") + (parent ? to_string(parent->ind) : "<none>") + " ";
-	}*/
-	return ret + "\n";
 }
 
-string Prop::show(uint m) const {
-	string ret;
-	ret += "Prop: ";
-	ret += Node::show(m);
-	/*if (show_bit(m, ShowMode::ASS)) {
-		ret += string("ass=") + show_id(prop_.assertion()->id()) + " ";
+template<class T>
+static string show_children_idx(const vector<unique_ptr<T>>& ch) {
+	string ret = "children=\"";
+	bool first = true;
+	for (const auto& n : ch) {
+		if (!first) ret += ",";
+		ret += to_string(n.get()->ind);
+		first = false;
 	}
-	if (show_bit(m, ShowMode::SUB)) {
-		ret += string("sub=") + show(sub_) + " ";
-	}*/
-	return ret + "\n";
+	return ret + "\" ";
 }
 
-string Hyp::show(uint m) const {
+string Prop::show() const {
 	string ret;
-	ret += "Hyp: ";
-	ret += Node::show(m);
-	if (show_bit(m, ShowMode::EXPR)) {
-		//ret += string("expr=") + rus::show(expr_) + " ";
-	}
-	return ret + "\n";
+	ret += "<prop ";
+	ret += string("name=\"") + Lex::toStr(prop.id()) + "\" ";
+	ret += string("index=\"") + to_string(ind) + "\" ";
+	ret += string("parent=\"") + to_string(parent->ind) + "\" ";
+	ret += show_children_idx(premises);
+	ret += ">\n";
+	ret += "\t<assertion>";
+	ret += "<![CDATA[";
+	ret += show_assertion(prop.ass);
+	ret += "]]>";
+	ret += "</assertion>\n";
+	ret += "\t<substitution>";
+	ret += "<![CDATA[";
+	ret += rus::show(sub);
+	ret += "]]>";
+	ret += "</substitution>\n";
+	ret += "</prop>\n";
+	return ret;
 }
 
-/*string Ref::show(uint m) const {
+string Hyp::show() const {
 	string ret;
-	ret += "Ref: ";
-	ret += Node::show(m);
-	return ret + "\n";
-}*/
+	ret += string("<") + (parent ? "hyp" : "root") + " ";
+	ret += string("index=\"") + to_string(ind) + "\" ";
+	if (parent) {
+		ret += string("parent=\"") + to_string(parent->ind) + "\" ";
+	}
+	ret += show_children_idx(variants);
+	ret += ">\n";
+	ret += "\t<expression>";
+	ret += "<![CDATA[" + rus::show(expr) + "]]>";
+	ret += "</expression>\n";
+	ret += string("</") + (parent ? "hyp" : "root") + ">\n";
+	return ret;
+}
 
-string ProofTop::show(uint m) const {
+string ProofTop::show() const {
 	string ret;
 	ret += "ProofTop: ";
 	return ret + "\n";
 }
 
-string ProofExp::show(uint m) const {
+string ProofExp::show() const {
 	string ret;
 	ret += "ProofHyp: ";
 	return ret + "\n";
 }
 
-string ProofProp::show(uint m) const {
+string ProofProp::show() const {
 	string ret;
 	ret += "ProofStep: ";
 	return ret + "\n";
 }
-
 
 }}}
 

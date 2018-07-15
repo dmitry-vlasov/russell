@@ -10,11 +10,20 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 }
 
 ProofHyp::ProofHyp(Hyp& h, const Substitution& s) :
-	ProofNode(s), parent(nullptr), node(h) {
+	ProofNode(s), node(h) {
 }
 
-rus::Ref* ProofHyp::ref() {
-	return parent->ref();
+ProofHyp::~ProofHyp() {
+	for (auto p : parents) {
+		uint i = find_in_vector(p->node.proofs, p);
+		if (i != -1) {
+			p->node.proofs.erase(p->node.proofs.begin() + i);
+		}
+	}
+}
+
+rus::Ref* ProofExp::ref() {
+	return child->ref();
 }
 
 rus::Ref* ProofTop::ref() {
@@ -29,7 +38,15 @@ ProofExp::ProofExp(Hyp& n, ProofProp* c, const Substitution& s) :
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Substitution& s) :
 	ProofNode(s), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
-		p->parent = this;
+		p->parents.push_back(this);
+	}
+}
+
+ProofProp::~ProofProp() {
+	if (parent) {
+		uint i = find_in_vector(parent->node.proofs, parent);
+		assert(i != -1);
+		parent->node.proofs.erase(parent->node.proofs.begin() + i);
 	}
 }
 

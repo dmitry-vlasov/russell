@@ -41,8 +41,7 @@ private:
 };
 
 struct ProxyTactic : public Tactic {
-	ProxyTactic(Tactic* t, uint m) : tactic(t), mode(m) { }
-	ProxyTactic(Tactic* t, string m) : tactic(t), mode(show_bits(m)) { }
+	ProxyTactic(Tactic* t) : tactic(t) { }
 	~ProxyTactic() { delete tactic; }
 	void add(Prop* p) override {
 		tactic->add(p);
@@ -53,13 +52,14 @@ struct ProxyTactic : public Tactic {
 	Prop* next() override {
 		Prop* p = tactic->next();
 		del(p);
-		if (p) cout << p->space->root->show(mode) << endl;
+		if (p) {
+			cout << p->space->root->show() << endl;
+		}
 		return p;
 	}
 
 protected:
 	Tactic* tactic;
-	uint    mode;
 };
 
 struct MetaTactic : public Tactic {

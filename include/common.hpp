@@ -33,6 +33,30 @@ set_unique_ptr<T> make_find_ptr(T* raw){
 	return set_unique_ptr<T>(raw, maybe_deleter<T>(false));
 }
 
+template<class T>
+inline uint find_in_vector(const vector<unique_ptr<T>>& pv, const T* pn) {
+	uint i = 0;
+	for (auto& p : pv) {
+		if (p.get() == pn) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
+template<class T>
+inline uint find_in_vector(const vector<T*>& pv, const T* pn) {
+	uint i = 0;
+	for (auto& p : pv) {
+		if (p == pn) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
 template<class T> struct Undef;
 template<> struct Undef<uint> {
 	static uint get()        { return UNDEF_UINT; }

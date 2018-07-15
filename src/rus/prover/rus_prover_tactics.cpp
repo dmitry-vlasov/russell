@@ -65,7 +65,7 @@ struct TacticsParser {
 			return new AlterTactic(std::move(sv.transform<Tactic*>()));
 		};
 		parser["PROXY"] = [](const peg::SemanticValues& sv) {
-			return new ProxyTactic(sv[1].get<Tactic*>(), sv[0].get<string>());
+			return new ProxyTactic(sv[1].get<Tactic*>());
 		};
 		parser["ORACLE"] = [](const peg::SemanticValues& sv) {
 			return new Oracle;

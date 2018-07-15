@@ -1,4 +1,5 @@
 #include "rus_prover_space.hpp"
+#include "rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -23,6 +24,62 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	}
 	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);
 	root->buildUp();
+}
+
+Return Space::init() {
+	string data;
+	data += "<new>\n";
+	data += Indent::paragraph(root->show()) + "\n";
+	data += "</new>\n";
+	cout << endl << data << endl;
+	return Return("tree created", data);
+}
+
+Return Space::info(uint index, string what) {
+	if (index >= nodes_.size()) return false;
+	string data;
+	data += "<info>\n";
+	if (what == "node") {
+		data += "\t<node>\n";
+		data += Indent::paragraph(nodes_[index]->show(), "\t\t") + "\n";
+		data += "\t</node>\n";
+	} else if (what == "children") {
+		if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
+			data += "\t<children kind=\"prop\">\n";
+			for (auto& h : p->premises) {;
+				data += Indent::paragraph(h.get()->show(), "\t\t") + "\n";
+			}
+			data += "\t</children>\n";
+		} else if (Hyp* h = dynamic_cast<Hyp*>(nodes_[index])) {
+			data += "\t<children kind=\"hyp\">\n";
+			for (auto& p : h->variants) {
+				data += Indent::paragraph(p.get()->show(), "\t\t") + "\n";
+			}
+			data += "\t</children>\n";
+		}
+	}
+	data += "</info>\n";
+	cout << endl << data << endl;
+	return Return("node info", data);
+}
+
+Return Space::expand(uint index) {
+	if (index >= nodes_.size()) return false;
+	if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
+		if (p->premises.size() < p->prop.ass->arity()) {
+			string data;
+			data += "<new>\n";
+			p->buildUp();
+			for (auto& h : p->premises) {
+				h.get()->buildUp();
+				data += Indent::paragraph(h.get()->show()) + "\n";
+			}
+			data += "</new>\n";
+			cout << endl << data << endl;
+			return Return("node expanded", data);
+		}
+	}
+	return true;
 }
 
 rus::Proof* Space::prove() {
