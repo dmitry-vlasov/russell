@@ -146,6 +146,10 @@ Return prove_step(uint index) {
 	return prover::Space::get()->expand(index);
 }
 
+Return prove_delete(uint index) {
+	return prover::Space::get()->erase(index);
+}
+
 Return prove_tactic(string tact) {
 	prover::Tactic* tactic = prover::make_tactic(tact);
 	return Return(true);
@@ -269,6 +273,10 @@ static Descr description(string name) {
 			"make a step in proving",
 			Descr::Arg("index", "index")
 		)},
+		{"prove_delete",  Descr(
+			"delete proof variant",
+			Descr::Arg("index", "index")
+		)},
 		{"prove_tactic",  Descr(
 			"switch to some tactic",
 			Descr::Arg("tact", "alter({tact})|proxy[bits](tact)|breadth|oracle", true, "breadth")
@@ -315,12 +323,13 @@ const Sys::Actions& Sys::actions() {
 
 		{"prove",      Action([](const Args& args) { return prove(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("prove"))},
 
-		{"prove_start", Action([](const Args& args) { return prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); }, description("prove_start"))},
-		{"prove_step",  Action([](const Args& args) { return prove_step(stoul(args[0])); }, description("prove_step"))},
-		{"prove_tactic", Action([](const Args& args) { return prove_tactic(args[0]); }, description("prove_tactic"))},
-		{"prove_confirm",  Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
-		{"prove_stop",  Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
-		{"prove_info",  Action([](const Args& args) { return prove_info(stoul(args[0]), args[1]); }, description("prove_info"))},
+		{"prove_start",   Action([](const Args& args) { return prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); }, description("prove_start"))},
+		{"prove_step",    Action([](const Args& args) { return prove_step(stoul(args[0])); }, description("prove_step"))},
+		{"prove_delete",  Action([](const Args& args) { return prove_delete(stoul(args[0])); }, description("prove_delete"))},
+		{"prove_tactic",  Action([](const Args& args) { return prove_tactic(args[0]); }, description("prove_tactic"))},
+		{"prove_confirm", Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
+		{"prove_stop",    Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
+		{"prove_info",    Action([](const Args& args) { return prove_info(stoul(args[0]), args[1]); }, description("prove_info"))},
 
 		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},
 	};

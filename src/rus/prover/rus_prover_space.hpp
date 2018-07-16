@@ -26,6 +26,7 @@ struct Space {
 	Return init();
 	Return info(uint index, string what);
 	Return expand(uint index);
+	Return erase(uint index);
 
 	static bool create(rus::Qed* q, Tactic* t) {
 		if (instance) return false;
@@ -77,6 +78,7 @@ private:
 
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
+	set<uint>     shown;
 	rus::Proof* checkProved();
 
 	static Space* instance;
