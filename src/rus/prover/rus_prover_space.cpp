@@ -63,12 +63,18 @@ Return Space::info(uint index, string what) {
 		oss << "\t<proofs>\n";
 		if (Hyp* h = dynamic_cast<Hyp*>(nodes_[index])) {
 			for (auto& p : h->proofs) {
-				rus::Proof* proof = make_proof(prop.ass->id(), prop.get());
-				string expr = show(proof->qeds()[proof->qeds().size() - 1]->prop->expr);
-				oss << "\t\t<proof expr=\"" + expr + "\"><![CDATA[";
-				proof->write(oss);
-				delete proof;
-				oss << "]]></proof>\n";
+				if (ProofExp* pr = dynamic_cast<ProofExp*>(p.get())) {
+					rus::Step* step = pr->child->step();
+					rus::Proof* proof = make_proof(step, prop.id(), prop.get());
+					oss << "\t\t<proof expr=\"" << show(step->expr) << "\"><![CDATA[";
+					proof->write(oss);
+					delete proof;
+					oss << "]]></proof>\n";
+				} else if (ProofTop* pr = dynamic_cast<ProofTop*>(p.get())) {
+					oss << "\t\t<proof expr=\"" << show(pr->expr) << "\"><![CDATA[";
+					oss << "hyp " << pr->hyp.ind + 1;
+					oss << "]]></proof>\n";
+				}
 			}
 		}
 		oss << "\t</proofs>\n";
@@ -79,7 +85,7 @@ Return Space::info(uint index, string what) {
 		data += "\t</tree>\n";
 	}
 	data += "</info>\n";
-	//cout << endl << data << endl;
+	cout << endl << data << endl;
 	return Return("node info", data);
 }
 
@@ -159,10 +165,9 @@ rus::Proof* Space::checkProved() {
 	if (!root->proofs.size()) return nullptr;
 	for (auto& p : root->proofs) {
 		if (ProofProp* ps = dynamic_cast<ProofProp*>(p.get())) {
-			if (rus::Proof* pr = make_proof(prop.ass->id(), prop.get())) {
+			if (rus::Proof* pr = make_proof(ps->step(), prop.ass->id(), prop.get())) {
 				if (pr->check()) return pr;
 			}
-			delete_steps_recursively(ps->step());
 		}
 	}
 	root->proofs.clear();

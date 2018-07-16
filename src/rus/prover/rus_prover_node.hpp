@@ -18,6 +18,7 @@ struct PropRef {
 struct HypRef {
 	HypRef(Assertion* a, uint i) : ass(a), ind(i) { }
 	rus::Hyp* get() { return ass->hyps[ind].get(); }
+	const rus::Hyp* get() const { return ass->hyps[ind].get(); }
 	friend bool operator < (const HypRef& a1, const HypRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
 	}
@@ -96,7 +97,7 @@ struct ProofHyp : public ProofNode {
 };
 
 struct ProofTop : public ProofHyp {
-	ProofTop(Hyp& n, const HypRef& h, const Substitution& s) : ProofHyp(n, s), hyp(h) { }
+	ProofTop(Hyp& n, const HypRef& h, const Substitution& s);
 	string show() const override;
 	rus::Ref* ref() override;
 
@@ -123,7 +124,7 @@ struct ProofProp : public ProofNode {
 	vector<ProofHyp*> premises;
 };
 
-rus::Proof* make_proof(uint theorem, rus::Prop* prop);
+rus::Proof* make_proof(rus::Step* step, uint theorem, rus::Prop* prop);
 
 }}}
 

@@ -236,8 +236,6 @@ Substitution unify_subs(const MultyTree& t) {
 	}
 }
 
-
-
 vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	vector<ProofHyp*> proofs;
 	Ind ind;
