@@ -40,6 +40,9 @@ void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
 		premises.emplace_back(new Hyp(apply(sub, h.get()->expr), this));
 	}
+	for (auto& p : premises) {
+		p.get()->complete();
+	}
 }
 
 void Hyp::complete() {
@@ -238,6 +241,9 @@ Substitution unify_subs(const MultyTree& t) {
 
 vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	vector<ProofHyp*> proofs;
+
+	cout << "unify_subs: " << Lex::toStr(pr->prop.id()) << endl;
+
 	Ind ind;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {

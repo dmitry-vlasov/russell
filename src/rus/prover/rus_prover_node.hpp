@@ -68,13 +68,12 @@ struct Hyp : public Node {
 	Proofs   proofs;
 	Expr     expr;
 	Hyp(const Expr& e, Space* s) : Node(s), parent(nullptr), expr(e) { complete(); }
-	Hyp(const Expr& e, Prop* p) : Node(p), parent(p), expr(p ? apply(p->sub, e) : e) { complete(); }
+	Hyp(const Expr& e, Prop* p) : Node(p), parent(p), expr(p ? apply(p->sub, e) : e) { }
 
 	void buildUp();
 	vector<Node*> buildDown() override;
 	string show() const override;
 
-private:
 	void complete();
 };
 
