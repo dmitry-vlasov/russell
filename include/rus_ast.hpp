@@ -223,7 +223,6 @@ struct Step : public Tokenable, public Writable {
 	vector<unique_ptr<Ref>> refs;
 	mutable Substitution sub;
 
-private:
 	uint   ind_;
 	Value  val_;
 	Proof* proof_;

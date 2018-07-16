@@ -97,9 +97,7 @@ string Hyp::show() const {
 }
 
 string ProofTop::show() const {
-	string ret;
-	ret += "ProofTop: ";
-	return ret + "\n";
+	return "<top index=\"" + to_string(hyp.ind) + "\"/>";
 }
 
 string ProofExp::show() const {

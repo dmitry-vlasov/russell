@@ -58,6 +58,24 @@ Return Space::info(uint index, string what) {
 			}
 			data += "\t</children>\n";
 		}
+	} else if (what == "proofs") {
+		ostringstream oss;
+		oss << "\t<proofs>\n";
+		if (Hyp* h = dynamic_cast<Hyp*>(nodes_[index])) {
+			for (auto& p : h->proofs) {
+				oss << "\t\t<proof><![CDATA[";
+				rus::Proof* proof = make_proof(prop.ass->id(), prop.get());
+				proof->write(oss);
+				delete proof;
+				oss << "]]></proof>\n";
+			}
+		}
+		oss << "\t</proofs>\n";
+		data += oss.str();
+	} else if (what == "tree") {
+		data += "\t<tree>\n";
+		// TODO
+		data += "\t</tree>\n";
 	}
 	data += "</info>\n";
 	//cout << endl << data << endl;
@@ -140,11 +158,10 @@ rus::Proof* Space::checkProved() {
 	if (!root->proofs.size()) return nullptr;
 	for (auto& p : root->proofs) {
 		if (ProofProp* ps = dynamic_cast<ProofProp*>(p.get())) {
-			rus::Step* s = ps->step();
-			if (rus::Proof* pr = make_proof(s, prop.ass->id(), prop.get())) {
+			if (rus::Proof* pr = make_proof(prop.ass->id(), prop.get())) {
 				if (pr->check()) return pr;
 			}
-			delete_steps_recursively(s);
+			delete_steps_recursively(ps->step());
 		}
 	}
 	root->proofs.clear();

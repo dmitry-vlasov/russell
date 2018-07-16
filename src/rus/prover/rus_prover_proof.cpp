@@ -82,8 +82,9 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	proof->elems.emplace_back(unique_ptr<Step>(step));
 }
 
-rus::Proof* make_proof(rus::Step* step, uint th, rus::Prop* prop) {
-	rus::Proof* ret = new rus::Proof(th);
+rus::Proof* make_proof(uint theorem, rus::Prop* prop) {
+	rus::Proof* ret = new rus::Proof(theorem);
+	rus::Step* step = new rus::Step(0, rus::Step::ASS, Id(), ret);
 	fill_in_proof(step, ret);
 	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(prop, step)));
 	return ret;

@@ -123,7 +123,7 @@ struct ProofProp : public ProofNode {
 	vector<ProofHyp*> premises;
 };
 
-rus::Proof* make_proof(rus::Step*, uint th, rus::Prop* prop);
+rus::Proof* make_proof(uint theorem, rus::Prop* prop);
 
 }}}
 
