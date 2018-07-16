@@ -32,7 +32,7 @@ Return Space::init() {
 	data += "<new>\n";
 	data += Indent::paragraph(root->show()) + "\n";
 	data += "</new>\n";
-	cout << endl << data << endl;
+	//cout << endl << data << endl;
 	return Return("tree created", data);
 }
 
@@ -60,7 +60,7 @@ Return Space::info(uint index, string what) {
 		}
 	}
 	data += "</info>\n";
-	cout << endl << data << endl;
+	//cout << endl << data << endl;
 	return Return("node info", data);
 }
 
@@ -101,7 +101,7 @@ Return Space::expand(uint index) {
 				data += Indent::paragraph(nodes_.at(i)->show()) + "\n";
 			}
 			data += "</new>\n";
-			cout << endl << data << endl;
+			//cout << endl << data << endl;
 			return Return("node expanded", data);
 		}
 	}
@@ -110,9 +110,7 @@ Return Space::expand(uint index) {
 
 Return Space::erase(uint index) {
 	if (index >= nodes_.size()) return false;
-	if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
-		// TODO
-	}
+	delete nodes_[index];
 	return true;
 }
 
