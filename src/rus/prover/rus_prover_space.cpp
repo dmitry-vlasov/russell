@@ -63,8 +63,9 @@ Return Space::info(uint index, string what) {
 		oss << "\t<proofs>\n";
 		if (Hyp* h = dynamic_cast<Hyp*>(nodes_[index])) {
 			for (auto& p : h->proofs) {
-				oss << "\t\t<proof><![CDATA[";
 				rus::Proof* proof = make_proof(prop.ass->id(), prop.get());
+				string expr = show(proof->qeds()[proof->qeds().size() - 1]->prop->expr);
+				oss << "\t\t<proof expr=\"" + expr + "\"><![CDATA[";
 				proof->write(oss);
 				delete proof;
 				oss << "]]></proof>\n";
