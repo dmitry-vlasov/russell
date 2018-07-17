@@ -21,9 +21,6 @@ struct Index {
 	map<Symbol, vector<Data>> vars;
 
 	void add(const Tree* t, const D& d) {
-
-		cout << "\nADDING: " << rus::show(t) << " TO\n" << show() << "\n";
-
 		if (t->kind() == Tree::VAR) {
 			vars[*t->var()].push_back(d);
 		} else {
@@ -44,7 +41,6 @@ struct Index {
 				}
 			}
 		}
-		cout << "\nADDING DONE: " << rus::show(t) << " TO\n" << show() << "\n";
 	}
 	Unified<Data> unify_forth(const Tree* t) const {
 		Unified<Data> unif;
@@ -72,9 +68,6 @@ struct Index {
 		return unif;
 	}
 	Unified<Data> unify_back(const Tree* t) const {
-
-		cout << "\nUNIFYING: " << rus::show(t) << " WITH\n" << show() << "\n";
-
 		Unified<Data> unif;
 		if (t->kind() == Tree::VAR) {
 			Symbol tv = *t->var();
@@ -140,7 +133,11 @@ private:
 		}
 		for (const auto& p : rules) {
 			const Rule* r = p.first;
-			for (const auto& d : p.second.data) {
+			if (!p.second.child.size()) {
+				for (const auto& d : p.second.data) {
+					ret[d] = rus::show(r->term);
+				}
+			} else {
 				const vector<Index*>& ch = p.second.child;
 				map<D, string> show_ch[ch.size()];
 				int c = 0;
@@ -220,7 +217,7 @@ private:
 		for (auto p : w[0]) {
 			D d = p.first;
 			vector<string> vstr;
-			int i = 1;
+			int i = 0;
 			for (; i < sz; ++ i) {
 				if (!w[i].count(d)) {
 					break;

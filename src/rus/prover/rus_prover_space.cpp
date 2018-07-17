@@ -15,7 +15,6 @@ Space::Space(rus::Qed* q, Tactic* t) :
 
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
-
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
 			if (!ass->token.preceeds(a->token)) {
@@ -29,17 +28,14 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
 	}
-
-	uint c = 0;
-	for (auto& p : prop.ass->props) {
-		if (!p.get()->expr.tree()) {
-			throw Error("unparsed expression", show(p.get()->expr));
-		}
-		HypRef hypRef(a, c++);
+	cout << "\nASSERTIONS:\n" << assertions.show() << endl;
+	for (uint i = 0; i < prop.ass->arity(); ++ i) {
+		HypRef hypRef(a, i);
 		Expr hypExpr = hypRef.get()->expr;
 		make_non_replaceable(hypExpr);
 		hyps.add(hypExpr.tree(), hypRef);
 	}
+	cout << "\nHYPS:\n" << hyps.show() << endl;
 	Expr propExpr = prop.get()->expr;
 	make_non_replaceable(propExpr);
 	root = new Hyp(propExpr, this);
