@@ -2,6 +2,16 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+PropRef::PropRef(Assertion* a, uint i) : ass(a), ind(i) {
+	expr = a->props[i].get()->expr;
+	make_non_replaceable(expr);
+}
+
+HypRef::HypRef(Assertion* a, uint i) : ass(a), ind(i) {
+	expr = a->hyps[i].get()->expr;
+	make_non_replaceable(expr);
+}
+
 Node::Node(Space* s) : space(s), ind(-1) {
 	space->registerNode(this);
 }

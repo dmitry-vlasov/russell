@@ -5,7 +5,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct PropRef {
-	PropRef(Assertion* a, uint i) : ass(a), ind(i) { }
+	PropRef(Assertion* a, uint i);
 	uint id() const { return ass->id(); }
 	rus::Prop* get() { return ass->props[ind].get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
@@ -13,10 +13,11 @@ struct PropRef {
 	}
 	Assertion* ass;
 	uint       ind;
+	Expr       expr;
 };
 
 struct HypRef {
-	HypRef(Assertion* a, uint i) : ass(a), ind(i) { }
+	HypRef(Assertion* a, uint i);
 	rus::Hyp* get() { return ass->hyps[ind].get(); }
 	const rus::Hyp* get() const { return ass->hyps[ind].get(); }
 	friend bool operator < (const HypRef& a1, const HypRef& a2) {
@@ -24,6 +25,7 @@ struct HypRef {
 	}
 	Assertion* ass;
 	uint       ind;
+	Expr       expr;
 };
 
 class Space;
