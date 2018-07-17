@@ -60,7 +60,7 @@ void Hyp::complete() {
 }
 
 void Hyp::buildUp() {
-	for (const auto& p : assertion_index().unify_forth(expr.tree())) {
+	for (const auto& p : space->assertions.unify_forth(expr.tree())) {
 		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
 			variants.emplace_back(new Prop(p.first, p.second, this));
 		}

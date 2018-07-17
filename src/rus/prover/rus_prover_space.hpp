@@ -21,6 +21,7 @@ struct Space {
 	Hyp*            root;
 	PropRef         prop;
 	Index<HypRef>   hyps;
+	Index<PropRef>  assertions;
 	map<uint, uint> vars;
 
 	Return init();

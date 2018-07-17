@@ -235,7 +235,5 @@ private:
 	}
 };
 
-Index<PropRef>& assertion_index();
-
 }}}
 

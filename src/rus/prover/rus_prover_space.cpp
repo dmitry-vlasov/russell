@@ -15,6 +15,21 @@ Space::Space(rus::Qed* q, Tactic* t) :
 
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
+
+	for (auto& p : Sys::mod().math.get<Assertion>()) {
+		if (Assertion* ass = p.second.data) {
+			if (!ass->token.preceeds(a->token)) {
+				continue;
+			}
+			uint c = 0;
+			for (auto& prop : ass->props) {
+				assertions.add(prop.get()->expr.tree(), PropRef(ass, c++));
+			}
+		} else {
+			throw Error("undefined reference to assertion", Lex::toStr(p.first));
+		}
+	}
+
 	uint c = 0;
 	for (auto& p : prop.ass->props) {
 		if (!p.get()->expr.tree()) {
