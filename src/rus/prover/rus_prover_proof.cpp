@@ -3,9 +3,11 @@
 namespace mdl { namespace rus { namespace prover {
 
 void apply_recursively(const Substitution& sub, rus::Step* step) {
-	apply(sub, step->expr);
+	step->expr = apply(sub, step->expr);
 	for (auto& r : step->refs) {
-		if (r.get()->kind() == rus::Ref::STEP) apply_recursively(sub, r.get()->step());
+		if (r.get()->kind() == rus::Ref::STEP) {
+			apply_recursively(sub, r.get()->step());
+		}
 	}
 }
 
@@ -63,6 +65,9 @@ rus::Step* ProofProp::step() {
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
 	step->expr = parent->node.expr;
+
+	cout << "SUB: " << rus::show(sub) << endl;
+
 	apply_recursively(sub, step);
 	return step;
 }

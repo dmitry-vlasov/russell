@@ -72,7 +72,9 @@ struct Ind {
 
 	void addDim(uint d) {
 		++size_;
-		if (d == 0) isEmpty_ = true;
+		if (d == 0) {
+			isEmpty_ = true;
+		}
 		dims_.push_back(d);
 		ind_.push_back(0);
 	}
@@ -87,7 +89,9 @@ struct Ind {
 			if (ind_[i] + 1 < dims_[i]) {
 				++ ind_[i];
 				break;
-			} else ind_[i] = 0;
+			} else {
+				ind_[i] = 0;
+			}
 		}
 		hasNext_ = false;
 	}
@@ -129,8 +133,11 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 		switch (t->kind()) {
 		case Tree::VAR: vars.push_back(t->var()); break;
 		case Tree::NODE:
-			if (!r) r = t->rule();
-			else if (r != t->rule()) return UnifSym();
+			if (!r) {
+				r = t->rule();
+			} else if (r != t->rule()) {
+				return UnifSym();
+			}
 			rules.push_back(&t->children());
 			break;
 		default: assert(false && "no term in unify_both");
@@ -222,8 +229,9 @@ inline bool intersects(const Substitution& s1, const Substitution& s2) {
 	return false;
 }
 
-Substitution unify_subs(const MultyTree& t) {
+Substitution unify_subs(const MultyTree& t, bool& ok) {
 	MultySub m = t.makeSubs();
+	ok = m.ok;
 	Substitution com;
 	Substitution gen;
 	for (auto& p : m.msub_) {
@@ -235,7 +243,7 @@ Substitution unify_subs(const MultyTree& t) {
 		return com;
 	} else {
 		MultyTree t1(com, gen);
-		return unify_subs(t1);
+		return unify_subs(t1, ok);
 	}
 }
 
@@ -258,8 +266,11 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 			ch.push_back(pr->premises[i].get()->proofs[ind[i]].get());
 		}
 		MultyTree t(ch);
-		Substitution sub = unify_subs(t);
-		pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
+		bool ok = true;
+		Substitution sub = unify_subs(t, ok);
+		if (ok) {
+			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
+		}
 		if (!ind.hasNext()) {
 			break;
 		}
