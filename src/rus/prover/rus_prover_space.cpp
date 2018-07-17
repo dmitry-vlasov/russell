@@ -21,9 +21,13 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("unparsed expression", show(p.get()->expr));
 		}
 		HypRef hypRef(a, c++);
-		hyps.add(hypRef.expr.tree(), hypRef);
+		Expr hypExpr = hypRef.get()->expr;
+		make_non_replaceable(hypExpr);
+		hyps.add(hypExpr.tree(), hypRef);
 	}
-	root = new Hyp(std::move(prop.expr), this);
+	Expr propExpr = prop.get()->expr;
+	make_non_replaceable(propExpr);
+	root = new Hyp(propExpr, this);
 	root->buildUp();
 }
 
