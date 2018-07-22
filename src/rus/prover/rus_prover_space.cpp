@@ -82,14 +82,29 @@ Return Space::info(uint index, string what) {
 				if (ProofExp* pr = dynamic_cast<ProofExp*>(p.get())) {
 					rus::Step* step = pr->child->step();
 					rus::Proof* proof = make_proof(step, prop.id(), prop.get());
-					oss << "\t\t<proof expr=\"" << show(step->expr) << "\"><![CDATA[";
+					oss << "\t\t<proof expr=\"" << show(step->expr) << "\">";
+					oss << "\t\t<![CDATA[\n";
 					proof->write(oss);
+					oss << "\n";
+					oss << "\t\t]]>\n";
 					delete proof;
-					oss << "]]></proof>\n";
+					oss << "\t\t<substitution>\n";
+					oss << "\t\t<![CDATA[\n";
+					oss << show(pr->sub);
+					oss << "\t\t]]>\n";
+					oss << "\t\t</substitution>\n";
+					oss << "\t</proof>\n";
 				} else if (ProofTop* pr = dynamic_cast<ProofTop*>(p.get())) {
-					oss << "\t\t<proof expr=\"" << show(pr->expr) << "\"><![CDATA[";
+					oss << "\t\t<proof expr=\"" << show(pr->expr) << "\">";
+					oss << "<![CDATA[";
 					oss << "hyp " << pr->hyp.ind + 1;
-					oss << "]]></proof>\n";
+					oss << "]]>\n";
+					oss << "\t\t<substitution>\n";
+					oss << "\t\t<![CDATA[\n";
+					oss << show(pr->sub);
+					oss << "\t\t]]>\n";
+					oss << "\t\t</substitution>\n";
+					oss << "\t</proof>\n";
 				}
 			}
 		}

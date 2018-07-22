@@ -6,10 +6,10 @@
 namespace mdl { namespace rus { namespace prover {
 
 template<class D>
-using Unified = map<D, Subst>;
+using Matched = map<D, Subst>;
 
 template<class D>
-using UnifiedTerms = map<D, LightTree*>;
+using MatchedTerms = map<D, LightTree*>;
 
 template<class D>
 struct Index {
@@ -43,8 +43,8 @@ struct Index {
 			}
 		}
 	}
-	Unified<Data> match_forth(const LightTree& t) const {
-		Unified<Data> unif;
+	Matched<Data> match_forth(const LightTree& t) const {
+		Matched<Data> unif;
 		for (const auto& p : vars) {
 			LightSymbol v = p.first;
 			if (v.type == t.type()) {
@@ -59,7 +59,7 @@ struct Index {
 			const Node& n = rules.at(t.rule());
 			for (const Data& d : n.data) unif[d];
 			auto ch = t.children().begin();
-			Unified<Data> un[n.child.size()];
+			Matched<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
 				un[c++] = i->match_forth(*(ch++)->get());
@@ -68,8 +68,8 @@ struct Index {
 		}
 		return unif;
 	}
-	Unified<Data> match_back(const LightTree& t) const {
-		Unified<Data> unif;
+	Matched<Data> match_back(const LightTree& t) const {
+		Matched<Data> unif;
 		if (t.kind() == LightTree::VAR) {
 			LightSymbol tv = t.var();
 			for (const auto& p : vars) {
@@ -101,7 +101,7 @@ struct Index {
 			const Node& n = rules.at(t.rule());
 			for (const Data& d : n.data) unif[d];
 			auto ch = t.children().begin();
-			Unified<Data> un[n.child.size()];
+			Matched<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
 				un[c++] = i->match_back(*(ch++)->get());
@@ -166,9 +166,9 @@ private:
 		return ret;
 	}
 
-	static UnifiedTerms<Data> gather_terms(const Rule* r, const Node& n) {
-		UnifiedTerms<Data> ret;
-		UnifiedTerms<Data> un[n.child.size()];
+	static MatchedTerms<Data> gather_terms(const Rule* r, const Node& n) {
+		MatchedTerms<Data> ret;
+		MatchedTerms<Data> un[n.child.size()];
 		for (const Data& d : n.data) {
 			ret[d] = new LightTree(r, LightTree::Children());
 		}
@@ -179,8 +179,8 @@ private:
 		if (c > 0) gather(r, ret, un, c);
 		return ret;
 	}
-	static UnifiedTerms<Data> gather_terms(const Index* i) {
-		UnifiedTerms<Data> ret;
+	static MatchedTerms<Data> gather_terms(const Index* i) {
+		MatchedTerms<Data> ret;
 		for (const auto& p : i->vars)
 			for (const auto& d : p.second)
 			ret[d] = new LightTree(p.first);
@@ -190,7 +190,7 @@ private:
 		}
 		return ret;
 	}
-	static void gather(const Rule* r, UnifiedTerms<D>& u, UnifiedTerms<D> w[], uint sz) {
+	static void gather(const Rule* r, MatchedTerms<D>& u, MatchedTerms<D> w[], uint sz) {
 		for (auto p : w[0]) {
 			D d = p.first;
 			LightTree::Children ch;
@@ -203,7 +203,7 @@ private:
 			u[d] = new LightTree(r, ch);
 		}
 	}
-	static void intersect(Unified<D>& u, Unified<D> w[], uint sz) {
+	static void intersect(Matched<D>& u, Matched<D> w[], uint sz) {
 		for (auto p : w[0]) {
 			D d = p.first;
 			Subst s = p.second;

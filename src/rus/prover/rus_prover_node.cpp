@@ -116,8 +116,8 @@ private:
 	bool         isEmpty_;
 };
 
-struct UnifSym {
-	UnifSym() : sub(false), term(nullptr) { }
+struct Unified {
+	Unified() : sub(false), term(nullptr) { }
 	operator bool() const{
 		return sub;
 	}
@@ -125,7 +125,7 @@ struct UnifSym {
 	LightTree* term;
 };
 
-UnifSym unify_both(const vector<const LightTree*>& ex) {
+Unified unify(const vector<const LightTree*>& ex) {
 	const Rule* r = nullptr;
 	vector<LightSymbol> vars;
 	vector<const LightTree::Children*> rules;
@@ -136,14 +136,14 @@ UnifSym unify_both(const vector<const LightTree*>& ex) {
 			if (!r) {
 				r = t->rule();
 			} else if (r != t->rule()) {
-				return UnifSym();
+				return Unified();
 			}
 			rules.push_back(&t->children());
 			break;
 		default: assert(false && "no term in unify_both");
 		}
 	}
-	UnifSym ret;
+	Unified ret;
 	if (r) {
 		LightTree::Children ch;
 		for (uint i = 0; i < r->arity(); ++ i) {
@@ -151,9 +151,9 @@ UnifSym unify_both(const vector<const LightTree*>& ex) {
 			for (const auto t : rules) {
 				x.push_back((*t)[i].get());
 			}
-			UnifSym s = unify_both(x);
+			Unified s = unify(x);
 			if (!ret.sub.join(s.sub)) {
-				return UnifSym();
+				return Unified();
 			}
 			ch.push_back(make_unique<LightTree>(*ret.term));
 		}
@@ -163,7 +163,7 @@ UnifSym unify_both(const vector<const LightTree*>& ex) {
 				ret.sub.join(Subst(s.lit, *ret.term));
 			} else if (Rule* sup = find_super(r->type(), s.type)) {
 				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(*ret.term))));
-			} else return UnifSym();
+			} else return Unified();
 		}
 	} else {
 		std::sort(
@@ -179,7 +179,7 @@ UnifSym unify_both(const vector<const LightTree*>& ex) {
 				ret.sub.join(Subst(s.lit, lv));
 			} else if (Rule* sup = find_super(lv.type, s.type)) {
 				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
-			} else return UnifSym();
+			} else return Unified();
 		}
 	}
 	return ret;
@@ -187,7 +187,7 @@ UnifSym unify_both(const vector<const LightTree*>& ex) {
 
 struct MultySub {
 	MultySub() : ok(true) { }
-	map<uint, UnifSym> msub_;
+	map<uint, Unified> msub_;
 	bool ok;
 };
 
@@ -204,7 +204,7 @@ struct MultyTree {
 	MultySub makeSubs() const {
 		MultySub ret;
 		for (const auto& p : msub_) {
-			if (UnifSym s = unify_both(p.second)) {
+			if (Unified s = unify(p.second)) {
 				ret.msub_[p.first] = s;
 			} else {
 				ret.ok = false;
@@ -229,9 +229,11 @@ inline bool intersects(const Subst& s1, const Subst& s2) {
 	return false;
 }
 
-Subst unify_subs(const MultyTree& t, bool& ok) {
+Subst unify_subs(const MultyTree& t) {
 	MultySub m = t.makeSubs();
-	ok = m.ok;
+	if (!m.ok) {
+		return Subst(false);
+	}
 	Subst com;
 	Subst gen;
 	for (auto& p : m.msub_) {
@@ -243,7 +245,7 @@ Subst unify_subs(const MultyTree& t, bool& ok) {
 		return com;
 	} else {
 		MultyTree t1(com, gen);
-		return unify_subs(t1, ok);
+		return unify_subs(t1);
 	}
 }
 
@@ -262,16 +264,22 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	}
 	while (true) {
 		vector<ProofHyp*> ch;
+		cout << "UNIFYING: \n--------------" << endl;
 		for (uint i = 0; i < ind.size(); ++ i) {
-
-			ch.push_back(pr->premises[i].get()->proofs[ind[i]].get());
+			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
+			cout << i << ": " << show(ph->expr) << "\nsub: \n" << show(ph->sub) << endl;
+			ch.push_back(ph);
 		}
+		cout << "-------------" << endl;
 		MultyTree t(ch);
-		bool ok = true;
-		Subst sub = unify_subs(t, ok);
-		if (ok) {
+		Subst sub = unify_subs(t);
+		if (sub) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
+			cout << "OK:\n" << show(sub) << endl;
+		} else {
+			cout << "FAIL" << endl;
 		}
+		cout << endl << endl << endl;
 		if (!ind.hasNext()) {
 			break;
 		}

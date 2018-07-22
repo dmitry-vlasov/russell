@@ -66,7 +66,7 @@ string show(const LightTree& tree, bool full) {
 string show(const Subst& s) {
 	string str;
 	for (const auto& p : s.sub()) {
-		str += Lex::toStr(p.first) + " --> " + show(p.second) + "\n";
+		str += Lex::toStr(p.first) + "* --> " + show(p.second) + "\n";
 	}
 	return str;
 }
