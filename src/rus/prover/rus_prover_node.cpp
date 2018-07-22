@@ -22,7 +22,7 @@ inline Symbol fresh_var(Symbol v, uint n) {
 	);
 }
 
-static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, uint>& vars) {
+static void make_free_vars_fresh(const Assertion* a, Subst& s, map<uint, uint>& vars) {
 	for (auto& v : a->vars.v) {
 		if (!s.sub().count(v.lit)) {
 			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
@@ -32,13 +32,13 @@ static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, 
 	}
 }
 
-Prop::Prop(const PropRef& r, const Substitution& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
+Prop::Prop(const PropRef& r, const Subst& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
 	make_free_vars_fresh(r.ass, sub, space->vars);
 }
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
-		premises.emplace_back(new Hyp(apply(sub, h.get()->expr), this));
+		premises.emplace_back(new Hyp(apply(sub, convert_tree(*h.get()->expr.tree())), this));
 	}
 	for (auto& p : premises) {
 		p.get()->complete();
@@ -46,7 +46,7 @@ void Prop::buildUp() {
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.unify_back(expr.tree())) {
+	for (const auto& p : space->hyps.unify_back(&expr)) {
 		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
 	}
 	queue<Node*> downs;
@@ -60,7 +60,7 @@ void Hyp::complete() {
 }
 
 void Hyp::buildUp() {
-	for (const auto& p : space->assertions.unify_forth(expr.tree())) {
+	for (const auto& p : space->assertions.unify_forth(&expr)) {
 		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
 			variants.emplace_back(new Prop(p.first, p.second, this));
 		}
@@ -121,18 +121,18 @@ struct UnifSym {
 	operator bool() const{
 		return sub;
 	}
-	Substitution sub;
-	Tree* term;
+	Subst      sub;
+	LightTree* term;
 };
 
-UnifSym unify_both(const vector<const Tree*>& ex) {
+UnifSym unify_both(const vector<const LightTree*>& ex) {
 	const Rule* r = nullptr;
-	vector<const Symbol*> vars;
-	vector<const Tree::Children*> rules;
+	vector<LightSymbol> vars;
+	vector<const LightTree::Children*> rules;
 	for (const auto& t : ex) {
 		switch (t->kind()) {
-		case Tree::VAR: vars.push_back(t->var()); break;
-		case Tree::NODE:
+		case LightTree::VAR: vars.push_back(t->var()); break;
+		case LightTree::NODE:
 			if (!r) {
 				r = t->rule();
 			} else if (r != t->rule()) {
@@ -145,9 +145,9 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 	}
 	UnifSym ret;
 	if (r) {
-		Tree::Children ch;
+		LightTree::Children ch;
 		for (uint i = 0; i < r->arity(); ++ i) {
-			vector<const Tree*> x;
+			vector<const LightTree*> x;
 			for (const auto t : rules) {
 				x.push_back((*t)[i].get());
 			}
@@ -155,30 +155,30 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 			if (!ret.sub.join(s.sub)) {
 				return UnifSym();
 			}
-			ch.emplace_back(new Tree(*ret.term));
+			ch.push_back(make_unique<LightTree>(*ret.term));
 		}
-		ret.term = new Tree(r->id(), ch);
+		ret.term = new LightTree(r, ch);
 		for (auto s : vars) {
-			if (r->type() == s->type()) {
-				ret.sub.join(Substitution(s->lit, *ret.term));
-			} else if (Rule* sup = find_super(r->type(), s->type())) {
-				ret.sub.join(Substitution(s->lit, Tree(sup->id(), {new Tree(*ret.term)})));
+			if (r->type() == s.type) {
+				ret.sub.join(Subst(s.lit, *ret.term));
+			} else if (Rule* sup = find_super(r->type(), s.type)) {
+				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(*ret.term))));
 			} else return UnifSym();
 		}
 	} else {
 		std::sort(
 			vars.begin(),
 			vars.end(),
-			[](const Symbol* v1, const Symbol* v2) {
-				return *v1->type() < *v2->type();
+			[](const LightSymbol& v1, const LightSymbol& v2) {
+				return *v1.type < *v2.type;
 			}
 		);
-		const Symbol* lv = *vars.begin();
+		LightSymbol lv = *vars.begin();
 		for (auto s : vars) {
-			if (lv->type() == s->type()) {
-				ret.sub.join(Substitution(s->lit, *lv));
-			} else if (Rule* sup = find_super(lv->type(), s->type())) {
-				ret.sub.join(Substitution(s->lit, Tree(sup->id(), {new Tree(*lv)})));
+			if (lv.type == s.type) {
+				ret.sub.join(Subst(s.lit, lv));
+			} else if (Rule* sup = find_super(lv.type, s.type)) {
+				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
 			} else return UnifSym();
 		}
 	}
@@ -192,7 +192,7 @@ struct MultySub {
 };
 
 struct MultyTree {
-	MultyTree(const Substitution& s1, const Substitution& s2) {
+	MultyTree(const Subst& s1, const Subst& s2) {
 		add(s1);
 		add(s2);
 	}
@@ -215,28 +215,28 @@ struct MultyTree {
 	}
 
 private:
-	void add(const Substitution& s) {
+	void add(const Subst& s) {
 		for (const auto& p : s.sub())
 			msub_[p.first].push_back(&p.second);
 	}
-	map<uint, vector<const Tree*>> msub_;
+	map<uint, vector<const LightTree*>> msub_;
 };
 
-inline bool intersects(const Substitution& s1, const Substitution& s2) {
+inline bool intersects(const Subst& s1, const Subst& s2) {
 	for (const auto& p : s1.sub()) {
 		if (s2.sub().count(p.first)) return true;
 	}
 	return false;
 }
 
-Substitution unify_subs(const MultyTree& t, bool& ok) {
+Subst unify_subs(const MultyTree& t, bool& ok) {
 	MultySub m = t.makeSubs();
 	ok = m.ok;
-	Substitution com;
-	Substitution gen;
+	Subst com;
+	Subst gen;
 	for (auto& p : m.msub_) {
-		if (!com.join(p.second.sub)) return Substitution(false);
-		if (!gen.join(p.first, *p.second.term)) Substitution(false);
+		if (!com.join(p.second.sub)) return Subst(false);
+		if (!gen.join(p.first, *p.second.term)) Subst(false);
 	}
 	if (!intersects(com, gen)) {
 		com.join(gen);
@@ -268,7 +268,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		}
 		MultyTree t(ch);
 		bool ok = true;
-		Substitution sub = unify_subs(t, ok);
+		Subst sub = unify_subs(t, ok);
 		if (ok) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
 		}

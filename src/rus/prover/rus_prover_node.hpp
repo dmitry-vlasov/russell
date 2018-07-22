@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rus_ast.hpp"
+#include "rus_prover_expr.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -48,12 +49,12 @@ struct Node {
 struct Prop : public Node {
 	typedef vector<unique_ptr<Hyp>> Premises;
 	typedef vector<unique_ptr<ProofProp>> Proofs;
-	Hyp*         parent;
-	Premises     premises;
-	Proofs       proofs;
-	PropRef      prop;
-	Substitution sub;
-	Prop(const PropRef& r, const Substitution& s, Hyp* p);
+	Hyp*     parent;
+	Premises premises;
+	Proofs   proofs;
+	PropRef  prop;
+	Subst    sub;
+	Prop(const PropRef& r, const Subst& s, Hyp* p);
 
 	void buildUp();
 	vector<Node*> buildDown() override;
@@ -63,12 +64,12 @@ struct Prop : public Node {
 struct Hyp : public Node {
 	typedef vector<unique_ptr<Prop>> Variants;
 	typedef vector<unique_ptr<ProofHyp>> Proofs;
-	Prop*    parent;
-	Variants variants;
-	Proofs   proofs;
-	Expr     expr;
-	Hyp(const Expr& e, Space* s) : Node(s), parent(nullptr), expr(e) { complete(); }
-	Hyp(const Expr& e, Prop* p) : Node(p), parent(p), expr(p ? apply(p->sub, e) : e) { }
+	Prop*     parent;
+	Variants  variants;
+	Proofs    proofs;
+	LightTree expr;
+	Hyp(const LightTree& e, Space* s) : Node(s), parent(nullptr), expr(e) { complete(); }
+	Hyp(const LightTree& e, Prop* p) : Node(p), parent(p), expr(p ? apply(p->sub, e) : e) { }
 
 	void buildUp();
 	vector<Node*> buildDown() override;
@@ -78,25 +79,25 @@ struct Hyp : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const Substitution& s) : sub(s), new_(true) { }
+	ProofNode(const Subst& s) : sub(s), new_(true) { }
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() = 0;
-	Substitution sub;
-	bool         new_;
+	Subst sub;
+	bool  new_;
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const Substitution& s);
+	ProofHyp(Hyp& n, const Subst& s);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;
-	Hyp& node;
-	Expr expr;
+	Hyp&      node;
+	LightTree expr;
 };
 
 struct ProofTop : public ProofHyp {
-	ProofTop(Hyp& n, const HypRef& h, const Substitution& s);
+	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
 	string show() const override;
 	rus::Ref* ref() override;
 
@@ -104,7 +105,7 @@ struct ProofTop : public ProofHyp {
 };
 
 struct ProofExp : public ProofHyp {
-	ProofExp(Hyp& h, ProofProp* c, const Substitution& s = Substitution());
+	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
 	string show() const override;
 	rus::Ref* ref() override;
 
@@ -112,7 +113,7 @@ struct ProofExp : public ProofHyp {
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p, const Substitution& s = Substitution());
+	ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s = Subst());
 	~ProofProp() override;
 	rus::Step* step();
 	rus::Ref* ref() override;

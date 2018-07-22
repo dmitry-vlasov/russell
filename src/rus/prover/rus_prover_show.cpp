@@ -73,7 +73,7 @@ string Prop::show() const {
 	ret += "</assertion>\n";
 	ret += "\t<substitution>";
 	ret += "<![CDATA[";
-	ret += rus::show(sub);
+	ret += rus::prover::show(sub);
 	ret += "]]>";
 	ret += "</substitution>\n";
 	ret += "</prop>\n";
@@ -90,7 +90,7 @@ string Hyp::show() const {
 	ret += show_children_idx(variants);
 	ret += ">\n";
 	ret += "\t<expression>";
-	ret += "<![CDATA[" + rus::show(expr) + "]]>";
+	ret += "<![CDATA[" + rus::prover::show(expr) + "]]>";
 	ret += "</expression>\n";
 	ret += string("</") + (parent ? "hyp" : "root") + ">\n";
 	return ret;

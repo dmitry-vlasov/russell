@@ -1,3 +1,4 @@
+#include "rus_prover_expr.hpp"
 #include "rus_prover_space.hpp"
 #include "rus_prover_node.hpp"
 
@@ -22,7 +23,10 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			}
 			uint c = 0;
 			for (auto& prop : ass->props) {
-				assertions.add(prop.get()->expr.tree(), PropRef(ass, c++));
+				assertions.add(
+					convert_tree(*prop.get()->expr.tree()),
+					PropRef(ass, c++)
+				);
 			}
 		} else {
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
@@ -33,12 +37,12 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 		HypRef hypRef(a, i);
 		Expr hypExpr = hypRef.get()->expr;
 		make_non_replaceable(hypExpr);
-		hyps.add(hypExpr.tree(), hypRef);
+		hyps.add(convert_tree(*hypExpr.tree()), hypRef);
 	}
 	cout << "\nHYPS:\n" << hyps.show() << endl;
 	Expr propExpr = prop.get()->expr;
 	make_non_replaceable(propExpr);
-	root = new Hyp(propExpr, this);
+	root = new Hyp(convert_tree(*propExpr.tree()), this);
 	root->buildUp();
 }
 

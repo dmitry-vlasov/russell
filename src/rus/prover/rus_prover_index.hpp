@@ -1,14 +1,15 @@
 #pragma once
 
+#include "rus_prover_expr.hpp"
 #include "rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
 template<class D>
-using Unified = map<D, Substitution>;
+using Unified = map<D, Subst>;
 
 template<class D>
-using UnifiedTerms = map<D, Tree*>;
+using UnifiedTerms = map<D, LightTree*>;
 
 template<class D>
 struct Index {
@@ -17,44 +18,44 @@ struct Index {
 		vector<Data>   data;
 		vector<Index*> child;
 	};
-	map<const Rule*, Node>     rules;
-	map<Symbol, vector<Data>> vars;
+	map<const Rule*, Node>    rules;
+	map<LightSymbol, vector<Data>> vars;
 
-	void add(const Tree* t, const D& d) {
-		if (t->kind() == Tree::VAR) {
-			vars[*t->var()].push_back(d);
+	void add(const LightTree& t, const D& d) {
+		if (t.kind() == LightTree::VAR) {
+			vars[t.var()].push_back(d);
 		} else {
-			if (!t->children().size()) {
-				rules[t->rule()].data.push_back(d);
+			if (!t.children().size()) {
+				rules[t.rule()].data.push_back(d);
 			} else {
-				bool is_new = !rules.count(t->rule());
-				vector<Index<D>*>& ch = rules[t->rule()].child;
+				bool is_new = !rules.count(t.rule());
+				vector<Index<D>*>& ch = rules[t.rule()].child;
 
 				if (is_new) {
-					for (const auto& c : t->children()) {
+					for (const auto& c : t.children()) {
 						ch.push_back(new Index<D>);
 					}
 				}
 				auto i = ch.begin();
-				for (const auto& c : t->children()) {
-					(*(i++))->add(c.get(), d);
+				for (const auto& c : t.children()) {
+					(*(i++))->add(*c.get(), d);
 				}
 			}
 		}
 	}
-	Unified<Data> unify_forth(const Tree* t) const {
+	Unified<Data> unify_forth(const LightTree* t) const {
 		Unified<Data> unif;
 		for (const auto& p : vars) {
-			const Symbol& v = p.first;
-			if (v.type() == t->type()) {
+			LightSymbol v = p.first;
+			if (v.type == t->type()) {
 				for (const Data& d : p.second)
 					unif[d].join(v.lit, *t);
-			} else if (Rule* super = find_super(t->type(), v.type())) {
+			} else if (Rule* super = find_super(t->type(), v.type)) {
 				for (const Data& d : p.second)
-					unif[d].join(v.lit, Tree(super->id(), {new Tree(*t)}));
+					unif[d].join(v.lit, LightTree(super, new LightTree(*t)));
 			}
 		}
-		if (t->kind() == Tree::NODE && rules.count(t->rule())) {
+		if (t->kind() == LightTree::NODE && rules.count(t->rule())) {
 			const Node& n = rules.at(t->rule());
 			for (const Data& d : n.data) unif[d];
 			auto ch = t->children().begin();
@@ -67,18 +68,18 @@ struct Index {
 		}
 		return unif;
 	}
-	Unified<Data> unify_back(const Tree* t) const {
+	Unified<Data> unify_back(const LightTree* t) const {
 		Unified<Data> unif;
-		if (t->kind() == Tree::VAR) {
-			Symbol tv = *t->var();
+		if (t->kind() == LightTree::VAR) {
+			LightSymbol tv = t->var();
 			for (const auto& p : vars) {
-				Symbol iv = p.first;
-				if (iv.type() == tv.type()) {
+				LightSymbol iv = p.first;
+				if (iv.type == tv.type) {
 					for (const Data& d : p.second)
 						unif[d].join(tv.lit, iv);
-				} else if (Rule* super = find_super(iv.type(), tv.type())) {
+				} else if (Rule* super = find_super(iv.type, tv.type)) {
 					for (const Data& d : p.second) {
-						Tree tr(super->id(), {new Tree(iv)});
+						LightTree tr(super, new LightTree(iv));
 						unif[d].join(tv.lit, tr);
 					}
 				}
@@ -86,12 +87,12 @@ struct Index {
 			for (const auto& p : rules) {
 				const Rule* r = p.first;
 				const Node& n = p.second;
-				if (tv.type() == r->type()) {
+				if (tv.type == r->type()) {
 					for (const auto& q : gather_terms(r, n))
 						unif[q.first].join(tv.lit, *q.second);
-				} else if (Rule* super = find_super(r->type(), tv.type())) {
+				} else if (Rule* super = find_super(r->type(), tv.type)) {
 					for (const auto& q : gather_terms(r, n)) {
-						Tree tr(super->id(), {new Tree(*q.second)});
+						LightTree tr(super, new LightTree(*q.second));
 						unif[q.first].join(tv.lit, tr);
 					}
 				}
@@ -128,7 +129,7 @@ private:
 		map<D, string> ret;
 		for (const auto& p : vars) {
 			for (const auto& d : p.second) {
-				ret[d] = rus::show(p.first);
+				ret[d] = rus::prover::show(p.first);
 			}
 		}
 		for (const auto& p : rules) {
@@ -168,7 +169,9 @@ private:
 	static UnifiedTerms<Data> gather_terms(const Rule* r, const Node& n) {
 		UnifiedTerms<Data> ret;
 		UnifiedTerms<Data> un[n.child.size()];
-		for (const Data& d : n.data) ret[d] = new Tree(r->id(), Tree::Children());
+		for (const Data& d : n.data) {
+			ret[d] = new LightTree(r, LightTree::Children());
+		}
 		int c = 0;
 		for (const auto i : n.child) {
 			un[c++] = gather_terms(i);
@@ -180,7 +183,7 @@ private:
 		UnifiedTerms<Data> ret;
 		for (const auto& p : i->vars)
 			for (const auto& d : p.second)
-			ret[d] = new Tree(p.first);
+			ret[d] = new LightTree(p.first);
 		for (const auto& p : i->rules) {
 			for (const auto& q : gather_terms(p.first, p.second))
 				ret[q.first] = q.second;
@@ -190,20 +193,20 @@ private:
 	static void gather(const Rule* r, UnifiedTerms<D>& u, UnifiedTerms<D> w[], uint sz) {
 		for (auto p : w[0]) {
 			D d = p.first;
-			Tree::Children ch;
+			LightTree::Children ch;
 			ch.emplace_back(p.second);
 			int i = 1;
 			for (; i < sz; ++ i) {
 				assert(w[i].count(d));
 				ch.emplace_back(w[i][d]);
 			}
-			u[d] = new Tree(r->id(), ch);
+			u[d] = new LightTree(r, ch);
 		}
 	}
 	static void intersect(Unified<D>& u, Unified<D> w[], uint sz) {
 		for (auto p : w[0]) {
 			D d = p.first;
-			Substitution s = p.second;
+			Subst s = p.second;
 			int i = 1;
 			for (; i < sz; ++ i) {
 				if (!w[i].count(d) || !s.join(w[i][d])) {
