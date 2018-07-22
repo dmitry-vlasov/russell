@@ -117,7 +117,7 @@ private:
 };
 
 struct Unified {
-	Unified() : sub(false), term(nullptr) { }
+	Unified(bool ok = false) : sub(ok), term(nullptr) { }
 	operator bool() const{
 		return sub;
 	}
@@ -125,14 +125,54 @@ struct Unified {
 	LightTree* term;
 };
 
+enum class UnifyKind {
+	UNDEF,
+	VAR,
+	CONST,
+	RULE,
+	DEFAULT = UNDEF
+};
+
+
 Unified unify(const vector<const LightTree*>& ex) {
 	const Rule* r = nullptr;
 	vector<LightSymbol> vars;
+
+	//cout << "exps.size() = " << ex.size() << endl;
+	//cout << "Exps:" << endl;
+	//for (const auto& t : ex) {
+	//	cout << "\t" << show(*t) << endl;
+	//}
+	//cout << endl;
+
 	vector<const LightTree::Children*> rules;
+
+	UnifyKind kind = UnifyKind::DEFAULT;
+
 	for (const auto& t : ex) {
 		switch (t->kind()) {
-		case LightTree::VAR: vars.push_back(t->var()); break;
+		case LightTree::VAR:
+			if (t->var().rep) {
+				if (kind == UnifyKind::UNDEF) {
+					kind = UnifyKind::VAR;
+				} else if (kind != UnifyKind::VAR) {
+					return Unified();
+				}
+				vars.push_back(t->var());
+			} else {
+				if (kind == UnifyKind::UNDEF) {
+					kind = UnifyKind::CONST;
+				} else if (kind != UnifyKind::CONST) {
+					return Unified();
+				}
+			}
+			break;
 		case LightTree::NODE:
+			if (kind == UnifyKind::UNDEF) {
+				kind = UnifyKind::RULE;
+			} else if (kind != UnifyKind::RULE) {
+				return Unified();
+			}
 			if (!r) {
 				r = t->rule();
 			} else if (r != t->rule()) {
@@ -143,7 +183,7 @@ Unified unify(const vector<const LightTree*>& ex) {
 		default: assert(false && "no term in unify_both");
 		}
 	}
-	Unified ret;
+	Unified ret(true);
 	if (r) {
 		LightTree::Children ch;
 		for (uint i = 0; i < r->arity(); ++ i) {
@@ -153,9 +193,10 @@ Unified unify(const vector<const LightTree*>& ex) {
 			}
 			Unified s = unify(x);
 			if (!ret.sub.join(s.sub)) {
+				//cout << "A" << endl;
 				return Unified();
 			}
-			ch.push_back(make_unique<LightTree>(*ret.term));
+			ch.push_back(make_unique<LightTree>(*s.term));
 		}
 		ret.term = new LightTree(r, ch);
 		for (auto s : vars) {
@@ -163,7 +204,10 @@ Unified unify(const vector<const LightTree*>& ex) {
 				ret.sub.join(Subst(s.lit, *ret.term));
 			} else if (Rule* sup = find_super(r->type(), s.type)) {
 				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(*ret.term))));
-			} else return Unified();
+			} else {
+				//cout << "B" << endl;
+				return Unified();
+			}
 		}
 	} else {
 		std::sort(
@@ -173,15 +217,41 @@ Unified unify(const vector<const LightTree*>& ex) {
 				return *v1.type < *v2.type;
 			}
 		);
-		LightSymbol lv = *vars.begin();
-		for (auto s : vars) {
-			if (lv.type == s.type) {
-				ret.sub.join(Subst(s.lit, lv));
-			} else if (Rule* sup = find_super(lv.type, s.type)) {
-				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
-			} else return Unified();
+		LightSymbol lv;
+		if (!vars.size()) {
+			//cout << "C: " << show(lv) << " == ";
+			for (const auto& t : ex) {
+				if (t->kind() == LightTree::VAR) {
+					if (lv.is_undef()) {
+						lv = t->var();
+					} else if (t->var() != lv) {
+						return Unified();
+					}
+				} else {
+					return Unified();
+				}
+				//cout << show(t->var()) << " ";
+			}
+			//cout << "\nC!" << endl;
+		} else {
+			for (auto s : vars) {
+				if (lv.is_undef()) {
+					lv = s;
+				}
+				if (lv.type == s.type) {
+					ret.sub.join(Subst(s.lit, lv));
+				} else if (Rule* sup = find_super(lv.type, s.type)) {
+					ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
+				} else {
+					//cout << "D" << endl;
+					return Unified();
+				}
+			}
 		}
+		ret.term = new LightTree(lv);
 	}
+	//cout << "E" << endl;
+	//exit(0);
 	return ret;
 }
 

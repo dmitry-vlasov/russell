@@ -63,10 +63,27 @@ string show(const LightTree& tree, bool full) {
 	}
 }
 
+string show_ast(const LightTree& tree) {
+	if (tree.kind() == LightTree::VAR) {
+		return show(tree.var(), true);
+	} else {
+		string str("[[");
+		uint i = 0;
+		for (auto s : tree.rule()->term.symbols) {
+			if (s.type()) {
+				str += show_ast(*tree.children()[i++].get()) + ' ';
+			} else {
+				str += show(s) + ' ';
+			}
+		}
+		return str + "]]";
+	}
+}
+
 string show(const Subst& s) {
 	string str;
 	for (const auto& p : s.sub()) {
-		str += Lex::toStr(p.first) + "* --> " + show(p.second) + "\n";
+		str += Lex::toStr(p.first) + "* --> " + show_ast(p.second) + "\n";
 	}
 	return str;
 }

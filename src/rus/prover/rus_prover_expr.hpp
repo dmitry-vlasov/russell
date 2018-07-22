@@ -276,6 +276,7 @@ rus::Substitution convert_sub(const Subst&);
 
 string show(LightSymbol s, bool full = true);
 string show(const LightTree&, bool full = true);
+string show_ast(const LightTree&);
 string show(const Subst& s);
 
 inline ostream& operator << (ostream& os, const LightSymbol& s) {
