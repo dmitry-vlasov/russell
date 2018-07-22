@@ -103,11 +103,15 @@ vector<string> Rules::Node::show() const {
 Tree::Node::Node(Id i) : rule(i), children() { }
 Tree::Node::Node(Id i, const Tree::Children& ch) : rule(i), children() {
 	children.reserve(ch.size());
-	for (auto& c : ch) children.push_back(make_unique<Tree>(*c.get()));
+	for (auto& c : ch) {
+		children.push_back(make_unique<Tree>(*c.get()));
+	}
 }
 Tree::Node::Node(const Node& n) : rule(n.rule), children() {
 	children.reserve(n.children.size());
-	for (auto& c : n.children) children.push_back(make_unique<Tree>(*c.get()));
+	for (auto& c : n.children) {
+		children.push_back(make_unique<Tree>(*c.get()));
+	}
 }
 Tree::Node::Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
 Tree::Node::Node(Id i, Tree::Children&& ch) : rule(i), children(std::move(ch)) { }

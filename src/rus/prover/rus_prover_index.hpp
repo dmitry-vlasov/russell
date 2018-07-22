@@ -43,35 +43,35 @@ struct Index {
 			}
 		}
 	}
-	Unified<Data> unify_forth(const LightTree* t) const {
+	Unified<Data> match_forth(const LightTree& t) const {
 		Unified<Data> unif;
 		for (const auto& p : vars) {
 			LightSymbol v = p.first;
-			if (v.type == t->type()) {
+			if (v.type == t.type()) {
 				for (const Data& d : p.second)
-					unif[d].join(v.lit, *t);
-			} else if (Rule* super = find_super(t->type(), v.type)) {
+					unif[d].join(v.lit, t);
+			} else if (Rule* super = find_super(t.type(), v.type)) {
 				for (const Data& d : p.second)
-					unif[d].join(v.lit, LightTree(super, new LightTree(*t)));
+					unif[d].join(v.lit, LightTree(super, new LightTree(t)));
 			}
 		}
-		if (t->kind() == LightTree::NODE && rules.count(t->rule())) {
-			const Node& n = rules.at(t->rule());
+		if (t.kind() == LightTree::NODE && rules.count(t.rule())) {
+			const Node& n = rules.at(t.rule());
 			for (const Data& d : n.data) unif[d];
-			auto ch = t->children().begin();
+			auto ch = t.children().begin();
 			Unified<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
-				un[c++] = i->unify_forth((ch++)->get());
+				un[c++] = i->match_forth(*(ch++)->get());
 			}
 			if (c > 0) intersect(unif, un, c);
 		}
 		return unif;
 	}
-	Unified<Data> unify_back(const LightTree* t) const {
+	Unified<Data> match_back(const LightTree& t) const {
 		Unified<Data> unif;
-		if (t->kind() == LightTree::VAR) {
-			LightSymbol tv = t->var();
+		if (t.kind() == LightTree::VAR) {
+			LightSymbol tv = t.var();
 			for (const auto& p : vars) {
 				LightSymbol iv = p.first;
 				if (iv.type == tv.type) {
@@ -97,14 +97,14 @@ struct Index {
 					}
 				}
 			}
-		} else if (rules.count(t->rule())) {
-			const Node& n = rules.at(t->rule());
+		} else if (rules.count(t.rule())) {
+			const Node& n = rules.at(t.rule());
 			for (const Data& d : n.data) unif[d];
-			auto ch = t->children().begin();
+			auto ch = t.children().begin();
 			Unified<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
-				un[c++] = i->unify_back((ch++)->get());
+				un[c++] = i->match_back(*(ch++)->get());
 			}
 			if (c > 0) intersect(unif, un, c);
 		}

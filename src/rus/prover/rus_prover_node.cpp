@@ -46,7 +46,7 @@ void Prop::buildUp() {
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.unify_back(&expr)) {
+	for (const auto& p : space->hyps.match_back(expr)) {
 		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
 	}
 	queue<Node*> downs;
@@ -60,7 +60,7 @@ void Hyp::complete() {
 }
 
 void Hyp::buildUp() {
-	for (const auto& p : space->assertions.unify_forth(&expr)) {
+	for (const auto& p : space->assertions.match_forth(expr)) {
 		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
 			variants.emplace_back(new Prop(p.first, p.second, this));
 		}
