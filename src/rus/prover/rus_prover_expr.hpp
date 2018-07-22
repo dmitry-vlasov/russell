@@ -5,9 +5,19 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+enum class ReplMode {
+	KEEP_REPL,
+	DENY_REPL,
+	DEFAULT = KEEP_REPL
+};
+
 struct LightSymbol : public Literal {
 	LightSymbol() : type(nullptr) { }
-	LightSymbol(const rus::Symbol& s) : Literal(s), type(s.type()) { }
+	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) : Literal(s), type(s.type()) {
+		if (mode == ReplMode::DENY_REPL) {
+			rep = false;
+		}
+	}
 	LightSymbol(const LightSymbol& s) = default;
 	LightSymbol(LightSymbol&& s) = default;
 	uint literal() const { return Literal::lit; }
@@ -244,15 +254,15 @@ private:
 };
 
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree&);
-unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&);
+unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&, ReplMode = ReplMode::DEFAULT);
 unique_ptr<LightTree> apply_ptr(const Subst&, const LightTree&);
 unique_ptr<LightTree> apply_ptr(const Substitution&, const LightTree&);
 
 inline rus::Tree convert_tree(const LightTree& t) {
 	return rus::Tree(std::move(*convert_tree_ptr(t).release()));
 }
-inline LightTree convert_tree(const rus::Tree& t) {
-	return LightTree(std::move(*convert_tree_ptr(t).release()));
+inline LightTree convert_tree(const rus::Tree& t, ReplMode m = ReplMode::DEFAULT) {
+	return LightTree(std::move(*convert_tree_ptr(t, m).release()));
 }
 inline LightTree apply(const Subst& s, const LightTree& t) {
 	return LightTree(std::move(*apply_ptr(s, t).release()));

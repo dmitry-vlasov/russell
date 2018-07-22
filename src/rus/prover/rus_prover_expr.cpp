@@ -20,18 +20,18 @@ unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	}
 }
 
-unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree) {
+unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode) {
 	switch (tree.kind()) {
 	case rus::Tree::NODE: {
 		LightTree::Children ch;
 		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
-			ch.push_back(convert_tree_ptr(*c.get()));
+			ch.push_back(convert_tree_ptr(*c.get(), mode));
 		}
 		return make_unique<LightTree>(tree.rule(), std::move(ch));
 	}
 	case rus::Tree::VAR:
-		return make_unique<LightTree>(LightSymbol(*tree.var()));
+		return make_unique<LightTree>(LightSymbol(*tree.var(), mode));
 	default:
 		assert(false && "impossible");
 		return unique_ptr<LightTree>();

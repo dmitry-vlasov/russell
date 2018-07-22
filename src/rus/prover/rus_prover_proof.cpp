@@ -25,7 +25,7 @@ ProofHyp::~ProofHyp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) : ProofHyp(n, s), hyp(h) {
-	expr = convert_tree(*h.get()->expr.tree());
+	expr = convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL);
 }
 
 rus::Ref* ProofExp::ref() {
