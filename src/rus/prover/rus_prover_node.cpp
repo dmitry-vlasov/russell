@@ -205,7 +205,7 @@ struct MultyTree {
 		MultySub ret;
 		for (const auto& p : msub_) {
 			if (UnifSym s = unify_both(p.second)) {
-				ret.msub_[p.first.lit] = s;
+				ret.msub_[p.first] = s;
 			} else {
 				ret.ok = false;
 				break;
@@ -219,7 +219,7 @@ private:
 		for (const auto& p : s.sub())
 			msub_[p.first].push_back(&p.second);
 	}
-	map<Symbol, vector<const Tree*>> msub_;
+	map<uint, vector<const Tree*>> msub_;
 };
 
 inline bool intersects(const Substitution& s1, const Substitution& s2) {
@@ -263,6 +263,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	while (true) {
 		vector<ProofHyp*> ch;
 		for (uint i = 0; i < ind.size(); ++ i) {
+
 			ch.push_back(pr->premises[i].get()->proofs[ind[i]].get());
 		}
 		MultyTree t(ch);
