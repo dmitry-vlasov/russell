@@ -49,10 +49,13 @@ void Hyp::complete() {
 	for (const auto& p : space->hyps.match_back(expr)) {
 		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
 	}
+	cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
 	downs.push(this);
 	while (!downs.empty()) {
-		Node* n = downs.front(); downs.pop();
+		Node* n = downs.front();
+		cout << "DOWNING: " << n->ind << endl;
+		downs.pop();
 		for (auto x : n->buildDown()) {
 			downs.push(x);
 		}
@@ -68,32 +71,41 @@ void Hyp::buildUp() {
 }
 
 struct Ind {
-	Ind() : size_(0), hasNext_(true), isEmpty_(false) { }
+	Ind() : size_(0), fixed_(-1), hasNext_(false), isEmpty_(false) { }
 
 	void addDim(uint d) {
 		++size_;
 		if (d == 0) {
 			isEmpty_ = true;
 		}
+		if (d > 1) {
+			hasNext_ = true;
+		}
 		dims_.push_back(d);
 		ind_.push_back(0);
 	}
 	void addFixed(uint i) {
+		fixed_ = size_;
 		++size_;
 		dims_.push_back(-1);
 		ind_.push_back(i);
 	}
 	void makeNext() {
 		for (uint i = 0; i < size_; ++ i) {
-			if (dims_[i] == -1) continue;
+			if (dims_[i] == -1) {
+				continue;
+			}
 			if (ind_[i] + 1 < dims_[i]) {
 				++ ind_[i];
-				break;
+				hasNext_ =
+					(ind_[i] + 1 < dims_[i]) ||
+					((i + 1 < size_) && (fixed_ + 1 != size_));
+				return;
 			} else {
 				ind_[i] = 0;
 			}
 		}
-		hasNext_ = false;
+		assert(false && "this execution point should be unreacheable");
 	}
 	bool hasNext() const {
 		return size_ && hasNext_;
@@ -107,9 +119,30 @@ struct Ind {
 	uint operator[] (uint i) const {
 		return ind_[i];
 	}
+	string show() const {
+		if (empty()) return "empty";
+		string ret;
+		ret += "size: " + to_string(size_) + ", ";
+		ret += "dims: [";
+		for (auto d : dims_) {
+			ret += (d == -1 ? string("N") : to_string(d)) + " ";
+		}
+		ret += "]";
+		return ret;
+	}
+	string current() const {
+		if (empty()) return "empty";
+		string ret = "[";
+		for (auto i : ind_) {
+			ret += to_string(i) + " ";
+		}
+		ret += "]";
+		return ret;
+	}
 
 private:
 	uint         size_;
+	uint         fixed_;
 	vector<uint> dims_;
 	vector<uint> ind_;
 	bool         hasNext_;
@@ -125,13 +158,15 @@ struct Unified {
 	LightTree* term;
 };
 
-enum class UnifyKind {
-	UNDEF,
-	VAR,
-	CONST,
-	RULE,
-	DEFAULT = UNDEF
-};
+
+bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) {
+	for (auto e : ex) {
+		if (apply(unif.sub, *e) != *unif.term) {
+			return false;
+		}
+	}
+	return true;
+}
 
 
 Unified unify(const vector<const LightTree*>& ex) {
@@ -147,6 +182,7 @@ Unified unify(const vector<const LightTree*>& ex) {
 
 	vector<const LightTree::Children*> rules;
 
+	enum class UnifyKind {UNDEF, VAR, CONST, RULE, DEFAULT = UNDEF};
 	UnifyKind kind = UnifyKind::DEFAULT;
 
 	for (const auto& t : ex) {
@@ -252,6 +288,11 @@ Unified unify(const vector<const LightTree*>& ex) {
 	}
 	//cout << "E" << endl;
 	//exit(0);
+	/*if (!check_unification(ret, ex)) {
+		cout << "AAAAA" << endl;
+	} else {
+		cout << "OK" << endl;
+	}*/
 	return ret;
 }
 
@@ -332,9 +373,13 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	if (ind.empty()) {
 		return vector<Node*>();
 	}
+	cout << endl << "IND: " << ind.show() << endl << endl;
+	bool new_proofs = false;
 	while (true) {
 		vector<ProofHyp*> ch;
+		cout << "CURRENT: " << ind.current() << endl;
 		cout << "UNIFYING: \n--------------" << endl;
+		cout << "PROP: " << pr->ind << endl;
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
 			cout << i << ": " << show(ph->expr) << "\nsub: \n" << show(ph->sub) << endl;
@@ -346,6 +391,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		if (sub) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
 			cout << "OK:\n" << show(sub) << endl;
+			new_proofs = true;
 		} else {
 			cout << "FAIL" << endl;
 		}
@@ -355,16 +401,27 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		}
 		ind.makeNext();
 	}
-	return {pr};
+	if (new_proofs) {
+		return {pr};
+	} else {
+		return vector<Node*>();
+	}
 }
 
 vector<Node*> Prop::buildDown() {
+	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
+			cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
 			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get()));
+			new_proofs = true;
 		}
 	}
-	return {parent};
+	if (new_proofs) {
+		return {parent};
+	} else {
+		return vector<Node*>();
+	}
 }
 
 vector<Node*> Hyp::buildDown() {

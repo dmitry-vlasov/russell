@@ -114,6 +114,12 @@ Return Space::info(uint index, string what) {
 		data += "\t<tree>\n";
 		// TODO
 		data += "\t</tree>\n";
+	} else if (what == "all") {
+		for (auto n : nodes_) {
+			data += "\t<node>\n";
+			data += Indent::paragraph(n->show(), "\t\t") + "\n";
+			data += "\t</node>\n";
+		}
 	}
 	data += "</info>\n";
 	cout << endl << data << endl;

@@ -47,24 +47,44 @@ struct Index {
 		Matched<Data> unif;
 		for (const auto& p : vars) {
 			LightSymbol v = p.first;
-			if (v.type == t.type()) {
-				for (const Data& d : p.second)
-					unif[d].join(v.lit, t);
-			} else if (Rule* super = find_super(t.type(), v.type)) {
-				for (const Data& d : p.second)
-					unif[d].join(v.lit, LightTree(super, new LightTree(t)));
+			if (v.rep) {
+				if (v.type == t.type()) {
+					for (const Data& d : p.second) {
+						/*if (unif.count(d)) {
+							if (unif.at(d).consistent(v.lit, t)) {
+
+							}
+						} else {*/
+							unif[d].join(v.lit, t);
+						//}
+					}
+				} else if (Rule* super = find_super(t.type(), v.type)) {
+					for (const Data& d : p.second) {
+						unif[d].join(v.lit, LightTree(super, new LightTree(t)));
+					}
+				}
+			} else {
+				if (t.kind() == LightTree::VAR && v == t.var()) {
+					for (const Data& d : p.second) {
+						unif[d];
+					}
+				}
 			}
 		}
 		if (t.kind() == LightTree::NODE && rules.count(t.rule())) {
 			const Node& n = rules.at(t.rule());
-			for (const Data& d : n.data) unif[d];
+			for (const Data& d : n.data) {
+				unif[d];
+			}
 			auto ch = t.children().begin();
 			Matched<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
 				un[c++] = i->match_forth(*(ch++)->get());
 			}
-			if (c > 0) intersect(unif, un, c);
+			if (c > 0) {
+				intersect(unif, un, c);
+			}
 		}
 		return unif;
 	}
@@ -72,34 +92,49 @@ struct Index {
 		Matched<Data> unif;
 		if (t.kind() == LightTree::VAR) {
 			LightSymbol tv = t.var();
-			for (const auto& p : vars) {
-				LightSymbol iv = p.first;
-				if (iv.type == tv.type) {
-					for (const Data& d : p.second)
-						unif[d].join(tv.lit, iv);
-				} else if (Rule* super = find_super(iv.type, tv.type)) {
-					for (const Data& d : p.second) {
-						LightTree tr(super, new LightTree(iv));
-						unif[d].join(tv.lit, tr);
+			if (tv.rep) {
+				for (const auto& p : vars) {
+					LightSymbol iv = p.first;
+					if (iv.type == tv.type) {
+						for (const Data& d : p.second) {
+							unif[d].join(tv.lit, iv);
+						}
+					} else if (Rule* super = find_super(iv.type, tv.type)) {
+						for (const Data& d : p.second) {
+							LightTree tr(super, new LightTree(iv));
+							unif[d].join(tv.lit, tr);
+						}
 					}
 				}
-			}
-			for (const auto& p : rules) {
-				const Rule* r = p.first;
-				const Node& n = p.second;
-				if (tv.type == r->type()) {
-					for (const auto& q : gather_terms(r, n))
-						unif[q.first].join(tv.lit, *q.second);
-				} else if (Rule* super = find_super(r->type(), tv.type)) {
-					for (const auto& q : gather_terms(r, n)) {
-						LightTree tr(super, new LightTree(*q.second));
-						unif[q.first].join(tv.lit, tr);
+				for (const auto& p : rules) {
+					const Rule* r = p.first;
+					const Node& n = p.second;
+					if (tv.type == r->type()) {
+						for (const auto& q : gather_terms(r, n)) {
+							unif[q.first].join(tv.lit, *q.second);
+						}
+					} else if (Rule* super = find_super(r->type(), tv.type)) {
+						for (const auto& q : gather_terms(r, n)) {
+							LightTree tr(super, new LightTree(*q.second));
+							unif[q.first].join(tv.lit, tr);
+						}
+					}
+				}
+			} else {
+				for (const auto& p : vars) {
+					LightSymbol iv = p.first;
+					if (iv == tv) {
+						for (const Data& d : p.second) {
+							unif[d];
+						}
 					}
 				}
 			}
 		} else if (rules.count(t.rule())) {
 			const Node& n = rules.at(t.rule());
-			for (const Data& d : n.data) unif[d];
+			for (const Data& d : n.data) {
+				unif[d];
+			}
 			auto ch = t.children().begin();
 			Matched<Data> un[n.child.size()];
 			int c = 0;

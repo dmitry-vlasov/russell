@@ -102,13 +102,13 @@ string ProofTop::show() const {
 
 string ProofExp::show() const {
 	string ret;
-	ret += "ProofHyp: ";
+	ret += "ProofHyp: " + prover::show(expr);
 	return ret + "\n";
 }
 
 string ProofProp::show() const {
 	string ret;
-	ret += "ProofStep: ";
+	ret += "ProofStep: " + Lex::toStr(node.prop.id());
 	return ret + "\n";
 }
 

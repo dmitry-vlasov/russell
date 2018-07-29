@@ -39,6 +39,7 @@ rus::Ref* ProofTop::ref() {
 ProofExp::ProofExp(Hyp& n, ProofProp* c, const Subst& s) :
 	ProofHyp(n, s), child(c) {
 	child->parent = this;
+	expr = apply(s, n.expr);
 }
 
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
@@ -66,7 +67,7 @@ rus::Step* ProofProp::step() {
 	step->refs = std::move(refs);
 	step->expr = std::move(convert_expr(parent->node.expr));
 
-	cout << "SUB: " << rus::prover::show(sub) << endl;
+	//cout << "SUB: " << rus::prover::show(sub) << endl;
 
 	Substitution s = convert_sub(sub);
 	apply_recursively(s, step);

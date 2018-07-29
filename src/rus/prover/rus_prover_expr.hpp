@@ -243,6 +243,24 @@ struct Subst {
 		}
 		return ok_;
 	}
+	bool consistent(uint v, const LightTree& t) {
+		auto it = sub_.find(v);
+		if (it != sub_.end()) {
+			return (*it).second == t;
+		} else {
+			return true;
+		}
+	}
+	bool consistent(const Subst& s) {
+		for (const auto& p : s.sub_) {
+			if (!consistent(p.first, p.second)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	const map<uint, LightTree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
