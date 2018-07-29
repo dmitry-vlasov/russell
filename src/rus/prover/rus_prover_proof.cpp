@@ -66,9 +66,6 @@ rus::Step* ProofProp::step() {
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
 	step->expr = std::move(convert_expr(parent->node.expr));
-
-	//cout << "SUB: " << rus::prover::show(sub) << endl;
-
 	Substitution s = convert_sub(sub);
 	apply_recursively(s, step);
 	return step;
@@ -89,6 +86,7 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 		if (proof->theorem()->vars.isDeclared(s)) continue;
 		proof->allvars.v.push_back(s);
 	}
+	step->proof_ = proof;
 	step->set_ind(proof->elems.size());
 	proof->elems.emplace_back(unique_ptr<Step>(step));
 }
@@ -98,6 +96,13 @@ rus::Proof* make_proof(rus::Step* step, uint theorem, rus::Prop* prop) {
 	ret->inner = true;
 	fill_in_proof(step, ret);
 	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(prop, step)));
+	ret->verify(VERIFY_SUB);
+	try {
+		ret->verify(VERIFY_DISJ);
+	} catch (Error& err) {
+		delete ret;
+		ret = nullptr;
+	}
 	return ret;
 }
 

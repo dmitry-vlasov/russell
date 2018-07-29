@@ -11,12 +11,10 @@ bool test_proof_with_oracle(Proof* p) {
 			/*prover::show_bits("idx,ch_idx,recurs,ass,expr")*/
 		)
 	);
-	Proof* reproved = prover::Space::get()->prove();
+	prover::Space::Proved reproved = prover::Space::get()->prove();
 	prover::Space::destroy();
-	bool ret = reproved && reproved->check();
-	delete reproved;
-	cout << (ret ? "success" : "FAIL") << endl;
-	return ret;
+	cout << (reproved.size() ? "success" : "FAIL") << endl;
+	return reproved.size();
 }
 
 bool test_with_oracle() {

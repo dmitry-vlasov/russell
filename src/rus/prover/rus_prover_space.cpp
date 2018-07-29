@@ -122,7 +122,7 @@ Return Space::info(uint index, string what) {
 		}
 	}
 	data += "</info>\n";
-	cout << endl << data << endl;
+	//cout << endl << data << endl;
 	return Return("node info", data);
 }
 
@@ -157,14 +157,27 @@ Return Space::expand(uint index) {
 				hyp->buildUp();
 				add_shown(shown, to_show, hyp);
 			}
-			string data;
-			data += "<new>\n";
-			for (uint i : to_show) {
-				data += Indent::paragraph(nodes_.at(i)->show()) + "\n";
+			ostringstream oss;
+			Proved prov = proved();
+			if (prov.size()) {
+				oss << "<proved>\n";
+				for (auto& p : prov) {
+					oss << "\t<proof>\n";
+					oss << "\t<![CDATA[\n";
+					p->write(oss);
+					oss << "\t]]>\n";
+					oss << "\t</proof>\n";
+				}
+				oss << "</proved>\n";
+			} else {
+				oss << "<new>\n";
+				for (uint i : to_show) {
+					oss << Indent::paragraph(nodes_.at(i)->show()) + "\n";
+				}
+				oss << "</new>\n";
 			}
-			data += "</new>\n";
-			//cout << endl << data << endl;
-			return Return("node expanded", data);
+			cout << endl << oss.str() << endl;
+			return Return("node expanded", oss.str());
 		}
 	}
 	return true;
@@ -176,17 +189,18 @@ Return Space::erase(uint index) {
 	return true;
 }
 
-rus::Proof* Space::prove() {
+Space::Proved Space::prove() {
 	while (Prop* p = tactic_->next()) {
 		p->buildUp();
 		for (auto& h : p->premises) {
 			h.get()->buildUp();
 		}
-		if (rus::Proof* ret = checkProved()) {
-			return ret;
+		Proved prov = proved();
+		if (prov.size()) {
+			return prov;
 		}
 	}
-	return nullptr;
+	return Proved();
 }
 
 void delete_steps_recursively(rus::Step* s) {
@@ -198,17 +212,21 @@ void delete_steps_recursively(rus::Step* s) {
 	delete s;
 }
 
-rus::Proof* Space::checkProved() {
-	if (!root->proofs.size()) return nullptr;
+Space::Proved Space::proved() {
+	Proved ret;
 	for (auto& p : root->proofs) {
-		if (ProofProp* ps = dynamic_cast<ProofProp*>(p.get())) {
-			if (rus::Proof* pr = make_proof(ps->step(), prop.ass->id(), prop.get())) {
-				if (pr->check()) return pr;
+		if (ProofExp* h = dynamic_cast<ProofExp*>(p.get())) {
+			if (rus::Proof* pr = make_proof(h->child->step(), prop.ass->id(), prop.get())) {
+				ret.emplace_back(pr);
 			}
+		} else if (ProofTop* h = dynamic_cast<ProofTop*>(p.get())) {
+			//if (rus::Proof* pr = make_proof(h->child->step(), prop.ass->id(), prop.get())) {
+			//	ret.emplace_back(pr);
+			//}
+			// TODO
 		}
 	}
-	root->proofs.clear();
-	return nullptr;
+	return ret;
 }
 
 Space* Space::instance = nullptr;

@@ -49,12 +49,12 @@ void Hyp::complete() {
 	for (const auto& p : space->hyps.match_back(expr)) {
 		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
 	}
-	cout << "COMPLETING: " << ind << endl;
+	//cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
 	downs.push(this);
 	while (!downs.empty()) {
 		Node* n = downs.front();
-		cout << "DOWNING: " << n->ind << endl;
+		//cout << "DOWNING: " << n->ind << endl;
 		downs.pop();
 		for (auto x : n->buildDown()) {
 			downs.push(x);
@@ -373,29 +373,29 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	if (ind.empty()) {
 		return vector<Node*>();
 	}
-	cout << endl << "IND: " << ind.show() << endl << endl;
+	//cout << endl << "IND: " << ind.show() << endl << endl;
 	bool new_proofs = false;
 	while (true) {
 		vector<ProofHyp*> ch;
-		cout << "CURRENT: " << ind.current() << endl;
-		cout << "UNIFYING: \n--------------" << endl;
-		cout << "PROP: " << pr->ind << endl;
+		//cout << "CURRENT: " << ind.current() << endl;
+		//cout << "UNIFYING: \n--------------" << endl;
+		//cout << "PROP: " << pr->ind << endl;
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
-			cout << i << ": " << show(ph->expr) << "\nsub: \n" << show(ph->sub) << endl;
+			//cout << i << ": " << show(ph->expr) << "\nsub: \n" << show(ph->sub) << endl;
 			ch.push_back(ph);
 		}
-		cout << "-------------" << endl;
+		//cout << "-------------" << endl;
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
 		if (sub) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
-			cout << "OK:\n" << show(sub) << endl;
+			//cout << "OK:\n" << show(sub) << endl;
 			new_proofs = true;
 		} else {
-			cout << "FAIL" << endl;
+			//cout << "FAIL" << endl;
 		}
-		cout << endl << endl << endl;
+		//cout << endl << endl << endl;
 		if (!ind.hasNext()) {
 			break;
 		}
@@ -412,7 +412,7 @@ vector<Node*> Prop::buildDown() {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
-			cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
+			//cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
 			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get()));
 			new_proofs = true;
 		}

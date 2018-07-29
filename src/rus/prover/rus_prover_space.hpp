@@ -17,6 +17,8 @@ struct Tactic {
 Tactic* make_tactic(const string&);
 
 struct Space {
+	typedef vector<unique_ptr<rus::Proof>> Proved;
+
 	Proof*          proof = nullptr; // for Oracle tactic
 	Hyp*            root;
 	PropRef         prop;
@@ -45,7 +47,7 @@ struct Space {
 		return true;
 	}
 
-	rus::Proof* prove();
+	Proved prove();
 	Tactic* getTactic() {
 		return tactic_;
 	}
@@ -80,7 +82,7 @@ private:
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
 	set<uint>     shown;
-	rus::Proof* checkProved();
+	Proved proved();
 
 	static Space* instance;
 };
