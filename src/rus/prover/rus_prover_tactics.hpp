@@ -10,11 +10,15 @@ struct QueueTactic : public Tactic {
 	void del(Prop* n) override {
 		if (n) {
 			auto it = std::find(leafs.begin(), leafs.end(), n);
-			if (it != leafs.end()) leafs.erase(it);
+			if (it != leafs.end()) {
+				leafs.erase(it);
+			}
 		}
 	}
 	Prop* next() override {
-		if (leafs.empty()) return nullptr;
+		if (leafs.empty()) {
+			return nullptr;
+		}
 		Prop* p = leafs.front();
 		leafs.erase(leafs.begin());
 		return p;

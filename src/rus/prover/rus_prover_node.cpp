@@ -2,14 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Node::Node(Space* s) : space(s), ind(-1) {
-	space->registerNode(this);
-}
-
-Node::Node(Node* n) : space(n->space), ind(-1) {
-	space->registerNode(this);
-}
-
 Node::~Node() {
 	space->unregisterNode(this);
 }
@@ -32,8 +24,21 @@ static void make_free_vars_fresh(const Assertion* a, Subst& s, map<uint, uint>& 
 	}
 }
 
+Hyp::Hyp(const LightTree& e, Space* s) :
+	Node(s), parent(nullptr), expr(e) {
+	complete();
+	space->registerNode(this);
+}
+
+Hyp::Hyp(const LightTree& e, Prop* p) :
+	Node(p), parent(p), expr(p ? apply(p->sub, e) : e) {
+	space->registerNode(this);
+
+}
+
 Prop::Prop(const PropRef& r, const Subst& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
 	make_free_vars_fresh(r.ass, sub, space->vars);
+	space->registerNode(this);
 }
 
 void Prop::buildUp() {

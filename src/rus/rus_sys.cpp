@@ -90,13 +90,6 @@ Return types() {
 	return Return("", xml_types());
 }
 
-Return test(string mode) {
-	if (mode == "oracle") {
-		return Return(test_with_oracle());
-	}
-	return Return();
-}
-
 Return prove(uint src, uint line, uint col, string tact) {
 	Source* source = Sys::mod().math.get<Source>().access(src);
 	const char* pos = locate_position(line, col, source->data().c_str());
@@ -152,6 +145,13 @@ Return prove_stop() {
 
 Return prove_info(uint index, string what) {
 	return prover::Space::get()->info(index, what);
+}
+
+Return prove_test(string mode) {
+	if (mode == "oracle") {
+		return Return(prover::test_with_oracle());
+	}
+	return Return();
 }
 
 }
@@ -236,7 +236,6 @@ static Descr description(string name) {
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
 		{"info",       Descr("info about math")},
 		{"show",       Descr("show entity")},
-		{"test",       Descr("test prover",          Descr::Arg("mode", "oracle", true, "oracle"))},
 		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
@@ -280,6 +279,7 @@ static Descr description(string name) {
 			Descr::Arg("index", "integer"),
 			Descr::Arg("what", "tree|node|children|proofs")
 		)},
+		{"prove_test", Descr("test prover",        Descr::Arg("mode", "oracle", true, "oracle"))},
 		{"min_imports", Descr("minimize imports",  Descr::Arg("in", "file", true, ""))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
@@ -301,7 +301,6 @@ const Sys::Actions& Sys::actions() {
 		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
 		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
-		{"test",       Action([](const Args& args) { return test(args[0]); }, description("test"))},
 		{"opts",       Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
 		{"lookup",     Action([](const Args& args) { return lookup_ref(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
 		{"outline",    Action([](const Args& args) { return outline(Sys::make_name(args[0]), xml_bits(args[1])); }, description("outline"))},
@@ -317,6 +316,7 @@ const Sys::Actions& Sys::actions() {
 		{"prove_confirm", Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
 		{"prove_stop",    Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
 		{"prove_info",    Action([](const Args& args) { return prove_info(stoul(args[0]), args[1]); }, description("prove_info"))},
+		{"prove_test",    Action([](const Args& args) { return prove_test(args[0]); }, description("prove_test"))},
 
 		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},
 	};

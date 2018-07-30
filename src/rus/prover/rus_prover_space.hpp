@@ -77,7 +77,10 @@ struct Space {
 private:
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
-	~Space() { delete root; delete tactic_; }
+	~Space() {
+		//delete root; TODO: fix
+		delete tactic_;
+	}
 
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
@@ -86,6 +89,8 @@ private:
 
 	static Space* instance;
 };
+
+bool test_with_oracle();
 
 }}}
 

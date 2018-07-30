@@ -12,7 +12,10 @@ static rus::Step* root_step(rus::Proof* p) {
 	return nullptr;
 }
 */
-Oracle::Oracle(rus::Proof* p) : proof(p), root(p ? (*p->qeds().begin())->step : nullptr) { }
+Oracle::Oracle(rus::Proof* p) :
+	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
+
+}
 
 void Oracle::add(Prop* p) {
 	const Assertion* ass = p->prop.ass;

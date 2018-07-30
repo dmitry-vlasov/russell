@@ -35,8 +35,8 @@ class ProofHyp;
 class ProofNode;
 
 struct Node {
-	Node(Space* s);
-	Node(Node* n);
+	Node(Space* s) : space(s), ind(-1) { }
+	Node(Node* n) : space(n->space), ind(-1) { }
 	virtual ~Node();
 
 	virtual vector<Node*> buildDown() = 0;
@@ -68,8 +68,8 @@ struct Hyp : public Node {
 	Variants  variants;
 	Proofs    proofs;
 	LightTree expr;
-	Hyp(const LightTree& e, Space* s) : Node(s), parent(nullptr), expr(e) { complete(); }
-	Hyp(const LightTree& e, Prop* p) : Node(p), parent(p), expr(p ? apply(p->sub, e) : e) { }
+	Hyp(const LightTree& e, Space* s);
+	Hyp(const LightTree& e, Prop* p);
 
 	void buildUp();
 	vector<Node*> buildDown() override;

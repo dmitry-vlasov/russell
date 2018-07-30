@@ -44,6 +44,7 @@ else()
 		rus/prover/rus_prover_show.cpp
 		rus/prover/rus_prover_space.cpp
 		rus/prover/rus_prover_tactics.cpp
+		rus/prover/rus_prover_test.cpp
 		
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
@@ -54,7 +55,6 @@ else()
 		rus/rus_parser.cpp
 		rus/rus_read.cpp  
 		rus/rus_show.cpp 
-		rus/rus_test.cpp 
 		rus/rus_translate.cpp 
 		rus/rus_verify.cpp 
 		rus/rus_xml.cpp 
