@@ -39,6 +39,7 @@ else()
 		rus/expr/rus_expr_unify.cpp 
 		rus/parser/rus_parser.cpp
 		rus/prover/rus_prover_expr.cpp
+		rus/prover/rus_prover_index2.cpp
 		rus/prover/rus_prover_node.cpp
 		rus/prover/rus_prover_proof.cpp
 		rus/prover/rus_prover_show.cpp

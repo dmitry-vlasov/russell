@@ -90,6 +90,8 @@ Return types() {
 	return Return("", xml_types());
 }
 
+unique_ptr<prover::Space> space;
+
 Return prove(uint src, uint line, uint col, string tact) {
 	Source* source = Sys::mod().math.get<Source>().access(src);
 	const char* pos = locate_position(line, col, source->data().c_str());
@@ -97,7 +99,8 @@ Return prove(uint src, uint line, uint col, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		return prover::Space::create(qed, tactic);
+		space = make_unique<prover::Space>(qed, tactic);
+		return space->prove();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
@@ -111,11 +114,8 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		if (prover::Space::create(qed, tactic)) {
-			return prover::Space::get()->init();
-		} else {
-			return false;
-		}
+		space = make_unique<prover::Space>(qed, tactic);
+		return space->init();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
@@ -123,11 +123,11 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 }
 
 Return prove_step(uint index) {
-	return prover::Space::get()->expand(index);
+	return space ? space->expand(index) : Return("prover is not started", false);
 }
 
 Return prove_delete(uint index) {
-	return prover::Space::get()->erase(index);
+	return space ? space->erase(index) : Return("prover is not started", false);
 }
 
 Return prove_tactic(string tact) {
@@ -140,11 +140,11 @@ Return prove_confirm(uint index) {
 }
 
 Return prove_stop() {
-	return prover::Space::destroy();
+	return space ? space.release() : Return("prover is not started", false);
 }
 
 Return prove_info(uint index, string what) {
-	return prover::Space::get()->info(index, what);
+	return space ? space->info(index, what) : Return("prover is not started", false);
 }
 
 Return prove_test(string mode) {

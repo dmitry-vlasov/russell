@@ -124,6 +124,9 @@ struct LightTree {
 		return std::get<LightSymbol>(val);
 	}
 	const Rule* rule() const {
+		if (kind() != NODE) {
+			cout << "FUCK " << endl;
+		}
 		assert(kind() == NODE);
 		return std::get<Node>(val).rule;
 	}
@@ -177,6 +180,12 @@ struct Subst {
 	}
 	Subst(uint v, const LightTree& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
+	}
+	Subst(LightSymbol v, const LightSymbol& t) : sub_(), ok_(true) {
+		sub_.emplace(v.literal(), t);
+	}
+	Subst(LightSymbol v, const LightTree& t) : sub_(), ok_(true) {
+		sub_.emplace(v.literal(), t);
 	}
 	Subst(const Subst& s) : sub_(), ok_(s.ok_) {
 		operator = (s);
@@ -263,7 +272,6 @@ struct Subst {
 
 	const map<uint, LightTree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
-	operator bool() const { return ok_; }
 	bool mapsVar(uint v) const { return sub_.find(v) != sub_.end(); }
 
 private:

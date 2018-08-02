@@ -49,7 +49,7 @@ string show(LightSymbol s, bool full) {
 string show(const LightTree& tree, bool full) {
 	if (tree.kind() == LightTree::VAR) {
 		return show(tree.var(), full);
-	} else {
+	} else if (tree.kind() == LightTree::NODE) {
 		string str(" ");
 		uint i = 0;
 		for (auto s : tree.rule()->term.symbols) {
@@ -60,6 +60,8 @@ string show(const LightTree& tree, bool full) {
 			}
 		}
 		return str;
+	} else {
+		return "<UNDEF>";
 	}
 }
 

@@ -25,6 +25,10 @@ struct Indent {
 		}
 		return indented;
 	}
+	static string paragraph(const string& str, int d) {
+		Indent ind(d);
+		return paragraph(str, ind.str());
+	}
 	string str() const {
 		string s;
 		int n = num;

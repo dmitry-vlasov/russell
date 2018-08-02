@@ -32,12 +32,12 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
 	}
-	//cout << "\nASSERTIONS:\n" << assertions.show() << endl;
+	cout << "\nASSERTIONS:\n" << assertions.show() << endl;
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
 		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
 	}
-	//cout << "\nHYPS:\n" << hyps.show() << endl;
+	cout << "\nHYPS:\n" << hyps.show() << endl;
 	root = new Hyp(convert_tree(*prop.get()->expr.tree(), ReplMode::DENY_REPL), this);
 	root->buildUp();
 }
@@ -107,6 +107,25 @@ Return Space::info(uint index, string what) {
 					oss << "\t</proof>\n";
 				}
 			}
+		} else if (Prop* pr = dynamic_cast<Prop*>(nodes_[index])) {
+			for (auto& p : pr->proofs) {
+				if (ProofProp* pr = dynamic_cast<ProofProp*>(p.get())) {
+					rus::Step* step = pr->step();
+					rus::Proof* proof = make_proof(step, prop.id(), prop.get());
+					oss << "\t\t<proof expr=\"" << show(step->expr) << "\">";
+					oss << "\t\t<![CDATA[\n";
+					proof->write(oss);
+					oss << "\n";
+					oss << "\t\t]]>\n";
+					delete proof;
+					oss << "\t\t<substitution>\n";
+					oss << "\t\t<![CDATA[\n";
+					oss << show(pr->sub);
+					oss << "\t\t]]>\n";
+					oss << "\t\t</substitution>\n";
+					oss << "\t</proof>\n";
+				}
+			}
 		}
 		oss << "\t</proofs>\n";
 		data += oss.str();
@@ -122,7 +141,7 @@ Return Space::info(uint index, string what) {
 		}
 	}
 	data += "</info>\n";
-	//cout << endl << data << endl;
+	cout << endl << data << endl;
 	return Return("node info", data);
 }
 
@@ -147,7 +166,10 @@ static void add_shown(set<uint>& shown, set<uint>& to_show, Hyp* hyp) {
 }
 
 Return Space::expand(uint index) {
-	if (index >= nodes_.size()) return false;
+	if (index >= nodes_.size()) {
+		cout << index << " OUT OF BOUNDARIES" << endl;
+		return false;
+	}
 	if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
 		if (p->premises.size() < p->prop.ass->arity()) {
 			set<uint> to_show;
@@ -177,10 +199,31 @@ Return Space::expand(uint index) {
 				oss << "</new>\n";
 			}
 			cout << endl << oss.str() << endl;
-			return Return("node expanded", oss.str());
+			return Return("node expanded", oss.str(), true);
 		}
+	} else {
+		cout << index << " NOT A PROP" << endl;
 	}
 	return true;
+}
+
+Return Space::prove() {
+	Proved prov = doProve();
+	if (prov.size()) {
+		ostringstream oss;
+		oss << "<proved>\n";
+		for (auto& p : prov) {
+			oss << "\t<proof>\n";
+			oss << "\t<![CDATA[\n";
+			p->write(oss);
+			oss << "\t]]>\n";
+			oss << "\t</proof>\n";
+		}
+		oss << "</proved>\n";
+		return Return("successfully proved", oss.str());
+	} else {
+		return Return("proof not found");
+	}
 }
 
 Return Space::erase(uint index) {
@@ -189,7 +232,7 @@ Return Space::erase(uint index) {
 	return true;
 }
 
-Space::Proved Space::prove() {
+Space::Proved Space::doProve() {
 	while (Prop* p = tactic_->next()) {
 		p->buildUp();
 		for (auto& h : p->premises) {
@@ -228,8 +271,6 @@ Space::Proved Space::proved() {
 	}
 	return ret;
 }
-
-Space* Space::instance = nullptr;
 
 }}}
 

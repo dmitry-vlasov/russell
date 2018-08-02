@@ -19,6 +19,13 @@ Tactic* make_tactic(const string&);
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 
+	Space(rus::Qed*, Tactic*);
+	Space(rus::Assertion*, rus::Prop*, Tactic*);
+	~Space() {
+		//delete root; TODO: fix
+		delete tactic_;
+	}
+
 	Proof*          proof = nullptr; // for Oracle tactic
 	Hyp*            root;
 	PropRef         prop;
@@ -30,24 +37,9 @@ struct Space {
 	Return info(uint index, string what);
 	Return expand(uint index);
 	Return erase(uint index);
+	Return prove();
 
-	static bool create(rus::Qed* q, Tactic* t) {
-		if (instance) return false;
-		instance = new Space(q, t);
-		return true;
-	}
-	static bool create(rus::Assertion* a, rus::Prop* p, Tactic* t) {
-		if (instance) return false;
-		instance = new Space(a, p, t);
-		return true;
-	}
-	static bool destroy() {
-		if (!instance) return false;
-		delete instance;
-		return true;
-	}
-
-	Proved prove();
+	Proved doProve();
 	Tactic* getTactic() {
 		return tactic_;
 	}
@@ -72,22 +64,11 @@ struct Space {
 	uint count() const { return nodes_.size(); }
 	Node* getNode(uint i) { return nodes_[i]; }
 
-	static Space* get() { return instance; }
-
 private:
-	Space(rus::Qed*, Tactic*);
-	Space(rus::Assertion*, rus::Prop*, Tactic*);
-	~Space() {
-		//delete root; TODO: fix
-		delete tactic_;
-	}
-
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
 	set<uint>     shown;
 	Proved proved();
-
-	static Space* instance;
 };
 
 bool test_with_oracle();

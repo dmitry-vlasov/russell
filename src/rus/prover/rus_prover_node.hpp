@@ -6,22 +6,35 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct PropRef {
-	PropRef(Assertion* a, uint i) : ass(a), ind(i) { }
+	PropRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
 	uint id() const { return ass->id(); }
 	rus::Prop* get() { return ass->props[ind].get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
+	}
+	bool operator == (const PropRef& pr) const {
+		return ass == pr.ass && ind == pr.ind;
+	}
+	bool operator != (const PropRef& pr) const {
+		return !operator == (pr);
 	}
 	Assertion* ass;
 	uint       ind;
 };
 
 struct HypRef {
-	HypRef(Assertion* a, uint i) : ass(a), ind(i) { }
+	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
+	uint id() const { return ass->id(); }
 	rus::Hyp* get() { return ass->hyps[ind].get(); }
 	const rus::Hyp* get() const { return ass->hyps[ind].get(); }
 	friend bool operator < (const HypRef& a1, const HypRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
+	}
+	bool operator == (const HypRef& hr) const {
+		return ass == hr.ass && ind == hr.ind;
+	}
+	bool operator != (const HypRef& hr) const {
+		return !operator == (hr);
 	}
 	Assertion* ass;
 	uint       ind;
@@ -113,7 +126,7 @@ struct ProofExp : public ProofHyp {
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s = Subst());
+	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
 	~ProofProp() override;
 	rus::Step* step();
 	rus::Ref* ref() override;

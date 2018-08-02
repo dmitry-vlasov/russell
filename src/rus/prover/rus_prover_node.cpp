@@ -33,7 +33,6 @@ Hyp::Hyp(const LightTree& e, Space* s) :
 Hyp::Hyp(const LightTree& e, Prop* p) :
 	Node(p), parent(p), expr(p ? apply(p->sub, e) : e) {
 	space->registerNode(this);
-
 }
 
 Prop::Prop(const PropRef& r, const Subst& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
@@ -43,10 +42,46 @@ Prop::Prop(const PropRef& r, const Subst& s, Hyp* p) : Node(p), parent(p), prop(
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
-		premises.emplace_back(new Hyp(apply(sub, convert_tree(*h.get()->expr.tree())), this));
+		//cout << "ASS HYP: " << rus::show(h->expr) << endl;
+		//cout << "SUB: " << prover::show(sub) << endl;
+		//cout << "NODE EXPR: " << prover::show(apply(sub, convert_tree(*h->expr.tree()))) << endl;
+
+		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree()), this);
+		cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
+
+		premises.emplace_back(hyp);
 	}
 	for (auto& p : premises) {
 		p.get()->complete();
+	}
+}
+
+void Hyp::buildUp() {
+	/*static int c = 0;
+	++c;
+	cout << endl << "MATCHING: " << prover::show(expr) << endl;
+	for (const auto& p : space->assertions.match_forth(expr)) {
+		//cout << "PROP EXPR: " << rus::show(p.first.ass->props[0]->expr) << endl;
+		//cout << "SUB: " << prover::show(p.second) << endl;
+		if (apply(p.second.sub, convert_tree(*p.second.data.ass->props[0]->expr.tree())) != expr) {
+			cout << "MATCHING FAILED: " << prover::show(apply(p.second.sub, convert_tree(*p.second.data.ass->props[0]->expr.tree()))) << endl;
+		}
+
+		cout << "ASS: " << Lex::toStr(p.second.data.id()) << endl;
+		Prop* prop = new Prop(p.second.data, p.second.sub, this);
+		variants.emplace_back(prop);
+		if (!prop->prop.ass->arity()) {
+			ProofProp* pr = new ProofProp(*prop);
+			prop->proofs.emplace_back(pr);
+			proofs.emplace_back(new ProofExp(*this, pr, p.second.sub));
+			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+		}
+	}*/
+
+	for (const auto& p : space->assertions.match_forth(expr)) {
+		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
+			variants.emplace_back(new Prop(p.first, p.second, this));
+		}
 	}
 }
 
@@ -63,14 +98,6 @@ void Hyp::complete() {
 		downs.pop();
 		for (auto x : n->buildDown()) {
 			downs.push(x);
-		}
-	}
-}
-
-void Hyp::buildUp() {
-	for (const auto& p : space->assertions.match_forth(expr)) {
-		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
-			variants.emplace_back(new Prop(p.first, p.second, this));
 		}
 	}
 }
@@ -156,9 +183,6 @@ private:
 
 struct Unified {
 	Unified(bool ok = false) : sub(ok), term(nullptr) { }
-	operator bool() const{
-		return sub;
-	}
 	Subst      sub;
 	LightTree* term;
 };
@@ -320,7 +344,8 @@ struct MultyTree {
 	MultySub makeSubs() const {
 		MultySub ret;
 		for (const auto& p : msub_) {
-			if (Unified s = unify(p.second)) {
+			Unified s = unify(p.second);
+			if (s.sub.ok()) {
 				ret.msub_[p.first] = s;
 			} else {
 				ret.ok = false;
@@ -393,7 +418,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		//cout << "-------------" << endl;
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
-		if (sub) {
+		if (sub.ok()) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
 			//cout << "OK:\n" << show(sub) << endl;
 			new_proofs = true;
