@@ -5,269 +5,64 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-template<class D>
-using Matched = map<D, Subst>;
-
-template<class D>
-using MatchedTerms = map<D, LightTree*>;
-
-template<class D>
 struct Index {
-	typedef D Data;
+	typedef set<uint> LeafInds;
 	struct Node {
-		vector<Data>   data;
-		vector<Index*> child;
+		LeafInds leafs;
+		vector<unique_ptr<Index>> child;
 	};
-	map<const Rule*, Node>    rules;
-	map<LightSymbol, vector<Data>> vars;
+	typedef map<uint, pair<Subst, Subst>> Unified;
 
-	void add(const LightTree& t, const D& d) {
-		if (t.kind() == LightTree::VAR) {
-			vars[t.var()].push_back(d);
-		} else {
-			if (!t.children().size()) {
-				rules[t.rule()].data.push_back(d);
-			} else {
-				bool is_new = !rules.count(t.rule());
-				vector<Index<D>*>& ch = rules[t.rule()].child;
+	map<const Rule*, Node> rules;
+	map<LightSymbol, LeafInds> vars;
+	uint size = 0;
 
-				if (is_new) {
-					for (const auto& c : t.children()) {
-						ch.push_back(new Index<D>);
-					}
-				}
-				auto i = ch.begin();
-				for (const auto& c : t.children()) {
-					(*(i++))->add(*c.get(), d);
-				}
-			}
-		}
+	uint add(const LightTree& t) {
+		uint ind = size++;
+		add(t, ind);
+		return ind;
 	}
-	Matched<Data> match_forth(const LightTree& t) const {
-		Matched<Data> unif;
-		for (const auto& p : vars) {
-			LightSymbol v = p.first;
-			if (v.rep) {
-				if (v.type == t.type()) {
-					for (const Data& d : p.second) {
-						/*if (unif.count(d)) {
-							if (unif.at(d).consistent(v.lit, t)) {
+	void add(const LightTree& t, uint s);
+	Unified match_forth(const LightTree& t) const;
+	Unified match_back(const LightTree& t) const;
 
-							}
-						} else {*/
-							unif[d].join(v.lit, t);
-						//}
-					}
-				} else if (Rule* super = find_super(t.type(), v.type)) {
-					for (const Data& d : p.second) {
-						unif[d].join(v.lit, LightTree(super, new LightTree(t)));
-					}
-				}
-			} else {
-				if (t.kind() == LightTree::VAR && v == t.var()) {
-					for (const Data& d : p.second) {
-						unif[d];
-					}
-				}
-			}
-		}
-		if (t.kind() == LightTree::NODE && rules.count(t.rule())) {
-			const Node& n = rules.at(t.rule());
-			for (const Data& d : n.data) {
-				unif[d];
-			}
-			auto ch = t.children().begin();
-			Matched<Data> un[n.child.size()];
-			int c = 0;
-			for (const Index* i : n.child) {
-				un[c++] = i->match_forth(*(ch++)->get());
-			}
-			if (c > 0) {
-				intersect(unif, un, c);
-			}
-		}
-		return unif;
-	}
-	Matched<Data> match_back(const LightTree& t) const {
-		Matched<Data> unif;
-		if (t.kind() == LightTree::VAR) {
-			LightSymbol tv = t.var();
-			if (tv.rep) {
-				for (const auto& p : vars) {
-					LightSymbol iv = p.first;
-					if (iv.type == tv.type) {
-						for (const Data& d : p.second) {
-							unif[d].join(tv.lit, iv);
-						}
-					} else if (Rule* super = find_super(iv.type, tv.type)) {
-						for (const Data& d : p.second) {
-							LightTree tr(super, new LightTree(iv));
-							unif[d].join(tv.lit, tr);
-						}
-					}
-				}
-				for (const auto& p : rules) {
-					const Rule* r = p.first;
-					const Node& n = p.second;
-					if (tv.type == r->type()) {
-						for (const auto& q : gather_terms(r, n)) {
-							unif[q.first].join(tv.lit, *q.second);
-						}
-					} else if (Rule* super = find_super(r->type(), tv.type)) {
-						for (const auto& q : gather_terms(r, n)) {
-							LightTree tr(super, new LightTree(*q.second));
-							unif[q.first].join(tv.lit, tr);
-						}
-					}
-				}
-			} else {
-				for (const auto& p : vars) {
-					LightSymbol iv = p.first;
-					if (iv == tv) {
-						for (const Data& d : p.second) {
-							unif[d];
-						}
-					}
-				}
-			}
-		} else if (rules.count(t.rule())) {
-			const Node& n = rules.at(t.rule());
-			for (const Data& d : n.data) {
-				unif[d];
-			}
-			auto ch = t.children().begin();
-			Matched<Data> un[n.child.size()];
-			int c = 0;
-			for (const Index* i : n.child) {
-				un[c++] = i->match_back(*(ch++)->get());
-			}
-			if (c > 0) intersect(unif, un, c);
-		}
-		return unif;
-	}
-	~Index() {
-		for (auto& p : rules)
-			for (auto& i : p.second.child)
-				delete i;
-	}
+	string show() const;
+};
 
-	string show() const {
-		string ret;
-		for (const auto&  p : showVector()) {
-			ret += p.second + "\n";
+template<class Data>
+struct UnifyMap {
+	struct Unified {
+		Unified(const Data& d, pair<Subst, Subst>&& s) : data(d), subs(std::move(s)) { }
+		Data data;
+		pair<Subst, Subst> subs;
+	};
+	void add(const LightTree& t, const Data& d) {
+		index.add(t);
+		data.push_back(d);
+	}
+	vector<Unified> match_forth(const LightTree& t) {
+		vector<Unified> ret;
+		Index::Unified unif = index.match_forth(t);
+		for (auto& p : unif) {
+			ret.emplace_back(data[p.first], std::move(p.second));
 		}
 		return ret;
+	}
+	vector<Unified> match_back(const LightTree& t) {
+		vector<Unified> ret;
+		Index::Unified unif = index.match_back(t);
+		for (auto& p : unif) {
+			ret.emplace_back(data[p.first], std::move(p.second));
+		}
+		return ret;
+	}
+	string show() const {
+		return index.show();
 	}
 
 private:
-	map<D, string> showVector() const {
-		map<D, string> ret;
-		for (const auto& p : vars) {
-			for (const auto& d : p.second) {
-				ret[d] = rus::prover::show(p.first);
-			}
-		}
-		for (const auto& p : rules) {
-			const Rule* r = p.first;
-			if (!p.second.child.size()) {
-				for (const auto& d : p.second.data) {
-					ret[d] = rus::show(r->term);
-				}
-			} else {
-				const vector<Index*>& ch = p.second.child;
-				map<D, string> show_ch[ch.size()];
-				int c = 0;
-				for (auto ind : ch) {
-					 show_ch[c++] = ind->showVector();
-				}
-				map<D, vector<string>> intersected;
-				if (c > 0) {
-					intersect_show(intersected, show_ch, c);
-				}
-				for (auto pr : intersected) {
-					string str;
-					int x = 0;
-					for (auto s : r->term.symbols) {
-						if (s.cst) {
-							str += rus::show(s);
-						} else {
-							str += pr.second[x++];
-						}
-					}
-					ret[pr.first] = str;
-				}
-			}
-		}
-		return ret;
-	}
-
-	static MatchedTerms<Data> gather_terms(const Rule* r, const Node& n) {
-		MatchedTerms<Data> ret;
-		MatchedTerms<Data> un[n.child.size()];
-		for (const Data& d : n.data) {
-			ret[d] = new LightTree(r, LightTree::Children());
-		}
-		int c = 0;
-		for (const auto i : n.child) {
-			un[c++] = gather_terms(i);
-		}
-		if (c > 0) gather(r, ret, un, c);
-		return ret;
-	}
-	static MatchedTerms<Data> gather_terms(const Index* i) {
-		MatchedTerms<Data> ret;
-		for (const auto& p : i->vars)
-			for (const auto& d : p.second)
-			ret[d] = new LightTree(p.first);
-		for (const auto& p : i->rules) {
-			for (const auto& q : gather_terms(p.first, p.second))
-				ret[q.first] = q.second;
-		}
-		return ret;
-	}
-	static void gather(const Rule* r, MatchedTerms<D>& u, MatchedTerms<D> w[], uint sz) {
-		for (auto p : w[0]) {
-			D d = p.first;
-			LightTree::Children ch;
-			ch.emplace_back(p.second);
-			int i = 1;
-			for (; i < sz; ++ i) {
-				assert(w[i].count(d));
-				ch.emplace_back(w[i][d]);
-			}
-			u[d] = new LightTree(r, ch);
-		}
-	}
-	static void intersect(Matched<D>& u, Matched<D> w[], uint sz) {
-		for (auto p : w[0]) {
-			D d = p.first;
-			Subst s = p.second;
-			int i = 1;
-			for (; i < sz; ++ i) {
-				if (!w[i].count(d) || !s.join(w[i][d])) {
-					break;
-				}
-			}
-			if (i == sz) u[d] = s;
-		}
-	}
-	static void intersect_show(map<D, vector<string>>& u, map<D, string> w[], uint sz) {
-		for (auto p : w[0]) {
-			D d = p.first;
-			vector<string> vstr;
-			int i = 0;
-			for (; i < sz; ++ i) {
-				if (!w[i].count(d)) {
-					break;
-				} else {
-					vstr.push_back(w[i][d]);
-				}
-			}
-			if (i == sz) {
-				u[d] = vstr;
-			}
-		}
-	}
+	Index index;
+	vector<Data> data;
 };
 
 }}}

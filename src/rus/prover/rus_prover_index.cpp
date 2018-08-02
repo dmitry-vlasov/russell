@@ -1,4 +1,4 @@
-#include "rus_prover_index2.hpp"
+#include "rus_prover_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
