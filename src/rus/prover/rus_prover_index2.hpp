@@ -32,6 +32,7 @@ struct Index {
 template<class Data>
 struct UnifyMap {
 	struct Unified {
+		Unified(const Data& d, pair<Subst, Subst>&& s) : data(d), subs(std::move(s)) { }
 		Data data;
 		pair<Subst, Subst> subs;
 	};
@@ -42,18 +43,21 @@ struct UnifyMap {
 	vector<Unified> match_forth(const LightTree& t) {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_forth(t);
-		for (const auto& p : unif) {
-			ret.push_back(data[p.first], p.second);
+		for (auto& p : unif) {
+			ret.emplace_back(data[p.first], std::move(p.second));
 		}
 		return ret;
 	}
 	vector<Unified> match_back(const LightTree& t) {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_back(t);
-		for (const auto& p : unif) {
-			ret.push_back(data[p.first], p.second);
+		for (auto& p : unif) {
+			ret.emplace_back(data[p.first], std::move(p.second));
 		}
 		return ret;
+	}
+	string show() const {
+		return index.show();
 	}
 
 private:

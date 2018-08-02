@@ -1,6 +1,7 @@
 #pragma once
 
-#include "rus_prover_index.hpp"
+//#include "rus_prover_index.hpp"
+#include "rus_prover_index2.hpp"
 #include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -26,12 +27,12 @@ struct Space {
 		delete tactic_;
 	}
 
-	Proof*          proof = nullptr; // for Oracle tactic
-	Hyp*            root;
-	PropRef         prop;
-	Index<HypRef>   hyps;
-	Index<PropRef>  assertions;
-	map<uint, uint> vars;
+	Proof*            proof = nullptr; // for Oracle tactic
+	Hyp*              root;
+	PropRef           prop;
+	UnifyMap<HypRef>  hyps;
+	UnifyMap<PropRef> assertions;
+	map<uint, uint>   vars;
 
 	Return init();
 	Return info(uint index, string what);

@@ -78,16 +78,14 @@ void Hyp::buildUp() {
 		}
 	}*/
 
-	for (const auto& p : space->assertions.match_forth(expr)) {
-		if (p.first.ass->token.preceeds(space->prop.ass->token)) {
-			variants.emplace_back(new Prop(p.first, p.second, this));
-		}
+	for (const auto& m : space->assertions.match_forth(expr)) {
+		variants.emplace_back(new Prop(m.data, m.subs.first, this));
 	}
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.match_back(expr)) {
-		proofs.emplace_back(new ProofTop(*this, p.first, p.second));
+	for (const auto& m : space->hyps.match_back(expr)) {
+		proofs.emplace_back(new ProofTop(*this, m.data, m.subs.second));
 	}
 	//cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
