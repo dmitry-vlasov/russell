@@ -359,12 +359,12 @@ private:
 			for (auto s : d->prop.symbols) {
 				if (s == dfm) {
 					for (auto s_dfm : d->dfm.symbols)
-						prop->expr.push_back(s_dfm);
+						prop->expr.symbols.push_back(s_dfm);
 				} else if (s == dfs) {
 					for (auto s_dfs : d->dfs.symbols)
-						prop->expr.push_back(s_dfs);
+						prop->expr.symbols.push_back(s_dfs);
 				} else
-					prop->expr.push_back(s);
+					prop->expr.symbols.push_back(s);
 			}
 			prop->expr.type = d->prop.type;
 			prop->expr.token = d->prop.token;

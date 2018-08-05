@@ -297,14 +297,14 @@ void translate_def(const Assertion* ass, Maps& state) {
 			if (dfm_beg == it) {
 				def->prop.symbols.emplace_back(dfm());
 			}
-			def->dfm.push_back(translate_symb(*it, ass));
+			def->dfm.symbols.push_back(translate_symb(*it, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it) {
 				def->prop.symbols.emplace_back(dfs());
 			}
-			def->dfs.push_back(translate_symb(*it, ass));
+			def->dfs.symbols.push_back(translate_symb(*it, ass));
 		} else {
-			def->prop.push_back(translate_symb(*it, ass));
+			def->prop.symbols.push_back(translate_symb(*it, ass));
 		}
 	}
 	def->dfm.token = translate_token(ass->token, state);

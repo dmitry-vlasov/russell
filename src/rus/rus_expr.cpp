@@ -208,4 +208,64 @@ void dump(const Tree* tm) { cout << show(tm) << endl; }
 void dump_ast(const Tree* tm) { cout << show_ast(tm) << endl; }
 void dump(const Substitution& sb) { cout << show(sb) << endl; }
 
+
+void Substitution::operator = (const Substitution& s) {
+	ok_ = s.ok_;
+	if (ok_) for (const auto& p : s.sub_) {
+		sub_.emplace(p.first, p.second);
+	}
+}
+
+void Substitution::operator = (Substitution&& s) {
+	ok_ = s.ok_;
+	sub_ = std::move(s.sub_);
+	s.ok_ = true;
+}
+
+bool Substitution::join(uint v, const Tree& t) {
+	if (!ok_) return false;
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		if ((*it).second != t) ok_ = false;
+	} else {
+		sub_.emplace(v, t);
+	}
+	return ok_;
+}
+
+bool Substitution::join(uint v, Tree&& t) {
+	if (!ok_) return false;
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		if ((*it).second != t) ok_ = false;
+	} else {
+		sub_.emplace(v, std::move(t));
+	}
+	return ok_;
+}
+
+bool Substitution::join(const Substitution& s) {
+	if (s.ok_) {
+		for (const auto& p : s.sub_) {
+			if (!ok_) return false;
+			join(p.first, p.second);
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
+bool Substitution::join(Substitution&& s) {
+	if (s.ok_) {
+		for (auto&& p : s.sub_) {
+			if (!ok_) return false;
+			join(p.first, std::move(p.second));
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
 }} // mdl::rus

@@ -231,18 +231,6 @@ struct Expr : public Tokenable {
 		symbols = std::move(ex.symbols);
 		token = ex.token;
 	}
-
-	void push_back(Symbol s) {
-		symbols.push_back(s);
-	}
-	void push_front(Symbol s) {
-		symbols.insert(symbols.begin(), s);
-	}
-	Symbol pop_back() {
-		Symbol s = symbols.back();
-		symbols.pop_back();
-		return s;
-	}
 	bool operator == (const Expr& ex) const {
 		return (type == ex.type) && (symbols == ex.symbols);
 	}
@@ -316,65 +304,20 @@ struct Substitution {
 	Substitution(Substitution&& s) : sub_(), ok_(s.ok_) {
 		operator = (std::move(s));
 	}
-	void operator = (const Substitution& s) {
-		ok_ = s.ok_;
-		if (ok_) for (const auto& p : s.sub_) {
-			sub_.emplace(p.first, p.second);
-		}
-	}
-	void operator = (Substitution&& s) {
-		ok_ = s.ok_;
-		sub_ = std::move(s.sub_);
-		s.ok_ = true;
-	}
+
+	void operator = (const Substitution& s);
+	void operator = (Substitution&& s);
 	bool join(uint v, const Symbol& t) {
 		return join(v, Tree(t));
 	}
-	bool join(uint v, const Tree& t) {
-		if (!ok_) return false;
-		auto it = sub_.find(v);
-		if (it != sub_.end()) {
-			if ((*it).second != t) ok_ = false;
-		} else {
-			sub_.emplace(v, t);
-		}
-		return ok_;
-	}
-	bool join(uint v, Tree&& t) {
-		if (!ok_) return false;
-		auto it = sub_.find(v);
-		if (it != sub_.end()) {
-			if ((*it).second != t) ok_ = false;
-		} else {
-			sub_.emplace(v, std::move(t));
-		}
-		return ok_;
-	}
+	bool join(uint v, const Tree& t);
+	bool join(uint v, Tree&& t);
 	bool join(const Substitution* s) {
 		return join(*s);
 	}
-	bool join(const Substitution& s) {
-		if (s.ok_) {
-			for (const auto& p : s.sub_) {
-				if (!ok_) return false;
-				join(p.first, p.second);
-			}
-		} else {
-			ok_ = false;
-		}
-		return ok_;
-	}
-	bool join(Substitution&& s) {
-		if (s.ok_) {
-			for (auto&& p : s.sub_) {
-				if (!ok_) return false;
-				join(p.first, std::move(p.second));
-			}
-		} else {
-			ok_ = false;
-		}
-		return ok_;
-	}
+	bool join(const Substitution& s);
+	bool join(Substitution&& s);
+
 	const map<uint, Tree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
