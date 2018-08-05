@@ -15,9 +15,9 @@ struct Rule;
 
 struct Literal {
 
-	Literal(): lit(undef()), var(false), rep(false) { }
-	Literal(uint l, bool v = false) : lit(l), var(v), rep(false) { }
-	Literal(const Literal& s) : lit(s.lit), var(s.var), rep(s.rep) { }
+	Literal(): lit(undef()), var(false) { }
+	Literal(uint l, bool v = false) : lit(l), var(v) { }
+	Literal(const Literal& s) : lit(s.lit), var(s.var) { }
 
 	bool operator == (const Literal& s) const { return lit == s.lit; }
 	bool operator != (const Literal& s) const { return !operator ==(s); }
@@ -28,10 +28,7 @@ struct Literal {
 	uint literal() const { return lit; }
 
 	uint lit:27;
-
-	// Flags
 	bool var:1; //< is variable
-	bool rep:1; //< is replaceable variable
 };
 
 struct Symbol : public Literal {
@@ -45,9 +42,9 @@ struct Symbol : public Literal {
 	}
 	void set_kind(Kind k) {
 		switch (k) {
-		case VAR:   var = true;  rep = true;  break;
-		case CONST: var = false; rep = false; break;
-		default:    var = false; rep = false; break;
+		case VAR:   var = true;  break;
+		case CONST: var = false; break;
+		default:    var = false; break;
 		}
 	}
 
@@ -103,13 +100,11 @@ struct Symbol : public Literal {
 		if (t == UNDEF_UINT) return;
 		val = unique_ptr<User<Type>>(new User<Type>(t));
 		var = true;
-		rep = true;
 	}
 
 	void set_const() {
 		if (is_undef()) return;
 		val = unique_ptr<User<Const>>(new User<Const>(lit));
-		rep = false;
 	}
 
 	struct Hash {
@@ -418,29 +413,6 @@ Tree* apply(const Substitution*, const Tree*);
 Expr  apply(const Substitution*, const Expr&);
 inline Expr apply(const Substitution& s, const Expr& e) {
 	return apply(&s, e);
-}
-
-inline void make_non_replaceable(Tree* t) {
-	if (t->kind() == Tree::VAR) {
-		t->var()->rep = false;
-	} else if (t->kind() == Tree::NODE) {
-		for (auto& c : t->children()) {
-			make_non_replaceable(c.get());
-		}
-	}
-}
-
-inline void make_non_replaceable(Expr& e) {
-	for (auto& s : e.symbols) {
-		s.rep = false;
-	}
-	make_non_replaceable(e.tree());
-}
-
-inline Expr create_non_replaceable(const Expr& e) {
-	Expr ex(e);
-	make_non_replaceable(ex);
-	return ex;
 }
 
 inline void create_rule_term(Expr& ex, Id id) {

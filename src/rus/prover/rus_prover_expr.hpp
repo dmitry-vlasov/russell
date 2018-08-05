@@ -12,8 +12,8 @@ enum class ReplMode {
 };
 
 struct LightSymbol : public Literal {
-	LightSymbol() : type(nullptr) { }
-	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) : Literal(s), type(s.type()) {
+	LightSymbol() : type(nullptr), rep(false) { }
+	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) : Literal(s), type(s.type()), rep(rep = s.var) {
 		if (mode == ReplMode::DENY_REPL) {
 			rep = false;
 		}
@@ -25,10 +25,12 @@ struct LightSymbol : public Literal {
 	void operator = (const LightSymbol& s) {
 		lit  = s.lit;
 		type = s.type;
+		rep  = s.rep;
 	}
 	void operator = (LightSymbol&& s) {
 		lit  = s.lit;
 		type = s.type;
+		rep  = s.rep;
 	}
 
 	struct Hash {
@@ -41,6 +43,7 @@ struct LightSymbol : public Literal {
 		static std::hash<uint> hash;
 	};
 	const Type* type;
+	bool rep;
 };
 
 struct LightTree {
