@@ -12,7 +12,7 @@ enum class ReplMode {
 };
 
 struct LightSymbol {
-	LightSymbol() : lit(-1), rep(false), type(nullptr)  { }
+	LightSymbol() : lit(undef()), rep(false), type(nullptr)  { }
 	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) :
 		lit(s.lit), rep(s.kind() == Symbol::VAR), type(s.kind() == Symbol::VAR ? s.type() : nullptr) {
 		if (mode == ReplMode::DENY_REPL) {
@@ -21,6 +21,9 @@ struct LightSymbol {
 	}
 	LightSymbol(const LightSymbol& s) = default;
 	LightSymbol(LightSymbol&& s) = default;
+	static bool is_undef(uint lit) { return lit == undef(); }
+	static uint undef() { return 0x7FFFFFFF; }
+	uint literal() const { return lit; }
 
 	bool operator == (const LightSymbol& s) const { return lit == s.lit; }
 	bool operator != (const LightSymbol& s) const { return !operator ==(s); }
@@ -46,8 +49,9 @@ struct LightSymbol {
 	private:
 		static std::hash<uint> hash;
 	};
-	uint lit;
-	bool rep;
+
+	uint lit:31;
+	bool rep:1;
 	const Type* type;
 };
 
@@ -132,9 +136,6 @@ struct LightTree {
 		return std::get<LightSymbol>(val);
 	}
 	const Rule* rule() const {
-		if (kind() != NODE) {
-			cout << "FUCK " << endl;
-		}
 		assert(kind() == NODE);
 		return std::get<Node>(val).rule;
 	}
@@ -190,10 +191,10 @@ struct Subst {
 		sub_.emplace(v, t);
 	}
 	Subst(LightSymbol v, const LightSymbol& t) : sub_(), ok_(true) {
-		sub_.emplace(v.lit, t);
+		sub_.emplace(v.literal(), t);
 	}
 	Subst(LightSymbol v, const LightTree& t) : sub_(), ok_(true) {
-		sub_.emplace(v.lit, t);
+		sub_.emplace(v.literal(), t);
 	}
 	Subst(const Subst& s) : sub_(), ok_(s.ok_) {
 		operator = (s);

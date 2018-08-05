@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "rus_prover_index.hpp"
 #include "rus_prover_index.hpp"
 #include "rus_prover_show.hpp"
 
