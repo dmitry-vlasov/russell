@@ -11,19 +11,20 @@ enum class ReplMode {
 	DEFAULT = KEEP_REPL
 };
 
-struct LightSymbol : public Literal {
-	LightSymbol() : type(nullptr), rep(false) { }
+struct LightSymbol {
+	LightSymbol() : lit(-1), rep(false), type(nullptr)  { }
 	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) :
-		Literal(s.lit, s.kind() == Symbol::VAR),
-		type(s.kind() == Symbol::VAR ? s.type() : nullptr),
-		rep(s.kind() == Symbol::VAR) {
+		lit(s.lit), rep(s.kind() == Symbol::VAR), type(s.kind() == Symbol::VAR ? s.type() : nullptr) {
 		if (mode == ReplMode::DENY_REPL) {
 			rep = false;
 		}
 	}
 	LightSymbol(const LightSymbol& s) = default;
 	LightSymbol(LightSymbol&& s) = default;
-	uint literal() const { return Literal::lit; }
+
+	bool operator == (const LightSymbol& s) const { return lit == s.lit; }
+	bool operator != (const LightSymbol& s) const { return !operator ==(s); }
+	bool operator < (const LightSymbol& s) const { return lit < s.lit; }
 
 	void operator = (const LightSymbol& s) {
 		lit  = s.lit;
@@ -45,8 +46,9 @@ struct LightSymbol : public Literal {
 	private:
 		static std::hash<uint> hash;
 	};
-	const Type* type;
+	uint lit;
 	bool rep;
+	const Type* type;
 };
 
 struct LightTree {
@@ -188,10 +190,10 @@ struct Subst {
 		sub_.emplace(v, t);
 	}
 	Subst(LightSymbol v, const LightSymbol& t) : sub_(), ok_(true) {
-		sub_.emplace(v.literal(), t);
+		sub_.emplace(v.lit, t);
 	}
 	Subst(LightSymbol v, const LightTree& t) : sub_(), ok_(true) {
-		sub_.emplace(v.literal(), t);
+		sub_.emplace(v.lit, t);
 	}
 	Subst(const Subst& s) : sub_(), ok_(s.ok_) {
 		operator = (s);

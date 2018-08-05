@@ -285,7 +285,7 @@ Unified unify(const vector<const LightTree*>& ex) {
 			//cout << "C: " << show(lv) << " == ";
 			for (const auto& t : ex) {
 				if (t->kind() == LightTree::VAR) {
-					if (lv.is_undef()) {
+					if (lv.lit == -1) {
 						lv = t->var();
 					} else if (t->var() != lv) {
 						return Unified();
@@ -298,7 +298,7 @@ Unified unify(const vector<const LightTree*>& ex) {
 			//cout << "\nC!" << endl;
 		} else {
 			for (auto s : vars) {
-				if (lv.is_undef()) {
+				if (lv.lit == -1) {
 					lv = s;
 				}
 				if (lv.type == s.type) {
