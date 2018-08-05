@@ -14,81 +14,81 @@ typedef mdl::Id<Source> Id;
 struct Type;
 struct Rule;
 
-struct Symbol : public Literal {
-	enum Kind { VAR, CONST, NONE };
+struct Symbol {
+	enum Kind { CONST, VAR, NONE };
 	Kind kind() const {
-		if (val.index() == std::variant_npos) {
-			return NONE;
+		if (val.index() == VAR) {
+			if (std::get<unique_ptr<User<Type>>>(val).get()) {
+				return VAR;
+			} else {
+				return NONE;
+			}
+		} else if (val.index() == CONST){
+			if (std::get<unique_ptr<User<Const>>>(val).get()) {
+				return CONST;
+			} else {
+				return NONE;
+			}
 		} else {
-			return var ? VAR : CONST;
-		}
-	}
-	void set_kind(Kind k) {
-		switch (k) {
-		case VAR:   var = true;  break;
-		case CONST: var = false; break;
-		default:    var = false; break;
+			return NONE;
 		}
 	}
 
-	Symbol() : Literal() { }
-	Symbol(uint l) : Literal(l) { }
-	Symbol(uint l, Id i, Kind k) : Literal(l) {
-		set_kind(k);
+	Symbol() : lit(-1) { }
+	Symbol(uint l) : lit(l) { }
+	Symbol(uint l, Id i, Kind k) : lit(l) {
 		if (i.id != -1) {
-			if (var) {
-				val = unique_ptr<User<Type>>(new User<Type>(i));
-			} else {
-				val = unique_ptr<User<Const>>(new User<Const>(i));
+			switch (k) {
+			case VAR:   val = unique_ptr<User<Type>>(new User<Type>(i)); break;
+			case CONST: val = unique_ptr<User<Const>>(new User<Const>(i)); break;
+			default: break;
 			}
 		}
 	}
-	Symbol(const Symbol& s) : Literal(s) { operator = (s); }
-	Symbol(Symbol&& s) : Literal(s) { operator = (std::move(s)); }
+	Symbol(const Symbol& s) : lit(s.lit) { operator = (s); }
+	Symbol(Symbol&& s) : lit(s.lit) { operator = (std::move(s)); }
+
+	bool operator == (const Symbol& s) const { return lit == s.lit; }
+	bool operator != (const Symbol& s) const { return !operator ==(s); }
+	bool operator < (const Symbol& s) const { return lit < s.lit; }
+	bool is_undef() const { return lit == -1; }
 
 	void operator = (const Symbol& s) {
-		Literal::operator = (s);
-		if (s.kind() != NONE) {
-			if (var) {
-				if (auto v = std::get<unique_ptr<User<Type>>>(s.val).get()) {
-					val = unique_ptr<User<Type>>(new User<Type>(v->id()));
-				}
-			} else {
-				if (auto c = std::get<unique_ptr<User<Const>>>(s.val).get()) {
-					val = unique_ptr<User<Const>>(new User<Const>(c->id()));
-				}
+		lit = s.lit;
+		if (s.kind() == VAR) {
+			if (auto v = std::get<unique_ptr<User<Type>>>(s.val).get()) {
+				val = unique_ptr<User<Type>>(new User<Type>(v->id()));
+			}
+		} else if (s.kind() == CONST) {
+			if (auto c = std::get<unique_ptr<User<Const>>>(s.val).get()) {
+				val = unique_ptr<User<Const>>(new User<Const>(c->id()));
 			}
 		}
 	}
 	void operator = (Symbol&& s) {
-		Literal::operator = (s);
+		lit = s.lit;
 		if (s.kind() != NONE) {
 			val = std::move(s.val);
 		}
 	}
 
-	uint type_id() const { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
-	uint constant_id() const { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
-	Type* type() { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	Const* constant() { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
-	const Type* type() const { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	const Const* constant() const { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	uint type_id() const { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
+	uint constant_id() const { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
+	Type* type() { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	Const* constant() { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	const Type* type() const { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	const Const* constant() const { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
 	const Token* token() const {
-		return var && kind() != NONE ? &std::get<unique_ptr<User<Type>>>(val).get()->token : &std::get<unique_ptr<User<Const>>>(val).get()->token;
+		switch (kind()) {
+		case VAR:   return &std::get<unique_ptr<User<Type>>>(val).get()->token;
+		case CONST: return &std::get<unique_ptr<User<Const>>>(val).get()->token;
+		default:    return nullptr;
+		}
 	}
 	const Tokenable* tokenable() const;
 	void set_type(Id i) { set_type(i.id); }
-
-	void set_type(uint t) {
-		if (t == UNDEF_UINT) return;
-		val = unique_ptr<User<Type>>(new User<Type>(t));
-		var = true;
-	}
-
-	void set_const() {
-		if (is_undef()) return;
-		val = unique_ptr<User<Const>>(new User<Const>(lit));
-	}
+	void set_type(uint t) { val = unique_ptr<User<Type>>(new User<Type>(t)); }
+	void set_const() { val = unique_ptr<User<Const>>(new User<Const>(lit)); }
 
 	struct Hash {
 		typedef size_t result_type;
@@ -99,6 +99,8 @@ struct Symbol : public Literal {
 	private:
 		static std::hash<uint> hash;
 	};
+
+	uint lit;
 
 private:
 	typedef variant<unique_ptr<User<Const>>, unique_ptr<User<Type>>> Value;
@@ -203,9 +205,9 @@ private:
 	Value val;
 };
 
-class Expr;
+//class Expr;
 
-namespace expr { void parse_LL(Expr*); }
+//namespace expr { void parse_LL(Expr*); }
 
 struct Expr : public Tokenable {
 	Expr(const Token& t = Token()) : Tokenable(t) { }
@@ -237,9 +239,9 @@ struct Expr : public Tokenable {
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	void parse() {
-		expr::parse_LL(this);
-	}
+	//void parse() {
+	//	expr::parse_LL(this);
+	//}
 	Tree* tree() { return tree_.get(); }
 	const Tree* tree() const { return tree_.get(); }
 	void set(Tree* t) { tree_.reset(t); }
@@ -344,7 +346,9 @@ inline Expr apply(const Substitution& s, const Expr& e) {
 inline void create_rule_term(Expr& ex, Id id) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
-		if (s.var) children.push_back(make_unique<Tree>(s));
+		if (s.kind() == Symbol::VAR) {
+			children.push_back(make_unique<Tree>(s));
+		}
 	}
 	ex.set(new Tree(id, children));
 }

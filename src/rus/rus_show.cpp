@@ -28,7 +28,7 @@ string show(const Rules& tr) {
 }
 
 string show(Symbol s, bool full) {
-	if (!full || !s.var)
+	if (!full || s.kind() == Symbol::CONST)
 		return Lex::toStr(s.lit);
 	else {
 		return string("<") + Lex::toStr(s.lit) + ":" + show_id(s.type()->id()) + ">";
@@ -52,10 +52,10 @@ void Comment::write(ostream& os, const Indent& i) const {
 void Const::write(ostream& os, const Indent& i) const {
 	os << i << "constant {\n";
 	os << i + 1 << "symbol " << Lex::toStr(symb) << " " << END_MARKER << "\n";
-	if (!Symbol::is_undef(ascii)) {
+	if (ascii != -1) {
 		os << i + 1 << "ascii " << Lex::toStr(ascii) << " " << END_MARKER << "\n";
 	}
-	if (!Symbol::is_undef(latex)) {
+	if (latex != -1) {
 		os << i + 1 << "latex " << Lex::toStr(latex) << " " << END_MARKER << "\n";
 	}
 	os << i << "}\n";

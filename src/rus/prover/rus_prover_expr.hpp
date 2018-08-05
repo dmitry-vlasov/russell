@@ -13,7 +13,10 @@ enum class ReplMode {
 
 struct LightSymbol : public Literal {
 	LightSymbol() : type(nullptr), rep(false) { }
-	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) : Literal(s), type(s.type()), rep(rep = s.var) {
+	LightSymbol(const rus::Symbol& s, ReplMode mode = ReplMode::DEFAULT) :
+		Literal(s.lit, s.kind() == Symbol::VAR),
+		type(s.kind() == Symbol::VAR ? s.type() : nullptr),
+		rep(s.kind() == Symbol::VAR) {
 		if (mode == ReplMode::DENY_REPL) {
 			rep = false;
 		}

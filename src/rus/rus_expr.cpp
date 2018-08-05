@@ -3,7 +3,11 @@
 namespace mdl { namespace rus {
 
 const Tokenable* Symbol::tokenable() const {
-	if (var) return type(); else return constant();
+	switch (kind()) {
+	case VAR: return type();
+	case CONST: return constant();
+	default: return nullptr;
+	}
 }
 
 void Rules::add(const Expr& ex, uint id) {
@@ -14,7 +18,8 @@ void Rules::add(const Expr& ex, uint id) {
 		bool new_symb = true;
 		for (auto& x : m->nodes) {
 			Node* p = x.get();
-			if ((!s.var && p->symb == s) || (s.var && p->symb.type_id() == s.type_id())) {
+			if ((s.kind() == Symbol::CONST && p->symb == s) ||
+				(s.kind() == Symbol::VAR && p->symb.type_id() == s.type_id())) {
 				n = p;
 				m = &p->tree;
 				new_symb = false;
@@ -57,9 +62,9 @@ void Rules::sort() {
 		[](const unique_ptr<Node>& p1, const unique_ptr<Node>& p2) {
 			auto n1 = p1.get();
 			auto n2 = p2.get();
-		    if (!n1->symb.var && n2->symb.var) {
+		    if (n1->symb.kind() == Symbol::CONST && n2->symb.kind() == Symbol::VAR) {
 		    	return true;
-		    } else if (n1->symb.var && !n2->symb.var) {
+		    } else if (n1->symb.kind() == Symbol::VAR && n2->symb.kind() == Symbol::CONST) {
 		    	return false;
 		    } else {
 		    	return n1->min_dist < n2->min_dist;
@@ -70,7 +75,7 @@ void Rules::sort() {
 	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
 		Node* n = it->get();
-		if (!n->symb.var) {
+		if (n->symb.kind() == Symbol::CONST) {
 			constMap[n->symb.lit] = it;
 			constLast = it;
 		}
@@ -124,10 +129,10 @@ static void assemble(const Tree* t, Symbols& s) {
 	if (t->kind() == Tree::NODE) {
 		auto i = t->children().begin();
 		for (auto x : t->rule()->term) {
-			if (x.var) {
-				assemble((*i++).get(), s);
-			} else {
-				s.push_back(x);
+			switch (x.kind()) {
+			case Symbol::VAR:   assemble((*i++).get(), s); break;
+			case Symbol::CONST: s.push_back(x); break;
+			default: s.push_back(x); break;
 			}
 		}
 	} else if (t->kind() == Tree::VAR) {

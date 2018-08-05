@@ -44,11 +44,13 @@ struct Maps {
 };
 
 inline uint translate_symb(const Symbol& s) {
-	if (s.var) {
-		return s.lit;
-	} else {
+	switch (s.kind()) {
+	case Symbol::VAR: return s.lit;
+	case Symbol::CONST: {
 		const Const* c = s.constant();
-		return Symbol::is_undef(c->ascii) ? s.lit : c->ascii;
+		return (c->ascii == -1) ? s.lit : c->ascii;
+	}
+	default: return s.lit;
 	}
 }
 
@@ -71,7 +73,7 @@ mm::Expr translate_term(const Expr& ex, const Type* tp) {
 }
 
 mm::Const* translate_const(const Const* c) {
-	uint symb = Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
+	uint symb = (c->ascii == -1) ? c->id() : c->ascii;
 	mm::Const* constant = new mm::Const(symb);
 	return constant;
 }
@@ -146,7 +148,7 @@ vector<unique_ptr<mm::Var>> translate_floatings(const Vars& vars, Maps& maps, ui
 	vector<unique_ptr<mm::Var>> flo_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		const Symbol& v = vars.v[i];
-		mm::Var* flo = new mm::Var(false, i, id, v.type()->id(), v.literal());
+		mm::Var* flo = new mm::Var(false, i, id, v.type()->id(), v.lit);
 		flo_vect.emplace_back(flo);
 		if (ass) {
 			maps.local.floatings[ass][v.lit] = flo;
@@ -248,9 +250,9 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 	vector<unique_ptr<mm::Var>> inn_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		const Symbol& v = vars.v[i];
-		mm::Var* inn = new mm::Var(true, i + ind_0, thm->id(), v.type()->id(), v.literal());
+		mm::Var* inn = new mm::Var(true, i + ind_0, thm->id(), v.type()->id(), v.lit);
 		inn_vect.emplace_back(inn);
-		maps.local.thm->vars.vars.push_back(v.literal());
+		maps.local.thm->vars.vars.push_back(v.lit);
 		maps.local.inners[thm][v.lit] = inn;
 	}
 	return inn_vect;

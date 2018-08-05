@@ -122,7 +122,7 @@ void translate_constant(const Const* constant, Maps& state) {
 			rus::Const* c = nullptr;
 			auto p = math_consts().find(s);
 			if (p == math_consts().end()) {
-				c = new rus::Const(s, rus::Symbol::undef(), rus::Symbol::undef());
+				c = new rus::Const(s, -1, -1);
 			} else {
 				c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 			}

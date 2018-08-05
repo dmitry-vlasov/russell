@@ -254,8 +254,8 @@ private:
 		parser_["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Const* c = nullptr;
 			switch (sv.size()) {
-			case 1 : c = new Const(sv[0].get<uint>(), Symbol::undef(), Symbol::undef()); break;
-			case 2 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), Symbol::undef()); break;
+			case 1 : c = new Const(sv[0].get<uint>(), -1, -1); break;
+			case 2 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), -1); break;
 			case 3 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), sv[2].get<uint>()); break;
 			default : throw Error("syntax error");
 			}

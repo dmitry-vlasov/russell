@@ -211,7 +211,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 
 	constant =
 		lit("constant") > "{"
-		> lit("symbol")  [_b = phoenix::val(Symbol::undef()), _c = phoenix::val(Symbol::undef())]
+		> lit("symbol")  [_b = phoenix::val(-1), _c = phoenix::val(-1)]
 		> liter          [_a = qi::labels::_1]
 		> lit(END_MARKER)
 		> -(

@@ -16,10 +16,10 @@ inline void const_deps(const Const* c, set<uint>& deps) {
 }
 
 inline void symb_deps(const Symbol& symb, set<uint>& deps) {
-	if (symb.var) {
-		add_dep(symb.type(), deps);
-	} else {
-		add_dep(symb.constant(), deps);
+	switch (symb.kind()) {
+	case Symbol::VAR:   add_dep(symb.type(), deps); break;
+	case Symbol::CONST: add_dep(symb.constant(), deps); break;
+	default: break;
 	}
 }
 

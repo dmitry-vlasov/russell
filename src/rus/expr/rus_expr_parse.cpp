@@ -45,7 +45,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (!ch->var && !(*n.top())->symb.var) {
+			if (ch->kind() == Symbol::CONST && (*n.top())->symb.kind() == Symbol::CONST) {
 				const Rules* par = (*n.top())->parent ? (*n.top())->parent : &type->rules;
 				auto constIter = par->constMap.find(ch->lit);
 				if (constIter != par->constMap.end()) {
