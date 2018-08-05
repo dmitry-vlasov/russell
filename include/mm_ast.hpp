@@ -216,7 +216,7 @@ struct Source : public mdl::Source<Source, Sys> {
 	}
 };
 
-typedef map<Symbol, Expr> Subst;
+typedef map<Literal, Expr> Subst;
 Expr apply(const Subst& sub, const Expr& expr);
 
 }} // mdl::mm

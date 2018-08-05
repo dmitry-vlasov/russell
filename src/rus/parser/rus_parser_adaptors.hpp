@@ -1,6 +1,6 @@
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Literal,
+	mdl::Literal,
 	(mdl::uint, lit)
 )
 

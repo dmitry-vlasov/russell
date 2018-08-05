@@ -73,7 +73,7 @@ inline uint translate_var_type(uint v, const Assertion* ass) {
 	return -1;
 }
 
-inline rus::Symbol translate_symb(Symbol s, const Assertion* ass) {
+inline rus::Symbol translate_symb(Literal s, const Assertion* ass) {
 	if (s.var) {
 		uint v = translate_var_symb(s.lit);
 		uint t = translate_var_type(s.lit, ass);
@@ -255,7 +255,7 @@ inline bool low_depth(uint brack_depth, uint brace_depth) {
 		(brack_depth == 0 && brace_depth <= 1);
 }
 
-vector<Symbol>::const_iterator eq_position(const Expr& ex) {
+vector<Literal>::const_iterator eq_position(const Expr& ex) {
 	uint brack_depth = 0;
 	uint brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
@@ -322,7 +322,7 @@ bool is_def(const Assertion* ass) {
 }
 
 rus::Theory::Kind node_kind(const Assertion* ass) {
-	if (!is_turnstile(ass->expr.front())) {
+	if (!ass->expr.front().is_turnstile()) {
 		return rus::Theory::RULE;
 	} else if (is_def(ass)) {
 		return rus::Theory::DEF;

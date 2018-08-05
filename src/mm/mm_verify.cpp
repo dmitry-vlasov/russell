@@ -5,7 +5,7 @@
 
 namespace mdl { namespace mm {
 
-bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
+bool areDisjointed(const Assertion* ass, Literal s1, Literal s2) {
 	for (const auto& dis : ass->disj.vect) {
 		const set<uint>* d = dis.get();
 		if (d->find(s1.literal()) != d->end() && d->find(s2.literal()) != d->end()) {
@@ -20,12 +20,12 @@ static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th,
 		for (auto s_2 : ex2) {
 			if (s_1.var && s_1 == s_2) {
 				string msg = "disjointed violation, ";
-				msg += "variable " + show_sy(s_1) + " is common for " + show_ex(ex1) + " and " + show_ex(ex2);
+				msg += "variable " + s_1.show() + " is common for " + show_ex(ex1) + " and " + show_ex(ex2);
 				throw Error("verification", msg, th->token);
 			}
 			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
-				msg += show_sy(s_1) + " and " + show_sy(s_2) + " ";
+				msg += s_1.show() + " and " + s_2.show() + " ";
 				msg += "are not disjointed in " + Lex::toStr(th->id()) + ", ";
 				msg += "while claimed to be disjointed in " + Lex::toStr(ass->id());
 				throw Error("verification", msg, th->token);
@@ -85,7 +85,7 @@ static void checkFloating(const Assertion* ass, const vector<unique_ptr<Var>>& f
 	}
 }
 
-static void checkDisjointed(const Assertion* ass, Symbol var) {
+static void checkDisjointed(const Assertion* ass, Literal var) {
 	for (uint v : ass->vars.vars) {
 		if (v == var.lit) return;
 	}

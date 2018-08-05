@@ -1,5 +1,6 @@
 #pragma once
 
+#include "literal.hpp"
 #include "rus_sys.hpp"
 
 namespace mdl { namespace rus {
@@ -12,24 +13,6 @@ typedef mdl::Id<Source> Id;
 
 struct Type;
 struct Rule;
-
-struct Literal {
-
-	Literal(): lit(undef()), var(false) { }
-	Literal(uint l, bool v = false) : lit(l), var(v) { }
-	Literal(const Literal& s) : lit(s.lit), var(s.var) { }
-
-	bool operator == (const Literal& s) const { return lit == s.lit; }
-	bool operator != (const Literal& s) const { return !operator ==(s); }
-	bool operator < (const Literal& s) const { return lit < s.lit; }
-	bool is_undef() const { return lit == undef(); }
-	static bool is_undef(uint lit) { return lit == undef(); }
-	static uint undef() { return 0x07FFFFFF; }
-	uint literal() const { return lit; }
-
-	uint lit:27;
-	bool var:1; //< is variable
-};
 
 struct Symbol : public Literal {
 	enum Kind { VAR, CONST, NONE };

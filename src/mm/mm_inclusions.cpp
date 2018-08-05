@@ -16,7 +16,7 @@ bool has_contents(const Source* s) {
 
 void collect_included_labels(uint label, const Expr& expr, set<uint>& deps, const map<uint, set<uint>>& rule_deps) {
 	const map<uint, uint>& consts = Sys::get().math.consts;
-	Symbol first = expr.front();
+	Literal first = expr.front();
 	for (const auto& s : expr) {
 		if (s == first) continue;
 		auto rit = rule_deps.find(s.lit);
@@ -149,16 +149,16 @@ map<uint, set<uint>> create_rule_deps() {
 	vector<const Assertion*> rules;
 	for (const auto& p : Sys::get().math.get<Assertion>()) {
 		const Assertion* a = p.second.data;
-		Symbol first = a->expr.front();
-		if (!is_turnstile(first)) {
+		Literal first = a->expr.front();
+		if (!first.is_turnstile()) {
 			rules.push_back(a);
 		}
 	}
 
 	map<uint, set<uint>> rule_deps;
 	for (auto a : rules) {
-		Symbol first = a->expr.front();
-		if (!is_turnstile(first)) {
+		Literal first = a->expr.front();
+		if (!first.is_turnstile()) {
 			for (auto s : a->expr) {
 				if (!s.var && s != first) {
 					bool is_unique = true;
