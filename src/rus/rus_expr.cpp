@@ -3,9 +3,7 @@
 namespace mdl { namespace rus {
 
 const Tokenable* Symbol::tokenable() const {
-	if (cst) return constant();
-	else if (var) return type();
-	else return nullptr;
+	if (var) return type(); else return constant();
 }
 
 void Rules::add(const Expr& ex, uint id) {
@@ -16,7 +14,7 @@ void Rules::add(const Expr& ex, uint id) {
 		bool new_symb = true;
 		for (auto& x : m->nodes) {
 			Node* p = x.get();
-			if ((s.cst && p->symb == s) || (s.var && p->symb.type_id() == s.type_id())) {
+			if ((!s.var && p->symb == s) || (s.var && p->symb.type_id() == s.type_id())) {
 				n = p;
 				m = &p->tree;
 				new_symb = false;
@@ -59,9 +57,9 @@ void Rules::sort() {
 		[](const unique_ptr<Node>& p1, const unique_ptr<Node>& p2) {
 			auto n1 = p1.get();
 			auto n2 = p2.get();
-		    if (n1->symb.cst && n2->symb.var) {
+		    if (!n1->symb.var && n2->symb.var) {
 		    	return true;
-		    } else if (n1->symb.var && n2->symb.cst) {
+		    } else if (n1->symb.var && !n2->symb.var) {
 		    	return false;
 		    } else {
 		    	return n1->min_dist < n2->min_dist;
@@ -72,7 +70,7 @@ void Rules::sort() {
 	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
 		Node* n = it->get();
-		if (n->symb.cst) {
+		if (!n->symb.var) {
 			constMap[n->symb.lit] = it;
 			constLast = it;
 		}
@@ -126,10 +124,10 @@ static void assemble(const Tree* t, Symbols& s) {
 	if (t->kind() == Tree::NODE) {
 		auto i = t->children().begin();
 		for (auto x : t->rule()->term) {
-			if (x.cst) {
-				s.push_back(x);
-			} else {
+			if (x.var) {
 				assemble((*i++).get(), s);
+			} else {
+				s.push_back(x);
 			}
 		}
 	} else if (t->kind() == Tree::VAR) {

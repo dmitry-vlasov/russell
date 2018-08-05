@@ -3,6 +3,8 @@
 #include "mm_math_symb.hpp"
 #include "mm_tree.hpp"
 
+#define PARALLEL_TRANSLATE
+
 namespace mdl {
 
 namespace rus { Rule* create_super(Type* inf, Type* sup); }
@@ -257,14 +259,14 @@ vector<Symbol>::const_iterator eq_position(const Expr& ex) {
 	uint brack_depth = 0;
 	uint brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
-		count_br(it->lit, brack_depth, brace_depth);
-		if (it->lit == eqiv() && low_depth(brack_depth, brace_depth)) return it;
+		count_br(it->literal(), brack_depth, brace_depth);
+		if (it->literal() == eqiv() && low_depth(brack_depth, brace_depth)) return it;
 	}
 	brack_depth = 0;
 	brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
-		count_br(it->lit, brack_depth, brace_depth);
-		if (it->lit == eqty() && low_depth(brack_depth, brace_depth)) return it;
+		count_br(it->literal(), brack_depth, brace_depth);
+		if (it->literal() == eqty() && low_depth(brack_depth, brace_depth)) return it;
 	}
 	return ex.end();
 }
@@ -293,12 +295,12 @@ void translate_def(const Assertion* ass, Maps& state) {
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it) {
-				def->prop.symbols.emplace_back(dfm(), rus::Id(), rus::Symbol::NONE);
+				def->prop.symbols.emplace_back(dfm());
 			}
 			def->dfm.push_back(translate_symb(*it, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it) {
-				def->prop.symbols.emplace_back(dfs(), rus::Id(), rus::Symbol::NONE);
+				def->prop.symbols.emplace_back(dfs());
 			}
 			def->dfs.push_back(translate_symb(*it, ass));
 		} else {
@@ -491,6 +493,9 @@ rus::Source* translate_source(uint src, Maps& maps, uint tgt = -1) {
 			target->include(inc);
 		}
 	}
+#ifndef PARALLEL_TRANSLATE
+	translate_theory(src, maps);
+#endif
 	return target;
 }
 
@@ -555,8 +560,6 @@ static vector<uint> find_dependencies(uint src) {
 }
 
 } // anonymous namespace
-
-#define PARALLEL_TRANSLATE
 
 void translate(uint src, uint tgt) {
 	if (!Sys::get().math.get<Source>().has(src)) throw Error("no source", Lex::toStr(src));

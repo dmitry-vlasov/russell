@@ -113,10 +113,10 @@ static map<uint, string> showVector(const Index* index) {
 				string str;
 				int x = 0;
 				for (auto s : r->term.symbols) {
-					if (s.cst) {
-						str += rus::show(s);
-					} else {
+					if (s.var) {
 						str += pr.second[x++];
+					} else {
+						str += rus::show(s);
 					}
 				}
 				ret[pr.first] = str;

@@ -14,10 +14,10 @@ struct Type;
 struct Rule;
 
 struct Literal {
-	enum Kind { VAR, CONST, NONE };
-	Literal(): lit(undef()), var(false), cst(false), rep(false) { }
-	Literal(uint l, bool v = false) : lit(l), var(v), cst(false), rep(false) { }
-	Literal(const Literal& s) : lit(s.lit), var(s.var), cst(s.cst), rep(s.rep) { }
+
+	Literal(): lit(undef()), var(false), rep(false) { }
+	Literal(uint l, bool v = false) : lit(l), var(v), rep(false) { }
+	Literal(const Literal& s) : lit(s.lit), var(s.var), rep(s.rep) { }
 
 	bool operator == (const Literal& s) const { return lit == s.lit; }
 	bool operator != (const Literal& s) const { return !operator ==(s); }
@@ -25,37 +25,42 @@ struct Literal {
 	bool is_undef() const { return lit == undef(); }
 	static bool is_undef(uint lit) { return lit == undef(); }
 	static uint undef() { return 0x07FFFFFF; }
-	Kind kind() const {
-		if (var && !cst) return VAR;
-		if (cst && !var) return CONST;
-		return NONE;
-	}
-	void set_kind(Kind k) {
-		switch (k) {
-		case VAR:   var = true; cst = false;  rep = true;  break;
-		case CONST: var = false; cst = true;  rep = false; break;
-		default:    var = false; cst = false; rep = false; break;
-		}
-	}
 	uint literal() const { return lit; }
 
 	uint lit:27;
 
 	// Flags
 	bool var:1; //< is variable
-	bool cst:1; //< is constant
 	bool rep:1; //< is replaceable variable
 };
 
 struct Symbol : public Literal {
+	enum Kind { VAR, CONST, NONE };
+	Kind kind() const {
+		if (val.index() == std::variant_npos) {
+			return NONE;
+		} else {
+			return var ? VAR : CONST;
+		}
+	}
+	void set_kind(Kind k) {
+		switch (k) {
+		case VAR:   var = true;  rep = true;  break;
+		case CONST: var = false; rep = false; break;
+		default:    var = false; rep = false; break;
+		}
+	}
+
 	Symbol() : Literal() { }
 	Symbol(uint l) : Literal(l) { }
 	Symbol(uint l, Id i, Kind k) : Literal(l) {
 		set_kind(k);
-		if (var) {
-			val = unique_ptr<User<Type>>(new User<Type>(i));
-		} else if (cst) {
-			val = unique_ptr<User<Const>>(new User<Const>(i));
+		if (i.id != -1) {
+			if (var) {
+				val = unique_ptr<User<Type>>(new User<Type>(i));
+			} else {
+				val = unique_ptr<User<Const>>(new User<Const>(i));
+			}
 		}
 	}
 	Symbol(const Symbol& s) : Literal(s) { operator = (s); }
@@ -63,28 +68,33 @@ struct Symbol : public Literal {
 
 	void operator = (const Symbol& s) {
 		Literal::operator = (s);
-		if (var) {
-			val = unique_ptr<User<Type>>(new User<Type>(*std::get<unique_ptr<User<Type>>>(s.val).get()));
-		}
-		if (cst) {
-			val = unique_ptr<User<Const>>(new User<Const>(*std::get<unique_ptr<User<Const>>>(s.val).get()));
+		if (s.kind() != NONE) {
+			if (var) {
+				if (auto v = std::get<unique_ptr<User<Type>>>(s.val).get()) {
+					val = unique_ptr<User<Type>>(new User<Type>(v->id()));
+				}
+			} else {
+				if (auto c = std::get<unique_ptr<User<Const>>>(s.val).get()) {
+					val = unique_ptr<User<Const>>(new User<Const>(c->id()));
+				}
+			}
 		}
 	}
 	void operator = (Symbol&& s) {
 		Literal::operator = (s);
-		val = std::move(s.val);
+		if (s.kind() != NONE) {
+			val = std::move(s.val);
+		}
 	}
 
-	uint type_id() const { return var ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
-	uint constant_id() const { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
-	Type* type() { return var ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	Const* constant() { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
-	const Type* type() const { return var ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	const Const* constant() const { return cst ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	uint type_id() const { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
+	uint constant_id() const { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
+	Type* type() { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	Const* constant() { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	const Type* type() const { return var && kind() != NONE ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
+	const Const* constant() const { return !var && kind() != NONE ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
 	const Token* token() const {
-		if (cst) return &std::get<unique_ptr<User<Const>>>(val).get()->token;
-		else if (var) return &std::get<unique_ptr<User<Type>>>(val).get()->token;
-		else return nullptr;
+		return var && kind() != NONE ? &std::get<unique_ptr<User<Type>>>(val).get()->token : &std::get<unique_ptr<User<Const>>>(val).get()->token;
 	}
 	const Tokenable* tokenable() const;
 	void set_type(Id i) { set_type(i.id); }
@@ -99,7 +109,6 @@ struct Symbol : public Literal {
 	void set_const() {
 		if (is_undef()) return;
 		val = unique_ptr<User<Const>>(new User<Const>(lit));
-		cst = true;
 		rep = false;
 	}
 
@@ -114,7 +123,7 @@ struct Symbol : public Literal {
 	};
 
 private:
-	typedef variant<unique_ptr<User<Type>>, unique_ptr<User<Const>>> Value;
+	typedef variant<unique_ptr<User<Const>>, unique_ptr<User<Type>>> Value;
 	Value val;
 };
 

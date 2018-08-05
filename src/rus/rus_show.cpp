@@ -28,7 +28,7 @@ string show(const Rules& tr) {
 }
 
 string show(Symbol s, bool full) {
-	if (!full || !s.type())
+	if (!full || !s.var)
 		return Lex::toStr(s.lit);
 	else {
 		return string("<") + Lex::toStr(s.lit) + ":" + show_id(s.type()->id()) + ">";
