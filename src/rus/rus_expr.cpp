@@ -24,10 +24,10 @@ void Rules::add(const Expr& ex, uint id) {
 			}
 		}
 		if (new_symb) {
-			if (m->nodes.size()) m->nodes.back()->symb.fin = false;
+			if (m->nodes.size()) m->nodes.back()->final = false;
 			m->nodes.emplace_back(new Node(s, m));
 			n = m->nodes.back().get();
-			n->symb.fin = true;
+			n->final = true;
 			m = &n->tree;
 		}
 	}
@@ -52,7 +52,7 @@ void Rules::add(const Expr& ex, uint id) {
 
 void Rules::sort() {
 	if (!nodes.size()) return;
-	nodes.back().get()->symb.fin = false;
+	nodes.back().get()->final = false;
 	std::sort(
 		nodes.begin(),
 		nodes.end(),
@@ -68,7 +68,7 @@ void Rules::sort() {
 		    }
 		}
 	);
-	nodes.back().get()->symb.fin = true;
+	nodes.back().get()->final = true;
 	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
 		Node* n = it->get();

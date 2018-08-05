@@ -71,11 +71,11 @@ string Prop::show() const {
 	ret += show_assertion(prop.ass);
 	ret += "]]>";
 	ret += "</assertion>\n";
-	ret += "\t<substitution>";
-	ret += "<![CDATA[";
+	ret += "\t<substitution>\n";
+	ret += "\t<![CDATA[\n";
 	ret += rus::prover::show(sub);
-	ret += "]]>";
-	ret += "</substitution>\n";
+	ret += "\t]]>\n";
+	ret += "\t</substitution>\n";
 	ret += "</prop>\n";
 	return ret;
 }

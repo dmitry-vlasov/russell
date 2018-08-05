@@ -2,6 +2,116 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+void Subst::operator = (const Subst& s) {
+	ok_ = s.ok_;
+	if (ok_) for (const auto& p : s.sub_) {
+		sub_.emplace(p.first, p.second);
+	}
+}
+
+void Subst::operator = (Subst&& s) {
+	ok_ = s.ok_;
+	sub_ = std::move(s.sub_);
+	s.ok_ = true;
+}
+
+bool Subst::join(uint v, const LightTree& t) {
+	if (!ok_) return false;
+	if (t.kind() == LightTree::VAR && t.var().lit == v) {
+		return true;
+	}
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		if ((*it).second != t) ok_ = false;
+	} else {
+		sub_.emplace(v, t);
+	}
+	return ok_;
+}
+
+bool Subst::join(uint v, LightTree&& t) {
+	if (!ok_) return false;
+	if (t.kind() == LightTree::VAR && t.var().lit == v) {
+		return true;
+	}
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		if ((*it).second != t) ok_ = false;
+	} else {
+		sub_.emplace(v, std::move(t));
+	}
+	return ok_;
+}
+
+bool Subst::join(const Subst& s) {
+	if (s.ok_) {
+		for (const auto& p : s.sub_) {
+			if (!ok_) return false;
+			join(p.first, p.second);
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
+bool Subst::join(Subst&& s) {
+	if (s.ok_) {
+		for (auto&& p : s.sub_) {
+			if (!ok_) return false;
+			join(p.first, std::move(p.second));
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
+bool Subst::consistent(uint v, const LightTree& t) {
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		return (*it).second == t;
+	} else {
+		return true;
+	}
+}
+
+bool Subst::consistent(const Subst& s) {
+	for (const auto& p : s.sub_) {
+		if (!consistent(p.first, p.second)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+Subst compose(const Subst& s1, const Subst& s2, bool full) {
+	Subst ret;
+	set<uint> vars;
+	for (const auto& p : s1.sub()) {
+		ret.join(p.first, apply(s2, p.second));
+		vars.insert(p.first);
+	}
+	if (full) {
+		for (const auto& p : s2.sub()) {
+			if (vars.find(p.first) == vars.end()) {
+				ret.join(p.first, p.second);
+			}
+		}
+	}
+	return ret;
+}
+
+bool composable(const Subst& s1, const Subst& s2) {
+	for (const auto& p : s1.sub()) {
+		if (s2.sub().find(p.first) != s2.sub().end()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	switch (tree.kind()) {
 	case LightTree::NODE: {

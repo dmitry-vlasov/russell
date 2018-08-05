@@ -15,9 +15,9 @@ struct Rule;
 
 struct Literal {
 	enum Kind { VAR, CONST, NONE };
-	Literal(): lit(undef()), var(false), cst(false), end(false), rep(false), fin(false) { }
-	Literal(uint l, bool v = false) : lit(l), var(v), cst(false), end(false), rep(false), fin(false) { }
-	Literal(const Literal& s) : lit(s.lit), var(s.var), cst(s.cst), end(s.end), rep(s.rep), fin(s.fin) { }
+	Literal(): lit(undef()), var(false), cst(false), rep(false) { }
+	Literal(uint l, bool v = false) : lit(l), var(v), cst(false), rep(false) { }
+	Literal(const Literal& s) : lit(s.lit), var(s.var), cst(s.cst), rep(s.rep) { }
 
 	bool operator == (const Literal& s) const { return lit == s.lit; }
 	bool operator != (const Literal& s) const { return !operator ==(s); }
@@ -44,9 +44,7 @@ struct Literal {
 	// Flags
 	bool var:1; //< is variable
 	bool cst:1; //< is constant
-	bool end:1; //< is end of an expression
 	bool rep:1; //< is replaceable variable
-	bool fin:1; //< final node in a tree (in a horizontal iteration)
 };
 
 struct Symbol : public Literal {
@@ -304,13 +302,14 @@ struct Rules {
 };
 
 struct Rules::Node {
-	Node(const Symbol& s, Rules* p) : symb(s), tree(this), parent(p), min_dist(-1) { }
+	Node(const Symbol& s, Rules* p) : symb(s), tree(this), parent(p), min_dist(-1), final(false) { }
 	vector<string> show() const;
 	Symbol     symb;
 	Rules      tree;
 	User<Rule> rule;
 	Rules*     parent;
 	uint       min_dist;
+	bool       final;
 };
 
 

@@ -78,7 +78,7 @@ void Hyp::buildUp() {
 		}
 	}*/
 
-	for (const auto& m : space->assertions.match_forth(expr)) {
+	for (const auto& m : space->assertions.unify(expr)) {
 		variants.emplace_back(new Prop(m.data, m.subs.first, this));
 	}
 }

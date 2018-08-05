@@ -25,6 +25,7 @@ struct Index {
 	void add(const LightTree& t, uint s);
 	Unified match_forth(const LightTree& t) const;
 	Unified match_back(const LightTree& t) const;
+	Unified unify(const LightTree& t) const;
 
 	string show() const;
 };
@@ -44,7 +45,9 @@ struct UnifyMap {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_forth(t);
 		for (auto& p : unif) {
-			ret.emplace_back(data[p.first], std::move(p.second));
+			if (p.second.first.ok() && p.second.second.ok()) {
+				ret.emplace_back(data[p.first], std::move(p.second));
+			}
 		}
 		return ret;
 	}
@@ -52,7 +55,19 @@ struct UnifyMap {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_back(t);
 		for (auto& p : unif) {
-			ret.emplace_back(data[p.first], std::move(p.second));
+			if (p.second.first.ok() && p.second.second.ok()) {
+				ret.emplace_back(data[p.first], std::move(p.second));
+			}
+		}
+		return ret;
+	}
+	vector<Unified> unify(const LightTree& t) {
+		vector<Unified> ret;
+		Index::Unified unif = index.unify(t);
+		for (auto& p : unif) {
+			if (p.second.first.ok() && p.second.second.ok()) {
+				ret.emplace_back(data[p.first], std::move(p.second));
+			}
 		}
 		return ret;
 	}

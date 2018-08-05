@@ -193,82 +193,20 @@ struct Subst {
 	Subst(Subst&& s) : sub_(), ok_(s.ok_) {
 		operator = (std::move(s));
 	}
-	void operator = (const Subst& s) {
-		ok_ = s.ok_;
-		if (ok_) for (const auto& p : s.sub_) {
-			sub_.emplace(p.first, p.second);
-		}
-	}
-	void operator = (Subst&& s) {
-		ok_ = s.ok_;
-		sub_ = std::move(s.sub_);
-		s.ok_ = true;
-	}
+	void operator = (const Subst& s);
+	void operator = (Subst&& s);
 	bool join(uint v, const LightSymbol& t) {
 		return join(v, LightTree(t));
 	}
-	bool join(uint v, const LightTree& t) {
-		if (!ok_) return false;
-		auto it = sub_.find(v);
-		if (it != sub_.end()) {
-			if ((*it).second != t) ok_ = false;
-		} else {
-			sub_.emplace(v, t);
-		}
-		return ok_;
-	}
-	bool join(uint v, LightTree&& t) {
-		if (!ok_) return false;
-		auto it = sub_.find(v);
-		if (it != sub_.end()) {
-			if ((*it).second != t) ok_ = false;
-		} else {
-			sub_.emplace(v, std::move(t));
-		}
-		return ok_;
-	}
+	bool join(uint v, const LightTree& t);
+	bool join(uint v, LightTree&& t);
 	bool join(const Subst* s) {
 		return join(*s);
 	}
-	bool join(const Subst& s) {
-		if (s.ok_) {
-			for (const auto& p : s.sub_) {
-				if (!ok_) return false;
-				join(p.first, p.second);
-			}
-		} else {
-			ok_ = false;
-		}
-		return ok_;
-	}
-	bool join(Subst&& s) {
-		if (s.ok_) {
-			for (auto&& p : s.sub_) {
-				if (!ok_) return false;
-				join(p.first, std::move(p.second));
-			}
-		} else {
-			ok_ = false;
-		}
-		return ok_;
-	}
-	bool consistent(uint v, const LightTree& t) {
-		auto it = sub_.find(v);
-		if (it != sub_.end()) {
-			return (*it).second == t;
-		} else {
-			return true;
-		}
-	}
-	bool consistent(const Subst& s) {
-		for (const auto& p : s.sub_) {
-			if (!consistent(p.first, p.second)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
+	bool join(const Subst& s);
+	bool join(Subst&& s);
+	bool consistent(uint v, const LightTree& t);
+	bool consistent(const Subst& s);
 
 	const map<uint, LightTree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
@@ -278,6 +216,9 @@ private:
 	map<uint, LightTree> sub_;
 	bool ok_;
 };
+
+Subst compose(const Subst& s1, const Subst& s2, bool full = true);
+bool composable(const Subst& s1, const Subst& s2);
 
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree&);
 unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&, ReplMode = ReplMode::DEFAULT);

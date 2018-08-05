@@ -12,7 +12,7 @@ struct Action {
 };
 
 template<bool trace>
-inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
+inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, const Expr* e, Symbols::iterator beg, Symbols::iterator end) {
 	if (const User<Rule>& r = (*ni)->rule) {
 		if (!r) throw Error("unknown rule", Lex::toStr(r.id()));
 		if (r.get()->token.preceeds(e->token)) {
@@ -22,7 +22,7 @@ inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, co
 			if (trace) cout << Indent(ch - beg) << "Act: Rule FAILS - follows: " << Lex::toStr(r.id()) << endl;
 			return Action::BREAK;
 		}
-	} else if (ch->end) {
+	} else if (ch == end) {
 		if (trace) cout << Indent(ch - beg) << "Act: end of expression: " << endl;
 		return Action::BREAK;
 	} else {
@@ -34,7 +34,7 @@ inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, co
 }
 
 template<bool trace>
-Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::iterator beg) {
+Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::iterator beg, Symbols::iterator end) {
 	if (type->rules.nodes.size()) {
 		typedef Rules::NodeIter NodeIter;
 		Tree::Children children;
@@ -53,7 +53,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					if (trace) cout << Indent(ch - beg) << "Expr const symbol: " << *m.top() << endl;
 					if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
 					n.top() = par->constLast;
-					Action a = act<trace>(n, m, constIter->second, ch, e, beg);
+					Action a = act<trace>(n, m, constIter->second, ch, e, beg, end);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 					case Action::BREAK: goto out;
@@ -65,10 +65,10 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
 				if (trace) cout << Indent(ch - beg) << "Parse: variable " << (*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
 				childnodes.push(n.top());
-				if (Tree* child = parse_LL<trace>(ch, tp, e, beg)) {
+				if (Tree* child = parse_LL<trace>(ch, tp, e, beg, end)) {
 					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(child) << " - success " << endl;
 					children.emplace_back(child);
-					Action a = act<trace>(n, m, n.top(), ch, e, beg);
+					Action a = act<trace>(n, m, n.top(), ch, e, beg, end);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 					case Action::BREAK: goto out;
@@ -78,7 +78,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					childnodes.pop();
 				}
 			}
-			while ((*n.top())->symb.fin) {
+			while ((*n.top())->final) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
@@ -106,14 +106,13 @@ cvector<std::exception_ptr> exceptions;
 
 void parse(Expr* ex) {
 	try {
-		(--ex->symbols.end())->end = true;
 		auto it = ex->symbols.begin();
-		if (Tree* tree = parse_LL<false>(it, ex->type.get(), ex, ex->symbols.begin())) {
+		if (Tree* tree = parse_LL<false>(it, ex->type.get(), ex, ex->symbols.begin(), ex->symbols.end() - 1)) {
 			ex->set(tree);
 		} else {
  			cout << "parsing expr: " <<  show(*ex)  << endl << endl;
  			cout << "source: " << Lex::toStr(ex->token.src()->id())  << endl << endl;
-			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin());
+			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin(), ex->symbols.end() - 1);
 			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 		}
 	} catch (...) {
