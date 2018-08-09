@@ -67,35 +67,57 @@ bool Subst::join(Subst&& s) {
 	return ok;
 }
 
-bool Subst::consistent(uint v, const LightTree& t) {
-	auto it = sub.find(v);
-	if (it != sub.end()) {
-		return (*it).second == t;
+void collect_vars(const LightTree& tree, set<uint> vars) {
+	if (tree.kind() == LightTree::VAR) {
+		vars.insert(tree.var().lit);
 	} else {
-		return true;
+		for (const auto& c : tree.children()) {
+			collect_vars(*c.get(), vars);
+		}
 	}
 }
 
-bool Subst::consistent(const Subst& s) {
+bool consistent_for_unify(const Subst* s, uint v, const LightTree& t) {
+	set<uint> x_vars;
+	collect_vars(t, x_vars);
+	for (uint y : x_vars) {
+		auto i = s->sub.find(y);
+		if (i != s->sub.end()) {
+			set<uint> y_vars;
+			collect_vars(i->second, y_vars);
+			if (y_vars.find(v) != y_vars.end()) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+
+bool Subst::consistent(uint v, const LightTree& t) {
+	return consistent_for_unify(this, v, t);
+}
+
+/*bool Subst::consistent(const Subst& s) {
 	for (const auto& p : s.sub) {
 		if (!consistent(p.first, p.second)) {
 			return false;
 		}
 	}
 	return true;
-}
+}*/
 
 void Subst::compose(const Subst& s, bool full) {
 	Subst ret;
 	set<uint> vars;
 	for (const auto& p : sub) {
-		ret.join(p.first, apply(s, p.second));
+		sub[p.first] = apply(s, p.second);
 		vars.insert(p.first);
 	}
 	if (full) {
 		for (const auto& p : s.sub) {
 			if (vars.find(p.first) == vars.end()) {
-				join(p.first, p.second);
+				sub[p.first] = p.second;
 			}
 		}
 	}

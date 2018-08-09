@@ -2,126 +2,10 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) {
-	if (unif.sub.ok) {
-		for (auto e : ex) {
-			if (apply(unif.sub, *e) != *unif.term) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-Unified do_unify(const vector<const LightTree*>& ex) {
-	const Rule* r = nullptr;
-	vector<LightSymbol> vars;
-	vector<const LightTree::Children*> rules;
-
-	enum class UnifyKind {UNDEF, VAR, CONST, RULE, DEFAULT = UNDEF};
-	UnifyKind kind = UnifyKind::DEFAULT;
-
-	for (const auto& t : ex) {
-		switch (t->kind()) {
-		case LightTree::VAR:
-			if (t->var().rep) {
-				if (kind == UnifyKind::UNDEF) {
-					kind = UnifyKind::VAR;
-				} else if (kind != UnifyKind::VAR) {
-					return Unified();
-				}
-				vars.push_back(t->var());
-			} else {
-				if (kind == UnifyKind::UNDEF) {
-					kind = UnifyKind::CONST;
-				} else if (kind != UnifyKind::CONST) {
-					return Unified();
-				}
-			}
-			break;
-		case LightTree::NODE:
-			if (kind == UnifyKind::UNDEF) {
-				kind = UnifyKind::RULE;
-			} else if (kind != UnifyKind::RULE) {
-				return Unified();
-			}
-			if (!r) {
-				r = t->rule();
-			} else if (r != t->rule()) {
-				return Unified();
-			}
-			rules.push_back(&t->children());
-			break;
-		default: assert(false && "no term in unify_both");
-		}
-	}
-	Unified ret(true);
-	if (r) {
-		LightTree::Children ch;
-		for (uint i = 0; i < r->arity(); ++ i) {
-			vector<const LightTree*> x;
-			for (const auto t : rules) {
-				x.push_back((*t)[i].get());
-			}
-			Unified s = do_unify(x);
-			if (!ret.sub.join(s.sub)) {
-				return Unified();
-			}
-			ch.push_back(make_unique<LightTree>(*s.term));
-		}
-		ret.term.reset(new LightTree(r, ch));
-		for (auto s : vars) {
-			if (r->type() == s.type) {
-				ret.sub.join(Subst(s.lit, *ret.term));
-			} else if (Rule* sup = find_super(r->type(), s.type)) {
-				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(*ret.term))));
-			} else {
-				return Unified();
-			}
-		}
-	} else {
-		std::sort(
-			vars.begin(),
-			vars.end(),
-			[](const LightSymbol& v1, const LightSymbol& v2) {
-				return *v1.type < *v2.type;
-			}
-		);
-		LightSymbol lv;
-		if (!vars.size()) {
-			for (const auto& t : ex) {
-				if (t->kind() == LightTree::VAR) {
-					if (lv.lit == -1) {
-						lv = t->var();
-					} else if (t->var() != lv) {
-						return Unified();
-					}
-				} else {
-					return Unified();
-				}
-			}
-		} else {
-			for (auto s : vars) {
-				if (lv.lit == -1) {
-					lv = s;
-				}
-				if (lv.type == s.type) {
-					ret.sub.join(Subst(s.lit, lv));
-				} else if (Rule* sup = find_super(lv.type, s.type)) {
-					ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
-				} else {
-					return Unified();
-				}
-			}
-		}
-		ret.term.reset(new LightTree(lv));
-	}
-	return ret;
-}
-
 struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;
+	//map<LightSymbol, const Type*> super_wrappers;
 	vector<const LightTree::Children*> children;
 	bool consistent = false;
 	LightSymbol var;
@@ -192,21 +76,23 @@ static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
 }
 
 
-unique_ptr<LightTree> do_unify_1(vector<const LightTree*> ex, Subst& sub);
+unique_ptr<LightTree> unify(vector<const LightTree*> ex, Subst& sub);
 
 unique_ptr<LightTree> gather_result(UnifStepData& data, Subst& s, LightTree* ret) {
 	vector<const LightTree*> to_unify({ret});
 	for (auto v : data.vars) {
-		if (s.mapsVar(v.lit)) {
+		if (s.maps(v.lit)) {
 			to_unify.push_back(&s.sub[v.lit]);
 		}
 	}
-	if (auto unified = do_unify_1(to_unify, s)) {
+	if (auto unified = unify(to_unify, s)) {
 		for (auto v : data.vars) {
-			if (data.rule->type() == v.type) {
-				s.compose(Subst(v.lit, *unified));
-			} else {
-				s.compose(Subst(v.lit, LightTree(find_super(data.rule->type(), v.type), new LightTree(*unified))));
+			LightTree term =
+				(data.rule->type() == v.type) ?
+				*unified :
+				LightTree(find_super(data.rule->type(), v.type), new LightTree(*unified));
+			if (s.consistent(v.lit, term)) {
+				s.compose(Subst(v.lit, term));
 			}
 		}
 		return unified;
@@ -215,7 +101,7 @@ unique_ptr<LightTree> gather_result(UnifStepData& data, Subst& s, LightTree* ret
 	}
 }
 
-unique_ptr<LightTree> do_unify_1(vector<const LightTree*> ex, Subst& sub) {
+unique_ptr<LightTree> unify(vector<const LightTree*> ex, Subst& sub) {
 	if (!ex.size()) {
 		return nullptr;
 	} else if (ex.size() == 1) {
@@ -233,7 +119,7 @@ unique_ptr<LightTree> do_unify_1(vector<const LightTree*> ex, Subst& sub) {
 			for (const auto t : data.children) {
 				x.push_back((*t)[i].get());
 			}
-			if (unique_ptr<LightTree> c = do_unify_1(x, sub)) {
+			if (unique_ptr<LightTree> c = unify(x, sub)) {
 				ch.push_back(std::move(c));
 			} else {
 				return nullptr;
@@ -246,6 +132,16 @@ unique_ptr<LightTree> do_unify_1(vector<const LightTree*> ex, Subst& sub) {
 	return gather_result(data, sub, ret);
 }
 
+bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) {
+	if (unif.sub.ok) {
+		for (auto e : ex) {
+			if (apply(unif.sub, *e) != *unif.term) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 Unified unify(const vector<const LightTree*>& ex) {
 
@@ -255,9 +151,8 @@ Unified unify(const vector<const LightTree*>& ex) {
 	}
 	cout << endl;
 
-	//Unified ret = do_unify(ex);
 	Unified ret;
-	ret.term = do_unify_1(ex, ret.sub);
+	ret.term = unify(ex, ret.sub);
 	assert(check_unification(ret, ex) && "unification error");
 
 	cout << "RESULT: " << (ret.term ? show(*ret.term) : "NULL") << endl;

@@ -20,7 +20,7 @@ static void make_free_vars_fresh(const Assertion* a, Subst& s, map<uint, uint>& 
 		if (!s.sub.count(v.lit)) {
 			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
 			vars[v.lit] = n;
-			s.join(v.lit, fresh_var(v, n));
+			s.sub[v.lit] = LightTree(fresh_var(v, n));
 		}
 	}
 }
@@ -80,13 +80,13 @@ void Hyp::buildUp() {
 	}*/
 
 	for (const auto& m : space->assertions.unify(expr)) {
-		variants.emplace_back(new Prop(m.data, m.sub, this));
+		variants.emplace_back(new Prop(m.data, m.unif.sub, this));
 	}
 }
 
 void Hyp::complete() {
-	for (const auto& m : space->hyps.match_back(expr)) {
-		proofs.emplace_back(new ProofTop(*this, m.data, m.sub));
+	for (const auto& m : space->hyps.unify(expr)) {
+		proofs.emplace_back(new ProofTop(*this, m.data, m.unif.sub));
 	}
 	//cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
@@ -233,8 +233,12 @@ Subst unify_subs(const MultyTree& t) {
 	Subst com;
 	Subst gen;
 	for (auto& p : m.msub_) {
-		if (!com.join(p.second.sub)) return Subst(false);
-		if (!gen.join(p.first, *p.second.term)) Subst(false);
+		if (!com.join(p.second.sub)) {
+			return Subst(false);
+		}
+		if (!gen.join(p.first, *p.second.term)) {
+			return Subst(false);
+		}
 	}
 	if (!intersects(com, gen)) {
 		com.join(gen);

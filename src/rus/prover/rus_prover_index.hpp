@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_expr.hpp"
+#include "rus_prover_unify.hpp"
 #include "rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -11,63 +11,36 @@ struct Index {
 		LeafInds leafs;
 		vector<unique_ptr<Index>> child;
 	};
-	typedef map<uint, Subst> Unified;
+	typedef map<uint, prover::Unified> Unified;
 
 	map<const Rule*, Node> rules;
 	map<LightSymbol, LeafInds> vars;
 	uint size = 0;
 
-	uint add(const LightTree& t) {
-		uint ind = size++;
-		add(t, ind);
-		return ind;
-	}
-	void add(const LightTree& t, uint s);
-	Unified match_forth(const LightTree& t) const;
-	Unified match_back(const LightTree& t) const;
-	Unified unify(const LightTree& t) const;
-
+	uint add(const LightTree&);
+	Index::Unified unify(const LightTree&) const;
 	string show() const;
+
+	vector<LightTree> exprs;
 };
+
 
 template<class Data>
 struct UnifyMap {
 	struct Unified {
-		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Data& d, prover::Unified&& u) : data(d), unif(std::move(u)) { }
 		Data  data;
-		Subst sub;
+		prover::Unified unif;
 	};
 	void add(const LightTree& t, const Data& d) {
 		index.add(t);
 		data.push_back(d);
 	}
-	vector<Unified> match_forth(const LightTree& t) {
-		vector<Unified> ret;
-		Index::Unified unif = index.match_forth(t);
-		for (auto& p : unif) {
-			if (p.second.ok()) {
-				ret.emplace_back(data[p.first], std::move(p.second));
-			}
-		}
-		return ret;
-	}
-	vector<Unified> match_back(const LightTree& t) {
-		vector<Unified> ret;
-		Index::Unified unif = index.match_back(t);
-		for (auto& p : unif) {
-			if (p.second.ok) {
-				ret.emplace_back(data[p.first], std::move(p.second));
-			}
-		}
-		return ret;
-	}
 	vector<Unified> unify(const LightTree& t) {
 		vector<Unified> ret;
 		Index::Unified unif = index.unify(t);
 		for (auto& p : unif) {
-			if (p.second.ok) {
-				ret.emplace_back(data[p.first], std::move(p.second));
-			}
+			ret.emplace_back(data[p.first], std::move(p.second));
 		}
 		return ret;
 	}
