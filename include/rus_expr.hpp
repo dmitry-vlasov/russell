@@ -166,15 +166,15 @@ struct Tree {
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 
 	uint rule_id() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.id(); }
-	Symbol* var() { assert(kind() == VAR); return std::get<unique_ptr<Symbol>>(val).get(); }
-	Node* node() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get(); }
-	Rule* rule() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.get(); }
+	Symbol* var() { return kind() == VAR ? std::get<unique_ptr<Symbol>>(val).get() : nullptr; }
+	Node* node() { return kind() == NODE ? std::get<unique_ptr<Node>>(val).get() : nullptr; }
+	Rule* rule() { return  kind() == NODE ? std::get<unique_ptr<Node>>(val).get()->rule.get() : nullptr; }
 	Children& children() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
 	Type* type();
 
-	const Symbol* var() const { assert(kind() == VAR); return std::get<unique_ptr<Symbol>>(val).get(); }
-	const Node* node() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get(); }
-	const Rule* rule() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.get(); }
+	const Symbol* var() const { return kind() == VAR ? std::get<unique_ptr<Symbol>>(val).get() : nullptr; }
+	const Node* node() const { return kind() == NODE ? std::get<unique_ptr<Node>>(val).get() : nullptr; }
+	const Rule* rule() const { return  kind() == NODE ? std::get<unique_ptr<Node>>(val).get()->rule.get() : nullptr; }
 	const Children& children() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
 	const Type* type() const;
 	uint arity() const {

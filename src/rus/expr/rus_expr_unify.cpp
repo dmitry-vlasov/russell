@@ -23,7 +23,9 @@ Substitution unify_forth(const Tree* p, const Tree* q) {
 			return Substitution(false);
 	}
 	case Tree::NODE: {
-		if (p->rule() != q->rule()) return Substitution(false);
+		if (p->rule() != q->rule()) {
+			return Substitution(false);
+		}
 		Substitution sub;
 		auto p_ch = p->children().begin();
 		auto q_ch = q->children().begin();

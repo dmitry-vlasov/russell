@@ -48,7 +48,7 @@ void Prop::buildUp() {
 		//cout << "NODE EXPR: " << prover::show(apply(sub, convert_tree(*h->expr.tree()))) << endl;
 
 		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree()), this);
-		cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
+		//cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
 
 		premises.emplace_back(hyp);
 	}
@@ -83,7 +83,14 @@ void Hyp::buildUp() {
 		//cout << "HYP THIS: " << prover::show(expr) << endl;
 		//cout << "PROP UP: " << Lex::toStr(m.data.id()) << endl;
 		//cout << "SUB:" << endl << prover::show(m.sub) << endl;
-		variants.emplace_back(new Prop(m.data, m.sub, this));
+		Prop* prop = new Prop(m.data, m.sub, this);
+		variants.emplace_back(prop);
+		if (!prop->prop.ass->arity()) {
+			ProofProp* pr = new ProofProp(*prop);
+			prop->proofs.emplace_back(pr);
+			proofs.emplace_back(new ProofExp(*this, pr, m.sub));
+			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+		}
 	}
 }
 

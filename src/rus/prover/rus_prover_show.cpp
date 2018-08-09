@@ -98,7 +98,7 @@ string Hyp::show() const {
 
 string ProofTop::show() const {
 	ostringstream oss;
-	oss << "\t\t<proof expr=\"" << prover::show(node.expr) << "\">";
+	oss << "\t\t<proof expr=\"" << prover::show(apply(sub, node.expr)) << "\">";
 	oss << "<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
 	oss << "]]>\n";
