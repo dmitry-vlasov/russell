@@ -97,19 +97,56 @@ string Hyp::show() const {
 }
 
 string ProofTop::show() const {
-	return "<top index=\"" + to_string(hyp.ind) + "\"/>";
+	ostringstream oss;
+	oss << "\t\t<proof expr=\"" << prover::show(node.expr) << "\">";
+	oss << "<![CDATA[";
+	oss << "hyp " << hyp.ind + 1;
+	oss << "]]>\n";
+	oss << "\t\t<substitution>\n";
+	oss << "\t\t<![CDATA[\n";
+	oss << prover::show(sub);
+	oss << "\t\t]]>\n";
+	oss << "\t\t</substitution>\n";
+	oss << "\t</proof>\n";
+	return oss.str();
 }
 
 string ProofExp::show() const {
-	string ret;
-	ret += "ProofHyp: " + prover::show(expr);
-	return ret + "\n";
+	ostringstream oss;
+	rus::Step* step = child->step();
+	rus::Proof* proof = make_proof(step, node.space->prop.id(), node.space->prop.get());
+	oss << "\t\t<proof expr=\"" << rus::show(step->expr) << "\">";
+	oss << "\t\t<![CDATA[\n";
+	proof->write(oss);
+	oss << "\n";
+	oss << "\t\t]]>\n";
+	delete proof;
+	oss << "\t\t<substitution>\n";
+	oss << "\t\t<![CDATA[\n";
+	oss << prover::show(sub);
+	oss << "\t\t]]>\n";
+	oss << "\t\t</substitution>\n";
+	oss << "\t</proof>\n";
+	return oss.str();
 }
 
 string ProofProp::show() const {
-	string ret;
-	ret += "ProofStep: " + Lex::toStr(node.prop.id());
-	return ret + "\n";
+	ostringstream oss;
+	rus::Step* st = step();
+	rus::Proof* proof = make_proof(st, node.space->prop.id(), node.space->prop.get());
+	oss << "\t\t<proof expr=\"" << rus::show(st->expr) << "\">";
+	oss << "\t\t<![CDATA[\n";
+	proof->write(oss);
+	oss << "\n";
+	oss << "\t\t]]>\n";
+	delete proof;
+	oss << "\t\t<substitution>\n";
+	oss << "\t\t<![CDATA[\n";
+	oss << prover::show(sub);
+	oss << "\t\t]]>\n";
+	oss << "\t\t</substitution>\n";
+	oss << "\t</proof>\n";
+	return oss.str();
 }
 
 }}}

@@ -128,7 +128,7 @@ struct ProofExp : public ProofHyp {
 struct ProofProp : public ProofNode {
 	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
 	~ProofProp() override;
-	rus::Step* step();
+	rus::Step* step() const;
 	rus::Ref* ref() override;
 	string show() const override;
 

@@ -75,68 +75,41 @@ Return Space::info(uint index, string what) {
 			data += "\t</children>\n";
 		}
 	} else if (what == "proofs") {
-		ostringstream oss;
-		oss << "\t<proofs>\n";
+		data += "\t<proofs>\n";
 		if (Hyp* h = dynamic_cast<Hyp*>(nodes_[index])) {
 			for (auto& p : h->proofs) {
-				if (ProofExp* pr = dynamic_cast<ProofExp*>(p.get())) {
-					rus::Step* step = pr->child->step();
-					rus::Proof* proof = make_proof(step, prop.id(), prop.get());
-					oss << "\t\t<proof expr=\"" << show(step->expr) << "\">";
-					oss << "\t\t<![CDATA[\n";
-					proof->write(oss);
-					oss << "\n";
-					oss << "\t\t]]>\n";
-					delete proof;
-					oss << "\t\t<substitution>\n";
-					oss << "\t\t<![CDATA[\n";
-					oss << show(pr->sub);
-					oss << "\t\t]]>\n";
-					oss << "\t\t</substitution>\n";
-					oss << "\t</proof>\n";
-				} else if (ProofTop* pr = dynamic_cast<ProofTop*>(p.get())) {
-					oss << "\t\t<proof expr=\"" << show(pr->expr) << "\">";
-					oss << "<![CDATA[";
-					oss << "hyp " << pr->hyp.ind + 1;
-					oss << "]]>\n";
-					oss << "\t\t<substitution>\n";
-					oss << "\t\t<![CDATA[\n";
-					oss << show(pr->sub);
-					oss << "\t\t]]>\n";
-					oss << "\t\t</substitution>\n";
-					oss << "\t</proof>\n";
-				}
+				data += Indent::paragraph(p->show(), "\t\t");
 			}
 		} else if (Prop* pr = dynamic_cast<Prop*>(nodes_[index])) {
 			for (auto& p : pr->proofs) {
-				if (ProofProp* pr = dynamic_cast<ProofProp*>(p.get())) {
-					rus::Step* step = pr->step();
-					rus::Proof* proof = make_proof(step, prop.id(), prop.get());
-					oss << "\t\t<proof expr=\"" << show(step->expr) << "\">";
-					oss << "\t\t<![CDATA[\n";
-					proof->write(oss);
-					oss << "\n";
-					oss << "\t\t]]>\n";
-					delete proof;
-					oss << "\t\t<substitution>\n";
-					oss << "\t\t<![CDATA[\n";
-					oss << show(pr->sub);
-					oss << "\t\t]]>\n";
-					oss << "\t\t</substitution>\n";
-					oss << "\t</proof>\n";
-				}
+				data += Indent::paragraph(p->show(), "\t\t");
 			}
 		}
-		oss << "\t</proofs>\n";
-		data += oss.str();
+		data += "\t</proofs>\n";
 	} else if (what == "tree") {
 		data += "\t<tree>\n";
 		// TODO
 		data += "\t</tree>\n";
-	} else if (what == "all") {
+	} else if (what == "all_nodes") {
 		for (auto n : nodes_) {
 			data += "\t<node>\n";
 			data += Indent::paragraph(n->show(), "\t\t") + "\n";
+			data += "\t</node>\n";
+		}
+	} else if (what == "all_proofs") {
+		for (auto n : nodes_) {
+			data += "\t<node " + to_string(n->ind) + ">\n";
+			data += "\t\t<proofs>\n";
+			if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+				for (auto& p : h->proofs) {
+					data += Indent::paragraph(p->show(), "\t\t\t");
+				}
+			} else if (Prop* pr = dynamic_cast<Prop*>(n)) {
+				for (auto& p : pr->proofs) {
+					data += Indent::paragraph(p->show(), "\t\t\t");
+				}
+			}
+			data += "\t\t</proofs>\n";
 			data += "\t</node>\n";
 		}
 	}

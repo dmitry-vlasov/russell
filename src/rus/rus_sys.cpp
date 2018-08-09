@@ -276,8 +276,8 @@ static Descr description(string name) {
 		)},
 		{"prove_info",  Descr(
 			"show an info about node",
-			Descr::Arg("index", "integer"),
-			Descr::Arg("what", "tree|node|children|proofs")
+			Descr::Arg("what", "tree|node|children|proofs|all_nodes|all_proofs"),
+			Descr::Arg("index", "integer", true, "0")
 		)},
 		{"prove_test", Descr("test prover",        Descr::Arg("mode", "oracle", true, "oracle"))},
 		{"min_imports", Descr("minimize imports",  Descr::Arg("in", "file", true, ""))},
@@ -315,7 +315,7 @@ const Sys::Actions& Sys::actions() {
 		{"prove_tactic",  Action([](const Args& args) { return prove_tactic(args[0]); }, description("prove_tactic"))},
 		{"prove_confirm", Action([](const Args& args) { return prove_confirm(stoul(args[0])); }, description("prove_confirm"))},
 		{"prove_stop",    Action([](const Args& args) { return prove_stop(); }, description("prove_stop"))},
-		{"prove_info",    Action([](const Args& args) { return prove_info(stoul(args[0]), args[1]); }, description("prove_info"))},
+		{"prove_info",    Action([](const Args& args) { return prove_info(stoul(args[1]), args[0]); }, description("prove_info"))},
 		{"prove_test",    Action([](const Args& args) { return prove_test(args[0]); }, description("prove_test"))},
 
 		{"min_imports", Action([](const Args& args) { min_imports(Sys::make_name(args[0])); return Return(); }, description("min_imports"))},

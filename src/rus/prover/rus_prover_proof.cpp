@@ -57,7 +57,7 @@ ProofProp::~ProofProp() {
 	}
 }
 
-rus::Step* ProofProp::step() {
+rus::Step* ProofProp::step() const {
 	vector<unique_ptr<rus::Ref>> refs;
 	for (auto ch : premises) {
 		refs.emplace_back(ch->ref());
