@@ -69,7 +69,7 @@ Unified do_unify(const vector<const LightTree*>& ex) {
 			}
 			ch.push_back(make_unique<LightTree>(*s.term));
 		}
-		ret.term = new LightTree(r, ch);
+		ret.term.reset(new LightTree(r, ch));
 		for (auto s : vars) {
 			if (r->type() == s.type) {
 				ret.sub.join(Subst(s.lit, *ret.term));
@@ -114,7 +114,7 @@ Unified do_unify(const vector<const LightTree*>& ex) {
 				}
 			}
 		}
-		ret.term = new LightTree(lv);
+		ret.term.reset(new LightTree(lv));
 	}
 	return ret;
 }
@@ -257,7 +257,7 @@ Unified unify(const vector<const LightTree*>& ex) {
 
 	//Unified ret = do_unify(ex);
 	Unified ret;
-	ret.term = do_unify_1(ex, ret.sub).release();
+	ret.term = do_unify_1(ex, ret.sub);
 	assert(check_unification(ret, ex) && "unification error");
 
 	cout << "RESULT: " << (ret.term ? show(*ret.term) : "NULL") << endl;

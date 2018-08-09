@@ -201,7 +201,7 @@ struct MultyTree {
 		for (const auto& p : msub_) {
 			Unified s = unify(p.second);
 			if (s.sub.ok) {
-				ret.msub_[p.first] = s;
+				ret.msub_[p.first] = std::move(s);
 			} else {
 				ret.ok = false;
 				break;
