@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover {
 struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;
-	//map<LightSymbol, const Type*> super_wrappers;
+	const Type* least_type = nullptr;
 	vector<const LightTree::Children*> children;
 	bool consistent = false;
 	LightSymbol var;
@@ -51,9 +51,9 @@ static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
 		}
 	);
 	UnifStepData ret;
-	const Type* least_type = (*ex.begin())->type();
+	ret.least_type = (*ex.begin())->type();
 	for (const auto& t : ex) {
-		if (!(t->type() == least_type || find_super(t->type(), least_type))) {
+		if (!(*ret.least_type <= *t->type())) {
 			// There's no unification because of type constraints
 			return ret;
 		}
@@ -86,12 +86,19 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 		}
 	}
 	LightTree unified = unify(to_unify, s);
+	if (debug_unify /*&& to_unify.size() > 1*/) {
+		/*cout << "TO UNIFY:" << endl;
+		for (auto e : to_unify) {
+			cout << "\t" << show(*e) << endl;
+		}
+		cout << endl;*/
+	}
 	if (!unified.empty()) {
 		for (auto v : data.vars) {
 			LightTree term =
-				(data.rule->type() == v.type) ?
+				(data.least_type == v.type) ?
 				unified :
-				LightTree(find_super(data.rule->type(), v.type), new LightTree(unified));
+				LightTree(find_super(v.type, data.least_type), new LightTree(unified));
 			if (s.consistent(v.lit, term)) {
 				s.compose(Subst(v.lit, term));
 			} else {
@@ -146,21 +153,44 @@ bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) 
 	return true;
 }
 
+bool debug_unify;
+
+uint c = 0;
+
 Unified unify(const vector<const LightTree*>& ex) {
 
-	cout << endl << "UNIFYING: " << endl;
-	for (auto e : ex) {
-		cout << "\t" << show(*e, true) << endl;
+	if (debug_unify) {
+		/*if (c == 14) {
+			cout << "AAA" << endl;
+			debug_index = true;
+		}*/
+		cout << endl << "UNIFYING: " << c++ << endl;
+		for (auto e : ex) {
+			cout << "\t" << show(*e, true) << endl;
+		}
+		cout << endl;
 	}
-	cout << endl;
 
 	Unified ret;
 	ret.term = unify(ex, ret.sub);
-	assert(check_unification(ret, ex) && "unification error");
+	if (!check_unification(ret, ex)) {
+		cout << "unification error" << endl;
+		for (auto pe : ex) {
+			cout << "\t" << show(*pe) << endl;
+		}
+		cout << "sub: " << endl;
+		cout << show(ret.sub) << endl;
 
-	cout << "RESULT: " << show(ret.term) << endl;
-	cout << "SUB:" << endl;
-	cout << show(ret.sub) << endl << endl;
+		cout << "term: " << endl;
+		cout << show(ret.term) << endl;
+		exit(0);
+	}
+
+	if (debug_unify) {
+		cout << "RESULT: " << show(ret.term) << endl;
+		cout << "SUB:" << endl;
+		cout << show(ret.sub) << endl << endl;
+	}
 
 	return ret;
 }

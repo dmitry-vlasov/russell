@@ -3,7 +3,9 @@
 #include "mm_math_symb.hpp"
 #include "mm_tree.hpp"
 
+#ifdef PARALLEL
 #define PARALLEL_TRANSLATE
+#endif
 
 namespace mdl {
 

@@ -133,21 +133,52 @@ static UnifiedTerms gather_terms(const Index* i) {
 	return ret;
 }
 
+bool debug_index = false;
+bool debug_ind = false;
+
 LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
+	if (!(*v.type <= *t.type())) {
+		return LightTree();
+	}
 	LightTree t_substituted = apply(unif, t);
 	vector<const LightTree*> to_unify({&t_substituted});
 	if (unif.maps(v.lit)) {
 		to_unify.push_back(&unif.sub[v.lit]);
 	}
-	Unified u = unify(to_unify);
-	if (!u.term.empty()) {
-		LightTree term;
-		if (v.type == u.term.type()) {
-			term = u.term;
-		} else if (Rule* super = find_super(u.term.type(), v.type)) {
-			term = LightTree(super, new LightTree(u.term));
+	if (to_unify.size() > 1) {
+		Unified u = unify(to_unify);
+		if (!u.term.empty()) {
+			LightTree term =
+				(v.type == u.term.type()) ?
+				u.term :
+				LightTree(find_super(u.term.type(), v.type), new LightTree(u.term));
+
+			if (debug_ind) {
+				cout << "AAA UNIF:" << endl;
+				cout << show(unif) << endl;
+				cout << "v: " << show(v) << endl;
+				cout << "term: " << show(term) << endl;
+			}
+
+			//if (unif.consistent(v.lit, term)) {
+			//	unif.compose(Subst(v, term));
+			if (unif.consistent(u.sub)) {
+				unif.compose(u.sub);
+
+				if (debug_ind) {
+					cout << "BBB UNIF:" << endl;
+					cout << show(unif) << endl;
+				}
+
+				return term;
+			}
 		}
-		if (!term.empty() && unif.consistent(v.lit, term)) {
+	} else {
+		LightTree term =
+			(v.type == t_substituted.type()) ?
+			t_substituted :
+			LightTree(find_super(t_substituted.type(), v.type), new LightTree(t_substituted));
+		if (unif.consistent(v.lit, term)) {
 			unif.compose(Subst(v, term));
 			return term;
 		}
@@ -161,11 +192,24 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 		LightSymbol iv = p.first;
 		for (uint d : p.second) {
 			if (iv.rep) {
+				if (debug_ind && d == 3) {
+					debug_unify = true;
+					cout << "UNIF A:" << endl;
+					cout << show(unif[d]) << endl;
+					cout << "iv: " << show(iv) << endl;
+				}
 				ret[d] = try_to_expand_subst(unif[d], iv, t);
+				debug_unify = false;
 			} else {
 				if (t.kind() == LightTree::VAR) {
 					if (t.var().rep) {
+						if (debug_ind && d == 3) {
+							debug_unify = true;
+							cout << "UNIF B:" << endl;
+							cout << show(unif[d]) << endl;
+						}
 						ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
+						debug_unify = false;
 					} else if (iv == t.var()) {
 						unif[d];
 						ret[d] = LightTree(iv);
@@ -181,6 +225,11 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 				const Rule* r = p.first;
 				const Index::Node& n = p.second;
 				for (const auto& q : gather_terms(r, n)) {
+					if (debug_ind && q.first == 3) {
+						debug_unify = true;
+						cout << "UNIF C:" << endl;
+						cout << show(unif[q.first]) << endl;
+					}
 					ret[q.first] = try_to_expand_subst(unif[q.first], tv, q.second);
 				}
 			}
@@ -213,7 +262,7 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 					}
 				}
 				if (k == c) {
-					ret[d] = LightTree(t.rule(), ch);
+					ret[d] = apply(unif[d], LightTree(t.rule(), ch));
 				}
 			}
 		}
@@ -236,11 +285,44 @@ Index::Unified Index::unify(const LightTree& t) const {
 		LightTree tr = exprs[p.first];
 		LightTree x = terms[p.first];
 		if (x.empty()) {
+			unif[p.first].ok = false;
 			continue;
 		}
 		if (!(apply(p.second, tr) == apply(p.second, t) && apply(p.second, t) == x)) {
-			cout << "unification failure:" << endl;
-		}
+			debug_unify = true;
+			cout << "FAILURE" << endl << endl;
+			debug_ind = true;
+			prover::unify(this, t, unif);
+
+
+			cout << "unification failure: " << p.first << endl;
+			cout << "index:" << endl;
+			cout << show() << endl;
+			cout << "term:" << endl;
+			cout << prover::show(t) << endl;
+			cout << "tr:" << endl;
+			cout << prover::show(tr) << endl;
+
+			cout << "apply(p.second, tr): " << prover::show(apply(p.second, tr)) << endl;
+			cout << "apply(p.second, t): " << prover::show(apply(p.second, t)) << endl;
+			cout << "terms[p.first]: " << prover::show(terms[p.first]) << endl;
+			cout << "sub: " << endl << prover::show(p.second) << endl;
+			exit(0);
+		} /*else {
+			cout << "unification OK: " << p.first << endl;
+			cout << "index:" << endl;
+			cout << show() << endl;
+			cout << "term:" << endl;
+			cout << prover::show(t) << endl;
+			cout << "tr:" << endl;
+			cout << prover::show(tr) << endl;
+
+			cout << "apply(p.second, tr): " << prover::show(apply(p.second, tr)) << endl;
+			cout << "apply(p.second, t): " << prover::show(apply(p.second, t)) << endl;
+			cout << "terms[p.first]: " << prover::show(terms[p.first]) << endl;
+			cout << "sub: " << endl << prover::show(p.second) << endl;
+			cout << "-------------------------------" << endl;
+		}*/
 	}
 
 	return unif;
@@ -249,7 +331,7 @@ Index::Unified Index::unify(const LightTree& t) const {
 string Index::show() const {
 	string ret;
 	for (const auto&  p : showVector(this)) {
-		ret += p.second + "\n";
+		ret += to_string(p.first) + " -> " + p.second + "\n";
 	}
 	return ret;
 }

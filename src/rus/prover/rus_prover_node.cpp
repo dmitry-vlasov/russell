@@ -80,6 +80,9 @@ void Hyp::buildUp() {
 	}*/
 
 	for (const auto& m : space->assertions.unify(expr)) {
+		//cout << "HYP THIS: " << prover::show(expr) << endl;
+		//cout << "PROP UP: " << Lex::toStr(m.data.id()) << endl;
+		//cout << "SUB:" << endl << prover::show(m.sub) << endl;
 		variants.emplace_back(new Prop(m.data, m.sub, this));
 	}
 }

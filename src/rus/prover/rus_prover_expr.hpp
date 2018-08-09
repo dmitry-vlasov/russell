@@ -218,8 +218,8 @@ struct Subst {
 	bool join(const Subst& s);
 	bool join(Subst&& s);
 
-	bool consistent(uint v, const LightTree& t);
-	//bool consistent(const Subst& s);
+	bool consistent(uint v, const LightTree& t) const;
+	bool consistent(const Subst& s) const;
 	void compose(const Subst& s, bool full = true);
 
 	bool maps(uint v) const { return sub.find(v) != sub.end(); }

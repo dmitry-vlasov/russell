@@ -182,7 +182,9 @@ static void verify_assertion(const Assertion* ass) {
 	}
 }
 
+#ifdef PARALLEL
 #define PARALLEL_VERIFY
+#endif
 
 void verify() {
 	Sys::timer()["verify"].start();

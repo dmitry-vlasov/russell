@@ -83,6 +83,10 @@ inline bool operator < (const Type& t1, const Type& t2) {
 	return false;
 }
 
+inline bool operator <= (const Type& t1, const Type& t2) {
+	return &t1 == &t2 || t1 < t2;
+}
+
 struct Rule : public Owner<Rule>, public Writable {
 	Rule(Id i, const Token& t = Token()) : Owner(i.id, t) { }
 	Rule(const Rule&) = delete;

@@ -8,7 +8,9 @@ void parse_src_spirit(uint);
 
 namespace parser {
 
+#ifdef PARALLEL
 #define PARALLEL_RUS_PARSE
+#endif
 
 namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;

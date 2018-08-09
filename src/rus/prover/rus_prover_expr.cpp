@@ -94,18 +94,18 @@ bool consistent_for_unify(const Subst* s, uint v, const LightTree& t) {
 }
 
 
-bool Subst::consistent(uint v, const LightTree& t) {
+bool Subst::consistent(uint v, const LightTree& t) const {
 	return consistent_for_unify(this, v, t);
 }
 
-/*bool Subst::consistent(const Subst& s) {
+bool Subst::consistent(const Subst& s) const {
 	for (const auto& p : s.sub) {
 		if (!consistent(p.first, p.second)) {
 			return false;
 		}
 	}
 	return true;
-}*/
+}
 
 void Subst::compose(const Subst& s, bool full) {
 	Subst ret;
@@ -242,7 +242,7 @@ unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (s.sub.count(v.lit)) {
+		if (v.rep && s.sub.count(v.lit)) {
 			return make_unique<LightTree>(s.sub.at(v.lit));
 		} else {
 			return make_unique<LightTree>(v);
@@ -260,7 +260,7 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (s.sub().count(v.lit)) {
+		if (v.rep && s.sub().count(v.lit)) {
 			return convert_tree_ptr(s.sub().at(v.lit));
 		} else {
 			return make_unique<LightTree>(v);

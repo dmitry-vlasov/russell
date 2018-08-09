@@ -9,7 +9,9 @@ Var* VarDecl::make(bool inner, uint index) const {
 
 namespace parser {
 
+#ifdef PARALLEL
 #define PARALLEL_MM_PARSE
+#endif
 
 struct Disj {
 	vector<uint> disj;

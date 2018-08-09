@@ -410,7 +410,9 @@ Maps::Global translate_global() {
 
 }
 
+#ifdef PARALLEL
 #define PARALLEL_TRANSLATE
+#endif
 
 mm::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);

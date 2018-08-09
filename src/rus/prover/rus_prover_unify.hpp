@@ -12,5 +12,8 @@ struct Unified {
 
 Unified unify(const vector<const LightTree*>& ex);
 
+extern bool debug_unify;
+extern bool debug_index;
+
 }}}
 
