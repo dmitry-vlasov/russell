@@ -21,7 +21,8 @@ struct LightSymbol {
 	}
 	LightSymbol(const LightSymbol& s) = default;
 	LightSymbol(LightSymbol&& s) = default;
-	static bool is_undef(uint lit) { return lit == undef(); }
+	bool is_undef() const { return lit == undef(); }
+	bool is_def() const { return lit != undef(); }
 	static uint undef() { return 0x7FFFFFFF; }
 	uint literal() const { return lit; }
 
@@ -183,23 +184,23 @@ private:
 };
 
 struct Subst {
-	Subst(bool ok = true) : sub_(), ok_(ok) { }
-	Subst(uint v, const LightSymbol& t) : sub_(), ok_(true) {
-		sub_.emplace(v, t);
+	Subst(bool ok = true) : sub(), ok(ok) { }
+	Subst(uint v, const LightSymbol& t) : sub(), ok(true) {
+		sub.emplace(v, t);
 	}
-	Subst(uint v, const LightTree& t) : sub_(), ok_(true) {
-		sub_.emplace(v, t);
+	Subst(uint v, const LightTree& t) : sub(), ok(true) {
+		sub.emplace(v, t);
 	}
-	Subst(LightSymbol v, const LightSymbol& t) : sub_(), ok_(true) {
-		sub_.emplace(v.literal(), t);
+	Subst(LightSymbol v, const LightSymbol& t) : sub(), ok(true) {
+		sub.emplace(v.literal(), t);
 	}
-	Subst(LightSymbol v, const LightTree& t) : sub_(), ok_(true) {
-		sub_.emplace(v.literal(), t);
+	Subst(LightSymbol v, const LightTree& t) : sub(), ok(true) {
+		sub.emplace(v.literal(), t);
 	}
-	Subst(const Subst& s) : sub_(), ok_(s.ok_) {
+	Subst(const Subst& s) : sub(), ok(s.ok) {
 		operator = (s);
 	}
-	Subst(Subst&& s) : sub_(), ok_(s.ok_) {
+	Subst(Subst&& s) : sub(), ok(s.ok) {
 		operator = (std::move(s));
 	}
 	void operator = (const Subst& s);
@@ -216,14 +217,12 @@ struct Subst {
 	bool join(Subst&& s);
 	bool consistent(uint v, const LightTree& t);
 	bool consistent(const Subst& s);
+	void compose(const Subst& s, bool full = true);
 
-	const map<uint, LightTree>& sub() const { return sub_; }
-	bool ok() const { return ok_; }
-	bool mapsVar(uint v) const { return sub_.find(v) != sub_.end(); }
+	bool mapsVar(uint v) const { return sub.find(v) != sub.end(); }
 
-private:
-	map<uint, LightTree> sub_;
-	bool ok_;
+	map<uint, LightTree> sub;
+	bool ok;
 };
 
 Subst compose(const Subst& s1, const Subst& s2, bool full = true);

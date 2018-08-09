@@ -3,73 +3,73 @@
 namespace mdl { namespace rus { namespace prover {
 
 void Subst::operator = (const Subst& s) {
-	ok_ = s.ok_;
-	if (ok_) for (const auto& p : s.sub_) {
-		sub_.emplace(p.first, p.second);
+	ok = s.ok;
+	if (ok) for (const auto& p : s.sub) {
+		sub.emplace(p.first, p.second);
 	}
 }
 
 void Subst::operator = (Subst&& s) {
-	ok_ = s.ok_;
-	sub_ = std::move(s.sub_);
-	s.ok_ = true;
+	ok = s.ok;
+	sub = std::move(s.sub);
+	s.ok = true;
 }
 
 bool Subst::join(uint v, const LightTree& t) {
-	if (!ok_) return false;
+	if (!ok) return false;
 	if (t.kind() == LightTree::VAR && t.var().lit == v) {
 		return true;
 	}
-	auto it = sub_.find(v);
-	if (it != sub_.end()) {
-		if ((*it).second != t) ok_ = false;
+	auto it = sub.find(v);
+	if (it != sub.end()) {
+		if ((*it).second != t) ok = false;
 	} else {
-		sub_.emplace(v, t);
+		sub.emplace(v, t);
 	}
-	return ok_;
+	return ok;
 }
 
 bool Subst::join(uint v, LightTree&& t) {
-	if (!ok_) return false;
+	if (!ok) return false;
 	if (t.kind() == LightTree::VAR && t.var().lit == v) {
 		return true;
 	}
-	auto it = sub_.find(v);
-	if (it != sub_.end()) {
-		if ((*it).second != t) ok_ = false;
+	auto it = sub.find(v);
+	if (it != sub.end()) {
+		if ((*it).second != t) ok = false;
 	} else {
-		sub_.emplace(v, std::move(t));
+		sub.emplace(v, std::move(t));
 	}
-	return ok_;
+	return ok;
 }
 
 bool Subst::join(const Subst& s) {
-	if (s.ok_) {
-		for (const auto& p : s.sub_) {
-			if (!ok_) return false;
+	if (s.ok) {
+		for (const auto& p : s.sub) {
+			if (!ok) return false;
 			join(p.first, p.second);
 		}
 	} else {
-		ok_ = false;
+		ok = false;
 	}
-	return ok_;
+	return ok;
 }
 
 bool Subst::join(Subst&& s) {
-	if (s.ok_) {
-		for (auto&& p : s.sub_) {
-			if (!ok_) return false;
+	if (s.ok) {
+		for (auto&& p : s.sub) {
+			if (!ok) return false;
 			join(p.first, std::move(p.second));
 		}
 	} else {
-		ok_ = false;
+		ok = false;
 	}
-	return ok_;
+	return ok;
 }
 
 bool Subst::consistent(uint v, const LightTree& t) {
-	auto it = sub_.find(v);
-	if (it != sub_.end()) {
+	auto it = sub.find(v);
+	if (it != sub.end()) {
 		return (*it).second == t;
 	} else {
 		return true;
@@ -77,7 +77,7 @@ bool Subst::consistent(uint v, const LightTree& t) {
 }
 
 bool Subst::consistent(const Subst& s) {
-	for (const auto& p : s.sub_) {
+	for (const auto& p : s.sub) {
 		if (!consistent(p.first, p.second)) {
 			return false;
 		}
@@ -85,26 +85,31 @@ bool Subst::consistent(const Subst& s) {
 	return true;
 }
 
-Subst compose(const Subst& s1, const Subst& s2, bool full) {
+void Subst::compose(const Subst& s, bool full) {
 	Subst ret;
 	set<uint> vars;
-	for (const auto& p : s1.sub()) {
-		ret.join(p.first, apply(s2, p.second));
+	for (const auto& p : sub) {
+		ret.join(p.first, apply(s, p.second));
 		vars.insert(p.first);
 	}
 	if (full) {
-		for (const auto& p : s2.sub()) {
+		for (const auto& p : s.sub) {
 			if (vars.find(p.first) == vars.end()) {
-				ret.join(p.first, p.second);
+				join(p.first, p.second);
 			}
 		}
 	}
+}
+
+Subst compose(const Subst& s1, const Subst& s2, bool full) {
+	Subst ret(s1);
+	ret.compose(s2, full);
 	return ret;
 }
 
 bool composable(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1.sub()) {
-		if (s2.sub().find(p.first) != s2.sub().end()) {
+	for (const auto& p : s1.sub) {
+		if (s2.sub.find(p.first) != s2.sub.end()) {
 			return true;
 		}
 	}
@@ -166,7 +171,7 @@ string show(const LightTree& tree, bool full) {
 			if (s.type()) {
 				str += show(*tree.children()[i++].get(), full) + ' ';
 			} else {
-				str += show(s) + ' ';
+				str += prover::show(s, full) + ' ';
 			}
 		}
 		return str;
@@ -185,7 +190,7 @@ string show_ast(const LightTree& tree) {
 			if (s.type()) {
 				str += show_ast(*tree.children()[i++].get()) + ' ';
 			} else {
-				str += show(s) + ' ';
+				str += prover::show(s) + ' ';
 			}
 		}
 		return str + "]]";
@@ -194,7 +199,7 @@ string show_ast(const LightTree& tree) {
 
 string show(const Subst& s) {
 	string str;
-	for (const auto& p : s.sub()) {
+	for (const auto& p : s.sub) {
 		str += Lex::toStr(p.first) + "* --> " + show_ast(p.second) + "\n";
 	}
 	return str;
@@ -211,8 +216,8 @@ unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (s.sub().count(v.lit)) {
-			return make_unique<LightTree>(s.sub().at(v.lit));
+		if (s.sub.count(v.lit)) {
+			return make_unique<LightTree>(s.sub.at(v.lit));
 		} else {
 			return make_unique<LightTree>(v);
 		}
@@ -262,8 +267,8 @@ rus::Expr convert_expr(const LightTree& tree) {
 }
 
 rus::Substitution convert_sub(const Subst& s) {
-	rus::Substitution ret(s.ok());
-	for (const auto& p : s.sub()) {
+	rus::Substitution ret(s.ok);
+	for (const auto& p : s.sub) {
 		ret.join(p.first, convert_tree(p.second));
 	}
 	return ret;

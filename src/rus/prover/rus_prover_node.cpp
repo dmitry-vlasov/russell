@@ -1,4 +1,5 @@
 #include "rus_prover_space.hpp"
+#include "rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -16,7 +17,7 @@ inline Symbol fresh_var(Symbol v, uint n) {
 
 static void make_free_vars_fresh(const Assertion* a, Subst& s, map<uint, uint>& vars) {
 	for (auto& v : a->vars.v) {
-		if (!s.sub().count(v.lit)) {
+		if (!s.sub.count(v.lit)) {
 			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
 			vars[v.lit] = n;
 			s.join(v.lit, fresh_var(v, n));
@@ -79,13 +80,13 @@ void Hyp::buildUp() {
 	}*/
 
 	for (const auto& m : space->assertions.unify(expr)) {
-		variants.emplace_back(new Prop(m.data, m.subs.first, this));
+		variants.emplace_back(new Prop(m.data, m.sub, this));
 	}
 }
 
 void Hyp::complete() {
 	for (const auto& m : space->hyps.match_back(expr)) {
-		proofs.emplace_back(new ProofTop(*this, m.data, m.subs.second));
+		proofs.emplace_back(new ProofTop(*this, m.data, m.sub));
 	}
 	//cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
@@ -179,150 +180,6 @@ private:
 	bool         isEmpty_;
 };
 
-struct Unified {
-	Unified(bool ok = false) : sub(ok), term(nullptr) { }
-	Subst      sub;
-	LightTree* term;
-};
-
-
-bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) {
-	for (auto e : ex) {
-		if (apply(unif.sub, *e) != *unif.term) {
-			return false;
-		}
-	}
-	return true;
-}
-
-
-Unified unify(const vector<const LightTree*>& ex) {
-	const Rule* r = nullptr;
-	vector<LightSymbol> vars;
-
-	//cout << "exps.size() = " << ex.size() << endl;
-	//cout << "Exps:" << endl;
-	//for (const auto& t : ex) {
-	//	cout << "\t" << show(*t) << endl;
-	//}
-	//cout << endl;
-
-	vector<const LightTree::Children*> rules;
-
-	enum class UnifyKind {UNDEF, VAR, CONST, RULE, DEFAULT = UNDEF};
-	UnifyKind kind = UnifyKind::DEFAULT;
-
-	for (const auto& t : ex) {
-		switch (t->kind()) {
-		case LightTree::VAR:
-			if (t->var().rep) {
-				if (kind == UnifyKind::UNDEF) {
-					kind = UnifyKind::VAR;
-				} else if (kind != UnifyKind::VAR) {
-					return Unified();
-				}
-				vars.push_back(t->var());
-			} else {
-				if (kind == UnifyKind::UNDEF) {
-					kind = UnifyKind::CONST;
-				} else if (kind != UnifyKind::CONST) {
-					return Unified();
-				}
-			}
-			break;
-		case LightTree::NODE:
-			if (kind == UnifyKind::UNDEF) {
-				kind = UnifyKind::RULE;
-			} else if (kind != UnifyKind::RULE) {
-				return Unified();
-			}
-			if (!r) {
-				r = t->rule();
-			} else if (r != t->rule()) {
-				return Unified();
-			}
-			rules.push_back(&t->children());
-			break;
-		default: assert(false && "no term in unify_both");
-		}
-	}
-	Unified ret(true);
-	if (r) {
-		LightTree::Children ch;
-		for (uint i = 0; i < r->arity(); ++ i) {
-			vector<const LightTree*> x;
-			for (const auto t : rules) {
-				x.push_back((*t)[i].get());
-			}
-			Unified s = unify(x);
-			if (!ret.sub.join(s.sub)) {
-				//cout << "A" << endl;
-				return Unified();
-			}
-			ch.push_back(make_unique<LightTree>(*s.term));
-		}
-		ret.term = new LightTree(r, ch);
-		for (auto s : vars) {
-			if (r->type() == s.type) {
-				ret.sub.join(Subst(s.lit, *ret.term));
-			} else if (Rule* sup = find_super(r->type(), s.type)) {
-				ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(*ret.term))));
-			} else {
-				//cout << "B" << endl;
-				return Unified();
-			}
-		}
-	} else {
-		std::sort(
-			vars.begin(),
-			vars.end(),
-			[](const LightSymbol& v1, const LightSymbol& v2) {
-				return *v1.type < *v2.type;
-			}
-		);
-		LightSymbol lv;
-		if (!vars.size()) {
-			//cout << "C: " << show(lv) << " == ";
-			for (const auto& t : ex) {
-				if (t->kind() == LightTree::VAR) {
-					if (lv.lit == -1) {
-						lv = t->var();
-					} else if (t->var() != lv) {
-						return Unified();
-					}
-				} else {
-					return Unified();
-				}
-				//cout << show(t->var()) << " ";
-			}
-			//cout << "\nC!" << endl;
-		} else {
-			for (auto s : vars) {
-				if (lv.lit == -1) {
-					lv = s;
-				}
-				if (lv.type == s.type) {
-					ret.sub.join(Subst(s.lit, lv));
-				} else if (Rule* sup = find_super(lv.type, s.type)) {
-					ret.sub.join(Subst(s.lit, LightTree(sup, new LightTree(lv))));
-				} else {
-					//cout << "D" << endl;
-					return Unified();
-				}
-			}
-		}
-		ret.term = new LightTree(lv);
-	}
-	//cout << "E" << endl;
-	//exit(0);
-	/*if (!check_unification(ret, ex)) {
-		cout << "AAAAA" << endl;
-	} else {
-		cout << "OK" << endl;
-	}*/
-	return ret;
-}
-
 struct MultySub {
 	MultySub() : ok(true) { }
 	map<uint, Unified> msub_;
@@ -343,7 +200,7 @@ struct MultyTree {
 		MultySub ret;
 		for (const auto& p : msub_) {
 			Unified s = unify(p.second);
-			if (s.sub.ok()) {
+			if (s.sub.ok) {
 				ret.msub_[p.first] = s;
 			} else {
 				ret.ok = false;
@@ -355,15 +212,15 @@ struct MultyTree {
 
 private:
 	void add(const Subst& s) {
-		for (const auto& p : s.sub())
+		for (const auto& p : s.sub)
 			msub_[p.first].push_back(&p.second);
 	}
 	map<uint, vector<const LightTree*>> msub_;
 };
 
 inline bool intersects(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1.sub()) {
-		if (s2.sub().count(p.first)) return true;
+	for (const auto& p : s1.sub) {
+		if (s2.sub.count(p.first)) return true;
 	}
 	return false;
 }
@@ -416,7 +273,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		//cout << "-------------" << endl;
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
-		if (sub.ok()) {
+		if (sub.ok) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
 			//cout << "OK:\n" << show(sub) << endl;
 			new_proofs = true;

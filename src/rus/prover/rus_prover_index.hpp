@@ -11,7 +11,7 @@ struct Index {
 		LeafInds leafs;
 		vector<unique_ptr<Index>> child;
 	};
-	typedef map<uint, pair<Subst, Subst>> Unified;
+	typedef map<uint, Subst> Unified;
 
 	map<const Rule*, Node> rules;
 	map<LightSymbol, LeafInds> vars;
@@ -33,9 +33,9 @@ struct Index {
 template<class Data>
 struct UnifyMap {
 	struct Unified {
-		Unified(const Data& d, pair<Subst, Subst>&& s) : data(d), subs(std::move(s)) { }
-		Data data;
-		pair<Subst, Subst> subs;
+		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Data  data;
+		Subst sub;
 	};
 	void add(const LightTree& t, const Data& d) {
 		index.add(t);
@@ -45,7 +45,7 @@ struct UnifyMap {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_forth(t);
 		for (auto& p : unif) {
-			if (p.second.first.ok() && p.second.second.ok()) {
+			if (p.second.ok()) {
 				ret.emplace_back(data[p.first], std::move(p.second));
 			}
 		}
@@ -55,7 +55,7 @@ struct UnifyMap {
 		vector<Unified> ret;
 		Index::Unified unif = index.match_back(t);
 		for (auto& p : unif) {
-			if (p.second.first.ok() && p.second.second.ok()) {
+			if (p.second.ok) {
 				ret.emplace_back(data[p.first], std::move(p.second));
 			}
 		}
@@ -65,7 +65,7 @@ struct UnifyMap {
 		vector<Unified> ret;
 		Index::Unified unif = index.unify(t);
 		for (auto& p : unif) {
-			if (p.second.first.ok() && p.second.second.ok()) {
+			if (p.second.ok) {
 				ret.emplace_back(data[p.first], std::move(p.second));
 			}
 		}
