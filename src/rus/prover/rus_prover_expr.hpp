@@ -131,6 +131,7 @@ struct LightTree {
 	bool operator != (const LightTree& e) const { return !operator == (e); }
 	bool leaf() const { return kind() == VAR || !children().size(); }
 	Kind kind() const { return static_cast<Kind>(val.index()); }
+	bool empty() const { return kind() == VAR && var().is_undef(); }
 
 	LightSymbol var() const {
 		assert(kind() == VAR);

@@ -185,7 +185,11 @@ string show(LightSymbol s, bool full) {
 
 string show(const LightTree& tree, bool full) {
 	if (tree.kind() == LightTree::VAR) {
-		return show(tree.var(), full);
+		if (tree.empty()) {
+			return "<EMPTY>";
+		} else {
+			return show(tree.var(), full);
+		}
 	} else if (tree.kind() == LightTree::NODE) {
 		string str(" ");
 		uint i = 0;

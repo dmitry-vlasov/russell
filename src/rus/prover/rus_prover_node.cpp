@@ -80,13 +80,13 @@ void Hyp::buildUp() {
 	}*/
 
 	for (const auto& m : space->assertions.unify(expr)) {
-		variants.emplace_back(new Prop(m.data, m.unif.sub, this));
+		variants.emplace_back(new Prop(m.data, m.sub, this));
 	}
 }
 
 void Hyp::complete() {
 	for (const auto& m : space->hyps.unify(expr)) {
-		proofs.emplace_back(new ProofTop(*this, m.data, m.unif.sub));
+		proofs.emplace_back(new ProofTop(*this, m.data, m.sub));
 	}
 	//cout << "COMPLETING: " << ind << endl;
 	queue<Node*> downs;
@@ -236,7 +236,7 @@ Subst unify_subs(const MultyTree& t) {
 		if (!com.join(p.second.sub)) {
 			return Subst(false);
 		}
-		if (!gen.join(p.first, *p.second.term)) {
+		if (!gen.join(p.first, p.second.term)) {
 			return Subst(false);
 		}
 	}

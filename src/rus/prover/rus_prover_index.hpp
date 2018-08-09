@@ -8,10 +8,11 @@ namespace mdl { namespace rus { namespace prover {
 struct Index {
 	typedef set<uint> LeafInds;
 	struct Node {
+		bool is_leaf() const { return !child.size(); }
 		LeafInds leafs;
 		vector<unique_ptr<Index>> child;
 	};
-	typedef map<uint, prover::Unified> Unified;
+	typedef map<uint, Subst> Unified;
 
 	map<const Rule*, Node> rules;
 	map<LightSymbol, LeafInds> vars;
@@ -28,9 +29,9 @@ struct Index {
 template<class Data>
 struct UnifyMap {
 	struct Unified {
-		Unified(const Data& d, prover::Unified&& u) : data(d), unif(std::move(u)) { }
+		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Data  data;
-		prover::Unified unif;
+		Subst sub;
 	};
 	void add(const LightTree& t, const Data& d) {
 		index.add(t);

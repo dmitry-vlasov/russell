@@ -7,7 +7,7 @@ namespace mdl { namespace rus { namespace prover {
 struct Unified {
 	Unified(bool ok = false) : sub(ok) { }
 	Subst sub;
-	unique_ptr<LightTree> term;
+	LightTree term;
 };
 
 Unified unify(const vector<const LightTree*>& ex);

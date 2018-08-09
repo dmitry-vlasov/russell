@@ -84,23 +84,92 @@ static void add_to_index(Index* index, const LightTree& t, uint s) {
 	}
 }
 
-void unify(const Index* index, const LightTree& t, Index::Unified& inif) {
-	/*for (const auto& p : index->vars) {
-		LightSymbol v = p.first;
-		if (v.rep) {
-			if (v.type == t.type()) {
-				for (uint d : p.second) {
-					unif[d].emplace_back(v, t);
-				}
-			} else if (Rule* super = find_super(t.type(), v.type)) {
-				for (uint d : p.second) {
-					unif[d].emplace_back(v, LightTree(super, new LightTree(t)));
-				}
-			}
-		} else {
-			if (t.kind() == LightTree::VAR && v == t.var()) {
-				for (uint d : p.second) {
-					unif[d];
+typedef map<uint, LightTree> UnifiedTerms;
+
+static void gather(const Rule* r, UnifiedTerms& u, UnifiedTerms w[], uint sz) {
+	for (auto& p : w[0]) {
+		uint d = p.first;
+		LightTree::Children ch;
+		ch.push_back(make_unique<LightTree>(p.second));
+		int i = 1;
+		for (; i < sz; ++ i) {
+			assert(w[i].count(d));
+			ch.emplace_back(make_unique<LightTree>(w[i][d]));
+		}
+		u[d] = LightTree(r, ch);
+	}
+}
+
+static UnifiedTerms gather_terms(const Index* i);
+
+static UnifiedTerms gather_terms(const Rule* r, const Index::Node& n) {
+	UnifiedTerms ret;
+	UnifiedTerms un[n.child.size()];
+	for (uint d : n.leafs) {
+		ret[d] = LightTree(r, LightTree::Children());
+	}
+	int c = 0;
+	for (const auto& i : n.child) {
+		un[c++] = gather_terms(i.get());
+	}
+	if (c > 0) {
+		gather(r, ret, un, c);
+	}
+	return ret;
+}
+
+static UnifiedTerms gather_terms(const Index* i) {
+	UnifiedTerms ret;
+	for (const auto& p : i->vars) {
+		for (uint d : p.second) {
+			ret[d] = LightTree(p.first);
+		}
+	}
+	for (const auto& p : i->rules) {
+		for (auto& q : gather_terms(p.first, p.second)) {
+			ret.emplace(q.first, q.second);
+		}
+	}
+	return ret;
+}
+
+LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
+	LightTree t_substituted = apply(unif, t);
+	vector<const LightTree*> to_unify({&t_substituted});
+	if (unif.maps(v.lit)) {
+		to_unify.push_back(&unif.sub[v.lit]);
+	}
+	Unified u = unify(to_unify);
+	if (!u.term.empty()) {
+		LightTree term;
+		if (v.type == u.term.type()) {
+			term = u.term;
+		} else if (Rule* super = find_super(u.term.type(), v.type)) {
+			term = LightTree(super, new LightTree(u.term));
+		}
+		if (!term.empty() && unif.consistent(v.lit, term)) {
+			unif.compose(Subst(v, term));
+			return term;
+		}
+	}
+	return LightTree();
+}
+
+UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif) {
+	UnifiedTerms ret;
+	for (const auto& p : index->vars) {
+		LightSymbol iv = p.first;
+		for (uint d : p.second) {
+			if (iv.rep) {
+				ret[d] = try_to_expand_subst(unif[d], iv, t);
+			} else {
+				if (t.kind() == LightTree::VAR) {
+					if (t.var().rep) {
+						ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
+					} else if (iv == t.var()) {
+						unif[d];
+						ret[d] = LightTree(iv);
+					}
 				}
 			}
 		}
@@ -108,53 +177,48 @@ void unify(const Index* index, const LightTree& t, Index::Unified& inif) {
 	if (t.kind() == LightTree::VAR) {
 		LightSymbol tv = t.var();
 		if (tv.rep) {
-			for (const auto& p : index->vars) {
-				LightSymbol iv = p.first;
-				if (iv.type == tv.type) {
-					for (uint d : p.second) {
-						unif[d].emplace_back(tv, LightTree(iv));
-					}
-				} else if (Rule* super = find_super(iv.type, tv.type)) {
-					for (uint d : p.second) {
-						unif[d].emplace_back(tv, LightTree(super, new LightTree(iv)));
-					}
-				}
-			}
 			for (const auto& p : index->rules) {
 				const Rule* r = p.first;
 				const Index::Node& n = p.second;
-				if (tv.type == r->type()) {
-					for (const auto& q : gather_terms(r, n)) {
-						unif[q.first].emplace_back(tv, *q.second);
-					}
-				} else if (Rule* super = find_super(r->type(), tv.type)) {
-					for (const auto& q : gather_terms(r, n)) {
-						unif[q.first].emplace_back(tv, LightTree(super, new LightTree(*q.second)));
-					}
+				for (const auto& q : gather_terms(r, n)) {
+					ret[q.first] = try_to_expand_subst(unif[q.first], tv, q.second);
 				}
+			}
+		}
+	}
+	if (t.kind() == LightTree::NODE && index->rules.count(t.rule())) {
+		const Index::Node& n = index->rules.at(t.rule());
+		if (n.is_leaf()) {
+			for (uint d : n.leafs) {
+				unif[d];
+				ret[d] = LightTree(t.rule(), {});
 			}
 		} else {
-			for (const auto& p : index->vars) {
-				LightSymbol iv = p.first;
-				if (iv == tv) {
-					for (uint d : p.second) {
-						unif[d];
+			auto ch = t.children().begin();
+			UnifiedTerms un[n.child.size()];
+			int c = 0;
+			for (const auto& i : n.child) {
+				un[c++] = unify(i.get(), *(ch++)->get(), unif);
+			}
+			for (const auto& p : un[0]) {
+				uint d = p.first;
+				LightTree::Children ch;
+				ch.push_back(make_unique<LightTree>(p.second));
+				uint k = 1;
+				for (; k < c; ++ k) {
+					if (!un[k][d].empty()) {
+						ch.push_back(make_unique<LightTree>(un[k][d]));
+					} else {
+						break;
 					}
+				}
+				if (k == c) {
+					ret[d] = LightTree(t.rule(), ch);
 				}
 			}
 		}
-	} else if (index->rules.count(t.rule())) {
-		const Index::Node& n = index->rules.at(t.rule());
-		for (uint d : n.leafs) {
-			unif[d];
-		}
-		auto ch = t.children().begin();
-		VarTreeMap un[n.child.size()];
-		int c = 0;
-		for (const auto& i : n.child) {
-			unify(i.get(), *(ch++)->get(), unif);
-		}
-	}*/
+	}
+	return ret;
 }
 
 uint Index::add(const LightTree& t) {
@@ -164,15 +228,17 @@ uint Index::add(const LightTree& t) {
 	return ind;
 }
 
-bool check_unification(const Unified& unif, const vector<const LightTree*>& ex);
-
 Index::Unified Index::unify(const LightTree& t) const {
 	Index::Unified unif;
-	prover::unify(this, t, unif);
+	UnifiedTerms terms = prover::unify(this, t, unif);
 
 	for (const auto& p : unif) {
 		LightTree tr = exprs[p.first];
-		if (!check_unification(p.second, {&t, &tr})) {
+		LightTree x = terms[p.first];
+		if (x.empty()) {
+			continue;
+		}
+		if (!(apply(p.second, tr) == apply(p.second, t) && apply(p.second, t) == x)) {
 			cout << "unification failure:" << endl;
 		}
 	}
