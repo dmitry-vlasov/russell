@@ -89,7 +89,10 @@ void Hyp::buildUp() {
 			ProofProp* pr = new ProofProp(*prop);
 			prop->proofs.emplace_back(pr);
 			proofs.emplace_back(new ProofExp(*this, pr, m.sub));
-			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+			cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+			cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
+			cout <<  "SUB: " << endl;
+			cout <<  prover::show(m.sub) << endl;
 		}
 	}
 }

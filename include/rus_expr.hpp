@@ -205,10 +205,6 @@ private:
 	Value val;
 };
 
-//class Expr;
-
-//namespace expr { void parse_LL(Expr*); }
-
 struct Expr : public Tokenable {
 	Expr(const Token& t = Token()) : Tokenable(t) { }
 	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()) { symbols.push_back(s); }
@@ -239,9 +235,6 @@ struct Expr : public Tokenable {
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	//void parse() {
-	//	expr::parse_LL(this);
-	//}
 	Tree* tree() { return tree_.get(); }
 	const Tree* tree() const { return tree_.get(); }
 	void set(Tree* t) { tree_.reset(t); }
