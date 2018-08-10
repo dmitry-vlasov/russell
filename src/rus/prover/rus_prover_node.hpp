@@ -101,7 +101,7 @@ struct ProofNode {
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const Subst& s);
+	ProofHyp(Hyp& n, const Subst& s, const LightTree& e);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;

@@ -11,8 +11,8 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 	}
 }
 
-ProofHyp::ProofHyp(Hyp& h, const Subst& s) :
-	ProofNode(s), node(h) {
+ProofHyp::ProofHyp(Hyp& h, const Subst& s, const LightTree& e) :
+	ProofNode(s), node(h), expr(e) {
 }
 
 ProofHyp::~ProofHyp() {
@@ -24,8 +24,8 @@ ProofHyp::~ProofHyp() {
 	}
 }
 
-ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) : ProofHyp(n, s), hyp(h) {
-	expr = convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL);
+ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
+	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL))), hyp(h) {
 }
 
 rus::Ref* ProofExp::ref() {
@@ -37,9 +37,8 @@ rus::Ref* ProofTop::ref() {
 }
 
 ProofExp::ProofExp(Hyp& n, ProofProp* c, const Subst& s) :
-	ProofHyp(n, s), child(c) {
+	ProofHyp(n, s, apply(s, n.expr)), child(c) {
 	child->parent = this;
-	expr = apply(s, n.expr);
 }
 
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
@@ -65,7 +64,7 @@ rus::Step* ProofProp::step() const {
 	const PropRef& p = node.prop;
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
-	step->expr = std::move(convert_expr(parent->node.expr));
+	step->expr = std::move(convert_expr(parent->expr));
 	Substitution s = convert_sub(sub);
 	apply_recursively(s, step);
 	return step;
