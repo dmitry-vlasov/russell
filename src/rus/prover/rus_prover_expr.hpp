@@ -207,20 +207,8 @@ struct Subst {
 	void operator = (const Subst& s);
 	void operator = (Subst&& s);
 
-	bool join(uint v, const LightSymbol& t) {
-		return join(v, LightTree(t));
-	}
-	bool join(uint v, const LightTree& t);
-	bool join(uint v, LightTree&& t);
-	bool join(const Subst* s) {
-		return join(*s);
-	}
-	bool join(const Subst& s);
-	bool join(Subst&& s);
-
-	bool consistent(uint v, const LightTree& t) const;
 	bool consistent(const Subst& s) const;
-	void compose(const Subst& s, bool full = true);
+	bool compose(const Subst& s);
 
 	bool maps(uint v) const { return sub.find(v) != sub.end(); }
 

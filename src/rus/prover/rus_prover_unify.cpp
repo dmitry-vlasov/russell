@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+bool debug_unify_1 = false;
+
 struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;
@@ -83,8 +85,14 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 	for (auto v : data.vars) {
 		if (s.maps(v.lit)) {
 			to_unify.push_back(&s.sub[v.lit]);
+
+			if (debug_unify_1) {
+				cout << "to unify: " << show(v) << " --> " << show(s.sub[v.lit]) << endl;
+			}
+
 		}
 	}
+
 	LightTree unified = unify(to_unify, s);
 	if (debug_unify /*&& to_unify.size() > 1*/) {
 		/*cout << "TO UNIFY:" << endl;
@@ -99,16 +107,27 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 				(data.least_type == v.type) ?
 				unified :
 				LightTree(find_super(v.type, data.least_type), new LightTree(unified));
-			if (s.consistent(v.lit, term)) {
-				s.compose(Subst(v.lit, term));
-			} else {
+
+			if (debug_unify_1) {
+				cout << "going to add: " << show(v) << " --> " << show(term) << endl;
+				cout << "sub:" << endl;
+				cout << show(s) << endl;
+			}
+
+			if (!s.compose(Subst(v.lit, term))) {
+				if (debug_unify_1) {
+					cout << "SUCC" << endl;
+				}
 				return LightTree();
+			} else {
+				if (debug_unify_1) {
+					cout << "FAIL" << endl;
+				}
 			}
 		}
 		return unified;
-	} else {
-		return LightTree();
 	}
+	return LightTree();
 }
 
 LightTree unify(vector<const LightTree*> ex, Subst& sub) {
@@ -159,22 +178,27 @@ uint c = 0;
 
 Unified unify(const vector<const LightTree*>& ex) {
 
+	c ++;
 	if (debug_unify) {
-		/*if (c == 14) {
-			cout << "AAA" << endl;
-			debug_index = true;
-		}*/
-		cout << endl << "UNIFYING: " << c++ << endl;
+		cout << endl << " ** UNIFYING: " << c++ << endl;
 		for (auto e : ex) {
 			cout << "\t" << show(*e, true) << endl;
 		}
 		cout << endl;
 	}
 
+	if (c == 25) {
+		cout << "AAA" << endl;
+		debug_unify_1 = true;
+		cout << endl;
+	}
+
 	Unified ret;
 	ret.term = unify(ex, ret.sub);
+	ret.sub.ok = !ret.term.empty();
+
 	if (!check_unification(ret, ex)) {
-		cout << "unification error" << endl;
+		cout << "unification error: " << c << endl;
 		for (auto pe : ex) {
 			cout << "\t" << show(*pe) << endl;
 		}

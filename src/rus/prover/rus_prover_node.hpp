@@ -8,7 +8,7 @@ namespace mdl { namespace rus { namespace prover {
 struct PropRef {
 	PropRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
 	uint id() const { return ass->id(); }
-	rus::Prop* get() { return ass->props[ind].get(); }
+	rus::Prop* get() const { return ass->props[ind].get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
 	}
@@ -25,8 +25,7 @@ struct PropRef {
 struct HypRef {
 	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
 	uint id() const { return ass->id(); }
-	rus::Hyp* get() { return ass->hyps[ind].get(); }
-	const rus::Hyp* get() const { return ass->hyps[ind].get(); }
+	rus::Hyp* get() const { return ass->hyps[ind].get(); }
 	friend bool operator < (const HypRef& a1, const HypRef& a2) {
 		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
 	}
@@ -92,12 +91,14 @@ struct Hyp : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const Subst& s) : sub(s), new_(true) { }
+	ProofNode(const Subst& s);
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
-	virtual rus::Ref* ref() = 0;
+	virtual rus::Ref* ref() const = 0;
+
 	Subst sub;
 	bool  new_;
+	uint  ind;
 };
 
 struct ProofHyp : public ProofNode {
@@ -112,7 +113,7 @@ struct ProofHyp : public ProofNode {
 struct ProofTop : public ProofHyp {
 	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
 	string show() const override;
-	rus::Ref* ref() override;
+	rus::Ref* ref() const override;
 
 	HypRef hyp;
 };
@@ -120,24 +121,25 @@ struct ProofTop : public ProofHyp {
 struct ProofExp : public ProofHyp {
 	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
 	string show() const override;
-	rus::Ref* ref() override;
-
+	rus::Ref* ref() const override;
+	rus::Proof* proof() const;
 	ProofProp* child;
 };
 
 struct ProofProp : public ProofNode {
 	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
 	~ProofProp() override;
-	rus::Step* step() const;
-	rus::Ref* ref() override;
+	rus::Ref* ref() const override;
 	string show() const override;
+	rus::Step* step() const;
+	rus::Proof* proof() const;
 
 	ProofHyp*         parent;
 	Prop&             node;
 	vector<ProofHyp*> premises;
 };
 
-rus::Proof* make_proof(rus::Step* step, uint theorem, rus::Prop* prop);
+string showNodeProofs(const Node* n);
 
 }}}
 

@@ -31,7 +31,7 @@ string show(Symbol s, bool full) {
 	if (!full || s.kind() == Symbol::CONST)
 		return Lex::toStr(s.lit);
 	else {
-		return string("<") + Lex::toStr(s.lit) + ":" + show_id(s.type()->id()) + ">";
+		return string("<") + Lex::toStr(s.lit) + ":" + (s.type() ? show_id(s.type()->id()) : "NULL") + ">";
 	}
 }
 

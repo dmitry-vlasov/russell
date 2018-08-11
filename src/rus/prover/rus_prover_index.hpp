@@ -42,7 +42,6 @@ struct UnifyMap {
 		Index::Unified unif = index.unify(t);
 		for (auto& p : unif) {
 			if (p.second.ok) {
-				//cout << "UnifyMap ind: " << p.first << endl;
 				ret.emplace_back(data[p.first], std::move(p.second));
 			}
 		}

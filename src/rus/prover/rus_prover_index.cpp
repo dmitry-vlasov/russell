@@ -155,22 +155,19 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 
 			if (debug_ind) {
 				cout << "AAA UNIF:" << endl;
-				cout << show(unif) << endl;
-				cout << "v: " << show(v) << endl;
+				cout << Indent::paragraph(show(unif)) << endl;
+				cout << "var: " << show(v) << endl;
 				cout << "term: " << show(term) << endl;
 			}
-
-			//if (unif.consistent(v.lit, term)) {
-			//	unif.compose(Subst(v, term));
-			if (unif.consistent(u.sub)) {
-				unif.compose(u.sub);
-
+			if (unif.compose(u.sub)) {
 				if (debug_ind) {
-					cout << "BBB UNIF:" << endl;
-					cout << show(unif) << endl;
+					cout << "AAA SUCCESS:" << endl << endl;
 				}
-
 				return term;
+			} else {
+				if (debug_ind) {
+					cout << "AAA FAILURE:" << endl << endl;
+				}
 			}
 		}
 	} else {
@@ -178,9 +175,25 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 			(v.type == t_substituted.type()) ?
 			t_substituted :
 			LightTree(find_super(t_substituted.type(), v.type), new LightTree(t_substituted));
-		if (unif.consistent(v.lit, term)) {
-			unif.compose(Subst(v, term));
+
+		if (debug_ind) {
+			cout << "BBB UNIF:" << endl;
+			cout << Indent::paragraph(show(unif)) << endl;
+			cout << "var: " << show(v) << endl;
+			cout << "term: " << show(term) << endl;
+		}
+
+		if (unif.compose(Subst(v, term))) {
+
+			if (debug_ind) {
+				cout << "BBB SUCCESS:" << endl << endl;
+			}
+
 			return term;
+		} else {
+			if (debug_ind) {
+				cout << "BBB FAILURE:" << endl << endl;
+			}
 		}
 	}
 	return LightTree();
@@ -299,32 +312,17 @@ Index::Unified Index::unify(const LightTree& t) const {
 			cout << "index:" << endl;
 			cout << show() << endl;
 			cout << "term:" << endl;
-			cout << prover::show(t) << endl;
+			cout << "\t" << prover::show(t) << endl;
 			cout << "tr:" << endl;
-			cout << prover::show(tr) << endl;
+			cout << "\t" << prover::show(tr) << endl;
 
 			cout << "apply(p.second, tr): " << prover::show(apply(p.second, tr)) << endl;
 			cout << "apply(p.second, t): " << prover::show(apply(p.second, t)) << endl;
 			cout << "terms[p.first]: " << prover::show(terms[p.first]) << endl;
 			cout << "sub: " << endl << prover::show(p.second) << endl;
 			exit(0);
-		} /*else {
-			cout << "unification OK: " << p.first << endl;
-			cout << "index:" << endl;
-			cout << show() << endl;
-			cout << "term:" << endl;
-			cout << prover::show(t) << endl;
-			cout << "tr:" << endl;
-			cout << prover::show(tr) << endl;
-
-			cout << "apply(p.second, tr): " << prover::show(apply(p.second, tr)) << endl;
-			cout << "apply(p.second, t): " << prover::show(apply(p.second, t)) << endl;
-			cout << "terms[p.first]: " << prover::show(terms[p.first]) << endl;
-			cout << "sub: " << endl << prover::show(p.second) << endl;
-			cout << "-------------------------------" << endl;
-		}*/
+		}
 	}
-
 	return unif;
 }
 

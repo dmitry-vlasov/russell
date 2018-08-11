@@ -3,6 +3,9 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+bool debug_unify_subs = false;
+bool debug_unify_subs_1 = false;
+
 Node::~Node() {
 	space->unregisterNode(this);
 }
@@ -52,9 +55,9 @@ void Prop::buildUp() {
 
 		premises.emplace_back(hyp);
 	}
-	for (auto& p : premises) {
+	/*for (auto& p : premises) {
 		p.get()->complete();
-	}
+	}*/
 }
 
 void Hyp::buildUp() {
@@ -86,9 +89,9 @@ void Hyp::buildUp() {
 		Prop* prop = new Prop(m.data, m.sub, this);
 		variants.emplace_back(prop);
 		if (!prop->prop.ass->arity()) {
-			ProofProp* pr = new ProofProp(*prop);
-			prop->proofs.emplace_back(pr);
-			proofs.emplace_back(new ProofExp(*this, pr, m.sub));
+			ProofProp* pp = new ProofProp(*prop);
+			prop->proofs.emplace_back(pp);
+			proofs.emplace_back(new ProofExp(*this, pp, m.sub));
 
 			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
 			//cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
@@ -103,14 +106,14 @@ void Hyp::complete() {
 		proofs.emplace_back(new ProofTop(*this, m.data, m.sub));
 	}
 	//cout << "COMPLETING: " << ind << endl;
-	queue<Node*> downs;
-	downs.push(this);
+	set<Node*> downs;
+	downs.insert(this);
 	while (!downs.empty()) {
-		Node* n = downs.front();
+		Node* n = *downs.begin();
 		//cout << "DOWNING: " << n->ind << endl;
-		downs.pop();
+		downs.erase(n);
 		for (auto x : n->buildDown()) {
-			downs.push(x);
+			downs.insert(x);
 		}
 	}
 }
@@ -184,12 +187,22 @@ struct Ind {
 		ret += "]";
 		return ret;
 	}
+	bool current_is(const vector<uint> ind) const {
+		if (ind.size() != ind_.size()) return false;
+		for (uint i = 0; i < ind.size(); ++ i) {
+			if (ind[i] != ind_[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 private:
 	uint         size_;
 	uint         fixed_;
 	vector<uint> dims_;
 	vector<uint> ind_;
+
 	bool         hasNext_;
 	bool         isEmpty_;
 };
@@ -247,16 +260,19 @@ Subst unify_subs(const MultyTree& t) {
 	Subst com;
 	Subst gen;
 	for (auto& p : m.msub_) {
-		if (!com.join(p.second.sub)) {
+		if (!com.compose(p.second.sub)) {
 			return Subst(false);
 		}
-		if (!gen.join(p.first, p.second.term)) {
+		if (!gen.compose(Subst(p.first, p.second.term))) {
 			return Subst(false);
 		}
 	}
 	if (!intersects(com, gen)) {
-		com.join(gen);
-		return com;
+		if (com.compose(gen)) {
+			return com;
+		} else {
+			return Subst(false);
+		}
 	} else {
 		MultyTree t1(com, gen);
 		return unify_subs(t1);
@@ -268,37 +284,61 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	Ind ind;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {
-			ind.addDim(x.get()->proofs.size());
+			ind.addDim(x->proofs.size());
 		} else {
-			ind.addFixed(find_in_vector(x.get()->proofs, h));
+			ind.addFixed(find_in_vector(x->proofs, h));
 		}
 	}
 	if (ind.empty()) {
 		return vector<Node*>();
 	}
-	//cout << endl << "IND: " << ind.show() << endl << endl;
+
+	debug_unify_subs = (pr->ind == 2);
+
+	if (debug_unify_subs) {
+		cout << endl << "IND: " << ind.show() << endl << endl;
+	}
 	bool new_proofs = false;
 	while (true) {
 		vector<ProofHyp*> ch;
-		//cout << "CURRENT: " << ind.current() << endl;
-		//cout << "UNIFYING: \n--------------" << endl;
-		//cout << "PROP: " << pr->ind << endl;
+		if (debug_unify_subs) {
+			cout << "CURRENT: " << ind.current() << endl;
+			cout << "UNIFYING: \n--------------" << endl;
+			cout << "PROP: " << pr->ind << endl;
+		}
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
-			//cout << i << ": " << show(ph->expr) << "\nsub: \n" << show(ph->sub) << endl;
+			if (debug_unify_subs) {
+				cout << ph->ind << ": " << show(ph->expr) << endl;
+				cout << "sub:" << endl;
+				cout << Indent::paragraph(show(ph->sub)) << endl;
+			}
 			ch.push_back(ph);
 		}
-		//cout << "-------------" << endl;
+		/*if (pr->ind == 2 && ind.current_is({3, 0})) {
+			cout << "AAA" << endl;
+			debug_unify_subs_1 = pr->ind == 2 && ind.current_is({3, 0});
+			debug_unify = pr->ind == 2 && ind.current_is({3, 0});
+		}*/
+		if (debug_unify_subs) {
+			cout << "-------------" << endl;
+		}
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
 		if (sub.ok) {
 			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
-			//cout << "OK:\n" << show(sub) << endl;
+			if (debug_unify_subs) {
+				cout << "OK:\n" << show(sub) << endl;
+			}
 			new_proofs = true;
 		} else {
-			//cout << "FAIL" << endl;
+			if (debug_unify_subs) {
+				cout << "FAIL" << endl;
+			}
 		}
-		//cout << endl << endl << endl;
+		if (debug_unify_subs) {
+			cout << endl << endl << endl;
+		}
 		if (!ind.hasNext()) {
 			break;
 		}
@@ -316,8 +356,12 @@ vector<Node*> Prop::buildDown() {
 	for (auto& p : proofs) {
 		if (p->new_) {
 			//cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
+			cout << "PROP: " << ind << endl;
+			cout << "BUILDING DOWN HYP: " << parent->ind << endl;
 			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get()));
 			new_proofs = true;
+		} else {
+			cout << "OLD PROP: " << p->node.ind << endl;
 		}
 	}
 	if (new_proofs) {
@@ -332,9 +376,12 @@ vector<Node*> Hyp::buildDown() {
 	if (parent) {
 		for (auto& p : proofs) {
 			if (p->new_) {
+				cout << "BUILDING DOWN PROP: " << p->node.ind << endl;
 				for (auto& q : unify_subs(parent, p.get())) {
 					ret.push_back(q);
 				}
+			} else {
+				cout << "OLD HYP: " << p->node.ind << endl;
 			}
 		}
 	}

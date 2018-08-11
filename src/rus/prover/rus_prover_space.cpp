@@ -98,19 +98,7 @@ Return Space::info(uint index, string what) {
 		}
 	} else if (what == "all_proofs") {
 		for (auto n : nodes_) {
-			data += "\t<node " + to_string(n->ind) + ">\n";
-			data += "\t\t<proofs>\n";
-			if (Hyp* h = dynamic_cast<Hyp*>(n)) {
-				for (auto& p : h->proofs) {
-					data += Indent::paragraph(p->show(), "\t\t\t");
-				}
-			} else if (Prop* pr = dynamic_cast<Prop*>(n)) {
-				for (auto& p : pr->proofs) {
-					data += Indent::paragraph(p->show(), "\t\t\t");
-				}
-			}
-			data += "\t\t</proofs>\n";
-			data += "\t</node>\n";
+			data += Indent::paragraph(showNodeProofs(n));
 		}
 	}
 	data += "</info>\n";
@@ -151,6 +139,9 @@ Return Space::expand(uint index) {
 				Hyp* hyp = h.get();
 				hyp->buildUp();
 				add_shown(shown, to_show, hyp);
+			}
+			for (auto& h : p->premises) {
+				h->complete();
 			}
 			ostringstream oss;
 			Proved prov = proved();
@@ -232,7 +223,7 @@ Space::Proved Space::proved() {
 	Proved ret;
 	for (auto& p : root->proofs) {
 		if (ProofExp* h = dynamic_cast<ProofExp*>(p.get())) {
-			if (rus::Proof* pr = make_proof(h->child->step(), prop.ass->id(), prop.get())) {
+			if (rus::Proof* pr = h->proof()) {
 				ret.emplace_back(pr);
 			}
 		} else if (ProofTop* h = dynamic_cast<ProofTop*>(p.get())) {

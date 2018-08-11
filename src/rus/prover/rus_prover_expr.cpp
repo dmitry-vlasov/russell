@@ -15,71 +15,24 @@ void Subst::operator = (Subst&& s) {
 	s.ok = true;
 }
 
-bool Subst::join(uint v, const LightTree& t) {
-	if (!ok) return false;
-	if (t.kind() == LightTree::VAR && t.var().lit == v) {
-		return true;
-	}
-	auto it = sub.find(v);
-	if (it != sub.end()) {
-		if ((*it).second != t) ok = false;
-	} else {
-		sub.emplace(v, t);
-	}
-	return ok;
-}
-
-bool Subst::join(uint v, LightTree&& t) {
-	if (!ok) return false;
-	if (t.kind() == LightTree::VAR && t.var().lit == v) {
-		return true;
-	}
-	auto it = sub.find(v);
-	if (it != sub.end()) {
-		if ((*it).second != t) ok = false;
-	} else {
-		sub.emplace(v, std::move(t));
-	}
-	return ok;
-}
-
-bool Subst::join(const Subst& s) {
-	if (s.ok) {
-		for (const auto& p : s.sub) {
-			if (!ok) return false;
-			join(p.first, p.second);
-		}
-	} else {
-		ok = false;
-	}
-	return ok;
-}
-
-bool Subst::join(Subst&& s) {
-	if (s.ok) {
-		for (auto&& p : s.sub) {
-			if (!ok) return false;
-			join(p.first, std::move(p.second));
-		}
-	} else {
-		ok = false;
-	}
-	return ok;
-}
-
-void collect_vars(const LightTree& tree, set<uint> vars) {
+void collect_vars(const LightTree& tree, set<uint>& vars) {
 	if (tree.kind() == LightTree::VAR) {
-		vars.insert(tree.var().lit);
+		if (tree.var().rep) {
+			vars.insert(tree.var().lit);
+		}
 	} else {
 		for (const auto& c : tree.children()) {
-			collect_vars(*c.get(), vars);
+			collect_vars(*c, vars);
 		}
 	}
 }
 
-bool consistent_for_unify(const Subst* s, uint v, const LightTree& t) {
+bool consistent(const Subst* s, uint v, const LightTree& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
+	if (x_vars.find(v) != x_vars.end()) {
+		return false;
+	}
 	for (uint y : x_vars) {
 		auto i = s->sub.find(y);
 		if (i != s->sub.end()) {
@@ -93,39 +46,57 @@ bool consistent_for_unify(const Subst* s, uint v, const LightTree& t) {
 	return true;
 }
 
-
-bool Subst::consistent(uint v, const LightTree& t) const {
-	return consistent_for_unify(this, v, t);
-}
-
 bool Subst::consistent(const Subst& s) const {
 	for (const auto& p : s.sub) {
-		if (!consistent(p.first, p.second)) {
+		if (!prover::consistent(this, p.first, p.second)) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void Subst::compose(const Subst& s, bool full) {
+void compose(Subst& s1, const Subst& s2, bool full) {
+	/*bool sh = s.sub.size() && sub.size();
+	if (sh) {
+		cout << "-------------------------------------" << endl;
+		cout << "BEFORE " << (full ? "FULL" : "PART") << " COMPOSE THIS:" << endl;
+		cout << Indent::paragraph(show(*this)) << endl;
+		cout << "BEFORE COMPOSE S:" << endl;
+		cout << Indent::paragraph(show(s)) << endl;
+	}*/
 	Subst ret;
 	set<uint> vars;
-	for (const auto& p : sub) {
-		sub[p.first] = apply(s, p.second);
+	for (const auto& p : s1.sub) {
+		s1.sub[p.first] = apply(s2, p.second);
 		vars.insert(p.first);
 	}
 	if (full) {
-		for (const auto& p : s.sub) {
+		for (const auto& p : s2.sub) {
 			if (vars.find(p.first) == vars.end()) {
-				sub[p.first] = p.second;
+				s1.sub[p.first] = p.second;
 			}
 		}
 	}
+	/*if (sh) {
+		cout << "AFTER COMPOSE THIS:" << endl;
+		cout << Indent::paragraph(show(*this)) << endl;
+		cout << "-------------------------------------" << endl;
+	}*/
 }
 
-Subst compose(const Subst& s1, const Subst& s2, bool full) {
+bool Subst::compose(const Subst& s) {
+	if (!consistent(s)) {
+		return false;
+	}
+	Subst ss(s);
+	prover::compose(ss, *this, false);
+	prover::compose(*this, ss, true);
+	return true;
+}
+
+Subst compose(const Subst& s1, const Subst& s2) {
 	Subst ret(s1);
-	ret.compose(s2, full);
+	ret.compose(s2);
 	return ret;
 }
 
@@ -225,8 +196,12 @@ string show_ast(const LightTree& tree) {
 
 string show(const Subst& s) {
 	string str;
+	str += "OK = " + (s.ok ? string("TRUE") : string("FALSE")) + "\n";
+	if (!s.sub.size()) {
+		str += "empty";
+	}
 	for (const auto& p : s.sub) {
-		str += Lex::toStr(p.first) + "* --> " + show_ast(p.second) + "\n";
+		str += Lex::toStr(p.first) + "* --> " + show(p.second) + "\n";
 	}
 	return str;
 }

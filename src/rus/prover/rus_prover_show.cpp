@@ -98,29 +98,31 @@ string Hyp::show() const {
 
 string ProofTop::show() const {
 	ostringstream oss;
-	oss << "\t\t<proof expr=\"" << prover::show(apply(sub, node.expr)) << "\">";
+	oss << "<proof expr=\"" << prover::show(apply(sub, node.expr)) << "\" ";
+	oss << "index=\"" << ind << "\">";
 	oss << "<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
 	oss << "]]>\n";
-	oss << "\t\t<substitution>\n";
+	oss << "\t<substitution>\n";
 	oss << "\t\t<![CDATA[\n";
 	oss << prover::show(sub);
 	oss << "\t\t]]>\n";
-	oss << "\t\t</substitution>\n";
-	oss << "\t</proof>\n";
+	oss << "\t</substitution>\n";
+	oss << "</proof>\n";
 	return oss.str();
 }
 
 string ProofExp::show() const {
 	ostringstream oss;
-	rus::Step* step = child->step();
-	rus::Proof* proof = make_proof(step, node.space->prop.id(), node.space->prop.get());
-	oss << "\t\t<proof expr=\"" << rus::show(step->expr) << "\">";
+	rus::Step* st = child ? child->step() : nullptr;
+	rus::Proof* pr = proof();
+	oss << "\t\t<proof expr=\"" << (st ? rus::show(st->expr) : prover::show(node.expr)) << "\" ";
+	oss << "index=\"" << ind << "\">";
 	oss << "\t\t<![CDATA[\n";
-	proof->write(oss);
+	oss << *pr;
 	oss << "\n";
 	oss << "\t\t]]>\n";
-	delete proof;
+	delete pr;
 	oss << "\t\t<substitution>\n";
 	oss << "\t\t<![CDATA[\n";
 	oss << prover::show(sub);
@@ -133,13 +135,14 @@ string ProofExp::show() const {
 string ProofProp::show() const {
 	ostringstream oss;
 	rus::Step* st = step();
-	rus::Proof* proof = make_proof(st, node.space->prop.id(), node.space->prop.get());
-	oss << "\t\t<proof expr=\"" << rus::show(st->expr) << "\">";
+	rus::Proof* pr = proof();
+	oss << "\t\t<proof expr=\"" << rus::show(st->expr) << "\" ";
+	oss << "index=\"" << ind << "\">";
 	oss << "\t\t<![CDATA[\n";
-	proof->write(oss);
+	oss << *pr;
 	oss << "\n";
 	oss << "\t\t]]>\n";
-	delete proof;
+	delete pr;
 	oss << "\t\t<substitution>\n";
 	oss << "\t\t<![CDATA[\n";
 	oss << prover::show(sub);
@@ -147,6 +150,24 @@ string ProofProp::show() const {
 	oss << "\t\t</substitution>\n";
 	oss << "\t</proof>\n";
 	return oss.str();
+}
+
+string showNodeProofs(const Node* n) {
+	string data;
+	data += "<node index=\"" + to_string(n->ind) + "\">\n";
+	data += "\t<proofs>\n";
+	if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
+		for (auto& p : h->proofs) {
+			data += Indent::paragraph(p->show(), "\t\t");
+		}
+	} else if (const Prop* pr = dynamic_cast<const Prop*>(n)) {
+		for (auto& p : pr->proofs) {
+			data += Indent::paragraph(p->show(), "\t\t");
+		}
+	}
+	data += "\t</proofs>\n";
+	data += "</node>\n";
+	return data;
 }
 
 }}}

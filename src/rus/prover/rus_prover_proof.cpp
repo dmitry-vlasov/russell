@@ -1,4 +1,4 @@
-#include "rus_prover_node.hpp"
+#include "rus_prover_space.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -10,6 +10,11 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 		}
 	}
 }
+
+static uint proof_node_index = 0;
+
+ProofNode::ProofNode(const Subst& s) :
+	sub(s), new_(true), ind(proof_node_index++) { }
 
 ProofHyp::ProofHyp(Hyp& h, const Subst& s, const LightTree& e) :
 	ProofNode(s), node(h), expr(e) {
@@ -28,17 +33,25 @@ ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
 	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL))), hyp(h) {
 }
 
-rus::Ref* ProofExp::ref() {
+rus::Ref* ProofExp::ref() const {
 	return child->ref();
 }
 
-rus::Ref* ProofTop::ref() {
+rus::Proof* ProofExp::proof() const {
+	return child->proof();
+}
+
+rus::Ref* ProofTop::ref() const {
 	return new rus::Ref(hyp.get());
 }
 
 ProofExp::ProofExp(Hyp& n, ProofProp* c, const Subst& s) :
 	ProofHyp(n, s, apply(s, n.expr)), child(c) {
 	child->parent = this;
+	rus::Proof* pr = proof();
+	cout << "PROOF: " << *pr << endl;
+	delete pr;
+
 }
 
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
@@ -70,10 +83,6 @@ rus::Step* ProofProp::step() const {
 	return step;
 }
 
-rus::Ref* ProofProp::ref() {
-	return new rus::Ref(step());
-}
-
 static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	for (auto& r : step->refs) {
 		if (r.get()->kind() == rus::Ref::STEP)
@@ -90,12 +99,21 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	proof->elems.emplace_back(unique_ptr<Step>(step));
 }
 
-rus::Proof* make_proof(rus::Step* step, uint theorem, rus::Prop* prop) {
-	rus::Proof* ret = new rus::Proof(theorem);
+rus::Proof* ProofProp::proof() const {
+	rus::Step* st = step();
+	rus::Proof* ret = new rus::Proof(node.space->prop.ass->id());
 	ret->inner = true;
-	fill_in_proof(step, ret);
-	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(prop, step)));
-	ret->verify(VERIFY_SUB);
+	fill_in_proof(st, ret);
+	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop.get(), st)));
+	try {
+		ret->verify(VERIFY_SUB);
+	} catch (Error& err) {
+		cout << "PROOF:" << endl;
+		ostringstream oss;
+		ret->write(oss);
+		cout << oss.str() << endl;
+		throw err;
+	}
 	try {
 		ret->verify(VERIFY_DISJ);
 	} catch (Error& err) {
@@ -104,6 +122,11 @@ rus::Proof* make_proof(rus::Step* step, uint theorem, rus::Prop* prop) {
 	}
 	return ret;
 }
+
+rus::Ref* ProofProp::ref() const {
+	return new rus::Ref(step());
+}
+
 
 }}}
 
