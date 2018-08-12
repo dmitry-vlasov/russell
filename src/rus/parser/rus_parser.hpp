@@ -247,7 +247,7 @@ struct AssembleDef {
 struct AppendComment {
 	struct result { typedef void type; };
 	void operator()(Comment* c1, Comment* c2) const {
-		c1->text += show(*c2);
+		c1->text += c2->show();
 		delete c2;
 	}
 	void operator()(Comment* c1, const string& c2) const {

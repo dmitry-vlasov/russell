@@ -45,12 +45,26 @@ rus::Ref* ProofTop::ref() const {
 	return new rus::Ref(hyp.get());
 }
 
-ProofExp::ProofExp(Hyp& n, ProofProp* c, const Subst& s) :
-	ProofHyp(n, s, apply(s, n.expr)), child(c) {
+string show_struct(const ProofNode* n);
+
+ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
+	ProofHyp(h, s, apply(s, h.expr)), child(c) {
 	child->parent = this;
-	rus::Proof* pr = proof();
-	cout << "PROOF: " << *pr << endl;
-	delete pr;
+	try {
+		rus::Proof* pr = proof();
+		//cout << "PROOF: " << *pr << endl;
+		delete pr;
+	} catch (Error& err) {
+		cout << "ERR proof: " << ind << endl;
+		cout << show_struct(this) << endl;
+		/*for (auto n : h.space->nodes_) {
+			cout << "\t<node> " << n->ind << endl;
+			cout << Indent::paragraph(n->show(), "\t\t") + "\n";
+			cout << Indent::paragraph(showNodeProofs(n));
+			cout << "\t</node>" << endl;
+		}*/
+		throw err;
+	}
 
 }
 
@@ -70,6 +84,7 @@ ProofProp::~ProofProp() {
 }
 
 rus::Step* ProofProp::step() const {
+	if (!parent) return nullptr;
 	vector<unique_ptr<rus::Ref>> refs;
 	for (auto ch : premises) {
 		refs.emplace_back(ch->ref());
@@ -108,7 +123,7 @@ rus::Proof* ProofProp::proof() const {
 	try {
 		ret->verify(VERIFY_SUB);
 	} catch (Error& err) {
-		cout << "PROOF:" << endl;
+		cout << "WRONG PROOF:" << endl;
 		ostringstream oss;
 		ret->write(oss);
 		cout << oss.str() << endl;

@@ -17,9 +17,9 @@ void Subst::operator = (Subst&& s) {
 
 void collect_vars(const LightTree& tree, set<uint>& vars) {
 	if (tree.kind() == LightTree::VAR) {
-		if (tree.var().rep) {
+		//if (tree.var().rep) {
 			vars.insert(tree.var().lit);
-		}
+		//}
 	} else {
 		for (const auto& c : tree.children()) {
 			collect_vars(*c, vars);
@@ -30,9 +30,9 @@ void collect_vars(const LightTree& tree, set<uint>& vars) {
 bool consistent(const Subst* s, uint v, const LightTree& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
-	if (x_vars.find(v) != x_vars.end()) {
+	/*if (x_vars.find(v) != x_vars.end()) {
 		return false;
-	}
+	}*/
 	for (uint y : x_vars) {
 		auto i = s->sub.find(y);
 		if (i != s->sub.end()) {
@@ -67,8 +67,11 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 	Subst ret;
 	set<uint> vars;
 	for (const auto& p : s1.sub) {
-		s1.sub[p.first] = apply(s2, p.second);
-		vars.insert(p.first);
+		LightTree ex = apply(s2, p.second);
+		if (!(ex.kind() == LightTree::VAR && ex.var().lit == p.first)) {
+			s1.sub[p.first] = apply(s2, p.second);
+			vars.insert(p.first);
+		}
 	}
 	if (full) {
 		for (const auto& p : s2.sub) {
@@ -198,7 +201,7 @@ string show(const Subst& s) {
 	string str;
 	str += "OK = " + (s.ok ? string("TRUE") : string("FALSE")) + "\n";
 	if (!s.sub.size()) {
-		str += "empty";
+		str += "empty\n";
 	}
 	for (const auto& p : s.sub) {
 		str += Lex::toStr(p.first) + "* --> " + show(p.second) + "\n";

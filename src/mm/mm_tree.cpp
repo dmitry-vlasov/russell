@@ -162,7 +162,7 @@ Expr eval(Tree* tree) {
 			msg += "and\n";
 			msg += "hyp from proof: " + show_ex(from_proof) + "\n";
 			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
-			msg += show(*ass) + "\n";
+			msg += ass->show() + "\n";
 			msg += "substitution:\n"  + show(sub) + "\n";
 			msg += "tree: " + tree->show() + "\n";
 			throw Error("verification", msg);

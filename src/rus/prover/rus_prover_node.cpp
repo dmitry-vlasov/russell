@@ -1,5 +1,6 @@
 #include "rus_prover_space.hpp"
 #include "rus_prover_unify.hpp"
+#include "rus_prover_decart.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -10,22 +11,20 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-inline Symbol fresh_var(Symbol v, uint n) {
-	return Symbol(
-		Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(n)),
-		v.type()->id(),
-		Symbol::VAR
-	);
-}
-
-static void make_free_vars_fresh(const Assertion* a, Subst& s, map<uint, uint>& vars) {
-	for (auto& v : a->vars.v) {
-		if (!s.sub.count(v.lit)) {
-			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
-			vars[v.lit] = n;
-			s.sub[v.lit] = LightTree(fresh_var(v, n));
+static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Subst& s) {
+	Subst ret;
+	for (const auto& v : a->vars.v) {
+		if (!ret.maps(v.lit)) {
+			if (!s.maps(v.lit)) {
+				uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
+				vars[v.lit] = n;
+				LightSymbol s(v);
+				s.lit = Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(n));
+				ret.sub[v.lit] = LightTree(s);
+			}
 		}
 	}
+	return ret;
 }
 
 Hyp::Hyp(const LightTree& e, Space* s) :
@@ -35,12 +34,22 @@ Hyp::Hyp(const LightTree& e, Space* s) :
 }
 
 Hyp::Hyp(const LightTree& e, Prop* p) :
-	Node(p), parent(p), expr(p ? apply(p->sub, e) : e) {
+	Node(p), parent(p), expr(p ? apply(p->sub, apply(p->fresher, e)) : e) {
 	space->registerNode(this);
 }
 
-Prop::Prop(const PropRef& r, const Subst& s, Hyp* p) : Node(p), parent(p), prop(r), sub(s) {
-	make_free_vars_fresh(r.ass, sub, space->vars);
+Prop::Prop(const PropRef& r, const Subst& s, const Subst& f, Hyp* p) :
+	Node(p), parent(p), prop(r), sub(s), fresher(f) {
+	//Subst fresher = make_free_vars_fresh(r.ass, sub, space->vars);
+
+	//cout << "ASS: " << Lex::toStr(r.id()) << endl;
+	//cout << "FRESHER: " << endl;
+	//cout << prover::show(fresher) << endl;
+
+	/*for (const auto& p : fresher.sub) {
+		sub.sub.erase(p.first);
+	}
+	compose(sub, fresher, false);*/
 	space->registerNode(this);
 }
 
@@ -82,21 +91,52 @@ void Hyp::buildUp() {
 		}
 	}*/
 
-	for (const auto& m : space->assertions.unify(expr)) {
-		//cout << "HYP THIS: " << prover::show(expr) << endl;
-		//cout << "PROP UP: " << Lex::toStr(m.data.id()) << endl;
-		//cout << "SUB:" << endl << prover::show(m.sub) << endl;
-		Prop* prop = new Prop(m.data, m.sub, this);
+
+	for (auto& m : space->assertions.unify(expr)) {
+
+		bool show_this = (ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
+
+		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
+		if (show_this) {
+			cout << "=========================" << endl;
+			cout << "HYP THIS: " << prover::show(expr) << endl;
+			cout << "PROP UP: " << Lex::toStr(m.data.id()) << endl;
+			cout << "SUB:" << endl << prover::show(m.sub) << endl;
+			cout << "FRESHER:" << endl << prover::show(fresher) << endl;
+		}
+
+
+		for (const auto& p : fresher.sub) {
+			if (m.sub.sub.count(p.first)) {
+				/*const LightTree& ex = m.sub.sub[p.first];
+				if (!(ex.kind() == LightTree::VAR && !ex.var().rep)) {
+					//cout << "ERASING: " << Lex::toStr(p.first) << " --> " << prover::show(m.sub.sub[p.first]) << endl;
+					//m.sub.sub.erase(p.first);
+				} else {
+					fresher.sub.erase(p.first);
+				}*/
+				fresher.sub.erase(p.first);
+			}
+		}
+		compose(m.sub, fresher, false);
+
+		if (show_this) {
+			cout << "--------------------------" << endl;
+			cout << "SUB:" << endl << prover::show(m.sub) << endl;
+			cout << "FRESHER:" << endl << prover::show(fresher) << endl << endl << endl;
+		}
+
+		Prop* prop = new Prop(m.data, m.sub, fresher, this);
 		variants.emplace_back(prop);
 		if (!prop->prop.ass->arity()) {
-			ProofProp* pp = new ProofProp(*prop);
+			ProofProp* pp = new ProofProp(*prop, {}, m.sub);
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, m.sub));
 
 			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
 			//cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
 			//cout <<  "SUB: " << endl;
-			//cout <<  prover::show(m.sub) << endl;
+			//cout <<  Indent::paragraph(prover::show(m.sub)) << endl;
 		}
 	}
 }
@@ -117,95 +157,6 @@ void Hyp::complete() {
 		}
 	}
 }
-
-struct Ind {
-	Ind() : size_(0), fixed_(-1), hasNext_(false), isEmpty_(false) { }
-
-	void addDim(uint d) {
-		++size_;
-		if (d == 0) {
-			isEmpty_ = true;
-		}
-		if (d > 1) {
-			hasNext_ = true;
-		}
-		dims_.push_back(d);
-		ind_.push_back(0);
-	}
-	void addFixed(uint i) {
-		fixed_ = size_;
-		++size_;
-		dims_.push_back(-1);
-		ind_.push_back(i);
-	}
-	void makeNext() {
-		for (uint i = 0; i < size_; ++ i) {
-			if (dims_[i] == -1) {
-				continue;
-			}
-			if (ind_[i] + 1 < dims_[i]) {
-				++ ind_[i];
-				hasNext_ =
-					(ind_[i] + 1 < dims_[i]) ||
-					((i + 1 < size_) && (fixed_ + 1 != size_));
-				return;
-			} else {
-				ind_[i] = 0;
-			}
-		}
-		assert(false && "this execution point should be unreacheable");
-	}
-	bool hasNext() const {
-		return size_ && hasNext_;
-	}
-	bool empty() const {
-		return size_ && isEmpty_;
-	}
-	uint size() const {
-		return size_;
-	}
-	uint operator[] (uint i) const {
-		return ind_[i];
-	}
-	string show() const {
-		if (empty()) return "empty";
-		string ret;
-		ret += "size: " + to_string(size_) + ", ";
-		ret += "dims: [";
-		for (auto d : dims_) {
-			ret += (d == -1 ? string("N") : to_string(d)) + " ";
-		}
-		ret += "]";
-		return ret;
-	}
-	string current() const {
-		if (empty()) return "empty";
-		string ret = "[";
-		for (auto i : ind_) {
-			ret += to_string(i) + " ";
-		}
-		ret += "]";
-		return ret;
-	}
-	bool current_is(const vector<uint> ind) const {
-		if (ind.size() != ind_.size()) return false;
-		for (uint i = 0; i < ind.size(); ++ i) {
-			if (ind[i] != ind_[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-private:
-	uint         size_;
-	uint         fixed_;
-	vector<uint> dims_;
-	vector<uint> ind_;
-
-	bool         hasNext_;
-	bool         isEmpty_;
-};
 
 struct MultySub {
 	MultySub() : ok(true) { }
@@ -281,7 +232,7 @@ Subst unify_subs(const MultyTree& t) {
 
 vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 	vector<ProofHyp*> proofs;
-	Ind ind;
+	DecartIter ind;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {
 			ind.addDim(x->proofs.size());
@@ -293,7 +244,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		return vector<Node*>();
 	}
 
-	debug_unify_subs = (pr->ind == 2);
+	debug_unify_subs = (pr->ind == 1);
 
 	if (debug_unify_subs) {
 		cout << endl << "IND: " << ind.show() << endl << endl;
@@ -356,12 +307,12 @@ vector<Node*> Prop::buildDown() {
 	for (auto& p : proofs) {
 		if (p->new_) {
 			//cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
-			cout << "PROP: " << ind << endl;
-			cout << "BUILDING DOWN HYP: " << parent->ind << endl;
-			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get()));
+			//cout << "PROP: " << ind << endl;
+			//cout << "BUILDING DOWN HYP: " << parent->ind << endl;
+			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get(), p->sub));
 			new_proofs = true;
 		} else {
-			cout << "OLD PROP: " << p->node.ind << endl;
+			//cout << "OLD PROP: " << p->node.ind << endl;
 		}
 	}
 	if (new_proofs) {
@@ -376,12 +327,12 @@ vector<Node*> Hyp::buildDown() {
 	if (parent) {
 		for (auto& p : proofs) {
 			if (p->new_) {
-				cout << "BUILDING DOWN PROP: " << p->node.ind << endl;
+				//cout << "BUILDING DOWN PROP: " << p->node.ind << endl;
 				for (auto& q : unify_subs(parent, p.get())) {
 					ret.push_back(q);
 				}
 			} else {
-				cout << "OLD HYP: " << p->node.ind << endl;
+				//cout << "OLD HYP: " << p->node.ind << endl;
 			}
 		}
 	}

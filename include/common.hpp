@@ -128,6 +128,9 @@ inline string showmem(size_t s) {
 struct Writable {
 	virtual ~Writable() { }
 	virtual void write(ostream&, const Indent& = Indent()) const = 0;
+	string show() const {
+		ostringstream oss; write(oss); return oss.str();
+	}
 };
 
 struct Referable {
@@ -139,9 +142,9 @@ inline ostream& operator << (ostream& os, const Writable& w) {
 	w.write(os); return os;
 }
 
-inline string show(const Writable& w) {
-	ostringstream ss; w.write(ss); return ss.str();
-}
+//inline string show(const Writable& w) {
+//	ostringstream ss; w.write(ss); return ss.str();
+//}
 
 inline void dump(const Writable& w) {
 	w.write(cout);
@@ -521,6 +524,11 @@ public:
 	bool operator <= (const T* p) const { return ptr <= p; }
 	bool operator > (const T* p) const  { return ptr > p; }
 	bool operator >= (const T* p) const { return ptr >= p; }
+
+	T* operator -> () { return ptr; }
+	const T* operator -> () const { return ptr; }
+	T& operator * () { return *ptr; }
+	const T& operator * () const { return *ptr; }
 
 	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ptr; }
 	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ptr; }

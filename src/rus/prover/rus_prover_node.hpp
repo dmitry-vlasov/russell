@@ -66,7 +66,8 @@ struct Prop : public Node {
 	Proofs   proofs;
 	PropRef  prop;
 	Subst    sub;
-	Prop(const PropRef& r, const Subst& s, Hyp* p);
+	Subst    fresher;
+	Prop(const PropRef& r, const Subst& s, const Subst& f, Hyp* p);
 
 	void buildUp();
 	vector<Node*> buildDown() override;

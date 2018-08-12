@@ -64,7 +64,6 @@ struct Space {
 	uint count() const { return nodes_.size(); }
 	Node* getNode(uint i) { return nodes_[i]; }
 
-private:
 	vector<Node*> nodes_;
 	Tactic*       tactic_;
 	set<uint>     shown;

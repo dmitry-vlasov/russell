@@ -183,7 +183,7 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 			cout << "term: " << show(term) << endl;
 		}
 
-		if (unif.compose(Subst(v, term))) {
+		if (unif.compose(Subst(v.lit, term))) {
 
 			if (debug_ind) {
 				cout << "BBB SUCCESS:" << endl << endl;
@@ -198,6 +198,80 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 	}
 	return LightTree();
 }
+
+/*
+ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif) {
+	UnifiedTerms ret;
+	for (const auto& p : index->vars) {
+		LightSymbol iv = p.first;
+		for (uint d : p.second) {
+			if (iv.rep) {
+				if (debug_ind && d == 3) {
+					debug_unify = true;
+					cout << "UNIF A:" << endl;
+					cout << show(unif[d]) << endl;
+					cout << "iv: " << show(iv) << endl;
+				}
+				ret[d] = try_to_expand_subst(unif[d], iv, t);
+				debug_unify = false;
+			} else if (t.kind() == LightTree::VAR && t.var().rep) {
+				if (debug_ind && d == 3) {
+					debug_unify = true;
+					cout << "UNIF B:" << endl;
+					cout << show(unif[d]) << endl;
+				}
+				ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
+				debug_unify = false;
+			}
+		}
+	}
+	if (t.kind() == LightTree::VAR && t.var().rep) {
+		for (const auto& p : index->rules) {
+			const Rule* r = p.first;
+			const Index::Node& n = p.second;
+			for (const auto& q : gather_terms(r, n)) {
+				if (debug_ind && q.first == 3) {
+					debug_unify = true;
+					cout << "UNIF C:" << endl;
+					cout << show(unif[q.first]) << endl;
+				}
+				ret[q.first] = try_to_expand_subst(unif[q.first], t.var(), q.second);
+			}
+		}
+	}
+	if (t.kind() == LightTree::NODE && index->rules.count(t.rule())) {
+		const Index::Node& n = index->rules.at(t.rule());
+		if (n.is_leaf()) {
+			for (uint d : n.leafs) {
+				unif[d];
+				ret[d] = LightTree(t.rule(), {});
+			}
+		} else {
+			auto ch = t.children().begin();
+			vector<UnifiedTerms> un;
+			for (const auto& i : n.child) {
+				un.push_back(unify(i.get(), *(ch++)->get(), unif));
+			}
+			for (const auto& p : un[0]) {
+				uint d = p.first;
+				LightTree::Children ch;
+				for (auto& u : un) {
+					if (!u[d].empty()) {
+						ch.push_back(make_unique<LightTree>(u[d]));
+					} else {
+						break;
+					}
+				}
+				if (ch.size() == n.child.size()) {
+					ret[d] = apply(unif[d], LightTree(t.rule(), ch));
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+ */
 
 UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif) {
 	UnifiedTerms ret;
@@ -223,10 +297,10 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 						}
 						ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
 						debug_unify = false;
-					} else if (iv == t.var()) {
+					} /*else if (iv == t.var()) {
 						unif[d];
 						ret[d] = LightTree(iv);
-					}
+					}*/
 				}
 			}
 		}
@@ -257,24 +331,21 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 			}
 		} else {
 			auto ch = t.children().begin();
-			UnifiedTerms un[n.child.size()];
-			int c = 0;
+			vector<UnifiedTerms> un;
 			for (const auto& i : n.child) {
-				un[c++] = unify(i.get(), *(ch++)->get(), unif);
+				un.push_back(unify(i.get(), *(ch++)->get(), unif));
 			}
 			for (const auto& p : un[0]) {
 				uint d = p.first;
 				LightTree::Children ch;
-				ch.push_back(make_unique<LightTree>(p.second));
-				uint k = 1;
-				for (; k < c; ++ k) {
-					if (!un[k][d].empty()) {
-						ch.push_back(make_unique<LightTree>(un[k][d]));
+				for (auto& u : un) {
+					if (!u[d].empty()) {
+						ch.push_back(make_unique<LightTree>(u[d]));
 					} else {
 						break;
 					}
 				}
-				if (k == c) {
+				if (ch.size() == n.child.size()) {
 					ret[d] = apply(unif[d], LightTree(t.rule(), ch));
 				}
 			}

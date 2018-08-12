@@ -33,19 +33,6 @@ bool show_bit(uint m, ShowMode n) {
 	return uint(show_nodes().at(n).bit) & m;
 }
 
-static string show_assertion(const Assertion* a) {
-	if (const Axiom* ax = dynamic_cast<const Axiom*>(a)) {
-		return mdl::show(*ax);
-	} else if (const Theorem* th = dynamic_cast<const Theorem*>(a)) {
-		return mdl::show(*th);
-	} else if (const Def* df = dynamic_cast<const Def*>(a)) {
-		return mdl::show(*df);
-	} else {
-		assert(false && "impossible");
-		throw Error("impossible");
-	}
-}
-
 template<class T>
 static string show_children_idx(const vector<unique_ptr<T>>& ch) {
 	string ret = "children=\"";
@@ -57,6 +44,21 @@ static string show_children_idx(const vector<unique_ptr<T>>& ch) {
 	}
 	return ret + "\" ";
 }
+
+
+static string show_assertion(const Assertion* a) {
+	if (const Axiom* ax = dynamic_cast<const Axiom*>(a)) {
+		return ax->show();
+	} else if (const Theorem* th = dynamic_cast<const Theorem*>(a)) {
+		return th->show();
+	} else if (const Def* df = dynamic_cast<const Def*>(a)) {
+		return df->show();
+	} else {
+		assert(false && "impossible");
+		throw Error("impossible");
+	}
+}
+
 
 string Prop::show() const {
 	string ret;
@@ -99,14 +101,14 @@ string Hyp::show() const {
 string ProofTop::show() const {
 	ostringstream oss;
 	oss << "<proof expr=\"" << prover::show(apply(sub, node.expr)) << "\" ";
-	oss << "index=\"" << ind << "\">";
-	oss << "<![CDATA[";
+	oss << "index=\"" << ind << "\">\n";
+	oss << "\t<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
 	oss << "]]>\n";
 	oss << "\t<substitution>\n";
-	oss << "\t\t<![CDATA[\n";
-	oss << prover::show(sub);
-	oss << "\t\t]]>\n";
+	oss << "\t<![CDATA[\n";
+	oss << Indent::paragraph(prover::show(sub), "\t\t");
+	oss << "\t]]>\n";
 	oss << "\t</substitution>\n";
 	oss << "</proof>\n";
 	return oss.str();
@@ -115,40 +117,51 @@ string ProofTop::show() const {
 string ProofExp::show() const {
 	ostringstream oss;
 	rus::Step* st = child ? child->step() : nullptr;
-	rus::Proof* pr = proof();
-	oss << "\t\t<proof expr=\"" << (st ? rus::show(st->expr) : prover::show(node.expr)) << "\" ";
-	oss << "index=\"" << ind << "\">";
-	oss << "\t\t<![CDATA[\n";
-	oss << *pr;
-	oss << "\n";
-	oss << "\t\t]]>\n";
-	delete pr;
-	oss << "\t\t<substitution>\n";
-	oss << "\t\t<![CDATA[\n";
-	oss << prover::show(sub);
-	oss << "\t\t]]>\n";
-	oss << "\t\t</substitution>\n";
-	oss << "\t</proof>\n";
+	oss << "<proof expr=\"" << (st ? rus::show(st->expr) : prover::show(node.expr)) << "\" ";
+	oss << "index=\"" << ind << "\">\n";
+	oss << "\t<![CDATA[\n";
+	try {
+		if (rus::Proof* pr = proof()) {
+			oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
+			delete pr;
+		}
+	} catch (Error&) {
+		oss << "FAILED PROOF" << endl;
+	}
+	oss << "]]>\n";
+	oss << "\t<substitution>\n";
+	oss << "\t<![CDATA[\n";
+	oss << Indent::paragraph(prover::show(sub), "\t\t");
+	oss << "\t]]>\n";
+	oss << "\t</substitution>\n";
+	oss << "</proof>\n";
 	return oss.str();
 }
 
 string ProofProp::show() const {
 	ostringstream oss;
-	rus::Step* st = step();
-	rus::Proof* pr = proof();
-	oss << "\t\t<proof expr=\"" << rus::show(st->expr) << "\" ";
-	oss << "index=\"" << ind << "\">";
-	oss << "\t\t<![CDATA[\n";
-	oss << *pr;
-	oss << "\n";
-	oss << "\t\t]]>\n";
-	delete pr;
-	oss << "\t\t<substitution>\n";
-	oss << "\t\t<![CDATA[\n";
-	oss << prover::show(sub);
-	oss << "\t\t]]>\n";
-	oss << "\t\t</substitution>\n";
-	oss << "\t</proof>\n";
+	if (rus::Step* st = step()) {
+		oss << "<proof expr=\"" << rus::show(st->expr) << "\" ";
+		oss << "index=\"" << ind << "\">\n";
+		oss << "\t<![CDATA[\n";
+		try {
+			if (rus::Proof* pr = proof()) {
+				oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
+				delete pr;
+			}
+		} catch(Error&) {
+			oss << "\tFAILED PROOF" << endl;
+		}
+		oss << "\t]]>\n";
+		oss << "\t<substitution>\n";
+		oss << "\t<![CDATA[\n";
+		oss << Indent::paragraph(prover::show(sub), "\t\t");
+		oss << "\t]]>\n";
+		oss << "\t</substitution>\n";
+		oss << "</proof>\n";
+	} else {
+		oss << "UNFINISHED" << endl;
+	}
 	return oss.str();
 }
 
@@ -169,6 +182,38 @@ string showNodeProofs(const Node* n) {
 	data += "</node>\n";
 	return data;
 }
+
+string show_struct(const ProofNode* n) {
+	ostringstream oss;
+	if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+		oss << "ProofProp(index = " << p->ind << ", node = " << p->node.ind << endl;
+		oss << "\tprop = " << Lex::toStr(p->node.prop.id()) << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(show(p->sub), "\t\t");
+		oss << "\tnode sub = " << endl << Indent::paragraph(show(p->node.sub), "\t\t");
+		for (auto h : p->premises) {
+			oss << Indent::paragraph(show_struct(h));
+		}
+		oss << ")" << endl;
+	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
+		oss << "ProofTop(index = " << t->ind << ", node = " << t->node.ind << endl;
+		oss << "\thyp = " << t->hyp.ind << endl;
+		oss << "\texp = " << show(t->expr) << endl;
+		oss << "\tnode exp = " << show(t->node.expr) << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(show(t->sub), "\t\t");
+		oss << ")" << endl;
+	} else if (const ProofExp* e = dynamic_cast<const ProofExp*>(n)) {
+		oss << "ProofExp(index = " << e->ind << ", node = " << e->node.ind << endl;
+		oss << "\texp = " << show(e->expr) << endl;
+		oss << "\tnode exp = " << show(e->node.expr) << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(show(e->sub), "\t\t");
+		oss << Indent::paragraph(show_struct(e->child));
+		oss << ")" << endl;
+	} else {
+		oss << "IMPOSSIBLE" << endl;
+	}
+	return oss.str();
+}
+
 
 }}}
 

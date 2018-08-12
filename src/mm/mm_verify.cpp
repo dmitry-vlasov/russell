@@ -143,7 +143,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 			msg += "on stack: " + show_ex(p.second) + "\n";
 			msg += "theorem " + Lex::toStr(th->id()) + "\n";
 			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
-			msg += show(*ass) + "\n";
+			msg += ass->show() + "\n";
 			msg += "substitution:\n";
 			msg += show(sub) + "\n";
 			throw Error("verification", msg, th->token);
@@ -167,7 +167,7 @@ static void verify_assertion(const Assertion* ass) {
 	}
 	if (expr_stack.empty()) {
 		string msg("empty stack in the end of proof\n");
-		msg += "theorem: " + show(*ass) + "\n";
+		msg += "theorem: " + ass->show() + "\n";
 		throw Error("verification", msg, ass->token);
 	}
 	if (expr_stack.top() != ass->expr) {

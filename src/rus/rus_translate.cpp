@@ -234,7 +234,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof
 	const Assertion* ass = st->ass();
 	if (!st->sub) {
 		string msg;
-		msg += show(*st);
+		msg += st->show();
 		throw Error("proof step unification failure", msg);
 	}
 	for (auto& v : ass->vars.v) {

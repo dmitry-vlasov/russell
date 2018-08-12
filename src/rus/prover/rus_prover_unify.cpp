@@ -187,11 +187,11 @@ Unified unify(const vector<const LightTree*>& ex) {
 		cout << endl;
 	}
 
-	if (c == 25) {
+	/*if (c == 25) {
 		cout << "AAA" << endl;
 		debug_unify_1 = true;
 		cout << endl;
-	}
+	}*/
 
 	Unified ret;
 	ret.term = unify(ex, ret.sub);

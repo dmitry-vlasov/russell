@@ -12,7 +12,7 @@ static vector<string> show_lines(const Rules& tr) {
 				vect.push_back(show(p->symb) + ' ' + s);
 		} else {
 			vect.push_back(show(p->symb) + " --> " +
-				(p->rule ? show(*p->rule.get()) : "null")
+				(p->rule ? p->rule->show() : "null")
 			);
 		}
 	}

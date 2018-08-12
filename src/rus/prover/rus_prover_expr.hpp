@@ -185,23 +185,16 @@ private:
 };
 
 struct Subst {
-	Subst(bool ok = true) : sub(), ok(ok) { }
-	Subst(uint v, const LightSymbol& t) : sub(), ok(true) {
-		sub.emplace(v, t);
+	Subst(bool ok = true) : ok(ok) { }
+	Subst(uint v, const LightTree& t) : ok(true) {
+		if (!(t.kind() == LightTree::VAR && t.var().lit == v)) {
+			sub.emplace(v, t);
+		}
 	}
-	Subst(uint v, const LightTree& t) : sub(), ok(true) {
-		sub.emplace(v, t);
-	}
-	Subst(LightSymbol v, const LightSymbol& t) : sub(), ok(true) {
-		sub.emplace(v.literal(), t);
-	}
-	Subst(LightSymbol v, const LightTree& t) : sub(), ok(true) {
-		sub.emplace(v.literal(), t);
-	}
-	Subst(const Subst& s) : sub(), ok(s.ok) {
+	Subst(const Subst& s) : ok(s.ok) {
 		operator = (s);
 	}
-	Subst(Subst&& s) : sub(), ok(s.ok) {
+	Subst(Subst&& s) : ok(s.ok) {
 		operator = (std::move(s));
 	}
 	void operator = (const Subst& s);
@@ -216,7 +209,7 @@ struct Subst {
 	bool ok;
 };
 
-Subst compose(const Subst& s1, const Subst& s2, bool full = true);
+void compose(Subst& s1, const Subst& s2, bool full = true);
 bool composable(const Subst& s1, const Subst& s2);
 
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree&);
