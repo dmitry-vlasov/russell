@@ -16,10 +16,10 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Sub
 	for (const auto& v : a->vars.v) {
 		if (!ret.maps(v.lit)) {
 			if (!s.maps(v.lit)) {
-				uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
-				vars[v.lit] = n;
-				LightSymbol s(v);
-				s.lit = Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(n));
+				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
+				vars[v.lit] = i;
+				LightSymbol s(v, ReplMode::KEEP_REPL, i);
+				s.lit = Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(i));
 				ret.sub[v.lit] = LightTree(s);
 			}
 		}
@@ -59,7 +59,7 @@ void Prop::buildUp() {
 		//cout << "SUB: " << prover::show(sub) << endl;
 		//cout << "NODE EXPR: " << prover::show(apply(sub, convert_tree(*h->expr.tree()))) << endl;
 
-		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree()), this);
+		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree(), ReplMode::KEEP_REPL), this);
 		//cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
 
 		premises.emplace_back(hyp);

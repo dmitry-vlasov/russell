@@ -171,7 +171,7 @@ string show(const LightTree& tree, bool full) {
 			if (s.type()) {
 				str += show(*tree.children()[i++].get(), full) + ' ';
 			} else {
-				str += prover::show(s, full) + ' ';
+				str += rus::show(s, full) + ' ';
 			}
 		}
 		return str;
@@ -190,7 +190,7 @@ string show_ast(const LightTree& tree) {
 			if (s.type()) {
 				str += show_ast(*tree.children()[i++].get()) + ' ';
 			} else {
-				str += prover::show(s) + ' ';
+				str += rus::show(s) + ' ';
 			}
 		}
 		return str + "]]";
@@ -239,7 +239,7 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 	} else {
 		LightSymbol v = t.var();
 		if (v.rep && s.sub().count(v.lit)) {
-			return convert_tree_ptr(s.sub().at(v.lit));
+			return convert_tree_ptr(s.sub().at(v.lit), ReplMode::KEEP_REPL);
 		} else {
 			return make_unique<LightTree>(v);
 		}

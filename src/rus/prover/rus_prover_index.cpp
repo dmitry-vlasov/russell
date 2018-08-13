@@ -297,10 +297,10 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 						}
 						ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
 						debug_unify = false;
-					} /*else if (iv == t.var()) {
+					} else if (iv == t.var()) {
 						unif[d];
 						ret[d] = LightTree(iv);
-					}*/
+					}
 				}
 			}
 		}

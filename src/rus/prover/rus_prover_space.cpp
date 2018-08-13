@@ -24,7 +24,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			uint c = 0;
 			for (auto& prop : ass->props) {
 				assertions.add(
-					convert_tree(*prop.get()->expr.tree()),
+					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL),
 					PropRef(ass, c++)
 				);
 			}
