@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_unify_1 = true;
+bool debug_unify_1 = false;
 
 struct UnifStepData {
 	const Rule* rule = nullptr;

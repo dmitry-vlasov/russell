@@ -93,7 +93,7 @@ void Hyp::buildUp() {
 
 	for (auto& m : space->assertions.unify(expr)) {
 
-		bool show_this = true; //(ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
+		bool show_this = false; //(ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
 
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		if (show_this) {
