@@ -118,10 +118,21 @@ void Hyp::buildUp() {
 }
 
 void Hyp::complete() {
-	///cout << "HYP UNIFYING... " << prover::show(expr) << endl;
+	bool show_this = false; //(47 <= ind && ind <= 49);
+
+	if (show_this) {
+		cout << "HYP UNIFYING " << ind << " EXPR: " << prover::show(expr) << endl;
+	}
+
+
 	for (const auto& m : space->hyps.unify(expr)) {
 		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
-		//cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+		if (show_this) {
+			cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+			cout << "\tIND: " << pt->ind << endl;
+			cout << "\tSUB:" << endl;
+			cout << Indent::paragraph(prover::show(pt->sub)) << endl;
+		}
 
 		proofs.emplace_back(pt);
 	}
@@ -226,12 +237,13 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		return vector<Node*>();
 	}
 
-	debug_unify_subs = false; //(pr->space->ind == 5 && pr->ind == 15);
+	debug_unify_subs = false; //(/*pr->space->ind == 5 &&*/ pr->ind == 21);
 
 	if (debug_unify_subs) {
 		cout << endl << "IND: " << ind.show() << endl << endl;
 	}
 	bool new_proofs = false;
+
 	while (true) {
 		vector<ProofHyp*> ch;
 		if (debug_unify_subs) {
@@ -248,11 +260,6 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 			}
 			ch.push_back(ph);
 		}
-		/*if (pr->ind == 2 && ind.current_is({3, 0})) {
-			cout << "AAA" << endl;
-			debug_unify_subs_1 = pr->ind == 2 && ind.current_is({3, 0});
-			debug_unify = pr->ind == 2 && ind.current_is({3, 0});
-		}*/
 		if (debug_unify_subs) {
 			cout << "-------------" << endl;
 		}

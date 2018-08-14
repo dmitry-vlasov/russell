@@ -30,9 +30,7 @@ struct DecartIter {
 			}
 			if (ind_[i] + 1 < dims_[i]) {
 				++ ind_[i];
-				hasNext_ =
-					(ind_[i] + 1 < dims_[i]) ||
-					((i + 1 < size_) && (fixed_ + 1 != size_));
+				hasNext_ = !isLast();
 				return;
 			} else {
 				ind_[i] = 0;
@@ -51,6 +49,9 @@ struct DecartIter {
 	}
 	uint operator[] (uint i) const {
 		return ind_[i];
+	}
+	const vector<uint>& dims() const {
+		return dims_;
 	}
 	string show() const {
 		if (empty()) return "empty";
@@ -76,6 +77,26 @@ struct DecartIter {
 		if (ind.size() != ind_.size()) return false;
 		for (uint i = 0; i < ind.size(); ++ i) {
 			if (ind[i] != ind_[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	uint cardinality() const {
+		if (!size_ || empty()) {
+			return 0;
+		}
+		uint card = 1;
+		for (uint i = 0; i < size_; ++ i) {
+			if (dims_[i] != -1) {
+				card *= dims_[i];
+			}
+		}
+		return card;
+	}
+	bool isLast() const {
+		for (uint i = 0; i < size_; ++ i) {
+			if (dims_[i] != -1 && (ind_[i] + 1 != dims_[i])) {
 				return false;
 			}
 		}
