@@ -151,12 +151,6 @@ void Hyp::complete() {
 	}
 }
 
-struct MultySub {
-	MultySub() : ok(true) { }
-	map<LightSymbol, Unified> msub_;
-	bool ok;
-};
-
 struct MultyTree {
 	MultyTree(const Subst& s1, const Subst& s2) {
 		add(s1);
@@ -167,13 +161,11 @@ struct MultyTree {
 			add(p->sub);
 		}
 	}
-	MultySub makeSubs() const {
-		MultySub ret;
+	Subst makeSubs(Subst& unif) const {
+		Subst ret;
 		for (const auto& p : msub_) {
-			Unified s = unify(p.second);
-			if (s.sub.ok) {
-				ret.msub_[p.first] = std::move(s);
-			} else {
+			ret.sub[p.first] = unify(p.second, unif);
+			if (ret.sub[p.first].empty()) {
 				ret.ok = false;
 				break;
 			}
@@ -183,8 +175,9 @@ struct MultyTree {
 
 private:
 	void add(const Subst& s) {
-		for (const auto& p : s.sub)
+		for (const auto& p : s.sub) {
 			msub_[p.first].push_back(&p.second);
+		}
 	}
 	map<LightSymbol, vector<const LightTree*>> msub_;
 };
@@ -197,28 +190,20 @@ inline bool intersects(const Subst& s1, const Subst& s2) {
 }
 
 Subst unify_subs(const MultyTree& t) {
-	MultySub m = t.makeSubs();
-	if (!m.ok) {
+	Subst unif;
+	Subst gen;
+	gen = t.makeSubs(unif);
+	if (!(gen.ok && unif.ok)) {
 		return Subst(false);
 	}
-	Subst com;
-	Subst gen;
-	for (auto& p : m.msub_) {
-		if (!com.compose(p.second.sub)) {
-			return Subst(false);
-		}
-		if (!gen.compose(Subst(p.first, p.second.term))) {
-			return Subst(false);
-		}
-	}
-	if (!intersects(com, gen)) {
-		if (com.compose(gen)) {
-			return com;
+	if (!intersects(unif, gen)) {
+		if (unif.compose(gen)) {
+			return unif;
 		} else {
 			return Subst(false);
 		}
 	} else {
-		MultyTree t1(com, gen);
+		MultyTree t1(unif, gen);
 		return unify_subs(t1);
 	}
 }

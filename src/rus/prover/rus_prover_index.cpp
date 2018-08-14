@@ -146,12 +146,13 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 		to_unify.push_back(&unif.sub[v]);
 	}
 	if (to_unify.size() > 1) {
-		Unified u = unify(to_unify);
-		if (!u.term.empty()) {
+		Subst un;
+		LightTree t = unify(to_unify, un);
+		if (!t.empty()) {
 			LightTree term =
-				(v.type == u.term.type()) ?
-				u.term :
-				LightTree(find_super(u.term.type(), v.type), new LightTree(u.term));
+				(v.type == t.type()) ?
+				t :
+				LightTree(find_super(t.type(), v.type), new LightTree(t));
 
 			if (debug_ind) {
 				cout << "AAA UNIF:" << endl;
@@ -159,7 +160,7 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 				cout << "var: " << show(v) << endl;
 				cout << "term: " << show(term) << endl;
 			}
-			if (unif.compose(u.sub)) {
+			if (unif.compose(un)) {
 				if (debug_ind) {
 					cout << "AAA SUCCESS:" << endl << endl;
 				}
