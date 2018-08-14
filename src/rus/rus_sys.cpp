@@ -104,7 +104,7 @@ Return prove(uint src, uint line, uint col, string tact) {
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
-	return Return(false);
+	return Return("prover didn't find a goal", false);
 }
 
 Return prove_start(uint src, uint line, uint col, string mode, string tact) {
@@ -119,7 +119,7 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
-	return Return(false);
+	return Return("prover didn't find a goal", false);
 }
 
 Return prove_step(uint index) {

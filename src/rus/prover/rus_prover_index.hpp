@@ -56,5 +56,8 @@ private:
 	vector<Data> data;
 };
 
+extern bool debug_index;
+extern bool debug_ind;
+
 }}}
 

@@ -11,23 +11,33 @@ struct UnifStepData {
 	vector<const LightTree::Children*> children;
 	bool consistent = false;
 	LightSymbol var;
+	LightSymbol const_;
 
 	bool track_var(LightSymbol v) {
-		if (var.is_undef()) {
-			var = v;
-		}
 		if (v.rep) {
+			if (var.is_undef()) {
+				var = v;
+			}
 			// Collect replaceable variables
 			vars.push_back(v);
-		} else if  (var != v || rule) {
-			// If we have any non-replaceable variables (constant), all other
-			// terms must be the same variable (constant).
-			return false;
+		} else {
+			if (const_.is_undef()) {
+				const_ = v;
+			} else if (const_ != v) {
+				// If we have any non-replaceable variables (constant), all other
+				// constants must be the same variable (constant).
+				return false;
+			}
+			if (rule) {
+				// If we have any non-replaceable variables (constant),
+				// complex terms are not allowed.
+				return false;
+			}
 		}
 		return true;
 	}
 	bool track_node(const LightTree* t) {
-		if (var.is_def() && !var.rep) {
+		if (const_.is_def()) {
 			// If we have any non-replaceable variables (constant), all other
 			// terms must be the same variable (constant).
 			return false;
@@ -104,6 +114,7 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 			return LightTree();
 		}
 	}
+	ret = apply(s, ret);
 
 	vector<const LightTree*> to_unify({&ret});
 	for (auto v : data.vars) {
@@ -162,6 +173,10 @@ LightTree unify(vector<const LightTree*> ex, Subst& sub) {
 	}
 	UnifStepData data = gather_unification_data(ex);
 	if (!data.consistent) {
+		if (debug_unify) {
+			cout << "DATA INCONSISTENT" << endl;
+			cout << data.show() << endl;
+		}
 		return LightTree();
 	}
 	LightTree ret;
@@ -181,7 +196,7 @@ LightTree unify(vector<const LightTree*> ex, Subst& sub) {
 		}
 		return gather_result(data, sub, LightTree(data.rule, ch));
 	} else {
-		return gather_result(data, sub, LightTree(data.var));
+		return gather_result(data, sub, LightTree(data.const_.is_def() ? data.const_ : data.var));
 	}
 }
 
@@ -204,9 +219,8 @@ Unified unify(const vector<const LightTree*>& ex) {
 
 	depth_counter = 0;
 
-	c ++;
 	if (debug_unify) {
-		cout << endl << "*** UNIFYING: " << c++ << endl;
+		cout << endl << "*** UNIFYING: " << ++c << endl;
 		for (auto e : ex) {
 			cout << "\t" << show(*e, true) << endl;
 		}

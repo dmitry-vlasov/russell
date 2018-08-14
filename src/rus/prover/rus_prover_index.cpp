@@ -209,7 +209,7 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 		LightSymbol iv = p.first;
 		for (uint d : p.second) {
 			if (iv.rep) {
-				if (debug_ind && d == 3) {
+				if (debug_index && d == 0) {
 					debug_unify = true;
 					cout << "UNIF A:" << endl;
 					cout << show(unif[d]) << endl;
@@ -220,13 +220,13 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 			} else {
 				if (t.kind() == LightTree::VAR) {
 					if (t.var().rep) {
-						if (debug_ind && d == 3) {
-							debug_unify = true;
+						if (debug_index && d == 0) {
+							//debug_unify = true;
 							cout << "UNIF B:" << endl;
 							cout << show(unif[d]) << endl;
 						}
 						ret[d] = try_to_expand_subst(unif[d], t.var(), LightTree(iv));
-						debug_unify = false;
+						//debug_unify = false;
 					} else if (iv == t.var()) {
 						unif[d];
 						ret[d] = LightTree(iv);
@@ -242,8 +242,8 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 				const Rule* r = p.first;
 				const Index::Node& n = p.second;
 				for (const auto& q : gather_terms(r, n)) {
-					if (debug_ind && q.first == 3) {
-						debug_unify = true;
+					if (debug_index && q.first == 3) {
+						//debug_unify = true;
 						cout << "UNIF C:" << endl;
 						cout << show(unif[q.first]) << endl;
 					}

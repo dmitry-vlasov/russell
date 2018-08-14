@@ -34,12 +34,16 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
 	}
-	//cout << "\nASSERTIONS:\n" << assertions.show() << endl;
+	//if (ind == 18) {
+	//	cout << "\nASSERTIONS:\n" << assertions.show() << endl;
+	//}
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
 		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
-	//cout << "\nHYPS:\n" << hyps.show() << endl;
+	//if (ind == 18) {
+	//	cout << "\nHYPS:\n" << hyps.show() << endl;
+	//}
 	root = new Hyp(convert_tree(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
 	root->buildUp();
 }

@@ -62,9 +62,10 @@ void Prop::buildUp() {
 }
 
 void Hyp::buildUp() {
+
 	for (auto& m : space->assertions.unify(expr)) {
 
-		bool show_this = false; //(ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
+		bool show_this = false; //(ind == 14) /*&& (Lex::toStr(m.data.id()) == "ax-3")*/;
 
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		if (show_this) {
@@ -96,10 +97,12 @@ void Hyp::buildUp() {
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, m.sub));
 
-			/*cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
-			cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
-			cout <<  "SUB: " << endl;
-			cout <<  Indent::paragraph(prover::show(m.sub)) << endl;*/
+			if (show_this) {
+				cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+				cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
+				cout <<  "SUB: " << endl;
+				cout <<  Indent::paragraph(prover::show(m.sub)) << endl;
+			}
 		}
 	}
 }
