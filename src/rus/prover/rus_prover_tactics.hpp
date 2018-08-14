@@ -96,5 +96,7 @@ private:
 	uint index = 0;
 };
 
+extern bool debug_oracle;
+
 }}}
 

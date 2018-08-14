@@ -7,14 +7,20 @@ Oracle::Oracle(rus::Proof* p) :
 
 }
 
+bool debug_oracle = false;
+
 void Oracle::add(Prop* p) {
 	const Assertion* ass = p->prop.ass;
-	//cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
+	if (debug_oracle) {
+		cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
+	}
 	if (props.empty()) {
 		if (ass == root->ass()) {
 			leafs.push_back(p);
 			props[p] = root;
-			//out << "orcale ROOT: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+			if (debug_oracle) {
+				cout << "orcale ROOT: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+			}
 		}
 	} else {
 		if (p->parent && p->parent->parent) {
@@ -24,7 +30,9 @@ void Oracle::add(Prop* p) {
 				for (auto& r : st->refs) {
 					if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
 						leafs.push_back(p);
-						//cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+						if (debug_oracle) {
+							cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+						}
 						props[p] = r.get()->step();
 					}
 				}

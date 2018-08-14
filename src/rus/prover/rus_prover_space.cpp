@@ -185,7 +185,7 @@ Return Space::prove() {
 		}
 
 	}
-	return Return("goal not proved");
+	return Return("goal not proved", false);
 }
 
 Return Space::erase(uint index) {

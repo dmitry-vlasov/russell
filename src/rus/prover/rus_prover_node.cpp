@@ -33,12 +33,12 @@ Hyp::Hyp(const LightTree& e, Space* s) :
 }
 
 Hyp::Hyp(const LightTree& e, Prop* p) :
-	Node(p), parent(p), expr(p ? apply(p->sub, apply(p->fresher, e)) : e) {
+	Node(p), parent(p), expr(p ? apply(p->outer, apply(p->sub, apply(p->fresher, e))) : e) {
 	space->registerNode(this);
 }
 
-Prop::Prop(const PropRef& r, const Subst& s, const Subst& f, Hyp* p) :
-	Node(p), parent(p), prop(r), sub(s), fresher(f) {
+Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p) :
+	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
 	//Subst fresher = make_free_vars_fresh(r.ass, sub, space->vars);
 
 	//cout << "ASS: " << Lex::toStr(r.id()) << endl;
@@ -84,18 +84,28 @@ void Hyp::buildUp() {
 		}
 		compose(m.sub, fresher, false);
 
+		Subst sub;
+		Subst outer;
+		for (const auto& p : m.sub.sub) {
+			if (p.first.ind == LightSymbol::ASSERTION_INDEX) {
+				outer.sub[p.first] = p.second;
+			} else {
+				sub.sub[p.first] = p.second;
+			}
+		}
+
 		if (show_this) {
 			cout << "--------------------------" << endl;
 			cout << "SUB:" << endl << prover::show(m.sub) << endl;
 			cout << "FRESHER:" << endl << prover::show(fresher) << endl << endl << endl;
 		}
 
-		Prop* prop = new Prop(m.data, m.sub, fresher, this);
+		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
 		variants.emplace_back(prop);
 		if (!prop->prop.ass->arity()) {
-			ProofProp* pp = new ProofProp(*prop, {}, m.sub);
+			ProofProp* pp = new ProofProp(*prop, {}, sub);
 			prop->proofs.emplace_back(pp);
-			proofs.emplace_back(new ProofExp(*this, pp, m.sub));
+			proofs.emplace_back(new ProofExp(*this, pp, sub));
 
 			if (show_this) {
 				cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;

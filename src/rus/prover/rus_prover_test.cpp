@@ -27,6 +27,10 @@ bool test_with_oracle() {
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::PROOF) {
 				if (!test_proof_with_oracle(Theory::proof(n))) {
+
+					debug_oracle = true;
+					test_proof_with_oracle(Theory::proof(n));
+
 					return false;
 				}
 			}
