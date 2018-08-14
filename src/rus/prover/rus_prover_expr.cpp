@@ -97,6 +97,29 @@ bool Subst::compose(const Subst& s) {
 	return true;
 }
 
+bool Subst::intersects(const Subst& s) const {
+	for (const auto& p : sub) {
+		if (s.sub.count(p.first)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Subst::composeable(const Subst& s) const {
+	set<LightSymbol> vars;
+	for (const auto& p : sub) {
+		collect_vars(p.second, vars);
+	}
+	for (const auto& p : s.sub) {
+		if (vars.find(p.first) != vars.end()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
 Subst compose(const Subst& s1, const Subst& s2) {
 	Subst ret(s1);
 	ret.compose(s2);

@@ -182,13 +182,6 @@ private:
 	map<LightSymbol, vector<LightTree>> msub_;
 };
 
-inline bool intersects(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1.sub) {
-		if (s2.sub.count(p.first)) return true;
-	}
-	return false;
-}
-
 Subst unify_subs(const MultyTree& t) {
 	Subst unif;
 	Subst gen;
@@ -196,7 +189,7 @@ Subst unify_subs(const MultyTree& t) {
 	if (!(gen.ok && unif.ok)) {
 		return Subst(false);
 	}
-	if (!intersects(unif, gen)) {
+	if (!unif.intersects(gen)) {
 		if (unif.compose(gen)) {
 			return unif;
 		} else {
@@ -250,6 +243,18 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		}
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
+		uint watchdog = 0;
+		while (sub.composeable(sub)) {
+			if (!sub.consistent(sub)) {
+				sub.ok = false;
+				break;
+			}
+			if (watchdog++ > 32) {
+				cout << "SOMETHING WRONG" << endl;
+				break;
+			}
+			sub.compose(sub);
+		}
 		if (sub.ok) {
 			Subst delta = pr->sub;
 			delta.compose(sub);

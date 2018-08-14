@@ -199,6 +199,8 @@ struct Subst {
 
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s);
+	bool intersects(const Subst& s) const;
+	bool composeable(const Subst& s) const;
 
 	bool maps(LightSymbol v) const { return sub.find(v) != sub.end(); }
 
