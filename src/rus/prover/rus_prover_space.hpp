@@ -39,7 +39,7 @@ struct Space {
 	Return erase(uint index);
 	Return prove();
 
-	Proved doProve();
+	//Proved doProve();
 	Tactic* getTactic() {
 		return tactic_;
 	}

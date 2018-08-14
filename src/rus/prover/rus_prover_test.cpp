@@ -5,9 +5,9 @@ namespace mdl { namespace rus { namespace prover {
 bool test_proof_with_oracle(Proof* p) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), new prover::Oracle(p));
-	prover::Space::Proved reproved = space->doProve();
-	cout << (reproved.size() ? "success" : "FAIL") << endl;
-	return reproved.size();
+	Return reproved = space->prove();
+	cout << reproved.msg << endl;
+	return reproved.msg == "goal proved";
 }
 
 bool test_with_oracle() {

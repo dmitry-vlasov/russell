@@ -9,7 +9,7 @@ Oracle::Oracle(rus::Proof* p) :
 
 void Oracle::add(Prop* p) {
 	const Assertion* ass = p->prop.ass;
-	cout << endl << "orcale observing: " << show_id(ass->id()) << " ";
+	cout << "orcale observing: " << show_id(ass->id()) << endl;
 	if (props.empty()) {
 		if (ass == root->ass()) {
 			leafs.push_back(p);
@@ -23,6 +23,7 @@ void Oracle::add(Prop* p) {
 				for (auto& r : st->refs) {
 					if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
 						leafs.push_back(p);
+						cout << "orcale pushed: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
 						props[p] = r.get()->step();
 					}
 				}

@@ -163,7 +163,7 @@ Return Space::expand(uint index) {
 				oss << "</new>\n";
 			}
 			cout << endl << oss.str() << endl;
-			return Return("node expanded", oss.str(), true);
+			return Return(prov.size() ? "goal proved" : "node expanded", oss.str(), true);
 		}
 	} else {
 		cout << index << " NOT A PROP" << endl;
@@ -172,42 +172,20 @@ Return Space::expand(uint index) {
 }
 
 Return Space::prove() {
-	Proved prov = doProve();
-	if (prov.size()) {
-		ostringstream oss;
-		oss << "<proved>\n";
-		for (auto& p : prov) {
-			oss << "\t<proof>\n";
-			oss << "\t<![CDATA[\n";
-			p->write(oss);
-			oss << "\t]]>\n";
-			oss << "\t</proof>\n";
+	while (Prop* p = tactic_->next()) {
+		Return ret = expand(p->ind);
+		if (ret.msg == "goal proved") {
+			return ret;
 		}
-		oss << "</proved>\n";
-		return Return("successfully proved", oss.str());
-	} else {
-		return Return("proof not found");
+
 	}
+	return Return("goal not proved");
 }
 
 Return Space::erase(uint index) {
 	if (index >= nodes_.size()) return false;
 	delete nodes_[index];
 	return true;
-}
-
-Space::Proved Space::doProve() {
-	while (Prop* p = tactic_->next()) {
-		p->buildUp();
-		for (auto& h : p->premises) {
-			h.get()->buildUp();
-		}
-		Proved prov = proved();
-		if (prov.size()) {
-			return prov;
-		}
-	}
-	return Proved();
 }
 
 void delete_steps_recursively(rus::Step* s) {
