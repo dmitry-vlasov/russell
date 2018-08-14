@@ -33,6 +33,19 @@ ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
 	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
 }
 
+bool ProofTop::equal(const ProofNode* n) const {
+	if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
+		return hyp == t->hyp && &node == &t->node;
+	} else {
+		return false;
+	}
+}
+
+rus::Ref* ProofTop::ref() const {
+	return new rus::Ref(hyp.get());
+}
+
+
 rus::Ref* ProofExp::ref() const {
 	return child->ref();
 }
@@ -41,15 +54,21 @@ rus::Proof* ProofExp::proof() const {
 	return child->proof();
 }
 
-rus::Ref* ProofTop::ref() const {
-	return new rus::Ref(hyp.get());
+bool ProofExp::equal(const ProofNode* n) const {
+	if (const ProofExp* e = dynamic_cast<const ProofExp*>(n)) {
+		return &node == &e->node && child->equal(e->child);
+	} else {
+		return false;
+	}
 }
+
 
 string show_struct(const ProofNode* n);
 
 ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 	ProofHyp(h, s, apply(s, h.expr)), child(c) {
 	child->parent = this;
+	child->new_ = false;
 	try {
 		rus::Proof* pr = proof();
 		//cout << "PROOF: " << *pr << endl;
@@ -66,6 +85,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 	ProofNode(s), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->parents.push_back(this);
+		p->new_ = false;
 	}
 }
 
@@ -74,6 +94,22 @@ ProofProp::~ProofProp() {
 		uint i = find_in_vector(parent->node.proofs, parent);
 		assert(i != -1);
 		parent->node.proofs.erase(parent->node.proofs.begin() + i);
+	}
+}
+
+bool ProofProp::equal(const ProofNode* n) const {
+	if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+		if (premises.size() != p->premises.size()) {
+			return false;
+		}
+		for (int i = 0; i < premises.size(); ++ i) {
+			if (!premises[i]->equal(p->premises[i])) {
+				return false;
+			}
+		}
+		return &node == &p->node;
+	} else {
+		return false;
 	}
 }
 

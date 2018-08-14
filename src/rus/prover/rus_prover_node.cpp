@@ -246,7 +246,16 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
 		if (sub.ok) {
-			pr->proofs.emplace_back(new ProofProp(*pr, ch, sub));
+			ProofProp* pp = new ProofProp(*pr, ch, sub);
+			for (auto& h : pr->proofs) {
+				if (pp->equal(h.get())) {
+					cout << "DUPLICATE PROP PROOF" << endl;
+					cout << pp->show() << endl;
+					cout << "-----------" << endl;
+					cout << h->show() << endl;
+				}
+			}
+			pr->proofs.emplace_back(pp);
 			if (debug_unify_subs) {
 				cout << "OK:\n" << show(sub) << endl;
 			}
@@ -278,7 +287,16 @@ vector<Node*> Prop::buildDown() {
 			//cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
 			//cout << "PROP: " << ind << endl;
 			//cout << "BUILDING DOWN HYP: " << parent->ind << endl;
-			parent->proofs.push_back(make_unique<ProofExp>(*parent, p.get(), p->sub));
+			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub);
+			for (auto& h : parent->proofs) {
+				if (hp->equal(h.get())) {
+					cout << "DUPLICATE EXP PROOF" << endl;
+					cout << hp->show() << endl;
+					cout << "-----------" << endl;
+					cout << h->show() << endl;
+				}
+			}
+			parent->proofs.emplace_back(hp);
 			new_proofs = true;
 		} else {
 			//cout << "OLD PROP: " << p->node.ind << endl;

@@ -45,7 +45,6 @@ static string show_children_idx(const vector<unique_ptr<T>>& ch) {
 	return ret + "\" ";
 }
 
-
 static string show_assertion(const Assertion* a) {
 	if (const Axiom* ax = dynamic_cast<const Axiom*>(a)) {
 		return ax->show();
@@ -214,6 +213,4 @@ string show_struct(const ProofNode* n) {
 	return oss.str();
 }
 
-
 }}}
-

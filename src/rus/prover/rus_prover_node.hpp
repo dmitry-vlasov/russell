@@ -96,6 +96,7 @@ struct ProofNode {
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() const = 0;
+	virtual bool equal(const ProofNode*) const = 0;
 
 	Subst sub;
 	bool  new_;
@@ -115,6 +116,7 @@ struct ProofTop : public ProofHyp {
 	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
 	string show() const override;
 	rus::Ref* ref() const override;
+	bool equal(const ProofNode* n) const override;
 
 	HypRef hyp;
 };
@@ -123,6 +125,7 @@ struct ProofExp : public ProofHyp {
 	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
 	string show() const override;
 	rus::Ref* ref() const override;
+	bool equal(const ProofNode* n) const override;
 	rus::Proof* proof() const;
 	ProofProp* child;
 };
@@ -132,6 +135,7 @@ struct ProofProp : public ProofNode {
 	~ProofProp() override;
 	rus::Ref* ref() const override;
 	string show() const override;
+	bool equal(const ProofNode* n) const override;
 	rus::Step* step() const;
 	rus::Proof* proof() const;
 
