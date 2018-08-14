@@ -26,6 +26,7 @@ struct Space {
 		delete tactic_;
 	}
 
+	const uint        ind = 0;
 	Proof*            proof = nullptr; // for Oracle tactic
 	Hyp*              root;
 	PropRef           prop;
@@ -39,7 +40,6 @@ struct Space {
 	Return erase(uint index);
 	Return prove();
 
-	//Proved doProve();
 	Tactic* getTactic() {
 		return tactic_;
 	}

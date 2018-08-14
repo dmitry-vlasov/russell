@@ -213,7 +213,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		return vector<Node*>();
 	}
 
-	debug_unify_subs = false; //(pr->ind == 1);
+	debug_unify_subs = false; //(pr->space->ind == 5 && pr->ind == 15);
 
 	if (debug_unify_subs) {
 		cout << endl << "IND: " << ind.show() << endl << endl;
@@ -246,7 +246,9 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		MultyTree t(ch);
 		Subst sub = unify_subs(t);
 		if (sub.ok) {
-			ProofProp* pp = new ProofProp(*pr, ch, sub);
+			Subst delta = pr->sub;
+			delta.compose(sub);
+			ProofProp* pp = new ProofProp(*pr, ch, delta);
 			for (auto& h : pr->proofs) {
 				if (pp->equal(h.get())) {
 					cout << "DUPLICATE PROP PROOF" << endl;
