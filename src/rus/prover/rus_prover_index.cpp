@@ -141,9 +141,9 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 		return LightTree();
 	}
 	LightTree t_substituted = apply(unif, t);
-	vector<const LightTree*> to_unify({&t_substituted});
+	vector<LightTree> to_unify({t_substituted});
 	if (unif.maps(v)) {
-		to_unify.push_back(&unif.sub[v]);
+		to_unify.push_back(unif.sub[v]);
 	}
 	if (to_unify.size() > 1) {
 		Subst un;

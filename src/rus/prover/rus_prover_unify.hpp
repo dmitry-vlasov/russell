@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-LightTree unify(const vector<const LightTree*>& ex, Subst& sub);
+LightTree unify(const vector<LightTree>& ex, Subst& sub);
 
 extern bool debug_unify;
 extern bool debug_index;

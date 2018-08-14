@@ -36,20 +36,20 @@ struct UnifStepData {
 		}
 		return true;
 	}
-	bool track_node(const LightTree* t) {
+	bool track_node(const LightTree& t) {
 		if (const_.is_def()) {
 			// If we have any non-replaceable variables (constant), all other
 			// terms must be the same variable (constant).
 			return false;
 		}
 		if (!rule) {
-			rule = t->rule();
-		} else if (rule !=t->rule()) {
+			rule = t.rule();
+		} else if (rule !=t.rule()) {
 			// In case we have a non-leaf with some rule,
 			// all other leafs must be with the same rule.
 			return false;
 		}
-		children.push_back(&t->children());
+		children.push_back(&t.children());
 		return true;
 	}
 
@@ -67,24 +67,24 @@ struct UnifStepData {
 	}
 };
 
-static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
+static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 	std::sort(
 		ex.begin(),
 		ex.end(),
-		[](const LightTree* t1, const LightTree* t2) {
-			return *t1->type() < *t2->type();
+		[](const LightTree& t1, const LightTree& t2) {
+			return *t1.type() < *t2.type();
 		}
 	);
 	UnifStepData ret;
-	ret.least_type = (*ex.begin())->type();
+	ret.least_type = ex.begin()->type();
 	for (const auto& t : ex) {
-		if (!(*ret.least_type <= *t->type())) {
+		if (!(*ret.least_type <= *t.type())) {
 			// There's no unification because of type constraints
 			return ret;
 		}
-		switch (t->kind()) {
+		switch (t.kind()) {
 		case LightTree::VAR:
-			if (!ret.track_var(t->var())) {
+			if (!ret.track_var(t.var())) {
 				return ret;
 			}
 			break;
@@ -102,7 +102,7 @@ static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
 
 uint depth_counter = 0;
 
-LightTree do_unify(vector<const LightTree*> ex, Subst& sub);
+LightTree do_unify(vector<LightTree> ex, Subst& sub);
 
 LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 	if (debug_unify_1) {
@@ -116,10 +116,10 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 	}
 	ret = apply(s, ret);
 
-	vector<const LightTree*> to_unify({&ret});
+	vector<LightTree> to_unify({ret});
 	for (auto v : data.vars) {
 		if (s.maps(v)) {
-			to_unify.push_back(&s.sub[v]);
+			to_unify.push_back(s.sub[v]);
 
 			if (debug_unify_1) {
 				cout << "to unify: " << show(v) << " --> " << show(s.sub[v]) << endl;
@@ -165,11 +165,11 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 	return LightTree();
 }
 
-LightTree do_unify(vector<const LightTree*> ex, Subst& sub) {
+LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 	if (!ex.size()) {
 		return LightTree();
 	} else if (ex.size() == 1) {
-		return apply(sub, **ex.begin());
+		return apply(sub, *ex.begin());
 	}
 	UnifStepData data = gather_unification_data(ex);
 	if (!data.consistent) {
@@ -183,13 +183,13 @@ LightTree do_unify(vector<const LightTree*> ex, Subst& sub) {
 	if (data.rule) {
 		LightTree::Children ch;
 		for (uint i = 0; i < data.rule->arity(); ++ i) {
-			vector<const LightTree*> x;
+			vector<LightTree> x;
 			for (const auto t : data.children) {
 				LightTree* c = (*t)[i].get();
 				if (!c) {
 					cout << "AAA" << endl;
 				}
-				x.push_back(c);
+				x.push_back(*c);
 			}
 			LightTree c = do_unify(x, sub);
 			if (!c.empty()) {
@@ -204,10 +204,10 @@ LightTree do_unify(vector<const LightTree*> ex, Subst& sub) {
 	}
 }
 
-bool check_unification(const LightTree& term, const Subst& sub, const vector<const LightTree*>& ex) {
+bool check_unification(const LightTree& term, const Subst& sub, const vector<LightTree>& ex) {
 	if (!term.empty()) {
 		for (auto e : ex) {
-			if (apply(sub, *e) != term) {
+			if (apply(sub, e) != term) {
 				return false;
 			}
 		}
@@ -219,14 +219,14 @@ bool debug_unify = true;
 
 uint c = 0;
 
-LightTree unify(const vector<const LightTree*>& ex, Subst& sub) {
+LightTree unify(const vector<LightTree>& ex, Subst& sub) {
 
 	depth_counter = 0;
 
 	if (debug_unify) {
 		cout << endl << "*** UNIFYING: " << ++c << endl;
 		for (auto e : ex) {
-			cout << "\t" << show(*e, true) << endl;
+			cout << "\t" << show(e, true) << endl;
 		}
 		cout << endl;
 	}
@@ -236,7 +236,7 @@ LightTree unify(const vector<const LightTree*>& ex, Subst& sub) {
 	if (!check_unification(ret, sub, ex)) {
 		cout << "unification error: " << c << endl;
 		for (auto pe : ex) {
-			cout << "\t" << show(*pe) << endl;
+			cout << "\t" << show(pe) << endl;
 		}
 		cout << "sub: " << endl;
 		cout << show(sub) << endl;

@@ -176,10 +176,10 @@ struct MultyTree {
 private:
 	void add(const Subst& s) {
 		for (const auto& p : s.sub) {
-			msub_[p.first].push_back(&p.second);
+			msub_[p.first].push_back(p.second);
 		}
 	}
-	map<LightSymbol, vector<const LightTree*>> msub_;
+	map<LightSymbol, vector<LightTree>> msub_;
 };
 
 inline bool intersects(const Subst& s1, const Subst& s2) {
