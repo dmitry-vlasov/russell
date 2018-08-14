@@ -151,12 +151,6 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uin
 
 string show(LightSymbol s, bool full) {
 	if (full) {
-		/*string postfix =
-			(s.ind == LightSymbol::MATH_INDEX ? "" :
-				(s.ind == LightSymbol::ASSERTION_INDEX ? "!" :
-					string("_") + to_string(s.ind - LightSymbol::INTERNAL_MIN_INDEX)
-				)
-			);*/
 		return Lex::toStr(s.lit) + (s.rep ? "*" : "");
 	} else {
 		return Lex::toStr(s.lit);

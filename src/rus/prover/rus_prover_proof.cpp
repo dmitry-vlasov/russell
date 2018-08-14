@@ -57,12 +57,6 @@ ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 	} catch (Error& err) {
 		cout << "ERR proof: " << ind << endl;
 		cout << show_struct(this) << endl;
-		/*for (auto n : h.space->nodes_) {
-			cout << "\t<node> " << n->ind << endl;
-			cout << Indent::paragraph(n->show(), "\t\t") + "\n";
-			cout << Indent::paragraph(showNodeProofs(n));
-			cout << "\t</node>" << endl;
-		}*/
 		throw err;
 	}
 

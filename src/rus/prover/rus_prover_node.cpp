@@ -45,10 +45,6 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& f, Hyp* p) :
 	//cout << "FRESHER: " << endl;
 	//cout << prover::show(fresher) << endl;
 
-	/*for (const auto& p : fresher.sub) {
-		sub.sub.erase(p.first);
-	}
-	compose(sub, fresher, false);*/
 	space->registerNode(this);
 }
 
@@ -63,34 +59,9 @@ void Prop::buildUp() {
 
 		premises.emplace_back(hyp);
 	}
-	/*for (auto& p : premises) {
-		p.get()->complete();
-	}*/
 }
 
 void Hyp::buildUp() {
-	/*static int c = 0;
-	++c;
-	cout << endl << "MATCHING: " << prover::show(expr) << endl;
-	for (const auto& p : space->assertions.match_forth(expr)) {
-		//cout << "PROP EXPR: " << rus::show(p.first.ass->props[0]->expr) << endl;
-		//cout << "SUB: " << prover::show(p.second) << endl;
-		if (apply(p.second.sub, convert_tree(*p.second.data.ass->props[0]->expr.tree())) != expr) {
-			cout << "MATCHING FAILED: " << prover::show(apply(p.second.sub, convert_tree(*p.second.data.ass->props[0]->expr.tree()))) << endl;
-		}
-
-		cout << "ASS: " << Lex::toStr(p.second.data.id()) << endl;
-		Prop* prop = new Prop(p.second.data, p.second.sub, this);
-		variants.emplace_back(prop);
-		if (!prop->prop.ass->arity()) {
-			ProofProp* pr = new ProofProp(*prop);
-			prop->proofs.emplace_back(pr);
-			proofs.emplace_back(new ProofExp(*this, pr, p.second.sub));
-			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
-		}
-	}*/
-
-
 	for (auto& m : space->assertions.unify(expr)) {
 
 		bool show_this = false; //(ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
@@ -107,13 +78,6 @@ void Hyp::buildUp() {
 
 		for (const auto& p : fresher.sub) {
 			if (m.sub.sub.count(p.first)) {
-				/*const LightTree& ex = m.sub.sub[p.first];
-				if (!(ex.kind() == LightTree::VAR && !ex.var().rep)) {
-					//cout << "ERASING: " << Lex::toStr(p.first) << " --> " << prover::show(m.sub.sub[p.first]) << endl;
-					//m.sub.sub.erase(p.first);
-				} else {
-					fresher.sub.erase(p.first);
-				}*/
 				fresher.sub.erase(p.first);
 			}
 		}

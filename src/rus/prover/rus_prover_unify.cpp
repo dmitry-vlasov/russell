@@ -51,10 +51,6 @@ struct UnifStepData {
 			ret += prover::show(v, true) + " ";
 		}
 		ret += "\n";
-		/*ret += "children:\n";
-		for (auto c : children) {
-			ret += ""
-		};*/
 		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
 		ret += string("var: ") + prover::show(var, true) + "\n";
 		return ret;
@@ -216,12 +212,6 @@ Unified unify(const vector<const LightTree*>& ex) {
 		}
 		cout << endl;
 	}
-
-	/*if (c == 25) {
-		cout << "AAA" << endl;
-		debug_unify_1 = true;
-		cout << endl;
-	}*/
 
 	Unified ret;
 	ret.term = unify(ex, ret.sub);

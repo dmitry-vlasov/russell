@@ -2,16 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-/*
-static rus::Step* root_step(rus::Proof* p) {
-	for (auto e : p->elems) {
-		if (e.kind == Proof::Elem::QED) {
-			return e.val.qed->step;
-		}
-	}
-	return nullptr;
-}
-*/
 Oracle::Oracle(rus::Proof* p) :
 	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
 
