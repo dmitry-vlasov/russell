@@ -15,10 +15,10 @@ void Subst::operator = (Subst&& s) {
 	s.ok = true;
 }
 
-void collect_vars(const LightTree& tree, set<uint>& vars) {
+void collect_vars(const LightTree& tree, set<LightSymbol>& vars) {
 	if (tree.kind() == LightTree::VAR) {
 		//if (tree.var().rep) {
-			vars.insert(tree.var().lit);
+			vars.insert(tree.var());
 		//}
 	} else {
 		for (const auto& c : tree.children()) {
@@ -27,16 +27,16 @@ void collect_vars(const LightTree& tree, set<uint>& vars) {
 	}
 }
 
-bool consistent(const Subst* s, uint v, const LightTree& t) {
-	set<uint> x_vars;
+bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
+	set<LightSymbol> x_vars;
 	collect_vars(t, x_vars);
-	/*if (x_vars.find(v) != x_vars.end()) {
+	if (x_vars.find(v) != x_vars.end()) {
 		return false;
-	}*/
-	for (uint y : x_vars) {
+	}
+	for (LightSymbol y : x_vars) {
 		auto i = s->sub.find(y);
 		if (i != s->sub.end()) {
-			set<uint> y_vars;
+			set<LightSymbol> y_vars;
 			collect_vars(i->second, y_vars);
 			if (y_vars.find(v) != y_vars.end()) {
 				return false;
@@ -65,10 +65,10 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 		cout << Indent::paragraph(show(s)) << endl;
 	}*/
 	Subst ret;
-	set<uint> vars;
+	set<LightSymbol> vars;
 	for (const auto& p : s1.sub) {
 		LightTree ex = apply(s2, p.second);
-		if (!(ex.kind() == LightTree::VAR && ex.var().lit == p.first)) {
+		if (!(ex.kind() == LightTree::VAR && ex.var() == p.first)) {
 			s1.sub[p.first] = apply(s2, p.second);
 			vars.insert(p.first);
 		}
@@ -131,18 +131,18 @@ unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	}
 }
 
-unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode) {
+unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uint ind) {
 	switch (tree.kind()) {
 	case rus::Tree::NODE: {
 		LightTree::Children ch;
 		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
-			ch.push_back(convert_tree_ptr(*c.get(), mode));
+			ch.push_back(convert_tree_ptr(*c.get(), mode, ind));
 		}
 		return make_unique<LightTree>(tree.rule(), std::move(ch));
 	}
 	case rus::Tree::VAR:
-		return make_unique<LightTree>(LightSymbol(*tree.var(), mode));
+		return make_unique<LightTree>(LightSymbol(*tree.var(), mode, ind));
 	default:
 		assert(false && "impossible");
 		return unique_ptr<LightTree>();
@@ -151,6 +151,12 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode) {
 
 string show(LightSymbol s, bool full) {
 	if (full) {
+		/*string postfix =
+			(s.ind == LightSymbol::MATH_INDEX ? "" :
+				(s.ind == LightSymbol::ASSERTION_INDEX ? "!" :
+					string("_") + to_string(s.ind - LightSymbol::INTERNAL_MIN_INDEX)
+				)
+			);*/
 		return Lex::toStr(s.lit) + (s.rep ? "*" : "");
 	} else {
 		return Lex::toStr(s.lit);
@@ -204,7 +210,7 @@ string show(const Subst& s) {
 		str += "empty\n";
 	}
 	for (const auto& p : s.sub) {
-		str += Lex::toStr(p.first) + "* --> " + show(p.second) + "\n";
+		str += show(p.first) + " --> " + show(p.second) + "\n";
 	}
 	return str;
 }
@@ -220,8 +226,8 @@ unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (v.rep && s.sub.count(v.lit)) {
-			return make_unique<LightTree>(s.sub.at(v.lit));
+		if (v.rep && s.sub.count(v)) {
+			return make_unique<LightTree>(s.sub.at(v));
 		} else {
 			return make_unique<LightTree>(v);
 		}
@@ -239,7 +245,7 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 	} else {
 		LightSymbol v = t.var();
 		if (v.rep && s.sub().count(v.lit)) {
-			return convert_tree_ptr(s.sub().at(v.lit), ReplMode::KEEP_REPL);
+			return convert_tree_ptr(s.sub().at(v.lit), ReplMode::KEEP_REPL, LightSymbol::MATH_INDEX);
 		} else {
 			return make_unique<LightTree>(v);
 		}
@@ -273,7 +279,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 rus::Substitution convert_sub(const Subst& s) {
 	rus::Substitution ret(s.ok);
 	for (const auto& p : s.sub) {
-		ret.join(p.first, convert_tree(p.second));
+		ret.join(p.first.lit, convert_tree(p.second));
 	}
 	return ret;
 }

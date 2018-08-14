@@ -13,14 +13,13 @@ Node::~Node() {
 
 static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Subst& s) {
 	Subst ret;
-	for (const auto& v : a->vars.v) {
-		if (!ret.maps(v.lit)) {
-			if (!s.maps(v.lit)) {
-				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
+	for (const auto& w : a->vars.v) {
+		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
+		if (!ret.maps(v)) {
+			if (!s.maps(v)) {
+				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				vars[v.lit] = i;
-				LightSymbol s(v, ReplMode::KEEP_REPL, i);
-				s.lit = Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(i));
-				ret.sub[v.lit] = LightTree(s);
+				ret.sub[v] = LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i));
 			}
 		}
 	}
@@ -59,7 +58,7 @@ void Prop::buildUp() {
 		//cout << "SUB: " << prover::show(sub) << endl;
 		//cout << "NODE EXPR: " << prover::show(apply(sub, convert_tree(*h->expr.tree()))) << endl;
 
-		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree(), ReplMode::KEEP_REPL), this);
+		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this);
 		//cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
 
 		premises.emplace_back(hyp);
@@ -94,7 +93,7 @@ void Hyp::buildUp() {
 
 	for (auto& m : space->assertions.unify(expr)) {
 
-		bool show_this = (ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
+		bool show_this = true; //(ind == 4) && (Lex::toStr(m.data.id()) == "ax-3");
 
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		if (show_this) {
@@ -133,18 +132,24 @@ void Hyp::buildUp() {
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, m.sub));
 
-			//cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
-			//cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
-			//cout <<  "SUB: " << endl;
-			//cout <<  Indent::paragraph(prover::show(m.sub)) << endl;
+			/*cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
+			cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
+			cout <<  "SUB: " << endl;
+			cout <<  Indent::paragraph(prover::show(m.sub)) << endl;*/
 		}
 	}
 }
 
 void Hyp::complete() {
+	///cout << "HYP UNIFYING... " << prover::show(expr) << endl;
 	for (const auto& m : space->hyps.unify(expr)) {
-		proofs.emplace_back(new ProofTop(*this, m.data, m.sub));
+		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
+		//cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+
+		proofs.emplace_back(pt);
 	}
+	//cout << endl;
+
 	//cout << "COMPLETING: " << ind << endl;
 	set<Node*> downs;
 	downs.insert(this);
@@ -160,7 +165,7 @@ void Hyp::complete() {
 
 struct MultySub {
 	MultySub() : ok(true) { }
-	map<uint, Unified> msub_;
+	map<LightSymbol, Unified> msub_;
 	bool ok;
 };
 
@@ -193,7 +198,7 @@ private:
 		for (const auto& p : s.sub)
 			msub_[p.first].push_back(&p.second);
 	}
-	map<uint, vector<const LightTree*>> msub_;
+	map<LightSymbol, vector<const LightTree*>> msub_;
 };
 
 inline bool intersects(const Subst& s1, const Subst& s2) {
@@ -244,7 +249,7 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		return vector<Node*>();
 	}
 
-	debug_unify_subs = (pr->ind == 1);
+	debug_unify_subs = false; //(pr->ind == 1);
 
 	if (debug_unify_subs) {
 		cout << endl << "IND: " << ind.show() << endl << endl;

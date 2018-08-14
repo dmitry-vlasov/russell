@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_unify_1 = false;
+bool debug_unify_1 = true;
 
 struct UnifStepData {
 	const Rule* rule = nullptr;
@@ -42,6 +42,23 @@ struct UnifStepData {
 		children.push_back(&t->children());
 		return true;
 	}
+
+	string show() const {
+		string ret;
+		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
+		ret += "vars: ";
+		for (const auto& v : vars) {
+			ret += prover::show(v, true) + " ";
+		}
+		ret += "\n";
+		/*ret += "children:\n";
+		for (auto c : children) {
+			ret += ""
+		};*/
+		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
+		ret += string("var: ") + prover::show(var, true) + "\n";
+		return ret;
+	}
 };
 
 static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
@@ -77,17 +94,28 @@ static UnifStepData gather_unification_data(vector<const LightTree*>& ex) {
 	return ret;
 }
 
+uint depth_counter = 0;
 
 LightTree unify(vector<const LightTree*> ex, Subst& sub);
 
 LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
+	if (debug_unify_1) {
+		cout << "UNIFYING:\n" << Indent::paragraph(data.show()) << endl;
+		cout << "SUB:\n";
+		cout << Indent::paragraph(show(s)) << endl;
+		if (++depth_counter > 8) {
+			cout << "AND" << endl;
+			return LightTree();
+		}
+	}
+
 	vector<const LightTree*> to_unify({&ret});
 	for (auto v : data.vars) {
-		if (s.maps(v.lit)) {
-			to_unify.push_back(&s.sub[v.lit]);
+		if (s.maps(v)) {
+			to_unify.push_back(&s.sub[v]);
 
 			if (debug_unify_1) {
-				cout << "to unify: " << show(v) << " --> " << show(s.sub[v.lit]) << endl;
+				cout << "to unify: " << show(v) << " --> " << show(s.sub[v]) << endl;
 			}
 
 		}
@@ -114,7 +142,7 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 				cout << show(s) << endl;
 			}
 
-			if (!s.compose(Subst(v.lit, term))) {
+			if (!s.compose(Subst(v, term))) {
 				if (debug_unify_1) {
 					cout << "SUCC" << endl;
 				}
@@ -172,15 +200,17 @@ bool check_unification(const Unified& unif, const vector<const LightTree*>& ex) 
 	return true;
 }
 
-bool debug_unify;
+bool debug_unify = true;
 
 uint c = 0;
 
 Unified unify(const vector<const LightTree*>& ex) {
 
+	depth_counter = 0;
+
 	c ++;
 	if (debug_unify) {
-		cout << endl << " ** UNIFYING: " << c++ << endl;
+		cout << endl << "*** UNIFYING: " << c++ << endl;
 		for (auto e : ex) {
 			cout << "\t" << show(*e, true) << endl;
 		}
@@ -211,8 +241,8 @@ Unified unify(const vector<const LightTree*>& ex) {
 	}
 
 	if (debug_unify) {
-		cout << "RESULT: " << show(ret.term) << endl;
-		cout << "SUB:" << endl;
+		cout << "*** RESULT: " << show(ret.term) << endl;
+		cout << "*** SUB:" << endl;
 		cout << show(ret.sub) << endl << endl;
 	}
 

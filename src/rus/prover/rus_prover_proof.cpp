@@ -30,7 +30,7 @@ ProofHyp::~ProofHyp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
-	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL))), hyp(h) {
+	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
 }
 
 rus::Ref* ProofExp::ref() const {

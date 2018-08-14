@@ -11,15 +11,26 @@ enum class ReplMode {
 };
 
 struct LightSymbol {
+	enum {
+		MATH_INDEX = 0,
+		ASSERTION_INDEX = 1,
+		INTERNAL_MIN_INDEX = 2
+	};
 	LightSymbol() : lit(undef()), rep(false), ind(-1), type(nullptr)  { }
-	LightSymbol(const rus::Symbol& s, ReplMode mode, uint i = 0) :
-		lit(s.lit), rep(s.kind() == Symbol::VAR), ind(i), type(s.kind() == Symbol::VAR ? s.type() : nullptr) {
+	LightSymbol(const rus::Symbol& s, ReplMode mode, uint i) :
+		lit(i == MATH_INDEX ? s.lit :
+			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(s.lit) + "!") :
+				Lex::toInt(Lex::toStr(s.lit) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
+			)
+		),
+		rep(s.kind() == Symbol::VAR),
+		ind(i),
+		type(s.kind() == Symbol::VAR ? s.type() : nullptr) {
 		if (mode == ReplMode::DENY_REPL) {
 			rep = false;
 		}
 	}
 	LightSymbol(const LightSymbol& s) = default;
-	//LightSymbol(LightSymbol&& s) = default;
 
 	bool is_undef() const { return lit == undef(); }
 	bool is_def() const { return lit != undef(); }
@@ -34,28 +45,7 @@ struct LightSymbol {
 		else return ind < s.ind;
 	}
 
-	void operator = (const LightSymbol& s) {
-		lit  = s.lit;
-		type = s.type;
-		rep  = s.rep;
-		ind  = s.ind;
-	}
-	/*void operator = (LightSymbol&& s) {
-		lit  = s.lit;
-		type = s.type;
-		rep  = s.rep;
-		ind  = s.ind;
-	}*/
-
-	/*struct Hash {
-		typedef size_t result_type;
-		typedef LightSymbol argument_type;
-		size_t operator() (LightSymbol s) const {
-			return hash(s.lit);
-		}
-	private:
-		static std::hash<uint> hash;
-	};*/
+	LightSymbol& operator = (const LightSymbol& s) = default;
 
 	uint lit:31;
 	bool rep:1;
@@ -193,8 +183,8 @@ private:
 
 struct Subst {
 	Subst(bool ok = true) : ok(ok) { }
-	Subst(uint v, const LightTree& t) : ok(true) {
-		if (!(t.kind() == LightTree::VAR && t.var().lit == v)) {
+	Subst(LightSymbol v, const LightTree& t) : ok(true) {
+		if (!(t.kind() == LightTree::VAR && t.var() == v)) {
 			sub.emplace(v, t);
 		}
 	}
@@ -210,9 +200,9 @@ struct Subst {
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s);
 
-	bool maps(uint v) const { return sub.find(v) != sub.end(); }
+	bool maps(LightSymbol v) const { return sub.find(v) != sub.end(); }
 
-	map<uint, LightTree> sub;
+	map<LightSymbol, LightTree> sub;
 	bool ok;
 };
 
@@ -220,20 +210,16 @@ void compose(Subst& s1, const Subst& s2, bool full = true);
 bool composable(const Subst& s1, const Subst& s2);
 
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree&);
-unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&, ReplMode);
+unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&, ReplMode, uint i);
 unique_ptr<LightTree> apply_ptr(const Subst&, const LightTree&);
-unique_ptr<LightTree> apply_ptr(const Substitution&, const LightTree&);
 
 inline rus::Tree convert_tree(const LightTree& t) {
 	return rus::Tree(std::move(*convert_tree_ptr(t).release()));
 }
-inline LightTree convert_tree(const rus::Tree& t, ReplMode m) {
-	return LightTree(std::move(*convert_tree_ptr(t, m).release()));
+inline LightTree convert_tree(const rus::Tree& t, ReplMode m, uint i) {
+	return LightTree(std::move(*convert_tree_ptr(t, m, i).release()));
 }
 inline LightTree apply(const Subst& s, const LightTree& t) {
-	return LightTree(std::move(*apply_ptr(s, t).release()));
-}
-inline LightTree apply(const Substitution& s, const LightTree& t) {
 	return LightTree(std::move(*apply_ptr(s, t).release()));
 }
 

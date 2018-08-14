@@ -142,8 +142,8 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 	}
 	LightTree t_substituted = apply(unif, t);
 	vector<const LightTree*> to_unify({&t_substituted});
-	if (unif.maps(v.lit)) {
-		to_unify.push_back(&unif.sub[v.lit]);
+	if (unif.maps(v)) {
+		to_unify.push_back(&unif.sub[v]);
 	}
 	if (to_unify.size() > 1) {
 		Unified u = unify(to_unify);
@@ -169,6 +169,10 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 					cout << "AAA FAILURE:" << endl << endl;
 				}
 			}
+		} else {
+			if (debug_ind) {
+				cout << "XXX FAILURE:" << endl << endl;
+			}
 		}
 	} else {
 		LightTree term =
@@ -183,7 +187,7 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 			cout << "term: " << show(term) << endl;
 		}
 
-		if (unif.compose(Subst(v.lit, term))) {
+		if (unif.compose(Subst(v, term))) {
 
 			if (debug_ind) {
 				cout << "BBB SUCCESS:" << endl << endl;

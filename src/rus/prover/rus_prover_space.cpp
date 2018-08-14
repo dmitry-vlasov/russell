@@ -24,7 +24,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			uint c = 0;
 			for (auto& prop : ass->props) {
 				assertions.add(
-					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL),
+					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
 					PropRef(ass, c++)
 				);
 			}
@@ -35,10 +35,10 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	cout << "\nASSERTIONS:\n" << assertions.show() << endl;
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
-		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
+		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
 	cout << "\nHYPS:\n" << hyps.show() << endl;
-	root = new Hyp(convert_tree(*prop.get()->expr.tree(), ReplMode::DENY_REPL), this);
+	root = new Hyp(convert_tree(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
 	root->buildUp();
 }
 
