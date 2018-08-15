@@ -44,14 +44,15 @@ Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 }
 
 inline uint make_proof_id(uint id, Id th) {
-	if (Undef<uint>::is(id)) {
-		const string& th_name = Lex::toStr(th.id);
-		if (const Theorem* thm = dynamic_cast<const Theorem*>(Sys::get().math.get<Assertion>().access(th.id))) {
-			return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(thm->proofs.size()));
-		} else {
-			throw Error("not a theorem", th_name);
-		}
-	} else return id;
+	if (id == -1) {
+		const string& th_name = (th.id == -1) ? "anonymous" : Lex::toStr(th.id);
+		static map<uint, uint> proof_indexes;
+		uint ind = proof_indexes.count(th.id) ? proof_indexes.at(th.id) + 1 : 0;
+		proof_indexes[th.id] = ind;
+		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(ind));
+	} else {
+		return id;
+	}
 }
 
 inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {

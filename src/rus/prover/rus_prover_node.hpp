@@ -88,6 +88,7 @@ struct Hyp : public Node {
 	void buildUp();
 	vector<Node*> buildDown() override;
 	string show() const override;
+	bool root() const { return !parent; }
 
 	void complete();
 };
