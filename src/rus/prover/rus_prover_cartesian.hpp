@@ -3,8 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct DecartIter {
-	DecartIter() : size_(0), fixed_(-1), hasNext_(false), isEmpty_(false) { }
+struct CartesianIter {
+	CartesianIter() : size_(0), fixed_(-1), hasNext_(false), isEmpty_(false) { }
 
 	void addDim(uint d) {
 		++size_;

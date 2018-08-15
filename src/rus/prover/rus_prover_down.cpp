@@ -1,5 +1,6 @@
 #include "rus_prover_down.hpp"
-#include "rus_prover_decart.hpp"
+
+#include "rus_prover_cartesian.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -56,9 +57,8 @@ Subst unify_subs(const MultyTree& t) {
 	}
 }
 
-vector<Node*> unify_down(Prop* pr, ProofHyp* h) {
-	vector<ProofHyp*> proofs;
-	DecartIter ind;
+vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
+	CartesianIter ind;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {
 			ind.addDim(x->proofs.size());
