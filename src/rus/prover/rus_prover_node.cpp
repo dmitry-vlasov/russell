@@ -245,15 +245,14 @@ vector<Node*> unify_subs(Prop* pr, ProofHyp* h) {
 		Subst sub = unify_subs(t);
 		uint watchdog = 0;
 		while (sub.composeable(sub)) {
-			if (!sub.consistent(sub)) {
-				sub.ok = false;
-				break;
-			}
 			if (watchdog++ > 32) {
 				cout << "SOMETHING WRONG" << endl;
 				break;
 			}
-			sub.compose(sub);
+			if (!sub.compose(sub)) {
+				sub.ok = false;
+				break;
+			}
 		}
 		if (sub.ok) {
 			Subst delta = pr->sub;

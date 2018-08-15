@@ -88,11 +88,14 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 }
 
 bool Subst::compose(const Subst& s) {
-	if (!consistent(s)) {
+	if (!s.consistent(*this)) {
 		return false;
 	}
 	Subst ss(s);
 	prover::compose(ss, *this, false);
+	if (!consistent(ss)) {
+		return false;
+	}
 	prover::compose(*this, ss, true);
 	return true;
 }
