@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Oracle::Oracle(rus::Proof* p) :
+Oracle::Oracle(const rus::Proof* p) :
 	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
 
 }
@@ -26,8 +26,8 @@ void Oracle::add(Prop* p) {
 		if (p->parent && p->parent->parent) {
 			Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
 			if (props.count(grand)) {
-				rus::Step* st = props.at(grand);
-				for (auto& r : st->refs) {
+				const rus::Step* st = props.at(grand);
+				for (const auto& r : st->refs) {
 					if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
 						leafs.push_back(p);
 						if (debug_oracle) {

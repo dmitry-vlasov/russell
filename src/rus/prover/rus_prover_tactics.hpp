@@ -34,14 +34,14 @@ struct BreadthSearch : public QueueTactic {
 };
 
 struct Oracle : public QueueTactic {
-	Oracle(rus::Proof* = nullptr);
+	Oracle(const rus::Proof* = nullptr);
 	void add(Prop* p) override;
-	void setProof(rus::Proof* p) { proof = p; }
+	void setProof(const rus::Proof* p) { proof = p; }
 
 private:
-	rus::Proof*   proof;
-	rus::Step*    root;
-	map<Prop*, rus::Step*> props;
+	const rus::Proof* proof;
+	const rus::Step*  root;
+	map<Prop*, const rus::Step*> props;
 };
 
 struct ProxyTactic : public Tactic {

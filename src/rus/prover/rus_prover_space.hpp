@@ -70,7 +70,7 @@ struct Space {
 	Proved proved();
 };
 
-bool test_with_oracle();
+Return test_with_oracle(string theorem);
 
 }}}
 

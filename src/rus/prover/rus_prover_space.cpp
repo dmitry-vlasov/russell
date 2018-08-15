@@ -183,7 +183,6 @@ Return Space::prove() {
 		if (ret.msg == "goal proved") {
 			return ret;
 		}
-
 	}
 	return Return("goal not proved", false);
 }
