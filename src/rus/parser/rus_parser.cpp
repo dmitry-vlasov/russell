@@ -290,6 +290,10 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 
 } // parser namespace
 
+#ifdef PARALLEL
+#define PARALLEL_RUS_PARSE
+#endif
+
 void parse_src_spirit(uint label) {
 	Source* src = Sys::mod().math.get<Source>().access(label);
 
@@ -304,10 +308,13 @@ void parse_src_spirit(uint label) {
 }
 
 void parse_src_spirit() {
-#ifdef PARALLEL_RUS_PARSE
 	vector<uint> labels;
-	for (auto p : Sys::mod().math.get<Source>())
-		if (!p.second.data->parsed) labels.push_back(p.first);
+	for (auto p : Sys::mod().math.get<Source>()) {
+		if (!p.second.data->parsed) {
+			labels.push_back(p.first);
+		}
+	}
+#ifdef PARALLEL_RUS_PARSE
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
 		[labels] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)
@@ -315,8 +322,9 @@ void parse_src_spirit() {
 		}
 	);
 #else
-	for (auto p : Sys::mod().math.get<Source>())
-		if (!p.second.data->parsed) parse_src_spirit(p.first);
+	for (auto src : labels) {
+		parse_src_spirit(src);
+	}
 #endif
 }
 

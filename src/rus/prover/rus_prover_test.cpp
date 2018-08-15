@@ -38,10 +38,14 @@ Return test_with_oracle(string theorem) {
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
+			cout << "Tesing proving of: " << theorem << endl;
+			uint i = 0;
 			for (const auto& pr : th->proofs) {
+				cout << "\tTesing proof no. " << i++ << " of " << Lex::toStr(pr.id()) << endl;
 				Return r = test_proof_with_oracle(pr.get());
 					if (!r.success()) {
 						debug_oracle = true;
+						cout << "\tTesing proof no. " << i++ << " of " << Lex::toStr(pr.id()) << endl;
 						test_proof_with_oracle(pr.get());
 						return r;
 					}

@@ -128,6 +128,7 @@ void parse() {
 			tp->rules.add(r->term, r->id());
 		}
 	}
+	Sys::mod().math.get<Type>().rehash();
 	for (const auto& p : Sys::get().math.get<Type>()) {
 		Type* tp = p.second.data;
 		tp->rules.sort();

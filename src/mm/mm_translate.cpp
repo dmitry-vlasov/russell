@@ -477,7 +477,7 @@ inline bool rule_term_is_super(const Expr& term) {
 	return term.size() == 2 && !term[0].var && term[1].var;
 }
 
-rus::Source* translate_source(uint src, Maps& maps, uint tgt = -1) {
+rus::Source* create_source(uint src, Maps& maps, uint tgt = -1) {
 	if (maps.sources.find(src) != maps.sources.end()) {
 		return maps.sources.at(src);
 	}
@@ -491,24 +491,22 @@ rus::Source* translate_source(uint src, Maps& maps, uint tgt = -1) {
 	for (auto& n : source->contents) {
 		if (mm::Source::kind(n) == mm::Source::IMPORT) {
 			mm::Import* imp = std::get<unique_ptr<Import>>(n).get();
-			rus::Source* inc = translate_source(imp->source.id(), maps);
+			rus::Source* inc = create_source(imp->source.id(), maps);
 			target->include(inc);
 		}
 	}
-#ifndef PARALLEL_TRANSLATE
-	translate_theory(src, maps);
-#endif
 	return target;
 }
 
 Maps create_maps(uint src, uint tgt) {
 	Maps maps;
 	vector<rus::Source*> targets;
+	Sys::mod().math.get<Source>().rehash();
 	for (const auto& p : Sys::get().math.get<Source>()) {
 		if (p.first == src) {
-			targets.push_back(translate_source(src, maps, tgt));
+			targets.push_back(create_source(src, maps, tgt));
 		} else {
-			targets.push_back(translate_source(p.first, maps));
+			targets.push_back(create_source(p.first, maps));
 		}
 	}
 	for (auto t : targets) {
@@ -516,6 +514,7 @@ Maps create_maps(uint src, uint tgt) {
 	}
 	vector<Assertion*> rules;
 	vector<Assertion*> supers;
+	Sys::mod().math.get<Assertion>().rehash();
 	for (const auto& p : Sys::get().math.get<Assertion>()) {
 		Assertion* a = p.second.data;
 		if (a->proof.refs.size() == 1) {
@@ -564,7 +563,9 @@ static vector<uint> find_dependencies(uint src) {
 } // anonymous namespace
 
 void translate(uint src, uint tgt) {
-	if (!Sys::get().math.get<Source>().has(src)) throw Error("no source", Lex::toStr(src));
+	if (!Sys::get().math.get<Source>().has(src)) {
+		throw Error("no source", Lex::toStr(src));
+	}
 	Maps maps = create_maps(src, tgt);
 	vector<uint> deps = find_dependencies(src);
 #ifdef PARALLEL_TRANSLATE
@@ -577,7 +578,7 @@ void translate(uint src, uint tgt) {
 	);
 #else
 	for (uint s : deps) {
-		translate_source(s, maps);
+		translate_theory(s, maps);
 	}
 #endif
 }

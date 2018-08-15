@@ -3,8 +3,8 @@
 namespace mdl {
 namespace rus {
 
-inline Rule* find_super(const Type* type, const Type* super) {
-	auto it =type->supers.find(super);
+Rule* find_super(const Type* type, const Type* super) {
+	auto it = type->supers.find(super);
 	return it != type->supers.end() ? it->second.get() : nullptr;
 }
 

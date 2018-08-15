@@ -8,10 +8,6 @@ void parse_src_spirit(uint);
 
 namespace parser {
 
-#ifdef PARALLEL
-#define PARALLEL_RUS_PARSE
-#endif
-
 namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
@@ -154,10 +150,6 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
-#ifndef PARALLEL_RUS_PARSE
-		Source* imp_src = Sys::mod().math.get<Source>().access(id);
-		if (!imp_src->parsed) parse_src_spirit(id);
-#endif
 		return new Import(id);
 	}
 };
@@ -306,6 +298,7 @@ struct AddToTheory {
 		t->nodes.emplace_back(unique_ptr<Theorem>(th));
 	}
 	void operator()(Theory* t, Proof* p) const {
+		p->theorem()->proofs.emplace_back(User<Proof>(p->id()));
 		t->nodes.emplace_back(unique_ptr<Proof>(p));
 	}
 	void operator()(Theory* t, Theory* th) const {
