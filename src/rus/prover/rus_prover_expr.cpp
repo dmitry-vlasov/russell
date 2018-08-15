@@ -17,9 +17,7 @@ void Subst::operator = (Subst&& s) {
 
 void collect_vars(const LightTree& tree, set<LightSymbol>& vars) {
 	if (tree.kind() == LightTree::VAR) {
-		//if (tree.var().rep) {
-			vars.insert(tree.var());
-		//}
+		vars.insert(tree.var());
 	} else {
 		for (const auto& c : tree.children()) {
 			collect_vars(*c, vars);
@@ -272,14 +270,14 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 	}
 }
 
-static void create_liear_expr(const LightTree& tree, vector<Symbol>& ret) {
+static void create_linear_expr(const LightTree& tree, vector<Symbol>& ret) {
 	if (tree.kind() == LightTree::VAR) {
 		ret.emplace_back(rus::Symbol(tree.var().lit, tree.type()->id(), rus::Symbol::VAR));
 	} else {
 		uint i = 0;
 		for (const auto& s : tree.rule()->term.symbols) {
 			if (s.type()) {
-				create_liear_expr(*tree.children()[i++].get(), ret);
+				create_linear_expr(*tree.children()[i++].get(), ret);
 			} else {
 				ret.push_back(s);
 			}
@@ -292,7 +290,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 	ret.set(convert_tree_ptr(tree).release());
 	ret.type = tree.type();
 	ret.symbols.reserve(tree.length());
-	create_liear_expr(tree, ret.symbols);
+	create_linear_expr(tree, ret.symbols);
 	return ret;
 }
 
