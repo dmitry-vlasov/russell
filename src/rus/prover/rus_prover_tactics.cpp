@@ -12,33 +12,81 @@ bool debug_oracle = false;
 void Oracle::add(Prop* p) {
 	const Assertion* ass = p->prop.ass;
 	if (debug_oracle) {
-		cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
+		//cout << endl;
+		//cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
 	}
 	if (props.empty()) {
 		if (ass == root->ass()) {
 			leafs.push_back(p);
 			props[p] = root;
+			observed.insert(root);
 			if (debug_oracle) {
-				cout << "orcale ROOT: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+				cout << endl << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << endl;
+				cout << "this: " << (void*)p << ", parent: " << (void*)root << endl << endl;
+				//cout << p->show() << endl << endl;
 			}
 		}
 	} else {
-		if (p->parent && p->parent->parent) {
+		if (p->parent && !p->parent->root()) {
 			Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
+			uint ind = 0;
+			for (const auto& premise : grand->premises) {
+				if (p->parent == premise.get()) {
+					break;
+				}
+				++ind;
+			}
 			if (props.count(grand)) {
 				const rus::Step* st = props.at(grand);
+				uint i = 0;
 				for (const auto& r : st->refs) {
-					if (r.get()->kind() == rus::Ref::STEP && ass == r.get()->step()->ass()) {
-						leafs.push_back(p);
-						if (debug_oracle) {
-							cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind <<  endl;
+					if (r.get()->kind() == rus::Ref::STEP) {
+						const rus::Step* candidate = r.get()->step();
+						if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
+							leafs.push_back(p);
+							if (debug_oracle) {
+								cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
+								cout << "this: " << (void*)p << ", parent: " << (void*)grand << endl << endl;
+								//cout << p->show() << endl << endl;
+							}
+							props[p] = candidate;
+							observed.insert(candidate);
 						}
-						props[p] = r.get()->step();
 					}
+					++i;
 				}
 			}
 		}
 	}
+}
+
+void all_steps(const rus::Step* s, set<const rus::Step*>& all) {
+	all.insert(s);
+	for (const auto& r : s->refs) {
+		if (r->kind() == rus::Ref::STEP) {
+			all_steps(r->step(), all);
+		}
+	}
+}
+
+string Oracle::show() const {
+	set<const rus::Step*> all;
+	all_steps(root, all);
+	string ret;
+	for (auto p : props) {
+		all.erase(p.second);
+	}
+	ret += "MISSED STEPS:\n";
+	for (auto p : all) {
+		ret += p->show() + "\n";
+	}
+	ret += "\n\n";
+
+	for (auto p : props) {
+		ret += p.first->parent->show(true);
+		ret += p.first->show(true);
+	}
+	return ret;
 }
 
 struct TacticsParser {

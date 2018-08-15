@@ -4,9 +4,14 @@ namespace mdl { namespace rus { namespace prover {
 
 Return test_proof_with_oracle(const Proof* p) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::endl;
-	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), new prover::Oracle(p));
-	cout << "SPACE INDEX: " << space->ind << " ... " << std::flush;
-	return space->prove();
+	Oracle* oracle = new prover::Oracle(p);
+	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
+	Return ret = space->prove();
+	if (!ret.success()) {
+		cout << "oracle status:" << endl;
+		cout << oracle->show() << endl;
+	}
+	return ret;
 }
 
 Return test_with_oracle(string theorem) {
@@ -21,10 +26,12 @@ Return test_with_oracle(string theorem) {
 			ordered_sources.insert(p.second.data);
 		}
 		cout << endl;
+		uint counter = 0;
 		for (Source* src : ordered_sources) {
-			//cout << "SOURCE: " << src->id() << " = " << Lex::toStr(src->id()) << endl;
+			cout << "testing source: " << Lex::toStr(src->id()) << endl;
 			for (auto& n : src->theory.nodes) {
 				if (Theory::kind(n) == Theory::PROOF) {
+					cout << counter++ << " ";
 					Return r = test_proof_with_oracle(Theory::proof(n));
 					if (!r.success()) {
 						debug_oracle = true;
@@ -38,14 +45,10 @@ Return test_with_oracle(string theorem) {
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
-			cout << "Tesing proving of: " << theorem << endl;
-			uint i = 0;
 			for (const auto& pr : th->proofs) {
-				cout << "\tTesing proof no. " << i++ << " of " << Lex::toStr(pr.id()) << endl;
 				Return r = test_proof_with_oracle(pr.get());
 					if (!r.success()) {
 						debug_oracle = true;
-						cout << "\tTesing proof no. " << i++ << " of " << Lex::toStr(pr.id()) << endl;
 						test_proof_with_oracle(pr.get());
 						return r;
 					}

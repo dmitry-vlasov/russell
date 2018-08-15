@@ -68,6 +68,7 @@ struct Space {
 	Tactic*       tactic_;
 	set<uint>     shown;
 	Proved proved();
+	Return check_proved();
 };
 
 Return test_with_oracle(string theorem);

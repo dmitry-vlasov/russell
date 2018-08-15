@@ -59,7 +59,7 @@ static string show_assertion(const Assertion* a) {
 }
 
 
-string Prop::show() const {
+string Prop::show(bool with_proofs) const {
 	string ret;
 	ret += "<prop ";
 	ret += string("name=\"") + Lex::toStr(prop.id()) + "\" ";
@@ -67,21 +67,26 @@ string Prop::show() const {
 	ret += string("parent=\"") + to_string(parent->ind) + "\" ";
 	ret += show_children_idx(premises);
 	ret += ">\n";
-	ret += "\t<assertion>";
-	ret += "<![CDATA[";
-	ret += show_assertion(prop.ass);
-	ret += "]]>";
-	ret += "</assertion>\n";
+	ret += "\t<assertion>\n";
+	ret += "\t<![CDATA[\n";
+	ret += Indent::paragraph(show_assertion(prop.ass), "\t\t");
+	ret += "\t]]>";
+	ret += "\t</assertion>\n";
 	ret += "\t<substitution>\n";
 	ret += "\t<![CDATA[\n";
-	ret += rus::prover::show(sub);
+	ret += Indent::paragraph(rus::prover::show(sub), "\t\t");
 	ret += "\t]]>\n";
 	ret += "\t</substitution>\n";
+	if (with_proofs) {
+		for (const auto& p : proofs) {
+			ret += Indent::paragraph(p->show());
+		}
+	}
 	ret += "</prop>\n";
 	return ret;
 }
 
-string Hyp::show() const {
+string Hyp::show(bool with_proofs) const {
 	string ret;
 	ret += string("<") + (parent ? "hyp" : "root") + " ";
 	ret += string("index=\"") + to_string(ind) + "\" ";
@@ -93,6 +98,11 @@ string Hyp::show() const {
 	ret += "\t<expression>";
 	ret += "<![CDATA[" + rus::prover::show(expr) + "]]>";
 	ret += "</expression>\n";
+	if (with_proofs) {
+		for (const auto& p : proofs) {
+			ret += Indent::paragraph(p->show());
+		}
+	}
 	ret += string("</") + (parent ? "hyp" : "root") + ">\n";
 	return ret;
 }

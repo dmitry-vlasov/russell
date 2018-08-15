@@ -149,32 +149,42 @@ Return Space::expand(uint index) {
 			for (auto& h : p->premises) {
 				h->complete();
 			}
-			ostringstream oss;
-			Proved prov = proved();
-			if (prov.size()) {
-				oss << "<proved>\n";
-				for (auto& p : prov) {
-					oss << "\t<proof>\n";
-					oss << "\t<![CDATA[\n";
-					p->write(oss);
-					oss << "\t]]>\n";
-					oss << "\t</proof>\n";
-				}
-				oss << "</proved>\n";
-			} else {
-				oss << "<new>\n";
-				for (uint i : to_show) {
-					oss << Indent::paragraph(nodes_.at(i)->show()) + "\n";
-				}
-				oss << "</new>\n";
+			Return ret = check_proved();
+			if (ret.success()) {
+				return ret;
 			}
-			cout << endl << oss.str() << endl;
-			return Return(prov.size() ? "goal proved" : "node expanded", oss.str(), true);
+			ostringstream oss;
+			oss << "<new>\n";
+			for (uint i : to_show) {
+				oss << Indent::paragraph(nodes_.at(i)->show()) + "\n";
+			}
+			oss << "</new>\n";
+			//cout << endl << oss.str() << endl;
+			return Return("node expanded", oss.str());
 		}
 	} else {
 		cout << index << " NOT A PROP" << endl;
 	}
 	return true;
+}
+
+Return Space::check_proved() {
+	Proved prov = proved();
+	if (prov.size()) {
+		ostringstream oss;
+		oss << "<proved>\n";
+		for (auto& p : prov) {
+			oss << "\t<proof>\n";
+			oss << "\t<![CDATA[\n";
+			oss << Indent::paragraph(p->show(), "\t\t");
+			oss << "\t]]>\n";
+			oss << "\t</proof>\n";
+		}
+		oss << "</proved>\n";
+		return Return("goal proved", oss.str());
+	} else {
+		return Return("goal not proved", false);
+	}
 }
 
 Return Space::prove() {
@@ -184,7 +194,7 @@ Return Space::prove() {
 			return ret;
 		}
 	}
-	return Return("goal not proved", false);
+	return check_proved();
 }
 
 Return Space::erase(uint index) {

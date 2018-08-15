@@ -37,11 +37,13 @@ struct Oracle : public QueueTactic {
 	Oracle(const rus::Proof* = nullptr);
 	void add(Prop* p) override;
 	void setProof(const rus::Proof* p) { proof = p; }
+	string show() const;
 
 private:
 	const rus::Proof* proof;
 	const rus::Step*  root;
 	map<Prop*, const rus::Step*> props;
+	set<const rus::Step*> observed;
 };
 
 struct ProxyTactic : public Tactic {

@@ -52,7 +52,7 @@ struct Node {
 	virtual ~Node();
 
 	virtual vector<Node*> buildDown() = 0;
-	virtual string show() const = 0;
+	virtual string show(bool with_proofs = false) const = 0;
 
 	Space* space;
 	uint   ind;
@@ -72,7 +72,7 @@ struct Prop : public Node {
 
 	void buildUp();
 	vector<Node*> buildDown() override;
-	string show() const override;
+	string show(bool with_proofs = false) const override;
 };
 
 struct Hyp : public Node {
@@ -87,7 +87,7 @@ struct Hyp : public Node {
 
 	void buildUp();
 	vector<Node*> buildDown() override;
-	string show() const override;
+	string show(bool with_proofs = false) const override;
 	bool root() const { return !parent; }
 
 	void complete();
