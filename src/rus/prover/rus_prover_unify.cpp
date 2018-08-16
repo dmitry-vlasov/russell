@@ -100,30 +100,6 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 
 LightTree do_unify(vector<LightTree> ex, Subst& sub);
 
-LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
-	ret = apply(s, ret);
-	vector<LightTree> to_unify({ret});
-	for (auto v : data.vars) {
-		if (s.maps(v)) {
-			to_unify.push_back(s.sub[v]);
-		}
-	}
-	LightTree unified = do_unify(to_unify, s);
-	if (!unified.empty()) {
-		for (auto v : data.vars) {
-			LightTree term =
-				(data.least_type == v.type) ?
-				unified :
-				LightTree(find_super(v.type, data.least_type), new LightTree(unified));
-			if (!s.compose(Subst(v, term))) {
-				return LightTree();
-			}
-		}
-		return unified;
-	}
-	return LightTree();
-}
-
 LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree& term) {
 	vector<LightTree> to_unify({apply(s, term)});
 	for (auto v : vars) {

@@ -5,6 +5,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 LightTree unify(const vector<LightTree>& ex, Subst& sub);
+LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree& term);
 
 extern bool debug_unify;
 extern bool debug_index;
