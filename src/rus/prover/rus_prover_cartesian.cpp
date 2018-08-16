@@ -32,8 +32,11 @@ void CartesianIter::addFixed(uint d, uint i) {
 	ind_.push_back(i);
 }
 
-void CartesianIter::reset() {
+void CartesianIter::reset(bool drop_fixed) {
 	for (uint i = 0; i < dims_.size(); ++ i) {
+		if (drop_fixed) {
+			fixed_[i] = false;
+		}
 		if (!fixed_[i]) {
 			ind_[i] = 0;
 		}

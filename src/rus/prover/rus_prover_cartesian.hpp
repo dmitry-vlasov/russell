@@ -16,7 +16,7 @@ struct CartesianIter {
 	void fix(uint i) { fixed_[i] = true; }
 	void unfix(uint i) { fixed_[i] = false; }
 
-	void reset();
+	void reset(bool drop_fixed = true);
 	void makeNext();
 	bool hasNext() const;
 	uint size() const { return dims_.size(); }
@@ -60,7 +60,18 @@ struct CartesianMap {
 		iter_.addFixed(v.size(), i);
 	}
 
-	void reset() { iter_.reset(); }
+	void fix(uint i, Data d) {
+		auto j = std::find(data_[i].begin(), data_[i].end(), d);
+		if (j != data_[i].end()) {
+			iter_[i] = j - data_[i].begin();
+			iter_.fix(i);
+		} else {
+			assert(false && "element not found in CartesianMap vector");
+		}
+	}
+	void unfix(uint i) { iter_.unfix(i); }
+
+	void reset(bool drop_fixed = true) { iter_.reset(drop_fixed); }
 	void makeNext() { iter_.makeNext(); }
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
@@ -70,8 +81,8 @@ struct CartesianMap {
 	}
 	vector<Data> data() const {
 		vector<Data> ret;
-		for (uint j = 0; j < iter_.size(); ++ j) {
-			ret.push_back(data_[j][iter_[j]]);
+		for (uint i = 0; i < iter_.size(); ++ i) {
+			ret.push_back(data_[i][iter_[i]]);
 		};
 		return ret;
 	}

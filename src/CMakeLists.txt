@@ -43,6 +43,7 @@ else()
 		rus/prover/rus_prover_expr.cpp
 		rus/prover/rus_prover_down.cpp
 		rus/prover/rus_prover_index.cpp
+		rus/prover/rus_prover_multy_index.cpp
 		rus/prover/rus_prover_node.cpp
 		rus/prover/rus_prover_proof.cpp
 		rus/prover/rus_prover_show.cpp
