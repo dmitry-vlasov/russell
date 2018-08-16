@@ -2,57 +2,49 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-CartesianIter::CartesianIter(const vector<uint>& d) :
-	dims_(d), fixed_(d.size()), ind_(d.size()) {
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		fixed_[i] = false;
-		ind_[i] = 0;
+CartesianIter::CartesianIter(const vector<uint>& dims) {
+	for (auto& d : dims) {
+		dims_.emplace_back(d);
 	}
 }
 
 void CartesianIter::incDim() {
-	++ dims_[dims_.size() - 1];
+	++ dims_[dims_.size() - 1].size;
 }
 
 void CartesianIter::incSize() {
-	dims_.push_back(0);
-	fixed_.push_back(false);
-	ind_.push_back(0);
+	dims_.push_back(Dim());
 }
 
 void CartesianIter::addDim(uint d) {
-	dims_.push_back(d);
-	fixed_.push_back(false);
-	ind_.push_back(0);
+	dims_.push_back(Dim(d));
 }
 
 void CartesianIter::addFixed(uint d, uint i) {
-	dims_.push_back(d);
-	fixed_.push_back(true);
-	ind_.push_back(i);
+	dims_.push_back(Dim(d, i, Dim::FIXED));
 }
 
-void CartesianIter::reset(bool drop_fixed) {
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (drop_fixed) {
-			fixed_[i] = false;
+void CartesianIter::reset(bool drop_kind) {
+	for (auto& d : dims_) {
+		if (drop_kind) {
+			d.kind = Dim::NORM;
 		}
-		if (!fixed_[i]) {
-			ind_[i] = 0;
+		if (d.kind == Dim::NORM) {
+			d.ind = 0;
 		}
 	}
 }
 
 void CartesianIter::makeNext() {
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (fixed_[i]) {
+	for (auto& d : dims_) {
+		if (d.kind != Dim::NORM) {
 			continue;
 		}
-		if (ind_[i] + 1 < dims_[i]) {
-			++ ind_[i];
+		if (d.ind + 1 < d.size) {
+			++ d.ind;
 			return;
 		} else {
-			ind_[i] = 0;
+			d.ind = 0;
 		}
 	}
 	cout << show() << endl;
@@ -63,24 +55,29 @@ string CartesianIter::show() const {
 	string ret;
 	ret += "size: " + to_string(dims_.size()) + ", ";
 	ret += "dims: [";
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		ret += (fixed_[i] ? string("(fixed)") : "") + to_string(dims_[i]) + " ";
+	for (const auto& d : dims_) {
+		switch (d.kind) {
+		case Dim::FIXED:   ret += "(fixed)";   break;
+		case Dim::SKIPPED: ret += "(skipped)"; break;
+		default: break;
+		}
+		ret += to_string(d.size) + " ";
 	}
 	ret += "]";
 	return ret;
 }
 string CartesianIter::current() const {
 	string ret = "[";
-	for (auto i : ind_) {
-		ret += to_string(i) + " ";
+	for (const auto& d : dims_) {
+		ret += to_string(d.ind) + " ";
 	}
 	ret += "]";
 	return ret;
 }
 bool CartesianIter::current_is(const vector<uint> ind) const {
-	if (ind.size() != ind_.size()) return false;
+	if (dims_.size() != ind.size()) return false;
 	for (uint i = 0; i < ind.size(); ++ i) {
-		if (ind[i] != ind_[i]) {
+		if (ind[i] != dims_[i].ind) {
 			return false;
 		}
 	}
@@ -91,16 +88,16 @@ uint CartesianIter::card() const {
 		return 0;
 	}
 	uint card = 1;
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (!fixed_[i]) {
-			card *= dims_[i];
+	for (auto& d : dims_) {
+		if (d.kind == Dim::NORM) {
+			card *= d.size;
 		}
 	}
 	return card;
 }
 bool CartesianIter::hasNext() const {
-	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (!fixed_[i] && (ind_[i] + 1 != dims_[i])) {
+	for (auto& d : dims_) {
+		if (d.kind == Dim::NORM && (d.ind + 1 != d.size)) {
 			return true;
 		}
 	}

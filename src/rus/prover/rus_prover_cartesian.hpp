@@ -4,6 +4,15 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct CartesianIter {
+	struct Dim {
+		enum Kind { NORM, FIXED, SKIPPED };
+		Dim(uint s = 0, uint i = 0, Kind k = NORM) :
+			size(s), ind(i), kind(k) { }
+		uint size;
+		uint ind;
+		Kind kind;
+	};
+
 	CartesianIter() = default;
 	CartesianIter(const vector<uint>&);
 
@@ -12,27 +21,35 @@ struct CartesianIter {
 
 	void addDim(uint d);
 	void addFixed(uint d, uint i);
+	void addSkipped(uint d);
 
-	void fix(uint i) { fixed_[i] = true; }
-	void unfix(uint i) { fixed_[i] = false; }
+	void fix(uint d, uint i) {
+		dims_[d].kind = Dim::FIXED;
+		dims_[d].ind = i;
+	}
+	void skip(uint d) {
+		dims_[d].kind = Dim::SKIPPED;
+		dims_[d].ind = -1;
+	}
+	void norm(uint d) {
+		dims_[d].kind = Dim::NORM;
+		dims_[d].ind = 0;
+	}
 
-	void reset(bool drop_fixed = true);
+	void reset(bool drop_kind = true);
 	void makeNext();
 	bool hasNext() const;
 	uint size() const { return dims_.size(); }
 	uint card() const;
-	uint operator[] (uint i) const { return ind_[i]; }
-	uint& operator[] (uint i) { return ind_[i]; }
-	const vector<uint>& dims() const { return dims_; }
+	uint operator[] (uint i) const { return dims_[i].ind; }
+	uint& operator[] (uint i) { return dims_[i].ind; }
 
 	string show() const;
 	string current() const ;
 	bool current_is(const vector<uint> ind) const;
 
 private:
-	vector<uint> dims_;
-	vector<bool> fixed_;
-	vector<uint> ind_;
+	vector<Dim> dims_;
 };
 
 template<class Data>
@@ -63,13 +80,13 @@ struct CartesianProduct {
 	void fix(uint i, Data d) {
 		auto j = std::find(data_[i].begin(), data_[i].end(), d);
 		if (j != data_[i].end()) {
-			iter_[i] = j - data_[i].begin();
-			iter_.fix(i);
-		} else {
+			iter_.fix(i, j - data_[i].begin());
+		} /*else {
 			assert(false && "element not found in CartesianMap vector");
-		}
+		}*/
 	}
-	void unfix(uint i) { iter_.unfix(i); }
+	void skip(uint i) { iter_.skip(i); }
+	void norm(uint i) { iter_.norm(i); }
 
 	void reset(bool drop_fixed = true) { iter_.reset(drop_fixed); }
 	void makeNext() { iter_.makeNext(); }

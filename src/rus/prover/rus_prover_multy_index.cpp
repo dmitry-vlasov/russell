@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-void try_variable_replacement(const vector<Index*>& mindex, LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif, MultyIndex::UnifiedTerms& ret) {
+void unify_step(const vector<Index*>& mindex, const vector<LightSymbol>& w, LightTree t, MultyIndex::UnifiedSubs& unif, MultyIndex::UnifiedTerms& ret) {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		for (uint s : mindex[i]->vars[w[i]]) {
@@ -12,9 +12,12 @@ void try_variable_replacement(const vector<Index*>& mindex, LightSymbol v, const
 		}
 		leafs_prod.incSize();
 	}
+	if (leafs_prod.card() == 0) {
+		return;
+	}
 	while (true) {
 		vector<uint> leafs = leafs_prod.data();
-		LightTree unified = unify_step(unif[leafs], w, LightTree(v));
+		LightTree unified = unify_step(unif[leafs], w, t);
 		if (!unified.empty()) {
 			if (ret.count(leafs)) {
 				cout << "MULTIPLE UNIFICATION RESULTS" << endl;
@@ -61,12 +64,42 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 		}
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
-			try_variable_replacement(mindex, v, w, unif, ret);
+			unify_step(mindex, w, LightTree(v), unif, ret);
 			if (!vars_prod.hasNext()) {
 				break;
 			}
 			vars_prod.makeNext();
 		}
+	}
+	for (auto p : consts) {
+		LightSymbol c = p.first;
+		vars_prod.reset();
+		for (uint i : p.second) {
+			vars_prod.skip(i);
+		}
+		while (true) {
+			vector<LightSymbol> w = vars_prod.data();
+			unify_step(mindex, w, LightTree(c), unif, ret);
+			if (!vars_prod.hasNext()) {
+				break;
+			}
+			vars_prod.makeNext();
+		}
+	}
+	for (auto p : rules) {
+		const Rule* r = p.first;
+		vars_prod.reset();
+		for (uint i : p.second) {
+			vars_prod.skip(i);
+		}
+		/*while (true) {
+			vector<LightSymbol> w = vars_prod.data();
+			unify_step(mindex, w, LightTree(c), unif, ret);
+			if (!vars_prod.hasNext()) {
+				break;
+			}
+			vars_prod.makeNext();
+		}*/
 	}
 
 
