@@ -66,7 +66,7 @@ vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 			ind.addFixed(find_in_vector(x->proofs, h));
 		}
 	}
-	if (ind.empty()) {
+	if (ind.cardinality() == 0) {
 		return vector<Node*>();
 	}
 
