@@ -36,9 +36,9 @@ private:
 };
 
 template<class Data>
-struct CartesianMap {
-	CartesianMap() = default;
-	CartesianMap(const vector<vector<Data>>& d) : data_(d) {
+struct CartesianProduct {
+	CartesianProduct() = default;
+	CartesianProduct(const vector<vector<Data>>& d) : data_(d) {
 		for (const auto& v : data_) {
 			addDim(v.size());
 		}

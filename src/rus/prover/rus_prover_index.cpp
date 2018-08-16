@@ -145,60 +145,14 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 	if (unif.maps(v)) {
 		to_unify.push_back(unif.sub[v]);
 	}
-	if (to_unify.size() > 1) {
-		Subst un;
-		LightTree t = unify(to_unify, un);
-		if (!t.empty()) {
-			LightTree term =
-				(v.type == t.type()) ?
-				t :
-				LightTree(find_super(t.type(), v.type), new LightTree(t));
-
-			if (debug_ind) {
-				cout << "AAA UNIF:" << endl;
-				cout << Indent::paragraph(show(unif)) << endl;
-				cout << "var: " << show(v) << endl;
-				cout << "term: " << show(term) << endl;
-			}
-			if (unif.compose(un)) {
-				if (debug_ind) {
-					cout << "AAA SUCCESS:" << endl << endl;
-				}
-				return term;
-			} else {
-				if (debug_ind) {
-					cout << "AAA FAILURE:" << endl << endl;
-				}
-			}
-		} else {
-			if (debug_ind) {
-				cout << "XXX FAILURE:" << endl << endl;
-			}
-		}
-	} else {
+	LightTree tr = unify(to_unify, unif);
+	if (!tr.empty()) {
 		LightTree term =
-			(v.type == t_substituted.type()) ?
-			t_substituted :
-			LightTree(find_super(t_substituted.type(), v.type), new LightTree(t_substituted));
-
-		if (debug_ind) {
-			cout << "BBB UNIF:" << endl;
-			cout << Indent::paragraph(show(unif)) << endl;
-			cout << "var: " << show(v) << endl;
-			cout << "term: " << show(term) << endl;
-		}
-
+			(v.type == tr.type()) ?
+			tr :
+			LightTree(find_super(t.type(), v.type), new LightTree(tr));
 		if (unif.compose(Subst(v, term))) {
-
-			if (debug_ind) {
-				cout << "BBB SUCCESS:" << endl << endl;
-			}
-
 			return term;
-		} else {
-			if (debug_ind) {
-				cout << "BBB FAILURE:" << endl << endl;
-			}
 		}
 	}
 	return LightTree();

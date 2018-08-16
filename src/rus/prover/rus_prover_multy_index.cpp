@@ -1,81 +1,49 @@
 #include "rus_prover_cartesian.hpp"
+#include "rus_prover_unify.hpp"
 #include "rus_prover_multy_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
-/*
-
-LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
-	if (!(*v.type <= *t.type())) {
-		return LightTree();
+MultyIndex::UnifiedTerms try_variable_replacement(const vector<Index*>& mindex, LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif) {
+	MultyIndex::UnifiedTerms ret;
+	CartesianProduct<uint> leafs_prod;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		for (uint s : mindex[i]->vars[w[i]]) {
+			leafs_prod.incDim(s);
+		}
+		leafs_prod.incSize();
 	}
-	LightTree t_substituted = apply(unif, t);
-	vector<LightTree> to_unify({t_substituted});
-	if (unif.maps(v)) {
-		to_unify.push_back(unif.sub[v]);
-	}
-	if (to_unify.size() > 1) {
-		Subst un;
-		LightTree t = unify(to_unify, un);
-		if (!t.empty()) {
-			LightTree term =
-				(v.type == t.type()) ?
-				t :
-				LightTree(find_super(t.type(), v.type), new LightTree(t));
+	while (true) {
+		vector<uint> leafs = leafs_prod.data();
+		Subst& s = unif[leafs];
 
-			if (debug_ind) {
-				cout << "AAA UNIF:" << endl;
-				cout << Indent::paragraph(show(unif)) << endl;
-				cout << "var: " << show(v) << endl;
-				cout << "term: " << show(term) << endl;
+		LightTree term = apply(s, LightTree(v));
+		vector<LightTree> to_unify({term});
+		for (auto v : w) {
+			if (s.maps(v)) {
+				to_unify.push_back(s.sub[v]);
 			}
-			if (unif.compose(un)) {
-				if (debug_ind) {
-					cout << "AAA SUCCESS:" << endl << endl;
+		}
+		LightTree unified = unify(to_unify, s);
+		bool success = true;
+		if (!unified.empty()) {
+			for (auto v : w) {
+				if (!s.compose(Subst(v, unified))) {
+					success = false;
+					break;
 				}
-				return term;
-			} else {
-				if (debug_ind) {
-					cout << "AAA FAILURE:" << endl << endl;
-				}
-			}
-		} else {
-			if (debug_ind) {
-				cout << "XXX FAILURE:" << endl << endl;
-			}
+			};
 		}
-	} else {
-		LightTree term =
-			(v.type == t_substituted.type()) ?
-			t_substituted :
-			LightTree(find_super(t_substituted.type(), v.type), new LightTree(t_substituted));
-
-		if (debug_ind) {
-			cout << "BBB UNIF:" << endl;
-			cout << Indent::paragraph(show(unif)) << endl;
-			cout << "var: " << show(v) << endl;
-			cout << "term: " << show(term) << endl;
+		if (success) {
+			ret[leafs] = unified;
 		}
 
-		if (unif.compose(Subst(v, term))) {
-
-			if (debug_ind) {
-				cout << "BBB SUCCESS:" << endl << endl;
-			}
-
-			return term;
-		} else {
-			if (debug_ind) {
-				cout << "BBB FAILURE:" << endl << endl;
-			}
+		if (!leafs_prod.hasNext()) {
+			break;
 		}
+		leafs_prod.makeNext();
 	}
-	return LightTree();
-}
-*/
-
-void try_variable_replacement(LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif) {
-
+	return ret;
 }
 
 MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::UnifiedSubs& unif) {
@@ -85,13 +53,13 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 	map<LightSymbol, set<uint>> consts;
 	map<const Rule*, set<uint>> rules;
 
-	CartesianMap<LightSymbol> vars_map;
+	CartesianProduct<LightSymbol> vars_prod;
 
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		for (const auto& p : mindex[i]->vars) {
 			if (p.first.rep) {
 				vars[p.first].insert(i);
-				vars_map.incDim(p.first);
+				vars_prod.incDim(p.first);
 			} else {
 				consts[p.first].insert(i);
 			}
@@ -99,22 +67,22 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 		for (const auto& p : mindex[i]->rules) {
 			rules[p.first].insert(i);
 		}
-		vars_map.incSize();
+		vars_prod.incSize();
 	}
 
 	for (auto p : vars) {
 		LightSymbol v = p.first;
-		vars_map.reset();
+		vars_prod.reset();
 		for (uint i : p.second) {
-			vars_map.fix(i, v);
+			vars_prod.fix(i, v);
 		}
 		while (true) {
-			vector<LightSymbol> w = vars_map.data();
-			try_variable_replacement(v, w, unif);
-			if (!vars_map.hasNext()) {
+			vector<LightSymbol> w = vars_prod.data();
+			try_variable_replacement(mindex, v, w, unif);
+			if (!vars_prod.hasNext()) {
 				break;
 			}
-			vars_map.makeNext();
+			vars_prod.makeNext();
 		}
 
 	}
