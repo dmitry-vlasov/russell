@@ -4,22 +4,31 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct CartesianIter {
+	CartesianIter() = default;
+	CartesianIter(const vector<uint>&);
+
 	void addDim(uint d);
-	void addFixed(uint i);
+	void addFixed(uint d, uint i);
+
+	void fix(uint i) { fixed_[i] = true; }
+	void unfix(uint i) { fixed_[i] = false; }
+
+	void reset();
 	void makeNext();
 	bool hasNext() const;
-	//bool empty() const { return cardinality() == 0; }
 	uint size() const { return dims_.size(); }
+	uint card() const;
 	uint operator[] (uint i) const { return ind_[i]; }
+	uint& operator[] (uint i) { return ind_[i]; }
 	const vector<uint>& dims() const { return dims_; }
 
 	string show() const;
 	string current() const ;
 	bool current_is(const vector<uint> ind) const;
-	uint cardinality() const;
 
 private:
 	vector<uint> dims_;
+	vector<bool> fixed_;
 	vector<uint> ind_;
 };
 
@@ -31,11 +40,13 @@ struct CartesianMap {
 	}
 	void addFixed(const vector<Data>& data, uint i) {
 		dims_.push_back(data);
-		iter_.addFixed(i);
+		iter_.addFixed(data.size(), i);
 	}
 
+	void makeNext() { iter_.makeNext(); }
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
+	uint card() const { return iter_.card(); }
 	Data operator[] (uint i) const {
 		return dims_[i][iter_[i]];
 	}

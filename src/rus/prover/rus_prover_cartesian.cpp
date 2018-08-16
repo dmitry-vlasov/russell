@@ -2,19 +2,37 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+CartesianIter::CartesianIter(const vector<uint>& d) :
+	dims_(d), fixed_(d.size()), ind_(d.size()) {
+	for (uint i = 0; i < dims_.size(); ++ i) {
+		fixed_[i] = false;
+		ind_[i] = 0;
+	}
+}
+
 void CartesianIter::addDim(uint d) {
 	dims_.push_back(d);
+	fixed_.push_back(false);
 	ind_.push_back(0);
 }
 
-void CartesianIter::addFixed(uint i) {
-	dims_.push_back(-1);
+void CartesianIter::addFixed(uint d, uint i) {
+	dims_.push_back(d);
+	fixed_.push_back(true);
 	ind_.push_back(i);
+}
+
+void CartesianIter::reset() {
+	for (uint i = 0; i < dims_.size(); ++ i) {
+		if (!fixed_[i]) {
+			ind_[i] = 0;
+		}
+	}
 }
 
 void CartesianIter::makeNext() {
 	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (dims_[i] == -1) {
+		if (fixed_[i]) {
 			continue;
 		}
 		if (ind_[i] + 1 < dims_[i]) {
@@ -24,6 +42,7 @@ void CartesianIter::makeNext() {
 			ind_[i] = 0;
 		}
 	}
+	cout << show() << endl;
 	assert(false && "this execution point should be unreacheable");
 }
 
@@ -31,8 +50,8 @@ string CartesianIter::show() const {
 	string ret;
 	ret += "size: " + to_string(dims_.size()) + ", ";
 	ret += "dims: [";
-	for (auto d : dims_) {
-		ret += (d == -1 ? string("N") : to_string(d)) + " ";
+	for (uint i = 0; i < dims_.size(); ++ i) {
+		ret += (fixed_[i] ? string("(fixed)") : "") + to_string(dims_[i]) + " ";
 	}
 	ret += "]";
 	return ret;
@@ -54,13 +73,13 @@ bool CartesianIter::current_is(const vector<uint> ind) const {
 	}
 	return true;
 }
-uint CartesianIter::cardinality() const {
+uint CartesianIter::card() const {
 	if (dims_.size() == 0) {
 		return 0;
 	}
 	uint card = 1;
 	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (dims_[i] != -1) {
+		if (!fixed_[i]) {
 			card *= dims_[i];
 		}
 	}
@@ -68,7 +87,7 @@ uint CartesianIter::cardinality() const {
 }
 bool CartesianIter::hasNext() const {
 	for (uint i = 0; i < dims_.size(); ++ i) {
-		if (dims_[i] != -1 && (ind_[i] + 1 != dims_[i])) {
+		if (!fixed_[i] && (ind_[i] + 1 != dims_[i])) {
 			return true;
 		}
 	}
