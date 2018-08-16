@@ -124,6 +124,25 @@ LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
 	return LightTree();
 }
 
+LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree& term) {
+	vector<LightTree> to_unify({apply(s, term)});
+	for (auto v : vars) {
+		if (s.maps(v)) {
+			to_unify.push_back(s.sub[v]);
+		}
+	}
+	LightTree unified = do_unify(to_unify, s);
+	if (!unified.empty()) {
+		for (auto v : vars) {
+			if (!s.compose(Subst(v, unified))) {
+				return LightTree();
+			}
+		}
+		return unified;
+	}
+	return LightTree();
+}
+
 LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 	if (!ex.size()) {
 		return LightTree();
@@ -150,9 +169,9 @@ LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 				return LightTree();
 			}
 		}
-		return gather_result(data, sub, LightTree(data.rule, ch));
+		return unify_step(sub, data.vars, LightTree(data.rule, ch));
 	} else {
-		return gather_result(data, sub, LightTree(data.const_.is_def() ? data.const_ : data.var));
+		return unify_step(sub, data.vars, LightTree(data.const_.is_def() ? data.const_ : data.var));
 	}
 }
 
