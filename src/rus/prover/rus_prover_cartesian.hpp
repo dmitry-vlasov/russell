@@ -4,7 +4,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct CartesianIter {
-	CartesianIter() : size_(0), fixed_(-1), hasNext_(false), isEmpty_(false) { }
+	CartesianIter() : size_(0), hasNext_(false), isEmpty_(false) { }
 
 	void addDim(uint d) {
 		++size_;
@@ -18,7 +18,6 @@ struct CartesianIter {
 		ind_.push_back(0);
 	}
 	void addFixed(uint i) {
-		fixed_ = size_;
 		++size_;
 		dims_.push_back(-1);
 		ind_.push_back(i);
@@ -105,7 +104,6 @@ struct CartesianIter {
 
 private:
 	uint         size_;
-	uint         fixed_;
 	vector<uint> dims_;
 	vector<uint> ind_;
 
