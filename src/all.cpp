@@ -22,6 +22,8 @@
 #include "rus/expr/rus_expr_parse.cpp"
 #include "rus/expr/rus_expr_unify.cpp"
 #include "rus/parser/rus_parser.cpp"
+
+#include "rus/prover/rus_prover_cartesian.cpp"
 #include "rus/prover/rus_prover_down.cpp"
 #include "rus/prover/rus_prover_expr.cpp"
 #include "rus/prover/rus_prover_index.cpp"
@@ -32,6 +34,7 @@
 #include "rus/prover/rus_prover_tactics.cpp"
 #include "rus/prover/rus_prover_test.cpp"
 #include "rus/prover/rus_prover_unify.cpp"
+
 #include "rus/rus_ast.cpp"
 #include "rus/rus_expr.cpp"
 #include "rus/rus_memvol.cpp"

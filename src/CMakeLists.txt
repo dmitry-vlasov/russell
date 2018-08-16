@@ -38,6 +38,8 @@ else()
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 
 		rus/parser/rus_parser.cpp
+		
+		rus/prover/rus_prover_cartesian.cpp
 		rus/prover/rus_prover_expr.cpp
 		rus/prover/rus_prover_down.cpp
 		rus/prover/rus_prover_index.cpp
