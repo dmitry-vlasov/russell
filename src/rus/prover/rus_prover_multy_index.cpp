@@ -8,8 +8,8 @@ void unify_step(
 	const vector<const Index*>& mindex,
 	const vector<LightSymbol>& w,
 	LightTree t,
-	MultyIndex::UnifiedSubs& unif,
-	MultyIndex::UnifiedTerms& terms,
+	MultyUnifiedSubs& unif,
+	MultyUnifiedTerms& terms,
 	const set<vector<uint>>* restrictions)
 {
 
@@ -44,9 +44,9 @@ void unify_step(
 
 void unify(
 	const vector<const Index*>& mindex,
-	MultyIndex::UnifiedSubs& unif,
-	MultyIndex::UnifiedTerms& terms,
-	const set<vector<uint>>* restrictions = nullptr)
+	MultyUnifiedSubs& unif,
+	MultyUnifiedTerms& terms,
+	const set<vector<uint>>* restrictions)
 {
 	map<LightSymbol, set<uint>> vars;
 	map<LightSymbol, set<uint>> consts;
@@ -121,7 +121,7 @@ void unify(
 				}
 			}
 		} else {
-			vector<MultyIndex::UnifiedTerms> ch(r->arity());
+			vector<MultyUnifiedTerms> ch(r->arity());
 			vector<const Index*> x;
 			for (auto ind : mindex) {
 				x.push_back(ind->rules.at(r).child[0].get());
