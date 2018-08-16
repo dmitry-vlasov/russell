@@ -42,12 +42,10 @@ void unify_step(
 	}
 }
 
-void unify(
-	const vector<const Index*>& mindex,
-	MultyUnifiedSubs& unif,
-	MultyUnifiedTerms& terms,
-	const set<vector<uint>>* restrictions)
+MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions)
 {
+	MultyUnifiedTerms terms;
+
 	map<LightSymbol, set<uint>> vars;
 	map<LightSymbol, set<uint>> consts;
 	map<const Rule*, set<uint>> rules;
@@ -126,8 +124,8 @@ void unify(
 			for (auto ind : mindex) {
 				x.push_back(ind->rules.at(r).child[0].get());
 			}
-			unify(x, unif, ch[0], restrictions);
-			set<vector<uint>> common;
+			ch[0] = unify(x, unif, restrictions);
+			Restrictions common;
 			for (const auto& p : ch[0]) {
 				common.insert(p.first);
 			}
@@ -136,14 +134,22 @@ void unify(
 				for (auto ind : mindex) {
 					x.push_back(ind->rules.at(r).child[i].get());
 				}
-				unify(x, unif, ch[i], &common);
+				ch[i] = unify(x, unif, &common);
 				common.clear();
-				for (const auto& p : ch[0]) {
+				for (const auto& p : ch[i]) {
 					common.insert(p.first);
 				}
 			}
+			for (const auto& c : common) {
+				LightTree::Children childern;
+				for (uint i = 0; i < r->arity(); ++ i) {
+					childern.push_back(make_unique<LightTree>(ch[i][c]));
+				}
+				terms[c] = LightTree(r, childern);
+			}
 		}
 	}
+	return terms;
 }
 
 }}}

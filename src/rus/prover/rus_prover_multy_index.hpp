@@ -6,12 +6,9 @@ namespace mdl { namespace rus { namespace prover {
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 typedef map<vector<uint>, LightTree> MultyUnifiedTerms;
+typedef set<vector<uint>> Restrictions;
 
-void unify(
-	const vector<const Index*>& mindex,
-	MultyUnifiedSubs& unif,
-	MultyUnifiedTerms& terms,
-	const set<vector<uint>>* restrictions = nullptr);
+MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions = nullptr);
 
 }}}
 

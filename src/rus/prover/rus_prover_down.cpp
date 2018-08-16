@@ -38,6 +38,40 @@ private:
 	map<LightSymbol, vector<LightTree>> msub_;
 };
 
+Subst unify_subs_1(Subst unif, Subst gen);
+
+Subst unify_subs_1(const MultyTree& t) {
+	Subst unif;
+	return unify_subs_1(t.makeSubs(unif), unif);
+}
+
+Subst unify_subs_1(Subst unif, Subst gen) {
+	if (!(gen.ok && unif.ok)) {
+		return Subst(false);
+	}
+	if (!unif.intersects(gen)) {
+		if (unif.compose(gen)) {
+			uint watchdog = 0;
+			while (unif.composeable(unif)) {
+				if (watchdog++ > 32) {
+					cout << "SOMETHING WRONG" << endl;
+					break;
+				}
+				if (!unif.compose(unif)) {
+					unif.ok = false;
+					break;
+				}
+			}
+			return unif;
+		} else {
+			return Subst(false);
+		}
+	} else {
+		MultyTree t1(unif, gen);
+		return unify_subs_1(t1);
+	}
+}
+
 Subst unify_subs(const MultyTree& t) {
 	Subst unif;
 	Subst gen;
