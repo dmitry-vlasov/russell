@@ -74,6 +74,10 @@ LightTree try_to_expand_subst(Subst& unif, LightSymbol v, LightTree t) {
 }
 */
 
+void try_variable_replacement(LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif) {
+
+}
+
 MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::UnifiedSubs& unif) {
 	MultyIndex::UnifiedTerms ret;
 
@@ -101,18 +105,16 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 	for (auto p : vars) {
 		LightSymbol v = p.first;
 		vars_map.reset();
-		for (uint i : vars[v]) {
+		for (uint i : p.second) {
 			vars_map.fix(i, v);
 		}
 		while (true) {
-
+			vector<LightSymbol> w = vars_map.data();
+			try_variable_replacement(v, w, unif);
 			if (!vars_map.hasNext()) {
 				break;
 			}
 			vars_map.makeNext();
-		}
-		for (uint i : vars[v]) {
-			vars_map.fix(i, v);
 		}
 
 	}

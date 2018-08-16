@@ -2,8 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_unify_1 = false;
-
 struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;
@@ -100,64 +98,25 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 	return ret;
 }
 
-uint depth_counter = 0;
-
 LightTree do_unify(vector<LightTree> ex, Subst& sub);
 
 LightTree gather_result(UnifStepData& data, Subst& s, LightTree ret) {
-	if (debug_unify_1) {
-		cout << "UNIFYING:\n" << Indent::paragraph(data.show()) << endl;
-		cout << "SUB:\n";
-		cout << Indent::paragraph(show(s)) << endl;
-		if (++depth_counter > 8) {
-			cout << "AND" << endl;
-			return LightTree();
-		}
-	}
 	ret = apply(s, ret);
-
 	vector<LightTree> to_unify({ret});
 	for (auto v : data.vars) {
 		if (s.maps(v)) {
 			to_unify.push_back(s.sub[v]);
-
-			if (debug_unify_1) {
-				cout << "to unify: " << show(v) << " --> " << show(s.sub[v]) << endl;
-			}
-
 		}
 	}
-
 	LightTree unified = do_unify(to_unify, s);
-	if (debug_unify /*&& to_unify.size() > 1*/) {
-		/*cout << "TO UNIFY:" << endl;
-		for (auto e : to_unify) {
-			cout << "\t" << show(*e) << endl;
-		}
-		cout << endl;*/
-	}
 	if (!unified.empty()) {
 		for (auto v : data.vars) {
 			LightTree term =
 				(data.least_type == v.type) ?
 				unified :
 				LightTree(find_super(v.type, data.least_type), new LightTree(unified));
-
-			if (debug_unify_1) {
-				cout << "going to add: " << show(v) << " --> " << show(term) << endl;
-				cout << "sub:" << endl;
-				cout << show(s) << endl;
-			}
-
 			if (!s.compose(Subst(v, term))) {
-				if (debug_unify_1) {
-					cout << "SUCC" << endl;
-				}
 				return LightTree();
-			} else {
-				if (debug_unify_1) {
-					cout << "FAIL" << endl;
-				}
 			}
 		}
 		return unified;
@@ -173,10 +132,6 @@ LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 	}
 	UnifStepData data = gather_unification_data(ex);
 	if (!data.consistent) {
-		if (debug_unify) {
-			cout << "DATA INCONSISTENT" << endl;
-			cout << data.show() << endl;
-		}
 		return LightTree();
 	}
 	LightTree ret;
@@ -186,9 +141,6 @@ LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 			vector<LightTree> x;
 			for (const auto t : data.children) {
 				LightTree* c = (*t)[i].get();
-				if (!c) {
-					cout << "AAA" << endl;
-				}
 				x.push_back(*c);
 			}
 			LightTree c = do_unify(x, sub);
@@ -215,26 +167,10 @@ bool check_unification(const LightTree& term, const Subst& sub, const vector<Lig
 	return true;
 }
 
-bool debug_unify = true;
-
-uint c = 0;
-
 LightTree unify(const vector<LightTree>& ex, Subst& sub) {
-
-	depth_counter = 0;
-
-	if (debug_unify) {
-		cout << endl << "*** UNIFYING: " << ++c << endl;
-		for (auto e : ex) {
-			cout << "\t" << show(e, true) << endl;
-		}
-		cout << endl;
-	}
-
 	LightTree ret = do_unify(ex, sub);
-
 	if (!check_unification(ret, sub, ex)) {
-		cout << "unification error: " << c << endl;
+		cout << "unification error: " << endl;
 		for (auto pe : ex) {
 			cout << "\t" << show(pe) << endl;
 		}
@@ -245,13 +181,6 @@ LightTree unify(const vector<LightTree>& ex, Subst& sub) {
 		cout << show(ret) << endl;
 		exit(0);
 	}
-
-	if (debug_unify) {
-		cout << "*** RESULT: " << show(ret) << endl;
-		cout << "*** SUB:" << endl;
-		cout << show(sub) << endl << endl;
-	}
-
 	return ret;
 }
 

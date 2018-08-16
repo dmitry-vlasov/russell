@@ -211,13 +211,11 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 		for (uint d : p.second) {
 			if (iv.rep) {
 				if (debug_index && d == 0) {
-					debug_unify = true;
 					cout << "UNIF A:" << endl;
 					cout << show(unif[d]) << endl;
 					cout << "iv: " << show(iv) << endl;
 				}
 				ret[d] = try_to_expand_subst(unif[d], iv, t);
-				debug_unify = false;
 			} else {
 				if (t.kind() == LightTree::VAR) {
 					if (t.var().rep) {
@@ -304,7 +302,6 @@ Index::Unified Index::unify(const LightTree& t) const {
 			continue;
 		}
 		if (!(apply(p.second, tr) == apply(p.second, t) && apply(p.second, t) == x)) {
-			debug_unify = true;
 			cout << "FAILURE" << endl << endl;
 			debug_ind = true;
 			prover::unify(this, t, unif);
