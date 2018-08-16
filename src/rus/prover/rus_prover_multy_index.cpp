@@ -15,29 +15,10 @@ MultyIndex::UnifiedTerms try_variable_replacement(const vector<Index*>& mindex, 
 	}
 	while (true) {
 		vector<uint> leafs = leafs_prod.data();
-		Subst& s = unif[leafs];
-
-		LightTree term = apply(s, LightTree(v));
-		vector<LightTree> to_unify({term});
-		for (auto v : w) {
-			if (s.maps(v)) {
-				to_unify.push_back(s.sub[v]);
-			}
-		}
-		LightTree unified = unify(to_unify, s);
-		bool success = true;
+		LightTree unified = unify_step(unif[leafs], w, LightTree(v));
 		if (!unified.empty()) {
-			for (auto v : w) {
-				if (!s.compose(Subst(v, unified))) {
-					success = false;
-					break;
-				}
-			};
-		}
-		if (success) {
 			ret[leafs] = unified;
 		}
-
 		if (!leafs_prod.hasNext()) {
 			break;
 		}
@@ -78,7 +59,7 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 		}
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
-			try_variable_replacement(mindex, v, w, unif);
+			MultyIndex::UnifiedTerms r = try_variable_replacement(mindex, v, w, unif);
 			if (!vars_prod.hasNext()) {
 				break;
 			}
