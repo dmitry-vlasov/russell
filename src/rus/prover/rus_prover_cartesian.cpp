@@ -10,6 +10,16 @@ CartesianIter::CartesianIter(const vector<uint>& d) :
 	}
 }
 
+void CartesianIter::incDim() {
+	++ dims_[dims_.size() - 1];
+}
+
+void CartesianIter::incSize() {
+	dims_.push_back(0);
+	fixed_.push_back(false);
+	ind_.push_back(0);
+}
+
 void CartesianIter::addDim(uint d) {
 	dims_.push_back(d);
 	fixed_.push_back(false);

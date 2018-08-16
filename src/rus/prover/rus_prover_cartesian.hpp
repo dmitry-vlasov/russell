@@ -7,6 +7,9 @@ struct CartesianIter {
 	CartesianIter() = default;
 	CartesianIter(const vector<uint>&);
 
+	void incDim();
+	void incSize();
+
 	void addDim(uint d);
 	void addFixed(uint d, uint i);
 
@@ -34,33 +37,48 @@ private:
 
 template<class Data>
 struct CartesianMap {
-	void addDim(const vector<Data>& data) {
-		dims_.push_back(data);
-		iter_.addDim(data.size());
-	}
-	void addFixed(const vector<Data>& data, uint i) {
-		dims_.push_back(data);
-		iter_.addFixed(data.size(), i);
+	CartesianMap() = default;
+	CartesianMap(const vector<vector<Data>>& d) : data_(d) {
+		for (const auto& v : data_) {
+			addDim(v.size());
+		}
 	}
 
+	void incDim(Data d) {
+		data_[data_.size() - 1].push_back(d);
+		iter_.incDim();
+	}
+	void incSize() {
+		data_.push_back(vector<Data>());
+		iter_.incSize();
+	}
+
+	void addDim(const vector<Data>& v) {
+		iter_.addDim(v.size());
+	}
+	void addFixed(const vector<Data>& v, uint i) {
+		iter_.addFixed(v.size(), i);
+	}
+
+	void reset() { iter_.reset(); }
 	void makeNext() { iter_.makeNext(); }
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
 	uint card() const { return iter_.card(); }
 	Data operator[] (uint i) const {
-		return dims_[i][iter_[i]];
+		return data_[i][iter_[i]];
 	}
 	vector<Data> data() const {
 		vector<Data> ret;
 		for (uint j = 0; j < iter_.size(); ++ j) {
-			ret.push_back(dims_[j][iter_[j]]);
+			ret.push_back(data_[j][iter_[j]]);
 		};
 		return ret;
 	}
 
 private:
 	CartesianIter iter_;
-	vector<vector<Data>>& dims_;
+	vector<vector<Data>> data_;
 };
 
 }}}
