@@ -4,8 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-MultyIndex::UnifiedTerms try_variable_replacement(const vector<Index*>& mindex, LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif) {
-	MultyIndex::UnifiedTerms ret;
+void try_variable_replacement(const vector<Index*>& mindex, LightSymbol v, const vector<LightSymbol>& w, MultyIndex::UnifiedSubs& unif, MultyIndex::UnifiedTerms& ret) {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		for (uint s : mindex[i]->vars[w[i]]) {
@@ -17,6 +16,10 @@ MultyIndex::UnifiedTerms try_variable_replacement(const vector<Index*>& mindex, 
 		vector<uint> leafs = leafs_prod.data();
 		LightTree unified = unify_step(unif[leafs], w, LightTree(v));
 		if (!unified.empty()) {
+			if (ret.count(leafs)) {
+				cout << "MULTIPLE UNIFICATION RESULTS" << endl;
+				cout << "try_variable_replacement" << endl;
+			}
 			ret[leafs] = unified;
 		}
 		if (!leafs_prod.hasNext()) {
@@ -24,7 +27,6 @@ MultyIndex::UnifiedTerms try_variable_replacement(const vector<Index*>& mindex, 
 		}
 		leafs_prod.makeNext();
 	}
-	return ret;
 }
 
 MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::UnifiedSubs& unif) {
@@ -59,13 +61,12 @@ MultyIndex::UnifiedTerms unify(const vector<Index*>& mindex, MultyIndex::Unified
 		}
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
-			MultyIndex::UnifiedTerms r = try_variable_replacement(mindex, v, w, unif);
+			try_variable_replacement(mindex, v, w, unif, ret);
 			if (!vars_prod.hasNext()) {
 				break;
 			}
 			vars_prod.makeNext();
 		}
-
 	}
 
 
