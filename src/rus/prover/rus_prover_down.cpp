@@ -7,14 +7,10 @@ namespace mdl { namespace rus { namespace prover {
 bool debug_unify_subs = false;
 bool debug_unify_subs_1 = false;
 
-struct MultyTree {
-	MultyTree(const Subst& s1, const Subst& s2) {
-		add(s1);
-		add(s2);
-	}
-	MultyTree(const vector<ProofHyp*>& ch) {
-		for (auto p : ch) {
-			add(p->sub);
+struct MultySubst {
+	MultySubst(const vector<const Subst*>& subs) {
+		for (auto s : subs) {
+			add(s);
 		}
 	}
 	Subst makeSubs(Subst& unif) const {
@@ -28,66 +24,52 @@ struct MultyTree {
 		}
 		return ret;
 	}
-
 private:
-	void add(const Subst& s) {
-		for (const auto& p : s.sub) {
+	void add(const Subst* s) {
+		for (const auto& p : s->sub) {
 			msub_[p.first].push_back(p.second);
 		}
 	}
 	map<LightSymbol, vector<LightTree>> msub_;
 };
 
-Subst unify_subs_1(Subst unif, Subst gen);
 
-Subst unify_subs_1(const MultyTree& t) {
-	Subst unif;
-	return unify_subs_1(t.makeSubs(unif), unif);
+void sub_closure(Subst& sub) {
+	enum { WATCHDOG_THRESHOLD = 32 };
+	uint watchdog = 0;
+	while (sub.composeable(sub)) {
+		if (watchdog++ > WATCHDOG_THRESHOLD) {
+			cout << "SOMETHING WRONG: too much deep substitution closure" << endl;
+			break;
+		}
+		if (!sub.compose(sub)) {
+			sub.ok = false;
+			break;
+		}
+	}
 }
 
-Subst unify_subs_1(Subst unif, Subst gen) {
+Subst unify_subs(Subst unif, Subst gen);
+
+Subst unify_subs(const MultySubst& t) {
+	Subst unif;
+	return unify_subs(unif, t.makeSubs(unif));
+}
+
+Subst unify_subs(Subst unif, Subst gen) {
 	if (!(gen.ok && unif.ok)) {
 		return Subst(false);
 	}
 	if (!unif.intersects(gen)) {
 		if (unif.compose(gen)) {
-			uint watchdog = 0;
-			while (unif.composeable(unif)) {
-				if (watchdog++ > 32) {
-					cout << "SOMETHING WRONG" << endl;
-					break;
-				}
-				if (!unif.compose(unif)) {
-					unif.ok = false;
-					break;
-				}
-			}
+			sub_closure(unif);
 			return unif;
 		} else {
 			return Subst(false);
 		}
 	} else {
-		MultyTree t1(unif, gen);
-		return unify_subs_1(t1);
-	}
-}
-
-Subst unify_subs(const MultyTree& t) {
-	Subst unif;
-	Subst gen;
-	gen = t.makeSubs(unif);
-	if (!(gen.ok && unif.ok)) {
-		return Subst(false);
-	}
-	if (!unif.intersects(gen)) {
-		if (unif.compose(gen)) {
-			return unif;
-		} else {
-			return Subst(false);
-		}
-	} else {
-		MultyTree t1(unif, gen);
-		return unify_subs(t1);
+		MultySubst msub({&unif, &gen});
+		return unify_subs(msub);
 	}
 }
 
@@ -112,6 +94,7 @@ vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 	bool new_proofs = false;
 
 	while (true) {
+		vector<const Subst*> subs;
 		vector<ProofHyp*> ch;
 		if (debug_unify_subs) {
 			cout << "CURRENT: " << ind.current() << endl;
@@ -126,23 +109,12 @@ vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 				cout << Indent::paragraph(show(ph->sub)) << endl;
 			}
 			ch.push_back(ph);
+			subs.push_back(&ph->sub);
 		}
 		if (debug_unify_subs) {
 			cout << "-------------" << endl;
 		}
-		MultyTree t(ch);
-		Subst sub = unify_subs(t);
-		uint watchdog = 0;
-		while (sub.composeable(sub)) {
-			if (watchdog++ > 32) {
-				cout << "SOMETHING WRONG" << endl;
-				break;
-			}
-			if (!sub.compose(sub)) {
-				sub.ok = false;
-				break;
-			}
-		}
+		Subst sub = unify_subs(MultySubst(subs));
 		if (sub.ok) {
 			Subst delta = pr->sub;
 			delta.compose(sub);

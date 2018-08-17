@@ -39,14 +39,14 @@ private:
 	map<LightSymbol, vector<Index>> mindex_;
 };
 
-Subst unify_subs_1(Subst unif, Subst gen);
+Subst unify_subs(Subst unif, Subst gen);
 
 MultyUnifiedSubs unify_subs(MatrixIndex& mi) {
 	MultyUnifiedSubs ret;
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
-		Subst r = unify_subs_1(p.second, gen[p.first]);
+		Subst r = unify_subs(p.second, gen[p.first]);
 		if (r.ok) {
 			ret[p.first] = r;
 		}
