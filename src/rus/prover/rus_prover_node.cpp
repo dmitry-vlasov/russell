@@ -36,51 +36,25 @@ Hyp::Hyp(const LightTree& e, Prop* p) :
 
 Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p) :
 	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
-	//Subst fresher = make_free_vars_fresh(r.ass, sub, space->vars);
-
-	//cout << "ASS: " << Lex::toStr(r.id()) << endl;
-	//cout << "FRESHER: " << endl;
-	//cout << prover::show(fresher) << endl;
-
 	space->registerNode(this);
 }
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
-		//cout << "ASS HYP: " << rus::show(h->expr) << endl;
-		//cout << "SUB: " << prover::show(sub) << endl;
-		//cout << "NODE EXPR: " << prover::show(apply(sub, convert_tree(*h->expr.tree()))) << endl;
-
 		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this);
-		//cout << "HYP EXPR: " << prover::show(hyp->expr) << endl;
-
 		premises.emplace_back(hyp);
 	}
 }
 
 void Hyp::buildUp() {
-
 	for (auto& m : space->assertions.unify(expr)) {
-
-		bool show_this = false; //(ind == 14) /*&& (Lex::toStr(m.data.id()) == "ax-3")*/;
-
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
-		if (show_this) {
-			cout << "=========================" << endl;
-			cout << "HYP THIS: " << prover::show(expr) << endl;
-			cout << "PROP UP: " << Lex::toStr(m.data.id()) << endl;
-			cout << "SUB:" << endl << prover::show(m.sub) << endl;
-			cout << "FRESHER:" << endl << prover::show(fresher) << endl;
-		}
-
-
 		for (const auto& p : fresher.sub) {
 			if (m.sub.sub.count(p.first)) {
 				fresher.sub.erase(p.first);
 			}
 		}
 		compose(m.sub, fresher, false);
-
 		Subst sub;
 		Subst outer;
 		for (const auto& p : m.sub.sub) {
@@ -90,26 +64,12 @@ void Hyp::buildUp() {
 				sub.sub[p.first] = p.second;
 			}
 		}
-
-		if (show_this) {
-			cout << "--------------------------" << endl;
-			cout << "SUB:" << endl << prover::show(m.sub) << endl;
-			cout << "FRESHER:" << endl << prover::show(fresher) << endl << endl << endl;
-		}
-
 		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
 		variants.emplace_back(prop);
 		if (!prop->prop.ass->arity()) {
 			ProofProp* pp = new ProofProp(*prop, {}, sub);
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, sub));
-
-			if (show_this) {
-				cout <<  "AX MET: " << prop->ind << " -- " << prop->proofs.size() << endl;
-				cout <<  "EXPR: " << prover::show(apply(m.sub, expr)) << endl;
-				cout <<  "SUB: " << endl;
-				cout <<  Indent::paragraph(prover::show(m.sub)) << endl;
-			}
 		}
 	}
 }
@@ -120,8 +80,6 @@ void Hyp::complete() {
 	if (show_this) {
 		cout << "HYP UNIFYING " << ind << " EXPR: " << prover::show(expr) << endl;
 	}
-
-
 	for (const auto& m : space->hyps.unify(expr)) {
 		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
 		if (show_this) {
