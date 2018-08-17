@@ -34,6 +34,20 @@ struct MatrixIndex {
 		return s;
 	}
 
+	string show() const {
+		string ret;
+		for (const auto& p : mindex_) {
+			ret += "\nVAR: " + prover::show(p.first) + "\n";
+			ret += "==============================\n";
+			for (uint i = 0; i < p.second.size(); ++ i) {
+				ret += "index: " + to_string(i) + "\n";
+				ret += p.second[i].show() + "\n";
+				ret += "-----------------------------\n\n";
+			}
+		}
+		return ret;
+	}
+
 private:
 	uint dim_hyp;
 	map<LightSymbol, vector<Index>> mindex_;
@@ -58,6 +72,10 @@ vector<Node*> unify_down_2(Prop* pr, const ProofHyp* h) {
 		}
 		mi.addProofs(pr->premises[i]->proofs, i);
 	}
+
+	cout << "MATRIX:" << endl;
+	cout << mi.show() << endl;
+
 	bool new_proofs = false;
 	MultyUnifiedSubs subs = unify_subs(mi);
 	for (const auto& p : subs) {

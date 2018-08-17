@@ -89,8 +89,10 @@ uint CartesianIter::card() const {
 	}
 	uint card = 1;
 	for (auto& d : dims_) {
-		if (d.kind == Dim::NORM) {
-			card *= d.size;
+		switch (d.kind) {
+		case Dim::NORM:    card *= d.size; break;
+		case Dim::FIXED:   card *= (d.size > 0) ? 1 : 0; break;
+		case Dim::SKIPPED: break;
 		}
 	}
 	return card;

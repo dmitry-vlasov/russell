@@ -93,6 +93,7 @@ struct CartesianProduct {
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
 	uint card() const { return iter_.card(); }
+
 	Data operator[] (uint i) const {
 		return data_[i][iter_[i]];
 	}

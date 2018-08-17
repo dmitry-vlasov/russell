@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-void unify_step(
+void unify_vars_step(
 	const vector<const Index*>& mindex,
 	const vector<LightSymbol>& w,
 	LightTree t,
@@ -12,7 +12,6 @@ void unify_step(
 	MultyUnifiedTerms& terms,
 	const set<vector<uint>>* restrictions)
 {
-
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		for (uint s : mindex.at(i)->vars.at(w[i])) {
@@ -42,87 +41,167 @@ void unify_step(
 	}
 }
 
-MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions)
+void unify_const_step(
+	const vector<const Index*>& mindex,
+	LightSymbol c,
+	MultyUnifiedSubs& unif,
+	MultyUnifiedTerms& terms,
+	const set<vector<uint>>* restrictions)
 {
-	MultyUnifiedTerms terms;
+	CartesianProduct<uint> leafs_prod;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		for (uint s : mindex.at(i)->vars.at(c)) {
+			leafs_prod.incDim(s);
+		}
+		leafs_prod.incSize();
+	}
+	if (leafs_prod.card() == 0) {
+		return;
+	}
+	while (true) {
+		vector<uint> leafs = leafs_prod.data();
+		if (!restrictions || restrictions->count(leafs)) {
+			unif[leafs];
+			terms[leafs] = LightTree(c);
+		}
+		if (!leafs_prod.hasNext()) {
+			break;
+		}
+		leafs_prod.makeNext();
+	}
+}
 
+void unify_rule_step(
+	const vector<const Index*>& mindex,
+	const rus::Rule* r,
+	MultyUnifiedSubs& unif,
+	MultyUnifiedTerms& terms,
+	const set<vector<uint>>* restrictions)
+{
+	CartesianProduct<uint> leafs_prod;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		for (uint s : mindex.at(i)->rules.at(r).leafs) {
+			leafs_prod.incDim(s);
+		}
+		leafs_prod.incSize();
+	}
+	if (leafs_prod.card() == 0) {
+		return;
+	}
+	while (true) {
+		vector<uint> leafs = leafs_prod.data();
+		if (!restrictions || restrictions->count(leafs)) {
+			unif[leafs];
+			terms[leafs] = LightTree(r, {});
+		}
+		if (!leafs_prod.hasNext()) {
+			break;
+		}
+		leafs_prod.makeNext();
+	}
+}
+
+
+struct MIndexSpace {
 	map<LightSymbol, set<uint>> vars;
 	map<LightSymbol, set<uint>> consts;
 	map<const Rule*, set<uint>> rules;
-
 	CartesianProduct<LightSymbol> vars_prod;
+};
 
+MIndexSpace prepare_space(const vector<const Index*>& mindex) {
+	MIndexSpace space;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		for (const auto& p : mindex[i]->vars) {
 			if (p.first.rep) {
-				vars[p.first].insert(i);
-				vars_prod.incDim(p.first);
+				space.vars[p.first].insert(i);
+				space.vars_prod.incDim(p.first);
 			} else {
-				consts[p.first].insert(i);
+				space.consts[p.first].insert(i);
 			}
 		}
 		for (const auto& p : mindex[i]->rules) {
-			rules[p.first].insert(i);
+			space.rules[p.first].insert(i);
 		}
-		vars_prod.incSize();
+		space.vars_prod.incSize();
 	}
+	return space;
+}
 
-	for (auto p : vars) {
+void unify_variables(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+{
+	for (auto p : space.vars) {
 		LightSymbol v = p.first;
-		vars_prod.reset();
+		space.vars_prod.reset();
 		for (uint i : p.second) {
-			vars_prod.fix(i, v);
+			space.vars_prod.fix(i, v);
 		}
-		if (vars_prod.card() > 0) {
-			while (true) {
-				vector<LightSymbol> w = vars_prod.data();
-				unify_step(mindex, w, LightTree(v), unif, terms, restrictions);
-				if (!vars_prod.hasNext()) {
-					break;
-				}
-				vars_prod.makeNext();
+		while (true) {
+			vector<LightSymbol> w = space.vars_prod.data();
+			unify_vars_step(mindex, w, LightTree(v), unif, terms, restrictions);
+			if (!space.vars_prod.hasNext()) {
+				break;
 			}
+			space.vars_prod.makeNext();
 		}
 	}
-	for (auto p : consts) {
+}
+
+void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+{
+	for (auto p : space.consts) {
 		LightSymbol c = p.first;
-		vars_prod.reset();
+		space.vars_prod.reset();
 		for (uint i : p.second) {
-			vars_prod.skip(i);
+			space.vars_prod.skip(i);
 		}
-		if (vars_prod.card() > 0) {
+		if (space.vars_prod.card() > 0) {
 			while (true) {
-				vector<LightSymbol> w = vars_prod.data();
-				unify_step(mindex, w, LightTree(c), unif, terms, restrictions);
-				if (!vars_prod.hasNext()) {
+				vector<LightSymbol> w = space.vars_prod.data();
+				unify_vars_step(mindex, w, LightTree(c), unif, terms, restrictions);
+				if (!space.vars_prod.hasNext()) {
 					break;
 				}
-				vars_prod.makeNext();
+				space.vars_prod.makeNext();
 			}
+		} else if (p.second.size() == mindex.size()) {
+			// All indexes have constant 'c'
+			unify_const_step(mindex, c, unif, terms, restrictions);
 		}
 	}
-	for (auto p : rules) {
+}
+
+void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+{
+	for (auto p : space.rules) {
 		const Rule* r = p.first;
-		vars_prod.reset();
+		space.vars_prod.reset();
 		for (uint i : p.second) {
-			vars_prod.skip(i);
+			space.vars_prod.skip(i);
 		}
 		if (r->arity() == 0) {
-			if (vars_prod.card() > 0) {
+			if (space.vars_prod.card() > 0) {
 				while (true) {
-					vector<LightSymbol> w = vars_prod.data();
-					unify_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
-					if (!vars_prod.hasNext()) {
+					vector<LightSymbol> w = space.vars_prod.data();
+					unify_vars_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
+					if (!space.vars_prod.hasNext()) {
 						break;
 					}
-					vars_prod.makeNext();
+					space.vars_prod.makeNext();
 				}
+			} else if (p.second.size() == mindex.size()) {
+				// All indexes have zero-ary rule 'r'
+				unify_rule_step(mindex, r, unif, terms, restrictions);
 			}
 		} else {
 			vector<MultyUnifiedTerms> ch(r->arity());
 			vector<const Index*> x;
 			for (auto ind : mindex) {
-				x.push_back(ind->rules.at(r).child[0].get());
+				if (ind->rules.count(r)) {
+					x.push_back(ind->rules.at(r).child[0].get());
+				} else {
+
+				}
 			}
 			ch[0] = unify(x, unif, restrictions);
 			Restrictions common;
@@ -132,6 +211,9 @@ MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& un
 			for (uint i = 1; i < r->arity(); ++ i) {
 				vector<const Index*> x;
 				for (auto ind : mindex) {
+					if (!ind->rules.count(r)) {
+						cout << "EEE" << endl;
+					}
 					x.push_back(ind->rules.at(r).child[i].get());
 				}
 				ch[i] = unify(x, unif, &common);
@@ -149,6 +231,19 @@ MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& un
 			}
 		}
 	}
+}
+
+MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions)
+{
+	MultyUnifiedTerms terms;
+	MIndexSpace space = prepare_space(mindex);
+
+	if (space.vars_prod.card() > 0) {
+		unify_variables(mindex, unif, terms, restrictions, space);
+	}
+	unify_consts(mindex, unif, terms, restrictions, space);
+	unify_rules(mindex, unif, terms, restrictions, space);
+
 	return terms;
 }
 
