@@ -1,4 +1,5 @@
 #include "rus_prover_expr.hpp"
+#include "rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -300,6 +301,67 @@ rus::Substitution convert_sub(const Subst& s) {
 		ret.join(p.first.lit, convert_tree(p.second));
 	}
 	return ret;
+}
+
+
+MultySubst::MultySubst(const vector<const Subst*>& subs) {
+	for (auto s : subs) {
+		add(s);
+	}
+}
+Subst MultySubst::makeSubs(Subst& unif) const {
+	Subst ret;
+	for (const auto& p : msub_) {
+		ret.sub[p.first] = unify(p.second, unif);
+		if (ret.sub[p.first].empty()) {
+			ret.ok = false;
+			break;
+		}
+	}
+	return ret;
+}
+
+void MultySubst::add(const Subst* s) {
+	for (const auto& p : s->sub) {
+		msub_[p.first].push_back(p.second);
+	}
+}
+
+void sub_closure(Subst& sub) {
+	enum { WATCHDOG_THRESHOLD = 32 };
+	uint watchdog = 0;
+	while (sub.composeable(sub)) {
+		if (watchdog++ > WATCHDOG_THRESHOLD) {
+			cout << "SOMETHING WRONG: too much deep substitution closure" << endl;
+			break;
+		}
+		if (!sub.compose(sub)) {
+			sub.ok = false;
+			break;
+		}
+	}
+}
+
+Subst unify_subs(const MultySubst& t) {
+	Subst unif;
+	return unify_subs(unif, t.makeSubs(unif));
+}
+
+Subst unify_subs(Subst unif, Subst gen) {
+	if (!(gen.ok && unif.ok)) {
+		return Subst(false);
+	}
+	if (!unif.intersects(gen)) {
+		if (unif.compose(gen)) {
+			sub_closure(unif);
+			return unif;
+		} else {
+			return Subst(false);
+		}
+	} else {
+		MultySubst msub({&unif, &gen});
+		return unify_subs(msub);
+	}
 }
 
 }}}

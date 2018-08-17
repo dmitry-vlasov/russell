@@ -39,17 +39,12 @@ private:
 	map<LightSymbol, vector<Index>> mindex_;
 };
 
-Subst unify_subs(Subst unif, Subst gen);
-
 MultyUnifiedSubs unify_subs(MatrixIndex& mi) {
 	MultyUnifiedSubs ret;
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
-		Subst r = unify_subs(p.second, gen[p.first]);
-		if (r.ok) {
-			ret[p.first] = r;
-		}
+		ret[p.first] = unify_subs(p.second, gen[p.first]);
 	}
 	return ret;
 }
@@ -66,6 +61,9 @@ vector<Node*> unify_down_2(Prop* pr, const ProofHyp* h) {
 	bool new_proofs = false;
 	MultyUnifiedSubs subs = unify_subs(mi);
 	for (const auto& p : subs) {
+		if (!p.second.ok) {
+			continue;
+		}
 		vector<ProofHyp*> ch;
 		for (uint i = 0; i < arity; ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[p.first[i]].get();
