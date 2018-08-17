@@ -62,6 +62,9 @@ struct CartesianProduct {
 	}
 
 	void incDim(Data d) {
+		if (data_.size() == 0) {
+			incSize();
+		}
 		data_[data_.size() - 1].push_back(d);
 		iter_.incDim();
 	}

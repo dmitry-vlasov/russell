@@ -171,6 +171,46 @@ void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mu
 	}
 }
 
+void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+{
+	vector<MultyUnifiedTerms> ch(r->arity());
+	vector<const Index*> x;
+	for (auto ind : mindex) {
+		if (ind->rules.count(r)) {
+			x.push_back(ind->rules.at(r).child[0].get());
+		} else {
+			return;
+		}
+	}
+	ch[0] = unify(x, unif, restrictions);
+	Restrictions common;
+	for (const auto& p : ch[0]) {
+		common.insert(p.first);
+	}
+	for (uint i = 1; i < r->arity(); ++ i) {
+		vector<const Index*> x;
+		for (auto ind : mindex) {
+			if (ind->rules.count(r)) {
+				x.push_back(ind->rules.at(r).child[i].get());
+			} else {
+				return;
+			}
+		}
+		ch[i] = unify(x, unif, &common);
+		common.clear();
+		for (const auto& p : ch[i]) {
+			common.insert(p.first);
+		}
+	}
+	for (const auto& c : common) {
+		LightTree::Children childern;
+		for (uint i = 0; i < r->arity(); ++ i) {
+			childern.push_back(make_unique<LightTree>(ch[i][c]));
+		}
+		terms[c] = LightTree(r, childern);
+	}
+}
+
 void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
 {
 	for (auto p : space.rules) {
@@ -179,55 +219,23 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 		for (uint i : p.second) {
 			space.vars_prod.skip(i);
 		}
-		if (r->arity() == 0) {
-			if (space.vars_prod.card() > 0) {
-				while (true) {
-					vector<LightSymbol> w = space.vars_prod.data();
-					unify_vars_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
-					if (!space.vars_prod.hasNext()) {
-						break;
-					}
-					space.vars_prod.makeNext();
-				}
-			} else if (p.second.size() == mindex.size()) {
+		if (space.vars_prod.card() > 0) {
+			if (r->arity() == 0) {
+				vector<LightSymbol> w = space.vars_prod.data();
+				unify_vars_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
+			} else {
+				// TODO
+			}
+			if (!space.vars_prod.hasNext()) {
+				break;
+			}
+			space.vars_prod.makeNext();
+		} else if (p.second.size() == mindex.size()) {
+			if (r->arity() == 0) {
 				// All indexes have zero-ary rule 'r'
 				unify_rule_step(mindex, r, unif, terms, restrictions);
-			}
-		} else {
-			vector<MultyUnifiedTerms> ch(r->arity());
-			vector<const Index*> x;
-			for (auto ind : mindex) {
-				if (ind->rules.count(r)) {
-					x.push_back(ind->rules.at(r).child[0].get());
-				} else {
-
-				}
-			}
-			ch[0] = unify(x, unif, restrictions);
-			Restrictions common;
-			for (const auto& p : ch[0]) {
-				common.insert(p.first);
-			}
-			for (uint i = 1; i < r->arity(); ++ i) {
-				vector<const Index*> x;
-				for (auto ind : mindex) {
-					if (!ind->rules.count(r)) {
-						cout << "EEE" << endl;
-					}
-					x.push_back(ind->rules.at(r).child[i].get());
-				}
-				ch[i] = unify(x, unif, &common);
-				common.clear();
-				for (const auto& p : ch[i]) {
-					common.insert(p.first);
-				}
-			}
-			for (const auto& c : common) {
-				LightTree::Children childern;
-				for (uint i = 0; i < r->arity(); ++ i) {
-					childern.push_back(make_unique<LightTree>(ch[i][c]));
-				}
-				terms[c] = LightTree(r, childern);
+			} else {
+				unify_branch_rule(mindex, r, unif, terms, restrictions, space);
 			}
 		}
 	}
