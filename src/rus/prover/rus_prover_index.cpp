@@ -86,46 +86,40 @@ static void add_to_index(Index* index, const LightTree& t, uint s) {
 
 typedef map<uint, LightTree> UnifiedTerms;
 
-static void gather(const Rule* r, UnifiedTerms& u, UnifiedTerms w[], uint sz) {
-	for (auto& p : w[0]) {
-		uint d = p.first;
-		LightTree::Children ch;
-		ch.push_back(make_unique<LightTree>(p.second));
-		int i = 1;
-		for (; i < sz; ++ i) {
-			assert(w[i].count(d));
-			ch.emplace_back(make_unique<LightTree>(w[i][d]));
-		}
-		u[d] = LightTree(r, ch);
-	}
-}
-
-static UnifiedTerms gather_terms(const Index* i);
+static UnifiedTerms gather_terms(const Index& i);
 
 static UnifiedTerms gather_terms(const Rule* r, const Index::Node& n) {
 	UnifiedTerms ret;
-	UnifiedTerms un[n.child.size()];
 	for (uint d : n.leafs) {
-		ret[d] = LightTree(r, LightTree::Children());
+		ret[d] = LightTree(r, {});
 	}
-	int c = 0;
-	for (const auto& i : n.child) {
-		un[c++] = gather_terms(i.get());
+	vector<UnifiedTerms> un;
+	for (uint i = 0; i < n.child.size(); ++ i) {
+		un.push_back(gather_terms(*n.child[i]));
 	}
-	if (c > 0) {
-		gather(r, ret, un, c);
+	if (un.size() > 0) {
+		for (auto& p : un[0]) {
+			uint d = p.first;
+			LightTree::Children ch;
+			ch.push_back(make_unique<LightTree>(p.second));
+			for (int i = 1; i < un.size(); ++ i) {
+				assert(un.at(i).count(d));
+				ch.emplace_back(make_unique<LightTree>(un.at(i).at(d)));
+			}
+			ret[d] = LightTree(r, ch);
+		}
 	}
 	return ret;
 }
 
-static UnifiedTerms gather_terms(const Index* i) {
+static UnifiedTerms gather_terms(const Index& i) {
 	UnifiedTerms ret;
-	for (const auto& p : i->vars) {
+	for (const auto& p : i.vars) {
 		for (uint d : p.second) {
 			ret[d] = LightTree(p.first);
 		}
 	}
-	for (const auto& p : i->rules) {
+	for (const auto& p : i.rules) {
 		for (auto& q : gather_terms(p.first, p.second)) {
 			ret.emplace(q.first, q.second);
 		}

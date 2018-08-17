@@ -43,6 +43,7 @@ struct CartesianIter {
 	uint card() const;
 	uint operator[] (uint i) const { return dims_[i].ind; }
 	uint& operator[] (uint i) { return dims_[i].ind; }
+	Dim get(uint i) const { return dims_[i]; }
 
 	string show() const;
 	string current() const ;
@@ -79,6 +80,7 @@ struct CartesianProduct {
 	void addFixed(const vector<Data>& v, uint i) {
 		iter_.addFixed(v.size(), i);
 	}
+	CartesianIter::Dim getDim(uint i) const { return iter_.get(i); }
 
 	void fix(uint i, Data d) {
 		auto j = std::find(data_[i].begin(), data_[i].end(), d);
