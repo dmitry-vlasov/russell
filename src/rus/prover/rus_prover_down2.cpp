@@ -73,7 +73,8 @@ vector<Node*> unify_down_2(Prop* pr, const ProofHyp* h) {
 		mi.addProofs(pr->premises[i]->proofs, i);
 	}
 
-	cout << "MATRIX:" << endl;
+	static int c = 0;
+	cout << "MATRIX: " << ++c << endl;
 	cout << mi.show() << endl;
 
 	bool new_proofs = false;

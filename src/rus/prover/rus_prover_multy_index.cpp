@@ -4,6 +4,26 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+string show(const vector<const Index*>& mindex) {
+	string ret;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		ret += "index: " + to_string(i) + "\n";
+		ret += mindex[i]->show() + "\n";
+		ret += "-----------------------------\n\n";
+	}
+	return ret;
+}
+
+string show(const set<uint>& s) {
+	string ret;
+	ret += "{";
+	for (uint i : s) {
+		ret += to_string(i) + ", ";
+	}
+	ret += "}";
+	return ret;
+}
+
 set<uint> complement(const set<uint>& s, uint m) {
 	set<uint> ret;
 	for (uint i = 0; i < m; ++ i) {
@@ -39,7 +59,7 @@ vector<uint> join_leafs(const vector<uint>& leafs1,const vector<uint>& leafs2, c
 		if (s.count(i)) {
 			ret.push_back(leafs1[n++]);
 		} else {
-			ret.push_back(leafs1[m++]);
+			ret.push_back(leafs2[m++]);
 		}
 	}
 	return ret;
@@ -74,11 +94,20 @@ void unify_vars_step(
 	const Subst& other_subst = Subst())
 {
 	CartesianProduct<uint> leafs_prod;
-	for (uint i = 0; i < mindex.size(); ++ i) {
+	for (uint i = 0; i < w.size(); ++ i) {
 		leafs_prod.incSize();
 		if (!other_indexes.count(i)) {
-			for (uint s : mindex.at(i)->vars.at(w[i])) {
-				leafs_prod.incDim(s);
+			if (mindex[i]->vars.count(w[i])) {
+				for (uint s : mindex[i]->vars.at(w[i])) {
+					leafs_prod.incDim(s);
+				}
+			} else {
+				cout << "AAA: " << i << endl;
+				for (auto s : w) {
+					cout << show(s) << " ";
+				}
+				cout << endl << show(w[i]) << endl;
+				cout << show(mindex) << endl;
 			}
 		} else {
 			leafs_prod.skip(i);
@@ -120,7 +149,10 @@ void unify_const_step(
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		leafs_prod.incSize();
-		for (uint s : mindex.at(i)->vars.at(c)) {
+		if (!mindex[i]->vars.count(c)) {
+				cout << "BBB" << endl;
+			}
+		for (uint s : mindex[i]->vars.at(c)) {
 			leafs_prod.incDim(s);
 		}
 	}
@@ -150,7 +182,10 @@ void unify_rule_step(
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		leafs_prod.incSize();
-		for (uint s : mindex.at(i)->rules.at(r).leafs) {
+		if (!mindex[i]->rules.count(r)) {
+				cout << "CCC" << endl;
+			}
+		for (uint s : mindex[i]->rules.at(r).leafs) {
 			leafs_prod.incDim(s);
 		}
 	}
@@ -219,6 +254,7 @@ void unify_variables(const vector<const Index*>& mindex, MultyUnifiedSubs& unif,
 void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
 {
 	for (auto p : space.consts) {
+		set<uint> consts_part = p.second;
 		LightSymbol c = p.first;
 		space.vars_prod.reset();
 		for (uint i : p.second) {
@@ -227,7 +263,35 @@ void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mu
 		if (space.vars_prod.card() > 0) {
 			while (true) {
 				vector<LightSymbol> w = space.vars_prod.data();
-				unify_vars_step(mindex, w, LightTree(c), unif, terms, restrictions);
+
+				CartesianProduct<uint> const_leafs_prod;
+				for (uint i = 0; i < mindex.size(); ++ i) {
+					const_leafs_prod.incSize();
+					if (consts_part.count(i)) {
+						for (uint s : mindex[i]->vars.at(c)) {
+							const_leafs_prod.incDim(s);
+						}
+					} else {
+						const_leafs_prod.skip(i);
+					}
+				}
+				if (const_leafs_prod.card() > 0) {
+					while (true) {
+						vector<uint> leafs = const_leafs_prod.data();
+						if (!restrictions || restrictions->count(leafs)) {
+							unify_vars_step(
+								mindex, w,
+								LightTree(c),
+								unif, terms,
+								restrictions, leafs, consts_part
+							);
+						}
+						if (!const_leafs_prod.hasNext()) {
+							break;
+						}
+						const_leafs_prod.makeNext();
+					}
+				}
 				if (!space.vars_prod.hasNext()) {
 					break;
 				}
@@ -248,6 +312,7 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 		if (ind->rules.count(r)) {
 			x.push_back(ind->rules.at(r).child[0].get());
 		} else {
+			cout << "XXX" << endl;
 			return;
 		}
 	}
@@ -262,6 +327,7 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 			if (ind->rules.count(r)) {
 				x.push_back(ind->rules.at(r).child[i].get());
 			} else {
+				cout << "YYY" << endl;
 				return;
 			}
 		}
@@ -299,7 +365,7 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 					for (uint i = 0; i < mindex.size(); ++ i) {
 						leafs_prod.incSize();
 						if (rules_part.count(i)) {
-							for (uint s : mindex.at(i)->rules.at(r).leafs) {
+							for (uint s : mindex[i]->rules.at(r).leafs) {
 								leafs_prod.incDim(s);
 							}
 						} else {
@@ -327,15 +393,20 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 					vector<MultyUnifiedTerms> child_terms(r->arity());
 					for (uint i = 0; i < r->arity(); ++ i) {
 						vector<const Index*> child_mindex;
-						for (auto ind : mindex) {
-							if (rules_part.count(i)) {
-								child_mindex.push_back(ind->rules.at(r).child[i].get());
+						for (uint j = 0; j < mindex.size(); ++ j) {
+							if (rules_part.count(j)) {
+								if (!mindex[j]->rules.count(r)) {
+									cout << "i = " << i << endl;
+									cout << "rules_part = " << show(rules_part) << endl;
+								}
+								child_mindex.push_back(mindex[j]->rules.at(r).child[i].get());
 							}
 						}
 						MultyUnifiedSubs unif1 = reduce_subs(unif, rules_part);
 						for (const auto& p : unify(child_mindex, unif1, restrictions)) {
 							vector<uint> leafs = p.first;
 							LightTree::Children children(r->arity());
+							children.push_back(make_unique<LightTree>(p.second));
 							for (uint i = 1; i < r->arity(); ++ i) {
 								if (child_terms[i].count(leafs)) {
 									const LightTree& ch = child_terms[i].at(leafs);
@@ -373,6 +444,10 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 
 MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions)
 {
+	static int c = 0;
+	cout << "MULTY INDEX: " << ++c << endl;
+	cout << show(mindex) << endl;
+
 	MultyUnifiedTerms terms;
 	MIndexSpace space = prepare_space(mindex);
 

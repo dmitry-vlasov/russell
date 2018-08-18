@@ -100,7 +100,7 @@ struct CartesianProduct {
 	uint card() const { return iter_.card(); }
 
 	Data operator[] (uint i) const {
-		if (iter_.get(i).kind == CartesianIter::Dim::NORM) {
+		if (iter_.get(i).kind == CartesianIter::Dim::SKIPPED) {
 			return data_[i][iter_[i]];
 		} else {
 			return Data();
@@ -109,7 +109,7 @@ struct CartesianProduct {
 	vector<Data> data() const {
 		vector<Data> ret;
 		for (uint i = 0; i < iter_.size(); ++ i) {
-			if (iter_.get(i).kind == CartesianIter::Dim::NORM) {
+			if (iter_.get(i).kind != CartesianIter::Dim::SKIPPED) {
 				ret.push_back(data_[i][iter_[i]]);
 			}
 		}
