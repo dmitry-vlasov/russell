@@ -211,79 +211,6 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 	}
 }
 
-/*
-static void gather(const Rule* r, MultyUnifiedTerms& u, MultyUnifiedTerms w[], uint sz, const Restrictions* restrictions) {
-	for (auto& p : w[0]) {
-		uint d = p.first;
-		LightTree::Children ch;
-		ch.push_back(make_unique<LightTree>(p.second));
-		int i = 1;
-		for (; i < sz; ++ i) {
-			assert(w[i].count(d));
-			ch.emplace_back(make_unique<LightTree>(w[i][d]));
-		}
-		u[d] = LightTree(r, ch);
-	}
-}
-
-static MultyUnifiedTerms gather_terms(const vector<const Index*> i, const Restrictions* restrictions);
-
-static MultyUnifiedTerms gather_terms(const Rule* r, const vector<const Index::Node*>& n, const Restrictions* restrictions) {
-	MultyUnifiedTerms ret;
-	MultyUnifiedTerms un[n.child.size()];
-	for (uint d : n.leafs) {
-		ret[d] = LightTree(r, LightTree::Children());
-	}
-	int c = 0;
-	for (const auto& i : n.child) {
-		un[c++] = gather_terms(i.get());
-	}
-	if (c > 0) {
-		gather(r, ret, un, c);
-	}
-	return ret;
-}
-
-static MultyUnifiedTerms gather_terms(const vector<const Index*>, const Restrictions* restrictions) {
-	MultyUnifiedTerms ret;
-	for (const auto& p : i->vars) {
-		for (uint d : p.second) {
-			ret[d] = LightTree(p.first);
-		}
-	}
-	for (const auto& p : i->rules) {
-		for (auto& q : gather_terms(p.first, p.second)) {
-			ret.emplace(q.first, q.second);
-		}
-	}
-	return ret;
-}
-
-static MultyUnifiedTerms gather_terms(const Rule* r, const MIndexSpace& space, const vector<const Index*> mindex, const Restrictions* restrictions) {
-	MultyUnifiedTerms ret;
-	vector<const Index::Node*> mnode;
-	for (uint i = 0; i < mindex.size(); ++ i) {
-		if (space.vars_prod.get(i).kind == CartesianIter::Dim::NORM) {
-			mnode.push_back(mindex[i]->rules.at(r));
-		} else {
-			mnode.push_back(nullptr);
-		}
-	}
-
-
-	for (const auto& p : i->vars) {
-		for (uint d : p.second) {
-			ret[d] = LightTree(p.first);
-		}
-	}
-	for (const auto& p : i->rules) {
-		for (auto& q : gather_terms(p.first, p.second)) {
-			ret.emplace(q.first, q.second);
-		}
-	}
-	return ret;
-}
-*/
 void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
 {
 	for (auto p : space.rules) {
@@ -298,9 +225,38 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 				if (r->arity() == 0) {
 					unify_vars_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
 				} else {
-					//for (const auto& q : gather_terms(r, space, mindex, restrictions)) {
-					//	unify_vars_step(mindex, w, q, unif, terms, restrictions);
-					//}
+					vector<MultyUnifiedTerms> child_terms(r->arity());
+					for (uint i = 0; i < r->arity(); ++ i) {
+						vector<const Index*> child_mindex(mindex.size());
+						for (uint j = 0; j < mindex.size(); ++ j) {
+							if (p.second.find(i) != p.second.end()) {
+								child_mindex[j] = mindex[j]->rules.at(r).child[i].get();
+							} else {
+								child_mindex[j] = nullptr;
+							}
+						}
+						child_terms[i] = unify(child_mindex, unif, restrictions);
+					}
+					MultyUnifiedTerms joined_with_r;
+					for (const auto& p : child_terms[0]) {
+						vector<uint> leafs = p.first;
+						LightTree::Children children(r->arity());
+						for (uint i = 1; i < r->arity(); ++ i) {
+							if (child_terms[i].count(leafs)) {
+								const LightTree& ch = child_terms[i].at(leafs);
+								children.push_back(make_unique<LightTree>(ch));
+							} else {
+								break;
+							}
+						}
+						if (children.size() == r->arity()) {
+							joined_with_r[leafs] = LightTree(r, children);
+						}
+					}
+					for (const auto& p : joined_with_r) {
+						vector<LightSymbol> w = space.vars_prod.data();
+						unify_vars_step(mindex, w, p.second, unif, terms, restrictions);
+					}
 				}
 				if (!space.vars_prod.hasNext()) {
 					break;
