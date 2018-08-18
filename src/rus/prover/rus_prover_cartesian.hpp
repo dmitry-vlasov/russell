@@ -44,6 +44,7 @@ struct CartesianIter {
 	uint operator[] (uint i) const { return dims_[i].ind; }
 	uint& operator[] (uint i) { return dims_[i].ind; }
 	Dim get(uint i) const { return dims_[i]; }
+	vector<uint> inds() const;
 
 	string show() const;
 	string current() const ;
@@ -98,6 +99,7 @@ struct CartesianProduct {
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
 	uint card() const { return iter_.card(); }
+	const CartesianIter& iter() const { return iter_; }
 
 	Data operator[] (uint i) const {
 		if (iter_.get(i).kind == CartesianIter::Dim::SKIPPED) {

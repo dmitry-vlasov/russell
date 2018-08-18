@@ -51,6 +51,14 @@ void CartesianIter::makeNext() {
 	assert(false && "this execution point should be unreacheable");
 }
 
+vector<uint> CartesianIter::inds() const {
+	vector<uint> ret;
+	for (const auto& d : dims_) {
+		ret.push_back(d.ind);
+	}
+	return ret;
+}
+
 string CartesianIter::show() const {
 	string ret;
 	ret += "size: " + to_string(dims_.size()) + ", ";
