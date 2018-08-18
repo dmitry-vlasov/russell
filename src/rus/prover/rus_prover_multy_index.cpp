@@ -4,34 +4,101 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+set<uint> complement(const set<uint>& s, uint m) {
+	set<uint> ret;
+	for (uint i = 0; i < m; ++ i) {
+		if (!s.count(i)) {
+			ret.insert(i);
+		}
+	}
+	return ret;
+}
+
+bool are_complement(const set<uint>& s1, set<uint>& s2, uint m) {
+	for (uint i = 0; i < m; ++ i) {
+		if (s1.count(i) + s2.count(i) != 1) {
+			return false;
+		}
+	}
+	return true;
+}
+
+vector<uint> reduce_leafs(const vector<uint>& leafs, const set<uint>& s) {
+	vector<uint> ret;
+	for (uint i = 0 ; i < leafs.size(); ++ i) {
+		if (s.count(i)) {
+			ret.push_back(leafs[i]);
+		}
+	}
+	return ret;
+}
+
+vector<uint> join_leafs(const vector<uint>& leafs1,const vector<uint>& leafs2, const set<uint>& s) {
+	vector<uint> ret;
+	for (uint i = 0, n = 0, m = 0 ; i < leafs1.size() + leafs2.size(); ++ i) {
+		if (s.count(i)) {
+			ret.push_back(leafs1[n++]);
+		} else {
+			ret.push_back(leafs1[m++]);
+		}
+	}
+	return ret;
+}
+
+MultyUnifiedSubs reduce_subs(const MultyUnifiedSubs& subs, const set<uint>& s) {
+	MultyUnifiedSubs ret;
+	for (const auto& p : subs) {
+		ret[reduce_leafs(p.first, s)] = p.second;
+	}
+	return ret;
+}
+
+Restrictions reduce_restrictions(const Restrictions& restrictions, const set<uint>& s) {
+	Restrictions ret;
+	for (const auto& leafs : restrictions) {
+		ret.insert(reduce_leafs(leafs, s));
+	}
+	return ret;
+}
+
+
 void unify_vars_step(
 	const vector<const Index*>& mindex,
 	const vector<LightSymbol>& w,
 	LightTree t,
 	MultyUnifiedSubs& unif,
 	MultyUnifiedTerms& terms,
-	const set<vector<uint>>* restrictions)
+	const set<vector<uint>>* restrictions,
+	const vector<uint>& other_leafs = vector<uint>(),
+	const set<uint>& other_indexes = set<uint>(),
+	const Subst& other_subst = Subst())
 {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
-		for (uint s : mindex.at(i)->vars.at(w[i])) {
-			leafs_prod.incDim(s);
+		if (!other_indexes.count(i)) {
+			for (uint s : mindex.at(i)->vars.at(w[i])) {
+				leafs_prod.incDim(s);
+			}
+			leafs_prod.incSize();
 		}
-		leafs_prod.incSize();
 	}
 	if (leafs_prod.card() == 0) {
 		return;
 	}
 	while (true) {
-		vector<uint> leafs = leafs_prod.data();
+		vector<uint> leafs = join_leafs(other_leafs, leafs_prod.data(), other_indexes);
 		if (!restrictions || restrictions->count(leafs)) {
 			LightTree unified = unify_step(unif[leafs], w, t);
 			if (!unified.empty()) {
-				if (terms.count(leafs)) {
-					cout << "MULTIPLE UNIFICATION RESULTS" << endl;
-					cout << "try_variable_replacement" << endl;
+				Subst s = unif[leafs];
+				if (s.compose(other_subst)) {
+					if (terms.count(leafs)) {
+						cout << "MULTIPLE UNIFICATION RESULTS" << endl;
+						cout << "try_variable_replacement" << endl;
+					}
+					unif[leafs] = s;
+					terms[leafs] = unified;
 				}
-				terms[leafs] = unified;
 			}
 		}
 		if (!leafs_prod.hasNext()) {
@@ -211,10 +278,13 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 	}
 }
 
+
 void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
 {
 	for (auto p : space.rules) {
 		const Rule* r = p.first;
+		set<uint> rules_part = p.second;
+		set<uint> vars_part = complement(rules_part, mindex.size());
 		space.vars_prod.reset();
 		for (uint i : p.second) {
 			space.vars_prod.skip(i);
@@ -227,35 +297,34 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 				} else {
 					vector<MultyUnifiedTerms> child_terms(r->arity());
 					for (uint i = 0; i < r->arity(); ++ i) {
-						vector<const Index*> child_mindex(mindex.size());
-						for (uint j = 0; j < mindex.size(); ++ j) {
-							if (p.second.find(i) != p.second.end()) {
-								child_mindex[j] = mindex[j]->rules.at(r).child[i].get();
-							} else {
-								child_mindex[j] = nullptr;
+						vector<const Index*> child_mindex;
+						for (auto ind : mindex) {
+							if (rules_part.count(i)) {
+								child_mindex.push_back(ind->rules.at(r).child[i].get());
 							}
 						}
-						child_terms[i] = unify(child_mindex, unif, restrictions);
-					}
-					MultyUnifiedTerms joined_with_r;
-					for (const auto& p : child_terms[0]) {
-						vector<uint> leafs = p.first;
-						LightTree::Children children(r->arity());
-						for (uint i = 1; i < r->arity(); ++ i) {
-							if (child_terms[i].count(leafs)) {
-								const LightTree& ch = child_terms[i].at(leafs);
-								children.push_back(make_unique<LightTree>(ch));
-							} else {
-								break;
+						MultyUnifiedSubs unif1 = reduce_subs(unif, rules_part);
+						for (const auto& p : unify(child_mindex, unif1, restrictions)) {
+							vector<uint> leafs = p.first;
+							LightTree::Children children(r->arity());
+							for (uint i = 1; i < r->arity(); ++ i) {
+								if (child_terms[i].count(leafs)) {
+									const LightTree& ch = child_terms[i].at(leafs);
+									children.push_back(make_unique<LightTree>(ch));
+								} else {
+									break;
+								}
+							}
+							if (children.size() == r->arity()) {
+								vector<LightSymbol> w = space.vars_prod.data();
+								unify_vars_step(
+									mindex, w,
+									LightTree(r, children),
+									unif, terms,
+									restrictions, leafs, rules_part, unif1[leafs]
+								);
 							}
 						}
-						if (children.size() == r->arity()) {
-							joined_with_r[leafs] = LightTree(r, children);
-						}
-					}
-					for (const auto& p : joined_with_r) {
-						vector<LightSymbol> w = space.vars_prod.data();
-						unify_vars_step(mindex, w, p.second, unif, terms, restrictions);
 					}
 				}
 				if (!space.vars_prod.hasNext()) {

@@ -106,7 +106,7 @@ struct CartesianProduct {
 		vector<Data> ret;
 		for (uint i = 0; i < iter_.size(); ++ i) {
 			ret.push_back(data_[i][iter_[i]]);
-		};
+		}
 		return ret;
 	}
 
