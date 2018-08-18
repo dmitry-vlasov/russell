@@ -11,6 +11,12 @@ typedef set<vector<uint>> Restrictions;
 MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions = nullptr);
 
 string show(const vector<const Index*>& mindex);
+string show(const set<uint>&);
+string show(const vector<uint>&);
+string show(const MultyUnifiedSubs&);
+string show(const MultyUnifiedTerms&);
+
+extern bool debug_multy_index;
 
 }}}
 

@@ -4,6 +4,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+bool debug_multy_index = false;
+
 string show(const vector<const Index*>& mindex) {
 	string ret;
 	for (uint i = 0; i < mindex.size(); ++ i) {
@@ -23,6 +25,34 @@ string show(const set<uint>& s) {
 	ret += "}";
 	return ret;
 }
+
+string show(const vector<uint>& v) {
+	string ret;
+	ret += "(";
+	for (uint i : v) {
+		ret += to_string(i) + ", ";
+	}
+	ret += ")";
+	return ret;
+}
+
+string show(const MultyUnifiedSubs& ms) {
+	string ret;
+	for (const auto& p : ms) {
+		ret += show(p.first) + ":\n";
+		ret += Indent::paragraph(show(p.second)) + "\n";
+	}
+	return ret;
+}
+
+string show(const MultyUnifiedTerms& mt) {
+	string ret;
+	for (const auto& p : mt) {
+		ret += show(p.first) + ": " + show(p.second) + "\n";
+	}
+	return ret;
+}
+
 
 set<uint> complement(const set<uint>& s, uint m) {
 	set<uint> ret;
@@ -444,10 +474,6 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 
 MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, const Restrictions* restrictions)
 {
-	static int c = 0;
-	cout << "MULTY INDEX: " << ++c << endl;
-	cout << show(mindex) << endl;
-
 	MultyUnifiedTerms terms;
 	MIndexSpace space = prepare_space(mindex);
 

@@ -36,6 +36,7 @@ struct MatrixIndex {
 
 	string show() const {
 		string ret;
+		ret += "DIMENSION: " + to_string(mindex_.size()) + "\n";
 		for (const auto& p : mindex_) {
 			ret += "\nVAR: " + prover::show(p.first) + "\n";
 			ret += "==============================\n";
@@ -63,52 +64,24 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi) {
 	return ret;
 }
 
-vector<Node*> unify_down_2(Prop* pr, const ProofHyp* h) {
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	uint arity = pr->premises.size();
 	MatrixIndex mi(arity);
 	for (uint i = 0; i < arity; ++ i) {
 		if (!pr->premises[i]->proofs.size()) {
-			return vector<Node*>();
+			return MultyUnifiedSubs();
 		}
 		mi.addProofs(pr->premises[i]->proofs, i);
 	}
 
 	static int c = 0;
-	cout << "MATRIX: " << ++c << endl;
-	cout << mi.show() << endl;
-
-	bool new_proofs = false;
-	MultyUnifiedSubs subs = unify_subs(mi);
-	for (const auto& p : subs) {
-		if (!p.second.ok) {
-			continue;
-		}
-		vector<ProofHyp*> ch;
-		for (uint i = 0; i < arity; ++ i) {
-			ProofHyp* ph = pr->premises[i].get()->proofs[p.first[i]].get();
-			ch.push_back(ph);
-		}
-		Subst delta = pr->sub;
-		delta.compose(p.second);
-		ProofProp* pp = new ProofProp(*pr, ch, delta);
-		for (auto& h : pr->proofs) {
-			if (pp->equal(h.get())) {
-				cout << "DUPLICATE PROP PROOF" << endl;
-				cout << pp->show() << endl;
-				cout << "-----------" << endl;
-				cout << h->show() << endl;
-			}
-		}
-		pr->proofs.emplace_back(pp);
-		new_proofs = true;
+	c++;
+	if (debug_multy_index) {
+		cout << "MATRIX no. " << c << endl;
+		cout << mi.show() << endl;
 	}
 
-	if (new_proofs) {
-		return {pr};
-	} else {
-		return vector<Node*>();
-	}
-}
+	return unify_subs(mi);}
 
 }}}
 

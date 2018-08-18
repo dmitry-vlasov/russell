@@ -16,6 +16,33 @@ void Subst::operator = (Subst&& s) {
 	s.ok = true;
 }
 
+bool Subst::operator == (const Subst& s) const {
+	if (ok != s.ok) {
+		return false;
+	}
+	for (const auto& p : sub) {
+		if (!s.maps(p.first)) {
+			return false;
+		}
+		if (p.second != s.sub.at(p.first)) {
+			return false;
+		}
+	}
+	for (const auto& p : s.sub) {
+		if (!maps(p.first)) {
+			return false;
+		}
+		if (p.second != sub.at(p.first)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Subst::operator != (const Subst& s) const {
+	return !operator ==(s);
+}
+
 void collect_vars(const LightTree& tree, set<LightSymbol>& vars) {
 	if (tree.kind() == LightTree::VAR) {
 		vars.insert(tree.var());

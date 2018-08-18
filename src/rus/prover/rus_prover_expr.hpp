@@ -197,6 +197,9 @@ struct Subst {
 	void operator = (const Subst& s);
 	void operator = (Subst&& s);
 
+	bool operator == (const Subst& s) const;
+	bool operator != (const Subst& s) const;
+
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s);
 	bool intersects(const Subst& s) const;
