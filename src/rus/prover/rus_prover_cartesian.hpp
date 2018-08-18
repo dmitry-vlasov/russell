@@ -63,9 +63,9 @@ struct CartesianProduct {
 	}
 
 	void incDim(Data d) {
-		if (data_.size() == 0) {
+		/*if (data_.size() == 0) {
 			incSize();
-		}
+		}*/
 		data_[data_.size() - 1].push_back(d);
 		iter_.incDim();
 	}
@@ -100,12 +100,18 @@ struct CartesianProduct {
 	uint card() const { return iter_.card(); }
 
 	Data operator[] (uint i) const {
-		return data_[i][iter_[i]];
+		if (iter_.get(i).kind == CartesianIter::Dim::NORM) {
+			return data_[i][iter_[i]];
+		} else {
+			return Data();
+		}
 	}
 	vector<Data> data() const {
 		vector<Data> ret;
 		for (uint i = 0; i < iter_.size(); ++ i) {
-			ret.push_back(data_[i][iter_[i]]);
+			if (iter_.get(i).kind == CartesianIter::Dim::NORM) {
+				ret.push_back(data_[i][iter_[i]]);
+			}
 		}
 		return ret;
 	}

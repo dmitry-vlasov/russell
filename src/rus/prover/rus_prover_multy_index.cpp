@@ -75,11 +75,13 @@ void unify_vars_step(
 {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
+		leafs_prod.incSize();
 		if (!other_indexes.count(i)) {
 			for (uint s : mindex.at(i)->vars.at(w[i])) {
 				leafs_prod.incDim(s);
 			}
-			leafs_prod.incSize();
+		} else {
+			leafs_prod.skip(i);
 		}
 	}
 	if (leafs_prod.card() == 0) {
@@ -117,10 +119,10 @@ void unify_const_step(
 {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
+		leafs_prod.incSize();
 		for (uint s : mindex.at(i)->vars.at(c)) {
 			leafs_prod.incDim(s);
 		}
-		leafs_prod.incSize();
 	}
 	if (leafs_prod.card() == 0) {
 		return;
@@ -147,10 +149,10 @@ void unify_rule_step(
 {
 	CartesianProduct<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
+		leafs_prod.incSize();
 		for (uint s : mindex.at(i)->rules.at(r).leafs) {
 			leafs_prod.incDim(s);
 		}
-		leafs_prod.incSize();
 	}
 	if (leafs_prod.card() == 0) {
 		return;
@@ -179,6 +181,7 @@ struct MIndexSpace {
 MIndexSpace prepare_space(const vector<const Index*>& mindex) {
 	MIndexSpace space;
 	for (uint i = 0; i < mindex.size(); ++ i) {
+		space.vars_prod.incSize();
 		for (const auto& p : mindex[i]->vars) {
 			if (p.first.rep) {
 				space.vars[p.first].insert(i);
@@ -190,7 +193,6 @@ MIndexSpace prepare_space(const vector<const Index*>& mindex) {
 		for (const auto& p : mindex[i]->rules) {
 			space.rules[p.first].insert(i);
 		}
-		space.vars_prod.incSize();
 	}
 	return space;
 }
@@ -293,7 +295,34 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 			while (true) {
 				vector<LightSymbol> w = space.vars_prod.data();
 				if (r->arity() == 0) {
-					unify_vars_step(mindex, w, LightTree(r, {}), unif, terms, restrictions);
+					CartesianProduct<uint> leafs_prod;
+					for (uint i = 0; i < mindex.size(); ++ i) {
+						leafs_prod.incSize();
+						if (rules_part.count(i)) {
+							for (uint s : mindex.at(i)->rules.at(r).leafs) {
+								leafs_prod.incDim(s);
+							}
+						} else {
+							leafs_prod.skip(i);
+						}
+					}
+					if (leafs_prod.card() > 0) {
+						while (true) {
+							vector<uint> leafs = leafs_prod.data();
+							if (!restrictions || restrictions->count(leafs)) {
+								unify_vars_step(
+									mindex, w,
+									LightTree(r, {}),
+									unif, terms,
+									restrictions, leafs, rules_part
+								);
+							}
+							if (!leafs_prod.hasNext()) {
+								break;
+							}
+							leafs_prod.makeNext();
+						}
+					}
 				} else {
 					vector<MultyUnifiedTerms> child_terms(r->arity());
 					for (uint i = 0; i < r->arity(); ++ i) {
@@ -316,7 +345,6 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 								}
 							}
 							if (children.size() == r->arity()) {
-								vector<LightSymbol> w = space.vars_prod.data();
 								unify_vars_step(
 									mindex, w,
 									LightTree(r, children),
