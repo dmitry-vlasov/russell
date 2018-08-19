@@ -1,6 +1,6 @@
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_down.hpp"
-#include "rus_prover_multy_index.hpp"
+#include "rus_prover_vector_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -35,8 +35,14 @@ struct MatrixIndex {
 			for (auto& i : p.second) {
 				x.push_back(&i);
 			}
+			if (debug_multy_index) {
+				cout << "MultyUnifiedSubs compute(MultyUnifiedSubs& unif)" << endl;
+			}
 			MultyUnifiedTerms terms = unify(x, unif, nullptr);
 			for (const auto& t : terms) {
+				if (debug_multy_index) {
+					cout << prover::show(t.first) << " --> term: " << prover::show(terms[t.first]) << endl;
+				}
 				s[t.first].sub[p.first] = terms[t.first];
 			}
 		}

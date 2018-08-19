@@ -1,4 +1,5 @@
 #include "rus_prover_space.hpp"
+#include "rus_prover_vector_index.hpp"
 #include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -222,5 +223,54 @@ string show_struct(const ProofNode* n) {
 	}
 	return oss.str();
 }
+
+string show(const vector<const Index*>& mindex) {
+	string ret;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		ret += "index: " + to_string(i) + "\n";
+		ret += mindex[i]->show() + "\n";
+		ret += "-----------------------------\n\n";
+	}
+	return ret;
+}
+
+string show(const set<uint>& s) {
+	string ret;
+	ret += "{";
+	for (uint i : s) {
+		ret += to_string(i) + ", ";
+	}
+	ret += "}";
+	return ret;
+}
+
+string show(const vector<uint>& v) {
+	string ret;
+	ret += "(";
+	for (uint i : v) {
+		ret += to_string(i) + ", ";
+	}
+	ret += ")";
+	return ret;
+}
+
+string show(const MultyUnifiedSubs& ms) {
+	string ret;
+	for (const auto& p : ms) {
+		ret += show(p.first) + ":\n";
+		ret += Indent::paragraph(show(p.second)) + "\n";
+	}
+	return ret;
+}
+
+string show(const MultyUnifiedTerms& mt) {
+	string ret;
+	for (const auto& p : mt) {
+		ret += show(p.first) + ": " + show(p.second) + "\n";
+	}
+	return ret;
+}
+
+
 
 }}}

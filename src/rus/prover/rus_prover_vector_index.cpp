@@ -1,58 +1,10 @@
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_unify.hpp"
-#include "rus_prover_multy_index.hpp"
+#include "rus_prover_vector_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
 bool debug_multy_index = false;
-
-string show(const vector<const Index*>& mindex) {
-	string ret;
-	for (uint i = 0; i < mindex.size(); ++ i) {
-		ret += "index: " + to_string(i) + "\n";
-		ret += mindex[i]->show() + "\n";
-		ret += "-----------------------------\n\n";
-	}
-	return ret;
-}
-
-string show(const set<uint>& s) {
-	string ret;
-	ret += "{";
-	for (uint i : s) {
-		ret += to_string(i) + ", ";
-	}
-	ret += "}";
-	return ret;
-}
-
-string show(const vector<uint>& v) {
-	string ret;
-	ret += "(";
-	for (uint i : v) {
-		ret += to_string(i) + ", ";
-	}
-	ret += ")";
-	return ret;
-}
-
-string show(const MultyUnifiedSubs& ms) {
-	string ret;
-	for (const auto& p : ms) {
-		ret += show(p.first) + ":\n";
-		ret += Indent::paragraph(show(p.second)) + "\n";
-	}
-	return ret;
-}
-
-string show(const MultyUnifiedTerms& mt) {
-	string ret;
-	for (const auto& p : mt) {
-		ret += show(p.first) + ": " + show(p.second) + "\n";
-	}
-	return ret;
-}
-
 
 set<uint> complement(const set<uint>& s, uint m) {
 	set<uint> ret;
@@ -123,7 +75,7 @@ void unify_vars_step(
 	const set<uint>& other_indexes = set<uint>(),
 	const Subst& other_subst = Subst())
 {
-	CartesianProduct<uint> leafs_prod;
+	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < w.size(); ++ i) {
 		leafs_prod.incSize();
 		if (!other_indexes.count(i)) {
@@ -131,13 +83,6 @@ void unify_vars_step(
 				for (uint s : mindex[i]->vars.at(w[i])) {
 					leafs_prod.incDim(s);
 				}
-			} else {
-				cout << "AAA: " << i << endl;
-				for (auto s : w) {
-					cout << show(s) << " ";
-				}
-				cout << endl << show(w[i]) << endl;
-				cout << show(mindex) << endl;
 			}
 		} else {
 			leafs_prod.skip(i);
@@ -176,12 +121,9 @@ void unify_const_step(
 	MultyUnifiedTerms& terms,
 	const set<vector<uint>>* restrictions)
 {
-	CartesianProduct<uint> leafs_prod;
+	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		leafs_prod.incSize();
-		if (!mindex[i]->vars.count(c)) {
-				cout << "BBB" << endl;
-			}
 		for (uint s : mindex[i]->vars.at(c)) {
 			leafs_prod.incDim(s);
 		}
@@ -209,12 +151,9 @@ void unify_rule_step(
 	MultyUnifiedTerms& terms,
 	const set<vector<uint>>* restrictions)
 {
-	CartesianProduct<uint> leafs_prod;
+	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		leafs_prod.incSize();
-		if (!mindex[i]->rules.count(r)) {
-				cout << "CCC" << endl;
-			}
 		for (uint s : mindex[i]->rules.at(r).leafs) {
 			leafs_prod.incDim(s);
 		}
@@ -240,61 +179,69 @@ struct MIndexSpace {
 	map<LightSymbol, set<uint>> vars;
 	map<LightSymbol, set<uint>> consts;
 	map<const Rule*, set<uint>> rules;
-	CartesianProduct<LightSymbol> vars_prod;
+	CartesianProd<LightSymbol> vars_prod;
 };
 
 MIndexSpace prepare_space(const vector<const Index*>& mindex) {
 	MIndexSpace space;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		space.vars_prod.incSize();
-		for (const auto& p : mindex[i]->vars) {
-			if (p.first.rep) {
-				space.vars[p.first].insert(i);
-				space.vars_prod.incDim(p.first);
-			} else {
-				space.consts[p.first].insert(i);
+		if (mindex[i]->size == 0) {
+			space.vars_prod.skip(i);
+		} else {
+			for (const auto& p : mindex[i]->vars) {
+				if (p.first.rep) {
+					space.vars[p.first].insert(i);
+					space.vars_prod.incDim(p.first);
+				} else {
+					space.consts[p.first].insert(i);
+				}
 			}
-		}
-		for (const auto& p : mindex[i]->rules) {
-			space.rules[p.first].insert(i);
+			for (const auto& p : mindex[i]->rules) {
+				space.rules[p.first].insert(i);
+			}
 		}
 	}
 	return space;
 }
 
-void unify_variables(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+void unify_variables(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, const MIndexSpace& space)
 {
 	for (auto p : space.vars) {
 		LightSymbol v = p.first;
-		space.vars_prod.reset();
+		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 		for (uint i : p.second) {
-			space.vars_prod.fix(i, v);
+			vars_prod.fix(i, v);
 		}
-		while (true) {
-			vector<LightSymbol> w = space.vars_prod.data();
-			unify_vars_step(mindex, w, LightTree(v), unif, terms, restrictions);
-			if (!space.vars_prod.hasNext()) {
-				break;
+		if (vars_prod.card() > 0) {
+			while (true) {
+				vector<LightSymbol> w = vars_prod.data();
+				unify_vars_step(mindex, w, LightTree(v), unif, terms, restrictions);
+				if (!vars_prod.hasNext()) {
+					break;
+				}
+				vars_prod.makeNext();
 			}
-			space.vars_prod.makeNext();
+		} else if (p.second.size() == mindex.size()) {
+			// All indexes have variable 'v'
+			unify_const_step(mindex, v, unif, terms, restrictions);
 		}
 	}
 }
 
-void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, const MIndexSpace& space)
 {
 	for (auto p : space.consts) {
 		set<uint> consts_part = p.second;
 		LightSymbol c = p.first;
-		space.vars_prod.reset();
+		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 		for (uint i : p.second) {
-			space.vars_prod.skip(i);
+			vars_prod.skip(i);
 		}
-		if (space.vars_prod.card() > 0) {
+		if (vars_prod.card() > 0) {
 			while (true) {
-				vector<LightSymbol> w = space.vars_prod.data();
-
-				CartesianProduct<uint> const_leafs_prod;
+				vector<LightSymbol> w = vars_prod.data();
+				CartesianProd<uint> const_leafs_prod;
 				for (uint i = 0; i < mindex.size(); ++ i) {
 					const_leafs_prod.incSize();
 					if (consts_part.count(i)) {
@@ -322,10 +269,10 @@ void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mu
 						const_leafs_prod.makeNext();
 					}
 				}
-				if (!space.vars_prod.hasNext()) {
+				if (!vars_prod.hasNext()) {
 					break;
 				}
-				space.vars_prod.makeNext();
+				vars_prod.makeNext();
 			}
 		} else if (p.second.size() == mindex.size()) {
 			// All indexes have constant 'c'
@@ -334,7 +281,7 @@ void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mu
 	}
 }
 
-void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, const MIndexSpace& space)
 {
 	vector<MultyUnifiedTerms> ch(r->arity());
 	vector<const Index*> x;
@@ -377,21 +324,22 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 }
 
 
-void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, MIndexSpace& space)
+void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, MultyUnifiedTerms& terms, const Restrictions* restrictions, const MIndexSpace& space)
 {
 	for (auto p : space.rules) {
 		const Rule* r = p.first;
 		set<uint> rules_part = p.second;
 		set<uint> vars_part = complement(rules_part, mindex.size());
-		space.vars_prod.reset();
+		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
+		vars_prod.reset();
 		for (uint i : p.second) {
-			space.vars_prod.skip(i);
+			vars_prod.skip(i);
 		}
-		if (space.vars_prod.card() > 0) {
+		if (vars_prod.card() > 0) {
 			while (true) {
-				vector<LightSymbol> w = space.vars_prod.data();
+				vector<LightSymbol> w = vars_prod.data();
 				if (r->arity() == 0) {
-					CartesianProduct<uint> leafs_prod;
+					CartesianProd<uint> leafs_prod;
 					for (uint i = 0; i < mindex.size(); ++ i) {
 						leafs_prod.incSize();
 						if (rules_part.count(i)) {
@@ -456,10 +404,10 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 						}
 					}
 				}
-				if (!space.vars_prod.hasNext()) {
+				if (!vars_prod.hasNext()) {
 					break;
 				}
-				space.vars_prod.makeNext();
+				vars_prod.makeNext();
 			}
 		} else if (p.second.size() == mindex.size()) {
 			if (r->arity() == 0) {
@@ -477,9 +425,7 @@ MultyUnifiedTerms unify(const vector<const Index*>& mindex, MultyUnifiedSubs& un
 	MultyUnifiedTerms terms;
 	MIndexSpace space = prepare_space(mindex);
 
-	if (space.vars_prod.card() > 0) {
-		unify_variables(mindex, unif, terms, restrictions, space);
-	}
+	unify_variables(mindex, unif, terms, restrictions, space);
 	unify_consts(mindex, unif, terms, restrictions, space);
 	unify_rules(mindex, unif, terms, restrictions, space);
 

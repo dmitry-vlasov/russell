@@ -42,9 +42,8 @@ else()
 		rus/prover/rus_prover_cartesian.cpp
 		rus/prover/rus_prover_expr.cpp
 		rus/prover/rus_prover_down.cpp
-		rus/prover/rus_prover_down2.cpp
 		rus/prover/rus_prover_index.cpp
-		rus/prover/rus_prover_multy_index.cpp
+		rus/prover/rus_prover_matrix_index.cpp
 		rus/prover/rus_prover_node.cpp
 		rus/prover/rus_prover_proof.cpp
 		rus/prover/rus_prover_show.cpp
@@ -52,6 +51,7 @@ else()
 		rus/prover/rus_prover_tactics.cpp
 		rus/prover/rus_prover_test.cpp
 		rus/prover/rus_prover_unify.cpp
+		rus/prover/rus_prover_vector_index.cpp
 		
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

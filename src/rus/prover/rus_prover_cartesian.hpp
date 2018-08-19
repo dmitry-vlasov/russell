@@ -8,6 +8,9 @@ struct CartesianIter {
 		enum Kind { NORM, FIXED, SKIPPED };
 		Dim(uint s = 0, uint i = 0, Kind k = NORM) :
 			size(s), ind(i), kind(k) { }
+		Dim(const Dim&) = default;
+		Dim& operator = (const Dim&) = default;
+
 		uint size;
 		uint ind;
 		Kind kind;
@@ -15,6 +18,10 @@ struct CartesianIter {
 
 	CartesianIter() = default;
 	CartesianIter(const vector<uint>&);
+	CartesianIter(const CartesianIter&) = default;
+
+	CartesianIter& operator =(const CartesianIter&) = default;
+
 
 	void incDim();
 	void incSize();
@@ -55,13 +62,16 @@ private:
 };
 
 template<class Data>
-struct CartesianProduct {
-	CartesianProduct() = default;
-	CartesianProduct(const vector<vector<Data>>& d) : data_(d) {
+struct CartesianProd {
+	CartesianProd() = default;
+	CartesianProd(const vector<vector<Data>>& d) : data_(d) {
 		for (const auto& v : data_) {
 			addDim(v.size());
 		}
 	}
+	CartesianProd(const CartesianProd&) = default;
+
+	CartesianProd& operator = (const CartesianProd&) = default;
 
 	void incDim(Data d) {
 		/*if (data_.size() == 0) {

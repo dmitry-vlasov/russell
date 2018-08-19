@@ -27,6 +27,7 @@
 #include "rus/prover/rus_prover_down.cpp"
 #include "rus/prover/rus_prover_expr.cpp"
 #include "rus/prover/rus_prover_index.cpp"
+#include "rus/prover/rus_prover_matrix_index.cpp"
 #include "rus/prover/rus_prover_node.cpp"
 #include "rus/prover/rus_prover_proof.cpp"
 #include "rus/prover/rus_prover_show.cpp"
@@ -34,6 +35,7 @@
 #include "rus/prover/rus_prover_tactics.cpp"
 #include "rus/prover/rus_prover_test.cpp"
 #include "rus/prover/rus_prover_unify.cpp"
+#include "rus/prover/rus_prover_vector_index.cpp"
 
 #include "rus/rus_ast.cpp"
 #include "rus/rus_expr.cpp"
