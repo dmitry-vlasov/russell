@@ -18,6 +18,15 @@ struct MatrixIndex {
 			}
 		}
 	}
+	void addProof(const ProofHyp* p, uint i) {
+		const Subst& s = p->sub;
+		for (const auto& x : s.sub) {
+			if (!mindex_.count(x.first)) {
+				mindex_[x.first] = vector<Index>(dim_hyp);
+			}
+			mindex_[x.first][i].add(x.second);
+		}
+	}
 
 	MultyUnifiedSubs compute(MultyUnifiedSubs& unif) {
 		MultyUnifiedSubs s;
@@ -68,10 +77,15 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	uint arity = pr->premises.size();
 	MatrixIndex mi(arity);
 	for (uint i = 0; i < arity; ++ i) {
-		if (!pr->premises[i]->proofs.size()) {
+		const auto& proofs = pr->premises[i]->proofs;
+		if (!proofs.size()) {
 			return MultyUnifiedSubs();
 		}
-		mi.addProofs(pr->premises[i]->proofs, i);
+		if (pr->premises[i].get() != &h->node) {
+			mi.addProofs(proofs, i);
+		} else {
+			mi.addProof(h, i);
+		}
 	}
 
 	static int c = 0;
