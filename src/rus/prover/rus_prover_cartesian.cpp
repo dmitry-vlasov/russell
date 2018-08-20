@@ -94,7 +94,7 @@ bool CartesianIter::current_is(const vector<uint> ind) const {
 uint CartesianIter::card() const {
 	uint active_dims = 0;
 	for (auto& d : dims_) {
-		if (!d.kind == Dim::SKIPPED) {
+		if (d.kind != Dim::SKIPPED) {
 			++active_dims;
 		}
 	}
