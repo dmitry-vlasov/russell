@@ -67,7 +67,7 @@ Restrictions reduce_restrictions(const Restrictions& restrictions, const set<uin
 void unify_vars_step(
 	const vector<const Index*>& mindex,
 	const vector<LightSymbol>& w,
-	LightTree t,
+	const LightTree& t,
 	MultyUnifiedSubs& unif,
 	MultyUnifiedTerms& terms,
 	const set<vector<uint>>* restrictions,
@@ -114,6 +114,7 @@ void unify_vars_step(
 	}
 }
 
+
 void unify_const_step(
 	const vector<const Index*>& mindex,
 	LightSymbol c,
@@ -122,9 +123,9 @@ void unify_const_step(
 	const set<vector<uint>>* restrictions)
 {
 	CartesianProd<uint> leafs_prod;
-	for (uint i = 0; i < mindex.size(); ++ i) {
+	for (const auto& i : mindex) {
 		leafs_prod.incSize();
-		for (uint s : mindex[i]->vars.at(c)) {
+		for (uint s : i->vars.at(c)) {
 			leafs_prod.incDim(s);
 		}
 	}
@@ -152,9 +153,9 @@ void unify_rule_step(
 	const set<vector<uint>>* restrictions)
 {
 	CartesianProd<uint> leafs_prod;
-	for (uint i = 0; i < mindex.size(); ++ i) {
+	for (const auto& i : mindex) {
 		leafs_prod.incSize();
-		for (uint s : mindex[i]->rules.at(r).leafs) {
+		for (uint s : i->rules.at(r).leafs) {
 			leafs_prod.incDim(s);
 		}
 	}
@@ -173,7 +174,6 @@ void unify_rule_step(
 		leafs_prod.makeNext();
 	}
 }
-
 
 struct MIndexSpace {
 	map<LightSymbol, set<uint>> vars;
@@ -331,7 +331,6 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 		set<uint> rules_part = p.second;
 		set<uint> vars_part = complement(rules_part, mindex.size());
 		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-		vars_prod.reset();
 		for (uint i : p.second) {
 			vars_prod.skip(i);
 		}
