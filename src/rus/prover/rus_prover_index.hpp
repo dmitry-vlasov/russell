@@ -27,7 +27,7 @@ struct Index {
 
 
 template<class Data>
-struct UnifyMap {
+struct IndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Data  data;
@@ -55,6 +55,8 @@ private:
 	Index index;
 	vector<Data> data;
 };
+
+typedef IndexMap<uint> IndexInt;
 
 extern bool debug_index;
 extern bool debug_ind;

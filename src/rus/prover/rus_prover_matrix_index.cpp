@@ -8,7 +8,8 @@ struct MatrixIndex {
 	MatrixIndex(uint hd) : dim_hyp(hd) { }
 
 	void addProofs(const Hyp::Proofs& proofs, uint i) {
-		for (const auto& p : proofs) {
+		for (uint j = 0; j < proofs.size(); ++j) {
+			auto p = proofs[j].get();
 			const Subst& s = p->sub;
 			for (const auto& x : s.sub) {
 				if (!mindex_.count(x.first)) {

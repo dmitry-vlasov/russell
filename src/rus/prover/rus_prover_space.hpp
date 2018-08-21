@@ -30,8 +30,8 @@ struct Space {
 	Proof*            proof = nullptr; // for Oracle tactic
 	Hyp*              root;
 	PropRef           prop;
-	UnifyMap<HypRef>  hyps;
-	UnifyMap<PropRef> assertions;
+	IndexMap<HypRef>  hyps;
+	IndexMap<PropRef> assertions;
 	map<uint, uint>   vars;
 
 	Return init();
