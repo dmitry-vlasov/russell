@@ -34,26 +34,29 @@ struct IndexMap {
 		Subst sub;
 	};
 	void add(const LightTree& t, const Data& d) {
-		index.add(t);
-		data.push_back(d);
+		index_.add(t);
+		data_.push_back(d);
 	}
 	vector<Unified> unify(const LightTree& t) {
 		vector<Unified> ret;
-		Index::Unified unif = index.unify(t);
+		Index::Unified unif = index_.unify(t);
 		for (auto& p : unif) {
 			if (p.second.ok) {
-				ret.emplace_back(data[p.first], std::move(p.second));
+				ret.emplace_back(data_[p.first], std::move(p.second));
 			}
 		}
 		return ret;
 	}
 	string show() const {
-		return index.show();
+		return index_.show();
 	}
 
+	const Index& index() const { return index_; }
+	const vector<Data>& data() const { return data_; }
+
 private:
-	Index index;
-	vector<Data> data;
+	Index index_;
+	vector<Data> data_;
 };
 
 typedef IndexMap<uint> IndexInt;
