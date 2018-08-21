@@ -48,6 +48,7 @@ struct CartesianIter {
 	bool hasNext() const;
 	uint size() const { return dims_.size(); }
 	uint card() const;
+	uint activeSize() const;
 	uint operator[] (uint i) const { return dims_[i].ind; }
 	uint& operator[] (uint i) { return dims_[i].ind; }
 	Dim get(uint i) const { return dims_[i]; }
@@ -109,6 +110,7 @@ struct CartesianProd {
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
 	uint card() const { return iter_.card(); }
+	uint activeSize() const { return iter_.activeSize(); }
 	const CartesianIter& iter() const { return iter_; }
 
 	Data operator[] (uint i) const {

@@ -35,6 +35,16 @@ void CartesianIter::reset(bool drop_kind) {
 	}
 }
 
+uint CartesianIter::activeSize() const {
+	uint active_size = 0;
+	for (auto& d : dims_) {
+		if (d.kind != Dim::SKIPPED) {
+			++active_size;
+		}
+	}
+	return active_size;
+}
+
 void CartesianIter::makeNext() {
 	for (auto& d : dims_) {
 		if (d.kind != Dim::NORM) {
@@ -92,13 +102,7 @@ bool CartesianIter::current_is(const vector<uint> ind) const {
 	return true;
 }
 uint CartesianIter::card() const {
-	uint active_dims = 0;
-	for (auto& d : dims_) {
-		if (d.kind != Dim::SKIPPED) {
-			++active_dims;
-		}
-	}
-	if (active_dims == 0) {
+	if (activeSize() == 0) {
 		return 0;
 	}
 	uint card = 1;

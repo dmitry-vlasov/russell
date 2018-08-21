@@ -180,6 +180,7 @@ struct MIndexSpace {
 	map<LightSymbol, set<uint>> consts;
 	map<const Rule*, set<uint>> rules;
 	CartesianProd<LightSymbol> vars_prod;
+	uint active_size = 0;
 };
 
 MIndexSpace prepare_space(const vector<const Index*>& mindex) {
@@ -189,6 +190,7 @@ MIndexSpace prepare_space(const vector<const Index*>& mindex) {
 		if (mindex[i]->size == 0) {
 			space.vars_prod.skip(i);
 		} else {
+			++ space.active_size;
 			for (const auto& p : mindex[i]->vars) {
 				if (p.first.rep) {
 					space.vars[p.first].insert(i);
@@ -222,7 +224,7 @@ void unify_variables(const vector<const Index*>& mindex, MultyUnifiedSubs& unif,
 				}
 				vars_prod.makeNext();
 			}
-		} else if (p.second.size() == mindex.size()) {
+		} else if (p.second.size() == space.active_size) {
 			// All indexes have variable 'v'
 			unify_const_step(mindex, v, unif, terms, restrictions);
 		}
@@ -274,7 +276,7 @@ void unify_consts(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mu
 				}
 				vars_prod.makeNext();
 			}
-		} else if (p.second.size() == mindex.size()) {
+		} else if (p.second.size() == space.active_size) {
 			// All indexes have constant 'c'
 			unify_const_step(mindex, c, unif, terms, restrictions);
 		}
@@ -290,7 +292,6 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 			x.push_back(ind->rules.at(r).child[0].get());
 		} else {
 			cout << "XXX" << endl;
-			return;
 		}
 	}
 	ch[0] = unify(x, unif, restrictions);
@@ -305,7 +306,6 @@ void unify_branch_rule(const vector<const Index*>& mindex, const Rule* r, MultyU
 				x.push_back(ind->rules.at(r).child[i].get());
 			} else {
 				cout << "YYY" << endl;
-				return;
 			}
 		}
 		ch[i] = unify(x, unif, &common);
@@ -408,7 +408,7 @@ void unify_rules(const vector<const Index*>& mindex, MultyUnifiedSubs& unif, Mul
 				}
 				vars_prod.makeNext();
 			}
-		} else if (p.second.size() == mindex.size()) {
+		} else if (p.second.size() == space.active_size) {
 			if (r->arity() == 0) {
 				// All indexes have zero-ary rule 'r'
 				unify_rule_step(mindex, r, unif, terms, restrictions);
