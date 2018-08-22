@@ -10,9 +10,10 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 		const Subst& s = p->sub;
 		for (const auto& x : s.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<IndexInt>(dim_hyp);
+				mindex_[x.first] = vector<Cell>(dim_hyp);
 			}
-			mindex_[x.first][i].add(x.second, j);
+			mindex_[x.first][i].index.add(x.second, j);
+			mindex_[x.first][i].proofsNumber = proofs.size();
 		}
 	}
 }
@@ -20,9 +21,10 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 	const Subst& s = p->sub;
 	for (const auto& x : s.sub) {
 		if (!mindex_.count(x.first)) {
-			mindex_[x.first] = vector<IndexInt>(dim_hyp);
+			mindex_[x.first] = vector<Cell>(dim_hyp);
 		}
-		mindex_[x.first][i].add(x.second, j);
+		mindex_[x.first][i].index.add(x.second, j);
+		mindex_[x.first][i].proofsNumber = 1;
 	}
 }
 
@@ -31,7 +33,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
 		for (auto& i : p.second) {
-			vectIndex.add(i);
+			vectIndex.add(i.index);
 		}
 		if (debug_multy_index) {
 			cout << "MultyUnifiedSubs compute(MultyUnifiedSubs& unif)" << endl;
@@ -55,7 +57,7 @@ string MatrixIndex::show() const {
 		ret += "==============================\n";
 		for (uint i = 0; i < p.second.size(); ++ i) {
 			ret += "index: " + to_string(i) + "\n";
-			ret += p.second[i].show() + "\n";
+			ret += p.second[i].index.show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
 	}

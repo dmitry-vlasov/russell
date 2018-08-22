@@ -3,6 +3,11 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct MatrixIndex {
+	struct Cell {
+		IndexInt index;
+		uint proofsNumber;
+	};
+
 	MatrixIndex(uint hd) : dim_hyp(hd) { }
 
 	void addProofs(const Hyp::Proofs& proofs, uint i);
@@ -14,7 +19,7 @@ struct MatrixIndex {
 
 private:
 	uint dim_hyp;
-	map<LightSymbol, vector<IndexInt>> mindex_;
+	map<LightSymbol, vector<Cell>> mindex_;
 };
 
 }}}

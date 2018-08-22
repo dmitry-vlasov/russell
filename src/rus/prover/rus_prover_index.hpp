@@ -19,7 +19,7 @@ struct Index {
 	uint size = 0;
 
 	uint add(const LightTree&);
-	Index::Unified unify(const LightTree&) const;
+	Unified unify(const LightTree&) const;
 	string show() const;
 
 	vector<LightTree> exprs;

@@ -109,7 +109,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 
 vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, h);
-	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, h);
+	/*MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, h);
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "SEQUENTIAL:" << endl;
@@ -124,7 +124,7 @@ vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		cout << "SUB UNIFICATION EQUAL" << endl;
-	}
+	}*/
 
 	for (const auto& p : unified_subs_1) {
 		vector<uint> ind = p.first;
