@@ -23,7 +23,7 @@ struct CartesianIter {
 	CartesianIter& operator =(const CartesianIter&) = default;
 
 
-	void incDim();
+	void incDim(uint i = -1);
 	void incSize();
 
 	void addDim(uint d);
@@ -74,12 +74,13 @@ struct CartesianProd {
 
 	CartesianProd& operator = (const CartesianProd&) = default;
 
-	void incDim(Data d) {
-		/*if (data_.size() == 0) {
-			incSize();
-		}*/
-		data_[data_.size() - 1].push_back(d);
-		iter_.incDim();
+	void incDim(Data d, uint i = -1) {
+		if (i == -1) {
+			data_[data_.size() - 1].push_back(d);
+		} else {
+			data_[i].push_back(d);
+		}
+		iter_.incDim(i);
 	}
 	void incSize() {
 		data_.push_back(vector<Data>());
@@ -87,6 +88,9 @@ struct CartesianProd {
 	}
 
 	void addDim(const vector<Data>& v) {
+		iter_.addDim(v.size());
+	}
+	void add2Dim(const vector<Data>& v) {
 		iter_.addDim(v.size());
 	}
 	void addFixed(const vector<Data>& v, uint i) {

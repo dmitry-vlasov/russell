@@ -4,40 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct ProofIndex {
-	enum Kind {
-		PROOF_INDEX, // Actual proof index.
-		PROOFS_SIZE  // A wildcard for any proof index from 0 to data - 1.
-	};
-	uint data;
-	Kind kind;
-
-	bool operator < (const ProofIndex& piv) const {
-		if (kind < piv.kind) {
-			return true;
-		} else if (kind > piv.kind) {
-			return false;
-		} else {
-			return data < piv.data;
-		}
-	}
-};
-
-template<class T, int i>
-struct ProofIndexMap;
-
-template<class T, int i>
-struct ProofIndexMap {
-	map<ProofIndex, ProofIndexMap<T, i - 1>> m;
-};
-
-template<class T>
-struct ProofIndexMap<T, 0> {
-	T data;
-};
-
-
-
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 typedef map<vector<uint>, LightTree> MultyUnifiedTerms;
 typedef set<vector<uint>> Restrictions;
@@ -78,6 +44,8 @@ struct VectorIndex {
 private:
 	vector<IndexPtr> vect_;
 };
+
+
 
 MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const Restrictions* restrictions = nullptr);
 

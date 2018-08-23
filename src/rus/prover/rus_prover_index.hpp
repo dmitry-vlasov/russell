@@ -6,16 +6,34 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct Index {
-	typedef set<uint> LeafInds;
-	struct Node {
-		bool is_leaf() const { return !child.size(); }
-		LeafInds leafs;
+	struct Leaf {
+		set<uint> inds;
+	};
+	struct Branch {
+		Branch(uint a) {
+			for (uint i = 0; i < a; ++ i) {
+				child.push_back(make_unique<Index>());
+			}
+		}
 		vector<unique_ptr<Index>> child;
+	};
+	struct Node {
+		enum Kind { LEAF, BRANCH };
+		Node(Leaf&& l) : node(std::move(l)) { }
+		Node(Branch&& b) : node(std::move(b)) { }
+
+		Kind kind() const { return static_cast<Kind>(node.index()); }
+		Leaf& leaf() { return std::get<Leaf>(node); }
+		Branch& branch() { return std::get<Branch>(node); }
+		const Leaf& leaf() const { return std::get<Leaf>(node); }
+		const Branch& branch() const { return std::get<Branch>(node); }
+
+		variant<Leaf, Branch> node;
 	};
 	typedef map<uint, Subst> Unified;
 
 	map<const Rule*, Node> rules;
-	map<LightSymbol, LeafInds> vars;
+	map<LightSymbol, Leaf> vars;
 	uint size = 0;
 
 	uint add(const LightTree&);

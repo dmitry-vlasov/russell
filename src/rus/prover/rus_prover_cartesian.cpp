@@ -8,8 +8,12 @@ CartesianIter::CartesianIter(const vector<uint>& dims) {
 	}
 }
 
-void CartesianIter::incDim() {
-	++ dims_[dims_.size() - 1].size;
+void CartesianIter::incDim(uint i) {
+	if (i == -1) {
+		++ dims_[dims_.size() - 1].size;
+	} else {
+		++ dims_[i].size;
+	}
 }
 
 void CartesianIter::incSize() {

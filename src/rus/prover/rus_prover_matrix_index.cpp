@@ -35,9 +35,6 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		for (auto& i : p.second) {
 			vectIndex.add(i.index);
 		}
-		if (debug_multy_index) {
-			cout << "MultyUnifiedSubs compute(MultyUnifiedSubs& unif)" << endl;
-		}
 		MultyUnifiedTerms terms = unify(vectIndex, unif, nullptr);
 		for (const auto& t : terms) {
 			if (debug_multy_index) {
