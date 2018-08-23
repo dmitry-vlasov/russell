@@ -35,7 +35,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		for (auto& i : p.second) {
 			vectIndex.add(i.index);
 		}
-		MultyUnifiedTerms terms = unify(vectIndex, unif, nullptr);
+		MultyUnifiedTerms terms = unify(vectIndex, unif);
 		for (const auto& t : terms) {
 			if (debug_multy_index) {
 				cout << prover::show(t.first) << " --> term: " << prover::show(terms[t.first]) << endl;

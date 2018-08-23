@@ -67,13 +67,6 @@ inline MultyUnifiedSubs reduce_subs(const MultyUnifiedSubs& subs, const vector<u
 	return ret;
 }
 
-inline Restrictions reduce_restrictions(const Restrictions& restrictions, const vector<uint>& s) {
-	Restrictions ret;
-	for (const auto& leafs : restrictions) {
-		ret.insert(reduce_leafs(leafs, s));
-	}
-	return ret;
-}
 
 }}}
 

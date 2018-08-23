@@ -6,7 +6,6 @@ namespace mdl { namespace rus { namespace prover {
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 typedef map<vector<uint>, LightTree> MultyUnifiedTerms;
-typedef set<vector<uint>> Restrictions;
 
 struct VectorIndex {
 	struct IndexPtr {
@@ -38,17 +37,18 @@ struct VectorIndex {
 		}
 		return ret;
 	}
-	const vector<IndexPtr>& vect() const { return vect_; }
-	void clear() { vect_.clear(); }
-
+	const vector<IndexPtr>& vect() const {
+		return vect_;
+	}
+	void clear() {
+		vect_.clear();
+	}
 
 private:
 	vector<IndexPtr> vect_;
 };
 
-
-
-MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const Restrictions* restrictions = nullptr);
+MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif);
 
 string show(const VectorIndex& vindex);
 string show(const set<uint>&);

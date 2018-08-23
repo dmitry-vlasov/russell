@@ -36,8 +36,8 @@ CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
 }
 
 struct MIndexSpace {
-	MIndexSpace(const VectorIndex& vi, MultyUnifiedSubs& un, const LeafVector& f, const Restrictions* r) :
-	total_size(vi.size()), vindex(vi), unif(un), fixed(f), restrictions(r) {
+	MIndexSpace(const VectorIndex& vi, MultyUnifiedSubs& un, const LeafVector& f) :
+	vindex(vi), unif(un), fixed(f) {
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			if (!fixed[i]) {
 				vars_prod.incSize();
@@ -63,16 +63,14 @@ struct MIndexSpace {
 		}
 		while (true) {
 			vector<uint> leafs = leafs_prod.data();
-			if (!restrictions || restrictions->count(leafs)) {
-				if (w.size()) {
-					LightTree unified = unify_step(unif[leafs], w, t);
-					if (!unified.empty()) {
-						terms[leafs] = unified;
-					}
-				} else {
-					unif[leafs];
-					terms[leafs] = t;
+			if (w.size()) {
+				LightTree unified = unify_step(unif[leafs], w, t);
+				if (!unified.empty()) {
+					terms[leafs] = unified;
 				}
+			} else {
+				unif[leafs];
+				terms[leafs] = t;
 			}
 			if (!leafs_prod.hasNext()) {
 				break;
@@ -85,22 +83,20 @@ struct MIndexSpace {
 	set<const Rule*> rules;
 	CartesianProd<LightSymbol> vars_prod;
 
-	uint total_size;
 	const VectorIndex& vindex;
 	MultyUnifiedSubs& unif;
 	MultyUnifiedTerms terms;
 	LeafVector fixed;
-	const Restrictions* restrictions;
 };
 
-MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const LeafVector& fixed, const Restrictions* restrictions = nullptr);
+MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const LeafVector& fixed);
 
 void unify_symbs(MIndexSpace& space)
 {
 	for (LightSymbol s : space.symbs) {
 		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 		LeafVector s_leafs = space.fixed;
-		for (uint i = 0; i < space.total_size; ++ i) {
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (space.vindex.index(i)->vars.count(s)) {
 				vars_prod.skip(i);
 				s_leafs[i] = &space.vindex.index(i)->vars.at(s);
@@ -110,7 +106,7 @@ void unify_symbs(MIndexSpace& space)
 			while (true) {
 				vector<LightSymbol> w = vars_prod.data();
 				LeafVector w_leafs = s_leafs;
-				for (uint i = 0; i < space.total_size; ++ i) {
+				for (uint i = 0; i < space.vindex.size(); ++ i) {
 					if (space.vindex.index(i)->vars.count(w[i])) {
 						w_leafs[i] = &space.vindex.index(i)->vars.at(w[i]);
 					}
@@ -134,7 +130,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	assert(r->arity() == 0);
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector r_leafs = space.fixed;
-	for (uint i = 0; i < space.total_size; ++ i) {
+	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (space.vindex.index(i)->rules.count(r)) {
 			r_leafs[i] = &space.vindex.index(i)->rules.at(r).leaf();
 		}
@@ -143,7 +139,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
 			LeafVector w_leafs = r_leafs;
-			for (uint i = 0; i < space.total_size; ++ i) {
+			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (space.vindex.index(i)->vars.count(w[i])) {
 					w_leafs[i] = &space.vindex.index(i)->vars.at(w[i]);
 				}
@@ -165,39 +161,29 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 {
 	vector<MultyUnifiedTerms> child_terms(r->arity());
 	VectorIndex child_vindex;
-	for (uint i = 0; i < space.total_size; ++ i) {
-		const Index* ind =
-			space.vindex.index(i)->rules.count(r) ?
-			space.vindex.index(i)->rules.at(r).branch().child[0].get() :
-			nullptr;
-		child_vindex.add(ind, space.vindex.values(i));
-	}
-	child_terms[0] = unify(child_vindex, space.unif, leafs, space.restrictions);
-	Restrictions common;
-	for (const auto& p : child_terms[0]) {
-		common.insert(p.first);
-	}
-	for (uint k = 1; k < r->arity(); ++ k) {
+	for (uint k = 0; k < r->arity(); ++ k) {
 		child_vindex.clear();
-		for (uint i = 0; i < space.total_size; ++ i) {
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			const Index* ind =
 				space.vindex.index(i)->rules.count(r) ?
 				space.vindex.index(i)->rules.at(r).branch().child[k].get() :
 				nullptr;
 			child_vindex.add(ind, space.vindex.values(i));
 		}
-		child_terms[k] = unify(child_vindex, space.unif, leafs, &common);
-		common.clear();
-		for (const auto& p : child_terms[k]) {
-			common.insert(p.first);
-		}
+		child_terms[k] = unify(child_vindex, space.unif, leafs);
 	}
-	for (const auto& c : common) {
-		LightTree::Children childern;
+	for (const auto& p : child_terms[0]) {
+		LightTree::Children children;
 		for (uint i = 0; i < r->arity(); ++ i) {
-			childern.push_back(make_unique<LightTree>(child_terms[i][c]));
+			if (child_terms[i].count(p.first)) {
+				children.push_back(make_unique<LightTree>(child_terms[i][p.first]));
+			} else {
+				break;
+			}
 		}
-		space.terms[c] = LightTree(r, childern);
+		if (children.size() == r->arity()) {
+			space.terms[p.first] = LightTree(r, children);
+		}
 	}
 }
 
@@ -212,7 +198,7 @@ void unify_rules(MIndexSpace& space)
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
 			LeafVector w_leafs = space.fixed;
-			for (uint i = 0; i < space.total_size; ++ i) {
+			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (space.vindex.index(i)->vars.count(w[i])) {
 					w_leafs[i] = &space.vindex.index(i)->vars.at(w[i]);
 				}
@@ -226,16 +212,16 @@ void unify_rules(MIndexSpace& space)
 	}
 }
 
-MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const LeafVector& fixed, const Restrictions* restrictions)
+MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const LeafVector& fixed)
 {
-	MIndexSpace space(vindex, unif, fixed, restrictions);
+	MIndexSpace space(vindex, unif, fixed);
 	unify_symbs(space);
 	unify_rules(space);
 	return space.terms;
 }
 
-MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif, const Restrictions* restrictions) {
-	return unify(vindex, unif, LeafVector(vindex.size(), nullptr), restrictions);
+MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif) {
+	return unify(vindex, unif, LeafVector(vindex.size(), nullptr));
 }
 
 }}}
