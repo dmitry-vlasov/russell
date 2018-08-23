@@ -117,13 +117,6 @@ struct CartesianProd {
 	uint activeSize() const { return iter_.activeSize(); }
 	const CartesianIter& iter() const { return iter_; }
 
-	Data operator[] (uint i) const {
-		if (iter_.get(i).kind == CartesianIter::Dim::SKIPPED) {
-			return data_[i][iter_[i]];
-		} else {
-			return Data();
-		}
-	}
 	vector<Data> data() const {
 		vector<Data> ret;
 		for (uint i = 0; i < iter_.size(); ++ i) {

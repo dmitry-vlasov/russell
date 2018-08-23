@@ -39,6 +39,7 @@ struct VectorIndex {
 		return ret;
 	}
 	const vector<IndexPtr>& vect() const { return vect_; }
+	void clear() { vect_.clear(); }
 
 
 private:
