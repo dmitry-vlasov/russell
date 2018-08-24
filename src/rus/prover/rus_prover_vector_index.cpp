@@ -168,11 +168,15 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 	for (uint k = 0; k < r->arity(); ++ k) {
 		child_vindex.clear();
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			const Index* ind =
-				space.vindex.index(i)->rules.count(r) ?
-				space.vindex.index(i)->rules.at(r).branch().child[k].get() :
-				nullptr;
-			child_vindex.add(ind, space.vindex.values(i));
+			if (!leafs[i]) {
+				if (!space.vindex.index(i)->rules.count(r)) {
+					return;
+				}
+				const Index* ind = space.vindex.index(i)->rules.at(r).branch().child[k].get();
+				child_vindex.add(ind, space.vindex.values(i));
+			} else {
+				child_vindex.add(space.vindex.index(i), space.vindex.values(i));
+			}
 		}
 		child_terms[k] = unify(child_vindex, space.unif, leafs);
 	}

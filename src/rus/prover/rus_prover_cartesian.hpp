@@ -25,7 +25,6 @@ struct CartesianIter {
 
 	CartesianIter& operator =(const CartesianIter&) = default;
 
-
 	void incDim(uint i = -1);
 	void incSize();
 

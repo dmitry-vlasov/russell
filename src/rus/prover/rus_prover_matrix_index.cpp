@@ -43,7 +43,7 @@ MultyUnifiedTerms multiply(const MultyUnifiedTerms& terms, const vector<uint>& f
 	for (const auto& p : terms) {
 		vector<uint> part_leafs = p.first;
 		while (true) {
-			vector<uint> complete_leafs;
+			vector<uint> complete_leafs(factors.size(), -1);
 			vector<uint> mult_leafs = mult_prod.data();
 			for (uint i = 0, j = 0, k = 0; i < factors.size(); ++ i) {
 				if (factors[i] != -1) {

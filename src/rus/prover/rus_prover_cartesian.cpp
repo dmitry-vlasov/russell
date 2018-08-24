@@ -121,7 +121,7 @@ uint CartesianIter::card() const {
 }
 bool CartesianIter::hasNext() const {
 	for (auto& d : dims_) {
-		if (d.kind == Dim::NORM && (d.ind + 1 != d.size)) {
+		if (d.kind == Dim::NORM && (d.ind + 1 < d.size)) {
 			return true;
 		}
 	}
