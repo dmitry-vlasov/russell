@@ -72,7 +72,13 @@ struct MIndexSpace {
 			return;
 		}
 		while (true) {
+
 			vector<uint> leafs = leafs_prod.data();
+			if (leafs.size() != vindex.size()) {
+				cout << "AAA" << endl;
+				assert(false);
+			}
+			cout << "LEAFS: " << prover::show(leafs) << endl;
 			if (w.size()) {
 				LightTree unified = unify_step(unif[leafs], w, t);
 				if (!unified.empty()) {
@@ -173,9 +179,9 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 					return;
 				}
 				const Index* ind = space.vindex.index(i)->rules.at(r).branch().child[k].get();
-				child_vindex.add(ind, space.vindex.values(i));
+				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofsSize(i));
 			} else {
-				child_vindex.add(space.vindex.index(i), space.vindex.values(i));
+				child_vindex.add(space.vindex.index(i), space.vindex.values(i), space.vindex.proofsSize(i));
 			}
 		}
 		child_terms[k] = unify(child_vindex, space.unif, leafs);

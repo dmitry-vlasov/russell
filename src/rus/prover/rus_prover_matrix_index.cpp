@@ -50,6 +50,9 @@ MultyUnifiedTerms multiply(const MultyUnifiedTerms& terms, const vector<uint>& f
 					complete_leafs[i] = mult_leafs[k++];
 				}
 			}
+
+			//cout << "complete_leafs = " << show(complete_leafs) << endl;
+
 			ret[complete_leafs] = p.second;
 			if (!mult_prod.hasNext()) {
 				break;
@@ -68,24 +71,32 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		for (uint i = 0; i < dim_hyp; ++i) {
 			const auto& ind = p.second[i];
 			if (ind.index().size) {
-				vectIndex.add(ind);
+				vectIndex.add(ind, proofSizes_[i]);
 				factors.push_back(-1);
 			} else {
 				factors.push_back(proofSizes_[i]);
 			}
 		}
 		terms[p.first] = multiply(unify(vectIndex, unif), factors);
+		if (debug_multy_index) {
+			cout << "unified terms for: " << prover::show(p.first) << endl;
+			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;
+			cout << "unifier:" << endl;
+			cout << Indent::paragraph(prover::show(unif)) << endl;
+		}
 	}
 	set<vector<uint>> common;
 	for (const auto& p : terms.begin()->second) {
 		bool is_common = true;
 		for (const auto& q : terms) {
 			if (!q.second.count(p.first)) {
+				cout << "non common = " << prover::show(p.first) << endl;
 				is_common = false;
 				break;
 			}
 		}
 		if (is_common) {
+			cout << "common = " << prover::show(p.first) << endl;
 			common.insert(p.first);
 		}
 	}
@@ -143,12 +154,14 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	//if (debug_multy_index) {
+	debug_multy_index = (c == 2);
+	if (debug_multy_index) {
 		cout << "MATRIX no. " << c << endl;
 		cout << mi.show() << endl;
-	//}
+	}
 
-	return unify_subs(mi);}
+	return unify_subs(mi);
+}
 
 }}}
 
