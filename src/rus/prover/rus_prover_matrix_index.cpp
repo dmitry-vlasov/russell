@@ -5,29 +5,27 @@
 namespace mdl { namespace rus { namespace prover {
 
 void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
+	proofSizes_[i] = proofs.size();
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
-		const Subst& s = p->sub;
-		for (const auto& x : s.sub) {
+		for (const auto& x : p->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<Cell>(dim_hyp);
+				mindex_[x.first] = vector<IndexInt>(dim_hyp);
 			}
-			mindex_[x.first][i].index.add(x.second, j);
-			mindex_[x.first][i].proofsNumber = proofs.size();
+			mindex_[x.first][i].add(x.second, j);
 		}
-	}
-}
-void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
-	const Subst& s = p->sub;
-	for (const auto& x : s.sub) {
-		if (!mindex_.count(x.first)) {
-			mindex_[x.first] = vector<Cell>(dim_hyp);
-		}
-		mindex_[x.first][i].index.add(x.second, j);
-		mindex_[x.first][i].proofsNumber = 1;
 	}
 }
 
+void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
+	proofSizes_[i] = 1;
+	for (const auto& x : p->sub.sub) {
+		if (!mindex_.count(x.first)) {
+			mindex_[x.first] = vector<IndexInt>(dim_hyp);
+		}
+		mindex_[x.first][i].add(x.second, j);
+	}
+}
 
 MultyUnifiedTerms multiply(const MultyUnifiedTerms& terms, const vector<uint>& factors) {
 	CartesianProd<uint> mult_prod;
@@ -46,7 +44,7 @@ MultyUnifiedTerms multiply(const MultyUnifiedTerms& terms, const vector<uint>& f
 			vector<uint> complete_leafs(factors.size(), -1);
 			vector<uint> mult_leafs = mult_prod.data();
 			for (uint i = 0, j = 0, k = 0; i < factors.size(); ++ i) {
-				if (factors[i] != -1) {
+				if (factors[i] == -1) {
 					complete_leafs[i] = part_leafs[j++];
 				} else {
 					complete_leafs[i] = mult_leafs[k++];
@@ -67,12 +65,13 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
 		vector<uint> factors;
-		for (auto& i : p.second) {
-			if (i.index.index().size) {
-				vectIndex.add(i.index);
+		for (uint i = 0; i < dim_hyp; ++i) {
+			const auto& ind = p.second[i];
+			if (ind.index().size) {
+				vectIndex.add(ind);
 				factors.push_back(-1);
 			} else {
-				factors.push_back(i.proofsNumber);
+				factors.push_back(proofSizes_[i]);
 			}
 		}
 		terms[p.first] = multiply(unify(vectIndex, unif), factors);
@@ -110,7 +109,7 @@ string MatrixIndex::show() const {
 		ret += "==============================\n";
 		for (uint i = 0; i < p.second.size(); ++ i) {
 			ret += "index: " + to_string(i) + "\n";
-			ret += p.second[i].index.show() + "\n";
+			ret += p.second[i].show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
 	}
