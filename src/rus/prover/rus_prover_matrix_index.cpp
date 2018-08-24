@@ -67,17 +67,11 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	map<LightSymbol, MultyUnifiedTerms> terms;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
-		vector<uint> factors;
 		for (uint i = 0; i < dim_hyp; ++i) {
 			const auto& ind = p.second[i];
-			if (ind.index().size) {
-				vectIndex.add(ind, proofSizes_[i]);
-				factors.push_back(-1);
-			} else {
-				factors.push_back(proofSizes_[i]);
-			}
+			vectIndex.add(ind, proofSizes_[i]);
 		}
-		terms[p.first] = multiply(unify(vectIndex, unif), factors);
+		terms[p.first] = unify(vectIndex, unif);
 		if (debug_multy_index) {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
 			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;

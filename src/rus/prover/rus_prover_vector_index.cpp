@@ -24,12 +24,14 @@ CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
 	for (uint i = 0; i < leafs.size(); ++ i) {
 		leafs_prod.incSize();
 		if (!leafs[i]) {
-			cout << "NULL LEAF" << endl;
-			assert(false);
-		}
-		for (uint s : leafs[i]->inds) {
-			uint ind = vi.values(i)->at(s);
-			leafs_prod.incDim(ind);
+			for (uint ind = 0; ind < vi.proofsSize(i); ++ind) {
+				leafs_prod.incDim(ind);
+			}
+		} else {
+			for (uint s : leafs[i]->inds) {
+				uint ind = vi.values(i)->at(s);
+				leafs_prod.incDim(ind);
+			}
 		}
 	}
 	return leafs_prod;
@@ -72,13 +74,12 @@ struct MIndexSpace {
 			return;
 		}
 		while (true) {
-
 			vector<uint> leafs = leafs_prod.data();
-			if (leafs.size() != vindex.size()) {
+			/*if (leafs.size() != vindex.size()) {
 				cout << "AAA" << endl;
 				assert(false);
 			}
-			cout << "LEAFS: " << prover::show(leafs) << endl;
+			cout << "LEAFS: " << prover::show(leafs) << endl;*/
 			if (w.size()) {
 				LightTree unified = unify_step(unif[leafs], w, t);
 				if (!unified.empty()) {
@@ -174,7 +175,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 	for (uint k = 0; k < r->arity(); ++ k) {
 		child_vindex.clear();
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (!leafs[i]) {
+			if (!leafs[i] && space.vindex.index(i)->size) {
 				if (!space.vindex.index(i)->rules.count(r)) {
 					return;
 				}
