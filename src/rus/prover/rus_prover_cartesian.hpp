@@ -10,6 +10,9 @@ struct CartesianIter {
 			size(s), ind(i), kind(k) { }
 		Dim(const Dim&) = default;
 		Dim& operator = (const Dim&) = default;
+		bool carriesData() const {
+			return kind != SKIPPED && size > 0;
+		}
 
 		uint size;
 		uint ind;
@@ -120,9 +123,17 @@ struct CartesianProd {
 	vector<Data> data() const {
 		vector<Data> ret;
 		for (uint i = 0; i < iter_.size(); ++ i) {
-			if (iter_.get(i).kind != CartesianIter::Dim::SKIPPED) {
+			if (iter_.get(i).carriesData()) {
 				ret.push_back(data_[i][iter_[i]]);
 			}
+		}
+		return ret;
+	}
+
+	vector<uint> indexes() const {
+		vector<uint> ret;
+		for (uint i = 0, c = 0; i < iter_.size(); ++ i) {
+			ret.push_back(iter_.get(i).carriesData() ? c++ : -1);
 		}
 		return ret;
 	}

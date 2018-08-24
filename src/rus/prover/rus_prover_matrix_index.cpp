@@ -144,10 +144,10 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	if (debug_multy_index) {
+	//if (debug_multy_index) {
 		cout << "MATRIX no. " << c << endl;
 		cout << mi.show() << endl;
-	}
+	//}
 
 	return unify_subs(mi);}
 
