@@ -9,13 +9,17 @@ bool debug_multy_index = false;
 
 typedef vector<const Index::Leaf*> LeafVector;
 
-inline bool complete(const LeafVector& v) {
-	for (auto x : v) if (!x) return false;
+inline bool complete(const LeafVector& v, const VectorIndex& vi) {
+	for (uint i = 0; i < v.size(); ++i) {
+		if (!v[i] && vi.index(i)) {
+			return false;
+		}
+	}
 	return true;
 }
 
 CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
-	assert(complete(leafs));
+	assert(complete(leafs, vi));
 	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < leafs.size(); ++ i) {
 		leafs_prod.incSize();
@@ -64,7 +68,7 @@ struct MIndexSpace {
 	}
 
 	void finalize(LeafVector leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-		assert(complete(leafs_vect));
+		assert(complete(leafs_vect, vindex));
 		CartesianProd<uint> leafs_prod = leafsProd(vindex, leafs_vect);
 		if (leafs_prod.card() == 0) {
 			return;
@@ -118,7 +122,7 @@ void unify_symbs(MIndexSpace& space)
 				vars_prod.makeNext();
 			}
 		}
-		if (complete(s_leafs)) {
+		if (complete(s_leafs, space.vindex)) {
 			// All indexes have variable 'v'
 			space.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
 		}
@@ -153,7 +157,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 			vars_prod.makeNext();
 		}
 	}
-	if (complete(r_leafs)) {
+	if (complete(r_leafs, space.vindex)) {
 		// All indexes have rule 'r'
 		space.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
 	}
