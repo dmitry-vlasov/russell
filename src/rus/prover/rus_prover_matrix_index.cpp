@@ -27,42 +27,6 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 	}
 }
 
-MultyUnifiedTerms multiply(const MultyUnifiedTerms& terms, const vector<uint>& factors) {
-	CartesianProd<uint> mult_prod;
-	for (auto size : factors) {
-		if (size != -1) {
-			mult_prod.incSize();
-			for (uint i = 0; i < size; ++ i) {
-				mult_prod.incDim(i);
-			}
-		}
-	}
-	MultyUnifiedTerms ret;
-	for (const auto& p : terms) {
-		vector<uint> part_leafs = p.first;
-		while (true) {
-			vector<uint> complete_leafs(factors.size(), -1);
-			vector<uint> mult_leafs = mult_prod.data();
-			for (uint i = 0, j = 0, k = 0; i < factors.size(); ++ i) {
-				if (factors[i] == -1) {
-					complete_leafs[i] = part_leafs[j++];
-				} else {
-					complete_leafs[i] = mult_leafs[k++];
-				}
-			}
-
-			//cout << "complete_leafs = " << show(complete_leafs) << endl;
-
-			ret[complete_leafs] = p.second;
-			if (!mult_prod.hasNext()) {
-				break;
-			}
-			mult_prod.makeNext();
-		}
-	}
-	return ret;
-}
-
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	map<LightSymbol, MultyUnifiedTerms> terms;
 	for (const auto& p : mindex_) {
@@ -71,6 +35,10 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			const auto& ind = p.second[i];
 			vectIndex.add(ind, proofSizes_[i]);
 		}
+
+		//cout << "original vect index:" << endl;
+		//cout << vectIndex.show() << endl << endl;
+
 		terms[p.first] = unify(vectIndex, unif);
 		if (debug_multy_index) {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
@@ -98,7 +66,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
 			if (debug_multy_index) {
-				cout << prover::show(c) << " --> term: " << prover::show(p.second.at(c)) << endl;
+				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c)) << endl;
 			}
 			s[c].sub[p.first] = p.second.at(c);
 		}

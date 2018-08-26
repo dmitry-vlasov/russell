@@ -240,10 +240,15 @@ Index::Unified Index::unify(const LightTree& t) const {
 
 string Index::show() const {
 	string ret;
-	for (const auto&  p : showVector(this)) {
-		ret += to_string(p.first) + " -> " + p.second + "\n";
+	auto lines = showVector(this);
+	if (!lines.size()) {
+		return "\n";
+	} else {
+		for (const auto&  p : lines) {
+			ret += to_string(p.first) + " -> " + p.second + "\n";
+		}
+		return ret;
 	}
-	return ret;
 }
 
 }}}
