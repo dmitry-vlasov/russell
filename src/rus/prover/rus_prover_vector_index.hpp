@@ -4,15 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct SubstTree {
-	Subst     sub;
-	LightTree tree;
-};
-
-typedef map<vector<uint>, Subst> MultyUnifiedSubs;
-typedef map<vector<uint>, LightTree> MultyUnifiedTerms;
-typedef map<vector<uint>, SubstTree> VectorUnified;
-
 struct VectorIndex {
 	struct IndexPtr {
 		IndexPtr(const Index* i, const vector<uint>* v, uint ps, bool e) :
@@ -90,13 +81,21 @@ private:
 	vector<IndexPtr> vect_;
 };
 
-MultyUnifiedTerms unify(const VectorIndex& vindex, MultyUnifiedSubs& unif);
+struct SubstTree {
+	Subst     sub;
+	LightTree tree;
+};
+
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
+typedef map<vector<uint>, SubstTree> VectorUnified;
+
+VectorUnified unify(const VectorIndex& vindex);
 
 string show(const VectorIndex& vindex);
 string show(const set<uint>&);
 string show(const vector<uint>&);
+string show(const VectorUnified&);
 string show(const MultyUnifiedSubs&);
-string show(const MultyUnifiedTerms&);
 
 extern bool debug_multy_index;
 

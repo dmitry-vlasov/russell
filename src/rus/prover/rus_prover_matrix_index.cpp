@@ -28,7 +28,7 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 }
 
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
-	map<LightSymbol, MultyUnifiedTerms> terms;
+	map<LightSymbol, VectorUnified> terms;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
 		for (uint i = 0; i < dim_hyp; ++i) {
@@ -39,12 +39,10 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		//cout << "original vect index:" << endl;
 		//cout << vectIndex.show() << endl << endl;
 
-		terms[p.first] = unify(vectIndex, unif);
+		terms[p.first] = unify(vectIndex);
 		if (debug_multy_index) {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
 			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;
-			cout << "unifier:" << endl;
-			cout << Indent::paragraph(prover::show(unif)) << endl;
 		}
 	}
 	set<vector<uint>> common;
@@ -66,9 +64,10 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
 			if (debug_multy_index) {
-				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c)) << endl;
+				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
 			}
-			s[c].sub[p.first] = p.second.at(c);
+			s[c].sub[p.first] = p.second.at(c).tree;
+			unif[c] = p.second.at(c).sub;
 		}
 	}
 	return s;
