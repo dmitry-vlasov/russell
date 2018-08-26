@@ -63,6 +63,9 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	MultyUnifiedSubs s;
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
+			//if (p.second.at(c).tree.empty()) {
+			//	continue;
+			//}
 			if (debug_multy_index) {
 				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
 			}

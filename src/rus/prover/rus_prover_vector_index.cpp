@@ -93,6 +93,8 @@ struct MIndexSpace {
 				if (!term.empty()) {
 					unified[leafs].sub = unif;
 					unified[leafs].tree = term;
+					//cout << "AAA" << endl;
+					//cout << show(unif) << endl;
 				}
 			} else {
 				unified[leafs].sub;
@@ -177,7 +179,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 
 VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint depth);
 
-void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leafs)
+void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
 {
 	/*cout << "PARENT VINDEX:" << endl;
 	cout << Indent::paragraph(space.vindex.show(), space.depth) << endl;
@@ -213,6 +215,12 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 				if (!unif.compose(child_terms[i][p.first].sub)) {
 					break;
 				}
+
+				/*if (unif.sub.size()) {
+					cout << "UNIF: " << endl;
+					cout << show(unif) << endl;
+				}*/
+
 			} else {
 				break;
 			}
@@ -220,6 +228,8 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const LeafVector& leaf
 		if (children.size() == r->arity()) {
 			space.unified[p.first].tree = LightTree(r, children);
 			space.unified[p.first].sub = unif;
+
+			//space.finalize(leafs, w, LightTree(r, children));
 		}
 	}
 }
@@ -231,7 +241,7 @@ void unify_rules(MIndexSpace& space)
 			unify_leaf_rule(space, r);
 			continue;
 		}
-		unify_branch_rule(space, r, space.fixed);
+		unify_branch_rule(space, r, vector<LightSymbol>(), space.fixed);
 		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
@@ -242,7 +252,7 @@ void unify_rules(MIndexSpace& space)
 					w_leafs[i] = &space.vindex.index(i)->vars.at(w[inds[i]]);
 				}
 			}
-			unify_branch_rule(space, r, w_leafs);
+			unify_branch_rule(space, r, w, w_leafs);
 			if (!vars_prod.hasNext()) {
 				break;
 			}
