@@ -7,13 +7,24 @@ namespace mdl { namespace rus { namespace prover {
 struct VectorIndex {
 	struct IndexPtr {
 		IndexPtr(const Index* i, const vector<uint>* v, uint ps, bool e) :
-			ind(i), values(v), proofsSize(ps), empty(e) { }
+			ind(i), values(v), proofsSize(ps), empty(e) {
+			set<uint> vals;
+			for (auto val : *values) {
+				vals.insert(val);
+			}
+			for (uint i = 0; i < proofsSize; ++ i) {
+				if (vals.find(i) == vals.end()) {
+					obligatory.push_back(i);
+				}
+			}
+		}
 		IndexPtr(const IndexPtr&) = default;
 		IndexPtr& operator = (const IndexPtr&) = default;
 		const Index* ind;
 		const vector<uint>* values;
 		uint proofsSize;
 		const bool empty;
+		vector<uint> obligatory;
 	};
 	uint size() const {
 		return vect_.size();
@@ -42,6 +53,9 @@ struct VectorIndex {
 	}
 	uint proofsSize(uint i) const {
 		return vect_[i].proofsSize;
+	}
+	const vector<uint>& obligatory(uint i) const {
+		return vect_[i].obligatory;
 	}
 	const vector<IndexPtr>& vect() const {
 		return vect_;

@@ -35,16 +35,19 @@ CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
 	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < leafs.size(); ++ i) {
 		leafs_prod.incSize();
-		if (!leafs[i]) {
-			for (uint ind = 0; ind < vi.proofsSize(i); ++ind) {
-				leafs_prod.incDim(ind);
-			}
-		} else {
+		for (uint ind : vi.obligatory(i)) {
+			leafs_prod.incDim(ind);
+		}
+		if (leafs[i]) {
 			for (uint s : leafs[i]->inds) {
 				uint ind = vi.values(i)->at(s);
 				leafs_prod.incDim(ind);
 			}
-		}
+		} /*else {
+			for (uint ind = 0; ind < vi.proofsSize(i); ++ind) {
+				leafs_prod.incDim(ind);
+			}
+		}*/
 	}
 	return leafs_prod;
 }
