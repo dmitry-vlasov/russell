@@ -87,23 +87,25 @@ struct MIndexSpace {
 		}
 		while (true) {
 			vector<uint> leafs = leafs_prod.data();
-			if (w.size()) {
-				Subst unif = unified[leafs].sub;
-				LightTree term = unify_step(unif, w, t);
-				if (!term.empty()) {
-					unified[leafs].sub = unif;
-					unified[leafs].tree = term;
-					//cout << "AAA" << endl;
-					//cout << show(unif) << endl;
-				}
-			} else {
-				unified[leafs].sub;
-				unified[leafs].tree = t;
-			}
+			finalize(leafs, w, t);
 			if (!leafs_prod.hasNext()) {
 				break;
 			}
 			leafs_prod.makeNext();
+		}
+	}
+
+	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+		if (w.size()) {
+			Subst unif = unified[leafs].sub;
+			LightTree term = unify_step(unif, w, t);
+			if (!term.empty()) {
+				unified[leafs].sub = unif;
+				unified[leafs].tree = term;
+			}
+		} else {
+			unified[leafs].sub;
+			unified[leafs].tree = t;
 		}
 	}
 };
@@ -215,21 +217,13 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				if (!unif.compose(child_terms[i][p.first].sub)) {
 					break;
 				}
-
-				/*if (unif.sub.size()) {
-					cout << "UNIF: " << endl;
-					cout << show(unif) << endl;
-				}*/
-
 			} else {
 				break;
 			}
 		}
 		if (children.size() == r->arity()) {
-			space.unified[p.first].tree = LightTree(r, children);
 			space.unified[p.first].sub = unif;
-
-			//space.finalize(leafs, w, LightTree(r, children));
+			space.finalize(p.first, w, LightTree(r, children));
 		}
 	}
 }
