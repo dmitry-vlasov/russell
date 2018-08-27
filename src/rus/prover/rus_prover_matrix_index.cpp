@@ -35,10 +35,6 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			const auto& ind = p.second[i];
 			vectIndex.add(ind, proofSizes_[i]);
 		}
-
-		//cout << "original vect index:" << endl;
-		//cout << vectIndex.show() << endl << endl;
-
 		terms[p.first] = unify(vectIndex);
 		if (debug_multy_index) {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
@@ -50,13 +46,17 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		bool is_common = true;
 		for (const auto& q : terms) {
 			if (!q.second.count(p.first)) {
-				cout << "non common = " << prover::show(p.first) << endl;
+				if (debug_multy_index) {
+					cout << "non common = " << prover::show(p.first) << endl;
+				}
 				is_common = false;
 				break;
 			}
 		}
 		if (is_common) {
-			cout << "common = " << prover::show(p.first) << endl;
+			if (debug_multy_index) {
+				cout << "common = " << prover::show(p.first) << endl;
+			}
 			common.insert(p.first);
 		}
 	}
@@ -118,7 +118,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 2);
+	//debug_multy_index = (c == 2);
 	if (debug_multy_index) {
 		cout << "MATRIX no. " << c << endl;
 		cout << mi.show() << endl;
