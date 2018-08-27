@@ -6,15 +6,17 @@ namespace mdl { namespace rus { namespace prover {
 
 struct VectorIndex {
 	struct IndexPtr {
-		IndexPtr(const Index* i, const vector<uint>* v, uint ps, bool e) :
+		IndexPtr(const Index* i, const vector<uint>* v, uint ps, bool e, bool oblig) :
 			ind(i), values(v), proofsSize(ps), empty(e) {
-			set<uint> vals;
-			for (auto val : *values) {
-				vals.insert(val);
-			}
-			for (uint i = 0; i < proofsSize; ++ i) {
-				if (vals.find(i) == vals.end()) {
-					obligatory.push_back(i);
+			if (oblig) {
+				set<uint> vals;
+				for (auto val : *values) {
+					vals.insert(val);
+				}
+				for (uint i = 0; i < proofsSize; ++ i) {
+					if (vals.find(i) == vals.end()) {
+						obligatory.push_back(i);
+					}
 				}
 			}
 		}
@@ -30,10 +32,10 @@ struct VectorIndex {
 		return vect_.size();
 	}
 	void add(const IndexInt& i, uint ps) {
-		vect_.emplace_back(&i.index(), &i.data(), ps, i.index().size == 0);
+		vect_.emplace_back(&i.index(), &i.data(), ps, i.index().size == 0, true);
 	}
 	void add(const Index* i, const vector<uint>* v, uint ps, bool em) {
-		vect_.emplace_back(i, v, ps, em);
+		vect_.emplace_back(i, v, ps, em, true);
 	}
 	bool empty(uint i) const {
 		return vect_[i].empty;
@@ -77,6 +79,11 @@ struct VectorIndex {
 			} else {
 				ret += "NULL\n";
 			}
+			ret += string("Obligatory: ");
+			for (uint j = 0; j < ptr.obligatory.size(); ++j) {
+				ret += to_string(ptr.obligatory.at(j)) + ", ";
+			}
+			ret += "\n";
 			ret += string("Proofs size: ") + to_string(ptr.proofsSize) + "\n";
 			ret += string("Index size: ") + (ptr.ind ? to_string(ptr.ind->size) : "NULL") + "\n";
 			ret += string("Empty: ") + (ptr.empty ? "yes" : "no") + "\n";

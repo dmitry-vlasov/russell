@@ -7,6 +7,23 @@ namespace mdl { namespace rus { namespace prover {
 
 bool debug_multy_index = false;
 
+struct LeafStorage {
+	void init(const Index::Leaf& ind_leafs, const vector<uint>& ind_values) {
+		assert(leafs.size() == 0 && "LeafStorage::init");
+		for (uint s : ind_leafs.inds) {
+			leafs.push_back(ind_values[s]);
+		}
+		active = true;
+	}
+	void init(const vector<uint>& l) {
+		assert(leafs.size() == 0 && "LeafStorage::init");
+		leafs = l;
+		active = true;
+	}
+	bool active = false;
+	vector<uint> leafs;
+};
+
 typedef vector<const Index::Leaf*> LeafVector;
 
 string show_leafs(const LeafVector& leafs) {
@@ -35,19 +52,21 @@ CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
 	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < leafs.size(); ++ i) {
 		leafs_prod.incSize();
-		for (uint ind : vi.obligatory(i)) {
-			leafs_prod.incDim(ind);
-		}
+		/*if (!leafs[i] || vi.empty(i)) {
+			for (uint ind : vi.obligatory(i)) {
+				leafs_prod.incDim(ind);
+			}
+		}*/
 		if (leafs[i]) {
 			for (uint s : leafs[i]->inds) {
 				uint ind = vi.values(i)->at(s);
 				leafs_prod.incDim(ind);
 			}
-		} /*else {
-			for (uint ind = 0; ind < vi.proofsSize(i); ++ind) {
+		} else {
+			for (uint ind : vi.obligatory(i)) {
 				leafs_prod.incDim(ind);
 			}
-		}*/
+		}
 	}
 	return leafs_prod;
 }
@@ -106,6 +125,9 @@ struct MIndexSpace {
 				unified[leafs].sub = unif;
 				unified[leafs].tree = term;
 			}
+			cout << "FINAL: " << show(leafs) << " TERM: " << show(term) << endl;
+			cout << Indent::paragraph(show(unif)) << endl;
+
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
@@ -186,10 +208,10 @@ VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint dep
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
 {
-	/*cout << "PARENT VINDEX:" << endl;
+	cout << "PARENT VINDEX:" << endl;
 	cout << Indent::paragraph(space.vindex.show(), space.depth) << endl;
 	cout << "LEAFS: " << endl;
-	cout << "\t" << show_leafs(leafs) << endl;*/
+	cout << "\t" << show_leafs(leafs) << endl;
 
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
@@ -206,8 +228,8 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		//cout << "CHILD VINDEX:" << endl;
-		//cout << Indent::paragraph(child_vindex.show(), space.depth + 1) << endl;
+		cout << "CHILD VINDEX:" << endl;
+		cout << Indent::paragraph(child_vindex.show(), space.depth + 1) << endl;
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 	}

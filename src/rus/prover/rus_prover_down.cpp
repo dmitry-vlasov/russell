@@ -120,7 +120,7 @@ vector<Node*> unify_down(Prop* pr, const ProofHyp* h) {
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
 
  		debug_multy_index = true;
-		unify_subs_matrix(pr, h);
+		//unify_subs_matrix(pr, h);
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		cout << "SUB UNIFICATION EQUAL" << endl;
