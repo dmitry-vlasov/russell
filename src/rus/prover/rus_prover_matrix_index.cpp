@@ -128,16 +128,12 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	Subst common;
 	bool first = true;
 	for (auto& s : subvector) {
-
-		if (debug_multy_index) {
-			cout << "SUB: " << show(s) << endl;
-		}
-
 		Subst ss(s);
 		ss.compose(sub);
 		if (!first && common != ss) {
 			cout << "MATRIX UNIFICATION FAILS" << endl;
 			//cout << show(ss) << " != " << show(common) << endl << endl;
+			cout << "SUB: " << show(s) << endl;
 			cout << "ss: " << show(ss) << endl;
 			cout << "common: " << show(common) << endl;
 			return false;
@@ -157,7 +153,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	//debug_multy_index = (c == 9);
+	//debug_multy_index = (c == 62);
 
 	uint arity = pr->premises.size();
 	MatrixIndex mi(arity);
@@ -178,15 +174,23 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		cout << mi.show() << endl;
 	}
 
-	MultyUnifiedSubs ret = unify_subs(mi, pr);
-	for (const auto& p : ret) {
-		if (!check_matrix_unification(p.first, p.second, pr, h)) {
-			cout << "MATRIX no. " << c << endl;
-			cout << mi.show() << endl;
-			throw Error("MATRIX UNIFICATION ERROR");
+	try {
+		MultyUnifiedSubs ret = unify_subs(mi, pr);
+		for (const auto& p : ret) {
+			if (!check_matrix_unification(p.first, p.second, pr, h)) {
+				cout << "MATRIX no. " << c << endl;
+				cout << mi.show() << endl;
+				throw Error("MATRIX UNIFICATION ERROR");
+			}
 		}
+		return ret;
+	} catch (Error& err) {
+		debug_multy_index_1 = true;
+		cout << "MATRIX no. " << c << endl;
+		cout << mi.show() << endl;
+		//return unify_subs(mi, pr);
+		throw err;
 	}
-	return ret;
 }
 
 }}}

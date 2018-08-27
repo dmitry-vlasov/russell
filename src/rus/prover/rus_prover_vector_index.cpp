@@ -104,15 +104,17 @@ struct MIndexSpace {
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		if (w.size()) {
-			Subst unif = unified[leafs].sub;
-			LightTree term = unify_step(unif, w, t);
+			if (debug_multy_index_1) {
+				cout << "PRE FINAL: " << show(leafs) << " TERM: " << show(t) << endl;
+				cout << Indent::paragraph(show(unified[leafs].sub)) << endl;
+			}
+			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				unified[leafs].sub = unif;
 				unified[leafs].tree = term;
 			}
 			if (debug_multy_index_1) {
 				cout << "FINAL: " << show(leafs) << " TERM: " << show(term) << endl;
-				cout << Indent::paragraph(show(unif)) << endl;
+				cout << Indent::paragraph(show(unified[leafs].sub)) << endl;
 			}
 
 		} else {
@@ -195,12 +197,12 @@ VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint dep
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
 {
-	if (debug_multy_index_1) {
+	/*if (debug_multy_index_1) {
 		cout << "PARENT VINDEX:" << endl;
 		cout << Indent::paragraph(space.vindex.show(), space.depth) << endl;
 		cout << "LEAFS: " << endl;
 		cout << "\t" << show_leafs(leafs) << endl;
-	}
+	}*/
 
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
@@ -217,10 +219,10 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		if (debug_multy_index_1) {
+		/*if (debug_multy_index_1) {
 			cout << "CHILD VINDEX:" << endl;
 			cout << Indent::paragraph(child_vindex.show(), space.depth + 1) << endl;
-		}
+		}*/
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 	}
@@ -229,17 +231,33 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		Subst unif;
 		for (uint i = 0; i < r->arity(); ++ i) {
 			if (child_terms[i].count(p.first)) {
-				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
-				if (!unif.compose(child_terms[i][p.first].sub)) {
-					break;
+
+				if (debug_multy_index_1) {
+					cout << "COMPOSING:" << endl;
+					cout << "UNIF: " << endl << show(unif) << endl;
+					cout << "child_terms[i][p.first].sub: " << endl << show(child_terms[i][p.first].sub) << endl;
 				}
+
+				if (!unif.compose(child_terms[i][p.first].sub)) {
+					if (debug_multy_index_1) {
+						cout << "FAILURE" << endl;
+					}
+					break;
+				} else {
+					if (debug_multy_index_1) {
+						cout << "SUCCESS" << endl;
+						cout << "UNIF: " << endl << show(unif) << endl << endl;
+					}
+				}
+				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
 			} else {
 				break;
 			}
 		}
 		if (children.size() == r->arity()) {
-			space.unified[p.first].sub = unif;
-			space.finalize(p.first, w, LightTree(r, children));
+			if (space.unified[p.first].sub.compose(unif)) {
+				space.finalize(p.first, w, LightTree(r, children));
+			}
 		}
 	}
 }

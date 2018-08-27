@@ -59,6 +59,12 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
+	/*auto j = s->sub.find(v);
+	if (j != s->sub.end()) {
+		if (t != j->second) {
+			return false;
+		}
+	}*/
 	for (LightSymbol y : x_vars) {
 		auto i = s->sub.find(y);
 		if (i != s->sub.end()) {
@@ -114,6 +120,14 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 }
 
 bool Subst::compose(const Subst& s) {
+	if (!consistent(s)) {
+		return false;
+	}
+	prover::compose(*this, s, true);
+	return true;
+}
+
+bool Subst::bicompose(const Subst& s) {
 	if (!s.consistent(*this)) {
 		return false;
 	}
