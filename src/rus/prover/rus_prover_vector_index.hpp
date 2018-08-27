@@ -119,6 +119,7 @@ string show(const VectorUnified&);
 string show(const MultyUnifiedSubs&);
 
 extern bool debug_multy_index;
+extern bool debug_multy_index_1;
 
 }}}
 

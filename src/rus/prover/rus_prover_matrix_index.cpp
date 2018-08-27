@@ -91,14 +91,63 @@ string MatrixIndex::show() const {
 	return ret;
 }
 
-MultyUnifiedSubs unify_subs(MatrixIndex& mi) {
+MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 	MultyUnifiedSubs ret;
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
-		ret[p.first] = unify_subs(p.second, gen[p.first]);
+		Subst sub = unify_subs(p.second, gen[p.first]);
+		if (sub.ok) {
+			Subst delta = pr->sub;
+			delta.compose(sub);
+			ret[p.first] = delta;
+		}
 	}
 	return ret;
+}
+
+bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop* pr, const ProofHyp* h) {
+	uint arity = pr->premises.size();
+	vector<Subst> subvector(arity);
+
+	for (uint i = 0; i < arity; ++ i) {
+		const auto& proofs = pr->premises[i]->proofs;
+		if (pr->premises[i].get() != &h->node) {
+			subvector[i] = proofs[leafs[i]]->sub;
+		} else {
+			subvector[i] = h->sub;
+		}
+	}
+
+	if (debug_multy_index) {
+		cout << endl << "CHECKING MATRIX UNIFICATION" << endl;
+		cout << "UNIFIER: " << show(sub) << endl;
+	}
+
+	Subst common;
+	bool first = true;
+	for (auto& s : subvector) {
+
+		cout << "SUB: " << show(s) << endl;
+
+		Subst ss(s);
+		ss.compose(sub);
+		if (!first && common != ss) {
+			cout << "MATRIX UNIFICATION FAILS" << endl;
+			//cout << show(ss) << " != " << show(common) << endl << endl;
+			cout << "ss: " << show(ss) << endl;
+			cout << "common: " << show(common) << endl;
+			return false;
+		}
+		if (first){
+			common = ss;
+			first = false;
+		}
+	}
+	if (debug_multy_index) {
+		cout << "COMMON: " << show(common) << endl;
+	}
+	return true;
 }
 
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
@@ -124,7 +173,18 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		cout << mi.show() << endl;
 	}
 
-	return unify_subs(mi);
+	bool error = false;
+	MultyUnifiedSubs ret = unify_subs(mi, pr);
+	for (const auto& p : ret) {
+		if (!check_matrix_unification(p.first, p.second, pr, h)) {
+			cout << "MATRIX UNIFICATION ERROR" << endl;
+			error = true;
+		}
+	}
+	if (!error) {
+		cout << "MATRIX UNIFICATION SUCCESSFULL" << endl;
+	}
+	return ret;
 }
 
 }}}

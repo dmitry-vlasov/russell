@@ -6,6 +6,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 bool debug_multy_index = false;
+bool debug_multy_index_1 = false;
 
 struct LeafStorage {
 	void init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
@@ -109,7 +110,7 @@ struct MIndexSpace {
 				unified[leafs].sub = unif;
 				unified[leafs].tree = term;
 			}
-			if (debug_multy_index) {
+			if (debug_multy_index_1) {
 				cout << "FINAL: " << show(leafs) << " TERM: " << show(term) << endl;
 				cout << Indent::paragraph(show(unif)) << endl;
 			}
@@ -194,7 +195,7 @@ VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint dep
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
 {
-	if (debug_multy_index) {
+	if (debug_multy_index_1) {
 		cout << "PARENT VINDEX:" << endl;
 		cout << Indent::paragraph(space.vindex.show(), space.depth) << endl;
 		cout << "LEAFS: " << endl;
@@ -216,7 +217,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		if (debug_multy_index) {
+		if (debug_multy_index_1) {
 			cout << "CHILD VINDEX:" << endl;
 			cout << Indent::paragraph(child_vindex.show(), space.depth + 1) << endl;
 		}
@@ -278,6 +279,54 @@ VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint dep
 	return space.unified;
 }
 
+vector<map<uint, uint>> back_values(const VectorIndex& vindex) {
+	vector<map<uint, uint>> ret(vindex.size());
+	for (uint i = 0; i < vindex.size(); ++ i) {
+		for (uint j = 0; j < vindex.values(i)->size(); ++ j) {
+			ret[i][vindex.values(i)->at(j)] = j;
+		}
+	}
+	return ret;
+}
+
+bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subtree, const VectorIndex& vindex) {
+	vector<map<uint, uint>> b_values = back_values(vindex);
+	vector<uint> expr_ind(vindex.size());
+	for (uint i = 0; i < vindex.size(); ++ i) {
+		if (b_values[i].count(leafs[i])) {
+			expr_ind[i] = b_values[i][leafs[i]];
+		} else {
+			expr_ind[i] = -1;
+		}
+	}
+	LightTree common;
+	for (uint i = 0; i < vindex.size(); ++ i) {
+		if (expr_ind[i] != -1) {
+			LightTree e_orig = vindex.index(i)->exprs[expr_ind[i]];
+			if (apply(subtree.sub, e_orig) != subtree.tree) {
+				cout << "VECTOR INDEX UNIFICATION FAILS" << endl;
+				cout << show(apply(subtree.sub, e_orig)) << " != " << show(subtree.tree) << endl << endl;
+				cout << "e_orig: " << show(e_orig) << endl;
+				cout << "subtree.tree: " << show(subtree.tree) << endl;
+				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				return false;
+			}
+			if (!common.empty() && common != subtree.tree) {
+				cout << "VECTOR INDEX UNIFICATION FAILS" << endl;
+				cout << show(common) << " != " << show(subtree.tree) << endl << endl;
+				cout << "common: " << show(common) << endl;
+				cout << "e_orig: " << show(e_orig) << endl;
+				cout << "subtree.tree: " << show(subtree.tree) << endl;
+				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				return false;
+			} else {
+				common = subtree.tree;
+			}
+		}
+	}
+	return true;
+}
+
 VectorUnified unify(const VectorIndex& vindex) {
 	CartesianProd<uint> absent_leafs_prod;
 	for (uint i = 0; i < vindex.size(); ++ i) {
@@ -310,6 +359,16 @@ VectorUnified unify(const VectorIndex& vindex) {
 			break;
 		}
 		absent_leafs_prod.makeNext();
+	}
+	bool error = false;
+	for (const auto& p : space.unified) {
+		if (!check_vector_index_unified(p.first, p.second, vindex)) {
+			cout << "VECTOR UNIFICATION ERROR" << endl;
+			error = true;
+		}
+	}
+	if (!error) {
+		cout << "VECTOR UNIFICATION SUCCESSFULL" << endl;
 	}
 	return space.unified;
 }
