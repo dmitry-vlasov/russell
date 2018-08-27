@@ -201,7 +201,7 @@ struct Subst {
 	bool operator != (const Subst& s) const;
 
 	bool consistent(const Subst& s) const;
-	bool compose(const Subst& s);
+	bool compose(const Subst& s, bool full = true);
 	bool bicompose(const Subst& s);
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;

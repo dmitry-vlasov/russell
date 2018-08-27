@@ -119,11 +119,11 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 	}*/
 }
 
-bool Subst::compose(const Subst& s) {
+bool Subst::compose(const Subst& s, bool full) {
 	if (!consistent(s)) {
 		return false;
 	}
-	prover::compose(*this, s, true);
+	prover::compose(*this, s, full);
 	return true;
 }
 
