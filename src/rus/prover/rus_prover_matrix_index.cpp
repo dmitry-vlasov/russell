@@ -5,7 +5,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
-	proofSizes_[i] = proofs.size();
+	proofSizes_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub.sub) {
@@ -13,12 +13,13 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 				mindex_[x.first] = vector<IndexInt>(dim_hyp);
 			}
 			mindex_[x.first][i].add(x.second, j);
+			proofSizes_[i][j] = j;
 		}
 	}
 }
 
 void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
-	proofSizes_[i] = 1;
+	proofSizes_[i] = vector<uint>(1, j);
 	for (const auto& x : p->sub.sub) {
 		if (!mindex_.count(x.first)) {
 			mindex_[x.first] = vector<IndexInt>(dim_hyp);
@@ -78,12 +79,12 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 
 string MatrixIndex::show() const {
 	string ret;
-	ret += "DIMENSION: " + to_string(mindex_.size()) + "\n";
+	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp) + "\n";
 	for (const auto& p : mindex_) {
 		ret += "\nVAR: " + prover::show(p.first) + "\n";
 		ret += "==============================\n";
 		for (uint i = 0; i < p.second.size(); ++ i) {
-			ret += "index: " + to_string(i) + "\n";
+			ret += "index: " + to_string(i) + ", proof inds: " + prover::show(proofSizes_[i]) + "\n";
 			ret += p.second[i].show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
@@ -128,7 +129,9 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	bool first = true;
 	for (auto& s : subvector) {
 
-		cout << "SUB: " << show(s) << endl;
+		if (debug_multy_index) {
+			cout << "SUB: " << show(s) << endl;
+		}
 
 		Subst ss(s);
 		ss.compose(sub);
@@ -151,6 +154,11 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 }
 
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
+
+	static int c = 0;
+	c++;
+	//debug_multy_index = (c == 9);
+
 	uint arity = pr->premises.size();
 	MatrixIndex mi(arity);
 	for (uint i = 0; i < arity; ++ i) {
@@ -165,24 +173,18 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		}
 	}
 
-	static int c = 0;
-	c++;
-	//debug_multy_index = (c == 2);
 	if (debug_multy_index) {
 		cout << "MATRIX no. " << c << endl;
 		cout << mi.show() << endl;
 	}
 
-	bool error = false;
 	MultyUnifiedSubs ret = unify_subs(mi, pr);
 	for (const auto& p : ret) {
 		if (!check_matrix_unification(p.first, p.second, pr, h)) {
-			cout << "MATRIX UNIFICATION ERROR" << endl;
-			error = true;
+			cout << "MATRIX no. " << c << endl;
+			cout << mi.show() << endl;
+			throw Error("MATRIX UNIFICATION ERROR");
 		}
-	}
-	if (!error) {
-		cout << "MATRIX UNIFICATION SUCCESSFULL" << endl;
 	}
 	return ret;
 }

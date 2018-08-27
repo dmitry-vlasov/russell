@@ -6,17 +6,15 @@ namespace mdl { namespace rus { namespace prover {
 
 struct VectorIndex {
 	struct IndexPtr {
-		IndexPtr(const Index* i, const vector<uint>* v, uint ps, bool e, bool oblig) :
-			ind(i), values(v), proofsSize(ps), empty(e) {
-			if (oblig) {
-				set<uint> vals;
-				for (auto val : *values) {
-					vals.insert(val);
-				}
-				for (uint i = 0; i < proofsSize; ++ i) {
-					if (vals.find(i) == vals.end()) {
-						obligatory.push_back(i);
-					}
+		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi, bool e) :
+			ind(i), values(v), proofsSize(pi.size()), empty(e), proofInds(pi) {
+			set<uint> vals;
+			for (auto val : *values) {
+				vals.insert(val);
+			}
+			for (uint i : pi) {
+				if (vals.find(i) == vals.end()) {
+					obligatory.push_back(i);
 				}
 			}
 		}
@@ -27,15 +25,16 @@ struct VectorIndex {
 		uint proofsSize;
 		const bool empty;
 		vector<uint> obligatory;
+		vector<uint> proofInds;
 	};
 	uint size() const {
 		return vect_.size();
 	}
-	void add(const IndexInt& i, uint ps) {
-		vect_.emplace_back(&i.index(), &i.data(), ps, i.index().size == 0, true);
+	void add(const IndexInt& i, const vector<uint>& pi) {
+		vect_.emplace_back(&i.index(), &i.data(), pi, i.index().size == 0);
 	}
-	void add(const Index* i, const vector<uint>* v, uint ps, bool em) {
-		vect_.emplace_back(i, v, ps, em, true);
+	void add(const Index* i, const vector<uint>* v, const vector<uint>& pi, bool em) {
+		vect_.emplace_back(i, v, pi, em);
 	}
 	bool empty(uint i) const {
 		return vect_[i].empty;
@@ -58,6 +57,9 @@ struct VectorIndex {
 	}
 	const vector<uint>& obligatory(uint i) const {
 		return vect_[i].obligatory;
+	}
+	const vector<uint>& proofInds(uint i) const {
+		return vect_[i].proofInds;
 	}
 	const vector<IndexPtr>& vect() const {
 		return vect_;

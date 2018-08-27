@@ -211,9 +211,9 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 					return;
 				}
 				const Index* ind = space.vindex.index(i)->rules.at(r).branch().child[k].get();
-				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofsSize(i), space.vindex.empty(i));
+				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
 			} else {
-				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofsSize(i), space.vindex.empty(i));
+				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
 			}
 		}
 
@@ -360,15 +360,10 @@ VectorUnified unify(const VectorIndex& vindex) {
 		}
 		absent_leafs_prod.makeNext();
 	}
-	bool error = false;
 	for (const auto& p : space.unified) {
 		if (!check_vector_index_unified(p.first, p.second, vindex)) {
-			cout << "VECTOR UNIFICATION ERROR" << endl;
-			error = true;
+			throw Error("VECTOR UNIFICATION ERROR");
 		}
-	}
-	if (!error) {
-		cout << "VECTOR UNIFICATION SUCCESSFULL" << endl;
 	}
 	return space.unified;
 }
