@@ -59,12 +59,18 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
-	/*auto j = s->sub.find(v);
+	auto j = s->sub.find(v);
 	if (j != s->sub.end()) {
 		if (t != j->second) {
+
+			cout << "INCONSIS" << endl;
+			cout << "s: " << show(*s) << endl;
+			cout << "v: " << show(v) << endl;
+			cout << "t: " << show(t) << endl;
+
 			return false;
 		}
-	}*/
+	}
 	for (LightSymbol y : x_vars) {
 		auto i = s->sub.find(y);
 		if (i != s->sub.end()) {

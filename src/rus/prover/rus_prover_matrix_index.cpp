@@ -176,13 +176,13 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	try {
 		MultyUnifiedSubs ret = unify_subs(mi, pr);
-		for (const auto& p : ret) {
+		/*for (const auto& p : ret) {
 			if (!check_matrix_unification(p.first, p.second, pr, h)) {
 				cout << "MATRIX no. " << c << endl;
 				cout << mi.show() << endl;
 				throw Error("MATRIX UNIFICATION ERROR");
 			}
-		}
+		}*/
 		return ret;
 	} catch (Error& err) {
 		debug_multy_index_1 = true;
