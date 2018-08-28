@@ -29,6 +29,23 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 }
 
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
+	if (mindex_.empty()) {
+		MultyUnifiedSubs s;
+		CartesianProd<uint> proofs_prod;
+		for (uint i = 0; i < dim_hyp; ++ i) {
+			proofs_prod.incSize();
+			proofs_prod.addDim(proofSizes_[i]);
+		}
+		while (true) {
+			vector<uint> proof_inds = proofs_prod.data();
+			s[proof_inds];
+			if (!proofs_prod.hasNext()) {
+				break;
+			}
+			proofs_prod.makeNext();
+		}
+		return s;
+	}
 	map<LightSymbol, VectorUnified> terms;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
@@ -44,25 +61,25 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	}
 	set<vector<uint>> common;
 	if (!terms.empty()) {
-        for (const auto &p : terms.begin()->second) {
-            bool is_common = true;
-            for (const auto &q : terms) {
-                if (!q.second.count(p.first)) {
-                    if (debug_multy_index) {
-                        cout << "non common = " << prover::show(p.first) << endl;
-                    }
-                    is_common = false;
-                    break;
-                }
-            }
-            if (is_common) {
-                if (debug_multy_index) {
-                    cout << "common = " << prover::show(p.first) << endl;
-                }
-                common.insert(p.first);
-            }
-        }
-    }
+		for (const auto &p : terms.begin()->second) {
+			bool is_common = true;
+			for (const auto &q : terms) {
+				if (!q.second.count(p.first)) {
+					if (debug_multy_index) {
+						cout << "non common = " << prover::show(p.first) << endl;
+					}
+					is_common = false;
+					break;
+				}
+			}
+			if (is_common) {
+				if (debug_multy_index) {
+					cout << "common = " << prover::show(p.first) << endl;
+				}
+				common.insert(p.first);
+			}
+		}
+	}
 	MultyUnifiedSubs s;
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
