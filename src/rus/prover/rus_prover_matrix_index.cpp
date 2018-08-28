@@ -43,24 +43,26 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 	}
 	set<vector<uint>> common;
-	for (const auto& p : terms.begin()->second) {
-		bool is_common = true;
-		for (const auto& q : terms) {
-			if (!q.second.count(p.first)) {
-				if (debug_multy_index) {
-					cout << "non common = " << prover::show(p.first) << endl;
-				}
-				is_common = false;
-				break;
-			}
-		}
-		if (is_common) {
-			if (debug_multy_index) {
-				cout << "common = " << prover::show(p.first) << endl;
-			}
-			common.insert(p.first);
-		}
-	}
+	if (!terms.empty()) {
+        for (const auto &p : terms.begin()->second) {
+            bool is_common = true;
+            for (const auto &q : terms) {
+                if (!q.second.count(p.first)) {
+                    if (debug_multy_index) {
+                        cout << "non common = " << prover::show(p.first) << endl;
+                    }
+                    is_common = false;
+                    break;
+                }
+            }
+            if (is_common) {
+                if (debug_multy_index) {
+                    cout << "common = " << prover::show(p.first) << endl;
+                }
+                common.insert(p.first);
+            }
+        }
+    }
 	MultyUnifiedSubs s;
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
@@ -162,7 +164,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	MatrixIndex mi(arity);
 	for (uint i = 0; i < arity; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;
-		if (!proofs.size()) {
+		if (proofs.empty()) {
 			return MultyUnifiedSubs();
 		}
 		if (pr->premises[i].get() != &h->node) {
