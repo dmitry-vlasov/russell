@@ -30,7 +30,6 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
-		MultyUnifiedSubs s;
 		CartesianProd<uint> proofs_prod;
 		for (uint i = 0; i < dim_hyp; ++ i) {
 			proofs_prod.incSize();
@@ -38,13 +37,13 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		while (true) {
 			vector<uint> proof_inds = proofs_prod.data();
-			s[proof_inds];
+			unif[proof_inds];
 			if (!proofs_prod.hasNext()) {
 				break;
 			}
 			proofs_prod.makeNext();
 		}
-		return s;
+		return MultyUnifiedSubs();
 	}
 	map<LightSymbol, VectorUnified> terms;
 	for (const auto& p : mindex_) {
