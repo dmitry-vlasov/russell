@@ -153,7 +153,10 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	//debug_multy_index = (c == 62);
+	debug_multy_index = (c == 66);
+	if (debug_multy_index) {
+		cout << "AAA" << endl;
+	}
 
 	uint arity = pr->premises.size();
 	MatrixIndex mi(arity);
@@ -190,6 +193,12 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		cout << mi.show() << endl;
 		//return unify_subs(mi, pr);
 		throw err;
+	} catch (std::exception& e) {
+		debug_multy_index_1 = true;
+		cout << "MATRIX no. " << c << endl;
+		cout << mi.show() << endl;
+		return unify_subs(mi, pr);
+		throw e;
 	}
 }
 
