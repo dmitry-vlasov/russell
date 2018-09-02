@@ -222,11 +222,18 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uin
 }
 
 string show(LightSymbol s, bool full) {
-	if (full) {
-		return Lex::toStr(s.lit) + (s.rep ? "*" : "");
+	string ret;
+	if (s.is_undef()) {
+		ret += "<UNDEF>";
+	} else if (s.is_lambda()) {
+		ret += "/\\";
 	} else {
-		return Lex::toStr(s.lit);
+		ret += Lex::toStr(s.lit);
 	}
+	if (full && s.rep) {
+		ret += "*";
+	}
+	return ret;
 }
 
 string show(const LightTree& tree, bool full) {

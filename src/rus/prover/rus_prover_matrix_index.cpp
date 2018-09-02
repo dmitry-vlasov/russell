@@ -115,11 +115,22 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
+		if (debug_multy_index) {
+			cout << "unify_subs: " << prover::show(p.first) <<  " --> sub: " << endl << prover::show(p.second) << endl;
+			cout << "gen[p.first]: " << prover::show(gen[p.first]) << endl;
+		}
 		Subst sub = unify_subs(p.second, gen[p.first]);
 		if (sub.ok) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
+			if (debug_multy_index) {
+				cout << "YES" << endl;
+			}
+		} else {
+			if (debug_multy_index) {
+				cout << "NO" << endl;
+			}
 		}
 	}
 	return ret;
@@ -171,7 +182,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 66);
+	debug_multy_index = (c == 560);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}
