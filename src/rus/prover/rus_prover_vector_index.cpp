@@ -185,8 +185,8 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector s_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (space.vindex.index(i) && space.vindex.index(i)->vars.count(s)) {
-		//if (not_vars.at(i)) {
+		//if (space.vindex.index(i) && space.vindex.index(i)->vars.count(s)) {
+		if (not_vars.at(i)) {
 			vars_prod.skip(i);
 			if (s_leafs[i].leafs.empty()) {
 				s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i));
@@ -224,7 +224,6 @@ void unify_symbs(MIndexSpace& space)
 		if (!space.complete_for(s)) {
 			continue;
 		}
-		unify_symbs_variant(space, s, vector<bool>(space.vindex.size(), false));
 		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
@@ -243,6 +242,8 @@ void unify_symbs(MIndexSpace& space)
 				}
 				ps_iter.makeNext();
 			}
+		} else {
+			unify_symbs_variant(space, s, space.symb_inds.at(s));
 		}
 	}
 }
