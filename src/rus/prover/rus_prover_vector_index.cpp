@@ -185,7 +185,6 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector s_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		//if (space.vindex.index(i) && space.vindex.index(i)->vars.count(s)) {
 		if (not_vars.at(i)) {
 			vars_prod.skip(i);
 			if (s_leafs[i].leafs.empty()) {
@@ -234,6 +233,7 @@ void unify_symbs(MIndexSpace& space)
 			}
 		}
 		if (ps_iter.card() > 0) {
+			cout << "FFFFFFFFFFFFFFFF" << endl;
 			while (true) {
 				vector<bool> not_vars = ps_iter.values();
 				unify_symbs_variant(space, s, not_vars);
@@ -248,15 +248,17 @@ void unify_symbs(MIndexSpace& space)
 	}
 }
 
-void unify_leaf_rule(MIndexSpace& space, const Rule* r)
+void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& not_vars)
 {
 	assert(r->arity() == 0);
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (space.vindex.index(i) && space.vindex.index(i)->rules.count(r)) {
+		if (not_vars.at(i)) {
 			vars_prod.skip(i);
-			r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i));
+			if (r_leafs[i].leafs.empty()) {
+				r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i));
+			}
 		}
 	}
 	if (vars_prod.card() > 0) {
@@ -279,6 +281,37 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	if (complete(r_leafs, space.vindex)) {
 		// All indexes have rule 'r'
 		space.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
+	}
+}
+
+
+void unify_leaf_rule(MIndexSpace& space, const Rule* r)
+{
+	assert(r->arity() == 0);
+	if (!space.complete_for(r)) {
+		return;
+	}
+	vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
+	PowerSetIter ps_iter;
+	for (uint i = 0; i < space.vindex.size(); ++ i) {
+		if (common.at(i)) {
+			ps_iter.addDim();
+		} else {
+			ps_iter.addSkipped();
+		}
+	}
+	if (ps_iter.card() > 0) {
+		cout << "GGGGGGGGGGGGGGG" << endl;
+		while (true) {
+			vector<bool> not_vars = ps_iter.values();
+			unify_leaf_rule_variant(space, r, not_vars);
+			if (!ps_iter.hasNext()) {
+				break;
+			}
+			ps_iter.makeNext();
+		}
+	} else {
+		unify_leaf_rule_variant(space, r, space.rule_inds.at(r));
 	}
 }
 
