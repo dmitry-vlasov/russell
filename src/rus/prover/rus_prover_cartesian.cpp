@@ -28,6 +28,10 @@ void CartesianIter::addFixed(uint d, uint i) {
 	dims_.emplace_back(d, i, Dim::FIXED);
 }
 
+void CartesianIter::addSkipped(uint d) {
+	dims_.emplace_back(d, -1, Dim::SKIPPED);
+}
+
 void CartesianIter::reset(bool drop_kind) {
 	for (auto& d : dims_) {
 		if (drop_kind) {

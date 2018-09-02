@@ -9,11 +9,28 @@ bool debug_multy_index = false;
 bool debug_multy_index_1 = false;
 
 struct LeafStorage {
-	void init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
-		assert(leafs.size() == 0 && "LeafStorage::init");
+	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
+		if (leafs.size() > 0) {
+			cout << "AAAA" << endl;
+			cout << "old_leafs: " << show(leafs) << endl;
+			cout << "ind_values: " << show(*ind_values) << endl;
+			cout << "ind_leafs: " << show(ind_leafs.inds) << endl;
+			vector<uint> new_leafs;
+			for (uint s : ind_leafs.inds) {
+				new_leafs.push_back(ind_values->at(s));
+			}
+			cout << "new_leafs: " << show(leafs) << endl;
+			//throw Error("AAA");
+		}
+		if (!leafs.empty()) {
+			return false;
+		}
+		//assert(leafs.size() == 0 && "LeafStorage::init");
+		leafs.clear();
 		for (uint s : ind_leafs.inds) {
 			leafs.push_back(ind_values->at(s));
 		}
+		return true;
 	}
 	void init(uint l) {
 		leafs.push_back(l);
@@ -44,6 +61,14 @@ inline bool complete(const LeafVector& v, const VectorIndex& vi) {
 	return true;
 }
 
+vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
+	vector<bool> ret(s1.size(), false);
+	for (uint i = 0; i < s1.size(); ++ i) {
+		ret[i] == s1[i] && s2[i];
+	}
+	return ret;
+}
+
 CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
 	assert(complete(leafs, vi) && "leafsProd(const VectorIndex& vi, const LeafVector& leafs)");
 	CartesianProd<uint> leafs_prod;
@@ -62,12 +87,34 @@ struct MIndexSpace {
 	set<const Rule*> rules;
 	CartesianProd<LightSymbol> vars_prod;
 
+	map<LightSymbol, vector<bool>> symb_inds;
+	map<const Rule*, vector<bool>> rule_inds;
+	vector<bool> vars_inds;
+
 	const VectorIndex& vindex;
 	LeafVector fixed;
 	uint depth;
 
+	bool complete(const vector<bool>& s) const {
+		for (uint i = 0; i < vindex.size(); ++ i) {
+			if (fixed[i].leafs.size()) {
+				continue;
+			}
+			if (!s.at(i) && !vars_inds.at(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool complete_for(LightSymbol s) const {
+		return complete(symb_inds.at(s));
+	}
+	bool complete_for(const Rule* r) const {
+		return complete(rule_inds.at(r));
+	}
+
 	MIndexSpace(const VectorIndex& vi, const LeafVector& f, uint d) :
-	vindex(vi), fixed(f), depth(d) {
+	vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			vars_prod.incSize();
 			if (fixed[i].leafs.size() || !vindex.index(i)) {
@@ -76,18 +123,27 @@ struct MIndexSpace {
 				for (const auto& p : vindex.index(i)->vars) {
 					if (p.first.rep) {
 						vars_prod.incDim(p.first);
+						vars_inds[i] = true;
 					}
 					symbs.insert(p.first);
+					if (!symb_inds.count(p.first)) {
+						symb_inds[p.first] = vector<bool>(vi.size(), false);
+					}
+					symb_inds[p.first][i] = true;
 				}
 				for (const auto& p : vindex.index(i)->rules) {
 					rules.insert(p.first);
+					if (!rule_inds.count(p.first)) {
+						rule_inds[p.first] = vector<bool>(vi.size(), false);
+					}
+					rule_inds[p.first][i] = true;
 				}
 			}
 		}
 	}
 
 	void finalize(LeafVector leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-		assert(complete(leafs_vect, vindex));
+		assert(prover::complete(leafs_vect, vindex));
 		CartesianProd<uint> leafs_prod = leafsProd(vindex, leafs_vect);
 		if (leafs_prod.card() == 0) {
 			return;
@@ -124,37 +180,69 @@ struct MIndexSpace {
 	}
 };
 
-void unify_symbs(MIndexSpace& space)
+void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& not_vars)
 {
-	for (LightSymbol s : space.symbs) {
-		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-		LeafVector s_leafs = space.fixed;
-		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (space.vindex.index(i) && space.vindex.index(i)->vars.count(s)) {
-				vars_prod.skip(i);
+	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
+	LeafVector s_leafs = space.fixed;
+	for (uint i = 0; i < space.vindex.size(); ++ i) {
+		if (space.vindex.index(i) && space.vindex.index(i)->vars.count(s)) {
+		//if (not_vars.at(i)) {
+			vars_prod.skip(i);
+			if (s_leafs[i].leafs.empty()) {
 				s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i));
 			}
 		}
-		if (vars_prod.card() > 0) {
-			while (true) {
-				vector<LightSymbol> w = vars_prod.data();
-				vector<uint> inds = vars_prod.indexes();
-				LeafVector w_leafs = s_leafs;
-				for (uint i = 0; i < space.vindex.size(); ++ i) {
-					if (inds[i] != -1 && space.vindex.index(i)) {
-						w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i));
-					}
+	}
+	if (vars_prod.card() > 0) {
+		while (true) {
+			vector<LightSymbol> w = vars_prod.data();
+			vector<uint> inds = vars_prod.indexes();
+			LeafVector w_leafs = s_leafs;
+			for (uint i = 0; i < space.vindex.size(); ++ i) {
+				if (inds[i] != -1 && space.vindex.index(i)) {
+					w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i));
 				}
-				space.finalize(w_leafs, w, LightTree(s));
-				if (!vars_prod.hasNext()) {
-					break;
-				}
-				vars_prod.makeNext();
+			}
+			space.finalize(w_leafs, w, LightTree(s));
+			if (!vars_prod.hasNext()) {
+				break;
+			}
+			vars_prod.makeNext();
+		}
+	}
+	if (complete(s_leafs, space.vindex)) {
+		// All indexes have variable 'v'
+		space.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
+	}
+}
+
+
+void unify_symbs(MIndexSpace& space)
+{
+	for (LightSymbol s : space.symbs) {
+		LeafVector s_leafs = space.fixed;
+		if (!space.complete_for(s)) {
+			continue;
+		}
+		unify_symbs_variant(space, s, vector<bool>(space.vindex.size(), false));
+		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
+		PowerSetIter ps_iter;
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
+			if (common.at(i)) {
+				ps_iter.addDim();
+			} else {
+				ps_iter.addSkipped();
 			}
 		}
-		if (complete(s_leafs, space.vindex)) {
-			// All indexes have variable 'v'
-			space.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
+		if (ps_iter.card() > 0) {
+			while (true) {
+				vector<bool> not_vars = ps_iter.values();
+				unify_symbs_variant(space, s, not_vars);
+				if (!ps_iter.hasNext()) {
+					break;
+				}
+				ps_iter.makeNext();
+			}
 		}
 	}
 }
@@ -266,7 +354,9 @@ void unify_rules(MIndexSpace& space)
 {
 	for (const Rule* r : space.rules) {
 		if (r->arity() == 0) {
-			unify_leaf_rule(space, r);
+			if (space.complete_for(r)) {
+				unify_leaf_rule(space, r);
+			}
 			continue;
 		}
 		unify_branch_rule(space, r, vector<LightSymbol>(), space.fixed);
@@ -371,8 +461,17 @@ VectorUnified unify(const VectorIndex& vindex) {
 				}
 			}
 		}
+		try{
 		unify_symbs(space);
 		unify_rules(space);
+		} catch (Error& e) {
+			cout << "*********" << endl;
+			cout << "absent_leafs: " << show(absent_leafs) << endl;
+			cout << "absent_inds: " << show(absent_inds) << endl;
+			cout << "space.fixed: " << show_leafs(space.fixed) << endl;
+			cout << endl;
+			throw e;
+		}
 		if (!absent_leafs_prod.hasNext()) {
 			break;
 		}

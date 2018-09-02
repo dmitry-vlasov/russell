@@ -146,4 +146,44 @@ private:
 	vector<vector<Data>> data_;
 };
 
+struct PowerSetIter {
+	//PowerSetIter() = default;
+	//PowerSetIter(const PowerSetIter&) = default;
+	//PowerSetIter& operator =(const PowerSetIter&) = default;
+
+	void addDim() { iter_.addDim(2); }
+	void addFixed(bool v) { iter_.addFixed(2, v ? 1 : 0); }
+	void addSkipped() { iter_.addSkipped(2); }
+
+	void makeNext() { iter_.makeNext(); }
+	bool hasNext() const { return iter_.hasNext(); }
+	uint size() const { return iter_.size(); }
+	uint card() const { return iter_.card(); }
+	bool operator[] (uint i) const { return iter_[i] == 1; }
+	vector<bool> values() const {
+		vector<bool> ret;
+		for (uint i = 0; i < iter_.size(); ++ i) {
+			ret.push_back(iter_[i] == 1);
+		}
+		return ret;
+	}
+
+	string show() const {
+		string ret;
+		ret += "[";
+		for (uint i = 0; i < iter_.size(); ++ i) {
+			if (i > 0) {
+				ret += ", ";
+			}
+			ret += (iter_[i] == 1) ? "T" : "F";
+		}
+		ret += "]";
+		return ret;
+	}
+
+private:
+	CartesianIter iter_;
+};
+
+
 }}}

@@ -5,7 +5,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
-	proofSizes_[i] = vector<uint>(proofs.size());
+	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub.sub) {
@@ -13,13 +13,13 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 				mindex_[x.first] = vector<IndexInt>(dim_hyp);
 			}
 			mindex_[x.first][i].add(x.second, j);
-			proofSizes_[i][j] = j;
 		}
+		proofInds_[i][j] = j;
 	}
 }
 
 void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
-	proofSizes_[i] = vector<uint>(1, j);
+	proofInds_[i] = vector<uint>(1, j);
 	for (const auto& x : p->sub.sub) {
 		if (!mindex_.count(x.first)) {
 			mindex_[x.first] = vector<IndexInt>(dim_hyp);
@@ -33,7 +33,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		CartesianProd<uint> proofs_prod;
 		for (uint i = 0; i < dim_hyp; ++ i) {
 			proofs_prod.incSize();
-			proofs_prod.addDim(proofSizes_[i]);
+			proofs_prod.addDim(proofInds_[i]);
 		}
 		while (true) {
 			vector<uint> proof_inds = proofs_prod.data();
@@ -50,7 +50,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		VectorIndex vectIndex;
 		for (uint i = 0; i < dim_hyp; ++i) {
 			const auto& ind = p.second[i];
-			vectIndex.add(ind, proofSizes_[i]);
+			vectIndex.add(ind, proofInds_[i]);
 		}
 		terms[p.first] = unify(vectIndex);
 		if (debug_multy_index) {
@@ -102,7 +102,7 @@ string MatrixIndex::show() const {
 		ret += "\nVAR: " + prover::show(p.first) + "\n";
 		ret += "==============================\n";
 		for (uint i = 0; i < p.second.size(); ++ i) {
-			ret += "index: " + to_string(i) + ", proof inds: " + prover::show(proofSizes_[i]) + "\n";
+			ret += "index: " + to_string(i) + ", proof inds: " + prover::show(proofInds_[i]) + "\n";
 			ret += p.second[i].show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
