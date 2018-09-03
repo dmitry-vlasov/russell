@@ -51,7 +51,7 @@ string show_leafs(const LeafVector& leafs) {
 vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	vector<bool> ret(s1.size(), false);
 	for (uint i = 0; i < s1.size(); ++ i) {
-		ret[i] == s1[i] && s2[i];
+		ret[i] = s1[i] && s2[i];
 	}
 	return ret;
 }
@@ -318,14 +318,16 @@ void unify_symbs(MIndexSpace& space)
 		}
 		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
+		uint c = 0;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
 				ps_iter.addDim();
+				++c;
 			} else {
 				ps_iter.addSkipped();
 			}
 		}
-		if (ps_iter.card() > 0) {
+		if (ps_iter.card() > 0 && c > 1) {
 			cout << "FFFFFFFFFFFFFFFF" << endl;
 			while (true) {
 				vector<bool> not_vars = ps_iter.values();
@@ -395,14 +397,16 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 	vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 	PowerSetIter ps_iter;
+	uint c = 0;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (common.at(i)) {
 			ps_iter.addDim();
+			++c;
 		} else {
 			ps_iter.addSkipped();
 		}
 	}
-	if (ps_iter.card() > 0) {
+	if (ps_iter.card() > 0 && c > 1) {
 		cout << "GGGGGGGGGGGGGGG" << endl;
 		while (true) {
 			vector<bool> not_vars = ps_iter.values();
@@ -559,14 +563,16 @@ void unify_rules(MIndexSpace& space)
 		}
 		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 		PowerSetIter ps_iter;
+		uint c = 0;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
 				ps_iter.addDim();
+				++c;
 			} else {
 				ps_iter.addSkipped();
 			}
 		}
-		if (ps_iter.card() > 0) {
+		if (ps_iter.card() > 0 && c > 1) {
 			cout << "HHHHHHHHHHHHHHH" << endl;
 			while (true) {
 				vector<bool> not_vars = ps_iter.values();
