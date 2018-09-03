@@ -133,50 +133,14 @@ struct MIndexSpace {
 	}
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
-
-		if (debug_multy_index) {
-			if (prover::show(leafs) == "(0, 2, )") {
-				cout << "*************************" << endl;
-				cout << vindex.show() << endl;
-
-				cout << "X FUCK!!!" << endl;
-				cout << "term: " << prover::show(t) << endl;
-				cout << "sub:" << endl;
-				cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
-				cout << "w: ";
-				for (auto s : w) {
-					cout << show(s) << ", ";
-				}
-				cout << endl << endl;
-			}
-		}
-
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
 				unified[leafs].tree = term;
-
-				if (debug_multy_index) {
-					if (prover::show(leafs) == "(0, 2, )") {
-						cout << "A FUCK!!!" << endl;
-						cout << "term: " << prover::show(t) << endl;
-						cout << "sub:" << endl;
-						cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
-					}
-				}
-
 			}
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
-			if (debug_multy_index) {
-				if (prover::show(leafs) == "(0, 2, )") {
-					cout << "B FUCK!!!" << endl;
-					cout << "term: " << prover::show(t) << endl;
-					cout << "sub:" << endl;
-					cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
-				}
-			}
 		}
 	}
 
@@ -402,7 +366,8 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		}
 		if (children.size() == r->arity()) {
 			if (space.unified[p.first].sub.compose(unif)) {
-				space.finalize(p.first, w, LightTree(r, children));
+				LightTree term = LightTree(r, children);
+				space.finalize(p.first, w, apply(unif, term));
 			}
 		}
 	}
@@ -476,20 +441,22 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 		if (expr_ind[i] != -1) {
 			LightTree e_orig = vindex.index(i)->exprs[expr_ind[i]];
 			if (apply(subtree.sub, e_orig) != subtree.tree) {
-				cout << "VECTOR INDEX UNIFICATION FAILS" << endl;
+				cout << "VECTOR INDEX UNIFICATION FAILS (A)" << endl;
 				cout << show(apply(subtree.sub, e_orig)) << " != " << show(subtree.tree) << endl << endl;
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree) << endl;
 				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				cout << "leafs: " << show(leafs) << endl;
 				return false;
 			}
 			if (!common.empty() && common != subtree.tree) {
-				cout << "VECTOR INDEX UNIFICATION FAILS" << endl;
+				cout << "VECTOR INDEX UNIFICATION FAILS (B)" << endl;
 				cout << show(common) << " != " << show(subtree.tree) << endl << endl;
 				cout << "common: " << show(common) << endl;
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree) << endl;
 				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				cout << "leafs: " << show(leafs) << endl;
 				return false;
 			} else {
 				common = subtree.tree;
@@ -526,9 +493,6 @@ VectorUnified unify(const VectorIndex& vindex) {
 			}
 		}
 		if (space.complete(space.fixed)) {
-			cout << "EMPTY" << endl;
-			cout << show_leafs(space.fixed) << endl;
-			cout << vindex.show() << endl;
 			space.finalize_empty();
 		} else {
 			unify_symbs(space);
