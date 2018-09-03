@@ -6,8 +6,8 @@ namespace mdl { namespace rus { namespace prover {
 
 struct VectorIndex {
 	struct IndexPtr {
-		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi, bool e) :
-			ind(i), values(v), proofsSize(pi.size()), empty(e), proofInds(pi) {
+		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi) :
+			ind(i), values(v), proofsSize(pi.size()), proofInds(pi) {
 			set<uint> vals;
 			for (auto val : *values) {
 				vals.insert(val);
@@ -23,7 +23,6 @@ struct VectorIndex {
 		const Index* ind;
 		const vector<uint>* values;
 		uint proofsSize;
-		const bool empty;
 		vector<uint> obligatory;
 		vector<uint> proofInds;
 	};
@@ -31,13 +30,10 @@ struct VectorIndex {
 		return vect_.size();
 	}
 	void add(const IndexInt& i, const vector<uint>& pi) {
-		vect_.emplace_back(&i.index(), &i.data(), pi, i.index().size == 0);
+		vect_.emplace_back(&i.index(), &i.data(), pi);
 	}
-	void add(const Index* i, const vector<uint>* v, const vector<uint>& pi, bool em) {
-		vect_.emplace_back(i, v, pi, em);
-	}
-	bool empty(uint i) const {
-		return vect_[i].empty;
+	void add(const Index* i, const vector<uint>* v, const vector<uint>& pi) {
+		vect_.emplace_back(i, v, pi);
 	}
 	const Index* index(uint i) const {
 		return vect_[i].ind;
@@ -88,7 +84,6 @@ struct VectorIndex {
 			ret += "\n";
 			ret += string("Proofs size: ") + to_string(ptr.proofsSize) + "\n";
 			ret += string("Index size: ") + (ptr.ind ? to_string(ptr.ind->size) : "NULL") + "\n";
-			ret += string("Empty: ") + (ptr.empty ? "yes" : "no") + "\n";
 			ret += string("Index: ");
 			if (ptr.ind) {
 				ret += ptr.ind->show();

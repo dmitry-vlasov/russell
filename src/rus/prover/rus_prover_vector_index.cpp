@@ -7,6 +7,7 @@ namespace mdl { namespace rus { namespace prover {
 
 bool debug_multy_index = false;
 bool debug_multy_index_1 = false;
+bool debug_multy_index_2 = false;
 
 struct LeafStorage {
 	LeafStorage() : index_leafs(nullptr) { }
@@ -65,6 +66,16 @@ string show(const vector<bool>& v) {
 	return ret;
 }
 
+string show(const vector<LightSymbol>& v) {
+	string ret;
+	ret += "(";
+	for (auto s : v) {
+		ret += prover::show(s) + ", ";
+	}
+	ret += ")";
+	return ret;
+}
+
 struct MIndexSpace {
 	VectorUnified unified;
 	set<LightSymbol> symbs;
@@ -114,7 +125,7 @@ struct MIndexSpace {
 		oss << vindex.show() << endl;
 		oss << endl;
 		oss << "Fixed:" << endl;
-		oss << show_leafs(fixed);
+		oss << show_leafs(fixed) << endl;
 		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 		return oss.str();
 	}
@@ -413,26 +424,30 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
 		VectorIndex child_vindex;
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
+			if (space.vindex.index(i)) {
+				if (!leafs[i].leafs.size() && !space.vindex.index(i)->rules.count(r)) {
+					return;
+				}
+				const Index* ind =
+					space.vindex.index(i)->rules.count(r) ?
+					space.vindex.index(i)->rules.at(r).branch().child[k].get() : nullptr;
+				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofInds(i));
+			} else {
+				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i));
+			}
+		}
 
 		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI: " << endl;
 			cout << child_vindex.show() << endl;
+			debug_multy_index_1 = true;
+			debug_multy_index_2 = true;
 		}
 		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN: " << endl;
 			cout << child_vindex.show() << endl;
-		}
-
-		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (!leafs[i].leafs.size() && space.vindex.index(i) && !space.vindex.empty(i)) {
-				if (!space.vindex.index(i)->rules.count(r)) {
-					return;
-				}
-				const Index* ind = space.vindex.index(i)->rules.at(r).branch().child[k].get();
-				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
-			} else {
-				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
-			}
+			debug_multy_index_1 = true;
 		}
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
@@ -505,6 +520,11 @@ void unify_rules(MIndexSpace& space)
 		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
+
+			if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
+				cout << "unify_rules: w: " << show(w) << endl;
+			}
+
 			vector<uint> inds = vars_prod.indexes();
 			LeafVector w_leafs = space.fixed;
 			bool consistent = true;
@@ -530,6 +550,10 @@ void unify_rules(MIndexSpace& space)
 VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint depth)
 {
 	MIndexSpace space(vindex, fixed, depth);
+	if (debug_multy_index_1) {
+		cout << space.show() << endl;
+		debug_multy_index_1 = false;
+	}
 	unify_symbs(space);
 	unify_rules(space);
 	return space.unified;

@@ -141,10 +141,17 @@ struct CartesianProd {
 		return ret;
 	}
 	string show() const {
-		string ret;
-		ret += "iter: " + iter_.show() + "\n";
-		ret += "curr: " + iter_.current() + "\n";
-		return ret;
+		ostringstream oss;
+		oss << "iter: " << iter_.show() << endl;
+		oss << "curr: " << iter_.current() << endl;
+		oss << "data: " << endl;
+		for (const vector<Data>& v : data_) {
+			for (const Data& d : v) {
+				oss << "\t" << d << ", ";
+			}
+			oss << endl;
+		}
+		return oss.str();
 	}
 
 private:
