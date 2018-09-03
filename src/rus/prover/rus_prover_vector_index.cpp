@@ -47,33 +47,12 @@ string show_leafs(const LeafVector& leafs) {
 	return ret;
 }
 
-inline bool complete(const LeafVector& v, const VectorIndex& vi) {
-	for (uint i = 0; i < v.size(); ++i) {
-		if (!v[i].leafs.size() && vi.index(i)) {
-			return false;
-		}
-	}
-	return true;
-}
-
 vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	vector<bool> ret(s1.size(), false);
 	for (uint i = 0; i < s1.size(); ++ i) {
 		ret[i] == s1[i] && s2[i];
 	}
 	return ret;
-}
-
-CartesianProd<uint> leafsProd(const VectorIndex& vi, const LeafVector& leafs) {
-	assert(complete(leafs, vi) && "leafsProd(const VectorIndex& vi, const LeafVector& leafs)");
-	CartesianProd<uint> leafs_prod;
-	for (uint i = 0; i < leafs.size(); ++ i) {
-		leafs_prod.incSize();
-		for (uint l : leafs[i].leafs) {
-			leafs_prod.incDim(l);
-		}
-	}
-	return leafs_prod;
 }
 
 struct MIndexSpace {
@@ -138,8 +117,8 @@ struct MIndexSpace {
 	}
 
 	void finalize(LeafVector leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-		assert(prover::complete(leafs_vect, vindex));
-		CartesianProd<uint> leafs_prod = leafsProd(vindex, leafs_vect);
+		assert(complete(leafs_vect));
+		CartesianProd<uint> leafs_prod = leafsProd(leafs_vect);
 		if (leafs_prod.card() == 0) {
 			return;
 		}
@@ -155,24 +134,38 @@ struct MIndexSpace {
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		if (w.size()) {
-			if (debug_multy_index_1) {
-				cout << "PRE FINAL: " << show(leafs) << " TERM: " << show(t) << endl;
-				cout << Indent::paragraph(show(unified[leafs].sub)) << endl;
-			}
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
 				unified[leafs].tree = term;
 			}
-			if (debug_multy_index_1) {
-				cout << "FINAL: " << show(leafs) << " TERM: " << show(term) << endl;
-				cout << Indent::paragraph(show(unified[leafs].sub)) << endl;
-			}
-
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
 		}
 	}
+
+	bool complete(const LeafVector& v) const {
+		for (uint i = 0; i < vindex.size(); ++i) {
+			if (!v[i].leafs.size() && vindex.index(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+private:
+	CartesianProd<uint> leafsProd(const LeafVector& leafs) {
+		assert(complete(leafs) && "leafsProd(const VectorIndex& vi, const LeafVector& leafs)");
+		CartesianProd<uint> leafs_prod;
+		for (uint i = 0; i < leafs.size(); ++ i) {
+			leafs_prod.incSize();
+			for (uint l : leafs[i].leafs) {
+				leafs_prod.incDim(l);
+			}
+		}
+		return leafs_prod;
+	}
+
 };
 
 void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& not_vars)
@@ -210,7 +203,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 			vars_prod.makeNext();
 		}
 	}
-	if (complete(s_leafs, space.vindex)) {
+	if (space.complete(s_leafs)) {
 		// All indexes have variable 'v'
 		space.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
 	}
@@ -285,7 +278,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 			vars_prod.makeNext();
 		}
 	}
-	if (complete(r_leafs, space.vindex)) {
+	if (space.complete(r_leafs)) {
 		// All indexes have rule 'r'
 		space.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
 	}
@@ -480,16 +473,10 @@ VectorUnified unify(const VectorIndex& vindex) {
 				}
 			}
 		}
-		try{
-		unify_symbs(space);
-		unify_rules(space);
-		} catch (Error& e) {
-			cout << "*********" << endl;
-			cout << "absent_leafs: " << show(absent_leafs) << endl;
-			cout << "absent_inds: " << show(absent_inds) << endl;
-			cout << "space.fixed: " << show_leafs(space.fixed) << endl;
-			cout << endl;
-			throw e;
+		if (space.complete(space.fixed)) {
+		} else {
+			unify_symbs(space);
+			unify_rules(space);
 		}
 		if (!absent_leafs_prod.hasNext()) {
 			break;
