@@ -140,6 +140,12 @@ struct CartesianProd {
 		}
 		return ret;
 	}
+	string show() const {
+		string ret;
+		ret += "iter: " + iter_.show() + "\n";
+		ret += "curr: " + iter_.current() + "\n";
+		return ret;
+	}
 
 private:
 	CartesianIter iter_;
@@ -147,10 +153,6 @@ private:
 };
 
 struct PowerSetIter {
-	//PowerSetIter() = default;
-	//PowerSetIter(const PowerSetIter&) = default;
-	//PowerSetIter& operator =(const PowerSetIter&) = default;
-
 	void addDim() { iter_.addDim(2); }
 	void addFixed(bool v) { iter_.addFixed(2, v ? 1 : 0); }
 	void addSkipped() { iter_.addSkipped(2); }

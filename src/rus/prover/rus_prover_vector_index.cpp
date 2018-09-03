@@ -55,6 +55,16 @@ vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	return ret;
 }
 
+string show(const vector<bool>& v) {
+	string ret;
+	ret += "(";
+	for (bool x : v) {
+		ret += x ? "1, " : "0, ";
+	}
+	ret += ")";
+	return ret;
+}
+
 struct MIndexSpace {
 	VectorUnified unified;
 	set<LightSymbol> symbs;
@@ -68,6 +78,46 @@ struct MIndexSpace {
 	const VectorIndex& vindex;
 	LeafVector fixed;
 	uint depth;
+
+	string show() const {
+		ostringstream oss;
+		oss << "M_INDEX_SPACE" << endl;
+		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+		oss << "depth: " << depth << endl;
+		oss << "VectorUnified: " << endl << "--------------" << endl;
+		for (const auto& u : unified) {
+			oss << prover::show(u.first) << " --> " << endl;
+			oss << "term: " << prover::show(u.second.tree) << endl;
+			oss << "sub: " << prover::show(u.second.sub) << endl;
+		}
+		oss << endl;
+		oss << "Symbs: {"; for (auto s : symbs) oss << prover::show(s) << ", "; oss << "}" << endl;
+		oss << endl;
+		oss << "Rules: {"; for (auto r : rules) oss << Lex::toStr(r->id()) << ", "; oss << "}" << endl;
+		oss << endl;
+		oss << "Vars prod:" << endl;
+		oss << vars_prod.show() << endl;
+		oss << endl;
+		oss << "Symb inds: " << endl;
+		for (const auto& p : symb_inds) {
+			oss << "\t" << prover::show(p.first) << " --> " << prover::show(p.second) << endl;
+		}
+		oss << endl;
+		oss << "Rule inds: " << endl;
+		for (const auto& p : rule_inds) {
+			oss << "\t" << Lex::toStr(p.first->id()) << " --> " << prover::show(p.second) << endl;
+		}
+		oss << endl;
+		oss << "Var inds: " << prover::show(vars_inds) << endl;
+		oss << endl;
+		oss << "VIndex: " << endl;
+		oss << vindex.show() << endl;
+		oss << endl;
+		oss << "Fixed:" << endl;
+		oss << show_leafs(fixed);
+		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+		return oss.str();
+	}
 
 	bool complete(const vector<bool>& s) const {
 		for (uint i = 0; i < vindex.size(); ++ i) {
@@ -133,14 +183,39 @@ struct MIndexSpace {
 	}
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+		if (debug_multy_index) {
+			if (prover::show(leafs) == "(1, 1, )") {
+				cout << "FUCK" << endl;
+				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
+				cout << "t: " << prover::show(t) << endl;
+				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+			}
+		}
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
+				if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+					cout << "SUCCESS" << endl;
+					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+				}
+
 				unified[leafs].tree = term;
+			} else {
+				if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+					cout << "FAILURE" << endl;
+					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+				}
 			}
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
+			if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+				cout << "SUCCESS" << endl;
+				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+			}
+		}
+		if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+			cout << "---------------" << endl;
 		}
 	}
 
@@ -338,6 +413,16 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
 		VectorIndex child_vindex;
+
+		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+			cout << "WI: " << endl;
+			cout << child_vindex.show() << endl;
+		}
+		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
+			cout << "WN: " << endl;
+			cout << child_vindex.show() << endl;
+		}
+
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (!leafs[i].leafs.size() && space.vindex.index(i) && !space.vindex.empty(i)) {
 				if (!space.vindex.index(i)->rules.count(r)) {
@@ -349,7 +434,17 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
 			}
 		}
+
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
+
+		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+			cout << "WI RESULT: " << endl;
+			cout << show(child_terms[k]) << endl;
+		}
+		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
+			cout << "WN RESULT: " << endl;
+			cout << show(child_terms[k]) << endl;
+		}
 	}
 	for (const auto& p : child_terms[0]) {
 		LightTree::Children children;
@@ -357,7 +452,18 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		for (uint i = 0; i < r->arity(); ++ i) {
 			if (child_terms[i].count(p.first)) {
 				if (!unif.compose(child_terms[i][p.first].sub)) {
+
+					if (debug_multy_index && show(p.first) == "(1, 1, )") {
+						cout << "(A)FUCK!!!" << endl;
+						cout << Indent::paragraph(show(child_terms[i][p.first].sub)) << endl;
+						cout << Indent::paragraph(show(unif)) << endl;
+					}
+
 					break;
+				} else {
+					if (debug_multy_index && show(p.first) == "(1, 1, )") {
+						cout << "(A)FUCK!!!" << endl << "SUCCESS" << endl;
+					}
 				}
 				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
 			} else {
@@ -366,8 +472,21 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		}
 		if (children.size() == r->arity()) {
 			if (space.unified[p.first].sub.compose(unif)) {
-				LightTree term = LightTree(r, children);
-				space.finalize(p.first, w, apply(unif, term));
+				LightTree term = apply(unif, LightTree(r, children));
+				space.finalize(p.first, w, term);
+				if (debug_multy_index && show(p.first) == "(1, 1, )") {
+					cout << "(B)FUCK!!!" << endl;
+					cout << "term: " << show(term) << endl;
+					cout << "sub:" << endl;
+					cout << Indent::paragraph(show(space.unified[p.first].sub)) << endl;
+					cout << "SUCCESS" << endl;
+				}
+			} else {
+				if (debug_multy_index && show(p.first) == "(1, 1, )") {
+					cout << "(B)FUCK!!!" << endl;
+					cout << Indent::paragraph(show(space.unified[p.first].sub)) << endl;
+					cout << Indent::paragraph(show(unif)) << endl;
+				}
 			}
 		}
 	}
