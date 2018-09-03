@@ -472,6 +472,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 						cout << "(A)FUCK!!!" << endl;
 						cout << Indent::paragraph(show(child_terms[i][p.first].sub)) << endl;
 						cout << Indent::paragraph(show(unif)) << endl;
+						cout << "FAIL" << endl;
 					}
 
 					break;
@@ -501,9 +502,44 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 					cout << "(B)FUCK!!!" << endl;
 					cout << Indent::paragraph(show(space.unified[p.first].sub)) << endl;
 					cout << Indent::paragraph(show(unif)) << endl;
+					cout << "FAIL" << endl;
 				}
 			}
 		}
+	}
+}
+
+void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& not_vars)
+{
+	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
+	LeafVector r_leafs = space.fixed;
+	for (uint i = 0; i < space.vindex.size(); ++ i) {
+		if (r_leafs[i].leafs.size() || not_vars.at(i)) {
+			vars_prod.skip(i);
+		}
+	}
+	unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
+
+	while (true) {
+		vector<LightSymbol> w = vars_prod.data();
+		vector<uint> inds = vars_prod.indexes();
+		LeafVector w_leafs = r_leafs;
+		bool consistent = true;
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
+			if (inds[i] != -1 && space.vindex.index(i)) {
+				if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+					consistent = false;
+					break;
+				}
+			}
+		}
+		if (consistent) {
+			unify_branch_rule(space, r, w, w_leafs);
+		}
+		if (!vars_prod.hasNext()) {
+			break;
+		}
+		vars_prod.makeNext();
 	}
 }
 
@@ -516,33 +552,27 @@ void unify_rules(MIndexSpace& space)
 			}
 			continue;
 		}
-		unify_branch_rule(space, r, vector<LightSymbol>(), space.fixed);
-		CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-		while (true) {
-			vector<LightSymbol> w = vars_prod.data();
-
-			if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
-				cout << "unify_rules: w: " << show(w) << endl;
+		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
+		PowerSetIter ps_iter;
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
+			if (common.at(i)) {
+				ps_iter.addDim();
+			} else {
+				ps_iter.addSkipped();
 			}
-
-			vector<uint> inds = vars_prod.indexes();
-			LeafVector w_leafs = space.fixed;
-			bool consistent = true;
-			for (uint i = 0; i < space.vindex.size(); ++ i) {
-				if (inds[i] != -1 && space.vindex.index(i)) {
-					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
-						consistent = false;
-						break;
-					}
+		}
+		if (ps_iter.card() > 0) {
+			cout << "HHHHHHHHHHHHHHH" << endl;
+			while (true) {
+				vector<bool> not_vars = ps_iter.values();
+				unify_rule_variant(space, r, not_vars);
+				if (!ps_iter.hasNext()) {
+					break;
 				}
+				ps_iter.makeNext();
 			}
-			if (consistent) {
-				unify_branch_rule(space, r, w, w_leafs);
-			}
-			if (!vars_prod.hasNext()) {
-				break;
-			}
-			vars_prod.makeNext();
+		} else {
+			unify_rule_variant(space, r, space.rule_inds.at(r));
 		}
 	}
 }
