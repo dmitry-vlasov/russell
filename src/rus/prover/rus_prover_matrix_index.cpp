@@ -88,7 +88,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			const LightTree& term = p.second.at(c).tree;
 			if (!term.empty()) {
 				s[c].sub[p.first] = term;
-				unif[c] = p.second.at(c).sub;
+				unif[c] = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
 			} else {
 				s[c];
 				unif[c];
@@ -128,6 +128,8 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 			delta.compose(sub);
 			ret[p.first] = delta;
 			if (debug_multy_index) {
+				cout << "result sub: " << Indent::paragraph(prover::show(sub)) << endl;
+				cout << "result delta: " << Indent::paragraph(prover::show(delta)) << endl;
 				cout << "YES" << endl;
 			}
 		} else {
@@ -185,7 +187,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 593);
+	debug_multy_index = (c == 693);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}

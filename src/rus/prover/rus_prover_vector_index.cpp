@@ -467,10 +467,11 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		for (uint i = 0; i < r->arity(); ++ i) {
 			if (child_terms[i].count(p.first)) {
 
-				Subst s = unify_subs(unif, child_terms[i][p.first].sub);
+				//Subst s = unify_subs(unif, child_terms[i][p.first].sub);
+				unif = unify_subs(MultySubst({&unif, &child_terms[i][p.first].sub}));
 
 				//if (!unif.compose(child_terms[i][p.first].sub)) {
-				if (!s.ok) {
+				if (!unif.ok) {
 
 					if (debug_multy_index && show(p.first) == "(1, 1, )") {
 						cout << "(A)FUCK!!!" << endl;
@@ -485,7 +486,6 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 						cout << "(A)FUCK!!!" << endl << "SUCCESS" << endl;
 					}
 				}
-				unif = s;
 				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
 			} else {
 				break;
