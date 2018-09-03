@@ -9,33 +9,28 @@ bool debug_multy_index = false;
 bool debug_multy_index_1 = false;
 
 struct LeafStorage {
+	LeafStorage() : index_leafs(nullptr) { }
+
 	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
-		if (leafs.size() > 0) {
-			cout << "AAAA" << endl;
-			cout << "old_leafs: " << show(leafs) << endl;
-			cout << "ind_values: " << show(*ind_values) << endl;
-			cout << "ind_leafs: " << show(ind_leafs.inds) << endl;
-			vector<uint> new_leafs;
+		if (!index_leafs) {
+			index_leafs = &ind_leafs;
 			for (uint s : ind_leafs.inds) {
-				new_leafs.push_back(ind_values->at(s));
+				leafs.push_back(ind_values->at(s));
 			}
-			cout << "new_leafs: " << show(leafs) << endl;
-			//throw Error("AAA");
+			return true;
+		} else {
+			return index_leafs == &ind_leafs;
 		}
-		if (!leafs.empty()) {
-			return false;
-		}
-		//assert(leafs.size() == 0 && "LeafStorage::init");
-		leafs.clear();
-		for (uint s : ind_leafs.inds) {
-			leafs.push_back(ind_values->at(s));
-		}
-		return true;
 	}
+
 	void init(uint l) {
 		leafs.push_back(l);
 	}
+
 	vector<uint> leafs;
+
+private:
+	const Index::Leaf* index_leafs;
 };
 
 typedef vector<LeafStorage> LeafVector;
@@ -187,8 +182,8 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (not_vars.at(i)) {
 			vars_prod.skip(i);
-			if (s_leafs[i].leafs.empty()) {
-				s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i));
+			if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
+				return;
 			}
 		}
 	}
@@ -197,12 +192,18 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 			vector<LightSymbol> w = vars_prod.data();
 			vector<uint> inds = vars_prod.indexes();
 			LeafVector w_leafs = s_leafs;
+			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
-					w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i));
+					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+						consistent = false;
+						break;
+					}
 				}
 			}
-			space.finalize(w_leafs, w, LightTree(s));
+			if (consistent) {
+				space.finalize(w_leafs, w, LightTree(s));
+			}
 			if (!vars_prod.hasNext()) {
 				break;
 			}
@@ -256,8 +257,8 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (not_vars.at(i)) {
 			vars_prod.skip(i);
-			if (r_leafs[i].leafs.empty()) {
-				r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i));
+			if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
+				return;
 			}
 		}
 	}
@@ -266,12 +267,18 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 			vector<LightSymbol> w = vars_prod.data();
 			vector<uint> inds = vars_prod.indexes();
 			LeafVector w_leafs = r_leafs;
+			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
-					w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i));
+					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+						consistent = false;
+						break;
+					}
 				}
 			}
-			space.finalize(w_leafs, w, LightTree(r, {}));
+			if (consistent) {
+				space.finalize(w_leafs, w, LightTree(r, {}));
+			}
 			if (!vars_prod.hasNext()) {
 				break;
 			}
@@ -319,13 +326,6 @@ VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint dep
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
 {
-	/*if (debug_multy_index_1) {
-		cout << "PARENT VINDEX:" << endl;
-		cout << Indent::paragraph(space.vindex.show(), space.depth) << endl;
-		cout << "LEAFS: " << endl;
-		cout << "\t" << show_leafs(leafs) << endl;
-	}*/
-
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
 		VectorIndex child_vindex;
@@ -340,12 +340,6 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i), space.vindex.empty(i));
 			}
 		}
-
-		/*if (debug_multy_index_1) {
-			cout << "CHILD VINDEX:" << endl;
-			cout << Indent::paragraph(child_vindex.show(), space.depth + 1) << endl;
-		}*/
-
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 	}
 	for (const auto& p : child_terms[0]) {
@@ -353,23 +347,8 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		Subst unif;
 		for (uint i = 0; i < r->arity(); ++ i) {
 			if (child_terms[i].count(p.first)) {
-
-				if (debug_multy_index_1) {
-					cout << "COMPOSING:" << endl;
-					cout << "UNIF: " << endl << show(unif) << endl;
-					cout << "child_terms[i][p.first].sub: " << endl << show(child_terms[i][p.first].sub) << endl;
-				}
-
 				if (!unif.compose(child_terms[i][p.first].sub)) {
-					if (debug_multy_index_1) {
-						cout << "FAILURE" << endl;
-					}
 					break;
-				} else {
-					if (debug_multy_index_1) {
-						cout << "SUCCESS" << endl;
-						cout << "UNIF: " << endl << show(unif) << endl << endl;
-					}
 				}
 				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
 			} else {
@@ -399,12 +378,18 @@ void unify_rules(MIndexSpace& space)
 			vector<LightSymbol> w = vars_prod.data();
 			vector<uint> inds = vars_prod.indexes();
 			LeafVector w_leafs = space.fixed;
+			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
-					w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i));
+					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+						consistent = false;
+						break;
+					}
 				}
 			}
-			unify_branch_rule(space, r, w, w_leafs);
+			if (consistent) {
+				unify_branch_rule(space, r, w, w_leafs);
+			}
 			if (!vars_prod.hasNext()) {
 				break;
 			}
