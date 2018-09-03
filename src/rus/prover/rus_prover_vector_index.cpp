@@ -438,7 +438,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI: " << endl;
 			cout << child_vindex.show() << endl;
 			debug_multy_index_1 = true;
@@ -448,25 +448,29 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			cout << "WN: " << endl;
 			cout << child_vindex.show() << endl;
 			debug_multy_index_1 = true;
-		}
+		}*/
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 
-		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
 		}
 		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
-		}
+		}*/
 	}
 	for (const auto& p : child_terms[0]) {
 		LightTree::Children children;
 		Subst unif;
 		for (uint i = 0; i < r->arity(); ++ i) {
 			if (child_terms[i].count(p.first)) {
-				if (!unif.compose(child_terms[i][p.first].sub)) {
+
+				Subst s = unify_subs(unif, child_terms[i][p.first].sub);
+
+				//if (!unif.compose(child_terms[i][p.first].sub)) {
+				if (!s.ok) {
 
 					if (debug_multy_index && show(p.first) == "(1, 1, )") {
 						cout << "(A)FUCK!!!" << endl;
@@ -481,6 +485,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 						cout << "(A)FUCK!!!" << endl << "SUCCESS" << endl;
 					}
 				}
+				unif = s;
 				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
 			} else {
 				break;
