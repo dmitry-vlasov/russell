@@ -146,8 +146,9 @@ struct CartesianProd {
 		oss << "curr: " << iter_.current() << endl;
 		oss << "data: " << endl;
 		for (const vector<Data>& v : data_) {
+			oss << "\t";
 			for (const Data& d : v) {
-				oss << "\t" << d << ", ";
+				oss << d << ", ";
 			}
 			oss << endl;
 		}

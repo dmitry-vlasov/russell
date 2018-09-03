@@ -89,7 +89,8 @@ string CartesianIter::show() const {
 		}
 		ret += to_string(d.size) + " ";
 	}
-	ret += "]";
+	ret += "], ";
+	ret += "card: " + to_string(card());
 	return ret;
 }
 string CartesianIter::current() const {

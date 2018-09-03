@@ -195,7 +195,7 @@ struct MIndexSpace {
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		if (debug_multy_index) {
-			if (prover::show(leafs) == "(1, 1, )") {
+			if (prover::show(leafs) == "(20, 35, )") {
 				cout << "FUCK" << endl;
 				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
 				cout << "t: " << prover::show(t) << endl;
@@ -205,14 +205,14 @@ struct MIndexSpace {
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+				if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
 					cout << "SUCCESS" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
 
 				unified[leafs].tree = term;
 			} else {
-				if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+				if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -220,12 +220,12 @@ struct MIndexSpace {
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
-			if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+			if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
 				cout << "SUCCESS" << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 			}
 		}
-		if (debug_multy_index && prover::show(leafs) == "(1, 1, )") {
+		if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
 			cout << "---------------" << endl;
 		}
 	}
@@ -438,13 +438,13 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI: " << endl;
 			cout << child_vindex.show() << endl;
 			debug_multy_index_1 = true;
 			debug_multy_index_2 = true;
 		}
-		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
+		/*if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN: " << endl;
 			cout << child_vindex.show() << endl;
 			debug_multy_index_1 = true;
@@ -452,10 +452,10 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 
-		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
-		}
+		}/*
 		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
