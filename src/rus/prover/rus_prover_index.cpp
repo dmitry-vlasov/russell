@@ -21,14 +21,14 @@ static void intersect_show(map<uint, vector<string>>& u, map<uint, string> w[], 
 	}
 }
 
-static map<uint, string> showVector(const Index* index) {
+map<uint, string> Index::showVector() const {
 	map<uint, string> ret;
-	for (const auto& p : index->vars) {
+	for (const auto& p : vars) {
 		for (const auto& d : p.second.inds) {
 			ret[d] = rus::prover::show(p.first);
 		}
 	}
-	for (const auto& p : index->rules) {
+	for (const auto& p : rules) {
 		const Rule* r = p.first;
 		if (p.second.kind() == Index::Node::LEAF) {
 			for (const auto& d : p.second.leaf().inds) {
@@ -39,7 +39,7 @@ static map<uint, string> showVector(const Index* index) {
 			map<uint, string> show_ch[ch.size()];
 			int c = 0;
 			for (auto& ind : ch) {
-				 show_ch[c++] = showVector(ind.get());
+				 show_ch[c++] = ind.get()->showVector();
 			}
 			map<uint, vector<string>> intersected;
 			if (c > 0) {
@@ -240,7 +240,7 @@ Index::Unified Index::unify(const LightTree& t) const {
 
 string Index::show() const {
 	string ret;
-	auto lines = showVector(this);
+	auto lines = showVector();
 	if (!lines.size()) {
 		return "\n";
 	} else {

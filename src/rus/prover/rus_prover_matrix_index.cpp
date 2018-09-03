@@ -82,14 +82,17 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	MultyUnifiedSubs s;
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
-			//if (p.second.at(c).tree.empty()) {
-			//	continue;
-			//}
 			if (debug_multy_index) {
 				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
 			}
-			s[c].sub[p.first] = p.second.at(c).tree;
-			unif[c] = p.second.at(c).sub;
+			const LightTree& term = p.second.at(c).tree;
+			if (!term.empty()) {
+				s[c].sub[p.first] = term;
+				unif[c] = p.second.at(c).sub;
+			} else {
+				s[c];
+				unif[c];
+			}
 		}
 	}
 	return s;

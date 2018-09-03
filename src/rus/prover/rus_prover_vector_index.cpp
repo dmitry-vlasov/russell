@@ -133,15 +133,61 @@ struct MIndexSpace {
 	}
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+
+		if (debug_multy_index) {
+			if (prover::show(leafs) == "(0, 2, )") {
+				cout << "*************************" << endl;
+				cout << vindex.show() << endl;
+
+				cout << "X FUCK!!!" << endl;
+				cout << "term: " << prover::show(t) << endl;
+				cout << "sub:" << endl;
+				cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
+				cout << "w: ";
+				for (auto s : w) {
+					cout << show(s) << ", ";
+				}
+				cout << endl << endl;
+			}
+		}
+
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
 				unified[leafs].tree = term;
+
+				if (debug_multy_index) {
+					if (prover::show(leafs) == "(0, 2, )") {
+						cout << "A FUCK!!!" << endl;
+						cout << "term: " << prover::show(t) << endl;
+						cout << "sub:" << endl;
+						cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
+					}
+				}
+
 			}
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
+			if (debug_multy_index) {
+				if (prover::show(leafs) == "(0, 2, )") {
+					cout << "B FUCK!!!" << endl;
+					cout << "term: " << prover::show(t) << endl;
+					cout << "sub:" << endl;
+					cout << Indent::paragraph(prover::show(unified[leafs].sub)) << endl;
+				}
+			}
 		}
+	}
+
+	void finalize_empty() {
+		assert(complete(fixed));
+		vector<uint> leafs;
+		for (uint i = 0; i < vindex.size(); ++ i) {
+			assert(fixed[i].leafs.size() == 1);
+			leafs.push_back(fixed[i].leafs[0]);
+		}
+		unified[leafs];
 	}
 
 	bool complete(const LeafVector& v) const {
@@ -173,6 +219,9 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector s_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
+		if (s_leafs[i].leafs.size()) {
+			vars_prod.skip(i);
+		}
 		if (not_vars.at(i)) {
 			vars_prod.skip(i);
 			if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
@@ -248,6 +297,9 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
+		if (r_leafs[i].leafs.size()) {
+			vars_prod.skip(i);
+		}
 		if (not_vars.at(i)) {
 			vars_prod.skip(i);
 			if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
@@ -474,6 +526,10 @@ VectorUnified unify(const VectorIndex& vindex) {
 			}
 		}
 		if (space.complete(space.fixed)) {
+			cout << "EMPTY" << endl;
+			cout << show_leafs(space.fixed) << endl;
+			cout << vindex.show() << endl;
+			space.finalize_empty();
 		} else {
 			unify_symbs(space);
 			unify_rules(space);

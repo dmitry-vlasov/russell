@@ -39,6 +39,7 @@ struct Index {
 	uint add(const LightTree&);
 	Unified unify(const LightTree&) const;
 	string show() const;
+	map<uint, string> showVector() const;
 
 	vector<LightTree> exprs;
 };
@@ -66,6 +67,18 @@ struct IndexMap {
 		return ret;
 	}
 	string show() const {
+		map<uint, string> lines = index_.showVector();
+		if (!lines.size()) {
+			return "\n";
+		} else {
+			string ret;
+			for (const auto&  p : lines) {
+				uint ind = p.first;
+				Data d = data_[ind];
+				ret += to_string(d) + "[" + to_string(p.first) + "]" + " -> " + p.second + "\n";
+			}
+			return ret;
+		}
 		return index_.show();
 	}
 
