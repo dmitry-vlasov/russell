@@ -63,6 +63,13 @@ struct VectorIndex {
 	void clear() {
 		vect_.clear();
 	}
+	uint card() const {
+		uint ret = 1;
+		for (const auto& i : vect_) {
+			ret *= i.proofsSize;
+		}
+		return ret;
+	}
 	string show() const {
 		string ret;
 		for (uint i = 0; i < vect_.size(); ++ i) {

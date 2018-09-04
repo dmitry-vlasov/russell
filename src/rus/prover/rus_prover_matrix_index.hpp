@@ -11,6 +11,7 @@ struct MatrixIndex {
 	MultyUnifiedSubs compute(MultyUnifiedSubs& unif);
 
 	string show() const;
+	uint card() const;
 
 private:
 	uint dim_hyp;

@@ -379,7 +379,7 @@ void unify_symbs(MIndexSpace& space)
 	}
 }
 
-void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& not_vars)
+void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r_fixed)
 {
 	assert(r->arity() == 0);
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
@@ -388,7 +388,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 		if (r_leafs[i].leafs.size()) {
 			vars_prod.skip(i);
 		}
-		if (not_vars.at(i)) {
+		if (r_fixed.at(i)) {
 			vars_prod.skip(i);
 			if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
 				return;
@@ -447,8 +447,8 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 			cout << "GGGGGGGGGGGGGGG" << endl;
 		}
 		while (true) {
-			vector<bool> not_vars = ps_iter.values();
-			unify_leaf_rule_variant(space, r, not_vars);
+			vector<bool> r_fixed = ps_iter.values();
+			unify_leaf_rule_variant(space, r, r_fixed);
 			if (!ps_iter.hasNext()) {
 				break;
 			}
@@ -556,12 +556,12 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 	}
 }
 
-void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& not_vars)
+void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r_fixed)
 {
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (r_leafs[i].leafs.size() || not_vars.at(i)) {
+		if (r_leafs[i].leafs.size() || r_fixed.at(i)) {
 			vars_prod.skip(i);
 		}
 	}
@@ -615,8 +615,10 @@ void unify_rules(MIndexSpace& space)
 				cout << "HHHHHHHHHHHHHHH" << endl;
 			}
 			while (true) {
-				vector<bool> not_vars = ps_iter.values();
-				unify_rule_variant(space, r, not_vars);
+				vector<bool> r_fixed = ps_iter.values();
+				if (!false_vector(r_fixed)) {
+					unify_rule_variant(space, r, r_fixed);
+				}
 				if (!ps_iter.hasNext()) {
 					break;
 				}

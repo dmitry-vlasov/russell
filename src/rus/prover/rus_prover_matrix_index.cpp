@@ -28,6 +28,14 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 	}
 }
 
+uint MatrixIndex::card() const {
+	uint ret = 1;
+	for (const auto& p : proofInds_) {
+		ret *= p.size();
+	}
+	return ret;
+}
+
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -209,7 +217,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	}
 
 	//if (debug_multy_index) {
-		cout << "MATRIX no. " << c << endl;
+		cout << "MATRIX no. " << c <<  ", card: " << mi.card() << endl ;
 	//	cout << mi.show() << endl;
 	//}
 
