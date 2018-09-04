@@ -219,8 +219,8 @@ struct MIndexSpace {
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
 
-				//if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
-				if (debug_multy_index) {
+				if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
+				//if (debug_multy_index) {
 					//cout << "!unified[leafs].tree.empty()" << endl;
 					if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
 						cout << "555555555555" << endl;
@@ -300,6 +300,10 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 			}
 		}
 	}
+	if (debug_multy_index) {
+		cout << "s_leafs: " << show_leafs(s_leafs) << endl;
+		cout << "s_fixed: " << show(s_fixed) << endl;
+	}
 	if (vars_prod.card() > 0) {
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
@@ -315,6 +319,9 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 				}
 			}
 			if (consistent) {
+				if (debug_multy_index) {
+					cout << "w_leafs: " << show_leafs(w_leafs) << endl;
+				}
 				space.finalize(w_leafs, w, LightTree(s));
 			}
 			if (!vars_prod.hasNext()) {
@@ -337,19 +344,26 @@ void unify_symbs(MIndexSpace& space)
 		if (!space.complete_for(s)) {
 			continue;
 		}
-		/*vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
+		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
 				ps_iter.addDim();
+			} else if (space.symb_inds.at(s)[i]) {
+				ps_iter.addFixed(true);
 			} else {
 				ps_iter.addSkipped();
 			}
 		}
 		if (ps_iter.card() > 0) {
-			cout << "FFFFFFFFFFFFFFFF" << endl;
+			if (debug_multy_index) {
+				cout << "FFFFFFFFFFFFFFFF" << endl;
+			}
 			while (true) {
 				vector<bool> s_fixed = ps_iter.values();
+				if (debug_multy_index) {
+					cout << "ps_iter: " << ps_iter.show() << endl;
+				}
 				if (!false_vector(s_fixed)) {
 					unify_symbs_variant(space, s, s_fixed);
 				}
@@ -360,8 +374,8 @@ void unify_symbs(MIndexSpace& space)
 			}
 		} else {
 			unify_symbs_variant(space, s, space.symb_inds.at(s));
-		}*/
-		unify_symbs_variant(space, s, space.symb_inds.at(s));
+		}
+		//unify_symbs_variant(space, s, space.symb_inds.at(s));
 	}
 }
 
@@ -419,17 +433,19 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 	vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 	PowerSetIter ps_iter;
-	uint c = 0;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (common.at(i)) {
 			ps_iter.addDim();
-			++c;
+		} else if (space.rule_inds.at(r)[i]) {
+			ps_iter.addFixed(true);
 		} else {
 			ps_iter.addSkipped();
 		}
 	}
-	if (ps_iter.card() > 0 && c > 1) {
-		cout << "GGGGGGGGGGGGGGG" << endl;
+	if (ps_iter.card() > 0) {
+		if (debug_multy_index) {
+			cout << "GGGGGGGGGGGGGGG" << endl;
+		}
 		while (true) {
 			vector<bool> not_vars = ps_iter.values();
 			unify_leaf_rule_variant(space, r, not_vars);
@@ -583,19 +599,21 @@ void unify_rules(MIndexSpace& space)
 			}
 			continue;
 		}
-		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
+		/*vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 		PowerSetIter ps_iter;
-		uint c = 0;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
 				ps_iter.addDim();
-				++c;
+			} else if (space.rule_inds.at(r)[i]) {
+				ps_iter.addFixed(true);
 			} else {
 				ps_iter.addSkipped();
 			}
 		}
-		if (ps_iter.card() > 0 && c > 1) {
-			cout << "HHHHHHHHHHHHHHH" << endl;
+		if (ps_iter.card() > 0) {
+			if (debug_multy_index) {
+				cout << "HHHHHHHHHHHHHHH" << endl;
+			}
 			while (true) {
 				vector<bool> not_vars = ps_iter.values();
 				unify_rule_variant(space, r, not_vars);
@@ -606,7 +624,8 @@ void unify_rules(MIndexSpace& space)
 			}
 		} else {
 			unify_rule_variant(space, r, space.rule_inds.at(r));
-		}
+		}*/
+		unify_rule_variant(space, r, space.rule_inds.at(r));
 	}
 }
 
