@@ -36,6 +36,20 @@ uint MatrixIndex::card() const {
 	return ret;
 }
 
+string MatrixIndex::card_str() const {
+	string ret;
+	bool first = true;
+	for (const auto& p : proofInds_) {
+		if (!first) {
+			ret += " x ";
+		}
+		ret += to_string(p.size());
+		first = false;
+	}
+	ret += " = " + to_string(card());
+	return ret;
+}
+
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -78,6 +92,14 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 					is_common = false;
 					break;
 				}
+				const Subst& sub = q.second.at(p.first).sub;
+				if (!sub.ok) {
+					if (debug_multy_index) {
+						cout << "has error = " << prover::show(p.first) << endl;
+					}
+					is_common = false;
+					break;
+				}
 			}
 			if (is_common) {
 				if (debug_multy_index) {
@@ -94,6 +116,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
 			}
 			const LightTree& term = p.second.at(c).tree;
+			const Subst& sub = p.second.at(c).sub;
 			if (!term.empty()) {
 				s[c].sub[p.first] = term;
 				unif[c] = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
@@ -195,7 +218,8 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 2070);
+	debug_multy_index = (c == 2372);
+	//debug_multy_index = (c == 2070);
 	//debug_multy_index = (c == 8);
 	//debug_multy_index = (c == 78);
 	if (debug_multy_index) {
@@ -217,7 +241,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	}
 
 	//if (debug_multy_index) {
-		cout << "MATRIX no. " << c <<  ", card: " << mi.card() << endl ;
+		cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 	//	cout << mi.show() << endl;
 	//}
 

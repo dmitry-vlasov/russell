@@ -204,7 +204,7 @@ struct MIndexSpace {
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		if (debug_multy_index) {
-			if (prover::show(leafs) == "(20, 35, )") {
+			if (prover::show(leafs) == "(0, 11, 0, )") {
 				cout << "FUCK" << endl;
 				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
 				cout << "t: " << prover::show(t) << endl;
@@ -214,7 +214,7 @@ struct MIndexSpace {
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+				if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
 					cout << "SUCCESS (A)" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -233,7 +233,7 @@ struct MIndexSpace {
 
 				unified[leafs].tree = term;
 			} else {
-				if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+				if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -241,13 +241,13 @@ struct MIndexSpace {
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
-			if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+			if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
 				cout << "SUCCESS (B)" << endl;
 				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 			}
 		}
-		if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+		if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
 			cout << "---------------" << endl;
 		}
 	}
@@ -301,8 +301,8 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 		}
 	}
 	if (debug_multy_index) {
-		cout << "s_leafs: " << show_leafs(s_leafs) << endl;
-		cout << "s_fixed: " << show(s_fixed) << endl;
+		//cout << "s_leafs: " << show_leafs(s_leafs) << endl;
+		//cout << "s_fixed: " << show(s_fixed) << endl;
 	}
 	if (vars_prod.card() > 0) {
 		while (true) {
@@ -320,7 +320,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 			}
 			if (consistent) {
 				if (debug_multy_index) {
-					cout << "w_leafs: " << show_leafs(w_leafs) << endl;
+					//cout << "w_leafs: " << show_leafs(w_leafs) << endl;
 				}
 				space.finalize(w_leafs, w, LightTree(s));
 			}
@@ -357,12 +357,12 @@ void unify_symbs(MIndexSpace& space)
 		}
 		if (ps_iter.card() > 0) {
 			if (debug_multy_index) {
-				cout << "FFFFFFFFFFFFFFFF" << endl;
+				//cout << "FFFFFFFFFFFFFFFF" << endl;
 			}
 			while (true) {
 				vector<bool> s_fixed = ps_iter.values();
 				if (debug_multy_index) {
-					cout << "ps_iter: " << ps_iter.show() << endl;
+					//cout << "ps_iter: " << ps_iter.show() << endl;
 				}
 				if (!false_vector(s_fixed)) {
 					unify_symbs_variant(space, s, s_fixed);
@@ -480,12 +480,12 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 			}
 		}
 
-		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI: " << endl;
 			cout << child_vindex.show() << endl;
 			debug_multy_index_1 = true;
 			debug_multy_index_2 = true;
-		}
+		}*/
 		/*if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN: " << endl;
 			cout << child_vindex.show() << endl;
@@ -494,10 +494,11 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
 
-		if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
+		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
 			cout << "WI RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
-		}/*
+		}*/
+		/*
 		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
 			cout << "WN RESULT: " << endl;
 			cout << show(child_terms[k]) << endl;
@@ -507,7 +508,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 		LightTree::Children children;
 		Subst unif;
 		for (uint i = 0; i < r->arity(); ++ i) {
-			if (child_terms[i].count(p.first)) {
+			if (child_terms[i].count(p.first) && !child_terms[i][p.first].tree.empty()) {
 
 				//Subst s = unify_subs(unif, child_terms[i][p.first].sub);
 				unif = unify_subs(MultySubst({&unif, &child_terms[i][p.first].sub}));
@@ -599,7 +600,7 @@ void unify_rules(MIndexSpace& space)
 			}
 			continue;
 		}
-		/*vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
+		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
@@ -612,7 +613,7 @@ void unify_rules(MIndexSpace& space)
 		}
 		if (ps_iter.card() > 0) {
 			if (debug_multy_index) {
-				cout << "HHHHHHHHHHHHHHH" << endl;
+				//cout << "HHHHHHHHHHHHHHH" << endl;
 			}
 			while (true) {
 				vector<bool> r_fixed = ps_iter.values();
@@ -626,8 +627,8 @@ void unify_rules(MIndexSpace& space)
 			}
 		} else {
 			unify_rule_variant(space, r, space.rule_inds.at(r));
-		}*/
-		unify_rule_variant(space, r, space.rule_inds.at(r));
+		}
+		//unify_rule_variant(space, r, space.rule_inds.at(r));
 	}
 }
 
@@ -665,7 +666,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 	}
 	LightTree common;
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		if (expr_ind[i] != -1) {
+		if (expr_ind[i] != -1 && subtree.sub.ok) {
 			LightTree e_orig = vindex.index(i)->exprs[expr_ind[i]];
 			if (apply(subtree.sub, e_orig) != subtree.tree) {
 				cout << "VECTOR INDEX UNIFICATION FAILS (A)" << endl;

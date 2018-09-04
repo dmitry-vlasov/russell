@@ -111,6 +111,7 @@ LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree&
 	if (!unified.empty()) {
 		for (auto v : vars) {
 			if (!s.compose(Subst(v, unified))) {
+				s.ok = false;
 				return LightTree();
 			}
 		}

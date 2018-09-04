@@ -12,6 +12,7 @@ struct MatrixIndex {
 
 	string show() const;
 	uint card() const;
+	string card_str() const;
 
 private:
 	uint dim_hyp;
