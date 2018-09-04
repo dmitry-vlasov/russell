@@ -584,8 +584,15 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (r_leafs[i].leafs.size() || r_fixed.at(i)) {
+		if (r_leafs[i].leafs.size()) {
 			vars_prod.skip(i);
+			if (r_fixed.at(i)) {
+				return;
+			}
+		} else {
+			if (r_fixed.at(i)) {
+				vars_prod.skip(i);
+			}
 		}
 	}
 	unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
