@@ -205,7 +205,7 @@ struct MIndexSpace {
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		static uint c = 0;
 		if (debug_multy_index) {
-			if (prover::show(leafs) == "(1, 18, 11, )") {
+			/*if (prover::show(leafs) == "(6, 32, 28, )") {
 				++c;
 				if (c == 15) {
 					cout << "DDD" << endl;
@@ -215,15 +215,15 @@ struct MIndexSpace {
 				cout << "t: " << prover::show(t) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				cout << "leafs: " << prover::show(leafs) << endl;
-			}
+			}*/
 		}
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
+				/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
 					cout << "SUCCESS (A)" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-				}
+				}*/
 
 				if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
 				//if (debug_multy_index) {
@@ -239,23 +239,23 @@ struct MIndexSpace {
 
 				unified[leafs].tree = apply(unified[leafs].sub, term);
 			} else {
-				if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
+				/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-				}
+				}*/
 			}
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = apply(unified[leafs].sub, t);
-			if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
+			/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
 				cout << "SUCCESS (B)" << endl;
 				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-			}
+			}*/
 		}
-		if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
+		/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
 			cout << "---------------" << endl;
-		}
+		}*/
 	}
 
 	void finalize_empty() {

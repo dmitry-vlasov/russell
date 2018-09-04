@@ -116,7 +116,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	}
 	for (const auto p1 : ms1) {
 		if (!ms2.count(p1.first)) {
-			ret += "ms1 doesn't have key" + show(p1.first) + "\n";
+			ret += "ms2 doesn't have key" + show(p1.first) + "\n";
 		} else if (p1.second != ms2.at(p1.first)) {
 			ret += "ms1 and m2 values for key" + show(p1.first) + " differ\n";
 			ret += "ms1 value:\n";
@@ -127,7 +127,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	}
 	for (const auto p2 : ms2) {
 		if (!ms1.count(p2.first)) {
-			ret += "ms2 doesn't have key" + show(p2.first) + "\n";
+			ret += "ms1 doesn't have key" + show(p2.first) + "\n";
 		} else if (p2.second != ms1.at(p2.first)) {
 			ret += "ms1 and m2 values for key" + show(p2.first) + " differ\n";
 			ret += "ms2 value:\n";

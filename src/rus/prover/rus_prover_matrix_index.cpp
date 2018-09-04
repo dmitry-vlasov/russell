@@ -75,7 +75,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			vectIndex.add(ind, proofInds_[i]);
 		}
 		terms[p.first] = unify(vectIndex);
-		if (debug_multy_index) {
+		if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
 			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;
 		}
@@ -86,7 +86,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			bool is_common = true;
 			for (const auto &q : terms) {
 				if (!q.second.count(p.first)) {
-					if (debug_multy_index) {
+					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 						cout << "non common = " << prover::show(p.first) << endl;
 					}
 					is_common = false;
@@ -94,7 +94,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 				}
 				const Subst& sub = q.second.at(p.first).sub;
 				if (!sub.ok) {
-					if (debug_multy_index) {
+					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 						cout << "has error = " << prover::show(p.first) << endl;
 					}
 					is_common = false;
@@ -102,7 +102,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 				}
 			}
 			if (is_common) {
-				if (debug_multy_index) {
+				if (debug_multy_index&& prover::show(p.first) == "(6, 32, 28, )") {
 					cout << "common = " << prover::show(p.first) << endl;
 				}
 				common.insert(p.first);
@@ -112,13 +112,26 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	MultyUnifiedSubs s;
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
-			if (debug_multy_index) {
+			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
 			}
 			const LightTree& term = p.second.at(c).tree;
 			const Subst& sub = p.second.at(c).sub;
-			if (!term.empty()) {
-				unif[c] = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
+			if (!term.empty() && unif[c].ok) {
+				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
+				if (debug_multy_index && prover::show(c) == "(6, 32, 28, )") {
+					cout << "==============" << endl;
+					cout << "UNIFIED:" << endl;
+					cout << prover::show(unified) << endl;
+					cout << "unif[c]:" << endl;
+					cout << prover::show(unif[c]) << endl;
+					cout << "p.second.at(c).sub:" << endl;
+					cout << prover::show(p.second.at(c).sub) << endl;
+					cout << "term" << endl;
+					cout << prover::show(term) << endl;
+					cout << "==============" << endl;
+				}
+				unif[c] = unified;
 				s[c].sub[p.first] = apply(unif[c], term);
 			} else {
 				s[c];
@@ -149,7 +162,7 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
-		if (debug_multy_index) {
+		if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 			cout << "unify_subs: " << prover::show(p.first) <<  " --> sub: " << endl << prover::show(p.second) << endl;
 			cout << "gen[p.first]: " << prover::show(gen[p.first]) << endl;
 		}
@@ -158,13 +171,13 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
-			if (debug_multy_index) {
+			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 				cout << "result sub: " << Indent::paragraph(prover::show(sub)) << endl;
 				cout << "result delta: " << Indent::paragraph(prover::show(delta)) << endl;
 				cout << "YES" << endl;
 			}
 		} else {
-			if (debug_multy_index) {
+			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 				cout << "NO" << endl;
 			}
 		}
@@ -244,8 +257,8 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		}
 	}
 
+	cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 	if (debug_multy_index) {
-		cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 		cout << mi.show() << endl;
 	}
 
