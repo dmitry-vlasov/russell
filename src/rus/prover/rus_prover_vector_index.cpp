@@ -56,11 +56,20 @@ vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	return ret;
 }
 
+bool false_vector(const vector<bool>& s) {
+	for (uint i = 0; i < s.size(); ++ i) {
+		if (s.at(i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
 string show(const vector<bool>& v) {
 	string ret;
 	ret += "(";
 	for (bool x : v) {
-		ret += x ? "1, " : "0, ";
+		ret += x ? "true, " : "false, ";
 	}
 	ret += ")";
 	return ret;
@@ -205,14 +214,26 @@ struct MIndexSpace {
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
-					cout << "SUCCESS" << endl;
+				if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+					cout << "SUCCESS (A)" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+				}
+
+				//if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
+				if (debug_multy_index) {
+					//cout << "!unified[leafs].tree.empty()" << endl;
+					if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
+						cout << "555555555555" << endl;
+					}
+					cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
+					cout << "term: " << prover::show(term) << endl;
+					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+					//cout << "leafs: " << prover::show(leafs) << endl;
 				}
 
 				unified[leafs].tree = term;
 			} else {
-				if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
+				if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -220,12 +241,13 @@ struct MIndexSpace {
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = t;
-			if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
-				cout << "SUCCESS" << endl;
+			if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
+				cout << "SUCCESS (B)" << endl;
+				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 			}
 		}
-		if (debug_multy_index && prover::show(leafs) == "(20, 35, )") {
+		if (debug_multy_index /*&& prover::show(leafs) == "(20, 35, )"*/) {
 			cout << "---------------" << endl;
 		}
 	}
@@ -261,10 +283,9 @@ private:
 		}
 		return leafs_prod;
 	}
-
 };
 
-void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& not_vars)
+void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& s_fixed)
 {
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
 	LeafVector s_leafs = space.fixed;
@@ -272,7 +293,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 		if (s_leafs[i].leafs.size()) {
 			vars_prod.skip(i);
 		}
-		if (not_vars.at(i)) {
+		if (s_fixed.at(i)) {
 			vars_prod.skip(i);
 			if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
 				return;
@@ -316,22 +337,22 @@ void unify_symbs(MIndexSpace& space)
 		if (!space.complete_for(s)) {
 			continue;
 		}
-		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
+		/*vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
-		uint c = 0;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (common.at(i)) {
 				ps_iter.addDim();
-				++c;
 			} else {
 				ps_iter.addSkipped();
 			}
 		}
-		if (ps_iter.card() > 0 && c > 1) {
+		if (ps_iter.card() > 0) {
 			cout << "FFFFFFFFFFFFFFFF" << endl;
 			while (true) {
-				vector<bool> not_vars = ps_iter.values();
-				unify_symbs_variant(space, s, not_vars);
+				vector<bool> s_fixed = ps_iter.values();
+				if (!false_vector(s_fixed)) {
+					unify_symbs_variant(space, s, s_fixed);
+				}
 				if (!ps_iter.hasNext()) {
 					break;
 				}
@@ -339,7 +360,8 @@ void unify_symbs(MIndexSpace& space)
 			}
 		} else {
 			unify_symbs_variant(space, s, space.symb_inds.at(s));
-		}
+		}*/
+		unify_symbs_variant(space, s, space.symb_inds.at(s));
 	}
 }
 
