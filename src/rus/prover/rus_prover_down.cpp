@@ -54,6 +54,38 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, const ProofHyp* h) {
 	return ret;
 }
 
+bool similar_subs_1(const Subst& s1, const Subst& s2) {
+	if (s1 == s2) return true;
+	Subst unif = unify_subs(MultySubst({&s1, &s2}));
+	if (!unif.ok) {
+		//don't unify
+		return false;
+	}
+	for (const auto& p : unif.sub) {
+		if (p.second.kind() != LightTree::VAR) {
+			// is not a var replacement
+			return false;
+		}
+	}
+	return true;
+}
+
+
+bool similar_subs(const Subst& s1, const Subst& s2) {
+	if (s1 == s2) return true;
+	Subst s1_vars_inv;
+	Subst s1_terms;
+	for (const auto& p : s1.sub) {
+		if (p.second.kind() == LightTree::VAR && !s2.sub.count(p.first)) {
+			s1_vars_inv.sub[p.second.var()] = LightTree(p.first);
+		} else {
+			s1_terms.sub[p.first] = p.second;
+		}
+	}
+	s1_terms.compose(s1_vars_inv);
+	return s2 == s1_terms;
+}
+
 bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2) {
 	if (ms1.size() != ms2.size()) {
 		return false;
@@ -62,7 +94,7 @@ bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& m
 		if (!ms2.count(p1.first)) {
 			return false;
 		}
-		if (p1.second != ms2.at(p1.first)) {
+		if (!similar_subs(p1.second, ms2.at(p1.first))) {
 			return false;
 		}
 	}
@@ -70,7 +102,7 @@ bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& m
 		if (!ms1.count(p2.first)) {
 			return false;
 		}
-		if (p2.second != ms1.at(p2.first)) {
+		if (!similar_subs(p2.second, ms1.at(p2.first))) {
 			return false;
 		}
 	}
