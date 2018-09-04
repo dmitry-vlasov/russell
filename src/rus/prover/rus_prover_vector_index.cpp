@@ -204,7 +204,7 @@ struct MIndexSpace {
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 		if (debug_multy_index) {
-			if (prover::show(leafs) == "(0, 11, 0, )") {
+			if (prover::show(leafs) == "(0, 0, 11, )") {
 				cout << "FUCK" << endl;
 				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
 				cout << "t: " << prover::show(t) << endl;
@@ -214,7 +214,7 @@ struct MIndexSpace {
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
+				if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
 					cout << "SUCCESS (A)" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -231,23 +231,23 @@ struct MIndexSpace {
 					//cout << "leafs: " << prover::show(leafs) << endl;
 				}
 
-				unified[leafs].tree = term;
+				unified[leafs].tree = apply(unified[leafs].sub, term);
 			} else {
-				if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
+				if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
 			}
 		} else {
 			unified[leafs].sub;
-			unified[leafs].tree = t;
-			if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
+			unified[leafs].tree = apply(unified[leafs].sub, t);
+			if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
 				cout << "SUCCESS (B)" << endl;
 				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 			}
 		}
-		if (debug_multy_index && prover::show(leafs) == "(0, 11, 0, )") {
+		if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
 			cout << "---------------" << endl;
 		}
 	}
@@ -675,6 +675,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 				cout << "subtree.tree: " << show(subtree.tree) << endl;
 				cout << "subtree.sub: " << show(subtree.sub) << endl;
 				cout << "leafs: " << show(leafs) << endl;
+				cout << "vindex:" << endl << vindex.show();
 				return false;
 			}
 			if (!common.empty() && common != subtree.tree) {
@@ -685,6 +686,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 				cout << "subtree.tree: " << show(subtree.tree) << endl;
 				cout << "subtree.sub: " << show(subtree.sub) << endl;
 				cout << "leafs: " << show(leafs) << endl;
+				cout << "vindex:" << endl << vindex.show();
 				return false;
 			} else {
 				common = subtree.tree;

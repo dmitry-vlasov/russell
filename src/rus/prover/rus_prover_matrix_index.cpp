@@ -118,8 +118,8 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			const LightTree& term = p.second.at(c).tree;
 			const Subst& sub = p.second.at(c).sub;
 			if (!term.empty()) {
-				s[c].sub[p.first] = term;
 				unif[c] = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
+				s[c].sub[p.first] = apply(unif[c], term);
 			} else {
 				s[c];
 				unif[c];
@@ -218,7 +218,8 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 2372);
+	//debug_multy_index = (c == 2386);
+	//debug_multy_index = (c == 2372);
 	//debug_multy_index = (c == 2070);
 	//debug_multy_index = (c == 8);
 	//debug_multy_index = (c == 78);
