@@ -203,18 +203,24 @@ struct MIndexSpace {
 	}
 
 	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+		static uint c = 0;
 		if (debug_multy_index) {
-			if (prover::show(leafs) == "(0, 0, 11, )") {
-				cout << "FUCK" << endl;
+			if (prover::show(leafs) == "(1, 18, 11, )") {
+				++c;
+				if (c == 15) {
+					cout << "DDD" << endl;
+				}
+				cout << "FUCK " << c << endl;
 				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
 				cout << "t: " << prover::show(t) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
+				cout << "leafs: " << prover::show(leafs) << endl;
 			}
 		}
 		if (w.size()) {
 			LightTree term = unify_step(unified[leafs].sub, w, t);
 			if (!term.empty()) {
-				if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
+				if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
 					cout << "SUCCESS (A)" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -233,7 +239,7 @@ struct MIndexSpace {
 
 				unified[leafs].tree = apply(unified[leafs].sub, term);
 			} else {
-				if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
+				if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
 					cout << "FAILURE" << endl;
 					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 				}
@@ -241,13 +247,13 @@ struct MIndexSpace {
 		} else {
 			unified[leafs].sub;
 			unified[leafs].tree = apply(unified[leafs].sub, t);
-			if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
+			if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
 				cout << "SUCCESS (B)" << endl;
 				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
 				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
 			}
 		}
-		if (debug_multy_index && prover::show(leafs) == "(0, 0, 11, )") {
+		if (debug_multy_index && prover::show(leafs) == "(1, 18, 11, )") {
 			cout << "---------------" << endl;
 		}
 	}
@@ -292,11 +298,15 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (s_leafs[i].leafs.size()) {
 			vars_prod.skip(i);
-		}
-		if (s_fixed.at(i)) {
-			vars_prod.skip(i);
-			if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
+			if (s_fixed.at(i)) {
 				return;
+			}
+		} else {
+			if (s_fixed.at(i)) {
+				vars_prod.skip(i);
+				if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
+					return;
+				}
 			}
 		}
 	}
@@ -347,12 +357,16 @@ void unify_symbs(MIndexSpace& space)
 		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (common.at(i)) {
-				ps_iter.addDim();
-			} else if (space.symb_inds.at(s)[i]) {
-				ps_iter.addFixed(true);
-			} else {
+			if (s_leafs[i].leafs.size()) {
 				ps_iter.addSkipped();
+			} else {
+				if (common.at(i)) {
+					ps_iter.addDim();
+				} else if (space.symb_inds.at(s)[i]) {
+					ps_iter.addFixed(true);
+				} else {
+					ps_iter.addSkipped();
+				}
 			}
 		}
 		if (ps_iter.card() > 0) {
@@ -387,11 +401,15 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
 		if (r_leafs[i].leafs.size()) {
 			vars_prod.skip(i);
-		}
-		if (r_fixed.at(i)) {
-			vars_prod.skip(i);
-			if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
+			if (r_fixed.at(i)) {
 				return;
+			}
+		} else {
+			if (r_fixed.at(i)) {
+				vars_prod.skip(i);
+				if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
+					return;
+				}
 			}
 		}
 	}
@@ -434,12 +452,16 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 	PowerSetIter ps_iter;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (common.at(i)) {
-			ps_iter.addDim();
-		} else if (space.rule_inds.at(r)[i]) {
-			ps_iter.addFixed(true);
-		} else {
+		if (space.fixed[i].leafs.size()) {
 			ps_iter.addSkipped();
+		} else {
+			if (common.at(i)) {
+				ps_iter.addDim();
+			} else if (space.rule_inds.at(r)[i]) {
+				ps_iter.addFixed(true);
+			} else {
+				ps_iter.addSkipped();
+			}
 		}
 	}
 	if (ps_iter.card() > 0) {
@@ -603,12 +625,16 @@ void unify_rules(MIndexSpace& space)
 		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (common.at(i)) {
-				ps_iter.addDim();
-			} else if (space.rule_inds.at(r)[i]) {
-				ps_iter.addFixed(true);
-			} else {
+			if (space.fixed[i].leafs.size()) {
 				ps_iter.addSkipped();
+			} else {
+				if (common.at(i)) {
+					ps_iter.addDim();
+				} else if (space.rule_inds.at(r)[i]) {
+					ps_iter.addFixed(true);
+				} else {
+					ps_iter.addSkipped();
+				}
 			}
 		}
 		if (ps_iter.card() > 0) {
