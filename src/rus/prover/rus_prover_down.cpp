@@ -6,15 +6,16 @@ namespace mdl { namespace rus { namespace prover {
 
 bool debug_unify_subs = false;
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<const ProofHyp*>& hs);
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs);
 
-void unify_subs_sequent(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
+void unify_subs_sequent(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	CartesianIter ind;
+	const ProofHyp* h = hi.proof;
 	for (auto& x : pr->premises) {
 		if (x.get() != &h->node) {
 			ind.addDim(x->proofs.size());
 		} else {
-			ind.addFixed(x->proofs.size(), find_in_vector(x->proofs, h));
+			ind.addFixed(x->proofs.size(), hi.ind);
 		}
 	}
 	if (ind.card() == 0) {
@@ -52,7 +53,7 @@ void unify_subs_sequent(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
 	}
 }
 
-MultyUnifiedSubs unify_subs_sequent(Prop* pr, const vector<const ProofHyp*>& hs) {
+MultyUnifiedSubs unify_subs_sequent(Prop* pr, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs ret;
 	for (auto h : hs) {
 		unify_subs_sequent(pr, h, ret);
@@ -145,7 +146,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-vector<Node*> unify_down(Prop* pr, const vector<const ProofHyp*>& h) {
+vector<Node*> unify_down(Prop* pr, const vector<ProofHypIndexed>& h) {
 	Timer timer; timer.start();
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, h);
 	timer.stop();

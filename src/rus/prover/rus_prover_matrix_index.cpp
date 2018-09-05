@@ -225,7 +225,75 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	return true;
 }
 
-void unify_subs_matrix(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
+void unify_subs_matrix(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
+
+	static int c = 0;
+	c++;
+	//debug_multy_index = (c == 5835);
+	//debug_multy_index = (c == 2887);
+	//debug_multy_index = (c == 2441);
+	//debug_multy_index = (c == 2386);
+	//debug_multy_index = (c == 2372);
+	//debug_multy_index = (c == 2070);
+	//debug_multy_index = (c == 8);
+	//debug_multy_index = (c == 78);
+	if (debug_multy_index) {
+		cout << "AAA" << endl;
+	}
+
+	const ProofHyp* h = hi.proof;
+	uint arity = pr->premises.size();
+	MatrixIndex mi(arity);
+	for (uint i = 0; i < arity; ++ i) {
+		const auto& proofs = pr->premises[i]->proofs;
+		if (proofs.empty()) {
+			return;
+		}
+		if (pr->premises[i].get() != &h->node) {
+			mi.addProofs(proofs, i);
+		} else {
+			mi.addProof(h, i, hi.ind);
+		}
+	}
+
+	cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
+	if (debug_multy_index) {
+		cout << mi.show() << endl;
+	}
+
+	try {
+		unify_subs(mi, pr, ret);
+		/*for (const auto& p : ret) {
+			if (!check_matrix_unification(p.first, p.second, pr, h)) {
+				cout << "MATRIX no. " << c << endl;
+				cout << mi.show() << endl;
+				throw Error("MATRIX UNIFICATION ERROR");
+			}
+		}*/
+	} catch (Error& err) {
+		debug_multy_index_1 = true;
+		cout << "MATRIX no. " << c << endl;
+		cout << mi.show() << endl;
+		//return unify_subs(mi, pr);
+		throw err;
+	} catch (std::exception& e) {
+		debug_multy_index_1 = true;
+		cout << "MATRIX no. " << c << endl;
+		cout << mi.show() << endl;
+		unify_subs(mi, pr, ret);
+		throw e;
+	}
+}
+
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs) {
+	MultyUnifiedSubs ret;
+	for (auto hi : hs) {
+		unify_subs_matrix(pr, hi, ret);
+	}
+	return ret;
+}
+/*
+void unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs, MultyUnifiedSubs& ret) {
 
 	static int c = 0;
 	c++;
@@ -268,7 +336,7 @@ void unify_subs_matrix(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
 				cout << mi.show() << endl;
 				throw Error("MATRIX UNIFICATION ERROR");
 			}
-		}*/
+		}* /
 	} catch (Error& err) {
 		debug_multy_index_1 = true;
 		cout << "MATRIX no. " << c << endl;
@@ -283,14 +351,7 @@ void unify_subs_matrix(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
 		throw e;
 	}
 }
-
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<const ProofHyp*>& hs) {
-	MultyUnifiedSubs ret;
-	for (auto h : hs) {
-		unify_subs_matrix(pr, h, ret);
-	}
-	return ret;
-}
+*/
 
 }}}
 

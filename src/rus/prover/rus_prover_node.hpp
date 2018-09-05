@@ -146,6 +146,11 @@ struct ProofProp : public ProofNode {
 	vector<ProofHyp*> premises;
 };
 
+struct ProofHypIndexed {
+	const ProofHyp* proof = nullptr;
+	uint ind = -1;
+};
+
 string showNodeProofs(const Node* n);
 
 }}}

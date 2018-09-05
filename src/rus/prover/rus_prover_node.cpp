@@ -138,10 +138,11 @@ vector<Node*> Prop::buildDown() {
 vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
 	if (parent) {
-		vector<const ProofHyp*> news;
-		for (auto& p : proofs) {
+		vector<ProofHypIndexed> news;
+		for (uint i = 0; i < proofs.size(); ++i) {
+			const ProofHyp* p = proofs[i].get();
 			if (p->new_) {
-				news.push_back(p.get());
+				news.push_back({p, i});
 			}
 		}
 		for (auto& q : unify_down(parent, news)) {
