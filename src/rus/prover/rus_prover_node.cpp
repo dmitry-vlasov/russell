@@ -138,15 +138,14 @@ vector<Node*> Prop::buildDown() {
 vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
 	if (parent) {
+		vector<const ProofHyp*> news;
 		for (auto& p : proofs) {
 			if (p->new_) {
-				//cout << "BUILDING DOWN PROP: " << p->node.ind << endl;
-				for (auto& q : unify_down(parent, p.get())) {
-					ret.push_back(q);
-				}
-			} else {
-				//cout << "OLD HYP: " << p->node.ind << endl;
+				news.push_back(p.get());
 			}
+		}
+		for (auto& q : unify_down(parent, news)) {
+			ret.push_back(q);
 		}
 	}
 	return ret;

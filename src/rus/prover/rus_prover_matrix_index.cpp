@@ -157,8 +157,7 @@ string MatrixIndex::show() const {
 	return ret;
 }
 
-MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
-	MultyUnifiedSubs ret;
+void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
@@ -182,7 +181,6 @@ MultyUnifiedSubs unify_subs(MatrixIndex& mi, const Prop* pr) {
 			}
 		}
 	}
-	return ret;
 }
 
 bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop* pr, const ProofHyp* h) {
@@ -227,11 +225,11 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	return true;
 }
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
+void unify_subs_matrix(Prop* pr, const ProofHyp* h, MultyUnifiedSubs& ret) {
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 5835);
+	//debug_multy_index = (c == 5835);
 	//debug_multy_index = (c == 2887);
 	//debug_multy_index = (c == 2441);
 	//debug_multy_index = (c == 2386);
@@ -248,7 +246,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	for (uint i = 0; i < arity; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;
 		if (proofs.empty()) {
-			return MultyUnifiedSubs();
+			return;
 		}
 		if (pr->premises[i].get() != &h->node) {
 			mi.addProofs(proofs, i);
@@ -263,7 +261,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 	}
 
 	try {
-		MultyUnifiedSubs ret = unify_subs(mi, pr);
+		unify_subs(mi, pr, ret);
 		/*for (const auto& p : ret) {
 			if (!check_matrix_unification(p.first, p.second, pr, h)) {
 				cout << "MATRIX no. " << c << endl;
@@ -271,7 +269,6 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 				throw Error("MATRIX UNIFICATION ERROR");
 			}
 		}*/
-		return ret;
 	} catch (Error& err) {
 		debug_multy_index_1 = true;
 		cout << "MATRIX no. " << c << endl;
@@ -282,9 +279,17 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, const ProofHyp* h) {
 		debug_multy_index_1 = true;
 		cout << "MATRIX no. " << c << endl;
 		cout << mi.show() << endl;
-		return unify_subs(mi, pr);
+		unify_subs(mi, pr, ret);
 		throw e;
 	}
+}
+
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<const ProofHyp*>& hs) {
+	MultyUnifiedSubs ret;
+	for (auto h : hs) {
+		unify_subs_matrix(pr, h, ret);
+	}
+	return ret;
 }
 
 }}}
