@@ -145,7 +145,7 @@ vector<Node*> Hyp::buildDown() {
 				news.push_back({p, i});
 			}
 		}
-		for (auto& q : unify_down(parent, news)) {
+		for (auto& q : unify_down(parent, this, news)) {
 			ret.push_back(q);
 		}
 	}

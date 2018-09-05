@@ -18,6 +18,21 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 	}
 }
 
+
+void MatrixIndex::addProofs(const vector<ProofHypIndexed>& hs, uint i) {
+	proofInds_[i] = vector<uint>(hs.size());
+	for (uint j = 0; j < hs.size(); ++j) {
+		ProofHypIndexed hi = hs[j];
+		for (const auto& x : hi.proof->sub.sub) {
+			if (!mindex_.count(x.first)) {
+				mindex_[x.first] = vector<IndexInt>(dim_hyp);
+			}
+			mindex_[x.first][i].add(x.second, hi.ind);
+		}
+		proofInds_[i][j] = hi.ind;
+	}
+}
+
 void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 	proofInds_[i] = vector<uint>(1, j);
 	for (const auto& x : p->sub.sub) {
@@ -225,7 +240,7 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	return true;
 }
 
-void unify_subs_matrix(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
+void unify_subs_matrix(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 
 	static int c = 0;
 	c++;
@@ -285,26 +300,19 @@ void unify_subs_matrix(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	}
 }
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs) {
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs ret;
 	for (auto hi : hs) {
-		unify_subs_matrix(pr, hi, ret);
+		unify_subs_matrix(pr, hy, hi, ret);
 	}
 	return ret;
 }
-/*
-void unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs, MultyUnifiedSubs& ret) {
+
+void unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, MultyUnifiedSubs& ret) {
 
 	static int c = 0;
 	c++;
 	//debug_multy_index = (c == 5835);
-	//debug_multy_index = (c == 2887);
-	//debug_multy_index = (c == 2441);
-	//debug_multy_index = (c == 2386);
-	//debug_multy_index = (c == 2372);
-	//debug_multy_index = (c == 2070);
-	//debug_multy_index = (c == 8);
-	//debug_multy_index = (c == 78);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}
@@ -316,10 +324,10 @@ void unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs, MultyUnified
 		if (proofs.empty()) {
 			return;
 		}
-		if (pr->premises[i].get() != &h->node) {
+		if (pr->premises[i].get() != hy) {
 			mi.addProofs(proofs, i);
 		} else {
-			mi.addProof(h, i, find_in_vector(proofs, h));
+			mi.addProofs(hs, i);
 		}
 	}
 
@@ -330,13 +338,6 @@ void unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs, MultyUnified
 
 	try {
 		unify_subs(mi, pr, ret);
-		/*for (const auto& p : ret) {
-			if (!check_matrix_unification(p.first, p.second, pr, h)) {
-				cout << "MATRIX no. " << c << endl;
-				cout << mi.show() << endl;
-				throw Error("MATRIX UNIFICATION ERROR");
-			}
-		}* /
 	} catch (Error& err) {
 		debug_multy_index_1 = true;
 		cout << "MATRIX no. " << c << endl;
@@ -351,7 +352,7 @@ void unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs, MultyUnified
 		throw e;
 	}
 }
-*/
+
 
 }}}
 

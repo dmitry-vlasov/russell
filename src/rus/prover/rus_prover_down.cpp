@@ -6,13 +6,13 @@ namespace mdl { namespace rus { namespace prover {
 
 bool debug_unify_subs = false;
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, const vector<ProofHypIndexed>& hs);
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
 
-void unify_subs_sequent(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
+void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	CartesianIter ind;
 	const ProofHyp* h = hi.proof;
 	for (auto& x : pr->premises) {
-		if (x.get() != &h->node) {
+		if (x.get() != hy) {
 			ind.addDim(x->proofs.size());
 		} else {
 			ind.addFixed(x->proofs.size(), hi.ind);
@@ -53,10 +53,10 @@ void unify_subs_sequent(Prop* pr, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	}
 }
 
-MultyUnifiedSubs unify_subs_sequent(Prop* pr, const vector<ProofHypIndexed>& hs) {
+MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs ret;
 	for (auto h : hs) {
-		unify_subs_sequent(pr, h, ret);
+		unify_subs_sequent(pr, hy, h, ret);
 	}
 	return ret;
 }
@@ -146,15 +146,15 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-vector<Node*> unify_down(Prop* pr, const vector<ProofHypIndexed>& h) {
+vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	Timer timer; timer.start();
-	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, h);
+	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
 	cout << "sequntial unification: " << timer << endl;
 
 	timer.clear();
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, h);
+	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, hy, hs);
 	timer.stop();
 	cout << "matrix unification: " << timer << endl;
 
@@ -168,7 +168,7 @@ vector<Node*> unify_down(Prop* pr, const vector<ProofHypIndexed>& h) {
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
 
  		debug_multy_index = true;
-		unify_subs_matrix(pr, h);
+		unify_subs_matrix(pr, hy, hs);
 
 		//debug_unify_subs = true;
 		//unify_subs_sequent(pr, h);
