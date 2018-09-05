@@ -28,6 +28,10 @@ struct LeafStorage {
 		leafs.push_back(l);
 	}
 
+	void init(const vector<uint>& l) {
+		leafs = l;
+	}
+
 	vector<uint> leafs;
 
 private:
@@ -256,16 +260,6 @@ struct MIndexSpace {
 		/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
 			cout << "---------------" << endl;
 		}*/
-	}
-
-	void finalize_empty() {
-		assert(complete(fixed));
-		vector<uint> leafs;
-		for (uint i = 0; i < vindex.size(); ++ i) {
-			assert(fixed[i].leafs.size() == 1);
-			leafs.push_back(fixed[i].leafs[0]);
-		}
-		unified[leafs];
 	}
 
 	bool complete(const LeafVector& v) const {
@@ -730,41 +724,32 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 }
 
 VectorUnified unify(const VectorIndex& vindex) {
-	CartesianProd<uint> absent_leafs_prod;
+	PowerSetIter absent_iter;
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		absent_leafs_prod.incSize();
 		if (vindex.obligatory(i).size()) {
-			absent_leafs_prod.incDim(0);
-			for (uint a : vindex.obligatory(i)) {
-				absent_leafs_prod.incDim(a + 1);
-			}
+			absent_iter.addDim();
 		} else {
-			absent_leafs_prod.skip(i);
+			absent_iter.addSkipped();
 		}
 	}
 	MIndexSpace space(vindex, LeafVector(vindex.size()), 0);
 	while (true) {
 		space.fixed = LeafVector(vindex.size());
-		vector<uint> absent_leafs = absent_leafs_prod.data();
-		vector<uint> absent_inds = absent_leafs_prod.indexes();
 		for (uint i = 0; i < vindex.size(); ++ i) {
-			if (absent_inds[i] != -1) {
-				uint a = absent_leafs[absent_inds[i]];
-				if (a > 0) {
-					space.fixed[i].init(a - 1);
-				}
+			if (absent_iter[i]) {
+				space.fixed[i].init(vindex.obligatory(i));
 			}
 		}
 		if (space.complete(space.fixed)) {
-			space.finalize_empty();
+			space.finalize(space.fixed, vector<LightSymbol>(), LightTree());
 		} else {
 			unify_symbs(space);
 			unify_rules(space);
 		}
-		if (!absent_leafs_prod.hasNext()) {
+		if (!absent_iter.hasNext()) {
 			break;
 		}
-		absent_leafs_prod.makeNext();
+		absent_iter.makeNext();
 	}
 	for (const auto& p : space.unified) {
 		if (!check_vector_index_unified(p.first, p.second, vindex)) {
