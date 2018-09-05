@@ -300,7 +300,7 @@ void unify_subs_matrix(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& 
 	}
 }
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+MultyUnifiedSubs unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs ret;
 	for (auto hi : hs) {
 		unify_subs_matrix(pr, hy, hi, ret);
@@ -308,11 +308,12 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	return ret;
 }
 
-void unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, MultyUnifiedSubs& ret) {
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
 	//debug_multy_index = (c == 5835);
+	debug_multy_index = (c == 483);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}
@@ -322,7 +323,7 @@ void unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, Mu
 	for (uint i = 0; i < arity; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;
 		if (proofs.empty()) {
-			return;
+			return MultyUnifiedSubs();
 		}
 		if (pr->premises[i].get() != hy) {
 			mi.addProofs(proofs, i);
@@ -331,11 +332,13 @@ void unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, Mu
 		}
 	}
 
-	cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
+	//cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 	if (debug_multy_index) {
+		cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 		cout << mi.show() << endl;
 	}
 
+	MultyUnifiedSubs ret;
 	try {
 		unify_subs(mi, pr, ret);
 	} catch (Error& err) {
@@ -351,6 +354,7 @@ void unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, Mu
 		unify_subs(mi, pr, ret);
 		throw e;
 	}
+	return ret;
 }
 
 

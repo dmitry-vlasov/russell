@@ -53,6 +53,36 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	}
 }
 
+uint unification_space_card(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+	uint ret = 1;
+	for (auto& x : pr->premises) {
+		if (x.get() != hy) {
+			ret *= x->proofs.size();
+		} else {
+			ret *= hs.size();
+		}
+	}
+	return ret;
+}
+
+string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+	string ret;
+	bool first = true;
+	for (auto& x : pr->premises) {
+		if (!first) {
+			ret += " x ";
+		}
+		if (x.get() != hy) {
+			ret += to_string(x->proofs.size());
+		} else {
+			ret += to_string(hs.size());
+		}
+		first = false;
+	}
+	ret += " = " + to_string(unification_space_card(pr, hy, hs));
+	return ret;
+}
+
 MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs ret;
 	for (auto h : hs) {
@@ -147,6 +177,11 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+
+	static int c = 0;
+	c++;
+	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
+
 	Timer timer; timer.start();
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
@@ -156,7 +191,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, hy, hs);
 	timer.stop();
-	cout << "matrix unification: " << timer << endl;
+	cout << "matrix unification: " << timer << endl << endl;
 
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
@@ -174,7 +209,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		//unify_subs_sequent(pr, h);
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
-		cout << "SUB UNIFICATION EQUAL" << endl;
+		//cout << "SUB UNIFICATION EQUAL" << endl;
 	}
 
 	for (const auto& p : unified_subs_1) {
