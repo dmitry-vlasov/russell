@@ -186,12 +186,14 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
 	cout << "sequntial unification: " << timer << endl;
+	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
 
 	timer.clear();
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, hy, hs);
 	timer.stop();
-	cout << "matrix unification: " << timer << endl << endl;
+	cout << "matrix unification: " << timer << endl;
+	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
 
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;

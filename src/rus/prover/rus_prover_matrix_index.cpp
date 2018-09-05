@@ -18,7 +18,6 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 	}
 }
 
-
 void MatrixIndex::addProofs(const vector<ProofHypIndexed>& hs, uint i) {
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
@@ -94,6 +93,8 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
 			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;
 		}
+
+		cout << "var " << prover::show(p.first) << " has " << terms[p.first].size() << " unified" << endl;
 	}
 	set<vector<uint>> common;
 	if (!terms.empty()) {
@@ -161,10 +162,17 @@ string MatrixIndex::show() const {
 	string ret;
 	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp) + "\n";
 	for (const auto& p : mindex_) {
+		VectorIndex vectIndex;
+		for (uint i = 0; i < dim_hyp; ++i) {
+			const auto& ind = p.second[i];
+			vectIndex.add(ind, proofInds_[i]);
+		}
 		ret += "\nVAR: " + prover::show(p.first) + "\n";
 		ret += "==============================\n";
 		for (uint i = 0; i < p.second.size(); ++ i) {
-			ret += "index: " + to_string(i) + ", proof inds: " + prover::show(proofInds_[i]) + "\n";
+			ret += "index: " + to_string(i) + "\n";
+			ret += "\tproof inds: " + prover::show(proofInds_[i]) + "\n";
+			ret += "\tabsent inds: " + prover::show(vectIndex.obligatory(i)) + "\n\n";
 			ret += p.second[i].show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
