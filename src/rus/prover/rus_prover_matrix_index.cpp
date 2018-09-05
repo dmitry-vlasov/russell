@@ -10,7 +10,7 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<IndexInt>(dim_hyp);
+				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}
 			mindex_[x.first][i].add(x.second, j);
 		}
@@ -24,7 +24,7 @@ void MatrixIndex::addProofs(const vector<ProofHypIndexed>& hs, uint i) {
 		ProofHypIndexed hi = hs[j];
 		for (const auto& x : hi.proof->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<IndexInt>(dim_hyp);
+				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}
 			mindex_[x.first][i].add(x.second, hi.ind);
 		}
@@ -36,7 +36,7 @@ void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
 	proofInds_[i] = vector<uint>(1, j);
 	for (const auto& x : p->sub.sub) {
 		if (!mindex_.count(x.first)) {
-			mindex_[x.first] = vector<IndexInt>(dim_hyp);
+			mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 		}
 		mindex_[x.first][i].add(x.second, j);
 	}
@@ -67,7 +67,7 @@ string MatrixIndex::card_str() const {
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
-		for (uint i = 0; i < dim_hyp; ++ i) {
+		for (uint i = 0; i < dim_hyp_; ++ i) {
 			proofs_prod.incSize();
 			proofs_prod.addDim(proofInds_[i]);
 		}
@@ -84,7 +84,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	map<LightSymbol, VectorUnified> terms;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
-		for (uint i = 0; i < dim_hyp; ++i) {
+		for (uint i = 0; i < dim_hyp_; ++i) {
 			const auto& ind = p.second[i];
 			vectIndex.add(ind, proofInds_[i]);
 		}
@@ -160,10 +160,10 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 
 string MatrixIndex::show() const {
 	string ret;
-	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp) + "\n";
+	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
-		for (uint i = 0; i < dim_hyp; ++i) {
+		for (uint i = 0; i < dim_hyp_; ++i) {
 			const auto& ind = p.second[i];
 			vectIndex.add(ind, proofInds_[i]);
 		}
@@ -279,7 +279,7 @@ void unify_subs_matrix(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& 
 		}
 	}
 
-	cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
+	cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
 	if (debug_multy_index) {
 		cout << mi.show() << endl;
 	}
@@ -340,7 +340,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 		}
 	}
 
-	//cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
+	cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
 	if (debug_multy_index) {
 		cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 		cout << mi.show() << endl;

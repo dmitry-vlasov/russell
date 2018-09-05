@@ -3,7 +3,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct MatrixIndex {
-	MatrixIndex(uint hd) : dim_hyp(hd), proofInds_(hd) { }
+	MatrixIndex(uint hd) : dim_hyp_(hd), proofInds_(hd) { }
 
 	void addProofs(const Hyp::Proofs& proofs, uint i);
 	void addProofs(const vector<ProofHypIndexed>& hs, uint i);
@@ -14,9 +14,11 @@ struct MatrixIndex {
 	string show() const;
 	uint card() const;
 	string card_str() const;
+	uint dim_hyp() const { return dim_hyp_; }
+	uint dim_vars() const { return mindex_.size(); }
 
 private:
-	uint dim_hyp;
+	uint dim_hyp_;
 	map<LightSymbol, vector<IndexInt>> mindex_;
 	vector<vector<uint>> proofInds_;
 };
