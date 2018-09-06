@@ -89,19 +89,30 @@ struct CartesianProd {
 		iter_.incSize();
 	}
 
-	void addDim(const vector<Data>& v, uint i = -1) {
-		uint ind = (i == -1) ? data_.size() - 1 : i;
+	void addDim(const vector<Data>& v) {
+		data_.push_back(vector<Data>());
 		for (auto d : v) {
-			data_[ind].push_back(d);
-			iter_.incDim();
+			data_[data_.size() - 1].push_back(d);
 		}
+		iter_.addDim(v.size());
 	}
+
 	void addFixed(const vector<Data>& v, uint i) {
+		data_.push_back(vector<Data>());
 		for (auto d : v) {
-			data_[i].push_back(d);
+			data_[data_.size() - 1].push_back(d);
 		}
 		iter_.addFixed(v.size(), i);
 	}
+
+	void addSkipped(const vector<Data>& v) {
+		data_.push_back(vector<Data>());
+		for (auto d : v) {
+			data_[data_.size() - 1].push_back(d);
+		}
+		iter_.addSkipped(v.size());
+	}
+
 	CartesianIter::Dim getDim(uint i) const { return iter_.get(i); }
 
 	void fix(uint i, Data d) {

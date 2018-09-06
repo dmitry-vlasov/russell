@@ -759,4 +759,58 @@ VectorUnified unify(const VectorIndex& vindex) {
 	return space.unified;
 }
 
+VectorUnified unify1(const VectorIndex& vindex) {
+	PowerSetIter absent_iter;
+	for (uint i = 0; i < vindex.size(); ++ i) {
+		if (vindex.obligatory(i).size()) {
+			absent_iter.addDim();
+		} else {
+			absent_iter.addSkipped();
+		}
+	}
+	VectorUnified ret;
+	while (true) {
+		MIndexSpace space(vindex, LeafVector(vindex.size()), 0);
+		for (uint i = 0; i < vindex.size(); ++ i) {
+			if (absent_iter[i]) {
+				//space.fixed[i].init(vindex.obligatory(i));
+				space.fixed[i].init({uint(-1)});
+			}
+		}
+		if (space.complete(space.fixed)) {
+			space.finalize(space.fixed, vector<LightSymbol>(), LightTree());
+		} else {
+			unify_symbs(space);
+			unify_rules(space);
+		}
+		CartesianProd<uint> absent_prod;
+		for (uint i = 0; i < vindex.size(); ++ i) {
+			absent_prod.incSize();
+			if (absent_iter[i]) {
+				absent_prod.addDim(vindex.obligatory(i));
+			} else {
+				absent_prod.addSkipped(vindex.obligatory(i));
+			}
+		}
+		for (const auto& p : space.unified) {
+
+		}
+
+		if (!absent_iter.hasNext()) {
+			break;
+		}
+		absent_iter.makeNext();
+	}
+
+
+
+	for (const auto& p : ret) {
+		if (!check_vector_index_unified(p.first, p.second, vindex)) {
+			throw Error("VECTOR UNIFICATION ERROR");
+		}
+	}
+	return ret;
+}
+
+
 }}}

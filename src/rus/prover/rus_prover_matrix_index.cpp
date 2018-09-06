@@ -68,7 +68,6 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
 		for (uint i = 0; i < dim_hyp_; ++ i) {
-			proofs_prod.incSize();
 			proofs_prod.addDim(proofInds_[i]);
 		}
 		while (true) {
