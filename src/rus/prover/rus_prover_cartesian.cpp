@@ -79,15 +79,19 @@ vector<uint> CartesianIter::inds() const {
 
 string CartesianIter::show() const {
 	string ret;
-	ret += "size: " + to_string(dims_.size()) + ", ";
 	ret += "dims: [";
+	bool first = true;
 	for (const auto& d : dims_) {
+		if (!first) {
+			ret += " x ";
+		}
 		switch (d.kind) {
 		case Dim::FIXED:   ret += "(fixed)";   break;
 		case Dim::SKIPPED: ret += "(skipped)"; break;
 		default: break;
 		}
-		ret += to_string(d.size) + " ";
+		ret += to_string(d.size);
+		first = false;
 	}
 	ret += "], ";
 	ret += "card: " + to_string(card());
@@ -95,8 +99,13 @@ string CartesianIter::show() const {
 }
 string CartesianIter::current() const {
 	string ret = "[";
+	bool first = true;
 	for (const auto& d : dims_) {
-		ret += to_string(d.ind) + " ";
+		if (!first) {
+			ret += ", ";
+		}
+		ret += to_string(d.ind);
+		first = false;
 	}
 	ret += "]";
 	return ret;
