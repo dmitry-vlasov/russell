@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
+
 struct MatrixIndex {
 	MatrixIndex(uint hd) : dim_hyp_(hd), proofInds_(hd) { }
 
@@ -22,6 +24,8 @@ private:
 	map<LightSymbol, vector<IndexInt>> mindex_;
 	vector<vector<uint>> proofInds_;
 };
+
+string show(const MultyUnifiedSubs&);
 
 }}}
 

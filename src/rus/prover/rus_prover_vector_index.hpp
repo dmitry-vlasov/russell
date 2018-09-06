@@ -111,7 +111,7 @@ struct SubstTree {
 	LightTree tree;
 };
 
-typedef map<vector<uint>, Subst> MultyUnifiedSubs;
+
 typedef map<vector<uint>, SubstTree> VectorUnified;
 
 VectorUnified unify(const VectorIndex& vindex);
@@ -120,7 +120,6 @@ string show(const VectorIndex& vindex);
 string show(const set<uint>&);
 string show(const vector<uint>&);
 string show(const VectorUnified&);
-string show(const MultyUnifiedSubs&);
 
 extern bool debug_multy_index;
 extern bool debug_multy_index_1;

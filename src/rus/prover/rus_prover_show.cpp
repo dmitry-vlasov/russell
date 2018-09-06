@@ -1,5 +1,5 @@
 #include "rus_prover_space.hpp"
-#include "rus_prover_vector_index.hpp"
+#include "rus_prover_matrix_index.hpp"
 #include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {

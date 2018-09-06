@@ -1,3 +1,5 @@
+#pragma once
+
 #include "rus_prover_space.hpp"
 #include "rus_prover_unify.hpp"
 
