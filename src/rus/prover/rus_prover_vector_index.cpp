@@ -792,8 +792,21 @@ VectorUnified unify1(const VectorIndex& vindex) {
 				absent_prod.addSkipped(vindex.obligatory(i));
 			}
 		}
-		for (const auto& p : space.unified) {
-
+		while (true) {
+			for (const auto& p : space.unified) {
+				vector<uint> prod_inds = absent_prod.data();
+				vector<uint> unif_inds = p.first;
+				vector<uint> join_inds(vindex.size(), -1);
+				for (uint i = 0; i < vindex.size(); ++i) {
+					join_inds[i] = (prod_inds[i] == -1) ? unif_inds[i] : prod_inds[i];
+					assert((join_inds[i] != - 1) && "unify1: join_inds[i] == - 1 ");
+				}
+				ret[join_inds] = p.second;
+			}
+			if (!absent_prod.hasNext()) {
+				break;
+			}
+			absent_prod.makeNext();
 		}
 
 		if (!absent_iter.hasNext()) {
