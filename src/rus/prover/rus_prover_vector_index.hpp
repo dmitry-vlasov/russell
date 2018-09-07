@@ -7,6 +7,7 @@ namespace mdl { namespace rus { namespace prover {
 
 string show(const set<uint>&);
 string show(const vector<uint>&);
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
 struct VectorIndex {
 	struct IndexPtr {
@@ -134,7 +135,7 @@ VectorMap<vector<D>> intersect(const vector<const VectorMap<D>*>& v) {
 		vector<D> data;
 		for (const auto& m : v) {
 			auto i = m->map_.find(k);
-			if (i != m->map_.end() && !i->second.tree.empty()) {
+			if (i != m->map_.end() && i->second.sub.ok) {
 				data.push_back(i->second);
 			} else {
 				break;
@@ -184,6 +185,9 @@ struct VectorUnified {
 			LightTree::Children children;
 			Subst unif;
 			for (const auto& st : p.second) {
+				if (st.tree.empty()) {
+					break;
+				}
 				unif = unify_subs(MultySubst({&unif, &st.sub}));
 				if (!unif.ok) {
 					break;
@@ -227,8 +231,35 @@ private:
 		return leafs_prod;
 	}
 
+	friend MultyUnifiedSubs intersect(const std::map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif);
+
 	VectorMap<SubstTree> unif_;
 };
+
+inline MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
+	vector<const VectorMap<SubstTree>*> maps;
+	for (const auto& p : terms) {
+		maps.push_back(&p.second.unif_);
+	}
+	VectorMap<vector<SubstTree>> common = intersect(maps);
+	MultyUnifiedSubs s;
+	for (const auto& q : common.map_) {
+		vector<uint> c = q.first;
+		for (const auto& p : terms) {
+			const LightTree& term = p.second.map().at(c).tree;
+			const Subst& sub = p.second.map().at(c).sub;
+			if (!term.empty() && unif[c].ok) {
+				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.map().at(c).sub}));
+				unif[c] = unified;
+				s[c].sub[p.first] = apply(unif[c], term);
+			} else {
+				s[c];
+				unif[c];
+			}
+		}
+	}
+	return s;
+}
 
 VectorUnified unify(const VectorIndex& vindex);
 

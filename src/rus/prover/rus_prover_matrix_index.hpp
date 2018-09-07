@@ -2,8 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-typedef map<vector<uint>, Subst> MultyUnifiedSubs;
-
 struct MatrixIndex {
 	MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
 

@@ -104,73 +104,9 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			vectIndex.add(ind, proofInds_[i]);
 		}
 		terms[p.first] = unify(vectIndex);
-		if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-			cout << "unified terms for: " << prover::show(p.first) << endl;
-			cout << Indent::paragraph(terms[p.first].show()) << endl;
-		}
-
 		cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
 	}
-	set<vector<uint>> common;
-	if (!terms.empty()) {
-		for (const auto &p : terms.begin()->second.map()) {
-			bool is_common = true;
-			for (const auto &q : terms) {
-				if (!q.second.map().count(p.first)) {
-					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-						cout << "non common = " << prover::show(p.first) << endl;
-					}
-					is_common = false;
-					break;
-				}
-				const Subst& sub = q.second.map().at(p.first).sub;
-				if (!sub.ok) {
-					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-						cout << "has error = " << prover::show(p.first) << endl;
-					}
-					is_common = false;
-					break;
-				}
-			}
-			if (is_common) {
-				if (debug_multy_index&& prover::show(p.first) == "(6, 32, 28, )") {
-					cout << "common = " << prover::show(p.first) << endl;
-				}
-				common.insert(p.first);
-			}
-		}
-	}
-	MultyUnifiedSubs s;
-	for (const auto& c : common) {
-		for (const auto& p : terms) {
-			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.map().at(c).tree) << endl;
-			}
-			const LightTree& term = p.second.map().at(c).tree;
-			const Subst& sub = p.second.map().at(c).sub;
-			if (!term.empty() && unif[c].ok) {
-				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.map().at(c).sub}));
-				if (debug_multy_index && prover::show(c) == "(6, 32, 28, )") {
-					cout << "==============" << endl;
-					cout << "UNIFIED:" << endl;
-					cout << prover::show(unified) << endl;
-					cout << "unif[c]:" << endl;
-					cout << prover::show(unif[c]) << endl;
-					cout << "p.second.at(c).sub:" << endl;
-					cout << prover::show(p.second.map().at(c).sub) << endl;
-					cout << "term" << endl;
-					cout << prover::show(term) << endl;
-					cout << "==============" << endl;
-				}
-				unif[c] = unified;
-				s[c].sub[p.first] = apply(unif[c], term);
-			} else {
-				s[c];
-				unif[c];
-			}
-		}
-	}
-	return s;
+	return intersect(terms, unif);
 }
 
 string MatrixIndex::show() const {
