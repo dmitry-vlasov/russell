@@ -532,4 +532,36 @@ VectorUnified unify(const VectorIndex& vindex) {
 	return space.unified;
 }
 
+string VectorIndex::show() const {
+	string ret;
+	for (uint i = 0; i < vect_.size(); ++ i) {
+		const IndexPtr& ptr = vect_[i];
+		ret += string("Index: ") + to_string(i) + "\n";
+		ret += string("Values: ");
+		if (ptr.values) {
+			for (uint j = 0; j < ptr.values->size(); ++j) {
+				ret += to_string(ptr.values->at(j)) + ", ";
+			}
+			ret += "\n";
+		} else {
+			ret += "NULL\n";
+		}
+		ret += string("Obligatory: ");
+		for (uint j = 0; j < ptr.obligatory.size(); ++j) {
+			ret += to_string(ptr.obligatory.at(j)) + ", ";
+		}
+		ret += "\n";
+		ret += string("Proofs size: ") + to_string(ptr.proofsSize) + "\n";
+		ret += string("Index size: ") + (ptr.ind ? to_string(ptr.ind->size) : "NULL") + "\n";
+		ret += string("Index: ");
+		if (ptr.ind) {
+			ret += ptr.ind->show();
+		} else {
+			ret += "NULL\n";
+		}
+		ret += "\n";
+	}
+	return ret;
+}
+
 }}}

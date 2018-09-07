@@ -236,6 +236,8 @@ inline LightTree apply(const Subst& s, const LightTree& t) {
 rus::Expr convert_expr(const LightTree&);
 rus::Substitution convert_sub(const Subst&);
 
+string show(const set<uint>&);
+string show(const vector<uint>&);
 string show(LightSymbol s, bool full = true);
 string show(const LightTree&, bool full = true);
 string show_ast(const LightTree&);

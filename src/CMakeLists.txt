@@ -52,6 +52,7 @@ else()
 		rus/prover/rus_prover_test.cpp
 		rus/prover/rus_prover_unify.cpp
 		rus/prover/rus_prover_vector_index.cpp
+		rus/prover/rus_prover_vector_unified.cpp
 		
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

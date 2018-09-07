@@ -4,23 +4,11 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
-	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
-	for (uint i = 0; i < dim_hyp_; ++ i) {
-		const auto& proofs = pr->premises[i]->proofs;
-		if (proofs.empty()) {
-			empty_ = true;
-			break;
-		}
-		if (pr->premises[i].get() != hy) {
-			addProofs(proofs, i);
-		} else {
-			addProofs(hs, i);
-		}
-	}
-}
-
-void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
+static void addProofs(
+	map<LightSymbol, vector<IndexInt>>& mindex_,
+	vector<vector<uint>>& proofInds_,
+	uint dim_hyp_,
+	const Hyp::Proofs& proofs, uint i) {
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
@@ -34,7 +22,11 @@ void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 	}
 }
 
-void MatrixIndex::addProofs(const vector<ProofHypIndexed>& hs, uint i) {
+static void addProofs(
+	map<LightSymbol, vector<IndexInt>>& mindex_,
+	vector<vector<uint>>& proofInds_,
+	uint dim_hyp_,
+	const vector<ProofHypIndexed>& hs, uint i) {
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
@@ -48,13 +40,20 @@ void MatrixIndex::addProofs(const vector<ProofHypIndexed>& hs, uint i) {
 	}
 }
 
-void MatrixIndex::addProof(const ProofHyp* p, uint i, uint j) {
-	proofInds_[i] = vector<uint>(1, j);
-	for (const auto& x : p->sub.sub) {
-		if (!mindex_.count(x.first)) {
-			mindex_[x.first] = vector<IndexInt>(dim_hyp_);
+
+MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
+	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
+	for (uint i = 0; i < dim_hyp_; ++ i) {
+		const auto& proofs = pr->premises[i]->proofs;
+		if (proofs.empty()) {
+			empty_ = true;
+			break;
 		}
-		mindex_[x.first][i].add(x.second, j);
+		if (pr->premises[i].get() != hy) {
+			addProofs(mindex_, proofInds_, dim_hyp_, proofs, i);
+		} else {
+			addProofs(mindex_, proofInds_, dim_hyp_, hs, i);
+		}
 	}
 }
 
@@ -242,6 +241,4 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	return ret;
 }
 
-
 }}}
-

@@ -15,10 +15,6 @@ struct MatrixIndex {
 	bool empty() const { return empty_; }
 
 private:
-	void addProofs(const Hyp::Proofs& proofs, uint i);
-	void addProofs(const vector<ProofHypIndexed>& hs, uint i);
-	void addProof(const ProofHyp* p, uint i, uint j);
-
 	uint dim_hyp_;
 	map<LightSymbol, vector<IndexInt>> mindex_;
 	vector<vector<uint>> proofInds_;
