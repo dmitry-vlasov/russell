@@ -136,6 +136,8 @@ VectorMap<vector<D>> intersect(const vector<const VectorMap<D>*>& v) {
 			auto i = m->map_.find(k);
 			if (i != m->map_.end() && !i->second.tree.empty()) {
 				data.push_back(i->second);
+			} else {
+				break;
 			}
 		}
 		if (data.size() == v.size()) {
@@ -179,11 +181,9 @@ struct VectorUnified {
 		}
 		VectorMap<vector<SubstTree>> common = intersect(maps);
 		for (const auto& p : common.map_) {
-			vector<SubstTree> subtrees;
-
 			LightTree::Children children;
 			Subst unif;
-			for (const auto& st : subtrees) {
+			for (const auto& st : p.second) {
 				unif = unify_subs(MultySubst({&unif, &st.sub}));
 				if (!unif.ok) {
 					break;
