@@ -40,7 +40,6 @@ static void addProofs(
 	}
 }
 
-
 MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
 	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
 	for (uint i = 0; i < dim_hyp_; ++ i) {
@@ -137,80 +136,23 @@ void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
-		if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-			cout << "unify_subs: " << prover::show(p.first) <<  " --> sub: " << endl << prover::show(p.second) << endl;
-			cout << "gen[p.first]: " << prover::show(gen[p.first]) << endl;
-		}
 		Subst sub = unify_subs(p.second, gen[p.first]);
 		if (sub.ok) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
-			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-				cout << "result sub: " << Indent::paragraph(prover::show(sub)) << endl;
-				cout << "result delta: " << Indent::paragraph(prover::show(delta)) << endl;
-				cout << "YES" << endl;
-			}
-		} else {
-			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-				cout << "NO" << endl;
-			}
 		}
 	}
-}
-
-bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop* pr, const ProofHyp* h) {
-	uint arity = pr->premises.size();
-	vector<Subst> subvector(arity);
-
-	for (uint i = 0; i < arity; ++ i) {
-		const auto& proofs = pr->premises[i]->proofs;
-		if (pr->premises[i].get() != &h->node) {
-			subvector[i] = proofs[leafs[i]]->sub;
-		} else {
-			subvector[i] = h->sub;
-		}
-	}
-
-	if (debug_multy_index) {
-		cout << endl << "CHECKING MATRIX UNIFICATION" << endl;
-		cout << "UNIFIER: " << show(sub) << endl;
-	}
-
-	Subst common;
-	bool first = true;
-	for (auto& s : subvector) {
-		Subst ss(s);
-		ss.compose(sub);
-		if (!first && common != ss) {
-			cout << "MATRIX UNIFICATION FAILS" << endl;
-			//cout << show(ss) << " != " << show(common) << endl << endl;
-			cout << "SUB: " << show(s) << endl;
-			cout << "ss: " << show(ss) << endl;
-			cout << "common: " << show(common) << endl;
-			return false;
-		}
-		if (first){
-			common = ss;
-			first = false;
-		}
-	}
-	if (debug_multy_index) {
-		cout << "COMMON: " << show(common) << endl;
-	}
-	return true;
 }
 
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
-	//debug_multy_index = (c == 5835);
 	//debug_multy_index = (c == 483);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}
-
 	MatrixIndex mi(pr, hy, hs);
 	if (mi.empty()) {
 		return MultyUnifiedSubs();

@@ -4,14 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-typedef map<vector<uint>, Subst> MultyUnifiedSubs;
-
-struct SubstTree {
-	Subst     sub;
-	LightTree tree;
-	string show() const;
-};
-
 template<class Data>
 struct VectorMap {
 	map<vector<uint>, Data> map_;
@@ -38,16 +30,24 @@ VectorMap<vector<D>> intersect(const vector<const VectorMap<D>*>& v) {
 	return ret;
 }
 
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
+
+struct SubstTree {
+	Subst     sub;
+	LightTree tree;
+	string show() const;
+};
+
 struct VectorUnified {
 	string show() const;
 	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
 	void add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w);
-	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t);
 
 	std::map<vector<uint>, SubstTree>& map() { return unif_.map_; }
 	const std::map<vector<uint>, SubstTree>& map() const { return unif_.map_; }
 
 private:
+	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t);
 	CartesianProd<uint> leafsProd(const ProdVect& leafs);
 	friend MultyUnifiedSubs intersect(const std::map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif);
 
