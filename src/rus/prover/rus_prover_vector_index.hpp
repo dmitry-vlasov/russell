@@ -109,6 +109,12 @@ private:
 struct SubstTree {
 	Subst     sub;
 	LightTree tree;
+	string show() const {
+		string ret;
+		ret += "expr: " + prover::show(tree) + "\n";
+		ret += Indent::paragraph(prover::show(sub)) + "\n";
+		return ret;
+	}
 };
 
 
