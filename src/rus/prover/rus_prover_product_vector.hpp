@@ -64,8 +64,29 @@ struct Set {
 		return init_;
 	}
 
+	bool is_subset_of(const Set& s) const {
+		if (!init_) return false;
+		for (auto i : set_) {
+			if (s.set_.find(i) == s.set_.end()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	void unite(const Set& s) {
+		if (!(init_ && s.init_)) return;
+		for (uint i : s.set_) set_.insert(i);
+	}
+
+	void intersect(const Set& s) {
+		if (!(init_ && s.init_)) return;
+		for (uint i : set_) if (s.set_.find(i) == s.set_.end()) set_.erase(i);
+	}
+
 private:
-	friend Set intersect(const Set& s1, const Set& s2);
+	friend Set prover::intersect(const Set& s1, const Set& s2);
+	friend Set prover::unite(const Set& s1, const Set& s2);
 
 	std::set<uint> set_;
 	bool init_;
@@ -73,16 +94,11 @@ private:
 };
 
 inline Set intersect(const Set& s1, const Set& s2) {
-	if (!(s1.init_ && s2.init_)) {
-		return Set();
-	}
-	Set ret(true);
-	for (uint i : s1.set_) {
-		if (s2.set_.find(i) != s2.set_.end()) {
-			ret.set_.insert(i);
-		}
-	}
-	return ret;
+	Set s(s1); s.intersect(s2); return s;
+}
+
+inline Set unite(const Set& s1, const Set& s2) {
+	Set s(s1); s.unite(s2); return s;
 }
 
 struct ProdVect {
@@ -127,19 +143,68 @@ struct ProdVect {
 		ret += ")";
 		return ret;
 	}
+
+	void intersect(const ProdVect& v) {
+		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
+		for (uint i = 0; i < vect.size(); ++ i) {
+			vect[i].intersect(v.vect[i]);
+		}
+	}
+
 	vector<Set> vect;
 };
 
 inline ProdVect intersect(const ProdVect& v1, const ProdVect& v2) {
-	assert(v1.vect.size() == v2.vect.size() && "intersect: v1.vect.size() != v2.vect.size()");
-	ProdVect ret(v1.vect.size());
-	for (uint i = 0; i < v1.vect.size(); ++ i) {
-		ret.vect[i] = intersect(v1.vect[i], v2.vect[i]);
-	}
-	return ret;
+	ProdVect ret(v1); ret.intersect(v2); return ret;
 }
 
+struct UnionVect {
+	bool is_superset_of(const ProdVect& v) {
+		for (uint i = 0; i < v.vect.size(); ++ i) {
+			Set u(un[0].vect[i]);
+			for (uint j = 1; j < un.size(); ++ j) {
+				u.unite(un[j].vect[j]);
+			}
+			if (!v.vect[i].is_subset_of(u)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	string show() const {
+		string ret;
+		ret += "{\n";
+		for (const auto& s : un) {
+			ret += "\t" + s.show() + "\n";
+		}
+		ret += "}\n";
+		return ret;
+	}
+	void intersect(const ProdVect& v) {
+		vector<uint> empty_components;
+		for (uint i = 0; i < un.size(); ++i) {
+			un[i].intersect(v);
+			if (!un[i].storesInfo()) {
+				empty_components.push_back(i);
+			}
+		}
+		//if ()
+	}
+	vector<ProdVect> un;
+};
 
+struct DiffVect {
+	ProdVect positive;
+	UnionVect negative;
+
+	void intersect(const ProdVect& v) {
+		positive.intersect(v);
+		negative.intersect(v);
+	}
+	void subtract(const ProdVect& v) {
+
+	}
+};
 
 template<class Data>
 struct ProdVectData {

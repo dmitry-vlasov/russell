@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rus_prover_index.hpp"
+#include "rus_prover_product_vector.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
