@@ -263,15 +263,4 @@ string show(const MultyUnifiedSubs& ms) {
 	return ret;
 }
 
-string show(const VectorUnified& mt) {
-	string ret;
-	for (const auto& p : mt) {
-		ret += show(p.first) + " expr: " + show(p.second.tree) + "\n";
-		ret += Indent::paragraph(show(p.second.sub)) + "\n";
-	}
-	return ret;
-}
-
-
-
 }}}

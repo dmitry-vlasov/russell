@@ -203,6 +203,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
+		cout << MatrixIndex(pr, hy, hs).show() << endl;
 
  		debug_multy_index = true;
 		unify_subs_matrix(pr, hy, hs);

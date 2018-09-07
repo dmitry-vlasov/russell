@@ -60,17 +60,42 @@ struct MIndexSpace {
 	ProdVect fixed;
 	uint depth;
 
+	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d) :
+	vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
+		for (uint i = 0; i < vindex.size(); ++ i) {
+			vars_prod.incSize();
+			if (fixed[i].storesInfo() || !vindex.index(i)) {
+				vars_prod.skip(i);
+			} else {
+				for (const auto& p : vindex.index(i)->vars) {
+					if (p.first.rep) {
+						vars_prod.incDim(p.first);
+						vars_inds[i] = true;
+					}
+					symbs.insert(p.first);
+					if (!symb_inds.count(p.first)) {
+						symb_inds[p.first] = vector<bool>(vi.size(), false);
+					}
+					symb_inds[p.first][i] = true;
+				}
+				for (const auto& p : vindex.index(i)->rules) {
+					rules.insert(p.first);
+					if (!rule_inds.count(p.first)) {
+						rule_inds[p.first] = vector<bool>(vi.size(), false);
+					}
+					rule_inds[p.first][i] = true;
+				}
+			}
+		}
+	}
+
 	string show() const {
 		ostringstream oss;
 		oss << "M_INDEX_SPACE" << endl;
 		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 		oss << "depth: " << depth << endl;
 		oss << "VectorUnified: " << endl << "--------------" << endl;
-		for (const auto& u : unified) {
-			oss << prover::show(u.first) << " --> " << endl;
-			oss << "term: " << prover::show(u.second.tree) << endl;
-			oss << "sub: " << prover::show(u.second.sub) << endl;
-		}
+		oss << unified.show();
 		oss << endl;
 		oss << "Symbs: {"; for (auto s : symbs) oss << prover::show(s) << ", "; oss << "}" << endl;
 		oss << endl;
@@ -117,111 +142,6 @@ struct MIndexSpace {
 	bool complete_for(const Rule* r) const {
 		return complete(rule_inds.at(r));
 	}
-
-	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d) :
-	vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
-		for (uint i = 0; i < vindex.size(); ++ i) {
-			vars_prod.incSize();
-			if (fixed[i].storesInfo() || !vindex.index(i)) {
-				vars_prod.skip(i);
-			} else {
-				for (const auto& p : vindex.index(i)->vars) {
-					if (p.first.rep) {
-						vars_prod.incDim(p.first);
-						vars_inds[i] = true;
-					}
-					symbs.insert(p.first);
-					if (!symb_inds.count(p.first)) {
-						symb_inds[p.first] = vector<bool>(vi.size(), false);
-					}
-					symb_inds[p.first][i] = true;
-				}
-				for (const auto& p : vindex.index(i)->rules) {
-					rules.insert(p.first);
-					if (!rule_inds.count(p.first)) {
-						rule_inds[p.first] = vector<bool>(vi.size(), false);
-					}
-					rule_inds[p.first][i] = true;
-				}
-			}
-		}
-	}
-
-	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-		assert(complete(leafs_vect));
-		CartesianProd<uint> leafs_prod = leafsProd(leafs_vect);
-		if (leafs_prod.card() == 0) {
-			return;
-		}
-		//if (leafs_prod.card() > 1) {
-		//	cout << "leafs_prod: " << leafs_prod.iter().show() << endl;
-		//}
-		while (true) {
-			vector<uint> leafs = leafs_prod.data();
-			finalize(leafs, w, t);
-			if (!leafs_prod.hasNext()) {
-				break;
-			}
-			leafs_prod.makeNext();
-		}
-	}
-
-	void finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
-		static uint c = 0;
-		if (debug_multy_index) {
-			/*if (prover::show(leafs) == "(6, 32, 28, )") {
-				++c;
-				if (c == 15) {
-					cout << "DDD" << endl;
-				}
-				cout << "FUCK " << c << endl;
-				cout << "w: "; for (auto s: w) cout << prover::show(s) << ", "; cout << endl;
-				cout << "t: " << prover::show(t) << endl;
-				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-				cout << "leafs: " << prover::show(leafs) << endl;
-			}*/
-		}
-		if (w.size()) {
-			LightTree term = unify_step(unified[leafs].sub, w, t);
-			if (!term.empty()) {
-				/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
-					cout << "SUCCESS (A)" << endl;
-					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-				}*/
-
-				if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
-				//if (debug_multy_index) {
-					//cout << "!unified[leafs].tree.empty()" << endl;
-					if (!unified[leafs].tree.empty() && unified[leafs].tree != term) {
-						cout << "555555555555" << endl;
-					}
-					cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
-					cout << "term: " << prover::show(term) << endl;
-					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-					//cout << "leafs: " << prover::show(leafs) << endl;
-				}
-
-				unified[leafs].tree = apply(unified[leafs].sub, term);
-			} else {
-				/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
-					cout << "FAILURE" << endl;
-					cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-				}*/
-			}
-		} else {
-			unified[leafs].sub;
-			unified[leafs].tree = apply(unified[leafs].sub, t);
-			/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
-				cout << "SUCCESS (B)" << endl;
-				cout << "unified[" << prover::show(leafs) << "].tree: " << prover::show(unified[leafs].tree) << endl;
-				cout << "sub: " << prover::show(unified[leafs].sub) << endl;
-			}*/
-		}
-		/*if (debug_multy_index && prover::show(leafs) == "(6, 32, 28, )") {
-			cout << "---------------" << endl;
-		}*/
-	}
-
 	bool complete(const ProdVect& v) const {
 		for (uint i = 0; i < vindex.size(); ++i) {
 			if (!v[i].storesInfo() && vindex.index(i)) {
@@ -229,19 +149,6 @@ struct MIndexSpace {
 			}
 		}
 		return true;
-	}
-
-private:
-	CartesianProd<uint> leafsProd(const ProdVect& leafs) {
-		assert(complete(leafs) && "leafsProd(const VectorIndex& vi, const ProdVect& leafs)");
-		CartesianProd<uint> leafs_prod;
-		for (uint i = 0; i < leafs.vect.size(); ++ i) {
-			leafs_prod.incSize();
-			for (uint l : leafs[i].set()) {
-				leafs_prod.incDim(l);
-			}
-		}
-		return leafs_prod;
 	}
 };
 
@@ -286,7 +193,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 				if (debug_multy_index) {
 					//cout << "w_leafs: " << show_leafs(w_leafs) << endl;
 				}
-				space.finalize(w_leafs, w, LightTree(s));
+				space.unified.finalize(w_leafs, w, LightTree(s));
 			}
 			if (!vars_prod.hasNext()) {
 				break;
@@ -296,7 +203,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	}
 	if (space.complete(s_leafs)) {
 		// All indexes have variable 'v'
-		space.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
+		space.unified.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
 	}
 }
 
@@ -382,7 +289,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 				}
 			}
 			if (consistent) {
-				space.finalize(w_leafs, w, LightTree(r, {}));
+				space.unified.finalize(w_leafs, w, LightTree(r, {}));
 			}
 			if (!vars_prod.hasNext()) {
 				break;
@@ -392,7 +299,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 	}
 	if (space.complete(r_leafs)) {
 		// All indexes have rule 'r'
-		space.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
+		space.unified.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
 	}
 }
 
@@ -455,79 +362,29 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i));
 			}
 		}
-
-		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
-			cout << "WI: " << endl;
-			cout << child_vindex.show() << endl;
-			debug_multy_index_1 = true;
-			debug_multy_index_2 = true;
-		}*/
-		/*if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
-			cout << "WN: " << endl;
-			cout << child_vindex.show() << endl;
-			debug_multy_index_1 = true;
-		}*/
-
 		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
-
-		/*if (debug_multy_index && Lex::toStr(r->id()) == "wi") {
-			cout << "WI RESULT: " << endl;
-			cout << show(child_terms[k]) << endl;
-		}*/
-		/*
-		if (debug_multy_index && Lex::toStr(r->id()) == "wn") {
-			cout << "WN RESULT: " << endl;
-			cout << show(child_terms[k]) << endl;
-		}*/
 	}
-	for (const auto& p : child_terms[0]) {
+	//space.unified.add_intersection(child_terms, r, w);
+	for (const auto& p : child_terms[0].map()) {
 		LightTree::Children children;
 		Subst unif;
 		for (uint i = 0; i < r->arity(); ++ i) {
-			if (child_terms[i].count(p.first) && !child_terms[i][p.first].tree.empty()) {
+			if (child_terms[i].map().count(p.first) && !child_terms[i].map()[p.first].tree.empty()) {
 
-				//Subst s = unify_subs(unif, child_terms[i][p.first].sub);
-				unif = unify_subs(MultySubst({&unif, &child_terms[i][p.first].sub}));
+				unif = unify_subs(MultySubst({&unif, &child_terms[i].map()[p.first].sub}));
 
-				//if (!unif.compose(child_terms[i][p.first].sub)) {
 				if (!unif.ok) {
-
-					if (debug_multy_index && show(p.first) == "(1, 1, )") {
-						cout << "(A)FUCK!!!" << endl;
-						cout << Indent::paragraph(show(child_terms[i][p.first].sub)) << endl;
-						cout << Indent::paragraph(show(unif)) << endl;
-						cout << "FAIL" << endl;
-					}
-
 					break;
-				} else {
-					if (debug_multy_index && show(p.first) == "(1, 1, )") {
-						cout << "(A)FUCK!!!" << endl << "SUCCESS" << endl;
-					}
 				}
-				children.push_back(make_unique<LightTree>(child_terms[i][p.first].tree));
+				children.push_back(make_unique<LightTree>(child_terms[i].map()[p.first].tree));
 			} else {
 				break;
 			}
 		}
 		if (children.size() == r->arity()) {
-			if (space.unified[p.first].sub.compose(unif)) {
+			if (space.unified.map()[p.first].sub.compose(unif)) {
 				LightTree term = apply(unif, LightTree(r, children));
-				space.finalize(p.first, w, term);
-				if (debug_multy_index && show(p.first) == "(1, 1, )") {
-					cout << "(B)FUCK!!!" << endl;
-					cout << "term: " << show(term) << endl;
-					cout << "sub:" << endl;
-					cout << Indent::paragraph(show(space.unified[p.first].sub)) << endl;
-					cout << "SUCCESS" << endl;
-				}
-			} else {
-				if (debug_multy_index && show(p.first) == "(1, 1, )") {
-					cout << "(B)FUCK!!!" << endl;
-					cout << Indent::paragraph(show(space.unified[p.first].sub)) << endl;
-					cout << Indent::paragraph(show(unif)) << endl;
-					cout << "FAIL" << endl;
-				}
+				space.unified.finalize(p.first, w, term);
 			}
 		}
 	}
@@ -701,7 +558,7 @@ VectorUnified unify(const VectorIndex& vindex) {
 			}
 		}
 		if (space.complete(space.fixed)) {
-			space.finalize(space.fixed, vector<LightSymbol>(), LightTree());
+			space.unified.finalize(space.fixed, vector<LightSymbol>(), LightTree());
 		} else {
 			unify_symbs(space);
 			unify_rules(space);
@@ -711,7 +568,7 @@ VectorUnified unify(const VectorIndex& vindex) {
 		}
 		absent_iter.makeNext();
 	}
-	for (const auto& p : space.unified) {
+	for (const auto& p : space.unified.map()) {
 		if (!check_vector_index_unified(p.first, p.second, vindex)) {
 			throw Error("VECTOR UNIFICATION ERROR");
 		}
@@ -719,6 +576,7 @@ VectorUnified unify(const VectorIndex& vindex) {
 	return space.unified;
 }
 
+/*
 VectorUnified unify1(const VectorIndex& vindex) {
 	PowerSetIter absent_iter;
 	for (uint i = 0; i < vindex.size(); ++ i) {
@@ -738,7 +596,7 @@ VectorUnified unify1(const VectorIndex& vindex) {
 			}
 		}
 		if (space.complete(space.fixed)) {
-			space.finalize(space.fixed, vector<LightSymbol>(), LightTree());
+			space.unified.finalize(space.fixed, vector<LightSymbol>(), LightTree());
 		} else {
 			unify_symbs(space);
 			unify_rules(space);
@@ -754,7 +612,7 @@ VectorUnified unify1(const VectorIndex& vindex) {
 		}
 		if (absent_prod.card()) {
 			while (true) {
-				for (const auto& p : space.unified) {
+				for (const auto& p : space.unified.map()) {
 					vector<uint> prod_inds = absent_prod.data();
 					vector<uint> unif_inds = p.first;
 					vector<uint> join_inds(vindex.size(), -1);
@@ -770,7 +628,7 @@ VectorUnified unify1(const VectorIndex& vindex) {
 				absent_prod.makeNext();
 			}
 		} else {
-			for (const auto& p : space.unified) {
+			for (const auto& p : space.unified.map()) {
 				ret[p.first] = p.second;
 			}
 		}
@@ -783,13 +641,13 @@ VectorUnified unify1(const VectorIndex& vindex) {
 
 
 
-	for (const auto& p : ret) {
+	for (const auto& p : ret.map()) {
 		if (!check_vector_index_unified(p.first, p.second, vindex)) {
 			throw Error("VECTOR UNIFICATION ERROR");
 		}
 	}
 	return ret;
 }
-
+*/
 
 }}}

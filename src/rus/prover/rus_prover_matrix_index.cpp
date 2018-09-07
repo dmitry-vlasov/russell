@@ -4,6 +4,22 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
+	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
+	for (uint i = 0; i < dim_hyp_; ++ i) {
+		const auto& proofs = pr->premises[i]->proofs;
+		if (proofs.empty()) {
+			empty_ = true;
+			break;
+		}
+		if (pr->premises[i].get() != hy) {
+			addProofs(proofs, i);
+		} else {
+			addProofs(hs, i);
+		}
+	}
+}
+
 void MatrixIndex::addProofs(const Hyp::Proofs& proofs, uint i) {
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
@@ -90,24 +106,24 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		terms[p.first] = unify(vectIndex);
 		if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 			cout << "unified terms for: " << prover::show(p.first) << endl;
-			cout << Indent::paragraph(prover::show(terms[p.first])) << endl;
+			cout << Indent::paragraph(terms[p.first].show()) << endl;
 		}
 
-		cout << "var " << prover::show(p.first) << " has " << terms[p.first].size() << " unified" << endl;
+		cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
 	}
 	set<vector<uint>> common;
 	if (!terms.empty()) {
-		for (const auto &p : terms.begin()->second) {
+		for (const auto &p : terms.begin()->second.map()) {
 			bool is_common = true;
 			for (const auto &q : terms) {
-				if (!q.second.count(p.first)) {
+				if (!q.second.map().count(p.first)) {
 					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 						cout << "non common = " << prover::show(p.first) << endl;
 					}
 					is_common = false;
 					break;
 				}
-				const Subst& sub = q.second.at(p.first).sub;
+				const Subst& sub = q.second.map().at(p.first).sub;
 				if (!sub.ok) {
 					if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
 						cout << "has error = " << prover::show(p.first) << endl;
@@ -128,12 +144,12 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (const auto& c : common) {
 		for (const auto& p : terms) {
 			if (debug_multy_index && prover::show(p.first) == "(6, 32, 28, )") {
-				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.at(c).tree) << endl;
+				cout << prover::show(c) << ", " << prover::show(p.first) <<  " --> term: " << prover::show(p.second.map().at(c).tree) << endl;
 			}
-			const LightTree& term = p.second.at(c).tree;
-			const Subst& sub = p.second.at(c).sub;
+			const LightTree& term = p.second.map().at(c).tree;
+			const Subst& sub = p.second.map().at(c).sub;
 			if (!term.empty() && unif[c].ok) {
-				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.at(c).sub}));
+				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.map().at(c).sub}));
 				if (debug_multy_index && prover::show(c) == "(6, 32, 28, )") {
 					cout << "==============" << endl;
 					cout << "UNIFIED:" << endl;
@@ -141,7 +157,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 					cout << "unif[c]:" << endl;
 					cout << prover::show(unif[c]) << endl;
 					cout << "p.second.at(c).sub:" << endl;
-					cout << prover::show(p.second.at(c).sub) << endl;
+					cout << prover::show(p.second.map().at(c).sub) << endl;
 					cout << "term" << endl;
 					cout << prover::show(term) << endl;
 					cout << "==============" << endl;
@@ -158,6 +174,9 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 }
 
 string MatrixIndex::show() const {
+	if (empty_) {
+		return "empty\n";
+	}
 	string ret;
 	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
 	for (const auto& p : mindex_) {
@@ -247,74 +266,6 @@ bool check_matrix_unification(const vector<uint>& leafs, const Subst& sub, Prop*
 	return true;
 }
 
-void unify_subs_matrix(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
-
-	static int c = 0;
-	c++;
-	//debug_multy_index = (c == 5835);
-	//debug_multy_index = (c == 2887);
-	//debug_multy_index = (c == 2441);
-	//debug_multy_index = (c == 2386);
-	//debug_multy_index = (c == 2372);
-	//debug_multy_index = (c == 2070);
-	//debug_multy_index = (c == 8);
-	//debug_multy_index = (c == 78);
-	if (debug_multy_index) {
-		cout << "AAA" << endl;
-	}
-
-	const ProofHyp* h = hi.proof;
-	uint arity = pr->premises.size();
-	MatrixIndex mi(arity);
-	for (uint i = 0; i < arity; ++ i) {
-		const auto& proofs = pr->premises[i]->proofs;
-		if (proofs.empty()) {
-			return;
-		}
-		if (pr->premises[i].get() != &h->node) {
-			mi.addProofs(proofs, i);
-		} else {
-			mi.addProof(h, i, hi.ind);
-		}
-	}
-
-	cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
-	if (debug_multy_index) {
-		cout << mi.show() << endl;
-	}
-
-	try {
-		unify_subs(mi, pr, ret);
-		/*for (const auto& p : ret) {
-			if (!check_matrix_unification(p.first, p.second, pr, h)) {
-				cout << "MATRIX no. " << c << endl;
-				cout << mi.show() << endl;
-				throw Error("MATRIX UNIFICATION ERROR");
-			}
-		}*/
-	} catch (Error& err) {
-		debug_multy_index_1 = true;
-		cout << "MATRIX no. " << c << endl;
-		cout << mi.show() << endl;
-		//return unify_subs(mi, pr);
-		throw err;
-	} catch (std::exception& e) {
-		debug_multy_index_1 = true;
-		cout << "MATRIX no. " << c << endl;
-		cout << mi.show() << endl;
-		unify_subs(mi, pr, ret);
-		throw e;
-	}
-}
-
-MultyUnifiedSubs unify_subs_matrix1(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
-	MultyUnifiedSubs ret;
-	for (auto hi : hs) {
-		unify_subs_matrix(pr, hy, hi, ret);
-	}
-	return ret;
-}
-
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
@@ -325,18 +276,9 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 		cout << "AAA" << endl;
 	}
 
-	uint arity = pr->premises.size();
-	MatrixIndex mi(arity);
-	for (uint i = 0; i < arity; ++ i) {
-		const auto& proofs = pr->premises[i]->proofs;
-		if (proofs.empty()) {
-			return MultyUnifiedSubs();
-		}
-		if (pr->premises[i].get() != hy) {
-			mi.addProofs(proofs, i);
-		} else {
-			mi.addProofs(hs, i);
-		}
+	MatrixIndex mi(pr, hy, hs);
+	if (mi.empty()) {
+		return MultyUnifiedSubs();
 	}
 
 	cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
