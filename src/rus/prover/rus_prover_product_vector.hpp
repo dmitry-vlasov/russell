@@ -150,6 +150,8 @@ struct ProdVect {
 			vect[i].intersect(v.vect[i]);
 		}
 	}
+	Set& operator[] (uint i) { return vect[i]; }
+	const Set& operator[] (uint i) const { return vect[i]; }
 
 	vector<Set> vect;
 };

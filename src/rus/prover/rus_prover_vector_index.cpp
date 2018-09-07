@@ -9,49 +9,6 @@ bool debug_multy_index = false;
 bool debug_multy_index_1 = false;
 bool debug_multy_index_2 = false;
 
-struct LeafStorage {
-	LeafStorage() : index_leafs(nullptr) { }
-
-	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
-		if (!index_leafs) {
-			index_leafs = &ind_leafs;
-			for (uint s : ind_leafs.inds) {
-				leafs.push_back(ind_values->at(s));
-			}
-			return true;
-		} else {
-			return index_leafs == &ind_leafs;
-		}
-	}
-
-	void init(uint l) {
-		leafs.push_back(l);
-	}
-
-	void init(const vector<uint>& l) {
-		leafs = l;
-	}
-
-	vector<uint> leafs;
-
-private:
-	const Index::Leaf* index_leafs;
-};
-
-typedef vector<LeafStorage> LeafVector;
-
-string show_leafs(const LeafVector& leafs) {
-	string ret;
-	for (auto l : leafs) {
-		if (l.leafs.size()) {
-			ret += show(l.leafs) + ", ";
-		} else {
-			ret += "empty, ";
-		}
-	}
-	return ret;
-}
-
 vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	vector<bool> ret(s1.size(), false);
 	for (uint i = 0; i < s1.size(); ++ i) {
@@ -100,7 +57,7 @@ struct MIndexSpace {
 	vector<bool> vars_inds;
 
 	const VectorIndex& vindex;
-	LeafVector fixed;
+	ProdVect fixed;
 	uint depth;
 
 	string show() const {
@@ -138,14 +95,14 @@ struct MIndexSpace {
 		oss << vindex.show() << endl;
 		oss << endl;
 		oss << "Fixed:" << endl;
-		oss << show_leafs(fixed) << endl;
+		oss << fixed.show() << endl;
 		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 		return oss.str();
 	}
 
 	bool complete(const vector<bool>& s) const {
 		for (uint i = 0; i < vindex.size(); ++ i) {
-			if (fixed[i].leafs.size()) {
+			if (fixed[i].storesInfo()) {
 				continue;
 			}
 			if (!s.at(i) && !vars_inds.at(i)) {
@@ -161,11 +118,11 @@ struct MIndexSpace {
 		return complete(rule_inds.at(r));
 	}
 
-	MIndexSpace(const VectorIndex& vi, const LeafVector& f, uint d) :
+	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d) :
 	vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			vars_prod.incSize();
-			if (fixed[i].leafs.size() || !vindex.index(i)) {
+			if (fixed[i].storesInfo() || !vindex.index(i)) {
 				vars_prod.skip(i);
 			} else {
 				for (const auto& p : vindex.index(i)->vars) {
@@ -190,15 +147,15 @@ struct MIndexSpace {
 		}
 	}
 
-	void finalize(LeafVector leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
+	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
 		assert(complete(leafs_vect));
 		CartesianProd<uint> leafs_prod = leafsProd(leafs_vect);
 		if (leafs_prod.card() == 0) {
 			return;
 		}
-		if (leafs_prod.card() > 1) {
-			cout << "leafs_prod: " << leafs_prod.iter().show() << endl;
-		}
+		//if (leafs_prod.card() > 1) {
+		//	cout << "leafs_prod: " << leafs_prod.iter().show() << endl;
+		//}
 		while (true) {
 			vector<uint> leafs = leafs_prod.data();
 			finalize(leafs, w, t);
@@ -265,9 +222,9 @@ struct MIndexSpace {
 		}*/
 	}
 
-	bool complete(const LeafVector& v) const {
+	bool complete(const ProdVect& v) const {
 		for (uint i = 0; i < vindex.size(); ++i) {
-			if (!v[i].leafs.size() && vindex.index(i)) {
+			if (!v[i].storesInfo() && vindex.index(i)) {
 				return false;
 			}
 		}
@@ -275,12 +232,12 @@ struct MIndexSpace {
 	}
 
 private:
-	CartesianProd<uint> leafsProd(const LeafVector& leafs) {
-		assert(complete(leafs) && "leafsProd(const VectorIndex& vi, const LeafVector& leafs)");
+	CartesianProd<uint> leafsProd(const ProdVect& leafs) {
+		assert(complete(leafs) && "leafsProd(const VectorIndex& vi, const ProdVect& leafs)");
 		CartesianProd<uint> leafs_prod;
-		for (uint i = 0; i < leafs.size(); ++ i) {
+		for (uint i = 0; i < leafs.vect.size(); ++ i) {
 			leafs_prod.incSize();
-			for (uint l : leafs[i].leafs) {
+			for (uint l : leafs[i].set()) {
 				leafs_prod.incDim(l);
 			}
 		}
@@ -291,9 +248,9 @@ private:
 void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& s_fixed)
 {
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-	LeafVector s_leafs = space.fixed;
+	ProdVect s_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (s_leafs[i].leafs.size()) {
+		if (s_leafs[i].storesInfo()) {
 			vars_prod.skip(i);
 			if (s_fixed.at(i)) {
 				return;
@@ -315,7 +272,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
 			vector<uint> inds = vars_prod.indexes();
-			LeafVector w_leafs = s_leafs;
+			ProdVect w_leafs = s_leafs;
 			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
@@ -347,14 +304,14 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 void unify_symbs(MIndexSpace& space)
 {
 	for (LightSymbol s : space.symbs) {
-		LeafVector s_leafs = space.fixed;
+		ProdVect s_leafs = space.fixed;
 		if (!space.complete_for(s)) {
 			continue;
 		}
 		vector<bool> common = intersect(space.vars_inds, space.symb_inds.at(s));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (s_leafs[i].leafs.size()) {
+			if (s_leafs[i].storesInfo()) {
 				ps_iter.addSkipped();
 			} else {
 				if (common.at(i)) {
@@ -394,9 +351,9 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 {
 	assert(r->arity() == 0);
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-	LeafVector r_leafs = space.fixed;
+	ProdVect r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (r_leafs[i].leafs.size()) {
+		if (r_leafs[i].storesInfo()) {
 			vars_prod.skip(i);
 			if (r_fixed.at(i)) {
 				return;
@@ -414,7 +371,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 		while (true) {
 			vector<LightSymbol> w = vars_prod.data();
 			vector<uint> inds = vars_prod.indexes();
-			LeafVector w_leafs = r_leafs;
+			ProdVect w_leafs = r_leafs;
 			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
@@ -449,7 +406,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 	PowerSetIter ps_iter;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (space.fixed[i].leafs.size()) {
+		if (space.fixed[i].storesInfo()) {
 			ps_iter.addSkipped();
 		} else {
 			if (common.at(i)) {
@@ -478,16 +435,16 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 }
 
-VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint depth);
+VectorUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth);
 
-void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const LeafVector& leafs)
+void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
 {
 	vector<VectorUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
 		VectorIndex child_vindex;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (space.vindex.index(i)) {
-				if (!leafs[i].leafs.size() && !space.vindex.index(i)->rules.count(r)) {
+				if (!leafs[i].storesInfo() && !space.vindex.index(i)->rules.count(r)) {
 					return;
 				}
 				const Index* ind =
@@ -579,9 +536,9 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r_fixed)
 {
 	CartesianProd<LightSymbol> vars_prod = space.vars_prod;
-	LeafVector r_leafs = space.fixed;
+	ProdVect r_leafs = space.fixed;
 	for (uint i = 0; i < space.vindex.size(); ++ i) {
-		if (r_leafs[i].leafs.size()) {
+		if (r_leafs[i].storesInfo()) {
 			vars_prod.skip(i);
 			if (r_fixed.at(i)) {
 				return;
@@ -597,7 +554,7 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 	while (true) {
 		vector<LightSymbol> w = vars_prod.data();
 		vector<uint> inds = vars_prod.indexes();
-		LeafVector w_leafs = r_leafs;
+		ProdVect w_leafs = r_leafs;
 		bool consistent = true;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (inds[i] != -1 && space.vindex.index(i)) {
@@ -629,7 +586,7 @@ void unify_rules(MIndexSpace& space)
 		vector<bool> common = intersect(space.vars_inds, space.rule_inds.at(r));
 		PowerSetIter ps_iter;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
-			if (space.fixed[i].leafs.size()) {
+			if (space.fixed[i].storesInfo()) {
 				ps_iter.addSkipped();
 			} else {
 				if (common.at(i)) {
@@ -662,7 +619,7 @@ void unify_rules(MIndexSpace& space)
 	}
 }
 
-VectorUnified unify(const VectorIndex& vindex, const LeafVector& fixed, uint depth)
+VectorUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth)
 {
 	MIndexSpace space(vindex, fixed, depth);
 	if (debug_multy_index_1) {
@@ -735,9 +692,9 @@ VectorUnified unify(const VectorIndex& vindex) {
 			absent_iter.addSkipped();
 		}
 	}
-	MIndexSpace space(vindex, LeafVector(vindex.size()), 0);
+	MIndexSpace space(vindex, ProdVect(vindex.size()), 0);
 	while (true) {
-		space.fixed = LeafVector(vindex.size());
+		space.fixed = ProdVect(vindex.size());
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			if (absent_iter[i]) {
 				space.fixed[i].init(vindex.obligatory(i));
@@ -773,7 +730,7 @@ VectorUnified unify1(const VectorIndex& vindex) {
 	}
 	VectorUnified ret;
 	while (true) {
-		MIndexSpace space(vindex, LeafVector(vindex.size()), 0);
+		MIndexSpace space(vindex, ProdVect(vindex.size()), 0);
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			if (absent_iter[i]) {
 				//space.fixed[i].init(vindex.obligatory(i));
