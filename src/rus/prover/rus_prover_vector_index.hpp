@@ -236,22 +236,24 @@ private:
 	VectorMap<SubstTree> unif_;
 };
 
-inline MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
+ inline MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
 	vector<const VectorMap<SubstTree>*> maps;
+	vector<LightSymbol> vars;
 	for (const auto& p : terms) {
 		maps.push_back(&p.second.unif_);
+		vars.push_back(p.first);
 	}
 	VectorMap<vector<SubstTree>> common = intersect(maps);
 	MultyUnifiedSubs s;
 	for (const auto& q : common.map_) {
 		vector<uint> c = q.first;
-		for (const auto& p : terms) {
-			const LightTree& term = p.second.map().at(c).tree;
-			const Subst& sub = p.second.map().at(c).sub;
-			if (!term.empty() && unif[c].ok) {
-				Subst unified = unify_subs(MultySubst({&unif[c], &p.second.map().at(c).sub}));
+		for (uint i = 0; i < q.second.size(); ++ i) {
+			const LightTree& term = q.second[i].tree;
+			const Subst& sub = q.second[i].sub;
+			if (!term.empty()) {
+				Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 				unif[c] = unified;
-				s[c].sub[p.first] = apply(unif[c], term);
+				s[c].sub[vars[i]] = apply(unif[c], term);
 			} else {
 				s[c];
 				unif[c];
