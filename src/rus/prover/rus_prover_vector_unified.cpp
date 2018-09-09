@@ -38,7 +38,7 @@ void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
 	VectorMap<vector<SubstTree>> common(true);
 	for (const auto& m : v) {
-		intersect(common, m.unif_);
+		common = std::move(intersect(common, m.unif_));
 	}
 	for (const auto& p : common.map_) {
 		LightTree::Children children;
@@ -87,13 +87,12 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 }
 
  MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
-	vector<const VectorMap<SubstTree>*> maps;
+	VectorMap<vector<SubstTree>> common(true);
 	vector<LightSymbol> vars;
 	for (const auto& p : terms) {
-		maps.push_back(&p.second.unif_);
+		common = std::move(intersect(common, p.second.unif_));
 		vars.push_back(p.first);
 	}
-	VectorMap<vector<SubstTree>> common = intersect(maps);
 	MultyUnifiedSubs s;
 	for (const auto& q : common.map_) {
 		vector<uint> c = q.first;

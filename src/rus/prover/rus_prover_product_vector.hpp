@@ -188,7 +188,7 @@ inline ProdVect intersect(const ProdVect& v1, const ProdVect& v2) {
 
 template<class Data>
 struct UnionVect {
-	UnionVect(uint d) : dim(d) { }
+	UnionVect(uint d, bool f = false) : dim(d), full(f) { }
 
 	struct Pair {
 		ProdVect key;
@@ -230,20 +230,27 @@ struct UnionVect {
 
 	vector<Pair> un;
 	uint dim;
+	bool full;
 };
 
 template<class D>
-UnionVect<vector<D>> intersect(const vector<const UnionVect<D>*>& uv) {
+UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
 	UnionVect<vector<D>> ret;
-	for (uint i = 0; i < uv[0]->un.size(); ++ i) {
-		const ProdVect& k = uv[0]->un[i].key;
-		vector<D> data;
-		for (uint j = 1; j < uv.size(); ++j) {
-
-
+	if (v.full) {
+		for (const auto& p : uv.un) {
+			ret.un.emplace_back(p.first, {p.second});
 		}
-		if (data.size() == uv.size()) {
-			ret.map_[k] = data;
+	} else {
+		for (uint i = 0; i < v.un.size(); ++ i) {
+			const ProdVect& k = v.un[i].key;
+			vector<D> data;
+			for (uint j = 1; j < uv.size(); ++j) {
+
+
+			}
+			if (data.size() == uv.size()) {
+				ret.map_[k] = data;
+			}
 		}
 	}
 	return ret;
