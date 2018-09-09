@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include "rus_prover_cartesian.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -224,27 +225,11 @@ struct UnionVect {
 		oss << "}" << endl;
 		return oss.str();
 	}
-	void intersect(const ProdVect& v) {
-		vector<Pair> new_un;
-		for (const auto& p : un) {
-			p.key.intersect(v);
-			if (p.key.storesInfo()) {
-				new_un.push_back(p);
-			}
-		}
-		un = new_un;
-	}
-
-	void unite(const UnionVect& u) {
-		for (const auto& v : u.un) {
-			un.push_back(v);
-		}
-	}
 	bool empty() const {
 		return un.empty();
 	}
 
-	vector<Pair> un;
+	std::list<Pair> un;
 	uint dim;
 	bool full;
 };
@@ -270,12 +255,6 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 	}
 	return ret;
 }
-
-struct UnionResult {
-	vector<ProdVect> first;
-	vector<ProdVect> second;
-	ProdVect intersection;
-};
 
 inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	ProdVect comp = complement(v, inter);
