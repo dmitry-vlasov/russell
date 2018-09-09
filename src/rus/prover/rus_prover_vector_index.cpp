@@ -38,7 +38,7 @@ string show(const vector<LightSymbol>& v) {
 }
 
 struct MIndexSpace {
-	VectorUnified unified;
+	ResultUnified unified;
 	set<LightSymbol> symbs;
 	set<const Rule*> rules;
 	CartesianProd<LightSymbol> vars_prod;
@@ -85,7 +85,7 @@ struct MIndexSpace {
 		oss << "M_INDEX_SPACE" << endl;
 		oss << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 		oss << "depth: " << depth << endl;
-		oss << "VectorUnified: " << endl << "--------------" << endl;
+		oss << "ResultUnified: " << endl << "--------------" << endl;
 		oss << unified.show();
 		oss << endl;
 		oss << "Symbs: {"; for (auto s : symbs) oss << prover::show(s) << ", "; oss << "}" << endl;
@@ -316,11 +316,11 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 }
 
-VectorUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth);
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth);
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
 {
-	vector<VectorUnified> child_terms(r->arity());
+	vector<ResultUnified> child_terms(r->arity());
 	for (uint k = 0; k < r->arity(); ++ k) {
 		VectorIndex child_vindex;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
@@ -423,7 +423,7 @@ void unify_rules(MIndexSpace& space)
 	}
 }
 
-VectorUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth)
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth)
 {
 	MIndexSpace space(vindex, fixed, depth);
 	if (debug_multy_index_1) {
@@ -487,7 +487,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 	return true;
 }
 
-VectorUnified unify(const VectorIndex& vindex) {
+ResultUnified unify(const VectorIndex& vindex) {
 	PowerSetIter absent_iter;
 	for (uint i = 0; i < vindex.size(); ++ i) {
 		if (vindex.obligatory(i).size()) {

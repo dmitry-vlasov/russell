@@ -78,7 +78,9 @@ private:
 	vector<IndexPtr> vect_;
 };
 
-VectorUnified unify(const VectorIndex& vindex);
+typedef VectorUnified ResultUnified;
+
+ResultUnified unify(const VectorIndex& vindex);
 
 string show(const VectorIndex& vindex);
 

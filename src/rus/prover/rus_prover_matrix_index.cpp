@@ -94,7 +94,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<LightSymbol, VectorUnified> terms;
+	map<LightSymbol, ResultUnified> terms;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
 		for (uint i = 0; i < dim_hyp_; ++i) {
