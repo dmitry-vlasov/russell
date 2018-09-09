@@ -37,11 +37,6 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 	}
 }
 
-std::map<vector<uint>, SubstTree> ProductUnified::map() const {
-	std::map<vector<uint>, SubstTree> ret;
-	return ret;
-}
-
  MultyUnifiedSubs intersect(const map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif) {
 	UnionVect<vector<SubstTree>> common(true);
 	vector<LightSymbol> vars;
@@ -50,21 +45,25 @@ std::map<vector<uint>, SubstTree> ProductUnified::map() const {
 		vars.push_back(p.first);
 	}
 	MultyUnifiedSubs s;
-	/*for (const auto& q : common.map_) {
-		vector<uint> c = q.first;
-		for (uint i = 0; i < q.second.size(); ++ i) {
-			const LightTree& term = q.second[i].tree;
-			const Subst& sub = q.second[i].sub;
+	for (const auto& q : common.un) {
+		const ProdVect& key = q.key;
+		for (uint i = 0; i < q.value.size(); ++ i) {
+			const LightTree& term = q.value[i].tree;
+			const Subst& sub = q.value[i].sub;
 			if (!term.empty()) {
-				Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-				unif[c] = unified;
-				s[c].sub[vars[i]] = apply(unif[c], term);
+				for (auto c : key.unfold()) {
+					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
+					unif[c] = unified;
+					s[c].sub[vars[i]] = apply(unif[c], term);
+				}
 			} else {
-				s[c];
-				unif[c];
+				for (auto c : key.unfold()) {
+					s[c];
+					unif[c];
+				}
 			}
 		}
-	}*/
+	}
 	return s;
 }
 

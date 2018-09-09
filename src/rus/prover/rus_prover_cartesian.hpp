@@ -99,6 +99,14 @@ struct CartesianProd {
 		iter_.addDim(v.size());
 	}
 
+	void addDim(const set<Data>& v) {
+		data_.push_back(vector<Data>());
+		for (auto d : v) {
+			data_[data_.size() - 1].push_back(d);
+		}
+		iter_.addDim(v.size());
+	}
+
 	void addFixed(const vector<Data>& v, uint i) {
 		data_.push_back(vector<Data>());
 		for (auto d : v) {

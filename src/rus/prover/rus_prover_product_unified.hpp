@@ -9,8 +9,6 @@ struct ProductUnified {
 	void finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
 	void add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w);
 
-	std::map<vector<uint>, SubstTree> map() const;
-
 private:
 	friend MultyUnifiedSubs intersect(const std::map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif);
 

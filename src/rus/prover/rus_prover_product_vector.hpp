@@ -189,6 +189,25 @@ struct ProdVect {
 		return true;
 	}
 
+	vector<vector<uint>> unfold() const {
+		vector<vector<uint>> ret;
+		CartesianProd<uint> prod;
+		for (uint i = 0; i < vect.size(); ++ i) {
+			assert(vect[i].init && vect[i].set().size());
+			prod.addDim(vect[i].set());
+		}
+		if (prod.card() > 0) {
+			while (true) {
+				ret.push_back(prod.data());
+				if (!prod.hasNext()) {
+					break;
+				}
+				prod.makeNext();
+			}
+		}
+		return ret;
+	}
+
 	Set& operator[] (uint i) { return vect[i]; }
 	const Set& operator[] (uint i) const { return vect[i]; }
 
