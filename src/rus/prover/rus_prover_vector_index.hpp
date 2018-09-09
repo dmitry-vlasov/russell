@@ -2,6 +2,7 @@
 
 #include "rus_prover_index.hpp"
 #include "rus_prover_vector_unified.hpp"
+#include "rus_prover_product_unified.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

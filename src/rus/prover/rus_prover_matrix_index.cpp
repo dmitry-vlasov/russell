@@ -102,7 +102,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			vectIndex.add(ind, proofInds_[i]);
 		}
 		terms[p.first] = unify(vectIndex);
-		cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
+		//cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
 	}
 	return intersect(terms, unif);
 }

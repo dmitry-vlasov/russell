@@ -54,8 +54,6 @@ struct VectorUnified {
 	string show() const;
 	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
 	void add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w);
-
-	std::map<vector<uint>, SubstTree>& map() { return unif_.map_; }
 	const std::map<vector<uint>, SubstTree>& map() const { return unif_.map_; }
 
 private:

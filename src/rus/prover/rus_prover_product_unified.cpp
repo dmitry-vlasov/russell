@@ -67,4 +67,14 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 	return s;
 }
 
+ std::map<vector<uint>, SubstTree> ProductUnified::map() const {
+	 std::map<vector<uint>, SubstTree> ret;
+	 for (const auto& q : unif_.un) {
+		for (auto c : q.key.unfold()) {
+			ret[c] = q.value;
+		}
+	 }
+	 return ret;
+ }
+
 }}}
