@@ -238,18 +238,17 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 	UnionVect<vector<D>> ret;
 	if (v.full) {
 		for (const auto& p : uv.un) {
-			ret.un.emplace_back(p.first, {p.second});
+			ret.un.emplace_back(p.key, {p.value});
 		}
 	} else {
-		for (uint i = 0; i < v.un.size(); ++ i) {
-			const ProdVect& k = v.un[i].key;
-			vector<D> data;
-			for (uint j = 1; j < uv.size(); ++j) {
-
-
-			}
-			if (data.size() == uv.size()) {
-				ret.map_[k] = data;
+		for (const auto& p : v.un) {
+			for (const auto& q : uv.un) {
+				ProdVect r = intersect(p, q);
+				if (r.storesInfo() && q.value.sub.ok) {
+					vector<D> data = p.value;
+					data.push_back(q.value);
+					ret.un.emplace_back(r, data);
+				}
 			}
 		}
 	}
