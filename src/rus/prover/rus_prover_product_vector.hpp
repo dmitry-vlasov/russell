@@ -203,6 +203,40 @@ inline ProdVect complement(const ProdVect& v1, const ProdVect& v2) {
 	ProdVect ret(v1); ret.complement(v2); return ret;
 }
 
+inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
+	ProdVect comp = complement(v, inter);
+	if (!comp.storesInfo()) {
+		return {v};
+	}
+	vector<ProdVect> ret;
+	PowerSetIter iter;
+	for (uint i = 0; i < v.vect.size(); ++i) {
+		if (v[i].is_init()) {
+			iter.addDim();
+		} else {
+			iter.addSkipped();
+		}
+	}
+	while (true) {
+		if (!iter.initial()) {
+			ProdVect pv(v.vect.size());
+			for (uint i = 0; i < pv.vect.size(); ++ i) {
+				if (iter[i]) {
+					pv[i] = comp[i];
+				} else {
+					pv[i] = inter[i];
+				}
+			}
+			ret.push_back(pv);
+		}
+		if (!iter.hasNext()) {
+			break;
+		}
+		iter.makeNext();
+	}
+	return ret;
+}
+
 template<class Data>
 struct UnionVect {
 	UnionVect(uint d, bool f = false) : dim(d), full(f) { }
@@ -256,43 +290,8 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 	return ret;
 }
 
-inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
-	ProdVect comp = complement(v, inter);
-	if (!comp.storesInfo()) {
-		return {v};
-	}
-	vector<ProdVect> ret;
-	PowerSetIter iter;
-	for (uint i = 0; i < v.vect.size(); ++i) {
-		if (v[i].is_init()) {
-			iter.addDim();
-		} else {
-			iter.addSkipped();
-		}
-	}
-	while (true) {
-		if (!iter.initial()) {
-			ProdVect pv(v.vect.size());
-			for (uint i = 0; i < pv.vect.size(); ++ i) {
-				if (iter[i]) {
-					pv[i] = comp[i];
-				} else {
-					pv[i] = inter[i];
-				}
-			}
-			ret.push_back(pv);
-		}
-		if (!iter.hasNext()) {
-			break;
-		}
-		iter.makeNext();
-	}
-	return ret;
-}
-
 template<class D>
-UnionVect<vector<D>> unite(const UnionVect<vector<D>>& uv1, const UnionVect<D>& uv2) {
-	UnionVect<vector<D>> ret;
+void unite(const UnionVect<vector<D>>& uv1, const UnionVect<D>& uv2) {
 	stack<typename UnionVect<D>::Pair> to_add;
 	for (const auto& p : uv2.un) {
 		to_add.push(p);
@@ -300,23 +299,23 @@ UnionVect<vector<D>> unite(const UnionVect<vector<D>>& uv1, const UnionVect<D>& 
 	while (!to_add.empty()) {
 		const typename UnionVect<D>::Pair& q = to_add.top(); to_add.pop();
 		bool intersects = false;
-		for (const auto& p : uv1.un) {
-			if (p.key.intersects_with(q.key)) {
+		for (auto pi = uv1.begin(); pi != uv1.end(); ++pi) {
+			if (pi->key.intersects_with(q.key)) {
 				intersects = true;
-				ProdVect inter = intersect(p.key, q.key);
-				for (const auto& part : split(p.key, inter)) {
-					ret.un.emplace_back(part, {p.vaue, q.value});
+				ProdVect inter = intersect(pi->key, q.key);
+				for (const auto& part : split(pi->key, inter)) {
+					uv1.un.emplace_back(part, {pi->value, q.value});
 				}
 				for (const auto& part : split(q.key, inter)) {
 					to_add.push(part, q.value);
 				}
+				uv1.erase(pi);
 			}
 		}
 		if (!intersects) {
-			ret.un.push_back(q);
+			uv1.un.push_back(q);
 		}
 	}
-	return ret;
 }
 
 }}}
