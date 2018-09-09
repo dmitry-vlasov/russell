@@ -84,6 +84,21 @@ struct Set {
 		for (uint i : set_) if (s.set_.find(i) == s.set_.end()) set_.erase(i);
 	}
 
+	bool intersects_with(const Set& s) const {
+		if (!init_ && !s.init_) {
+			return true;
+		} else if (init_ && s.init_) {
+			for (uint i : set_) {
+				if (s.set_.find(i) == s.set_.end()) {
+					return true;
+				}
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+
 private:
 	friend Set prover::intersect(const Set& s1, const Set& s2);
 	friend Set prover::unite(const Set& s1, const Set& s2);
@@ -150,6 +165,17 @@ struct ProdVect {
 			vect[i].intersect(v.vect[i]);
 		}
 	}
+
+	bool intersects_with(const ProdVect& v) const {
+		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
+		for (uint i = 0; i < vect.size(); ++ i) {
+			if (!vect[i].intersects_with(v.vect[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	Set& operator[] (uint i) { return vect[i]; }
 	const Set& operator[] (uint i) const { return vect[i]; }
 
@@ -160,95 +186,67 @@ inline ProdVect intersect(const ProdVect& v1, const ProdVect& v2) {
 	ProdVect ret(v1); ret.intersect(v2); return ret;
 }
 
+template<class Data>
 struct UnionVect {
-	bool is_superset_of(const ProdVect& v) {
-		for (uint i = 0; i < v.vect.size(); ++ i) {
-			Set u(un[0].vect[i]);
-			for (uint j = 1; j < un.size(); ++ j) {
-				u.unite(un[j].vect[j]);
-			}
-			if (!v.vect[i].is_subset_of(u)) {
-				return false;
-			}
+	UnionVect(uint d) : dim(d) { }
+
+	struct Pair {
+		ProdVect key;
+		Data     value;
+		string show() const {
+			ostringstream oss;
+			oss << key.show() << " --> " << value.show();
+			return oss.str();
 		}
-		return true;
-	}
+	};
 	string show() const {
-		string ret;
-		ret += "{\n";
+		ostringstream oss;
+		oss << "{" << endl;
 		for (const auto& s : un) {
-			ret += "\t" + s.show() + "\n";
+			oss << "\t" << s.show() << endl;
 		}
-		ret += "}\n";
-		return ret;
+		oss << "}" << endl;
+		return oss.str();
 	}
 	void intersect(const ProdVect& v) {
-		vector<uint> empty_components;
-		for (uint i = 0; i < un.size(); ++i) {
-			un[i].intersect(v);
-			if (!un[i].storesInfo()) {
-				empty_components.push_back(i);
+		vector<Pair> new_un;
+		for (const auto& p : un) {
+			p.key.intersect(v);
+			if (p.key.storesInfo()) {
+				new_un.push_back(p);
 			}
 		}
-		//if ()
+		un = new_un;
 	}
-	vector<ProdVect> un;
-};
 
-struct DiffVect {
-	ProdVect positive;
-	UnionVect negative;
-
-	void intersect(const ProdVect& v) {
-		positive.intersect(v);
-		negative.intersect(v);
-	}
-	void subtract(const ProdVect& v) {
-
-	}
-};
-
-template<class Data>
-struct ProdVectData {
-	ProdVect prod;
-	Data data;
-
-	string show() const {
-		return prod.show() + " --> " + data.show();
-	}
-};
-
-template<class Data>
-struct ProdVectMap {
-	vector<ProdVectData<Data>> map;
-
-	string show() const {
-		string ret;
-		for (const auto& pvd : map) {
-			ret += pvd.show() + "\n";
+	void unite(const UnionVect& u) {
+		for (const auto& v : u.un) {
+			un.push_back(v);
 		}
-		return ret;
 	}
-	std::map<vector<uint>, Data> transform() const {
-		std::map<vector<uint>, Data> ret;
+	bool empty() const {
+		return un.empty();
+	}
 
-		return ret;
-	}
+	vector<Pair> un;
+	uint dim;
 };
 
 template<class D>
-ProdVectMap<pair<D, D>> intersect(const ProdVectMap<D>& m1, const ProdVectMap<D>& m2) {
-	ProdVectMap<D> ret;
-	for (const auto& d1 : m1.map) {
-		for (const auto& d2 : m1.map) {;
-			ProdVect pv = intersect(d1.prod.vect, d2.prod.vect);
-			if (!pv.empty()) {
-				ret.map.emplace_back({pv, pair<D, D>(d1.data, d2.data)});
-			}
+UnionVect<vector<D>> intersect(const vector<const UnionVect<D>*>& uv) {
+	UnionVect<vector<D>> ret;
+	for (uint i = 0; i < uv[0]->un.size(); ++ i) {
+		const ProdVect& k = uv[0]->un[i].key;
+		vector<D> data;
+		for (uint j = 1; j < uv.size(); ++j) {
+
+
+		}
+		if (data.size() == uv.size()) {
+			ret.map_[k] = data;
 		}
 	}
 	return ret;
 }
-
 
 }}}

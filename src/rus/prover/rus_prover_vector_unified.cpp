@@ -36,11 +36,10 @@ void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, 
 }
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
-	vector<const VectorMap<SubstTree>*> maps;
+	VectorMap<vector<SubstTree>> common(true);
 	for (const auto& m : v) {
-		maps.push_back(&m.unif_);
+		intersect(common, m.unif_);
 	}
-	VectorMap<vector<SubstTree>> common = intersect(maps);
 	for (const auto& p : common.map_) {
 		LightTree::Children children;
 		Subst unif;
