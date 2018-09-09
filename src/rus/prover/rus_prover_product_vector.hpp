@@ -311,27 +311,32 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	return ret;
 }
 
-inline UnionResult unite(const ProdVect& v1, const ProdVect& v2) {
-	UnionResult ret;
-	ret.intersection = intersect(v1, v2);
-	ret.first = split(v1, ret.intersection);
-	ret.second = split(v2, ret.intersection);
-	return ret;
-}
-
 template<class D>
-UnionVect<vector<D>> unite(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
+UnionVect<vector<D>> unite(const UnionVect<vector<D>>& uv1, const UnionVect<D>& uv2) {
 	UnionVect<vector<D>> ret;
-		for (const auto& p : v.un) {
-			for (const auto& q : uv.un) {
-				ProdVect r = intersect(p, q);
-				if (r.storesInfo() && q.value.sub.ok) {
-					vector<D> data = p.value;
-					data.push_back(q.value);
-					ret.un.emplace_back(r, data);
+	stack<typename UnionVect<D>::Pair> to_add;
+	for (const auto& p : uv2.un) {
+		to_add.push(p);
+	}
+	while (!to_add.empty()) {
+		const typename UnionVect<D>::Pair& q = to_add.top(); to_add.pop();
+		bool intersects = false;
+		for (const auto& p : uv1.un) {
+			if (p.key.intersects_with(q.key)) {
+				intersects = true;
+				ProdVect inter = intersect(p.key, q.key);
+				for (const auto& part : split(p.key, inter)) {
+					ret.un.emplace_back(part, {p.vaue, q.value});
+				}
+				for (const auto& part : split(q.key, inter)) {
+					to_add.push(part, q.value);
 				}
 			}
 		}
+		if (!intersects) {
+			ret.un.push_back(q);
+		}
+	}
 	return ret;
 }
 
