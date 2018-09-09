@@ -248,6 +248,9 @@ struct UnionVect {
 	UnionVect(uint d, bool f = false) : dim(d), full(f) { }
 
 	struct Pair {
+		Pair(const ProdVect& k, const Data& v) : key(k), value(v) { }
+		Pair(const Pair&) = default;
+		Pair& operator = (const Pair&) = default;
 		ProdVect key;
 		Data     value;
 		string show() const {
@@ -276,15 +279,15 @@ struct UnionVect {
 
 template<class D>
 UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
-	UnionVect<vector<D>> ret;
+	UnionVect<vector<D>> ret(v.dim);
 	if (v.full) {
 		for (const auto& p : uv.un) {
-			ret.un.emplace_back(p.key, {p.value});
+			ret.un.emplace_back(p.key, vector<D>(1, p.value));
 		}
 	} else {
 		for (const auto& p : v.un) {
 			for (const auto& q : uv.un) {
-				ProdVect r = intersect(p, q);
+				ProdVect r = intersect(p.key, q.key);
 				if (r.storesInfo() && q.value.sub.ok) {
 					vector<D> data = p.value;
 					data.push_back(q.value);
@@ -307,7 +310,7 @@ inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer)
 				intersects = true;
 				ProdVect inter = intersect(pi->key, q);
 				for (const auto& part : split(pi->key, inter)) {
-					Subst st = pi->value;
+					SubstTree st = pi->value;
 					finalizer(st);
 					uv1.un.emplace_back(part, st);
 				}
@@ -318,11 +321,13 @@ inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer)
 			}
 		}
 		if (!intersects) {
-			Subst st;
+			SubstTree st;
 			finalizer(st);
 			uv1.un.emplace_back(q, st);
 		}
 	}
 }
+
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
 }}}

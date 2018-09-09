@@ -43,7 +43,6 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 		} else {
 		}
 	} else {
-		st.sub;
 		st.tree = apply(st.sub, t);
 	}
 }
