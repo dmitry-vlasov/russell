@@ -17,15 +17,6 @@ vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	return ret;
 }
 
-bool false_vector(const vector<bool>& s) {
-	for (uint i = 0; i < s.size(); ++ i) {
-		if (s.at(i)) {
-			return false;
-		}
-	}
-	return true;
-}
-
 string show(const vector<bool>& v) {
 	string ret;
 	ret += "(";
@@ -225,8 +216,8 @@ void unify_symbs(MIndexSpace& space)
 		}
 		if (ps_iter.card() > 0) {
 			while (true) {
-				vector<bool> s_fixed = ps_iter.values();
-				if (!false_vector(s_fixed)) {
+				if (!ps_iter.initial()) {
+					vector<bool> s_fixed = ps_iter.values();
 					unify_symbs_variant(space, s, s_fixed);
 				}
 				if (!ps_iter.hasNext()) {
@@ -417,8 +408,8 @@ void unify_rules(MIndexSpace& space)
 		}
 		if (ps_iter.card() > 0) {
 			while (true) {
-				vector<bool> r_fixed = ps_iter.values();
-				if (!false_vector(r_fixed)) {
+				if (!ps_iter.initial()) {
+					vector<bool> r_fixed = ps_iter.values();
 					unify_rule_variant(space, r, r_fixed);
 				}
 				if (!ps_iter.hasNext()) {
