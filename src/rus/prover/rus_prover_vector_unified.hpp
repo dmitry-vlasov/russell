@@ -52,12 +52,6 @@ VectorMap<vector<D>> unite(const VectorMap<vector<D>>& v, const VectorMap<D>& w)
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
-struct SubstTree {
-	Subst     sub;
-	LightTree tree;
-	string show() const;
-};
-
 struct VectorUnified {
 	string show() const;
 	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);

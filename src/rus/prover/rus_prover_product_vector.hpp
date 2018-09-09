@@ -237,6 +237,12 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	return ret;
 }
 
+struct SubstTree {
+	Subst     sub;
+	LightTree tree;
+	string show() const;
+};
+
 template<class Data>
 struct UnionVect {
 	UnionVect(uint d, bool f = false) : dim(d), full(f) { }
@@ -290,30 +296,31 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 	return ret;
 }
 
-template<class D>
-void unite(const UnionVect<vector<D>>& uv1, const UnionVect<D>& uv2) {
-	stack<typename UnionVect<D>::Pair> to_add;
-	for (const auto& p : uv2.un) {
-		to_add.push(p);
-	}
+inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer) {
+	stack<ProdVect> to_add;
+	to_add.emplace(pv);
 	while (!to_add.empty()) {
-		const typename UnionVect<D>::Pair& q = to_add.top(); to_add.pop();
+		const ProdVect& q = to_add.top(); to_add.pop();
 		bool intersects = false;
-		for (auto pi = uv1.begin(); pi != uv1.end(); ++pi) {
-			if (pi->key.intersects_with(q.key)) {
+		for (auto pi = uv1.un.begin(); pi != uv1.un.end(); ++pi) {
+			if (pi->key.intersects_with(q)) {
 				intersects = true;
-				ProdVect inter = intersect(pi->key, q.key);
+				ProdVect inter = intersect(pi->key, q);
 				for (const auto& part : split(pi->key, inter)) {
-					uv1.un.emplace_back(part, {pi->value, q.value});
+					Subst st = pi->value;
+					finalizer(st);
+					uv1.un.emplace_back(part, st);
 				}
-				for (const auto& part : split(q.key, inter)) {
-					to_add.push(part, q.value);
+				for (const auto& part : split(q, inter)) {
+					to_add.emplace(part);
 				}
-				uv1.erase(pi);
+				uv1.un.erase(pi);
 			}
 		}
 		if (!intersects) {
-			uv1.un.push_back(q);
+			Subst st;
+			finalizer(st);
+			uv1.un.emplace_back(q, st);
 		}
 	}
 }
