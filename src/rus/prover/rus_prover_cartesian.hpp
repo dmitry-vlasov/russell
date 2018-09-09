@@ -190,6 +190,14 @@ struct PowerSetIter {
 		}
 		return ret;
 	}
+	bool initial() const {
+		for (uint i = 0; i < iter_.size(); ++ i) {
+			if (iter_[i] != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	string show() const {
 		string ret;

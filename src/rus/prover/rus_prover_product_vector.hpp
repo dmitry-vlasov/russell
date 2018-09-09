@@ -84,6 +84,11 @@ struct Set {
 		for (uint i : set_) if (s.set_.find(i) == s.set_.end()) set_.erase(i);
 	}
 
+	void complement(const Set& s) {
+		if (!(init_ && s.init_)) return;
+		for (uint i : set_) if (s.set_.find(i) != s.set_.end()) set_.erase(i);
+	}
+
 	bool intersects_with(const Set& s) const {
 		if (!init_ && !s.init_) {
 			return true;
@@ -166,6 +171,13 @@ struct ProdVect {
 		}
 	}
 
+	void complement(const ProdVect& v) {
+		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
+		for (uint i = 0; i < vect.size(); ++ i) {
+			vect[i].complement(v.vect[i]);
+		}
+	}
+
 	bool intersects_with(const ProdVect& v) const {
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
@@ -184,6 +196,10 @@ struct ProdVect {
 
 inline ProdVect intersect(const ProdVect& v1, const ProdVect& v2) {
 	ProdVect ret(v1); ret.intersect(v2); return ret;
+}
+
+inline ProdVect complement(const ProdVect& v1, const ProdVect& v2) {
+	ProdVect ret(v1); ret.complement(v2); return ret;
 }
 
 template<class Data>
@@ -252,6 +268,70 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 			}
 		}
 	}
+	return ret;
+}
+
+struct UnionResult {
+	vector<ProdVect> first;
+	vector<ProdVect> second;
+	ProdVect intersection;
+};
+
+inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
+	ProdVect comp = complement(v, inter);
+	if (!comp.storesInfo()) {
+		return {v};
+	}
+	vector<ProdVect> ret;
+	PowerSetIter iter;
+	for (uint i = 0; i < v.vect.size(); ++i) {
+		if (v[i].is_init()) {
+			iter.addDim();
+		} else {
+			iter.addSkipped();
+		}
+	}
+	while (true) {
+		if (!iter.initial()) {
+			ProdVect pv(v.vect.size());
+			for (uint i = 0; i < pv.vect.size(); ++ i) {
+				if (iter[i]) {
+					pv[i] = comp[i];
+				} else {
+					pv[i] = inter[i];
+				}
+			}
+			ret.push_back(pv);
+		}
+		if (!iter.hasNext()) {
+			break;
+		}
+		iter.makeNext();
+	}
+	return ret;
+}
+
+inline UnionResult unite(const ProdVect& v1, const ProdVect& v2) {
+	UnionResult ret;
+	ret.intersection = intersect(v1, v2);
+	ret.first = split(v1, ret.intersection);
+	ret.second = split(v2, ret.intersection);
+	return ret;
+}
+
+template<class D>
+UnionVect<vector<D>> unite(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
+	UnionVect<vector<D>> ret;
+		for (const auto& p : v.un) {
+			for (const auto& q : uv.un) {
+				ProdVect r = intersect(p, q);
+				if (r.storesInfo() && q.value.sub.ok) {
+					vector<D> data = p.value;
+					data.push_back(q.value);
+					ret.un.emplace_back(r, data);
+				}
+			}
+		}
 	return ret;
 }
 
