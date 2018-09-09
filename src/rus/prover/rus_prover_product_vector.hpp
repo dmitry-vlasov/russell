@@ -193,7 +193,7 @@ struct ProdVect {
 		vector<vector<uint>> ret;
 		CartesianProd<uint> prod;
 		for (uint i = 0; i < vect.size(); ++ i) {
-			assert(vect[i].init && vect[i].set().size());
+			assert(vect[i].is_init() && vect[i].set().size());
 			prod.addDim(vect[i].set());
 		}
 		if (prod.card() > 0) {
@@ -264,7 +264,7 @@ struct SubstTree {
 
 template<class Data>
 struct UnionVect {
-	UnionVect(uint d, bool f = false) : dim(d), full(f) { }
+	UnionVect(bool f = false) : full(f) { }
 
 	struct Pair {
 		Pair(const ProdVect& k, const Data& v) : key(k), value(v) { }
@@ -292,13 +292,12 @@ struct UnionVect {
 	}
 
 	std::list<Pair> un;
-	uint dim;
 	bool full;
 };
 
 template<class D>
 UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
-	UnionVect<vector<D>> ret(v.dim);
+	UnionVect<vector<D>> ret;
 	if (v.full) {
 		for (const auto& p : uv.un) {
 			ret.un.emplace_back(p.key, vector<D>(1, p.value));
