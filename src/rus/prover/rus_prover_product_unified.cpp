@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t);
+void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, const Subst& unif = Subst());
 
 void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
 	unite(unif_, leafs_vect, [w,t](SubstTree& st) { prover::finalize(st, w, t); });
@@ -28,10 +28,11 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			children.push_back(make_unique<LightTree>(st.tree));
 		}
 		if (children.size() == r->arity()) {
-			/*if (unif_.map_[p.first].sub.compose(unif)) {
-				LightTree term = apply(unif, LightTree(r, children));
-				finalize(p.first, w, term);
-			}*/
+			SubstTree st;
+			prover::finalize(st, w, apply(unif, LightTree(r, children)), unif);
+			if (st.sub.ok) {
+				unif_.un.emplace_back(p.key, st);
+			}
 		}
 	}
 }
