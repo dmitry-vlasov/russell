@@ -35,17 +35,21 @@ void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, 
 	}
 }
 
-void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 	if (w.size()) {
-		LightTree term = unify_step(unif_.map_[leafs].sub, w, t);
+		LightTree term = unify_step(st.sub, w, t);
 		if (!term.empty()) {
-			unif_.map_[leafs].tree = apply(unif_.map_[leafs].sub, term);
+			st.tree = apply(st.sub, term);
 		} else {
 		}
 	} else {
-		unif_.map_[leafs].sub;
-		unif_.map_[leafs].tree = apply(unif_.map_[leafs].sub, t);
+		st.sub;
+		st.tree = apply(st.sub, t);
 	}
+}
+
+void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
+	prover::finalize(unif_.map_[leafs], w, t);
 }
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
