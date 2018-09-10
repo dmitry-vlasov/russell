@@ -10,6 +10,13 @@ struct Set {
 	Set(const Set&) = default;
 	Set& operator = (const Set&) = default;
 
+	bool operator == (const Set& s) const {
+		return set_ == s.set_ && init_ == s.init_;
+	}
+	bool operator != (const Set& s) const {
+		return !operator == (s);
+	}
+
 	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
 		if (!index_leafs) {
 			index_leafs = &ind_leafs;
@@ -127,6 +134,18 @@ struct ProdVect {
 	ProdVect(const ProdVect&) = default;
 	ProdVect& operator = (const ProdVect&) = default;
 
+	bool operator == (const ProdVect& v) const {
+		for (uint i = 0; i < vect.size(); ++ i) {
+			if (vect[i] != v.vect[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool operator != (const ProdVect& v) const {
+		return !operator == (v);
+	}
+
 	bool empty() const {
 		for (const auto& s : vect) {
 			if (!s.set().size()) {
@@ -160,12 +179,16 @@ struct ProdVect {
 				ret += ", ";
 			}
 			ret += s.show();
+			first = false;
 		}
 		ret += ")";
 		return ret;
 	}
 
 	void intersect(const ProdVect& v) {
+		if (vect.size() != v.vect.size()) {
+			cout << "vect.size() != v.vect.size(): " << vect.size() << " !=  " << v.vect.size() << endl;
+		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
 			vect[i].intersect(v.vect[i]);
@@ -173,6 +196,9 @@ struct ProdVect {
 	}
 
 	void complement(const ProdVect& v) {
+		if (vect.size() != v.vect.size()) {
+			cout << "vect.size() != v.vect.size(): " << vect.size() << " !=  " << v.vect.size() << endl;
+		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
 			vect[i].complement(v.vect[i]);
@@ -180,6 +206,9 @@ struct ProdVect {
 	}
 
 	bool intersects_with(const ProdVect& v) const {
+		if (vect.size() != v.vect.size()) {
+			cout << "vect.size() != v.vect.size(): " << vect.size() << " !=  " << v.vect.size() << endl;
+		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
 			if (!vect[i].intersects_with(v.vect[i])) {
@@ -279,6 +308,9 @@ struct UnionVect {
 		}
 	};
 	string show() const {
+		if (un.empty()) {
+			return "{ }";
+		}
 		ostringstream oss;
 		oss << "{" << endl;
 		for (const auto& s : un) {
@@ -317,12 +349,27 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 	return ret;
 }
 
+inline bool check_uniqueness(const UnionVect<SubstTree>& uv) {
+	for (auto pi = uv.un.begin(); pi != uv.un.end(); ++pi) {
+		for (auto qi = uv.un.begin(); qi != uv.un.end(); ++qi) {
+			if (pi != qi && pi->key == qi->key) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer) {
 	stack<ProdVect> to_add;
 	to_add.emplace(pv);
 	while (!to_add.empty()) {
-		const ProdVect& q = to_add.top(); to_add.pop();
+		ProdVect q = to_add.top(); to_add.pop();
 		bool intersects = false;
+
+		cout << "uv1:" << endl;
+		cout << uv1.show() << endl;
+
 		for (auto pi = uv1.un.begin(); pi != uv1.un.end(); ++pi) {
 			if (pi->key.intersects_with(q)) {
 				intersects = true;
