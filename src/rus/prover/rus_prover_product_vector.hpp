@@ -355,7 +355,7 @@ struct UnionVect {
 	UnionVect(bool f = false) : full(f) { }
 
 	struct Pair {
-		Pair(const ProdVect& k, const Data& v) : key(k), value(v) { }
+		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
@@ -413,14 +413,13 @@ struct UnionVect {
 			bool intersects = false;
 			auto pi = un_.begin();
 			while (pi != un_.end()) {
-				if (pi->key.intersects_with(q)) {
+				ProdVect inter = intersect(pi->key, q);
+				if (inter.storesInfo()) {
 					intersects = true;
-					ProdVect inter = intersect(pi->key, q);
 					for (const auto& part : split(pi->key, inter)) {
-						SubstTree st = pi->value;
-						finalizer(st);
-						un_.emplace_back(part, st);
+						un_.emplace_back(part, pi->value);
 					}
+					finalizer(pi->value);
 					for (const auto& part : split(q, inter)) {
 						to_add.emplace(part);
 					}
@@ -430,9 +429,8 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				SubstTree st;
-				finalizer(st);
-				un_.emplace_back(q, st);
+				un_.emplace_back(q);
+				finalizer(un_.back().value);
 			}
 		}
 	}

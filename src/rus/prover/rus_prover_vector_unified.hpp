@@ -11,8 +11,7 @@ struct VectorMap {
 	VectorMap& operator = (const VectorMap&) = default;
 
 	void add(const vector<uint>& v, auto finalizer) {
-		SubstTree& st = map_[v];
-		finalizer(st);
+		finalizer(map_[v]);
 	}
 
 	const std::map<vector<uint>, Data>& map() const { return map_; }
@@ -39,21 +38,6 @@ VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>
 				data.push_back(i->second);
 				ret.map_[k] = data;
 			}
-		}
-	}
-	return ret;
-}
-
-template<class D>
-VectorMap<vector<D>> unite(const VectorMap<vector<D>>& v, const VectorMap<D>& w) {
-	VectorMap<vector<D>> ret;
-	for (const auto& p : v.map_) {
-		vector<uint> k = p.first;
-		vector<D> data = p.second;
-		auto i = w.map_.find(k);
-		if (i != w.map_.end() && i->second.sub.ok) {
-			data.push_back(i->second);
-			ret.map_[k] = data;
 		}
 	}
 	return ret;
