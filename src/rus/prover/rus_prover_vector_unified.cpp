@@ -12,7 +12,7 @@ string SubstTree::show() const {
 
 string VectorUnified::show() const {
 	ostringstream oss;
-	for (const auto& u : unif_.map_) {
+	for (const auto& u : unif_.map()) {
 		oss << prover::show(u.first) << " --> " << endl;
 		oss << "term: " << prover::show(u.second.tree) << endl;
 		oss << "sub: " << prover::show(u.second.sub) << endl;
@@ -51,7 +51,7 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, c
 }
 
 void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
-	prover::finalize(unif_.map_[leafs], w, t);
+	unif_.add(leafs, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
 }
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
@@ -59,7 +59,7 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 	for (const auto& m : v) {
 		common = std::move(intersect(common, m.unif_));
 	}
-	for (const auto& p : common.map_) {
+	for (const auto& p : common.map()) {
 		LightTree::Children children;
 		Subst unif;
 		for (const auto& st : p.second) {
@@ -73,7 +73,8 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 			children.push_back(make_unique<LightTree>(st.tree));
 		}
 		if (children.size() == r->arity()) {
-			prover::finalize(unif_.map_[p.first], w, apply(unif, LightTree(r, children)), unif);
+			LightTree term = apply(unif, LightTree(r, children));
+			unif_.add(p.first, [w, term, unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
 		}
 	}
 }
@@ -97,7 +98,7 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 		vars.push_back(p.first);
 	}
 	MultyUnifiedSubs s;
-	for (const auto& q : common.map_) {
+	for (const auto& q : common.map()) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
 			const LightTree& term = q.second[i].tree;

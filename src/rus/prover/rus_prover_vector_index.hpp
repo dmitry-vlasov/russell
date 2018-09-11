@@ -78,8 +78,8 @@ private:
 	vector<IndexPtr> vect_;
 };
 
-//typedef VectorUnified ResultUnified;
-typedef ProductUnified ResultUnified;
+typedef VectorUnified ResultUnified;
+//typedef ProductUnified ResultUnified;
 
 ResultUnified unify(const VectorIndex& vindex);
 

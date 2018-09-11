@@ -223,18 +223,20 @@ struct ProdVect {
 
 	vector<vector<uint>> unfold() const {
 		vector<vector<uint>> ret;
-		CartesianProd<uint> prod;
-		for (uint i = 0; i < vect.size(); ++ i) {
-			assert(vect[i].is_init() && vect[i].set().size());
-			prod.addDim(vect[i].set());
-		}
-		if (prod.card() > 0) {
-			while (true) {
-				ret.push_back(prod.data());
-				if (!prod.hasNext()) {
-					break;
+		if (storesInfo()) {
+			CartesianProd<uint> prod;
+			for (uint i = 0; i < vect.size(); ++ i) {
+				assert(vect[i].is_init() && vect[i].set().size());
+				prod.addDim(vect[i].set());
+			}
+			if (prod.card() > 0) {
+				while (true) {
+					ret.push_back(prod.data());
+					if (!prod.hasNext()) {
+						break;
+					}
+					prod.makeNext();
 				}
-				prod.makeNext();
 			}
 		}
 		return ret;
@@ -254,11 +256,51 @@ inline ProdVect complement(const ProdVect& v1, const ProdVect& v2) {
 	ProdVect ret(v1); ret.complement(v2); return ret;
 }
 
+inline bool intersects(const set<vector<uint>>& s1, const set<vector<uint>>& s2) {
+	for (const auto v : s1) {
+		if (s2.count(v)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+inline bool is_splitting(const ProdVect& v, const vector<ProdVect>& s, const ProdVect& i) {
+	set<vector<uint>> s1;
+	for (const auto& p : v.unfold()) {
+		s1.insert(p);
+	}
+	set<vector<uint>> s2;
+	vector<set<vector<uint>>> parts;
+	parts.push_back(set<vector<uint>>());
+	for (const auto& p : i.unfold()) {
+		s2.insert(p);
+		parts.back().insert(p);
+	}
+	for (const auto& w : s) {
+		if (!w.storesInfo()) {
+			return false;
+		}
+		parts.push_back(set<vector<uint>>());
+		for (const auto& p : w.unfold()) {
+			s2.insert(p);
+			parts.back().insert(p);
+		}
+	}
+	for (auto ip = parts.begin(); ip != parts.end(); ++ip) {
+		for (auto jp = parts.begin(); jp != parts.end(); ++jp) {
+			if (ip != jp) {
+				if (intersects(*ip, *jp)) {
+					return false;
+				}
+			}
+		}
+	}
+	return s1 == s2;
+}
+
 inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	ProdVect comp = complement(v, inter);
-	if (!comp.storesInfo()) {
-		return vector<ProdVect>();
-	}
 	vector<ProdVect> ret;
 	PowerSetIter iter;
 	for (uint i = 0; i < v.vect.size(); ++i) {
@@ -278,12 +320,24 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 					pv[i] = inter[i];
 				}
 			}
-			ret.push_back(pv);
+			if (pv.storesInfo()) {
+				ret.push_back(pv);
+			}
 		}
 		if (!iter.hasNext()) {
 			break;
 		}
 		iter.makeNext();
+	}
+	if (!is_splitting(v, ret, inter)) {
+		cout << "!is_splitting(v, ret)" << endl;
+		cout << "v: " << v.show() << endl;
+		cout << "inter: " << inter.show() << endl;
+		cout << "splitting: " << endl;
+		for (const auto& p : ret) {
+			cout << "\t" << p.show() << endl;
+		}
+		exit(1);
 	}
 	return ret;
 }
