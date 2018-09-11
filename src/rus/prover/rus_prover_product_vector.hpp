@@ -313,25 +313,25 @@ struct UnionVect {
 		}
 	};
 	string show() const {
-		if (un.empty()) {
+		if (un_.empty()) {
 			return "{ }";
 		}
 		ostringstream oss;
 		oss << "{" << endl;
-		for (const auto& s : un) {
+		for (const auto& s : un_) {
 			oss << "\t" << s.show() << endl;
 		}
 		oss << "}" << endl;
 		return oss.str();
 	}
 	bool empty() const {
-		return un.empty();
+		return un_.empty();
 	}
 	void add(const ProdVect& k, const Data& v) {
-		un.emplace_back(k, v);
+		un_.emplace_back(k, v);
 	}
 	bool hasKey(const ProdVect& k) const {
-		for (const auto& p : un) {
+		for (const auto& p : un_) {
 			if (p.key == k) {
 				return true;
 			}
@@ -340,8 +340,8 @@ struct UnionVect {
 	}
 
 	bool check_uniqueness() const {
-		for (auto pi = un.begin(); pi != un.end(); ++pi) {
-			for (auto qi = un.begin(); qi != un.end(); ++qi) {
+		for (auto pi = un_.begin(); pi != un_.end(); ++pi) {
+			for (auto qi = un_.begin(); qi != un_.end(); ++qi) {
 				if (pi != qi && pi->key == qi->key) {
 					cout << "duplicate key: " << pi->key.show() << endl;
 					return false;
@@ -351,26 +351,26 @@ struct UnionVect {
 		return true;
 	}
 
-	void unite(const ProdVect& pv, auto finalizer) {
+	void add(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
-			auto pi = un.begin();
-			while (pi != un.end()) {
+			auto pi = un_.begin();
+			while (pi != un_.end()) {
 				if (pi->key.intersects_with(q)) {
 					intersects = true;
 					ProdVect inter = intersect(pi->key, q);
 					for (const auto& part : split(pi->key, inter)) {
 						SubstTree st = pi->value;
 						finalizer(st);
-						un.emplace_back(part, st);
+						un_.emplace_back(part, st);
 					}
 					for (const auto& part : split(q, inter)) {
 						to_add.emplace(part);
 					}
-					pi = un.erase(pi);
+					pi = un_.erase(pi);
 				} else {
 					++pi;
 				}
@@ -378,17 +378,17 @@ struct UnionVect {
 			if (!intersects) {
 				SubstTree st;
 				finalizer(st);
-				un.emplace_back(q, st);
+				un_.emplace_back(q, st);
 			}
 		}
 	}
 
-	const std::list<Pair>& un__() const { return un; }
+	const std::list<Pair>& un() const { return un_; }
 
 private:
 	template<class D> friend UnionVect<vector<D>> intersect(const UnionVect<vector<D>>&, const UnionVect<D>&);
 
-	std::list<Pair> un;
+	std::list<Pair> un_;
 	bool full;
 };
 
@@ -396,17 +396,17 @@ template<class D>
 UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
 	UnionVect<vector<D>> ret;
 	if (v.full) {
-		for (const auto& p : uv.un) {
-			ret.un.emplace_back(p.key, vector<D>(1, p.value));
+		for (const auto& p : uv.un()) {
+			ret.un_.emplace_back(p.key, vector<D>(1, p.value));
 		}
 	} else {
-		for (const auto& p : v.un) {
-			for (const auto& q : uv.un) {
+		for (const auto& p : v.un()) {
+			for (const auto& q : uv.un()) {
 				ProdVect r = intersect(p.key, q.key);
 				if (r.storesInfo() && q.value.sub.ok) {
 					vector<D> data = p.value;
 					data.push_back(q.value);
-					ret.un.emplace_back(r, data);
+					ret.un_.emplace_back(r, data);
 				}
 			}
 		}

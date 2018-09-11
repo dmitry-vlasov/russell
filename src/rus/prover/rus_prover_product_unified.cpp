@@ -6,7 +6,7 @@ namespace mdl { namespace rus { namespace prover {
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, const Subst& unif = Subst());
 
 void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-	unif_.unite(leafs_vect, [w,t](SubstTree& st) { prover::finalize(st, w, t); });
+	unif_.add(leafs_vect, [w,t](SubstTree& st) { prover::finalize(st, w, t); });
 }
 
 void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
@@ -15,7 +15,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		common = std::move(intersect(common, m.unif_));
 	}
 	common.check_uniqueness();
-	for (const auto& p : common.un__()) {
+	for (const auto& p : common.un()) {
 		LightTree::Children children;
 		Subst unif;
 		for (const auto& st : p.value) {
@@ -30,7 +30,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		}
 		if (children.size() == r->arity()) {
 			LightTree term = apply(unif, LightTree(r, children));
-			unif_.unite(p.key, [w, term](SubstTree& st) { prover::finalize(st, w, term); });
+			unif_.add(p.key, [w, term](SubstTree& st) { prover::finalize(st, w, term); });
 		}
 	}
 }
@@ -43,7 +43,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		vars.push_back(p.first);
 	}
 	MultyUnifiedSubs s;
-	for (const auto& q : common.un__()) {
+	for (const auto& q : common.un()) {
 		const ProdVect& key = q.key;
 		for (uint i = 0; i < q.value.size(); ++ i) {
 			const LightTree& term = q.value[i].tree;
@@ -67,7 +67,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 
  std::map<vector<uint>, SubstTree> ProductUnified::map() const {
 	 std::map<vector<uint>, SubstTree> ret;
-	 for (const auto& q : unif_.un__()) {
+	 for (const auto& q : unif_.un()) {
 		for (auto c : q.key.unfold()) {
 			ret[c] = q.value;
 		}
