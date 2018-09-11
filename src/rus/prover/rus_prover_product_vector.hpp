@@ -278,7 +278,7 @@ inline bool is_splitting(const ProdVect& v, const vector<ProdVect>& s, const Pro
 		parts.back().insert(p);
 	}
 	for (const auto& w : s) {
-		if (!w.storesInfo()) {
+		if (!w.storesInfo() || w == i) {
 			return false;
 		}
 		parts.push_back(set<vector<uint>>());
@@ -415,15 +415,18 @@ struct UnionVect {
 			while (pi != un_.end()) {
 				ProdVect inter = intersect(pi->key, q);
 				if (inter.storesInfo()) {
+					ProdVect key = pi->key;
+					Data value = pi->value;
+					pi = un_.erase(pi);
 					intersects = true;
-					for (const auto& part : split(pi->key, inter)) {
-						un_.emplace_back(part, pi->value);
+					for (const auto& part : split(key, inter)) {
+						un_.emplace_back(part, value);
 					}
-					finalizer(pi->value);
+					un_.emplace_back(inter, value);
+					finalizer(un_.back().value);
 					for (const auto& part : split(q, inter)) {
 						to_add.emplace(part);
 					}
-					pi = un_.erase(pi);
 				} else {
 					++pi;
 				}
