@@ -14,7 +14,8 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 	for (const auto& m : v) {
 		common = std::move(intersect(common, m.unif_));
 	}
-	for (const auto& p : common.un) {
+	common.check_uniqueness();
+	for (const auto& p : common.un__()) {
 		LightTree::Children children;
 		Subst unif;
 		for (const auto& st : p.value) {
@@ -28,11 +29,8 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			children.push_back(make_unique<LightTree>(st.tree));
 		}
 		if (children.size() == r->arity()) {
-			SubstTree st;
-			prover::finalize(st, w, apply(unif, LightTree(r, children)), unif);
-			if (st.sub.ok) {
-				unif_.un.emplace_back(p.key, st);
-			}
+			LightTree term = apply(unif, LightTree(r, children));
+			unite(unif_, p.key, [w, term](SubstTree& st) { prover::finalize(st, w, term); });
 		}
 	}
 }
@@ -45,7 +43,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		vars.push_back(p.first);
 	}
 	MultyUnifiedSubs s;
-	for (const auto& q : common.un) {
+	for (const auto& q : common.un__()) {
 		const ProdVect& key = q.key;
 		for (uint i = 0; i < q.value.size(); ++ i) {
 			const LightTree& term = q.value[i].tree;
@@ -69,7 +67,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 
  std::map<vector<uint>, SubstTree> ProductUnified::map() const {
 	 std::map<vector<uint>, SubstTree> ret;
-	 for (const auto& q : unif_.un) {
+	 for (const auto& q : unif_.un__()) {
 		for (auto c : q.key.unfold()) {
 			ret[c] = q.value;
 		}
