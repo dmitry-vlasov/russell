@@ -40,7 +40,7 @@ struct Set {
 	string show() const {
 		if (!init_) {
 			return "?";
-		} else if (!set_.size()) {
+		} else if (set_.size() == 0) {
 			return "emtpy";
 		} else if (set_.size() == 1) {
 			return to_string(*set_.begin());
@@ -102,7 +102,7 @@ struct Set {
 			return true;
 		} else if (init_ && s.init_) {
 			for (uint i : set_) {
-				if (s.set_.find(i) == s.set_.end()) {
+				if (s.set_.find(i) != s.set_.end()) {
 					return true;
 				}
 			}
@@ -208,8 +208,9 @@ struct ProdVect {
 	bool intersects_with(const ProdVect& v) const {
 		if (vect.size() != v.vect.size()) {
 			cout << "vect.size() != v.vect.size(): " << vect.size() << " !=  " << v.vect.size() << endl;
+			throw Error("vect.size() != v.vect.size():");
 		}
-		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
+		//assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
 			if (!vect[i].intersects_with(v.vect[i])) {
 				return false;
@@ -254,7 +255,7 @@ inline ProdVect complement(const ProdVect& v1, const ProdVect& v2) {
 inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	ProdVect comp = complement(v, inter);
 	if (!comp.storesInfo()) {
-		return {v};
+		return vector<ProdVect>();
 	}
 	vector<ProdVect> ret;
 	PowerSetIter iter;
@@ -353,6 +354,7 @@ inline bool check_uniqueness(const UnionVect<SubstTree>& uv) {
 	for (auto pi = uv.un.begin(); pi != uv.un.end(); ++pi) {
 		for (auto qi = uv.un.begin(); qi != uv.un.end(); ++qi) {
 			if (pi != qi && pi->key == qi->key) {
+				cout << "duplicate key: " << pi->key.show() << endl;
 				return false;
 			}
 		}
@@ -367,10 +369,17 @@ inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer)
 		ProdVect q = to_add.top(); to_add.pop();
 		bool intersects = false;
 
-		cout << "uv1:" << endl;
-		cout << uv1.show() << endl;
+		//cout << "uv1:" << endl;
+		//cout << uv1.show() << endl;
+		if (!check_uniqueness(uv1)) {
+			cout << "AAA" << endl;
+			cout << uv1.show() << endl;
+			exit(-1);
+		}
 
 		for (auto pi = uv1.un.begin(); pi != uv1.un.end(); ++pi) {
+
+			try {
 			if (pi->key.intersects_with(q)) {
 				intersects = true;
 				ProdVect inter = intersect(pi->key, q);
@@ -378,17 +387,63 @@ inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer)
 					SubstTree st = pi->value;
 					finalizer(st);
 					uv1.un.emplace_back(part, st);
+
+					if (!check_uniqueness(uv1)) {
+						cout << "BBB" << endl;
+						cout << uv1.show() << endl;
+						cout << "part:" << part.show() << endl;
+						cout << "inter:" << inter.show() << endl;
+						cout << "pi->key:" << pi->key.show() << endl;
+						cout << "compl: " << complement(pi->key, inter).show() << endl;
+						exit(-1);
+					}
+
 				}
 				for (const auto& part : split(q, inter)) {
 					to_add.emplace(part);
 				}
-				uv1.un.erase(pi);
+				auto to_erase = pi;
+				auto y = pi;
+				y++;
+				cout << "before erasing: " << pi->key.show() << endl;
+				uv1.un.erase(to_erase);
+				pi = --y;
+				cout << "just erased: " << pi->key.show() << endl;
+				auto x = pi;
+				++x;
+				cout << "next: " << x->key.show() << endl;
+			}
+			} catch (Error& err) {
+				cout << uv1.show() << endl;
+				cout << pi->key.show() << endl;
+				cout << q.show() << endl;
+				throw err;
 			}
 		}
 		if (!intersects) {
 			SubstTree st;
 			finalizer(st);
 			uv1.un.emplace_back(q, st);
+
+			if (!check_uniqueness(uv1)) {
+				cout << "CCC" << endl;
+				cout << uv1.show() << endl;
+				cout << q.show() << endl;
+				if (q.intersects_with(q)) {
+					cout << "OK" << endl;
+				} else {
+					cout << "NO" << endl;
+				}
+
+
+				for (auto pi = uv1.un.begin(); pi != uv1.un.end(); ++pi) {
+					if (pi->key.intersects_with(q)) {
+						cout << "FUCK" << endl;
+					}
+				}
+
+				exit(-1);
+			}
 		}
 	}
 }
