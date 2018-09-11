@@ -351,12 +351,42 @@ struct UnionVect {
 		return true;
 	}
 
+	void unite(const ProdVect& pv, auto finalizer) {
+		stack<ProdVect> to_add;
+		to_add.emplace(pv);
+		while (!to_add.empty()) {
+			ProdVect q = to_add.top(); to_add.pop();
+			bool intersects = false;
+			auto pi = un.begin();
+			while (pi != un.end()) {
+				if (pi->key.intersects_with(q)) {
+					intersects = true;
+					ProdVect inter = intersect(pi->key, q);
+					for (const auto& part : split(pi->key, inter)) {
+						SubstTree st = pi->value;
+						finalizer(st);
+						un.emplace_back(part, st);
+					}
+					for (const auto& part : split(q, inter)) {
+						to_add.emplace(part);
+					}
+					pi = un.erase(pi);
+				} else {
+					++pi;
+				}
+			}
+			if (!intersects) {
+				SubstTree st;
+				finalizer(st);
+				un.emplace_back(q, st);
+			}
+		}
+	}
+
 	const std::list<Pair>& un__() const { return un; }
 
 private:
-	template<class D> friend bool check_uniqueness(const UnionVect<D>&);
 	template<class D> friend UnionVect<vector<D>> intersect(const UnionVect<vector<D>>&, const UnionVect<D>&);
-	friend void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer);
 
 	std::list<Pair> un;
 	bool full;
@@ -382,38 +412,6 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 		}
 	}
 	return ret;
-}
-
-inline void unite(UnionVect<SubstTree>& uv1, const ProdVect& pv, auto finalizer) {
-	stack<ProdVect> to_add;
-	to_add.emplace(pv);
-	while (!to_add.empty()) {
-		ProdVect q = to_add.top(); to_add.pop();
-		bool intersects = false;
-		auto pi = uv1.un.begin();
-		while (pi != uv1.un.end()) {
-			if (pi->key.intersects_with(q)) {
-				intersects = true;
-				ProdVect inter = intersect(pi->key, q);
-				for (const auto& part : split(pi->key, inter)) {
-					SubstTree st = pi->value;
-					finalizer(st);
-					uv1.un.emplace_back(part, st);
-				}
-				for (const auto& part : split(q, inter)) {
-					to_add.emplace(part);
-				}
-				pi = uv1.un.erase(pi);
-			} else {
-				++pi;
-			}
-		}
-		if (!intersects) {
-			SubstTree st;
-			finalizer(st);
-			uv1.un.emplace_back(q, st);
-		}
-	}
 }
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
