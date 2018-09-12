@@ -336,7 +336,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i));
 			}
 		}
-		child_terms[k] = unify(child_vindex, leafs, space.depth + 1);
+		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1));
 	}
 	space.unified.add_intersection(child_terms, r, w);
 }

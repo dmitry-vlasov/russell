@@ -421,8 +421,8 @@ struct UnionVect {
 			bool intersects = false;
 			auto pi = un_.begin();
 			while (pi != un_.end()) {
-				ProdVect inter = intersect(pi->key, q);
-				if (inter.storesInfo()) {
+				if (pi->key.intersects_with(q)) {
+					ProdVect inter = intersect(pi->key, q);
 					ProdVect key = pi->key;
 					Data value = pi->value;
 					intersects = true;
@@ -464,15 +464,16 @@ private:
 		}
 	}
 
-	template<class D> friend UnionVect<vector<D>> intersect(const UnionVect<vector<D>>&, const UnionVect<D>&);
+	friend UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>&, const UnionVect<SubstTree>&);
 
 	std::list<Pair> un_;
 	bool full;
 };
 
-template<class D>
-UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>& uv) {
-	UnionVect<vector<D>> ret;
+UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, const UnionVect<SubstTree>& uv);
+
+/*UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, const UnionVect<SubstTree>& uv) {
+	UnionVect<vector<SubstTree>> ret;
 	if (v.full) {
 		for (const auto& p : uv.un()) {
 			ret.un_.emplace_back(p.key, vector<D>(1, p.value));
@@ -481,15 +482,8 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 		for (const auto& p : v.un()) {
 			for (const auto& q : uv.un()) {
 				ProdVect r = intersect(p.key, q.key);
-
-				if (debug_union_vect) {
-					cout << "P: " << p.key.show() << endl;
-					cout << "Q: " << q.key.show() << endl;
-					cout << "INTERSECTION: " << r.show() << endl;
-				}
-
 				if (r.storesInfo() && q.value.sub.ok) {
-					vector<D> data = p.value;
+					vector<SubstTree> data = p.value;
 					data.push_back(q.value);
 					ret.un_.emplace_back(r, data);
 				}
@@ -497,7 +491,7 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 		}
 	}
 	return ret;
-}
+}*/
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 

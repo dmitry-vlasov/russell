@@ -46,6 +46,7 @@ else()
 		rus/prover/rus_prover_matrix_index.cpp
 		rus/prover/rus_prover_node.cpp
 		rus/prover/rus_prover_product_unified.cpp
+		rus/prover/rus_prover_product_vector.cpp
 		rus/prover/rus_prover_proof.cpp
 		rus/prover/rus_prover_show.cpp
 		rus/prover/rus_prover_space.cpp
