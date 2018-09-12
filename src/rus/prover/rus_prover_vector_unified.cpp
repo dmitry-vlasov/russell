@@ -48,7 +48,6 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst& unif) {
 	if (!st.sub.compose(unif)) {
-	//if (!st.sub.compose(unif) || !unif.compose(st.sub)) {
 		st.sub.ok = false;
 		st.tree = LightTree();
 		unif.ok = false;
@@ -60,8 +59,6 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, S
 void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 	unif_.add(leafs, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
 }
-
-extern bool debug_multy_index;
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
 	VectorMap<vector<SubstTree>> common(true);
@@ -112,22 +109,9 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 		for (uint i = 0; i < q.second.size(); ++ i) {
 			const LightTree& term = q.second[i].tree;
 			const Subst& sub = q.second[i].sub;
-
-			if (debug_multy_index && prover::show(c) == "(5, 8, )") {
-				cout << "ST:" << endl;
-				cout << Indent::paragraph(q.second[i].show()) << endl;
-				cout << "unif[" << prover::show(c) << "]" << prover::show(unif[c]) << endl;
-			}
-
 			if (!term.empty()) {
 				if (unif[c].ok) {
 					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-
-					if (debug_multy_index && prover::show(c) == "(5, 8, )") {
-						cout << "UNIUFIED:" << endl;
-						cout << Indent::paragraph(prover::show(unified)) << endl;
-					}
-
 					unif[c] = unified;
 					s[c].sub[vars[i]] = apply(unif[c], term);
 				}
