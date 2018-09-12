@@ -72,31 +72,6 @@ struct Set {
 		return init_;
 	}
 
-	bool is_subset_of(const Set& s) const {
-		if (!init_) return false;
-		for (auto i : set_) {
-			if (s.set_.find(i) == s.set_.end()) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	void unite(const Set& s) {
-		if (!(init_ && s.init_)) return;
-		for (uint i : s.set_) set_.insert(i);
-	}
-
-	void intersect(const Set& s) {
-		if (!(init_ && s.init_)) return;
-		for (uint i : set_) if (s.set_.find(i) == s.set_.end()) set_.erase(i);
-	}
-
-	void complement(const Set& s) {
-		if (!(init_ && s.init_)) return;
-		for (uint i : set_) if (s.set_.find(i) != s.set_.end()) set_.erase(i);
-	}
-
 	bool intersects_with(const Set& s) const {
 		if (!init_ && !s.init_) {
 			return true;
@@ -114,7 +89,7 @@ struct Set {
 
 private:
 	friend Set prover::intersect(const Set& s1, const Set& s2);
-	friend Set prover::unite(const Set& s1, const Set& s2);
+	friend Set prover::complement(const Set& s1, const Set& s2);
 
 	std::set<uint> set_;
 	bool init_;
@@ -122,11 +97,32 @@ private:
 };
 
 inline Set intersect(const Set& s1, const Set& s2) {
-	Set s(s1); s.intersect(s2); return s;
+	if (s1.set_.size() > s2.set_.size()) {
+		return intersect(s2, s1);
+	}
+	assert(s1.init_ == s2.init_);
+	Set s(s1.init_);
+	if (s1.init_ && s2.init_) {;
+		for (uint i : s1.set_) {
+			if (s2.set_.find(i) != s2.set_.end()) {
+				s.set_.insert(i);
+			}
+		}
+	}
+	return s;
 }
 
-inline Set unite(const Set& s1, const Set& s2) {
-	Set s(s1); s.unite(s2); return s;
+inline Set complement(const Set& s1, const Set& s2) {
+	assert(s1.init_ == s2.init_);
+	Set s(s1.init_);
+	if (s1.init_ && s2.init_) {;
+		for (uint i : s1.set_) {
+			if (s2.set_.find(i) == s2.set_.end()) {
+				s.set_.insert(i);
+			}
+		}
+	}
+	return s;
 }
 
 struct ProdVect {
@@ -191,7 +187,7 @@ struct ProdVect {
 		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
-			vect[i].intersect(v.vect[i]);
+			vect[i] = prover::intersect(vect[i], v.vect[i]);
 		}
 	}
 
@@ -201,7 +197,7 @@ struct ProdVect {
 		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
-			vect[i].complement(v.vect[i]);
+			vect[i] = prover::complement(vect[i], v.vect[i]);
 		}
 	}
 
@@ -339,6 +335,9 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 		}
 		exit(1);
 	}
+	if (ret.size() > 32) {
+		cout << "splitting size: " << ret.size() << endl;
+	}
 	return ret;
 }
 
@@ -346,9 +345,29 @@ struct SubstTree {
 	Subst     sub;
 	LightTree tree;
 	string show() const;
+	bool operator == (const SubstTree& st) const {
+		return sub == st.sub && tree == st.tree;
+	}
+	bool operator != (const SubstTree& st) const {
+		return !operator == (st);
+	}
 };
 
+extern bool debug_union_vect;
 
+inline string show(const vector<SubstTree>& vst) {
+	string ret;
+	ret += "<\n";
+	for (const auto& st : vst) {
+		ret += Indent::paragraph(st.show());
+	}
+	ret += ">/n";
+	return ret;
+}
+
+inline string show(const SubstTree& st) {
+	return st.show();
+}
 
 template<class Data>
 struct UnionVect {
@@ -362,7 +381,7 @@ struct UnionVect {
 		Data     value;
 		string show() const {
 			ostringstream oss;
-			oss << key.show() << " --> "; // << value.show();
+			oss << key.show() << " --> " << prover::show(value);
 			return oss.str();
 		}
 	};
@@ -381,17 +400,6 @@ struct UnionVect {
 	bool empty() const {
 		return un_.empty();
 	}
-	void add(const ProdVect& k, const Data& v) {
-		un_.emplace_back(k, v);
-	}
-	bool hasKey(const ProdVect& k) const {
-		for (const auto& p : un_) {
-			if (p.key == k) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	bool check_uniqueness() const {
 		for (auto pi = un_.begin(); pi != un_.end(); ++pi) {
@@ -408,8 +416,35 @@ struct UnionVect {
 	void add(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
-		while (!to_add.empty()) {
+
+		static uint a = 0;
+		a++;
+		//cout << "a = " << a << endl;
+		bool debug = false;
+		/*if (a == 45809) {
+			cout << "AAA" << endl;
+			cout << "pv: " << pv.show() << endl;
+			cout << "this:" << endl;
+			cout << show() << endl;
+			debug = true;
+			//debug_union_vect = true;
+		}*/
+
+		if (debug_union_vect) {
+			cout << "START ADDING: " << pv.show() << endl;
+		}
+
+		uint c = 0;
+
+ 		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
+
+			bool aha = debug_union_vect && (q[0].set().count(106) || q[0].set().count(209));
+			if (aha) {
+				cout << "ADDING PROD VECT:" << endl;
+				cout << q.show() << endl;
+			}
+
 			bool intersects = false;
 			auto pi = un_.begin();
 			while (pi != un_.end()) {
@@ -417,23 +452,72 @@ struct UnionVect {
 				if (inter.storesInfo()) {
 					ProdVect key = pi->key;
 					Data value = pi->value;
-					pi = un_.erase(pi);
 					intersects = true;
-					for (const auto& part : split(key, inter)) {
-						un_.emplace_back(part, value);
+
+					if (aha) {
+						cout << "key: " << key.show() << endl;
+						cout << "val: " << value.show() << endl;
+						cout << "inter: " << inter.show() << endl;
 					}
-					un_.emplace_back(inter, value);
-					finalizer(un_.back().value);
-					for (const auto& part : split(q, inter)) {
-						to_add.emplace(part);
+
+					if (inter != key) {
+
+						if (aha) {
+							cout << "CASE 1" << endl;
+						}
+
+						pi = un_.erase(pi);
+						for (const auto& part : split(key, inter)) {
+							un_.emplace_back(part, value);
+						}
+						un_.emplace_back(inter, value);
+						finalizer(un_.back().value);
+
+						if (aha) {
+							cout << "AFTER: " << endl;
+							cout << "val: " << un_.back().value.show() << endl;
+						}
+
+					} else {
+
+						if (aha) {
+							cout << "CASE 2" << endl;
+						}
+
+						finalizer(pi->value);
+
+
+						if (aha) {
+							cout << "AFTER: " << endl;
+							cout << "val: " << pi->value.show() << endl;
+						}
+
+						++pi;
+					}
+					if (inter != q) {
+						for (const auto& part : split(q, inter)) {
+							to_add.emplace(part);
+							if (aha) {
+								cout << "TO ADD: " << part.show() << endl;
+							}
+						}
 					}
 				} else {
 					++pi;
 				}
 			}
 			if (!intersects) {
+				if (aha) {
+					cout << "CASE 3" << endl;
+				}
+
 				un_.emplace_back(q);
 				finalizer(un_.back().value);
+
+				if (aha) {
+					cout << "AFTER: " << endl;
+					cout << "val: " << un_.back().value.show() << endl;
+				}
 			}
 		}
 	}
@@ -441,6 +525,14 @@ struct UnionVect {
 	const std::list<Pair>& un() const { return un_; }
 
 private:
+
+	void add_pair(const ProdVect& key, const Data& value = Data()) {
+		un_.emplace_back(key, value);
+		if (!check_uniqueness()) {
+			cout << "!check_uniqueness()" << endl;
+		}
+	}
+
 	template<class D> friend UnionVect<vector<D>> intersect(const UnionVect<vector<D>>&, const UnionVect<D>&);
 
 	std::list<Pair> un_;
@@ -458,6 +550,13 @@ UnionVect<vector<D>> intersect(const UnionVect<vector<D>>& v, const UnionVect<D>
 		for (const auto& p : v.un()) {
 			for (const auto& q : uv.un()) {
 				ProdVect r = intersect(p.key, q.key);
+
+				if (debug_union_vect) {
+					cout << "P: " << p.key.show() << endl;
+					cout << "Q: " << q.key.show() << endl;
+					cout << "INTERSECTION: " << r.show() << endl;
+				}
+
 				if (r.storesInfo() && q.value.sub.ok) {
 					vector<D> data = p.value;
 					data.push_back(q.value);

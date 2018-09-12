@@ -3,6 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+bool debug_union_vect = false;
+
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, const Subst& unif = Subst());
 
 void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {

@@ -101,7 +101,12 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			const auto& ind = p.second[i];
 			vectIndex.add(ind, proofInds_[i]);
 		}
-		terms[p.first] = unify(vectIndex);
+		try {
+			terms[p.first] = unify(vectIndex);
+		} catch (Error& err) {
+			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
+			throw err;
+		}
 		//cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
 	}
 	return intersect(terms, unif);
