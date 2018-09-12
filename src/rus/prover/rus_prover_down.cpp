@@ -149,28 +149,26 @@ bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& m
 string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2) {
 	string ret;
 	if (ms1.size() != ms2.size()) {
-		ret += "ms1.size() = " + to_string(ms1.size()) + " != " + to_string(ms2.size()) + " = ms2.size()\n";
+		ret += "sequential.size() = " + to_string(ms1.size()) + " != " + to_string(ms2.size()) + " = matrix.size()\n";
 	}
 	for (const auto p1 : ms1) {
 		if (!ms2.count(p1.first)) {
-			ret += "ms2 doesn't have key" + show(p1.first) + "\n";
-		} else if (p1.second != ms2.at(p1.first)) {
-			ret += "ms1 and m2 values for key" + show(p1.first) + " differ\n";
-			ret += "ms1 value:\n";
+			ret += "matrix doesn't have key" + show(p1.first) + "\n";
+			ret += "sequential value:\n";
 			ret += Indent::paragraph(show(p1.second));
-			ret += "ms2 value:\n";
+		} else if (p1.second != ms2.at(p1.first)) {
+			ret += "sequential and matrix values for key" + show(p1.first) + " differ\n";
+			ret += "sequential value:\n";
+			ret += Indent::paragraph(show(p1.second));
+			ret += "matrix value:\n";
 			ret += Indent::paragraph(show(ms2.at(p1.first)));
 		}
 	}
 	for (const auto p2 : ms2) {
 		if (!ms1.count(p2.first)) {
-			ret += "ms1 doesn't have key" + show(p2.first) + "\n";
-		} else if (p2.second != ms1.at(p2.first)) {
-			ret += "ms1 and m2 values for key" + show(p2.first) + " differ\n";
-			ret += "ms2 value:\n";
+			ret += "sequential doesn't have key" + show(p2.first) + "\n";
+			ret += "matrix value:\n";
 			ret += Indent::paragraph(show(p2.second));
-			ret += "ms1 value:\n";
-			ret += Indent::paragraph(show(ms1.at(p2.first)));
 		}
 	}
 	return ret;
@@ -197,10 +195,10 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
-		cout << "SEQUENTIAL:" << endl;
-		cout << show(unified_subs_1) << endl;
-		cout << "MATRIX:" << endl;
-		cout << show(unified_subs_2) << endl;
+		//cout << "SEQUENTIAL:" << endl;
+		//cout << show(unified_subs_1) << endl;
+		//cout << "MATRIX:" << endl;
+		//cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
 		cout << MatrixIndex(pr, hy, hs).show() << endl;

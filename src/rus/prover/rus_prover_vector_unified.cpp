@@ -35,24 +35,33 @@ void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, 
 	}
 }
 
-void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, const Subst& unif = Subst()) {
-	if (!st.sub.compose(unif)) {
-		return;
-	}
+void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 	if (w.size()) {
 		LightTree term = unify_step(st.sub, w, t);
 		if (!term.empty()) {
 			st.tree = apply(st.sub, term);
-		} else {
 		}
 	} else {
 		st.tree = apply(st.sub, t);
 	}
 }
 
+void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst& unif) {
+	if (!st.sub.compose(unif)) {
+	//if (!st.sub.compose(unif) || !unif.compose(st.sub)) {
+		st.sub.ok = false;
+		st.tree = LightTree();
+		unif.ok = false;
+		return;
+	}
+	finalize(st, w, t);
+}
+
 void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
 	unif_.add(leafs, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
 }
+
+extern bool debug_multy_index;
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
 	VectorMap<vector<SubstTree>> common(true);
@@ -74,7 +83,7 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 		}
 		if (children.size() == r->arity()) {
 			LightTree term = apply(unif, LightTree(r, children));
-			unif_.add(p.first, [w, term, unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
+			unif_.add(p.first, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
 		}
 	}
 }
@@ -103,13 +112,32 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 		for (uint i = 0; i < q.second.size(); ++ i) {
 			const LightTree& term = q.second[i].tree;
 			const Subst& sub = q.second[i].sub;
+
+			if (debug_multy_index && prover::show(c) == "(5, 8, )") {
+				cout << "ST:" << endl;
+				cout << Indent::paragraph(q.second[i].show()) << endl;
+				cout << "unif[" << prover::show(c) << "]" << prover::show(unif[c]) << endl;
+			}
+
 			if (!term.empty()) {
-				Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-				unif[c] = unified;
-				s[c].sub[vars[i]] = apply(unif[c], term);
+				if (unif[c].ok) {
+					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
+
+					if (debug_multy_index && prover::show(c) == "(5, 8, )") {
+						cout << "UNIUFIED:" << endl;
+						cout << Indent::paragraph(prover::show(unified)) << endl;
+					}
+
+					unif[c] = unified;
+					s[c].sub[vars[i]] = apply(unif[c], term);
+				}
 			} else {
-				s[c];
-				unif[c];
+				if (sub.ok) {
+					s[c];
+					unif[c];
+				} else {
+					unif[c].ok = false;
+				}
 			}
 		}
 	}

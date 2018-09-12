@@ -416,35 +416,8 @@ struct UnionVect {
 	void add(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
-
-		static uint a = 0;
-		a++;
-		//cout << "a = " << a << endl;
-		bool debug = false;
-		/*if (a == 45809) {
-			cout << "AAA" << endl;
-			cout << "pv: " << pv.show() << endl;
-			cout << "this:" << endl;
-			cout << show() << endl;
-			debug = true;
-			//debug_union_vect = true;
-		}*/
-
-		if (debug_union_vect) {
-			cout << "START ADDING: " << pv.show() << endl;
-		}
-
-		uint c = 0;
-
  		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
-
-			bool aha = debug_union_vect && (q[0].set().count(106) || q[0].set().count(209));
-			if (aha) {
-				cout << "ADDING PROD VECT:" << endl;
-				cout << q.show() << endl;
-			}
-
 			bool intersects = false;
 			auto pi = un_.begin();
 			while (pi != un_.end()) {
@@ -453,53 +426,20 @@ struct UnionVect {
 					ProdVect key = pi->key;
 					Data value = pi->value;
 					intersects = true;
-
-					if (aha) {
-						cout << "key: " << key.show() << endl;
-						cout << "val: " << value.show() << endl;
-						cout << "inter: " << inter.show() << endl;
-					}
-
 					if (inter != key) {
-
-						if (aha) {
-							cout << "CASE 1" << endl;
-						}
-
 						pi = un_.erase(pi);
 						for (const auto& part : split(key, inter)) {
 							un_.emplace_back(part, value);
 						}
 						un_.emplace_back(inter, value);
 						finalizer(un_.back().value);
-
-						if (aha) {
-							cout << "AFTER: " << endl;
-							cout << "val: " << un_.back().value.show() << endl;
-						}
-
 					} else {
-
-						if (aha) {
-							cout << "CASE 2" << endl;
-						}
-
 						finalizer(pi->value);
-
-
-						if (aha) {
-							cout << "AFTER: " << endl;
-							cout << "val: " << pi->value.show() << endl;
-						}
-
 						++pi;
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
 							to_add.emplace(part);
-							if (aha) {
-								cout << "TO ADD: " << part.show() << endl;
-							}
 						}
 					}
 				} else {
@@ -507,17 +447,8 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				if (aha) {
-					cout << "CASE 3" << endl;
-				}
-
 				un_.emplace_back(q);
 				finalizer(un_.back().value);
-
-				if (aha) {
-					cout << "AFTER: " << endl;
-					cout << "val: " << un_.back().value.show() << endl;
-				}
 			}
 		}
 	}
