@@ -10,7 +10,8 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 		}
 	} else {
 		for (const auto& p : v.un()) {
-			for (const auto& q : uv.un()) {
+			for (uint i : uv.neighbourhood(p.key)) {
+				auto q = uv.un()[i];
 				if (p.key.intersects_with(q.key) && q.value.sub.ok) {
 					ProdVect r = intersect(p.key, q.key);
 					vector<SubstTree> data = p.value;

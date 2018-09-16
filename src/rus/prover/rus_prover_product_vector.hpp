@@ -478,12 +478,17 @@ struct UnionVect {
 
 	set<uint> neighbourhood(const ProdVect& v) const {
 		set<uint> ret;
+		if (!maps_.size()) {
+			return ret;
+		}
 		vector<set<uint>> sets;
 		for (uint i = 0; i < v.vect.size(); ++i) {
 			set<uint> inds;
 			for (uint k : v.vect[i].set()) {
-				for (uint j : maps_[i].at(k)) {
-					inds.insert(j);
+				if (maps_[i].count(k)) {
+					for (uint j : maps_[i].at(k)) {
+						inds.insert(j);
+					}
 				}
 			}
 			if (i == 0) {
