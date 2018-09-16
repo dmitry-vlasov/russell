@@ -434,33 +434,29 @@ struct UnionVect {
  		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
-			auto pi = un_.begin();
-			while (pi != un_.end()) {
+			for (uint i : neighbourhood(q)) {
 				++c;
-				if (pi->key.intersects_with(q)) {
-					ProdVect inter = intersect(pi->key, q);
-					ProdVect key = pi->key;
-					Data value = pi->value;
+				Pair& p = un_[i];
+				if (p.key.intersects_with(q)) {
+					ProdVect inter = intersect(p.key, q);
+					ProdVect key = p.key;
+					Data value = p.value;
 					intersects = true;
 					if (inter != key) {
-						//pi = un_.erase(pi);
-						pi->erased = true;
+						p.erased = true;
 						for (const auto& part : split(key, inter)) {
 							add_pair(part, value);
 						}
 						add_pair(inter, value);
 						finalizer(un_.back().value);
 					} else {
-						finalizer(pi->value);
-						++pi;
+						finalizer(p.value);
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
 							to_add.emplace(part);
 						}
 					}
-				} else {
-					++pi;
 				}
 			}
 			if (!intersects) {
@@ -468,8 +464,8 @@ struct UnionVect {
 				finalizer(un_.back().value);
 			}
 		}
- 		if (c > 1024) {
- 			cout << "ADD COUNT:" << c << endl;
+ 		if (un_.size() > 256 && c > 8) {
+ 			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
  		}
 	}
 

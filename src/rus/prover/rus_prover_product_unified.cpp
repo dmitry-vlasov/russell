@@ -17,7 +17,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 	for (const auto& m : v) {
 		common = std::move(intersect(common, m.unif_));
 	}
-	//common.check_uniqueness();
+	common.check_uniqueness();
 	for (const auto& p : common.un()) {
 		LightTree::Children children;
 		Subst unif;
