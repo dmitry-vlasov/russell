@@ -112,6 +112,19 @@ inline Set intersect(const Set& s1, const Set& s2) {
 	return s;
 }
 
+inline set<uint> intersect(const set<uint>& s1, const set<uint>& s2) {
+	if (s1.size() > s2.size()) {
+		return intersect(s2, s1);
+	}
+	set<uint> s;
+	for (uint i : s1) {
+		if (s2.find(i) != s2.end()) {
+			s.insert(i);
+		}
+	}
+	return s;
+}
+
 inline Set complement(const Set& s1, const Set& s2) {
 	assert(s1.init_ == s2.init_);
 	Set s(s1.init_);
@@ -371,7 +384,7 @@ inline string show(const SubstTree& st) {
 
 template<class Data>
 struct UnionVect {
-	UnionVect(bool f = false) : size_(0), full(f) { }
+	UnionVect(bool f = false) : full(f) { }
 
 	struct Pair {
 		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v) { }
@@ -463,20 +476,39 @@ struct UnionVect {
 
 	const vector<Pair>& un() const { return un_; }
 
+	set<uint> neighbourhood(const ProdVect& v) const {
+		set<uint> ret;
+		vector<set<uint>> sets;
+		for (uint i = 0; i < v.vect.size(); ++i) {
+			set<uint> inds;
+			for (uint k : v.vect[i].set()) {
+				for (uint j : maps_[i].at(k)) {
+					inds.insert(j);
+				}
+			}
+			if (i == 0) {
+				ret = inds;
+			} else {
+				ret = intersect(ret, inds);
+			}
+		}
+		return ret;
+	}
+
 private:
 
 	void add_pair(const ProdVect& key, const Data& value = Data()) {
 		if (!maps_.size()) {
-			maps_ = vector<map<uint, vector<uint>>>(key.vect.size());
+			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
+		uint ind = un_.size();
 		un_.emplace_back(key, value);
 		for (uint i = 0; i < key.vect.size(); ++ i) {
 			const Set& s = key.vect[i];
 			for (uint k : s.set()) {
-				maps_[i][k].push_back(size_);
+				maps_[i][k].push_back(ind);
 			}
 		}
-		++size_;
 
 		//if (!check_uniqueness()) {
 		//	cout << "!check_uniqueness()" << endl;
@@ -485,9 +517,8 @@ private:
 
 	friend UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>&, const UnionVect<SubstTree>&);
 
-	uint size_;
 	vector<Pair> un_;
-	vector<map<uint, vector<uint>>> maps_;
+	vector<std::map<uint, vector<uint>>> maps_;
 	bool full;
 };
 
