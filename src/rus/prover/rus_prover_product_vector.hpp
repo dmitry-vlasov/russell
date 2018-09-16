@@ -461,7 +461,7 @@ struct UnionVect {
  		}
 	}
 
-	const std::list<Pair>& un() const { return un_; }
+	const vector<Pair>& un() const { return un_; }
 
 private:
 
@@ -486,7 +486,7 @@ private:
 	friend UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>&, const UnionVect<SubstTree>&);
 
 	uint size_;
-	std::list<Pair> un_;
+	vector<Pair> un_;
 	vector<map<uint, vector<uint>>> maps_;
 	bool full;
 };
