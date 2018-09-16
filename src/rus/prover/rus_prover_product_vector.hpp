@@ -371,7 +371,7 @@ inline string show(const SubstTree& st) {
 
 template<class Data>
 struct UnionVect {
-	UnionVect(bool f = false) : full(f) { }
+	UnionVect(bool f = false) : size_(0), full(f) { }
 
 	struct Pair {
 		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v) { }
@@ -416,11 +416,13 @@ struct UnionVect {
 	void add(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
+		uint c = 0;
  		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
 			auto pi = un_.begin();
 			while (pi != un_.end()) {
+				++c;
 				if (pi->key.intersects_with(q)) {
 					ProdVect inter = intersect(pi->key, q);
 					ProdVect key = pi->key;
@@ -429,9 +431,11 @@ struct UnionVect {
 					if (inter != key) {
 						pi = un_.erase(pi);
 						for (const auto& part : split(key, inter)) {
-							un_.emplace_back(part, value);
+							//un_.emplace_back(part, value);
+							add_pair(part, value);
 						}
-						un_.emplace_back(inter, value);
+						//un_.emplace_back(inter, value);
+						add_pair(inter, value);
 						finalizer(un_.back().value);
 					} else {
 						finalizer(pi->value);
@@ -447,10 +451,14 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				un_.emplace_back(q);
+				//un_.emplace_back(q);
+				add_pair(q);
 				finalizer(un_.back().value);
 			}
 		}
+ 		if (c > 1024) {
+ 			cout << "ADD COUNT:" << c << endl;
+ 		}
 	}
 
 	const std::list<Pair>& un() const { return un_; }
@@ -458,15 +466,28 @@ struct UnionVect {
 private:
 
 	void add_pair(const ProdVect& key, const Data& value = Data()) {
-		un_.emplace_back(key, value);
-		if (!check_uniqueness()) {
-			cout << "!check_uniqueness()" << endl;
+		if (!maps_.size()) {
+			maps_ = vector<map<uint, vector<uint>>>(key.vect.size());
 		}
+		un_.emplace_back(key, value);
+		for (uint i = 0; i < key.vect.size(); ++ i) {
+			const Set& s = key.vect[i];
+			for (uint k : s.set()) {
+				maps_[i][k].push_back(size_);
+			}
+		}
+		++size_;
+
+		//if (!check_uniqueness()) {
+		//	cout << "!check_uniqueness()" << endl;
+		//}
 	}
 
 	friend UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>&, const UnionVect<SubstTree>&);
 
+	uint size_;
 	std::list<Pair> un_;
+	vector<map<uint, vector<uint>>> maps_;
 	bool full;
 };
 

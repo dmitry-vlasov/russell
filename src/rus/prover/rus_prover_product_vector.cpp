@@ -19,6 +19,10 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 				}
 			}
 		}
+		uint c = v.un().size() * uv.un().size();
+		if (c > 1024 * 16) {
+			cout << "INTERSECT COUNT: " << c << endl;
+		}
 	}
 	return ret;
 }
