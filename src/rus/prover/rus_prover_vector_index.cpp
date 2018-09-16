@@ -156,7 +156,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 		} else {
 			if (s_fixed.at(i)) {
 				vars_prod.skip(i);
-				if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.values(i))) {
+				if (!s_leafs[i].init(space.vindex.index(i)->vars.at(s), space.vindex.info(i).values)) {
 					return;
 				}
 			}
@@ -170,7 +170,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
-					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.info(i).values)) {
 						consistent = false;
 						break;
 					}
@@ -245,7 +245,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 		} else {
 			if (r_fixed.at(i)) {
 				vars_prod.skip(i);
-				if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.values(i))) {
+				if (!r_leafs[i].init(space.vindex.index(i)->rules.at(r).leaf(), space.vindex.info(i).values)) {
 					return;
 				}
 			}
@@ -259,7 +259,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 			bool consistent = true;
 			for (uint i = 0; i < space.vindex.size(); ++ i) {
 				if (inds[i] != -1 && space.vindex.index(i)) {
-					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+					if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.info(i).values)) {
 						consistent = false;
 						break;
 					}
@@ -331,9 +331,9 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				const Index* ind =
 					space.vindex.index(i)->rules.count(r) ?
 					space.vindex.index(i)->rules.at(r).branch().child[k].get() : nullptr;
-				child_vindex.add(ind, space.vindex.values(i), space.vindex.proofInds(i));
+				child_vindex.add(ind, space.vindex.info(i));
 			} else {
-				child_vindex.add(nullptr, space.vindex.values(i), space.vindex.proofInds(i));
+				child_vindex.add(nullptr, space.vindex.info(i));
 			}
 		}
 		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1));
@@ -366,7 +366,7 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 		bool consistent = true;
 		for (uint i = 0; i < space.vindex.size(); ++ i) {
 			if (inds[i] != -1 && space.vindex.index(i)) {
-				if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.values(i))) {
+				if (!w_leafs[i].init(space.vindex.index(i)->vars.at(w[inds[i]]), space.vindex.info(i).values)) {
 					consistent = false;
 					break;
 				}
@@ -438,8 +438,8 @@ ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth
 vector<map<uint, uint>> back_values(const VectorIndex& vindex) {
 	vector<map<uint, uint>> ret(vindex.size());
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		for (uint j = 0; j < vindex.values(i)->size(); ++ j) {
-			ret[i][vindex.values(i)->at(j)] = j;
+		for (uint j = 0; j < vindex.info(i).values->size(); ++ j) {
+			ret[i][vindex.info(i).values->at(j)] = j;
 		}
 	}
 	return ret;
@@ -490,7 +490,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 ResultUnified unify(const VectorIndex& vindex) {
 	PowerSetIter absent_iter;
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		if (vindex.obligatory(i).size()) {
+		if (vindex.info(i).obligatory.size()) {
 			absent_iter.addDim();
 		} else {
 			absent_iter.addSkipped();
@@ -501,7 +501,7 @@ ResultUnified unify(const VectorIndex& vindex) {
 		space.fixed = ProdVect(vindex.size());
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			if (absent_iter[i]) {
-				space.fixed[i].init(vindex.obligatory(i));
+				space.fixed[i].init(vindex.info(i).obligatory);
 			}
 		}
 		if (space.complete(space.fixed)) {
@@ -529,20 +529,20 @@ string VectorIndex::show() const {
 		const IndexPtr& ptr = vect_[i];
 		ret += string("Index: ") + to_string(i) + "\n";
 		ret += string("Values: ");
-		if (ptr.values) {
-			for (uint j = 0; j < ptr.values->size(); ++j) {
-				ret += to_string(ptr.values->at(j)) + ", ";
+		if (ptr.info.values) {
+			for (uint j = 0; j < ptr.info.values->size(); ++j) {
+				ret += to_string(ptr.info.values->at(j)) + ", ";
 			}
 			ret += "\n";
 		} else {
 			ret += "NULL\n";
 		}
 		ret += string("Obligatory: ");
-		for (uint j = 0; j < ptr.obligatory.size(); ++j) {
-			ret += to_string(ptr.obligatory.at(j)) + ", ";
+		for (uint j = 0; j < ptr.info.obligatory.size(); ++j) {
+			ret += to_string(ptr.info.obligatory.at(j)) + ", ";
 		}
 		ret += "\n";
-		ret += string("Proofs size: ") + to_string(ptr.proofsSize) + "\n";
+		ret += string("Proofs size: ") + to_string(ptr.info.proofsSize) + "\n";
 		ret += string("Index size: ") + (ptr.ind ? to_string(ptr.ind->size) : "NULL") + "\n";
 		ret += string("Index: ");
 		if (ptr.ind) {

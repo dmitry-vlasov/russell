@@ -7,9 +7,9 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct VectorIndex {
-	struct IndexPtr {
-		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi) :
-			ind(i), values(v), proofsSize(pi.size()), proofInds(pi) {
+	struct LeafsInfo {
+		LeafsInfo(const vector<uint>* v, const vector<uint>& pi) :
+			values(v), proofsSize(pi.size()), proofInds(pi) {
 			set<uint> vals;
 			for (auto val : *values) {
 				vals.insert(val);
@@ -20,13 +20,19 @@ struct VectorIndex {
 				}
 			}
 		}
+		LeafsInfo(const LeafsInfo& li) = default;
+		uint proofsSize;
+		const vector<uint>* values;
+		vector<uint> obligatory;
+		vector<uint> proofInds;
+	};
+	struct IndexPtr {
+		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi) : ind(i), info(v, pi) { }
+		IndexPtr(const Index* i, const LeafsInfo& li) : ind(i), info(li) { }
 		IndexPtr(const IndexPtr&) = default;
 		IndexPtr& operator = (const IndexPtr&) = default;
 		const Index* ind;
-		const vector<uint>* values;
-		uint proofsSize;
-		vector<uint> obligatory;
-		vector<uint> proofInds;
+		LeafsInfo info;
 	};
 	uint size() const {
 		return vect_.size();
@@ -34,41 +40,19 @@ struct VectorIndex {
 	void add(const IndexInt& i, const vector<uint>& pi) {
 		vect_.emplace_back(&i.index(), &i.data(), pi);
 	}
-	void add(const Index* i, const vector<uint>* v, const vector<uint>& pi) {
-		vect_.emplace_back(i, v, pi);
+	void add(const Index* i, const LeafsInfo& li) {
+		vect_.emplace_back(i, li);
 	}
 	const Index* index(uint i) const {
 		return vect_[i].ind;
 	}
-	const vector<uint>* values(uint i) const {
-		return vect_[i].values;
-	}
-	const vector<uint> values(uint i, const vector<uint>& k) const {
-		vector<uint> ret;
-		for (uint i = 0; i < vect_.size(); ++ i) {
-			ret.push_back(vect_[i].values->at(k[i]));
-		}
-		return ret;
-	}
-	uint proofsSize(uint i) const {
-		return vect_[i].proofsSize;
-	}
-	const vector<uint>& obligatory(uint i) const {
-		return vect_[i].obligatory;
-	}
-	const vector<uint>& proofInds(uint i) const {
-		return vect_[i].proofInds;
-	}
-	const vector<IndexPtr>& vect() const {
-		return vect_;
-	}
-	void clear() {
-		vect_.clear();
+	const LeafsInfo& info(uint i) const {
+		return vect_[i].info;
 	}
 	uint card() const {
 		uint ret = 1;
 		for (const auto& i : vect_) {
-			ret *= i.proofsSize;
+			ret *= i.info.proofsSize;
 		}
 		return ret;
 	}

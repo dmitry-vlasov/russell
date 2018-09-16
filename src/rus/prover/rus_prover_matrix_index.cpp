@@ -129,7 +129,7 @@ string MatrixIndex::show() const {
 		for (uint i = 0; i < p.second.size(); ++ i) {
 			ret += "index: " + to_string(i) + "\n";
 			ret += "\tproof inds: " + prover::show(proofInds_[i]) + "\n";
-			ret += "\tabsent inds: " + prover::show(vectIndex.obligatory(i)) + "\n\n";
+			ret += "\tabsent inds: " + prover::show(vectIndex.info(i).obligatory) + "\n\n";
 			ret += p.second[i].show() + "\n";
 			ret += "-----------------------------\n\n";
 		}
