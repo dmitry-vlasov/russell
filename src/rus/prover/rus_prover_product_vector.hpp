@@ -387,11 +387,12 @@ struct UnionVect {
 	UnionVect(bool f = false) : full(f) { }
 
 	struct Pair {
-		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v) { }
+		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v), erased(false) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
 		Data     value;
+		bool     erased;
 		string show() const {
 			ostringstream oss;
 			oss << key.show() << " --> " << prover::show(value);
@@ -442,12 +443,11 @@ struct UnionVect {
 					Data value = pi->value;
 					intersects = true;
 					if (inter != key) {
-						pi = un_.erase(pi);
+						//pi = un_.erase(pi);
+						pi->erased = true;
 						for (const auto& part : split(key, inter)) {
-							//un_.emplace_back(part, value);
 							add_pair(part, value);
 						}
-						//un_.emplace_back(inter, value);
 						add_pair(inter, value);
 						finalizer(un_.back().value);
 					} else {
@@ -464,7 +464,6 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				//un_.emplace_back(q);
 				add_pair(q);
 				finalizer(un_.back().value);
 			}

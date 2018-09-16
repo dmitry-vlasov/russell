@@ -10,13 +10,17 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 		}
 	} else {
 		for (const auto& p : v.un()) {
-			for (uint i : uv.neighbourhood(p.key)) {
-				auto q = uv.un()[i];
-				if (p.key.intersects_with(q.key) && q.value.sub.ok) {
-					ProdVect r = intersect(p.key, q.key);
-					vector<SubstTree> data = p.value;
-					data.push_back(q.value);
-					ret.un_.emplace_back(r, data);
+			if (!p.erased) {
+				for (uint i : uv.neighbourhood(p.key)) {
+					auto q = uv.un()[i];
+					if (!q.erased) {
+						if (p.key.intersects_with(q.key) && q.value.sub.ok) {
+							ProdVect r = intersect(p.key, q.key);
+							vector<SubstTree> data = p.value;
+							data.push_back(q.value);
+							ret.un_.emplace_back(r, data);
+						}
+					}
 				}
 			}
 		}
