@@ -429,7 +429,7 @@ struct UnionVect {
 		return true;
 	}
 
-	void intersect(const ProdVect& pv, auto finalizer) {
+	void intersect(const ProdVect& pv, auto finalizer/*, bool may_add*/) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
@@ -441,15 +441,13 @@ struct UnionVect {
 				Pair& p = un_[i];
 				if (!p.erased && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
-					ProdVect key = p.key;
-					Data value = p.value;
 					intersects = true;
-					if (inter != key) {
+					if (inter != p.key) {
 						p.erased = true;
-						for (const auto& part : split(key, inter)) {
-							add(part, value);
+						for (const auto& part : split(p.key, inter)) {
+							add(part, p.value);
 						}
-						add(inter, value);
+						add(inter, p.value);
 						finalizer(un_.back().value);
 					} else {
 						finalizer(p.value);
@@ -461,7 +459,7 @@ struct UnionVect {
 					}
 				}
 			}
-			if (!intersects) {
+			if (!intersects /* && may_add*/) {
 				add(q);
 				finalizer(un_.back().value);
 			}
