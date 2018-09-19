@@ -439,7 +439,7 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if (p.key.intersects_with(q)) {
+				if (!p.erased && p.key.intersects_with(q)) {
 					ProdVect inter = intersect(p.key, q);
 					ProdVect key = p.key;
 					Data value = p.value;
