@@ -6,7 +6,7 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 	UnionVect<vector<SubstTree>> ret;
 	if (v.full()) {
 		for (const auto& p : uv.un()) {
-			ret.add_new(p.key, vector<SubstTree>(1, p.value));
+			ret.add(p.key, vector<SubstTree>(1, p.value));
 		}
 	} else {
 		uint c0 = 0;
@@ -19,7 +19,7 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 							ProdVect r = intersect(p.key, q.key);
 							vector<SubstTree> data = p.value;
 							data.push_back(q.value);
-							ret.add_new(r, data);
+							ret.add(r, data);
 							++c0;
 						}
 					}

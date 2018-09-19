@@ -429,7 +429,7 @@ struct UnionVect {
 		return true;
 	}
 
-	void add(const ProdVect& pv, auto finalizer) {
+	void intersect(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
@@ -440,16 +440,16 @@ struct UnionVect {
 				++c;
 				Pair& p = un_[i];
 				if (!p.erased && p.key.intersects_with(q)) {
-					ProdVect inter = intersect(p.key, q);
+					ProdVect inter = prover::intersect(p.key, q);
 					ProdVect key = p.key;
 					Data value = p.value;
 					intersects = true;
 					if (inter != key) {
 						p.erased = true;
 						for (const auto& part : split(key, inter)) {
-							add_new(part, value);
+							add(part, value);
 						}
-						add_new(inter, value);
+						add(inter, value);
 						finalizer(un_.back().value);
 					} else {
 						finalizer(p.value);
@@ -462,7 +462,7 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				add_new(q);
+				add(q);
 				finalizer(un_.back().value);
 			}
 		}
@@ -491,13 +491,13 @@ struct UnionVect {
 			if (i == 0) {
 				ret = inds;
 			} else {
-				ret = intersect(ret, inds);
+				ret = prover::intersect(ret, inds);
 			}
 		}
 		return ret;
 	}
 
-	void add_new(const ProdVect& key, const Data& value = Data()) {
+	void add(const ProdVect& key, const Data& value = Data()) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}

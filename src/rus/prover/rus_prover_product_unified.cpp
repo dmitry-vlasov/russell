@@ -9,7 +9,7 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t);
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst&);
 
 void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-	unif_.add(leafs_vect, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
+	unif_.intersect(leafs_vect, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
 }
 
 void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
@@ -34,7 +34,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.add(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
+				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
 			}
 		}
 	}
