@@ -384,7 +384,9 @@ inline string show(const SubstTree& st) {
 
 template<class Data>
 struct UnionVect {
-	UnionVect(bool f = false) : full(f) { }
+	UnionVect(bool f = false) : full_(f) { }
+
+	bool full() const { return full_; }
 
 	struct Pair {
 		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v), erased(false) { }
@@ -445,9 +447,9 @@ struct UnionVect {
 					if (inter != key) {
 						p.erased = true;
 						for (const auto& part : split(key, inter)) {
-							add_pair(part, value);
+							add_new(part, value);
 						}
-						add_pair(inter, value);
+						add_new(inter, value);
 						finalizer(un_.back().value);
 					} else {
 						finalizer(p.value);
@@ -460,7 +462,7 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				add_pair(q);
+				add_new(q);
 				finalizer(un_.back().value);
 			}
 		}
@@ -495,9 +497,7 @@ struct UnionVect {
 		return ret;
 	}
 
-private:
-
-	void add_pair(const ProdVect& key, const Data& value = Data()) {
+	void add_new(const ProdVect& key, const Data& value = Data()) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
@@ -509,41 +509,18 @@ private:
 				maps_[i][k].push_back(ind);
 			}
 		}
-
 		//if (!check_uniqueness()) {
 		//	cout << "!check_uniqueness()" << endl;
 		//}
 	}
 
-	friend UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>&, const UnionVect<SubstTree>&);
-
+private:
 	vector<Pair> un_;
 	vector<std::map<uint, vector<uint>>> maps_;
-	bool full;
+	bool full_;
 };
 
 UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, const UnionVect<SubstTree>& uv);
-
-/*UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, const UnionVect<SubstTree>& uv) {
-	UnionVect<vector<SubstTree>> ret;
-	if (v.full) {
-		for (const auto& p : uv.un()) {
-			ret.un_.emplace_back(p.key, vector<D>(1, p.value));
-		}
-	} else {
-		for (const auto& p : v.un()) {
-			for (const auto& q : uv.un()) {
-				ProdVect r = intersect(p.key, q.key);
-				if (r.storesInfo() && q.value.sub.ok) {
-					vector<SubstTree> data = p.value;
-					data.push_back(q.value);
-					ret.un_.emplace_back(r, data);
-				}
-			}
-		}
-	}
-	return ret;
-}*/
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
