@@ -71,11 +71,11 @@ struct VectorProductUnified {
 		ret += prod.show() + "\n\n";
 		return ret;
 	}
-	void finalize(ProdVect leafs, const vector<LightSymbol>& w, const LightTree& t) {
+	void finalize(ProdVect leafs, const vector<LightSymbol>& w, const LightTree& t, bool may_add) {
 		static uint c = 0;
 		c++;
-		vect.finalize(leafs, w, t);
-		prod.finalize(leafs, w, t);
+		vect.finalize(leafs, w, t, may_add);
+		prod.finalize(leafs, w, t, may_add);
 		/*if (!verify()) {
 			cout << "AAA: " << c << endl;
 			exit(1);

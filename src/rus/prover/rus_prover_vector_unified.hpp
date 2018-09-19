@@ -45,7 +45,7 @@ VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>
 
 struct VectorUnified {
 	string show() const;
-	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
+	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t, bool may_add);
 	void add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w);
 	const std::map<vector<uint>, SubstTree>& map() const { return unif_.map(); }
 

@@ -6,7 +6,7 @@ namespace mdl { namespace rus { namespace prover {
 
 struct ProductUnified {
 	string show() const { return unif_.show(); }
-	void finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
+	void finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t, bool may_add);
 	void add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w);
 	std::map<vector<uint>, SubstTree> map() const;
 

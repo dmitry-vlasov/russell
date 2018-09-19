@@ -177,7 +177,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 				}
 			}
 			if (consistent) {
-				space.unified.finalize(w_leafs, w, LightTree(s));
+				space.unified.finalize(w_leafs, w, LightTree(s), true);
 			}
 			if (!vars_prod.hasNext()) {
 				break;
@@ -187,7 +187,7 @@ void unify_symbs_variant(MIndexSpace& space, LightSymbol s, const vector<bool>& 
 	}
 	if (space.complete(s_leafs)) {
 		// All indexes have variable 'v'
-		space.unified.finalize(s_leafs, vector<LightSymbol>(), LightTree(s));
+		space.unified.finalize(s_leafs, vector<LightSymbol>(), LightTree(s), true);
 	}
 }
 
@@ -266,7 +266,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 				}
 			}
 			if (consistent) {
-				space.unified.finalize(w_leafs, w, LightTree(r, {}));
+				space.unified.finalize(w_leafs, w, LightTree(r, {}), true);
 			}
 			if (!vars_prod.hasNext()) {
 				break;
@@ -276,7 +276,7 @@ void unify_leaf_rule_variant(MIndexSpace& space, const Rule* r, const vector<boo
 	}
 	if (space.complete(r_leafs)) {
 		// All indexes have rule 'r'
-		space.unified.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}));
+		space.unified.finalize(r_leafs, vector<LightSymbol>(), LightTree(r, {}), true);
 	}
 }
 
@@ -505,7 +505,7 @@ ResultUnified unify(const VectorIndex& vindex) {
 			}
 		}
 		if (space.complete(space.fixed)) {
-			space.unified.finalize(space.fixed, vector<LightSymbol>(), LightTree());
+			space.unified.finalize(space.fixed, vector<LightSymbol>(), LightTree(), true);
 		} else {
 			unify_symbs(space);
 			unify_rules(space);

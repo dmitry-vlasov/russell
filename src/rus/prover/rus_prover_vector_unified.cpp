@@ -20,7 +20,7 @@ string VectorUnified::show() const {
 	return oss.str();
 }
 
-void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
+void VectorUnified::finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t, bool may_add) {
 	CartesianProd<uint> leafs_prod = leafsProd(leafs_vect);
 	if (leafs_prod.card() == 0) {
 		return;

@@ -429,7 +429,7 @@ struct UnionVect {
 		return true;
 	}
 
-	void intersect(const ProdVect& pv, auto finalizer/*, bool may_add*/) {
+	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
@@ -459,7 +459,7 @@ struct UnionVect {
 					}
 				}
 			}
-			if (!intersects /* && may_add*/) {
+			if (!intersects && may_add) {
 				add(q);
 				finalizer(un_.back().value);
 			}
