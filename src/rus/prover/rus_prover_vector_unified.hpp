@@ -16,8 +16,8 @@ struct VectorMap {
 
 	const std::map<vector<uint>, Data>& map() const { return map_; }
 
-private:
-	template<class D> friend VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>& w);
+//private:
+//	template<class D> friend VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>& w);
 	bool full;
 	std::map<vector<uint>, Data> map_;
 };
@@ -44,8 +44,14 @@ VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>
 }
 
 struct VectorUnified {
+	VectorUnified() : may_add(true) { }
+	VectorUnified(const VectorUnified& pu) : may_add(false) {
+		for (auto& p : pu.unif_.map()) {
+			unif_.map_[p.first];
+		}
+	}
 	string show() const;
-	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t, bool may_add);
+	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
 	void add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w);
 	const std::map<vector<uint>, SubstTree>& map() const { return unif_.map(); }
 
@@ -54,6 +60,7 @@ private:
 	CartesianProd<uint> leafsProd(const ProdVect& leafs);
 	friend MultyUnifiedSubs intersect(const std::map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif);
 
+	bool may_add;
 	VectorMap<SubstTree> unif_;
 };
 

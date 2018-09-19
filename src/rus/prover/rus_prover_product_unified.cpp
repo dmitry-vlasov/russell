@@ -8,7 +8,7 @@ bool debug_union_vect = false;
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t);
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst&);
 
-void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t, bool may_add) {
+void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
 	unif_.intersect(leafs_vect, [w, t](SubstTree& st) { prover::finalize(st, w, t); }, may_add);
 }
 
