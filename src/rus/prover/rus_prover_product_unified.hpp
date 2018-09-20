@@ -8,7 +8,9 @@ struct ProductUnified {
 	ProductUnified() : may_add(true) { }
 	ProductUnified(const ProductUnified& pu) : may_add(false) {
 		for (auto& p : pu.unif_.un()) {
-			unif_.add(p.key);
+			if (!p.erased) {
+				unif_.add(p.key, p.value);
+			}
 		}
 	}
 	string show() const { return unif_.show(); }
