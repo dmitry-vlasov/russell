@@ -34,7 +34,7 @@ VectorMap<vector<D>> intersect(const VectorMap<vector<D>>& v, const VectorMap<D>
 			vector<uint> k = p.first;
 			vector<D> data = p.second;
 			auto i = w.map_.find(k);
-			if (i != w.map_.end() && i->second.sub.ok) {
+			if (i != w.map_.end() && i->second.sub().ok) {
 				data.push_back(i->second);
 				ret.map_[k] = data;
 			}

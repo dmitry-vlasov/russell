@@ -355,26 +355,35 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 }
 
 struct SubstTree {
-	SubstTree() : trees(1) { }
+	SubstTree() : subs_(1), trees_(1) { }
 	SubstTree(const SubstTree&) = default;
 
-	Subst sub;
-	vector<LightTree> trees;
+	SubstTree inc() const {
+		SubstTree ret(*this);
+		ret.trees_.emplace_back();
+		ret.subs_.emplace_back();
+		return ret;
+	}
 
-	LightTree& tree() {
-		return trees.back();
-	}
-	const LightTree& tree() const {
-		return trees.back();
-	}
+	LightTree& tree(uint i = -1) { return i == -1 ? trees_.back() : trees_[i]; }
+	const LightTree& tree(uint i = -1) const { return i == -1 ? trees_.back() : trees_[i]; }
+	Subst& sub(uint i = -1) { return i == -1 ? subs_.back() : subs_[i]; }
+	const Subst& sub(uint i = -1) const { return i == -1 ? subs_.back() : subs_[i]; }
 
 	string show() const;
 	bool operator == (const SubstTree& st) const {
-		return sub == st.sub && trees == st.trees;
+		return subs_ == st.subs_ && trees_ == st.trees_;
 	}
 	bool operator != (const SubstTree& st) const {
 		return !operator == (st);
 	}
+	uint size() const {
+		return subs_.size();
+	}
+
+private:
+	vector<Subst> subs_;
+	vector<LightTree> trees_;
 };
 
 extern bool debug_union_vect;

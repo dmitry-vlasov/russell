@@ -361,7 +361,7 @@ void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSy
 		}
 		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1, k == 0 ? nullptr : &child_terms[k - 1]));
 	}
-	space.unified.add_intersection(child_terms, r, w);
+	space.unified.add_intersection_1(child_terms.back(), r, w);
 }
 
 void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r_fixed)
@@ -480,14 +480,14 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 	}
 	LightTree common;
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		if (expr_ind[i] != -1 && subtree.sub.ok) {
+		if (expr_ind[i] != -1 && subtree.sub().ok) {
 			LightTree e_orig = vindex.index(i)->exprs[expr_ind[i]];
-			if (apply(subtree.sub, e_orig) != subtree.tree()) {
+			if (apply(subtree.sub(), e_orig) != subtree.tree()) {
 				cout << "VECTOR INDEX UNIFICATION FAILS (A)" << endl;
-				cout << show(apply(subtree.sub, e_orig)) << " != " << show(subtree.tree()) << endl << endl;
+				cout << show(apply(subtree.sub(), e_orig)) << " != " << show(subtree.tree()) << endl << endl;
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree()) << endl;
-				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				cout << "subtree.sub: " << show(subtree.sub()) << endl;
 				cout << "leafs: " << show(leafs) << endl;
 				cout << "vindex:" << endl << vindex.show();
 				return false;
@@ -498,7 +498,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 				cout << "common: " << show(common) << endl;
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree()) << endl;
-				cout << "subtree.sub: " << show(subtree.sub) << endl;
+				cout << "subtree.sub: " << show(subtree.sub()) << endl;
 				cout << "leafs: " << show(leafs) << endl;
 				cout << "vindex:" << endl << vindex.show();
 				return false;

@@ -15,7 +15,7 @@ UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, co
 				for (uint i : uv.neighbourhood(p.key)) {
 					const auto& q = uv.un()[i];
 					if (!q.erased) {
-						if (p.key.intersects_with(q.key) && q.value.sub.ok) {
+						if (p.key.intersects_with(q.key) && q.value.sub().ok) {
 							ProdVect r = intersect(p.key, q.key);
 							vector<SubstTree> data = p.value;
 							data.push_back(q.value);
