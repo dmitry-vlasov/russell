@@ -397,6 +397,7 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 		}
 		if (consistent) {
 			unify_branch_rule(space, r, w, w_leafs);
+			//unify_branch_rule_1(space, r, w, w_leafs);
 		}
 		if (!vars_prod.hasNext()) {
 			break;

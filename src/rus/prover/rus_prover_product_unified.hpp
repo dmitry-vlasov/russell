@@ -17,7 +17,7 @@ struct ProductUnified {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
 				if (!p.erased) {
-					unif_.add(p.key, p.value.inc());
+					unif_.add(p.key, p.value.inc(), true);
 				}
 			}
 		}

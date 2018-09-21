@@ -409,7 +409,7 @@ struct UnionVect {
 	bool full() const { return full_; }
 
 	struct Pair {
-		Pair(const ProdVect& k, const Data& v = Data()) : key(k), value(v), erased(false) { }
+		Pair(const ProdVect& k, const Data& v = Data(), bool e = false) : key(k), value(v), erased(e) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
@@ -459,7 +459,7 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if (!p.erased && p.key.intersects_with(q)) {
+				if ((!p.erased || !may_add) && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
@@ -515,12 +515,12 @@ struct UnionVect {
 		return ret;
 	}
 
-	void add(const ProdVect& key, const Data& value = Data()) {
+	void add(const ProdVect& key, const Data& value = Data(), bool erased = false) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
 		uint ind = un_.size();
-		un_.emplace_back(key, value);
+		un_.emplace_back(key, value, erased);
 		for (uint i = 0; i < key.vect.size(); ++ i) {
 			const Set& s = key.vect[i];
 			for (uint k : s.set()) {
