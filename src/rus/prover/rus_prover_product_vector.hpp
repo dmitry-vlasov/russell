@@ -355,11 +355,22 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 }
 
 struct SubstTree {
-	Subst     sub;
-	LightTree tree;
+	SubstTree() : trees(1) { }
+	SubstTree(const SubstTree&) = default;
+
+	Subst sub;
+	vector<LightTree> trees;
+
+	LightTree& tree() {
+		return trees.back();
+	}
+	const LightTree& tree() const {
+		return trees.back();
+	}
+
 	string show() const;
 	bool operator == (const SubstTree& st) const {
-		return sub == st.sub && tree == st.tree;
+		return sub == st.sub && trees == st.trees;
 	}
 	bool operator != (const SubstTree& st) const {
 		return !operator == (st);

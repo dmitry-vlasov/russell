@@ -102,7 +102,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			vectIndex.add(ind, proofInds_[i]);
 		}
 		try {
-			terms[p.first] = unify(vectIndex);
+			terms[p.first] = std::move(unify(vectIndex));
 		} catch (Error& err) {
 			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
 			throw err;

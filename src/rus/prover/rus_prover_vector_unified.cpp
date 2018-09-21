@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover {
 
 string SubstTree::show() const {
 	string ret;
-	ret += "expr: " + prover::show(tree) + "\n";
+	ret += "expr: " + prover::show(tree()) + "\n";
 	ret += Indent::paragraph(prover::show(sub)) + "\n";
 	return ret;
 }
@@ -14,7 +14,7 @@ string VectorUnified::show() const {
 	ostringstream oss;
 	for (const auto& u : unif_.map()) {
 		oss << prover::show(u.first) << " --> " << endl;
-		oss << "term: " << prover::show(u.second.tree) << endl;
+		oss << "term: " << prover::show(u.second.tree()) << endl;
 		oss << "sub: " << prover::show(u.second.sub) << endl;
 	}
 	return oss.str();
@@ -39,17 +39,17 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 	if (w.size()) {
 		LightTree term = unify_step(st.sub, w, t);
 		if (!term.empty()) {
-			st.tree = apply(st.sub, term);
+			st.tree() = apply(st.sub, term);
 		}
 	} else {
-		st.tree = apply(st.sub, t);
+		st.tree() = apply(st.sub, t);
 	}
 }
 
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst& unif) {
 	if (!st.sub.compose(unif)) {
 		st.sub.ok = false;
-		st.tree = LightTree();
+		st.tree() = LightTree();
 		unif.ok = false;
 		return;
 	}
@@ -69,14 +69,14 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 		LightTree::Children children;
 		Subst unif;
 		for (const auto& st : p.second) {
-			if (st.tree.empty()) {
+			if (st.tree().empty()) {
 				break;
 			}
 			unif = unify_subs(MultySubst({&unif, &st.sub}));
 			if (!unif.ok) {
 				break;
 			}
-			children.push_back(make_unique<LightTree>(st.tree));
+			children.push_back(make_unique<LightTree>(st.tree()));
 		}
 		if (children.size() == r->arity()) {
 			LightTree term = apply(unif, LightTree(r, children));
@@ -107,7 +107,7 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 	for (const auto& q : common.map()) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
-			const LightTree& term = q.second[i].tree;
+			const LightTree& term = q.second[i].tree();
 			const Subst& sub = q.second[i].sub;
 			if (!term.empty()) {
 				if (unif[c].ok) {

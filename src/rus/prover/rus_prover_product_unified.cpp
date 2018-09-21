@@ -23,14 +23,42 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			LightTree::Children children;
 			Subst unif;
 			for (const auto& st : p.value) {
-				if (st.tree.empty()) {
+				if (st.tree().empty()) {
 					break;
 				}
 				unif = unify_subs(MultySubst({&unif, &st.sub}));
 				if (!unif.ok) {
 					break;
 				}
-				children.push_back(make_unique<LightTree>(st.tree));
+				children.push_back(make_unique<LightTree>(st.tree()));
+			}
+			if (children.size() == r->arity()) {
+				LightTree term = apply(unif, LightTree(r, children));
+				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+			}
+		}
+	}
+}
+
+void ProductUnified::add_intersection_1(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
+	UnionVect<vector<SubstTree>> common(true);
+	for (const auto& m : v) {
+		common = std::move(intersect(common, m.unif_));
+	}
+	common.check_uniqueness();
+	for (const auto& p : common.un()) {
+		if (!p.erased) {
+			LightTree::Children children;
+			Subst unif;
+			for (const auto& st : p.value) {
+				if (st.tree().empty()) {
+					break;
+				}
+				unif = unify_subs(MultySubst({&unif, &st.sub}));
+				if (!unif.ok) {
+					break;
+				}
+				children.push_back(make_unique<LightTree>(st.tree()));
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
@@ -52,7 +80,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		if (!q.erased) {
 			const ProdVect& key = q.key;
 			for (uint i = 0; i < q.value.size(); ++ i) {
-				const LightTree& term = q.value[i].tree;
+				const LightTree& term = q.value[i].tree();
 				const Subst& sub = q.value[i].sub;
 				if (!term.empty()) {
 					for (auto c : key.unfold()) {
