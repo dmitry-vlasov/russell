@@ -51,8 +51,8 @@ struct MIndexSpace {
 	ProdVect fixed;
 	uint depth;
 
-	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d) :
-	vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
+	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d, const ResultUnified* prev) :
+	unified(prev), vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			vars_prod.incSize();
 			if (fixed[i].storesInfo() || !vindex.index(i)) {
@@ -316,7 +316,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 }
 
-ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth);
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified*);
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
 {
@@ -336,7 +336,30 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.info(i));
 			}
 		}
-		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1));
+		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1, nullptr));
+	}
+	space.unified.add_intersection(child_terms, r, w);
+}
+
+void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
+{
+	vector<ResultUnified> child_terms(r->arity());
+	for (uint k = 0; k < r->arity(); ++ k) {
+		VectorIndex child_vindex;
+		for (uint i = 0; i < space.vindex.size(); ++ i) {
+			if (space.vindex.index(i)) {
+				if (!leafs[i].storesInfo() && !space.vindex.index(i)->rules.count(r)) {
+					return;
+				}
+				const Index* ind =
+					space.vindex.index(i)->rules.count(r) ?
+					space.vindex.index(i)->rules.at(r).branch().child[k].get() : nullptr;
+				child_vindex.add(ind, space.vindex.info(i));
+			} else {
+				child_vindex.add(nullptr, space.vindex.info(i));
+			}
+		}
+		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1, k == 0 ? nullptr : &child_terms[k]));
 	}
 	space.unified.add_intersection(child_terms, r, w);
 }
@@ -423,9 +446,9 @@ void unify_rules(MIndexSpace& space)
 	}
 }
 
-ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth)
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified* prev)
 {
-	MIndexSpace space(vindex, fixed, depth);
+	MIndexSpace space(vindex, fixed, depth, prev);
 	if (debug_multy_index_1) {
 		cout << space.show() << endl;
 		debug_multy_index_1 = false;
@@ -496,7 +519,7 @@ ResultUnified unify(const VectorIndex& vindex) {
 			absent_iter.addSkipped();
 		}
 	}
-	MIndexSpace space(vindex, ProdVect(vindex.size()), 0);
+	MIndexSpace space(vindex, ProdVect(vindex.size()), 0, nullptr);
 	while (true) {
 		space.fixed = ProdVect(vindex.size());
 		for (uint i = 0; i < vindex.size(); ++ i) {

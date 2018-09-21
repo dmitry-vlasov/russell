@@ -6,10 +6,19 @@ namespace mdl { namespace rus { namespace prover {
 
 struct ProductUnified {
 	ProductUnified() : may_add(true) { }
-	ProductUnified(const ProductUnified& pu) : may_add(false) {
+	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
 		for (auto& p : pu.unif_.un()) {
 			if (!p.erased) {
 				unif_.add(p.key, p.value);
+			}
+		}
+	}
+	ProductUnified(const ProductUnified* pu) : may_add(!pu) {
+		if (pu) {
+			for (auto& p : pu->unif_.un()) {
+				if (!p.erased) {
+					unif_.add(p.key, p.value);
+				}
 			}
 		}
 	}
