@@ -5,6 +5,9 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+extern bool debug_multy_index;
+extern uint matrix_vector_counter;
+
 struct Set {
 	Set(bool i = false) : init_(i), index_leafs(nullptr) { }
 	Set(const Set&) = default;
@@ -254,6 +257,19 @@ struct ProdVect {
 	Set& operator[] (uint i) { return vect[i]; }
 	const Set& operator[] (uint i) const { return vect[i]; }
 
+	bool contains(const vector<uint>& v) const {
+		if (v.size() != vect.size()) {
+			throw Error("wrong dim");
+		}
+		for (uint i = 0; i < v.size(); ++ i) {
+			const auto& s = vect[i];
+			if (s.set().find(v[i]) == s.set().end()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	vector<Set> vect;
 };
 
@@ -450,6 +466,12 @@ struct UnionVect {
 	}
 
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
+
+		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
+			cout << "INTERSECTIONG: " << pv.show() << " MAY_ADD: " << (may_add ? "yes" : "no") << endl;
+			//cout << "data: " << value.show() << endl;
+		}
+
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
@@ -463,10 +485,10 @@ struct UnionVect {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						p.erased = true;
 						for (const auto& part : split(p.key, inter)) {
-							add(part, p.value);
+							add(part, p.value, p.erased);
 						}
+						p.erased = true;
 						add(inter, p.value);
 						finalizer(un_.back().value);
 					} else {
@@ -519,6 +541,12 @@ struct UnionVect {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
+
+		if (debug_multy_index && matrix_vector_counter == 1 && key.contains({0, 1})) {
+			cout << "ADDING: " << key.show() << " ERASED: " << (erased ? "yes" : "no") << endl;
+			//cout << "data: " << value.show() << endl;
+		}
+
 		uint ind = un_.size();
 		un_.emplace_back(key, value, erased);
 		for (uint i = 0; i < key.vect.size(); ++ i) {

@@ -78,6 +78,8 @@ string MatrixIndex::card_str() const {
 	return ret;
 }
 
+uint matrix_vector_counter = 0;
+
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -95,6 +97,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		return MultyUnifiedSubs();
 	}
 	map<LightSymbol, ResultUnified> terms;
+	matrix_vector_counter = 0;
 	for (const auto& p : mindex_) {
 		VectorIndex vectIndex;
 		for (uint i = 0; i < dim_hyp_; ++i) {
@@ -108,6 +111,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			throw err;
 		}
 		//cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
+		matrix_vector_counter += 1;
 	}
 	return intersect(terms, unif);
 }
@@ -154,7 +158,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 
 	static int c = 0;
 	c++;
-	//debug_multy_index = (c == 483);
+	debug_multy_index = (c == 3);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}
