@@ -13,7 +13,7 @@ void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymb
 }
 
 void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
-	UnionVect<vector<SubstTree>> common(true);
+	UnionVect common(true);
 	for (const auto& m : v) {
 		common = std::move(intersect(common, m.unif_));
 	}
@@ -22,15 +22,16 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		if (!p.erased) {
 			LightTree::Children children;
 			Subst unif;
-			for (const auto& st : p.value) {
-				if (st.tree().empty()) {
+			const SubstTree& st = p.value;
+			for (uint i = 0; i < st.size(); ++i) {
+				if (st.tree(i).empty()) {
 					break;
 				}
-				unif = unify_subs(MultySubst({&unif, &st.sub()}));
+				unif = unify_subs(MultySubst({&unif, &st.sub(i)}));
 				if (!unif.ok) {
 					break;
 				}
-				children.push_back(make_unique<LightTree>(st.tree()));
+				children.push_back(make_unique<LightTree>(st.tree(i)));
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
@@ -65,7 +66,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 }
 
  MultyUnifiedSubs intersect(const map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif) {
-	UnionVect<vector<SubstTree>> common(true);
+	UnionVect common(true);
 	vector<LightSymbol> vars;
 	for (const auto& p : terms) {
 		common = std::move(intersect(common, p.second.unif_));
@@ -75,9 +76,10 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 	for (const auto& q : common.un()) {
 		if (!q.erased) {
 			const ProdVect& key = q.key;
-			for (uint i = 0; i < q.value.size(); ++ i) {
-				const LightTree& term = q.value[i].tree();
-				const Subst& sub = q.value[i].sub();
+			const SubstTree& st = q.value;
+			for (uint i = 0; i < st.size(); ++ i) {
+				const LightTree& term =st.tree(i);
+				const Subst& sub = st.sub(i);
 				if (!term.empty()) {
 					for (auto c : key.unfold()) {
 						if (unif[c].ok) {

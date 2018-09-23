@@ -27,13 +27,13 @@ struct ProductUnified {
 	void add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w);
 	void add_intersection_1(const ProductUnified& v, const Rule* r, const vector<LightSymbol>& w);
 	std::map<vector<uint>, SubstTree> map() const;
-	const UnionVect<SubstTree>& unif() const { return unif_; }
+	const UnionVect& unif() const { return unif_; }
 
 private:
 	friend MultyUnifiedSubs intersect(const std::map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif);
 
 	bool may_add;
-	UnionVect<SubstTree> unif_;
+	UnionVect unif_;
 };
 
  MultyUnifiedSubs intersect(const map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif);

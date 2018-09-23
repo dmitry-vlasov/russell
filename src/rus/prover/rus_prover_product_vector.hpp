@@ -381,6 +381,11 @@ struct SubstTree {
 		return ret;
 	}
 
+	void inc() {
+		trees_.emplace_back();
+		subs_.emplace_back();
+	}
+
 	LightTree& tree(uint i = -1) { return i == -1 ? trees_.back() : trees_[i]; }
 	const LightTree& tree(uint i = -1) const { return i == -1 ? trees_.back() : trees_[i]; }
 	Subst& sub(uint i = -1) { return i == -1 ? subs_.back() : subs_[i]; }
@@ -418,19 +423,18 @@ inline string show(const SubstTree& st) {
 	return st.show();
 }
 
-template<class Data>
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
 
 	bool full() const { return full_; }
 
 	struct Pair {
-		Pair(const ProdVect& k, const Data& v = Data(), bool e = false) : key(k), value(v), erased(e) { }
+		Pair(const ProdVect& k, const SubstTree& v = SubstTree(), bool e = false) : key(k), value(v), erased(e) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
-		ProdVect key;
-		Data     value;
-		bool     erased;
+		ProdVect   key;
+		SubstTree  value;
+		bool       erased;
 		string show() const {
 			ostringstream oss;
 			oss << key.show() << " --> " << prover::show(value);
@@ -465,6 +469,8 @@ struct UnionVect {
 		return true;
 	}
 
+	//void intersect(const ProdVect& pv, auto finalizer, bool may_add);
+
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 
 		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
@@ -475,7 +481,7 @@ struct UnionVect {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
- 		while (!to_add.empty()) {
+		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
 			for (uint i : neighbourhood(q)) {
@@ -506,58 +512,21 @@ struct UnionVect {
 				finalizer(un_.back().value);
 			}
 		}
- 		if (un_.size() > 256 && c > 8) {
- 			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
- 		}
+		if (un_.size() > 256 && c > 8) {
+			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
+		}
 	}
 
 	const vector<Pair>& un() const { return un_; }
 
-	set<uint> neighbourhood(const ProdVect& v) const {
-		set<uint> ret;
-		if (!maps_.size()) {
-			return ret;
-		}
-		vector<set<uint>> sets;
-		for (uint i = 0; i < v.vect.size(); ++i) {
-			set<uint> inds;
-			for (uint k : v.vect[i].set()) {
-				if (maps_[i].count(k)) {
-					for (uint j : maps_[i].at(k)) {
-						inds.insert(j);
-					}
-				}
-			}
-			if (i == 0) {
-				ret = inds;
-			} else {
-				ret = prover::intersect(ret, inds);
-			}
-		}
-		return ret;
-	}
+	set<uint> neighbourhood(const ProdVect& v) const;
 
-	void add(const ProdVect& key, const Data& value = Data(), bool erased = false) {
-		if (!maps_.size()) {
-			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
-		}
+	void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
 
-		if (debug_multy_index && matrix_vector_counter == 1 && key.contains({0, 1})) {
-			cout << "ADDING: " << key.show() << " ERASED: " << (erased ? "yes" : "no") << endl;
-			//cout << "data: " << value.show() << endl;
+	void inc() {
+		for (Pair& p : un_) {
+			p.value.inc();
 		}
-
-		uint ind = un_.size();
-		un_.emplace_back(key, value, erased);
-		for (uint i = 0; i < key.vect.size(); ++ i) {
-			const Set& s = key.vect[i];
-			for (uint k : s.set()) {
-				maps_[i][k].push_back(ind);
-			}
-		}
-		//if (!check_uniqueness()) {
-		//	cout << "!check_uniqueness()" << endl;
-		//}
 	}
 
 private:
@@ -566,7 +535,7 @@ private:
 	bool full_;
 };
 
-UnionVect<vector<SubstTree>> intersect(const UnionVect<vector<SubstTree>>& v, const UnionVect<SubstTree>& uv);
+UnionVect intersect(const UnionVect& v, const UnionVect& uv);
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
