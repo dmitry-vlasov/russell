@@ -20,10 +20,10 @@ struct ProductUnified {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
 				if (!p.erased) {
-					if (debug_multy_index && matrix_vector_counter) {
+					/*if (debug_multy_index && matrix_vector_counter) {
 						cout << "INIT_ADDING: " << p.key.show() << endl;
 						cout << "p.value.inc(): " << p.value.inc().show(true) << endl;
-					}
+					}*/
 					unif_.add(p.key, p.value.inc(), true);
 				}
 			}

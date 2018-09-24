@@ -2,53 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-/*
-void UnionVect::intersect(const ProdVect& pv, auto finalizer, bool may_add) {
-
-	if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
-		cout << "INTERSECTIONG: " << pv.show() << " MAY_ADD: " << (may_add ? "yes" : "no") << endl;
-		//cout << "data: " << value.show() << endl;
-	}
-
-	stack<ProdVect> to_add;
-	to_add.emplace(pv);
-	uint c = 0;
-	while (!to_add.empty()) {
-		ProdVect q = to_add.top(); to_add.pop();
-		bool intersects = false;
-		for (uint i : neighbourhood(q)) {
-			++c;
-			Pair& p = un_[i];
-			if ((!p.erased || !may_add) && p.key.intersects_with(q)) {
-				ProdVect inter = prover::intersect(p.key, q);
-				intersects = true;
-				if (inter != p.key) {
-					for (const auto& part : split(p.key, inter)) {
-						add(part, p.value, p.erased);
-					}
-					p.erased = true;
-					add(inter, p.value);
-					finalizer(un_.back().value);
-				} else {
-					finalizer(p.value);
-				}
-				if (inter != q) {
-					for (const auto& part : split(q, inter)) {
-						to_add.emplace(part);
-					}
-				}
-			}
-		}
-		if (!intersects && may_add) {
-			add(q);
-			finalizer(un_.back().value);
-		}
-	}
-	if (un_.size() > 256 && c > 8) {
-		cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
-	}
-}*/
-
 set<uint> UnionVect::neighbourhood(const ProdVect& v) const {
 	set<uint> ret;
 	if (!maps_.size()) {
@@ -78,10 +31,10 @@ void UnionVect::add(const ProdVect& key, const SubstTree& value, bool erased) {
 		maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 	}
 
-	if (debug_multy_index && matrix_vector_counter == 1 && key.contains({0, 1})) {
+	/*if (debug_multy_index && matrix_vector_counter == 1 && key.contains({0, 1})) {
 		cout << "ADDING: " << key.show() << " ERASED: " << (erased ? "yes" : "no") << endl;
 		cout << "data: " << value.show(true) << endl;
-	}
+	}*/
 
 	if (debug_multy_index && matrix_vector_counter == 1) {
 		if (auto p = get(key)) {

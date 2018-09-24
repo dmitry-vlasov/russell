@@ -343,6 +343,8 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 	space.unified.add_intersection(child_terms, r, w);
 }
 
+bool debug_intersect_1 = false;
+
 void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
 {
 	static uint c = 0;
@@ -357,6 +359,7 @@ void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSy
 		oss << "w: " << show(w) << endl;
 		oss << "leafs: " << leafs.show() << endl;
 		oss << "========================" << endl;
+		oss << space.unified.show() << endl << endl;
 		cout << Indent::paragraph(oss.str(), space.depth);
 	}
 
@@ -405,34 +408,42 @@ void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSy
 			ostringstream oss;
 			oss << "POST CHILD PROCESS:" << endl;
 			oss << "c = " << c << ", cc = " << cc << endl;
-			oss << "rule: " << Lex::toStr(r->id()) << endl;
-			oss << "w: " << show(w) << endl;
-			oss << "leafs: " << leafs.show() << endl;
+			//oss << "rule: " << Lex::toStr(r->id()) << endl;
+			//oss << "w: " << show(w) << endl;
+			//oss << "leafs: " << leafs.show() << endl;
 			oss << "---------------------------------------" << endl;
-			for (uint i = 0; i <= k; ++ i) {
+			oss << child_terms[k].show() << endl;
+			/*for (uint i = 0; i <= k; ++ i) {
 				oss << "child_terms[" << i << "]:" << endl;
 				oss << child_terms[i].show() << endl;
-			}
+			}*/
 			cout << Indent::paragraph(oss.str(), space.depth) << endl << endl;
 		}
 	}
 
+	bool ZZZ = debug_multy_index && matrix_vector_counter == 1;
 	if (debug_multy_index && matrix_vector_counter == 1) {
 		ostringstream oss;
 		oss << "PRE FINAL: " << cur << endl;
 		oss << "========================" << endl;
 		oss << space.unified.show() << endl << endl;
+		oss << "------------------------" << endl;
+		oss << child_terms.back().show() << endl << endl;
 		cout << Indent::paragraph(oss.str(), space.depth) << endl << endl;
+		if (cur == 8) {
+			cout << "AAA" << endl;
+			debug_intersect_1 = true;
+		}
 	}
 
 	space.unified.add_intersection_1(child_terms.back(), r, w);
 
 	if (debug_multy_index && matrix_vector_counter == 1) {
 		ostringstream oss;
-		oss << "FINAL: " << cur << endl;
+		oss << "POST FINAL: " << cur << endl;
 		oss << "========================" << endl;
 		oss << space.unified.show() << endl << endl;
-		oss << Indent::paragraph(oss.str(), space.depth) << endl << endl;
+		cout << Indent::paragraph(oss.str(), space.depth) << endl << endl;
 	}
 }
 
@@ -452,8 +463,8 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 			}
 		}
 	}
-	unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
-	//unify_branch_rule_1(space, r, vector<LightSymbol>(), r_leafs);
+	//unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
+	unify_branch_rule_1(space, r, vector<LightSymbol>(), r_leafs);
 
 	while (true) {
 		vector<LightSymbol> w = vars_prod.data();
@@ -469,8 +480,8 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 			}
 		}
 		if (consistent) {
-			unify_branch_rule(space, r, w, w_leafs);
-			//unify_branch_rule_1(space, r, w, w_leafs);
+			//unify_branch_rule(space, r, w, w_leafs);
+			unify_branch_rule_1(space, r, w, w_leafs);
 		}
 		if (!vars_prod.hasNext()) {
 			break;

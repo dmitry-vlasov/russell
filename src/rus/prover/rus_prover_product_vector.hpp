@@ -440,6 +440,8 @@ inline string show(const SubstTree& st, bool full = false) {
 	return st.show(full);
 }
 
+extern bool debug_intersect_1;
+
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
 
@@ -499,7 +501,7 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if (!p.erased && p.key.intersects_with(q)) {
+				if (/*!p.erased &&*/ p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
@@ -510,6 +512,7 @@ struct UnionVect {
 						add(inter, p.value);
 						finalizer(un_.back().value);
 					} else {
+						p.erased = false;
 						finalizer(p.value);
 					}
 					if (inter != q) {
@@ -532,7 +535,7 @@ struct UnionVect {
 	void intersect_1(const ProdVect& pv, auto finalizer) {
 
 		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
-			cout << "INTERSECTIONG_1: " << pv.show() << endl;
+			cout << "INTERSECTING_1: " << pv.show() << endl;
 		}
 
 		stack<ProdVect> to_add;
