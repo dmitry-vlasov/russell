@@ -53,8 +53,8 @@ struct MIndexSpace {
 	ProdVect fixed;
 	uint depth;
 
-	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d, const ResultUnified* p) :
-	prev(p), unified(p), vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
+	MIndexSpace(const VectorIndex& vi, const ProdVect& f, uint d, const ResultUnified* p, bool new_level) :
+	prev(p), unified(p, new_level), vars_inds(vi.size(), false), vindex(vi), fixed(f), depth(d) {
 		for (uint i = 0; i < vindex.size(); ++ i) {
 			vars_prod.incSize();
 			if (fixed[i].storesInfo() || !vindex.index(i)) {
@@ -318,7 +318,7 @@ void unify_leaf_rule(MIndexSpace& space, const Rule* r)
 	}
 }
 
-ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified*);
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified*, bool new_level);
 
 void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymbol>& w, const ProdVect& leafs)
 {
@@ -338,7 +338,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				child_vindex.add(nullptr, space.vindex.info(i));
 			}
 		}
-		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1, nullptr));
+		child_terms[k] = std::move(unify(child_vindex, leafs, space.depth + 1, nullptr, false));
 	}
 	space.unified.add_intersection(child_terms, r, w);
 }
@@ -401,7 +401,8 @@ void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSy
 				child_vindex,
 				leafs,
 				space.depth + 1,
-				k == 0 ? space.prev : &child_terms[k - 1]
+				k == 0 ? space.prev : &child_terms[k - 1],
+				k == 0
 			)
 		);
 		if (debug_multy_index && matrix_vector_counter == 1 /*&& leafs.contains({0, 1})*/) {
@@ -463,8 +464,8 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 			}
 		}
 	}
-	unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
-	//unify_branch_rule_1(space, r, vector<LightSymbol>(), r_leafs);
+	//unify_branch_rule(space, r, vector<LightSymbol>(), r_leafs);
+	unify_branch_rule_1(space, r, vector<LightSymbol>(), r_leafs);
 
 	while (true) {
 		vector<LightSymbol> w = vars_prod.data();
@@ -480,8 +481,8 @@ void unify_rule_variant(MIndexSpace& space, const Rule* r, const vector<bool>& r
 			}
 		}
 		if (consistent) {
-			unify_branch_rule(space, r, w, w_leafs);
-			//unify_branch_rule_1(space, r, w, w_leafs);
+			//unify_branch_rule(space, r, w, w_leafs);
+			unify_branch_rule_1(space, r, w, w_leafs);
 		}
 		if (!vars_prod.hasNext()) {
 			break;
@@ -531,9 +532,9 @@ void unify_rules(MIndexSpace& space)
 	}
 }
 
-ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified* prev)
+ResultUnified unify(const VectorIndex& vindex, const ProdVect& fixed, uint depth, const ResultUnified* prev, bool new_level)
 {
-	MIndexSpace space(vindex, fixed, depth, prev);
+	MIndexSpace space(vindex, fixed, depth, prev, new_level);
 	if (debug_multy_index_1) {
 		cout << space.show() << endl;
 		debug_multy_index_1 = false;
@@ -604,7 +605,7 @@ ResultUnified unify(const VectorIndex& vindex) {
 			absent_iter.addSkipped();
 		}
 	}
-	MIndexSpace space(vindex, ProdVect(vindex.size()), 0, nullptr);
+	MIndexSpace space(vindex, ProdVect(vindex.size()), 0, nullptr, true);
 	while (true) {
 		space.fixed = ProdVect(vindex.size());
 		for (uint i = 0; i < vindex.size(); ++ i) {

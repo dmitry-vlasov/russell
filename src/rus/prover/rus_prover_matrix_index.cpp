@@ -158,7 +158,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 
 	static int c = 0;
 	c++;
-	debug_multy_index = (c == 3);
+	//debug_multy_index = (c == 3);
 	if (debug_multy_index) {
 		cout << "AAA" << endl;
 	}

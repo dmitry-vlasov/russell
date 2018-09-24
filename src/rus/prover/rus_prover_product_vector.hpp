@@ -370,6 +370,8 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 	return ret;
 }
 
+extern bool debug_intersect_1;
+
 struct SubstTree {
 	SubstTree() : subs_(1), trees_(1) { }
 	SubstTree(const SubstTree& st) {
@@ -386,10 +388,10 @@ struct SubstTree {
 		return ret;
 	}
 
-	/*void inc() {
+	void inc() {
 		trees_.emplace_back();
 		subs_.emplace_back();
-	}*/
+	}
 
 	LightTree& tree(uint i = -1) { return i == -1 ? trees_.back() : trees_[i]; }
 	const LightTree& tree(uint i = -1) const { return i == -1 ? trees_.back() : trees_[i]; }
@@ -440,18 +442,14 @@ inline string show(const SubstTree& st, bool full = false) {
 	return st.show(full);
 }
 
-extern bool debug_intersect_1;
-
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
 
 	bool full() const { return full_; }
 
 	struct Pair {
-		Pair(const ProdVect& k, const SubstTree& v = SubstTree(), bool e = false) :
-		key(k), erased(e) {
-			value.push(v);
-		}
+		Pair(const ProdVect& k, const stack<SubstTree>& v, bool e = false) :
+		key(k), value(v), erased(e) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
@@ -514,11 +512,20 @@ struct UnionVect {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						for (const auto& part : split(p.key, inter)) {
-							add(part, p.value.top());
-						}
+						bool was_erased = p.erased;
 						p.erased = true;
-						add(inter, p.value.top());
+						stack<SubstTree> value = p.value;
+						for (const auto& part : split(p.key, inter)) {
+							if (auto x = get(part)) {
+								cout << "part: " << part.show() << endl;
+								cout << "p.key: " << p.key.show() << endl;
+								cout << "inter: " << inter.show() << endl;
+								cout << "all: " << endl;
+								cout << show() << endl;
+							}
+							add(part, value, was_erased);
+						}
+						add(inter, value);
 						finalizer(un_.back().value.top());
 					} else {
 						p.erased = false;
@@ -532,13 +539,14 @@ struct UnionVect {
 				}
 			}
 			if (!intersects) {
-				add(q);
+				stack<SubstTree> v; v.emplace();
+				add(q, v);
 				finalizer(un_.back().value.top());
 			}
 		}
-		if (un_.size() > 256 && c > 8) {
+		/*if (un_.size() > 256 && c > 8) {
 			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
-		}
+		}*/
 	}
 
 	void intersect_1(const ProdVect& pv, auto finalizer) {
@@ -549,7 +557,7 @@ struct UnionVect {
 
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
-		uint c = 0;
+		static uint c = 0;
 		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
@@ -560,11 +568,15 @@ struct UnionVect {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						for (const auto& part : split(p.key, inter)) {
-							add(part, p.value.top(), p.erased);
-						}
+						bool was_erased = p.erased;
 						p.erased = true;
-						add(inter, p.value.top());
+						stack<SubstTree> value = p.value;
+						for (const auto& part : split(p.key, inter)) {
+							add(part, value, was_erased);
+						}
+						//cout << "c1 = " << c << endl;
+						add(inter, value);
+						//cout << "done " << endl;
 						finalizer(un_.back().value.top());
 					} else {
 						p.erased = false;
@@ -587,7 +599,28 @@ struct UnionVect {
 
 	set<uint> neighbourhood(const ProdVect& v) const;
 
-	void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
+	//void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
+	void add(const ProdVect& key, const stack<SubstTree>& value, bool erased = false) {
+		if (!maps_.size()) {
+			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
+		}
+		//if (debug_multy_index && matrix_vector_counter == 1) {
+			if (auto p = get(key)) {
+				cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
+				cout << "already there: " << p->show() << endl;
+				//cout << "adding: " << value.show(true) << endl;
+			}
+		//}
+
+		uint ind = un_.size();
+		un_.emplace_back(key, value, erased);
+		for (uint i = 0; i < key.vect.size(); ++ i) {
+			const Set& s = key.vect[i];
+			for (uint k : s.set()) {
+				maps_[i][k].push_back(ind);
+			}
+		}
+}
 
 	/*void inc() {
 		for (Pair& p : un_) {

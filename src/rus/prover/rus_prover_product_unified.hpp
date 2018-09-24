@@ -12,19 +12,21 @@ struct ProductUnified {
 	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
 		for (auto& p : pu.unif_.un()) {
 			if (!p.erased) {
-				unif_.add(p.key, p.value.top());
+				unif_.add(p.key, p.value);
 			}
 		}
 	}
-	ProductUnified(const ProductUnified* pu) : may_add(!pu) {
+	ProductUnified(const ProductUnified* pu, bool new_level) : may_add(!pu) {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
 				if (!p.erased) {
-					/*if (debug_multy_index && matrix_vector_counter) {
-						cout << "INIT_ADDING: " << p.key.show() << endl;
-						cout << "p.value.inc(): " << p.value.inc().show(true) << endl;
-					}*/
-					unif_.add(p.key, p.value.top().inc(), true);
+					stack<SubstTree> v = p.value;
+					if (new_level) {
+						v.emplace();
+					} else {
+						v.top().inc();
+					}
+					unif_.add(p.key, v, true);
 				}
 			}
 		}
