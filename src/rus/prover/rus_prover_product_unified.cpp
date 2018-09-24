@@ -26,7 +26,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 		if (!p.erased) {
 			LightTree::Children children;
 			Subst unif;
-			const SubstTree& st = p.value;
+			const SubstTree& st = p.value.top();
 			for (uint i = 0; i < st.size(); ++i) {
 				if (st.tree(i).empty()) {
 					break;
@@ -50,7 +50,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 		if (!p.erased) {
 			LightTree::Children children;
 			Subst unif;
-			const SubstTree& st = p.value;
+			const SubstTree& st = p.value.top();
 			for (uint i = 0; i < st.size(); ++i) {
 				if (st.tree(i).empty()) {
 					break;
@@ -80,7 +80,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 	for (const auto& q : common.un()) {
 		if (!q.erased) {
 			const ProdVect& key = q.key;
-			const SubstTree& st = q.value;
+			const SubstTree& st = q.value.top();
 			for (uint i = 0; i < st.size(); ++ i) {
 				const LightTree& term =st.tree(i);
 				const Subst& sub = st.sub(i);
@@ -112,7 +112,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 	 for (const auto& q : unif_.un()) {
 		if (!q.erased) {
 			for (auto c : q.key.unfold()) {
-				ret[c] = q.value;
+				ret[c] = q.value.top();
 			}
 		}
 	 }

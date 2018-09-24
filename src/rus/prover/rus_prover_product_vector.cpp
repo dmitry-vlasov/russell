@@ -59,7 +59,7 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 	if (v.full()) {
 		for (const auto& p : uv.un()) {
 			if (!p.erased) {
-				ret.add(p.key, p.value);
+				ret.add(p.key, p.value.top());
 			}
 		}
 	} else {
@@ -69,11 +69,11 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 				for (uint i : uv.neighbourhood(p.key)) {
 					const auto& q = uv.un()[i];
 					if (!q.erased) {
-						if (p.key.intersects_with(q.key) && q.value.sub().ok) {
+						if (p.key.intersects_with(q.key) && q.value.top().sub().ok) {
 							ProdVect r = intersect(p.key, q.key);
-							SubstTree data = p.value.inc();
-							data.sub() = q.value.sub();
-							data.tree() = q.value.tree();
+							SubstTree data = p.value.top().inc();
+							data.sub() = q.value.top().sub();
+							data.tree() = q.value.top().tree();
 							ret.add(r, data);
 							++c0;
 						}

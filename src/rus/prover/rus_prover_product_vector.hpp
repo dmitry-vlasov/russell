@@ -386,10 +386,10 @@ struct SubstTree {
 		return ret;
 	}
 
-	void inc() {
+	/*void inc() {
 		trees_.emplace_back();
 		subs_.emplace_back();
-	}
+	}*/
 
 	LightTree& tree(uint i = -1) { return i == -1 ? trees_.back() : trees_[i]; }
 	const LightTree& tree(uint i = -1) const { return i == -1 ? trees_.back() : trees_[i]; }
@@ -448,16 +448,25 @@ struct UnionVect {
 	bool full() const { return full_; }
 
 	struct Pair {
-		Pair(const ProdVect& k, const SubstTree& v = SubstTree(), bool e = false) : key(k), value(v), erased(e) { }
+		Pair(const ProdVect& k, const SubstTree& v = SubstTree(), bool e = false) :
+		key(k), erased(e) {
+			value.push(v);
+		}
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
-		ProdVect   key;
-		SubstTree  value;
-		bool       erased;
+		ProdVect key;
+		stack<SubstTree> value;
+		bool erased;
 		string show() const {
 			ostringstream oss;
 			oss << (erased ? "ERASED " : "") + key.show() << " --> " << endl;
-			oss << prover::show(value, true);
+			stack<SubstTree> v = value;
+			uint c = 0;
+			while (!v.empty()) {
+				oss << "stack level: " << c++ << endl;
+				oss << prover::show(v.top(), true);
+				v.pop();
+			}
 			return oss.str();
 		}
 	};
@@ -506,14 +515,14 @@ struct UnionVect {
 					intersects = true;
 					if (inter != p.key) {
 						for (const auto& part : split(p.key, inter)) {
-							add(part, p.value);
+							add(part, p.value.top());
 						}
 						p.erased = true;
-						add(inter, p.value);
-						finalizer(un_.back().value);
+						add(inter, p.value.top());
+						finalizer(un_.back().value.top());
 					} else {
 						p.erased = false;
-						finalizer(p.value);
+						finalizer(p.value.top());
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
@@ -524,7 +533,7 @@ struct UnionVect {
 			}
 			if (!intersects) {
 				add(q);
-				finalizer(un_.back().value);
+				finalizer(un_.back().value.top());
 			}
 		}
 		if (un_.size() > 256 && c > 8) {
@@ -552,14 +561,14 @@ struct UnionVect {
 					intersects = true;
 					if (inter != p.key) {
 						for (const auto& part : split(p.key, inter)) {
-							add(part, p.value, p.erased);
+							add(part, p.value.top(), p.erased);
 						}
 						p.erased = true;
-						add(inter, p.value);
-						finalizer(un_.back().value);
+						add(inter, p.value.top());
+						finalizer(un_.back().value.top());
 					} else {
 						p.erased = false;
-						finalizer(p.value);
+						finalizer(p.value.top());
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
@@ -580,11 +589,11 @@ struct UnionVect {
 
 	void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
 
-	void inc() {
+	/*void inc() {
 		for (Pair& p : un_) {
-			p.value.inc();
+			p.value.top().inc();
 		}
-	}
+	}*/
 
 	bool contains(const vector<uint>& v) const {
 		for (const auto& p : un_) {

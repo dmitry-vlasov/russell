@@ -12,7 +12,7 @@ struct ProductUnified {
 	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
 		for (auto& p : pu.unif_.un()) {
 			if (!p.erased) {
-				unif_.add(p.key, p.value);
+				unif_.add(p.key, p.value.top());
 			}
 		}
 	}
@@ -24,7 +24,7 @@ struct ProductUnified {
 						cout << "INIT_ADDING: " << p.key.show() << endl;
 						cout << "p.value.inc(): " << p.value.inc().show(true) << endl;
 					}*/
-					unif_.add(p.key, p.value.inc(), true);
+					unif_.add(p.key, p.value.top().inc(), true);
 				}
 			}
 		}
