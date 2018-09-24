@@ -83,17 +83,20 @@ void UnionVect::add(const ProdVect& key, const SubstTree& value, bool erased) {
 		cout << "data: " << value.show(true) << endl;
 	}
 
+	if (debug_multy_index && matrix_vector_counter == 1) {
+		if (auto p = get(key)) {
+			cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
+			cout << "already there: " << p->show() << endl;
+			cout << "adding: " << value.show(true) << endl;
+		}
+	}
+
 	uint ind = un_.size();
 	un_.emplace_back(key, value, erased);
 	for (uint i = 0; i < key.vect.size(); ++ i) {
 		const Set& s = key.vect[i];
 		for (uint k : s.set()) {
 			maps_[i][k].push_back(ind);
-		}
-	}
-	if (debug_multy_index && matrix_vector_counter == 1) {
-		if (!check_uniqueness()) {
-			cout << "!check_uniqueness()" << endl;
 		}
 	}
 }

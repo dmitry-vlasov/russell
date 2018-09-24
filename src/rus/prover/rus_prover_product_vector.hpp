@@ -489,10 +489,50 @@ struct UnionVect {
 
 	//void intersect(const ProdVect& pv, auto finalizer, bool may_add);
 
-	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
+	void intersect(const ProdVect& pv, auto finalizer) {
+		stack<ProdVect> to_add;
+		to_add.emplace(pv);
+		uint c = 0;
+		while (!to_add.empty()) {
+			ProdVect q = to_add.top(); to_add.pop();
+			bool intersects = false;
+			for (uint i : neighbourhood(q)) {
+				++c;
+				Pair& p = un_[i];
+				if (!p.erased && p.key.intersects_with(q)) {
+					ProdVect inter = prover::intersect(p.key, q);
+					intersects = true;
+					if (inter != p.key) {
+						for (const auto& part : split(p.key, inter)) {
+							add(part, p.value);
+						}
+						p.erased = true;
+						add(inter, p.value);
+						finalizer(un_.back().value);
+					} else {
+						finalizer(p.value);
+					}
+					if (inter != q) {
+						for (const auto& part : split(q, inter)) {
+							to_add.emplace(part);
+						}
+					}
+				}
+			}
+			if (!intersects) {
+				add(q);
+				finalizer(un_.back().value);
+			}
+		}
+		if (un_.size() > 256 && c > 8) {
+			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
+		}
+	}
+
+	void intersect_1(const ProdVect& pv, auto finalizer) {
 
 		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
-			cout << "INTERSECTIONG: " << pv.show() << " MAY_ADD: " << (may_add ? "yes" : "no") << endl;
+			cout << "INTERSECTIONG_1: " << pv.show() << endl;
 		}
 
 		stack<ProdVect> to_add;
@@ -504,7 +544,7 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if ((!p.erased || !may_add) && p.key.intersects_with(q)) {
+				if (p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
@@ -515,7 +555,7 @@ struct UnionVect {
 						add(inter, p.value);
 						finalizer(un_.back().value);
 					} else {
-						//p.erased = false;
+						p.erased = false;
 						finalizer(p.value);
 					}
 					if (inter != q) {
@@ -524,10 +564,6 @@ struct UnionVect {
 						}
 					}
 				}
-			}
-			if (!intersects && may_add) {
-				add(q);
-				finalizer(un_.back().value);
 			}
 		}
 		if (un_.size() > 256 && c > 8) {
@@ -554,6 +590,14 @@ struct UnionVect {
 			}
 		}
 		return false;
+	}
+	const Pair* get(const ProdVect& v) const {
+		for (const auto& p : un_) {
+			if (p.key == v) {
+				return &p;
+			}
+		}
+		return nullptr;
 	}
 
 private:
