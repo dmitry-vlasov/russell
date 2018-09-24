@@ -448,16 +448,29 @@ struct UnionVect {
 	bool full() const { return full_; }
 
 	struct Pair {
-		Pair(const ProdVect& k, const stack<SubstTree>& v, bool e = false) :
-		key(k), value(v), erased(e) { }
+		enum Status {
+			ACTIVE, SHADOWED, ERASED
+		};
+		Pair(const ProdVect& k, const stack<SubstTree>& v, Status s = ACTIVE) :
+		key(k), value(v), status(s) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
 		stack<SubstTree> value;
-		bool erased;
+		Status status;
+		bool active() const { return status == ACTIVE; }
+		bool erased() const { return status == ERASED; }
+		void erase() { status = ERASED; }
+		void activate() { status = ACTIVE; }
+
 		string show() const {
 			ostringstream oss;
-			oss << (erased ? "ERASED " : "") + key.show() << " --> " << endl;
+			switch (status) {
+			case ACTIVE:   oss << "ACTIVE ";   break;
+			case SHADOWED: oss << "SHADOWED "; break;
+			case ERASED:   oss <<"ERASED ";    break;
+			}
+			oss << key.show() << " --> " << endl;
 			stack<SubstTree> v = value;
 			uint c = 0;
 			while (!v.empty()) {
@@ -508,12 +521,12 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if (/*!p.erased &&*/ p.key.intersects_with(q)) {
+				if (!p.erased() && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						bool was_erased = p.erased;
-						p.erased = true;
+						bool active = p.active();
+						p.erase();
 						stack<SubstTree> value = p.value;
 						for (const auto& part : split(p.key, inter)) {
 							if (auto x = get(part)) {
@@ -523,12 +536,12 @@ struct UnionVect {
 								cout << "all: " << endl;
 								cout << show() << endl;
 							}
-							add(part, value, was_erased);
+							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
 						}
 						add(inter, value);
 						finalizer(un_.back().value.top());
 					} else {
-						p.erased = false;
+						p.activate();
 						finalizer(p.value.top());
 					}
 					if (inter != q) {
@@ -564,22 +577,22 @@ struct UnionVect {
 			for (uint i : neighbourhood(q)) {
 				++c;
 				Pair& p = un_[i];
-				if (p.key.intersects_with(q)) {
+				if (!p.erased() && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						bool was_erased = p.erased;
-						p.erased = true;
+						bool active = p.active();
+						p.erase();
 						stack<SubstTree> value = p.value;
 						for (const auto& part : split(p.key, inter)) {
-							add(part, value, was_erased);
+							add(part, value, active ? Pair::ACTIVE : Pair::SHADOWED);
 						}
 						//cout << "c1 = " << c << endl;
 						add(inter, value);
 						//cout << "done " << endl;
 						finalizer(un_.back().value.top());
 					} else {
-						p.erased = false;
+						p.activate();
 						finalizer(p.value.top());
 					}
 					if (inter != q) {
@@ -600,7 +613,7 @@ struct UnionVect {
 	set<uint> neighbourhood(const ProdVect& v) const;
 
 	//void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
-	void add(const ProdVect& key, const stack<SubstTree>& value, bool erased = false) {
+	void add(const ProdVect& key, const stack<SubstTree>& value, Pair::Status status = Pair::ACTIVE) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
@@ -613,7 +626,7 @@ struct UnionVect {
 		//}
 
 		uint ind = un_.size();
-		un_.emplace_back(key, value, erased);
+		un_.emplace_back(key, value, status);
 		for (uint i = 0; i < key.vect.size(); ++ i) {
 			const Set& s = key.vect[i];
 			for (uint k : s.set()) {

@@ -75,17 +75,17 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 	UnionVect ret;
 	if (v.full()) {
 		for (const auto& p : uv.un()) {
-			if (!p.erased) {
+			if (p.active()) {
 				ret.add(p.key, p.value);
 			}
 		}
 	} else {
 		uint c0 = 0;
 		for (const auto& p : v.un()) {
-			if (!p.erased) {
+			if (p.active()) {
 				for (uint i : uv.neighbourhood(p.key)) {
 					const auto& q = uv.un()[i];
-					if (!q.erased) {
+					if (q.active()) {
 						if (p.key.intersects_with(q.key) && q.value.top().sub().ok) {
 							ProdVect r = intersect(p.key, q.key);
 							SubstTree data = p.value.top().inc();
@@ -93,7 +93,7 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 							data.tree() = q.value.top().tree();
 							stack<SubstTree> v;
 							v.push(data);
-							ret.add(r, v);
+							ret.add(r, v, UnionVect::Pair::Status::ACTIVE);
 							++c0;
 						}
 					}
