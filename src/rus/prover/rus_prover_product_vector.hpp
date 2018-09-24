@@ -511,7 +511,7 @@ struct UnionVect {
 
 	//void intersect(const ProdVect& pv, auto finalizer, bool may_add);
 
-	void intersect(const ProdVect& pv, auto finalizer) {
+	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		uint c = 0;
@@ -551,26 +551,21 @@ struct UnionVect {
 					}
 				}
 			}
-			if (!intersects) {
+			if (may_add && !intersects) {
 				stack<SubstTree> v; v.emplace();
 				add(q, v);
 				finalizer(un_.back().value.top());
 			}
 		}
-		/*if (un_.size() > 256 && c > 8) {
+		if (un_.size() > 256 && c > 8) {
 			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
-		}*/
+		}
 	}
 
-	void intersect_1(const ProdVect& pv, auto finalizer) {
-
-		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
-			cout << "INTERSECTING_1: " << pv.show() << endl;
-		}
-
+	/*void intersect_1(const ProdVect& pv, auto finalizer) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
-		static uint c = 0;
+		uint c = 0;
 		while (!to_add.empty()) {
 			ProdVect q = to_add.top(); to_add.pop();
 			bool intersects = false;
@@ -587,9 +582,7 @@ struct UnionVect {
 						for (const auto& part : split(p.key, inter)) {
 							add(part, value, active ? Pair::ACTIVE : Pair::SHADOWED);
 						}
-						//cout << "c1 = " << c << endl;
 						add(inter, value);
-						//cout << "done " << endl;
 						finalizer(un_.back().value.top());
 					} else {
 						p.activate();
@@ -606,7 +599,7 @@ struct UnionVect {
 		if (un_.size() > 256 && c > 8) {
 			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
 		}
-	}
+	}*/
 
 	const vector<Pair>& un() const { return un_; }
 

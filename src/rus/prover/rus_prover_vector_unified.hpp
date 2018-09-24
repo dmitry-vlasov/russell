@@ -50,9 +50,18 @@ struct VectorUnified {
 			unif_.map_[p.first];
 		}
 	}
+	VectorUnified(const VectorUnified* pu, bool new_level) : may_add(false) {
+		if (pu) {
+			for (auto& p : pu->unif_.map()) {
+				unif_.map_[p.first];
+			}
+		}
+	}
+
 	string show() const;
 	void finalize(ProdVect leafs_vect, const vector<LightSymbol>& w, const LightTree& t);
 	void add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w);
+	void add_intersection_1(const VectorUnified& v, const Rule* r, const vector<LightSymbol>& w);
 	const std::map<vector<uint>, SubstTree>& map() const { return unif_.map(); }
 
 private:

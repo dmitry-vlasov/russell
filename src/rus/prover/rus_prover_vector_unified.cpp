@@ -78,6 +78,31 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 	}
 }
 
+void VectorUnified::add_intersection_1(const VectorUnified& v, const Rule* r, const vector<LightSymbol>& w) {
+	for (const auto& p : v.map()) {
+		auto x = unif_.map().find(p.first);
+		if (x != unif_.map().end()) {
+			LightTree::Children children;
+			Subst unif;
+			const SubstTree& st = p.second;
+			for (uint i = 0; i < st.size(); ++i) {
+				if (st.tree(i).empty()) {
+					break;
+				}
+				unif = unify_subs(MultySubst({&unif, &st.sub(i)}));
+				if (!unif.ok) {
+					break;
+				}
+				children.push_back(make_unique<LightTree>(st.tree(i)));
+			}
+			if (children.size() == r->arity()) {
+				LightTree term = apply(unif, LightTree(r, children));
+				unif_.add(p.first, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
+		}
+		}
+	}
+}
+
 CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 	CartesianProd<uint> leafs_prod;
 	for (uint i = 0; i < leafs.vect.size(); ++ i) {
