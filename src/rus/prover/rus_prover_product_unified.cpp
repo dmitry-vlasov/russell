@@ -59,7 +59,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, false);
 			}
 		}
 	}

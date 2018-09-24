@@ -4,6 +4,9 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+extern bool debug_multy_index;
+extern uint matrix_vector_counter;
+
 struct ProductUnified {
 	ProductUnified() : may_add(true) { }
 	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
@@ -17,6 +20,10 @@ struct ProductUnified {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
 				if (!p.erased) {
+					if (debug_multy_index && matrix_vector_counter) {
+						cout << "INIT_ADDING: " << p.key.show() << endl;
+						cout << "p.value.inc(): " << p.value.inc().show(true) << endl;
+					}
 					unif_.add(p.key, p.value.inc(), true);
 				}
 			}

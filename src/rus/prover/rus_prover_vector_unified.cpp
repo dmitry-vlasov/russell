@@ -3,13 +3,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-string SubstTree::show() const {
-	string ret;
-	ret += "expr: " + prover::show(tree()) + "\n";
-	ret += Indent::paragraph(prover::show(sub())) + "\n";
-	return ret;
-}
-
 string VectorUnified::show() const {
 	ostringstream oss;
 	for (const auto& u : unif_.map()) {

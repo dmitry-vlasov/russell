@@ -80,7 +80,7 @@ void UnionVect::add(const ProdVect& key, const SubstTree& value, bool erased) {
 
 	if (debug_multy_index && matrix_vector_counter == 1 && key.contains({0, 1})) {
 		cout << "ADDING: " << key.show() << " ERASED: " << (erased ? "yes" : "no") << endl;
-		cout << "data: " << value.show() << endl;
+		cout << "data: " << value.show(true) << endl;
 	}
 
 	uint ind = un_.size();
@@ -91,9 +91,11 @@ void UnionVect::add(const ProdVect& key, const SubstTree& value, bool erased) {
 			maps_[i][k].push_back(ind);
 		}
 	}
-	//if (!check_uniqueness()) {
-	//	cout << "!check_uniqueness()" << endl;
-	//}
+	if (debug_multy_index && matrix_vector_counter == 1) {
+		if (!check_uniqueness()) {
+			cout << "!check_uniqueness()" << endl;
+		}
+	}
 }
 
 UnionVect intersect(const UnionVect& v, const UnionVect& uv) {

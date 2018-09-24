@@ -372,7 +372,12 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 
 struct SubstTree {
 	SubstTree() : subs_(1), trees_(1) { }
-	SubstTree(const SubstTree&) = default;
+	SubstTree(const SubstTree& st) {
+		for (uint i = 0; i < st.size(); ++ i) {
+			subs_.push_back(st.sub(i));
+			trees_.push_back(st.tree(i));
+		}
+	}
 
 	SubstTree inc() const {
 		SubstTree ret(*this);
@@ -391,7 +396,19 @@ struct SubstTree {
 	Subst& sub(uint i = -1) { return i == -1 ? subs_.back() : subs_[i]; }
 	const Subst& sub(uint i = -1) const { return i == -1 ? subs_.back() : subs_[i]; }
 
-	string show() const;
+	string show(bool full = false) const {
+		string ret;
+		if (full) {
+			for (uint i = 0; i < size(); ++ i) {
+				ret += to_string(i) + " - expr: " + prover::show(tree(i)) + "\n";
+				ret += Indent::paragraph(prover::show(sub(i))) + "\n";
+			}
+		} else {
+			ret += "expr: " + prover::show(tree()) + "\n";
+			ret += Indent::paragraph(prover::show(sub())) + "\n";
+		}
+		return ret;
+	}
 	bool operator == (const SubstTree& st) const {
 		return subs_ == st.subs_ && trees_ == st.trees_;
 	}
@@ -419,8 +436,8 @@ inline string show(const vector<SubstTree>& vst) {
 	return ret;
 }
 
-inline string show(const SubstTree& st) {
-	return st.show();
+inline string show(const SubstTree& st, bool full = false) {
+	return st.show(full);
 }
 
 struct UnionVect {
@@ -437,7 +454,8 @@ struct UnionVect {
 		bool       erased;
 		string show() const {
 			ostringstream oss;
-			oss << key.show() << " --> " << prover::show(value);
+			oss << (erased ? "ERASED " : "") + key.show() << " --> " << endl;
+			oss << prover::show(value, true);
 			return oss.str();
 		}
 	};
@@ -475,7 +493,6 @@ struct UnionVect {
 
 		if (debug_multy_index && matrix_vector_counter == 1 && pv.contains({0, 1})) {
 			cout << "INTERSECTIONG: " << pv.show() << " MAY_ADD: " << (may_add ? "yes" : "no") << endl;
-			//cout << "data: " << value.show() << endl;
 		}
 
 		stack<ProdVect> to_add;
@@ -498,6 +515,7 @@ struct UnionVect {
 						add(inter, p.value);
 						finalizer(un_.back().value);
 					} else {
+						//p.erased = false;
 						finalizer(p.value);
 					}
 					if (inter != q) {
@@ -527,6 +545,15 @@ struct UnionVect {
 		for (Pair& p : un_) {
 			p.value.inc();
 		}
+	}
+
+	bool contains(const vector<uint>& v) const {
+		for (const auto& p : un_) {
+			if (p.key.contains(v)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 private:
