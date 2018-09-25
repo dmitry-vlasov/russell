@@ -19,6 +19,25 @@ struct Set {
 	bool operator != (const Set& s) const {
 		return !operator == (s);
 	}
+	bool operator < (const Set& s) const {
+		if ((!init_ && s.init_) || (set_.size() < s.set_.size())) {
+			return true;
+		} else if ((init_ && !s.init_) || (set_.size() > s.set_.size())) {
+			return false;
+		} else {
+			auto i1 = set_.begin();
+			auto i2 = s.set_.begin();
+			for (uint i = 0; i < set_.size(); ++i, ++i1, ++i2) {
+				if (*i1 < *i2) {
+					return true;
+				} else if (*i1 > *i2) {
+					return false;
+				}
+			}
+			assert(operator==(s));
+			return false;
+		}
+	}
 
 	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
 		if (!index_leafs) {
@@ -156,6 +175,17 @@ struct ProdVect {
 	}
 	bool operator != (const ProdVect& v) const {
 		return !operator == (v);
+	}
+	bool operator < (const ProdVect& v) const {
+		for (uint i = 0; i < vect.size(); ++ i) {
+			if (vect[i] < v.vect[i]) {
+				return true;
+			} else if (v.vect[i] < vect[i]) {
+				return false;
+			}
+		}
+		assert(operator ==(v));
+		return false;
 	}
 
 	bool empty() const {
@@ -354,7 +384,7 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 		}
 		iter.makeNext();
 	}
-	if (!is_splitting(v, ret, inter)) {
+	/*if (!is_splitting(v, ret, inter)) {
 		cout << "!is_splitting(v, ret)" << endl;
 		cout << "v: " << v.show() << endl;
 		cout << "inter: " << inter.show() << endl;
@@ -363,7 +393,7 @@ inline vector<ProdVect> split(const ProdVect& v, const ProdVect& inter) {
 			cout << "\t" << p.show() << endl;
 		}
 		exit(1);
-	}
+	}*/
 	if (ret.size() > 32) {
 		cout << "splitting size: " << ret.size() << endl;
 	}
@@ -444,6 +474,7 @@ inline string show(const SubstTree& st, bool full = false) {
 
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
+	UnionVect(const UnionVect&) = default;
 
 	bool full() const { return full_; }
 
@@ -465,12 +496,7 @@ struct UnionVect {
 
 		string show() const {
 			ostringstream oss;
-			switch (status) {
-			case ACTIVE:   oss << "ACTIVE ";   break;
-			case SHADOWED: oss << "SHADOWED "; break;
-			case ERASED:   oss <<"ERASED ";    break;
-			}
-			oss << key.show() << " --> " << endl;
+			oss << showKey() << " --> " << endl;
 			stack<SubstTree> v = value;
 			uint c = 0;
 			while (!v.empty()) {
@@ -478,6 +504,16 @@ struct UnionVect {
 				oss << prover::show(v.top(), true);
 				v.pop();
 			}
+			return oss.str();
+		}
+		string showKey() const {
+			ostringstream oss;
+			switch (status) {
+			case ACTIVE:   oss << "ACTIVE ";   break;
+			case SHADOWED: oss << "SHADOWED "; break;
+			case ERASED:   oss <<"ERASED ";    break;
+			}
+			oss << key.show();
 			return oss.str();
 		}
 	};
@@ -489,6 +525,18 @@ struct UnionVect {
 		oss << "{" << endl;
 		for (const auto& s : un_) {
 			oss << "\t" << s.show() << endl;
+		}
+		oss << "}" << endl;
+		return oss.str();
+	}
+	string showKeys() const {
+		if (un_.empty()) {
+			return "{ }";
+		}
+		ostringstream oss;
+		oss << "{" << endl;
+		for (const auto& s : un_) {
+			oss << "\t" << s.showKey() << endl;
 		}
 		oss << "}" << endl;
 		return oss.str();
@@ -510,20 +558,161 @@ struct UnionVect {
 	}
 
 	//void intersect(const ProdVect& pv, auto finalizer, bool may_add);
+/*
+	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 
+		set<uint> n = neighbourhood(pv);
+		vector<Pair> intersected_pairs;
+		for (uint i : n) {
+			Pair& p = un_[i];
+			if (!p.erased() && p.key.intersects_with(pv)) {
+				ProdVect inter = prover::intersect(p.key, pv);
+				if (inter != p.key) {
+					bool active = p.active();
+					p.erase();
+					stack<SubstTree> value = p.value;
+					for (const auto& non_intersected : split(p.key, inter)) {
+						add(non_intersected, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
+					}
+					//add(inter, value);
+					//finalizer(un_.back().value.top());
+					for ()
+					for (const auto& intersected : split(q, inter)) {
+						to_add.emplace(part);
+					}
+
+				} else {
+					p.activate();
+					finalizer(p.value.top());
+				}
+			}
+		}
+		if (may_add) {
+			for (const auto& k : intersected_pairs) {
+				stack<SubstTree> v; v.emplace();
+				add(k.key, k.value);
+				finalizer(un_.back().value.top());
+			}
+		}
+
+
+		stack<ProdVect> to_add;
+		to_add.emplace(pv);
+		vector<ProdVect> added;
+		while (!to_add.empty()) {
+			ProdVect q = to_add.top();
+			to_add.pop();
+			if (std::find(added.begin(), added.end(), q) != added.end()) {
+				continue;
+			}
+			added.push_back(q);
+			bool intersects = false;
+			set<uint> n = neighbourhood(q);
+			for (uint i : n) {
+				Pair& p = un_[i];
+				if (!p.erased() && p.key.intersects_with(q)) {
+					ProdVect inter = prover::intersect(p.key, q);
+					intersects = true;
+					if (inter != p.key) {
+						bool active = p.active();
+						p.erase();
+						stack<SubstTree> value = p.value;
+						for (const auto& part : split(p.key, inter)) {
+							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
+						}
+						add(inter, value);
+						finalizer(un_.back().value.top());
+					} else {
+						p.activate();
+						finalizer(p.value.top());
+					}
+					if (inter != q) {
+						for (const auto& part : split(q, inter)) {
+							to_add.emplace(part);
+						}
+					}
+				}
+			}
+			if (may_add && !intersects) {
+				stack<SubstTree> v; v.emplace();
+				add(q, v);
+				finalizer(un_.back().value.top());
+			}
+		}
+	}
+*/
+	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
+		stack<ProdVect> to_add;
+		to_add.emplace(pv);
+		set<ProdVect> added;
+		while (!to_add.empty()) {
+			ProdVect q = to_add.top();
+			to_add.pop();
+			if (added.count(q)) {
+				continue;
+			}
+			added.insert(q);
+			bool intersects = false;
+			set<uint> n = neighbourhood(q);
+			for (uint i : n) {
+				Pair& p = un_[i];
+				if (!p.erased() && p.key.intersects_with(q)) {
+					ProdVect inter = prover::intersect(p.key, q);
+					intersects = true;
+					if (inter != p.key) {
+						bool active = p.active();
+						p.erase();
+						stack<SubstTree> value = p.value;
+						for (const auto& part : split(p.key, inter)) {
+							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
+						}
+						add(inter, value);
+						finalizer(un_.back().value.top());
+					} else {
+						p.activate();
+						finalizer(p.value.top());
+					}
+					if (inter != q) {
+						for (const auto& part : split(q, inter)) {
+							to_add.emplace(part);
+						}
+					}
+				}
+			}
+			if (may_add && !intersects) {
+				stack<SubstTree> v; v.emplace();
+				add(q, v);
+				finalizer(un_.back().value.top());
+			}
+		}
+	}
+
+
+	/*
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
 		vector<ProdVect> added;
+		UnionVect thisone(*this);
 		uint c = 0;
-		uint cc = 0;
+		uint ccc = 0;
 		bool fuck = false;
+		static bool vot_ono = false;
 		while (!to_add.empty()) {
-			cc ++;
-			ProdVect q = to_add.top(); to_add.pop();
+			ccc ++;
+			ProdVect q = to_add.top();
+			to_add.pop();
+
 			if (std::find(added.begin(), added.end(), q) != added.end()) {
-				cout << "FUCK !! " << cc << endl;
+				//cout << "FUCK !! " << ccc << " : " << q.show() << endl;
+				//exit(1);
 				continue;
+			}
+			if (fuck) {
+				cout << endl << endl << "CONSIDERING: " << q.show() << endl;
+				cout << "to_add.size(): " << to_add.size() << endl;
+				cout << "added.size(): " << to_add.size() << endl;
+				cout << "un_.size(): " << un_.size() << endl;
 			}
 			added.push_back(q);
 			bool intersects = false;
@@ -534,13 +723,16 @@ struct UnionVect {
 				if (c > 60000) {
 					fuck = true;
 					static uint cc = 0;
+					cout << "c: " << c << endl;
 					cout << "AAA " << ++cc << endl;
 					cout << "n.size() = " << n.size() << endl;
 					cout << "q: " << q.show() << endl;
 					cout << "p.key: " << p.key.show() << endl;
 					cout << "to_add.size(): " << to_add.size() << endl;
+					cout << "un_.size(): " << un_.size() << endl;
 					if (cc == 128) {
 						cout << "BBB" << endl;
+						exit(1);
 					}
 				}
 				if (!p.erased() && p.key.intersects_with(q)) {
@@ -556,10 +748,19 @@ struct UnionVect {
 						p.erase();
 						stack<SubstTree> value = p.value;
 						for (const auto& part : split(p.key, inter)) {
-							if (auto x = get(part) || fuck) {
+							if (auto x = get(part)) {
+								cout << "CRASH" << endl;
 								cout << "part: " << part.show() << endl;
 								cout << "p.key: " << p.key.show() << endl;
 								cout << "inter: " << inter.show() << endl;
+								//cout << "all: " << endl;
+								//cout << show() << endl;
+								exit(1);
+							}
+							if (fuck) {
+								cout << "add part: " << part.show() << endl;
+								//cout << "p.key: " << p.key.show() << endl;
+								//cout << "inter: " << inter.show() << endl;
 								//cout << "all: " << endl;
 								//cout << show() << endl;
 							}
@@ -567,19 +768,24 @@ struct UnionVect {
 						}
 						add(inter, value);
 						finalizer(un_.back().value.top());
+						if (fuck) {
+							cout << "finalizing inter != p: " << p.key.show() << endl;
+						}
 					} else {
 						if (fuck) {
-							cout << "addin inter == p: " << p.show() << endl;
+							cout << "finalizing inter == p: " << p.key.show() << endl;
 						}
 						p.activate();
 						finalizer(p.value.top());
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
-							if (fuck) {
-								cout << "emplacing: " << part.show() << endl;
-							}
-							to_add.emplace(part);
+							//if (std::find(added.begin(), added.end(), part) == added.end()) {
+								if (fuck) {
+									cout << "to_add part: " << part.show() << endl;
+								}
+								to_add.emplace(part);
+							//}
 						}
 					}
 				}
@@ -595,44 +801,7 @@ struct UnionVect {
 		}
 	}
 
-	/*void intersect_1(const ProdVect& pv, auto finalizer) {
-		stack<ProdVect> to_add;
-		to_add.emplace(pv);
-		uint c = 0;
-		while (!to_add.empty()) {
-			ProdVect q = to_add.top(); to_add.pop();
-			bool intersects = false;
-			for (uint i : neighbourhood(q)) {
-				++c;
-				Pair& p = un_[i];
-				if (!p.erased() && p.key.intersects_with(q)) {
-					ProdVect inter = prover::intersect(p.key, q);
-					intersects = true;
-					if (inter != p.key) {
-						bool active = p.active();
-						p.erase();
-						stack<SubstTree> value = p.value;
-						for (const auto& part : split(p.key, inter)) {
-							add(part, value, active ? Pair::ACTIVE : Pair::SHADOWED);
-						}
-						add(inter, value);
-						finalizer(un_.back().value.top());
-					} else {
-						p.activate();
-						finalizer(p.value.top());
-					}
-					if (inter != q) {
-						for (const auto& part : split(q, inter)) {
-							to_add.emplace(part);
-						}
-					}
-				}
-			}
-		}
-		if (un_.size() > 256 && c > 8) {
-			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
-		}
-	}*/
+	*/
 
 	const vector<Pair>& un() const { return un_; }
 
