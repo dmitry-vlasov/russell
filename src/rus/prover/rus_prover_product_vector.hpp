@@ -514,38 +514,71 @@ struct UnionVect {
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
+		vector<ProdVect> added;
 		uint c = 0;
+		uint cc = 0;
+		bool fuck = false;
 		while (!to_add.empty()) {
+			cc ++;
 			ProdVect q = to_add.top(); to_add.pop();
+			if (std::find(added.begin(), added.end(), q) != added.end()) {
+				cout << "FUCK !! " << cc << endl;
+				continue;
+			}
+			added.push_back(q);
 			bool intersects = false;
-			for (uint i : neighbourhood(q)) {
+			set<uint> n = neighbourhood(q);
+			for (uint i : n) {
 				++c;
 				Pair& p = un_[i];
+				if (c > 60000) {
+					fuck = true;
+					static uint cc = 0;
+					cout << "AAA " << ++cc << endl;
+					cout << "n.size() = " << n.size() << endl;
+					cout << "q: " << q.show() << endl;
+					cout << "p.key: " << p.key.show() << endl;
+					cout << "to_add.size(): " << to_add.size() << endl;
+					if (cc == 128) {
+						cout << "BBB" << endl;
+					}
+				}
 				if (!p.erased() && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
+
+						if (fuck) {
+							cout << "addin INTER: " << inter.show() << endl;
+						}
+
 						bool active = p.active();
 						p.erase();
 						stack<SubstTree> value = p.value;
 						for (const auto& part : split(p.key, inter)) {
-							if (auto x = get(part)) {
+							if (auto x = get(part) || fuck) {
 								cout << "part: " << part.show() << endl;
 								cout << "p.key: " << p.key.show() << endl;
 								cout << "inter: " << inter.show() << endl;
-								cout << "all: " << endl;
-								cout << show() << endl;
+								//cout << "all: " << endl;
+								//cout << show() << endl;
 							}
 							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
 						}
 						add(inter, value);
 						finalizer(un_.back().value.top());
 					} else {
+						if (fuck) {
+							cout << "addin inter == p: " << p.show() << endl;
+						}
 						p.activate();
 						finalizer(p.value.top());
 					}
 					if (inter != q) {
 						for (const auto& part : split(q, inter)) {
+							if (fuck) {
+								cout << "emplacing: " << part.show() << endl;
+							}
 							to_add.emplace(part);
 						}
 					}
