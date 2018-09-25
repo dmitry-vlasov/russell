@@ -580,6 +580,11 @@ struct UnionVect {
 		set<Pair> intersected_pairs;
 		set<ProdVect> new_keys;
 		new_keys.insert(pv);
+
+		if (n.size() > 1000) {
+			cout << "n.size() = " << n.size() << endl;
+		}
+
 		for (uint i : n) {
 			Pair& p = un_[i];
 			if (!p.value.erased() && p.key.intersects_with(pv)) {
@@ -604,6 +609,9 @@ struct UnionVect {
 							}
 						}
 						new_keys = std::move(new_new_keys);
+						if (new_keys.size() > 1000) {
+							cout << "new_keys.size() = " << new_keys.size() << endl;
+						}
 					}
 				} else {
 					p.value.activate();
