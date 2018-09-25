@@ -11,22 +11,22 @@ struct ProductUnified {
 	ProductUnified() : may_add(true) { }
 	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
 		for (auto& p : pu.unif_.un()) {
-			if (!p.erased()) {
-				unif_.add(p.key, p.value, p.status);
+			if (!p.value.erased()) {
+				unif_.add(p.key, p.value.stack, p.value.status);
 			}
 		}
 	}
 	ProductUnified(const ProductUnified* pu, bool new_level) : may_add(!pu) {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
-				if (!p.erased()) {
-					stack<SubstTree> v = p.value;
+				if (!p.value.erased()) {
+					stack<SubstTree> v = p.value.stack;
 					if (new_level) {
 						v.emplace();
 					} else {
 						v.top().inc();
 					}
-					unif_.add(p.key, v, UnionVect::Pair::Status::SHADOWED);
+					unif_.add(p.key, v, UnionVect::Value::Status::SHADOWED);
 				}
 			}
 		}

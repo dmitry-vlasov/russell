@@ -478,29 +478,24 @@ struct UnionVect {
 
 	bool full() const { return full_; }
 
-	struct Pair {
+	struct Value {
 		enum Status {
 			ACTIVE, SHADOWED, ERASED
 		};
-		Pair(const ProdVect& k, const stack<SubstTree>& v, Status s = ACTIVE) :
-		key(k), value(v), status(s) { }
-		Pair(const Pair&) = default;
-		Pair& operator = (const Pair&) = default;
-		ProdVect key;
-		stack<SubstTree> value;
+		Value(const stack<SubstTree>& v, Status s = ACTIVE) :
+		stack(v), status(s) { }
+		Value(const Value&) = default;
+		Value& operator = (const Value&) = default;
+		std::stack<SubstTree> stack;
 		Status status;
 		bool active() const { return status == ACTIVE; }
 		bool erased() const { return status == ERASED; }
 		void erase() { status = ERASED; }
 		void activate() { status = ACTIVE; }
-		bool operator ==(const Pair& p) const { return key == p.key; }
-		bool operator !=(const Pair& p) const { return key != p.key; }
-		bool operator < (const Pair& p) const { return key < p.key; }
 
 		string show() const {
 			ostringstream oss;
-			oss << showKey() << " --> " << endl;
-			stack<SubstTree> v = value;
+			std::stack<SubstTree> v = stack;
 			uint c = 0;
 			while (!v.empty()) {
 				oss << "stack level: " << c++ << endl;
@@ -509,12 +504,32 @@ struct UnionVect {
 			}
 			return oss.str();
 		}
+	};
+
+	struct Pair {
+		Pair(const ProdVect& k, const stack<SubstTree>& v, Value::Status s = Value::ACTIVE) :
+		key(k), value(v, s) { }
+		Pair(const Pair&) = default;
+		Pair& operator = (const Pair&) = default;
+		ProdVect key;
+		Value value;
+
+		bool operator ==(const Pair& p) const { return key == p.key; }
+		bool operator !=(const Pair& p) const { return key != p.key; }
+		bool operator < (const Pair& p) const { return key < p.key; }
+
+		string show() const {
+			ostringstream oss;
+			oss << showKey() << " --> " << endl;
+			oss << value.show();
+			return oss.str();
+		}
 		string showKey() const {
 			ostringstream oss;
-			switch (status) {
-			case ACTIVE:   oss << "ACTIVE ";   break;
-			case SHADOWED: oss << "SHADOWED "; break;
-			case ERASED:   oss <<"ERASED ";    break;
+			switch (value.status) {
+			case Value::ACTIVE:   oss << "ACTIVE ";   break;
+			case Value::SHADOWED: oss << "SHADOWED "; break;
+			case Value::ERASED:   oss <<"ERASED ";    break;
 			}
 			oss << key.show();
 			return oss.str();
@@ -630,21 +645,21 @@ struct UnionVect {
 			set<uint> n = neighbourhood(q);
 			for (uint i : n) {
 				Pair& p = un_[i];
-				if (!p.erased() && p.key.intersects_with(q)) {
+				if (!p.value.erased() && p.key.intersects_with(q)) {
 					ProdVect inter = prover::intersect(p.key, q);
 					intersects = true;
 					if (inter != p.key) {
-						bool active = p.active();
-						p.erase();
-						stack<SubstTree> value = p.value;
+						bool active = p.value.active();
+						p.value.erase();
+						stack<SubstTree> value = p.value.stack;
 						for (const auto& part : split(p.key, inter)) {
-							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
+							add(part, value, active ? Value::ACTIVE : Value ::SHADOWED);
 						}
 						add(inter, value);
-						finalizer(un_.back().value.top());
+						finalizer(un_.back().value.stack.top());
 					} else {
-						p.activate();
-						finalizer(p.value.top());
+						p.value.activate();
+						finalizer(p.value.stack.top());
 					}
 					if (inter != q && may_add) {
 						for (const auto& part : split(q, inter)) {
@@ -656,7 +671,7 @@ struct UnionVect {
 			if (may_add && !intersects) {
 				stack<SubstTree> v; v.emplace();
 				add(q, v);
-				finalizer(un_.back().value.top());
+				finalizer(un_.back().value.stack.top());
 			}
 		}
 	}
@@ -782,7 +797,7 @@ struct UnionVect {
 	set<uint> neighbourhood(const ProdVect& v) const;
 
 	//void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
-	void add(const ProdVect& key, const stack<SubstTree>& value, Pair::Status status = Pair::ACTIVE) {
+	void add(const ProdVect& key, const stack<SubstTree>& value, Value::Status status = Value::ACTIVE) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
