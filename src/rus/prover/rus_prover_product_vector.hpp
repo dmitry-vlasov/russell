@@ -575,8 +575,6 @@ struct UnionVect {
 		return true;
 	}
 
-	//void intersect(const ProdVect& pv, auto finalizer, bool may_add);
-/*
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		set<uint> n = neighbourhood(pv);
 		set<Pair> intersected_pairs;
@@ -584,14 +582,14 @@ struct UnionVect {
 		new_keys.insert(pv);
 		for (uint i : n) {
 			Pair& p = un_[i];
-			if (!p.erased() && p.key.intersects_with(pv)) {
+			if (!p.value.erased() && p.key.intersects_with(pv)) {
 				ProdVect inter = prover::intersect(p.key, pv);
 				if (inter != p.key) {
-					bool active = p.active();
-					p.erase();
-					stack<SubstTree> value = p.value;
+					bool active = p.value.active();
+					p.value.erase();
+					stack<SubstTree> value = p.value.stack;
 					for (const auto& non_intersected : split(p.key, inter)) {
-						add(non_intersected, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
+						add(non_intersected, value, active ? Value::ACTIVE : Value::SHADOWED);
 					}
 					intersected_pairs.emplace(inter, value);
 					if (may_add) {
@@ -608,28 +606,28 @@ struct UnionVect {
 						new_keys = std::move(new_new_keys);
 					}
 				} else {
-					p.activate();
-					finalizer(p.value.top());
+					p.value.activate();
+					finalizer(p.value.stack.top());
 				}
 			}
 		}
 		for (const auto& p : intersected_pairs) {
-			add(p.key, p.value);
-			finalizer(un_.back().value.top());
+			add(p.key, p.value.stack);
+			finalizer(un_.back().value.stack.top());
 		}
 		if (may_add) {
 			for (const auto& k : new_keys) {
-				stack<SubstTree> v; v.emplace();
-				if (!intersected_pairs.count(Pair(k, v))) {
+				if (find(k) == -1) {
+					stack<SubstTree> v; v.emplace();
 					add(k, v);
-					finalizer(un_.back().value.top());
+					finalizer(un_.back().value.stack.top());
 				}
 			}
 		}
 	}
-*/
 
 
+/*
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		stack<ProdVect> to_add;
 		to_add.emplace(pv);
@@ -675,7 +673,7 @@ struct UnionVect {
 			}
 		}
 	}
-
+*/
 
 	/*
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
@@ -810,6 +808,8 @@ struct UnionVect {
 		}
 		if (keys_.count(key)) {
 			cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
+			cout << "prev value: " << get(key)->show() << endl;
+			cout << "new  value: " << Value(value, status).show() << endl;
 			exit(1);
 		}
 		keys_[key] = ind;
