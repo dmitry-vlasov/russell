@@ -796,19 +796,10 @@ struct UnionVect {
 
 	set<uint> neighbourhood(const ProdVect& v) const;
 
-	//void add(const ProdVect& key, const SubstTree& value = SubstTree(), bool erased = false);
 	void add(const ProdVect& key, const stack<SubstTree>& value, Value::Status status = Value::ACTIVE) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
-		//if (debug_multy_index && matrix_vector_counter == 1) {
-			if (auto p = get(key)) {
-				cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
-				cout << "already there: " << p->show() << endl;
-				//cout << "adding: " << value.show(true) << endl;
-			}
-		//}
-
 		uint ind = un_.size();
 		un_.emplace_back(key, value, status);
 		for (uint i = 0; i < key.vect.size(); ++ i) {
@@ -817,13 +808,12 @@ struct UnionVect {
 				maps_[i][k].push_back(ind);
 			}
 		}
-}
-
-	/*void inc() {
-		for (Pair& p : un_) {
-			p.value.top().inc();
+		if (keys_.count(key)) {
+			cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
+			exit(1);
 		}
-	}*/
+		keys_[key] = ind;
+	}
 
 	bool contains(const vector<uint>& v) const {
 		for (const auto& p : un_) {
@@ -833,18 +823,25 @@ struct UnionVect {
 		}
 		return false;
 	}
-	const Pair* get(const ProdVect& v) const {
-		for (const auto& p : un_) {
-			if (p.key == v) {
-				return &p;
-			}
+	uint find(const ProdVect& v) const {
+		if (keys_.count(v)) {
+			return keys_.at(v);
+		} else {
+			return -1;
 		}
-		return nullptr;
+	}
+	const Pair* get(const ProdVect& v) const {
+		if (keys_.count(v)) {
+			return &un_[keys_.at(v)];
+		} else {
+			return nullptr;
+		}
 	}
 
 private:
 	vector<Pair> un_;
 	vector<std::map<uint, vector<uint>>> maps_;
+	map<ProdVect, uint> keys_;
 	bool full_;
 };
 
