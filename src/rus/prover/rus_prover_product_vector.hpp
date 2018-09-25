@@ -565,6 +565,8 @@ struct UnionVect {
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		set<uint> n = neighbourhood(pv);
 		set<Pair> intersected_pairs;
+		set<ProdVect> new_keys;
+		new_keys.insert(pv);
 		for (uint i : n) {
 			Pair& p = un_[i];
 			if (!p.erased() && p.key.intersects_with(pv)) {
@@ -577,28 +579,36 @@ struct UnionVect {
 						add(non_intersected, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
 					}
 					intersected_pairs.emplace(inter, value);
-					set<Pair> new_intersected_pairs;
-					for (const Pair& q: intersected_pairs) {
-						if (q.key.intersects_with(inter)) {
-							for (const auto& intersected : split(q.key, inter)) {
-								new_intersected_pairs.emplace(intersected, q.value);
+					if (may_add) {
+						set<ProdVect> new_new_keys;
+						for (const ProdVect& q: new_keys) {
+							if (q.intersects_with(inter)) {
+								for (const auto& intersected : split(q, inter)) {
+									new_new_keys.emplace(intersected);
+								}
+							} else {
+								new_new_keys.emplace(q);
 							}
-						} else {
-							new_intersected_pairs.emplace(q);
 						}
+						new_keys = std::move(new_new_keys);
 					}
-					intersected_pairs = std::move(new_intersected_pairs);
 				} else {
 					p.activate();
 					finalizer(p.value.top());
 				}
 			}
 		}
+		for (const auto& p : intersected_pairs) {
+			add(p.key, p.value);
+			finalizer(un_.back().value.top());
+		}
 		if (may_add) {
-			for (const auto& k : intersected_pairs) {
+			for (const auto& k : new_keys) {
 				stack<SubstTree> v; v.emplace();
-				add(k.key, k.value);
-				finalizer(un_.back().value.top());
+				if (!intersected_pairs.count(Pair(k, v))) {
+					add(k, v);
+					finalizer(un_.back().value.top());
+				}
 			}
 		}
 	}
