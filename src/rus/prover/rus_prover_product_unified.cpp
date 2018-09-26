@@ -19,10 +19,10 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 	}
 	common.check_uniqueness();
 	for (const auto& p : common.un()) {
-		if (p.value.active()) {
+		if (p->value.active()) {
 			LightTree::Children children;
 			Subst unif;
-			const SubstTree& st = p.value.stack.top();
+			const SubstTree& st = p->value.stack.top();
 			for (uint i = 0; i < st.size(); ++i) {
 				if (st.tree(i).empty()) {
 					break;
@@ -35,7 +35,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
 			}
 		}
 	}
@@ -43,10 +43,10 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 
 void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, const vector<LightSymbol>& w) {
 	for (const auto& p : v.unif().un()) {
-		if (p.value.active()) {
+		if (p->value.active()) {
 			LightTree::Children children;
 			Subst unif;
-			const SubstTree& st = p.value.stack.top();
+			const SubstTree& st = p->value.stack.top();
 			for (uint i = 0; i < st.size(); ++i) {
 				if (st.tree(i).empty()) {
 					break;
@@ -59,7 +59,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.intersect(p.key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
 			}
 		}
 	}
@@ -74,9 +74,9 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 	}
 	MultyUnifiedSubs s;
 	for (const auto& q : common.un()) {
-		if (q.value.active()) {
-			const ProdVect& key = q.key;
-			const SubstTree& st = q.value.stack.top();
+		if (q->value.active()) {
+			const ProdVect& key = q->key;
+			const SubstTree& st = q->value.stack.top();
 			for (uint i = 0; i < st.size(); ++ i) {
 				const LightTree& term =st.tree(i);
 				const Subst& sub = st.sub(i);
@@ -106,9 +106,9 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
  std::map<vector<uint>, SubstTree> ProductUnified::map() const {
 	 std::map<vector<uint>, SubstTree> ret;
 	 for (const auto& q : unif_.un()) {
-		if (q.value.active()) {
-			for (auto c : q.key.unfold()) {
-				ret[c] = q.value.stack.top();
+		if (q->value.active()) {
+			for (auto c : q->key.unfold()) {
+				ret[c] = q->value.stack.top();
 			}
 		}
 	 }

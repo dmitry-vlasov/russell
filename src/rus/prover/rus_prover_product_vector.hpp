@@ -411,7 +411,7 @@ struct SubstTree {
 		}
 	}
 
-	SubstTree inc() const {
+	SubstTree makeInc() const {
 		SubstTree ret(*this);
 		ret.trees_.emplace_back();
 		ret.subs_.emplace_back();
@@ -475,6 +475,8 @@ inline string show(const SubstTree& st, bool full = false) {
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
 	UnionVect(const UnionVect&) = default;
+	UnionVect(UnionVect&&) = default;
+	UnionVect& operator = (UnionVect&&) = default;
 
 	bool full() const { return full_; }
 
@@ -542,7 +544,7 @@ struct UnionVect {
 		ostringstream oss;
 		oss << "{" << endl;
 		for (const auto& s : un_) {
-			oss << "\t" << s.show() << endl;
+			oss << "\t" << s->show() << endl;
 		}
 		oss << "}" << endl;
 		return oss.str();
@@ -554,7 +556,7 @@ struct UnionVect {
 		ostringstream oss;
 		oss << "{" << endl;
 		for (const auto& s : un_) {
-			oss << "\t" << s.showKey() << endl;
+			oss << "\t" << s->showKey() << endl;
 		}
 		oss << "}" << endl;
 		return oss.str();
@@ -566,8 +568,8 @@ struct UnionVect {
 	bool check_uniqueness() const {
 		for (auto pi = un_.begin(); pi != un_.end(); ++pi) {
 			for (auto qi = un_.begin(); qi != un_.end(); ++qi) {
-				if (pi != qi && pi->key == qi->key) {
-					cout << "duplicate key: " << pi->key.show() << endl;
+				if (pi != qi && (*pi)->key == (*qi)->key) {
+					cout << "duplicate key: " << (*pi)->key.show() << endl;
 					return false;
 				}
 			}
@@ -586,7 +588,7 @@ struct UnionVect {
 		}
 
 		for (uint i : n) {
-			Pair& p = un_[i];
+			Pair& p = *un_[i];
 			if (!p.value.erased() && p.key.intersects_with(pv)) {
 				ProdVect inter = prover::intersect(p.key, pv);
 				if (inter != p.key) {
@@ -621,14 +623,14 @@ struct UnionVect {
 		}
 		for (const auto& p : intersected_pairs) {
 			add(p.key, p.value.stack);
-			finalizer(un_.back().value.stack.top());
+			finalizer(un_.back()->value.stack.top());
 		}
 		if (may_add) {
 			for (const auto& k : new_keys) {
 				if (find(k) == -1) {
 					stack<SubstTree> v; v.emplace();
 					add(k, v);
-					finalizer(un_.back().value.stack.top());
+					finalizer(un_.back()->value.stack.top());
 				}
 			}
 		}
@@ -798,7 +800,7 @@ struct UnionVect {
 
 	*/
 
-	const vector<Pair>& un() const { return un_; }
+	const vector<unique_ptr<Pair>>& un() const { return un_; }
 
 	set<uint> neighbourhood(const ProdVect& v) const;
 
@@ -807,7 +809,7 @@ struct UnionVect {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
 		uint ind = un_.size();
-		un_.emplace_back(key, value, status);
+		un_.emplace_back(new Pair(key, value, status));
 		for (uint i = 0; i < key.vect.size(); ++ i) {
 			const Set& s = key.vect[i];
 			for (uint k : s.set()) {
@@ -825,7 +827,7 @@ struct UnionVect {
 
 	bool contains(const vector<uint>& v) const {
 		for (const auto& p : un_) {
-			if (p.key.contains(v)) {
+			if (p->key.contains(v)) {
 				return true;
 			}
 		}
@@ -840,14 +842,14 @@ struct UnionVect {
 	}
 	const Pair* get(const ProdVect& v) const {
 		if (keys_.count(v)) {
-			return &un_[keys_.at(v)];
+			return un_[keys_.at(v)].get();
 		} else {
 			return nullptr;
 		}
 	}
 
 private:
-	vector<Pair> un_;
+	vector<unique_ptr<Pair>> un_;
 	vector<std::map<uint, vector<uint>>> maps_;
 	map<ProdVect, uint> keys_;
 	bool full_;

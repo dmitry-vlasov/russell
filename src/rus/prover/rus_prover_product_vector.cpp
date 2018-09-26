@@ -75,22 +75,22 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 	UnionVect ret;
 	if (v.full()) {
 		for (const auto& p : uv.un()) {
-			if (p.value.active()) {
-				ret.add(p.key, p.value.stack);
+			if (p->value.active()) {
+				ret.add(p->key, p->value.stack);
 			}
 		}
 	} else {
 		uint c0 = 0;
 		for (const auto& p : v.un()) {
-			if (p.value.active()) {
-				for (uint i : uv.neighbourhood(p.key)) {
+			if (p->value.active()) {
+				for (uint i : uv.neighbourhood(p->key)) {
 					const auto& q = uv.un()[i];
-					if (q.value.active()) {
-						if (p.key.intersects_with(q.key) && q.value.stack.top().sub().ok) {
-							ProdVect r = intersect(p.key, q.key);
-							SubstTree data = p.value.stack.top().inc();
-							data.sub() = q.value.stack.top().sub();
-							data.tree() = q.value.stack.top().tree();
+					if (q->value.active()) {
+						if (p->key.intersects_with(q->key) && q->value.stack.top().sub().ok) {
+							ProdVect r = intersect(p->key, q->key);
+							SubstTree data = p->value.stack.top().makeInc();
+							data.sub() = q->value.stack.top().sub();
+							data.tree() = q->value.stack.top().tree();
 							stack<SubstTree> v;
 							v.push(data);
 							ret.add(r, v, UnionVect::Value::Status::ACTIVE);
