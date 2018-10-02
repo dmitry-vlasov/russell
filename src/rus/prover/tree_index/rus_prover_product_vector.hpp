@@ -792,6 +792,4 @@ private:
 
 UnionVect intersect(const UnionVect& v, const UnionVect& uv);
 
-typedef map<vector<uint>, Subst> MultyUnifiedSubs;
-
 }}}
