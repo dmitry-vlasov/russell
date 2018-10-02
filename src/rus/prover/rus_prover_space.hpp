@@ -1,7 +1,7 @@
 #pragma once
 
-#include "rus_prover_tree_index.hpp"
 #include "rus_prover_show.hpp"
+#include "tree_index/rus_prover_tree_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

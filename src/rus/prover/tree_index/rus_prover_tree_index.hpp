@@ -1,7 +1,7 @@
 #pragma once
 
-#include "rus_prover_unify.hpp"
-#include "rus_prover_node.hpp"
+#include "../rus_prover_unify.hpp"
+#include "../rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

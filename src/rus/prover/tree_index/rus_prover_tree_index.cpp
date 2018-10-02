@@ -1,5 +1,6 @@
 #include "rus_prover_tree_index.hpp"
-#include "rus_prover_unify.hpp"
+
+#include "../rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

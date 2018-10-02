@@ -1,6 +1,6 @@
 #include "rus_prover_down.hpp"
 #include "rus_prover_cartesian.hpp"
-#include "rus_prover_matrix_index.hpp"
+#include "tree_index/rus_prover_matrix_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

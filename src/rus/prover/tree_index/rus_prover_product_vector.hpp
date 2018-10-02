@@ -1,7 +1,6 @@
 #pragma once
 
-#include <list>
-#include "rus_prover_cartesian.hpp"
+#include "../rus_prover_cartesian.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

@@ -1,4 +1,3 @@
-
 #include "rus_prover_product_unified.hpp"
 
 namespace mdl { namespace rus { namespace prover {

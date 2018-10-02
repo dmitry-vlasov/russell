@@ -1,5 +1,5 @@
-#include "rus_prover_cartesian.hpp"
-#include "rus_prover_unify.hpp"
+#include "../rus_prover_cartesian.hpp"
+#include "../rus_prover_unify.hpp"
 #include "rus_prover_vector_index.hpp"
 #include "rus_prover_product_vector.hpp"
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "rus_prover_tree_index.hpp"
-#include "rus_prover_vector_unified.hpp"
 #include "rus_prover_product_unified.hpp"
+#include "rus_prover_vector_unified.hpp"
+#include "rus_prover_tree_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
