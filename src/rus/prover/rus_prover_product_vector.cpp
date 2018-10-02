@@ -76,7 +76,7 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 	if (v.full()) {
 		for (const auto& p : uv.un()) {
 			if (p->value.active()) {
-				ret.add(p->key, p->value.stack);
+				ret.add(p->key, std::move(p->value.copyStack()));
 			}
 		}
 	} else {
@@ -86,14 +86,14 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 				for (uint i : uv.neighbourhood(p->key)) {
 					const auto& q = uv.un()[i];
 					if (q->value.active()) {
-						if (p->key.intersects_with(q->key) && q->value.stack.top().sub().ok) {
+						if (p->key.intersects_with(q->key) && q->value.stack.back()->sub().ok) {
 							ProdVect r = intersect(p->key, q->key);
-							SubstTree data = p->value.stack.top().makeInc();
-							data.sub() = q->value.stack.top().sub();
-							data.tree() = q->value.stack.top().tree();
-							stack<SubstTree> v;
-							v.push(data);
-							ret.add(r, v, UnionVect::Value::Status::ACTIVE);
+							SubstTree data = p->value.stack.back()->makeInc();
+							data.sub() = q->value.stack.back()->sub();
+							data.tree() = q->value.stack.back()->tree();
+							vector<unique_ptr<SubstTree>> v;
+							v.emplace_back(new SubstTree(data));
+							ret.add(r, std::move(v), UnionVect::Value::Status::ACTIVE);
 							++c0;
 						}
 					}

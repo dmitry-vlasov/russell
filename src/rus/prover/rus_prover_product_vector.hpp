@@ -472,6 +472,21 @@ inline string show(const SubstTree& st, bool full = false) {
 	return st.show(full);
 }
 
+inline vector<unique_ptr<SubstTree>> moveStack(vector<unique_ptr<SubstTree>>& stack) {
+	vector<unique_ptr<SubstTree>> ret;
+	for (auto& st : stack) {
+		ret.emplace_back(st.release());
+	}
+	return ret;
+}
+inline vector<unique_ptr<SubstTree>> copyStack(const vector<unique_ptr<SubstTree>>& stack) {
+	vector<unique_ptr<SubstTree>> ret;
+	for (const auto& st : stack) {
+		ret.emplace_back(new SubstTree(*st.get()));
+	}
+	return ret;
+}
+
 struct UnionVect {
 	UnionVect(bool f = false) : full_(f) { }
 	UnionVect(const UnionVect&) = default;
@@ -484,33 +499,49 @@ struct UnionVect {
 		enum Status {
 			ACTIVE, SHADOWED, ERASED
 		};
-		Value(const stack<SubstTree>& v, Status s = ACTIVE) :
-		stack(v), status(s) { }
-		Value(const Value&) = default;
+		Value(vector<unique_ptr<SubstTree>> v, Status s = ACTIVE) : stack(std::move(v)), status(s) { }
+		/*Value(const vector<unique_ptr<SubstTree>>& v, Status s = ACTIVE) : stack(v), status(s) {
+			for (const auto& st : v) {
+				stack.emplace_back(new SubstTree(*st.get()));
+			}
+		}*/
+		Value(Value&&) = default;
+		Value(const Value& v) : status(v.status) {
+			for (auto& st : v.stack) {
+				stack.emplace_back(new SubstTree(*st));
+			}
+		}
+
 		Value& operator = (const Value&) = default;
-		std::stack<SubstTree> stack;
+
+		vector<unique_ptr<SubstTree>> stack;
 		Status status;
 		bool active() const { return status == ACTIVE; }
 		bool erased() const { return status == ERASED; }
 		void erase() { status = ERASED; }
 		void activate() { status = ACTIVE; }
 
+		vector<unique_ptr<SubstTree>> moveStack() { return prover::moveStack(stack); }
+		vector<unique_ptr<SubstTree>> copyStack() const { return prover::copyStack(stack); }
+
 		string show() const {
 			ostringstream oss;
-			std::stack<SubstTree> v = stack;
 			uint c = 0;
-			while (!v.empty()) {
+			for (const auto& st : stack) {
 				oss << "stack level: " << c++ << endl;
-				oss << prover::show(v.top(), true);
-				v.pop();
+				oss << st->show(true);
 			}
 			return oss.str();
 		}
 	};
 
 	struct Pair {
-		Pair(const ProdVect& k, const stack<SubstTree>& v, Value::Status s = Value::ACTIVE) :
-		key(k), value(v, s) { }
+		Pair(const ProdVect& k, vector<unique_ptr<SubstTree>> v, Value::Status s = Value::ACTIVE) :
+		key(k), value(std::move(v)) {
+			value.status = s;
+		}
+		//Pair(const ProdVect& k, const vector<unique_ptr<SubstTree>>& v, Value::Status s = Value::ACTIVE) :
+		//key(k), value(v, s) { }
 		Pair(const Pair&) = default;
 		Pair& operator = (const Pair&) = default;
 		ProdVect key;
@@ -579,7 +610,7 @@ struct UnionVect {
 
 	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
 		set<uint> n = neighbourhood(pv);
-		set<Pair> intersected_pairs;
+		vector<Pair> intersected_pairs;
 		set<ProdVect> new_keys;
 		new_keys.insert(pv);
 
@@ -594,11 +625,11 @@ struct UnionVect {
 				if (inter != p.key) {
 					bool active = p.value.active();
 					p.value.erase();
-					stack<SubstTree> value = p.value.stack;
+					vector<unique_ptr<SubstTree>> value = p.value.moveStack();
 					for (const auto& non_intersected : split(p.key, inter)) {
-						add(non_intersected, value, active ? Value::ACTIVE : Value::SHADOWED);
+						add(non_intersected, std::move(copyStack(value)), active ? Value::ACTIVE : Value::SHADOWED);
 					}
-					intersected_pairs.emplace(inter, value);
+					intersected_pairs.emplace_back(inter, std::move(value));
 					if (may_add) {
 						set<ProdVect> new_new_keys;
 						for (const ProdVect& q: new_keys) {
@@ -617,20 +648,20 @@ struct UnionVect {
 					}
 				} else {
 					p.value.activate();
-					finalizer(p.value.stack.top());
+					finalizer(*p.value.stack.back());
 				}
 			}
 		}
-		for (const auto& p : intersected_pairs) {
-			add(p.key, p.value.stack);
-			finalizer(un_.back()->value.stack.top());
+		for (auto& p : intersected_pairs) {
+			add(p.key, p.value.moveStack());
+			finalizer(*un_.back()->value.stack.back());
 		}
 		if (may_add) {
 			for (const auto& k : new_keys) {
 				if (find(k) == -1) {
-					stack<SubstTree> v; v.emplace();
-					add(k, v);
-					finalizer(un_.back()->value.stack.top());
+					vector<unique_ptr<SubstTree>> v; v.emplace_back(new SubstTree());
+					add(k, std::move(v));
+					finalizer(*un_.back()->value.stack.back());
 				}
 			}
 		}
@@ -684,127 +715,11 @@ struct UnionVect {
 		}
 	}
 */
-
-	/*
-	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
-		stack<ProdVect> to_add;
-		to_add.emplace(pv);
-		vector<ProdVect> added;
-		UnionVect thisone(*this);
-		uint c = 0;
-		uint ccc = 0;
-		bool fuck = false;
-		static bool vot_ono = false;
-		while (!to_add.empty()) {
-			ccc ++;
-			ProdVect q = to_add.top();
-			to_add.pop();
-
-			if (std::find(added.begin(), added.end(), q) != added.end()) {
-				//cout << "FUCK !! " << ccc << " : " << q.show() << endl;
-				//exit(1);
-				continue;
-			}
-			if (fuck) {
-				cout << endl << endl << "CONSIDERING: " << q.show() << endl;
-				cout << "to_add.size(): " << to_add.size() << endl;
-				cout << "added.size(): " << to_add.size() << endl;
-				cout << "un_.size(): " << un_.size() << endl;
-			}
-			added.push_back(q);
-			bool intersects = false;
-			set<uint> n = neighbourhood(q);
-			for (uint i : n) {
-				++c;
-				Pair& p = un_[i];
-				if (c > 60000) {
-					fuck = true;
-					static uint cc = 0;
-					cout << "c: " << c << endl;
-					cout << "AAA " << ++cc << endl;
-					cout << "n.size() = " << n.size() << endl;
-					cout << "q: " << q.show() << endl;
-					cout << "p.key: " << p.key.show() << endl;
-					cout << "to_add.size(): " << to_add.size() << endl;
-					cout << "un_.size(): " << un_.size() << endl;
-					if (cc == 128) {
-						cout << "BBB" << endl;
-						exit(1);
-					}
-				}
-				if (!p.erased() && p.key.intersects_with(q)) {
-					ProdVect inter = prover::intersect(p.key, q);
-					intersects = true;
-					if (inter != p.key) {
-
-						if (fuck) {
-							cout << "addin INTER: " << inter.show() << endl;
-						}
-
-						bool active = p.active();
-						p.erase();
-						stack<SubstTree> value = p.value;
-						for (const auto& part : split(p.key, inter)) {
-							if (auto x = get(part)) {
-								cout << "CRASH" << endl;
-								cout << "part: " << part.show() << endl;
-								cout << "p.key: " << p.key.show() << endl;
-								cout << "inter: " << inter.show() << endl;
-								//cout << "all: " << endl;
-								//cout << show() << endl;
-								exit(1);
-							}
-							if (fuck) {
-								cout << "add part: " << part.show() << endl;
-								//cout << "p.key: " << p.key.show() << endl;
-								//cout << "inter: " << inter.show() << endl;
-								//cout << "all: " << endl;
-								//cout << show() << endl;
-							}
-							add(part, value, active ? Pair::ACTIVE : Pair ::SHADOWED);
-						}
-						add(inter, value);
-						finalizer(un_.back().value.top());
-						if (fuck) {
-							cout << "finalizing inter != p: " << p.key.show() << endl;
-						}
-					} else {
-						if (fuck) {
-							cout << "finalizing inter == p: " << p.key.show() << endl;
-						}
-						p.activate();
-						finalizer(p.value.top());
-					}
-					if (inter != q) {
-						for (const auto& part : split(q, inter)) {
-							//if (std::find(added.begin(), added.end(), part) == added.end()) {
-								if (fuck) {
-									cout << "to_add part: " << part.show() << endl;
-								}
-								to_add.emplace(part);
-							//}
-						}
-					}
-				}
-			}
-			if (may_add && !intersects) {
-				stack<SubstTree> v; v.emplace();
-				add(q, v);
-				finalizer(un_.back().value.top());
-			}
-		}
-		if (un_.size() > 256 && c > 8) {
-			cout << "UN SIZE:" << un_.size() << " REAL COUNT: " << c << endl;
-		}
-	}
-
-	*/
-
 	const vector<unique_ptr<Pair>>& un() const { return un_; }
 
 	set<uint> neighbourhood(const ProdVect& v) const;
 
-	void add(const ProdVect& key, const stack<SubstTree>& value, Value::Status status = Value::ACTIVE) {
+	/*void add(const ProdVect& key, const vector<SubstTree>& value, Value::Status status = Value::ACTIVE) {
 		if (!maps_.size()) {
 			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
 		}
@@ -818,8 +733,29 @@ struct UnionVect {
 		}
 		if (keys_.count(key)) {
 			cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
-			cout << "prev value: " << get(key)->show() << endl;
-			cout << "new  value: " << Value(value, status).show() << endl;
+			//cout << "prev value: " << get(key)->show() << endl;
+			//cout << "new  value: " << Value(value, status).show() << endl;
+			exit(1);
+		}
+		keys_[key] = ind;
+	}*/
+
+	void add(const ProdVect& key, vector<unique_ptr<SubstTree>> value, Value::Status status = Value::ACTIVE) {
+		if (!maps_.size()) {
+			maps_ = vector<std::map<uint, vector<uint>>>(key.vect.size());
+		}
+		uint ind = un_.size();
+		un_.emplace_back(new Pair(key, std::move(value), status));
+		for (uint i = 0; i < key.vect.size(); ++ i) {
+			const Set& s = key.vect[i];
+			for (uint k : s.set()) {
+				maps_[i][k].push_back(ind);
+			}
+		}
+		if (keys_.count(key)) {
+			cout << "!CHECK check_uniqueness() of key: " << key.show() << endl;
+			//cout << "prev value: " << get(key)->show() << endl;
+			//cout << "new  value: " << Value(value, status).show() << endl;
 			exit(1);
 		}
 		keys_[key] = ind;

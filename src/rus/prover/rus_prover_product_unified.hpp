@@ -12,7 +12,7 @@ struct ProductUnified {
 	ProductUnified(const ProductUnified& pu) : may_add(pu.may_add) {
 		for (auto& p : pu.unif_.un()) {
 			if (!p->value.erased()) {
-				unif_.add(p->key, p->value.stack, p->value.status);
+				unif_.add(p->key, std::move(p->value.copyStack()), p->value.status);
 			}
 		}
 	}
@@ -20,13 +20,13 @@ struct ProductUnified {
 		if (pu) {
 			for (auto& p : pu->unif_.un()) {
 				if (!p->value.erased()) {
-					stack<SubstTree> v = p->value.stack;
+					vector<unique_ptr<SubstTree>> v = std::move(p->value.copyStack());
 					if (new_level) {
-						v.emplace();
+						v.emplace_back(new SubstTree());
 					} else {
-						v.top().inc();
+						v.back()->inc();
 					}
-					unif_.add(p->key, v, UnionVect::Value::Status::SHADOWED);
+					unif_.add(p->key, std::move(v), UnionVect::Value::Status::SHADOWED);
 				}
 			}
 		}
