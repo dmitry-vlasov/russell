@@ -1,7 +1,6 @@
-
 #include "rus_prover_vector_unified.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 string VectorUnified::show() const {
 	ostringstream oss;
@@ -50,7 +49,7 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, S
 }
 
 void VectorUnified::finalize(const vector<uint> leafs, const vector<LightSymbol>& w, const LightTree& t) {
-	unif_.add(leafs, [w, t](SubstTree& st) { prover::finalize(st, w, t); });
+	unif_.add(leafs, [w, t](SubstTree& st) { tree_index::finalize(st, w, t); });
 }
 
 void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
@@ -73,7 +72,7 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 		}
 		if (children.size() == r->arity()) {
 			LightTree term = apply(unif, LightTree(r, children));
-			unif_.add(p.first, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
+			unif_.add(p.first, [w, term, &unif](SubstTree& st) { tree_index::finalize(st, w, term, unif); });
 		}
 	}
 }
@@ -97,7 +96,7 @@ void VectorUnified::add_intersection_1(const VectorUnified& v, const Rule* r, co
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.add(p.first, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); });
+				unif_.add(p.first, [w, term, &unif](SubstTree& st) { tree_index::finalize(st, w, term, unif); });
 		}
 		}
 	}
@@ -146,4 +145,4 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 	return s;
 }
 
-}}}
+}}}}

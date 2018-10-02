@@ -1,6 +1,8 @@
+#pragma once
+
 #include "rus_prover_vector_index.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 struct MatrixIndex {
 	MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
@@ -22,6 +24,6 @@ private:
 };
 
 string show(const MultyUnifiedSubs&);
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
 
-}}}
-
+}}}}

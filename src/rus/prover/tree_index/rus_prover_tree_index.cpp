@@ -2,7 +2,7 @@
 
 #include "../rus_prover_unify.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 static void intersect_show(map<uint, vector<string>>& u, map<uint, string> w[], uint sz) {
 	for (auto p : w[0]) {
@@ -26,7 +26,7 @@ map<uint, string> TreeIndex::showVector() const {
 	map<uint, string> ret;
 	for (const auto& p : vars) {
 		for (const auto& d : p.second.inds) {
-			ret[d] = rus::prover::show(p.first);
+			ret[d] = prover::show(p.first);
 		}
 	}
 	for (const auto& p : rules) {
@@ -206,7 +206,7 @@ uint TreeIndex::add(const LightTree& t) {
 
 TreeIndex::Unified TreeIndex::unify(const LightTree& t) const {
 	TreeIndex::Unified unif;
-	UnifiedTerms terms = prover::unify(this, t, unif);
+	UnifiedTerms terms = tree_index::unify(this, t, unif);
 
 	for (const auto& p : unif) {
 		LightTree tr = exprs[p.first];
@@ -218,7 +218,7 @@ TreeIndex::Unified TreeIndex::unify(const LightTree& t) const {
 		if (!(apply(p.second, tr) == apply(p.second, t) && apply(p.second, t) == x)) {
 			cout << "FAILURE" << endl << endl;
 			debug_ind = true;
-			prover::unify(this, t, unif);
+			tree_index::unify(this, t, unif);
 
 
 			cout << "unification failure: " << p.first << endl;
@@ -252,5 +252,5 @@ string TreeIndex::show() const {
 	}
 }
 
-}}}
+}}}}
 

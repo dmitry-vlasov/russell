@@ -6,8 +6,6 @@ namespace mdl { namespace rus { namespace prover {
 
 bool debug_unify_subs = false;
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
-
 void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	CartesianIter ind;
 	const ProofHyp* h = hi.proof;
@@ -188,7 +186,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	timer.clear();
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = unify_subs_matrix(pr, hy, hs);
+	MultyUnifiedSubs unified_subs_2 = tree_index::unify_subs_matrix(pr, hy, hs);
 	timer.stop();
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
@@ -201,10 +199,10 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		//cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
-		cout << MatrixIndex(pr, hy, hs).show() << endl;
+		cout << tree_index::MatrixIndex(pr, hy, hs).show() << endl;
 
- 		debug_multy_index = true;
-		unify_subs_matrix(pr, hy, hs);
+ 		tree_index::debug_multy_index = true;
+		tree_index::unify_subs_matrix(pr, hy, hs);
 
 		//debug_unify_subs = true;
 		//unify_subs_sequent(pr, h);

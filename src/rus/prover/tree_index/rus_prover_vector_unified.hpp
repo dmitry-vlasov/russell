@@ -2,7 +2,7 @@
 
 #include "rus_prover_product_vector.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 template<class Data>
 struct VectorMap {
@@ -75,5 +75,4 @@ private:
 
  MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif);
 
-}}}
-
+}}}}

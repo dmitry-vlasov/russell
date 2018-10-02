@@ -18,6 +18,8 @@ Tactic* make_tactic(const string&);
 
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
+	template<class T>
+	using IndexMap = tree_index::TreeIndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
@@ -30,8 +32,8 @@ struct Space {
 	Proof*            proof = nullptr; // for Oracle tactic
 	Hyp*              root;
 	PropRef           prop;
-	TreeIndexMap<HypRef>  hyps;
-	TreeIndexMap<PropRef> assertions;
+	IndexMap<HypRef>  hyps;
+	IndexMap<PropRef> assertions;
 	map<uint, uint>   vars;
 
 	Return init();

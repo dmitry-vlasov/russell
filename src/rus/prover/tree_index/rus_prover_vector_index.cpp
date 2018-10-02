@@ -3,7 +3,7 @@
 #include "rus_prover_vector_index.hpp"
 #include "rus_prover_product_vector.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 bool debug_multy_index = false;
 bool debug_multy_index_1 = false;
@@ -15,26 +15,6 @@ vector<bool> intersect(const vector<bool>& s1, const vector<bool>& s2) {
 	for (uint i = 0; i < s1.size(); ++ i) {
 		ret[i] = s1[i] && s2[i];
 	}
-	return ret;
-}
-
-string show(const vector<bool>& v) {
-	string ret;
-	ret += "(";
-	for (bool x : v) {
-		ret += x ? "true, " : "false, ";
-	}
-	ret += ")";
-	return ret;
-}
-
-string show(const vector<LightSymbol>& v) {
-	string ret;
-	ret += "(";
-	for (auto s : v) {
-		ret += prover::show(s) + ", ";
-	}
-	ret += ")";
 	return ret;
 }
 
@@ -574,7 +554,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree()) << endl;
 				cout << "subtree.sub: " << show(subtree.sub()) << endl;
-				cout << "leafs: " << show(leafs) << endl;
+				cout << "leafs: " << prover::show(leafs) << endl;
 				cout << "vindex:" << endl << vindex.show();
 				return false;
 			}
@@ -585,7 +565,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 				cout << "e_orig: " << show(e_orig) << endl;
 				cout << "subtree.tree: " << show(subtree.tree()) << endl;
 				cout << "subtree.sub: " << show(subtree.sub()) << endl;
-				cout << "leafs: " << show(leafs) << endl;
+				cout << "leafs: " << prover::show(leafs) << endl;
 				cout << "vindex:" << endl << vindex.show();
 				return false;
 			} else {
@@ -664,4 +644,4 @@ string VectorIndex::show() const {
 	return ret;
 }
 
-}}}
+}}}}

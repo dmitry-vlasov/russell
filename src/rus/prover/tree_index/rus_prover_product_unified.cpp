@@ -1,6 +1,6 @@
 #include "rus_prover_product_unified.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 bool debug_union_vect = false;
 
@@ -8,7 +8,7 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t);
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst&);
 
 void ProductUnified::finalize(const ProdVect& leafs_vect, const vector<LightSymbol>& w, const LightTree& t) {
-	unif_.intersect(leafs_vect, [w, t](SubstTree& st) { prover::finalize(st, w, t); }, may_add);
+	unif_.intersect(leafs_vect, [w, t](SubstTree& st) { tree_index::finalize(st, w, t); }, may_add);
 }
 
 void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rule* r, const vector<LightSymbol>& w) {
@@ -34,7 +34,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { tree_index::finalize(st, w, term, unif); }, true);
 			}
 		}
 	}
@@ -58,7 +58,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 			}
 			if (children.size() == r->arity()) {
 				LightTree term = apply(unif, LightTree(r, children));
-				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { prover::finalize(st, w, term, unif); }, true);
+				unif_.intersect(p->key, [w, term, &unif](SubstTree& st) { tree_index::finalize(st, w, term, unif); }, true);
 			}
 		}
 	}
@@ -114,4 +114,4 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 	 return ret;
  }
 
-}}}
+}}}}

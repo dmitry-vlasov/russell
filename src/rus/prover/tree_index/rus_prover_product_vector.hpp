@@ -2,7 +2,7 @@
 
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 extern bool debug_multy_index;
 extern uint matrix_vector_counter;
@@ -109,8 +109,8 @@ struct Set {
 	}
 
 private:
-	friend Set prover::intersect(const Set& s1, const Set& s2);
-	friend Set prover::complement(const Set& s1, const Set& s2);
+	friend Set prover::tree_index::intersect(const Set& s1, const Set& s2);
+	friend Set prover::tree_index::complement(const Set& s1, const Set& s2);
 
 	std::set<uint> set_;
 	bool init_;
@@ -232,7 +232,7 @@ struct ProdVect {
 		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
-			vect[i] = prover::intersect(vect[i], v.vect[i]);
+			vect[i] = tree_index::intersect(vect[i], v.vect[i]);
 		}
 	}
 
@@ -242,7 +242,7 @@ struct ProdVect {
 		}
 		assert(vect.size() == v.vect.size() && "intersect: vect.size() != v.vect.size()");
 		for (uint i = 0; i < vect.size(); ++ i) {
-			vect[i] = prover::complement(vect[i], v.vect[i]);
+			vect[i] = tree_index::complement(vect[i], v.vect[i]);
 		}
 	}
 
@@ -520,8 +520,8 @@ struct UnionVect {
 		void erase() { status = ERASED; }
 		void activate() { status = ACTIVE; }
 
-		vector<unique_ptr<SubstTree>> moveStack() { return prover::moveStack(stack); }
-		vector<unique_ptr<SubstTree>> copyStack() const { return prover::copyStack(stack); }
+		vector<unique_ptr<SubstTree>> moveStack() { return tree_index::moveStack(stack); }
+		vector<unique_ptr<SubstTree>> copyStack() const { return tree_index::copyStack(stack); }
 
 		string show() const {
 			ostringstream oss;
@@ -620,7 +620,7 @@ struct UnionVect {
 		for (uint i : n) {
 			Pair& p = *un_[i];
 			if (!p.value.erased() && p.key.intersects_with(pv)) {
-				ProdVect inter = prover::intersect(p.key, pv);
+				ProdVect inter = tree_index::intersect(p.key, pv);
 				if (inter != p.key) {
 					bool active = p.value.active();
 					p.value.erase();
@@ -792,4 +792,4 @@ private:
 
 UnionVect intersect(const UnionVect& v, const UnionVect& uv);
 
-}}}
+}}}}

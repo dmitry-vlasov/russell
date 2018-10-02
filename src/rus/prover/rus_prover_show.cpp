@@ -224,16 +224,6 @@ string show_struct(const ProofNode* n) {
 	return oss.str();
 }
 
-string show(const vector<const TreeIndex*>& mindex) {
-	string ret;
-	for (uint i = 0; i < mindex.size(); ++ i) {
-		ret += "index: " + to_string(i) + "\n";
-		ret += mindex[i]->show() + "\n";
-		ret += "-----------------------------\n\n";
-	}
-	return ret;
-}
-
 string show(const set<uint>& s) {
 	string ret;
 	ret += "{";
@@ -249,6 +239,26 @@ string show(const vector<uint>& v) {
 	ret += "(";
 	for (uint i : v) {
 		ret += to_string(i) + ", ";
+	}
+	ret += ")";
+	return ret;
+}
+
+string show(const vector<bool>& v) {
+	string ret;
+	ret += "(";
+	for (bool x : v) {
+		ret += x ? "true, " : "false, ";
+	}
+	ret += ")";
+	return ret;
+}
+
+string show(const vector<LightSymbol>& v) {
+	string ret;
+	ret += "(";
+	for (auto s : v) {
+		ret += prover::show(s) + ", ";
 	}
 	ret += ")";
 	return ret;

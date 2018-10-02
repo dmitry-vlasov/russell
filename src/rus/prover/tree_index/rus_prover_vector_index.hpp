@@ -4,7 +4,7 @@
 #include "rus_prover_vector_unified.hpp"
 #include "rus_prover_tree_index.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 struct VectorIndex {
 	struct LeafsInfo {
@@ -176,5 +176,4 @@ string show(const VectorIndex& vindex);
 extern bool debug_multy_index;
 extern bool debug_multy_index_1;
 
-}}}
-
+}}}}

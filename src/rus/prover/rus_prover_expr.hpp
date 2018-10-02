@@ -238,6 +238,8 @@ rus::Substitution convert_sub(const Subst&);
 
 string show(const set<uint>&);
 string show(const vector<uint>&);
+string show(const vector<bool>& v);
+string show(const vector<LightSymbol>& v);
 string show(LightSymbol s, bool full = true);
 string show(const LightTree&, bool full = true);
 string show_ast(const LightTree&);

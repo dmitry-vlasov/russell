@@ -3,7 +3,7 @@
 #include "../rus_prover_cartesian.hpp"
 #include "../rus_prover_down.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 static void addProofs(
 	map<LightSymbol, vector<IndexInt>>& mindex_,
@@ -193,4 +193,4 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	return ret;
 }
 
-}}}
+}}}}

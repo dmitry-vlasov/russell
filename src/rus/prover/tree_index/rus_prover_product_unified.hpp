@@ -2,7 +2,7 @@
 
 #include "rus_prover_product_vector.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 extern bool debug_multy_index;
 extern uint matrix_vector_counter;
@@ -51,5 +51,5 @@ private:
 
  MultyUnifiedSubs intersect(const map<LightSymbol, ProductUnified>& terms, MultyUnifiedSubs& unif);
 
-}}}
+}}}}
 

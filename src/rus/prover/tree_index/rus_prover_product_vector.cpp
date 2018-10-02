@@ -1,6 +1,6 @@
 #include "rus_prover_product_vector.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 set<uint> UnionVect::neighbourhood(const ProdVect& v) const {
 	set<uint> ret;
@@ -20,7 +20,7 @@ set<uint> UnionVect::neighbourhood(const ProdVect& v) const {
 		if (i == 0) {
 			ret = inds;
 		} else {
-			ret = prover::intersect(ret, inds);
+			ret = tree_index::intersect(ret, inds);
 		}
 	}
 	return ret;
@@ -108,4 +108,4 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 	return ret;
 }
 
-}}}
+}}}}

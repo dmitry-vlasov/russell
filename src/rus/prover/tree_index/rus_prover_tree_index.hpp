@@ -3,7 +3,7 @@
 #include "../rus_prover_unify.hpp"
 #include "../rus_prover_node.hpp"
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus { namespace prover { namespace tree_index {
 
 struct TreeIndex {
 	struct Leaf {
@@ -44,6 +44,15 @@ struct TreeIndex {
 	vector<LightTree> exprs;
 };
 
+inline string show(const vector<const TreeIndex*>& mindex) {
+	string ret;
+	for (uint i = 0; i < mindex.size(); ++ i) {
+		ret += "index: " + to_string(i) + "\n";
+		ret += mindex[i]->show() + "\n";
+		ret += "-----------------------------\n\n";
+	}
+	return ret;
+}
 
 template<class Data>
 struct TreeIndexMap {
@@ -95,5 +104,5 @@ typedef TreeIndexMap<uint> IndexInt;
 extern bool debug_index;
 extern bool debug_ind;
 
-}}}
+}}}}
 
