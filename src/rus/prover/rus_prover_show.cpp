@@ -224,7 +224,7 @@ string show_struct(const ProofNode* n) {
 	return oss.str();
 }
 
-string show(const vector<const Index*>& mindex) {
+string show(const vector<const TreeIndex*>& mindex) {
 	string ret;
 	for (uint i = 0; i < mindex.size(); ++ i) {
 		ret += "index: " + to_string(i) + "\n";

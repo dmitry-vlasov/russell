@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_index.hpp"
+#include "rus_prover_tree_index.hpp"
 #include "rus_prover_vector_unified.hpp"
 #include "rus_prover_product_unified.hpp"
 
@@ -27,11 +27,11 @@ struct VectorIndex {
 		vector<uint> proofInds;
 	};
 	struct IndexPtr {
-		IndexPtr(const Index* i, const vector<uint>* v, const vector<uint>& pi) : ind(i), info(v, pi) { }
-		IndexPtr(const Index* i, const LeafsInfo& li) : ind(i), info(li) { }
+		IndexPtr(const TreeIndex* i, const vector<uint>* v, const vector<uint>& pi) : ind(i), info(v, pi) { }
+		IndexPtr(const TreeIndex* i, const LeafsInfo& li) : ind(i), info(li) { }
 		IndexPtr(const IndexPtr&) = default;
 		IndexPtr& operator = (const IndexPtr&) = default;
-		const Index* ind;
+		const TreeIndex* ind;
 		LeafsInfo info;
 	};
 	uint size() const {
@@ -40,10 +40,10 @@ struct VectorIndex {
 	void add(const IndexInt& i, const vector<uint>& pi) {
 		vect_.emplace_back(&i.index(), &i.data(), pi);
 	}
-	void add(const Index* i, const LeafsInfo& li) {
+	void add(const TreeIndex* i, const LeafsInfo& li) {
 		vect_.emplace_back(i, li);
 	}
-	const Index* index(uint i) const {
+	const TreeIndex* index(uint i) const {
 		return vect_[i].ind;
 	}
 	const LeafsInfo& info(uint i) const {

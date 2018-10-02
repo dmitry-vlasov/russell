@@ -5,17 +5,17 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct Index {
+struct TreeIndex {
 	struct Leaf {
 		set<uint> inds;
 	};
 	struct Branch {
 		Branch(uint a) {
 			for (uint i = 0; i < a; ++ i) {
-				child.push_back(make_unique<Index>());
+				child.push_back(make_unique<TreeIndex>());
 			}
 		}
-		vector<unique_ptr<Index>> child;
+		vector<unique_ptr<TreeIndex>> child;
 	};
 	struct Node {
 		enum Kind { LEAF, BRANCH };
@@ -46,7 +46,7 @@ struct Index {
 
 
 template<class Data>
-struct IndexMap {
+struct TreeIndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Data  data;
@@ -58,7 +58,7 @@ struct IndexMap {
 	}
 	vector<Unified> unify(const LightTree& t) {
 		vector<Unified> ret;
-		Index::Unified unif = index_.unify(t);
+		TreeIndex::Unified unif = index_.unify(t);
 		for (auto& p : unif) {
 			if (p.second.ok) {
 				ret.emplace_back(data_[p.first], std::move(p.second));
@@ -82,15 +82,15 @@ struct IndexMap {
 		return index_.show();
 	}
 
-	const Index& index() const { return index_; }
+	const TreeIndex& index() const { return index_; }
 	const vector<Data>& data() const { return data_; }
 
 private:
-	Index index_;
+	TreeIndex index_;
 	vector<Data> data_;
 };
 
-typedef IndexMap<uint> IndexInt;
+typedef TreeIndexMap<uint> IndexInt;
 
 extern bool debug_index;
 extern bool debug_ind;

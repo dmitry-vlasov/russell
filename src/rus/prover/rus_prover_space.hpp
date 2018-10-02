@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_index.hpp"
+#include "rus_prover_tree_index.hpp"
 #include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -30,8 +30,8 @@ struct Space {
 	Proof*            proof = nullptr; // for Oracle tactic
 	Hyp*              root;
 	PropRef           prop;
-	IndexMap<HypRef>  hyps;
-	IndexMap<PropRef> assertions;
+	TreeIndexMap<HypRef>  hyps;
+	TreeIndexMap<PropRef> assertions;
 	map<uint, uint>   vars;
 
 	Return init();

@@ -39,7 +39,7 @@ struct Set {
 		}
 	}
 
-	bool init(const Index::Leaf& ind_leafs, const vector<uint>* ind_values) {
+	bool init(const TreeIndex::Leaf& ind_leafs, const vector<uint>* ind_values) {
 		if (!index_leafs) {
 			index_leafs = &ind_leafs;
 			for (uint s : ind_leafs.inds) {
@@ -115,7 +115,7 @@ private:
 
 	std::set<uint> set_;
 	bool init_;
-	const Index::Leaf* index_leafs;
+	const TreeIndex::Leaf* index_leafs;
 };
 
 inline Set intersect(const Set& s1, const Set& s2) {

@@ -1,4 +1,4 @@
-#include "rus_prover_index.hpp"
+#include "rus_prover_tree_index.hpp"
 #include "rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -21,7 +21,7 @@ static void intersect_show(map<uint, vector<string>>& u, map<uint, string> w[], 
 	}
 }
 
-map<uint, string> Index::showVector() const {
+map<uint, string> TreeIndex::showVector() const {
 	map<uint, string> ret;
 	for (const auto& p : vars) {
 		for (const auto& d : p.second.inds) {
@@ -30,12 +30,12 @@ map<uint, string> Index::showVector() const {
 	}
 	for (const auto& p : rules) {
 		const Rule* r = p.first;
-		if (p.second.kind() == Index::Node::LEAF) {
+		if (p.second.kind() == TreeIndex::Node::LEAF) {
 			for (const auto& d : p.second.leaf().inds) {
 				ret[d] = rus::show(r->term);
 			}
 		} else {
-			const vector<unique_ptr<Index>>& ch = p.second.branch().child;
+			const vector<unique_ptr<TreeIndex>>& ch = p.second.branch().child;
 			map<uint, string> show_ch[ch.size()];
 			int c = 0;
 			for (auto& ind : ch) {
@@ -62,20 +62,20 @@ map<uint, string> Index::showVector() const {
 	return ret;
 }
 
-static void add_to_index(Index* index, const LightTree& t, uint s) {
+static void add_to_index(TreeIndex* index, const LightTree& t, uint s) {
 	if (t.kind() == LightTree::VAR) {
 		index->vars[t.var()].inds.insert(s);
 	} else {
 		if (!t.children().size()) {
 			if (!index->rules.count(t.rule())) {
-				index->rules.emplace(t.rule(), Index::Leaf());
+				index->rules.emplace(t.rule(), TreeIndex::Leaf());
 			}
 			index->rules.at(t.rule()).leaf().inds.insert(s);
 		} else {
 			if (!index->rules.count(t.rule())) {
-				index->rules.emplace(t.rule(), Index::Branch(t.rule()->arity()));
+				index->rules.emplace(t.rule(), TreeIndex::Branch(t.rule()->arity()));
 			}
-			vector<unique_ptr<Index>>& ch = index->rules.at(t.rule()).branch().child;
+			vector<unique_ptr<TreeIndex>>& ch = index->rules.at(t.rule()).branch().child;
 			auto i = ch.begin();
 			for (const auto& c : t.children()) {
 				add_to_index((i++)->get(), *c.get(), s);
@@ -86,11 +86,11 @@ static void add_to_index(Index* index, const LightTree& t, uint s) {
 
 typedef map<uint, LightTree> UnifiedTerms;
 
-static UnifiedTerms gather_terms(const Index& i);
+static UnifiedTerms gather_terms(const TreeIndex& i);
 
-static UnifiedTerms gather_terms(const Rule* r, const Index::Node& n) {
+static UnifiedTerms gather_terms(const Rule* r, const TreeIndex::Node& n) {
 	UnifiedTerms ret;
-	if (n.kind() == Index::Node::LEAF) {
+	if (n.kind() == TreeIndex::Node::LEAF) {
 		for (uint d : n.leaf().inds) {
 			ret[d] = LightTree(r, {});
 		}
@@ -115,7 +115,7 @@ static UnifiedTerms gather_terms(const Rule* r, const Index::Node& n) {
 	return ret;
 }
 
-static UnifiedTerms gather_terms(const Index& i) {
+static UnifiedTerms gather_terms(const TreeIndex& i) {
 	UnifiedTerms ret;
 	for (const auto& p : i.vars) {
 		for (uint d : p.second.inds) {
@@ -133,7 +133,7 @@ static UnifiedTerms gather_terms(const Index& i) {
 bool debug_index = false;
 bool debug_ind = false;
 
-UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif) {
+UnifiedTerms unify(const TreeIndex* index, const LightTree& t, TreeIndex::Unified& unif) {
 	UnifiedTerms ret;
 	for (const auto& p : index->vars) {
 		LightSymbol iv = p.first;
@@ -157,7 +157,7 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 		if (tv.rep) {
 			for (const auto& p : index->rules) {
 				const Rule* r = p.first;
-				const Index::Node& n = p.second;
+				const TreeIndex::Node& n = p.second;
 				for (const auto& q : gather_terms(r, n)) {
 					ret[q.first] = unify_step(unif[q.first], {tv}, q.second);
 				}
@@ -165,8 +165,8 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 		}
 	}
 	if (t.kind() == LightTree::NODE && index->rules.count(t.rule())) {
-		const Index::Node& n = index->rules.at(t.rule());
-		if (n.kind() == Index::Node::LEAF) {
+		const TreeIndex::Node& n = index->rules.at(t.rule());
+		if (n.kind() == TreeIndex::Node::LEAF) {
 			for (uint d : n.leaf().inds) {
 				unif[d];
 				ret[d] = LightTree(t.rule(), {});
@@ -196,15 +196,15 @@ UnifiedTerms unify(const Index* index, const LightTree& t, Index::Unified& unif)
 	return ret;
 }
 
-uint Index::add(const LightTree& t) {
+uint TreeIndex::add(const LightTree& t) {
 	uint ind = size++;
 	exprs.push_back(t);
 	add_to_index(this, t, ind);
 	return ind;
 }
 
-Index::Unified Index::unify(const LightTree& t) const {
-	Index::Unified unif;
+TreeIndex::Unified TreeIndex::unify(const LightTree& t) const {
+	TreeIndex::Unified unif;
 	UnifiedTerms terms = prover::unify(this, t, unif);
 
 	for (const auto& p : unif) {
@@ -238,7 +238,7 @@ Index::Unified Index::unify(const LightTree& t) const {
 	return unif;
 }
 
-string Index::show() const {
+string TreeIndex::show() const {
 	string ret;
 	auto lines = showVector();
 	if (!lines.size()) {

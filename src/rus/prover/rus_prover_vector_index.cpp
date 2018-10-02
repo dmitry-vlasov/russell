@@ -330,7 +330,7 @@ void unify_branch_rule(MIndexSpace& space, const Rule* r, const vector<LightSymb
 				if (!leafs[i].storesInfo() && !space.vindex.index(i)->rules.count(r)) {
 					return;
 				}
-				const Index* ind =
+				const TreeIndex* ind =
 					space.vindex.index(i)->rules.count(r) ?
 					space.vindex.index(i)->rules.at(r).branch().child[k].get() : nullptr;
 				child_vindex.add(ind, space.vindex.info(i));
@@ -371,7 +371,7 @@ void unify_branch_rule_1(MIndexSpace& space, const Rule* r, const vector<LightSy
 				if (!leafs[i].storesInfo() && !space.vindex.index(i)->rules.count(r)) {
 					return;
 				}
-				const Index* ind =
+				const TreeIndex* ind =
 					space.vindex.index(i)->rules.count(r) ?
 					space.vindex.index(i)->rules.at(r).branch().child[k].get() : nullptr;
 				child_vindex.add(ind, space.vindex.info(i));
