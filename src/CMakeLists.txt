@@ -55,6 +55,8 @@ else()
 		rus/prover/tree_index/rus_prover_tree_index.cpp
 		rus/prover/tree_index/rus_prover_vector_index.cpp
 		rus/prover/tree_index/rus_prover_vector_unified.cpp
+		rus/prover/trie_index/rus_prover_trie_flatterm.cpp
+		rus/prover/trie_index/rus_prover_trie_index.cpp
 		
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
