@@ -1,4 +1,4 @@
-#include "rus_prover_trie_flatterm.hpp"
+#include "rus_prover_trie_flat_term.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
