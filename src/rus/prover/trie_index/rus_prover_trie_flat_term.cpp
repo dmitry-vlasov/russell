@@ -9,6 +9,15 @@ FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes) {
 	}
 }
 
+FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
+	nodes = t.nodes;
+	for (uint i = 0; i < nodes.size(); ++ i) {
+		auto len = t.nodes[i].end - t.nodes.begin();
+		nodes[i].end = nodes.begin() + len;
+	}
+	return *this;
+}
+
 string FlatTerm::show() const {
 	string ret;
 	stack<vector<Node>::iterator> st;

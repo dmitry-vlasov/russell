@@ -15,11 +15,16 @@ struct RuleVar {
 };
 
 struct FlatTerm {
+	enum Kind { RULE, VAR };
 	struct Node {
 		Node() { }
 		Node(const RuleVar& rv) : ruleVar(rv) { }
+		Node(const Node& n) : ruleVar(n.ruleVar) { }
+		Node(Node&&) = delete;
 		bool operator == (const Node& n) const { return ruleVar == n.ruleVar; }
 		bool operator != (const Node& n) const { return ruleVar != n.ruleVar; }
+		Node& operator = (const Node& n) { ruleVar = n.ruleVar; }
+		Node& operator = (Node&&) = delete;
 		RuleVar ruleVar;
 		vector<Node>::iterator end;
 	};
@@ -30,8 +35,16 @@ struct FlatTerm {
 	bool operator == (const FlatTerm& t) const { return nodes == t.nodes; }
 	bool operator != (const FlatTerm& t) const { return nodes != t.nodes; }
 
-	FlatTerm& operator = (const FlatTerm&) = default;
+	FlatTerm& operator = (const FlatTerm&);
 	FlatTerm& operator = (FlatTerm&&) = default;
+
+	Kind kind() const {
+		return (nodes.size() == 1 && nodes[0].ruleVar.isVar()) ? VAR : RULE;
+	}
+	LightSymbol var() const { assert(kind() == VAR); return nodes[0].ruleVar.var; }
+	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
+	bool empty() const { return !nodes.size(); }
+	uint len() const { return nodes.size(); }
 
 	vector<Node> nodes;
 	string show() const;
