@@ -2,6 +2,7 @@
 
 #include "rus_prover_show.hpp"
 #include "tree_index/rus_prover_tree_index.hpp"
+#include "trie_index/rus_prover_trie_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -20,6 +21,8 @@ struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
 	using IndexMap = tree_index::TreeIndexMap<T>;
+	template<class T>
+	using TrieIndexMap = trie_index::TrieIndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
@@ -35,6 +38,9 @@ struct Space {
 	IndexMap<HypRef>  hyps;
 	IndexMap<PropRef> assertions;
 	map<uint, uint>   vars;
+
+	TrieIndexMap<HypRef>  hyps_;
+	TrieIndexMap<PropRef> assertions_;
 
 	Return init();
 	Return info(uint index, string what);

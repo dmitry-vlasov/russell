@@ -12,77 +12,74 @@ void TrieIndex::add(const FlatTerm& t) {
 	stack<NodePair> st;
 	unique_ptr<Node>* n = &root;
 	auto i = t.nodes.begin();
-	while (i != t.nodes.end()) {
-		st.emplace(n, i->end);
+	while (true) {
 		if (!*n) {
 			n->reset(new Node(i->ruleVar));
-			n = &(*n)->next;
-		} else {
-			while (n) {
+		}
+		while (!st.empty() && st.top().end == i) {
+			(*st.top().trie)->ends.push_back(n->get());
+			st.pop();
+		}
+		if (i != t.nodes.end()) {
+			while (*n) {
 				if ((*n)->ruleVar == i->ruleVar) {
+					st.emplace(n, i->end);
 					n = &(*n)->next;
+					++i;
 					break;
 				} else {
 					n = &(*n)->side;
 				}
 			}
-		}
-		++i;
-		while (st.top().end == i) {
-			(*n)->ends.push_back(st.top().trie->get());
-			st.pop();
+		} else {
+			break;
 		}
 	}
 	(*n)->ind = size++;
 }
 
-vector<pair<FlatTerm, uint>> unpack_trie(const unique_ptr<TrieIndex::Node>* n) {
-	vector<pair<FlatTerm, uint>> ret;
-	while (*n) {
-		if ((*n)->next) {
-			for (auto p : unpack_trie(&(*n)->next)) {
-				p.first.nodes.emplace(p.first.nodes.begin(), (*n)->ruleVar);
-				ret.push_back(p);
+static FlatTerm create_flatterm(const vector<TrieIndex::Node*>& branch) {
+	FlatTerm ft(branch.size() - 1);
+	for (uint i = 0; i < branch.size() - 1; ++i) {
+		ft.nodes[i].ruleVar = branch[i]->ruleVar;
+		for (auto e : branch[i]->ends) {
+			for (uint j = i + 1; j < branch.size(); ++ j) {
+				if (branch[j] == e) {
+					ft.nodes[i].end = ft.nodes.begin() + j;
+					goto out;
+				}
 			}
 		}
-		if ((*n)->ind != -1) {
-			FlatTerm leaf(1);
-			leaf.nodes[0].ruleVar = (*n)->ruleVar;
-			ret.push_back(pair<FlatTerm, uint>(leaf, (*n)->ind));
-		}
-		n = &(*n)->side;
+		out:;
 	}
-	return ret;
+	return ft;
 }
 
 vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
 	vector<pair<FlatTerm, uint>> ret;
-	vector<Node*> branch;
-	branch.push_back(root.get());
-	while (branch.size()) {
-		Node* n = branch.back();
-		if (n->ind != -1) {
-			FlatTerm ft(branch.size());
-			for (uint i = 0; i < branch.size(); ++i) {
-				ft.nodes[i].ruleVar = branch[i]->ruleVar;
-				for (auto e : n->ends) {
-					for (uint j = i + 1; j < branch.size(); ++ j) {
-						if (branch[j] == e) {
-							ft.nodes[i].end = ft.nodes.begin() + j;
-							goto out;
-						}
-					}
-				}
-				out:;
+	if (root) {
+		vector<Node*> branch;
+		branch.push_back(root.get());
+		while (branch.size()) {
+			Node* n = branch.back();
+			if (n->ind != -1) {
+				ret.emplace_back(create_flatterm(branch), n->ind);
 			}
-			ret.emplace_back(ft, n->ind);
-		}
-		branch.pop_back();
-		if (n->side) {
-			branch.push_back(n->side.get());
-		}
-		if (n->next) {
-			branch.push_back(n->next.get());
+			if (n->next) {
+				branch.push_back(n->next.get());
+			} else {
+				while (true) {
+					branch.pop_back();
+					if (n->side) {
+						branch.push_back(n->side.get());
+						break;
+					}
+					if (branch.empty()) {
+						break;
+					}
+					n = branch.back();
+				}
+			}
 		}
 	}
 	return ret;

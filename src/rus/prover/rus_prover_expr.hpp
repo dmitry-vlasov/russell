@@ -179,6 +179,15 @@ struct LightTree {
 		default:   assert(0 && "impossible"); return -1;
 		}
 	}
+	uint len() const {
+		uint len = 1;
+		if (kind() == NODE) {
+			for (const auto& c : children()) {
+				len += c->len();
+			}
+		}
+		return len;
+	}
 
 private:
 	typedef variant<Node, LightSymbol> Value;

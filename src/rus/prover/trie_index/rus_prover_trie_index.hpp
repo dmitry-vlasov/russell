@@ -54,7 +54,7 @@ struct TrieIndexMap {
 			string ret;
 			for (const auto&  p : terms) {
 				Data d = data_[p.second];
-				ret += "[" + p.first.show() + "]" + " -> " + to_string(d) + "\n";
+				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second)/*prover::show(d)*/ + "\n";
 			}
 			return ret;
 		}

@@ -11,16 +11,23 @@ FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes) {
 
 string FlatTerm::show() const {
 	string ret;
-	stack<Node*> st;
-	for (const auto& n : nodes) {
-		if (n.ruleVar.rule) {
-			st.push(&*n.end);
-			ret += n.ruleVar.show() + " (";
-		} else {
-			ret += n.ruleVar.show() + " ";
+	stack<vector<Node>::iterator> st;
+	auto i = nodes.begin();
+	while (true) {
+		while (!st.empty() && st.top() == i) {
+			ret += ") ";
+			st.pop();
 		}
-		while (st.top() == &n) {
-			ret += ")";
+		if (i != nodes.end()) {
+			if (i->ruleVar.rule) {
+				st.push(i->end);
+				ret += i->ruleVar.show() + " (";
+			} else {
+				ret += i->ruleVar.show() + " ";
+			}
+			++i;
+		} else {
+			break;
 		}
 	}
 	return ret;
@@ -31,7 +38,6 @@ void fill_in_flatterm(auto& ft, const LightTree* t) {
 	if (t->kind() == LightTree::VAR) {
 		(ft++)->ruleVar.var = t->var();
 	} else {
-		auto n = ft;
 		(ft++)->ruleVar.rule = t->rule();
 		for (const auto& c : t->children()) {
 			fill_in_flatterm(ft, c.get());
@@ -41,7 +47,7 @@ void fill_in_flatterm(auto& ft, const LightTree* t) {
 }
 
 FlatTerm convert2flatterm(const LightTree& t) {
-	FlatTerm ret(t.length());
+	FlatTerm ret(t.len());
 	auto ft = ret.nodes.begin();
 	fill_in_flatterm(ft, &t);
 	return ret;
