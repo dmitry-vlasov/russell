@@ -23,7 +23,7 @@ struct FlatTerm {
 		Node(Node&&) = delete;
 		bool operator == (const Node& n) const { return ruleVar == n.ruleVar; }
 		bool operator != (const Node& n) const { return ruleVar != n.ruleVar; }
-		Node& operator = (const Node& n) { ruleVar = n.ruleVar; }
+		Node& operator = (const Node& n) { ruleVar = n.ruleVar; return *this;}
 		Node& operator = (Node&&) = delete;
 		RuleVar ruleVar;
 		vector<Node>::iterator end;
