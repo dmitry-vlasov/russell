@@ -181,7 +181,7 @@ bool composable(const Subst& s1, const Subst& s2) {
 
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	switch (tree.kind()) {
-	case LightTree::NODE: {
+	case LightTree::RULE: {
 		rus::Tree::Children ch;
 		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
@@ -237,7 +237,7 @@ string show(const LightTree& tree, bool full) {
 		} else {
 			return show(tree.var(), full);
 		}
-	} else if (tree.kind() == LightTree::NODE) {
+	} else if (tree.kind() == LightTree::RULE) {
 		string str(" ");
 		uint i = 0;
 		for (auto s : tree.rule()->term.symbols) {
@@ -284,7 +284,7 @@ string show(const Subst& s) {
 
 
 unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
-	if (t.kind() == LightTree::NODE) {
+	if (t.kind() == LightTree::RULE) {
 		LightTree::Children ch;
 		ch.reserve(t.children().size());
 		for (const auto& n : t.children()) {
@@ -302,7 +302,7 @@ unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 }
 
 unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
-	if (t.kind() == LightTree::NODE) {
+	if (t.kind() == LightTree::RULE) {
 		LightTree::Children ch;
 		ch.reserve(t.children().size());
 		for (const auto& n : t.children()) {

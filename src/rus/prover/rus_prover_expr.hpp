@@ -59,7 +59,7 @@ struct LightSymbol {
 
 struct LightTree {
 	typedef vector<unique_ptr<LightTree>> Children;
-	enum Kind { NODE, VAR };
+	enum Kind { RULE, VAR };
 
 	struct Node {
 		Node() = delete;
@@ -102,14 +102,14 @@ struct LightTree {
 
 	void operator = (const LightTree& e) {
 		switch (e.kind()) {
-		case NODE: val = Node(e.rule(), e.children()); break;
+		case RULE: val = Node(e.rule(), e.children()); break;
 		case VAR:  val = LightSymbol(e.var());         break;
 		default: assert(false && "impossible");        break;
 		}
 	}
 	void operator = (LightTree&& e) {
 		switch (e.kind()) {
-		case NODE: val = Node(e.rule(), std::move(e.children())); break;
+		case RULE: val = Node(e.rule(), std::move(e.children())); break;
 		case VAR:  val = LightSymbol(e.var());         break;
 		default: assert(false && "impossible");        break;
 		}
@@ -118,7 +118,7 @@ struct LightTree {
 	bool operator == (const LightTree& e) const {
 		if (kind() != e.kind()) return false;
 		switch (kind()) {
-		case NODE:
+		case RULE:
 			if (rule() != e.rule()) return false;
 			return std::equal(
 				children().begin(),children().end(),
@@ -139,31 +139,31 @@ struct LightTree {
 		return std::get<LightSymbol>(val);
 	}
 	const Rule* rule() const {
-		assert(kind() == NODE);
+		assert(kind() == RULE);
 		return std::get<Node>(val).rule;
 	}
 	const Type* type() const {
 		return kind() == VAR ? var().type : rule()->term.type.get();
 	}
 	Children& children() {
-		assert(kind() == NODE);
+		assert(kind() == RULE);
 		return std::get<Node>(val).children;
 	}
 	const Children& children() const {
-		assert(kind() == NODE);
+		assert(kind() == RULE);
 		return std::get<Node>(val).children;
 	}
 
 	uint arity() const {
 		switch (kind()) {
-		case NODE: return std::get<Node>(val).children.size();
+		case RULE: return std::get<Node>(val).children.size();
 		case VAR:  return 0;
 		default:   assert(0 && "impossible"); return -1;
 		}
 	}
 	uint length() const {
 		switch (kind()) {
-		case NODE: {
+		case RULE: {
 			uint len = 0;
 			uint i = 0;
 			for (const auto& s : rule()->term.symbols) {
@@ -181,7 +181,7 @@ struct LightTree {
 	}
 	uint len() const {
 		uint len = 1;
-		if (kind() == NODE) {
+		if (kind() == RULE) {
 			for (const auto& c : children()) {
 				len += c->len();
 			}

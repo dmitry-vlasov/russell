@@ -165,7 +165,7 @@ UnifiedTerms unify(const TreeIndex* index, const LightTree& t, TreeIndex::Unifie
 			}
 		}
 	}
-	if (t.kind() == LightTree::NODE && index->rules.count(t.rule())) {
+	if (t.kind() == LightTree::RULE && index->rules.count(t.rule())) {
 		const TreeIndex::Node& n = index->rules.at(t.rule());
 		if (n.kind() == TreeIndex::Node::LEAF) {
 			for (uint d : n.leaf().inds) {

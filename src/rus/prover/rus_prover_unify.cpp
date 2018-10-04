@@ -86,7 +86,7 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 				return ret;
 			}
 			break;
-		case LightTree::NODE:
+		case LightTree::RULE:
 			if (!ret.track_node(t)) {
 				return ret;
 			}
