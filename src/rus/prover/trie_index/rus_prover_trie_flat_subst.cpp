@@ -159,6 +159,18 @@ bool FlatSubst::composeable(const FlatSubst& s) const {
 	return false;
 }
 
+string FlatSubst::show() const {
+	string str;
+	str += "OK = " + (ok ? string("TRUE") : string("FALSE")) + "\n";
+	if (!sub.size()) {
+		str += "empty\n";
+	}
+	for (const auto& p : sub) {
+		str += prover::show(p.first) + " --> " + p.second.show() + "\n";
+	}
+	return str;
+}
+
 uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 	uint len = t.len();
 	for (const auto& n : t.nodes) {

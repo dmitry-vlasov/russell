@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_trie_flat_term.hpp"
+#include "rus_prover_trie_flat_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
@@ -14,7 +14,7 @@ struct TrieIndex {
 		vector<Node*> ends;
 	};
 
-	typedef map<uint, Subst> Unified;
+	typedef map<uint, FlatSubst> Unified;
 
 	void add(const FlatTerm& t);
 	Unified unify(const FlatTerm&) const;
@@ -67,6 +67,5 @@ private:
 	TrieIndex index_;
 	vector<Data> data_;
 };
-
 
 }}}}

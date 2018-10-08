@@ -42,6 +42,29 @@ string FlatTerm::show() const {
 	return ret;
 }
 
+vector<FlatTerm::Iterator> FlatTerm::children(Iterator it) {
+	assert(it->ruleVar.isRule());
+	vector<Iterator> ret;
+	Iterator x = it + 1;
+	ret.push_back(x);
+	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
+		x = x->end;
+		ret.push_back(x);
+	}
+	return ret;
+}
+
+vector<FlatTerm::ConstIterator> FlatTerm::children(ConstIterator it) const {
+	vector<ConstIterator> ret;
+	ConstIterator x = it + 1;
+	ret.push_back(x);
+	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
+		x = x->end;
+		ret.push_back(x);
+	}
+	return ret;
+}
+
 void fill_in_flatterm(auto& ft, const LightTree* t) {
 	auto n = ft;
 	if (t->kind() == LightTree::VAR) {

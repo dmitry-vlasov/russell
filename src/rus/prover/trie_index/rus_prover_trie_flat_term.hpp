@@ -12,6 +12,7 @@ struct RuleVar {
 	string show() const { return rule ? Lex::toStr(rule->id()) : prover::show(var); }
 	bool isVar() const  { return var.is_def(); }
 	bool isRule() const { return rule; }
+	const Type* type() const { return rule ? rule->type() : var.type; }
 };
 
 struct FlatTerm {
@@ -28,6 +29,8 @@ struct FlatTerm {
 		RuleVar ruleVar;
 		vector<Node>::iterator end;
 	};
+	typedef vector<Node>::iterator Iterator;
+	typedef vector<Node>::const_iterator ConstIterator;
 	FlatTerm(uint s) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
 	FlatTerm(FlatTerm&&) = default;
@@ -45,6 +48,8 @@ struct FlatTerm {
 	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
 	bool empty() const { return !nodes.size(); }
 	uint len() const { return nodes.size(); }
+	vector<Iterator> children(Iterator);
+	vector<ConstIterator> children(ConstIterator) const;
 
 	vector<Node> nodes;
 	string show() const;

@@ -95,6 +95,7 @@ string TrieIndex::show() const {
 
 TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	Unified ret;
+
 	return ret;
 }
 

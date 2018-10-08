@@ -30,6 +30,7 @@ struct FlatSubst {
 	bool composeable(const FlatSubst& s) const;
 
 	bool maps(LightSymbol v) const { return sub.find(v) != sub.end(); }
+	string show() const;
 
 	map<LightSymbol, FlatTerm> sub;
 	bool ok;
