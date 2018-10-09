@@ -47,7 +47,7 @@ struct FlatUnifStepData {
 			// all other leafs must be with the same rule.
 			return false;
 		}
-		children.push_back(t.children(i));
+		children.push_back(t.childrenIters());
 		return true;
 	}
 
@@ -76,7 +76,6 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm>& es, cons
 	FlatUnifStepData ret;
 	ret.least_type = (*is.begin())->ruleVar.type();
 	for (uint k = 0; k < es.size(); ++ k) {
-	//for (const auto& t : ex) {
 		if (!(*ret.least_type <= *is[k]->ruleVar.type())) {
 			// There's no unification because of type constraints
 			return ret;
@@ -95,16 +94,18 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm>& es, cons
 	return ret;
 }
 
+FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
+
 FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub);
 
-/*FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
 	vector<FlatTerm> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
 			to_unify.push_back(s.sub.at(v));
 		}
 	}
-	FlatTerm unified = do_unify(to_unify, s);
+	FlatTerm unified = unify(to_unify, s);
 	if (!unified.empty()) {
 		for (auto v : vars) {
 			if (!s.compose(FlatSubst(v, unified))) {
@@ -115,7 +116,7 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 		return unified;
 	}
 	return FlatTerm(0);
-}*/
+}
 
 FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub) {
 	if (!ex.size()) {
@@ -127,27 +128,24 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 	if (!data.consistent) {
 		return FlatTerm(0);
 	}
-	FlatTerm ret(0);
-	/*if (data.rule) {
-		LightTree::Children ch;
+	if (data.rule) {
+		vector<FlatTerm> ch;
 		for (uint i = 0; i < data.rule->arity(); ++ i) {
-			vector<LightTree> x;
-			for (const auto t : data.children) {
-				LightTree* c = (*t)[i].get();
-				x.push_back(*c);
+			vector<FlatTerm::ConstIterator> x;
+			for (const auto& t : data.children) {
+				x.push_back(t[i]);
 			}
-			LightTree c = do_unify(x, sub);
+			FlatTerm c = do_unify(ex, x, sub);
 			if (!c.empty()) {
-				ch.push_back(make_unique<LightTree>(c));
+				ch.emplace_back(c);
 			} else {
-				return LightTree();
+				return FlatTerm(0);
 			}
 		}
-		return unify_step(sub, data.vars, LightTree(data.rule, ch));
+		return unify_step(sub, data.vars, FlatTerm(data.rule, ch));
 	} else {
-		return unify_step(sub, data.vars, LightTree(data.const_.is_def() ? data.const_ : data.var));
-	}*/
-	return ret;
+		return unify_step(sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+	}
 }
 
 bool check_unification(const FlatTerm& term, const FlatSubst& sub, const vector<FlatTerm>& ex) {

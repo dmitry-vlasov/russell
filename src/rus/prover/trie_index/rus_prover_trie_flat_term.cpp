@@ -2,10 +2,42 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes) {
-	for (uint i = 0; i < nodes.size(); ++ i) {
-		auto len = t.nodes[i].end - t.nodes.begin();
-		nodes[i].end = nodes.begin() + len;
+void copyFlatSubTerm(FlatTerm* t, const uint pos, const FlatTerm& s, FlatTerm::ConstIterator b) {
+	uint i = 0;
+	for (auto it = b; ; ++ i) {
+		t->nodes[pos + i].ruleVar = it->ruleVar;
+		t->nodes[pos + i].end = t->nodes.begin() + pos + (it->end - b);
+		if (it == b->end) {
+			break;
+		}
+		++i;
+	}
+}
+
+FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes.size()) {
+	copyFlatSubTerm(this, 0, t, t.nodes.begin());
+}
+
+FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
+	nodes[0].ruleVar.var = s;
+	nodes[0].end = nodes.begin();
+}
+
+static uint flatTermsLen(const vector<FlatTerm>& ch) {
+	uint len = 1;
+	for (const auto& c : ch) {
+		len += c.len();
+	}
+	return len;
+}
+
+FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsLen(ch)) {
+	nodes[0].ruleVar.rule = r;
+	nodes[0].end = nodes.begin() + nodes.size() - 1;
+	uint pos = 1;
+	for (const auto& c : ch) {
+		copyFlatSubTerm(this, pos, c, c.nodes.begin());
+		pos += c.len();
 	}
 }
 
@@ -36,26 +68,33 @@ string FlatTerm::show() const {
 	return ret;
 }
 
-vector<FlatTerm::Iterator> FlatTerm::children(Iterator it) {
-	assert(it->ruleVar.isRule());
-	vector<Iterator> ret;
-	Iterator x = it + 1;
-	ret.push_back(x);
-	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
-		x = x->end + 1;
-		ret.push_back(x);
+vector<FlatTerm> FlatTerm::children() const {
+	vector<FlatTerm> ret;
+	if (kind() == RULE) {
+		ConstIterator x = nodes.begin() + 1;
+		for (uint i = 1; i < nodes[0].ruleVar.rule->arity(); ++i) {
+			ret.push_back(subTerm(x));
+			x = x->end + 1;
+		}
 	}
 	return ret;
 }
 
-vector<FlatTerm::ConstIterator> FlatTerm::children(ConstIterator it) const {
-	vector<ConstIterator> ret;
-	ConstIterator x = it + 1;
-	ret.push_back(x);
-	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
-		x = x->end + 1;
-		ret.push_back(x);
+vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
+	vector<FlatTerm::ConstIterator> ret;
+	if (kind() == RULE) {
+		ConstIterator x = nodes.begin() + 1;
+		for (uint i = 1; i < nodes[0].ruleVar.rule->arity(); ++i) {
+			ret.push_back(x);
+			x = x->end + 1;
+		}
 	}
+	return ret;
+}
+
+FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
+	FlatTerm ret(beg->end - beg);
+	copyFlatSubTerm(&ret, 0, *this, beg);
 	return ret;
 }
 

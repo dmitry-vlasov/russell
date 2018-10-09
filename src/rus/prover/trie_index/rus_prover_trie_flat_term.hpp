@@ -41,6 +41,8 @@ struct FlatTerm {
 	FlatTerm(uint s) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
 	FlatTerm(FlatTerm&&) = default;
+	FlatTerm(LightSymbol s);
+	FlatTerm(const Rule* r, const vector<FlatTerm>& ch);
 
 	bool operator == (const FlatTerm& t) const { return nodes == t.nodes; }
 	bool operator != (const FlatTerm& t) const { return nodes != t.nodes; }
@@ -55,8 +57,9 @@ struct FlatTerm {
 	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
 	bool empty() const { return !nodes.size(); }
 	uint len() const { return nodes.size(); }
-	vector<Iterator> children(Iterator);
-	vector<ConstIterator> children(ConstIterator) const;
+	vector<FlatTerm> children() const;
+	vector<ConstIterator> childrenIters() const;
+	FlatTerm subTerm(ConstIterator beg) const;
 
 	vector<Node> nodes;
 	string show() const;
