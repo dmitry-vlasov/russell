@@ -13,6 +13,45 @@ struct TrieIndex {
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
 
+	struct TrieIter {
+		TrieIter(const Node& n) :
+			valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
+		TrieIter(ConstIterator b, ConstIterator e) :
+			valid_(true), beg_(b), iter_(b), end_(e) { }
+		TrieIter(const TrieIter&) = default;
+		TrieIter& operator = (const TrieIter&) = default;
+		TrieIter side() const {
+			if (!valid_ || isSideEnd()) {
+				return TrieIter(beg_, iter_, end_, false);
+			} else {
+				auto i = iter_;
+				return TrieIter(beg_, ++i, end_);
+			}
+		}
+		TrieIter next() const {
+			if (!valid_ || isNextEnd()) {
+				return TrieIter(beg_, iter_, end_, false);
+			} else {
+				return TrieIter(iter_->second.nodes.begin(), iter_->second.nodes.end());
+			}
+		}
+		bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
+		bool isSideEnd() const { auto i = iter_; return ++i == end_; }
+		bool isValid() const { return valid_; }
+		ConstIterator iter() const {
+			assert(valid_ && "TrieIter::iter()");
+			return iter_;
+		}
+
+	private:
+		TrieIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
+			valid_(v), beg_(b), iter_(i), end_(e) { }
+		bool valid_;
+		ConstIterator beg_;
+		ConstIterator iter_;
+		ConstIterator end_;
+	};
+
 	typedef map<uint, FlatSubst> Unified;
 
 	void add(const FlatTerm& t);

@@ -38,6 +38,39 @@ struct FlatTerm {
 	};
 	typedef vector<Node>::iterator Iterator;
 	typedef vector<Node>::const_iterator ConstIterator;
+
+	struct TermIter {
+		TermIter(const FlatTerm& ft) :
+			valid_(true), beg_(ft.nodes.begin()), iter_(ft.nodes.begin()), end_(ft.nodes.end()) { }
+		TermIter(ConstIterator b, ConstIterator e) :
+			valid_(true), beg_(b), iter_(b), end_(e) { }
+		TermIter(const TermIter&) = default;
+		TermIter& operator = (const TermIter&) = default;
+		TermIter side() const { return TermIter(beg_, iter_, end_, false); }
+		TermIter next() const {
+			if (!valid_ || isNextEnd()) {
+				return TermIter(beg_, iter_, end_, false);
+			} else {
+				return TermIter(beg_, iter_ + 1, end_, iter_ != end_);
+			}
+		}
+		bool isNextEnd() const { return iter_ == end_; }
+		bool isSideEnd() const { return true; }
+		bool isValid() const { return valid_; }
+		ConstIterator iter() const {
+			assert(valid_ && "TermIter::iter()");
+			return iter_;
+		}
+
+	private:
+		TermIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
+			valid_(v), beg_(b), iter_(i), end_(e) { }
+		bool valid_;
+		ConstIterator beg_;
+		ConstIterator iter_;
+		ConstIterator end_;
+	};
+
 	FlatTerm(uint s) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
 	FlatTerm(FlatTerm&&) = default;
