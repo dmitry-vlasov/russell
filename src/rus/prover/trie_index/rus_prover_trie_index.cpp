@@ -9,28 +9,17 @@ struct NodePair {
 };
 
 void TrieIndex::add(const FlatTerm& t) {
-
-	cout << "ADDING: " << t.show() << endl;
-
 	stack<NodePair> st;
 	Node* n = &root;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
+		n = &n->nodes[i->ruleVar];
+		st.emplace(n, i->end);
 		while (!st.empty() && st.top().end == i) {
 			st.top().trie->ends.push_back(n);
 			st.pop();
 		}
-		n = &n->nodes[i->ruleVar];
-		st.emplace(n, i->end);
 	}
 	n->inds.push_back(size++);
-
-
-	cout << "THIS: " << endl;
-	cout << show() << endl;
-	static int c = 0;
-	if (c ++ == 128) {
-		exit(0);
-	}
 }
 
 struct UnpackPair {
@@ -42,12 +31,12 @@ struct UnpackPair {
 };
 
 static FlatTerm create_flatterm(const vector<UnpackPair>& branch) {
-	FlatTerm ft(branch.size() - 1);
-	for (uint i = 0; i < branch.size() - 1; ++i) {
+	FlatTerm ft(branch.size());
+	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter->first;
-		for (auto e : branch[i].iter->second.ends) {
-			for (uint j = i + 1; j < branch.size(); ++ j) {
-				if (&branch[j].iter->second == e) {
+		for (auto end : branch[i].iter->second.ends) {
+			for (uint j = i; j < branch.size(); ++ j) {
+				if (&branch[j].iter->second == end) {
 					ft.nodes[i].end = ft.nodes.begin() + j;
 					goto out;
 				}
