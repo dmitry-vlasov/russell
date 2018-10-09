@@ -21,22 +21,16 @@ FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
 string FlatTerm::show() const {
 	string ret;
 	stack<vector<Node>::iterator> st;
-	auto i = nodes.begin();
-	while (true) {
+	for (auto i = nodes.begin(); i != nodes.end(); ++i) {
+		if (i->ruleVar.rule) {
+			st.push(i->end);
+			ret += i->ruleVar.show() + " (";
+		} else {
+			ret += i->ruleVar.show() + " ";
+		}
 		while (!st.empty() && st.top() == i) {
 			ret += ") ";
 			st.pop();
-		}
-		if (i != nodes.end()) {
-			if (i->ruleVar.rule) {
-				st.push(i->end);
-				ret += i->ruleVar.show() + " (";
-			} else {
-				ret += i->ruleVar.show() + " ";
-			}
-			++i;
-		} else {
-			break;
 		}
 	}
 	return ret;
@@ -48,7 +42,7 @@ vector<FlatTerm::Iterator> FlatTerm::children(Iterator it) {
 	Iterator x = it + 1;
 	ret.push_back(x);
 	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
-		x = x->end;
+		x = x->end + 1;
 		ret.push_back(x);
 	}
 	return ret;
@@ -59,23 +53,25 @@ vector<FlatTerm::ConstIterator> FlatTerm::children(ConstIterator it) const {
 	ConstIterator x = it + 1;
 	ret.push_back(x);
 	for (uint i = 1; i < it->ruleVar.rule->arity(); ++i) {
-		x = x->end;
+		x = x->end + 1;
 		ret.push_back(x);
 	}
 	return ret;
 }
 
-void fill_in_flatterm(auto& ft, const LightTree* t) {
+FlatTerm::Iterator fill_in_flatterm(auto& ft, const LightTree* t) {
 	auto n = ft;
+	auto end = ft;
 	if (t->kind() == LightTree::VAR) {
 		(ft++)->ruleVar.var = t->var();
 	} else {
 		(ft++)->ruleVar.rule = t->rule();
 		for (const auto& c : t->children()) {
-			fill_in_flatterm(ft, c.get());
+			end = fill_in_flatterm(ft, c.get());
 		}
 	}
-	n->end = ft;
+	n->end = end;
+	return end;
 }
 
 FlatTerm convert2flatterm(const LightTree& t) {

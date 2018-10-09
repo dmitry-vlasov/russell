@@ -3,48 +3,51 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct NodePair {
-	NodePair(unique_ptr<TrieIndex::Node>* t, vector<FlatTerm::Node>::const_iterator e) : trie(t), end(e) { }
-	unique_ptr<TrieIndex::Node>* trie;
+	NodePair(TrieIndex::Node* t, vector<FlatTerm::Node>::const_iterator e) : trie(t), end(e) { }
+	TrieIndex::Node* trie;
 	vector<FlatTerm::Node>::const_iterator end;
 };
 
 void TrieIndex::add(const FlatTerm& t) {
+
+	cout << "ADDING: " << t.show() << endl;
+
 	stack<NodePair> st;
-	unique_ptr<Node>* n = &root;
-	auto i = t.nodes.begin();
-	while (true) {
-		if (!*n) {
-			n->reset(new Node(i->ruleVar));
-		}
+	Node* n = &root;
+	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		while (!st.empty() && st.top().end == i) {
-			(*st.top().trie)->ends.push_back(n->get());
+			st.top().trie->ends.push_back(n);
 			st.pop();
 		}
-		if (i != t.nodes.end()) {
-			while (*n) {
-				if ((*n)->ruleVar == i->ruleVar) {
-					st.emplace(n, i->end);
-					n = &(*n)->next;
-					++i;
-					break;
-				} else {
-					n = &(*n)->side;
-				}
-			}
-		} else {
-			break;
-		}
+		n = &n->nodes[i->ruleVar];
+		st.emplace(n, i->end);
 	}
-	(*n)->ind = size++;
+	n->inds.push_back(size++);
+
+
+	cout << "THIS: " << endl;
+	cout << show() << endl;
+	static int c = 0;
+	if (c ++ == 128) {
+		exit(0);
+	}
 }
 
-static FlatTerm create_flatterm(const vector<TrieIndex::Node*>& branch) {
+struct UnpackPair {
+	UnpackPair(TrieIndex::ConstIterator i, TrieIndex::ConstIterator e) : iter(i), end(e) { }
+	bool isEnd() const { return iter == end; }
+	UnpackPair side() { return UnpackPair(++iter, end); }
+	TrieIndex::ConstIterator iter;
+	TrieIndex::ConstIterator end;
+};
+
+static FlatTerm create_flatterm(const vector<UnpackPair>& branch) {
 	FlatTerm ft(branch.size() - 1);
 	for (uint i = 0; i < branch.size() - 1; ++i) {
-		ft.nodes[i].ruleVar = branch[i]->ruleVar;
-		for (auto e : branch[i]->ends) {
+		ft.nodes[i].ruleVar = branch[i].iter->first;
+		for (auto e : branch[i].iter->second.ends) {
 			for (uint j = i + 1; j < branch.size(); ++ j) {
-				if (branch[j] == e) {
+				if (&branch[j].iter->second == e) {
 					ft.nodes[i].end = ft.nodes.begin() + j;
 					goto out;
 				}
@@ -57,21 +60,22 @@ static FlatTerm create_flatterm(const vector<TrieIndex::Node*>& branch) {
 
 vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
 	vector<pair<FlatTerm, uint>> ret;
-	if (root) {
-		vector<Node*> branch;
-		branch.push_back(root.get());
+	vector<UnpackPair> branch;
+	if (root.nodes.size()) {
+		branch.emplace_back(root.nodes.begin(), root.nodes.end());
 		while (branch.size()) {
-			Node* n = branch.back();
-			if (n->ind != -1) {
-				ret.emplace_back(create_flatterm(branch), n->ind);
+			UnpackPair n = branch.back();
+			for (uint ind :  n.iter->second.inds) {
+				ret.emplace_back(create_flatterm(branch), ind);
 			}
-			if (n->next) {
-				branch.push_back(n->next.get());
+			if (n.iter->second.nodes.size()) {
+				branch.emplace_back(n.iter->second.nodes.begin(), n.iter->second.nodes.end());
 			} else {
 				while (true) {
 					branch.pop_back();
-					if (n->side) {
-						branch.push_back(n->side.get());
+					UnpackPair m = n.side();
+					if (!m.isEnd()) {
+						branch.push_back(m);
 						break;
 					}
 					if (branch.empty()) {

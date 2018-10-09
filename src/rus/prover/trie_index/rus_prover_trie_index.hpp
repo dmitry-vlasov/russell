@@ -6,13 +6,12 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct TrieIndex {
 	struct Node {
-		Node(const RuleVar& rv) : ruleVar(rv) { }
-		RuleVar ruleVar;
-		uint ind = -1;
-		unique_ptr<Node> next;
-		unique_ptr<Node> side;
+		vector<uint> inds;
+		map<RuleVar, Node> nodes;
 		vector<Node*> ends;
 	};
+	typedef map<RuleVar, Node>::iterator Iterator;
+	typedef map<RuleVar, Node>::const_iterator ConstIterator;
 
 	typedef map<uint, FlatSubst> Unified;
 
@@ -22,7 +21,7 @@ struct TrieIndex {
 	string show() const;
 
 	uint size = 0;
-	unique_ptr<Node> root;
+	Node root;
 };
 
 template<class Data>

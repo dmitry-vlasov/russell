@@ -9,6 +9,13 @@ struct RuleVar {
 	LightSymbol var;
 	bool operator == (const RuleVar& rv) const { return rule == rv.rule && var == rv.var; }
 	bool operator != (const RuleVar& rv) const { return !operator == (rv); }
+	bool operator < (const RuleVar& rv) const {
+		if (isVar()) {
+			return rv.isRule() ? true : var < rv.var;
+		} else {
+			return rv.isRule() ? rule < rv.rule : false;
+		}
+	}
 	string show() const { return rule ? Lex::toStr(rule->id()) : prover::show(var); }
 	bool isVar() const  { return var.is_def(); }
 	bool isRule() const { return rule; }
