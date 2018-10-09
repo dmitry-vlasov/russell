@@ -12,7 +12,9 @@ void TrieIndex::add(const FlatTerm& t) {
 	stack<NodePair> st;
 	Node* n = &root;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
+		Node* p = n;
 		n = &n->nodes[i->ruleVar];
+		n->parent = p;
 		st.emplace(n, i->end);
 		while (!st.empty() && st.top().end == i) {
 			st.top().trie->ends.push_back(n);
@@ -21,14 +23,6 @@ void TrieIndex::add(const FlatTerm& t) {
 	}
 	n->inds.push_back(size++);
 }
-
-struct UnpackPair {
-	UnpackPair(TrieIndex::ConstIterator i, TrieIndex::ConstIterator e) : iter(i), end(e) { }
-	bool isEnd() const { return iter == end; }
-	UnpackPair side() { return UnpackPair(++iter, end); }
-	TrieIndex::ConstIterator iter;
-	TrieIndex::ConstIterator end;
-};
 
 static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 	FlatTerm ft(branch.size());
@@ -45,6 +39,19 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 		out:;
 	}
 	return ft;
+}
+
+FlatTerm TrieIndex::TrieIter::subTerm(const Node* n) const {
+	vector<const TrieIndex::Node*> branch;
+	/*while (n) {
+		branch.push_back(n);
+		if (&*iter_ == n) {
+			break;
+		}
+		n = n->parent;
+	}
+	branch.reverse();
+	return create_flatterm(branch);*/
 }
 
 vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
@@ -86,16 +93,49 @@ string TrieIndex::show() const {
 }
 
 struct UnifyIter {
-	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2) : trieIter(i1), termIter(i2) { }
+	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const FlatSubst& s = FlatSubst(), bool v = true) :
+		valid_(v), trieIter(i1), termIter(i2), sub(s) { }
 	UnifyIter(const UnifyIter&) = default;
 	UnifyIter& operator = (const UnifyIter&) = default;
 	UnifyIter side() {
 		return UnifyIter(trieIter.side(), termIter);
 	}
-	UnifyIter next() { return UnifyIter(trieIter.next(), termIter.next()); }
+	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next()); }
 	bool isNextEnd() const { return trieIter.isNextEnd() || termIter.isNextEnd(); }
 	bool isTermEnd() const { return trieIter.isNextEnd() && termIter.isNextEnd(); }
 	bool isSideEnd() const { return trieIter.isSideEnd() && termIter.isSideEnd(); }
+	bool equals() const { return trieIter.iter()->first == termIter.iter()->ruleVar; }
+
+	vector<UnifyIter> unify() const {
+		if (equals()) {
+			return vector<UnifyIter>(1, next());
+		}
+		if (trieIter.iter()->first.isVar()) {
+			return vector<UnifyIter>(1, UnifyIter(
+				trieIter,
+				termIter.fastForward(),
+				FlatSubst(trieIter.iter()->first.var, termIter.subTerm())
+			));
+		} else if (termIter.iter()->ruleVar.isVar()) {
+			vector<UnifyIter> ret;
+			/*for (auto e : trieIter.iter()->second.ends) {
+				ret.push_back(UnifyIter(
+						e,
+						termIter,
+						FlatSubst(
+							termIter.iter()->ruleVar.var,
+							FlatTerm(0) //trieIter.subTerm()
+						)
+					)
+				);
+			}*/
+			return ret;
+		} else {
+			return vector<UnifyIter>();
+		}
+	}
+
+	bool valid_;
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
 	FlatSubst sub;
@@ -112,15 +152,26 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 				ret.emplace(ind, n.sub);
 			}
 		}
-		if (!n.isTermEnd()) {
-			UnifyIter m = n.next();
-			branch.push_back(m);
+		/*if (n.equals() && !n.isNextEnd()) {
+			branch.push_back(n.next());
+		} else if (n.trieIter.iter()->first.isVar()) {
+			return UnifyIterm(
+				trieIter,
+				termIter.fastForward(),
+				FlatSubst(trieIter.iter()->first.var, termIter.subTerm())
+			);
+		} else if (termIter.iter()->isVar()) {
+
+		}*/
+
+
+		if (!n.isNextEnd()) {
+			branch.push_back(n.next());
 		} else {
 			while (true) {
 				branch.pop_back();
-				UnifyIter m = n.side();
-				if (!m.isSideEnd()) {
-					branch.push_back(m);
+				if (!n.isSideEnd()) {
+					branch.push_back(n.side());
 					break;
 				}
 				if (branch.empty()) {

@@ -54,6 +54,14 @@ struct FlatTerm {
 				return TermIter(beg_, iter_ + 1, end_, iter_ != end_);
 			}
 		}
+		TermIter fastForward() const {
+			if (!valid_ || isNextEnd()) {
+				return TermIter(beg_, iter_, end_, false);
+			} else {
+				return TermIter(beg_, iter_->end, end_, iter_ != end_);
+			}
+		}
+		FlatTerm subTerm() const;
 		bool isNextEnd() const { return iter_ == end_; }
 		bool isSideEnd() const { return true; }
 		bool isValid() const { return valid_; }

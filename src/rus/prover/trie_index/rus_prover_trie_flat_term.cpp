@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-void copyFlatSubTerm(FlatTerm* t, const uint pos, const FlatTerm& s, FlatTerm::ConstIterator b) {
+void copyFlatSubTerm(FlatTerm* t, const uint pos, /*const FlatTerm& s,*/ FlatTerm::ConstIterator b) {
 	uint i = 0;
 	for (auto it = b; ; ++ i) {
 		t->nodes[pos + i].ruleVar = it->ruleVar;
@@ -14,8 +14,14 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, const FlatTerm& s, FlatTerm::C
 	}
 }
 
+FlatTerm FlatTerm::TermIter::subTerm() const {
+	FlatTerm ret(iter_->end - iter_);
+	copyFlatSubTerm(&ret, 0, iter_);
+	return ret;
+}
+
 FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes.size()) {
-	copyFlatSubTerm(this, 0, t, t.nodes.begin());
+	copyFlatSubTerm(this, 0, t.nodes.begin());
 }
 
 FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
@@ -36,7 +42,7 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 	nodes[0].end = nodes.begin() + nodes.size() - 1;
 	uint pos = 1;
 	for (const auto& c : ch) {
-		copyFlatSubTerm(this, pos, c, c.nodes.begin());
+		copyFlatSubTerm(this, pos, c.nodes.begin());
 		pos += c.len();
 	}
 }
@@ -94,7 +100,7 @@ vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 
 FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
 	FlatTerm ret(beg->end - beg);
-	copyFlatSubTerm(&ret, 0, *this, beg);
+	copyFlatSubTerm(&ret, 0, beg);
 	return ret;
 }
 
