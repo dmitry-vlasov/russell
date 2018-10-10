@@ -2,22 +2,22 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-struct NodePair {
-	NodePair(TrieIndex::Node* t, vector<FlatTerm::Node>::const_iterator e) : trie(t), end(e) { }
-	TrieIndex::Node* trie;
-	vector<FlatTerm::Node>::const_iterator end;
-};
-
 void TrieIndex::add(const FlatTerm& t) {
+	struct NodePair {
+		NodePair(TrieIndex::Iterator t, FlatTerm::ConstIterator e) : trie(t), end(e) { }
+		TrieIndex::Iterator trie;
+		FlatTerm::ConstIterator  end;
+	};
 	stack<NodePair> st;
 	Node* n = &root;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		Node* p = n;
-		n = &n->nodes[i->ruleVar];
+		auto ni = n->nodes.emplace(i->ruleVar, Node()).first;
+		n = &ni->second;
 		n->parent = p;
-		st.emplace(n, i->end);
+		st.emplace(ni, i->end);
 		while (!st.empty() && st.top().end == i) {
-			st.top().trie->ends.push_back(n);
+			st.top().trie->second.ends.push_back(ni);
 			st.pop();
 		}
 	}
@@ -30,7 +30,7 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
 		for (auto end : branch[i].iter()->second.ends) {
 			for (uint j = i; j < branch.size(); ++ j) {
-				if (&branch[j].iter()->second == end) {
+				if (branch[j].iter() == end) {
 					ft.nodes[i].end = ft.nodes.begin() + j;
 					goto out;
 				}

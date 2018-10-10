@@ -9,7 +9,7 @@ struct TrieIndex {
 		Node* parent = nullptr;
 		vector<uint> inds;
 		map<RuleVar, Node> nodes;
-		vector<Node*> ends;
+		vector<map<RuleVar, Node>::iterator> ends;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
