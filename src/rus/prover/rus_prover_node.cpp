@@ -47,6 +47,28 @@ void Prop::buildUp() {
 }
 
 void Hyp::buildUp() {
+	vector<Space::IndexMap<PropRef>::Unified> unif1 = space->assertions.unify(expr);
+	vector<Space::TrieIndexMap<PropRef>::Unified> unif2 = space->assertions_.unify(expr);
+	if (unif1.size() != unif2.size()) {
+		cout << "sizes differ: " << unif1.size() << " != " << unif2.size() << endl;
+	}
+	for (const auto& p1 : unif1) {
+		bool found = false;
+		for (const auto& p2 : unif2) {
+			if (p1.data == p2.data) {
+				found = true;
+				if (p1.sub != p2.sub) {
+					cout << "different values: " << endl;
+					cout << prover::show(p1.sub) << endl;
+					cout << prover::show(p2.sub) << endl;
+				}
+			}
+		}
+		if (!found) {
+			cout << "unif1 misses key: " << Lex::toStr(p1.data.id()) << endl;
+		}
+	}
+
 	for (auto& m : space->assertions.unify(expr)) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		for (const auto& p : fresher.sub) {
