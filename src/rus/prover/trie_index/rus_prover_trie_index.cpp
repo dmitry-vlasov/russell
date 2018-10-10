@@ -131,25 +131,37 @@ struct UnifyIter {
 				UnifyIter(
 					trieIter,
 					termIter.fastForward(),
-					std::move(VarTerm(
+					VarTerm(
 						trieIter.iter()->first.var,
-						std::move(termIter.subTerm())
-					))
+						termIter.subTerm()
+					)
 				)
 			);
 		} else if (termIter.iter()->ruleVar.isVar()) {
 			vector<UnifyIter> ret;
 			for (auto e : trieIter.iter()->second.ends) {
+			    cout << "END: " << endl;
+			    auto subterm = trieIter.subTerm(e);
+                cout << "SUBTRM: " << subterm.show() << endl;
+                auto itt = TrieIndex::TrieIter(e);
+                cout << "XXXX: " << endl;
+                auto rv = termIter.iter()->ruleVar.var;
+                cout << "SSSS: " << prover::show(rv) << endl;
+                auto vt = VarTerm(
+                        rv, //termIter.iter()->ruleVar.var,
+                        subterm //trieIter.subTerm(e)
+                );
+                cout << "YYYY" << endl;
+                auto ut = UnifyIter(
+                        itt,
+                        termIter,
+                        vt
+                );
+                cout << "ZZZ" << endl;
 				ret.push_back(
-					UnifyIter(
-						TrieIndex::TrieIter(e),
-						termIter,
-						std::move(VarTerm(
-							termIter.iter()->ruleVar.var,
-							std::move(trieIter.subTerm(e))
-						))
-					)
+				    ut
 				);
+                cout << "BBB: " << endl;
 			}
 			return ret;
 		} else {

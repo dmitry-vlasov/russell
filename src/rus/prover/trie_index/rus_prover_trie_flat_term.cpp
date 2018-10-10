@@ -52,10 +52,9 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 }
 
 FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
-	nodes = t.nodes;
-	for (uint i = 0; i < nodes.size(); ++ i) {
-		auto len = t.nodes[i].end - t.nodes.begin();
-		nodes[i].end = nodes.begin() + len;
+	nodes.clear();
+	if (t.nodes.size()) {
+		copyFlatSubTerm(this, 0, t.nodes.begin());
 	}
 	return *this;
 }
