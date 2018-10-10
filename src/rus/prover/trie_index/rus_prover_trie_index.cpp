@@ -1,4 +1,5 @@
 #include "rus_prover_trie_index.hpp"
+#include "rus_prover_trie_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
@@ -95,8 +96,19 @@ string TrieIndex::show() const {
 }
 
 struct UnifyIter {
-	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const FlatSubst& s = FlatSubst(), bool v = true) :
-		valid_(v), trieIter(i1), termIter(i2), sub(s) { }
+	struct VarTerm {
+		VarTerm() : term(0) { }
+		VarTerm(LightSymbol v, const FlatTerm& t) : var(v), term(t) { }
+		VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
+		VarTerm(const VarTerm&) = default;
+		VarTerm(VarTerm&&) = default;
+		VarTerm& operator = (const VarTerm&) = default;
+		LightSymbol var;
+		FlatTerm term;
+	};
+
+	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const VarTerm& vt = VarTerm(), bool v = true) :
+		valid_(v), trieIter(i1), termIter(i2), varTerm(vt) { }
 	UnifyIter(const UnifyIter&) = default;
 	UnifyIter& operator = (const UnifyIter&) = default;
 	UnifyIter side() {
@@ -117,7 +129,10 @@ struct UnifyIter {
 				UnifyIter(
 					trieIter,
 					termIter.fastForward(),
-					FlatSubst(trieIter.iter()->first.var, termIter.subTerm())
+					std::move(VarTerm(
+						trieIter.iter()->first.var,
+						std::move(termIter.subTerm())
+					))
 				)
 			);
 		} else if (termIter.iter()->ruleVar.isVar()) {
@@ -127,10 +142,10 @@ struct UnifyIter {
 					UnifyIter(
 						TrieIndex::TrieIter(e),
 						termIter,
-						FlatSubst(
+						std::move(VarTerm(
 							termIter.iter()->ruleVar.var,
-							trieIter.subTerm(e)
-						)
+							std::move(trieIter.subTerm(e))
+						))
 					)
 				);
 			}
@@ -143,19 +158,23 @@ struct UnifyIter {
 	bool valid_;
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
-	FlatSubst sub;
+	VarTerm varTerm;
 };
 
 FlatSubst gatherSub(const vector<UnifyIter>& branch, UnifyIter end) {
 	FlatSubst ret;
 	for (auto i : branch) {
-		ret.compose(i.sub);
-		if (!ret.ok) {
+		FlatTerm t = unify_step(ret, {i.varTerm.var}, i.varTerm.term);
+		if (t.empty()) {
 			break;
 		}
 	}
-	ret.compose(end.sub);
-	return ret;
+	FlatTerm t = unify_step(ret, {end.varTerm.var}, end.varTerm.term);
+	if (t.empty()) {
+		return FlatSubst(false);
+	} else {
+		return ret;
+	}
 }
 
 TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
