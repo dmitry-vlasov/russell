@@ -226,4 +226,20 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2) {
 	return false;
 }
 
+FlatSubst convert2flatsubst(const Subst& s) {
+	FlatSubst ret;
+	for (const auto& p : s.sub) {
+		ret.sub.emplace(p.first, std::move(convert2flatterm(p.second)));
+	}
+	return ret;
+}
+
+Subst convert2subst(const FlatSubst& s) {
+	Subst ret;
+	for (const auto& p : s.sub) {
+		ret.sub.emplace(p.first, std::move(convert2lighttree(p.second)));
+	}
+	return ret;
+}
+
 }}}}

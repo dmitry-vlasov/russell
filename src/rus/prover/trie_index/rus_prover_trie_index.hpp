@@ -83,7 +83,7 @@ struct TrieIndexMap {
 		TrieIndex::Unified unif = index_.unify(convert2flatterm(t));
 		for (auto& p : unif) {
 			if (p.second.ok) {
-				ret.emplace_back(data_[p.first], std::move(p.second));
+				ret.emplace_back(data_[p.first], convert2subst(p.second));
 			}
 		}
 		return ret;

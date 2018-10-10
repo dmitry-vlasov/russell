@@ -40,4 +40,7 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t);
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full = true);
 bool composable(const FlatSubst& s1, const FlatSubst& s2);
 
+FlatSubst convert2flatsubst(const Subst&);
+Subst convert2subst(const FlatSubst&);
+
 }}}}

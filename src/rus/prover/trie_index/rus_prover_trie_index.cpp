@@ -63,7 +63,7 @@ vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
 		branch.emplace_back(root);
 		while (branch.size()) {
 			TrieIter n = branch.back();
-			for (uint ind :  n.iter()->second.inds) {
+			for (uint ind : n.iter()->second.inds) {
 				ret.emplace_back(create_flatterm(branch), ind);
 			}
 			if (!n.isNextEnd()) {
