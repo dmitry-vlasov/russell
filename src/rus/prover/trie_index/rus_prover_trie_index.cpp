@@ -146,6 +146,18 @@ struct UnifyIter {
 	FlatSubst sub;
 };
 
+FlatSubst gatherSub(const vector<UnifyIter>& branch, UnifyIter end) {
+	FlatSubst ret;
+	for (auto i : branch) {
+		ret.compose(i.sub);
+		if (!ret.ok) {
+			break;
+		}
+	}
+	ret.compose(end.sub);
+	return ret;
+}
+
 TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	Unified ret;
 	vector<UnifyIter> branch;
@@ -155,7 +167,10 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		for (auto i : n.unify()) {
 			if (i.isTermEnd()) {
 				for (uint ind :  i.trieIter.iter()->second.inds) {
-					ret.emplace(ind, i.sub);
+					FlatSubst sub = gatherSub(branch, i);
+					if (sub.ok) {
+						ret.emplace(ind, std::move(sub));
+					}
 				}
 			}
 			if (!i.isNextEnd()) {
