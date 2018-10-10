@@ -54,7 +54,9 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 		i = i->second.parent;
 	}
 	std::reverse(branch.begin(), branch.end());
-	return create_flatterm(branch);
+	auto ret = create_flatterm(branch);
+	cout << "SUBTERM: " << ret.show() << endl;
+	return ret;
 }
 
 vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
@@ -177,11 +179,31 @@ FlatSubst gatherSub(const vector<UnifyIter>& branch, UnifyIter end) {
 	}
 }
 
+string show(const vector<UnifyIter>& branch) {
+	string ret;
+	ret += "trie: ";
+	for (auto i : branch) {
+		ret += i.trieIter.iter()->first.show() + " ";
+	}
+	ret += "\n";
+	ret += "term: ";
+	for (auto i : branch) {
+		ret += i.termIter.iter()->ruleVar.show() + " ";
+	}
+	ret += "\n";
+	return ret;
+}
+
 TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
+	static uint c = 0;
 	Unified ret;
 	vector<UnifyIter> branch;
 	branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
 	while (branch.size()) {
+		cout << "BRANCH " << ++c << ": " << trie_index::show(branch) << endl;
+		if (c == 2) {
+			cout << "AAA" << endl;
+		}
 		UnifyIter n = branch.back();
 		for (auto i : n.unify()) {
 			if (i.isTermEnd()) {

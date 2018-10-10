@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-void copyFlatSubTerm(FlatTerm* t, const uint pos, /*const FlatTerm& s,*/ FlatTerm::ConstIterator b) {
+void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	uint i = 0;
 	for (auto it = b; ; ++ i) {
 		t->nodes[pos + i].ruleVar = it->ruleVar;
@@ -16,12 +16,16 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, /*const FlatTerm& s,*/ FlatTer
 
 FlatTerm FlatTerm::TermIter::subTerm() const {
 	FlatTerm ret(iter_->end - iter_);
-	copyFlatSubTerm(&ret, 0, iter_);
+	if (ret.nodes.size()) {
+		copyFlatSubTerm(&ret, 0, iter_);
+	}
 	return ret;
 }
 
 FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes.size()) {
-	copyFlatSubTerm(this, 0, t.nodes.begin());
+	if (t.nodes.size()) {
+		copyFlatSubTerm(this, 0, t.nodes.begin());
+	}
 }
 
 FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
