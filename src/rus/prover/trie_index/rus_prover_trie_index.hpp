@@ -6,7 +6,7 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct TrieIndex {
 	struct Node {
-		Node* parent = nullptr;
+		map<RuleVar, Node>::iterator parent;
 		vector<uint> inds;
 		map<RuleVar, Node> nodes;
 		vector<map<RuleVar, Node>::iterator> ends;
@@ -17,6 +17,8 @@ struct TrieIndex {
 	struct TrieIter {
 		TrieIter(const Node& n) :
 			valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
+		TrieIter(ConstIterator i) :
+			valid_(true), beg_(i), iter_(i), end_(i) { }
 		TrieIter(ConstIterator b, ConstIterator e) :
 			valid_(true), beg_(b), iter_(b), end_(e) { }
 		TrieIter(const TrieIter&) = default;
@@ -43,7 +45,7 @@ struct TrieIndex {
 			assert(valid_ && "TrieIter::iter()");
 			return iter_;
 		}
-		FlatTerm subTerm(const Node* n) const;
+		FlatTerm subTerm(ConstIterator) const;
 
 	private:
 		TrieIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
