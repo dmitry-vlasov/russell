@@ -118,12 +118,12 @@ struct UnifyIter {
 		if (equals()) {
 			ret.emplace_back(*this);
 		} else {
-			if (trieIter.iter()->first.isVar()) {
+			if (trieIter.iter()->first.isVar() && trieIter.iter()->first.var.rep) {
 				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, termIter.subTerm());
 				if (s.ok) {
 					ret.emplace_back(trieIter, termIter.fastForward(), s);
 				}
-			} else if (termIter.iter()->ruleVar.isVar()) {
+			} else if (termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep) {
 				for (auto e : trieIter.iter()->second.ends) {
 					FlatSubst s = unify_step(sub, {termIter.iter()->ruleVar.var}, trieIter.subTerm(e));
 					if (s.ok) {

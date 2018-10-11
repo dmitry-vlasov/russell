@@ -61,11 +61,14 @@ void Hyp::buildUp() {
 					cout << "different values: " << endl;
 					cout << prover::show(p1.sub) << endl;
 					cout << prover::show(p2.sub) << endl;
+					exit(0);
 				}
 			}
 		}
 		if (!found) {
-			cout << "unif1 misses key: " << Lex::toStr(p1.data.id()) << endl;
+			cout << "expr: " << prover::show(expr) << endl;
+			cout << "unif2 misses key: " << Lex::toStr(p1.data.id()) << endl;
+			exit(0);
 		}
 	}
 
