@@ -189,18 +189,16 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 	uint i = 0;
 	uint k = 0;
 	for (const auto& n : t.nodes) {
+		bool substituted = false;
 		if (n.ruleVar.isVar()) {
 			auto it = s.sub.find(n.ruleVar.var);
 			if (it != s.sub.end()) {
-				for (const auto& m : it->second.nodes) {
-					ret.nodes[i] = m;
-					uint ind = m.end - t.nodes.begin();
-					ret.nodes[i].end = ret.nodes.begin() + ind + (i - k);
-					i +=1;
-				}
+				copyFlatSubTerm(&ret, i, it->second.nodes.begin());
+				i += it->second.len();
+				substituted = true;
 			}
-			i += it->second.len();
-		} else {
+		}
+		if (!substituted) {
 			ret.nodes[i] = n;
 			uint ind = n.end - t.nodes.begin();
 			ret.nodes[i].end = ret.nodes.begin() + ind + (i - k);

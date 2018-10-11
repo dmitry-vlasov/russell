@@ -108,5 +108,6 @@ struct FlatTerm {
 
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
+void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
 
 }}}}
