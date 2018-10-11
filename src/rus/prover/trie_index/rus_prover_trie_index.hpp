@@ -68,6 +68,7 @@ struct TrieIndex {
 	Unified unify(const FlatTerm&) const;
 	vector<pair<FlatTerm, uint>> unpack() const;
 	string show() const;
+	uint totalNodes() const;
 
 	uint size = 0;
 	Node root;

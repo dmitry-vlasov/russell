@@ -68,6 +68,9 @@ void Hyp::buildUp() {
 		if (!found) {
 			cout << "expr: " << prover::show(expr) << endl;
 			cout << "unif2 misses key: " << Lex::toStr(p1.data.id()) << endl;
+			cout << "sub:" << endl;
+			cout << prover::show(p1.sub) << endl;
+			unif2 = space->assertions_.unify(expr);
 			exit(0);
 		}
 	}

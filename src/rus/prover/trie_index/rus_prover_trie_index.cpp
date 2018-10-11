@@ -97,6 +97,34 @@ string TrieIndex::show() const {
 	return ret;
 }
 
+uint TrieIndex::totalNodes() const {
+	uint ret = 0;
+	vector<TrieIter> branch;
+	if (root.nodes.size()) {
+		branch.emplace_back(root);
+		while (branch.size()) {
+			TrieIter n = branch.back();
+			ret += n.iter()->second.inds.size();
+			if (!n.isNextEnd()) {
+				branch.push_back(n.next());
+			} else {
+				while (true) {
+					branch.pop_back();
+					if (!n.isSideEnd()) {
+						branch.push_back(n.side());
+						break;
+					}
+					if (branch.empty()) {
+						break;
+					}
+					n = branch.back();
+				}
+			}
+		}
+	}
+	return ret;
+}
+
 struct UnifyIter {
 	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const FlatSubst& s = FlatSubst()) :
 		trieIter(i1), termIter(i2), sub(s) { }
@@ -168,30 +196,40 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	static uint c = 0;
 	Unified ret;
 	vector<UnifyIter> branch;
-	while (branch.size()) {
+	if (root.nodes.size()) {
+		uint totalN = totalNodes();
+		cout << "UNIFYING c = " << ++c << endl;
+		cout << "TOTAL NODES: " << totalN << endl;
 		branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
-		cout << "BRANCH " << ++c << ": " << trie_index::show(branch) << endl;
-		UnifyIter n = branch.back();
-		for (auto i : n.unify()) {
-			if (i.isTermEnd()) {
-				for (uint ind :  i.trieIter.iter()->second.inds) {
-					ret.emplace(ind, std::move(i.sub));
+		static uint cc = 0;
+		while (branch.size()) {
+			cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
+			UnifyIter n = branch.back();
+			for (auto i : n.unify()) {
+				if (i.isTermEnd()) {
+					for (uint ind :  i.trieIter.iter()->second.inds) {
+						ret.emplace(ind, std::move(i.sub));
+					}
+				}
+				if (!i.isNextEnd()) {
+					branch.push_back(i.next());
+				} else {
+					while (true) {
+						branch.pop_back();
+						if (!i.isSideEnd()) {
+							branch.push_back(i.side());
+							break;
+						}
+						if (branch.empty()) {
+							break;
+						}
+						i = branch.back();
+					}
 				}
 			}
-			if (!i.isNextEnd()) {
-				branch.push_back(i.next());
-			} else {
-				while (true) {
-					branch.pop_back();
-					if (!i.isSideEnd()) {
-						branch.push_back(i.side());
-						break;
-					}
-					if (branch.empty()) {
-						break;
-					}
-					i = branch.back();
-				}
+			if (cc > totalN) {
+				cout << "TOO MUCH: " << cc << endl;
+				break;
 			}
 		}
 	}
