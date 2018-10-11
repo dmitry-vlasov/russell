@@ -81,7 +81,7 @@ struct FlatTerm {
 
 	FlatTerm(uint s) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
-	FlatTerm(FlatTerm&&) = default;
+	//FlatTerm(FlatTerm&&) = delete;
 	FlatTerm(LightSymbol s);
 	FlatTerm(const Rule* r, const vector<FlatTerm>& ch);
 
@@ -89,7 +89,7 @@ struct FlatTerm {
 	bool operator != (const FlatTerm& t) const { return nodes != t.nodes; }
 
 	FlatTerm& operator = (const FlatTerm&);
-	FlatTerm& operator = (FlatTerm&&) = default;
+	FlatTerm& operator = (FlatTerm&&) = delete;
 
 	Kind kind() const {
 		return (nodes.size() == 1 && nodes[0].ruleVar.isVar()) ? VAR : RULE;

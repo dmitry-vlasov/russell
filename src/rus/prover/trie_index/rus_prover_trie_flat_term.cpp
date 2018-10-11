@@ -4,14 +4,35 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	uint i = 0;
-	for (auto it = b; ; ++ i) {
+	uint wd = 0;
+
+	static int c = 0;
+	++c;
+	bool debug = false; //(c == 1);
+	if (debug) {
+		cout << "t->nodes.size() = " << t->nodes.size() << endl;
+		cout << "b: " << b->ruleVar.show() << endl;
+		cout << "b->end: " << b->end->ruleVar.show() << endl;
+	}
+
+	for (auto it = b; ; ++ it) {
+		//if (debug) {
+		//	cout << "it->ruleVar: " << it->ruleVar.show()  << endl;
+		//}
+
 		t->nodes[pos + i].ruleVar = it->ruleVar;
 		t->nodes[pos + i].end = t->nodes.begin() + pos + (it->end - b);
 		if (it == b->end) {
 			break;
 		}
 		++i;
+		++wd;
+		if (wd > 128) {
+			cout << "SOMETH WRONG: " << c << endl;
+			break;
+		}
 	}
+	//cout << "COPIED: " << t->show() << endl;
 }
 
 FlatTerm FlatTerm::TermIter::subTerm() const {

@@ -101,9 +101,9 @@ struct UnifyIter {
 	struct VarTerm {
 		VarTerm() : term(0) { }
 		VarTerm(LightSymbol v, const FlatTerm& t) : var(v), term(t) { }
-		VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
+		//VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
 		VarTerm(const VarTerm&) = default;
-		VarTerm(VarTerm&&) = default;
+		//VarTerm(VarTerm&&) = default;
 		VarTerm& operator = (const VarTerm&) = default;
 		LightSymbol var;
 		FlatTerm term;
@@ -140,28 +140,16 @@ struct UnifyIter {
 		} else if (termIter.iter()->ruleVar.isVar()) {
 			vector<UnifyIter> ret;
 			for (auto e : trieIter.iter()->second.ends) {
-			    cout << "END: " << endl;
-			    auto subterm = trieIter.subTerm(e);
-                cout << "SUBTRM: " << subterm.show() << endl;
-                auto itt = TrieIndex::TrieIter(e);
-                cout << "XXXX: " << endl;
-                auto rv = termIter.iter()->ruleVar.var;
-                cout << "SSSS: " << prover::show(rv) << endl;
-                auto vt = VarTerm(
-                        rv, //termIter.iter()->ruleVar.var,
-                        subterm //trieIter.subTerm(e)
-                );
-                cout << "YYYY" << endl;
-                auto ut = UnifyIter(
-                        itt,
+                ret.push_back(
+				    UnifyIter(
+                        TrieIndex::TrieIter(e),
                         termIter,
-                        vt
-                );
-                cout << "ZZZ" << endl;
-				ret.push_back(
-				    ut
+                        VarTerm(
+							termIter.iter()->ruleVar.var,
+							trieIter.subTerm(e)
+                        )
+				    )
 				);
-                cout << "BBB: " << endl;
 			}
 			return ret;
 		} else {
@@ -192,15 +180,25 @@ FlatSubst gatherSub(const vector<UnifyIter>& branch, UnifyIter end) {
 }
 
 string show(const vector<UnifyIter>& branch) {
+	static int c = 0;
 	string ret;
 	ret += "trie: ";
 	for (auto i : branch) {
-		ret += i.trieIter.iter()->first.show() + " ";
+		cout << "c: " << ++c << endl;
+		if (i.trieIter.isValid()) {
+			ret += i.trieIter.iter()->first.show() + " ";
+		} else {
+			ret += "<UNDEF> ";
+		}
 	}
 	ret += "\n";
 	ret += "term: ";
 	for (auto i : branch) {
-		ret += i.termIter.iter()->ruleVar.show() + " ";
+		if (i.termIter.isValid()) {
+			ret += i.termIter.iter()->ruleVar.show() + " ";
+		} else {
+			ret += "<UNDEF> ";
+		}
 	}
 	ret += "\n";
 	return ret;
@@ -210,12 +208,12 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	static uint c = 0;
 	Unified ret;
 	vector<UnifyIter> branch;
-	branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
 	while (branch.size()) {
+		branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
 		cout << "BRANCH " << ++c << ": " << trie_index::show(branch) << endl;
-		if (c == 2) {
-			cout << "AAA" << endl;
-		}
+		//if (c == 2) {
+		//	cout << "AAA" << endl;
+		//}
 		UnifyIter n = branch.back();
 		for (auto i : n.unify()) {
 			if (i.isTermEnd()) {
