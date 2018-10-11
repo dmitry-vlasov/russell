@@ -205,7 +205,8 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		while (branch.size()) {
 			cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
 			UnifyIter n = branch.back();
-			for (auto i : n.unify()) {
+			vector<UnifyIter> unified = n.unify();
+			for (auto i : unified) {
 				if (i.isTermEnd()) {
 					for (uint ind :  i.trieIter.iter()->second.inds) {
 						ret.emplace(ind, std::move(i.sub));
@@ -226,6 +227,9 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 						i = branch.back();
 					}
 				}
+			}
+			if (!unified.size()) {
+				branch.pop_back();
 			}
 			if (cc > totalN) {
 				cout << "TOO MUCH: " << cc << endl;
