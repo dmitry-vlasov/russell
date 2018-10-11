@@ -48,10 +48,25 @@ struct TrieIndex {
 		}
 		bool isValid() const { return valid_; }
 		ConstIterator iter() const {
+			if (!valid_) {
+				cout << "NOT VALID!!!" << endl;
+			}
 			assert(valid_ && "TrieIter::iter()");
 			return iter_;
 		}
 		FlatTerm subTerm(ConstIterator) const;
+		string show() const {
+			string ret;
+			//ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->first.show()) + "\n";
+			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + "\n";
+			//ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->first.show()) + "\n";
+			ret += "inds: ";
+			for (uint i : iter_->second.inds) {
+				ret += to_string(i) + " ";
+			}
+			ret += "\n";
+			return ret;
+		}
 
 	private:
 		TrieIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :

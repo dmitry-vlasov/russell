@@ -23,15 +23,15 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			if (!ass->token.preceeds(a->token)) {
 				continue;
 			}
-			uint c = 0;
-			for (auto& prop : ass->props) {
+			for (uint i = 0; i < ass->props.size(); ++i) {
+				auto& prop = ass->props[i];
 				assertions.add(
 					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, c++)
+					PropRef(ass, i)
 				);
 				assertions_.add(
 					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, c++)
+					PropRef(ass, i)
 				);
 			}
 		} else {

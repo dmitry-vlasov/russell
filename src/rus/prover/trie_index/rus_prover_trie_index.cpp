@@ -147,9 +147,40 @@ struct UnifyIter {
 			ret.emplace_back(*this);
 		} else {
 			if (trieIter.iter()->first.isVar() && trieIter.iter()->first.var.rep) {
-				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, termIter.subTerm());
+				debug_flatterm = true;
+				FlatTerm subterm = termIter.subTerm();
+				//cout << "termIter: " << termIter.iter()->ruleVar.show() << endl;
+				//cout << "SUB: " << subterm.show() << endl;
+				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, subterm);
 				if (s.ok) {
+					//cout << "OOOOOK" << endl;
 					ret.emplace_back(trieIter, termIter.fastForward(), s);
+					/*if (!termIter.fastForward().isValid()) {
+						cout << "YYY (!!!) " << endl;
+					}
+					if (!ret.back().termIter.isValid()) {
+						cout << "YYY" << endl;
+					}*/
+
+					/*if (trieIter.isNextEnd()) {
+						cout << "TRIE END" << endl;
+						cout << "iter: " << trieIter.iter()->first.show() << endl;
+						cout << "INDS: ";
+						for (uint i : trieIter.iter()->second.inds) {
+							cout << i << " ";
+						}
+						 cout << endl;
+					}*/
+					/*auto nn = termIter.fastForward();
+					if (nn.isNextEnd()) {
+						cout << "TERM END" << endl;
+					} else {
+						cout << "TERM NON (!!!) END" << endl;
+						cout << nn.show() << endl;
+					}*/
+					//cout << "ret.back().isTermEnd() = " << (ret.back().isTermEnd() ? "TRUE" : "FALSE") << endl;
+				} else {
+					//cout << "NOT OOOOOOK" << endl;
 				}
 			} else if (termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep) {
 				for (auto e : trieIter.iter()->second.ends) {
@@ -160,7 +191,7 @@ struct UnifyIter {
 				}
 			}
 		}
-		return vector<UnifyIter>();
+		return ret;
 	}
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
@@ -168,15 +199,13 @@ struct UnifyIter {
 };
 
 string show(const vector<UnifyIter>& branch) {
-	static int c = 0;
 	string ret;
-	ret += "trie: ";
+	ret += "trie: \n";
 	for (auto i : branch) {
-		cout << "c: " << ++c << endl;
 		if (i.trieIter.isValid()) {
-			ret += i.trieIter.iter()->first.show() + " ";
+			ret += "\t" + i.trieIter.show() + "\n";
 		} else {
-			ret += "<UNDEF> ";
+			ret += "\t<UNDEF>\n";
 		}
 	}
 	ret += "\n";
@@ -198,26 +227,47 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	vector<UnifyIter> branch;
 	if (root.nodes.size()) {
 		uint totalN = totalNodes();
-		cout << "UNIFYING c = " << ++c << endl;
-		cout << "TOTAL NODES: " << totalN << endl;
+		//cout << "UNIFYING c = " << ++c << endl;
+		//cout << "TOTAL NODES: " << totalN << endl;
+		//cout << "FLATTERM: " << t.show() << endl;
 		branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
+		if (!branch.back().termIter.isValid()) {
+			cout << "XXX" << endl;
+		}
 		static uint cc = 0;
 		while (branch.size()) {
-			cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
+			//cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
 			UnifyIter n = branch.back();
 			vector<UnifyIter> unified = n.unify();
 			for (auto i : unified) {
+
+				if (!i.termIter.isValid()) {
+					cout << "HOW DID IT COME?...." << endl;
+				}
+
 				if (i.isTermEnd()) {
+					//cout << "i.isTermEnd()" << endl;
 					for (uint ind :  i.trieIter.iter()->second.inds) {
+						cout << "ADDING TO RET: " << ind << endl;
+						cout << "SUB: " << i.sub.show() << endl;
 						ret.emplace(ind, std::move(i.sub));
 					}
 				}
 				if (!i.isNextEnd()) {
+					if (!i.next().termIter.isValid()) {
+						cout << "AAA" << endl;
+					}
 					branch.push_back(i.next());
 				} else {
 					while (true) {
 						branch.pop_back();
 						if (!i.isSideEnd()) {
+							if (!i.side().termIter.isValid()) {
+								if (i.termIter.isValid()) {
+									cout << "WTF?...." << endl;
+								}
+								cout << "BBB" << endl;
+							}
 							branch.push_back(i.side());
 							break;
 						}
@@ -225,6 +275,9 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 							break;
 						}
 						i = branch.back();
+						if (!i.termIter.isValid()) {
+							cout << "CCC" << endl;
+						}
 					}
 				}
 			}

@@ -54,6 +54,7 @@ void Hyp::buildUp() {
 	}
 	for (const auto& p1 : unif1) {
 		bool found = false;
+		cout << "in unif1: " << Lex::toStr(p1.data.id()) << ", " << p1.data.ind << endl;
 		for (const auto& p2 : unif2) {
 			if (p1.data == p2.data) {
 				found = true;
@@ -62,7 +63,11 @@ void Hyp::buildUp() {
 					cout << prover::show(p1.sub) << endl;
 					cout << prover::show(p2.sub) << endl;
 					exit(0);
+				} else {
+					cout << "FOUND COINCIDES" << endl;
 				}
+			} else {
+				cout << "in unif2: " << Lex::toStr(p2.data.id()) << ", " << p2.data.ind << endl;
 			}
 		}
 		if (!found) {
@@ -74,6 +79,7 @@ void Hyp::buildUp() {
 			exit(0);
 		}
 	}
+	cout << "UNIF COINCIDES" << endl;
 
 	for (auto& m : space->assertions.unify(expr)) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);

@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_flatterm = false;
+
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	uint i = 0;
 	uint wd = 0;
@@ -36,7 +38,7 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 }
 
 FlatTerm FlatTerm::TermIter::subTerm() const {
-	FlatTerm ret(iter_->end - iter_);
+	FlatTerm ret((iter_->end - iter_) + 1);
 	if (ret.nodes.size()) {
 		copyFlatSubTerm(&ret, 0, iter_);
 	}
@@ -151,14 +153,15 @@ FlatTerm convert2flatterm(const LightTree& t) {
 }
 
 unique_ptr<LightTree> fill_in_lighttree(auto& ft) {
-	if (const Rule* r = (ft++)->ruleVar.rule) {
+	if (ft->ruleVar.isRule()) {
+		const Rule* r = (ft++)->ruleVar.rule;
 		LightTree::Children ch;
 		for (uint i = 0; i < r->arity(); ++ r) {
 			ch.push_back(fill_in_lighttree(ft));
 		}
 		return make_unique<LightTree>(r, ch);
 	} else {
-		return make_unique<LightTree>(ft->ruleVar.var);
+		return make_unique<LightTree>((ft++)->ruleVar.var);
 	}
 }
 
@@ -168,4 +171,3 @@ LightTree convert2lighttree(const FlatTerm& ft) {
 }
 
 }}}}
-

@@ -206,6 +206,14 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		}
 		k += 1;
 	}
+	/*cout << "APPLY:" << endl;
+	cout << "------------" << endl;
+	cout << "SUB: " << endl << s.show() << endl;
+	cout << "TERM: " << t.show() << endl;
+	cout << "RET: " << ret.show() << endl;
+	cout << "------------" << endl << endl << endl;*/
+
+
 	return ret;
 }
 

@@ -41,12 +41,17 @@ struct FlatTerm {
 
 	struct TermIter {
 		TermIter(const FlatTerm& ft) :
-			valid_(true), beg_(ft.nodes.begin()), iter_(ft.nodes.begin()), end_(ft.nodes.end()) { }
+			valid_(true),
+			beg_(ft.nodes.begin()),
+			iter_(ft.nodes.begin()),
+			end_(ft.nodes.begin() + ft.len() - 1) { }
 		TermIter(ConstIterator b, ConstIterator e) :
 			valid_(true), beg_(b), iter_(b), end_(e) { }
 		TermIter(const TermIter&) = default;
 		TermIter& operator = (const TermIter&) = default;
-		TermIter side() const { return TermIter(beg_, iter_, end_, false); }
+		TermIter side() const {
+			return TermIter(beg_, iter_, end_, false);
+		}
 		TermIter next() const {
 			if (!valid_ || isNextEnd()) {
 				return TermIter(beg_, iter_, end_, false);
@@ -55,19 +60,26 @@ struct FlatTerm {
 			}
 		}
 		TermIter fastForward() const {
-			if (!valid_ || isNextEnd()) {
-				return TermIter(beg_, iter_, end_, false);
-			} else {
-				return TermIter(beg_, iter_->end, end_, iter_ != end_);
-			}
+			return TermIter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
 		}
 		FlatTerm subTerm() const;
 		bool isNextEnd() const { return iter_ == end_; }
 		bool isSideEnd() const { return true; }
 		bool isValid() const { return valid_; }
 		ConstIterator iter() const {
+			if (!valid_) {
+				cout << "NOT VALID FlatTerm::TermIter !!!" << endl;
+			}
 			assert(valid_ && "TermIter::iter()");
 			return iter_;
+		}
+		string show() const {
+			string ret;
+			ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->ruleVar.show()) + "\n";
+			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->ruleVar.show()) + "\n";
+			ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
+			ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
+			return ret;
 		}
 
 	private:
@@ -109,5 +121,7 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
+
+extern bool debug_flatterm;
 
 }}}}
