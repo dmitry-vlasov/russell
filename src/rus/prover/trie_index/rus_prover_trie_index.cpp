@@ -101,9 +101,9 @@ struct UnifyIter {
 	struct VarTerm {
 		VarTerm() : term(0) { }
 		VarTerm(LightSymbol v, const FlatTerm& t) : var(v), term(t) { }
-		//VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
+		VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
 		VarTerm(const VarTerm&) = default;
-		//VarTerm(VarTerm&&) = default;
+		VarTerm(VarTerm&&) = default;
 		VarTerm& operator = (const VarTerm&) = default;
 		LightSymbol var;
 		FlatTerm term;
@@ -211,9 +211,6 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	while (branch.size()) {
 		branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
 		cout << "BRANCH " << ++c << ": " << trie_index::show(branch) << endl;
-		//if (c == 2) {
-		//	cout << "AAA" << endl;
-		//}
 		UnifyIter n = branch.back();
 		for (auto i : n.unify()) {
 			if (i.isTermEnd()) {

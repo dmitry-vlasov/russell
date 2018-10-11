@@ -81,7 +81,7 @@ struct FlatTerm {
 
 	FlatTerm(uint s) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
-	//FlatTerm(FlatTerm&&) = delete;
+	FlatTerm(FlatTerm&&) = default;
 	FlatTerm(LightSymbol s);
 	FlatTerm(const Rule* r, const vector<FlatTerm>& ch);
 
