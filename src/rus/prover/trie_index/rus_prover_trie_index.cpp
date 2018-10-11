@@ -98,86 +98,46 @@ string TrieIndex::show() const {
 }
 
 struct UnifyIter {
-	struct VarTerm {
-		VarTerm() : term(0) { }
-		VarTerm(LightSymbol v, const FlatTerm& t) : var(v), term(t) { }
-		VarTerm(LightSymbol v, FlatTerm&& t) : var(v), term(std::move(t)) { }
-		VarTerm(const VarTerm&) = default;
-		VarTerm(VarTerm&&) = default;
-		VarTerm& operator = (const VarTerm&) = default;
-		LightSymbol var;
-		FlatTerm term;
-	};
-
-	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const VarTerm& vt = VarTerm(), bool v = true) :
-		valid_(v), trieIter(i1), termIter(i2), varTerm(vt) { }
+	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, const FlatSubst& s = FlatSubst()) :
+		trieIter(i1), termIter(i2), sub(s) { }
+	UnifyIter(TrieIndex::TrieIter i1, FlatTerm::TermIter i2, FlatSubst&& s) :
+		trieIter(i1), termIter(i2), sub(std::move(s)) { }
 	UnifyIter(const UnifyIter&) = default;
 	UnifyIter& operator = (const UnifyIter&) = default;
 	UnifyIter side() {
-		return UnifyIter(trieIter.side(), termIter);
+		return UnifyIter(trieIter.side(), termIter, sub);
 	}
-	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next()); }
-	bool isNextEnd() const { return trieIter.isNextEnd() || termIter.isNextEnd(); }
-	bool isTermEnd() const { return trieIter.isNextEnd() && termIter.isNextEnd(); }
-	bool isSideEnd() const { return trieIter.isSideEnd() && termIter.isSideEnd(); }
+	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next(), sub); }
+	bool isNextEnd() const { return sub.ok ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
+	bool isTermEnd() const { return sub.ok ? (trieIter.isNextEnd() && termIter.isNextEnd()) : true; }
+	bool isSideEnd() const { return sub.ok ? (trieIter.isSideEnd() && termIter.isSideEnd()) : true; }
 	bool equals() const { return trieIter.iter()->first == termIter.iter()->ruleVar; }
 
 	vector<UnifyIter> unify() const {
+		vector<UnifyIter> ret;
 		if (equals()) {
-			return vector<UnifyIter>(1, *this);
-		}
-		if (trieIter.iter()->first.isVar()) {
-			return vector<UnifyIter>(1,
-				UnifyIter(
-					trieIter,
-					termIter.fastForward(),
-					VarTerm(
-						trieIter.iter()->first.var,
-						termIter.subTerm()
-					)
-				)
-			);
-		} else if (termIter.iter()->ruleVar.isVar()) {
-			vector<UnifyIter> ret;
-			for (auto e : trieIter.iter()->second.ends) {
-                ret.push_back(
-				    UnifyIter(
-                        TrieIndex::TrieIter(e),
-                        termIter,
-                        VarTerm(
-							termIter.iter()->ruleVar.var,
-							trieIter.subTerm(e)
-                        )
-				    )
-				);
-			}
-			return ret;
+			ret.emplace_back(*this);
 		} else {
-			return vector<UnifyIter>();
+			if (trieIter.iter()->first.isVar()) {
+				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, termIter.subTerm());
+				if (s.ok) {
+					ret.emplace_back(trieIter, termIter.fastForward(), s);
+				}
+			} else if (termIter.iter()->ruleVar.isVar()) {
+				for (auto e : trieIter.iter()->second.ends) {
+					FlatSubst s = unify_step(sub, {termIter.iter()->ruleVar.var}, trieIter.subTerm(e));
+					if (s.ok) {
+						ret.emplace_back(TrieIndex::TrieIter(e), termIter, s);
+					}
+				}
+			}
 		}
+		return vector<UnifyIter>();
 	}
-
-	bool valid_;
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
-	VarTerm varTerm;
+	FlatSubst sub;
 };
-
-FlatSubst gatherSub(const vector<UnifyIter>& branch, UnifyIter end) {
-	FlatSubst ret;
-	for (auto i : branch) {
-		FlatTerm t = unify_step(ret, {i.varTerm.var}, i.varTerm.term);
-		if (t.empty()) {
-			break;
-		}
-	}
-	FlatTerm t = unify_step(ret, {end.varTerm.var}, end.varTerm.term);
-	if (t.empty()) {
-		return FlatSubst(false);
-	} else {
-		return ret;
-	}
-}
 
 string show(const vector<UnifyIter>& branch) {
 	static int c = 0;
@@ -215,10 +175,7 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		for (auto i : n.unify()) {
 			if (i.isTermEnd()) {
 				for (uint ind :  i.trieIter.iter()->second.inds) {
-					FlatSubst sub = gatherSub(branch, i);
-					if (sub.ok) {
-						ret.emplace(ind, std::move(sub));
-					}
+					ret.emplace(ind, std::move(i.sub));
 				}
 			}
 			if (!i.isNextEnd()) {

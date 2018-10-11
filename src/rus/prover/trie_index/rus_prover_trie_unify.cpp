@@ -118,6 +118,12 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 	return FlatTerm(0);
 }
 
+FlatSubst unify_step(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+	FlatSubst ret(s);
+	FlatTerm unified = unify_step(ret, vars, term);
+	return unified.empty() ? FlatSubst(false) : ret;
+}
+
 FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub) {
 	if (!ex.size()) {
 		return FlatTerm(0);
