@@ -4,8 +4,10 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 void FlatSubst::operator = (const FlatSubst& s) {
 	ok = s.ok;
-	if (ok) for (const auto& p : s.sub) {
-		sub.emplace(p.first, p.second);
+	if (ok) {
+		for (const auto& p : s.sub) {
+			sub.emplace(p.first, p.second);
+		}
 	}
 }
 

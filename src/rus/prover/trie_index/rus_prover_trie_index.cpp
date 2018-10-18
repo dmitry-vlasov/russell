@@ -239,7 +239,7 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 			//cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
 			UnifyIter n = branch.back();
 			vector<UnifyIter> unified = n.unify();
-			for (auto i : unified) {
+			for (const auto& i : unified) {
 
 				if (!i.termIter.isValid()) {
 					cout << "HOW DID IT COME?...." << endl;
@@ -259,23 +259,24 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 					}
 					branch.push_back(i.next());
 				} else {
+					auto j = i;
 					while (true) {
 						branch.pop_back();
-						if (!i.isSideEnd()) {
-							if (!i.side().termIter.isValid()) {
-								if (i.termIter.isValid()) {
+						if (!j.isSideEnd()) {
+							if (!j.side().termIter.isValid()) {
+								if (j.termIter.isValid()) {
 									cout << "WTF?...." << endl;
 								}
 								cout << "BBB" << endl;
 							}
-							branch.push_back(i.side());
+							branch.push_back(j.side());
 							break;
 						}
 						if (branch.empty()) {
 							break;
 						}
-						i = branch.back();
-						if (!i.termIter.isValid()) {
+						j = branch.back();
+						if (!j.termIter.isValid()) {
 							cout << "CCC" << endl;
 						}
 					}
