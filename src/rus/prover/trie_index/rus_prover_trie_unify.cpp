@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_flat_unify = false;
+
 struct FlatUnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;

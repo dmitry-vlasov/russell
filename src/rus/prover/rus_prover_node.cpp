@@ -75,11 +75,15 @@ void Hyp::buildUp() {
 			cout << "unif2 misses key: " << Lex::toStr(p1.data.id()) << endl;
 			cout << "sub:" << endl;
 			cout << prover::show(p1.sub) << endl;
+
+			trie_index::debug_trie_index = true;
+
 			unif2 = space->assertions_.unify(expr);
+			cout << "END OF ERROR" << endl;
 			exit(0);
 		}
 	}
-	cout << "UNIF COINCIDES" << endl;
+	cout << "UNIF COINCIDES" << endl << endl << endl;
 
 	for (auto& m : space->assertions.unify(expr)) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);

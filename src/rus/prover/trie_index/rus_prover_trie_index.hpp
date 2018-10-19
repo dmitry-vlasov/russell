@@ -55,16 +55,23 @@ struct TrieIndex {
 			return iter_;
 		}
 		FlatTerm subTerm(ConstIterator) const;
-		string show() const {
+		string show(bool full = false) const {
 			string ret;
-			//ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->first.show()) + "\n";
-			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + "\n";
-			//ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->first.show()) + "\n";
-			ret += "inds: ";
-			for (uint i : iter_->second.inds) {
-				ret += to_string(i) + " ";
+				if (full) {
+				//ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->first.show()) + "\n";
+				ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + "\n";
+				//ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->first.show()) + "\n";
+				ret += "inds: ";
+				for (uint i : iter_->second.inds) {
+					ret += to_string(i) + " ";
+				}
+				ret += "\n";
+			} else {
+				ret += ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + " ";
+				for (uint i : iter_->second.inds) {
+					ret += to_string(i) + " ";
+				}
 			}
-			ret += "\n";
 			return ret;
 		}
 
@@ -131,5 +138,7 @@ private:
 	TrieIndex index_;
 	vector<Data> data_;
 };
+
+extern bool debug_trie_index;
 
 }}}}

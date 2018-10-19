@@ -9,7 +9,6 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 FlatSubst unify_step(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term);
 
 extern bool debug_flat_unify;
-extern bool debug_flat_index;
 
 }}}}
 

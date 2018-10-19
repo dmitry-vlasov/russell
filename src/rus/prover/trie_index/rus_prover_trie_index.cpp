@@ -3,6 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_trie_index = false;
+
 void TrieIndex::add(const FlatTerm& t) {
 	struct NodePair {
 		NodePair(TrieIndex::Iterator t, FlatTerm::ConstIterator e) : trie(t), end(e) { }
@@ -55,7 +57,9 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	}
 	std::reverse(branch.begin(), branch.end());
 	auto ret = create_flatterm(branch);
-	cout << "SUBTERM: " << ret.show() << endl;
+	if (debug_trie_index) {
+		cout << "SUBTERM: " << ret.show() << endl;
+	}
 	return ret;
 }
 
@@ -147,43 +151,21 @@ struct UnifyIter {
 			ret.emplace_back(*this);
 		} else {
 			if (trieIter.iter()->first.isVar() && trieIter.iter()->first.var.rep) {
-				debug_flatterm = true;
+				//debug_flatterm = true;
 				FlatTerm subterm = termIter.subTerm();
-				//cout << "termIter: " << termIter.iter()->ruleVar.show() << endl;
-				//cout << "SUB: " << subterm.show() << endl;
 				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, subterm);
 				if (s.ok) {
-					//cout << "OOOOOK" << endl;
 					ret.emplace_back(trieIter, termIter.fastForward(), s);
-					/*if (!termIter.fastForward().isValid()) {
-						cout << "YYY (!!!) " << endl;
-					}
-					if (!ret.back().termIter.isValid()) {
-						cout << "YYY" << endl;
-					}*/
-
-					/*if (trieIter.isNextEnd()) {
-						cout << "TRIE END" << endl;
-						cout << "iter: " << trieIter.iter()->first.show() << endl;
-						cout << "INDS: ";
-						for (uint i : trieIter.iter()->second.inds) {
-							cout << i << " ";
-						}
-						 cout << endl;
-					}*/
-					/*auto nn = termIter.fastForward();
-					if (nn.isNextEnd()) {
-						cout << "TERM END" << endl;
-					} else {
-						cout << "TERM NON (!!!) END" << endl;
-						cout << nn.show() << endl;
-					}*/
-					//cout << "ret.back().isTermEnd() = " << (ret.back().isTermEnd() ? "TRUE" : "FALSE") << endl;
-				} else {
-					//cout << "NOT OOOOOOK" << endl;
 				}
 			} else if (termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep) {
+				if (debug_trie_index) {
+					cout << "termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep" << endl;
+				}
 				for (auto e : trieIter.iter()->second.ends) {
+					if (debug_trie_index) {
+						cout << "got end: " << (*e).first.show() << endl;
+						debug_flat_unify = true;
+					}
 					FlatSubst s = unify_step(sub, {termIter.iter()->ruleVar.var}, trieIter.subTerm(e));
 					if (s.ok) {
 						ret.emplace_back(TrieIndex::TrieIter(e), termIter, s);
@@ -200,12 +182,12 @@ struct UnifyIter {
 
 string show(const vector<UnifyIter>& branch) {
 	string ret;
-	ret += "trie: \n";
+	ret += "trie: ";
 	for (auto i : branch) {
 		if (i.trieIter.isValid()) {
-			ret += "\t" + i.trieIter.show() + "\n";
+			ret += i.trieIter.show() + " ";
 		} else {
-			ret += "\t<UNDEF>\n";
+			ret += "<UNDEF> ";
 		}
 	}
 	ret += "\n";
@@ -236,39 +218,28 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		}
 		static uint cc = 0;
 		while (branch.size()) {
-			//cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
+			if (debug_trie_index) {
+				cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
+			}
 			UnifyIter n = branch.back();
 			vector<UnifyIter> unified = n.unify();
 			for (const auto& i : unified) {
-
-				if (!i.termIter.isValid()) {
-					cout << "HOW DID IT COME?...." << endl;
-				}
-
 				if (i.isTermEnd()) {
-					//cout << "i.isTermEnd()" << endl;
 					for (uint ind :  i.trieIter.iter()->second.inds) {
-						cout << "ADDING TO RET: " << ind << endl;
-						cout << "SUB: " << i.sub.show() << endl;
+						if (debug_trie_index) {
+							cout << "ADDING TO RET: " << ind << endl;
+							cout << "SUB: " << i.sub.show() << endl;
+						}
 						ret.emplace(ind, std::move(i.sub));
 					}
 				}
 				if (!i.isNextEnd()) {
-					if (!i.next().termIter.isValid()) {
-						cout << "AAA" << endl;
-					}
 					branch.push_back(i.next());
 				} else {
 					auto j = i;
 					while (true) {
 						branch.pop_back();
 						if (!j.isSideEnd()) {
-							if (!j.side().termIter.isValid()) {
-								if (j.termIter.isValid()) {
-									cout << "WTF?...." << endl;
-								}
-								cout << "BBB" << endl;
-							}
 							branch.push_back(j.side());
 							break;
 						}
@@ -276,13 +247,13 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 							break;
 						}
 						j = branch.back();
-						if (!j.termIter.isValid()) {
-							cout << "CCC" << endl;
-						}
 					}
 				}
 			}
 			if (!unified.size()) {
+				if (debug_trie_index) {
+					cout << "!unified.size()" << endl;
+				}
 				branch.pop_back();
 			}
 			if (cc > totalN) {
