@@ -15,7 +15,7 @@ Substitution unify_forth(const Tree* p, const Tree* q) {
 		if (var->type() == q->type()) {
 			return Substitution(var->lit, *q);
 		} else if (Rule* super = find_super(q->type(), var->type())) {
-			return Substitution(var->lit, Tree(super->id(), {new Tree(*q)}));
+			return Substitution(var->lit, Tree(super->id(), new Tree(*q)));
 		} else {
 			return Substitution(false);
 		}

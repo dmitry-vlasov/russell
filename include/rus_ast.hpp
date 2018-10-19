@@ -146,14 +146,14 @@ struct Assertion : public Owner<Assertion> {
 struct Axiom : public Assertion, public Writable {
 	Axiom(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Axiom(const Axiom&) = delete;
-	Kind kind() const { return AXM; }
+	Kind kind() const override { return AXM; }
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
 struct Def : public Assertion, public Writable {
 	Def(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Def(const Def&) = delete;
-	Kind kind() const { return DEF; }
+	Kind kind() const override { return DEF; }
 	Expr dfm;
 	Expr dfs;
 	Expr prop;
@@ -163,7 +163,7 @@ struct Def : public Assertion, public Writable {
 struct Theorem : public Assertion, public Writable {
 	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Theorem(const Theorem&) = delete;
-	Kind kind() const { return THM; }
+	Kind kind() const override { return THM; }
 	vector<User<Proof>> proofs;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };

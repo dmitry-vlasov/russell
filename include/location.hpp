@@ -465,10 +465,10 @@ struct TokenIter : public string::const_iterator {
 	}
 
 	void start() {
-		token.beg_ = &string::const_iterator::operator*();
+		token_.beg_ = &string::const_iterator::operator*();
 	}
 	void end() {
-		token.end_ = &string::const_iterator::operator*();
+		token_.end_ = &string::const_iterator::operator*();
 	}
 	Token<Source> token() const {
 		return token_;

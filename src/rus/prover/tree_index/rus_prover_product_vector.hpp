@@ -7,6 +7,11 @@ namespace mdl { namespace rus { namespace prover { namespace tree_index {
 extern bool debug_multy_index;
 extern uint matrix_vector_counter;
 
+struct Set;
+
+Set intersect(const Set& s1, const Set& s2);
+Set complement(const Set& s1, const Set& s2);
+
 struct Set {
 	Set(bool i = false) : init_(i), index_leafs(nullptr) { }
 	Set(const Set&) = default;
@@ -607,7 +612,8 @@ struct UnionVect {
 		return true;
 	}
 
-	void intersect(const ProdVect& pv, auto finalizer, bool may_add) {
+	//std::function<bool(const T&)>
+	void intersect(const ProdVect& pv, std::function<void(SubstTree&)> finalizer, bool may_add) {
 		set<uint> n = neighbourhood(pv);
 		vector<Pair> intersected_pairs;
 		set<ProdVect> new_keys;

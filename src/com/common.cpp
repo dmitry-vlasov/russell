@@ -1,5 +1,11 @@
 #include "common.hpp"
 
+namespace peg {
+
+void* enabler = nullptr;
+
+}
+
 namespace mdl {
 
 string Timers::show() const {

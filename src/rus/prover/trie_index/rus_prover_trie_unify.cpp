@@ -101,6 +101,17 @@ FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
 FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub);
 
 FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+
+	if (debug_flat_unify) {
+		cout << "vars: ";
+		for (auto w : vars) {
+			cout << "'" << prover::show(w) << "' ";
+		}
+		cout << endl;
+		cout << "s: " << s.show() << endl;
+		cout << "term: " << term.show() << endl;
+	}
+
 	vector<FlatTerm> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
@@ -112,10 +123,18 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 		for (auto v : vars) {
 			if (!s.compose(FlatSubst(v, unified))) {
 				s.ok = false;
+				if (debug_flat_unify) {
+					cout << "!s.compose(FlatSubst(v, unified))" << endl;
+					cout << "v: " << prover::show(v) << endl;
+					cout << "s: " << s.show() << endl;
+				}
 				return FlatTerm(0);
 			}
 		}
 		return unified;
+	}
+	if (debug_flat_unify) {
+		cout << "unified.empty()" << endl;
 	}
 	return FlatTerm(0);
 }
@@ -134,6 +153,9 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 	}
 	FlatUnifStepData data = gather_unification_data(ex, is);
 	if (!data.consistent) {
+		if (debug_flat_unify) {
+			cout << "!data.consistent" << endl;
+		}
 		return FlatTerm(0);
 	}
 	if (data.rule) {
@@ -147,6 +169,9 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 			if (!c.empty()) {
 				ch.emplace_back(c);
 			} else {
+				if (debug_flat_unify) {
+					cout << "c.empty()" << endl;
+				}
 				return FlatTerm(0);
 			}
 		}

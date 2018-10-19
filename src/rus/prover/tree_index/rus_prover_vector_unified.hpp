@@ -10,7 +10,7 @@ struct VectorMap {
 	VectorMap(const VectorMap&) = default;
 	VectorMap& operator = (const VectorMap&) = default;
 
-	void add(const vector<uint>& v, auto finalizer) {
+	void add(const vector<uint>& v, std::function<void(Data&)> finalizer) {
 		finalizer(map_[v]);
 	}
 

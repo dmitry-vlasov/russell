@@ -130,7 +130,7 @@ FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
 	return ret;
 }
 
-FlatTerm::Iterator fill_in_flatterm(auto& ft, const LightTree* t) {
+FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const LightTree* t) {
 	auto n = ft;
 	auto end = ft;
 	if (t->kind() == LightTree::VAR) {
@@ -152,7 +152,7 @@ FlatTerm convert2flatterm(const LightTree& t) {
 	return ret;
 }
 
-unique_ptr<LightTree> fill_in_lighttree(auto& ft) {
+unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft) {
 	if (ft->ruleVar.isRule()) {
 		const Rule* r = (ft++)->ruleVar.rule;
 		LightTree::Children ch;

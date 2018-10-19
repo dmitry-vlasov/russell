@@ -12,7 +12,15 @@ struct Action {
 };
 
 template<bool trace>
-inline Action act(auto& n, auto& m, Rules::NodeIter ni, Symbols::iterator ch, const Expr* e, Symbols::iterator beg, Symbols::iterator end) {
+inline Action act(
+	stack<Rules::NodeIter>& n,
+	stack<Symbols::iterator>& m,
+	Rules::NodeIter ni,
+	Symbols::iterator ch,
+	const Expr* e,
+	Symbols::iterator beg,
+	Symbols::iterator end
+) {
 	if (const User<Rule>& r = (*ni)->rule) {
 		if (!r) throw Error("unknown rule", Lex::toStr(r.id()));
 		if (r.get()->token.preceeds(e->token)) {
@@ -95,7 +103,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 		if (x->type() == type) {
 			return new Tree(*x);
 		} else if (Rule* super = find_super(x->type(), type)) {
-			return new Tree(super->id(), {new Tree(*x)});
+			return new Tree(super->id(), new Tree(*x));
 		}
 	}
 	return nullptr;

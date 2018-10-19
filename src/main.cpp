@@ -45,6 +45,7 @@ int main (int argc, const char* argv[])
 			case Mode::CLI:  Client::mod().enqueue(argv[i]);  break;
 			case Mode::CONS: Console::mod().enqueue(argv[i]); break;
 			case Mode::EXEC: commands.push(argv[i]); break;
+			default: break;
 			}
 		}
 		switch (mode) {

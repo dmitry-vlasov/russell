@@ -127,6 +127,10 @@ struct TacticsParser {
 			case 1: return static_cast<Tactic*>(sv[0].get<AlterTactic*>());
 			case 2: return static_cast<Tactic*>(sv[0].get<ProxyTactic*>());
 			case 3: return static_cast<Tactic*>(sv[0].get<Oracle*>());
+			default: {
+				throw  Error("unknown tactic", sv.token());
+				return static_cast<Tactic*>(nullptr);
+			}
 			}
 		};
 		parser.log = [](size_t ln, size_t col, const std::string& err_msg) {
