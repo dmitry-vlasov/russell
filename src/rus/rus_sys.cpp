@@ -36,19 +36,6 @@ template<> const Table<Proof>& Math::get<Proof>() const { return proofs; }
 template<> const Table<Source>& Math::get<Source>() const { return sources; }
 template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
 
-template Table<Const>& Math::get<Const>();
-template Table<Type>& Math::get<Type>();
-template Table<Rule>& Math::get<Rule>();
-template Table<Proof>& Math::get<Proof>();
-template Table<Source>& Math::get<Source>();
-template Table<Assertion>& Math::get<Assertion>();
-template const Table<Const>& Math::get<Const>() const;
-template const Table<Type>& Math::get<Type>() const;
-template const Table<Rule>& Math::get<Rule>() const;
-template const Table<Proof>& Math::get<Proof>() const;
-template const Table<Source>& Math::get<Source>() const;
-template const Table<Assertion>& Math::get<Assertion>() const;
-
 void verify(uint src);
 mm::Source* translate(uint src, uint tgt);
 void parse_src_peg();

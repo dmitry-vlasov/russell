@@ -105,7 +105,8 @@ vector<FlatTerm> FlatTerm::children() const {
 	if (kind() == RULE) {
 		ConstIterator x = nodes.begin() + 1;
 		for (uint i = 1; i < nodes[0].ruleVar.rule->arity(); ++i) {
-			ret.push_back(subTerm(x));
+			FlatTerm t = subTerm(x);
+			ret.push_back(t);
 			x = x->end + 1;
 		}
 	}
@@ -152,12 +153,12 @@ FlatTerm convert2flatterm(const LightTree& t) {
 	return ret;
 }
 
-unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft) {
+unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft, FlatTerm::ConstIterator end) {
 	if (ft->ruleVar.isRule()) {
 		const Rule* r = (ft++)->ruleVar.rule;
 		LightTree::Children ch;
-		for (uint i = 0; i < r->arity(); ++ r) {
-			ch.push_back(fill_in_lighttree(ft));
+		for (uint i = 0; i < r->arity(); ++ i) {
+			ch.push_back(fill_in_lighttree(ft, end));
 		}
 		return make_unique<LightTree>(r, ch);
 	} else {
@@ -167,7 +168,7 @@ unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft) {
 
 LightTree convert2lighttree(const FlatTerm& ft) {
 	auto beg = ft.nodes.begin();
-	return LightTree(std::move(*fill_in_lighttree(beg).release()));
+	return LightTree(std::move(*fill_in_lighttree(beg, ft.nodes.end()).release()));
 }
 
 }}}}

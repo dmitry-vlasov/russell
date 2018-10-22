@@ -18,9 +18,9 @@ struct TrieIndex {
 		TrieIter(const Node& n) :
 			valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
 		TrieIter(ConstIterator i) :
-			valid_(true), iter_(i) { }
+			valid_(i != ConstIterator()), iter_(i) { }
 		TrieIter(ConstIterator b, ConstIterator e) :
-			valid_(true), beg_(b), iter_(b), end_(e) { }
+			valid_(b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
 		TrieIter(const TrieIter&) = default;
 		TrieIter& operator = (const TrieIter&) = default;
 		TrieIter side() const {
@@ -37,6 +37,9 @@ struct TrieIndex {
 			} else {
 				return TrieIter(iter_->second.nodes.begin(), iter_->second.nodes.end());
 			}
+		}
+		TrieIter prev() const {
+			return TrieIter(iter_->second.parent);
 		}
 		bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
 		bool isSideEnd() const {

@@ -56,7 +56,14 @@ struct FlatTerm {
 			if (!valid_ || isNextEnd()) {
 				return TermIter(beg_, iter_, end_, false);
 			} else {
-				return TermIter(beg_, iter_ + 1, end_, iter_ != end_);
+				return TermIter(beg_, iter_ + 1, end_, (iter_ + 1) != end_);
+			}
+		}
+		TermIter prev() const {
+			if (!valid_ || isPrevEnd()) {
+				return TermIter(beg_, iter_, end_, false);
+			} else {
+				return TermIter(beg_, iter_ - 1, end_, iter_ != end_);
 			}
 		}
 		TermIter fastForward() const {
@@ -64,6 +71,7 @@ struct FlatTerm {
 		}
 		FlatTerm subTerm() const;
 		bool isNextEnd() const { return iter_ == end_; }
+		bool isPrevEnd() const { return iter_ == beg_; }
 		bool isSideEnd() const { return true; }
 		bool isValid() const { return valid_; }
 		ConstIterator iter() const {
