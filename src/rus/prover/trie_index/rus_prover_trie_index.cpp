@@ -215,6 +215,10 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	Unified ret;
 	vector<UnifyIter> branch;
 	branch.reserve(256);
+	//cout << "entering TrieIndex::unify ... " << ++c << flush;
+	//if (c == 3) {
+	//	debug_trie_index = true;
+	//}
 	if (root.nodes.size()) {
 		uint totalN = totalNodes();
 		//cout << "UNIFYING c = " << ++c << endl;
@@ -250,7 +254,12 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 				}
 			}
 
+			uint k = 0;
 			while (true) {
+				if (++k > 100) {
+					cout << "somth is wrong" << endl;
+					exit(5);
+				}
 				if (!n.isSideEnd()) {
 					if (debug_trie_index) {
 						cout << "side:" << endl << Indent::paragraph(n.side().showBranch()) << endl;
@@ -262,6 +271,7 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 					break;
 				}
 				n = branch.back();
+				branch.pop_back();
 			}
 
 			if (cc > totalN) {
@@ -270,6 +280,7 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 			}
 		}
 	}
+	//cout << "leaving TrieIndex::unify " << endl;
 	return ret;
 }
 
