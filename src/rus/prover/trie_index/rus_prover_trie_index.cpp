@@ -148,11 +148,17 @@ struct UnifyIter {
 	vector<UnifyIter> unify() const {
 		vector<UnifyIter> ret;
 		if (equals()) {
+			if (debug_trie_index) {
+				cout << "equals" << endl;
+			}
 			ret.emplace_back(*this);
 		} else {
 			if (trieIter.iter()->first.isVar() && trieIter.iter()->first.var.rep) {
 				//debug_flatterm = true;
 				FlatTerm subterm = termIter.subTerm();
+				if (debug_trie_index) {
+					cout << "subterm: " << subterm.show() << endl;
+				}
 				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, subterm);
 				if (s.ok) {
 					ret.emplace_back(trieIter, termIter.fastForward(), parentSub, s);
@@ -173,6 +179,13 @@ struct UnifyIter {
 				}
 			}
 		}
+		return ret;
+	}
+
+	string show(bool full = false) const {
+		string ret;
+		ret += "trie: " + trieIter.show(full) + "\n";
+		ret += "term: " + termIter.show(full) + "\n";
 		return ret;
 	}
 	TrieIndex::TrieIter trieIter;
@@ -208,7 +221,7 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 	static uint c = 0;
 	Unified ret;
 	vector<UnifyIter> branch;
-	branch.reserve(1024);
+	branch.reserve(256);
 	if (root.nodes.size()) {
 		uint totalN = totalNodes();
 		//cout << "UNIFYING c = " << ++c << endl;
@@ -217,12 +230,22 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		branch.emplace_back(TrieIndex::TrieIter(root), FlatTerm::TermIter(t));
 		static uint cc = 0;
 		while (branch.size()) {
+			UnifyIter n = branch.back();
 			if (debug_trie_index) {
 				cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
+				cout << "n:" << endl << Indent::paragraph(n.show()) << endl << endl;
 			}
-			UnifyIter n = branch.back();
-			vector<UnifyIter> unified = n.unify();
-			for (const auto& i : unified) {
+			while (branch.size()) {
+				if (!branch.back().isSideEnd()) {
+					UnifyIter m = branch.back().side();
+					branch.pop_back();
+					branch.push_back(m);
+					break;
+				} else {
+					branch.pop_back();
+				}
+			}
+			for (const auto& i : n.unify()) {
 				if (i.isTermEnd()) {
 					for (uint ind :  i.trieIter.iter()->second.inds) {
 						if (debug_trie_index) {
@@ -233,21 +256,13 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 					}
 				}
 				if (!i.isNextEnd()) {
+					if (debug_trie_index) {
+						cout << "next:" << endl << Indent::paragraph(i.next().show(true)) << endl;
+					}
 					branch.push_back(i.next());
 				}
 			}
-			while (branch.size()) {
-				branch.pop_back();
-				if (!n.isSideEnd()) {
-					n = n.side();
-					branch.push_back(n);
-					break;
-				}
-				if (branch.empty()) {
-					break;
-				}
-				n = branch.back();
-			}
+
 			if (cc > totalN) {
 				cout << "TOO MUCH: " << cc << endl;
 				break;

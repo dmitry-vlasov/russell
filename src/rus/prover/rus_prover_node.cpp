@@ -78,6 +78,7 @@ void Hyp::buildUp() {
 
 			trie_index::debug_trie_index = true;
 
+			cout << "ERROR STARTS" << endl;
 			unif2 = space->assertions_.unify(expr);
 			cout << "END OF ERROR" << endl;
 			exit(0);

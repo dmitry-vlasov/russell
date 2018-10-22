@@ -56,7 +56,7 @@ struct FlatTerm {
 			if (!valid_ || isNextEnd()) {
 				return TermIter(beg_, iter_, end_, false);
 			} else {
-				return TermIter(beg_, iter_ + 1, end_, (iter_ + 1) != end_);
+				return TermIter(beg_, iter_ + 1, end_, iter_ != end_);
 			}
 		}
 		TermIter prev() const {
@@ -81,12 +81,16 @@ struct FlatTerm {
 			assert(valid_ && "TermIter::iter()");
 			return iter_;
 		}
-		string show() const {
+		string show(bool full = false) const {
 			string ret;
-			ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->ruleVar.show()) + "\n";
-			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->ruleVar.show()) + "\n";
-			ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
-			ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
+			if (full) {
+				ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->ruleVar.show()) + "\n";
+				ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->ruleVar.show()) + "\n";
+				ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
+				ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
+			} else {
+				ret += iter_->ruleVar.show();
+			}
 			return ret;
 		}
 
