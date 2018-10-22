@@ -71,9 +71,27 @@ struct TrieIndex {
 				ret += "\n";
 			} else {
 				ret += ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + " ";
-				for (uint i : iter_->second.inds) {
-					ret += to_string(i) + " ";
+				if (iter_->second.inds.size()) {
+					ret += "[";
+					for (uint i : iter_->second.inds) {
+						ret += to_string(i) + " ";
+					}
+					ret += "]";
 				}
+			}
+			return ret;
+		}
+		string showBranch() const {
+			vector<TrieIter> branch;
+			TrieIter i = *this;
+			while (i.isValid()) {
+				branch.push_back(i);
+				i = i.prev();
+			}
+			std::reverse(branch.begin(), branch.end());
+			string ret;
+			for (auto it : branch) {
+				ret += it.show();
 			}
 			return ret;
 		}
@@ -107,6 +125,7 @@ struct TrieIndexMap {
 		Subst sub;
 	};
 	void add(const LightTree& t, const Data& d) {
+		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
 		index_.add(convert2flatterm(t));
 		data_.push_back(d);
 	}
@@ -115,6 +134,7 @@ struct TrieIndexMap {
 		TrieIndex::Unified unif = index_.unify(convert2flatterm(t));
 		for (auto& p : unif) {
 			if (p.second.ok) {
+				//cout << "UNIFIED: " << p.first << endl;
 				ret.emplace_back(data_[p.first], convert2subst(p.second));
 			}
 		}

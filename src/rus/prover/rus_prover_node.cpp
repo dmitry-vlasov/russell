@@ -54,7 +54,7 @@ void Hyp::buildUp() {
 	}
 	for (const auto& p1 : unif1) {
 		bool found = false;
-		cout << "in unif1: " << Lex::toStr(p1.data.id()) << ", " << p1.data.ind << endl;
+		cout << "in unif1: " << Lex::toStr(p1.data.id()) << endl;
 		for (const auto& p2 : unif2) {
 			if (p1.data == p2.data) {
 				found = true;
@@ -67,7 +67,7 @@ void Hyp::buildUp() {
 					cout << "FOUND COINCIDES" << endl;
 				}
 			} else {
-				cout << "in unif2: " << Lex::toStr(p2.data.id()) << ", " << p2.data.ind << endl;
+				//cout << "in unif2: " << Lex::toStr(p2.data.id()) << endl;
 			}
 		}
 		if (!found) {
@@ -75,6 +75,13 @@ void Hyp::buildUp() {
 			cout << "unif2 misses key: " << Lex::toStr(p1.data.id()) << endl;
 			cout << "sub:" << endl;
 			cout << prover::show(p1.sub) << endl;
+
+			cout << "solutiuons form unif2:" << endl;
+			for (const auto& p2 : unif2) {
+				cout << Lex::toStr(p2.data.id()) << endl;
+				cout << prover::show(p2.sub) << endl;
+			}
+			cout << "--------------------" << endl;
 
 			trie_index::debug_trie_index = true;
 

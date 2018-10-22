@@ -139,7 +139,7 @@ struct UnifyIter {
 	UnifyIter side() {
 		return UnifyIter(trieIter.side(), termIter, parentSub);
 	}
-	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next(), sub); }
+	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next(), sub, sub); }
 	bool isNextEnd() const { return sub.ok ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
 	bool isTermEnd() const { return sub.ok ? (trieIter.isNextEnd() && termIter.isNextEnd()) : true; }
 	bool isSideEnd() const { return sub.ok ? (trieIter.isSideEnd() && termIter.isSideEnd()) : true; }
@@ -188,32 +188,25 @@ struct UnifyIter {
 		ret += "term: " + termIter.show(full) + "\n";
 		return ret;
 	}
+	string showBranch() const {
+		string ret;
+		ret += "trie: " + trieIter.showBranch() + "\n";
+		ret += "term: " + termIter.showBranch() + "\n";
+		return ret;
+	}
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
 	FlatSubst parentSub;
 	FlatSubst sub;
 };
 
-string show(const vector<UnifyIter>& branch) {
+string showBranches(const vector<UnifyIter>& branch) {
 	string ret;
-	ret += "trie: ";
+	ret += "trie: \n";
 	for (auto i : branch) {
-		if (i.trieIter.isValid()) {
-			ret += i.trieIter.show() + " ";
-		} else {
-			ret += "<UNDEF> ";
-		}
+		ret += i.showBranch() + "\n";
 	}
-	ret += "\n";
-	ret += "term: ";
-	for (auto i : branch) {
-		if (i.termIter.isValid()) {
-			ret += i.termIter.iter()->ruleVar.show() + " ";
-		} else {
-			ret += "<UNDEF> ";
-		}
-	}
-	ret += "\n";
+	ret += "==================\n";
 	return ret;
 }
 
@@ -232,18 +225,12 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 		while (branch.size()) {
 			UnifyIter n = branch.back();
 			if (debug_trie_index) {
-				cout << "BRANCH cc = " << ++cc << ": " << trie_index::show(branch) << endl;
-				cout << "n:" << endl << Indent::paragraph(n.show()) << endl << endl;
+				cout << "BRANCHES cc = " << ++cc << ": " << trie_index::showBranches(branch) << endl;
+				cout << "n:" << endl << Indent::paragraph(n.showBranch()) << endl << endl;
 			}
-			while (branch.size()) {
-				if (!branch.back().isSideEnd()) {
-					UnifyIter m = branch.back().side();
-					branch.pop_back();
-					branch.push_back(m);
-					break;
-				} else {
-					branch.pop_back();
-				}
+			branch.pop_back();
+			if (debug_trie_index) {
+				cout << "BRANCHES AFTER " << trie_index::showBranches(branch) << endl;
 			}
 			for (const auto& i : n.unify()) {
 				if (i.isTermEnd()) {
@@ -257,10 +244,24 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 				}
 				if (!i.isNextEnd()) {
 					if (debug_trie_index) {
-						cout << "next:" << endl << Indent::paragraph(i.next().show(true)) << endl;
+						cout << "next:" << endl << Indent::paragraph(i.next().showBranch()) << endl;
 					}
 					branch.push_back(i.next());
 				}
+			}
+
+			while (true) {
+				if (!n.isSideEnd()) {
+					if (debug_trie_index) {
+						cout << "side:" << endl << Indent::paragraph(n.side().showBranch()) << endl;
+					}
+					branch.push_back(n.side());
+					break;
+				}
+				if (branch.empty()) {
+					break;
+				}
+				n = branch.back();
 			}
 
 			if (cc > totalN) {

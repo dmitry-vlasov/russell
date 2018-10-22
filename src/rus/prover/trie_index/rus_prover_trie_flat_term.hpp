@@ -63,7 +63,7 @@ struct FlatTerm {
 			if (!valid_ || isPrevEnd()) {
 				return TermIter(beg_, iter_, end_, false);
 			} else {
-				return TermIter(beg_, iter_ - 1, end_, iter_ != end_);
+				return TermIter(beg_, iter_ - 1, end_, iter_ != beg_);
 			}
 		}
 		TermIter fastForward() const {
@@ -89,7 +89,21 @@ struct FlatTerm {
 				ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
 				ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
 			} else {
-				ret += iter_->ruleVar.show();
+				ret += iter_->ruleVar.show() + " ";
+			}
+			return ret;
+		}
+		string showBranch() const {
+			vector<TermIter> branch;
+			TermIter i = *this;
+			while (i.isValid()) {
+				branch.push_back(i);
+				i = i.prev();
+			}
+			std::reverse(branch.begin(), branch.end());
+			string ret;
+			for (auto it : branch) {
+				ret += it.show();
 			}
 			return ret;
 		}
