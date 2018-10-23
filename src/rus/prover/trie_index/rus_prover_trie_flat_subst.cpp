@@ -3,6 +3,7 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 bool debug_flat_subst = false;
+bool debug_flat_apply = false;
 
 void FlatSubst::operator = (const FlatSubst& s) {
 	ok = s.ok;
@@ -91,6 +92,16 @@ bool FlatSubst::consistent(const FlatSubst& s) const {
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	static uint c = 0;
 	++c;
+	if (c == 105) {
+		debug_flat_apply = true;
+		debug_flatterm = true;
+	} else {
+		debug_flat_apply = false;
+		debug_flatterm = false;
+	}
+
+	//cout << "(!!!) c = " << c << endl;
+
 	if (debug_flat_subst) {
 		cout << "-------------------------------------" << endl;
 		cout << "c = " << c << endl;
@@ -104,7 +115,7 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	for (const auto& p : s1.sub) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
-			s1.sub[p.first] = ex;
+			s1.sub[p.first] = ex; //std::move(ex);
 			vars.insert(p.first);
 		}
 	}
@@ -191,15 +202,84 @@ uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 }
 
 FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
-	FlatTerm ret(applied_len(s, t));
+
+	if (debug_flat_apply) {
+		cout << "TO APPLY:" << endl;
+		cout << "------------" << endl;
+		cout << "SUB: " << endl << s.show() << endl;
+		cout << "TERM: " << t.show() << endl;
+	}
+
+	uint len = 0;
+	vector<uint> beg_shifts;
+	vector<uint> end_shifts;
+	for (uint k = 0; k < t.len(); ++ k, ++ len) {
+		const auto& n = t.nodes[k];
+		beg_shifts.push_back(len);
+		if (n.ruleVar.isVar()) {
+			auto it = s.sub.find(n.ruleVar.var);
+			if (it != s.sub.end()) {
+				len += it->second.len() - 1;
+			}
+		}
+		end_shifts.push_back(len);
+	}
+
+	if (debug_flat_apply) {
+		cout << "BEG SHIFTS: [" << flush;
+		for (uint k = 0; k < beg_shifts.size(); ++ k) {
+			cout << k << " -> " << beg_shifts[k] << ", ";
+		}
+		cout << "]" << endl;
+		cout << "END SHIFTS: [" << flush;
+		for (uint k = 0; k < end_shifts.size(); ++ k) {
+			cout << k << " -> " << end_shifts[k] << ", ";
+		}
+		cout << "]" << endl;
+	}
+
+
+	FlatTerm ret(len);
+	for (uint k = 0; k < t.len(); ++ k) {
+		const auto& n = t.nodes[k];
+		bool substituted = false;
+		if (n.ruleVar.isVar()) {
+			auto it = s.sub.find(n.ruleVar.var);
+			if (it != s.sub.end()) {
+				copyFlatSubTerm(&ret, beg_shifts[k], it->second.nodes.begin());
+				substituted = true;
+			}
+		}
+		if (!substituted) {
+			ret.nodes[beg_shifts[k]] = n;
+			ret.nodes[beg_shifts[k]].end = ret.nodes.begin() + end_shifts[n.end - t.nodes.begin()];
+		}
+	}
+
+	if (debug_flat_apply) {
+		cout << "RET: " << ret.show() << endl;
+		cout << "RET end - beg: " << (int)(ret.nodes[0].end - ret.nodes.begin()) << endl;
+		cout << "------------" << endl << endl << endl;
+	}
+
+	return ret;
+}
+/*
+FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
+	uint length = applied_len(s, t);
+	FlatTerm ret(length);
 	uint i = 0;
 	uint k = 0;
+	vector<vector<uint>> begins(length);
 	for (const auto& n : t.nodes) {
 		bool substituted = false;
 		if (n.ruleVar.isVar()) {
 			auto it = s.sub.find(n.ruleVar.var);
 			if (it != s.sub.end()) {
 				copyFlatSubTerm(&ret, i, it->second.nodes.begin());
+				for (uint beg : begins[i]) {
+					ret.nodes[beg].end += (i + it->second.len() - k) - 1;
+				}
 				i += it->second.len();
 				substituted = true;
 			}
@@ -207,22 +287,26 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		if (!substituted) {
 			ret.nodes[i] = n;
 			uint ind = n.end - t.nodes.begin();
-			ret.nodes[i].end = ret.nodes.begin() + ind + (i - k);
+			uint shifted_ind = ind + (i - k);
+			begins[shifted_ind].push_back(i);
+			ret.nodes[i].end = ret.nodes.begin() + shifted_ind;
 			i += 1;
 		}
 		k += 1;
 	}
-	/*if (debug_flat_subst) {
+	if (debug_flat_apply) {
 		cout << "APPLY:" << endl;
 		cout << "------------" << endl;
+		cout << "applied_len(s, t): " << applied_len(s, t) << endl;
 		cout << "SUB: " << endl << s.show() << endl;
 		cout << "TERM: " << t.show() << endl;
 		cout << "RET: " << ret.show() << endl;
+		cout << "RET end - beg: " << (int)(ret.nodes[0].end - ret.nodes.begin()) << endl;
 		cout << "------------" << endl << endl << endl;
-	}*/
+	}
 
 	return ret;
-}
+}*/
 
 FlatSubst compose(const FlatSubst& s1, const FlatSubst& s2) {
 	FlatSubst ret(s1);

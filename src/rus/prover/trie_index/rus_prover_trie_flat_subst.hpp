@@ -44,5 +44,6 @@ FlatSubst convert2flatsubst(const Subst&);
 Subst convert2subst(const FlatSubst&);
 
 extern bool debug_flat_subst;
+extern bool debug_flat_apply;
 
 }}}}

@@ -143,7 +143,7 @@ struct FlatTerm {
 	bool operator != (const FlatTerm& t) const { return nodes != t.nodes; }
 
 	FlatTerm& operator = (const FlatTerm&);
-	FlatTerm& operator = (FlatTerm&&) = delete;
+	FlatTerm& operator = (FlatTerm&&) = default;
 
 	Kind kind() const {
 		return (nodes.size() == 1 && nodes[0].ruleVar.isVar()) ? VAR : RULE;

@@ -11,10 +11,11 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	static int c = 0;
 	++c;
 	bool debug = t->nodes.size() == 0; //(c == 1);
-	if (debug) {
+	if (debug_flatterm) {
 		cout << "t->nodes.size() = " << t->nodes.size() << endl;
 		cout << "b: " << b->ruleVar.show() << endl;
 		cout << "b->end: " << b->end->ruleVar.show() << endl;
+		cout << "b->end - b: " << (int)(b->end - b) << endl;
 		cout << "pos: " << pos << endl;
 	}
 
@@ -35,7 +36,7 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 			break;
 		}
 	}
-	if (debug) {
+	if (debug_flatterm) {
 		cout << "COPIED: " << t->show() << endl;
 	}
 }
