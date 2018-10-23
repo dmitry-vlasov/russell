@@ -81,6 +81,19 @@ struct FlatTerm {
 			assert(valid_ && "TermIter::iter()");
 			return iter_;
 		}
+		vector<ConstIterator> children() const {
+			vector<ConstIterator> ret;
+			if (valid_ && iter_->ruleVar.isRule()) {
+				ConstIterator x = iter_;
+				for (uint i = 0; i < iter_->ruleVar.rule->arity(); ++i) {
+					ret.push_back(x);
+					x = x->end + 1;
+				}
+			} else {
+				throw Error("node has no children");
+			}
+			return ret;
+		}
 		string show(bool full = false) const {
 			string ret;
 			if (full) {

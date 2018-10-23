@@ -118,13 +118,25 @@ vector<FlatTerm> FlatTerm::children() const {
 
 vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 	vector<FlatTerm::ConstIterator> ret;
-	if (kind() == RULE) {
+	cout << "CHILDREN OF: " << show() << endl;
+	if (kind() == RULE && nodes.size()) {
 		ConstIterator x = nodes.begin() + 1;
-		for (uint i = 1; i < nodes[0].ruleVar.rule->arity(); ++i) {
+		for (uint i = 0; i < nodes[0].ruleVar.rule->arity(); ++i) {
 			ret.push_back(x);
+			cout << "\tCHILD: '";
+			auto it = x;
+			while (true) {
+				cout << it->ruleVar.show() << " ";
+				if (it == x->end) {
+					break;
+				}
+				++it;
+			}
+			cout << "'" << endl;
 			x = x->end + 1;
 		}
 	}
+	cout << "END CHILDREN" << endl;
 	return ret;
 }
 
