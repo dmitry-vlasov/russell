@@ -48,9 +48,24 @@ FlatTerm FlatTerm::TermIter::subTerm() const {
 	return ret;
 }
 
+FlatTerm FlatTerm::TermIter::term() const {
+	FlatTerm ret((end_ - beg_) + 1);
+	if (ret.nodes.size()) {
+		copyFlatSubTerm(&ret, 0, beg_);
+	}
+	return ret;
+}
+
+
 FlatTerm::FlatTerm(const FlatTerm& t) : nodes(t.nodes.size()) {
 	if (t.nodes.size()) {
 		copyFlatSubTerm(this, 0, t.nodes.begin());
+	}
+}
+
+FlatTerm::FlatTerm(ConstIterator i) : nodes(i->end - i) {
+	if (nodes.size()) {
+		copyFlatSubTerm(this, 0, i);
 	}
 }
 
@@ -140,8 +155,40 @@ vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 	return ret;
 }
 
+vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator it) {
+	vector<FlatTerm::ConstIterator> ret;
+	cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
+	if (it->ruleVar.isRule()) {
+		FlatTerm::ConstIterator x = it + 1;
+		for (uint i = 0; i < it->ruleVar.rule->arity(); ++i) {
+			ret.push_back(x);
+			cout << "\tCHILD: '";
+			auto j = x;
+			while (true) {
+				cout << j->ruleVar.show() << " ";
+				if (j == x->end) {
+					break;
+				}
+				++j;
+			}
+			cout << "'" << endl;
+			x = x->end + 1;
+		}
+	} else {
+		throw Error("node has no children");
+	}
+	cout << "childrenIters -- END CHILDREN" << endl;
+	return ret;
+}
+
+FlatTerm term(FlatTerm::ConstIterator beg) {
+	FlatTerm ret((beg->end - beg) + 1);
+	copyFlatSubTerm(&ret, 0, beg);
+	return ret;
+}
+
 FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
-	FlatTerm ret(beg->end - beg);
+	FlatTerm ret((beg->end - beg) + 1);
 	copyFlatSubTerm(&ret, 0, beg);
 	return ret;
 }

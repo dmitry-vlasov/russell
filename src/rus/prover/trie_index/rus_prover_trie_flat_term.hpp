@@ -70,6 +70,7 @@ struct FlatTerm {
 			return TermIter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
 		}
 		FlatTerm subTerm() const;
+		FlatTerm term() const;
 		bool isNextEnd() const { return iter_ == end_; }
 		bool isPrevEnd() const { return iter_ == beg_; }
 		bool isSideEnd() const { return true; }
@@ -81,7 +82,8 @@ struct FlatTerm {
 			assert(valid_ && "TermIter::iter()");
 			return iter_;
 		}
-		vector<ConstIterator> children() const {
+
+		vector<ConstIterator> childrenIters() const {
 			vector<ConstIterator> ret;
 			if (valid_ && iter_->ruleVar.isRule()) {
 				ConstIterator x = iter_;
@@ -134,6 +136,7 @@ struct FlatTerm {
 	FlatTerm(const FlatTerm&);
 	FlatTerm(FlatTerm&&) = default;
 	FlatTerm(LightSymbol s);
+	FlatTerm(ConstIterator i);
 	FlatTerm(const Rule* r, const vector<FlatTerm>& ch);
 
 	bool operator == (const FlatTerm& t) const { return nodes == t.nodes; }
@@ -160,6 +163,8 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
+vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator b);
+FlatTerm term(FlatTerm::ConstIterator b);
 
 extern bool debug_flatterm;
 
