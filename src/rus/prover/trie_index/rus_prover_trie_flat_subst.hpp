@@ -43,4 +43,6 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2);
 FlatSubst convert2flatsubst(const Subst&);
 Subst convert2subst(const FlatSubst&);
 
+extern bool debug_flat_subst;
+
 }}}}

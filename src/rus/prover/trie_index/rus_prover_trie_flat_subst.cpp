@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_flat_subst = false;
+
 void FlatSubst::operator = (const FlatSubst& s) {
 	ok = s.ok;
 	if (ok) {
@@ -87,35 +89,37 @@ bool FlatSubst::consistent(const FlatSubst& s) const {
 }
 
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
-	/*bool sh = s.sub.size() && sub.size();
-	if (sh) {
+	static uint c = 0;
+	++c;
+	if (debug_flat_subst) {
 		cout << "-------------------------------------" << endl;
+		cout << "c = " << c << endl;
 		cout << "BEFORE " << (full ? "FULL" : "PART") << " COMPOSE THIS:" << endl;
-		cout << Indent::paragraph(show(*this)) << endl;
+		cout << Indent::paragraph(s1.show()) << endl;
 		cout << "BEFORE COMPOSE S:" << endl;
-		cout << Indent::paragraph(show(s)) << endl;
-	}*/
+		cout << Indent::paragraph(s2.show()) << endl;
+	}
 	FlatSubst ret;
 	set<LightSymbol> vars;
 	for (const auto& p : s1.sub) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
-			s1.sub.emplace(p.first, apply(s2, p.second));
+			s1.sub[p.first] = ex;
 			vars.insert(p.first);
 		}
 	}
 	if (full) {
 		for (const auto& p : s2.sub) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub.emplace(p.first, p.second);
+				s1.sub[p.first] = p.second;
 			}
 		}
 	}
-	/*if (sh) {
+	if (debug_flat_subst) {
 		cout << "AFTER COMPOSE THIS:" << endl;
-		cout << Indent::paragraph(show(*this)) << endl;
+		cout << Indent::paragraph(s1.show()) << endl;
 		cout << "-------------------------------------" << endl;
-	}*/
+	}
 }
 
 bool FlatSubst::compose(const FlatSubst& s, bool full) {
@@ -208,13 +212,14 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		}
 		k += 1;
 	}
-	/*cout << "APPLY:" << endl;
-	cout << "------------" << endl;
-	cout << "SUB: " << endl << s.show() << endl;
-	cout << "TERM: " << t.show() << endl;
-	cout << "RET: " << ret.show() << endl;
-	cout << "------------" << endl << endl << endl;*/
-
+	/*if (debug_flat_subst) {
+		cout << "APPLY:" << endl;
+		cout << "------------" << endl;
+		cout << "SUB: " << endl << s.show() << endl;
+		cout << "TERM: " << t.show() << endl;
+		cout << "RET: " << ret.show() << endl;
+		cout << "------------" << endl << endl << endl;
+	}*/
 
 	return ret;
 }

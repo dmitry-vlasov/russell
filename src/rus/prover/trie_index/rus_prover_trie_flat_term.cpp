@@ -10,11 +10,12 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 
 	static int c = 0;
 	++c;
-	bool debug = false; //(c == 1);
+	bool debug = t->nodes.size() == 0; //(c == 1);
 	if (debug) {
 		cout << "t->nodes.size() = " << t->nodes.size() << endl;
 		cout << "b: " << b->ruleVar.show() << endl;
 		cout << "b->end: " << b->end->ruleVar.show() << endl;
+		cout << "pos: " << pos << endl;
 	}
 
 	for (auto it = b; ; ++ it) {
@@ -34,7 +35,9 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 			break;
 		}
 	}
-	//cout << "COPIED: " << t->show() << endl;
+	if (debug) {
+		cout << "COPIED: " << t->show() << endl;
+	}
 }
 
 FlatTerm FlatTerm::TermIter::subTerm() const {
@@ -75,7 +78,7 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 }
 
 FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
-	nodes.clear();
+	nodes = vector<Node>(t.nodes.size());
 	if (t.nodes.size()) {
 		copyFlatSubTerm(this, 0, t.nodes.begin());
 	}

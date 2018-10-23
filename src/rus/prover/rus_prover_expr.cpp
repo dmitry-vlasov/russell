@@ -101,7 +101,7 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 	for (const auto& p : s1.sub) {
 		LightTree ex = apply(s2, p.second);
 		if (!(ex.kind() == LightTree::VAR && ex.var() == p.first)) {
-			s1.sub[p.first] = apply(s2, p.second);
+			s1.sub[p.first] = ex;
 			vars.insert(p.first);
 		}
 	}

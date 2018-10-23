@@ -39,7 +39,8 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 		}
 	}
 	//if (ind == 18) {
-	cout << "\nASSERTIONS:\n" << assertions_.show() << endl;
+	cout << "\nASSERTIONS_:\n" << assertions_.show() << endl;
+	cout << "\nASSERTIONS:\n" << assertions.show() << endl;
 	//}
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);

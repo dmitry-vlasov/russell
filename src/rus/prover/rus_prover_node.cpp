@@ -62,6 +62,14 @@ void Hyp::buildUp() {
 					cout << "different values: " << endl;
 					cout << prover::show(p1.sub) << endl;
 					cout << prover::show(p2.sub) << endl;
+					cout << "expr: " << prover::show(expr) << endl;
+
+					trie_index::debug_trie_index = true;
+
+					cout << "ERROR STARTS" << endl;
+					unif2 = space->assertions_.unify(expr);
+					cout << "END OF ERROR" << endl;
+
 					exit(0);
 				} else {
 					cout << "FOUND COINCIDES" << endl;

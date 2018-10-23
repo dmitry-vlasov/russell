@@ -117,7 +117,7 @@ struct FlatTerm {
 		ConstIterator end_;
 	};
 
-	FlatTerm(uint s) : nodes(s) { }
+	FlatTerm(uint s = 0) : nodes(s) { }
 	FlatTerm(const FlatTerm&);
 	FlatTerm(FlatTerm&&) = default;
 	FlatTerm(LightSymbol s);

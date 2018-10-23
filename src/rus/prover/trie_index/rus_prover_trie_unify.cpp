@@ -108,8 +108,8 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 			cout << "'" << prover::show(w) << "' ";
 		}
 		cout << endl;
-		cout << "s: " << s.show() << endl;
 		cout << "term: " << term.show() << endl;
+		cout << "s: " << s.show() << endl;
 	}
 
 	vector<FlatTerm> to_unify({apply(s, term)});
@@ -128,15 +128,19 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 					cout << "v: " << prover::show(v) << endl;
 					cout << "s: " << s.show() << endl;
 				}
-				return FlatTerm(0);
+				return FlatTerm();
 			}
+		}
+		if (debug_flat_unify) {
+			cout << "s.compose(FlatSubst(v, unified)) == true" << endl;
+			cout << "result s: " << s.show() << endl;
 		}
 		return unified;
 	}
 	if (debug_flat_unify) {
 		cout << "unified.empty()" << endl;
 	}
-	return FlatTerm(0);
+	return FlatTerm();
 }
 
 FlatSubst unify_step(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
@@ -147,7 +151,7 @@ FlatSubst unify_step(const FlatSubst& s, const vector<LightSymbol>& vars, const 
 
 FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub) {
 	if (!ex.size()) {
-		return FlatTerm(0);
+		return FlatTerm();
 	} else if (ex.size() == 1) {
 		return apply(sub, *ex.begin());
 	}
@@ -156,7 +160,7 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 		if (debug_flat_unify) {
 			cout << "!data.consistent" << endl;
 		}
-		return FlatTerm(0);
+		return FlatTerm();
 	}
 	if (data.rule) {
 		vector<FlatTerm> ch;
@@ -172,7 +176,7 @@ FlatTerm do_unify(const vector<FlatTerm>& ex, const vector<FlatTerm::ConstIterat
 				if (debug_flat_unify) {
 					cout << "c.empty()" << endl;
 				}
-				return FlatTerm(0);
+				return FlatTerm();
 			}
 		}
 		return unify_step(sub, data.vars, FlatTerm(data.rule, ch));

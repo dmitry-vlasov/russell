@@ -84,7 +84,8 @@ struct TreeIndexMap {
 			for (const auto&  p : lines) {
 				uint ind = p.first;
 				Data d = data_[ind];
-				ret += to_string(d) + "[" + to_string(p.first) + "]" + " -> " + p.second + "\n";
+				//ret += to_string(d) + "[" + to_string(p.first) + "]" + " -> " + p.second + "\n";
+				ret += to_string(p.first) + " -> " + p.second + "\n";
 			}
 			return ret;
 		}
