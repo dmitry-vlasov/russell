@@ -174,13 +174,13 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
-	static int c = 0;
+	/*static int c = 0;
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
-	Timer timer; timer.start();
+	Timer timer; timer.start();*/
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
-	timer.stop();
+	/*timer.stop();
 	cout << "sequntial unification: " << timer << endl;
 	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
 
@@ -209,7 +209,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		//cout << "SUB UNIFICATION EQUAL" << endl;
-	}
+	}*/
 
 	for (const auto& p : unified_subs_1) {
 		vector<uint> ind = p.first;

@@ -50,8 +50,8 @@ struct FlatUnifStepData {
 			return false;
 		}
 		vector<FlatTerm::ConstIterator> ch = trie_index::childrenIters(i);
-		cout << "GOT childern " << endl;
-		for (auto i : ch) {
+		//cout << "GOT childern " << endl;
+		/*for (auto i : ch) {
 			cout << "\t'";
 			auto j = i;
 			while (true) {
@@ -62,8 +62,8 @@ struct FlatUnifStepData {
 				++j;
 			}
 			cout << "'" << endl;
-		}
-		cout << "end of GOT" << endl << endl;
+		}*/
+		//cout << "end of GOT" << endl << endl;
 
 		children.push_back(trie_index::childrenIters(i));
 		return true;
@@ -139,7 +139,7 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIter
 		}
 	);*/
 
-	static uint c = 0;
+	/*static uint c = 0;
 	++c;
 	cout << "GATHERING: " << c << endl;
 	cout << "is.size()  = " << is.size() << endl;
@@ -156,7 +156,7 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIter
 		}
 		cout << "'" << endl;
 	}
-	cout << "END GATH" << endl;
+	cout << "END GATH" << endl;*/
 
 
 	FlatUnifStepData ret;
@@ -180,7 +180,7 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIter
 			}
 		}
 	}
-	cout << "END END GATH" << endl;
+	//cout << "END END GATH" << endl;
 	ret.consistent = true;
 	return ret;
 }
@@ -252,7 +252,7 @@ FlatTerm do_unify(const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub) {
 		return FlatTerm();
 	}
 	//if (debug_flat_unify) {
-		cout << "DATA:" << endl << data.show() << endl;
+	//	cout << "DATA:" << endl << data.show() << endl;
 	//}
 	if (data.rule) {
 		vector<FlatTerm> ch;

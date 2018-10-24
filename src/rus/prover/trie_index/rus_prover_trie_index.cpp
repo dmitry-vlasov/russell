@@ -137,7 +137,7 @@ struct UnifyIter {
 	UnifyIter(const UnifyIter&) = default;
 	UnifyIter& operator = (const UnifyIter&) = default;
 	UnifyIter side() {
-		return UnifyIter(trieIter.side(), termIter, parentSub);
+		return UnifyIter(trieIter.side(), termIter, parentSub, parentSub);
 	}
 	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next(), sub, sub); }
 	bool isNextEnd() const { return sub.ok ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
@@ -263,27 +263,6 @@ TrieIndex::Unified TrieIndex::unify(const FlatTerm& t) const {
 				}
 				branch.push_back(n.side());
 			}
-
-			/*uint k = 0;
-			while (true) {
-				if (++k > 100) {
-					cout << "somth is wrong" << endl;
-					exit(5);
-				}
-				if (!n.isSideEnd()) {
-					if (debug_trie_index) {
-						cout << "side:" << endl << Indent::paragraph(n.side().showBranch()) << endl;
-					}
-					branch.push_back(n.side());
-					break;
-				}
-				if (branch.empty()) {
-					break;
-				}
-				n = branch.back();
-				branch.pop_back();
-			}*/
-
 			if (cc > totalN * 10) {
 				cout << "TOO MUCH: " << cc << endl;
 				exit(-2);

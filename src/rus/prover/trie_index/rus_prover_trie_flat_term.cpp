@@ -134,12 +134,12 @@ vector<FlatTerm> FlatTerm::children() const {
 
 vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 	vector<FlatTerm::ConstIterator> ret;
-	cout << "CHILDREN OF: " << show() << endl;
+	//cout << "CHILDREN OF: " << show() << endl;
 	if (kind() == RULE && nodes.size()) {
 		ConstIterator x = nodes.begin() + 1;
 		for (uint i = 0; i < nodes[0].ruleVar.rule->arity(); ++i) {
 			ret.push_back(x);
-			cout << "\tCHILD: '";
+			/*cout << "\tCHILD: '";
 			auto it = x;
 			while (true) {
 				cout << it->ruleVar.show() << " ";
@@ -148,22 +148,22 @@ vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 				}
 				++it;
 			}
-			cout << "'" << endl;
+			cout << "'" << endl;*/
 			x = x->end + 1;
 		}
 	}
-	cout << "END CHILDREN" << endl;
+	//cout << "END CHILDREN" << endl;
 	return ret;
 }
 
 vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator it) {
 	vector<FlatTerm::ConstIterator> ret;
-	cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
+	//cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
 	if (it->ruleVar.isRule()) {
 		FlatTerm::ConstIterator x = it + 1;
 		for (uint i = 0; i < it->ruleVar.rule->arity(); ++i) {
 			ret.push_back(x);
-			cout << "\tCHILD: '";
+			/*cout << "\tCHILD: '";
 			auto j = x;
 			while (true) {
 				cout << j->ruleVar.show() << " ";
@@ -172,13 +172,13 @@ vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator it) {
 				}
 				++j;
 			}
-			cout << "'" << endl;
+			cout << "'" << endl;*/
 			x = x->end + 1;
 		}
 	} else {
 		throw Error("node has no children");
 	}
-	cout << "childrenIters -- END CHILDREN" << endl;
+	//cout << "childrenIters -- END CHILDREN" << endl;
 	return ret;
 }
 
