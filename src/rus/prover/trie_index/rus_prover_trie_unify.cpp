@@ -13,6 +13,26 @@ struct FlatUnifStepData {
 	LightSymbol var;
 	LightSymbol const_;
 
+	FlatUnifStepData(const vector<FlatTerm::ConstIterator>& is) {
+		least_type = (*is.begin())->ruleVar.type();
+		for (uint k = 0; k < is.size(); ++ k) {
+			if (!(*least_type <= *is[k]->ruleVar.type())) {
+				// There's no unification because of type constraints
+				return;
+			}
+			if (is[k]->ruleVar.isVar()) {
+				if (!track_var(is[k]->ruleVar.var)) {
+					return;
+				}
+			} else {
+				if (!track_node(is[k])) {
+					return;
+				}
+			}
+		}
+		consistent = true;
+	}
+
 	bool track_var(LightSymbol v) {
 		if (v.rep) {
 			if (var.is_undef()) {
@@ -50,21 +70,6 @@ struct FlatUnifStepData {
 			return false;
 		}
 		vector<FlatTerm::ConstIterator> ch = trie_index::childrenIters(i);
-		//cout << "GOT childern " << endl;
-		/*for (auto i : ch) {
-			cout << "\t'";
-			auto j = i;
-			while (true) {
-				cout << j->ruleVar.show() << " " << flush;
-				if (j == i->end) {
-					break;
-				}
-				++j;
-			}
-			cout << "'" << endl;
-		}*/
-		//cout << "end of GOT" << endl << endl;
-
 		children.push_back(trie_index::childrenIters(i));
 		return true;
 	}
@@ -130,6 +135,7 @@ struct FlatUnifStepData {
 	}
 };
 
+/*
 static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIterator>& is) {
 	/*std::sort(
 		es.begin(),
@@ -137,27 +143,7 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIter
 		[](const FlatTerm& t1, const FlatTerm& t2) {
 			return *t1.type() < *t2.type();
 		}
-	);*/
-
-	/*static uint c = 0;
-	++c;
-	cout << "GATHERING: " << c << endl;
-	cout << "is.size()  = " << is.size() << endl;
-	//cout << "es.size()  = " << es.size() << endl;
-	for (auto i : is) {
-		cout << "\t'";
-		auto j = i;
-		while (true) {
-			cout << j->ruleVar.show() << " ";
-			if (j == i->end) {
-				break;
-			}
-			++j;
-		}
-		cout << "'" << endl;
-	}
-	cout << "END GATH" << endl;*/
-
+	);* /
 
 	FlatUnifStepData ret;
 	ret.least_type = (*is.begin())->ruleVar.type();
@@ -183,7 +169,7 @@ static FlatUnifStepData gather_unification_data(const vector<FlatTerm::ConstIter
 	//cout << "END END GATH" << endl;
 	ret.consistent = true;
 	return ret;
-}
+}*/
 
 FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
 
@@ -244,7 +230,7 @@ FlatTerm do_unify(const vector<FlatTerm::ConstIterator>& is, FlatSubst& sub) {
 	} else if (is.size() == 1) {
 		return apply(sub, term(is[0]));
 	}
-	FlatUnifStepData data = gather_unification_data(is);
+	FlatUnifStepData data(is);
 	if (!data.consistent) {
 		if (debug_flat_unify) {
 			cout << "!data.consistent" << endl;
