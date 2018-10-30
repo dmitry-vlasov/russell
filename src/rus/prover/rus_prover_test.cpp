@@ -17,7 +17,7 @@ Return test_proof_with_oracle(const Proof* p) {
 Return test_with_oracle(string theorem) {
 	if (!theorem.size()) {
 		struct SourceLess {
-			bool operator () (const Source* s1, const Source* s2) {
+			bool operator () (const Source* s1, const Source* s2) const {
 				return s1->id() < s2->id();
 			}
 		};

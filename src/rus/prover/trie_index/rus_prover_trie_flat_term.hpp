@@ -40,6 +40,7 @@ struct FlatTerm {
 	typedef vector<Node>::const_iterator ConstIterator;
 
 	struct TermIter {
+		TermIter() : valid_(false) { }
 		TermIter(const FlatTerm& ft) :
 			valid_(true),
 			beg_(ft.nodes.begin()),

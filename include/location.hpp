@@ -100,6 +100,7 @@ struct Location {
 };
 
 struct LocationIter : public string::const_iterator {
+	LocationIter() = default;
 	LocationIter(const LocationIter& it) :
 	string::const_iterator(it), loc(it.loc) { }
 	LocationIter(string::const_iterator it, uint file) :

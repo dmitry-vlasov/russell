@@ -1,5 +1,6 @@
 #include "rus_prover_trie_index.hpp"
 
+
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct TrieIter {
