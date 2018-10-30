@@ -19,8 +19,8 @@ struct TrieIndex {
 			valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
 		TrieIter(ConstIterator i) :
 			valid_(i != ConstIterator()), iter_(i) { }
-		TrieIter(ConstIterator b, ConstIterator e) :
-			valid_(b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
+		TrieIter(ConstIterator b, ConstIterator e, bool v = true) :
+			valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
 		TrieIter(const TrieIter&) = default;
 		TrieIter& operator = (const TrieIter&) = default;
 		TrieIter side() const {
@@ -41,6 +41,9 @@ struct TrieIndex {
 		TrieIter prev() const {
 			return TrieIter(iter_->second.parent);
 		}
+		TrieIter reset() const {
+			return TrieIter(beg_, end_, valid_);
+		}
 		bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
 		bool isSideEnd() const {
 			if (end_ == ConstIterator()) {
@@ -58,6 +61,21 @@ struct TrieIndex {
 			return iter_;
 		}
 		FlatTerm subTerm(ConstIterator) const;
+
+		vector<pair<FlatTerm, TrieIter>> subTerms() const {
+			vector<pair<FlatTerm, TrieIter>> ret;
+			ret.reserve(iter_->second.ends.size());
+			for (auto end : iter_->second.ends) {
+				ret.emplace_back(subTerm(end), TrieIter(end));
+			}
+			return ret;
+		}
+		bool isVar() const {
+			return iter_->first.isVar() && iter_->first.var.rep;
+		}
+		LightSymbol var() const {
+			return iter_->first.var;
+		}
 		string show(bool full = false) const {
 			string ret;
 				if (full) {

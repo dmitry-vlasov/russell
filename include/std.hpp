@@ -38,6 +38,7 @@
 #include <atomic>
 #include <unordered_map>
 #include <unordered_set>
+#include <tuple>
 
 #include <cstdlib>
 #include <cstring>
@@ -116,6 +117,7 @@ namespace mdl {
 	using std::thread;
 	using std::mutex;
 	using std::atomic;
+	using std::tuple;
 	using std::unordered_map;
 	using std::unordered_set;
 

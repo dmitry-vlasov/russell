@@ -153,32 +153,18 @@ struct UnifyIter {
 			}
 			ret.emplace_back(*this);
 		} else {
-			if (trieIter.iter()->first.isVar() && trieIter.iter()->first.var.rep) {
-				FlatTerm subterm = termIter.subTerm();
-				if (debug_trie_index) {
-					//debug_flat_unify = true;
-					//cout << "subterm: " << subterm.show() << endl;
-				}
-				FlatSubst s = unify_step(sub, {trieIter.iter()->first.var}, subterm);
-				if (s.ok) {
-					ret.emplace_back(trieIter, termIter.fastForward(), parentSub, s);
-				}
-			} else if (termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep) {
-				if (debug_trie_index) {
-					cout << "termIter.iter()->ruleVar.isVar() && termIter.iter()->ruleVar.var.rep" << endl;
-				}
-				for (auto e : trieIter.iter()->second.ends) {
-					if (debug_trie_index) {
-						//cout << "got end: " << (*e).first.show() << endl;
-						debug_flat_unify = true;
-						debug_flat_subst = true;
-						cout << "var: " << prover::show(termIter.iter()->ruleVar.var) << endl;
-						cout << "trieIter.subTerm(e): " << trieIter.subTerm(e).show() << endl;
-						cout << "sub: " << sub.show() << endl;
-					}
-					FlatSubst s = unify_step(sub, {termIter.iter()->ruleVar.var}, trieIter.subTerm(e));
+			if (trieIter.isVar()) {
+				for (const auto& p : termIter.subTerms()) {
+					FlatSubst s = unify_step(sub, {trieIter.var()}, p.first);
 					if (s.ok) {
-						ret.emplace_back(TrieIndex::TrieIter(e), termIter, parentSub, s);
+						ret.emplace_back(trieIter, p.second, parentSub, s);
+					}
+				}
+			} else if (termIter.isVar()) {
+				for (const auto& p : trieIter.subTerms()) {
+					FlatSubst s = unify_step(sub, {termIter.var()}, p.first);
+					if (s.ok) {
+						ret.emplace_back(p.second, termIter, parentSub, s);
 					}
 				}
 			}

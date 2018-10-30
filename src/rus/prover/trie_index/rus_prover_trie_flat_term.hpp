@@ -45,8 +45,8 @@ struct FlatTerm {
 			beg_(ft.nodes.begin()),
 			iter_(ft.nodes.begin()),
 			end_(ft.nodes.begin() + ft.len() - 1) { }
-		TermIter(ConstIterator b, ConstIterator e) :
-			valid_(true), beg_(b), iter_(b), end_(e) { }
+		TermIter(ConstIterator b, ConstIterator e, bool v = true) :
+			valid_(v), beg_(b), iter_(b), end_(e) { }
 		TermIter(const TermIter&) = default;
 		TermIter& operator = (const TermIter&) = default;
 		TermIter side() const {
@@ -69,8 +69,23 @@ struct FlatTerm {
 		TermIter fastForward() const {
 			return TermIter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
 		}
+		TermIter reset() const {
+			return TermIter(beg_, end_, valid_);
+		}
 		FlatTerm subTerm() const;
 		FlatTerm term() const;
+		vector<pair<FlatTerm, TermIter>> subTerms() const {
+			vector<pair<FlatTerm, TermIter>> ret;
+			ret.reserve(1);
+			ret.emplace_back(subTerm(), fastForward());
+			return ret;
+		}
+		bool isVar() const {
+			return iter_->ruleVar.isVar() && iter_->ruleVar.var.rep;
+		}
+		LightSymbol var() const {
+			return iter_->ruleVar.var;
+		}
 		bool isNextEnd() const { return iter_ == end_; }
 		bool isPrevEnd() const { return iter_ == beg_; }
 		bool isSideEnd() const { return true; }
