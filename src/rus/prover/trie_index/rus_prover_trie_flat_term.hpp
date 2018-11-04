@@ -87,6 +87,9 @@ struct FlatTerm {
 		LightSymbol var() const {
 			return iter_->ruleVar.var;
 		}
+		RuleVar ruleVar() const {
+			return iter_->ruleVar;
+		}
 		bool isNextEnd() const { return iter_ == end_; }
 		bool isPrevEnd() const { return iter_ == beg_; }
 		bool isSideEnd() const { return true; }
@@ -179,7 +182,7 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
-vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator b);
+//vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator b);
 FlatTerm term(FlatTerm::ConstIterator b);
 
 extern bool debug_flatterm;

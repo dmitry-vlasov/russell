@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../rus_prover_cartesian.hpp"
 #include "rus_prover_trie_index.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
@@ -21,7 +22,7 @@ struct BothIter {
 	enum Kind { NONE, TRIE, TERM };
 	BothIter() : kind_(NONE) { }
 	BothIter(TrieIndex::TrieIter i) : kind_(TRIE), trieIter(i) { }
-	BothIter(FlatTerm::TermIter i) : kind_(TERM), termIter(i2) { }
+	BothIter(FlatTerm::TermIter i) : kind_(TERM), termIter(i) { }
 	BothIter(const BothIter&) = default;
 	BothIter& operator = (const BothIter&) = default;
 
@@ -75,6 +76,13 @@ struct BothIter {
 		default:   return false;
 		}
 	}
+	vector<uint> inds() const {
+		switch (kind_) {
+		case TRIE: return trieIter.iter()->second.inds;
+		case TERM: return {0};
+		default:   return {};
+		}
+	}
 	vector<pair<FlatTerm, BothIter>> subTerms() const {
 		vector<pair<FlatTerm, BothIter>> ret;
 		switch (kind_) {
@@ -110,12 +118,31 @@ struct BothIter {
 		default:   return LightSymbol();
 		}
 	}
+	RuleVar ruleVar() const {
+		switch (kind_) {
+		case TRIE: return trieIter.ruleVar();
+		case TERM: return termIter.ruleVar();
+		default:   return RuleVar();
+		}
+	}
 
 private:
 	Kind kind_;
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
 };
+
+template<>
+inline RuleVar ruleVar<BothIter>(BothIter i) {
+	return i.ruleVar();
+};
+
+template<>
+inline vector<BothIter> childrenIters<BothIter>(BothIter it) {
+	vector<BothIter> ret;
+	return ret;
+}
+
 
 struct UnifyIters {
 	UnifyIters(const vector<BothIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
@@ -124,6 +151,7 @@ struct UnifyIters {
 		iters(std::move(i)), parentSub(std::move(ps)), sub(std::move(s)) { }
 	UnifyIters(const UnifyIters&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
+
 	UnifyIters side() {
 		vector<BothIter> side_iters;
 		bool found = false;
@@ -148,28 +176,61 @@ struct UnifyIters {
 		}
 		return UnifyIters(next_iters, sub, sub);
 	}
-	bool isNextEnd() const { return sub.ok ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
-	bool isTermEnd() const { return sub.ok ? (trieIter.isNextEnd() && termIter.isNextEnd()) : true; }
-	bool isSideEnd() const { return sub.ok ? (trieIter.isSideEnd() && termIter.isSideEnd()) : true; }
+	bool isNextEnd() const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (const auto& i : iters) {
+			if (i.isNextEnd()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	bool isTermEnd() const { if (!sub.ok) {
+			return false;
+		}
+		for (const auto& i : iters) {
+			if (!i.isNextEnd()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool isSideEnd() const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (const auto& i : iters) {
+			if (!i.isSideEnd()) {
+				return false;
+			}
+		}
+		return true;
+	}
 	bool equals() const {
 		if (!iters.size()) {
 			return true;
 		}
-		RuleVar rv = iters[0].ruleVar;
+		RuleVar rv = iters[0].ruleVar();
 		for (uint i = 1; i < iters.size(); ++ i) {
-			if (rv != iters[i].ruleVar) {
+			if (rv != iters[i].ruleVar()) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+
 	vector<UnifyIters> unify() const {
 		vector<UnifyIters> ret;
 		if (equals()) {
 			ret.emplace_back(*this);
 		} else {
-			FlatUnifStepData data(iters);
+			FlatUnifStepData<BothIter> data(iters);
+			if (data.consistent) {
+
+			}
 
 			/*uint var_ind = -1;
 			for (uint i = 0; i < iters.size(); ++ i) {
@@ -207,21 +268,62 @@ struct UnifyIters {
 
 	string show(bool full = false) const {
 		string ret;
-		ret += "trie: " + trieIter.show(full) + "\n";
-		ret += "term: " + termIter.show(full) + "\n";
+		//ret += "trie: " + trieIter.show(full) + "\n";
+		//ret += "term: " + termIter.show(full) + "\n";
 		return ret;
 	}
 	string showBranch() const {
 		string ret;
-		ret += "trie: " + trieIter.showBranch() + "\n";
-		ret += "term: " + termIter.showBranch() + "\n";
+		//ret += "trie: " + trieIter.showBranch() + "\n";
+		//ret += "term: " + termIter.showBranch() + "\n";
 		return ret;
 	}
+	vector<vector<uint>> inds() const {
+		vector<vector<uint>> ret;
+		CartesianProd<uint> prod;
+		for (const auto& i : iters) {
+			prod.addDim(i.inds());
+		}
+		while (true) {
+			ret.push_back(prod.data());
+			if (!prod.hasNext()) {
+				break;
+			}
+			prod.makeNext();
+		}
+		return ret;
+	}
+
 	vector<BothIter> iters;
 
 	FlatSubst parentSub;
 	FlatSubst sub;
 };
 
+typedef map<vector<uint>, FlatSubst> GeneralUnified;
+
+GeneralUnified unify_general(const UnifyIters& i) {
+	GeneralUnified ret;
+	vector<UnifyIters> branch;
+	branch.push_back(i);
+	while (branch.size()) {
+		UnifyIters n = branch.back();
+		branch.pop_back();
+		for (const auto& i : n.unify()) {
+			if (i.isTermEnd()) {
+				for (auto ind :  i.inds()) {
+					ret.emplace(ind, std::move(i.sub));
+				}
+			}
+			if (!i.isNextEnd()) {
+				branch.push_back(i.next());
+			}
+		}
+		if (!n.isSideEnd()) {
+			branch.push_back(n.side());
+		}
+	}
+	return ret;
+}
 
 }}}}

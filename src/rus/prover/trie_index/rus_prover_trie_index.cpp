@@ -1,6 +1,6 @@
 #include "rus_prover_trie_index.hpp"
 #include "rus_prover_trie_unify.hpp"
-//#include "rus_prover_trie_index_vector.hpp"
+#include "rus_prover_trie_index_vector.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
@@ -23,7 +23,7 @@ void TrieIndex::add(const FlatTerm& t) {
 		it->second.parent = p;
 		st.emplace(ni, i->end);
 		while (!st.empty() && st.top().end == i) {
-			st.top().trie->second.ends.push_back(ni);
+			st.top().trie->second.ends.insert(ni);
 			st.pop();
 		}
 	}

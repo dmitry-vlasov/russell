@@ -156,32 +156,6 @@ vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 	return ret;
 }
 
-vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator it) {
-	vector<FlatTerm::ConstIterator> ret;
-	//cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
-	if (it->ruleVar.isRule()) {
-		FlatTerm::ConstIterator x = it + 1;
-		for (uint i = 0; i < it->ruleVar.rule->arity(); ++i) {
-			ret.push_back(x);
-			/*cout << "\tCHILD: '";
-			auto j = x;
-			while (true) {
-				cout << j->ruleVar.show() << " ";
-				if (j == x->end) {
-					break;
-				}
-				++j;
-			}
-			cout << "'" << endl;*/
-			x = x->end + 1;
-		}
-	} else {
-		throw Error("node has no children");
-	}
-	//cout << "childrenIters -- END CHILDREN" << endl;
-	return ret;
-}
-
 FlatTerm term(FlatTerm::ConstIterator beg) {
 	FlatTerm ret((beg->end - beg) + 1);
 	copyFlatSubTerm(&ret, 0, beg);

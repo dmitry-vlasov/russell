@@ -6,15 +6,21 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct TrieIndex {
 	struct Node {
+		struct NodeIterLess {
+			bool operator () (map<RuleVar, Node>::iterator i1, map<RuleVar, Node>::iterator i2) const {
+				return &*i1 < &*i2;
+			}
+		};
 		map<RuleVar, Node>::iterator parent;
 		vector<uint> inds;
 		map<RuleVar, Node> nodes;
-		vector<map<RuleVar, Node>::iterator> ends;
+		set<map<RuleVar, Node>::iterator, NodeIterLess> ends;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
 
 	struct TrieIter {
+		TrieIter() : valid_(false) { }
 		TrieIter(const Node& n) :
 			valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
 		TrieIter(ConstIterator i) :
@@ -75,6 +81,9 @@ struct TrieIndex {
 		}
 		LightSymbol var() const {
 			return iter_->first.var;
+		}
+		RuleVar ruleVar() const {
+			return iter_->first;
 		}
 		string show(bool full = false) const {
 			string ret;

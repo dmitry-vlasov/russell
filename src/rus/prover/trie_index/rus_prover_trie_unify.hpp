@@ -8,6 +8,41 @@ FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
 FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term);
 FlatSubst unify_step(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term);
 
+template<class Iter> RuleVar ruleVar(Iter);
+template<class Iter> vector<Iter> childrenIters(Iter);
+
+template<>
+inline RuleVar ruleVar<FlatTerm::ConstIterator>(FlatTerm::ConstIterator i) {
+	return i->ruleVar;
+};
+
+template<>
+inline vector<FlatTerm::ConstIterator> childrenIters<FlatTerm::ConstIterator>(FlatTerm::ConstIterator it) {
+	vector<FlatTerm::ConstIterator> ret;
+	//cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
+	if (it->ruleVar.isRule()) {
+		FlatTerm::ConstIterator x = it + 1;
+		for (uint i = 0; i < it->ruleVar.rule->arity(); ++i) {
+			ret.push_back(x);
+			/*cout << "\tCHILD: '";
+			auto j = x;
+			while (true) {
+				cout << j->ruleVar.show() << " ";
+				if (j == x->end) {
+					break;
+				}
+				++j;
+			}
+			cout << "'" << endl;*/
+			x = x->end + 1;
+		}
+	} else {
+		throw Error("node has no children");
+	}
+	//cout << "childrenIters -- END CHILDREN" << endl;
+	return ret;
+}
+
 template<class Iter>
 struct FlatUnifStepData {
 	const Rule* rule = nullptr;
@@ -19,14 +54,14 @@ struct FlatUnifStepData {
 	LightSymbol const_;
 
 	FlatUnifStepData(const vector<Iter>& is) {
-		least_type = (*is.begin())->ruleVar.type();
+		least_type = ruleVar(*is.begin()).type();
 		for (uint k = 0; k < is.size(); ++ k) {
-			if (!(*least_type <= *is[k]->ruleVar.type())) {
+			if (!(*least_type <= *(ruleVar(is[k]).type()))) {
 				// There's no unification because of type constraints
 				return;
 			}
-			if (is[k]->ruleVar.isVar()) {
-				if (!track_var(is[k]->ruleVar.var)) {
+			if (ruleVar(is[k]).isVar()) {
+				if (!track_var(ruleVar(is[k]).var)) {
 					return;
 				}
 			} else {
@@ -68,8 +103,8 @@ struct FlatUnifStepData {
 			return false;
 		}
 		if (!rule) {
-			rule = i->ruleVar.rule;
-		} else if (rule != i->ruleVar.rule) {
+			rule = ruleVar(i).rule;
+		} else if (rule != ruleVar(i).rule) {
 			// In case we have a non-leaf with some rule,
 			// all other leafs must be with the same rule.
 			return false;
