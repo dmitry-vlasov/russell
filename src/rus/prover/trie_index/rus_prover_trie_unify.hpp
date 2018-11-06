@@ -44,6 +44,102 @@ inline vector<FlatTerm::ConstIterator> childrenIters<FlatTerm::ConstIterator>(Fl
 }
 
 template<class Iter>
+struct UnifStepData {
+	const Rule* rule = nullptr;
+	vector<LightSymbol> vars;
+	const Type* least_type = nullptr;
+	bool consistent = false;
+	LightSymbol var;
+	LightSymbol const_;
+
+	vector<Iter> ruleIters;
+
+	UnifStepData(const vector<Iter>& is) {
+		least_type = ruleVar(*is.begin()).type();
+		for (uint k = 0; k < is.size(); ++ k) {
+			if (!(*least_type <= *(ruleVar(is[k]).type()))) {
+				// There's no unification because of type constraints
+				return;
+			}
+			if (ruleVar(is[k]).isVar()) {
+				if (!track_var(ruleVar(is[k]).var)) {
+					return;
+				}
+			} else {
+				if (!track_node(is[k])) {
+					return;
+				}
+			}
+		}
+		consistent = true;
+	}
+
+	bool track_var(LightSymbol v) {
+		if (v.rep) {
+			if (var.is_undef()) {
+				var = v;
+			}
+			// Collect replaceable variables
+			vars.push_back(v);
+		} else {
+			if (const_.is_undef()) {
+				const_ = v;
+			} else if (const_ != v) {
+				// If we have any non-replaceable variables (constant), all other
+				// constants must be the same variable (constant).
+				return false;
+			}
+			if (rule) {
+				// If we have any non-replaceable variables (constant),
+				// complex terms are not allowed.
+				return false;
+			}
+		}
+		return true;
+	}
+	bool track_node(Iter i) {
+		if (const_.is_def()) {
+			// If we have any non-replaceable variables (constant), all other
+			// terms must be the same variable (constant).
+			return false;
+		}
+		if (!rule) {
+			rule = ruleVar(i).rule;
+		} else if (rule != ruleVar(i).rule) {
+			// In case we have a non-leaf with some rule,
+			// all other leafs must be with the same rule.
+			return false;
+		}
+		return true;
+	}
+
+	string show() const {
+		cout << "rule: " << (rule ? Lex::toStr(rule->id()) : "NULL") << endl;
+		cout << "vars: " << flush;
+		for (const auto& v : vars) {
+			cout << prover::show(v, true) << " " << flush;
+		}
+		cout << endl;
+		cout << "consistent: " << (consistent ? "TRUE" : "FALSE") << endl;
+		cout << "var: " << prover::show(var, true) << endl;
+		cout << endl;
+
+		string ret;
+		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
+		ret += "vars: ";
+		for (const auto& v : vars) {
+			ret += prover::show(v, true) + " ";
+		}
+		ret += "\n";
+		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
+		ret += string("var: ") + prover::show(var, true) + "\n";
+		ret += "\n";
+		return ret;
+	}
+};
+
+
+template<class Iter>
 struct FlatUnifStepData {
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;

@@ -103,8 +103,8 @@ FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
 
 string FlatTerm::show() const {
 	string ret;
-	stack<vector<Node>::iterator> st;
-	for (auto i = nodes.begin(); i != nodes.end(); ++i) {
+	stack<vector<Node>::const_iterator> st;
+	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
 		if (i->ruleVar.rule) {
 			st.push(i->end);
 			ret += i->ruleVar.show() + " (";

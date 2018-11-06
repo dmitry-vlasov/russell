@@ -7,14 +7,14 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 struct TrieIndex {
 	struct Node {
 		struct NodeIterLess {
-			bool operator () (map<RuleVar, Node>::iterator i1, map<RuleVar, Node>::iterator i2) const {
+			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
 				return &*i1 < &*i2;
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
 		vector<uint> inds;
 		map<RuleVar, Node> nodes;
-		set<map<RuleVar, Node>::iterator, NodeIterLess> ends;
+		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
@@ -29,6 +29,12 @@ struct TrieIndex {
 			valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
 		TrieIter(const TrieIter&) = default;
 		TrieIter& operator = (const TrieIter&) = default;
+		bool operator == (const TrieIter& i) const {
+			return iter_ == i.iter_;
+		}
+		bool operator != (const TrieIter& i) const {
+			return iter_ != i.iter_;
+		}
 		TrieIter side() const {
 			if (!valid_ || isSideEnd()) {
 				return TrieIter(beg_, iter_, end_, false);
@@ -75,6 +81,9 @@ struct TrieIndex {
 				ret.emplace_back(subTerm(end), TrieIter(end));
 			}
 			return ret;
+		}
+		bool isEnd(const TrieIter& i) const {
+			return iter_->second.ends.find(i.iter()) != iter_->second.ends.end();
 		}
 		bool isVar() const {
 			return iter_->first.isVar() && iter_->first.var.rep;

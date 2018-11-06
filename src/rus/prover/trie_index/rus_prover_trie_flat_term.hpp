@@ -34,7 +34,7 @@ struct FlatTerm {
 		Node& operator = (const Node& n) { ruleVar = n.ruleVar; return *this;}
 		Node& operator = (Node&&) = delete;
 		RuleVar ruleVar;
-		vector<Node>::iterator end;
+		vector<Node>::const_iterator end;
 	};
 	typedef vector<Node>::iterator Iterator;
 	typedef vector<Node>::const_iterator ConstIterator;
@@ -50,6 +50,12 @@ struct FlatTerm {
 			valid_(v), beg_(b), iter_(b), end_(e) { }
 		TermIter(const TermIter&) = default;
 		TermIter& operator = (const TermIter&) = default;
+		bool operator == (const TermIter& i) const {
+			return iter_ == i.iter_;
+		}
+		bool operator != (const TermIter& i) const {
+			return iter_ != i.iter_;
+		}
 		TermIter side() const {
 			return TermIter(beg_, iter_, end_, false);
 		}
@@ -80,6 +86,9 @@ struct FlatTerm {
 			ret.reserve(1);
 			ret.emplace_back(subTerm(), fastForward());
 			return ret;
+		}
+		bool isEnd(const TermIter& i) const {
+			return iter_->end == i.iter_;
 		}
 		bool isVar() const {
 			return iter_->ruleVar.isVar() && iter_->ruleVar.var.rep;

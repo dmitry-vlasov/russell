@@ -26,6 +26,21 @@ struct BothIter {
 	BothIter(const BothIter&) = default;
 	BothIter& operator = (const BothIter&) = default;
 
+	bool operator == (const BothIter& i) const {
+		switch (kind_) {
+		case TRIE: return trieIter == i.trieIter;
+		case TERM: return termIter == i.termIter;
+		default:   return true;
+		}
+	}
+	bool operator != (const BothIter& i) const {
+		switch (kind_) {
+		case TRIE: return trieIter != i.trieIter;
+		case TERM: return termIter != i.termIter;
+		default:   return false;
+		}
+	}
+
 	Kind kind() const { return kind_; }
 	BothIter side() const {
 		switch (kind_) {
@@ -104,6 +119,13 @@ struct BothIter {
 		}
 		return ret;
 	}
+	bool isEnd(const BothIter& i) const {
+		switch (kind_) {
+		case TRIE: return trieIter.isEnd(i.trieIter);
+		case TERM: return termIter.isEnd(i.termIter);
+		default:   return true;
+		}
+	}
 	bool isVar() const {
 		switch (kind_) {
 		case TRIE: return trieIter.isVar();
@@ -136,13 +158,6 @@ template<>
 inline RuleVar ruleVar<BothIter>(BothIter i) {
 	return i.ruleVar();
 };
-
-template<>
-inline vector<BothIter> childrenIters<BothIter>(BothIter it) {
-	vector<BothIter> ret;
-	return ret;
-}
-
 
 struct UnifyIters {
 	UnifyIters(const vector<BothIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
@@ -197,6 +212,27 @@ struct UnifyIters {
 		}
 		return true;
 	}
+	bool isNextEnd(const UnifyIters& ends) const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (ends.iters[i].isEnd(iters[i]) || iters[i].isNextEnd()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	bool isTermEnd(const UnifyIters& ends) const { if (!sub.ok) {
+			return false;
+		}
+		for (const auto& i : iters) {
+			if (!i.isNextEnd()) {
+				return false;
+			}
+		}
+		return true;
+	}
 	bool isSideEnd() const {
 		if (!sub.ok) {
 			return true;
@@ -227,7 +263,7 @@ struct UnifyIters {
 		if (equals()) {
 			ret.emplace_back(*this);
 		} else {
-			FlatUnifStepData<BothIter> data(iters);
+			UnifStepData<BothIter> data(iters);
 			if (data.consistent) {
 
 			}
@@ -299,6 +335,29 @@ struct UnifyIters {
 	FlatSubst parentSub;
 	FlatSubst sub;
 };
+
+
+vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
+	vector<UnifyIters> ret;
+	vector<UnifyIters> branch;
+	branch.push_back(begins);
+	while (branch.size()) {
+		UnifyIters n = branch.back();
+		branch.pop_back();
+		for (const auto& i : n.unify()) {
+			if (i.isTermEnd(begins)) {
+				ret.push_back(std::move(i));
+			}
+			if (!i.isNextEnd(begins)) {
+				branch.push_back(i.next());
+			}
+		}
+		if (!n.isSideEnd()) {
+			branch.push_back(n.side());
+		}
+	}
+	return ret;
+}
 
 typedef map<vector<uint>, FlatSubst> GeneralUnified;
 
