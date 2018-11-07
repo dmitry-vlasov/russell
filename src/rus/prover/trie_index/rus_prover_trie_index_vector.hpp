@@ -322,6 +322,11 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 							ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 						}
 					}
+				} else {
+					FlatSubst s = unify_step(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+					if (s.ok) {
+						ret.emplace_back(i.iters, i.parentSub, s);
+					}
 				}
 			}
 		}
