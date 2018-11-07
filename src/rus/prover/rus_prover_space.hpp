@@ -3,6 +3,7 @@
 #include "rus_prover_show.hpp"
 #include "tree_index/rus_prover_tree_index.hpp"
 #include "trie_index/rus_prover_trie_index.hpp"
+#include "trie_index/rus_prover_trie_index_vector.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -23,6 +24,8 @@ struct Space {
 	using IndexMap = tree_index::TreeIndexMap<T>;
 	template<class T>
 	using TrieIndexMap = trie_index::TrieIndexMap<T>;
+	template<class T>
+	using TrieIndexMap1 = prover::trie_index::TrieIndexMap1<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
@@ -41,6 +44,9 @@ struct Space {
 
 	TrieIndexMap<HypRef>  hyps_;
 	TrieIndexMap<PropRef> assertions_;
+
+	TrieIndexMap1<HypRef>  hyps1_;
+	TrieIndexMap1<PropRef> assertions1_;
 
 	Return init();
 	Return info(uint index, string what);

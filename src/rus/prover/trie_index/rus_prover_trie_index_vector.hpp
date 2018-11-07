@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../rus_prover_cartesian.hpp"
 #include "rus_prover_trie_index.hpp"
+#include "rus_prover_trie_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
@@ -16,7 +16,6 @@ struct TrieIndexVector {
 };
 
 extern bool debug_trie_index_vector;
-
 
 struct BothIter {
 	enum Kind { NONE, TRIE, TERM };
@@ -162,14 +161,9 @@ private:
 	FlatTerm::TermIter  termIter;
 };
 
-template<>
-inline RuleVar ruleVar<BothIter>(BothIter i) {
+template<> inline RuleVar ruleVar<BothIter>(BothIter i) {
 	return i.ruleVar();
 };
-
-struct UnifyIters;
-
-vector<UnifyIters> unify_general_1(const UnifyIters& begins);
 
 struct UnifyIters {
 	UnifyIters(const vector<BothIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
@@ -281,21 +275,7 @@ struct UnifyIters {
 		//ret += "term: " + termIter.showBranch() + "\n";
 		return ret;
 	}
-	vector<vector<uint>> inds() const {
-		vector<vector<uint>> ret;
-		CartesianProd<uint> prod;
-		for (const auto& i : iters) {
-			prod.addDim(i.inds());
-		}
-		while (true) {
-			ret.push_back(prod.data());
-			if (!prod.hasNext()) {
-				break;
-			}
-			prod.makeNext();
-		}
-		return ret;
-	}
+	vector<vector<uint>> inds() const;
 
 	vector<BothIter> iters;
 
@@ -303,70 +283,10 @@ struct UnifyIters {
 	FlatSubst sub;
 };
 
-vector<UnifyIters> unify_iters(const UnifyIters& i) {
-	vector<UnifyIters> ret;
-	if (i.equals()) {
-		ret.emplace_back(i);
-	} else {
-		UnifStepData<BothIter> data(i.iters);
-		if (data.consistent) {
-			if (data.rule) {
-				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				vector<UnifyIters> subEnds = unify_general_1(subBegins);
-				for (const auto& ends : subEnds) {
-					BothIter i0 = ends.iters[0];
-					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
-					FlatTerm term_applied = apply(ends.sub, term_orig);
-					FlatSubst s = unify_step(i.sub, data.vars, term_applied);
-					if (s.ok) {
-						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
-					}
-				}
-			} else {
-				FlatSubst s = unify_step(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
-				if (s.ok) {
-					ret.emplace_back(i.iters, i.parentSub, s);
-				}
-			}
-		}
-	}
-	return ret;
-}
-
-
-vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
-	vector<UnifyIters> ret;
-	vector<UnifyIters> branch;
-	branch.push_back(begins);
-	while (branch.size()) {
-		UnifyIters n = branch.back();
-		branch.pop_back();
-		for (const auto& i : unify_iters(n)) {
-			if (i.isTermEnd(begins)) {
-				ret.push_back(std::move(i));
-			}
-			if (!i.isNextEnd(begins)) {
-				branch.push_back(i.next());
-			}
-		}
-		if (!n.isSideEnd()) {
-			branch.push_back(n.side());
-		}
-	}
-	return ret;
-}
 
 typedef map<vector<uint>, FlatSubst> GeneralUnified;
 
-GeneralUnified unify_general(const UnifyIters& i) {
-	GeneralUnified ret;
-	for (const auto& i : unify_general_1(i)) {
-		for (auto ind :  i.inds()) {
-			ret.emplace(ind, std::move(i.sub));
-		}
-	}
-	return ret;
-}
+GeneralUnified unify_general(const UnifyIters& i);
 
 template<class Data>
 struct TrieIndexMap1 {
@@ -416,6 +336,5 @@ private:
 	TrieIndex index_;
 	vector<Data> data_;
 };
-
 
 }}}}
