@@ -355,23 +355,9 @@ typedef map<vector<uint>, FlatSubst> GeneralUnified;
 
 GeneralUnified unify_general(const UnifyIters& i) {
 	GeneralUnified ret;
-	vector<UnifyIters> branch;
-	branch.push_back(i);
-	while (branch.size()) {
-		UnifyIters n = branch.back();
-		branch.pop_back();
-		for (const auto& i : unify_iters(n)) {
-			if (i.isTermEnd()) {
-				for (auto ind :  i.inds()) {
-					ret.emplace(ind, std::move(i.sub));
-				}
-			}
-			if (!i.isNextEnd()) {
-				branch.push_back(i.next());
-			}
-		}
-		if (!n.isSideEnd()) {
-			branch.push_back(n.side());
+	for (const auto& i : unify_general_1(i)) {
+		for (auto ind :  i.inds()) {
+			ret.emplace(ind, std::move(i.sub));
 		}
 	}
 	return ret;
