@@ -300,7 +300,7 @@ struct TrieIndexMap1 {
 		index_.add(convert2flatterm(t));
 		data_.push_back(d);
 	}
-	vector<Unified> unify(const LightTree& t) {
+	vector<Unified> unify(const LightTree& t) const {
 		vector<Unified> ret;
 		FlatTerm ft = convert2flatterm(t);
 		vector<BothIter> iters;
@@ -310,7 +310,7 @@ struct TrieIndexMap1 {
 		for (auto& p : unif) {
 			if (p.second.ok) {
 				//cout << "UNIFIED: " << p.first << endl;
-				ret.emplace_back(data_[p.first], convert2subst(p.second));
+				ret.emplace_back(data_.at(p.first[0]), convert2subst(p.second));
 			}
 		}
 		return ret;

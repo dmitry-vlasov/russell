@@ -48,7 +48,7 @@ void Prop::buildUp() {
 
 void Hyp::buildUp() {
 	vector<Space::IndexMap<PropRef>::Unified> unif1 = space->assertions.unify(expr);
-	vector<Space::TrieIndexMap<PropRef>::Unified> unif2 = space->assertions_.unify(expr);
+	vector<Space::TrieIndexMap1<PropRef>::Unified> unif2 = space->assertions1_.unify(expr);
 	if (unif1.size() != unif2.size()) {
 		cout << "sizes differ: " << unif1.size() << " != " << unif2.size() << endl;
 	}
@@ -67,7 +67,7 @@ void Hyp::buildUp() {
 					trie_index::debug_trie_index = true;
 
 					cout << "ERROR STARTS" << endl;
-					unif2 = space->assertions_.unify(expr);
+					unif2 = space->assertions1_.unify(expr);
 					cout << "END OF ERROR" << endl;
 
 					exit(0);
@@ -94,7 +94,7 @@ void Hyp::buildUp() {
 			trie_index::debug_trie_index = true;
 
 			cout << "ERROR STARTS" << endl;
-			unif2 = space->assertions_.unify(expr);
+			unif2 = space->assertions1_.unify(expr);
 			cout << "END OF ERROR" << endl;
 			exit(0);
 		}
