@@ -91,6 +91,14 @@ struct BothIter {
 		default:   return false;
 		}
 	}
+	FlatTerm subTerm(const BothIter& i) const {
+		switch (kind_) {
+		case TRIE: return trieIter.subTerm(i.trieIter);
+		case TERM: return termIter.subTerm();
+		default:   return FlatTerm();
+		}
+	}
+
 	vector<uint> inds() const {
 		switch (kind_) {
 		case TRIE: return trieIter.iter()->second.inds;
@@ -158,6 +166,10 @@ template<>
 inline RuleVar ruleVar<BothIter>(BothIter i) {
 	return i.ruleVar();
 };
+
+struct UnifyIters;
+
+vector<UnifyIters> unify_general_1(const UnifyIters& begins);
 
 struct UnifyIters {
 	UnifyIters(const vector<BothIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
@@ -257,51 +269,6 @@ struct UnifyIters {
 		return true;
 	}
 
-
-	vector<UnifyIters> unify() const {
-		vector<UnifyIters> ret;
-		if (equals()) {
-			ret.emplace_back(*this);
-		} else {
-			UnifStepData<BothIter> data(iters);
-			if (data.consistent) {
-
-			}
-
-			/*uint var_ind = -1;
-			for (uint i = 0; i < iters.size(); ++ i) {
-				if (iters[i].isVar()) {
-					var_ind = i;
-					break;
-				}
-			}
-			if (var_ind != -1) {
-				LightSymbol var = iters[var_ind].var();
-				for (uint i = 0; i < iters.size(); ++i) {
-
-				}
-			}
-
-
-			if (trieIter.isVar()) {
-				for (const auto& p : termIter.subTerms()) {
-					FlatSubst s = unify_step(sub, {trieIter.var()}, p.first);
-					if (s.ok) {
-						ret.emplace_back(trieIter, p.second, parentSub, s);
-					}
-				}
-			} else if (termIter.isVar()) {
-				for (const auto& p : trieIter.subTerms()) {
-					FlatSubst s = unify_step(sub, {termIter.var()}, p.first);
-					if (s.ok) {
-						ret.emplace_back(p.second, termIter, parentSub, s);
-					}
-				}
-			}*/
-		}
-		return ret;
-	}
-
 	string show(bool full = false) const {
 		string ret;
 		//ret += "trie: " + trieIter.show(full) + "\n";
@@ -336,6 +303,31 @@ struct UnifyIters {
 	FlatSubst sub;
 };
 
+vector<UnifyIters> unify_iters(const UnifyIters& i) {
+		vector<UnifyIters> ret;
+		if (i.equals()) {
+			ret.emplace_back(i);
+		} else {
+			UnifStepData<BothIter> data(i.iters);
+			if (data.consistent) {
+				if (data.rule) {
+					UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
+					vector<UnifyIters> subEnds = unify_general_1(subBegins);
+					for (const auto& ends : subEnds) {
+						BothIter i0 = ends.iters[0];
+						FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
+						FlatTerm term_applied = apply(ends.sub, term_orig);
+						FlatSubst s = unify_step(i.sub, data.vars, term_applied);
+						if (s.ok) {
+							ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
+						}
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
 
 vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	vector<UnifyIters> ret;
@@ -344,7 +336,7 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	while (branch.size()) {
 		UnifyIters n = branch.back();
 		branch.pop_back();
-		for (const auto& i : n.unify()) {
+		for (const auto& i : unify_iters(n)) {
 			if (i.isTermEnd(begins)) {
 				ret.push_back(std::move(i));
 			}
@@ -368,7 +360,7 @@ GeneralUnified unify_general(const UnifyIters& i) {
 	while (branch.size()) {
 		UnifyIters n = branch.back();
 		branch.pop_back();
-		for (const auto& i : n.unify()) {
+		for (const auto& i : unify_iters(n)) {
 			if (i.isTermEnd()) {
 				for (auto ind :  i.inds()) {
 					ret.emplace(ind, std::move(i.sub));

@@ -73,6 +73,9 @@ struct TrieIndex {
 			return iter_;
 		}
 		FlatTerm subTerm(ConstIterator) const;
+		FlatTerm subTerm(const TrieIter& i) const {
+			return subTerm(i.iter_);
+		}
 
 		vector<pair<FlatTerm, TrieIter>> subTerms() const {
 			vector<pair<FlatTerm, TrieIter>> ret;

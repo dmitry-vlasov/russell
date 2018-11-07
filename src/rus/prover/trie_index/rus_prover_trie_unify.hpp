@@ -45,16 +45,41 @@ inline vector<FlatTerm::ConstIterator> childrenIters<FlatTerm::ConstIterator>(Fl
 
 template<class Iter>
 struct UnifStepData {
+	enum Kind { VAR, RULE, CONST_VAR };
 	const Rule* rule = nullptr;
 	vector<LightSymbol> vars;
 	const Type* least_type = nullptr;
 	bool consistent = false;
 	LightSymbol var;
 	LightSymbol const_;
+	vector<Kind> kinds;
+	vector<Iter> iters;
 
-	vector<Iter> ruleIters;
+	vector<Iter> subGoals() const {
+		vector<Iter> ret;
+		assert(kinds.size() == iters.size());
+		for (uint i = 0; i < kinds.size(); ++ i) {
+			if (kinds[i] == RULE) {
+				ret.push_back(iters[i]);
+			}
+		}
+		return ret;
+	}
 
-	UnifStepData(const vector<Iter>& is) {
+	vector<Iter> shiftGoals(const vector<Iter>& ends) const {
+		vector<Iter> ret;
+		assert(kinds.size() == iters.size());
+		for (uint i = 0, j = 0; i < kinds.size(); ++ i) {
+			if (kinds[i] == RULE) {
+				ret.push_back(ends[j++]);
+			} else {
+				ret.push_back(iters[i]);
+			}
+		}
+		return ret;
+	}
+
+	UnifStepData(const vector<Iter>& is) : iters(is) {
 		least_type = ruleVar(*is.begin()).type();
 		for (uint k = 0; k < is.size(); ++ k) {
 			if (!(*least_type <= *(ruleVar(is[k]).type()))) {
@@ -78,10 +103,14 @@ struct UnifStepData {
 		if (v.rep) {
 			if (var.is_undef()) {
 				var = v;
+				kinds.push_back(VAR);
+			} else {
+				kinds.push_back(CONST_VAR);
 			}
 			// Collect replaceable variables
 			vars.push_back(v);
 		} else {
+			kinds.push_back(CONST_VAR);
 			if (const_.is_undef()) {
 				const_ = v;
 			} else if (const_ != v) {
@@ -110,6 +139,7 @@ struct UnifStepData {
 			// all other leafs must be with the same rule.
 			return false;
 		}
+		kinds.push_back(RULE);
 		return true;
 	}
 
