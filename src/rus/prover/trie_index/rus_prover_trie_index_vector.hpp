@@ -304,34 +304,34 @@ struct UnifyIters {
 };
 
 vector<UnifyIters> unify_iters(const UnifyIters& i) {
-		vector<UnifyIters> ret;
-		if (i.equals()) {
-			ret.emplace_back(i);
-		} else {
-			UnifStepData<BothIter> data(i.iters);
-			if (data.consistent) {
-				if (data.rule) {
-					UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-					vector<UnifyIters> subEnds = unify_general_1(subBegins);
-					for (const auto& ends : subEnds) {
-						BothIter i0 = ends.iters[0];
-						FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
-						FlatTerm term_applied = apply(ends.sub, term_orig);
-						FlatSubst s = unify_step(i.sub, data.vars, term_applied);
-						if (s.ok) {
-							ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
-						}
-					}
-				} else {
-					FlatSubst s = unify_step(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+	vector<UnifyIters> ret;
+	if (i.equals()) {
+		ret.emplace_back(i);
+	} else {
+		UnifStepData<BothIter> data(i.iters);
+		if (data.consistent) {
+			if (data.rule) {
+				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
+				vector<UnifyIters> subEnds = unify_general_1(subBegins);
+				for (const auto& ends : subEnds) {
+					BothIter i0 = ends.iters[0];
+					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
+					FlatTerm term_applied = apply(ends.sub, term_orig);
+					FlatSubst s = unify_step(i.sub, data.vars, term_applied);
 					if (s.ok) {
-						ret.emplace_back(i.iters, i.parentSub, s);
+						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 					}
+				}
+			} else {
+				FlatSubst s = unify_step(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+				if (s.ok) {
+					ret.emplace_back(i.iters, i.parentSub, s);
 				}
 			}
 		}
-		return ret;
 	}
+	return ret;
+}
 
 
 vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
@@ -367,5 +367,55 @@ GeneralUnified unify_general(const UnifyIters& i) {
 	}
 	return ret;
 }
+
+template<class Data>
+struct TrieIndexMap1 {
+	struct Unified {
+		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Data  data;
+		Subst sub;
+	};
+	void add(const LightTree& t, const Data& d) {
+		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
+		index_.add(convert2flatterm(t));
+		data_.push_back(d);
+	}
+	vector<Unified> unify(const LightTree& t) {
+		vector<Unified> ret;
+		FlatTerm ft = convert2flatterm(t);
+		vector<BothIter> iters;
+		iters.emplace_back(TrieIndex::TrieIter(index_.root));
+		iters.emplace_back(FlatTerm::TermIter(ft));
+		GeneralUnified unif = unify_general(iters);
+		for (auto& p : unif) {
+			if (p.second.ok) {
+				//cout << "UNIFIED: " << p.first << endl;
+				ret.emplace_back(data_[p.first], convert2subst(p.second));
+			}
+		}
+		return ret;
+	}
+	string show() const {
+		vector<pair<FlatTerm, uint>> terms = index_.unpack();
+		if (!terms.size()) {
+			return "\n";
+		} else {
+			string ret;
+			for (const auto&  p : terms) {
+				Data d = data_[p.second];
+				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second)/*prover::show(d)*/ + "\n";
+			}
+			return ret;
+		}
+	}
+
+	const TrieIndex& index() const { return index_; }
+	const vector<Data>& data() const { return data_; }
+
+private:
+	TrieIndex index_;
+	vector<Data> data_;
+};
+
 
 }}}}
