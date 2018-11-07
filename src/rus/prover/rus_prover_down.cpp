@@ -105,7 +105,6 @@ bool similar_subs_1(const Subst& s1, const Subst& s2) {
 	return true;
 }
 
-
 bool similar_subs(const Subst& s1, const Subst& s2) {
 	if (s1 == s2) return true;
 	Subst s1_vars_inv;

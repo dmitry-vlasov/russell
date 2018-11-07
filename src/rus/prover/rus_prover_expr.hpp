@@ -271,6 +271,9 @@ void sub_closure(Subst& sub);
 Subst unify_subs(Subst unif, Subst gen);
 Subst unify_subs(const MultySubst& t);
 
+// Substitutions, which differ only by varaible replacement
+bool similar_subs(const Subst& s1, const Subst& s2);
+
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
 }}}

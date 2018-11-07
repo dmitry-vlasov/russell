@@ -58,7 +58,7 @@ void Hyp::buildUp() {
 		for (const auto& p2 : unif2) {
 			if (p1.data == p2.data) {
 				found = true;
-				if (p1.sub != p2.sub) {
+				if (!similar_subs(p1.sub, p2.sub)) {
 					cout << "different values: " << endl;
 					cout << prover::show(p1.sub) << endl;
 					cout << prover::show(p2.sub) << endl;
