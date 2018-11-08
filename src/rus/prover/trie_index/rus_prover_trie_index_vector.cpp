@@ -53,21 +53,29 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 
 vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	vector<UnifyIters> ret;
-	vector<UnifyIters> branch;
-	branch.push_back(begins);
-	while (branch.size()) {
-		UnifyIters n = branch.back();
-		branch.pop_back();
-		for (const auto& i : unify_iters(n)) {
-			if (i.isTermEnd(begins)) {
-				ret.push_back(std::move(i));
+	if (begins.iters.size() > 0) {
+		if (begins.iters.size() == 1) {
+			for (const auto& end : begins.iters[0].ends()) {
+				ret.emplace_back(vector<BothIter>(1, end), begins.parentSub, begins.sub);
 			}
-			if (!i.isNextEnd(begins)) {
-				branch.push_back(i.next());
+		} else {
+			vector<UnifyIters> branch;
+			branch.push_back(begins);
+			while (branch.size()) {
+				UnifyIters n = branch.back();
+				branch.pop_back();
+				for (const auto& i : unify_iters(n)) {
+					if (i.isTermEnd(begins)) {
+						ret.push_back(std::move(i));
+					}
+					if (!i.isNextEnd(begins)) {
+						branch.push_back(i.next());
+					}
+				}
+				if (!n.isSideEnd()) {
+					branch.push_back(n.side());
+				}
 			}
-		}
-		if (!n.isSideEnd()) {
-			branch.push_back(n.side());
 		}
 	}
 	return ret;

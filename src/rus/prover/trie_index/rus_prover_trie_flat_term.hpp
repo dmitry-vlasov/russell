@@ -87,6 +87,12 @@ struct FlatTerm {
 			ret.emplace_back(subTerm(), fastForward());
 			return ret;
 		}
+		vector<TermIter> ends() const {
+			vector<TermIter> ret;
+			ret.reserve(1);
+			ret.push_back(fastForward());
+			return ret;
+		}
 		bool isEnd(const TermIter& i) const {
 			return iter_->end == i.iter_;
 		}

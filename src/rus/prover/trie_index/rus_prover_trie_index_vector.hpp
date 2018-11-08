@@ -126,6 +126,27 @@ struct BothIter {
 		}
 		return ret;
 	}
+	vector<BothIter> ends() const {
+		vector<BothIter> ret;
+		switch (kind_) {
+		case TRIE: {
+			auto ends = trieIter.ends();
+			for (auto end : ends) {
+				ret.emplace_back(end);
+			}
+			break;
+		}
+		case TERM: {
+			auto ends = termIter.ends();
+			for (auto end : ends) {
+				ret.emplace_back(end);
+			}
+			break;
+		}
+		default: break;
+		}
+		return ret;
+	}
 	bool isEnd(const BothIter& i) const {
 		switch (kind_) {
 		case TRIE: return trieIter.isEnd(i.trieIter);

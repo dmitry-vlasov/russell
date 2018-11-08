@@ -85,6 +85,14 @@ struct TrieIndex {
 			}
 			return ret;
 		}
+		vector<TrieIter> ends() const {
+			vector<TrieIter> ret;
+			ret.reserve(iter_->second.ends.size());
+			for (auto end : iter_->second.ends) {
+				ret.emplace_back(end);
+			}
+			return ret;
+		}
 		bool isEnd(const TrieIter& i) const {
 			return iter_->second.ends.find(i.iter()) != iter_->second.ends.end();
 		}
