@@ -21,6 +21,61 @@ vector<vector<uint>> UnifyIters::inds() const {
 
 vector<UnifyIters> unify_general_1(const UnifyIters& begins);
 
+FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+
+	if (debug_flat_unify) {
+		cout << "vars: ";
+		for (auto w : vars) {
+			cout << "'" << prover::show(w) << "' ";
+		}
+		cout << endl;
+		cout << "term: " << term.show() << endl;
+		cout << "s: " << s.show() << endl;
+	}
+
+	vector<FlatTerm> to_unify({apply(s, term)});
+	for (auto v : vars) {
+		if (s.maps(v)) {
+			to_unify.push_back(s.sub.at(v));
+		}
+	}
+	vector<BothIter> iters;
+	for (const auto& t : to_unify) {
+		iters.emplace_back(FlatTerm::TermIter(t));
+	}
+	UnifyIters begin = UnifyIters(iters);
+	vector<UnifyIters> ends = unify_general_1(begin);
+	assert(ends.size() <= 1);
+	if (ends.size() > 0) {
+		UnifyIters end = ends[0];
+		s.compose(end.sub);
+		FlatTerm term_orig = begin.iters[0].subTerm(end.iters[0]);
+		FlatTerm unified = apply(end.sub, term_orig);
+		for (auto v : vars) {
+			if (!s.compose(FlatSubst(v, unified))) {
+				s.ok = false;
+				if (debug_flat_unify) {
+					cout << "!s.compose(FlatSubst(v, unified))" << endl;
+					cout << "v: " << prover::show(v) << endl;
+					cout << "s: " << s.show() << endl;
+				}
+				return FlatTerm();
+			}
+		}
+		return unified;
+	}
+	if (debug_flat_unify) {
+		cout << "unified.empty()" << endl;
+	}
+	return FlatTerm();
+}
+
+FlatSubst unify_step_1(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+	FlatSubst ret(s);
+	FlatTerm unified = unify_step_1(ret, vars, term);
+	return unified.empty() ? FlatSubst(false) : ret;
+}
+
 vector<UnifyIters> unify_iters(const UnifyIters& i) {
 	vector<UnifyIters> ret;
 	if (i.equals()) {
@@ -35,13 +90,13 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 					BothIter i0 = ends.iters[0];
 					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
 					FlatTerm term_applied = apply(ends.sub, term_orig);
-					FlatSubst s = unify_step(i.sub, data.vars, term_applied);
+					FlatSubst s = unify_step_1(i.sub, data.vars, term_applied);
 					if (s.ok) {
 						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 					}
 				}
 			} else {
-				FlatSubst s = unify_step(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+				FlatSubst s = unify_step_1(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok) {
 					ret.emplace_back(i.iters, i.parentSub, s);
 				}
