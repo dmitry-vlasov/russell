@@ -5,16 +5,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-struct TrieIndexVector {
-	typedef map<uint, FlatSubst> Unified;
-
-	//void add(const FlatTerm& t);
-	//Unified unify(const FlatTerm&) const;
-	//string show() const;
-
-	vector<TrieIndex> indexVect;
-};
-
 extern bool debug_trie_index_vector;
 
 struct BothIter {
@@ -357,5 +347,7 @@ private:
 	TrieIndex index_;
 	vector<Data> data_;
 };
+
+typedef TrieIndexMap1<uint> IndexInt1;
 
 }}}}
