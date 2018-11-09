@@ -4,11 +4,13 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+struct ColumnUnified {
+
+};
+
 struct VectorIndex {
 	VectorIndex(uint dim) : vect(dim) { }
 	struct Cell {
-		IndexInt     exprs;
-		vector<uint> inds;
 		void init(const vector<uint>& all_inds) {
 			set<uint> inds_in_exprs;
 			for (auto i : exprs.data()) {
@@ -20,7 +22,26 @@ struct VectorIndex {
 				}
 			}
 		}
+		IndexInt     exprs;
+		vector<uint> inds;
 	};
+	GeneralUnified unify_general(const VectorIndex& m) {
+		GeneralUnified ret;
+		vector<BothIter> iters;
+		for (const auto& c : vect) {
+			if (!c.exprs.index().empty()) {
+				iters.emplace_back(TrieIndex::TrieIter(c.exprs.index().root));
+			}
+		}
+		/*GeneralUnified unif = unify_general(iters);
+		for (auto& p : unif) {
+			if (p.second.sub.ok) {
+				//cout << "UNIFIED: " << p.first << endl;
+				ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
+			}
+		}*/
+		return ret;
+	}
 	vector<Cell> vect;
 };
 
