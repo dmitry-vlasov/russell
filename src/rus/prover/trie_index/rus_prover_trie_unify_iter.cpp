@@ -136,11 +136,12 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	return ret;
 }
 
-GeneralUnified unify_general(const UnifyIters& i) {
+GeneralUnified unify_general(const UnifyIters& begin) {
 	GeneralUnified ret;
-	for (const auto& i : unify_general_1(i)) {
-		for (auto ind :  i.inds()) {
-			ret.emplace(ind, std::move(i.sub));
+	for (const auto& end : unify_general_1(begin)) {
+		FlatTerm term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
+		for (auto ind :  end.inds()) {
+			ret.emplace(ind, FlatTermSubst(term, end.sub));
 		}
 	}
 	return ret;

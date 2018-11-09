@@ -294,8 +294,13 @@ struct UnifyIters {
 	FlatSubst sub;
 };
 
+struct FlatTermSubst {
+	FlatTermSubst(const FlatTerm& t, const FlatSubst& s) : term(t), sub(s) { }
+	FlatTerm term;
+	FlatSubst sub;
+};
 
-typedef map<vector<uint>, FlatSubst> GeneralUnified;
+typedef map<vector<uint>, FlatTermSubst> GeneralUnified;
 
 GeneralUnified unify_general(const UnifyIters& i);
 
@@ -308,9 +313,9 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	iters.emplace_back(FlatTerm::TermIter(ft));
 	GeneralUnified unif = unify_general(iters);
 	for (auto& p : unif) {
-		if (p.second.ok) {
+		if (p.second.sub.ok) {
 			//cout << "UNIFIED: " << p.first << endl;
-			ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second));
+			ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
 		}
 	}
 	return ret;
