@@ -159,6 +159,7 @@ struct TrieIndex {
 	vector<pair<FlatTerm, uint>> unpack() const;
 	string show() const;
 	uint totalNodes() const;
+	bool empty() const { return root.nodes.empty(); }
 
 	uint size = 0;
 	Node root;

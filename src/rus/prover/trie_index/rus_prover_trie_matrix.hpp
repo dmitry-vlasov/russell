@@ -4,8 +4,24 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-struct VectorSolution {
-	VectorSolution() { }
+struct VectorIndex {
+	VectorIndex(uint dim) : vect(dim) { }
+	struct Cell {
+		IndexInt     exprs;
+		vector<uint> inds;
+		void init(const vector<uint>& all_inds) {
+			set<uint> inds_in_exprs;
+			for (auto i : exprs.data()) {
+				inds_in_exprs.insert(i);
+			}
+			for (uint i : all_inds) {
+				if (inds_in_exprs.find(i) == inds_in_exprs.end()) {
+					inds.push_back(i);
+				}
+			}
+		}
+	};
+	vector<Cell> vect;
 };
 
 struct MatrixIndex {
@@ -22,7 +38,7 @@ struct MatrixIndex {
 
 private:
 	uint dim_hyp_;
-	map<LightSymbol, vector<IndexInt>> mindex_;
+	map<LightSymbol, VectorIndex> mindex_;
 	vector<vector<uint>> proofInds_;
 	bool empty_;
 };
