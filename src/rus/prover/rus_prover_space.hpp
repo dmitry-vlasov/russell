@@ -24,8 +24,6 @@ struct Space {
 	using IndexMap = tree_index::TreeIndexMap<T>;
 	template<class T>
 	using TrieIndexMap = trie_index::TrieIndexMap<T>;
-	template<class T>
-	using TrieIndexMap1 = prover::trie_index::TrieIndexMap1<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
@@ -44,9 +42,6 @@ struct Space {
 
 	TrieIndexMap<HypRef>  hyps_;
 	TrieIndexMap<PropRef> assertions_;
-
-	TrieIndexMap1<HypRef>  hyps1_;
-	TrieIndexMap1<PropRef> assertions1_;
 
 	Return init();
 	Return info(uint index, string what);

@@ -299,55 +299,21 @@ typedef map<vector<uint>, FlatSubst> GeneralUnified;
 
 GeneralUnified unify_general(const UnifyIters& i);
 
-template<class Data>
-struct TrieIndexMap1 {
-	struct Unified {
-		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
-		Data  data;
-		Subst sub;
-	};
-	void add(const LightTree& t, const Data& d) {
-		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
-		index_.add(convert2flatterm(t));
-		data_.push_back(d);
-	}
-	vector<Unified> unify(const LightTree& t) const {
-		vector<Unified> ret;
-		FlatTerm ft = convert2flatterm(t);
-		vector<BothIter> iters;
-		iters.emplace_back(TrieIndex::TrieIter(index_.root));
-		iters.emplace_back(FlatTerm::TermIter(ft));
-		GeneralUnified unif = unify_general(iters);
-		for (auto& p : unif) {
-			if (p.second.ok) {
-				//cout << "UNIFIED: " << p.first << endl;
-				ret.emplace_back(data_.at(p.first[0]), convert2subst(p.second));
-			}
-		}
-		return ret;
-	}
-	string show() const {
-		vector<pair<FlatTerm, uint>> terms = index_.unpack();
-		if (!terms.size()) {
-			return "\n";
-		} else {
-			string ret;
-			for (const auto&  p : terms) {
-				Data d = data_[p.second];
-				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second)/*prover::show(d)*/ + "\n";
-			}
-			return ret;
+template<class D>
+vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const LightTree& t) {
+	vector<typename TrieIndexMap<D>::Unified> ret;
+	FlatTerm ft = convert2flatterm(t);
+	vector<BothIter> iters;
+	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
+	iters.emplace_back(FlatTerm::TermIter(ft));
+	GeneralUnified unif = unify_general(iters);
+	for (auto& p : unif) {
+		if (p.second.ok) {
+			//cout << "UNIFIED: " << p.first << endl;
+			ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second));
 		}
 	}
-
-	const TrieIndex& index() const { return index_; }
-	const vector<Data>& data() const { return data_; }
-
-private:
-	TrieIndex index_;
-	vector<Data> data_;
-};
-
-typedef TrieIndexMap1<uint> IndexInt1;
+	return ret;
+}
 
 }}}}

@@ -176,17 +176,6 @@ struct TrieIndexMap {
 		index_.add(convert2flatterm(t));
 		data_.push_back(d);
 	}
-	vector<Unified> unify(const LightTree& t) {
-		vector<Unified> ret;
-		TrieIndex::Unified unif = index_.unify(convert2flatterm(t));
-		for (auto& p : unif) {
-			if (p.second.ok) {
-				//cout << "UNIFIED: " << p.first << endl;
-				ret.emplace_back(data_[p.first], convert2subst(p.second));
-			}
-		}
-		return ret;
-	}
 	string show() const {
 		vector<pair<FlatTerm, uint>> terms = index_.unpack();
 		if (!terms.size()) {
@@ -200,7 +189,6 @@ struct TrieIndexMap {
 			return ret;
 		}
 	}
-
 	const TrieIndex& index() const { return index_; }
 	const vector<Data>& data() const { return data_; }
 
@@ -208,6 +196,21 @@ private:
 	TrieIndex index_;
 	vector<Data> data_;
 };
+
+typedef TrieIndexMap<uint> IndexInt;
+
+template<class D>
+inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const LightTree& t) {
+	vector<typename TrieIndexMap<D>::Unified> ret;
+	TrieIndex::Unified unif = m.index().unify(convert2flatterm(t));
+	for (auto& p : unif) {
+		if (p.second.ok) {
+			//cout << "UNIFIED: " << p.first << endl;
+			ret.emplace_back(m.data().at(p.first), convert2subst(p.second));
+		}
+	}
+	return ret;
+}
 
 extern bool debug_trie_index;
 

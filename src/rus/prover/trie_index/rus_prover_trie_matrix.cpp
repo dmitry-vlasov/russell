@@ -7,7 +7,7 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 bool debug_trie_matrix = false;
 
 static void addProofs(
-	map<LightSymbol, vector<IndexInt1>>& mindex_,
+	map<LightSymbol, vector<IndexInt>>& mindex_,
 	vector<vector<uint>>& proofInds_,
 	uint dim_hyp_,
 	const Hyp::Proofs& proofs, uint i) {
@@ -16,7 +16,7 @@ static void addProofs(
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<IndexInt1>(dim_hyp_);
+				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}
 			mindex_[x.first][i].add(x.second, j);
 		}
@@ -25,7 +25,7 @@ static void addProofs(
 }
 
 static void addProofs(
-	map<LightSymbol, vector<IndexInt1>>& mindex_,
+	map<LightSymbol, vector<IndexInt>>& mindex_,
 	vector<vector<uint>>& proofInds_,
 	uint dim_hyp_,
 	const vector<ProofHypIndexed>& hs, uint i) {
@@ -34,7 +34,7 @@ static void addProofs(
 		ProofHypIndexed hi = hs[j];
 		for (const auto& x : hi.proof->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_[x.first] = vector<IndexInt1>(dim_hyp_);
+				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}
 			mindex_[x.first][i].add(x.second, hi.ind);
 		}

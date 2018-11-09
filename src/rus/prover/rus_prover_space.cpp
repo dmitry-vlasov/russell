@@ -33,10 +33,6 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
 					PropRef(ass, i)
 				);
-				assertions1_.add(
-					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
 			}
 		} else {
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
@@ -50,7 +46,6 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 		HypRef hypRef(a, i);
 		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 		hyps_.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
-		hyps1_.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
 	//if (ind == 18) {
 		//cout << "\nHYPS:\n" << hyps1_.show() << endl;

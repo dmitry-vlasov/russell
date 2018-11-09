@@ -22,7 +22,7 @@ struct MatrixIndex {
 
 private:
 	uint dim_hyp_;
-	map<LightSymbol, vector<IndexInt1>> mindex_;
+	map<LightSymbol, vector<IndexInt>> mindex_;
 	vector<vector<uint>> proofInds_;
 	bool empty_;
 };
