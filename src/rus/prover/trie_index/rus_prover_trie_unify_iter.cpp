@@ -1,5 +1,5 @@
 #include "../rus_prover_cartesian.hpp"
-#include "rus_prover_trie_index_vector.hpp"
+#include "rus_prover_trie_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 

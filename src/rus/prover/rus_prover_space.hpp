@@ -3,7 +3,7 @@
 #include "rus_prover_show.hpp"
 #include "tree_index/rus_prover_tree_index.hpp"
 #include "trie_index/rus_prover_trie_index.hpp"
-#include "trie_index/rus_prover_trie_index_vector.hpp"
+#include "trie_index/rus_prover_trie_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

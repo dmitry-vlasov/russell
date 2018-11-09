@@ -1,8 +1,12 @@
 #pragma once
 
-#include "rus_prover_trie_index_vector.hpp"
+#include "rus_prover_trie_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
+
+struct VectorSolution {
+	VectorSolution() { }
+};
 
 struct MatrixIndex {
 	MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
