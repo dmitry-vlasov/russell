@@ -14,7 +14,7 @@ static void addProofs(map<LightSymbol, VectorIndex>& mindex_, vector<vector<uint
 			if (!mindex_.count(x.first)) {
 				mindex_.emplace(x.first, dim_hyp_);
 			}
-			mindex_.at(x.first).vect[i].exprs.add(x.second, j);
+			mindex_.at(x.first).vect[i].add(x.second, j);
 		}
 		proofInds_[i][j] = j;
 	}
@@ -28,7 +28,7 @@ static void addProofs(map<LightSymbol, VectorIndex>& mindex_, vector<vector<uint
 			if (!mindex_.count(x.first)) {
 				mindex_.emplace(x.first, dim_hyp_);
 			}
-			mindex_.at(x.first).vect[i].exprs.add(x.second, hi.ind);
+			mindex_.at(x.first).vect[i].add(x.second, hi.ind);
 		}
 		proofInds_[i][j] = hi.ind;
 	}

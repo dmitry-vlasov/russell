@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 bool debug_trie_index = false;
 
-void TrieIndex::add(const FlatTerm& t) {
+void TrieIndex::add(const FlatTerm& t, uint val) {
 	struct NodePair {
 		NodePair(TrieIndex::Iterator t, FlatTerm::ConstIterator e) : trie(t), end(e) { }
 		TrieIndex::Iterator trie;
@@ -26,7 +26,8 @@ void TrieIndex::add(const FlatTerm& t) {
 			st.pop();
 		}
 	}
-	n->inds.push_back(size++);
+	n->inds.push_back(val == -1 ? size : val);
+	++size;
 }
 
 static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
