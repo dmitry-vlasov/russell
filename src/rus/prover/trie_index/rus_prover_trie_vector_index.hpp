@@ -4,19 +4,23 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+struct CartesianCell {
+	CartesianCell(const vector<uint>& ex, bool em) : extra_inds(ex), is_empty(em) {
+		sort(extra_inds.begin(), extra_inds.end());
+	}
+	CartesianCell(const CartesianCell&) = default;
+	CartesianCell(CartesianCell&&) = default;
+
+	bool extraContains(uint i) const {
+		return std::binary_search(extra_inds.begin(), extra_inds.end(), i);
+	}
+	vector<uint> extra_inds;
+	bool is_empty;
+};
+
 struct VectorUnified {
-	struct Cell {
-		Cell(const vector<uint>& ex, bool em) : extra_inds(ex), is_empty(em) {
-			sort(extra_inds.begin(), extra_inds.end());
-		}
-		bool extraContains(uint i) const {
-			return std::binary_search(extra_inds.begin(), extra_inds.end(), i);
-		}
-		vector<uint> extra_inds;
-		bool is_empty;
-	};
-	vector<Cell> vect;
-	GeneralUnified unified;
+	vector<CartesianCell> vect;
+	map<vector<uint>, FlatTermSubst> unified;
 	vector<uint> complete(const vector<uint>& v) const {
 		vector<uint> ret(vect.size(), -1);
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {
@@ -74,7 +78,5 @@ struct VectorIndex {
 	}
 	vector<Cell> vect;
 };
-
-VectorUnified intersect(const VectorUnified& vu1, const VectorUnified& vu2);
 
 }}}}

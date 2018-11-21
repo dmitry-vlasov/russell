@@ -136,8 +136,8 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	return ret;
 }
 
-GeneralUnified unify_general(const UnifyIters& begin) {
-	GeneralUnified ret;
+map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
+	map<vector<uint>, FlatTermSubst> ret;
 	for (const auto& end : unify_general_1(begin)) {
 		FlatTerm term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
 		for (auto ind :  end.inds()) {

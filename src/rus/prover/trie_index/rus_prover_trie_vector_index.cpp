@@ -28,8 +28,8 @@ struct IndexHelper {
 		bothIndexes(dim),
 		unifiedLeft(vu1), unifiedRight(vu2) { }
 
-	void addCells(uint i, const VectorUnified::Cell& c1, const VectorUnified::Cell& c2) {
-		auto makeHypDescr = [](const VectorUnified::Cell& c1, const VectorUnified::Cell& c2) {
+	void addCells(uint i, const CartesianCell& c1, const CartesianCell& c2) {
+		auto makeHypDescr = [](const CartesianCell& c1, const CartesianCell& c2) {
 			if (c1.is_empty) return c2.is_empty ? HypDescr::FREE : HypDescr::RIGHT;
 			else             return c2.is_empty ? HypDescr::LEFT : HypDescr::BOTH;
 		};
@@ -44,7 +44,7 @@ struct IndexHelper {
 	}
 
 	struct Iterator {
-		typedef GeneralUnified::const_iterator Iter1;
+		typedef map<vector<uint>, FlatTermSubst>::const_iterator Iter1;
 		typedef CartesianProd<uint> Iter2;
 		Iterator(Iter1 i1, Iter1 i1e, const Iter2& i2, IndexHelper& h) :
 			iter1(i1), iter1end(i1e), iter2(i2), helper(h) { }
@@ -240,5 +240,6 @@ VectorUnified intersect(const VectorUnified& vu1, const VectorUnified& vu2) {
 	}
 	return ret;
 }
+
 
 }}}}

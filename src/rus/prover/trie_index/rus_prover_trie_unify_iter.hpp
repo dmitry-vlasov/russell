@@ -296,13 +296,13 @@ struct UnifyIters {
 
 struct FlatTermSubst {
 	FlatTermSubst(const FlatTerm& t, const FlatSubst& s) : term(t), sub(s) { }
+	FlatTermSubst(const FlatTermSubst&) = default;
+	FlatTermSubst(FlatTermSubst&&) = default;
 	FlatTerm term;
 	FlatSubst sub;
 };
 
-typedef map<vector<uint>, FlatTermSubst> GeneralUnified;
-
-GeneralUnified unify_general(const UnifyIters& i);
+map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 
 template<class D>
 vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const LightTree& t) {
@@ -311,7 +311,7 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	vector<BothIter> iters;
 	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
 	iters.emplace_back(FlatTerm::TermIter(ft));
-	GeneralUnified unif = unify_general(iters);
+	map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 	for (auto& p : unif) {
 		if (p.second.sub.ok) {
 			//cout << "UNIFIED: " << p.first << endl;

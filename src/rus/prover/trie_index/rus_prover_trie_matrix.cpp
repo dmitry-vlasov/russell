@@ -90,17 +90,15 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<LightSymbol, GeneralUnified> unified_column;
-	/*matrix_vector_counter = 0;
-	for (const auto& p : mindex_) {
+	map<LightSymbol, VectorUnified> unified_columns;
+	matrix_vector_counter = 0;
+	for (auto p : mindex_) {
 		for (uint i = 0; i < dim_hyp_; ++i) {
-			const auto& cell = p.second[i];
+			auto& cell = p.second.vect[i];
 			cell.init(proofInds_[i]);
 		}
 		try {
-
-			GeneralUnified ret = unify_general()
-			unified_column[p.first] = std::move(unify(vectIndex));
+			unified_columns[p.first] = std::move(p.second.unify_general());
 		} catch (Error& err) {
 			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
 			throw err;
@@ -108,8 +106,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		//cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
 		matrix_vector_counter += 1;
 	}
-	return intersect(terms, unif);*/
-	return MultyUnifiedSubs();
+	return intersect(unified_columns, unif);
 }
 
 string MatrixIndex::show() const {

@@ -4,6 +4,16 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+struct MatrixUnified {
+	MatrixUnified(bool f = true) : full(f) { }
+	MatrixUnified intersect(const VectorUnified&) const;
+	map<vector<uint>, vector<FlatTermSubst>> unfold() const;
+
+	bool full;
+	vector<CartesianCell> vect;
+	map<vector<uint>, vector<FlatTermSubst>> unified;
+};
+
 struct MatrixIndex {
 	MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
 
@@ -25,6 +35,7 @@ private:
 
 string show(const MultyUnifiedSubs&);
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
+MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>&, MultyUnifiedSubs& unif);
 
 extern bool debug_trie_matrix;
 
