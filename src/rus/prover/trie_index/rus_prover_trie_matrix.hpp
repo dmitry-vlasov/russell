@@ -5,10 +5,14 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct MatrixUnified {
-	MatrixUnified(bool f = true) : full(f) { }
+	enum Kind { FULL, EMPTY, NORM };
+	MatrixUnified(Kind k = FULL) : kind(k) { }
 	MatrixUnified intersect(const VectorUnified&) const;
 	map<vector<uint>, vector<FlatTermSubst>> unfold() const;
 	bool empty() const {
+		if (kind == EMPTY) {
+			return true;
+		}
 		for (const auto& c : vect) {
 			if (c.empty()) {
 				return true;
@@ -17,7 +21,7 @@ struct MatrixUnified {
 		return !unified.size();
 	}
 
-	bool full;
+	Kind kind;
 	vector<CartesianCell> vect;
 	map<vector<uint>, vector<FlatTermSubst>> unified;
 };

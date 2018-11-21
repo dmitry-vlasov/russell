@@ -21,7 +21,7 @@ struct IndexHelper {
 	void addCells(uint i, const CartesianCell& c1, const CartesianCell& c2) {
 		auto makeHypDescr = [](const CartesianCell& c1, const CartesianCell& c2) {
 			if (c1.empty_index) return c2.empty_index ? HypDescr::FREE : HypDescr::RIGHT;
-			else             return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
+			else                return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
 		};
 		hypDescrs.push_back(makeHypDescr(c1, c2));
 		if (hypDescrs.back() == HypDescr::RIGHT) {
@@ -125,8 +125,11 @@ struct IndexHelper {
 };
 
 MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
-	MatrixUnified ret(false);
-	if (full) {
+	if (kind == EMPTY || vu.empty()) {
+		return MatrixUnified(EMPTY);
+	}
+	MatrixUnified ret(NORM);
+	if (kind == FULL) {
 		for (const auto& c : vu.vect) {
 			ret.vect.emplace_back(c);
 		}
@@ -155,11 +158,25 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 }
 
 map<vector<uint>, vector<FlatTermSubst>> MatrixUnified::unfold() const {
+	if (kind == EMPTY) {
+		return map<vector<uint>, vector<FlatTermSubst>>();
+	}
 	CartesianProd<uint> additional;
+	PowerSetIter both_variants;
+	enum CellDescr { CARTESIAN, INDEX, BOTH };
+	vector<CellDescr> descrs;
 	for (uint i = 0; i < vect.size(); ++ i) {
 		const auto& c = vect[i];
 		if (c.extra_inds.size()) {
+			if (c.empty_index) {
+				descrs.push_back(CARTESIAN);
+			} else {
+				descrs.push_back(BOTH);
+				both_variants.addDim();
+			}
 			additional.addDim(c.extra_inds);
+		} else {
+			descrs.push_back(INDEX);
 		}
 	}
 	if (!additional.size()) {
@@ -174,14 +191,32 @@ map<vector<uint>, vector<FlatTermSubst>> MatrixUnified::unfold() const {
 		while (true) {
 			vector<uint> extra = additional.data();
 			vector<uint> key;
-			for (uint i = 0, j = 0, k = 0; i < vect.size(); ++ i) {
-				if (vect.at(i).extra_inds.size()) {
-					key.push_back(extra.at(j++));
+			both_variants.reset();
+			while (true) {
+				for (uint i = 0, j = 0, k = 0, b = 0; i < vect.size(); ++ i) {
+					if (vect.at(i).extra_inds.size()) {
+						if (vect.at(i).empty_index) {
+							key.push_back(extra.at(j++));
+						} else {
+							if (both_variants[b++]) {
+								key.push_back(extra.at(j++)); ++k;
+							} else {
+								key.push_back(p.first[k++]); ++j;
+							}
+						}
+					} else {
+						key.push_back(p.first[k++]);
+					}
+				}
+				ret.emplace(key, p.second);
+
+				if (both_variants.hasNext()) {
+					both_variants.makeNext();
 				} else {
-					key.push_back(p.first[k++]);
+					break;
 				}
 			}
-			ret.emplace(key, p.second);
+
 			if (additional.hasNext()) {
 				additional.makeNext();
 			} else {

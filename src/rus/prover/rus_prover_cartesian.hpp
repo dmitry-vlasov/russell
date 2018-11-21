@@ -190,6 +190,7 @@ struct PowerSetIter {
 	bool hasNext() const { return iter_.hasNext(); }
 	uint size() const { return iter_.size(); }
 	uint card() const { return iter_.card(); }
+	void reset() { iter_.reset(); }
 	bool operator[] (uint i) const { return iter_[i] == 1; }
 	vector<bool> values() const {
 		vector<bool> ret;
