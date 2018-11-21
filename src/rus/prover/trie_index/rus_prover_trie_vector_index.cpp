@@ -30,8 +30,8 @@ struct IndexHelper {
 
 	void addCells(uint i, const CartesianCell& c1, const CartesianCell& c2) {
 		auto makeHypDescr = [](const CartesianCell& c1, const CartesianCell& c2) {
-			if (c1.is_empty) return c2.is_empty ? HypDescr::FREE : HypDescr::RIGHT;
-			else             return c2.is_empty ? HypDescr::LEFT : HypDescr::BOTH;
+			if (c1.empty_index) return c2.empty_index ? HypDescr::FREE : HypDescr::RIGHT;
+			else             return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs.push_back(descr);
@@ -102,7 +102,7 @@ struct IndexHelper {
 				c0.begin()
 			);
 			c0.resize(end - c0.begin());
-			ret.vect.emplace_back(c0, c1.is_empty && c2.is_empty);
+			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index);
 		}
 		if (leftCartesianSize * unifiedRight.unified.size() < rightCartesianSize * unifiedLeft.unified.size()) {
 			for (uint i : rightIndexes) {

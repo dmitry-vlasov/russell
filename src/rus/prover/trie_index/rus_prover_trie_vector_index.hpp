@@ -5,7 +5,7 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct CartesianCell {
-	CartesianCell(const vector<uint>& ex, bool em) : extra_inds(ex), is_empty(em) {
+	CartesianCell(const vector<uint>& ex, bool em) : extra_inds(ex), empty_index(em) {
 		sort(extra_inds.begin(), extra_inds.end());
 	}
 	CartesianCell(const CartesianCell&) = default;
@@ -14,22 +14,34 @@ struct CartesianCell {
 	bool extraContains(uint i) const {
 		return std::binary_search(extra_inds.begin(), extra_inds.end(), i);
 	}
+	bool empty() const {
+		return !extra_inds.size() && empty_index;
+	}
 	vector<uint> extra_inds;
-	bool is_empty;
+	bool empty_index;
 };
 
 struct VectorUnified {
-	vector<CartesianCell> vect;
-	map<vector<uint>, FlatTermSubst> unified;
 	vector<uint> complete(const vector<uint>& v) const {
 		vector<uint> ret(vect.size(), -1);
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {
-			if (!vect.at(i).is_empty) {
+			if (!vect.at(i).empty_index) {
 				ret[i] = v.at(j++);
 			}
 		}
 		return ret;
 	}
+	bool empty() const {
+		for (const auto& c : vect) {
+			if (c.empty()) {
+				return true;
+			}
+		}
+		return !unified.size();
+	}
+
+	vector<CartesianCell> vect;
+	map<vector<uint>, FlatTermSubst> unified;
 };
 
 struct VectorIndex {
@@ -47,6 +59,9 @@ struct VectorIndex {
 		void add(const LightTree& e, uint i) {
 			inds_in_exprs.push_back(i);
 			exprs_.add(e, i);
+		}
+		bool empty() const {
+			return !extra_inds_.size() && exprs_.empty();
 		}
 		const TrieIndex& exprs() const { return exprs_; }
 		const vector<uint>& extraInds() const { return extra_inds_; }
@@ -68,12 +83,6 @@ struct VectorIndex {
 			}
 		}
 		ret.unified = trie_index::unify_general(iters);
-		/*for (auto& p : unif) {
-			if (p.second.sub.ok) {
-				//cout << "UNIFIED: " << p.first << endl;
-				ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
-			}
-		}*/
 		return ret;
 	}
 	vector<Cell> vect;

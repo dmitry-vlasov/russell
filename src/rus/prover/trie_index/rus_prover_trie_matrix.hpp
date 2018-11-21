@@ -8,6 +8,14 @@ struct MatrixUnified {
 	MatrixUnified(bool f = true) : full(f) { }
 	MatrixUnified intersect(const VectorUnified&) const;
 	map<vector<uint>, vector<FlatTermSubst>> unfold() const;
+	bool empty() const {
+		for (const auto& c : vect) {
+			if (c.empty()) {
+				return true;
+			}
+		}
+		return !unified.size();
+	}
 
 	bool full;
 	vector<CartesianCell> vect;

@@ -20,8 +20,8 @@ struct IndexHelper {
 
 	void addCells(uint i, const CartesianCell& c1, const CartesianCell& c2) {
 		auto makeHypDescr = [](const CartesianCell& c1, const CartesianCell& c2) {
-			if (c1.is_empty) return c2.is_empty ? HypDescr::FREE : HypDescr::RIGHT;
-			else             return c2.is_empty ? HypDescr::LEFT : HypDescr::BOTH;
+			if (c1.empty_index) return c2.empty_index ? HypDescr::FREE : HypDescr::RIGHT;
+			else             return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
 		};
 		hypDescrs.push_back(makeHypDescr(c1, c2));
 		if (hypDescrs.back() == HypDescr::RIGHT) {
@@ -94,7 +94,7 @@ struct IndexHelper {
 				c0.begin()
 			);
 			c0.resize(end - c0.begin());
-			ret.vect.emplace_back(c0, c1.is_empty && c2.is_empty);
+			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index);
 		}
 		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
 	}
@@ -155,8 +155,40 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 }
 
 map<vector<uint>, vector<FlatTermSubst>> MatrixUnified::unfold() const {
+	CartesianProd<uint> additional;
+	for (uint i = 0; i < vect.size(); ++ i) {
+		const auto& c = vect[i];
+		if (c.extra_inds.size()) {
+			additional.addDim(c.extra_inds);
+		}
+	}
+	if (!additional.size()) {
+		return unified;
+	}
 	map<vector<uint>, vector<FlatTermSubst>> ret;
-
+	if (empty() || !additional.card()) {
+		return ret;
+	}
+	for (const auto& p : unified) {
+		additional.reset();
+		while (true) {
+			vector<uint> extra = additional.data();
+			vector<uint> key;
+			for (uint i = 0, j = 0, k = 0; i < vect.size(); ++ i) {
+				if (vect.at(i).extra_inds.size()) {
+					key.push_back(extra.at(j++));
+				} else {
+					key.push_back(p.first[k++]);
+				}
+			}
+			ret.emplace(key, p.second);
+			if (additional.hasNext()) {
+				additional.makeNext();
+			} else {
+				break;
+			}
+		}
+	}
 	return ret;
 }
 
