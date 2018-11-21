@@ -180,22 +180,22 @@ FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
 }
 
 void FlatTerm::verify() const {
-	stack<vector<Node>::const_iterator> st;
-	st.push(nodes.begin());
-	for (auto i = nodes.begin(); i != nodes.end(); ++ i) {
-		if (i->ruleVar.isRule()) {
-			st.push(i->end);
-		}
-		if (st.empty()) {
-			throw Error("broken term", show(true));
-		}
-		if (i == st.top()) {
-			st.pop();
-		}
-	}
-	if (!st.empty()) {
-		throw Error("broken term", show(true));
-	}
+    if (nodes.begin()->ruleVar.isRule()) {
+        stack<vector<Node>::const_iterator> st;
+        for (auto i = nodes.begin(); i != nodes.end(); ++i) {
+            if (i->ruleVar.isRule()) {
+                st.push(i->end);
+            }
+            while (!st.empty() && i == st.top()) {
+                st.pop();
+            }
+        }
+        if (!st.empty()) {
+            throw Error("broken term: non-empty stack", show(true) + "\n" + show(false));
+        }
+    } else if (!nodes.begin()->ruleVar.isVar()) {
+        throw Error("broken term: non var neither rule", show(true) + "\n" + show(false));
+    }
 }
 
 FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const LightTree* t) {

@@ -184,6 +184,10 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "sequntial unification: " << timer << endl;
 	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
 
+	trie_index::debug_flat_apply = true;
+	trie_index::debug_trie_index = true;
+	trie_index::debug_flatterm = true;
+
 	timer.clear();
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
