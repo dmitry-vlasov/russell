@@ -189,9 +189,10 @@ struct FlatTerm {
 	vector<FlatTerm> children() const;
 	vector<ConstIterator> childrenIters() const;
 	FlatTerm subTerm(ConstIterator beg) const;
+	void verify() const;
 
 	vector<Node> nodes;
-	string show() const;
+	string show(bool simple = false) const;
 };
 
 FlatTerm convert2flatterm(const LightTree&);

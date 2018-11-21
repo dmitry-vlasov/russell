@@ -1,6 +1,7 @@
 #include "rus_prover_down.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "tree_index/rus_prover_matrix_index.hpp"
+#include "trie_index/rus_prover_trie_matrix.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -173,19 +174,19 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
-	/*static int c = 0;
+	static int c = 0;
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
-	Timer timer; timer.start();*/
+	Timer timer; timer.start();
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
-	/*timer.stop();
+	timer.stop();
 	cout << "sequntial unification: " << timer << endl;
 	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
 
 	timer.clear();
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = tree_index::unify_subs_matrix(pr, hy, hs);
+	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
 	timer.stop();
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
@@ -198,17 +199,19 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		//cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
 		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
-		cout << tree_index::MatrixIndex(pr, hy, hs).show() << endl;
+		cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
 
- 		tree_index::debug_multy_index = true;
-		tree_index::unify_subs_matrix(pr, hy, hs);
+		trie_index::debug_flat_apply = true;
+ 		trie_index::debug_trie_index = true;
+ 		trie_index::debug_flatterm = true;
+		trie_index::unify_subs_matrix(pr, hy, hs);
 
 		//debug_unify_subs = true;
 		//unify_subs_sequent(pr, h);
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		//cout << "SUB UNIFICATION EQUAL" << endl;
-	}*/
+	}
 
 	for (const auto& p : unified_subs_1) {
 		vector<uint> ind = p.first;

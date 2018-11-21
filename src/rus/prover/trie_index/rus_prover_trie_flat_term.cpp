@@ -38,6 +38,7 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	}
 	if (debug_flatterm) {
 		cout << "COPIED: " << t->show() << endl;
+		t->verify();
 	}
 }
 
@@ -73,6 +74,9 @@ FlatTerm::FlatTerm(ConstIterator i) : nodes(i->end - i) {
 FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
 	nodes[0].ruleVar.var = s;
 	nodes[0].end = nodes.begin();
+	if (debug_flatterm) {
+		verify();
+	}
 }
 
 static uint flatTermsLen(const vector<FlatTerm>& ch) {
@@ -91,6 +95,9 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 		copyFlatSubTerm(this, pos, c.nodes.begin());
 		pos += c.len();
 	}
+	if (debug_flatterm) {
+		verify();
+	}
 }
 
 FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
@@ -101,19 +108,23 @@ FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
 	return *this;
 }
 
-string FlatTerm::show() const {
+string FlatTerm::show(bool simple) const {
 	string ret;
 	stack<vector<Node>::const_iterator> st;
 	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
-		if (i->ruleVar.rule) {
-			st.push(i->end);
-			ret += i->ruleVar.show() + " (";
-		} else {
+		if (simple) {
 			ret += i->ruleVar.show() + " ";
-		}
-		while (!st.empty() && st.top() == i) {
-			ret += ") ";
-			st.pop();
+		} else {
+			if (i->ruleVar.rule) {
+				st.push(i->end);
+				ret += i->ruleVar.show() + " (";
+			} else {
+				ret += i->ruleVar.show() + " ";
+			}
+			while (!st.empty() && st.top() == i) {
+				ret += ") ";
+				st.pop();
+			}
 		}
 	}
 	return ret;
@@ -166,6 +177,25 @@ FlatTerm FlatTerm::subTerm(ConstIterator beg) const {
 	FlatTerm ret((beg->end - beg) + 1);
 	copyFlatSubTerm(&ret, 0, beg);
 	return ret;
+}
+
+void FlatTerm::verify() const {
+	stack<vector<Node>::const_iterator> st;
+	st.push(nodes.begin());
+	for (auto i = nodes.begin(); i != nodes.end(); ++ i) {
+		if (i->ruleVar.isRule()) {
+			st.push(i->end);
+		}
+		if (st.empty()) {
+			throw Error("broken term", show(true));
+		}
+		if (i == st.top()) {
+			st.pop();
+		}
+	}
+	if (!st.empty()) {
+		throw Error("broken term", show(true));
+	}
 }
 
 FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const LightTree* t) {
