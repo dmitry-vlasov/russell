@@ -204,6 +204,7 @@ uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 
 	if (debug_flat_apply) {
+		t.verify();
 		cout << "TO APPLY:" << endl;
 		cout << "------------" << endl;
 		cout << "SUB: " << endl << s.show() << endl;
@@ -251,6 +252,18 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 			copyFlatSubTerm(&ret, beg_shifts[k], subs[k]->nodes.begin());
 		} else {
 			const auto& n = t.nodes[k];
+			if (beg_shifts[k] >= ret.nodes.size()) {
+				cout << "AAAA" << endl;
+			}
+			if (n.end - t.nodes.begin() >= end_shifts.size()) {
+				cout << "BBBB: " << endl;
+				cout << "n.end - t.nodes.begin() = " << n.end - t.nodes.begin() << endl;
+				cout << "end_shifts.size() = " << end_shifts.size() << endl;
+			}
+			if (end_shifts[n.end - t.nodes.begin()] >= ret.nodes.size()) {
+				cout << "CCCC" << endl;
+			}
+
 			ret.nodes[beg_shifts[k]] = n;
 			ret.nodes[beg_shifts[k]].end = ret.nodes.begin() + end_shifts[n.end - t.nodes.begin()];
 		}

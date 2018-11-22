@@ -1,0 +1,7 @@
+build/debug
+build/profile
+build/release
+build/relWithDebInfo
+cb_build/debug
+metamath
+peglib
