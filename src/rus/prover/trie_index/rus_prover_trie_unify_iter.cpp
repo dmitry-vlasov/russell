@@ -121,7 +121,7 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 				branch.pop_back();
 				for (const auto& i : unify_iters(n)) {
 					if (i.isTermEnd(begins)) {
-						ret.push_back(std::move(i));
+						ret.push_back(i);
 					}
 					if (!i.isNextEnd(begins)) {
 						branch.push_back(i.next());

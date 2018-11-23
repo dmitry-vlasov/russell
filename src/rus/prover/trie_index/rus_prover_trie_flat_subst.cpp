@@ -257,6 +257,7 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 			}
 			if (n.end - t.nodes.begin() >= end_shifts.size()) {
 				cout << "BBBB: " << endl;
+				cout << "t.nodes.begin(): " << (void*)(&*t.nodes.begin()) << endl;
 				cout << "n.end - t.nodes.begin() = " << n.end - t.nodes.begin() << endl;
 				cout << "end_shifts.size() = " << end_shifts.size() << endl;
 			}
