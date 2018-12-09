@@ -219,7 +219,30 @@ struct UnifyIters {
 		}
 		return false;
 	}
-	bool isTermEnd() const { if (!sub.ok) {
+	bool isTermEnd(const UnifyIters& ends) const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (ends.iters[i].isEnd(iters[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+	bool isNextEnd(const UnifyIters& ends) const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (ends.iters[i].isEnd(iters[i]) || iters[i].isNextEnd()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/*bool isTermEnd() const {
+		if (!sub.ok) {
 			return false;
 		}
 		for (const auto& i : iters) {
@@ -240,7 +263,8 @@ struct UnifyIters {
 		}
 		return false;
 	}
-	bool isTermEnd(const UnifyIters& ends) const { if (!sub.ok) {
+	bool isTermEnd(const UnifyIters& ends) const {
+		if (!sub.ok) {
 			return false;
 		}
 		for (const auto& i : iters) {
@@ -249,7 +273,7 @@ struct UnifyIters {
 			}
 		}
 		return true;
-	}
+	}*/
 	bool isSideEnd() const {
 		if (!sub.ok) {
 			return true;
