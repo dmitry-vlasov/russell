@@ -26,6 +26,7 @@ struct TrieIndex {
 	Unified unify(const FlatTerm&) const;
 	vector<pair<FlatTerm, uint>> unpack() const;
 	string show() const;
+	string show_pointers() const;
 	uint totalNodes() const;
 	bool empty() const { return root.nodes.empty(); }
 

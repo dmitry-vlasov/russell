@@ -76,13 +76,22 @@ struct VectorIndex {
 	VectorUnified unify_general() {
 		vector<BothIter> iters;
 		VectorUnified ret;
-		for (const auto& c : vect) {
-			ret.vect.emplace_back(c.extraInds(), c.exprs().empty());
-			if (!c.exprs().empty()) {
-				iters.emplace_back(TrieIndex::TrieIter(c.exprs().root));
+		try {
+			for (const auto& c : vect) {
+				ret.vect.emplace_back(c.extraInds(), c.exprs().empty());
+				if (!c.exprs().empty()) {
+					iters.emplace_back(TrieIndex::TrieIter(c.exprs().root));
+				}
 			}
+			ret.unified = trie_index::unify_general(iters);
+		} catch (Error& err) {
+			cout << "VectorIndex::unify_general()" << endl;
+			for (const auto& c : vect) {
+				cout << "CELL: " << endl;
+				cout << c.exprs().show_pointers() << endl << endl;
+			}
+			throw err;
 		}
-		ret.unified = trie_index::unify_general(iters);
 		return ret;
 	}
 	vector<Cell> vect;

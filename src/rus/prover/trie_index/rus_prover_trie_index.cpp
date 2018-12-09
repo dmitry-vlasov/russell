@@ -44,17 +44,42 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 		}
 		out:;
 	}
+	try {
+		ft.verify();
+	} catch (Error& err) {
+		cerr << "at : create_flatterm" << endl;
+		for (const auto& i : branch) {
+			cerr << i.ruleVar().show() << " ";
+		}
+		cerr << endl;
+		throw err;
+	}
 	return ft;
 }
 
 FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	vector<TrieIter> branch;
+	ConstIterator start = i;
 	while (i != ConstIterator()) {
 		branch.emplace_back(i);
 		if (iter_ == i) {
 			break;
 		}
 		i = i->second.parent;
+		if (i == ConstIterator()) {
+			cout << "i == ConstIterator() " << endl;
+			cout << "start: " << start->first.show() << " - " << (void*)&*start << endl;
+			cout << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
+			i = start;
+			while (i != ConstIterator()) {
+				cout << "i: " << i->first.show() << " - " << (void*)&*i << endl;
+				if (iter_ == i) {
+					break;
+				}
+				i = i->second.parent;
+			}
+			throw Error("TrieIndex::TrieIter::subTerm");
+		}
 	}
 	std::reverse(branch.begin(), branch.end());
 	auto ret = create_flatterm(branch);
@@ -100,6 +125,43 @@ string TrieIndex::show() const {
 		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
 	}
 	return ret;
+}
+
+string TrieIndex::show_pointers() const {
+	vector<pair<vector<TrieIter>, uint>> vect;
+	vector<TrieIter> branch;
+	if (root.nodes.size()) {
+		branch.emplace_back(root);
+		while (branch.size()) {
+			TrieIter n = branch.back();
+			for (uint ind : n.iter()->second.inds) {
+				vect.emplace_back(branch, ind);
+			}
+			if (!n.isNextEnd()) {
+				branch.push_back(n.next());
+			} else {
+				while (true) {
+					branch.pop_back();
+					if (!n.isSideEnd()) {
+						branch.push_back(n.side());
+						break;
+					}
+					if (branch.empty()) {
+						break;
+					}
+					n = branch.back();
+				}
+			}
+		}
+	}
+	ostringstream oss;
+	for (const auto& p : vect) {
+		for (const auto& i : p.first) {
+			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
+		}
+		oss << " --> " << p.second << "\n";
+	}
+	return oss.str();
 }
 
 uint TrieIndex::totalNodes() const {
