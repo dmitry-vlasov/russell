@@ -130,6 +130,15 @@ string FlatTerm::show(bool simple) const {
 	return ret;
 }
 
+string FlatTerm::show_pointers() const {
+	ostringstream oss;
+	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
+		oss << i->ruleVar.show() << "=(" << (void*)&*i << " ";
+	}
+	oss << endl;
+	return oss.str();
+}
+
 vector<FlatTerm> FlatTerm::children() const {
 	vector<FlatTerm> ret;
 	if (kind() == RULE) {

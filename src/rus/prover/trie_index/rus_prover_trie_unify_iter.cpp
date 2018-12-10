@@ -44,28 +44,38 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 		iters.emplace_back(FlatTerm::TermIter(t));
 	}
 	UnifyIters begin = UnifyIters(iters);
-	vector<UnifyIters> ends = unify_general_1(begin);
-	assert(ends.size() <= 1);
-	if (ends.size() > 0) {
-		UnifyIters end = ends[0];
-		s.compose(end.sub);
-		FlatTerm term_orig = begin.iters[0].subTerm(end.iters[0]);
-		FlatTerm unified = apply(end.sub, term_orig);
-		for (auto v : vars) {
-			if (!s.compose(FlatSubst(v, unified))) {
-				s.ok = false;
-				if (debug_flat_unify) {
-					cout << "!s.compose(FlatSubst(v, unified))" << endl;
-					cout << "v: " << prover::show(v) << endl;
-					cout << "s: " << s.show() << endl;
+	try {
+		vector<UnifyIters> ends = unify_general_1(begin);
+		assert(ends.size() <= 1);
+		if (ends.size() > 0) {
+			UnifyIters end = ends[0];
+			s.compose(end.sub);
+			FlatTerm term_orig = begin.iters[0].subTerm(end.iters[0]);
+			FlatTerm unified = apply(end.sub, term_orig);
+			for (auto v : vars) {
+				if (!s.compose(FlatSubst(v, unified))) {
+					s.ok = false;
+					if (debug_flat_unify) {
+						cout << "!s.compose(FlatSubst(v, unified))" << endl;
+						cout << "v: " << prover::show(v) << endl;
+						cout << "s: " << s.show() << endl;
+					}
+					return FlatTerm();
 				}
-				return FlatTerm();
 			}
+			return unified;
 		}
-		return unified;
-	}
-	if (debug_flat_unify) {
-		cout << "unified.empty()" << endl;
+		if (debug_flat_unify) {
+			cout << "unified.empty()" << endl;
+		}
+	} catch (Error& err) {
+		cerr << endl << "unify_step_1: ERROR" << endl;
+		for (const auto& t : to_unify) {
+			cerr << "TERM: " << endl;
+			cerr << t.show_pointers();
+		}
+		cerr << endl;
+		throw err;
 	}
 	return FlatTerm();
 }
@@ -120,7 +130,7 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 				UnifyIters n = branch.back();
 				branch.pop_back();
 				for (const auto& i : unify_iters(n)) {
-					if (i.isTermEnd(begins)) {
+					if (i.isTermEnd(begins) && i.sub.ok) {
 						ret.push_back(i);
 					}
 					if (!i.isNextEnd(begins)) {

@@ -193,6 +193,7 @@ struct FlatTerm {
 
 	vector<Node> nodes;
 	string show(bool simple = false) const;
+	string show_pointers() const;
 };
 
 FlatTerm convert2flatterm(const LightTree&);

@@ -66,7 +66,7 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 			break;
 		}
 		i = i->second.parent;
-		if (i == ConstIterator()) {
+		/*if (i == ConstIterator()) {
 			cout << "i == ConstIterator() " << endl;
 			cout << "start: " << start->first.show() << " - " << (void*)&*start << endl;
 			cout << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
@@ -78,15 +78,33 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 				}
 				i = i->second.parent;
 			}
+			std::reverse(branch.begin(), branch.end());
+			cout << "SUBTERM: " << create_flatterm(branch).show() << endl;
 			throw Error("TrieIndex::TrieIter::subTerm");
-		}
+		}*/
 	}
 	std::reverse(branch.begin(), branch.end());
-	auto ret = create_flatterm(branch);
-	if (debug_trie_index) {
-		cout << "SUBTERM: " << ret.show() << endl;
+	try {
+		auto ret = create_flatterm(branch);
+		if (debug_trie_index) {
+			cout << "SUBTERM: " << ret.show() << endl;
+		}
+		return ret;
+	} catch (Error& err) {
+		cerr << "start: " << start->first.show() << " - " << (void*)&*start << endl;
+		cerr << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
+		i = start;
+		while (i != ConstIterator()) {
+			cerr << "i: " << i->first.show() << " - " << (void*)&*i << endl;
+			if (iter_ == i) {
+				break;
+			}
+			i = i->second.parent;
+		}
+		//std::reverse(branch.begin(), branch.end());
+		//cout << "SUBTERM: " << create_flatterm(branch).show() << endl;
+		throw err;
 	}
-	return ret;
 }
 
 vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {

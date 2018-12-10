@@ -335,12 +335,18 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	vector<BothIter> iters;
 	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
 	iters.emplace_back(FlatTerm::TermIter(ft));
-	map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
-	for (auto& p : unif) {
-		if (p.second.sub.ok) {
-			//cout << "UNIFIED: " << p.first << endl;
-			ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
+	try {
+		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
+		for (auto& p : unif) {
+			if (p.second.sub.ok) {
+				//cout << "UNIFIED: " << p.first << endl;
+				ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
+			}
 		}
+	} catch (Error& err) {
+		cout << "unify_general: " << endl;
+		cout << m.index().show_pointers() << endl << endl;
+		throw err;
 	}
 	return ret;
 }
