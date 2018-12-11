@@ -166,6 +166,14 @@ struct BothIter {
 		}
 	}
 
+	string show() const {
+		switch (kind_) {
+		case TRIE: return trieIter.show();
+		case TERM: return termIter.show();
+		default:   return "";
+		}
+	}
+
 private:
 	Kind kind_;
 	TrieIndex::TrieIter trieIter;
@@ -223,12 +231,21 @@ struct UnifyIters {
 		if (!sub.ok) {
 			return true;
 		}
+		// TODO !!!!!!
 		for (uint i = 0; i < iters.size(); ++i) {
 			if (ends.iters[i].isEnd(iters[i])) {
 				return true;
 			}
 		}
 		return false;
+		/*
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (!ends.iters[i].isEnd(iters[i])) {
+				return false;
+			}
+		}
+		return true;
+		 */
 	}
 	bool isNextEnd(const UnifyIters& ends) const {
 		if (!sub.ok) {
@@ -241,39 +258,6 @@ struct UnifyIters {
 		}
 		return false;
 	}
-	/*bool isTermEnd() const {
-		if (!sub.ok) {
-			return false;
-		}
-		for (const auto& i : iters) {
-			if (!i.isNextEnd()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	bool isNextEnd(const UnifyIters& ends) const {
-		if (!sub.ok) {
-			return true;
-		}
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (ends.iters[i].isEnd(iters[i]) || iters[i].isNextEnd()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	bool isTermEnd(const UnifyIters& ends) const {
-		if (!sub.ok) {
-			return false;
-		}
-		for (const auto& i : iters) {
-			if (!i.isNextEnd()) {
-				return false;
-			}
-		}
-		return true;
-	}*/
 	bool isSideEnd() const {
 		if (!sub.ok) {
 			return true;
@@ -299,10 +283,12 @@ struct UnifyIters {
 	}
 
 	string show(bool full = false) const {
-		string ret;
-		//ret += "trie: " + trieIter.show(full) + "\n";
-		//ret += "term: " + termIter.show(full) + "\n";
-		return ret;
+		ostringstream oss;
+		uint n = 0;
+		for (const auto& i : iters) {
+			oss << n++ << "-iter: " << i.show() << endl;
+		}
+		return oss.str();
 	}
 	string showBranch() const {
 		string ret;

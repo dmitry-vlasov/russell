@@ -47,11 +47,11 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 	try {
 		ft.verify();
 	} catch (Error& err) {
-		cerr << "at : create_flatterm" << endl;
+		cout << "at : create_flatterm" << endl;
 		for (const auto& i : branch) {
-			cerr << i.ruleVar().show() << " ";
+			cout << i.ruleVar().show() << " ";
 		}
-		cerr << endl;
+		cout << endl;
 		throw err;
 	}
 	return ft;
@@ -91,13 +91,17 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 		}
 		return ret;
 	} catch (Error& err) {
-		cerr << "start: " << start->first.show() << " - " << (void*)&*start << endl;
-		cerr << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
+		cout << "start: " << start->first.show() << " - " << (void*)&*start << endl;
+		cout << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
 		i = start;
 		while (i != ConstIterator()) {
-			cerr << "i: " << i->first.show() << " - " << (void*)&*i << endl;
+			cout << "i: " << i->first.show() << " - " << (void*)&*i << endl;
 			if (iter_ == i) {
 				break;
+			}
+			if (i->second.parent == ConstIterator()) {
+				cout << endl << endl << "FUCK" << endl;
+				cout << TrieIndex::show_pointers(i->second) << endl;
 			}
 			i = i->second.parent;
 		}
@@ -181,6 +185,84 @@ string TrieIndex::show_pointers() const {
 	}
 	return oss.str();
 }
+
+
+vector<pair<FlatTerm, uint>> TrieIndex::unpack(const Node& root) {
+	vector<pair<FlatTerm, uint>> ret;
+	vector<TrieIter> branch;
+	if (root.nodes.size()) {
+		branch.emplace_back(root);
+		while (branch.size()) {
+			TrieIter n = branch.back();
+			for (uint ind : n.iter()->second.inds) {
+				ret.emplace_back(create_flatterm(branch), ind);
+			}
+			if (!n.isNextEnd()) {
+				branch.push_back(n.next());
+			} else {
+				while (true) {
+					branch.pop_back();
+					if (!n.isSideEnd()) {
+						branch.push_back(n.side());
+						break;
+					}
+					if (branch.empty()) {
+						break;
+					}
+					n = branch.back();
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+string TrieIndex::show(const Node& root) {
+	string ret;
+	for (const auto& p : unpack(root)) {
+		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
+	}
+	return ret;
+}
+
+string TrieIndex::show_pointers(const Node& root) {
+	vector<pair<vector<TrieIter>, uint>> vect;
+	vector<TrieIter> branch;
+	if (root.nodes.size()) {
+		branch.emplace_back(root);
+		while (branch.size()) {
+			TrieIter n = branch.back();
+			for (uint ind : n.iter()->second.inds) {
+				vect.emplace_back(branch, ind);
+			}
+			if (!n.isNextEnd()) {
+				branch.push_back(n.next());
+			} else {
+				while (true) {
+					branch.pop_back();
+					if (!n.isSideEnd()) {
+						branch.push_back(n.side());
+						break;
+					}
+					if (branch.empty()) {
+						break;
+					}
+					n = branch.back();
+				}
+			}
+		}
+	}
+	ostringstream oss;
+	for (const auto& p : vect) {
+		for (const auto& i : p.first) {
+			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
+		}
+		oss << " --> " << p.second << "\n";
+	}
+	return oss.str();
+}
+
+
 
 uint TrieIndex::totalNodes() const {
 	uint ret = 0;

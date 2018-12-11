@@ -148,13 +148,15 @@ void Hyp::complete() {
 	//cout << endl;
 
 	//cout << "COMPLETING: " << ind << endl;
+	static  uint c = 0;
 	set<Node*> downs;
 	downs.insert(this);
 	while (!downs.empty()) {
 		Node* n = *downs.begin();
-		//cout << "DOWNING: " << n->ind << endl;
+		//cout << "DOWNING: " << n->ind << ", c = " << c++ << endl;
 		downs.erase(n);
-		for (auto x : n->buildDown()) {
+		auto n_downs = n->buildDown();
+		for (auto x : n_downs) {
 			downs.insert(x);
 		}
 	}

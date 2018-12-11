@@ -27,6 +27,11 @@ struct TrieIndex {
 	vector<pair<FlatTerm, uint>> unpack() const;
 	string show() const;
 	string show_pointers() const;
+
+	static vector<pair<FlatTerm, uint>> unpack(const Node&);
+	static string show(const Node&);
+	static string show_pointers(const Node&);
+
 	uint totalNodes() const;
 	bool empty() const { return root.nodes.empty(); }
 

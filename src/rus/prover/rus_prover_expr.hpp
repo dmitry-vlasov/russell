@@ -267,6 +267,8 @@ private:
 	map<LightSymbol, vector<LightTree>> msub_;
 };
 
+extern bool debug_unify_subs_func;
+
 void sub_closure(Subst& sub);
 Subst unify_subs(Subst unif, Subst gen);
 Subst unify_subs(const MultySubst& t);

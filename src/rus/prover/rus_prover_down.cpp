@@ -6,6 +6,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 bool debug_unify_subs = false;
+vector<uint> error_inds;
 
 void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
 	CartesianIter ind;
@@ -22,29 +23,38 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	}
 	while (true) {
 		vector<const Subst*> subs;
-		if (debug_unify_subs) {
+		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.inds());
+		if (show_debug) {
 			cout << "CURRENT: " << ind.current() << endl;
 			cout << "UNIFYING: \n--------------" << endl;
 			cout << "PROP: " << pr->ind << endl;
 		}
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
-			if (debug_unify_subs) {
+			if (show_debug) {
 				cout << ph->ind << ": " << show(ph->expr) << endl;
 				cout << "sub:" << endl;
 				cout << Indent::paragraph(show(ph->sub)) << endl;
 			}
 			subs.push_back(&ph->sub);
 		}
-		if (debug_unify_subs) {
+		if (show_debug) {
 			cout << "-------------" << endl;
+			debug_unify_subs_func = true;
 		}
 		Subst sub = unify_subs(MultySubst(subs));
 		if (sub.ok) {
 			Subst delta = pr->sub;
+			if (show_debug) {
+				cout << "DELTA" << endl;
+				cout << show(delta) << endl;
+				cout << "SUB" << endl;
+				cout << show(sub) << endl;
+			}
 			delta.compose(sub);
 			ret[ind.inds()] = delta;
 		}
+		debug_unify_subs_func = false;
 		if (!ind.hasNext()) {
 			break;
 		}
@@ -174,13 +184,13 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
-	static int c = 0;
+	/*static int c = 0;
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
-	Timer timer; timer.start();
+	Timer timer; timer.start();*/
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
-	timer.stop();
+	/*timer.stop();
 	cout << "sequntial unification: " << timer << endl;
 	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
 
@@ -212,7 +222,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	} else {
 		//cout << "SUB UNIFICATION EQUAL" << endl;
 	}
-
+*/
 	for (const auto& p : unified_subs_1) {
 		vector<uint> ind = p.first;
 		vector<ProofHyp*> ch;
@@ -220,16 +230,30 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
 			ch.push_back(ph);
 		}
-		ProofProp* pp = new ProofProp(*pr, ch, p.second);
-		for (auto& h : pr->proofs) {
-			if (pp->equal(h.get())) {
-				cout << "DUPLICATE PROP PROOF" << endl;
-				cout << pp->show() << endl;
-				cout << "-----------" << endl;
-				cout << h->show() << endl;
+		try {
+			ProofProp* pp = new ProofProp(*pr, ch, p.second);
+			for (auto& h : pr->proofs) {
+				if (pp->equal(h.get())) {
+					cout << "DUPLICATE PROP PROOF" << endl;
+					cout << pp->show() << endl;
+					cout << "-----------" << endl;
+					cout << h->show() << endl;
+				}
 			}
+			pr->proofs.emplace_back(pp);
+		} catch (Error& err) {
+			string msg;
+			msg += "while unifying down:\n";
+			for (auto c : ch) {
+				msg += show(c->sub) + "\n";
+			}
+			err.msg += "\n" + msg;
+			err.msg += "\nunifier: " + show(p.second);
+			error_inds = ind;
+			debug_unify_subs = true;
+			unify_subs_sequent(pr, hy, hs);
+			throw err;
 		}
-		pr->proofs.emplace_back(pp);
 	}
 	if (unified_subs_1.size()) {
 		return {pr};

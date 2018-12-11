@@ -153,8 +153,18 @@ LightTree do_unify(vector<LightTree> ex, Subst& sub) {
 }
 
 bool check_unification(const LightTree& term, const Subst& sub, const vector<LightTree>& ex) {
+	/*if (debug_unify_subs_func) {
+		cout << "--- check_unification ---" << endl;
+		cout << "term : " << show(term) << endl;
+		cout << "sub : " << show(sub) << endl;
+	}*/
 	if (!term.empty()) {
 		for (auto e : ex) {
+			/*if (debug_unify_subs_func) {
+				cout << "expr: " << show(e) << endl;
+				cout << "applied: " << show(apply(sub, e)) << endl;
+			}*/
+
 			if (apply(sub, e) != term) {
 				return false;
 			}

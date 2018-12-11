@@ -19,6 +19,24 @@ vector<vector<uint>> UnifyIters::inds() const {
 	return ret;
 }
 
+string show(const vector<UnifyIters>& vi) {
+	string ret;
+	for (const auto& ui : vi) {
+		ret += ui.show() + "\n";
+	}
+	return ret;
+}
+
+inline void dump(const vector<UnifyIters>& vi, const char* msg = "") {
+	cout << msg << endl;
+	cout << show(vi) << endl;
+}
+
+inline void dump(const UnifyIters& ui, const char* msg = "") {
+	cout << msg << endl;
+	cout << ui.show() << endl;
+}
+
 vector<UnifyIters> unify_general_1(const UnifyIters& begins);
 
 FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
@@ -69,12 +87,12 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 			cout << "unified.empty()" << endl;
 		}
 	} catch (Error& err) {
-		cerr << endl << "unify_step_1: ERROR" << endl;
+		cout << endl << "unify_step_1: ERROR" << endl;
 		for (const auto& t : to_unify) {
-			cerr << "TERM: " << endl;
-			cerr << t.show_pointers();
+			cout << "TERM: " << endl;
+			cout << t.show_pointers();
 		}
-		cerr << endl;
+		cout << endl;
 		throw err;
 	}
 	return FlatTerm();
@@ -84,6 +102,52 @@ FlatSubst unify_step_1(const FlatSubst& s, const vector<LightSymbol>& vars, cons
 	FlatSubst ret(s);
 	FlatTerm unified = unify_step_1(ret, vars, term);
 	return unified.empty() ? FlatSubst(false) : ret;
+}
+
+bool verify_begins_ends(const UnifyIters& begs, const UnifyIters& ends) {
+	if (begs.iters.size() != ends.iters.size()) {
+		cout << "begs.iters.size() != ends.iters.size()" << endl;
+		return false;
+	}
+	for (uint i = 0; i < begs.iters.size(); ++ i) {
+		BothIter beg = begs.iters[i];
+		BothIter end = ends.iters[i];
+		BothIter cur = end;
+		bool is_ok = false;
+		uint c = 0;
+		while (cur != BothIter()) {
+			if (cur == beg) {
+				is_ok = true;
+				break;
+			}
+			cur = cur.prev();
+			c++;
+			if (c == 2048) {
+				cout << "TOO MUCH C" << endl;
+				c = 0;
+				BothIter x = end;
+				while (x != BothIter()) {
+					cout <<  c << " -- x: " << x.ruleVar().show() << endl;
+					if (x == beg) {
+						cout << "WTF?..." << endl;
+						break;
+					}
+					x = x.prev();
+					c++;
+					if (c == 2048) {
+						cout << "FUCK THE MIDDLE EAST" << endl;
+						return false;
+					}
+				}
+				return false;
+			}
+		}
+		if (!is_ok) {
+			//cout << "NON REACHEABLE" << endl;
+			return false;
+		}
+	}
+	return true;
 }
 
 vector<UnifyIters> unify_iters(const UnifyIters& i) {
@@ -117,6 +181,11 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 }
 
 vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
+
+	if (debug_trie_index) {
+		dump(begins, "unify_general_1: begins");
+	}
+
 	vector<UnifyIters> ret;
 	if (begins.iters.size() > 0) {
 		if (begins.iters.size() == 1) {
@@ -128,9 +197,18 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 			branch.push_back(begins);
 			while (branch.size()) {
 				UnifyIters n = branch.back();
+
+				if (debug_trie_index) {
+					dump(n, "unify_general_1: n");
+				}
+
 				branch.pop_back();
 				for (const auto& i : unify_iters(n)) {
 					if (i.isTermEnd(begins) && i.sub.ok) {
+						if (debug_trie_index) {
+							dump(i, "if (i.isTermEnd(begins) && i.sub.ok)");
+						}
+						verify_begins_ends(begins, i);
 						ret.push_back(i);
 					}
 					if (!i.isNextEnd(begins)) {

@@ -359,8 +359,27 @@ MultySubst::MultySubst(const vector<const Subst*>& subs) {
 }
 Subst MultySubst::makeSubs(Subst& unif) const {
 	Subst ret;
+	uint c = 0;
+	if (debug_unify_subs_func) {
+		cout << "--- MultySubst::makeSubs ---" << endl;
+	}
 	for (const auto& p : msub_) {
+		if (debug_unify_subs_func) {
+			cout << "TO UNIFY: " << c++ << endl;
+			for (auto e : p.second) {
+				cout << prover::show(e) << endl;
+			}
+		}
+		if (c == 2) {
+			cout << "AAA" << endl;
+		}
 		ret.sub[p.first] = unify(p.second, unif);
+		if (debug_unify_subs_func) {
+			cout << "RESULT: " << endl;
+			cout << prover::show(ret.sub[p.first]) << endl;
+			cout << "UNIF:" << endl;
+			cout << prover::show(unif) << endl;
+		}
 		if (ret.sub[p.first].empty()) {
 			ret.ok = false;
 			break;
@@ -390,25 +409,43 @@ void sub_closure(Subst& sub) {
 	}
 }
 
+bool debug_unify_subs_func = false;
+
 Subst unify_subs(const MultySubst& t) {
 	Subst unif;
-	return unify_subs(unif, t.makeSubs(unif));
+	Subst gen = t.makeSubs(unif);
+	return unify_subs(unif, gen);
 }
 
 Subst unify_subs(Subst unif, Subst gen) {
 	if (!(gen.ok && unif.ok)) {
 		return Subst(false);
 	}
-	if (!unif.intersects(gen)) {
-		if (unif.compose(gen)) {
-			sub_closure(unif);
-			return unif;
+	if (debug_unify_subs_func) {
+		cout << "--- unify_subs ---" << endl;
+		cout << "UNIF:" << endl;
+		cout << show(unif) << endl;
+		cout << "GEN:" << endl;
+		cout << show(gen) << endl;
+	}
+	if (!gen.intersects(unif)) {
+		if (debug_unify_subs_func) {
+			cout << "intersects == false" << endl;
+		}
+		if (gen.compose(unif)) {
+			sub_closure(gen);
+			return gen;
 		} else {
 			return Subst(false);
 		}
 	} else {
 		MultySubst msub({&unif, &gen});
-		return unify_subs(msub);
+		Subst ret = unify_subs(msub);
+		if (debug_unify_subs_func) {
+			cout << "ret:" << endl;
+			cout << show(ret) << endl;
+		}
+		return ret;
 	}
 }
 

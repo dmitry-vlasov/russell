@@ -87,6 +87,26 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 		p->parents.push_back(this);
 		p->new_ = false;
 	}
+	if (n.prop.ass->arity() > 0) {
+		Subst s0 = premises[0]->sub;
+		compose(s0, sub);
+		for (uint i = 0; i < premises.size(); ++ i) {
+			Subst si = premises[i]->sub;
+			compose(si, sub);
+			if (s0 != si) {
+				string err;
+				err += "s0 != si\n";
+				err += "s0: " +  prover::show(s0) + "\n";
+				err += "s" + to_string(i) + ": " + prover::show(si) + "\n\n";
+				err += "orig s0: " +  prover::show(premises[0]->sub) + "\n";
+				err += "orig s" + to_string(i) + ": " + prover::show(premises[i]->sub) + "\n";
+				err += "unifier:\n";
+				err += prover::show(s) + "\n";
+				throw Error(err);
+			}
+		}
+	}
+
 }
 
 ProofProp::~ProofProp() {
