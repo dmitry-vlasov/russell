@@ -22,7 +22,7 @@ vector<vector<uint>> UnifyIters::inds() const {
 string show(const vector<UnifyIters>& vi) {
 	string ret;
 	for (const auto& ui : vi) {
-		ret += ui.show() + "\n";
+		ret += ui.show(true) + "\n";
 	}
 	return ret;
 }
@@ -34,10 +34,10 @@ inline void dump(const vector<UnifyIters>& vi, const char* msg = "") {
 
 inline void dump(const UnifyIters& ui, const char* msg = "") {
 	cout << msg << endl;
-	cout << ui.show() << endl;
+	cout << ui.show(true) << endl;
 }
 
-vector<UnifyIters> unify_general_1(const UnifyIters& begins);
+vector<UnifyIters> unify_general_2(const UnifyIters& begins);
 
 FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
 
@@ -63,7 +63,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 	}
 	UnifyIters begin = UnifyIters(iters);
 	try {
-		vector<UnifyIters> ends = unify_general_1(begin);
+		vector<UnifyIters> ends = unify_general_2(begin);
 		assert(ends.size() <= 1);
 		if (ends.size() > 0) {
 			UnifyIters end = ends[0];
@@ -150,7 +150,7 @@ bool verify_begins_ends(const UnifyIters& begs, const UnifyIters& ends) {
 	return true;
 }
 
-vector<UnifyIters> unify_iters(const UnifyIters& i) {
+vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 	vector<UnifyIters> ret;
 	if (i.equals()) {
 		ret.emplace_back(i);
@@ -159,7 +159,7 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				vector<UnifyIters> subEnds = unify_general_1(subBegins);
+				vector<UnifyIters> subEnds = unify_general_2(subBegins);
 				for (const auto& ends : subEnds) {
 					BothIter i0 = ends.iters[0];
 					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
@@ -180,43 +180,64 @@ vector<UnifyIters> unify_iters(const UnifyIters& i) {
 	return ret;
 }
 
-vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
+
+vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 
 	if (debug_trie_index) {
-		dump(begins, "unify_general_1: begins");
+		dump(inits, "unify_general_1: begins");
 	}
 
 	vector<UnifyIters> ret;
-	if (begins.iters.size() > 0) {
-		if (begins.iters.size() == 1) {
-			for (const auto& end : begins.iters[0].ends()) {
-				ret.emplace_back(vector<BothIter>(1, end), begins.parentSub, begins.sub);
+	if (inits.iters.size() > 0) {
+		if (inits.iters.size() == 1) {
+			for (const auto& end : inits.iters[0].ends()) {
+				ret.emplace_back(vector<BothIter>(1, end), inits.parentSub, inits.sub);
 			}
 		} else {
-			vector<UnifyIters> branch;
-			branch.push_back(begins);
-			while (branch.size()) {
-				UnifyIters n = branch.back();
 
+			struct UnifyPair {
+				UnifyPair(const UnifyIters& b) : is_root(true), beg(b), cur(b) { }
+				UnifyPair(const UnifyIters& b, const UnifyIters& c) : is_root(false), beg(b), cur(c) { }
+				bool is_root;
+				UnifyIters beg;
+				UnifyIters cur;
+			};
+
+			stack<UnifyPair> st;
+			st.emplace(inits);
+			while (st.size()) {
+				UnifyPair p = st.top();
 				if (debug_trie_index) {
-					dump(n, "unify_general_1: n");
+					dump(p.cur, "unify_general_1: n");
 				}
+				st.pop();
+				for (const auto& i : unify_iters_2(p.cur)) {
+					if (i.isTermEndOld(p.beg) && i.sub.ok && !i.isTermEnd(p.beg)) {
+						if (debug_trie_index) {
+							dump(i, "i.isTermEndOld(begins) && i.sub.ok && !i.isTermEnd(begins)");
+							cout << "i.showTermEnd(begins): " << endl;
+							i.showTermEnd(p.beg);
+							dump(p.beg, "begins:");
+						}
+					}
 
-				branch.pop_back();
-				for (const auto& i : unify_iters(n)) {
-					if (i.isTermEnd(begins) && i.sub.ok) {
+					if (i.isTermEnd(p.beg) && i.sub.ok) {
 						if (debug_trie_index) {
 							dump(i, "if (i.isTermEnd(begins) && i.sub.ok)");
 						}
-						verify_begins_ends(begins, i);
+						verify_begins_ends(p.beg, i);
 						ret.push_back(i);
 					}
-					if (!i.isNextEnd(begins)) {
-						branch.push_back(i.next());
+					if (!i.isNextEnd(p.beg)) {
+						st.emplace(p.beg, i.next());
 					}
 				}
-				if (!n.isSideEnd()) {
-					branch.push_back(n.side());
+				if (!p.cur.isSideEnd()) {
+					if (p.is_root) {
+						st.emplace(p.cur.side());
+					} else {
+						st.emplace(p.beg, p.cur.side());
+					}
 				}
 			}
 		}
@@ -224,12 +245,18 @@ vector<UnifyIters> unify_general_1(const UnifyIters& begins) {
 	return ret;
 }
 
+
+
+
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 	map<vector<uint>, FlatTermSubst> ret;
-	for (const auto& end : unify_general_1(begin)) {
+	for (const auto& end : unify_general_2(begin)) {
 		FlatTerm term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, FlatTermSubst(term, end.sub));
+		}
+		if (debug_trie_index) {
+			dump(end, "unify_general RESULT:  end");
 		}
 	}
 	return ret;

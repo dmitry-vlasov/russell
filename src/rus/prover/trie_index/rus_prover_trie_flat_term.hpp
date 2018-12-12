@@ -68,7 +68,7 @@ struct FlatTerm {
 		}
 		TermIter prev() const {
 			if (!valid_ || isPrevEnd()) {
-				return TermIter(beg_, iter_, end_, false);
+				return TermIter(); //TermIter(beg_, iter_, end_, false);
 			} else {
 				return TermIter(beg_, iter_ - 1, end_, iter_ != beg_);
 			}

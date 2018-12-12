@@ -90,6 +90,7 @@ void Hyp::buildUp() {
 				cout << prover::show(p2.sub) << endl;
 			}
 			cout << "--------------------" << endl;
+			cout << space->assertions_.show_pointers() << endl << endl << endl;
 
 			trie_index::debug_trie_index = true;
 

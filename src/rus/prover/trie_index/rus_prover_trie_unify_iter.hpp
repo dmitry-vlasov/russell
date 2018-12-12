@@ -231,21 +231,31 @@ struct UnifyIters {
 		if (!sub.ok) {
 			return true;
 		}
-		// TODO !!!!!!
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (ends.iters[i].isEnd(iters[i])) {
-				return true;
-			}
-		}
-		return false;
-		/*
 		for (uint i = 0; i < iters.size(); ++i) {
 			if (!ends.iters[i].isEnd(iters[i])) {
 				return false;
 			}
 		}
 		return true;
-		 */
+	}
+	bool isTermEndOld(const UnifyIters& ends) const {
+		if (!sub.ok) {
+			return true;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (ends.iters[i].isEnd(iters[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+	void showTermEnd(const UnifyIters& ends) const {
+		if (!sub.ok) {
+			cout << "!sub.ok" << endl;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			cout << i << ": " << (ends.iters[i].isEnd(iters[i]) ? "END" : "X" ) << endl;
+		}
 	}
 	bool isNextEnd(const UnifyIters& ends) const {
 		if (!sub.ok) {
@@ -286,7 +296,23 @@ struct UnifyIters {
 		ostringstream oss;
 		uint n = 0;
 		for (const auto& i : iters) {
-			oss << n++ << "-iter: " << i.show() << endl;
+			if (full) {
+				auto j = i;
+				vector<BothIter> branch;
+				while (j != BothIter()) {
+					branch.push_back(j);
+					j = j.prev();
+				}
+				reverse(branch.begin(), branch.end());
+				oss << n << ": ";
+				for (auto x : branch) {
+					oss << x.show();
+				}
+				oss << endl;
+			} else {
+				oss << n << "-iter: " << i.show() << endl;
+			}
+			++n;
 		}
 		return oss.str();
 	}

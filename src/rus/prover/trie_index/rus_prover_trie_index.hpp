@@ -126,27 +126,27 @@ struct TrieIndex::TrieIter {
 		return iter_->first;
 	}
 	string show(bool full = false) const {
-		string ret;
+		ostringstream oss;
 			if (full) {
 			//ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->first.show()) + "\n";
-			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + "\n";
+			oss << "iter: " << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "\n";
 			//ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->first.show()) + "\n";
-			ret += "inds: ";
+			oss << "inds: ";
 			for (uint i : iter_->second.inds) {
-				ret += to_string(i) + " ";
+				oss << to_string(i) << " ";
 			}
-			ret += "\n";
+			oss << "\n";
 		} else {
-			ret += ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) + " ";
+			oss << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "=(" << (void*)&*iter_ << ") " ;
 			if (iter_->second.inds.size()) {
-				ret += "[";
+				oss << "[";
 				for (uint i : iter_->second.inds) {
-					ret += to_string(i) + " ";
+					oss << to_string(i) + " ";
 				}
-				ret += "]";
+				oss << "]";
 			}
 		}
-		return ret;
+		return oss.str();
 	}
 	string showBranch() const {
 		vector<TrieIter> branch;
@@ -196,6 +196,9 @@ struct TrieIndexMap {
 			}
 			return ret;
 		}
+	}
+	string show_pointers() const {
+		return index_.show_pointers();
 	}
 	const TrieIndex& index() const { return index_; }
 	const vector<Data>& data() const { return data_; }
