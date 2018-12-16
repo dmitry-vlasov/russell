@@ -115,6 +115,10 @@ void verify_source(uint src, uint mode, set<uint>& verified) {
 	verify_theory(&source->theory, mode);
 }
 
+#ifdef PARALLEL
+#define PARALLEL_RUS_VERIFY
+#endif
+
 void verify(uint src) {
 	if (src == -1) {
 		vector<const Proof*> proofs;
@@ -125,12 +129,18 @@ void verify(uint src) {
 					proofs.push_back(p.get());
 			}
 		}
+#ifdef PARALLEL_RUS_VERIFY
 		tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
 			[proofs] (const tbb::blocked_range<size_t>& r) {
 				for (size_t i = r.begin(); i != r.end(); ++i)
 					proofs[i]->verify(VERIFY_SUB | VERIFY_QED);
 			}
 		);
+#else
+		for (auto proof : proofs) {
+			proof->verify(VERIFY_SUB | VERIFY_QED);
+		}
+#endif
 		set<uint> verified;
 		for (const auto& s : Sys::mod().math.get<Source>()) {
 			verify_source(s.first, VERIFY_DISJ | VERIFY_DEEP, verified);

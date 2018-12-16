@@ -183,12 +183,12 @@ static void verify_assertion(const Assertion* ass) {
 }
 
 #ifdef PARALLEL
-#define PARALLEL_VERIFY
+#define PARALLEL_MM_VERIFY
 #endif
 
 void verify() {
 	Sys::timer()["verify"].start();
-#ifdef PARALLEL_VERIFY
+#ifdef PARALLEL_MM_VERIFY
 	vector<const Assertion*> assertions;
 	for (auto p : Sys::mod().math.get<Assertion>())
 		assertions.push_back(p.second.data);

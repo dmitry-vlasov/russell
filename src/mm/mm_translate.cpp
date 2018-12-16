@@ -3,10 +3,6 @@
 #include "mm_math_symb.hpp"
 #include "mm_tree.hpp"
 
-#ifdef PARALLEL
-#define PARALLEL_TRANSLATE
-#endif
-
 namespace mdl {
 
 namespace rus { Rule* create_super(Type* inf, Type* sup); }
@@ -562,13 +558,17 @@ static vector<uint> find_dependencies(uint src) {
 
 } // anonymous namespace
 
+#ifdef PARALLEL
+#define PARALLEL_MM_TRANSLATE
+#endif
+
 void translate(uint src, uint tgt) {
 	if (!Sys::get().math.get<Source>().has(src)) {
 		throw Error("no source", Lex::toStr(src));
 	}
 	Maps maps = create_maps(src, tgt);
 	vector<uint> deps = find_dependencies(src);
-#ifdef PARALLEL_TRANSLATE
+#ifdef PARALLEL_MM_TRANSLATE
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, deps.size()),
 		[maps, deps] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {

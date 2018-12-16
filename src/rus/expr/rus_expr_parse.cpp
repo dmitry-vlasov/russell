@@ -128,6 +128,10 @@ void parse(Expr* ex) {
 	}
 }
 
+#ifdef PARALLEL
+#define PARALLEL_RUS_EXPR_PARSE
+#endif
+
 void parse() {
 	Sys::mod().math.get<Rule>().rehash();
 	for (const auto& p : Sys::get().math.get<Rule>()) {
@@ -141,12 +145,18 @@ void parse() {
 		Type* tp = p.second.data;
 		tp->rules.sort();
 	}
+#ifdef PARALLEL_RUS_EXPR_PARSE
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),
 		[] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)
 				parse(queue[i]);
 		}
 	);
+#else
+	for (auto expr : queue) {
+		parse(expr);
+	}
+#endif
 	queue.clear();
 	for (auto& ex : exceptions) {
 		if (ex) std::rethrow_exception(ex);

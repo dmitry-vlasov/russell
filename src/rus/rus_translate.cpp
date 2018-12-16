@@ -411,7 +411,7 @@ Maps::Global translate_global() {
 }
 
 #ifdef PARALLEL
-#define PARALLEL_TRANSLATE
+#define PARALLEL_RUS_TRANSLATE
 #endif
 
 mm::Source* translate(uint src, uint tgt) {
@@ -419,7 +419,7 @@ mm::Source* translate(uint src, uint tgt) {
 	if (!source) throw Error("no source", Lex::toStr(src));
 	Maps::Global global = translate_global();
 	vector<uint> deps = find_dependencies(src);
-#ifdef PARALLEL_TRANSLATE
+#ifdef PARALLEL_RUS_TRANSLATE
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, deps.size()),
 		[deps, global] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
