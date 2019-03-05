@@ -46,9 +46,12 @@ Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 inline uint make_proof_id(uint id, Id th) {
 	if (id == -1) {
 		const string& th_name = (th.id == -1) ? "anonymous" : Lex::toStr(th.id);
-		static map<uint, uint> proof_indexes;
-		uint ind = proof_indexes.count(th.id) ? proof_indexes.at(th.id) + 1 : 0;
-		proof_indexes[th.id] = ind;
+		static cmap<uint, uint> proof_indexes;
+
+		typename cmap<uint, uint>::accessor a;
+		uint ind = proof_indexes.find(a, th.id) ? a->second + 1 : 0;
+		proof_indexes.insert(a, th.id);
+		a->second = ind;
 		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(ind));
 	} else {
 		return id;
