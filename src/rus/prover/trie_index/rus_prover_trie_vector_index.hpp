@@ -45,7 +45,9 @@ struct VectorUnified {
 };
 
 struct VectorIndex {
-	VectorIndex(uint dim) : vect(dim) { }
+	VectorIndex(uint dim) {
+		for (uint i = 0; i < dim; ++ i) vect.emplace_back(new Cell);
+	}
 	struct Cell {
 		void init(const vector<uint>& all_inds) {
 			all_inds_ = all_inds;
@@ -77,18 +79,18 @@ struct VectorIndex {
 		vector<BothIter> iters;
 		VectorUnified ret;
 		try {
-			for (const auto& c : vect) {
-				ret.vect.emplace_back(c.extraInds(), c.exprs().empty());
-				if (!c.exprs().empty()) {
-					iters.emplace_back(TrieIndex::TrieIter(c.exprs().root));
+			for (auto& c : vect) {
+				ret.vect.emplace_back(c->extraInds(), c->exprs().empty());
+				if (!c->exprs().empty()) {
+					iters.emplace_back(TrieIndex::TrieIter(c->exprs().root));
 				}
 			}
 			ret.unified = trie_index::unify_general(iters);
 		} catch (Error& err) {
 			cout << endl << "VectorIndex::unify_general(): ERROR" << endl;
-			for (const auto& c : vect) {
+			for (auto& c : vect) {
 				cout << "CELL: " << endl;
-				cout << c.exprs().show_pointers() << endl << endl;
+				cout << c->exprs().show_pointers() << endl << endl;
 			}
 
 			//debug_trie_index = true;
@@ -98,7 +100,7 @@ struct VectorIndex {
 		}
 		return ret;
 	}
-	vector<Cell> vect;
+	vector<unique_ptr<Cell>> vect;
 };
 
 }}}}

@@ -40,7 +40,7 @@ struct MatrixIndex {
 
 private:
 	uint dim_hyp_;
-	map<LightSymbol, VectorIndex> mindex_;
+	map<LightSymbol, unique_ptr<VectorIndex>> mindex_;
 	vector<vector<uint>> proofInds_;
 	bool empty_;
 };

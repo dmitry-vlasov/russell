@@ -9,7 +9,7 @@ void TrieIndex::add(const FlatTerm& t, uint val) {
 	struct NodePair {
 		NodePair(TrieIndex::Iterator t, FlatTerm::ConstIterator e) : trie(t), end(e) { }
 		TrieIndex::Iterator trie;
-		FlatTerm::ConstIterator  end;
+		FlatTerm::ConstIterator end;
 	};
 	stack<NodePair> st;
 	Node* n = &root;
@@ -66,22 +66,6 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 			break;
 		}
 		i = i->second.parent;
-		/*if (i == ConstIterator()) {
-			cout << "i == ConstIterator() " << endl;
-			cout << "start: " << start->first.show() << " - " << (void*)&*start << endl;
-			cout << "this: " << ruleVar().show() << " - " << (void*)&*iter_ << endl;
-			i = start;
-			while (i != ConstIterator()) {
-				cout << "i: " << i->first.show() << " - " << (void*)&*i << endl;
-				if (iter_ == i) {
-					break;
-				}
-				i = i->second.parent;
-			}
-			std::reverse(branch.begin(), branch.end());
-			cout << "SUBTERM: " << create_flatterm(branch).show() << endl;
-			throw Error("TrieIndex::TrieIter::subTerm");
-		}*/
 	}
 	std::reverse(branch.begin(), branch.end());
 	try {
@@ -105,8 +89,6 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 			}
 			i = i->second.parent;
 		}
-		//std::reverse(branch.begin(), branch.end());
-		//cout << "SUBTERM: " << create_flatterm(branch).show() << endl;
 		throw err;
 	}
 }
@@ -177,6 +159,7 @@ string TrieIndex::show_pointers() const {
 		}
 	}
 	ostringstream oss;
+	oss << "ROOT: " << (void*)&root << endl;
 	for (const auto& p : vect) {
 		for (const auto& i : p.first) {
 			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
@@ -253,6 +236,7 @@ string TrieIndex::show_pointers(const Node& root) {
 		}
 	}
 	ostringstream oss;
+	oss << "RELATIVE ROOT: " << (void*)&root << endl;
 	for (const auto& p : vect) {
 		for (const auto& i : p.first) {
 			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";

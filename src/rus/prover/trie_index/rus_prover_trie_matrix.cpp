@@ -6,29 +6,29 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 bool debug_trie_matrix = false;
 
-static void addProofs(map<LightSymbol, VectorIndex>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
+static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, dim_hyp_);
+				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
 			}
-			mindex_.at(x.first).vect[i].add(x.second, j);
+			mindex_.at(x.first)->vect[i]->add(x.second, j);
 		}
 		proofInds_[i][j] = j;
 	}
 }
 
-static void addProofs(map<LightSymbol, VectorIndex>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
+static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
 		for (const auto& x : hi.proof->sub.sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, dim_hyp_);
+				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
 			}
-			mindex_.at(x.first).vect[i].add(x.second, hi.ind);
+			mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
 		}
 		proofInds_[i][j] = hi.ind;
 	}
@@ -92,13 +92,13 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	}
 	map<LightSymbol, VectorUnified> unified_columns;
 	matrix_vector_counter = 0;
-	for (auto p : mindex_) {
+	for (auto& p : mindex_) {
 		for (uint i = 0; i < dim_hyp_; ++i) {
-			auto& cell = p.second.vect[i];
-			cell.init(proofInds_[i]);
+			auto& cell = p.second->vect[i];
+			cell->init(proofInds_[i]);
 		}
 		try {
-			unified_columns[p.first] = std::move(p.second.unify_general());
+			unified_columns[p.first] = std::move(p.second->unify_general());
 		} catch (Error& err) {
 			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
 			throw err;

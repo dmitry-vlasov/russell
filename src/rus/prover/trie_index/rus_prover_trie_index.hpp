@@ -41,19 +41,16 @@ struct TrieIndex {
 
 struct TrieIndex::TrieIter {
 	TrieIter() : valid_(false) { }
-	TrieIter(const Node& n) :
-		valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
-	TrieIter(ConstIterator i) :
-		valid_(i != ConstIterator()), iter_(i) { }
-	TrieIter(ConstIterator b, ConstIterator e, bool v = true) :
-		valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
+	TrieIter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
+	TrieIter(ConstIterator i) : valid_(i != ConstIterator()), iter_(i) { }
+	TrieIter(ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
 	TrieIter(const TrieIter&) = default;
 	TrieIter& operator = (const TrieIter&) = default;
 	bool operator == (const TrieIter& i) const {
-		return iter_ == i.iter_;
+		return &*iter_ == &*i.iter_;
 	}
 	bool operator != (const TrieIter& i) const {
-		return iter_ != i.iter_;
+		return &*iter_ != &*i.iter_;
 	}
 	TrieIter side() const {
 		if (!valid_ || isSideEnd()) {
