@@ -48,6 +48,11 @@ MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
 			addProofs(mindex_, proofInds_, dim_hyp_, hs, i);
 		}
 	}
+	for (auto& p : mindex_) {
+		for (uint i = 0; i < dim_hyp_; ++i) {
+			p.second->vect[i]->init(proofInds_[i]);
+		}
+	}
 }
 
 uint MatrixIndex::card() const {
@@ -93,10 +98,6 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	map<LightSymbol, VectorUnified> unified_columns;
 	matrix_vector_counter = 0;
 	for (auto& p : mindex_) {
-		for (uint i = 0; i < dim_hyp_; ++i) {
-			auto& cell = p.second->vect[i];
-			cell->init(proofInds_[i]);
-		}
 		try {
 			unified_columns[p.first] = std::move(p.second->unify_general());
 		} catch (Error& err) {
@@ -115,21 +116,22 @@ string MatrixIndex::show() const {
 	}
 	string ret;
 	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
-	for (const auto& p : mindex_) {
-		/*VectorIndex vectIndex;
-		for (uint i = 0; i < dim_hyp_; ++i) {
-			const auto& ind = p.second[i];
-			vectIndex.add(ind, proofInds_[i]);
-		}
+	for (auto& p : mindex_) {
+		//VectorIndex vectIndex;
+		//for (uint i = 0; i < dim_hyp_; ++i) {
+		//	const auto& ind = p.second[i];
+		//	vectIndex.add(ind, proofInds_[i]);
+		//}
 		ret += "\nVAR: " + prover::show(p.first) + "\n";
 		ret += "==============================\n";
-		for (uint i = 0; i < p.second.size(); ++ i) {
+		for (uint i = 0; i < p.second->vect.size(); ++ i) {
 			ret += "index: " + to_string(i) + "\n";
-			ret += "\tproof inds: " + prover::show(proofInds_[i]) + "\n";
-			ret += "\tabsent inds: " + prover::show(vectIndex.info(i).obligatory) + "\n\n";
-			ret += p.second[i].show() + "\n";
+			ret += "\textra inds: " + prover::show(p.second->vect[i]->extraInds()) + "\n";
+			ret += "\tall inds: " + prover::show(p.second->vect[i]->allInds()) + "\n";
+			ret += "\texprs inds: " + prover::show(p.second->vect[i]->exprsInds()) + "\n";
+			ret += p.second->vect[i]->show() + "\n";
 			ret += "-----------------------------\n\n";
-		}*/
+		}
 	}
 	return ret;
 }

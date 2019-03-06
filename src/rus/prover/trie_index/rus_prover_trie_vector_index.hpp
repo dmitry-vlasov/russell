@@ -49,17 +49,19 @@ struct VectorIndex {
 		for (uint i = 0; i < dim; ++ i) vect.emplace_back(new Cell);
 	}
 	struct Cell {
+		Cell() = default;
+		Cell(const Cell&) = delete;
 		void init(const vector<uint>& all_inds) {
 			all_inds_ = all_inds;
-			std::sort(inds_in_exprs.begin(), inds_in_exprs.end());
+			std::sort(exprs_inds_.begin(), exprs_inds_.end());
 			for (uint i : all_inds_) {
-				if (!std::binary_search(inds_in_exprs.begin(), inds_in_exprs.end(), i)) {
+				if (!std::binary_search(exprs_inds_.begin(), exprs_inds_.end(), i)) {
 					extra_inds_.push_back(i);
 				}
 			}
 		}
 		void add(const LightTree& e, uint i) {
-			inds_in_exprs.push_back(i);
+			exprs_inds_.push_back(i);
 			exprs_.add(e, i);
 		}
 		bool empty() const {
@@ -68,12 +70,14 @@ struct VectorIndex {
 		const TrieIndex& exprs() const { return exprs_; }
 		const vector<uint>& extraInds() const { return extra_inds_; }
 		const vector<uint>& allInds() const { return all_inds_; }
+		const vector<uint>& exprsInds() const { return exprs_inds_; }
+		string show() const { return exprs_.show(); }
 
 	private:
 		TrieIndex    exprs_;
 		vector<uint> extra_inds_;
 		vector<uint> all_inds_;
-		vector<uint> inds_in_exprs;
+		vector<uint> exprs_inds_;
 	};
 	VectorUnified unify_general() {
 		vector<BothIter> iters;
