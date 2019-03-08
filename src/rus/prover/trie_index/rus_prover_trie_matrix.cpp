@@ -104,7 +104,14 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
 			throw err;
 		}
-		//cout << "var " << prover::show(p.first) << " has " << terms[p.first].map().size() << " unified" << endl;
+		if (debug_trie_index) {
+			cout << endl;
+			cout << "var " << prover::show(p.first) << " has " << unified_columns[p.first].unified.size() << " unified" << endl;
+			for (auto& un : unified_columns[p.first].unified) {
+				cout << prover::show(un.first) << " --> " << un.second.show() << endl;
+			}
+			cout << endl;
+		}
 		matrix_vector_counter += 1;
 	}
 	return intersect(unified_columns, unif);

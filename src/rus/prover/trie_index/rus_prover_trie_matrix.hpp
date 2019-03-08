@@ -20,6 +20,22 @@ struct MatrixUnified {
 		}
 		return !unified.size();
 	}
+	string show() const {
+		string ret;
+		ret += "<MatrixUnified>\n";
+		ret += "cartesian cells:\n";
+		for (const auto& c : vect) {
+			ret += "\t" + c.show();
+		}
+		ret += "unified:\n";
+		for (const auto& p : unified) {
+			ret += "\t" + prover::show(p.first) + " --> \n";
+			for (const auto& t : p.second) {
+				ret += "\t\t" + t.show() + "\n";
+			}
+		}
+		return ret;
+	}
 
 	Kind kind;
 	vector<CartesianCell> vect;

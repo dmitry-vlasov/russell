@@ -17,6 +17,11 @@ struct CartesianCell {
 	bool empty() const {
 		return !extra_inds.size() && empty_index;
 	}
+	string show() const {
+		string ret;
+		ret += (empty_index ? "(empty)" : "") + string("extra_inds: ") + prover::show(extra_inds) + "\n";
+		return ret;
+	}
 	vector<uint> extra_inds;
 	bool empty_index;
 };
@@ -38,6 +43,20 @@ struct VectorUnified {
 			}
 		}
 		return !unified.size();
+	}
+
+	string show() const {
+		string ret;
+		ret += "<VectorUnified>\n";
+		ret += "cartesian cells:\n";
+		for (const auto& c : vect) {
+			ret += "\t" + c.show();
+		}
+		ret += "unified:\n";
+		for (const auto& p : unified) {
+			ret += "\t" + prover::show(p.first) + " --> " + p.second.show() + "\n";
+		}
+		return ret;
 	}
 
 	vector<CartesianCell> vect;
@@ -80,7 +99,7 @@ struct VectorIndex {
 		vector<uint> exprs_inds_;
 	};
 	VectorUnified unify_general() {
-		vector<BothIter> iters;
+		vector<MultyIter> iters;
 		VectorUnified ret;
 		try {
 			for (auto& c : vect) {

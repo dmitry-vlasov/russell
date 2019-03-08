@@ -32,6 +32,9 @@ struct IndexHelper {
 	struct Keys {
 		vector<uint> mappingKey;
 		vector<uint> cartesianKey;
+		string show() const {
+			return "mappingKey: " + prover::show(mappingKey) + ", cartesianKey: " + prover::show(cartesianKey);
+		}
 	};
 
 	struct Iterator {
@@ -116,6 +119,28 @@ struct IndexHelper {
 		}
 	}
 
+	string show() const {
+		auto show_descr = [](HypDescr d) {
+			switch (d) {
+			case HypDescr::FREE: return "FREE";
+			case HypDescr::LEFT: return "LEFT";
+			case HypDescr::RIGHT: return "RIGHT";
+			case HypDescr::BOTH: return "BOTH";
+			}
+		};
+		ostringstream ret;
+		ret << "<IndexHelper>" << endl;
+		ret << "dim: " << dim << endl;
+		ret << "hyp descr: " << endl;
+		for (auto d : hypDescrs) {
+			ret << show_descr(d) << ", ";
+		}
+		ret << endl;
+		ret << "additional: " << endl;
+		ret << additional.show() << endl;
+		return ret.str();
+	}
+
 	uint dim;
 	vector<HypDescr> hypDescrs;
 	CartesianProd<uint> additional;
@@ -140,8 +165,19 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 		assert(vect.size() == vu.vect.size());
 		IndexHelper indexHelper(*this, vu);
 		auto iter = indexHelper.initIteration(ret);
+
+		if (debug_trie_index) {
+			cout << "indexHelper:" << endl;
+			cout << indexHelper.show() << endl;
+		}
+
 		while (true) {
 			IndexHelper::Keys keys = iter.keys();
+
+			if (debug_trie_index) {
+				cout << "KEYS: " << keys.show() << endl;
+			}
+
 			if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
 				vector<FlatTermSubst> w(iter.termSubstVect());
 				w.emplace_back(*ts);
@@ -228,14 +264,44 @@ map<vector<uint>, vector<FlatTermSubst>> MatrixUnified::unfold() const {
 }
 
 MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
+
+	if (debug_trie_index) {
+		cout << "TO INTERSECT:" << endl;
+		for (const auto& p : terms) {
+			cout << "VAR: " << p.first << endl;
+			cout << p.second.show() << endl;
+			cout << endl;
+		}
+	}
+
+
 	MatrixUnified common;
 	vector<LightSymbol> vars;
 	for (const auto& p : terms) {
 		common = std::move(common.intersect(p.second));
+
+		if (debug_trie_index) {
+			cout << "INTERSECTED:" << endl;
+			cout << common.show() << endl;
+		}
+
 		vars.push_back(p.first);
 	}
 	MultyUnifiedSubs s;
-	for (const auto& q : common.unfold()) {
+	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
+
+	if (debug_trie_index) {
+		cout << "UNFOLDED:" << endl;
+		for (const auto& p : unfolded) {
+			cout << "\t" << prover::show(p.first) << " --> " << endl;
+			for (const auto& t : p.second) {
+				cout << "\t\t" << t.show() << endl;
+			}
+			cout << endl;
+		}
+	}
+
+	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
 			const FlatTerm& term = q.second[i].term;

@@ -70,9 +70,9 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	std::reverse(branch.begin(), branch.end());
 	try {
 		auto ret = create_flatterm(branch);
-		if (debug_trie_index) {
-			cout << "SUBTERM: " << ret.show() << endl;
-		}
+		//if (debug_trie_index) {
+		//	cout << "SUBTERM: " << ret.show() << endl;
+		//}
 		return ret;
 	} catch (Error& err) {
 		cout << "start: " << start->first.show() << " - " << (void*)&*start << endl;

@@ -7,117 +7,160 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 extern bool debug_trie_index_vector;
 
-struct BothIter {
-	enum Kind { NONE, TRIE, TERM };
-	BothIter() : kind_(NONE) { }
-	BothIter(TrieIndex::TrieIter i) : kind_(TRIE), trieIter(i) { }
-	BothIter(FlatTerm::TermIter i) : kind_(TERM), termIter(i) { }
-	BothIter(const BothIter&) = default;
-	BothIter& operator = (const BothIter&) = default;
+struct EmptyIter {
+	EmptyIter(const vector<uint>& i = vector<uint>()) : inds_(i) { }
+	EmptyIter& operator = (const EmptyIter&) = default;
 
-	bool operator == (const BothIter& i) const {
+	bool operator == (const EmptyIter& i) const { return true; }
+	bool operator != (const EmptyIter& i) const { return false; }
+
+	EmptyIter side() const { return *this; }
+	EmptyIter next() const { return *this; }
+	EmptyIter prev() const { return *this; }
+	EmptyIter reset() const { return *this; }
+	bool isNextEnd() const { return false; }
+	bool isSideEnd() const { return true; }
+	bool isValid() const { return true; }
+	FlatTerm subTerm() const { return FlatTerm(); }
+	vector<uint> inds() const { return inds_; }
+	bool isEnd(const EmptyIter&) const { return true; }
+	bool isVar() const { return false; }
+	LightSymbol var() const { return LightSymbol(); }
+	RuleVar ruleVar() const { return RuleVar(); }
+
+	string show() const {
+		return "empty, inds: " + prover::show(inds_);
+	}
+
+private:
+	vector<uint> inds_;
+};
+
+
+struct MultyIter {
+	enum Kind { NONE, TRIE, TERM, EMPTY };
+	MultyIter() : kind_(NONE) { }
+	MultyIter(TrieIndex::TrieIter i) : kind_(TRIE), trieIter(i) { }
+	MultyIter(FlatTerm::TermIter i) : kind_(TERM), termIter(i) { }
+	MultyIter(EmptyIter i) : kind_(EMPTY), emptyIter(i) { }
+	MultyIter(const MultyIter&) = default;
+	MultyIter& operator = (const MultyIter&) = default;
+
+	bool operator == (const MultyIter& i) const {
 		switch (kind_) {
-		case TRIE: return trieIter == i.trieIter;
-		case TERM: return termIter == i.termIter;
-		default:   return true;
+		case TRIE:  return trieIter == i.trieIter;
+		case TERM:  return termIter == i.termIter;
+		case EMPTY: return emptyIter == i.emptyIter;
+		default: throw Error("impossible");
 		}
 	}
-	bool operator != (const BothIter& i) const {
+	bool operator != (const MultyIter& i) const {
 		switch (kind_) {
-		case TRIE: return trieIter != i.trieIter;
-		case TERM: return termIter != i.termIter;
-		default:   return false;
+		case TRIE:  return trieIter != i.trieIter;
+		case TERM:  return termIter != i.termIter;
+		case EMPTY: return emptyIter != i.emptyIter;
+		default: throw Error("impossible");
 		}
 	}
 
 	Kind kind() const { return kind_; }
-	BothIter side() const {
+	MultyIter side() const {
 		switch (kind_) {
-		case TRIE: return BothIter(trieIter.side());
-		case TERM: return BothIter(termIter.side());
-		default:   return BothIter();
+		case TRIE:  return MultyIter(trieIter.side());
+		case TERM:  return MultyIter(termIter.side());
+		case EMPTY: return MultyIter(emptyIter.side());
+		default: throw Error("impossible");
 		}
 	}
-	BothIter next() const {
+	MultyIter next() const {
 		switch (kind_) {
-		case TRIE: return BothIter(trieIter.next());
-		case TERM: return BothIter(termIter.next());
-		default:   return BothIter();
+		case TRIE:  return MultyIter(trieIter.next());
+		case TERM:  return MultyIter(termIter.next());
+		case EMPTY: return MultyIter(emptyIter.next());
+		default: throw Error("impossible");
 		}
 	}
-	BothIter prev() const {
+	MultyIter prev() const {
 		switch (kind_) {
-		case TRIE: return BothIter(trieIter.prev());
-		case TERM: return BothIter(termIter.prev());
-		default:   return BothIter();
+		case TRIE:  return MultyIter(trieIter.prev());
+		case TERM:  return MultyIter(termIter.prev());
+		case EMPTY: return MultyIter(emptyIter.prev());
+		default: throw Error("impossible");
 		}
 	}
-	BothIter reset() const {
+	MultyIter reset() const {
 		switch (kind_) {
-		case TRIE: return BothIter(trieIter.reset());
-		case TERM: return BothIter(termIter.reset());
-		default:   return BothIter();
+		case TRIE:  return MultyIter(trieIter.reset());
+		case TERM:  return MultyIter(termIter.reset());
+		case EMPTY: return MultyIter(emptyIter.reset());
+		default: throw Error("impossible");
 		}
 	}
 	bool isNextEnd() const {
 		switch (kind_) {
-		case TRIE: return trieIter.isNextEnd();
-		case TERM: return termIter.isNextEnd();
-		default:   return true;
+		case TRIE:  return trieIter.isNextEnd();
+		case TERM:  return termIter.isNextEnd();
+		case EMPTY: return emptyIter.isNextEnd();
+		default: throw Error("impossible");
 		}
 	}
 	bool isSideEnd() const {
 		switch (kind_) {
-		case TRIE: return trieIter.isSideEnd();
-		case TERM: return termIter.isSideEnd();
-		default:   return true;
+		case TRIE:  return trieIter.isSideEnd();
+		case TERM:  return termIter.isSideEnd();
+		case EMPTY: return emptyIter.isSideEnd();
+		default: throw Error("impossible");
 		}
 	}
 	bool isValid() const {
 		switch (kind_) {
-		case TRIE: return trieIter.isValid();
-		case TERM: return termIter.isValid();
-		default:   return false;
+		case TRIE:  return trieIter.isValid();
+		case TERM:  return termIter.isValid();
+		case EMPTY: return emptyIter.isValid();
+		default: throw Error("impossible");
 		}
 	}
-	FlatTerm subTerm(const BothIter& i) const {
+	FlatTerm subTerm(const MultyIter& i) const {
 		switch (kind_) {
-		case TRIE: return trieIter.subTerm(i.trieIter);
-		case TERM: return termIter.subTerm();
-		default:   return FlatTerm();
+		case TRIE:  return trieIter.subTerm(i.trieIter);
+		case TERM:  return termIter.subTerm();
+		case EMPTY: return emptyIter.subTerm();
+		default: throw Error("impossible");
 		}
 	}
 
 	vector<uint> inds() const {
 		switch (kind_) {
-		case TRIE: return trieIter.iter()->second.inds;
-		case TERM: return {0};
-		default:   return {};
+		case TRIE:  return trieIter.iter()->second.inds;
+		case TERM:  return {0};
+		case EMPTY: return emptyIter.inds();
+		default: throw Error("impossible");
 		}
 	}
-	vector<pair<FlatTerm, BothIter>> subTerms() const {
-		vector<pair<FlatTerm, BothIter>> ret;
+	vector<pair<FlatTerm, MultyIter>> subTerms() const {
+		vector<pair<FlatTerm, MultyIter>> ret;
 		switch (kind_) {
 		case TRIE: {
 			auto subterms = trieIter.subTerms();
 			for (auto st : subterms) {
-				ret.emplace_back(std::move(st.first), BothIter(st.second));
+				ret.emplace_back(std::move(st.first), MultyIter(st.second));
 			}
 			break;
 		}
 		case TERM: {
 			auto subterms = termIter.subTerms();
 			for (auto st : subterms) {
-				ret.emplace_back(std::move(st.first), BothIter(st.second));
+				ret.emplace_back(std::move(st.first), MultyIter(st.second));
 			}
 			break;
 		}
-		default: break;
+		case EMPTY: break;
+		default: throw Error("impossible");
 		}
 		return ret;
 	}
-	vector<BothIter> ends() const {
-		vector<BothIter> ret;
+	vector<MultyIter> ends() const {
+		vector<MultyIter> ret;
 		switch (kind_) {
 		case TRIE: {
 			auto ends = trieIter.ends();
@@ -133,44 +176,50 @@ struct BothIter {
 			}
 			break;
 		}
-		default: break;
+		case EMPTY: break;
+		default: throw Error("impossible");
 		}
 		return ret;
 	}
-	bool isEnd(const BothIter& i) const {
+	bool isEnd(const MultyIter& i) const {
 		switch (kind_) {
-		case TRIE: return trieIter.isEnd(i.trieIter);
-		case TERM: return termIter.isEnd(i.termIter);
-		default:   return true;
+		case TRIE:  return trieIter.isEnd(i.trieIter);
+		case TERM:  return termIter.isEnd(i.termIter);
+		case EMPTY: return emptyIter.isEnd(i.emptyIter);
+		default: throw Error("impossible");
 		}
 	}
 	bool isVar() const {
 		switch (kind_) {
-		case TRIE: return trieIter.isVar();
-		case TERM: return termIter.isVar();
-		default:   return false;
+		case TRIE:  return trieIter.isVar();
+		case TERM:  return termIter.isVar();
+		case EMPTY: return emptyIter.isVar();
+		default: throw Error("impossible");
 		}
 	}
 	LightSymbol var() const {
 		switch (kind_) {
-		case TRIE: return trieIter.var();
-		case TERM: return termIter.var();
-		default:   return LightSymbol();
+		case TRIE:  return trieIter.var();
+		case TERM:  return termIter.var();
+		case EMPTY: return emptyIter.var();
+		default: throw Error("impossible");
 		}
 	}
 	RuleVar ruleVar() const {
 		switch (kind_) {
-		case TRIE: return trieIter.ruleVar();
-		case TERM: return termIter.ruleVar();
-		default:   return RuleVar();
+		case TRIE:  return trieIter.ruleVar();
+		case TERM:  return termIter.ruleVar();
+		case EMPTY: return emptyIter.ruleVar();
+		default: throw Error("impossible");
 		}
 	}
 
 	string show() const {
 		switch (kind_) {
-		case TRIE: return trieIter.show();
-		case TERM: return termIter.show();
-		default:   return "";
+		case TRIE:  return trieIter.show();
+		case TERM:  return termIter.show();
+		case EMPTY: return emptyIter.show();
+		default: throw Error("impossible");
 		}
 	}
 
@@ -178,22 +227,23 @@ private:
 	Kind kind_;
 	TrieIndex::TrieIter trieIter;
 	FlatTerm::TermIter  termIter;
+	EmptyIter           emptyIter;
 };
 
-template<> inline RuleVar ruleVar<BothIter>(BothIter i) {
+template<> inline RuleVar ruleVar<MultyIter>(MultyIter i) {
 	return i.ruleVar();
 };
 
 struct UnifyIters {
-	UnifyIters(const vector<BothIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
+	UnifyIters(const vector<MultyIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
 		iters(i), parentSub(ps), sub(s) { }
-	UnifyIters(vector<BothIter>&& i, FlatSubst&& ps, FlatSubst&& s) :
+	UnifyIters(vector<MultyIter>&& i, FlatSubst&& ps, FlatSubst&& s) :
 		iters(std::move(i)), parentSub(std::move(ps)), sub(std::move(s)) { }
 	UnifyIters(const UnifyIters&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
 
 	UnifyIters side() {
-		vector<BothIter> side_iters;
+		vector<MultyIter> side_iters;
 		bool found = false;
 		for (auto i : iters) {
 			if (found) {
@@ -210,7 +260,7 @@ struct UnifyIters {
 		return UnifyIters(side_iters, parentSub, parentSub);
 	}
 	UnifyIters next() const {
-		vector<BothIter> next_iters;
+		vector<MultyIter> next_iters;
 		for (auto i : iters) {
 			next_iters.push_back(i.next());
 		}
@@ -237,17 +287,6 @@ struct UnifyIters {
 			}
 		}
 		return true;
-	}
-	bool isTermEndOld(const UnifyIters& ends) const {
-		if (!sub.ok) {
-			return true;
-		}
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (ends.iters[i].isEnd(iters[i])) {
-				return true;
-			}
-		}
-		return false;
 	}
 	void showTermEnd(const UnifyIters& ends) const {
 		if (!sub.ok) {
@@ -298,8 +337,8 @@ struct UnifyIters {
 		for (const auto& i : iters) {
 			if (full) {
 				auto j = i;
-				vector<BothIter> branch;
-				while (j != BothIter()) {
+				vector<MultyIter> branch;
+				while (j != MultyIter()) {
 					branch.push_back(j);
 					j = j.prev();
 				}
@@ -324,7 +363,7 @@ struct UnifyIters {
 	}
 	vector<vector<uint>> inds() const;
 
-	vector<BothIter> iters;
+	vector<MultyIter> iters;
 
 	FlatSubst parentSub;
 	FlatSubst sub;
@@ -336,6 +375,9 @@ struct FlatTermSubst {
 	FlatTermSubst(FlatTermSubst&&) = default;
 	FlatTerm term;
 	FlatSubst sub;
+	string show() const {
+		return "term: " + term.show() + ", sub: " + sub.show();
+	}
 };
 
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
@@ -344,7 +386,7 @@ template<class D>
 vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const LightTree& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	FlatTerm ft = convert2flatterm(t);
-	vector<BothIter> iters;
+	vector<MultyIter> iters;
 	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
 	iters.emplace_back(FlatTerm::TermIter(ft));
 	try {
