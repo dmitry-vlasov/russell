@@ -4,7 +4,7 @@
 namespace mdl { namespace rus {
 
 #ifdef PARALLEL
-#define PARALLEL_PARSE
+#define PARALLEL_RUS_PARSE
 #endif
 
 static const Symbol dfm(Lex::toInt("defiendum"));
@@ -550,7 +550,7 @@ private:
 		};
 		parser_["IMPORT"] = [](const peg::SemanticValues& sv) {
 			uint id = sv[0].get<uint>();
-#ifndef PARALLEL_PARSE
+#ifndef PARALLEL_RUS_PARSE
 			Source* s = Sys::mod().math.get<Source>().access(id);
 			if (!s->parsed) parse(id);
 #endif
@@ -598,7 +598,7 @@ public:
 };
 
 void parse_src_peg() {
-#ifdef PARALLEL_PARSE
+#ifdef PARALLEL_RUS_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
 		if (!p.second.data->parsed) labels.push_back(p.first);
