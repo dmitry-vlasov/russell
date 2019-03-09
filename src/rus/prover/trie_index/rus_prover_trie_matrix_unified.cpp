@@ -23,8 +23,12 @@ struct IndexHelper {
 			if (c1.empty_index) return c2.empty_index ? HypDescr::FREE : HypDescr::RIGHT;
 			else                return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
 		};
-		hypDescrs.push_back(makeHypDescr(c1, c2));
-		if (hypDescrs.back() == HypDescr::RIGHT) {
+		HypDescr descr = makeHypDescr(c1, c2);
+		hypDescrs[i] = descr;
+		if (descr == HypDescr::RIGHT) {
+			cout << "intersectedRight:" << endl << intersectedRight.show() << endl << endl;
+			cout << "intersectedRight.vect.at(" << i << ")" << intersectedRight.vect.at(i).show() << endl << endl;
+			cout << "intersectedRight.vect.at(" << i << ").extra_inds: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
 			additional.addDim(intersectedRight.vect.at(i).extra_inds);
 		}
 	}
@@ -50,9 +54,30 @@ struct IndexHelper {
 			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
 				switch (helper.hypDescrs.at(k)) {
 				case HypDescr::FREE:  break;
-				case HypDescr::LEFT:  ret.cartesianKey.push_back(a[i++]); break;
-				case HypDescr::RIGHT: ret.mappingKey.push_back(b[j++]); break;
-				case HypDescr::BOTH:  ret.mappingKey.push_back(a[i++]); break;
+				case HypDescr::LEFT:  {
+					if (i >= a.size()) {
+						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
+						cout << show() << endl;
+						throw Error("err");
+					}
+					ret.cartesianKey.push_back(a[i++]); break;
+				}
+				case HypDescr::RIGHT: {
+					if (j >= b.size()) {
+						cout << "j >= b.size(): " << j << " >= " << b.size() << endl;
+						cout << show() << endl;
+						throw Error("err");
+					}
+					ret.mappingKey.push_back(b[j++]); break;
+				}
+				case HypDescr::BOTH:  {
+					if (i >= a.size()) {
+						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
+						cout << show() << endl;
+						throw Error("err");
+					}
+					ret.mappingKey.push_back(a[i++]); break;
+				}
 				}
 			}
 			return ret;
@@ -74,6 +99,15 @@ struct IndexHelper {
 
 		const vector<FlatTermSubst>& termSubstVect() const {
 			return iter1->second;
+		}
+
+		string show() const {
+			vector<uint> a = iter1->first;
+			vector<uint> b = iter2.data();
+			ostringstream ret;
+			ret << "iter1: " << prover::show(a) << endl;
+			ret << "iter2: " << prover::show(b) << endl;
+			return ret.str();
 		}
 
 		Iter1 iter1;
@@ -171,6 +205,7 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 			cout << indexHelper.show() << endl;
 		}
 
+		try {
 		while (true) {
 			IndexHelper::Keys keys = iter.keys();
 
@@ -189,6 +224,11 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 				break;
 			}
 		}
+		} catch (Error& err) {
+				cout << "IndexHelper:" << endl;
+				cout << indexHelper.show() << endl;
+				throw err;
+			}
 	}
 	return ret;
 }
