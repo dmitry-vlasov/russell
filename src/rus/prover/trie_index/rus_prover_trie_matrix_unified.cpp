@@ -200,10 +200,13 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 		IndexHelper indexHelper(*this, vu);
 		auto iter = indexHelper.initIteration(ret);
 
-		if (debug_trie_index) {
+		//if (debug_trie_index) {
 			cout << "indexHelper:" << endl;
 			cout << indexHelper.show() << endl;
-		}
+
+			cout << "VectorUnified:" << endl;
+			cout << vu.show() << endl;
+		//}
 
 		try {
 		while (true) {

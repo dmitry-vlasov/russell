@@ -3,6 +3,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+/*
 struct IndexHelper {
 
 	enum class HypDescr {
@@ -185,6 +186,7 @@ struct IndexHelper {
 	const VectorUnified& unifiedLeft;
 	const VectorUnified& unifiedRight;
 };
+*/
 
 /*
 MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
@@ -220,6 +222,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUn
 }
  */
 
+/*
 VectorUnified intersect(const VectorUnified& vu1, const VectorUnified& vu2) {
 	assert(vu1.vect.size() == vu2.vect.size());
 	VectorUnified ret;
@@ -239,7 +242,7 @@ VectorUnified intersect(const VectorUnified& vu1, const VectorUnified& vu2) {
 		}
 	}
 	return ret;
-}
+}*/
 
 
 }}}}
