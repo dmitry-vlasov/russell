@@ -108,6 +108,36 @@ FlatTerm& FlatTerm::operator = (const FlatTerm& t) {
 	return *this;
 }
 
+string showFlatTerm(FlatTerm::ConstIterator i) {
+	if (i->ruleVar.isRule()) {
+		string ret;
+		auto it = i + 1;
+		for (const auto& s : i->ruleVar.rule->term) {
+			if (s.kind() == Symbol::CONST) {
+				ret += show(s) + " ";
+			} else {
+				ret += showFlatTerm(it) + " ";
+				it = it->end + 1;
+			}
+		}
+		return ret;
+	} else {
+		return show(i->ruleVar.var);
+	}
+}
+
+string FlatTerm::show(bool simple) const {
+	if (simple) {
+		string ret;
+		for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
+			ret += i->ruleVar.show() + " ";
+		}
+		return ret;
+	} else {
+		return showFlatTerm(nodes.begin());
+	}
+}
+/*
 string FlatTerm::show(bool simple) const {
 	string ret;
 	stack<vector<Node>::const_iterator> st;
@@ -128,7 +158,7 @@ string FlatTerm::show(bool simple) const {
 		}
 	}
 	return ret;
-}
+}*/
 
 string FlatTerm::show_pointers() const {
 	ostringstream oss;

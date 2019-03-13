@@ -26,12 +26,10 @@ struct IndexHelper {
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
-		if (descr == HypDescr::RIGHT) {
-			cout << "intersectedRight.vect.at(" << i << ").extra_inds: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
-			cout << "intersectedLeft.vect.at(" << i << ").extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
+		//if (descr == HypDescr::RIGHT) {
 			vector<uint> extras = std::move(unite_sorted(intersectedRight.vect.at(i).extra_inds, intersectedLeft.vect.at(i).extra_inds));
 			additional.addDim(extras);
-		}
+		//}
 	}
 
 	struct Keys {
@@ -171,8 +169,8 @@ struct IndexHelper {
 			ret << show_descr(d) << ", ";
 		}
 		ret << endl;
-		ret << "additional: " << endl;
-		ret << additional.show() << endl;
+		ret << "additional:" << endl;
+		ret << Indent::paragraph(additional.show()) << endl;
 		return ret.str();
 	}
 
@@ -201,13 +199,13 @@ MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
 		IndexHelper indexHelper(*this, vu);
 		auto iter = indexHelper.initIteration(ret);
 
-		//if (debug_trie_index) {
+		if (debug_trie_index) {
 			cout << "indexHelper:" << endl;
 			cout << indexHelper.show() << endl;
 
 			cout << "VectorUnified:" << endl;
 			cout << vu.show() << endl;
-		//}
+		}
 
 		try {
 		while (true) {
