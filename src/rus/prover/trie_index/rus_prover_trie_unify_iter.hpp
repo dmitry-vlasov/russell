@@ -370,13 +370,15 @@ struct UnifyIters {
 };
 
 struct FlatTermSubst {
-	FlatTermSubst(const FlatTerm& t, const FlatSubst& s) : term(t), sub(s) { }
-	FlatTermSubst(const FlatTermSubst&) = default;
+	FlatTermSubst(const FlatTerm& t, const FlatSubst& s) :
+		term(make_unique<FlatTerm>(t)), sub(make_unique<FlatSubst>(s)) { }
+	FlatTermSubst(const FlatTermSubst& ts) :
+		term(make_unique<FlatTerm>(*ts.term)), sub(make_unique<FlatSubst>(*ts.sub)) { }
 	FlatTermSubst(FlatTermSubst&&) = default;
-	FlatTerm term;
-	FlatSubst sub;
+	unique_ptr<FlatTerm> term;
+	unique_ptr<FlatSubst> sub;
 	string show() const {
-		return "term: " + term.show() + ", sub: " + sub.show();
+		return "term: " + term->show() + ", sub: " + sub->show();
 	}
 };
 
@@ -392,9 +394,9 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {
-			if (p.second.sub.ok) {
+			if (p.second.sub->ok) {
 				//cout << "UNIFIED: " << p.first << endl;
-				ret.emplace_back(m.data().at(p.first[0]), convert2subst(p.second.sub));
+				ret.emplace_back(m.data().at(p.first[0]), convert2subst(*p.second.sub));
 			}
 		}
 	} catch (Error& err) {
