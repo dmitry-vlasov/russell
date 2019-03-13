@@ -58,8 +58,8 @@ else()
 		rus/prover/trie_index/rus_prover_trie_flat_term.cpp
 		rus/prover/trie_index/rus_prover_trie_flat_subst.cpp
 		rus/prover/trie_index/rus_prover_trie_index.cpp
-		rus/prover/trie_index/rus_prover_trie_matrix.cpp
 		rus/prover/trie_index/rus_prover_trie_matrix_index.cpp
+		rus/prover/trie_index/rus_prover_trie_unify.cpp
 		rus/prover/trie_index/rus_prover_trie_unify_iter.cpp
 		rus/prover/trie_index/rus_prover_trie_unify_step.cpp
 
