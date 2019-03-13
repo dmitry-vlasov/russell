@@ -61,7 +61,7 @@ else()
 		rus/prover/trie_index/rus_prover_trie_matrix.cpp
 		rus/prover/trie_index/rus_prover_trie_matrix_index.cpp
 		rus/prover/trie_index/rus_prover_trie_unify_iter.cpp
-		rus/prover/trie_index/rus_prover_trie_unify.cpp
+		rus/prover/trie_index/rus_prover_trie_unify_step.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

@@ -1,5 +1,6 @@
 #include "rus_prover_trie_index.hpp"
-#include "rus_prover_trie_unify.hpp"
+
+#include "rus_prover_trie_unify_step.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
