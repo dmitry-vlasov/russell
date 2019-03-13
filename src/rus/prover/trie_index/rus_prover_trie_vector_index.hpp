@@ -27,17 +27,38 @@ struct CartesianCell {
 			"extra_inds: " + prover::show(extra_inds) + "\n";
 		return ret;
 	}
+	uint card() const {
+		return skipped ? 1 : extra_inds.size();
+	}
 	vector<uint> extra_inds;
 	const bool empty_index;
 	const bool skipped;
 };
 
-struct VectorUnified {
-	vector<uint> complete(const vector<uint>& v) const {
-		vector<uint> ret(vect.size(), -1);
+template<class T>
+string show_MapUnified(const T&);
+
+template<>
+inline string show_MapUnified<FlatTermSubst>(const FlatTermSubst& ts) {
+	return ts.show();
+}
+
+template<>
+inline string show_MapUnified<vector<FlatTermSubst>>(const vector<FlatTermSubst>& vect) {
+	string ret;
+	for (const auto& ts : vect) ret += ts.show() + "\n";
+	return ret;
+}
+
+template<class T>
+struct MapUnified {
+	string showKeys(const vector<uint>& v) const {
+		string ret;
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {
 			if (vect.at(i).skipped) {
-				ret[i] = v.at(j++);
+				ret += to_string(v.at(j++)) + ", ";
+			} else {
+				ret += prover::show(vect.at(i).extra_inds) + ", ";
 			}
 		}
 		return ret;
@@ -54,20 +75,121 @@ struct VectorUnified {
 
 	string show() const {
 		string ret;
-		ret += "<VectorUnified>\n";
 		ret += "cartesian cells:\n";
 		for (const auto& c : vect) {
-			ret += "\t" + c.show();
+			ret += Indent::paragraph(c.show());
 		}
 		ret += "unified:\n";
 		for (const auto& p : unified) {
-			ret += "\t" + prover::show(complete(p.first)) + " --> " + p.second.show() + "\n";
+			ret += "\t" + showKeys(p.first) + " -->\n" + Indent::paragraph(show_MapUnified<T>(p.second)) + "\n";
+		}
+		return ret;
+	}
+
+	uint card() const {
+		uint card_ = 1;
+		for (const auto& c : vect) card_ *= c.card();
+		return card_ * unified.size();
+	}
+
+	map<vector<uint>, T> unfold() const {
+		if (card() == 0) {
+			return map<vector<uint>, T>();
+		}
+		CartesianProd<uint> additional;
+		PowerSetIter both_variants;
+		enum CellDescr { CARTESIAN, INDEX, BOTH };
+		vector<CellDescr> descrs;
+		for (uint i = 0; i < vect.size(); ++ i) {
+			const auto& c = vect[i];
+			if (c.extra_inds.size()) {
+				if (c.empty_index) {
+					descrs.push_back(CARTESIAN);
+				} else {
+					descrs.push_back(BOTH);
+					both_variants.addDim();
+				}
+				additional.addDim(c.extra_inds);
+			} else {
+				descrs.push_back(INDEX);
+			}
+		}
+		if (!additional.size()) {
+			return unified;
+		}
+		map<vector<uint>, T> ret;
+		if (empty() || !additional.card()) {
+			return ret;
+		}
+		for (const auto& p : unified) {
+			additional.reset();
+			while (true) {
+				vector<uint> extra = additional.data();
+				vector<uint> key;
+				both_variants.reset();
+				while (true) {
+					for (uint i = 0, j = 0, k = 0, b = 0; i < vect.size(); ++ i) {
+						if (vect.at(i).extra_inds.size()) {
+							if (vect.at(i).empty_index) {
+								key.push_back(extra.at(j++));
+							} else {
+								if (both_variants[b++]) {
+									key.push_back(extra.at(j++)); ++k;
+								} else {
+									key.push_back(p.first[k++]); ++j;
+								}
+							}
+						} else {
+							key.push_back(p.first[k++]);
+						}
+					}
+					ret.emplace(key, p.second);
+
+					if (both_variants.hasNext()) {
+						both_variants.makeNext();
+					} else {
+						break;
+					}
+				}
+
+				if (additional.hasNext()) {
+					additional.makeNext();
+				} else {
+					break;
+				}
+			}
 		}
 		return ret;
 	}
 
 	vector<CartesianCell> vect;
-	map<vector<uint>, FlatTermSubst> unified;
+	map<vector<uint>, T> unified;
+};
+
+template<class T>
+string show(const vector<MapUnified<T>>& unif) {
+	string ret;
+	ret += "vector<MapUnified>:\n";
+	for (const auto& vu : unif) {
+		ret += "----------------------\n";
+		ret += vu.show() + "\n";
+	}
+	ret += "\n\n";
+	return ret;
+}
+
+typedef MapUnified<FlatTermSubst> VectorUnified;
+
+struct VectorUnifiedUnion {
+	uint card() const {
+		uint card_ = 0;
+		for (const auto& vu : union_) card_ += vu.card();
+		return card_;
+	}
+	string show() const {
+		return trie_index::show(union_);
+	}
+	vector<VectorUnified> union_;
 };
 
 struct VectorIndex {
@@ -133,8 +255,8 @@ struct VectorIndex {
 		return ret;
 	}
 
-	vector<VectorUnified> unify_general() const {
-		vector<VectorUnified> ret;
+	VectorUnifiedUnion unify_general() const {
+		VectorUnifiedUnion ret;
 		if (!empty()) {
 			CartesianProd<bool> skipped_variants;
 			for (auto& c : vect) {
@@ -146,7 +268,7 @@ struct VectorIndex {
 			}
 			while (true) {
 				vector<bool> skipped = skipped_variants.data();
-				ret.push_back(std::move(unify_general(skipped)));
+				ret.union_.push_back(std::move(unify_general(skipped)));
 				if (skipped_variants.hasNext()) {
 					skipped_variants.makeNext();
 				} else {

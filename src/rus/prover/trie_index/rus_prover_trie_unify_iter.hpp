@@ -378,7 +378,7 @@ struct FlatTermSubst {
 	unique_ptr<FlatTerm> term;
 	unique_ptr<FlatSubst> sub;
 	string show() const {
-		return "term: " + term->show() + ", sub: " + sub->show();
+		return "term: " + term->show() + "\nsub:\n" + sub->show();
 	}
 };
 

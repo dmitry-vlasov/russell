@@ -182,130 +182,71 @@ struct IndexHelper {
 	const MatrixUnified* intersection;
 };
 
-MatrixUnified MatrixUnified::intersect(const VectorUnified& vu) const {
-	if (kind == EMPTY || vu.empty()) {
-		return MatrixUnified(EMPTY);
+MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) const {
+	if (kind == EMPTY || vuu.card() == 0) {
+		return MatrixUnifiedUnion(EMPTY);
 	}
-	MatrixUnified ret(NORM);
+	MatrixUnifiedUnion ret(NORM);
 	if (kind == FULL) {
-		for (const auto& c : vu.vect) {
-			ret.vect.emplace_back(c);
-		}
-		for (const auto& p : vu.unified) {
-			ret.unified.emplace(p.first, vector<FlatTermSubst>(1, p.second));
+		for (const auto& vu : vuu.union_) {
+			MatrixUnified mu;
+			for (const auto& c : vu.vect) {
+				mu.vect.emplace_back(c);
+			}
+			for (const auto& p : vu.unified) {
+				mu.unified.emplace(p.first, vector<FlatTermSubst>(1, p.second));
+			}
+			ret.union_.push_back(mu);
 		}
 	} else {
-		assert(vect.size() == vu.vect.size());
-		IndexHelper indexHelper(*this, vu);
-		auto iter = indexHelper.initIteration(ret);
+		for (const auto& vu : vuu.union_) {
+			for (const auto& mu : union_) {
 
-		if (debug_trie_index) {
-			cout << "indexHelper:" << endl;
-			cout << indexHelper.show() << endl;
+				assert(mu.vect.size() == vu.vect.size());
+				IndexHelper indexHelper(mu, vu);
+				MatrixUnified mu_new;
+				auto iter = indexHelper.initIteration(mu_new);
 
-			cout << "VectorUnified:" << endl;
-			cout << vu.show() << endl;
-		}
+				if (debug_trie_index) {
+					cout << "indexHelper:" << endl;
+					cout << indexHelper.show() << endl;
 
-		try {
-		while (true) {
-			IndexHelper::Keys keys = iter.keys();
+					cout << "VectorUnified:" << endl;
+					cout << vu.show() << endl;
+				}
 
-			if (debug_trie_index) {
-				cout << "KEYS: " << keys.show() << endl;
-			}
+				try {
+					while (true) {
+						IndexHelper::Keys keys = iter.keys();
 
-			if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
-				vector<FlatTermSubst> w(iter.termSubstVect());
-				w.emplace_back(*ts);
-				ret.unified.emplace(keys.mappingKey, w);
-			}
-			if (iter.hasNext()) {
-				iter.makeNext();
-			} else {
-				break;
-			}
-		}
-		} catch (Error& err) {
-				cout << "IndexHelper:" << endl;
-				cout << indexHelper.show() << endl;
-				throw err;
-			}
-	}
-	return ret;
-}
-
-map<vector<uint>, vector<FlatTermSubst>> MatrixUnified::unfold() const {
-	if (kind == EMPTY) {
-		return map<vector<uint>, vector<FlatTermSubst>>();
-	}
-	CartesianProd<uint> additional;
-	PowerSetIter both_variants;
-	enum CellDescr { CARTESIAN, INDEX, BOTH };
-	vector<CellDescr> descrs;
-	for (uint i = 0; i < vect.size(); ++ i) {
-		const auto& c = vect[i];
-		if (c.extra_inds.size()) {
-			if (c.empty_index) {
-				descrs.push_back(CARTESIAN);
-			} else {
-				descrs.push_back(BOTH);
-				both_variants.addDim();
-			}
-			additional.addDim(c.extra_inds);
-		} else {
-			descrs.push_back(INDEX);
-		}
-	}
-	if (!additional.size()) {
-		return unified;
-	}
-	map<vector<uint>, vector<FlatTermSubst>> ret;
-	if (empty() || !additional.card()) {
-		return ret;
-	}
-	for (const auto& p : unified) {
-		additional.reset();
-		while (true) {
-			vector<uint> extra = additional.data();
-			vector<uint> key;
-			both_variants.reset();
-			while (true) {
-				for (uint i = 0, j = 0, k = 0, b = 0; i < vect.size(); ++ i) {
-					if (vect.at(i).extra_inds.size()) {
-						if (vect.at(i).empty_index) {
-							key.push_back(extra.at(j++));
-						} else {
-							if (both_variants[b++]) {
-								key.push_back(extra.at(j++)); ++k;
-							} else {
-								key.push_back(p.first[k++]); ++j;
-							}
+						if (debug_trie_index) {
+							cout << "KEYS: " << keys.show() << endl;
 						}
-					} else {
-						key.push_back(p.first[k++]);
+
+						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
+							vector<FlatTermSubst> w(iter.termSubstVect());
+							w.emplace_back(*ts);
+							mu_new.unified.emplace(keys.mappingKey, w);
+						}
+						if (iter.hasNext()) {
+							iter.makeNext();
+						} else {
+							break;
+						}
 					}
+				} catch (Error& err) {
+					cout << "IndexHelper:" << endl;
+					cout << indexHelper.show() << endl;
+					throw err;
 				}
-				ret.emplace(key, p.second);
-
-				if (both_variants.hasNext()) {
-					both_variants.makeNext();
-				} else {
-					break;
-				}
-			}
-
-			if (additional.hasNext()) {
-				additional.makeNext();
-			} else {
-				break;
+				ret.union_.push_back(mu_new);
 			}
 		}
 	}
 	return ret;
 }
 
-MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUnifiedSubs& unif) {
+MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 
 	if (debug_trie_index) {
 		cout << "TO INTERSECT:" << endl;
@@ -317,7 +258,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUn
 	}
 
 
-	MatrixUnified common;
+	MatrixUnifiedUnion common;
 	vector<LightSymbol> vars;
 	for (const auto& p : terms) {
 		common = std::move(common.intersect(p.second));
@@ -457,7 +398,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<LightSymbol, vector<VectorUnified>> unified_columns;
+	map<LightSymbol, VectorUnifiedUnion> unified_columns;
 	matrix_vector_counter = 0;
 	for (auto& p : mindex_) {
 		try {
@@ -468,10 +409,8 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		if (debug_trie_index) {
 			cout << endl;
-			cout << "var " << prover::show(p.first) << " has " << unified_columns[p.first].unified.size() << " unified" << endl;
-			for (auto& un : unified_columns[p.first].unified) {
-				cout << prover::show(un.first) << " --> " << un.second.show() << endl;
-			}
+			cout << "var " << prover::show(p.first) << " has " << unified_columns[p.first].card() << " unified" << endl;
+			cout << unified_columns[p.first].show() << endl;
 			cout << endl;
 		}
 		matrix_vector_counter += 1;

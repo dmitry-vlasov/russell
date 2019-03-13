@@ -5,42 +5,47 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
-struct MatrixUnified {
+typedef MapUnified<vector<FlatTermSubst>> MatrixUnified;
+
+struct MatrixUnifiedUnion {
 	enum Kind { FULL, EMPTY, NORM };
-	MatrixUnified(Kind k = FULL) : kind(k) { }
-	MatrixUnified intersect(const VectorUnified&) const;
-	map<vector<uint>, vector<FlatTermSubst>> unfold() const;
-	bool empty() const {
-		if (kind == EMPTY) {
-			return true;
-		}
-		for (const auto& c : vect) {
-			if (c.empty()) {
-				return true;
-			}
-		}
-		return !unified.size();
-	}
-	string show() const {
-		string ret;
-		ret += "<MatrixUnified>\n";
-		ret += "cartesian cells:\n";
-		for (const auto& c : vect) {
-			ret += "\t" + c.show();
-		}
-		ret += "unified:\n";
-		for (const auto& p : unified) {
-			ret += "\t" + prover::show(p.first) + " --> \n";
-			for (const auto& t : p.second) {
-				ret += "\t\t" + t.show() + "\n";
+	MatrixUnifiedUnion(Kind k = FULL) : kind(k) { }
+	MatrixUnifiedUnion intersect(const VectorUnifiedUnion&) const;
+	map<vector<uint>, vector<FlatTermSubst>> unfold() const {
+		map<vector<uint>, vector<FlatTermSubst>> ret;
+		for (const auto& mu : union_) {
+			for (const auto& p : mu.unfold()) {
+				ret.emplace(p.first, p.second);
 			}
 		}
 		return ret;
 	}
+	bool empty() const {
+		if (kind == EMPTY) {
+			return true;
+		}
+		for (const auto& m : union_) {
+			if (!m.empty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	string show() const {
+		switch (kind) {
+		case FULL:  return "MatrixUnifiedUnion: Full\n";
+		case EMPTY: return "MatrixUnifiedUnion: Empty\n";
+		default: {
+			string ret;
+			ret += "MatrixUnifiedUnion: Normal\n";
+			ret += trie_index::show(union_);
+			return ret;
+		}
+		}
+	}
 
 	Kind kind;
-	vector<CartesianCell> vect;
-	map<vector<uint>, vector<FlatTermSubst>> unified;
+	vector<MatrixUnified> union_;
 };
 
 struct MatrixIndex {
