@@ -261,7 +261,11 @@ struct VectorIndex {
 			CartesianProd<bool> skipped_variants;
 			for (auto& c : vect) {
 				if (c->extraInds().size()) {
-					skipped_variants.addDim(vector<bool>{false, true});
+					if (c->exprs().empty()) {
+						skipped_variants.addDim(vector<bool>{false});
+					} else {
+						skipped_variants.addDim(vector<bool>{false, true});
+					}
 				} else {
 					skipped_variants.addDim(vector<bool>{true});
 				}
