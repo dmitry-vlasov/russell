@@ -457,7 +457,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<LightSymbol, VectorUnified> unified_columns;
+	map<LightSymbol, vector<VectorUnified>> unified_columns;
 	matrix_vector_counter = 0;
 	for (auto& p : mindex_) {
 		try {

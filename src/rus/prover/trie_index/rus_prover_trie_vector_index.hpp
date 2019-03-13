@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../rus_prover_cartesian.hpp"
 #include "rus_prover_trie_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct CartesianCell {
-	CartesianCell(const vector<uint>& ex, bool em) : extra_inds(ex), empty_index(em) {
+	CartesianCell(const vector<uint>& ex, bool em, bool s = false) :
+		extra_inds(ex), empty_index(em), skipped(s) {
 		sort(extra_inds.begin(), extra_inds.end());
 	}
 	CartesianCell(const CartesianCell&) = default;
@@ -19,23 +21,28 @@ struct CartesianCell {
 	}
 	string show() const {
 		string ret;
-		ret += (empty_index ? "(empty)" : "") + string("extra_inds: ") + prover::show(extra_inds) + "\n";
+		ret +=
+			string(skipped ? "[skipped]" : "") +
+			(empty_index ? "(empty index)" : "") +
+			"extra_inds: " + prover::show(extra_inds) + "\n";
 		return ret;
 	}
 	vector<uint> extra_inds;
-	bool empty_index;
+	const bool empty_index;
+	const bool skipped;
 };
 
 struct VectorUnified {
 	vector<uint> complete(const vector<uint>& v) const {
 		vector<uint> ret(vect.size(), -1);
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {
-			if (!vect.at(i).empty_index) {
+			if (vect.at(i).skipped) {
 				ret[i] = v.at(j++);
 			}
 		}
 		return ret;
 	}
+
 	bool empty() const {
 		for (const auto& c : vect) {
 			if (c.empty()) {
@@ -54,7 +61,7 @@ struct VectorUnified {
 		}
 		ret += "unified:\n";
 		for (const auto& p : unified) {
-			ret += "\t" + prover::show(p.first) + " --> " + p.second.show() + "\n";
+			ret += "\t" + prover::show(complete(p.first)) + " --> " + p.second.show() + "\n";
 		}
 		return ret;
 	}
@@ -98,14 +105,18 @@ struct VectorIndex {
 		vector<uint> all_inds_;
 		vector<uint> exprs_inds_;
 	};
-	VectorUnified unify_general() {
+	VectorUnified unify_general(const vector<bool>& skipped) const {
 		vector<MultyIter> iters;
 		VectorUnified ret;
 		try {
-			for (auto& c : vect) {
-				ret.vect.emplace_back(c->extraInds(), c->exprs().empty());
-				if (!c->exprs().empty()) {
-					iters.emplace_back(TrieIndex::TrieIter(c->exprs().root));
+			for (uint i = 0; i < vect.size(); ++ i) {
+				ret.vect.emplace_back(
+					vect[i]->extraInds(),
+					vect[i]->exprs().empty(),
+					skipped[i]
+				);
+				if (skipped[i]) {
+					iters.emplace_back(TrieIndex::TrieIter(vect[i]->exprs().root));
 				}
 			}
 			ret.unified = trie_index::unify_general(iters);
@@ -115,14 +126,46 @@ struct VectorIndex {
 				cout << "CELL: " << endl;
 				cout << c->exprs().show_pointers() << endl << endl;
 			}
-
 			//debug_trie_index = true;
 			ret.unified = trie_index::unify_general(iters);
-
 			throw err;
 		}
 		return ret;
 	}
+
+	vector<VectorUnified> unify_general() const {
+		vector<VectorUnified> ret;
+		if (!empty()) {
+			CartesianProd<bool> skipped_variants;
+			for (auto& c : vect) {
+				if (c->extraInds().size()) {
+					skipped_variants.addDim(vector<bool>{false, true});
+				} else {
+					skipped_variants.addDim(vector<bool>{true});
+				}
+			}
+			while (true) {
+				vector<bool> skipped = skipped_variants.data();
+				ret.push_back(std::move(unify_general(skipped)));
+				if (skipped_variants.hasNext()) {
+					skipped_variants.makeNext();
+				} else {
+					break;
+				}
+			}
+		}
+		return ret;
+	}
+
+	bool empty() const {
+		for (const auto& c : vect) {
+			if (c->empty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	vector<unique_ptr<Cell>> vect;
 };
 
