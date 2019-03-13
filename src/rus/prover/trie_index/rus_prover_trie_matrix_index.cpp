@@ -346,8 +346,8 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnified>& terms, MultyUn
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
-			const FlatTerm& term = q.second[i].term;
-			const FlatSubst& sub = q.second[i].sub;
+			const FlatTerm& term = *q.second[i].term;
+			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
 				if (unif[c].ok) {
 					Subst sb = convert2subst(sub);
