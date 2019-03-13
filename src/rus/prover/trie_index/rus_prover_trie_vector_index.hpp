@@ -6,7 +6,7 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct CartesianCell {
-	CartesianCell(const vector<uint>& ex, bool em, bool s = false) :
+	CartesianCell(const vector<uint>& ex, bool em, bool s) :
 		extra_inds(ex), empty_index(em), skipped(s) {
 		sort(extra_inds.begin(), extra_inds.end());
 	}
