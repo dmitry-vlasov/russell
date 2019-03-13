@@ -245,9 +245,6 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 	return ret;
 }
 
-
-
-
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 	map<vector<uint>, FlatTermSubst> ret;
 	for (const auto& end : unify_general_2(begin)) {
