@@ -27,10 +27,10 @@ struct IndexHelper {
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
 		if (descr == HypDescr::RIGHT) {
-			cout << "intersectedRight:" << endl << intersectedRight.show() << endl << endl;
-			cout << "intersectedRight.vect.at(" << i << ")" << intersectedRight.vect.at(i).show() << endl << endl;
 			cout << "intersectedRight.vect.at(" << i << ").extra_inds: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
-			additional.addDim(intersectedRight.vect.at(i).extra_inds);
+			cout << "intersectedLeft.vect.at(" << i << ").extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
+			vector<uint> extras = std::move(unite_sorted(intersectedRight.vect.at(i).extra_inds, intersectedLeft.vect.at(i).extra_inds));
+			additional.addDim(extras);
 		}
 	}
 

@@ -57,6 +57,14 @@ inline uint find_in_vector(const vector<T*>& pv, const T* pn) {
 	return -1;
 }
 
+template<class T>
+inline vector<T> unite_sorted(const vector<T>& right, const vector<T>& left) {
+	vector<T> ret(right.size() + left.size());
+	auto end = std::merge(right.begin(), right.end(), left.begin(), left.end(), ret.begin());
+	ret.resize(end - ret.begin());
+	return ret;
+}
+
 template<class T> struct Undef;
 template<> struct Undef<uint> {
 	static uint get()        { return UNDEF_UINT; }
