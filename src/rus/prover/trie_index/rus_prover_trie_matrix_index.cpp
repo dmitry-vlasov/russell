@@ -31,10 +31,24 @@ struct IndexHelper {
 	}
 
 	struct Keys {
+		Keys(IndexHelper& h) : helper(h) { }
 		vector<uint> mappingKey;
 		vector<uint> cartesianKey;
+		IndexHelper& helper;
 		string show() const {
 			return "mappingKey: " + prover::show(mappingKey) + ", cartesianKey: " + prover::show(cartesianKey);
+		}
+		vector<uint> resultKey() const {
+			vector<uint> ret;
+			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
+				switch (helper.hypDescrs[k]) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: ret.push_back(cartesianKey[i++]); break;
+				case HypDescr::CART_TREE: ret.push_back(mappingKey[j++]); break;
+				case HypDescr::TREE_TREE: ret.push_back(mappingKey[j++]); break;
+				}
+			}
+			return ret;
 		}
 	};
 
@@ -45,36 +59,15 @@ struct IndexHelper {
 			iter1(i1), iter1end(i1e), iter2(i2), helper(h) { }
 
 		Keys keys() const {
-			Keys ret;
+			Keys ret(helper);
 			vector<uint> a = iter1->first;
 			vector<uint> b = iter2.data();
 			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
 				switch (helper.hypDescrs.at(k)) {
-				case HypDescr::CART_CART:  break;
-				case HypDescr::TREE_CART:  {
-					if (i >= a.size()) {
-						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
-						cout << show() << endl;
-						throw Error("err");
-					}
-					ret.cartesianKey.push_back(a[i++]); break;
-				}
-				case HypDescr::CART_TREE: {
-					if (j >= b.size()) {
-						cout << "j >= b.size(): " << j << " >= " << b.size() << endl;
-						cout << show() << endl;
-						throw Error("err");
-					}
-					ret.mappingKey.push_back(b[j++]); break;
-				}
-				case HypDescr::TREE_TREE:  {
-					if (i >= a.size()) {
-						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
-						cout << show() << endl;
-						throw Error("err");
-					}
-					ret.mappingKey.push_back(a[i++]); break;
-				}
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: ret.cartesianKey.push_back(a[i++]); break;
+				case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
+				case HypDescr::TREE_TREE: ret.mappingKey.push_back(a[i++]); break;
 				}
 			}
 			return ret;
@@ -128,32 +121,15 @@ struct IndexHelper {
 				c0.begin()
 			);
 			c0.resize(end - c0.begin());
-			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped || c2.skipped);
+			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped && c2.skipped);
 		}
 		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
 	}
 
 	const FlatTermSubst* inside(const Keys& keys) const {
-
-		bool deb = debug_trie_index && keys.mappingKey == vector<uint>{0} && keys.cartesianKey == vector<uint>{2};
-		if (deb) {
-			cout << "KEYS: " << keys.show() << endl;
-		}
-
 		for (uint i = 0, j = 0; i < dim; ++ i) {
 			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
-				if (keys.cartesianKey.size() == j) {
-					cout << "AAAAAFUCK !!" << endl;
-				}
-				if (intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
-					if (deb) {
-						cout << "INDSIDE: NOT A, i = " << i << ",  j == " << j - 1 << ", keys.cartesianKey[j++] = " << keys.cartesianKey[j - 1] << endl;
-
-						cout << "intersectedLeft:" << endl;
-						cout << intersectedLeft.show() << endl;
-						cout << "intersectedRight:" << endl;
-						cout << intersectedRight.show() << endl;
-					}
+				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
 					return nullptr;
 				}
 			}
@@ -162,13 +138,6 @@ struct IndexHelper {
 		if (it != intersectedRight.unified.end()) {
 			return &it->second;
 		} else {
-			if (deb) {
-				cout << "INDSIDE: NOT B (it != intersectedRight.unified.end())" << endl;
-				cout << "intersectedLeft:" << endl;
-				cout << intersectedLeft.show() << endl;
-				cout << "intersectedRight:" << endl;
-				cout << intersectedRight.show() << endl;
-			}
 			return nullptr;
 		}
 	}
@@ -247,9 +216,10 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
 							vector<FlatTermSubst> w(iter.termSubstVect());
 							w.emplace_back(*ts);
-							mu_new.unified.emplace(keys.mappingKey, w);
+							vector<uint> resultKeys = keys.resultKey();
+							mu_new.unified.emplace(resultKeys, w);
 							if (debug_trie_index) {
-								cout << "ADDED " << endl;
+								cout << "ADDED: " << prover::show(resultKeys) << endl;
 							}
 						} else if (debug_trie_index) {
 							cout << "REJECTED" << endl;

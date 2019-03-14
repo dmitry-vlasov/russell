@@ -56,6 +56,11 @@ struct MapUnified {
 		string ret;
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {
 			if (vect.at(i).skipped) {
+				if (v.size() <= j) {
+					cout << "CCCCFUCK!!!   i = " << i << endl;
+					cout << "v: " << prover::show(v) << endl;
+					cout << "cells:\n" << showCells() << endl;
+				}
 				ret += to_string(v.at(j++)) + ", ";
 			} else {
 				ret += prover::show(vect.at(i).extra_inds) + ", ";
@@ -73,12 +78,18 @@ struct MapUnified {
 		return !unified.size();
 	}
 
-	string show() const {
+	string showCells() const {
 		string ret;
 		ret += "cartesian cells:\n";
 		for (const auto& c : vect) {
 			ret += Indent::paragraph(c.show());
 		}
+		return ret;
+	}
+
+	string show() const {
+		string ret;
+		ret += showCells();
 		ret += "unified:\n";
 		for (const auto& p : unified) {
 			ret += "\t" + showKeys(p.first) + " -->\n" + Indent::paragraph(show_MapUnified<T>(p.second)) + "\n";
