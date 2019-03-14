@@ -121,7 +121,8 @@ struct IndexHelper {
 				c0.begin()
 			);
 			c0.resize(end - c0.begin());
-			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped && c2.skipped);
+			//ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped && c2.skipped);
+			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped || c2.skipped);
 		}
 		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
 	}
@@ -235,7 +236,9 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 					cout << indexHelper.show() << endl;
 					throw err;
 				}
-				ret.union_.push_back(mu_new);
+				if (!mu_new.empty()) {
+					ret.union_.push_back(mu_new);
+				}
 			}
 		}
 	}
