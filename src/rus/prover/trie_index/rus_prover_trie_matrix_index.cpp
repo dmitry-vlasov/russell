@@ -7,10 +7,10 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 struct IndexHelper {
 
 	enum class HypDescr {
-		FREE,  // both sides have no expression trees
-		LEFT,  // Left argument has an expression tree, right doesn't have
-		RIGHT, // Right argument has an expression tree, left doesn't have
-		BOTH,  // Both arguments have expression trees
+		CART_CART, // both sides are Cartesian products
+		TREE_CART, // Left argument is an expression tree, right is Cartesian
+		CART_TREE, // Right argument has an expression tree, left is Cartesian
+		TREE_TREE, // Both arguments are expression trees
 	};
 
 	IndexHelper(const MatrixUnified& mu, const VectorUnified& vu) :
@@ -21,15 +21,13 @@ struct IndexHelper {
 
 	void addCells(uint i, const CartesianCell& c1, const CartesianCell& c2) {
 		auto makeHypDescr = [](const CartesianCell& c1, const CartesianCell& c2) {
-			if (c1.empty_index) return c2.empty_index ? HypDescr::FREE : HypDescr::RIGHT;
-			else                return c2.empty_index ? HypDescr::LEFT : HypDescr::BOTH;
+			if (c1.skipped) return c2.skipped ? HypDescr::TREE_TREE : HypDescr::TREE_CART;
+			else            return c2.skipped ? HypDescr::CART_TREE : HypDescr::CART_CART;
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
-		//if (descr == HypDescr::RIGHT) {
-			vector<uint> extras = std::move(unite_sorted(intersectedRight.vect.at(i).extra_inds, intersectedLeft.vect.at(i).extra_inds));
-			additional.addDim(extras);
-		//}
+		vector<uint> extras = std::move(unite_sorted(intersectedRight.vect.at(i).extra_inds, intersectedLeft.vect.at(i).extra_inds));
+		additional.addDim(extras);
 	}
 
 	struct Keys {
@@ -52,8 +50,8 @@ struct IndexHelper {
 			vector<uint> b = iter2.data();
 			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
 				switch (helper.hypDescrs.at(k)) {
-				case HypDescr::FREE:  break;
-				case HypDescr::LEFT:  {
+				case HypDescr::CART_CART:  break;
+				case HypDescr::TREE_CART:  {
 					if (i >= a.size()) {
 						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
 						cout << show() << endl;
@@ -61,7 +59,7 @@ struct IndexHelper {
 					}
 					ret.cartesianKey.push_back(a[i++]); break;
 				}
-				case HypDescr::RIGHT: {
+				case HypDescr::CART_TREE: {
 					if (j >= b.size()) {
 						cout << "j >= b.size(): " << j << " >= " << b.size() << endl;
 						cout << show() << endl;
@@ -69,7 +67,7 @@ struct IndexHelper {
 					}
 					ret.mappingKey.push_back(b[j++]); break;
 				}
-				case HypDescr::BOTH:  {
+				case HypDescr::TREE_TREE:  {
 					if (i >= a.size()) {
 						cout << "i >= a.size(): " << i  << " >= " << a.size() << endl;
 						cout << show() << endl;
@@ -136,10 +134,26 @@ struct IndexHelper {
 	}
 
 	const FlatTermSubst* inside(const Keys& keys) const {
-		vector<uint> mapping_part;
+
+		bool deb = debug_trie_index && keys.mappingKey == vector<uint>{0} && keys.cartesianKey == vector<uint>{2};
+		if (deb) {
+			cout << "KEYS: " << keys.show() << endl;
+		}
+
 		for (uint i = 0, j = 0; i < dim; ++ i) {
-			if (hypDescrs.at(i) == HypDescr::LEFT) {
-				if (!intersection->vect.at(i).extraContains(keys.cartesianKey[j++])) {
+			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
+				if (keys.cartesianKey.size() == j) {
+					cout << "AAAAAFUCK !!" << endl;
+				}
+				if (intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
+					if (deb) {
+						cout << "INDSIDE: NOT A, i = " << i << ",  j == " << j - 1 << ", keys.cartesianKey[j++] = " << keys.cartesianKey[j - 1] << endl;
+
+						cout << "intersectedLeft:" << endl;
+						cout << intersectedLeft.show() << endl;
+						cout << "intersectedRight:" << endl;
+						cout << intersectedRight.show() << endl;
+					}
 					return nullptr;
 				}
 			}
@@ -148,6 +162,13 @@ struct IndexHelper {
 		if (it != intersectedRight.unified.end()) {
 			return &it->second;
 		} else {
+			if (deb) {
+				cout << "INDSIDE: NOT B (it != intersectedRight.unified.end())" << endl;
+				cout << "intersectedLeft:" << endl;
+				cout << intersectedLeft.show() << endl;
+				cout << "intersectedRight:" << endl;
+				cout << intersectedRight.show() << endl;
+			}
 			return nullptr;
 		}
 	}
@@ -155,10 +176,10 @@ struct IndexHelper {
 	string show() const {
 		auto show_descr = [](HypDescr d) {
 			switch (d) {
-			case HypDescr::FREE: return "FREE";
-			case HypDescr::LEFT: return "LEFT";
-			case HypDescr::RIGHT: return "RIGHT";
-			case HypDescr::BOTH: return "BOTH";
+			case HypDescr::CART_CART: return "CART_CART";
+			case HypDescr::TREE_CART: return "TREE_CART";
+			case HypDescr::CART_TREE: return "CART_TREE";
+			case HypDescr::TREE_TREE: return "TREE_TREE";
 			}
 		};
 		ostringstream ret;
@@ -220,13 +241,18 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 						IndexHelper::Keys keys = iter.keys();
 
 						if (debug_trie_index) {
-							cout << "KEYS: " << keys.show() << endl;
+							cout << "KEYS: " << keys.show() << " ... ";
 						}
 
 						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
 							vector<FlatTermSubst> w(iter.termSubstVect());
 							w.emplace_back(*ts);
 							mu_new.unified.emplace(keys.mappingKey, w);
+							if (debug_trie_index) {
+								cout << "ADDED " << endl;
+							}
+						} else if (debug_trie_index) {
+							cout << "REJECTED" << endl;
 						}
 						if (iter.hasNext()) {
 							iter.makeNext();

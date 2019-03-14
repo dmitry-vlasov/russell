@@ -187,7 +187,7 @@ struct VectorUnifiedUnion {
 		return card_;
 	}
 	string show() const {
-		return trie_index::show(union_);
+		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + trie_index::show(union_);
 	}
 	vector<VectorUnified> union_;
 };
@@ -248,7 +248,6 @@ struct VectorIndex {
 					for (const auto& p : vect[only_iter_ind]->exprs().root.nodes) {
 						for (const auto& end : p.second.ends) {
 							for (uint ind : end->second.inds) {
-								//cout << "\tend: " << end.show() << endl;
 								TrieIndex::TrieIter iter(p.second);
 								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), FlatSubst()));
 							}

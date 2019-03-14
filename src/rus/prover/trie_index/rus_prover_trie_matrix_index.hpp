@@ -31,6 +31,13 @@ struct MatrixUnifiedUnion {
 		}
 		return true;
 	}
+	uint card() const {
+		uint c = 0;
+		for (const auto& mu : union_) {
+			c += mu.card();
+		}
+		return c;
+	}
 	string show() const {
 		switch (kind) {
 		case FULL:  return "MatrixUnifiedUnion: Full\n";
@@ -38,6 +45,7 @@ struct MatrixUnifiedUnion {
 		default: {
 			string ret;
 			ret += "MatrixUnifiedUnion: Normal\n";
+			ret += "card = " + to_string(card()) + "\n";
 			ret += trie_index::show(union_);
 			return ret;
 		}

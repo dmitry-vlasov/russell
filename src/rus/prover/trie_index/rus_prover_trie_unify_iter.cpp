@@ -252,9 +252,9 @@ map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, FlatTermSubst(term, end.sub));
 		}
-		if (debug_trie_index) {
-			dump(end, "unify_general RESULT:  end");
-		}
+		//if (debug_trie_index) {
+		//	dump(end, "unify_general RESULT:  end");
+		//}
 	}
 	return ret;
 }
