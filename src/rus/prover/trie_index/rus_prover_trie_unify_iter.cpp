@@ -188,18 +188,12 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 	//}
 
 	vector<UnifyIters> ret;
-	if (inits.iters.size() <= 1) {
-		cout << "FUCKL!!!" << endl;
-	}
-	assert(inits.iters.size() > 1);
-	/*if (inits.iters.size() > 0) {
+	if (inits.iters.size() > 0) {
 		if (inits.iters.size() == 1) {
-			cout << "WOT ONO" << endl;
-			for (const auto& end : inits.iters[0].allEnds()) {
-				cout << "\tend: " << end.show() << endl;
+			for (const auto& end : inits.iters[0].ends()) {
 				ret.emplace_back(vector<MultyIter>(1, end), inits.parentSub, inits.sub);
 			}
-		} else {*/
+		} else {
 
 			struct UnifyPair {
 				UnifyPair(const UnifyIters& b) : is_root(true), beg(b), cur(b) { }
@@ -246,8 +240,8 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 					}
 				}
 			}
-	//	}
-	//}
+		}
+	}
 	return ret;
 }
 
