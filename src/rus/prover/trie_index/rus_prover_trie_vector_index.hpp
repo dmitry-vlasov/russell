@@ -231,7 +231,8 @@ struct VectorIndex {
 		vector<MultyIter> iters;
 		VectorUnified ret;
 		try {
-			for (uint i = 0; i < vect.size(); ++ i) {
+			uint i = 0;
+			for (; i < vect.size(); ++ i) {
 				ret.vect.emplace_back(
 					vect[i]->extraInds(),
 					vect[i]->exprs().empty(),
@@ -241,7 +242,21 @@ struct VectorIndex {
 					iters.emplace_back(TrieIndex::TrieIter(vect[i]->exprs().root));
 				}
 			}
-			ret.unified = trie_index::unify_general(iters);
+			if (iters.size() > 0) {
+				if (iters.size() == 1) {
+					for (const auto& p : vect[i]->exprs().root.nodes) {
+						for (const auto& end : p.second.ends) {
+							for (uint ind : end->second.inds) {
+								//cout << "\tend: " << end.show() << endl;
+								TrieIndex::TrieIter iter(p.second);
+								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), FlatSubst()));
+							}
+						}
+					}
+				} else {
+					ret.unified = trie_index::unify_general(iters);
+				}
+			}
 		} catch (Error& err) {
 			cout << endl << "VectorIndex::unify_general(): ERROR" << endl;
 			for (auto& c : vect) {
