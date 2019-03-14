@@ -260,7 +260,11 @@ struct VectorIndex {
 						for (const auto& end : p.second.ends) {
 							for (uint ind : end->second.inds) {
 								TrieIndex::TrieIter iter(p.second);
-								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), FlatSubst()));
+								FlatTerm term = iter.subTerm(end);
+								if (debug_trie_index && ind == 4) {
+									cout << "TEEEERM: " << term.show() << endl;
+								}
+								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(term, FlatSubst()));
 							}
 						}
 					}
