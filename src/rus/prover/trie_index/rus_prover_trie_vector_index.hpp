@@ -231,20 +231,21 @@ struct VectorIndex {
 		vector<MultyIter> iters;
 		VectorUnified ret;
 		try {
-			uint i = 0;
-			for (; i < vect.size(); ++ i) {
+			uint only_iter_ind = 0;
+			for (uint i = 0; i < vect.size(); ++ i) {
 				ret.vect.emplace_back(
 					vect[i]->extraInds(),
 					vect[i]->exprs().empty(),
 					skipped[i]
 				);
 				if (skipped[i]) {
+					only_iter_ind = i;
 					iters.emplace_back(TrieIndex::TrieIter(vect[i]->exprs().root));
 				}
 			}
 			if (iters.size() > 0) {
 				if (iters.size() == 1) {
-					for (const auto& p : vect[i]->exprs().root.nodes) {
+					for (const auto& p : vect[only_iter_ind]->exprs().root.nodes) {
 						for (const auto& end : p.second.ends) {
 							for (uint ind : end->second.inds) {
 								//cout << "\tend: " << end.show() << endl;
