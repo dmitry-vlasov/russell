@@ -35,6 +35,13 @@ struct IndexHelper {
 		additional.addDim(intersectedLeft.vect.at(i).extra_inds);
 	}
 
+	static FlatTermSubst& emptyTermSubst() {
+		static FlatTerm emptyTerm;
+		static FlatSubst emptySubst;
+		static FlatTermSubst emptyTermSub(emptyTerm, emptySubst);
+		return emptyTermSub;
+	}
+
 	struct Keys {
 		Keys(IndexHelper& h) : helper(h) { }
 		vector<uint> mappingKey;
@@ -61,46 +68,73 @@ struct IndexHelper {
 		typedef map<vector<uint>, vector<FlatTermSubst>>::const_iterator Iter1;
 		typedef CartesianProd<uint> Iter2;
 		Iterator(Iter1 i1, Iter1 i1e, const Iter2& i2, IndexHelper& h) :
-			iter1(i1), iter1end(i1e), iter2(i2), helper(h) { }
+			iter1(i1), iter1end(i1e), iter2(i2), helper(h), non_trivial_iter1(iter1 != iter1end) { }
 
 		Keys keys() const {
 			Keys ret(helper);
-			vector<uint> a = iter1->first;
-			vector<uint> b = iter2.data();
-			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
-				switch (helper.hypDescrs.at(k)) {
-				case HypDescr::CART_CART: break;
-				case HypDescr::TREE_CART: ret.cartesianKey.push_back(a[i++]); break;
-				case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
-				case HypDescr::TREE_TREE: ret.mappingKey.push_back(a[i++]); break;
+			if (non_trivial_iter1) {
+				vector<uint> a = iter1->first;
+				vector<uint> b = iter2.data();
+				for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
+					switch (helper.hypDescrs.at(k)) {
+					case HypDescr::CART_CART: break;
+					case HypDescr::TREE_CART: ret.cartesianKey.push_back(a[i++]); break;
+					case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
+					case HypDescr::TREE_TREE: ret.mappingKey.push_back(a[i++]); break;
+					}
+				}
+			} else {
+				vector<uint> b = iter2.data();
+				for (uint k = 0, j = 0; k < helper.dim; ++ k) {
+					switch (helper.hypDescrs.at(k)) {
+					case HypDescr::CART_CART: break;
+					case HypDescr::TREE_CART: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
+					case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
+					case HypDescr::TREE_TREE: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
+					}
 				}
 			}
 			return ret;
 		}
 
 		bool hasNext() const {
-			auto i1 = iter1; ++i1;
-			return !(i1 == iter1end && !iter2.hasNext());
+			if (non_trivial_iter1) {
+				auto i1 = iter1; ++i1;
+				return !(i1 == iter1end && !iter2.hasNext());
+			} else {
+				return iter2.hasNext();
+			}
 		}
 
 		void makeNext() {
-			if (!iter2.hasNext()) {
-				++iter1;
-				iter2.reset();
+			if (non_trivial_iter1) {
+				if (!iter2.hasNext()) {
+					++iter1;
+					iter2.reset();
+				} else {
+					iter2.makeNext();
+				}
 			} else {
 				iter2.makeNext();
 			}
 		}
 
-		const vector<FlatTermSubst>& termSubstVect() const {
-			return iter1->second;
+		vector<FlatTermSubst> termSubstVect() const {
+			if (non_trivial_iter1) {
+				return iter1->second;
+			} else {
+				return vector<FlatTermSubst>{emptyTermSubst()};
+				//throw Error("impossible:  IndexHelper::Iterator::termSubstVect()");
+			}
 		}
 
 		string show() const {
-			vector<uint> a = iter1->first;
-			vector<uint> b = iter2.data();
 			ostringstream ret;
-			ret << "IndexHelper::Iterator: <" << prover::show(a) << ", " << prover::show(b) << ">";
+			if (non_trivial_iter1) {
+				ret << "IndexHelper::Iterator: <" << prover::show(iter1->first) << ", " << prover::show(iter2.data()) << ">";
+			} else {
+				ret << "IndexHelper::Iterator: < -- , " << prover::show(iter2.data()) << ">";
+			}
 			return ret.str();
 		}
 
@@ -108,6 +142,7 @@ struct IndexHelper {
 		Iter1 iter1end;
 		Iter2 iter2;
 		IndexHelper& helper;
+		bool non_trivial_iter1;
 	};
 
 	Iterator initIteration(MatrixUnified& ret) {
@@ -163,10 +198,7 @@ struct IndexHelper {
 				return nullptr;
 			}
 		} else {
-			static FlatTerm emptyTerm;
-			static FlatSubst emptySubst;
-			static FlatTermSubst emptyTermSubst(emptyTerm, emptySubst);
-			return &emptyTermSubst;
+			return &emptyTermSubst();
 		}
 	}
 
@@ -224,7 +256,11 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 
 				if (debug_trie_index) {
 					counter++;
-					if (counter == 3) debug_index_helper = true;
+					cout << "COUNTER = " << counter << endl;
+					if (counter == 24) {
+						//debug_index_helper = true;
+						cout << "AAAAA" << endl;
+					}
 				}
 
 				assert(mu.vect.size() == vu.vect.size());
@@ -232,12 +268,15 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 				MatrixUnified mu_new;
 				auto iter = indexHelper.initIteration(mu_new);
 
-				if (debug_trie_index && counter == 3) {
+				if (counter == 24 || debug_trie_index) {
 					cout << "[[[indexHelper]]]: " << counter << endl;
 					cout << indexHelper.show() << endl;
 
 					cout << "[[[VectorUnified]]]:" << endl;
 					cout << vu.show() << endl;
+
+					cout << "[[[MatrixUnified]]]:" << endl;
+					cout << mu.show() << endl;
 				}
 
 				try {
@@ -282,14 +321,14 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 
 MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 
-	if (debug_trie_index) {
+	/*if (debug_trie_index) {
 		cout << "TO INTERSECT:" << endl;
 		for (const auto& p : terms) {
 			cout << "VAR: " << p.first << endl;
 			cout << p.second.show() << endl;
 			cout << endl;
 		}
-	}
+	}*/
 
 
 	MatrixUnifiedUnion common;

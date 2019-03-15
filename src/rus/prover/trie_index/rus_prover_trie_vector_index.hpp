@@ -70,12 +70,16 @@ struct MapUnified {
 	}
 
 	bool empty() const {
-		for (const auto& c : vect) {
-			if (c.empty()) {
+		bool all_are_cartesian = true;
+		for (const auto& cell : vect) {
+			if (cell.empty()) {
 				return true;
 			}
+			if (cell.skipped) {
+				all_are_cartesian = false;
+			}
 		}
-		return !unified.size();
+		return all_are_cartesian ? false : !unified.size();
 	}
 
 	string showCells() const {
@@ -89,6 +93,7 @@ struct MapUnified {
 
 	string show() const {
 		string ret;
+		ret += "card: " + to_string(card()) + "\n";
 		ret += showCells();
 		ret += "unified:\n";
 		for (const auto& p : unified) {
@@ -305,7 +310,10 @@ struct VectorIndex {
 			}
 			while (true) {
 				vector<bool> skipped = skipped_variants.data();
-				ret.union_.push_back(std::move(unify_general(skipped)));
+				VectorUnified vu = unify_general(skipped);
+				if (!vu.empty()) {
+					ret.union_.push_back(std::move(vu));
+				}
 				if (skipped_variants.hasNext()) {
 					skipped_variants.makeNext();
 				} else {

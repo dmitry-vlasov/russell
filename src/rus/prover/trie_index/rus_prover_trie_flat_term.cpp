@@ -134,7 +134,11 @@ string FlatTerm::show(bool simple) const {
 		}
 		return ret;
 	} else {
-		return showFlatTerm(nodes.begin());
+		if (!nodes.size()) {
+			return "<empty>";
+		} else {
+			return showFlatTerm(nodes.begin());
+		}
 	}
 }
 /*
