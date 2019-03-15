@@ -26,8 +26,7 @@ struct IndexHelper {
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
-		vector<uint> extras = std::move(unite_sorted(intersectedRight.vect.at(i).extra_inds, intersectedLeft.vect.at(i).extra_inds));
-		additional.addDim(extras);
+		additional.addDim(intersectedLeft.vect.at(i).extra_inds);
 	}
 
 	struct Keys {
@@ -95,8 +94,7 @@ struct IndexHelper {
 			vector<uint> a = iter1->first;
 			vector<uint> b = iter2.data();
 			ostringstream ret;
-			ret << "iter1: " << prover::show(a) << endl;
-			ret << "iter2: " << prover::show(b) << endl;
+			ret << "IndexHelper::Iterator: <" << prover::show(a) << ", " << prover::show(b) << ">";
 			return ret.str();
 		}
 
@@ -121,7 +119,6 @@ struct IndexHelper {
 				c0.begin()
 			);
 			c0.resize(end - c0.begin());
-			//ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped && c2.skipped);
 			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped || c2.skipped);
 		}
 		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
@@ -211,6 +208,7 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 						IndexHelper::Keys keys = iter.keys();
 
 						if (debug_trie_index) {
+							cout << "ITER: " << iter.show() << endl;
 							cout << "KEYS: " << keys.show() << " ... ";
 						}
 
@@ -259,8 +257,15 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 
 	MatrixUnifiedUnion common;
 	vector<LightSymbol> vars;
+	MultyUnifiedSubs s;
 	for (const auto& p : terms) {
 		common = std::move(common.intersect(p.second));
+		if (common.empty()) {
+			if (debug_trie_index) {
+				cout << "INTERSECTED: EMPTY" << endl;
+			}
+			return s;
+		}
 
 		if (debug_trie_index) {
 			cout << "INTERSECTED:" << endl;
@@ -269,7 +274,6 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 
 		vars.push_back(p.first);
 	}
-	MultyUnifiedSubs s;
 	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
 
 	if (debug_trie_index) {
