@@ -24,7 +24,7 @@ struct CartesianCell {
 		ret +=
 			string(skipped ? "[skipped]" : "") +
 			(empty_index ? "(empty index)" : "") +
-			"extra_inds: " + prover::show(extra_inds) + "\n";
+			"extra_inds: " + prover::show(extra_inds) + ", card: " + to_string(card()) + "\n";
 		return ret;
 	}
 	uint card() const {
@@ -99,8 +99,14 @@ struct MapUnified {
 
 	uint card() const {
 		uint card_ = 1;
-		for (const auto& c : vect) card_ *= c.card();
-		return card_ * unified.size();
+		bool all_are_cartesian = true;
+		for (const auto& cell : vect) {
+			card_ *= cell.card();
+			if (cell.skipped) {
+				all_are_cartesian = false;
+			}
+		}
+		return card_ * (all_are_cartesian ? 1 : unified.size());
 	}
 
 	map<vector<uint>, T> unfold() const {
@@ -181,9 +187,10 @@ template<class T>
 string show(const vector<MapUnified<T>>& unif) {
 	string ret;
 	ret += "vector<MapUnified>:\n";
-	for (const auto& vu : unif) {
+	for (uint i = 0; i < unif.size(); ++i) {
+		ret += "variant no. " + to_string(i) + ", card: " + to_string(unif[i].card()) + "\n";
 		ret += "----------------------\n";
-		ret += vu.show() + "\n";
+		ret += unif[i].show() + "\n";
 	}
 	ret += "\n\n";
 	return ret;

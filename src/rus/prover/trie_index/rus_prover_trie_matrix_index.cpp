@@ -4,6 +4,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_index_helper = false;
+
 struct IndexHelper {
 
 	enum class HypDescr {
@@ -26,6 +28,10 @@ struct IndexHelper {
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
+		if (debug_index_helper) {
+			cout << "intersectedLeft.vect.at(i).extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
+		}
+
 		additional.addDim(intersectedLeft.vect.at(i).extra_inds);
 	}
 
@@ -125,18 +131,42 @@ struct IndexHelper {
 	}
 
 	const FlatTermSubst* inside(const Keys& keys) const {
+		if (debug_trie_index) {
+			cout << "ITERATOR: " << endl;
+			cout << show() << endl;
+		}
 		for (uint i = 0, j = 0; i < dim; ++ i) {
 			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
 				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
+					if (debug_trie_index) {
+						cout << "NOT INSIDE A:" << endl;
+						cout << "keys.cartesianKey[j++]: " << keys.cartesianKey[j - 1] << endl;
+						cout << "intersectedRight.vect.at(i).extraContains: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
+					}
 					return nullptr;
 				}
 			}
 		}
-		auto it = intersectedRight.unified.find(keys.mappingKey);
-		if (it != intersectedRight.unified.end()) {
-			return &it->second;
+		if (keys.mappingKey.size()) {
+			auto it = intersectedRight.unified.find(keys.mappingKey);
+			if (it != intersectedRight.unified.end()) {
+				return &it->second;
+			} else {
+				if (debug_trie_index) {
+					cout << "NOT INSIDE B:" << endl;
+					cout << "keys.mappingKey: " << prover::show(keys.mappingKey) << endl;
+					cout << "intersectedRight.unified KEYS: " << endl;
+					for (const auto& p : intersectedRight.unified) {
+						cout << "\t" << prover::show(p.first) << endl;
+					}
+				}
+				return nullptr;
+			}
 		} else {
-			return nullptr;
+			static FlatTerm emptyTerm;
+			static FlatSubst emptySubst;
+			static FlatTermSubst emptyTermSubst(emptyTerm, emptySubst);
+			return &emptyTermSubst;
 		}
 	}
 
@@ -187,19 +217,26 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 			ret.union_.push_back(mu);
 		}
 	} else {
+		static uint counter = 0;
+
 		for (const auto& vu : vuu.union_) {
 			for (const auto& mu : union_) {
+
+				if (debug_trie_index) {
+					counter++;
+					if (counter == 3) debug_index_helper = true;
+				}
 
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
 				auto iter = indexHelper.initIteration(mu_new);
 
-				if (debug_trie_index) {
-					cout << "indexHelper:" << endl;
+				if (debug_trie_index && counter == 3) {
+					cout << "[[[indexHelper]]]: " << counter << endl;
 					cout << indexHelper.show() << endl;
 
-					cout << "VectorUnified:" << endl;
+					cout << "[[[VectorUnified]]]:" << endl;
 					cout << vu.show() << endl;
 				}
 
