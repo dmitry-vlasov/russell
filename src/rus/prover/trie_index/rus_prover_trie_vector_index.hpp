@@ -256,15 +256,11 @@ struct VectorIndex {
 			}
 			if (iters.size() > 0) {
 				if (iters.size() == 1) {
-					for (const auto& p : vect[only_iter_ind]->exprs().root.nodes) {
-						for (const auto& end : p.second.ends) {
+					for (auto it = vect[only_iter_ind]->exprs().root.nodes.begin(); it != vect[only_iter_ind]->exprs().root.nodes.end(); ++it) {
+						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
-								TrieIndex::TrieIter iter(p.second);
-								FlatTerm term = iter.subTerm(end);
-								if (debug_trie_index && ind == 4) {
-									cout << "TEEEERM: " << term.show() << endl;
-								}
-								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(term, FlatSubst()));
+								TrieIndex::TrieIter iter(it);
+								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), FlatSubst()));
 							}
 						}
 					}

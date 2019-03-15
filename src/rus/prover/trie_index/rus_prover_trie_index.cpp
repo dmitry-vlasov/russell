@@ -58,6 +58,8 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 	return ft;
 }
 
+bool debug_trie_subterm = false;
+
 FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	vector<TrieIter> branch;
 	ConstIterator start = i;
@@ -69,6 +71,15 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 		i = i->second.parent;
 	}
 	std::reverse(branch.begin(), branch.end());
+
+	if (debug_trie_subterm) {
+		cout << "SUBTERM BRANCH:" << endl;
+		for (auto i : branch) {
+			cout << i.ruleVar().show() << ", ";
+		}
+		cout << endl;
+	}
+
 	try {
 		auto ret = create_flatterm(branch);
 		//if (debug_trie_index) {
