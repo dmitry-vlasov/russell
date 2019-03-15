@@ -32,7 +32,9 @@ struct IndexHelper {
 			cout << "intersectedLeft.vect.at(i).extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
 		}
 
-		additional.addDim(intersectedLeft.vect.at(i).extra_inds);
+		if (!intersectedLeft.vect.at(i).skipped) {
+			additional.addDim(intersectedLeft.vect.at(i).extra_inds);
+		}
 	}
 
 	static FlatTermSubst& emptyTermSubst() {
