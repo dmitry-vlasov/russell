@@ -70,7 +70,7 @@ struct MapUnified {
 	}
 
 	bool empty() const {
-		bool all_are_cartesian = true;
+		/*bool all_are_cartesian = true;
 		for (const auto& cell : vect) {
 			if (cell.empty()) {
 				return true;
@@ -79,7 +79,8 @@ struct MapUnified {
 				all_are_cartesian = false;
 			}
 		}
-		return all_are_cartesian ? false : !unified.size();
+		return all_are_cartesian ? false : !unified.size();*/
+		return card() == 0;
 	}
 
 	string showCells() const {
