@@ -32,7 +32,12 @@ struct IndexHelper {
 			cout << "intersectedLeft.vect.at(i).extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
 		}
 
-		if (!intersectedLeft.vect.at(i).skipped) {
+		if (!intersectedLeft.vect.at(i).skipped && descr == HypDescr::CART_TREE) {
+			if (!intersectedLeft.vect.at(i).extra_inds.size()) {
+				cout << "!intersectedLeft.vect.at(i).extra_inds.size()" << endl;
+				cout << "intersectedLeft" << endl;
+				cout << intersectedLeft.show() << endl;
+			}
 			additional.addDim(intersectedLeft.vect.at(i).extra_inds);
 		}
 	}
@@ -81,7 +86,12 @@ struct IndexHelper {
 					switch (helper.hypDescrs.at(k)) {
 					case HypDescr::CART_CART: break;
 					case HypDescr::TREE_CART: ret.cartesianKey.push_back(a[i++]); break;
-					case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
+					case HypDescr::CART_TREE: {
+						if (!ret.helper.intersectedLeft.vect[k].skipped) {
+							ret.mappingKey.push_back(b[j++]);
+						}
+						break;
+					}
 					case HypDescr::TREE_TREE: ret.mappingKey.push_back(a[i++]); break;
 					}
 				}
@@ -91,7 +101,12 @@ struct IndexHelper {
 					switch (helper.hypDescrs.at(k)) {
 					case HypDescr::CART_CART: break;
 					case HypDescr::TREE_CART: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
-					case HypDescr::CART_TREE: ret.mappingKey.push_back(b[j++]); break;
+					case HypDescr::CART_TREE: {
+						if (!ret.helper.intersectedLeft.vect[k].skipped) {
+							ret.mappingKey.push_back(b[j++]);
+						}
+						break;
+					}
 					case HypDescr::TREE_TREE: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
 					}
 				}
@@ -168,18 +183,18 @@ struct IndexHelper {
 	}
 
 	const FlatTermSubst* inside(const Keys& keys) const {
-		if (debug_trie_index) {
+		/*if (debug_trie_index) {
 			cout << "ITERATOR: " << endl;
 			cout << show() << endl;
-		}
+		}*/
 		for (uint i = 0, j = 0; i < dim; ++ i) {
 			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
 				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
-					if (debug_trie_index) {
+					/*if (debug_trie_index) {
 						cout << "NOT INSIDE A:" << endl;
 						cout << "keys.cartesianKey[j++]: " << keys.cartesianKey[j - 1] << endl;
 						cout << "intersectedRight.vect.at(i).extraContains: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
-					}
+					}*/
 					return nullptr;
 				}
 			}
@@ -190,12 +205,12 @@ struct IndexHelper {
 				return &it->second;
 			} else {
 				if (debug_trie_index) {
-					cout << "NOT INSIDE B:" << endl;
+					/*cout << "NOT INSIDE B:" << endl;
 					cout << "keys.mappingKey: " << prover::show(keys.mappingKey) << endl;
 					cout << "intersectedRight.unified KEYS: " << endl;
 					for (const auto& p : intersectedRight.unified) {
 						cout << "\t" << prover::show(p.first) << endl;
-					}
+					}*/
 				}
 				return nullptr;
 			}
@@ -234,6 +249,8 @@ struct IndexHelper {
 	const MatrixUnified* intersection;
 };
 
+static bool debug_trie_intersect = false;
+
 MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) const {
 	if (kind == EMPTY || vuu.card() == 0) {
 		return MatrixUnifiedUnion(EMPTY);
@@ -254,23 +271,30 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 		static uint counter = 0;
 
 		for (const auto& vu : vuu.union_) {
+			if (vu.empty()) continue;
 			for (const auto& mu : union_) {
-
+				if (mu.empty()) continue;
 				if (debug_trie_index) {
+					counter++;
+				}
+
+				/*if (debug_trie_index) {
 					counter++;
 					cout << "COUNTER = " << counter << endl;
 					if (counter == 24) {
 						//debug_index_helper = true;
 						cout << "AAAAA" << endl;
 					}
-				}
+				}*/
+
+
 
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
 				auto iter = indexHelper.initIteration(mu_new);
 
-				if (counter == 24 || debug_trie_index) {
+				if (debug_trie_intersect && counter == 1) {
 					cout << "[[[indexHelper]]]: " << counter << endl;
 					cout << indexHelper.show() << endl;
 
@@ -281,12 +305,23 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 					cout << mu.show() << endl;
 				}
 
+				/*if (counter == 24 || debug_trie_index) {
+					cout << "[[[indexHelper]]]: " << counter << endl;
+					cout << indexHelper.show() << endl;
+
+					cout << "[[[VectorUnified]]]:" << endl;
+					cout << vu.show() << endl;
+
+					cout << "[[[MatrixUnified]]]:" << endl;
+					cout << mu.show() << endl;
+				}*/
+
 				try {
 					while (true) {
 						IndexHelper::Keys keys = iter.keys();
 
-						if (debug_trie_index) {
-							cout << "ITER: " << iter.show() << endl;
+						if (debug_trie_intersect && counter == 1) {
+							cout << "ITER: " << iter.show() << " = ";
 							cout << "KEYS: " << keys.show() << " ... ";
 						}
 
@@ -295,10 +330,10 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 							w.emplace_back(*ts);
 							vector<uint> resultKeys = keys.resultKey();
 							mu_new.unified.emplace(resultKeys, w);
-							if (debug_trie_index) {
+							if (debug_trie_intersect && counter == 1) {
 								cout << "ADDED: " << prover::show(resultKeys) << endl;
 							}
-						} else if (debug_trie_index) {
+						} else if (debug_trie_intersect && counter == 1) {
 							cout << "REJECTED" << endl;
 						}
 						if (iter.hasNext()) {
@@ -333,20 +368,28 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 	}*/
 
 
+	static int count = 0;
+
 	MatrixUnifiedUnion common;
 	vector<LightSymbol> vars;
 	MultyUnifiedSubs s;
 	for (const auto& p : terms) {
+		if (debug_trie_index) {
+			++count;
+		}
+		if (count == 1) {
+			debug_trie_intersect = true;
+		}
 		common = std::move(common.intersect(p.second));
 		if (common.empty()) {
 			if (debug_trie_index) {
-				cout << "INTERSECTED: EMPTY" << endl;
+				cout << "INTERSECTED: EMPTY " << count << endl;
 			}
 			return s;
 		}
 
 		if (debug_trie_index) {
-			cout << "INTERSECTED:" << endl;
+			cout << "INTERSECTED: " << count << endl;
 			cout << common.show() << endl;
 		}
 
@@ -354,7 +397,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 	}
 	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
 
-	if (debug_trie_index) {
+	/*if (debug_trie_index) {
 		cout << "UNFOLDED:" << endl;
 		for (const auto& p : unfolded) {
 			cout << "\t" << prover::show(p.first) << " --> " << endl;
@@ -363,7 +406,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 			}
 			cout << endl;
 		}
-	}
+	}*/
 
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
@@ -484,6 +527,9 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	for (auto& p : mindex_) {
 		try {
 			unified_columns[p.first] = std::move(p.second->unify_general());
+			if (unified_columns[p.first].empty()) {
+				return MultyUnifiedSubs();
+			}
 		} catch (Error& err) {
 			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
 			throw err;

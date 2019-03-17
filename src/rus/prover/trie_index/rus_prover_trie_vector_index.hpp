@@ -93,6 +93,7 @@ struct MapUnified {
 
 	string show() const {
 		string ret;
+		ret += string("empty: ") + (empty() ? "yes" : "no") + "\n";
 		ret += "card: " + to_string(card()) + "\n";
 		ret += showCells();
 		ret += "unified:\n";
@@ -208,6 +209,14 @@ struct VectorUnifiedUnion {
 		uint card_ = 0;
 		for (const auto& vu : union_) card_ += vu.card();
 		return card_;
+	}
+	bool empty() const {
+		for (const auto& vu : union_) {
+			if (!vu.empty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	string show() const {
 		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + trie_index::show(union_);
