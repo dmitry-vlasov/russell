@@ -48,9 +48,14 @@ void Prop::buildUp() {
 	}
 }
 
+//#define COMPARE_WITH_UNIF_TREE
+
 void Hyp::buildUp() {
+#ifdef COMPARE_WITH_UNIF_TREE
 	vector<Space::IndexMap<PropRef>::Unified> unif1 = space->assertions.unify(expr);
+#endif
 	vector<Space::TrieIndexMap<PropRef>::Unified> unif2 = unify_general(space->assertions_, expr);
+#ifdef COMPARE_WITH_UNIF_TREE
 	if (unif1.size() != unif2.size()) {
 		cout << "sizes differ: " << unif1.size() << " != " << unif2.size() << endl;
 	}
@@ -103,8 +108,9 @@ void Hyp::buildUp() {
 		}
 	}
 	//cout << "UNIF COINCIDES" << endl << endl << endl;
+#endif
 
-	for (auto& m : space->assertions.unify(expr)) {
+	for (auto& m : unif2) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		for (const auto& p : fresher) {
 			if (m.sub.maps(p.first)) {

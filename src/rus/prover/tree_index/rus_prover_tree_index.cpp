@@ -93,7 +93,7 @@ static UnifiedTerms gather_terms(const Rule* r, const TreeIndex::Node& n) {
 	UnifiedTerms ret;
 	if (n.kind() == TreeIndex::Node::LEAF) {
 		for (uint d : n.leaf().inds) {
-			ret[d] = LightTree(r, {});
+			ret[d] = LightTree(r);
 		}
 	} else {
 		vector<UnifiedTerms> un;
@@ -170,7 +170,7 @@ UnifiedTerms unify(const TreeIndex* index, const LightTree& t, TreeIndex::Unifie
 		if (n.kind() == TreeIndex::Node::LEAF) {
 			for (uint d : n.leaf().inds) {
 				unif[d];
-				ret[d] = LightTree(t.rule(), {});
+				ret[d] = LightTree(t.rule());
 			}
 		} else {
 			auto ch = t.children().begin();

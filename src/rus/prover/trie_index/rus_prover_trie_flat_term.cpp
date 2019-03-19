@@ -31,7 +31,7 @@ void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 		}
 		++i;
 		++wd;
-		if (wd > 256) {
+		if (wd > 1024) {
 			cout << "SOMETH WRONG: " << c << ", wd: " << wd << endl;
 			break;
 		}

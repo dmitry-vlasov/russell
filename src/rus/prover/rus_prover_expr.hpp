@@ -63,39 +63,48 @@ struct LightTree {
 
 	struct Node {
 		Node() = delete;
-		Node(const Node& n) : rule(n.rule) {
-			for (auto& c : n.children) {
-				children.push_back(make_unique<LightTree>(*c.get()));
+		Node(const Node& n) : rule_(n.rule_) {
+			for (auto& c : n.children_) {
+				if (!c.get()) {
+					throw Error("!c.get()");
+				}
+				children_.push_back(make_unique<LightTree>(*c.get()));
 			}
 		}
-		Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
-		Node(const Rule* r, const Children& ch) : rule(r) {
-			children.reserve(ch.size());
+		Node(Node&& n) : rule_(n.rule_), children_(std::move(n.children_)) { }
+		Node(const Rule* r, const Children& ch) : rule_(r) {
+			children_.reserve(ch.size());
 			for (auto& c : ch) {
-				children.push_back(make_unique<LightTree>(*c.get()));
+				if (!c.get()) {
+					throw Error("!c.get()");
+				}
+				children_.push_back(make_unique<LightTree>(*c.get()));
 			}
 		}
-		Node(const Rule* r, Children&& ch) : rule(r), children(std::move(ch)) { }
-		Node(const Rule* r, LightTree* ch) : rule(r) {
-			children.emplace_back(ch);
+		Node(const Rule* r, Children&& ch) : rule_(r), children_(std::move(ch)) { }
+		Node(const Rule* r, LightTree* ch) : rule_(r) {
+			children_.emplace_back(ch);
 		}
 		void operator = (const Node& n) {
-			rule = n.rule;
-			for (auto& c : n.children) {
-				children.push_back(make_unique<LightTree>(*c.get()));
+			rule_ = n.rule_;
+			for (auto& c : n.children_) {
+				children_.push_back(make_unique<LightTree>(*c.get()));
 			}
 		}
 		void operator = (Node&& n) {
-			rule = n.rule;
-			children = std::move(n.children);
+			rule_ = n.rule_;
+			children_ = std::move(n.children_);
 		}
-		const Rule* rule;
-		Children    children;
+		const Rule* rule() const { return rule_; }
+		const Children& children() const { return children_; }
+	private:
+		const Rule* rule_;
+		Children children_;
 	};
 
 	LightTree() : val(LightSymbol()) { }
 	LightTree(const LightSymbol& v) : val(LightSymbol(v)) { }
-	LightTree(const Rule* r, const Children& ch) : val(Node(r, ch)) { }
+	LightTree(const Rule* r, const Children& ch = Children()) : val(Node(r, ch)) { }
 	LightTree(const Rule* r, LightTree* ch) : val(Node(r, ch)) { }
 	LightTree(const LightTree& ex) = default;
 	LightTree(LightTree&& ex) = default;
@@ -140,23 +149,19 @@ struct LightTree {
 	}
 	const Rule* rule() const {
 		assert(kind() == RULE);
-		return std::get<Node>(val).rule;
+		return std::get<Node>(val).rule();
 	}
 	const Type* type() const {
 		return kind() == VAR ? var().type : rule()->term.type.get();
 	}
-	Children& children() {
-		assert(kind() == RULE);
-		return std::get<Node>(val).children;
-	}
 	const Children& children() const {
 		assert(kind() == RULE);
-		return std::get<Node>(val).children;
+		return std::get<Node>(val).children();
 	}
 
 	uint arity() const {
 		switch (kind()) {
-		case RULE: return std::get<Node>(val).children.size();
+		case RULE: return std::get<Node>(val).children().size();
 		case VAR:  return 0;
 		default:   assert(0 && "impossible"); return -1;
 		}
