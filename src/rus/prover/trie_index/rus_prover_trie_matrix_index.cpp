@@ -380,7 +380,10 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 		if (count == 1) {
 			debug_trie_intersect = true;
 		}
+		Timer timer; timer.start();
 		common = std::move(common.intersect(p.second));
+		timer.stop();
+
 		if (common.empty()) {
 			if (debug_trie_index) {
 				cout << "INTERSECTED: EMPTY " << count << endl;
@@ -391,6 +394,9 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 		if (debug_trie_index) {
 			cout << "INTERSECTED: " << count << endl;
 			cout << common.show() << endl;
+		}
+		if (debug_trie_profile) {
+			cout << "INTERSECTED IN: " << timer << endl;
 		}
 
 		vars.push_back(p.first);
@@ -506,6 +512,19 @@ string MatrixIndex::card_str() const {
 
 uint matrix_vector_counter = 0;
 
+static vector<LightSymbol> optimize_order_mindex(const map<LightSymbol, unique_ptr<VectorIndex>>& mindex) {
+	vector<LightSymbol> ret;
+	for (const auto& p : mindex) ret.push_back(p.first);
+	std::sort(
+		ret.begin(),
+		ret.end(),
+		[&mindex](LightSymbol s1, LightSymbol s2) {
+			return mindex.at(s1)->unifyComplexity() < mindex.at(s2)->unifyComplexity();
+		}
+	);
+	return ret;
+}
+
 MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -524,21 +543,25 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	}
 	map<LightSymbol, VectorUnifiedUnion> unified_columns;
 	matrix_vector_counter = 0;
-	for (auto& p : mindex_) {
+	for (auto var : optimize_order_mindex(mindex_)) {
+		if (debug_trie_profile) {
+			cout << "start unifying var " << prover::show(var) << " ... " << flush;
+		}
+		Timer timer;
+		timer.start();
 		try {
-			unified_columns[p.first] = std::move(p.second->unify_general());
-			if (unified_columns[p.first].empty()) {
+			unified_columns[var] = std::move(mindex_[var]->unify_general());
+			if (unified_columns[var].empty()) {
 				return MultyUnifiedSubs();
 			}
 		} catch (Error& err) {
-			cout << "while unifying matrix var: " << prover::show(p.first) << endl;
+			cout << "while unifying matrix var: " << prover::show(var) << endl;
 			throw err;
 		}
-		if (debug_trie_index) {
-			cout << endl;
-			cout << "var " << prover::show(p.first) << " has " << unified_columns[p.first].card() << " unified" << endl;
-			cout << unified_columns[p.first].show() << endl;
-			cout << endl;
+		timer.stop();
+		if (debug_trie_profile) {
+			cout << "var " << prover::show(var) << " has " << unified_columns[var].card() << " unified in " << timer << endl;
+			//cout << unified_columns[p.first].show() << endl;
 		}
 		matrix_vector_counter += 1;
 	}

@@ -182,18 +182,25 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
+//#define CHECK_MATRIX_UNIFICATION
+
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
+if (c >= 1880) {
+	trie_index::debug_trie_profile = true;
+}
+
 	Timer timer; timer.start();
-	/*MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
+#ifdef CHECK_MATRIX_UNIFICATION
+	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
 	cout << "sequntial unification: " << timer << endl;
-	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;*/
-
+	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+#endif
 	timer.clear();
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
@@ -201,7 +208,8 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
 
-	/*if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
+#ifdef CHECK_MATRIX_UNIFICATION
+	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		//cout << "SEQUENTIAL:" << endl;
 		//cout << show(unified_subs_1) << endl;
@@ -221,7 +229,12 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		//cout << "SUB UNIFICATION EQUAL" << endl;
-	}*/
+	}
+#endif
+
+	if (c == 1879) {
+		trie_index::debug_trie_profile = true;
+	}
 
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
@@ -232,12 +245,15 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		}
 		try {
 			ProofProp* pp = new ProofProp(*pr, ch, p.second);
-			for (auto& h : pr->proofs) {
-				if (pp->equal(h.get())) {
-					cout << "DUPLICATE PROP PROOF" << endl;
-					cout << pp->show() << endl;
-					cout << "-----------" << endl;
-					cout << h->show() << endl;
+			if (pr->proofs.size() < 64) {
+				// Don't check ALL proofs if there's too much (43050 for example)
+				for (auto& h : pr->proofs) {
+					if (pp->equal(h.get())) {
+						cout << "DUPLICATE PROP PROOF" << endl;
+						cout << pp->show() << endl;
+						cout << "-----------" << endl;
+						cout << h->show() << endl;
+					}
 				}
 			}
 			pr->proofs.emplace_back(pp);

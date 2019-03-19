@@ -171,12 +171,15 @@ vector<Node*> Prop::buildDown() {
 			//cout << "PROP: " << ind << endl;
 			//cout << "BUILDING DOWN HYP: " << parent->ind << endl;
 			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub);
-			for (auto& h : parent->proofs) {
-				if (hp->equal(h.get())) {
-					cout << "DUPLICATE EXP PROOF" << endl;
-					cout << hp->show() << endl;
-					cout << "-----------" << endl;
-					cout << h->show() << endl;
+			if (proofs.size() < 64) {
+				// Don't check ALL proofs if there's too much (43050 for example)
+				for (auto& h : parent->proofs) {
+					if (hp->equal(h.get())) {
+						cout << "DUPLICATE EXP PROOF" << endl;
+						cout << hp->show() << endl;
+						cout << "-----------" << endl;
+						cout << h->show() << endl;
+					}
 				}
 			}
 			parent->proofs.emplace_back(hp);

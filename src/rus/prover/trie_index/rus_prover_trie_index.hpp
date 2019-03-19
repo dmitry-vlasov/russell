@@ -222,6 +222,7 @@ inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m,
 
 extern bool debug_trie_index;
 extern bool debug_trie_subterm;
+extern bool debug_trie_profile;
 
 
 }}}}

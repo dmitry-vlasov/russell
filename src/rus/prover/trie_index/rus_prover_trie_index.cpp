@@ -5,6 +5,7 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 bool debug_trie_index = false;
+bool debug_trie_profile = false;
 
 void TrieIndex::add(const FlatTerm& t, uint val) {
 	struct NodePair {
