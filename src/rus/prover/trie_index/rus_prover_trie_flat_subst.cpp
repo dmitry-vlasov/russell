@@ -8,35 +8,24 @@ bool debug_flat_apply = false;
 void FlatSubst::operator = (const FlatSubst& s) {
 	ok = s.ok;
 	if (ok) {
-		for (const auto& p : s.sub) {
-			sub.emplace(p.first, p.second);
+		for (const auto& p : s.sub_) {
+			sub_.emplace(p.first, p.second);
 		}
 	}
 }
 
 void FlatSubst::operator = (FlatSubst&& s) {
 	ok = s.ok;
-	sub = std::move(s.sub);
+	sub_ = std::move(s.sub_);
 	s.ok = true;
 }
 
 bool FlatSubst::operator == (const FlatSubst& s) const {
-	if (ok != s.ok) {
+	if (ok != s.ok || size() != s.size()) {
 		return false;
 	}
-	for (const auto& p : sub) {
-		if (!s.maps(p.first)) {
-			return false;
-		}
-		if (p.second != s.sub.at(p.first)) {
-			return false;
-		}
-	}
-	for (const auto& p : s.sub) {
-		if (!maps(p.first)) {
-			return false;
-		}
-		if (p.second != sub.at(p.first)) {
+	for (const auto& p : sub_) {
+		if (p.second != s.maps(p.first)) {
 			return false;
 		}
 	}
@@ -61,27 +50,24 @@ bool consistent(const FlatSubst* s, LightSymbol v, const FlatTerm& t) {
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
-	auto j = s->sub.find(v);
-	if (j != s->sub.end()) {
-		if (t != j->second) {
-			return false;
-		}
-	}
-	for (LightSymbol y : x_vars) {
-		auto i = s->sub.find(y);
-		if (i != s->sub.end()) {
-			set<LightSymbol> y_vars;
-			collect_vars(i->second, y_vars);
-			if (y_vars.find(v) != y_vars.end()) {
-				return false;
+	if (s->maps(v)) {
+		return s->map(v) == t;
+	} else {
+		for (LightSymbol y : x_vars) {
+			if (s->maps(y)) {
+				set<LightSymbol> y_vars;
+				collect_vars(s->map(y), y_vars);
+				if (y_vars.find(v) != y_vars.end()) {
+					return false;
+				}
 			}
 		}
+		return true;
 	}
-	return true;
 }
 
-bool FlatSubst::consistent(const FlatSubst& s) const {
-	for (const auto& p : s.sub) {
+bool FlatSubst::consistent(const FlatSubst& sub) const {
+	for (const auto& p : sub) {
 		if (!trie_index::consistent(this, p.first, p.second)) {
 			return false;
 		}
@@ -112,17 +98,17 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	}
 	FlatSubst ret;
 	set<LightSymbol> vars;
-	for (const auto& p : s1.sub) {
+	for (const auto& p : s1) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
-			s1.sub[p.first] = ex; //std::move(ex);
+			s1.compose(p.first, ex); //std::move(ex);
 			vars.insert(p.first);
 		}
 	}
 	if (full) {
-		for (const auto& p : s2.sub) {
+		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub[p.first] = p.second;
+				s1.compose(p.first, p.second);
 			}
 		}
 	}
@@ -154,9 +140,9 @@ bool FlatSubst::bicompose(const FlatSubst& s) {
 	return true;
 }
 
-bool FlatSubst::intersects(const FlatSubst& s) const {
+bool FlatSubst::intersects(const FlatSubst& sub) const {
 	for (const auto& p : sub) {
-		if (s.sub.count(p.first)) {
+		if (sub.maps(p.first)) {
 			return true;
 		}
 	}
@@ -165,10 +151,10 @@ bool FlatSubst::intersects(const FlatSubst& s) const {
 
 bool FlatSubst::composeable(const FlatSubst& s) const {
 	set<LightSymbol> vars;
-	for (const auto& p : sub) {
+	for (const auto& p : sub_) {
 		collect_vars(p.second, vars);
 	}
-	for (const auto& p : s.sub) {
+	for (const auto& p : s) {
 		if (vars.find(p.first) != vars.end()) {
 			return true;
 		}
@@ -179,10 +165,10 @@ bool FlatSubst::composeable(const FlatSubst& s) const {
 string FlatSubst::show() const {
 	string str;
 	str += "OK = " + (ok ? string("TRUE") : string("FALSE")) + "\n";
-	if (!sub.size()) {
+	if (!sub_.size()) {
 		str += "empty\n";
 	}
-	for (const auto& p : sub) {
+	for (const auto& p : sub_) {
 		str += prover::show(p.first) + " --> " + p.second.show() + "\n";
 	}
 	return str;
@@ -192,9 +178,9 @@ uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 	uint len = t.len();
 	for (const auto& n : t.nodes) {
 		if (n.ruleVar.isVar()) {
-			auto it = s.sub.find(n.ruleVar.var);
-			if (it != s.sub.end()) {
-				len += it->second.len() - 1;
+			const FlatTerm& term = s.map(n.ruleVar.var);
+			if (!term.empty()) {
+				len += term.len() - 1;
 			}
 		}
 	}
@@ -219,10 +205,10 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		const auto& n = t.nodes[k];
 		beg_shifts.push_back(len);
 		if (n.ruleVar.isVar()) {
-			auto it = s.sub.find(n.ruleVar.var);
-			if (it != s.sub.end()) {
-				len += it->second.len() - 1;
-				subs.push_back(&it->second);
+			const FlatTerm& term = s.map(n.ruleVar.var);
+			if (!term.empty()) {
+				len += term.len() - 1;
+				subs.push_back(&term);
 			} else {
 				subs.push_back(nullptr);
 			}
@@ -329,8 +315,8 @@ FlatSubst compose(const FlatSubst& s1, const FlatSubst& s2) {
 }
 
 bool composable(const FlatSubst& s1, const FlatSubst& s2) {
-	for (const auto& p : s1.sub) {
-		if (s2.sub.find(p.first) != s2.sub.end()) {
+	for (const auto& p : s1) {
+		if (s2.maps(p.first)) {
 			return true;
 		}
 	}
@@ -340,14 +326,14 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2) {
 FlatSubst convert2flatsubst(const Subst& sub) {
 	FlatSubst ret;
 	for (const auto& p : sub) {
-		ret.sub.emplace(p.first, std::move(convert2flatterm(p.second)));
+		ret.compose(p.first, std::move(convert2flatterm(p.second)));
 	}
 	return ret;
 }
 
 Subst convert2subst(const FlatSubst& s) {
 	Subst ret;
-	for (const auto& p : s.sub) {
+	for (const auto& p : s) {
 		ret.compose(p.first, std::move(convert2lighttree(p.second)));
 	}
 	return ret;

@@ -8,7 +8,7 @@ struct FlatSubst {
 	FlatSubst(bool ok = true) : ok(ok) { }
 	FlatSubst(LightSymbol v, const FlatTerm& t) : ok(true) {
 		if (!(t.kind() == FlatTerm::VAR && t.var() == v)) {
-			sub.emplace(v, t);
+			sub_.emplace(v, t);
 		}
 	}
 	FlatSubst(const FlatSubst& s) : ok(s.ok) {
@@ -25,14 +25,33 @@ struct FlatSubst {
 
 	bool consistent(const FlatSubst& s) const;
 	bool compose(const FlatSubst& s, bool full = true);
+	bool compose(LightSymbol v, const FlatTerm& t, bool full = true) { return compose(FlatSubst(v, t), full); }
 	bool bicompose(const FlatSubst& s);
 	bool intersects(const FlatSubst& s) const;
 	bool composeable(const FlatSubst& s) const;
 
-	bool maps(LightSymbol v) const { return sub.find(v) != sub.end(); }
+	bool maps(LightSymbol v) const { return sub_.find(v) != sub_.end(); }
 	string show() const;
+	const FlatTerm& map(LightSymbol v) const {
+		auto it = sub_.find(v);
+		if (sub_.find(v) != sub_.end()) {
+			return it->second;
+		} else {
+			static FlatTerm empty; return empty;
+		}
+	}
+	void erase(LightSymbol v) { sub_.erase(v); }
 
-	map<LightSymbol, FlatTerm> sub;
+	typedef std::map<LightSymbol, FlatTerm>::const_iterator const_iterator;
+
+	const_iterator begin() const { return sub_.cbegin(); }
+	const_iterator end() const { return sub_.cend(); }
+
+	uint size() const { return sub_.size(); }
+
+private:
+	std::map<LightSymbol, FlatTerm> sub_;
+public:
 	bool ok;
 };
 

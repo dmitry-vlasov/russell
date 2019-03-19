@@ -84,7 +84,6 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 						if (unif[c].ok) {
 							Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 							unif[c] = unified;
-							//s[c].sub[vars[i]] = apply(unif[c], term);
 							s[c].compose(Subst(vars[i], apply(unif[c], term)));
 						}
 					}

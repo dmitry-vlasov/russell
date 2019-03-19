@@ -59,19 +59,20 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
-	if (s->maps(v) && t != s->map(v)) {
-		return false;
-	}
-	for (LightSymbol y : x_vars) {
-		if (s->maps(y)) {
-			set<LightSymbol> y_vars;
-			collect_vars(s->map(y), y_vars);
-			if (y_vars.find(v) != y_vars.end()) {
-				return false;
+	if (s->maps(v)) {
+		return t == s->map(v);
+	} else {
+		for (LightSymbol y : x_vars) {
+			if (s->maps(y)) {
+				set<LightSymbol> y_vars;
+				collect_vars(s->map(y), y_vars);
+				if (y_vars.find(v) != y_vars.end()) {
+					return false;
+				}
 			}
 		}
+		return true;
 	}
-	return true;
 }
 
 bool Subst::consistent(const Subst& s) const {

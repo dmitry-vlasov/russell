@@ -54,7 +54,12 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 	vector<FlatTerm> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
-			to_unify.push_back(s.sub.at(v));
+			const FlatTerm& t = s.map(v);
+			if (!t.empty()) {
+				to_unify.push_back(t);
+			} else {
+				throw Error("empty term at unify_step_1");
+			}
 		}
 	}
 	vector<MultyIter> iters;
