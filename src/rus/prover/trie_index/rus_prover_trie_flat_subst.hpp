@@ -5,16 +5,16 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 struct FlatSubst {
-	FlatSubst(bool ok = true) : ok(ok) { }
-	FlatSubst(LightSymbol v, const FlatTerm& t) : ok(true) {
+	FlatSubst(bool ok = true) : ok_(ok) { }
+	FlatSubst(LightSymbol v, const FlatTerm& t) : ok_(true) {
 		if (!(t.kind() == FlatTerm::VAR && t.var() == v)) {
 			sub_.emplace(v, t);
 		}
 	}
-	FlatSubst(const FlatSubst& s) : ok(s.ok) {
+	FlatSubst(const FlatSubst& s) : ok_(s.ok_) {
 		operator = (s);
 	}
-	FlatSubst(FlatSubst&& s) : ok(s.ok) {
+	FlatSubst(FlatSubst&& s) : ok_(s.ok_) {
 		operator = (std::move(s));
 	}
 	void operator = (const FlatSubst& s);
@@ -48,12 +48,11 @@ struct FlatSubst {
 	const_iterator end() const { return sub_.cend(); }
 
 	uint size() const { return sub_.size(); }
+	bool ok() const { return ok_; }
 
 private:
 	std::map<LightSymbol, FlatTerm> sub_;
-public:
-	bool ok;
-
+	bool ok_;
 	friend void compose(FlatSubst& s1, const FlatSubst& s2, bool full);
 };
 

@@ -77,7 +77,6 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 			FlatTerm unified = apply(end.sub, term_orig);
 			for (auto v : vars) {
 				if (!s.compose(FlatSubst(v, unified))) {
-					s.ok = false;
 					if (debug_flat_unify) {
 						cout << "!s.compose(FlatSubst(v, unified))" << endl;
 						cout << "v: " << prover::show(v) << endl;
@@ -170,13 +169,13 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
 					FlatTerm term_applied = apply(ends.sub, term_orig);
 					FlatSubst s = unify_step_1(i.sub, data.vars, term_applied);
-					if (s.ok) {
+					if (s.ok()) {
 						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 					}
 				}
 			} else {
 				FlatSubst s = unify_step_1(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
-				if (s.ok) {
+				if (s.ok()) {
 					ret.emplace_back(i.iters, i.parentSub, s);
 				}
 			}
@@ -226,7 +225,7 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 						}
 					}*/
 
-					if (i.isTermEnd(p.beg) && i.sub.ok) {
+					if (i.isTermEnd(p.beg) && i.sub.ok()) {
 						//if (debug_trie_index) {
 						//	dump(i, "if (i.isTermEnd(begins) && i.sub.ok)");
 						//}

@@ -267,7 +267,7 @@ struct UnifyIters {
 		return UnifyIters(next_iters, sub, sub);
 	}
 	bool isNextEnd() const {
-		if (!sub.ok) {
+		if (!sub.ok()) {
 			return true;
 		}
 		for (const auto& i : iters) {
@@ -278,7 +278,7 @@ struct UnifyIters {
 		return false;
 	}
 	bool isTermEnd(const UnifyIters& ends) const {
-		if (!sub.ok) {
+		if (!sub.ok()) {
 			return true;
 		}
 		for (uint i = 0; i < iters.size(); ++i) {
@@ -289,7 +289,7 @@ struct UnifyIters {
 		return true;
 	}
 	void showTermEnd(const UnifyIters& ends) const {
-		if (!sub.ok) {
+		if (!sub.ok()) {
 			cout << "!sub.ok" << endl;
 		}
 		for (uint i = 0; i < iters.size(); ++i) {
@@ -297,7 +297,7 @@ struct UnifyIters {
 		}
 	}
 	bool isNextEnd(const UnifyIters& ends) const {
-		if (!sub.ok) {
+		if (!sub.ok()) {
 			return true;
 		}
 		for (uint i = 0; i < iters.size(); ++i) {
@@ -308,7 +308,7 @@ struct UnifyIters {
 		return false;
 	}
 	bool isSideEnd() const {
-		if (!sub.ok) {
+		if (!sub.ok()) {
 			return true;
 		}
 		for (const auto& i : iters) {
@@ -394,7 +394,7 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {
-			if (p.second.sub->ok) {
+			if (p.second.sub->ok()) {
 				//cout << "UNIFIED: " << p.first << endl;
 				ret.emplace_back(m.data().at(p.first[0]), convert2subst(*p.second.sub));
 			}

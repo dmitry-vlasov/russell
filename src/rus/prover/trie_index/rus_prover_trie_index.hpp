@@ -212,7 +212,7 @@ inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m,
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	TrieIndex::Unified unif = m.index().unify(convert2flatterm(t));
 	for (auto& p : unif) {
-		if (p.second.ok) {
+		if (p.second.ok()) {
 			//cout << "UNIFIED: " << p.first << endl;
 			ret.emplace_back(m.data().at(p.first), convert2subst(p.second));
 		}

@@ -6,8 +6,8 @@ bool debug_flat_subst = false;
 bool debug_flat_apply = false;
 
 void FlatSubst::operator = (const FlatSubst& s) {
-	ok = s.ok;
-	if (ok) {
+	ok_ = s.ok_;
+	if (ok_) {
 		for (const auto& p : s.sub_) {
 			sub_.emplace(p.first, p.second);
 		}
@@ -15,13 +15,13 @@ void FlatSubst::operator = (const FlatSubst& s) {
 }
 
 void FlatSubst::operator = (FlatSubst&& s) {
-	ok = s.ok;
+	ok_ = s.ok_;
 	sub_ = std::move(s.sub_);
-	s.ok = true;
+	s.ok_ = true;
 }
 
 bool FlatSubst::operator == (const FlatSubst& s) const {
-	if (ok != s.ok || size() != s.size()) {
+	if (ok_ != s.ok_ || size() != s.size()) {
 		return false;
 	}
 	for (const auto& p : sub_) {
@@ -120,11 +120,12 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 }
 
 bool FlatSubst::compose(const FlatSubst& s, bool full) {
-	if (!consistent(s)) {
-		return false;
+	if (!ok_ || !consistent(s)) {
+		ok_ = false;
+	} else {
+		trie_index::compose(*this, s, full);
 	}
-	trie_index::compose(*this, s, full);
-	return true;
+	return ok_;
 }
 
 bool FlatSubst::bicompose(const FlatSubst& s) {
@@ -164,7 +165,7 @@ bool FlatSubst::composeable(const FlatSubst& s) const {
 
 string FlatSubst::show() const {
 	string str;
-	str += "OK = " + (ok ? string("TRUE") : string("FALSE")) + "\n";
+	str += "OK = " + (ok_ ? string("TRUE") : string("FALSE")) + "\n";
 	if (!sub_.size()) {
 		str += "empty\n";
 	}

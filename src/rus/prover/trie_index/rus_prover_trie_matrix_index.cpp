@@ -427,7 +427,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
 				}
 			} else {
-				if (sub.ok) {
+				if (sub.ok()) {
 					s[c];
 					unif[c];
 				} else {

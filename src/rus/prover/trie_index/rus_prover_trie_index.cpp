@@ -301,9 +301,9 @@ struct UnifyIter {
 		return UnifyIter(trieIter.side(), termIter, parentSub, parentSub);
 	}
 	UnifyIter next() const { return UnifyIter(trieIter.next(), termIter.next(), sub, sub); }
-	bool isNextEnd() const { return sub.ok ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
-	bool isTermEnd() const { return sub.ok ? (trieIter.isNextEnd() && termIter.isNextEnd()) : true; }
-	bool isSideEnd() const { return sub.ok ? (trieIter.isSideEnd() && termIter.isSideEnd()) : true; }
+	bool isNextEnd() const { return sub.ok() ? (trieIter.isNextEnd() || termIter.isNextEnd()) : true; }
+	bool isTermEnd() const { return sub.ok() ? (trieIter.isNextEnd() && termIter.isNextEnd()) : true; }
+	bool isSideEnd() const { return sub.ok() ? (trieIter.isSideEnd() && termIter.isSideEnd()) : true; }
 	bool equals() const { return trieIter.iter()->first == termIter.iter()->ruleVar; }
 
 	vector<UnifyIter> unify() const {
@@ -317,14 +317,14 @@ struct UnifyIter {
 			if (trieIter.isVar()) {
 				for (const auto& p : termIter.subTerms()) {
 					FlatSubst s = unify_step(sub, {trieIter.var()}, p.first);
-					if (s.ok) {
+					if (s.ok()) {
 						ret.emplace_back(trieIter, p.second, parentSub, s);
 					}
 				}
 			} else if (termIter.isVar()) {
 				for (const auto& p : trieIter.subTerms()) {
 					FlatSubst s = unify_step(sub, {termIter.var()}, p.first);
-					if (s.ok) {
+					if (s.ok()) {
 						ret.emplace_back(p.second, termIter, parentSub, s);
 					}
 				}
