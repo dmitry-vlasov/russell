@@ -13,7 +13,7 @@ static void addProofs(
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
-		for (const auto& x : p->sub.sub) {
+		for (const auto& x : p->sub.sub_) {
 			if (!mindex_.count(x.first)) {
 				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}
@@ -31,7 +31,7 @@ static void addProofs(
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
-		for (const auto& x : hi.proof->sub.sub) {
+		for (const auto& x : hi.proof->sub.sub_) {
 			if (!mindex_.count(x.first)) {
 				mindex_[x.first] = vector<IndexInt>(dim_hyp_);
 			}

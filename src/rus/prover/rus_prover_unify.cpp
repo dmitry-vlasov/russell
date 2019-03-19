@@ -104,7 +104,7 @@ LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree&
 	vector<LightTree> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
-			to_unify.push_back(s.sub[v]);
+			to_unify.push_back(s.sub_[v]);
 		}
 	}
 	LightTree unified = do_unify(to_unify, s);

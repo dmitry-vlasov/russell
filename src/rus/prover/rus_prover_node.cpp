@@ -8,7 +8,7 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Subst& s) {
+static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, const Subst& s) {
 	Subst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
@@ -16,7 +16,7 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Sub
 			if (!s.maps(v)) {
 				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				vars[v.lit] = i;
-				ret.sub[v] = LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i));
+				ret.sub_[v] = LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i));
 			}
 		}
 	}
@@ -25,7 +25,9 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, Sub
 
 Hyp::Hyp(const LightTree& e, Space* s) :
 	Node(s), parent(nullptr), expr(e) {
-	complete();
+	if (parent && parent->autoGoDown) {
+		complete();
+	}
 	space->registerNode(this);
 }
 
@@ -104,24 +106,25 @@ void Hyp::buildUp() {
 
 	for (auto& m : space->assertions.unify(expr)) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
-		for (const auto& p : fresher.sub) {
-			if (m.sub.sub.count(p.first)) {
-				fresher.sub.erase(p.first);
+		for (const auto& p : fresher.sub_) {
+			if (m.sub.sub().count(p.first)) {
+				fresher.sub_.erase(p.first);
 			}
 		}
-		compose(m.sub, fresher, false);
+		//compose(m.sub_, fresher, false);
+		m.sub.compose(fresher, false);
 		Subst sub;
 		Subst outer;
-		for (const auto& p : m.sub.sub) {
+		for (const auto& p : m.sub.sub()) {
 			if (p.first.ind == LightSymbol::ASSERTION_INDEX) {
-				outer.sub[p.first] = p.second;
+				outer.sub_[p.first] = p.second;
 			} else {
-				sub.sub[p.first] = p.second;
+				sub.sub_[p.first] = p.second;
 			}
 		}
 		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
 		variants.emplace_back(prop);
-		if (!prop->prop.ass->arity()) {
+		if (!prop->prop.ass->arity() && prop->autoGoDown) {
 			ProofProp* pp = new ProofProp(*prop, {}, sub);
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, sub));

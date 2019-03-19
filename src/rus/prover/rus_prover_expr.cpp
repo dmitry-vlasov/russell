@@ -5,14 +5,14 @@ namespace mdl { namespace rus { namespace prover {
 
 void Subst::operator = (const Subst& s) {
 	ok = s.ok;
-	if (ok) for (const auto& p : s.sub) {
-		sub.emplace(p.first, p.second);
+	if (ok) for (const auto& p : s.sub_) {
+		sub_.emplace(p.first, p.second);
 	}
 }
 
 void Subst::operator = (Subst&& s) {
 	ok = s.ok;
-	sub = std::move(s.sub);
+	sub_ = std::move(s.sub_);
 	s.ok = true;
 }
 
@@ -20,19 +20,19 @@ bool Subst::operator == (const Subst& s) const {
 	if (ok != s.ok) {
 		return false;
 	}
-	for (const auto& p : sub) {
+	for (const auto& p : sub_) {
 		if (!s.maps(p.first)) {
 			return false;
 		}
-		if (p.second != s.sub.at(p.first)) {
+		if (p.second != s.sub_.at(p.first)) {
 			return false;
 		}
 	}
-	for (const auto& p : s.sub) {
+	for (const auto& p : s.sub_) {
 		if (!maps(p.first)) {
 			return false;
 		}
-		if (p.second != sub.at(p.first)) {
+		if (p.second != sub_.at(p.first)) {
 			return false;
 		}
 	}
@@ -59,15 +59,15 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
-	auto j = s->sub.find(v);
-	if (j != s->sub.end()) {
+	auto j = s->sub_.find(v);
+	if (j != s->sub_.end()) {
 		if (t != j->second) {
 			return false;
 		}
 	}
 	for (LightSymbol y : x_vars) {
-		auto i = s->sub.find(y);
-		if (i != s->sub.end()) {
+		auto i = s->sub_.find(y);
+		if (i != s->sub_.end()) {
 			set<LightSymbol> y_vars;
 			collect_vars(i->second, y_vars);
 			if (y_vars.find(v) != y_vars.end()) {
@@ -79,7 +79,7 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 }
 
 bool Subst::consistent(const Subst& s) const {
-	for (const auto& p : s.sub) {
+	for (const auto& p : s.sub_) {
 		if (!prover::consistent(this, p.first, p.second)) {
 			return false;
 		}
@@ -98,17 +98,17 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 	}*/
 	Subst ret;
 	set<LightSymbol> vars;
-	for (const auto& p : s1.sub) {
+	for (const auto& p : s1.sub_) {
 		LightTree ex = apply(s2, p.second);
 		if (!(ex.kind() == LightTree::VAR && ex.var() == p.first)) {
-			s1.sub[p.first] = ex;
+			s1.sub_[p.first] = ex;
 			vars.insert(p.first);
 		}
 	}
 	if (full) {
-		for (const auto& p : s2.sub) {
+		for (const auto& p : s2.sub_) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub[p.first] = p.second;
+				s1.sub_[p.first] = p.second;
 			}
 		}
 	}
@@ -141,8 +141,8 @@ bool Subst::bicompose(const Subst& s) {
 }
 
 bool Subst::intersects(const Subst& s) const {
-	for (const auto& p : sub) {
-		if (s.sub.count(p.first)) {
+	for (const auto& p : sub_) {
+		if (s.sub_.count(p.first)) {
 			return true;
 		}
 	}
@@ -151,10 +151,10 @@ bool Subst::intersects(const Subst& s) const {
 
 bool Subst::composeable(const Subst& s) const {
 	set<LightSymbol> vars;
-	for (const auto& p : sub) {
+	for (const auto& p : sub_) {
 		collect_vars(p.second, vars);
 	}
-	for (const auto& p : s.sub) {
+	for (const auto& p : s.sub_) {
 		if (vars.find(p.first) != vars.end()) {
 			return true;
 		}
@@ -170,8 +170,8 @@ Subst compose(const Subst& s1, const Subst& s2) {
 }
 
 bool composable(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1.sub) {
-		if (s2.sub.find(p.first) != s2.sub.end()) {
+	for (const auto& p : s1.sub_) {
+		if (s2.sub_.find(p.first) != s2.sub_.end()) {
 			return true;
 		}
 	}
@@ -273,10 +273,10 @@ string show_ast(const LightTree& tree) {
 string show(const Subst& s) {
 	string str;
 	str += "OK = " + (s.ok ? string("TRUE") : string("FALSE")) + "\n";
-	if (!s.sub.size()) {
+	if (!s.sub_.size()) {
 		str += "empty\n";
 	}
-	for (const auto& p : s.sub) {
+	for (const auto& p : s.sub_) {
 		str += show(p.first) + " --> " + show(p.second) + "\n";
 	}
 	return str;
@@ -293,8 +293,8 @@ unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (v.rep && s.sub.count(v)) {
-			return make_unique<LightTree>(s.sub.at(v));
+		if (v.rep && s.sub_.count(v)) {
+			return make_unique<LightTree>(s.sub_.at(v));
 		} else {
 			return make_unique<LightTree>(v);
 		}
@@ -345,7 +345,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 
 rus::Substitution convert_sub(const Subst& s) {
 	rus::Substitution ret(s.ok);
-	for (const auto& p : s.sub) {
+	for (const auto& p : s.sub_) {
 		ret.join(p.first.lit, convert_tree(p.second));
 	}
 	return ret;
@@ -373,14 +373,17 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 		if (c == 2) {
 			cout << "AAA" << endl;
 		}
-		ret.sub[p.first] = unify(p.second, unif);
+		LightTree t = unify(p.second, unif);
+		if (t.kind() != LightTree::VAR || t.var() != p.first) {
+			ret.sub_[p.first] = t;
+		}
 		if (debug_unify_subs_func) {
 			cout << "RESULT: " << endl;
-			cout << prover::show(ret.sub[p.first]) << endl;
+			cout << prover::show(ret.sub_[p.first]) << endl;
 			cout << "UNIF:" << endl;
 			cout << prover::show(unif) << endl;
 		}
-		if (ret.sub[p.first].empty()) {
+		if (ret.sub_[p.first].empty()) {
 			ret.ok = false;
 			break;
 		}
@@ -389,7 +392,7 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 }
 
 void MultySubst::add(const Subst* s) {
-	for (const auto& p : s->sub) {
+	for (const auto& p : s->sub_) {
 		msub_[p.first].push_back(p.second);
 	}
 }

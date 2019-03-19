@@ -198,7 +198,7 @@ struct Subst {
 	Subst(bool ok = true) : ok(ok) { }
 	Subst(LightSymbol v, const LightTree& t) : ok(true) {
 		if (!(t.kind() == LightTree::VAR && t.var() == v)) {
-			sub.emplace(v, t);
+			sub_.emplace(v, t);
 		}
 	}
 	Subst(const Subst& s) : ok(s.ok) {
@@ -219,9 +219,11 @@ struct Subst {
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;
 
-	bool maps(LightSymbol v) const { return sub.find(v) != sub.end(); }
+	bool maps(LightSymbol v) const { return sub_.find(v) != sub_.end(); }
 
-	map<LightSymbol, LightTree> sub;
+	const map<LightSymbol, LightTree>& sub() { return sub_; }
+
+	map<LightSymbol, LightTree> sub_;
 	bool ok;
 };
 

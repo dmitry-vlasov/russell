@@ -9,12 +9,19 @@ bool debug_trie_matrix = false;
 void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
+
+	if (debug_trie_aftermath) {
+		cout << "gen.size(): " << gen.size() << endl;
+	}
+
 	for (const auto& p : unif) {
 		Subst sub = unify_subs(p.second, gen[p.first]);
 		if (sub.ok) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
+		} else if (debug_trie_aftermath) {
+			cout << "sub: " << prover::show(sub) << " rejected" << endl;
 		}
 	}
 }

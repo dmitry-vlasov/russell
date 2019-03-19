@@ -130,7 +130,8 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 				if (unif[c].ok) {
 					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 					unif[c] = unified;
-					s[c].sub[vars[i]] = apply(unif[c], term);
+					//s[c].sub[vars[i]] = apply(unif[c], term);
+					s[c].compose(Subst(vars[i], apply(unif[c], term)));
 				}
 			} else {
 				if (sub.ok) {

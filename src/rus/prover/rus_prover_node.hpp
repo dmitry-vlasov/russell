@@ -68,6 +68,7 @@ struct Prop : public Node {
 	Subst    sub;
 	Subst    outer;
 	Subst    fresher;
+	bool     autoGoDown = true;
 	Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p);
 
 	void buildUp();

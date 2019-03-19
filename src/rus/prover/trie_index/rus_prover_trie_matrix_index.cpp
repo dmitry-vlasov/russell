@@ -424,7 +424,10 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
 					unif[c] = unified;
-					s[c].sub[vars[i]] = apply(unified, convert2lighttree(term));
+					LightTree t = apply(unified, convert2lighttree(term));
+					if (t.kind() != LightTree::VAR || t.var() != vars[i]) {
+						s[c].sub_[vars[i]] = t;
+					}
 				}
 			} else {
 				if (sub.ok) {
@@ -443,7 +446,7 @@ static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
-		for (const auto& x : p->sub.sub) {
+		for (const auto& x : p->sub.sub_) {
 			if (!mindex_.count(x.first)) {
 				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
 			}
@@ -457,7 +460,7 @@ static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
-		for (const auto& x : hi.proof->sub.sub) {
+		for (const auto& x : hi.proof->sub.sub_) {
 			if (!mindex_.count(x.first)) {
 				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
 			}
