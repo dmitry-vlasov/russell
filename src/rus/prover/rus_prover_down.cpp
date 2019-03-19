@@ -189,10 +189,10 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
 	Timer timer; timer.start();
-	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
+	/*MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
 	cout << "sequntial unification: " << timer << endl;
-	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;*/
 
 	timer.clear();
 	timer.start();
@@ -201,7 +201,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
 
-	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
+	/*if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		//cout << "SEQUENTIAL:" << endl;
 		//cout << show(unified_subs_1) << endl;
@@ -221,9 +221,9 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		throw Error("SUB UNIFICATION DIFF");
 	} else {
 		//cout << "SUB UNIFICATION EQUAL" << endl;
-	}
+	}*/
 
-	for (const auto& p : unified_subs_1) {
+	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
 		vector<ProofHyp*> ch;
 		for (uint i = 0; i < ind.size(); ++ i) {
@@ -255,7 +255,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			throw err;
 		}
 	}
-	if (unified_subs_1.size()) {
+	if (unified_subs_2.size()) {
 		return {pr};
 	} else {
 		return vector<Node*>();
