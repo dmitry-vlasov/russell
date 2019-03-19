@@ -53,6 +53,8 @@ private:
 	std::map<LightSymbol, FlatTerm> sub_;
 public:
 	bool ok;
+
+	friend void compose(FlatSubst& s1, const FlatSubst& s2, bool full);
 };
 
 FlatTerm apply(const FlatSubst& s, const FlatTerm& t);

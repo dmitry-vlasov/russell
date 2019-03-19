@@ -101,14 +101,14 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	for (const auto& p : s1) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
-			s1.compose(p.first, ex); //std::move(ex);
+			s1.sub_[p.first] = std::move(ex); //std::move(ex);
 			vars.insert(p.first);
 		}
 	}
 	if (full) {
 		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.compose(p.first, p.second);
+				s1.sub_.emplace(p.first, p.second);
 			}
 		}
 	}
