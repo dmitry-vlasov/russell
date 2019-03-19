@@ -84,22 +84,26 @@ bool Subst::consistent(const Subst& s) const {
 	return true;
 }
 
+bool debug_compose = false;
+
 void compose(Subst& s1, const Subst& s2, bool full) {
-	/*bool sh = s.sub.size() && sub.size();
-	if (sh) {
+	//bool sh = s.sub.size() && sub.size();
+	if (debug_compose) {
 		cout << "-------------------------------------" << endl;
 		cout << "BEFORE " << (full ? "FULL" : "PART") << " COMPOSE THIS:" << endl;
-		cout << Indent::paragraph(show(*this)) << endl;
-		cout << "BEFORE COMPOSE S:" << endl;
-		cout << Indent::paragraph(show(s)) << endl;
-	}*/
+		cout << Indent::paragraph(show(s1)) << endl;
+		cout << "BEFORE COMPOSE WITH:" << endl;
+		cout << Indent::paragraph(show(s2)) << endl;
+	}
 	Subst ret;
 	set<LightSymbol> vars;
 	for (const auto& p : s1) {
 		LightTree ex = apply(s2, p.second);
 		if (!(ex.kind() == LightTree::VAR && ex.var() == p.first)) {
-			s1.sub_[p.first] = ex;
+			s1.sub_[p.first] = std::move(ex);
 			vars.insert(p.first);
+		} else {
+			s1.sub_.erase(p.first);
 		}
 	}
 	if (full) {
@@ -109,11 +113,11 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 			}
 		}
 	}
-	/*if (sh) {
+	if (debug_compose) {
 		cout << "AFTER COMPOSE THIS:" << endl;
-		cout << Indent::paragraph(show(*this)) << endl;
+		cout << Indent::paragraph(show(s1)) << endl;
 		cout << "-------------------------------------" << endl;
-	}*/
+	}
 }
 
 bool Subst::compose(const Subst& s, bool full) {
@@ -371,18 +375,18 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 		if (c == 2) {
 			cout << "AAA" << endl;
 		}
-		LightTree t = unify(p.second, unif);
-		if (t.kind() != LightTree::VAR || t.var() != p.first) {
-			ret.compose(p.first, t);
+		LightTree term = unify(p.second, unif);
+		if (term.empty()) {
+			return Subst(false);
 		}
+		ret.compose(p.first, unify(p.second, unif));
 		if (debug_unify_subs_func) {
 			cout << "RESULT: " << endl;
 			cout << prover::show(ret.map(p.first)) << endl;
 			cout << "UNIF:" << endl;
 			cout << prover::show(unif) << endl;
 		}
-		if (ret.map(p.first).empty()) {
-			ret.spoil();
+		if (!ret.ok()) {
 			break;
 		}
 	}
@@ -433,9 +437,15 @@ Subst unify_subs(Subst unif, Subst gen) {
 			cout << "intersects == false" << endl;
 		}
 		if (gen.compose(unif)) {
+			if (debug_unify_subs_func) {
+				cout << "gen.compose(unif)"  << endl;
+			}
 			sub_closure(gen);
 			return gen;
 		} else {
+			if (debug_unify_subs_func) {
+				cout << "!!!!!!!!!! gen.compose(unif)"  << endl;
+			}
 			return Subst(false);
 		}
 	} else {

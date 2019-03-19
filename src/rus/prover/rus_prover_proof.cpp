@@ -95,7 +95,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 			compose(si, sub);
 			if (s0 != si) {
 				string err;
-				err += "s0 != si\n";
+				err += "s0 != s" + to_string(i) + "\n";
 				err += "s0: " +  prover::show(s0) + "\n";
 				err += "s" + to_string(i) + ": " + prover::show(si) + "\n\n";
 				err += "orig s0: " +  prover::show(premises[0]->sub) + "\n";

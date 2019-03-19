@@ -43,6 +43,11 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			debug_unify_subs_func = true;
 		}
 		Subst sub = unify_subs(MultySubst(subs));
+
+		if (debug_unify_subs) {
+			cout << "SUB: " << show(sub) << endl;
+		}
+
 		if (sub.ok()) {
 			Subst delta = pr->sub;
 			if (show_debug) {
@@ -52,6 +57,11 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 				cout << show(sub) << endl;
 			}
 			delta.compose(sub);
+			if (debug_unify_subs) {
+				cout << "SUB: " << show(delta) << endl;
+			}
+
+
 			ret[ind.inds()] = delta;
 		}
 		debug_unify_subs_func = false;
@@ -190,13 +200,15 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
-/*if (c == 2288) {
-	trie_index::debug_trie_profile = true;
-	trie_index::debug_trie_aftermath = true;
-	cout << "TO SHOW MATRIX:" << endl;
-	cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
-	cout << "MATRIX SHOWN." << endl;
-}*/
+//if (c == 2288) {
+	//trie_index::debug_trie_profile = true;
+	//trie_index::debug_trie_aftermath = true;
+	//debug_unify_subs = true;
+	//debug_unify_subs_func = true;
+	//cout << "TO SHOW MATRIX:" << endl;
+	//cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
+	//cout << "MATRIX SHOWN." << endl;
+//}
 
 	Timer timer; timer.start();
 #ifdef CHECK_MATRIX_UNIFICATION
@@ -236,8 +248,9 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	}
 #endif
 
-	if (c == 1880) {
-		trie_index::debug_trie_profile = false;
+	if (c == 2288) {
+		//debug_compose = true;
+		//trie_index::debug_trie_profile = false;
 		//exit(0);
 	}
 
@@ -272,7 +285,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			err.msg += "\nunifier: " + show(p.second);
 			error_inds = ind;
 			debug_unify_subs = true;
-			unify_subs_sequent(pr, hy, hs);
+			//unify_subs_sequent(pr, hy, hs);
 			throw err;
 		}
 	}

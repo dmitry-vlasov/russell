@@ -289,6 +289,7 @@ private:
 };
 
 extern bool debug_unify_subs_func;
+extern bool debug_compose;
 
 void sub_closure(Subst& sub);
 Subst unify_subs(Subst unif, Subst gen);

@@ -101,8 +101,10 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	for (const auto& p : s1) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
-			s1.sub_[p.first] = std::move(ex); //std::move(ex);
+			s1.sub_[p.first] = std::move(ex);
 			vars.insert(p.first);
+		} else {
+			s1.sub_.erase(p.first);
 		}
 	}
 	if (full) {
