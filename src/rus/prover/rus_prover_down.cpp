@@ -43,7 +43,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			debug_unify_subs_func = true;
 		}
 		Subst sub = unify_subs(MultySubst(subs));
-		if (sub.ok) {
+		if (sub.ok()) {
 			Subst delta = pr->sub;
 			if (show_debug) {
 				cout << "DELTA" << endl;
@@ -103,7 +103,7 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypInde
 bool similar_subs_1(const Subst& s1, const Subst& s2) {
 	if (s1 == s2) return true;
 	Subst unif = unify_subs(MultySubst({&s1, &s2}));
-	if (!unif.ok) {
+	if (!unif.ok()) {
 		//don't unify
 		return false;
 	}

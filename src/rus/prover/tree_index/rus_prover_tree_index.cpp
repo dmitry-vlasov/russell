@@ -212,7 +212,7 @@ TreeIndex::Unified TreeIndex::unify(const LightTree& t) const {
 		LightTree tr = exprs[p.first];
 		LightTree x = terms[p.first];
 		if (x.empty()) {
-			unif[p.first].ok = false;
+			unif[p.first].spoil();
 			continue;
 		}
 		if (!(apply(p.second, tr) == apply(p.second, t) && apply(p.second, t) == x)) {

@@ -4,20 +4,20 @@
 namespace mdl { namespace rus { namespace prover {
 
 void Subst::operator = (const Subst& s) {
-	ok = s.ok;
-	if (ok) for (const auto& p : s.sub_) {
+	ok_ = s.ok_;
+	if (ok_) for (const auto& p : s.sub_) {
 		sub_.emplace(p.first, p.second);
 	}
 }
 
 void Subst::operator = (Subst&& s) {
-	ok = s.ok;
+	ok_ = s.ok_;
 	sub_ = std::move(s.sub_);
-	s.ok = true;
+	s.ok_ = true;
 }
 
 bool Subst::operator == (const Subst& s) const {
-	if (ok != s.ok) {
+	if (ok_ != s.ok_) {
 		return false;
 	}
 	for (const auto& p : sub_) {
@@ -118,10 +118,11 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 
 bool Subst::compose(const Subst& s, bool full) {
 	if (!consistent(s)) {
-		return false;
+		ok_ = false;
+	} else {
+		prover::compose(*this, s, full);
 	}
-	prover::compose(*this, s, full);
-	return true;
+	return ok_;
 }
 
 bool Subst::bicompose(const Subst& s) {
@@ -269,7 +270,7 @@ string show_ast(const LightTree& tree) {
 
 string show(const Subst& sub) {
 	string str;
-	str += "OK = " + (sub.ok ? string("TRUE") : string("FALSE")) + "\n";
+	str += "OK = " + (sub.ok() ? string("TRUE") : string("FALSE")) + "\n";
 	if (!sub.size()) {
 		str += "empty\n";
 	}
@@ -341,7 +342,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 }
 
 rus::Substitution convert_sub(const Subst& sub) {
-	rus::Substitution ret(sub.ok);
+	rus::Substitution ret(sub.ok());
 	for (const auto& p : sub) {
 		ret.join(p.first.lit, convert_tree(p.second));
 	}
@@ -381,7 +382,7 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 			cout << prover::show(unif) << endl;
 		}
 		if (ret.map(p.first).empty()) {
-			ret.ok = false;
+			ret.spoil();
 			break;
 		}
 	}
@@ -403,7 +404,6 @@ void sub_closure(Subst& sub) {
 			break;
 		}
 		if (!sub.compose(sub)) {
-			sub.ok = false;
 			break;
 		}
 	}
@@ -418,7 +418,7 @@ Subst unify_subs(const MultySubst& t) {
 }
 
 Subst unify_subs(Subst unif, Subst gen) {
-	if (!(gen.ok && unif.ok)) {
+	if (!(gen.ok() && unif.ok())) {
 		return Subst(false);
 	}
 	if (debug_unify_subs_func) {

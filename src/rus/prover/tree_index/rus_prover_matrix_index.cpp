@@ -147,7 +147,7 @@ void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs gen = mi.compute(unif);
 	for (const auto& p : unif) {
 		Subst sub = unify_subs(p.second, gen[p.first]);
-		if (sub.ok) {
+		if (sub.ok()) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;

@@ -546,7 +546,7 @@ bool check_vector_index_unified(const vector<uint>& leafs, const SubstTree& subt
 	}
 	LightTree common;
 	for (uint i = 0; i < vindex.size(); ++ i) {
-		if (expr_ind[i] != -1 && subtree.sub().ok) {
+		if (expr_ind[i] != -1 && subtree.sub().ok()) {
 			LightTree e_orig = vindex.index(i)->exprs[expr_ind[i]];
 			if (apply(subtree.sub(), e_orig) != subtree.tree()) {
 				cout << "VECTOR INDEX UNIFICATION FAILS (A)" << endl;

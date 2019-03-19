@@ -27,7 +27,7 @@ void ProductUnified::add_intersection(const vector<ProductUnified>& v, const Rul
 					break;
 				}
 				unif = unify_subs(MultySubst({&unif, &st.sub(i)}));
-				if (!unif.ok) {
+				if (!unif.ok()) {
 					break;
 				}
 				children.push_back(make_unique<LightTree>(st.tree(i)));
@@ -51,7 +51,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 					break;
 				}
 				unif = unify_subs(MultySubst({&unif, &st.sub(i)}));
-				if (!unif.ok) {
+				if (!unif.ok()) {
 					break;
 				}
 				children.push_back(make_unique<LightTree>(st.tree(i)));
@@ -81,7 +81,7 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 				const Subst& sub = st.sub(i);
 				if (!term.empty()) {
 					for (auto c : key.unfold()) {
-						if (unif[c].ok) {
+						if (unif[c].ok()) {
 							Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 							unif[c] = unified;
 							s[c].compose(Subst(vars[i], apply(unif[c], term)));
@@ -91,8 +91,8 @@ void ProductUnified::add_intersection_1(const ProductUnified& v, const Rule* r, 
 					for (auto c : key.unfold()) {
 						s[c];
 						unif[c];
-						if (!sub.ok) {
-							unif[c].ok = false;
+						if (!sub.ok()) {
+							unif[c].spoil();
 						}
 					}
 				}

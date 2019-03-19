@@ -69,7 +69,7 @@ struct TreeIndexMap {
 		vector<Unified> ret;
 		TreeIndex::Unified unif = index_.unify(t);
 		for (auto& p : unif) {
-			if (p.second.ok) {
+			if (p.second.ok()) {
 				ret.emplace_back(data_[p.first], std::move(p.second));
 			}
 		}

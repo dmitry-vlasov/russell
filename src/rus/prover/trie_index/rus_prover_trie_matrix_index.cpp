@@ -420,7 +420,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 			const FlatTerm& term = *q.second[i].term;
 			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
-				if (unif[c].ok) {
+				if (unif[c].ok()) {
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
 					unif[c] = unified;
@@ -431,7 +431,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 					s[c];
 					unif[c];
 				} else {
-					unif[c].ok = false;
+					unif[c].spoil();
 				}
 			}
 		}

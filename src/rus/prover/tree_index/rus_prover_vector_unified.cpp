@@ -40,9 +40,9 @@ void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t) {
 
 void finalize(SubstTree& st, const vector<LightSymbol>& w, const LightTree& t, Subst& unif) {
 	if (!st.sub().compose(unif)) {
-		st.sub().ok = false;
+		st.sub().spoil();
 		st.tree() = LightTree();
-		unif.ok = false;
+		unif.spoil();
 		return;
 	}
 	finalize(st, w, t);
@@ -65,7 +65,7 @@ void VectorUnified::add_intersection(const vector<VectorUnified>& v, const Rule*
 				break;
 			}
 			unif = unify_subs(MultySubst({&unif, &st.sub()}));
-			if (!unif.ok) {
+			if (!unif.ok()) {
 				break;
 			}
 			children.push_back(make_unique<LightTree>(st.tree()));
@@ -89,7 +89,7 @@ void VectorUnified::add_intersection_1(const VectorUnified& v, const Rule* r, co
 					break;
 				}
 				unif = unify_subs(MultySubst({&unif, &st.sub(i)}));
-				if (!unif.ok) {
+				if (!unif.ok()) {
 					break;
 				}
 				children.push_back(make_unique<LightTree>(st.tree(i)));
@@ -127,18 +127,18 @@ CartesianProd<uint> VectorUnified::leafsProd(const ProdVect& leafs) {
 			const LightTree& term = q.second[i].tree();
 			const Subst& sub = q.second[i].sub();
 			if (!term.empty()) {
-				if (unif[c].ok) {
+				if (unif[c].ok()) {
 					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 					unif[c] = unified;
 					//s[c].sub[vars[i]] = apply(unif[c], term);
 					s[c].compose(Subst(vars[i], apply(unif[c], term)));
 				}
 			} else {
-				if (sub.ok) {
+				if (sub.ok()) {
 					s[c];
 					unif[c];
 				} else {
-					unif[c].ok = false;
+					unif[c].spoil();
 				}
 			}
 		}

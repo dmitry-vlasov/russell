@@ -195,16 +195,16 @@ private:
 };
 
 struct Subst {
-	Subst(bool ok = true) : ok(ok) { }
-	Subst(LightSymbol v, const LightTree& t) : ok(true) {
+	Subst(bool ok = true) : ok_(ok) { }
+	Subst(LightSymbol v, const LightTree& t) : ok_(true) {
 		if (!(t.kind() == LightTree::VAR && t.var() == v)) {
 			sub_.emplace(v, t);
 		}
 	}
-	Subst(const Subst& s) : ok(s.ok) {
+	Subst(const Subst& s) : ok_(s.ok_) {
 		operator = (s);
 	}
-	Subst(Subst&& s) : ok(s.ok) {
+	Subst(Subst&& s) : ok_(s.ok_) {
 		operator = (std::move(s));
 	}
 	void operator = (const Subst& s);
@@ -237,12 +237,12 @@ struct Subst {
 	const_iterator end() const { return sub_.cend(); }
 
 	uint size() const { return sub_.size(); }
+	bool ok() const { return ok_; }
+	void spoil() { ok_ = false; }
 
 private:
 	std::map<LightSymbol, LightTree> sub_;
-public:
-	bool ok;
-
+	bool ok_;
 	friend void compose(Subst& s1, const Subst& s2, bool full);
 };
 

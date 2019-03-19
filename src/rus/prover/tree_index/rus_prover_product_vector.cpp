@@ -86,7 +86,7 @@ UnionVect intersect(const UnionVect& v, const UnionVect& uv) {
 				for (uint i : uv.neighbourhood(p->key)) {
 					const auto& q = uv.un()[i];
 					if (q->value.active()) {
-						if (p->key.intersects_with(q->key) && q->value.stack.back()->sub().ok) {
+						if (p->key.intersects_with(q->key) && q->value.stack.back()->sub().ok()) {
 							ProdVect r = intersect(p->key, q->key);
 							SubstTree data = p->value.stack.back()->makeInc();
 							data.sub() = q->value.stack.back()->sub();
