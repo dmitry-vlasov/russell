@@ -107,7 +107,7 @@ bool similar_subs_1(const Subst& s1, const Subst& s2) {
 		//don't unify
 		return false;
 	}
-	for (const auto& p : unif.sub_) {
+	for (const auto& p : unif) {
 		if (p.second.kind() != LightTree::VAR) {
 			// is not a var replacement
 			return false;
@@ -120,11 +120,11 @@ bool similar_subs(const Subst& s1, const Subst& s2) {
 	if (s1 == s2) return true;
 	Subst s1_vars_inv;
 	Subst s1_terms;
-	for (const auto& p : s1.sub_) {
-		if (p.second.kind() == LightTree::VAR && !s2.sub_.count(p.first)) {
-			s1_vars_inv.sub_[p.second.var()] = LightTree(p.first);
+	for (const auto& p : s1) {
+		if (p.second.kind() == LightTree::VAR && !s2.maps(p.first)) {
+			s1_vars_inv.compose(p.second.var(), LightTree(p.first));
 		} else {
-			s1_terms.sub_[p.first] = p.second;
+			s1_terms.compose(p.first, p.second);
 		}
 	}
 	s1_terms.compose(s1_vars_inv);
@@ -190,11 +190,13 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	c++;
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 
-if (c == 2288) {
+/*if (c == 2288) {
 	trie_index::debug_trie_profile = true;
 	trie_index::debug_trie_aftermath = true;
+	cout << "TO SHOW MATRIX:" << endl;
 	cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
-}
+	cout << "MATRIX SHOWN." << endl;
+}*/
 
 	Timer timer; timer.start();
 #ifdef CHECK_MATRIX_UNIFICATION

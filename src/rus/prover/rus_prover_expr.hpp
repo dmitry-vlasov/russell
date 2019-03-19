@@ -215,16 +215,35 @@ struct Subst {
 
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s, bool full = true);
+	bool compose(LightSymbol v, const LightTree& t, bool full = true) { return compose(Subst(v, t), full); }
 	bool bicompose(const Subst& s);
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;
 
 	bool maps(LightSymbol v) const { return sub_.find(v) != sub_.end(); }
+	const LightTree& map(LightSymbol v) const {
+		auto it = sub_.find(v);
+		if (sub_.find(v) != sub_.end()) {
+			return it->second;
+		} else {
+			static LightTree empty; return empty;
+		}
+	}
+	void erase(LightSymbol v) { sub_.erase(v); }
 
-	const map<LightSymbol, LightTree>& sub() { return sub_; }
+	typedef std::map<LightSymbol, LightTree>::const_iterator const_iterator;
 
-	map<LightSymbol, LightTree> sub_;
+	const_iterator begin() const { return sub_.cbegin(); }
+	const_iterator end() const { return sub_.cend(); }
+
+	uint size() const { return sub_.size(); }
+
+private:
+	std::map<LightSymbol, LightTree> sub_;
+public:
 	bool ok;
+
+	friend void compose(Subst& s1, const Subst& s2, bool full);
 };
 
 void compose(Subst& s1, const Subst& s2, bool full = true);

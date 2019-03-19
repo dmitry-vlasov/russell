@@ -337,9 +337,9 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2) {
 	return false;
 }
 
-FlatSubst convert2flatsubst(const Subst& s) {
+FlatSubst convert2flatsubst(const Subst& sub) {
 	FlatSubst ret;
-	for (const auto& p : s.sub_) {
+	for (const auto& p : sub) {
 		ret.sub.emplace(p.first, std::move(convert2flatterm(p.second)));
 	}
 	return ret;
@@ -348,7 +348,7 @@ FlatSubst convert2flatsubst(const Subst& s) {
 Subst convert2subst(const FlatSubst& s) {
 	Subst ret;
 	for (const auto& p : s.sub) {
-		ret.sub_.emplace(p.first, std::move(convert2lighttree(p.second)));
+		ret.compose(p.first, std::move(convert2lighttree(p.second)));
 	}
 	return ret;
 }
