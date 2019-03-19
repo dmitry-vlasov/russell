@@ -224,12 +224,17 @@ Space::Proved Space::proved() {
 		if (ProofExp* h = dynamic_cast<ProofExp*>(p.get())) {
 			if (rus::Proof* pr = h->proof()) {
 				ret.emplace_back(pr);
+			} else {
+				cout << "h->show(): " << h->show() << endl;
 			}
 		} else if (ProofTop* h = dynamic_cast<ProofTop*>(p.get())) {
 			//if (rus::Proof* pr = make_proof(h->child->step(), prop.ass->id(), prop.get())) {
 			//	ret.emplace_back(pr);
 			//}
 			// TODO
+			throw Error("incorrect proved node type");
+		} else {
+			throw Error("incorrect proved node type");
 		}
 	}
 	return ret;

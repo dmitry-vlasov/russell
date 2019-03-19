@@ -39,11 +39,11 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 		return MultyUnifiedSubs();
 	}
 
-	cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
+	/*cout << "MATRIX no. " << c << ", dim: " << mi.dim_vars() << "x" << mi.dim_hyp() << ", card: " << mi.card_str() << endl;
 	if (debug_trie_matrix) {
 		cout << "MATRIX no. " << c <<  ", card: " << mi.card_str() << endl ;
 		cout << mi.show() << endl;
-	}
+	}*/
 
 	MultyUnifiedSubs ret;
 	try {

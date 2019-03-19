@@ -51,7 +51,16 @@ void Step::verify(uint mode) const {
 		}
 	}
 	if (mode & VERIFY_DISJ) {
-		ass()->disj.check(sub, const_cast<Theorem*>(proof_->theorem()));
+		try {
+			ass()->disj.check(sub, const_cast<Theorem*>(proof_->theorem()));
+		} catch (Error& err) {
+			ostringstream oss;
+			ass()->disj.write(oss);
+			err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
+			err.msg += "disjointeds: " + oss.str() + "\n";
+			err.msg += "substitution: " + rus::show(sub) + "\n";
+			throw err;
+		}
 	}
 }
 

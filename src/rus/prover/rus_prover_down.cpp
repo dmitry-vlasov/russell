@@ -193,12 +193,16 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 //#define CHECK_MATRIX_UNIFICATION
+//#define SHOW_MATRIXES
+
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
+#ifdef SHOW_MATRIXES
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
+#endif
 
 //if (c == 2288) {
 	//trie_index::debug_trie_profile = true;
@@ -214,15 +218,19 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #ifdef CHECK_MATRIX_UNIFICATION
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
 	timer.stop();
+#ifdef SHOW_MATRIXES
 	cout << "sequntial unification: " << timer << endl;
 	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+#endif
 #endif
 	timer.clear();
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
 	timer.stop();
+#ifdef SHOW_MATRIXES
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
+#endif
 
 #ifdef CHECK_MATRIX_UNIFICATION
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {

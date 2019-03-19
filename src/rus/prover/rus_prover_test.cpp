@@ -3,7 +3,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 Return test_proof_with_oracle(const Proof* p) {
-	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::endl;
+	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Oracle* oracle = new prover::Oracle(p);
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
 	Return ret = space->prove();
@@ -32,7 +32,13 @@ Return test_with_oracle(string theorem) {
 			for (auto& n : src->theory.nodes) {
 				if (Theory::kind(n) == Theory::PROOF) {
 					cout << counter++ << " ";
+					if (counter == 2100) {
+						cout << "AAA" << endl;
+					}
+					Timer timer; timer.start();
 					Return r = test_proof_with_oracle(Theory::proof(n));
+					timer.stop();
+					cout << "done in " << timer << endl;
 					if (!r.success()) {
 						debug_oracle = true;
 						test_proof_with_oracle(Theory::proof(n));
