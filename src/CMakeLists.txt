@@ -48,13 +48,7 @@ else()
 		rus/prover/rus_prover_space.cpp
 		rus/prover/rus_prover_tactics.cpp
 		rus/prover/rus_prover_test.cpp
-		rus/prover/rus_prover_unify.cpp
-		rus/prover/tree_index/rus_prover_matrix_index.cpp
-		rus/prover/tree_index/rus_prover_product_unified.cpp
-		rus/prover/tree_index/rus_prover_product_vector.cpp
-		rus/prover/tree_index/rus_prover_tree_index.cpp
-		rus/prover/tree_index/rus_prover_vector_index.cpp
-		rus/prover/tree_index/rus_prover_vector_unified.cpp
+		rus/prover/rus_prover_unify.cpp	
 		rus/prover/trie_index/rus_prover_trie_flat_term.cpp
 		rus/prover/trie_index/rus_prover_trie_flat_subst.cpp
 		rus/prover/trie_index/rus_prover_trie_index.cpp

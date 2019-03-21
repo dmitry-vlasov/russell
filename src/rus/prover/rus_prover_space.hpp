@@ -1,7 +1,7 @@
 #pragma once
 
 #include "rus_prover_show.hpp"
-#include "tree_index/rus_prover_tree_index.hpp"
+#include "rus_prover_node.hpp"
 #include "trie_index/rus_prover_trie_index.hpp"
 #include "trie_index/rus_prover_trie_unify_iter.hpp"
 
@@ -21,8 +21,6 @@ Tactic* make_tactic(const string&);
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
-	using IndexMap = tree_index::TreeIndexMap<T>;
-	template<class T>
 	using TrieIndexMap = trie_index::TrieIndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
@@ -36,8 +34,6 @@ struct Space {
 	Proof*            proof = nullptr; // for Oracle tactic
 	Hyp*              root;
 	PropRef           prop;
-	IndexMap<HypRef>  hyps;
-	IndexMap<PropRef> assertions;
 	map<uint, uint>   vars;
 
 	TrieIndexMap<HypRef>  hyps_;

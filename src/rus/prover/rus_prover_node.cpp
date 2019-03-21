@@ -144,7 +144,7 @@ void Hyp::complete() {
 	if (show_this) {
 		cout << "HYP UNIFYING " << ind << " EXPR: " << prover::show(expr) << endl;
 	}
-	for (const auto& m : space->hyps.unify(expr)) {
+	for (const auto& m : unify_general(space->hyps_, expr)) {
 		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
 		if (show_this) {
 			cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;

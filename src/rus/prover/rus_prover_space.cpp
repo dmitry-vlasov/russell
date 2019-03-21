@@ -25,10 +25,6 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			}
 			for (uint i = 0; i < ass->props.size(); ++i) {
 				auto& prop = ass->props[i];
-				assertions.add(
-					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
 				assertions_.add(
 					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
 					PropRef(ass, i)
@@ -44,7 +40,6 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	//}
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
-		hyps.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 		hyps_.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
 	//if (ind == 18) {

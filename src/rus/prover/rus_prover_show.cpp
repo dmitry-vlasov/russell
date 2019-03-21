@@ -1,10 +1,9 @@
 #include "rus_prover_space.hpp"
 #include "rus_prover_show.hpp"
-#include "tree_index/rus_prover_matrix_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
-uint show_bits(string str) {
+/*uint show_bits(string str) {
 	uint ret = 0;
 	while (str.size()) {
 		string::size_type i = str.find(',');
@@ -32,7 +31,7 @@ string show_bits(uint m) {
 
 bool show_bit(uint m, ShowMode n) {
 	return uint(show_nodes().at(n).bit) & m;
-}
+}*/
 
 template<class T>
 static string show_children_idx(const vector<unique_ptr<T>>& ch) {
