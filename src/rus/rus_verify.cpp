@@ -52,7 +52,8 @@ void Step::verify(uint mode) const {
 	}
 	if (mode & VERIFY_DISJ) {
 		try {
-			ass()->disj.check(sub, const_cast<Theorem*>(proof_->theorem()));
+			Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem()) : nullptr;
+			ass()->disj.check(sub, th);
 		} catch (Error& err) {
 			ostringstream oss;
 			ass()->disj.write(oss);

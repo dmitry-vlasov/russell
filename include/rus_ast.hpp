@@ -60,7 +60,7 @@ struct Disj : public Tokenable, public Writable {
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
-	void check(const Substitution&, Assertion* t) const;
+	void check(const Substitution&, Assertion* t = nullptr) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
 
 	set<Pair> dvars;
@@ -189,15 +189,17 @@ struct Ref : public Tokenable, public Writable {
 // Modes of verification:
 //   VERIFY_SUB   verify substitutions,
 //   VERIFY_DISJ  verify disjointed restrictions,
+//   UPDATE_DISJ  update disjointed restrictions due to verification,
 //   VERIFY_QED   verify qed statements
 //   VERIFY_DEEP  consider all imported sources
 enum Verify {
 	VERIFY_SUB   = 0x01,
 	VERIFY_DISJ  = 0x02,
-	VERIFY_QED   = 0x04,
-	VERIFY_DEEP  = 0x08,
-	VERIFY_SRC   = VERIFY_SUB | VERIFY_DISJ | VERIFY_QED,
-	VERIFY_ALL   = VERIFY_SUB | VERIFY_DISJ | VERIFY_QED | VERIFY_DEEP
+	UPDATE_DISJ  = 0x04,
+	VERIFY_QED   = 0x08,
+	VERIFY_DEEP  = 0x10,
+	VERIFY_SRC   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED,
+	VERIFY_ALL   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED | VERIFY_DEEP
 };
 
 struct Step : public Tokenable, public Writable {

@@ -73,7 +73,9 @@ void Disj::check(const Substitution& s, Assertion* t) const {
 		set<uint> v1_vars = s.sub().at(p.v).vars();
 		set<uint> v2_vars = s.sub().at(p.w).vars();
 		check_disjointed(v1_vars, v2_vars);
-		t->disj.make_pairs_disjointed(v1_vars, v2_vars);
+		if (t) {
+			t->disj.make_pairs_disjointed(v1_vars, v2_vars);
+		}
 	}
 }
 
