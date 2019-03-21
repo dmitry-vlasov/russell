@@ -65,6 +65,16 @@ inline vector<T> unite_sorted(const vector<T>& right, const vector<T>& left) {
 	return ret;
 }
 
+template<class T>
+inline bool sets_intersect(const set<T>& right, const set<T>& left) {
+	for (const T& t : right) {
+		if (left.count(t)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 template<class T> struct Undef;
 template<> struct Undef<uint> {
 	static uint get()        { return UNDEF_UINT; }
