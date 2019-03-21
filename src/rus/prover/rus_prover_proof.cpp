@@ -183,8 +183,6 @@ rus::Proof* ProofProp::proof() const {
 		ret->verify(VERIFY_DISJ);
 	} catch (Error& err) {
 		delete ret;
-		cout << "ret->verify(VERIFY_DISJ)  FAILED:" << endl;
-		cout << err.msg << endl;
 		ret = nullptr;
 	}
 	return ret;

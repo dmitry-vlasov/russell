@@ -387,6 +387,7 @@ map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 template<class D>
 vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const LightTree& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
+	if (!m.index().size) return ret;
 	FlatTerm ft = convert2flatterm(t);
 	vector<MultyIter> iters;
 	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
