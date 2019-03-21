@@ -424,7 +424,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
 					unif[c] = unified;
-					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
+					s[c].bicompose(Subst(vars[i], apply(unified, convert2lighttree(term))));
 				}
 			} else {
 				if (sub.ok()) {

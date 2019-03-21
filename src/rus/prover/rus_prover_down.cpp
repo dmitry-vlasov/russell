@@ -56,7 +56,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 				cout << "SUB" << endl;
 				cout << show(sub) << endl;
 			}
-			delta.compose(sub);
+			delta.bicompose(sub);
 			if (debug_unify_subs) {
 				cout << "SUB: " << show(delta) << endl;
 			}
@@ -126,7 +126,7 @@ bool similar_subs_1(const Subst& s1, const Subst& s2) {
 	return true;
 }
 
-bool similar_subs(const Subst& s1, const Subst& s2) {
+bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
 	Subst s1_vars_inv;
 	Subst s1_terms;
@@ -138,26 +138,44 @@ bool similar_subs(const Subst& s1, const Subst& s2) {
 		}
 	}
 	s1_terms.compose(s1_vars_inv);
-	return s2 == s1_terms;
+	bool ret = (s2 == s1_terms);
+	if (!ret && verbose) {
+		cout << "diff:" << endl << Indent::paragraph(show_diff(s2, s1_terms)) << endl;
+		cout << "s1: " << show(s1) << endl;
+		cout << "s2: " << show(s2) << endl;
+	}
+	return ret;
 }
 
-bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2) {
+bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2, bool verbose = false) {
 	if (ms1.size() != ms2.size()) {
 		return false;
 	}
 	for (const auto p1 : ms1) {
 		if (!ms2.count(p1.first)) {
+			if (verbose) {
+				cout << "second doens't have key: " << show(p1.first) << endl;
+			}
 			return false;
 		}
-		if (!similar_subs(p1.second, ms2.at(p1.first))) {
+		if (!similar_subs(p1.second, ms2.at(p1.first), verbose)) {
+			if (verbose) {
+				cout << "on key: " << show(p1.first) << endl;
+			}
 			return false;
 		}
 	}
 	for (const auto p2 : ms2) {
 		if (!ms1.count(p2.first)) {
+			if (verbose) {
+				cout << "first doens't have key: " << show(p2.first) << endl;
+			}
 			return false;
 		}
-		if (!similar_subs(p2.second, ms1.at(p2.first))) {
+		if (!similar_subs(p2.second, ms1.at(p2.first), verbose)) {
+			if (verbose) {
+				cout << "on key: " << show(p2.first) << endl;
+			}
 			return false;
 		}
 	}
@@ -174,8 +192,10 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 			ret += "matrix doesn't have key" + show(p1.first) + "\n";
 			ret += "sequential value:\n";
 			ret += Indent::paragraph(show(p1.second));
-		} else if (p1.second != ms2.at(p1.first)) {
+		} else if (!similar_subs(p1.second, ms2.at(p1.first), false)) {
 			ret += "sequential and matrix values for key" + show(p1.first) + " differ\n";
+			ret += "diff:\n";
+			ret += Indent::paragraph(show_diff(p1.second, ms2.at(p1.first)));
 			ret += "sequential value:\n";
 			ret += Indent::paragraph(show(p1.second));
 			ret += "matrix value:\n";
@@ -192,7 +212,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-//#define CHECK_MATRIX_UNIFICATION
+#define CHECK_MATRIX_UNIFICATION
 //#define SHOW_MATRIXES
 
 
@@ -240,7 +260,8 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		//cout << "MATRIX:" << endl;
 		//cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
-		cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
+		compare_unified_subs(unified_subs_1, unified_subs_2, true);
+		//cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
 		cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
 
 		//trie_index::debug_flat_apply = true;

@@ -30,7 +30,7 @@ FlatTerm unify_step(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTer
 	FlatTerm unified = unify(to_unify, s);
 	if (!unified.empty()) {
 		for (auto v : vars) {
-			if (!s.compose(FlatSubst(v, unified))) {
+			if (!s.bicompose(FlatSubst(v, unified))) {
 				if (debug_flat_unify) {
 					cout << "!s.compose(FlatSubst(v, unified))" << endl;
 					cout << "v: " << prover::show(v) << endl;

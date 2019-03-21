@@ -117,7 +117,6 @@ void Hyp::buildUp() {
 				fresher.erase(p.first);
 			}
 		}
-		//compose(m.sub_, fresher, false);
 		m.sub.compose(fresher, false);
 		Subst sub;
 		Subst outer;

@@ -72,7 +72,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 		assert(ends.size() <= 1);
 		if (ends.size() > 0) {
 			UnifyIters end = ends[0];
-			s.compose(end.sub);
+			s.bicompose(end.sub);
 			FlatTerm term_orig = begin.iters[0].subTerm(end.iters[0]);
 			FlatTerm unified = apply(end.sub, term_orig);
 			for (auto v : vars) {

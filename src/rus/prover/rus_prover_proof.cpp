@@ -81,6 +81,33 @@ ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 
 }
 
+string show_diff(const Subst& s1, const Subst& s2) {
+	if (s1 == s2) return "<no diff>"; else {
+		string ret;
+		ret += "iterating s1\n";
+		for (const auto& p : s1) {
+			if (!s2.maps(p.first)) {
+				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+			} else if (p.second != s2.map(p.first)) {
+				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\t\t" + show(p.second) + "\n";
+				ret += "\t\t" + show(s2.map(p.first)) + "\n";
+			}
+		}
+		ret += "iterating s2\n";
+		for (const auto& p : s2) {
+			if (!s1.maps(p.first)) {
+				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+			} else if (p.second != s1.map(p.first)) {
+				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\t\t" + show(s1.map(p.first)) + "\n";
+				ret += "\t\t" + show(p.second) + "\n";
+			}
+		}
+		return ret;
+	}
+}
+
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 	ProofNode(s), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
@@ -96,12 +123,18 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 			if (s0 != si) {
 				string err;
 				err += "s0 != s" + to_string(i) + "\n";
+				err += "diff: " + show_diff(s0, si) + "\n";
 				err += "s0: " +  prover::show(s0) + "\n";
 				err += "s" + to_string(i) + ": " + prover::show(si) + "\n\n";
 				err += "orig s0: " +  prover::show(premises[0]->sub) + "\n";
 				err += "orig s" + to_string(i) + ": " + prover::show(premises[i]->sub) + "\n";
 				err += "unifier:\n";
 				err += prover::show(s) + "\n";
+				err += "all premises:\n";
+				for (uint j = 0; j < premises.size(); ++ j) {
+					err += "premise " + to_string(j) + ":\n";
+					err += prover::show(premises[j]->sub) + "\n";
+				}
 				throw Error(err);
 			}
 		}

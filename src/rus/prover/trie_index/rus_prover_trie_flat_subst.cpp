@@ -75,6 +75,24 @@ bool FlatSubst::consistent(const FlatSubst& sub) const {
 	return true;
 }
 
+set<LightSymbol> subDomVars(const FlatSubst& s1) {
+	set<LightSymbol> ret;
+	for (const auto& p : s1) ret.insert(p.first);
+	return ret;
+}
+
+set<LightSymbol> subRangeVars(const FlatSubst& s1) {
+	set<LightSymbol> ret;
+	for (const auto& p : s1) {
+		for (const auto& n : p.second.nodes) {
+			if (n.ruleVar.isVar()) {
+				ret.insert(n.ruleVar.var);
+			}
+		}
+	}
+	return ret;
+}
+
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	static uint c = 0;
 	++c;
@@ -85,6 +103,16 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 		debug_flat_apply = false;
 		debug_flatterm = false;
 	}*/
+
+	if (sets_intersect(subDomVars(s1), subRangeVars(s2))) {
+		cout << "-------------------------------------" << endl;
+		cout << "sets_intersect(subDomVars(s1), subRangeVars(s2))" << endl;
+		cout << "c = " << c << endl;
+		cout << "BEFORE " << (full ? "FULL" : "PART") << " COMPOSE THIS:" << endl;
+		cout << Indent::paragraph(s1.show()) << endl;
+		cout << "BEFORE COMPOSE S:" << endl;
+		cout << Indent::paragraph(s2.show()) << endl;
+	}
 
 	//cout << "(!!!) c = " << c << endl;
 

@@ -436,7 +436,7 @@ Subst unify_subs(Subst unif, Subst gen) {
 		if (debug_unify_subs_func) {
 			cout << "intersects == false" << endl;
 		}
-		if (gen.compose(unif)) {
+		if (gen.bicompose(unif)) {
 			if (debug_unify_subs_func) {
 				cout << "gen.compose(unif)"  << endl;
 			}
