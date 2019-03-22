@@ -3,6 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
+bool debug_flat_unify = false;
+
 vector<vector<uint>> UnifyIters::inds() const {
 	CartesianProd<uint> inds_prod;
 	for (const auto& i : iters) {

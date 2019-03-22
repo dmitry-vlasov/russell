@@ -408,4 +408,6 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	return ret;
 }
 
+extern bool debug_flat_unify;
+
 }}}}
