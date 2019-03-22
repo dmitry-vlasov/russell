@@ -284,6 +284,32 @@ string show(const Subst& sub) {
 	return str;
 }
 
+string show_diff(const Subst& s1, const Subst& s2) {
+	if (s1 == s2) return "<no diff>"; else {
+		string ret;
+		ret += "iterating s1\n";
+		for (const auto& p : s1) {
+			if (!s2.maps(p.first)) {
+				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+			} else if (p.second != s2.map(p.first)) {
+				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\t\t" + show(p.second) + "\n";
+				ret += "\t\t" + show(s2.map(p.first)) + "\n";
+			}
+		}
+		ret += "iterating s2\n";
+		for (const auto& p : s2) {
+			if (!s1.maps(p.first)) {
+				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+			} else if (p.second != s1.map(p.first)) {
+				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\t\t" + show(s1.map(p.first)) + "\n";
+				ret += "\t\t" + show(p.second) + "\n";
+			}
+		}
+		return ret;
+	}
+}
 
 unique_ptr<LightTree> apply_ptr(const Subst& s, const LightTree& t) {
 	if (t.kind() == LightTree::RULE) {

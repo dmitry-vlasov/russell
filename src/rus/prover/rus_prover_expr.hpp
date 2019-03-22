@@ -279,6 +279,7 @@ string show(LightSymbol s, bool full = true);
 string show(const LightTree&, bool full = true);
 string show_ast(const LightTree&);
 string show(const Subst& s);
+string show_diff(const Subst& s1, const Subst& s2);
 
 inline ostream& operator << (ostream& os, const LightSymbol& s) {
 	os << show(s); return os;
