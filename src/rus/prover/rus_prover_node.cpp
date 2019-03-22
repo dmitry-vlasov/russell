@@ -48,76 +48,14 @@ void Prop::buildUp() {
 	}
 }
 
-//#define COMPARE_WITH_UNIF_TREE
-
 void Hyp::buildUp() {
-#ifdef COMPARE_WITH_UNIF_TREE
-	vector<Space::IndexMap<PropRef>::Unified> unif1 = space->assertions.unify(expr);
-#endif
-	vector<Space::TrieIndexMap<PropRef>::Unified> unif2 = unify_general(space->assertions_, expr);
-#ifdef COMPARE_WITH_UNIF_TREE
-	if (unif1.size() != unif2.size()) {
-		cout << "sizes differ: " << unif1.size() << " != " << unif2.size() << endl;
-	}
-	for (const auto& p1 : unif1) {
-		bool found = false;
-		//cout << "in unif1: " << Lex::toStr(p1.data.id()) << endl;
-		for (const auto& p2 : unif2) {
-			if (p1.data == p2.data) {
-				found = true;
-				if (!similar_subs(p1.sub, p2.sub)) {
-					cout << "different values: " << endl;
-					cout << prover::show(p1.sub) << endl;
-					cout << prover::show(p2.sub) << endl;
-					cout << "expr: " << prover::show(expr) << endl << endl;
-
-					trie_index::debug_trie_index = true;
-
-					cout << "ERROR STARTS" << endl;
-					unif2 = unify_general(space->assertions_, expr);
-					cout << "END OF ERROR" << endl;
-
-					exit(0);
-				} else {
-					//cout << "FOUND COINCIDES" << endl;
-				}
-			} else {
-				//cout << "in unif2: " << Lex::toStr(p2.data.id()) << endl;
-			}
-		}
-		if (!found) {
-			cout << "expr: " << prover::show(expr) << endl;
-			cout << "unif2 misses key: " << Lex::toStr(p1.data.id()) << endl;
-			cout << "sub:" << endl;
-			cout << prover::show(p1.sub) << endl;
-
-			cout << "solutiuons form unif2:" << endl;
-			for (const auto& p2 : unif2) {
-				cout << Lex::toStr(p2.data.id()) << endl;
-				cout << prover::show(p2.sub) << endl;
-			}
-			cout << "--------------------" << endl;
-			cout << space->assertions_.show_pointers() << endl << endl << endl;
-
-			trie_index::debug_trie_index = true;
-
-			cout << "ERROR STARTS" << endl;
-			unif2 = unify_general(space->assertions_, expr);
-			cout << "END OF ERROR" << endl;
-			exit(0);
-		}
-	}
-	//cout << "UNIF COINCIDES" << endl << endl << endl;
-#endif
-
-	for (auto& m : unif2) {
+	for (auto& m : unify_general(space->assertions_, expr)) {
 		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
 		for (const auto& p : fresher) {
 			if (m.sub.maps(p.first)) {
 				fresher.erase(p.first);
 			}
 		}
-		//compose(m.sub_, fresher, false);
 		m.sub.compose(fresher, false);
 		Subst sub;
 		Subst outer;

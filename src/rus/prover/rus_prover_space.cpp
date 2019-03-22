@@ -14,10 +14,8 @@ Space::Space(rus::Qed* q, Tactic* t) :
 	Space(q->step->proof()->thm.get(), q->prop, t) {
 }
 
-static uint index = 0;
-
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
-	ind(index ++), root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
+	ind(0), root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
 			if (!ass->token.preceeds(a->token)) {

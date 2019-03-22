@@ -3,36 +3,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-/*uint show_bits(string str) {
-	uint ret = 0;
-	while (str.size()) {
-		string::size_type i = str.find(',');
-		string s = str.substr(0, str.find(','));
-		for (auto p : show_nodes()) {
-			if (p.second.str == s) {
-				ret += uint(p.second.bit);
-				break;
-			}
-		}
-		str = (i == string::npos) ? "" : str.substr(i + 1);
-	}
-	return ret;
-}
-
-string show_bits(uint m) {
-	string ret;
-	for (auto p : show_nodes()) {
-		if (m & uint(p.second.bit)) {
-			ret += (ret.size()? "," : "") + p.second.str;
-		}
-	}
-	return ret;
-}
-
-bool show_bit(uint m, ShowMode n) {
-	return uint(show_nodes().at(n).bit) & m;
-}*/
-
 template<class T>
 static string show_children_idx(const vector<unique_ptr<T>>& ch) {
 	string ret = "children=\"";
