@@ -5,39 +5,10 @@
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 template<class Iter> RuleVar ruleVar(Iter);
-template<class Iter> vector<Iter> childrenIters(Iter);
-
 template<>
 inline RuleVar ruleVar<FlatTerm::ConstIterator>(FlatTerm::ConstIterator i) {
 	return i->ruleVar;
 };
-
-template<>
-inline vector<FlatTerm::ConstIterator> childrenIters<FlatTerm::ConstIterator>(FlatTerm::ConstIterator it) {
-	vector<FlatTerm::ConstIterator> ret;
-	//cout << "childrenIters -- CHILDREN OF: " << term(it).show() << endl;
-	if (it->ruleVar.isRule()) {
-		FlatTerm::ConstIterator x = it + 1;
-		for (uint i = 0; i < it->ruleVar.rule->arity(); ++i) {
-			ret.push_back(x);
-			/*cout << "\tCHILD: '";
-			auto j = x;
-			while (true) {
-				cout << j->ruleVar.show() << " ";
-				if (j == x->end) {
-					break;
-				}
-				++j;
-			}
-			cout << "'" << endl;*/
-			x = x->end + 1;
-		}
-	} else {
-		throw Error("node has no children");
-	}
-	//cout << "childrenIters -- END CHILDREN" << endl;
-	return ret;
-}
 
 template<class Iter>
 struct UnifStepData {
