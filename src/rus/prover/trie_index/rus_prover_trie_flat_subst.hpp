@@ -49,6 +49,20 @@ struct FlatSubst {
 
 	uint size() const { return sub_.size(); }
 	bool ok() const { return ok_; }
+	set<LightSymbol> dom() const {
+		set<LightSymbol> ret;
+		for (const auto& p : sub_) {
+			ret.insert(p.first);
+		}
+		return ret;
+	}
+	FlatSubst complement(const set<LightSymbol>& vars) const {
+		FlatSubst ret(*this);
+		for (const auto& v : vars) {
+			ret.sub_.erase(v);
+		}
+		return ret;
+	}
 
 private:
 	std::map<LightSymbol, FlatTerm> sub_;

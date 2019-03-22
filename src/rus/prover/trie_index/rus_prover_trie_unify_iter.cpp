@@ -171,6 +171,7 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
 					FlatTerm term_applied = apply(ends.sub, term_orig);
 					FlatSubst s = unify_step_1(i.sub, data.vars, term_applied);
+					s.compose(ends.sub.complement(s.dom()));
 					if (s.ok()) {
 						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 					}
@@ -188,11 +189,6 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 
 
 vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
-
-	//if (debug_trie_index) {
-	//	dump(inits, "unify_general_1: begins");
-	//}
-
 	vector<UnifyIters> ret;
 	if (inits.iters.size() > 0) {
 		if (inits.iters.size() == 1) {
@@ -213,24 +209,9 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 			st.emplace(inits);
 			while (st.size()) {
 				UnifyPair p = st.top();
-				//if (debug_trie_index) {
-				//	dump(p.cur, "unify_general_1: n");
-				//}
 				st.pop();
 				for (const auto& i : unify_iters_2(p.cur)) {
-					/*if (i.isTermEndOld(p.beg) && i.sub.ok && !i.isTermEnd(p.beg)) {
-						if (debug_trie_index) {
-							dump(i, "i.isTermEndOld(begins) && i.sub.ok && !i.isTermEnd(begins)");
-							cout << "i.showTermEnd(begins): " << endl;
-							i.showTermEnd(p.beg);
-							dump(p.beg, "begins:");
-						}
-					}*/
-
 					if (i.isTermEnd(p.beg) && i.sub.ok()) {
-						//if (debug_trie_index) {
-						//	dump(i, "if (i.isTermEnd(begins) && i.sub.ok)");
-						//}
 						verify_begins_ends(p.beg, i);
 						ret.push_back(i);
 					}
