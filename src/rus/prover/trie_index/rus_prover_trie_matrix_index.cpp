@@ -403,7 +403,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 	}
 	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
 
-	/*if (debug_trie_index) {
+	if (debug_trie_index) {
 		cout << "UNFOLDED:" << endl;
 		for (const auto& p : unfolded) {
 			cout << "\t" << prover::show(p.first) << " --> " << endl;
@@ -412,7 +412,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 			}
 			cout << endl;
 		}
-	}*/
+	}
 
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
@@ -420,21 +420,44 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 			const FlatTerm& term = *q.second[i].term;
 			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
+				if (debug_trie_index) {
+					cout << "AAAA" << endl;
+				}
 				if (unif[c].ok()) {
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
 					unif[c] = unified;
 					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
+
+					if (debug_trie_index) {
+						cout << "YEX" << endl;
+					}
+
+				} else {
+					if (debug_trie_index) {
+						cout << "BBB" << endl;
+					}
 				}
 			} else {
 				if (sub.ok()) {
 					s[c];
 					unif[c];
+					if (debug_trie_index) {
+						cout << "YEX" << endl;
+					}
 				} else {
+					if (debug_trie_index) {
+						cout << "CCC" << endl;
+					}
 					unif[c].spoil();
 				}
 			}
 		}
+	}
+	if (debug_trie_index) {
+		cout << "FINALLY: s.size() = " << s.size() << endl;
+		cout << "s.begin.ok(): = " << (s.begin()->second.ok() ? "Y" : "N") << endl;
+		cout << "s.begin: = " << prover::show(s.begin()->second) << endl;
 	}
 	return s;
 }

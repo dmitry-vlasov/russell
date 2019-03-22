@@ -10,8 +10,9 @@ void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 
-	if (debug_trie_aftermath) {
+	if (debug_trie_index) {
 		cout << "gen.size(): " << gen.size() << endl;
+		cout << "unif.size(): " << unif.size() << endl;
 	}
 
 	for (const auto& p : unif) {
@@ -20,8 +21,12 @@ void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
-		} else if (debug_trie_aftermath) {
+		} else if (debug_trie_index) {
 			cout << "sub: " << prover::show(sub) << " rejected" << endl;
+			cout << "p.second: " << prover::show(p.second) << endl;
+			cout << "gen[p.first]: " << prover::show(gen[p.first]) << endl;
+			debug_unify_subs_func = true;
+			unify_subs(p.second, gen[p.first]);
 		}
 	}
 }

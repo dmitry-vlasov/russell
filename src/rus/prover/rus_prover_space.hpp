@@ -26,7 +26,7 @@ struct Space {
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
 	~Space() {
-		//delete root; TODO: fix
+		//delete root; //TODO: fix
 		delete tactic_;
 	}
 
