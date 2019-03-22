@@ -515,13 +515,13 @@ uint matrix_vector_counter = 0;
 static vector<LightSymbol> optimize_order_mindex(const map<LightSymbol, unique_ptr<VectorIndex>>& mindex) {
 	vector<LightSymbol> ret;
 	for (const auto& p : mindex) ret.push_back(p.first);
-	std::sort(
+	/*std::sort(
 		ret.begin(),
 		ret.end(),
 		[&mindex](LightSymbol s1, LightSymbol s2) {
 			return mindex.at(s1)->unifyComplexity() < mindex.at(s2)->unifyComplexity();
 		}
-	);
+	);*/
 	return ret;
 }
 
@@ -559,9 +559,11 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 			throw err;
 		}
 		timer.stop();
-		if (debug_trie_profile) {
+		if (debug_trie_index) {
 			cout << "var " << prover::show(var) << " has " << unified_columns[var].card() << " unified in " << timer << endl;
-			//cout << unified_columns[p.first].show() << endl;
+			cout << unified_columns[var].show() << endl;
+			cout << "INDEX" << endl;
+			cout << mindex_[var]->show() << endl;
 		}
 		matrix_vector_counter += 1;
 	}
@@ -575,21 +577,8 @@ string MatrixIndex::show() const {
 	string ret;
 	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
 	for (auto& p : mindex_) {
-		//VectorIndex vectIndex;
-		//for (uint i = 0; i < dim_hyp_; ++i) {
-		//	const auto& ind = p.second[i];
-		//	vectIndex.add(ind, proofInds_[i]);
-		//}
 		ret += "\nVAR: " + prover::show(p.first) + "\n";
-		ret += "==============================\n";
-		for (uint i = 0; i < p.second->vect.size(); ++ i) {
-			ret += "index: " + to_string(i) + "\n";
-			ret += "\textra inds: " + prover::show(p.second->vect[i]->extraInds()) + "\n";
-			ret += "\tall inds: " + prover::show(p.second->vect[i]->allInds()) + "\n";
-			ret += "\texprs inds: " + prover::show(p.second->vect[i]->exprsInds()) + "\n";
-			ret += p.second->vect[i]->show() + "\n";
-			ret += "-----------------------------\n\n";
-		}
+		ret += p.second->show() + "\n";
 	}
 	return ret;
 }

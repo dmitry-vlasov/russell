@@ -252,7 +252,15 @@ struct VectorIndex {
 		const vector<uint>& extraInds() const { return extra_inds_; }
 		const vector<uint>& allInds() const { return all_inds_; }
 		const vector<uint>& exprsInds() const { return exprs_inds_; }
-		string show() const { return exprs_.show(); }
+		string show() const {
+			string ret;
+			ret += "extra inds: " + prover::show(extra_inds_) + "\n";
+			//ret += "all inds: " + prover::show(all_inds_) + "\n";
+			ret += "exprs inds: " + prover::show(exprs_inds_) + "\n";
+			ret += "exprs:\n";
+			ret += exprs_.show();
+			return ret;
+		}
 
 	private:
 		TrieIndex    exprs_;
@@ -375,6 +383,16 @@ struct VectorIndex {
 			}
 		}
 		return all_complexity;
+	}
+
+	string show() const {
+		string ret;
+		ret += "=============================\n";
+		for (uint i = 0; i < vect.size(); ++ i) {
+			ret += Indent::paragraph(vect[i]->show()) + "\n";
+			ret += "-----------------------------\n\n";
+		}
+		return ret;
 	}
 
 	vector<unique_ptr<Cell>> vect;
