@@ -1,5 +1,6 @@
 #include "rus_prover_down.hpp"
 #include "rus_prover_cartesian.hpp"
+#include "rus_prover_tactics.hpp"
 #include "trie_index/rus_prover_trie_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -213,7 +214,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 //#define CHECK_MATRIX_UNIFICATION
-//#define SHOW_MATRIXES
+#define SHOW_MATRIXES
 
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
@@ -251,6 +252,19 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "matrix unification: " << timer << endl;
 	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
 #endif
+	if (timer.getSeconds() > 1) {
+		cout << "matrix unification: " << timer << endl;
+		cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
+		cout << "step: ";
+		if (Oracle* oracle = dynamic_cast<Oracle*>(pr->space->tactic_)) {
+			if (const Step* step = oracle->hint(pr)) {
+				step->write(cout);
+			} else {
+				cout << "NONE" << endl;
+			}
+		}
+		cout << endl << endl;
+	}
 
 #ifdef CHECK_MATRIX_UNIFICATION
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {

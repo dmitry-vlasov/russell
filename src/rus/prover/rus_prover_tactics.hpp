@@ -38,11 +38,18 @@ struct Oracle : public QueueTactic {
 	void add(Prop* p) override;
 	void setProof(const rus::Proof* p) { proof = p; }
 	string show() const;
+	const rus::Step* hint(const Prop* p) const {
+		if (props.count(p)) {
+			return props.at(p);
+		} else {
+			return nullptr;
+		}
+	}
 
 private:
 	const rus::Proof* proof;
 	const rus::Step*  root;
-	map<Prop*, const rus::Step*> props;
+	map<const Prop*, const rus::Step*> props;
 	set<const rus::Step*> observed;
 };
 
