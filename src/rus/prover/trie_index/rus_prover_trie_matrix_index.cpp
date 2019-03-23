@@ -426,6 +426,19 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 				if (unif[c].ok()) {
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
+
+					if (debug_trie_index && !unified.ok()) {
+						cout << "vot ono !!" << endl;
+						cout << "unif[c] = " << prover::show(unif[c]) << endl;
+						cout << "sb = " << prover::show(sb) << endl;
+						cout << "unified = " << prover::show(unified) << endl;
+
+						debug_unify_subs_func = true;
+						unify_subs(MultySubst({&unif[c], &sb}));
+
+						return MultyUnifiedSubs();
+					}
+
 					unif[c] = unified;
 					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
 

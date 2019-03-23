@@ -55,7 +55,7 @@ Return test_with_oracle(string theorem) {
 				Return r = test_proof_with_oracle(pr.get());
 					if (!r.success()) {
 						debug_oracle = true;
-						test_proof_with_oracle(pr.get());
+						//test_proof_with_oracle(pr.get());
 						return r;
 					}
 			}
