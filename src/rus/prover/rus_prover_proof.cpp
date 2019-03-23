@@ -21,12 +21,12 @@ ProofHyp::ProofHyp(Hyp& h, const Subst& s, const LightTree& e) :
 }
 
 ProofHyp::~ProofHyp() {
-	for (auto p : parents) {
+	/*for (auto p : parents) {
 		uint i = find_in_vector(p->node.proofs, p);
 		if (i != -1) {
 			p->node.proofs.erase(p->node.proofs.begin() + i);
 		}
-	}
+	}*/
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
@@ -110,11 +110,12 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 }
 
 ProofProp::~ProofProp() {
-	if (parent) {
+	/*if (parent) {
 		uint i = find_in_vector(parent->node.proofs, parent);
 		assert(i != -1);
-		parent->node.proofs.erase(parent->node.proofs.begin() + i);
-	}
+		parent->node.proofs[i].reset(nullptr);
+		//parent->node.proofs.erase(parent->node.proofs.begin() + i);
+	}*/
 }
 
 bool ProofProp::equal(const ProofNode* n) const {

@@ -96,14 +96,14 @@ Return Space::info(uint index, string what) {
 		// TODO
 		data += "\t</tree>\n";
 	} else if (what == "all_nodes") {
-		for (auto n : nodes_) {
+		for (const auto& n : nodes_) {
 			data += "\t<node>\n";
-			data += Indent::paragraph(n->show(), "\t\t") + "\n";
+			data += Indent::paragraph(n.second->show(), "\t\t") + "\n";
 			data += "\t</node>\n";
 		}
 	} else if (what == "all_proofs") {
-		for (auto n : nodes_) {
-			data += Indent::paragraph(showNodeProofs(n));
+		for (const auto& n : nodes_) {
+			data += Indent::paragraph(showNodeProofs(n.second));
 		}
 	}
 	data += "</info>\n";

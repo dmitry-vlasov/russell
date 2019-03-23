@@ -26,7 +26,7 @@ struct Space {
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
 	~Space() {
-		//delete root; //TODO: fix
+		delete root; //TODO: fix
 		delete tactic_;
 	}
 
@@ -55,13 +55,13 @@ struct Space {
 
 	void registerNode(Node* n) {
 		n->ind = nodes_.size();
-		nodes_.push_back(n);
+		nodes_.emplace(n->ind, n);
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->add(p);
 		}
 	}
 	void unregisterNode(Node* n) {
-		nodes_.erase(nodes_.begin() + n->ind);
+		nodes_.erase(n->ind);
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->del(p);
 		}
@@ -69,9 +69,9 @@ struct Space {
 	uint count() const { return nodes_.size(); }
 	Node* getNode(uint i) { return nodes_[i]; }
 
-	vector<Node*> nodes_;
-	Tactic*       tactic_;
-	set<uint>     shown;
+	map<uint, Node*> nodes_;
+	Tactic*          tactic_;
+	set<uint>        shown;
 	Proved proved();
 	Return check_proved();
 };
