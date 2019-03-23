@@ -212,8 +212,8 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-#define CHECK_MATRIX_UNIFICATION
-#define SHOW_MATRIXES
+//#define CHECK_MATRIX_UNIFICATION
+//#define SHOW_MATRIXES
 
 
 vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {

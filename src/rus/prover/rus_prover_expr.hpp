@@ -289,6 +289,21 @@ struct MultySubst {
 	MultySubst(const vector<const Subst*>& subs);
 	Subst makeSubs(Subst& unif) const;
 
+	string show() const {
+		ostringstream ret;
+		ret << "MultySubst" << endl;
+		ret << "==========" << endl;
+		uint c = 0;
+		for (const auto& p : msub_) {
+			ret << c++ << " VAR: " << prover::show(p.first) << endl;
+			ret << "TREES:" << endl;
+			for (const auto& tree : p.second) {
+				ret << Indent::paragraph(prover::show(tree)) << endl;
+			}
+		}
+		return ret.str();
+	}
+
 private:
 	void add(const Subst* s);
 	map<LightSymbol, vector<LightTree>> msub_;

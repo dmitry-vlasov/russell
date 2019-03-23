@@ -62,12 +62,18 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (s->maps(v)) {
 		return t == s->map(v);
 	} else {
-		for (LightSymbol y : x_vars) {
-			if (s->maps(y)) {
+		for (LightSymbol x : x_vars) {
+			if (s->maps(x)) {
 				set<LightSymbol> y_vars;
-				collect_vars(s->map(y), y_vars);
+				const LightTree& p = s->map(x);
+				collect_vars(p, y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
-					return false;
+					if (p.kind() == LightTree::VAR && p.var() == v &&
+						t.kind() == LightTree::VAR && t.var() == x) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			}
 		}
@@ -398,21 +404,38 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 				cout << prover::show(e) << endl;
 			}
 		}
-		if (c == 2) {
-			cout << "AAA" << endl;
-		}
 		LightTree term = unify(p.second, unif);
 		if (term.empty()) {
 			return Subst(false);
 		}
-		ret.compose(p.first, unify(p.second, unif));
-		if (debug_unify_subs_func) {
-			cout << "RESULT: " << endl;
-			cout << prover::show(ret.map(p.first)) << endl;
+		LightTree un = unify(p.second, unif);
+		if (debug_unify_subs_func && c == 6) {
+			if (c == 6) {
+				cout << "AAA" << endl;
+			}
+			cout << "RET: " << endl;
+			cout << prover::show(ret) << endl;
 			cout << "UNIF:" << endl;
 			cout << prover::show(unif) << endl;
+			cout << "p.first: " << prover::show(p.first) << endl;
+			cout << "p.second:" << endl << "---------------" << endl;
+			for (const auto& tree : p.second) {
+				cout << prover::show(tree) << endl;
+			}
+			cout << "---------------" << endl;
+			cout << "unify(p.second, unif):" << endl;
+			cout << prover::show(un) << endl;
 		}
+
+		ret.compose(p.first, un);
 		if (!ret.ok()) {
+			if (debug_unify_subs_func) {
+				cout << "SSSSSSSSSSSSSSSS" << endl;
+				cout << "RET: " << endl;
+				cout << prover::show(ret) << endl;
+				cout << "UNIF:" << endl;
+				cout << prover::show(unif) << endl;
+			}
 			break;
 		}
 	}
@@ -442,6 +465,9 @@ void sub_closure(Subst& sub) {
 bool debug_unify_subs_func = false;
 
 Subst unify_subs(const MultySubst& t) {
+	if (debug_unify_subs_func) {
+		cout << "unify_subs(const MultySubst& t): " << t.show() << endl;
+	}
 	Subst unif;
 	Subst gen = t.makeSubs(unif);
 	return unify_subs(unif, gen);
