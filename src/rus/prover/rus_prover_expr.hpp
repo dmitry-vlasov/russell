@@ -259,13 +259,13 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree&, ReplMode, uint i);
 unique_ptr<LightTree> apply_ptr(const Subst&, const LightTree&);
 
 inline rus::Tree convert_tree(const LightTree& t) {
-	return rus::Tree(std::move(*convert_tree_ptr(t).release()));
+	return rus::Tree(std::move(*convert_tree_ptr(t).get()));
 }
 inline LightTree convert_tree(const rus::Tree& t, ReplMode m, uint i) {
-	return LightTree(std::move(*convert_tree_ptr(t, m, i).release()));
+	return LightTree(std::move(*convert_tree_ptr(t, m, i).get()));
 }
 inline LightTree apply(const Subst& s, const LightTree& t) {
-	return LightTree(std::move(*apply_ptr(s, t).release()));
+	return LightTree(std::move(*apply_ptr(s, t).get()));
 }
 
 rus::Expr convert_expr(const LightTree&);

@@ -279,7 +279,7 @@ unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft, FlatTerm::C
 
 LightTree convert2lighttree(const FlatTerm& ft) {
 	auto beg = ft.nodes.begin();
-	return LightTree(std::move(*fill_in_lighttree(beg, ft.nodes.end()).release()));
+	return LightTree(std::move(*fill_in_lighttree(beg, ft.nodes.end()).get()));
 }
 
 }}}}
