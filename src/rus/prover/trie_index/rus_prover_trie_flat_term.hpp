@@ -68,7 +68,7 @@ struct FlatTerm {
 		}
 		TermIter prev() const {
 			if (!valid_ || isPrevEnd()) {
-				return TermIter(); //TermIter(beg_, iter_, end_, false);
+				return TermIter();
 			} else {
 				return TermIter(beg_, iter_ - 1, end_, iter_ != beg_);
 			}
@@ -199,7 +199,6 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
-//vector<FlatTerm::ConstIterator> childrenIters(FlatTerm::ConstIterator b);
 FlatTerm term(FlatTerm::ConstIterator b);
 
 extern bool debug_flatterm;

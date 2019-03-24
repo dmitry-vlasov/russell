@@ -6,39 +6,13 @@ bool debug_flatterm = false;
 
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b) {
 	uint i = 0;
-	uint wd = 0;
-
-	static int c = 0;
-	++c;
-	bool debug = t->nodes.size() == 0; //(c == 1);
-	if (debug_flatterm) {
-		cout << "t->nodes.size() = " << t->nodes.size() << endl;
-		cout << "b: " << b->ruleVar.show() << endl;
-		cout << "b->end: " << b->end->ruleVar.show() << endl;
-		cout << "b->end - b: " << (int)(b->end - b) << endl;
-		cout << "pos: " << pos << endl;
-	}
-
 	for (auto it = b; ; ++ it) {
-		//if (debug) {
-		//	cout << "it->ruleVar: " << it->ruleVar.show()  << endl;
-		//}
-
 		t->nodes[pos + i].ruleVar = it->ruleVar;
 		t->nodes[pos + i].end = t->nodes.begin() + pos + (it->end - b);
 		if (it == b->end) {
 			break;
 		}
 		++i;
-		++wd;
-		if (wd > 1024) {
-			cout << "SOMETH WRONG: " << c << ", wd: " << wd << endl;
-			break;
-		}
-	}
-	if (debug_flatterm) {
-		cout << "COPIED: " << t->show() << endl;
-		t->verify();
 	}
 }
 
@@ -74,9 +48,6 @@ FlatTerm::FlatTerm(ConstIterator i) : nodes(i->end - i) {
 FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
 	nodes[0].ruleVar.var = s;
 	nodes[0].end = nodes.begin();
-	if (debug_flatterm) {
-		verify();
-	}
 }
 
 static uint flatTermsLen(const vector<FlatTerm>& ch) {
@@ -94,9 +65,6 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 	for (const auto& c : ch) {
 		copyFlatSubTerm(this, pos, c.nodes.begin());
 		pos += c.len();
-	}
-	if (debug_flatterm) {
-		verify();
 	}
 }
 
@@ -141,28 +109,6 @@ string FlatTerm::show(bool simple) const {
 		}
 	}
 }
-/*
-string FlatTerm::show(bool simple) const {
-	string ret;
-	stack<vector<Node>::const_iterator> st;
-	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
-		if (simple) {
-			ret += i->ruleVar.show() + " ";
-		} else {
-			if (i->ruleVar.rule) {
-				st.push(i->end);
-				ret += i->ruleVar.show() + " (";
-			} else {
-				ret += i->ruleVar.show() + " ";
-			}
-			while (!st.empty() && st.top() == i) {
-				ret += ") ";
-				st.pop();
-			}
-		}
-	}
-	return ret;
-}*/
 
 string FlatTerm::show_pointers() const {
 	ostringstream oss;
@@ -188,25 +134,13 @@ vector<FlatTerm> FlatTerm::children() const {
 
 vector<FlatTerm::ConstIterator> FlatTerm::childrenIters() const {
 	vector<FlatTerm::ConstIterator> ret;
-	//cout << "CHILDREN OF: " << show() << endl;
 	if (kind() == RULE && nodes.size()) {
 		ConstIterator x = nodes.begin() + 1;
 		for (uint i = 0; i < nodes[0].ruleVar.rule->arity(); ++i) {
 			ret.push_back(x);
-			/*cout << "\tCHILD: '";
-			auto it = x;
-			while (true) {
-				cout << it->ruleVar.show() << " ";
-				if (it == x->end) {
-					break;
-				}
-				++it;
-			}
-			cout << "'" << endl;*/
 			x = x->end + 1;
 		}
 	}
-	//cout << "END CHILDREN" << endl;
 	return ret;
 }
 
@@ -234,7 +168,6 @@ void FlatTerm::verify() const {
 			}
 		}
 		if (!st.empty()) {
-			//cout << "st.top()->show() = " << st.top()->ruleVar.show() << endl;
 			throw Error("broken term: non-empty stack", show(true) + "\n" + show(false));
 		}
 	} else if (!nodes.begin()->ruleVar.isVar()) {

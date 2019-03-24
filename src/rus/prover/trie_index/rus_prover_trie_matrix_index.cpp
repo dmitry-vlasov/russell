@@ -183,18 +183,9 @@ struct IndexHelper {
 	}
 
 	const FlatTermSubst* inside(const Keys& keys) const {
-		/*if (debug_trie_index) {
-			cout << "ITERATOR: " << endl;
-			cout << show() << endl;
-		}*/
 		for (uint i = 0, j = 0; i < dim; ++ i) {
 			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
 				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
-					/*if (debug_trie_index) {
-						cout << "NOT INSIDE A:" << endl;
-						cout << "keys.cartesianKey[j++]: " << keys.cartesianKey[j - 1] << endl;
-						cout << "intersectedRight.vect.at(i).extraContains: " << prover::show(intersectedRight.vect.at(i).extra_inds) << endl;
-					}*/
 					return nullptr;
 				}
 			}
@@ -204,14 +195,6 @@ struct IndexHelper {
 			if (it != intersectedRight.unified.end()) {
 				return &it->second;
 			} else {
-				if (debug_trie_index) {
-					/*cout << "NOT INSIDE B:" << endl;
-					cout << "keys.mappingKey: " << prover::show(keys.mappingKey) << endl;
-					cout << "intersectedRight.unified KEYS: " << endl;
-					for (const auto& p : intersectedRight.unified) {
-						cout << "\t" << prover::show(p.first) << endl;
-					}*/
-				}
 				return nullptr;
 			}
 		} else {
@@ -268,73 +251,24 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 			ret.union_.push_back(mu);
 		}
 	} else {
-		static uint counter = 0;
-
 		for (const auto& vu : vuu.union_) {
 			if (vu.empty()) continue;
 			for (const auto& mu : union_) {
 				if (mu.empty()) continue;
-				if (debug_trie_index) {
-					counter++;
-				}
-
-				/*if (debug_trie_index) {
-					counter++;
-					cout << "COUNTER = " << counter << endl;
-					if (counter == 24) {
-						//debug_index_helper = true;
-						cout << "AAAAA" << endl;
-					}
-				}*/
-
 
 
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
 				auto iter = indexHelper.initIteration(mu_new);
-
-				if (debug_trie_intersect && counter == 1) {
-					cout << "[[[indexHelper]]]: " << counter << endl;
-					cout << indexHelper.show() << endl;
-
-					cout << "[[[VectorUnified]]]:" << endl;
-					cout << vu.show() << endl;
-
-					cout << "[[[MatrixUnified]]]:" << endl;
-					cout << mu.show() << endl;
-				}
-
-				/*if (counter == 24 || debug_trie_index) {
-					cout << "[[[indexHelper]]]: " << counter << endl;
-					cout << indexHelper.show() << endl;
-
-					cout << "[[[VectorUnified]]]:" << endl;
-					cout << vu.show() << endl;
-
-					cout << "[[[MatrixUnified]]]:" << endl;
-					cout << mu.show() << endl;
-				}*/
-
 				try {
 					while (true) {
 						IndexHelper::Keys keys = iter.keys();
-
-						if (debug_trie_intersect && counter == 1) {
-							cout << "ITER: " << iter.show() << " = ";
-							cout << "KEYS: " << keys.show() << " ... ";
-						}
-
 						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
 							vector<FlatTermSubst> w(iter.termSubstVect());
 							w.emplace_back(*ts);
 							vector<uint> resultKeys = keys.resultKey();
 							mu_new.unified.emplace(resultKeys, w);
-							if (debug_trie_intersect && counter == 1) {
-								cout << "ADDED: " << prover::show(resultKeys) << endl;
-							}
-						} else if (debug_trie_intersect && counter == 1) {
-							cout << "REJECTED" << endl;
 						}
 						if (iter.hasNext()) {
 							iter.makeNext();
@@ -357,15 +291,6 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 }
 
 MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
-
-	/*if (debug_trie_index) {
-		cout << "TO INTERSECT:" << endl;
-		for (const auto& p : terms) {
-			cout << "VAR: " << p.first << endl;
-			cout << p.second.show() << endl;
-			cout << endl;
-		}
-	}*/
 
 
 	static int count = 0;
@@ -420,57 +345,21 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 			const FlatTerm& term = *q.second[i].term;
 			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
-				if (debug_trie_index) {
-					cout << "AAAA" << endl;
-				}
 				if (unif[c].ok()) {
 					Subst sb = convert2subst(sub);
 					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
-
-					if (debug_trie_index && !unified.ok()) {
-						cout << "vot ono !!" << endl;
-						cout << "unif[c] = " << prover::show(unif[c]) << endl;
-						cout << "sb = " << prover::show(sb) << endl;
-						cout << "unified = " << prover::show(unified) << endl;
-
-						debug_unify_subs_func = true;
-						unify_subs(MultySubst({&unif[c], &sb}));
-
-						return MultyUnifiedSubs();
-					}
-
 					unif[c] = unified;
 					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
-
-					if (debug_trie_index) {
-						cout << "YEX" << endl;
-					}
-
-				} else {
-					if (debug_trie_index) {
-						cout << "BBB" << endl;
-					}
 				}
 			} else {
 				if (sub.ok()) {
 					s[c];
 					unif[c];
-					if (debug_trie_index) {
-						cout << "YEX" << endl;
-					}
 				} else {
-					if (debug_trie_index) {
-						cout << "CCC" << endl;
-					}
 					unif[c].spoil();
 				}
 			}
 		}
-	}
-	if (debug_trie_index) {
-		cout << "FINALLY: s.size() = " << s.size() << endl;
-		cout << "s.begin.ok(): = " << (s.begin()->second.ok() ? "Y" : "N") << endl;
-		cout << "s.begin: = " << prover::show(s.begin()->second) << endl;
 	}
 	return s;
 }

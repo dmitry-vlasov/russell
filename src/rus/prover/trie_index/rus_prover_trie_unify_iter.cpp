@@ -212,7 +212,7 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 				st.pop();
 				for (const auto& i : unify_iters_2(p.cur)) {
 					if (i.isTermEnd(p.beg) && i.sub.ok()) {
-						verify_begins_ends(p.beg, i);
+						//verify_begins_ends(p.beg, i);
 						ret.push_back(i);
 					}
 					if (!i.isNextEnd(p.beg)) {
@@ -239,9 +239,6 @@ map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, FlatTermSubst(term, end.sub));
 		}
-		//if (debug_trie_index) {
-		//	dump(end, "unify_general RESULT:  end");
-		//}
 	}
 	return ret;
 }
