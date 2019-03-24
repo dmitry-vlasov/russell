@@ -45,6 +45,19 @@ struct Oracle : public QueueTactic {
 			return nullptr;
 		}
 	}
+	const rus::Hyp* hint(const Prop* p, const Hyp* h) const {
+		const rus::Step* step = hint(p);
+		for (uint i = 0; i < step->ass()->arity(); ++ i) {
+			if (p->premises[i].get() == h) {
+				if (step->refs[i]->kind() == rus::Ref::HYP) {
+					return step->refs[i]->hyp();
+				} else {
+					return nullptr;
+				}
+			}
+		}
+		throw Error("unresolved hint");
+	}
 
 private:
 	const rus::Proof* proof;

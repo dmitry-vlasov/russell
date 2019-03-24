@@ -10,7 +10,7 @@ Oracle::Oracle(const rus::Proof* p) :
 bool debug_oracle = false;
 
 void Oracle::add(Prop* p) {
-	p->autoGoDown = false;
+	//p->autoGoDown = false;
 	const Assertion* ass = p->prop.ass;
 	if (debug_oracle) {
 		//cout << endl;

@@ -51,7 +51,7 @@ struct Node {
 	Node(Node* n) : space(n->space), ind(-1) { }
 	virtual ~Node();
 
-	virtual vector<Node*> buildDown() = 0;
+	virtual bool buildDown(set<Node*>&) = 0;
 	virtual string show(bool with_proofs = false) const = 0;
 
 	Space* space;
@@ -72,8 +72,10 @@ struct Prop : public Node {
 	Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p);
 
 	void buildUp();
-	vector<Node*> buildDown() override;
+	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
+	bool mayGrowUp() const { return premises.size() < prop.ass->arity(); }
+	bool isLeaf() const { return prop.ass->arity() == 0; }
 };
 
 struct Hyp : public Node {
@@ -87,11 +89,11 @@ struct Hyp : public Node {
 	Hyp(const LightTree& e, Prop* p);
 
 	void buildUp();
-	vector<Node*> buildDown() override;
+	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parent; }
 
-	void complete();
+	bool unifyWithGoalHyps();
 };
 
 struct ProofNode {
@@ -150,9 +152,16 @@ struct ProofProp : public ProofNode {
 struct ProofHypIndexed {
 	const ProofHyp* proof = nullptr;
 	uint ind = -1;
+	string show() const {
+		string ret;
+		ret += "index: " + (ind == -1 ? string("-1") : to_string(ind)) + "\n";
+		ret += proof->show();
+		return ret;
+	}
 };
 
-string showNodeProofs(const Node* n);
+string showNodeProofs(const Node* n, uint limit = -1);
+bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
 
 }}}
 

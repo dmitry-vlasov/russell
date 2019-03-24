@@ -1,6 +1,5 @@
 #include "rus_prover_space.hpp"
 #include "rus_prover_unify.hpp"
-#include "rus_prover_down.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -26,7 +25,7 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, con
 Hyp::Hyp(const LightTree& e, Space* s) :
 	Node(s), parent(nullptr), expr(e) {
 	if (parent && parent->autoGoDown) {
-		complete();
+		unifyWithGoalHyps();
 	}
 	space->registerNode(this);
 }
@@ -39,6 +38,9 @@ Hyp::Hyp(const LightTree& e, Prop* p) :
 Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p) :
 	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
 	space->registerNode(this);
+	if (isLeaf()) {
+		proofs.emplace_back(new ProofProp(*this, vector<ProofHyp*>(), sub));
+	}
 }
 
 void Prop::buildUp() {
@@ -68,20 +70,21 @@ void Hyp::buildUp() {
 		}
 		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
 		variants.emplace_back(prop);
-		if (!prop->prop.ass->arity() && prop->autoGoDown) {
+		/*if (!prop->prop.ass->arity() && prop->autoGoDown) {
 			ProofProp* pp = new ProofProp(*prop, {}, sub);
 			prop->proofs.emplace_back(pp);
 			proofs.emplace_back(new ProofExp(*this, pp, sub));
-		}
+		}*/
 	}
 }
 
-void Hyp::complete() {
+bool Hyp::unifyWithGoalHyps() {
 	bool show_this = false; //(47 <= ind && ind <= 49);
 
 	if (show_this) {
 		cout << "HYP UNIFYING " << ind << " EXPR: " << prover::show(expr) << endl;
 	}
+	bool ret = false;
 	for (const auto& m : unify_general(space->hyps_, expr)) {
 		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
 		if (show_this) {
@@ -92,9 +95,12 @@ void Hyp::complete() {
 		}
 
 		proofs.emplace_back(pt);
+		ret = true;
 	}
+	return ret;
 	//cout << endl;
 
+	/*
 	//cout << "COMPLETING: " << ind << endl;
 	static  uint c = 0;
 	set<Node*> downs;
@@ -107,10 +113,10 @@ void Hyp::complete() {
 		for (auto x : n_downs) {
 			downs.insert(x);
 		}
-	}
+	}*/
 }
 
-vector<Node*> Prop::buildDown() {
+bool Prop::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
@@ -136,14 +142,13 @@ vector<Node*> Prop::buildDown() {
 		}
 	}
 	if (new_proofs) {
-		return {parent};
-	} else {
-		return vector<Node*>();
+		downs.insert(parent);
 	}
+	return new_proofs;
 }
 
-vector<Node*> Hyp::buildDown() {
-	vector<Node*> ret;
+bool Hyp::buildDown(set<Node*>& downs) {
+	bool new_proofs = false;
 	if (parent) {
 		vector<ProofHypIndexed> news;
 		for (uint i = 0; i < proofs.size(); ++i) {
@@ -153,12 +158,13 @@ vector<Node*> Hyp::buildDown() {
 			}
 		}
 		if (news.size()) {
-			for (auto& q : unify_down(parent, this, news)) {
-				ret.push_back(q);
+			if (unify_down(parent, this, news)) {
+				downs.insert(parent);
+				new_proofs = true;
 			}
 		}
 	}
-	return ret;
+	return new_proofs;
 }
 
 }}}

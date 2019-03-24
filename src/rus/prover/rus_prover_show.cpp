@@ -144,17 +144,22 @@ string ProofProp::show() const {
 	return oss.str();
 }
 
-string showNodeProofs(const Node* n) {
+constexpr uint PROOF_SHOW_LIMIT = 8;
+
+string showNodeProofs(const Node* n, uint limit) {
 	string data;
 	data += "<node index=\"" + to_string(n->ind) + "\">\n";
 	data += "\t<proofs>\n";
+	uint counter = 0;
 	if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
 		for (auto& p : h->proofs) {
 			data += Indent::paragraph(p->show(), "\t\t");
+			if (++counter > limit) break;
 		}
 	} else if (const Prop* pr = dynamic_cast<const Prop*>(n)) {
 		for (auto& p : pr->proofs) {
 			data += Indent::paragraph(p->show(), "\t\t");
+			if (++counter > limit) break;
 		}
 	}
 	data += "\t</proofs>\n";

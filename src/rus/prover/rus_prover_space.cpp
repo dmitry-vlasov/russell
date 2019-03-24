@@ -1,6 +1,7 @@
 #include "rus_prover_expr.hpp"
 #include "rus_prover_space.hpp"
 #include "rus_prover_node.hpp"
+#include "rus_prover_tactics.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -131,36 +132,71 @@ static void add_shown(set<uint>& shown, set<uint>& to_show, Hyp* hyp) {
 	}
 }
 
+void completeDown(set<Node*>& downs) {
+	//cout << "COMPLETING: " << ind << endl;
+	static  uint c = 0;
+	while (!downs.empty()) {
+		Node* n = *downs.begin();
+		//cout << "DOWNING: " << n->ind << ", c = " << c++ << endl;
+		downs.erase(n);
+		n->buildDown(downs);
+	}
+}
+
 Return Space::expand(uint index) {
 	if (index >= nodes_.size()) {
 		cout << index << " OUT OF BOUNDARIES" << endl;
 		return false;
 	}
 	if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
-		if (p->premises.size() < p->prop.ass->arity()) {
-			set<uint> to_show;
-			p->buildUp();
-			for (auto& h : p->premises) {
-				Hyp* hyp = h.get();
-				hyp->buildUp();
-				add_shown(shown, to_show, hyp);
-			}
-			for (auto& h : p->premises) {
-				h->complete();
-			}
+		set<Node*> downs;
+		if (p->isLeaf()) {
+			downs.insert(p);
+			completeDown(downs);
 			Return ret = check_proved();
 			if (ret.success()) {
 				return ret;
+			} else {
+				return Return("leaf node", "</new>");
 			}
-			ostringstream oss;
-			oss << "<new>\n";
-			for (uint i : to_show) {
-				oss << Indent::paragraph(nodes_.at(i)->show()) + "\n";
+		} else {
+			if (p->mayGrowUp()) {
+				p->buildUp();
+				set<uint> to_show;
+				for (auto& h : p->premises) {
+					Hyp* hyp = h.get();
+					hyp->buildUp();
+					add_shown(shown, to_show, hyp);
+				}
+				for (auto& h : p->premises) {
+					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_)) {
+						if (oracle->hint(p, h.get())) {
+							h->unifyWithGoalHyps();
+							h->buildDown(downs);
+						}
+					} else {
+						h->unifyWithGoalHyps();
+						h->buildDown(downs);
+					}
+				}
+				completeDown(downs);
+				Return ret = check_proved();
+				if (ret.success()) {
+					return ret;
+				}
+				ostringstream oss;
+				oss << "<new>\n";
+				for (uint i : to_show) {
+					oss << Indent::paragraph(nodes_.at(i)->show()) + "\n";
+				}
+				oss << "</new>\n";
+				//cout << endl << oss.str() << endl;
+				return Return("node expanded", oss.str());
+			} else {
+				return Return("already expanded", "</new>");
 			}
-			oss << "</new>\n";
-			//cout << endl << oss.str() << endl;
-			return Return("node expanded", oss.str());
 		}
+
 	} else {
 		cout << index << " NOT A PROP" << endl;
 	}

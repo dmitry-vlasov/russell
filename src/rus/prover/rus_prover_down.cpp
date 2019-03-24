@@ -1,4 +1,3 @@
-#include "rus_prover_down.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
 #include "trie_index/rus_prover_trie_unify.hpp"
@@ -214,10 +213,10 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 //#define CHECK_MATRIX_UNIFICATION
-#define SHOW_MATRIXES
+//#define SHOW_MATRIXES
 
 
-vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
@@ -249,13 +248,10 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
 	timer.stop();
 #ifdef SHOW_MATRIXES
-	cout << "matrix unification: " << timer << endl;
-	cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
-#endif
-	if (timer.getSeconds() > 1) {
+	if (unified_subs_2.size() > 1) {
 		cout << "matrix unification: " << timer << endl;
-		cout << "results with " << unified_subs_2.size() << " variants " << endl << endl << endl;
-		cout << "step: ";
+		cout << "results with " << unified_subs_2.size() << " variants " << endl;
+		/*cout << "step: ";
 		if (Oracle* oracle = dynamic_cast<Oracle*>(pr->space->tactic_)) {
 			if (const Step* step = oracle->hint(pr)) {
 				step->write(cout);
@@ -263,8 +259,15 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 				cout << "NONE" << endl;
 			}
 		}
-		cout << endl << endl;
+		cout << "prop proofs: " << endl << Indent::paragraph(showNodeProofs(pr, 8)) << endl;
+		cout << "hyp proofs: " << endl;
+		for (uint i = 0; i < hs.size(); ++ i) {
+			cout << Indent::paragraph(hs[i].show()) << endl;
+			if (i >= 8) break;
+		}
+		cout << endl;*/
 	}
+#endif
 
 #ifdef CHECK_MATRIX_UNIFICATION
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
@@ -332,11 +335,7 @@ vector<Node*> unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			throw err;
 		}
 	}
-	if (unified_subs_2.size()) {
-		return {pr};
-	} else {
-		return vector<Node*>();
-	}
+	return unified_subs_2.size() > 0;
 }
 
 }}}
