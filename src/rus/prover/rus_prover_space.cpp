@@ -170,8 +170,8 @@ Return Space::expand(uint index) {
 				}
 				for (auto& h : p->premises) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_)) {
-						if (oracle->hint(p, h.get())) {
-							h->unifyWithGoalHyps();
+						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
+							h->unifyWithGoalHyps(hint);
 							h->buildDown(downs);
 						}
 					} else {

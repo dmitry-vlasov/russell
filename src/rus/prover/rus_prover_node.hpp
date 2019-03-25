@@ -93,7 +93,7 @@ struct Hyp : public Node {
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parent; }
 
-	bool unifyWithGoalHyps();
+	bool unifyWithGoalHyps(const rus::Hyp* hint = nullptr);
 };
 
 struct ProofNode {

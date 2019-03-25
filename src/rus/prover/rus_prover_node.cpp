@@ -78,7 +78,7 @@ void Hyp::buildUp() {
 	}
 }
 
-bool Hyp::unifyWithGoalHyps() {
+bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool show_this = false; //(47 <= ind && ind <= 49);
 
 	if (show_this) {
@@ -86,16 +86,31 @@ bool Hyp::unifyWithGoalHyps() {
 	}
 	bool ret = false;
 	for (const auto& m : unify_general(space->hyps_, expr)) {
-		ProofTop* pt = new ProofTop(*this, m.data, m.sub);
-		if (show_this) {
-			cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
-			cout << "\tIND: " << pt->ind << endl;
-			cout << "\tSUB:" << endl;
-			cout << Indent::paragraph(prover::show(pt->sub)) << endl;
-		}
+		if (hint) {
+			if (m.data.get() == hint) {
+				ProofTop* pt = new ProofTop(*this, m.data, m.sub);
+				if (show_this) {
+					cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+					cout << "\tIND: " << pt->ind << endl;
+					cout << "\tSUB:" << endl;
+					cout << Indent::paragraph(prover::show(pt->sub)) << endl;
+				}
 
-		proofs.emplace_back(pt);
-		ret = true;
+				proofs.emplace_back(pt);
+				ret = true;
+			}
+		} else {
+			ProofTop* pt = new ProofTop(*this, m.data, m.sub);
+			if (show_this) {
+				cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+				cout << "\tIND: " << pt->ind << endl;
+				cout << "\tSUB:" << endl;
+				cout << Indent::paragraph(prover::show(pt->sub)) << endl;
+			}
+
+			proofs.emplace_back(pt);
+			ret = true;
+		}
 	}
 	return ret;
 	//cout << endl;
