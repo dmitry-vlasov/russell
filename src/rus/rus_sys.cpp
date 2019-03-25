@@ -51,6 +51,17 @@ string xml_types();
 namespace {
 
 void parse_src() {
+
+	cout << "sizeof(rus::Symbol) = " << sizeof(rus::Symbol) << endl;
+	cout << "sizeof(rus::Tree) = " << sizeof(rus::Tree) << endl;
+	cout << "sizeof(rus::Tree::Node) = " << sizeof(rus::Tree::Node) << endl;
+	cout << "sizeof(rus::User<Rule>) = " << sizeof(rus::User<Rule>) << endl;
+	cout << "sizeof(rus::Tree::Children) = " << sizeof(rus::Tree::Children) << endl;
+	cout << "sizeof(rus::Id<Source>) = " << sizeof(mdl::Id<rus::Source>) << endl;
+	cout << "sizeof(rus::Tokenable<Source>) = " << sizeof(mdl::Tokenable<rus::Source>) << endl;
+	cout << "sizeof(rus::Token<Source>) = " << sizeof(mdl::Token<rus::Source>) << endl;
+	cout << "sizeof(rus::TokenStorage<Source>) = " << sizeof(mdl::TokenStorage<rus::Source>) << endl;
+
 	if (Sys::get().config.has("peg-parser")) parse_src_peg();
 	else parse_src_spirit();
 }
