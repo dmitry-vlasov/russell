@@ -412,10 +412,9 @@ struct Id {
 	Id(uint i = -1, uint s = -1) : id_(i), sys_(s == -1 ? Sys::get().id : s) { }
 	Id(const Id& i) = default;
 
-	string toStr() const { return Lex::toStr(id_); }
+	string str() const { return Lex::toStr(id_); }
 	uint sys() const { return sys_; }
 	uint id() const { return id_; }
-	string toStrFull() const { return Lex::toStr(sys_) + ":" + Lex::toStr(id_); }
 
 protected:
 	void set(uint i, uint s) { sys_ = s; id_ = i; }

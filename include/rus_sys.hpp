@@ -43,6 +43,9 @@ struct Sys : public mdl::Sys<Sys, Math> {
 };
 
 template<class T>
+using CompactUser = mdl::User<T, Sys, false>;
+
+template<class T>
 using User = mdl::User<T, Sys>;
 
 template<class T>

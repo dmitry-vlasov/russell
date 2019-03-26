@@ -477,7 +477,6 @@ public:
 	const_iterator end() const { return refs.end(); }
 
 	template<class, class> friend class Owner;
-	template<class, class> friend class User;
 	template<class, class> friend class _User;
 
 	void rehash() { refs.rehash(); }
@@ -499,7 +498,7 @@ public:
 	typedef Tokenable<Src> Tokenable_;
 	typedef Id<S> Id_;
 
-	Owner(uint i, const Token<Src>& t) : Tokenable_(t), Id_(i, Sys::get().id) {
+	Owner(uint i, const Token<Src>& t) : Tokenable_(t), Id_(i) {
 		Sys::mod().math.template get<T>().add(Id_::id(), static_cast<T*>(this));
 	}
 	virtual ~Owner() {
@@ -578,8 +577,10 @@ public:
 	}
 };
 
+template<class T, class S, bool with_token = true> class User;
+
 template<class T, class S>
-class User : public Tokenable<typename S::Src>, public _User<T, S> {
+class User<T, S, true> : public Tokenable<typename S::Src>, public _User<T, S> {
 public:
 	typedef S Sys;
 	typedef _User<T, S> _User_;
@@ -593,9 +594,23 @@ public:
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
 	virtual ~User() { }
-	void operator = (const T* p) { _User_::use(p->id(), p->sys()); }
 	void operator = (const User& u) { _User_::use(u.id(), u.sys()); }
 	const Tokenable_* ref() const override { return _User_::ptr; }
+};
+
+template<class T, class S>
+class User<T, S, false> : public _User<T, S> {
+public:
+	typedef S Sys;
+	typedef _User<T, S> _User_;
+	typedef typename S::Src Src;
+	typedef Id<S> Id_;
+
+	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : _User_(id) { }
+	explicit User(Id_ i, const Token<Src>& t = Token<Src>()) : _User_(i) { }
+	User(const T* p, const Token<Src>& t = Token<Src>()) : _User_(p) {  }
+	User(const User& u) : User(u.id()) { }
+	User(User&& u)      : User(u.id()) { u.unuse(); }
 };
 
 template<class Src, class Sys>
