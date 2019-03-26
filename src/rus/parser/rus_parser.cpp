@@ -256,7 +256,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 			comment  [addToTheory(&at_c<0>(*_val), qi::labels::_1)]
 		);
 
-	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	//qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(term,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(expr,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(plain,     setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

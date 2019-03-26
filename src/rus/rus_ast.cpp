@@ -36,7 +36,7 @@ static void collect_super_rules(Type* inf, Type* s) {
 	}
 }
 
-Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
+Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id(), t) {
 	for (auto t : s) {
 		sup.emplace_back(t);
 	}
@@ -45,12 +45,12 @@ Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 
 inline uint make_proof_id(uint id, Id th) {
 	if (id == -1) {
-		const string& th_name = (th.id == -1) ? "anonymous" : Lex::toStr(th.id);
+		const string& th_name = (th.id() == -1) ? "anonymous" : Lex::toStr(th.id());
 		static cmap<uint, uint> proof_indexes;
 
 		typename cmap<uint, uint>::accessor a;
-		uint ind = proof_indexes.find(a, th.id) ? a->second + 1 : 0;
-		proof_indexes.insert(a, th.id);
+		uint ind = proof_indexes.find(a, th.id()) ? a->second + 1 : 0;
+		proof_indexes.insert(a, th.id());
 		a->second = ind;
 		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(ind));
 	} else {
@@ -136,7 +136,7 @@ Disj::Vector Disj::toVector() const {
 }
 
 Proof::Proof(Id th, Id i, const Token& t) :
-	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr), inner(false) {
+	Owner(make_proof_id(i.id(), th), t), thm(th), par(nullptr), inner(false) {
 }
 
 vector<Qed*> Proof::qeds() const {

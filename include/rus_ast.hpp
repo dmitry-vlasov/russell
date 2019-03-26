@@ -88,7 +88,7 @@ inline bool operator <= (const Type& t1, const Type& t2) {
 }
 
 struct Rule : public Owner<Rule>, public Writable {
-	Rule(Id i, const Token& t = Token()) : Owner(i.id, t) { }
+	Rule(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Rule(const Rule&) = delete;
 	Vars vars;
 	Expr term;
@@ -123,7 +123,7 @@ struct Prop : public Tokenable, public Writable {
 
 struct Assertion : public Owner<Assertion> {
 	enum Kind { AXM, THM, DEF };
-	Assertion(Id i, const Token& t = Token()) : Owner(i.id, t) { }
+	Assertion(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Assertion(const Assertion&) = delete;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;

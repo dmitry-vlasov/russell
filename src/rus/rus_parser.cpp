@@ -229,7 +229,7 @@ private:
 			Context* c = ctx.get<Context*>();
 			uint v = sv[0].get<uint>();
 			Id tp = sv[1].get<Id>();
-			c->stacks.addVar(v, tp.id);
+			c->stacks.addVar(v, tp.id());
 			return Symbol(v, tp, Symbol::VAR);
 		};
 		parser_["VARS"].enter = [](peg::any& ctx) {

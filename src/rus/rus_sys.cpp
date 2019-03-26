@@ -52,6 +52,7 @@ namespace {
 
 void parse_src() {
 
+	cout << "sizeof(vector<uint>) = " << sizeof(vector<uint>) << endl;
 	cout << "sizeof(rus::Symbol) = " << sizeof(rus::Symbol) << endl;
 	cout << "sizeof(rus::Tree) = " << sizeof(rus::Tree) << endl;
 	cout << "sizeof(rus::Tree::Node) = " << sizeof(rus::Tree::Node) << endl;

@@ -397,6 +397,7 @@ private:
 
 template<class S>
 struct Tokenable {
+	typedef S Source;
 	Tokenable(const Token<S>& t) : token(t) { }
 	Tokenable(const Tokenable& t) : token(t.token) { }
 	virtual ~Tokenable() { }
@@ -405,22 +406,22 @@ struct Tokenable {
 	virtual const Tokenable* ref() const { return nullptr; }
 };
 
-template<class S, bool with_token = true> struct Id;
-
 template<class S>
-struct Id<S, true> : public Tokenable<S> {
-	Id(uint i = -1, const Token<S>& t = Token<S>()) : Tokenable<S>(t), id(i) { }
-	Id(const Id& i) : Tokenable<S>(i.token), id(i.id) { }
-	uint id;
-	string toStr() const { return Lex::toStr(id); }
-};
+struct Id {
+	typedef S Sys;
+	Id(uint i = -1, uint s = -1) : id_(i), sys_(s) { }
+	Id(const Id& i) : id_(i.id_), sys_(i.sys_) { }
+	string toStr() const { return Lex::toStr(id_); }
+	uint sys() const { return sys_; }
+	uint id() const { return id_; }
 
-template<class S>
-struct Id<S, false> {
-	Id(uint i = -1) : id(i) { }
-	Id(const Id& i) : id(i.id) { }
-	uint id;
-	string toStr() const { return Lex::toStr(id); }
+protected:
+	void set(uint i, uint s) { sys_ = s; id_ = i; }
+	void drop() { sys_ = -1; id_ = -1; }
+
+private:
+	uint id_;
+	uint sys_;
 };
 
 template<class S>

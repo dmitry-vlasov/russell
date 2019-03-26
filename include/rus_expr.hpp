@@ -21,7 +21,7 @@ struct Symbol {
 	Symbol() : lit(-1), kind_(NONE) { val_.const_ = nullptr; }
 	Symbol(uint l) : lit(l), kind_(NONE) { val_.const_ = nullptr; }
 	Symbol(uint l, Id i, Kind k) : lit(l), kind_(k) {
-		if (i.id != -1) {
+		if (i.id() != -1) {
 			switch (kind_) {
 			case VAR:   val_.type_ = new User<Type>(i); break;
 			case CONST: val_.const_ = new User<Const>(i); break;
@@ -77,7 +77,7 @@ struct Symbol {
 		}
 	}
 	const Tokenable* tokenable() const;
-	void set_type(Id i) { set_type(i.id); }
+	void set_type(Id i) { set_type(i.id()); }
 	void set_type(uint t) { kind_ = VAR; val_.type_ = new User<Type>(t); }
 	void set_const() { kind_ = CONST; val_.const_ = new User<Const>(lit); }
 
