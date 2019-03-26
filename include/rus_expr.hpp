@@ -16,37 +16,28 @@ struct Rule;
 
 struct Symbol {
 	enum Kind { CONST, VAR, NONE };
-	Kind kind() const {
-		if (val.index() == VAR) {
-			if (std::get<unique_ptr<User<Type>>>(val).get()) {
-				return VAR;
-			} else {
-				return NONE;
-			}
-		} else if (val.index() == CONST){
-			if (std::get<unique_ptr<User<Const>>>(val).get()) {
-				return CONST;
-			} else {
-				return NONE;
-			}
-		} else {
-			return NONE;
-		}
-	}
+	Kind kind() const { return kind_; }
 
-	Symbol() : lit(-1) { }
-	Symbol(uint l) : lit(l) { }
-	Symbol(uint l, Id i, Kind k) : lit(l) {
+	Symbol() : lit(-1), kind_(NONE) { val_.const_ = nullptr; }
+	Symbol(uint l) : lit(l), kind_(NONE) { val_.const_ = nullptr; }
+	Symbol(uint l, Id i, Kind k) : lit(l), kind_(k) {
 		if (i.id != -1) {
-			switch (k) {
-			case VAR:   val = unique_ptr<User<Type>>(new User<Type>(i)); break;
-			case CONST: val = unique_ptr<User<Const>>(new User<Const>(i)); break;
+			switch (kind_) {
+			case VAR:   val_.type_ = new User<Type>(i); break;
+			case CONST: val_.const_ = new User<Const>(i); break;
 			default: break;
 			}
 		}
 	}
 	Symbol(const Symbol& s) : lit(s.lit) { operator = (s); }
 	Symbol(Symbol&& s) : lit(s.lit) { operator = (std::move(s)); }
+	~Symbol() {
+		switch (kind_) {
+		case CONST: delete val_.const_; break;
+		case VAR:   delete val_.type_; break;
+		default:    break;
+		}
+	}
 
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
@@ -55,40 +46,40 @@ struct Symbol {
 
 	void operator = (const Symbol& s) {
 		lit = s.lit;
-		if (s.kind() == VAR) {
-			if (auto v = std::get<unique_ptr<User<Type>>>(s.val).get()) {
-				val = unique_ptr<User<Type>>(new User<Type>(v->id()));
-			}
-		} else if (s.kind() == CONST) {
-			if (auto c = std::get<unique_ptr<User<Const>>>(s.val).get()) {
-				val = unique_ptr<User<Const>>(new User<Const>(c->id()));
-			}
+		kind_ = s.kind_;
+		switch (kind_) {
+		case VAR:   val_.type_ = new User<Type>(s.type_id()); break;
+		case CONST: val_.const_ = new User<Const>(s.constant_id()); break;
+		default:    break;
 		}
 	}
 	void operator = (Symbol&& s) {
 		lit = s.lit;
-		if (s.kind() != NONE) {
-			val = std::move(s.val);
+		kind_ = s.kind_;
+		if (kind_ != NONE) {
+			val_ = s.val_;
+			s.val_.const_ = nullptr;
+			s.kind_ = NONE;
 		}
 	}
 
-	uint type_id() const { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->id() : UNDEF_UINT; }
-	uint constant_id() const { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->id() : UNDEF_UINT; }
-	Type* type() { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	Const* constant() { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
-	const Type* type() const { return kind() == VAR ? std::get<unique_ptr<User<Type>>>(val).get()->get() : nullptr; }
-	const Const* constant() const { return kind() == CONST ? std::get<unique_ptr<User<Const>>>(val).get()->get() : nullptr; }
+	uint type_id() const { return kind_ == VAR ? val_.type_->id() : -1; }
+	uint constant_id() const { return kind_ == CONST ? val_.type_->id() : -1; }
+	Type* type() { return kind_ == VAR ? val_.type_->get() : nullptr; }
+	Const* constant() { return kind_ == CONST ? val_.const_->get() : nullptr; }
+	const Type* type() const { return kind_ == VAR ? val_.type_->get() : nullptr; }
+	const Const* constant() const { return kind_ == CONST ? val_.const_->get() : nullptr; }
 	const Token* token() const {
-		switch (kind()) {
-		case VAR:   return &std::get<unique_ptr<User<Type>>>(val).get()->token;
-		case CONST: return &std::get<unique_ptr<User<Const>>>(val).get()->token;
+		switch (kind_) {
+		case VAR:   return &val_.type_->token;
+		case CONST: return &val_.const_->token;
 		default:    return nullptr;
 		}
 	}
 	const Tokenable* tokenable() const;
 	void set_type(Id i) { set_type(i.id); }
-	void set_type(uint t) { val = unique_ptr<User<Type>>(new User<Type>(t)); }
-	void set_const() { val = unique_ptr<User<Const>>(new User<Const>(lit)); }
+	void set_type(uint t) { kind_ = VAR; val_.type_ = new User<Type>(t); }
+	void set_const() { kind_ = CONST; val_.const_ = new User<Const>(lit); }
 
 	struct Hash {
 		typedef size_t result_type;
@@ -103,8 +94,12 @@ struct Symbol {
 	uint lit;
 
 private:
-	typedef variant<unique_ptr<User<Const>>, unique_ptr<User<Type>>> Value;
-	Value val;
+	union Value {
+		User<Const>* const_;
+		User<Type>*  type_;
+	};
+	Kind kind_;
+	Value val_;
 };
 
 typedef vector<Symbol> Symbols;

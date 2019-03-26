@@ -143,6 +143,9 @@ void parse() {
 	Sys::mod().math.get<Type>().rehash();
 	for (const auto& p : Sys::get().math.get<Type>()) {
 		Type* tp = p.second.data;
+		if (!tp) {
+			throw Error("!tp: " + Lex::toStr(p.first) + " -- " + to_string(p.first));
+		}
 		tp->rules.sort();
 	}
 #ifdef PARALLEL_PARSE_EXPR

@@ -3,7 +3,7 @@
 namespace mdl { namespace rus {
 
 const Tokenable* Symbol::tokenable() const {
-	switch (kind()) {
+	switch (kind_) {
 	case VAR: return type();
 	case CONST: return constant();
 	default: return nullptr;
