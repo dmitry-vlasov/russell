@@ -9,7 +9,7 @@ namespace mdl { namespace rus {
 
 typedef mdl::Token<Source> Token;
 typedef mdl::Tokenable<Source> Tokenable;
-typedef mdl::Id<Source> Id;
+typedef mdl::Id<Sys> Id;
 
 struct Type;
 struct Rule;

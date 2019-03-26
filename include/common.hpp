@@ -478,6 +478,7 @@ public:
 
 	template<class, class> friend class Owner;
 	template<class, class> friend class User;
+	template<class, class> friend class _User;
 
 	void rehash() { refs.rehash(); }
 };
@@ -491,12 +492,12 @@ inline string xml_sys_id(uint sys, uint id) {
 }
 
 template<class T, class S>
-class Owner : public Tokenable<typename S::Src>, public Id<typename S::Src> {
+class Owner : public Tokenable<typename S::Src>, public Id<S> {
 public:
 	typedef S Sys;
 	typedef typename S::Src Src;
 	typedef Tokenable<Src> Tokenable_;
-	typedef Id<Src> Id_;
+	typedef Id<S> Id_;
 
 	Owner(uint i, const Token<Src>& t) : Tokenable_(t), Id_(i, Sys::get().id) {
 		Sys::mod().math.template get<T>().add(Id_::id(), static_cast<T*>(this));
@@ -508,20 +509,23 @@ public:
 };
 
 template<class T, class S>
-class _User : public Id<typename S::Src> {
+class _User : public Id<S> {
+protected:
 	T* ptr;
 public:
 	typedef S Sys;
 	typedef typename S::Src Src;
-	typedef Id<Src> Id_;
+	typedef Id<S> Id_;
 
-	explicit _User(uint id = -1) : Id_(-1), ptr(nullptr) { use(id); }
-	explicit _User(Id_ i) : Id_(-1), ptr(nullptr) { use(i.id); }
-	_User(const _User& u) = delete;
+	explicit _User(uint id = -1) : ptr(nullptr) { use(id); }
+	explicit _User(Id_ i) : ptr(nullptr) { use(i.id(), i.sys()); }
+	explicit _User(const T* p) : ptr(nullptr) { if (p) use(p->id(), p->sys()); }
+	_User(const _User& u) :_User(u.id()) { }
+	_User(_User&& u) :_User(u.id()) { u.unuse(); }
 	~_User() { unuse(); }
 
-	void operator = (const T* p)    { use(p->id(), p->sys()); }
-	void operator = (const _User& u) = delete;
+	void operator = (const T* p) { if (p) use(p->id(), p->sys()); }
+	void operator = (const _User& u) { use(u.id(), u.sys()); }
 
 	bool operator == (const _User& u) const { return ptr == u.ptr; }
 	bool operator != (const _User& u) const { return ptr != u.ptr; }
@@ -554,9 +558,13 @@ public:
 	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
 	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
 
-	void use(uint id) {
+	void set(const T* p) { use(p->id(), p->sys()); }
+	void set(uint id) { use(id); }
+	void set(Id_ id) { use(id.id(), id.sys()); }
+
+	void use(uint id, uint s = -1) {
 		unuse();
-		Id_::set(id, Sys::get().id);
+		Id_::set(id, (s == -1) ? Sys::get().id : s);
 		if (Id_::id() != -1) {
 			Sys::mod(Id_::sys()).math.template get<T>().use(Id_::id(), ptr);
 		}
@@ -571,75 +579,23 @@ public:
 };
 
 template<class T, class S>
-class User : public Tokenable<typename S::Src>, public Id<typename S::Src> {
-	T* ptr;
+class User : public Tokenable<typename S::Src>, public _User<T, S> {
 public:
 	typedef S Sys;
+	typedef _User<T, S> _User_;
 	typedef typename S::Src Src;
 	typedef Tokenable<Src> Tokenable_;
-	typedef Id<Src> Id_;
+	typedef Id<S> Id_;
 
-	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) :
-		Tokenable_(t), Id_(-1, -1), ptr(nullptr) { use(id); }
-	explicit User(Id_ i, const Token<Src>& t = Token<Src>()) :
-		Tokenable_(t), Id_(-1), ptr(nullptr) { use(i.id()); }
-
-	User(const T* p, const Token<Src>& t = Token<Src>()) :
-		Tokenable_(t), Id_(-1), ptr(nullptr) { if (p) use(p->id()); }
+	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(id) { }
+	explicit User(Id_ i, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(i) { }
+	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(p) {  }
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
-	virtual ~User() { unuse(); }
-	void operator = (const T* p)    { use(p->id()); }
-	void operator = (const User& u) { Tokenable_::token = u.token; use(u.id()); }
-	void operator = (User&& u)      { Tokenable_::token = u.token; use(u.id()); u.unuse(); }
-
-	bool operator == (const User& u) const { return ptr == u.ptr; }
-	bool operator != (const User& u) const { return ptr != u.ptr; }
-	bool operator < (const User& u) const  { return ptr <  u.ptr; }
-	bool operator <= (const User& u) const { return ptr <= u.ptr; }
-	bool operator > (const User& u) const  { return ptr >  u.ptr; }
-	bool operator >= (const User& u) const { return ptr >= u.ptr; }
-
-	bool operator == (const T* p) const { return ptr == p; }
-	bool operator != (const T* p) const { return ptr != p; }
-	bool operator < (const T* p) const  { return ptr < p; }
-	bool operator <= (const T* p) const { return ptr <= p; }
-	bool operator > (const T* p) const  { return ptr > p; }
-	bool operator >= (const T* p) const { return ptr >= p; }
-
-	T* operator -> () { return ptr; }
-	const T* operator -> () const { return ptr; }
-	T& operator * () { return *ptr; }
-	const T& operator * () const { return *ptr; }
-
-	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ptr; }
-	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ptr; }
-	friend bool operator < (const T* p, const User<T, S>& u)  { return p <  u.ptr; }
-	friend bool operator <= (const T* p, const User<T, S>& u) { return p <= u.ptr; }
-	friend bool operator > (const T* p, const User<T, S>& u)  { return p >  u.ptr; }
-	friend bool operator >= (const T* p, const User<T, S>& u) { return p >= u.ptr; }
-
-	operator bool() const { return ptr; }
-
-	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
-	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
-	void set(Id_ i) { /*Tokenable_::token = i.token;*/ use(i.id()); }
-	const Tokenable_* ref() const override { return ptr; }
-
-	void use(uint id) {
-		unuse();
-		Id_::set(id, Sys::get().id);
-		if (Id_::id() != -1) {
-			Sys::mod(Id_::sys()).math.template get<T>().use(Id_::id(), ptr);
-		}
-	}
-	void unuse() {
-		if (Id_::id() != -1) {
-			Sys::mod(Id_::sys()).math.template get<T>().unuse(Id_::id(), ptr);
-			Id_::drop();
-		}
-		ptr = nullptr;
-	}
+	virtual ~User() { }
+	void operator = (const T* p) { _User_::use(p->id(), p->sys()); }
+	void operator = (const User& u) { _User_::use(u.id(), u.sys()); }
+	const Tokenable_* ref() const override { return _User_::ptr; }
 };
 
 template<class Src, class Sys>
