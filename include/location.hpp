@@ -405,10 +405,20 @@ struct Tokenable {
 	virtual const Tokenable* ref() const { return nullptr; }
 };
 
+template<class S, bool with_token = true> struct Id;
+
 template<class S>
-struct Id : public Tokenable<S> {
+struct Id<S, true> : public Tokenable<S> {
 	Id(uint i = -1, const Token<S>& t = Token<S>()) : Tokenable<S>(t), id(i) { }
 	Id(const Id& i) : Tokenable<S>(i.token), id(i.id) { }
+	uint id;
+	string toStr() const { return Lex::toStr(id); }
+};
+
+template<class S>
+struct Id<S, false> {
+	Id(uint i = -1) : id(i) { }
+	Id(const Id& i) : id(i.id) { }
 	uint id;
 	string toStr() const { return Lex::toStr(id); }
 };
