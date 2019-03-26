@@ -510,7 +510,6 @@ public:
 
 template<class T, class S>
 class User : public Id<typename S::Src> {
-	uint sys_;
 	T*   ptr;
 public:
 	typedef S Sys;
@@ -518,10 +517,10 @@ public:
 	typedef Tokenable<Src> Tokenable_;
 	typedef Id<Src> Id_;
 
-	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Id_(-1, t), sys_(-1), ptr(nullptr) { use(id); }
-	explicit User(Id_ i) : Id_(-1, i.token), sys_(-1), ptr(nullptr) { use(i.id); }
+	explicit User(uint id = -1, uint sys = -1, const Token<Src>& t = Token<Src>()) : Id_(-1, t), ptr(nullptr) { use(id, sys); }
+	explicit User(Id_ i) : Id_(-1, i.token), ptr(nullptr) { use(i.id); }
 
-	User(const T* p, const Token<Src>& t = Token<Src>()) : Id_(-1, t), sys_(-1), ptr(nullptr) { if (p) use(p->id()); }
+	User(const T* p, uint sys = -1, const Token<Src>& t = Token<Src>()) : Id_(-1, t), ptr(nullptr) { if (p) use(p->id(), sys); }
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
 	~User() { unuse(); }
@@ -560,21 +559,30 @@ public:
 	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
 	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(id())); return ptr; }
 	uint id() const { return Id_::id; }
-	uint sys() const { return sys_; }
+	uint sys(uint s = -1) const {
+		if (s == -1) {
+			if (Id_::token.src()) {
+				return Id_::token.src()->sys();
+			} else {
+				return Sys::get().id;
+			}
+		} else {
+			return s;
+		}
+	}
 	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }
 	const Tokenable_* ref() const override { return ptr; }
 
-	void use(uint id) {
-		unuse();
-		sys_ = Sys::get().id;
+	void use(uint id, uint s = -1) {
+		unuse(s);
 		Id_::id = id;
 		if (Id_::id != -1) {
-			Sys::mod(sys_).math.template get<T>().use(Id_::id, ptr);
+			Sys::mod(sys(s)).math.template get<T>().use(Id_::id, ptr);
 		}
 	}
-	void unuse() {
+	void unuse(uint s = -1) {
 		if (Id_::id != -1) {
-			Sys::mod(sys_).math.template get<T>().unuse(Id_::id, ptr);
+			Sys::mod(sys(s)).math.template get<T>().unuse(Id_::id, ptr);
 			Id_::id = -1;
 		}
 		ptr = nullptr;
