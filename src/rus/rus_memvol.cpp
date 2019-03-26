@@ -8,9 +8,9 @@ size_t memvol(const Symbol& s) {
 size_t memvol(const Tree& t) {
 	if (t.kind() != Tree::NODE) return 0;
 	size_t vol = 0;
-	vol += t.children().capacity();
+	vol += t.children().vect.capacity();
 	for (auto& ch : t.children()) {
-		vol += memvol(*ch.get());
+		vol += memvol(*ch);
 	}
 	return vol;
 }

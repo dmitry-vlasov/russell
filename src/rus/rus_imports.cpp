@@ -28,7 +28,7 @@ void tree_deps(const Tree* tree, set<uint>& deps) {
 	if (tree->kind() == Tree::NODE) {
 		add_dep(tree->rule(), deps);
 		for (const auto& ch : tree->children()) {
-			tree_deps(ch.get(), deps);
+			tree_deps(ch, deps);
 		}
 	} else {
 		symb_deps(*tree->var(), deps);

@@ -57,6 +57,7 @@ void parse_src() {
 	cout << "sizeof(rus::Tree) = " << sizeof(rus::Tree) << endl;
 	cout << "sizeof(rus::Tree::Node) = " << sizeof(rus::Tree::Node) << endl;
 	cout << "sizeof(rus::User<Rule>) = " << sizeof(rus::User<Rule>) << endl;
+	cout << "sizeof(rus::CompactUser<Rule>) = " << sizeof(rus::CompactUser<Rule>) << endl;
 	cout << "sizeof(rus::Tree::Children) = " << sizeof(rus::Tree::Children) << endl;
 	cout << "sizeof(rus::Id<Source>) = " << sizeof(mdl::Id<rus::Source>) << endl;
 	cout << "sizeof(rus::Tokenable<Source>) = " << sizeof(mdl::Tokenable<rus::Source>) << endl;

@@ -103,34 +103,36 @@ vector<string> Rules::Node::show() const {
 	return ret;
 }
 
+Tree::Children::~Children() { for (Tree* t : vect) delete t; }
+
 Tree::Node::Node(Id i) : rule(i), children() { }
 Tree::Node::Node(Id i, const Tree::Children& ch) : rule(i), children() {
-	children.reserve(ch.size());
+	children.vect.reserve(ch.size());
 	for (auto& c : ch) {
-		children.push_back(make_unique<Tree>(*c.get()));
+		children.vect.push_back(new Tree(*c));
 	}
 }
 Tree::Node::Node(const Node& n) : rule(n.rule), children() {
-	children.reserve(n.children.size());
+	children.vect.reserve(n.children.size());
 	for (auto& c : n.children) {
-		children.push_back(make_unique<Tree>(*c.get()));
+		children.vect.push_back(new Tree(*c));
 	}
 }
 Tree::Node::Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
 Tree::Node::Node(Id i, Tree::Children&& ch) : rule(i), children(std::move(ch)) { }
 Tree::Node::Node(Id i, Tree* ch) : rule(i), children() {
-	children.push_back(unique_ptr<Tree>(ch));
+	children.vect.push_back(ch);
 }
-Tree::Node::~Node() {
-
-}
+//Tree::Node::~Node() {
+//	for (Tree* t : children) delete t;
+//}
 
 static void assemble(const Tree* t, Symbols& s) {
 	if (t->kind() == Tree::NODE) {
 		auto i = t->children().begin();
 		for (auto x : t->rule()->term) {
 			switch (x.kind()) {
-			case Symbol::VAR:   assemble((*i++).get(), s); break;
+			case Symbol::VAR:   assemble((*i++), s); break;
 			case Symbol::CONST: s.push_back(x); break;
 			default: s.push_back(x); break;
 			}
@@ -156,9 +158,9 @@ void apply(const Substitution* sub, Expr& e) {
 Tree* apply(const Substitution* s, const Tree* t) {
 	if (t->kind() == Tree::NODE) {
 		Tree::Children ch;
-		ch.reserve(t->children().size());
+		ch.vect.reserve(t->children().size());
 		for (const auto& n : t->children()) {
-			ch.emplace_back(apply(s, n.get()));
+			ch.vect.emplace_back(apply(s, n));
 		}
 		return new Tree(t->rule()->id(), ch);
 	} else {
@@ -181,7 +183,7 @@ string show_ast(const Tree* t, bool full) {
 	} else {
 		string s = (t->rule() ? show_id(t->rule()->id()) : "?") + " (";
 		for (uint i = 0; i < t->children().size(); ++ i) {
-			s += show_ast(t->children()[i].get(), full);
+			s += show_ast(t->children().vect[i], full);
 			if (i + 1 < t->children().size()) s += ", ";
 		}
 		s += ")";
@@ -197,7 +199,7 @@ string show(const Tree* t, bool full) {
 		uint i = 0;
 		for (auto s : t->rule()->term.symbols) {
 			if (s.type()) {
-				str += show(t->children()[i++].get(), full) + ' ';
+				str += show(t->children().vect[i++], full) + ' ';
 			} else {
 				str += show(s) + ' ';
 			}

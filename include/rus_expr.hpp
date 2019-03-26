@@ -29,15 +29,9 @@ struct Symbol {
 			}
 		}
 	}
-	Symbol(const Symbol& s) : lit(s.lit) { operator = (s); }
-	Symbol(Symbol&& s) : lit(s.lit) { operator = (std::move(s)); }
-	~Symbol() {
-		switch (kind_) {
-		case CONST: delete val_.const_; break;
-		case VAR:   delete val_.type_; break;
-		default:    break;
-		}
-	}
+	Symbol(const Symbol& s) : lit(s.lit), kind_(NONE) { operator = (s); }
+	Symbol(Symbol&& s) : lit(s.lit), kind_(NONE) { operator = (std::move(s)); }
+	~Symbol() { clear(); }
 
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
@@ -45,6 +39,7 @@ struct Symbol {
 	bool is_undef() const { return lit == -1; }
 
 	void operator = (const Symbol& s) {
+		clear();
 		lit = s.lit;
 		kind_ = s.kind_;
 		switch (kind_) {
@@ -54,6 +49,7 @@ struct Symbol {
 		}
 	}
 	void operator = (Symbol&& s) {
+		clear();
 		lit = s.lit;
 		kind_ = s.kind_;
 		if (kind_ != NONE) {
@@ -78,8 +74,16 @@ struct Symbol {
 	}
 	const Tokenable* tokenable() const;
 	void set_type(Id i) { set_type(i.id()); }
-	void set_type(uint t) { kind_ = VAR; val_.type_ = new User<Type>(t); }
-	void set_const() { kind_ = CONST; val_.const_ = new User<Const>(lit); }
+	void set_type(uint t) {
+		clear();
+		kind_ = VAR;
+		val_.type_ = new User<Type>(t);
+	}
+	void set_const() {
+		clear();
+		kind_ = CONST;
+		val_.const_ = new User<Const>(lit);
+	}
 
 	struct Hash {
 		typedef size_t result_type;
@@ -94,6 +98,15 @@ struct Symbol {
 	uint lit;
 
 private:
+	void clear() {
+		switch (kind_) {
+		case CONST: delete val_.const_; break;
+		case VAR:   delete val_.type_; break;
+		default:    break;
+		}
+		kind_ = NONE;
+		val_.const_ = nullptr;
+	}
 	union Value {
 		User<Const>* const_;
 		User<Type>*  type_;
@@ -111,7 +124,21 @@ inline ostream& operator << (ostream& os, const Symbol& s) {
 }
 
 struct Tree {
-	typedef vector<unique_ptr<Tree>> Children;
+	struct Children {
+		~Children();
+		typedef vector<Tree*>::iterator iterator;
+		typedef vector<Tree*>::const_iterator const_iterator;
+
+		iterator begin() { return vect.begin(); }
+		iterator end() { return vect.end(); }
+
+		const_iterator begin() const { return vect.cbegin(); }
+		const_iterator end() const { return vect.cend(); }
+
+		size_t size() const { return vect.size(); }
+
+		vector<Tree*> vect;
+	};
 	enum Kind { NODE, VAR };
 
 	struct Node {
@@ -121,9 +148,9 @@ struct Tree {
 		Node(Id i, const Children& ch);
 		Node(Id i, Children&& ch);
 		Node(Id i, Tree* ch);
-		~Node();
-		User<Rule> rule;
-		Children   children;
+		//~Node();
+		CompactUser<Rule> rule;
+		Children children;
 	};
 
 	Tree() = delete;
@@ -184,7 +211,7 @@ struct Tree {
 		switch (kind()) {
 		case NODE:
 			for (const auto& c : node()->children) {
-				for (uint v : c.get()->vars()) {
+				for (uint v : c->vars()) {
 					ret.insert(v);
 				}
 			}
@@ -335,7 +362,7 @@ inline void create_rule_term(Expr& ex, Id id) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
 		if (s.kind() == Symbol::VAR) {
-			children.push_back(make_unique<Tree>(s));
+			children.vect.push_back(new Tree(s));
 		}
 	}
 	ex.set(new Tree(id, children));

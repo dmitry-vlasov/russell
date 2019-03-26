@@ -75,7 +75,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL<trace>(ch, tp, e, beg, end)) {
 					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(child) << " - success " << endl;
-					children.emplace_back(child);
+					children.vect.emplace_back(child);
 					Action a = act<trace>(n, m, n.top(), ch, e, beg, end);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
@@ -90,7 +90,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					children.pop_back();
+					children.vect.pop_back();
 					childnodes.pop();
 				}
 				if (n.empty() || m.empty()) goto out;

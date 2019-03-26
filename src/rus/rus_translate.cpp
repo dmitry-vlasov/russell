@@ -213,7 +213,7 @@ void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof,
 	} else {
 		for (auto& v : t.rule()->vars.v) {
 			RuleImage rule = maps.global.rules.at(t.rule());
-			translate_term(*t.children()[rule.args[v.lit]], thm, proof, maps);
+			translate_term(*t.children().vect[rule.args[v.lit]], thm, proof, maps);
 		}
 	}
 	if (t.kind() == Tree::NODE) {
