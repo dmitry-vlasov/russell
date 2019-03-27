@@ -6,7 +6,7 @@ size_t memvol(const Symbol& s) {
 	return 0;
 }
 size_t memvol(const Tree& t) {
-	if (t.kind() != Tree::NODE) return 0;
+	if (t.kind() != Tree::RULE) return 0;
 	size_t vol = 0;
 	vol += t.children().capacity();
 	for (auto& ch : t.children()) {

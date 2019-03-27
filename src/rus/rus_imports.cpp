@@ -25,7 +25,7 @@ inline void symb_deps(const Symbol& symb, set<uint>& deps) {
 
 void tree_deps(const Tree* tree, set<uint>& deps) {
 	if (!tree) return;
-	if (tree->kind() == Tree::NODE) {
+	if (tree->kind() == Tree::RULE) {
 		add_dep(tree->rule(), deps);
 		for (const auto& ch : tree->children()) {
 			tree_deps(ch.get(), deps);

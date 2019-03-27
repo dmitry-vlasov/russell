@@ -216,7 +216,7 @@ void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof,
 			translate_term(*t.children()[rule.args[v.lit]].get(), thm, proof, maps);
 		}
 	}
-	if (t.kind() == Tree::NODE) {
+	if (t.kind() == Tree::RULE) {
 		if (!maps.global.rules.count(t.rule())) {
 			throw Error("undefined reference to rule");
 		}

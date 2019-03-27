@@ -126,7 +126,7 @@ inline ostream& operator << (ostream& os, const Symbol& s) {
 struct Tree {
 	typedef vector<unique_ptr<Tree>> Children;
 
-	enum Kind { NODE, VAR };
+	enum Kind { RULE, VAR };
 
 	struct Node {
 		Node(Id = Id());
@@ -152,7 +152,7 @@ struct Tree {
 	bool operator == (const Tree& e) const {
 		if (kind() != e.kind()) return false;
 		switch (kind()) {
-		case NODE:
+		case RULE:
 			if (rule() != e.rule()) return false;
 			return std::equal(
 				children().begin(),children().end(),
@@ -167,21 +167,21 @@ struct Tree {
 	bool leaf() const { return kind() == VAR || !children().size(); }
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 
-	uint rule_id() const { assert(kind() == NODE); return std::get<Node>(val).rule.id(); }
+	uint rule_id() const { assert(kind() == RULE); return std::get<Node>(val).rule.id(); }
 	Symbol& var() { assert(kind() == VAR); return  std::get<Symbol>(val); }
-	Node& node() { assert(kind() == NODE); return std::get<Node>(val); }
-	Rule* rule() { assert(kind() == NODE); return std::get<Node>(val).rule.get(); }
-	Children& children() { assert(kind() == NODE); return std::get<Node>(val).children; }
+	Node& node() { assert(kind() == RULE); return std::get<Node>(val); }
+	Rule* rule() { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
+	Children& children() { assert(kind() == RULE); return std::get<Node>(val).children; }
 	Type* type();
 
 	const Symbol& var() const { assert(kind() == VAR); return std::get<Symbol>(val); }
-	const Node& node() const { assert(kind() == NODE); return std::get<Node>(val); }
-	const Rule* rule() const { assert(kind() == NODE); return std::get<Node>(val).rule.get(); }
-	const Children& children() const { assert(kind() == NODE); return std::get<Node>(val).children; }
+	const Node& node() const { assert(kind() == RULE); return std::get<Node>(val); }
+	const Rule* rule() const { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
+	const Children& children() const { assert(kind() == RULE); return std::get<Node>(val).children; }
 	const Type* type() const;
 	uint arity() const {
 		switch (kind()) {
-		case NODE: return children().size();
+		case RULE: return children().size();
 		case VAR:  return 0;
 		default:   assert(0 && "impossible"); return -1;
 		}
@@ -189,7 +189,7 @@ struct Tree {
 	set<uint> vars() const {
 		set<uint> ret;
 		switch (kind()) {
-		case NODE:
+		case RULE:
 			for (const auto& c : children()) {
 				for (uint v : c->vars()) {
 					ret.insert(v);

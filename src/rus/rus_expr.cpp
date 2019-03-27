@@ -123,7 +123,7 @@ Tree::Node::Node(Id i, Tree* ch) : rule(i), children() {
 }
 
 static void assemble(const Tree* t, Symbols& s) {
-	if (t->kind() == Tree::NODE) {
+	if (t->kind() == Tree::RULE) {
 		auto i = t->children().begin();
 		for (auto x : t->rule()->term) {
 			switch (x.kind()) {
@@ -151,7 +151,7 @@ void apply(const Substitution* sub, Expr& e) {
 }
 
 Tree* apply(const Substitution* s, const Tree* t) {
-	if (t->kind() == Tree::NODE) {
+	if (t->kind() == Tree::RULE) {
 		Tree::Children ch;
 		ch.reserve(t->children().size());
 		for (const auto& n : t->children()) {

@@ -207,7 +207,7 @@ unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 
 unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uint ind) {
 	switch (tree.kind()) {
-	case rus::Tree::NODE: {
+	case rus::Tree::RULE: {
 		LightTree::Children ch;
 		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
