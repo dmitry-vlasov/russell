@@ -7,8 +7,8 @@ namespace mdl { namespace rus {
 #define PARALLEL_RUS_PARSE
 #endif
 
-static const Symbol dfm(Lex::toInt("defiendum"));
-static const Symbol dfs(Lex::toInt("definiens"));
+static const Literal dfm(Lex::toInt("defiendum"));
+static const Literal dfs(Lex::toInt("definiens"));
 
 struct Parser {
 private:
@@ -29,18 +29,21 @@ private:
 			vars.back().emplace_back(v, t);
 			typing[v] = t;
 		}
-		void markType(Symbol& s) const {
-			if (typing.count(s.lit)) s.set_type(typing.at(s.lit));
-			else s.set_const();
-		}
-		Symbol makeSymb(uint lit, bool strict, const Token& token) const {
-			Symbol s(lit);
-			if (typing.count(lit)) {
-				s.set_type(typing.at(lit));
-			} else if (strict || !(lit == dfm.lit || lit == dfs.lit)) {
-				s.set_const();
+		void markType(unique_ptr<Symbol>& s) const {
+			if (typing.count(s->lit())) {
+				s.reset(new rus::Var(s->lit(), typing.at(s->lit())));
+			} else {
+				s.reset(new rus::Const(s->lit()));
 			}
-			return s;
+		}
+		Symbol* makeSymb(uint lit, bool strict, const Token& token) const {
+			if (typing.count(lit)) {
+				return new rus::Var(lit, typing.at(lit));
+			} else if (strict || !(lit == dfm.lit() || lit == dfs.lit())) {
+				return new rus::Const(lit);
+			} else {
+				return new rus::Literal(lit);
+			}
 		}
 		void pushProof(Proof* p) {
 			proofs.push_back(p);
@@ -190,20 +193,20 @@ private:
 		};
 		parser_["SYMBS_TYPED"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			vector<Symbol> vect;
+			vector<unique_ptr<Symbol>> vect;
 			vect.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) vect.push_back(s.get<Symbol>());
+				if (s.is<Symbol*>()) vect.emplace_back(s.get<Symbol*>());
 				else delete s.get<Comment*>();
 			}
 			return vect;
 		};
 		parser_["SYMBS_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			vector<Symbol> vect;
+			vector<unique_ptr<Symbol>> vect;
 			vect.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) vect.push_back(s.get<Symbol>());
+				if (s.is<Symbol*>()) vect.emplace_back(s.get<Symbol*>());
 				else delete s.get<Comment*>();
 			}
 			return vect;
@@ -211,26 +214,23 @@ private:
 		parser_["EX_TERM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			Id id = sv[0].get<Id>();
-			vector<Symbol> term = sv[1].get<vector<Symbol>>();
-			return Expr(id, std::move(term), c->token(sv));
+			return Expr(id, std::move(sv[1].get_val<vector<unique_ptr<Symbol>>>()), c->token(sv));
 		};
 		parser_["EX_STAT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			Id id = sv[0].get<Id>();
-			vector<Symbol> expr = sv[1].get<vector<Symbol>>();
-			return Expr(id, std::move(expr), c->token(sv));
+			return Expr(id, std::move(sv[1].get_val<vector<unique_ptr<Symbol>>>()), c->token(sv));
 		};
 		parser_["EX_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			vector<Symbol> expr = sv[1].get<vector<Symbol>>();
-			return Expr(sv[0].get<Id>(), std::move(expr), c->token(sv));
+			return Expr(sv[0].get<Id>(), std::move(sv[1].get_val<vector<unique_ptr<Symbol>>>()), c->token(sv));
 		};
 		parser_["VAR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			uint v = sv[0].get<uint>();
 			Id tp = sv[1].get<Id>();
 			c->stacks.addVar(v, tp.id());
-			return Symbol(v, tp, Symbol::VAR);
+			return Var(v, tp.id());
 		};
 		parser_["VARS"].enter = [](peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
@@ -238,10 +238,10 @@ private:
 		};
 		parser_["VARS"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			return sv.transform<Symbol>();
+			return sv.transform<Var>();
 		};
 		parser_["VAR_DECL"] = [](const peg::SemanticValues& sv) {
-			return new Vars(std::move(sv[0].get<vector<Symbol>>()));
+			return new Vars(std::move(sv[0].get<vector<Var>>()));
 		};
 		parser_["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			set<uint>* disj = new set<uint>();
@@ -358,15 +358,15 @@ private:
 			d->dfs  = std::move(sv[5].get<Expr>());
 			d->prop = std::move(sv[7].get<Expr>());
 			Prop* prop = new Prop(0);
-			for (auto s : d->prop.symbols) {
-				if (s == dfm) {
-					for (auto s_dfm : d->dfm.symbols)
-						prop->expr.symbols.push_back(s_dfm);
-				} else if (s == dfs) {
-					for (auto s_dfs : d->dfs.symbols)
-						prop->expr.symbols.push_back(s_dfs);
+			for (auto& s : d->prop.symbols) {
+				if (*s == dfm) {
+					for (auto& s_dfm : d->dfm.symbols)
+						prop->expr.symbols.emplace_back(s_dfm->clone());
+				} else if (*s == dfs) {
+					for (auto& s_dfs : d->dfs.symbols)
+						prop->expr.symbols.emplace_back(s_dfs->clone());
 				} else
-					prop->expr.symbols.push_back(s);
+					prop->expr.symbols.emplace_back(s->clone());
 			}
 			prop->expr.type = d->prop.type;
 			prop->expr.token = d->prop.token;
@@ -384,14 +384,13 @@ private:
 			uint ind = sv[0].get<uint>();
 			Id  type = sv[1].get<Id>();
 			Id  ass  = sv[2].get<Id>();
-			vector<Symbol> expr = sv[4].get<vector<Symbol>>();
 			vector<Ref*> refs = sv[3].get<vector<Ref*>>();
 			Step* s = new Step(ind, Step::ASS, ass, c->stacks.proof(), c->token(sv));
 			s->refs.reserve(refs.size());
 			for (Ref* r : refs) {
 				s->refs.emplace_back(r);
 			}
-			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
+			s->expr = std::move(Expr(type, std::move(sv[4].get_val<vector<unique_ptr<Symbol>>>()), c->token(sv)));
 			expr::enqueue(s->expr);
 			return s;
 		};
@@ -400,9 +399,8 @@ private:
 			Context* c = ctx.get<Context*>();
 			uint ind = sv[0].get<uint>();
 			Id  type = sv[1].get<Id>();
-			vector<Symbol> expr = sv[4].get<vector<Symbol>>();
 			Step* s = new Step(ind, Step::CLAIM, Id(), c->stacks.proof(), c->token(sv));
-			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
+			s->expr = std::move(Expr(type, std::move(sv[4].get_val<vector<unique_ptr<Symbol>>>()), c->token(sv)));
 			expr::enqueue(s->expr);
 			return s;
 		};

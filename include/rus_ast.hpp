@@ -31,11 +31,11 @@ struct Constant : public Owner<Constant>, public Writable {
 };
 
 struct Vars : public Tokenable, public Writable {
-	Vars(const vector<Symbol>& vars = vector<Symbol>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
+	Vars(const vector<Var>& vars = vector<Var>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
 	Vars(const Vars&) = delete;
-	vector<Symbol> v;
-	bool isDeclared(Symbol w) const {
-		return std::find(v.begin(), v.end(), w) != v.end();
+	vector<Var> v;
+	bool isDeclared(uint l) const {
+		return std::find_if(v.begin(), v.end(), [l](const Var& v) { return v.lit() == l; }) != v.end();
 	}
 	void write(ostream& os, const Indent& = Indent()) const override;
 };
@@ -100,7 +100,6 @@ struct Rule : public Owner<Rule>, public Writable {
 
 Rule* find_super(const Type* type, const Type* super);
 
-inline Type* Tree::type() { return kind() == VAR ? var().type() : rule()->term.type.get(); }
 inline const Type* Tree::type() const { return kind() == VAR ? var().type() : rule()->term.type.get(); }
 
 struct Hyp : public Tokenable, public Writable {

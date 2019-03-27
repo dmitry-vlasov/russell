@@ -9,9 +9,9 @@ static vector<string> show_lines(const Rules& tr) {
 		vector<string> v = show_lines(p->tree);
 		if (p->tree.nodes.size()) {
 			for (string& s : v)
-				vect.push_back(show(p->symb) + ' ' + s);
+				vect.push_back(p->symb->show() + ' ' + s);
 		} else {
-			vect.push_back(show(p->symb) + " --> " +
+			vect.push_back(p->symb->show() + " --> " +
 				(p->rule ? p->rule->show() : "null")
 			);
 		}
@@ -24,20 +24,6 @@ string show(const Rules& tr) {
 	for (string& s : show_lines(tr)) {
 		str += s + "\n";
 	}
-	return str;
-}
-
-string show(Symbol s, bool full) {
-	if (!full || s.kind() == Symbol::CONST)
-		return Lex::toStr(s.lit);
-	else {
-		return string("<") + Lex::toStr(s.lit) + ":" + (s.type() ? show_id(s.type()->id()) : "NULL") + ">";
-	}
-}
-
-string show(const Expr& ex) {
-	string str;
-	for (const auto& s : ex.symbols) str += Lex::toStr(s.lit) + " ";
 	return str;
 }
 
@@ -62,9 +48,11 @@ void Constant::write(ostream& os, const Indent& i) const {
 }
 
 void Vars::write(ostream& os, const Indent&) const {
-	for (uint i = 0; i < v.size(); ++ i) {
-		os << Lex::toStr(v.at(i).lit) << " : " << Lex::toStr(v.at(i).type_id());
-		if (i + 1 < v.size()) os << ", ";
+	if (v.size()) {
+		os << v.at(0) << " : " << Lex::toStr(v.at(0).typeId());
+		for (uint i = 1; i < v.size(); ++ i) {
+			os << ", " << v.at(i) << " : " << Lex::toStr(v.at(i).typeId());
+		}
 	}
 }
 

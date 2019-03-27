@@ -65,8 +65,10 @@ void parse_src() {
 	cout << "sizeof(rus::Token<Source>) = " << sizeof(mdl::Token<rus::Source>) << endl;
 	cout << "sizeof(rus::TokenStorage<Source>) = " << sizeof(mdl::TokenStorage<rus::Source>) << endl;
 
-	if (Sys::get().config.has("peg-parser")) parse_src_peg();
-	else parse_src_spirit();
+	//if (Sys::get().config.has("peg-parser")) parse_src_peg();
+	//else parse_src_spirit();
+
+	parse_src_spirit();
 }
 
 void parse_expr() {

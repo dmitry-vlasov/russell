@@ -24,7 +24,7 @@ inline Action act(
 	if (const User<Rule>& r = (*ni)->rule) {
 		if (!r) throw Error("unknown rule", Lex::toStr(r.id()));
 		if (r.get()->token.preceeds(e->token)) {
-			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
+			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << r.get()->term.show() <<  endl;
 			return Action(Action::RET, r.get());
 		} else {
 			if (trace) cout << Indent(ch - beg) << "Act: Rule FAILS - follows: " << Lex::toStr(r.id()) << endl;
@@ -53,13 +53,14 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (ch->kind() == Symbol::CONST && (*n.top())->symb.kind() == Symbol::CONST) {
+			if (trace) cout << Indent(ch - beg) << "Expr symbol: " << (*ch)->showDetailed() << endl;
+			if (trace) cout << Indent(ch - beg) << "Rule tree symbol: " << (*n.top())->symb->showDetailed() << endl;
+			if ((*ch)->kind() == Symbol::CONST && (*n.top())->symb->kind() == Symbol::CONST) {
 				const Rules* par = (*n.top())->parent ? (*n.top())->parent : &type->rules;
-				auto constIter = par->constMap.find(ch->lit);
+				auto constIter = par->constMap.find((*ch)->lit());
 				if (constIter != par->constMap.end()) {
 					n.top() = constIter->second;
-					if (trace) cout << Indent(ch - beg) << "Expr const symbol: " << *m.top() << endl;
-					if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
+					if (trace) cout << Indent(ch - beg) << "Parse: constant " << *(*n.top())->symb << " - success " << endl;
 					n.top() = par->constLast;
 					Action a = act<trace>(n, m, constIter->second, ch, e, beg, end);
 					switch (a.kind) {
@@ -69,12 +70,11 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					}
 				}
 			}
-			if (const Type* tp = (*n.top())->symb.type()) {
-				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
-				if (trace) cout << Indent(ch - beg) << "Parse: variable " << (*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
+			if (const Type* tp = (*n.top())->symb->type()) {
+				if (trace) cout << Indent(ch - beg) << "Parse: variable " << *(*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL<trace>(ch, tp, e, beg, end)) {
-					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(child) << " - success " << endl;
+					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << child->show() << " - success " << endl;
 					children.emplace_back(child);
 					Action a = act<trace>(n, m, n.top(), ch, e, beg, end);
 					switch (a.kind) {
@@ -99,11 +99,11 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 		}
 		out: ;
 	}
-	if (x->type()) {
-		if (x->type() == type) {
-			return new Tree(*x);
-		} else if (Rule* super = find_super(x->type(), type)) {
-			return new Tree(super->id(), new Tree(*x));
+	if (const Var* v = dynamic_cast<const Var*>(x->get())) {
+		if (v->type() == type) {
+			return new Tree(*v);
+		} else if (Rule* super = find_super(v->type(), type)) {
+			return new Tree(super->id(), new Tree(*v));
 		}
 	}
 	return nullptr;
@@ -118,10 +118,10 @@ void parse(Expr* ex) {
 		if (Tree* tree = parse_LL<false>(it, ex->type.get(), ex, ex->symbols.begin(), ex->symbols.end() - 1)) {
 			ex->set(tree);
 		} else {
- 			cout << "parsing expr: " <<  show(*ex)  << endl << endl;
+ 			cout << "parsing expr: " << *ex << endl << "detailed: " << ex->showDetailed() << endl;
  			cout << "source: " << Lex::toStr(ex->token.src()->id())  << endl << endl;
 			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin(), ex->symbols.end() - 1);
-			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
+			throw Error("parsing", string("expression: ") + ex->show() + " at: " + ex->token.show());
 		}
 	} catch (...) {
 		exceptions.push_back(std::current_exception());

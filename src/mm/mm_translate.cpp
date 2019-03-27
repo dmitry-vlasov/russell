@@ -71,14 +71,14 @@ inline uint translate_var_type(uint v, const Assertion* ass) {
 	return -1;
 }
 
-inline rus::Symbol translate_symb(Literal s, const Assertion* ass) {
+inline rus::Symbol* translate_symb(Literal s, const Assertion* ass) {
 	if (s.var) {
 		uint v = translate_var_symb(s.lit);
 		uint t = translate_var_type(s.lit, ass);
-		return rus::Symbol(v, t, rus::Symbol::VAR);
+		return new rus::Var(v, t);
 	} else {
 		uint c = translate_const_symb(s.lit);
-		return rus::Symbol(c, c, rus::Symbol::CONST);
+		return new rus::Const(c);
 	}
 }
 
@@ -93,16 +93,16 @@ rus::Expr translate_expr(const Expr& ex, const Assertion* ass, const Maps& maps)
 			uint type = translate_var_type(s, ass);
 			auto p = math_vars().find(s);
 			if (p == math_vars().end()) {
-				e.symbols.emplace_back(s, type, rus::Symbol::VAR);
+				e.symbols.push_back(make_unique<rus::Var>(s, type));
 			} else {
-				e.symbols.emplace_back(p->second.var, type, rus::Symbol::VAR);
+				e.symbols.push_back(make_unique<rus::Var>(p->second.var, type));
 			}
 		} else {
 			auto p = math_consts().find(s);
 			if (p == math_consts().end()) {
-				e.symbols.emplace_back(s, s, rus::Symbol::CONST);
+				e.symbols.push_back(make_unique<rus::Const>(s));
 			} else {
-				e.symbols.emplace_back(p->second.symb, p->second.symb, rus::Symbol::CONST);
+				e.symbols.push_back(make_unique<rus::Const>(p->second.symb));
 			}
 		}
 	}
@@ -137,12 +137,12 @@ void translate_constant(const Const* constant, Maps& state) {
 
 template<typename T>
 rus::Vars translate_vars(const vector<T>& decls) {
-	vector<rus::Symbol> vars;
+	vector<rus::Var> vars;
+	vars.reserve(decls.size());
 	for (const auto& flo : decls) {
 		vars.emplace_back(
 			translate_var_symb(flo.get()->var()),
-			flo.get()->type(),
-			rus::Symbol::VAR
+			flo.get()->type()
 		);
 	}
 	return rus::Vars(vars);
@@ -186,12 +186,12 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	auto m = r2->term.symbols.begin();
 	auto m_end = r2->term.symbols.end();
 	while (n != n_end && m != m_end) {
-		if (!n->type() && !m->type()) {
+		if (!(*n)->type() && !(*m)->type()) {
 			if (*n != *m) {
 				return false;
 			}
-		} else if (n->type() && m->type()) {
-			if (!super_type(n->type(), m->type())) {
+		} else if ((*n)->type() && (*m)->type()) {
+			if (!super_type((*n)->type(), (*m)->type())) {
 				return false;
 			}
 		} else {
@@ -293,16 +293,16 @@ void translate_def(const Assertion* ass, Maps& state) {
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it) {
-				def->prop.symbols.emplace_back(dfm());
+				def->prop.symbols.push_back(make_unique<rus::Literal>(dfm()));
 			}
-			def->dfm.symbols.push_back(translate_symb(*it, ass));
+			def->dfm.symbols.emplace_back(translate_symb(*it, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it) {
-				def->prop.symbols.emplace_back(dfs());
+				def->prop.symbols.push_back(make_unique<rus::Literal>(dfs()));
 			}
-			def->dfs.symbols.push_back(translate_symb(*it, ass));
+			def->dfs.symbols.emplace_back(translate_symb(*it, ass));
 		} else {
-			def->prop.symbols.push_back(translate_symb(*it, ass));
+			def->prop.symbols.emplace_back(translate_symb(*it, ass));
 		}
 	}
 	def->dfm.token = translate_token(ass->token, state);

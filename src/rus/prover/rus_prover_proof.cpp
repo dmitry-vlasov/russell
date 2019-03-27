@@ -155,10 +155,11 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 			fill_in_proof(r.get()->step(), proof);
 	}
 	for (auto& s : step->expr.symbols) {
-		if (s.kind() != Symbol::VAR) continue;
-		if (proof->allvars.isDeclared(s)) continue;
-		if (proof->theorem()->vars.isDeclared(s)) continue;
-		proof->allvars.v.push_back(s);
+		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
+			if (proof->allvars.isDeclared(v->lit())) continue;
+			if (proof->theorem()->vars.isDeclared(v->lit())) continue;
+			proof->allvars.v.push_back(*v);
+		}
 	}
 	step->proof_ = proof;
 	step->set_ind(proof->elems.size());

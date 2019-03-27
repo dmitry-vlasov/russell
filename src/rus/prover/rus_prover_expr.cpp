@@ -198,7 +198,7 @@ unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 		return make_unique<rus::Tree>(tree.rule()->id(), std::move(ch));
 	}
 	case LightTree::VAR:
-		return make_unique<rus::Tree>(rus::Symbol(tree.var().lit, tree.type()->id(), rus::Symbol::VAR));
+		return make_unique<rus::Tree>(rus::Var(tree.var().lit, tree.type()->id()));
 	default:
 		assert(false && "impossible");
 		return unique_ptr<rus::Tree>();
@@ -248,11 +248,11 @@ string show(const LightTree& tree, bool full) {
 	} else if (tree.kind() == LightTree::RULE) {
 		string str(" ");
 		uint i = 0;
-		for (auto s : tree.rule()->term.symbols) {
-			if (s.type()) {
+		for (auto& s : tree.rule()->term.symbols) {
+			if (s->type()) {
 				str += show(*tree.children()[i++].get(), full) + ' ';
 			} else {
-				str += rus::show(s, full) + ' ';
+				str += s->show() + ' ';
 			}
 		}
 		return str;
@@ -267,11 +267,11 @@ string show_ast(const LightTree& tree) {
 	} else {
 		string str("[[");
 		uint i = 0;
-		for (auto s : tree.rule()->term.symbols) {
-			if (s.type()) {
+		for (auto& s : tree.rule()->term.symbols) {
+			if (s->type()) {
 				str += show_ast(*tree.children()[i++].get()) + ' ';
 			} else {
-				str += rus::show(s) + ' ';
+				str += s->show() + ' ';
 			}
 		}
 		return str + "]]";
@@ -353,16 +353,16 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 	}
 }
 
-static void create_linear_expr(const LightTree& tree, vector<Symbol>& ret) {
+static void create_linear_expr(const LightTree& tree, vector<unique_ptr<Symbol>>& ret) {
 	if (tree.kind() == LightTree::VAR) {
-		ret.emplace_back(rus::Symbol(tree.var().lit, tree.type()->id(), rus::Symbol::VAR));
+		ret.push_back(make_unique<rus::Var>(tree.var().lit, tree.type()->id()));
 	} else {
 		uint i = 0;
 		for (const auto& s : tree.rule()->term.symbols) {
-			if (s.type()) {
+			if (s->type()) {
 				create_linear_expr(*tree.children()[i++].get(), ret);
 			} else {
-				ret.push_back(s);
+				ret.emplace_back(s->clone());
 			}
 		}
 	}

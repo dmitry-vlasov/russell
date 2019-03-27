@@ -2,24 +2,25 @@
 
 namespace mdl { namespace rus {
 
-const Tokenable* Symbol::tokenable() const {
-	switch (kind_) {
-	case VAR: return type();
-	case CONST: return constant();
-	default: return nullptr;
-	}
+const Tokenable* Const::tokenable() const {
+	return constant();
+}
+
+const Tokenable* Var::tokenable() const {
+	return type();
 }
 
 void Rules::add(const Expr& ex, uint id) {
 	assert(ex.symbols.size());
 	Rules* m = this;
 	Node* n = nullptr;
-	for (const Symbol& s : ex.symbols) {
+	for (const auto& s : ex.symbols) {
 		bool new_symb = true;
 		for (auto& x : m->nodes) {
 			Node* p = x.get();
-			if ((s.kind() == Symbol::CONST && p->symb == s) ||
-				(s.kind() == Symbol::VAR && p->symb.type_id() == s.type_id())) {
+			if ((s->kind() == Symbol::CONST && *p->symb == *s) ||
+				(s->kind() == Symbol::VAR && p->symb->kind() == Symbol::VAR &&
+				dynamic_cast<const Var*>(p->symb.get())->typeId() == dynamic_cast<const Var*>(s.get())->typeId())) {
 				n = p;
 				m = &p->tree;
 				new_symb = false;
@@ -28,7 +29,7 @@ void Rules::add(const Expr& ex, uint id) {
 		}
 		if (new_symb) {
 			if (m->nodes.size()) m->nodes.back()->final = false;
-			m->nodes.emplace_back(new Node(s, m));
+			m->nodes.emplace_back(new Node(*s, m));
 			n = m->nodes.back().get();
 			n->final = true;
 			m = &n->tree;
@@ -37,7 +38,7 @@ void Rules::add(const Expr& ex, uint id) {
 	if (n->rule) {
 		if (n->rule.id() != id) {
 			string msg;
-			msg += rus::show(ex) + " - term, ";
+			msg += ex.show() + " - term, ";
 			msg += Lex::toStr(id) + " - new id, ";
 			msg += Lex::toStr(n->rule.id()) + " - old id";
 			throw Error("rule already exists", msg);
@@ -62,9 +63,9 @@ void Rules::sort() {
 		[](const unique_ptr<Node>& p1, const unique_ptr<Node>& p2) {
 			auto n1 = p1.get();
 			auto n2 = p2.get();
-		    if (n1->symb.kind() == Symbol::CONST && n2->symb.kind() == Symbol::VAR) {
+		    if (n1->symb->kind() == Symbol::CONST && n2->symb->kind() == Symbol::VAR) {
 		    	return true;
-		    } else if (n1->symb.kind() == Symbol::VAR && n2->symb.kind() == Symbol::CONST) {
+		    } else if (n1->symb->kind() == Symbol::VAR && n2->symb->kind() == Symbol::CONST) {
 		    	return false;
 		    } else {
 		    	return n1->min_dist < n2->min_dist;
@@ -75,8 +76,8 @@ void Rules::sort() {
 	constLast = nodes.begin();
 	for (auto it = nodes.begin(); it != nodes.end(); ++ it) {
 		Node* n = it->get();
-		if (n->symb.kind() == Symbol::CONST) {
-			constMap[n->symb.lit] = it;
+		if (n->symb->kind() == Symbol::CONST) {
+			constMap[n->symb->lit()] = it;
 			constLast = it;
 		}
 		n->tree.sort();
@@ -95,11 +96,11 @@ vector<string> Rules::Node::show() const {
 	vector<string> ret;
 	if (rule) {
 		auto src = rule.get()->token.src();
-		ret.push_back(rus::show(symb) + " -> " + Lex::toStr(rule.id()) + " from " + (src ? Lex::toStr(src->id()) : "NULL" ));
+		ret.push_back(symb->show() + " -> " + Lex::toStr(rule.id()) + " from " + (src ? Lex::toStr(src->id()) : "NULL" ));
 	}
 	vector<string> strs = tree.show();
 	for (const auto& s : strs)
-		ret.push_back(rus::show(symb) + " " + s);
+		ret.push_back(symb->show() + " " + s);
 	return ret;
 }
 
@@ -125,15 +126,15 @@ Tree::Node::Node(Id i, Tree* ch) : rule(i), children() {
 static void assemble(const Tree* t, Symbols& s) {
 	if (t->kind() == Tree::RULE) {
 		auto i = t->children().begin();
-		for (auto x : t->rule()->term) {
-			switch (x.kind()) {
+		for (auto& x : t->rule()->term) {
+			switch (x->kind()) {
 			case Symbol::VAR:   assemble((i++)->get(), s); break;
-			case Symbol::CONST: s.push_back(x); break;
-			default: s.push_back(x); break;
+			case Symbol::CONST: s.push_back(make_unique<Const>(x->lit())); break;
+			default: s.push_back(make_unique<Literal>(x->lit())); break;
 			}
 		}
 	} else if (t->kind() == Tree::VAR) {
-		s.push_back(t->var());
+		s.push_back(make_unique<Var>(t->var()));
 	}
 }
 
@@ -159,9 +160,9 @@ Tree* apply(const Substitution* s, const Tree* t) {
 		}
 		return new Tree(t->rule()->id(), ch);
 	} else {
-		const Symbol& v = t->var();
-		if (s->sub().count(v.lit)) {
-			return new Tree(s->sub().at(v.lit));
+		const Var& v = t->var();
+		if (s->sub().count(v.lit())) {
+			return new Tree(s->sub().at(v.lit()));
 		} else {
 			return new Tree(v);
 		}
@@ -174,7 +175,7 @@ Expr apply(const Substitution* s, const Expr& e) {
 
 string show_ast(const Tree* t, bool full) {
 	if (t->kind() == Tree::VAR) {
-		return show(t->var(), full);
+		return t->var().show();
 	} else {
 		string s = (t->rule() ? show_id(t->rule()->id()) : "?") + " (";
 		for (uint i = 0; i < t->children().size(); ++ i) {
@@ -188,28 +189,37 @@ string show_ast(const Tree* t, bool full) {
 
 string show(const Tree* t, bool full) {
 	if (t->kind() == Tree::VAR) {
-		return show(t->var(), full);
+		return t->var().show();
 	} else {
 		string str(" ");
 		uint i = 0;
-		for (auto s : t->rule()->term.symbols) {
-			if (s.type()) {
+		for (auto& s : t->rule()->term.symbols) {
+			if (s->type()) {
 				str += show(t->children()[i++].get(), full) + ' ';
 			} else {
-				str += show(s) + ' ';
+				str += s->show() + ' ';
 			}
 		}
 		return str;
 	}
 }
 
-void dump(const Symbol& s) { cout << show(s) << endl; }
-void dump(const Expr& ex) { cout << show(ex) << endl; }
-void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
-void dump(const Tree* tm) { cout << show(tm) << endl; }
-void dump_ast(const Tree* tm) { cout << show_ast(tm) << endl; }
-void dump(const Substitution& sb) { cout << show(sb) << endl; }
-
+void Tree::write(ostream& os, const Indent& indent) const {
+	os << indent;
+	if (kind() == Tree::VAR) {
+		os << indent << var();
+	} else {
+		uint i = 0;
+		for (auto& s : rule()->term.symbols) {
+			if (s->kind() == Symbol::VAR) {
+				children()[i++]->write(os);
+				os << ' ';
+			} else {
+				os << s->show() << ' ';
+			}
+		}
+	}
+}
 
 void Substitution::operator = (const Substitution& s) {
 	ok_ = s.ok_;

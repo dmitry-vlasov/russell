@@ -96,7 +96,7 @@ string ProofTop::show() const {
 string ProofExp::show() const {
 	ostringstream oss;
 	rus::Step* st = child ? child->step() : nullptr;
-	oss << "<proof expr=\"" << (st ? rus::show(st->expr) : prover::show(node.expr)) << "\" ";
+	oss << "<proof expr=\"" << (st ? st->expr.show() : prover::show(node.expr)) << "\" ";
 	oss << "index=\"" << ind << "\">\n";
 	oss << "\t<![CDATA[\n";
 	try {
@@ -120,7 +120,7 @@ string ProofExp::show() const {
 string ProofProp::show() const {
 	ostringstream oss;
 	if (rus::Step* st = step()) {
-		oss << "<proof expr=\"" << rus::show(st->expr) << "\" ";
+		oss << "<proof expr=\"" << st->expr << "\" ";
 		oss << "index=\"" << ind << "\">\n";
 		oss << "\t<![CDATA[\n";
 		try {

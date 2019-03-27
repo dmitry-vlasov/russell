@@ -14,116 +14,100 @@ typedef mdl::Id<Sys> Id;
 struct Type;
 struct Rule;
 
-struct Symbol {
-	enum Kind { CONST, VAR, NONE };
-	Kind kind() const { return kind_; }
+struct Symbol : Writable {
+	enum Kind { CONST, VAR, LITERAL };
+	virtual ~Symbol() { }
 
-	Symbol() : lit(-1), kind_(NONE) { val_.const_ = nullptr; }
-	Symbol(uint l) : lit(l), kind_(NONE) { val_.const_ = nullptr; }
-	Symbol(uint l, Id i, Kind k) : lit(l), kind_(k) {
-		if (i.id() != -1) {
-			switch (kind_) {
-			case VAR:   val_.type_ = new User<Type>(i); break;
-			case CONST: val_.const_ = new User<Constant>(i); break;
-			default: break;
-			}
-		}
-	}
-	Symbol(const Symbol& s) : lit(s.lit), kind_(NONE) { operator = (s); }
-	Symbol(Symbol&& s) : lit(s.lit), kind_(NONE) { operator = (std::move(s)); }
-	~Symbol() { clear(); }
+	virtual uint lit() const = 0;
+	virtual Kind kind() const = 0;
+	virtual Symbol* clone() const = 0;
 
-	bool operator == (const Symbol& s) const { return lit == s.lit; }
+	virtual const Type* type() const { return nullptr; }
+	virtual const Token* token() const { return nullptr; }
+	virtual const Tokenable* tokenable() const { return nullptr; }
+	virtual string showDetailed() const { return Lex::toStr(lit()); }
+
+	bool operator == (const Symbol& s) const { return lit() == s.lit(); }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
-	bool operator < (const Symbol& s) const { return lit < s.lit; }
-	bool is_undef() const { return lit == -1; }
-
-	void operator = (const Symbol& s) {
-		clear();
-		lit = s.lit;
-		kind_ = s.kind_;
-		switch (kind_) {
-		case VAR:   val_.type_ = new User<Type>(s.type_id()); break;
-		case CONST: val_.const_ = new User<Constant>(s.constant_id()); break;
-		default:    break;
-		}
-	}
-	void operator = (Symbol&& s) {
-		clear();
-		lit = s.lit;
-		kind_ = s.kind_;
-		if (kind_ != NONE) {
-			val_ = s.val_;
-			s.val_.const_ = nullptr;
-			s.kind_ = NONE;
-		}
-	}
-
-	uint type_id() const { return kind_ == VAR ? val_.type_->id() : -1; }
-	uint constant_id() const { return kind_ == CONST ? val_.type_->id() : -1; }
-	Type* type() { return kind_ == VAR ? val_.type_->get() : nullptr; }
-	Constant* constant() { return kind_ == CONST ? val_.const_->get() : nullptr; }
-	const Type* type() const { return kind_ == VAR ? val_.type_->get() : nullptr; }
-	const Constant* constant() const { return kind_ == CONST ? val_.const_->get() : nullptr; }
-	const Token* token() const {
-		switch (kind_) {
-		case VAR:   return &val_.type_->token;
-		case CONST: return &val_.const_->token;
-		default:    return nullptr;
-		}
-	}
-	const Tokenable* tokenable() const;
-	void set_type(Id i) { set_type(i.id()); }
-	void set_type(uint t) {
-		clear();
-		kind_ = VAR;
-		val_.type_ = new User<Type>(t);
-	}
-	void set_const() {
-		clear();
-		kind_ = CONST;
-		val_.const_ = new User<Constant>(lit);
+	bool operator < (const Symbol& s) const { return lit() < s.lit(); }
+	void write(ostream& os, const Indent& indent = Indent()) const override {
+		os << indent << Lex::toStr(lit());
 	}
 
 	struct Hash {
 		typedef size_t result_type;
 		typedef Symbol argument_type;
-		size_t operator() (Symbol s) const {
-			return hash(s.lit);
+		size_t operator() (const Symbol& s) const {
+			return hash(s.lit());
 		}
 	private:
 		static std::hash<uint> hash;
 	};
-
-	uint lit;
-
-private:
-	void clear() {
-		switch (kind_) {
-		case CONST: delete val_.const_; break;
-		case VAR:   delete val_.type_; break;
-		default:    break;
-		}
-		kind_ = NONE;
-		val_.const_ = nullptr;
-	}
-	union Value {
-		User<Constant>* const_;
-		User<Type>* type_;
-	};
-	Kind kind_;
-	Value val_;
 };
 
-typedef vector<Symbol> Symbols;
+struct Literal : public Symbol {
+	Literal(uint l) : lit_(l) { }
+	Literal(const Literal& c) = default;
+	Literal(Literal&& c) = default;
+	Literal& operator = (const Literal& s) = default;
+	Literal& operator = (Literal&& s) = default;
 
-string show(Symbol s, bool full = false);
+	Kind kind() const override { return LITERAL; }
+	uint lit() const override { return lit_; }
+	Symbol* clone() const override { return new Literal(*this); }
+	string showDetailed() const override { return "[" + Lex::toStr(lit()) + "]"; }
 
-inline ostream& operator << (ostream& os, const Symbol& s) {
-	os << Lex::toStr(s.lit); return os;
-}
+private:
+	uint lit_;
+};
 
-struct Tree {
+struct Const : public Symbol {
+	Const(uint l) : const_(l) { }
+	Const(const Const& c) = default;
+	Const(Const&& c) = default;
+	Const& operator = (const Const& s) = default;
+	Const& operator = (Const&& s) = default;
+
+	Kind kind() const override { return CONST; }
+	uint lit() const override { return const_.id(); }
+	Symbol* clone() const override { return new Const(*this); }
+
+	const Constant* constant() const { return const_.get(); }
+
+	const Token* token() const override { return &const_.token; }
+	const Tokenable* tokenable() const override;
+
+private:
+	User<Constant> const_;
+};
+
+struct Var : public Symbol {
+	Var(uint l, uint t) : lit_(l), type_(t) { }
+	Var(const Var& c) = default;
+	Var(Var&& c) = default;
+	Var& operator = (const Var& s) = default;
+	Var& operator = (Var&& s) = default;
+
+	Kind kind() const override { return VAR; }
+	uint lit() const override { return lit_; }
+	uint typeId() const { return type_.id(); }
+	Symbol* clone() const override { return new Var(*this); }
+	const Type* type() const override { return type_.get(); }
+	string showDetailed() const override {
+		return Lex::toStr(lit()) + " <" + Lex::toStr(type_.id()) + ">";
+	}
+
+	const Token* token() const override { return &type_.token; }
+	const Tokenable* tokenable() const override;
+
+private:
+	uint lit_;
+	User<Type> type_;
+};
+
+typedef vector<unique_ptr<Symbol>> Symbols;
+
+struct Tree : public Writable{
 	typedef vector<unique_ptr<Tree>> Children;
 
 	enum Kind { RULE, VAR };
@@ -141,7 +125,7 @@ struct Tree {
 	};
 
 	Tree() = delete;
-	Tree(const Symbol& v) : val(v) { }
+	Tree(const Var& v) : val(v) { }
 	Tree(Id i, const Children& ch) : val(std::move(Node(i, ch))) { }
 	Tree(Id i, Tree* ch) : val(std::move(Node(i, ch))) { }
 	Tree(const Tree& ex) = default;
@@ -168,13 +152,12 @@ struct Tree {
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 
 	uint rule_id() const { assert(kind() == RULE); return std::get<Node>(val).rule.id(); }
-	Symbol& var() { assert(kind() == VAR); return  std::get<Symbol>(val); }
+	Var& var() { assert(kind() == VAR); return  std::get<Var>(val); }
 	Node& node() { assert(kind() == RULE); return std::get<Node>(val); }
-	Rule* rule() { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
+	//Rule* rule() { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
 	Children& children() { assert(kind() == RULE); return std::get<Node>(val).children; }
-	Type* type();
 
-	const Symbol& var() const { assert(kind() == VAR); return std::get<Symbol>(val); }
+	const Var& var() const { assert(kind() == VAR); return std::get<Var>(val); }
 	const Node& node() const { assert(kind() == RULE); return std::get<Node>(val); }
 	const Rule* rule() const { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
 	const Children& children() const { assert(kind() == RULE); return std::get<Node>(val).children; }
@@ -196,23 +179,28 @@ struct Tree {
 				}
 			}
 			break;
-		case VAR:  ret.insert(var().lit); break;
+		case VAR:  ret.insert(var().lit()); break;
 		default:   assert(0 && "impossible"); return set<uint>();
 		}
 		return ret;
 	}
+	void write(ostream& os, const Indent& indent = Indent()) const override;
 
 private:
-	typedef variant<Node, Symbol> Value;
+	typedef variant<Node, Var> Value;
 	Value val;
 };
 
-struct Expr : public Tokenable {
+struct Expr : public Tokenable, public Writable {
 	Expr(const Token& t = Token()) : Tokenable(t) { }
-	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()) { symbols.push_back(s); }
-	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), symbols(ss) { }
-	Expr(Id tp, Symbols&& ex, const Token& t = Token()) : Tokenable(t), type(tp), symbols(std::move(ex)) { }
-	Expr(Id tp, Symbols&& ex, Tree* tr, const Token& t = Token()) : Tokenable(t), type(tp), tree_(tr), symbols(std::move(ex)) { }
+	//Expr(const Symbol& s, const Token& t = Token()) :
+	//	Tokenable(t), type(s.kind() == Symbol::VAR ? dynamic_cast<const Var&>(s).type() : nullptr) { symbols.emplace_back(s.clone()); }
+	//Expr(const Symbols& ss, const Token& t = Token()) :
+	//	Tokenable(t), symbols(ss) { }
+	Expr(Id tp, Symbols&& ex, const Token& t = Token()) :
+		Tokenable(t), type(tp), symbols(std::move(ex)) { }
+	Expr(Id tp, Symbols&& ex, Tree* tr, const Token& t = Token()) :
+		Tokenable(t), type(tp), tree_(tr), symbols(std::move(ex)) { }
 	Expr(const Expr& ex) : Tokenable(ex) { operator = (ex); }
 	Expr(Expr&& ex) : Tokenable(ex.token) { operator = (std::move(ex)); }
 
@@ -221,7 +209,9 @@ struct Expr : public Tokenable {
 		if (ex.tree()) {
 			tree_.reset(new Tree(*ex.tree_));
 		}
-		symbols = ex.symbols;
+		for (const auto& s : ex.symbols) {
+			symbols.emplace_back(s->clone());
+		}
 		token = ex.token;
 	}
 
@@ -232,11 +222,40 @@ struct Expr : public Tokenable {
 		token = ex.token;
 	}
 	bool operator == (const Expr& ex) const {
-		return (type == ex.type) && (symbols == ex.symbols);
+		if (symbols.size() != ex.symbols.size()) {
+			return false;
+		}
+		for (uint i = 0; i < symbols.size(); ++ i) {
+			if (*symbols[i] != *ex.symbols[i]) {
+				return false;
+			}
+		}
+		return (type == ex.type);
 	}
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
+
+	void write(ostream& os, const Indent& indent = Indent()) const override {
+		if (symbols.size()) {
+			os << indent;
+			os << *symbols.at(0);
+			for (uint i = 1; i < symbols.size(); ++ i) {
+				os << " " << *symbols.at(i);
+			}
+		}
+	}
+	string showDetailed() const {
+		string ret;
+		if (symbols.size()) {
+			ret +=  symbols.at(0)->showDetailed();
+			for (uint i = 1; i < symbols.size(); ++ i) {
+				ret += " " + symbols.at(i)->showDetailed();
+			}
+		}
+		return ret;
+	}
+
 	Tree* tree() { return tree_.get(); }
 	const Tree* tree() const { return tree_.get(); }
 	void set(Tree* t) { tree_.reset(t); }
@@ -251,7 +270,7 @@ struct Expr : public Tokenable {
 	const_iterator end() const { return symbols.cend(); }
 
 	User<Type> type;
-	Symbols    symbols;
+	Symbols symbols;
 
 private:
 	unique_ptr<Tree> tree_;
@@ -274,9 +293,10 @@ struct Rules {
 };
 
 struct Rules::Node {
-	Node(const Symbol& s, Rules* p) : symb(s), tree(this), parent(p), min_dist(-1), final(false) { }
+	Node(const Symbol& s, Rules* p) :
+		symb(s.clone()), tree(this), parent(p), min_dist(-1), final(false) { }
 	vector<string> show() const;
-	Symbol     symb;
+	unique_ptr<Symbol> symb;
 	Rules      tree;
 	User<Rule> rule;
 	Rules*     parent;
@@ -287,11 +307,11 @@ struct Rules::Node {
 
 string show(const Rules& tr);
 
-struct Substitution {
+struct Substitution : public Writable {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
-	Substitution(uint v, const Symbol& t) : sub_(), ok_(true) {
+	/*Substitution(uint v, const Symbol& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
-	}
+	}*/
 	Substitution(uint v, const Tree& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
 	}
@@ -304,9 +324,9 @@ struct Substitution {
 
 	void operator = (const Substitution& s);
 	void operator = (Substitution&& s);
-	bool join(uint v, const Symbol& t) {
+	/*bool join(uint v, const Symbol& t) {
 		return join(v, Tree(t));
-	}
+	}*/
 	bool join(uint v, const Tree& t);
 	bool join(uint v, Tree&& t);
 	bool join(const Substitution* s) {
@@ -319,6 +339,12 @@ struct Substitution {
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
 	bool mapsVar(uint v) const { return sub_.find(v) != sub_.end(); }
+
+	void write(ostream& os, const Indent& indent = Indent()) const override {
+		for (const auto p : sub_) {
+			os << indent << Lex::toStr(p.first) << " --> " << static_cast<const Writable&>(p.second) << endl;
+		}
+	}
 
 private:
 	map<uint, Tree> sub_;
@@ -341,8 +367,8 @@ inline Expr apply(const Substitution& s, const Expr& e) {
 inline void create_rule_term(Expr& ex, Id id) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
-		if (s.kind() == Symbol::VAR) {
-			children.push_back(make_unique<Tree>(s));
+		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
+			children.push_back(make_unique<Tree>(*v));
 		}
 	}
 	ex.set(new Tree(id, children));
@@ -352,36 +378,6 @@ namespace expr {
 	void enqueue(Expr& ex);
 	void parse();
 }
-
-string show(const Expr&);
-string show(const Tree* t, bool full = false);
-string show_ast(const Tree*, bool full = false);
-
-inline string show_ast(const Expr& ex, bool full = false) {
-	return show_ast(ex.tree(), full);
-}
-
-inline string show(const Substitution& s) {
-	string str;
-	for (const auto& p : s.sub()) {
-		str += show(p.first, true) + " --> " + show_ast(&p.second) + "\t ==\t"  + show(&p.second) + "\n";
-	}
-	return str;
-}
-
-inline ostream& operator << (ostream& os, const Expr& ex) {
-	for (const auto& s : ex.symbols) {
-		os << Lex::toStr(s.lit) << " ";
-	}
-	return os;
-}
-
-void dump(const Symbol& s);
-void dump(const Expr& ex);
-void dump_ast(const Expr& ex);
-void dump(const Tree* tm);
-void dump_ast(const Tree* tm);
-void dump(const Substitution& sb);
 
 size_t memvol(const Symbol& s);
 size_t memvol(const Tree& t);

@@ -30,7 +30,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Vars,
-	(mdl::vector<mdl::rus::Symbol>, v)
+	(mdl::vector<mdl::rus::Var>, v)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

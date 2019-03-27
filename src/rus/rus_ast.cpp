@@ -6,13 +6,13 @@ inline uint create_id(string pref, string s1, string s2) {
 	return Lex::toInt(pref + "_" + s1 + "_" + s2);
 }
 
-inline Symbol create_var(string str, Type* tp) {
-	return Symbol(Lex::toInt(str), tp->id(), Symbol::VAR);
+inline Var create_var(string str, Type* tp) {
+	return Var(Lex::toInt(str), tp->id());
 }
 
-inline Symbol create_const(string str, Constant* c) {
-	return Symbol(Lex::toInt(str), c->id(), Symbol::CONST);
-}
+//inline Const create_const(string str, Constant* c) {
+//	return Const(Lex::toInt(str));
+//}
 
 uint create_super_id(Type* inf, Type* sup) {
 	return create_id("sup", show_id(inf->id()), show_id(sup->id()));
@@ -21,8 +21,8 @@ uint create_super_id(Type* inf, Type* sup) {
 Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_super_id(inf, sup);
 	Rule* rule = new Rule(id);
-	rule->vars.v.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);
-	rule->term.symbols.emplace_back(Lex::toInt("x"), inf->id(), Symbol::VAR);
+	rule->vars.v.emplace_back(Lex::toInt("x"), inf->id());
+	rule->term.symbols.push_back(make_unique<Var>(Lex::toInt("x"), inf->id()));
 	rule->term.type.set(sup->id());
 	create_rule_term(rule->term, id);
 	return rule;

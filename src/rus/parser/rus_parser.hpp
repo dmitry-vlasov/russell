@@ -36,22 +36,22 @@ struct AddVars {
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack, Vars& vars) const {
 		for (auto& v : vars.v) {
-			var_stack.vstack.top().push_back(v.lit);
-			var_stack.mapping[v.lit] = v.type_id();
+			var_stack.vstack.top().push_back(v.lit());
+			var_stack.mapping[v.lit()] = v.typeId();
 		}
 	}
 	void operator()(VarStack& var_stack, User<Assertion>& thm) const {
 		for (auto& v : thm.get()->vars.v) {
-			var_stack.vstack.top().push_back(v.lit);
-			var_stack.mapping[v.lit] = v.type_id();
+			var_stack.vstack.top().push_back(v.lit());
+			var_stack.mapping[v.lit()] = v.typeId();
 		}
 	}
 };
 
 struct AddVar {
 	struct result { typedef void type; };
-	void operator()(vector<Symbol>& vars, uint var, Id type) const {
-		vars.emplace_back(var, type, Symbol::VAR);
+	void operator()(vector<Var>& vars, uint var, Id type) const {
+		vars.emplace_back(var, type.id());
 	}
 };
 
@@ -68,9 +68,12 @@ struct PopVars {
 
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
-		bool is_var = var_stack.mapping.count(s.lit);
-		if (is_var) s.set_type(var_stack.mapping[s.lit]);
-		else s.set_const();
+		auto i = var_stack.mapping.find(s->lit());
+		if (i != var_stack.mapping.end()) {
+			s.reset(new Var(s->lit(), i->second));
+		} else {
+			s.reset(new Const(s->lit()));
+		}
 	}
 }
 
@@ -122,7 +125,7 @@ struct ParsePlain {
 	void operator()(Expr& ex, const vector<uint>& symbs, Id tp) const {
 		ex.symbols.reserve(symbs.size());
 		for (uint s : symbs) {
-			ex.symbols.emplace_back(s);
+			ex.symbols.push_back(make_unique<Literal>(s));
 		}
 		ex.type.set(tp);
 	}
@@ -156,8 +159,8 @@ struct ParseImport {
 
 struct SetType {
 	struct result { typedef void type; };
-	void operator()(Symbol& s, Id t) const {
-		s.set_type(t);
+	void operator()(unique_ptr<Symbol>& s, Id t) const {
+		s.reset(new Var(s->lit(), t.id()));
 	}
 };
 
@@ -212,22 +215,25 @@ struct SetToken {
     }
 };
 
-static Symbol dfm(Lex::toInt("defiendum"));
-static Symbol dfs(Lex::toInt("definiens"));
+static Literal dfm(Lex::toInt("defiendum"));
+static Literal dfs(Lex::toInt("definiens"));
 
 struct AssembleDef {
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
 		Prop* prop = new Prop(0);
-		for (auto s : d->prop.symbols) {
-			if (s == dfm) {
-				for (auto s_dfm : d->dfm.symbols)
-					prop->expr.symbols.push_back(s_dfm);
-			} else if (s == dfs) {
-				for (auto s_dfs : d->dfs.symbols)
-					prop->expr.symbols.push_back(s_dfs);
-			} else
-				prop->expr.symbols.push_back(s);
+		for (auto& s : d->prop.symbols) {
+			if (*s == dfm) {
+				for (auto& s_dfm : d->dfm.symbols) {
+					prop->expr.symbols.emplace_back(s_dfm->clone());
+				}
+			} else if (*s == dfs) {
+				for (auto& s_dfs : d->dfs.symbols) {
+					prop->expr.symbols.emplace_back(s_dfs->clone());
+				}
+			} else {
+				prop->expr.symbols.emplace_back(s->clone());
+			}
 		}
 		prop->expr.type = d->prop.type;
 		prop->expr.token = d->prop.token;

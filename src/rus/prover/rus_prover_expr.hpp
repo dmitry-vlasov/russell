@@ -21,9 +21,9 @@ struct LightSymbol {
 	};
 	LightSymbol() : lit(undefined_value), rep(false), ind(-1), type(nullptr)  { }
 	LightSymbol(const rus::Symbol& s, ReplMode mode, uint i) :
-		lit(i == MATH_INDEX ? s.lit :
-			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(s.lit) + "!") :
-				Lex::toInt(Lex::toStr(s.lit) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
+		lit(i == MATH_INDEX ? s.lit() :
+			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(s.lit()) + "!") :
+				Lex::toInt(Lex::toStr(s.lit()) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
 			)
 		),
 		rep(s.kind() == Symbol::VAR),
@@ -172,7 +172,7 @@ struct LightTree {
 			uint len = 0;
 			uint i = 0;
 			for (const auto& s : rule()->term.symbols) {
-				if (s.type()) {
+				if (s->type()) {
 					len += children()[i++].get()->length();
 				} else {
 					len += 1;

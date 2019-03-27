@@ -16,11 +16,12 @@ inline void const_deps(const Constant* c, set<uint>& deps) {
 }
 
 inline void symb_deps(const Symbol& symb, set<uint>& deps) {
-	switch (symb.kind()) {
-	case Symbol::VAR:   add_dep(symb.type(), deps); break;
-	case Symbol::CONST: add_dep(symb.constant(), deps); break;
-	default: break;
-	}
+	add_dep(symb.tokenable(), deps);
+	//switch (symb.kind()) {
+	//case Symbol::VAR:   add_dep(symb.type(), deps); break;
+	//case Symbol::CONST: add_dep(symb.constant(), deps); break;
+	//default: break;
+	//}
 }
 
 void tree_deps(const Tree* tree, set<uint>& deps) {
@@ -39,7 +40,7 @@ inline void expr_deps(const Expr& expr, set<uint>& deps) {
 	add_dep(expr.type, deps);
 	tree_deps(expr.tree(), deps);
 	for (const auto& s : expr.symbols) {
-		symb_deps(s, deps);
+		symb_deps(*s, deps);
 	}
 }
 

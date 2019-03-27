@@ -160,10 +160,6 @@ inline ostream& operator << (ostream& os, const Writable& w) {
 	w.write(os); return os;
 }
 
-//inline string show(const Writable& w) {
-//	ostringstream ss; w.write(ss); return ss.str();
-//}
-
 inline void dump(const Writable& w) {
 	w.write(cout);
 }
@@ -554,12 +550,24 @@ public:
 
 	operator bool() const { return ptr; }
 
-	T* get() { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
-	const T* get() const { if (!ptr) throw Error("unknown id", Lex::toStr(Id_::id())); return ptr; }
+	T* get() {
+		if (!ptr) {
+			throw Error("unknown id", Lex::toStr(Id_::id()));
+		}
+		return ptr;
+	}
+	const T* get() const {
+		if (!ptr) {
+			throw Error("unknown id", Lex::toStr(Id_::id()));
+		}
+		return ptr;
+	}
 
 	void set(const T* p) { use(p->id(), p->sys()); }
 	void set(uint id) { use(id); }
 	void set(Id_ id) { use(id.id(), id.sys()); }
+
+	bool is_undef() const { return Id_::id() == -1; }
 
 	void use(uint id, uint s = -1) {
 		unuse();

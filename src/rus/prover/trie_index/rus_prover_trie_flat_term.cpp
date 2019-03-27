@@ -81,8 +81,8 @@ string showFlatTerm(FlatTerm::ConstIterator i) {
 		string ret;
 		auto it = i + 1;
 		for (const auto& s : i->ruleVar.rule->term) {
-			if (s.kind() == Symbol::CONST) {
-				ret += show(s) + " ";
+			if (s->kind() == Symbol::CONST) {
+				ret += s->show() + " ";
 			} else {
 				ret += showFlatTerm(it) + " ";
 				it = it->end + 1;

@@ -15,11 +15,10 @@ void Step::verify(uint mode) const {
 			string msg = "proposition:\n";
 			msg += ass()->props[0]->show() + "\n";
 			msg += "ref expr:\n";
-			msg += rus::show(ass()->props[0]->expr) + "\n";
-			msg += show_ast(ass()->props[0]->expr, true) + "\n\n";
+			msg += ass()->props[0]->expr.show() + "\n";
 			msg += "step:\n";
 			msg += show() + "\n";
-			msg += show_ast(expr, true) + "\n\n";
+			msg += expr.show() + "\n\n";
 			msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
 			throw Error("proposition unification failed", msg);
 		}
@@ -29,23 +28,23 @@ void Step::verify(uint mode) const {
 				string msg = "\nhypothesis:\n";
 				msg += ass()->hyps[i]->show() + "\n";
 				msg += "ref expr:\n";
-				msg += rus::show(refs[i]->expr()) + "\n\n";
+				msg += refs[i]->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
 				msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
-				msg += "substitution:\n" + rus::show(sub) + "\n";
+				msg += "substitution:\n" + sub.show() + "\n";
 				throw Error("hypothesis unification failed", msg);
 			}
 			if (!sub.join(hs)) {
 				string msg = "\nhypothesis:\n";
 				msg += ass()->hyps[i]->show() + "\n";
 				msg += "ref expr:\n";
-				msg += rus::show(refs[i]->expr()) + "\n\n";
+				msg += refs[i]->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
 				msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
-				msg += "prop substitution:\n" + rus::show(sub) + "\n";
-				msg += "hyp substitution:\n" + rus::show(hs) + "\n";
+				msg += "prop substitution:\n" + sub.show() + "\n";
+				msg += "hyp substitution:\n" + hs.show() + "\n";
 				throw Error("substitution join failed", msg);
 			}
 		}
@@ -59,7 +58,7 @@ void Step::verify(uint mode) const {
 			ass()->disj.write(oss);
 			err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
 			err.msg += "disjointeds: " + oss.str() + "\n";
-			err.msg += "substitution: " + rus::show(sub) + "\n";
+			err.msg += "substitution: " + sub.show() + "\n";
 			throw err;
 		}
 	}
@@ -67,7 +66,7 @@ void Step::verify(uint mode) const {
 
 void Qed::verify(uint mode) const {
 	if ((mode & VERIFY_QED) && (prop->expr != step->expr))
-		throw Error("qed prop doesn't match qed step", rus::show(prop->expr) + " != " + rus::show(step->expr));
+		throw Error("qed prop doesn't match qed step", prop->expr.show() + " != " + step->expr.show());
 }
 
 void Proof::verify(uint mode) const {

@@ -36,8 +36,8 @@ else()
 		mm/mm_verify.cpp
 		
 		rus/expr/rus_expr_parse.cpp 
-		rus/expr/rus_expr_unify.cpp 
-		rus/parser/rus_parser.cpp
+		rus/expr/rus_expr_unify.cpp
+		rus/parser/rus_parser.cpp 
 		
 		rus/prover/rus_prover_cartesian.cpp
 		rus/prover/rus_prover_expr.cpp
@@ -62,7 +62,7 @@ else()
 		rus/rus_lookup.cpp
 		rus/rus_memvol.cpp  
 		rus/rus_sys.cpp 
-		rus/rus_parser.cpp
+		#rus/rus_parser.cpp
 		rus/rus_read.cpp  
 		rus/rus_show.cpp 
 		rus/rus_translate.cpp 
