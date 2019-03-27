@@ -155,7 +155,7 @@ static T* find_obj(Comment* comment, const char* pos) {
 }
 
 template<class T>
-static T* find_obj(Const* cons, const char* pos) {
+static T* find_obj(Constant* cons, const char* pos) {
 	return cons->token.includes(pos) ? dynamic_cast<T*>(cons) : nullptr;
 }
 
@@ -165,16 +165,16 @@ static T* find_obj(Theory* theory, const char* pos);
 template<class T>
 static T* find_obj(Theory::Node& n, const char* pos) {
 	switch(Theory::kind(n)) {
-	case Theory::CONST:   return find_obj<T>(Theory::const_(n), pos);
-	case Theory::TYPE:    return find_obj<T>(Theory::type(n), pos);
-	case Theory::RULE:    return find_obj<T>(Theory::rule(n), pos);
-	case Theory::AXIOM:   return find_obj<T>(Theory::axiom(n), pos);
-	case Theory::DEF:     return find_obj<T>(Theory::def(n), pos);
-	case Theory::THEOREM: return find_obj<T>(Theory::theorem(n), pos);
-	case Theory::PROOF:   return find_obj<T>(Theory::proof(n), pos);
-	case Theory::IMPORT:  return find_obj<T>(Theory::import(n), pos);
-	case Theory::THEORY:  return find_obj<T>(Theory::theory(n), pos);
-	case Theory::COMMENT: return find_obj<T>(Theory::comment(n), pos);
+	case Theory::CONSTANT: return find_obj<T>(Theory::constant(n), pos);
+	case Theory::TYPE:     return find_obj<T>(Theory::type(n), pos);
+	case Theory::RULE:     return find_obj<T>(Theory::rule(n), pos);
+	case Theory::AXIOM:    return find_obj<T>(Theory::axiom(n), pos);
+	case Theory::DEF:      return find_obj<T>(Theory::def(n), pos);
+	case Theory::THEOREM:  return find_obj<T>(Theory::theorem(n), pos);
+	case Theory::PROOF:    return find_obj<T>(Theory::proof(n), pos);
+	case Theory::IMPORT:   return find_obj<T>(Theory::import(n), pos);
+	case Theory::THEORY:   return find_obj<T>(Theory::theory(n), pos);
+	case Theory::COMMENT:  return find_obj<T>(Theory::comment(n), pos);
 	default : return nullptr;
 	}
 }

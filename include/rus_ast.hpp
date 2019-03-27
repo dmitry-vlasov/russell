@@ -20,10 +20,10 @@ struct Comment : public Tokenable, public Writable  {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Const : public Owner<Const>, public Writable {
-	Const(uint s, uint a, uint l, const Token& t = Token()) :
+struct Constant : public Owner<Constant>, public Writable {
+	Constant(uint s, uint a, uint l, const Token& t = Token()) :
 		Owner(s, t), symb(s), ascii(a), latex(l) { }
-	Const(const Const& c) = delete;
+	Constant(const Constant& c) = delete;
 	uint  symb;
 	uint  ascii;
 	uint  latex;
@@ -300,9 +300,9 @@ struct Import : public Tokenable, public Writable {
 };
 
 struct Theory : public Tokenable, public Writable {
-	enum Kind { CONST, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
+	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
 	typedef variant<
-		unique_ptr<Const>,
+		unique_ptr<Constant>,
 		unique_ptr<Type>,
 		unique_ptr<Rule>,
 		unique_ptr<Axiom>,
@@ -320,7 +320,7 @@ struct Theory : public Tokenable, public Writable {
 
 	void write(ostream& os, const Indent& i = Indent()) const override;
 	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
-	static Const* const_(const Node& n) { return std::get<unique_ptr<Const>>(n).get(); }
+	static Constant* constant(const Node& n) { return std::get<unique_ptr<Constant>>(n).get(); }
 	static Type* type(const Node& n) { return std::get<unique_ptr<Type>>(n).get(); }
 	static Rule* rule(const Node& n) { return std::get<unique_ptr<Rule>>(n).get(); }
 	static Axiom* axiom(const Node& n) { return std::get<unique_ptr<Axiom>>(n).get(); }

@@ -254,11 +254,11 @@ private:
 			return sv.transform<set<uint>*>();
 		};
 		parser_["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Const* c = nullptr;
+			Constant* c = nullptr;
 			switch (sv.size()) {
-			case 1 : c = new Const(sv[0].get<uint>(), -1, -1); break;
-			case 2 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), -1); break;
-			case 3 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), sv[2].get<uint>()); break;
+			case 1 : c = new Constant(sv[0].get<uint>(), -1, -1); break;
+			case 2 : c = new Constant(sv[0].get<uint>(), sv[1].get<uint>(), -1); break;
+			case 3 : c = new Constant(sv[0].get<uint>(), sv[1].get<uint>(), sv[2].get<uint>()); break;
 			default : throw Error("syntax error");
 			}
 			return c;
@@ -524,16 +524,16 @@ private:
 		parser_["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			switch (sv.choice()) {
-			case 0: c->theory->nodes.emplace_back(unique_ptr<Comment>(sv[0].get<Comment*>())); break;
-			case 1: c->theory->nodes.emplace_back(unique_ptr<Import>(sv[0].get<Import*>()));   break;
-			case 2: c->theory->nodes.emplace_back(unique_ptr<Const>(sv[0].get<Const*>()));     break;
-			case 3: c->theory->nodes.emplace_back(unique_ptr<Type>(sv[0].get<Type*>()));       break;
-			case 4: c->theory->nodes.emplace_back(unique_ptr<Rule>(sv[0].get<Rule*>()));       break;
-			case 5: c->theory->nodes.emplace_back(unique_ptr<Axiom>(sv[0].get<Axiom*>()));     break;
-			case 6: c->theory->nodes.emplace_back(unique_ptr<Def>(sv[0].get<Def*>()));         break;
-			case 7: c->theory->nodes.emplace_back(unique_ptr<Theorem>(sv[0].get<Theorem*>())); break;
-			case 8: c->theory->nodes.emplace_back(unique_ptr<Proof>(sv[0].get<Proof*>()));     break;
-			case 9: c->theory->nodes.emplace_back(unique_ptr<Theory>(sv[0].get<Theory*>()));   break;
+			case 0: c->theory->nodes.emplace_back(unique_ptr<Comment>(sv[0].get<Comment*>()));   break;
+			case 1: c->theory->nodes.emplace_back(unique_ptr<Import>(sv[0].get<Import*>()));     break;
+			case 2: c->theory->nodes.emplace_back(unique_ptr<Constant>(sv[0].get<Constant*>())); break;
+			case 3: c->theory->nodes.emplace_back(unique_ptr<Type>(sv[0].get<Type*>()));         break;
+			case 4: c->theory->nodes.emplace_back(unique_ptr<Rule>(sv[0].get<Rule*>()));         break;
+			case 5: c->theory->nodes.emplace_back(unique_ptr<Axiom>(sv[0].get<Axiom*>()));       break;
+			case 6: c->theory->nodes.emplace_back(unique_ptr<Def>(sv[0].get<Def*>()));           break;
+			case 7: c->theory->nodes.emplace_back(unique_ptr<Theorem>(sv[0].get<Theorem*>()));   break;
+			case 8: c->theory->nodes.emplace_back(unique_ptr<Proof>(sv[0].get<Proof*>()));       break;
+			case 9: c->theory->nodes.emplace_back(unique_ptr<Theory>(sv[0].get<Theory*>()));     break;
 			}
 		};
 		parser_["TH_DECL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {

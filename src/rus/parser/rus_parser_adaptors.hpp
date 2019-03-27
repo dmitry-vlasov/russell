@@ -22,7 +22,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Const,
+	mdl::rus::Constant,
 	(mdl::rus::Symbol, symb)
 	(mdl::rus::Symbol, ascii)
 	(mdl::rus::Symbol, latex)

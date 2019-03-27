@@ -25,7 +25,7 @@ struct Maps {
 				turnstileSource->contents.emplace_back(unique_ptr<mm::Const>(new mm::Const(turnstile)));
 			}
 		}
-		map<const Const*, mm::Const*> constants;
+		map<const Constant*, mm::Const*> constants;
 		map<const Type*, TypeImage>    types;
 		map<const Rule*, RuleImage>    rules;
 		uint turnstile;
@@ -47,7 +47,7 @@ inline uint translate_symb(const Symbol& s) {
 	switch (s.kind()) {
 	case Symbol::VAR: return s.lit;
 	case Symbol::CONST: {
-		const Const* c = s.constant();
+		const Constant* c = s.constant();
 		return (c->ascii == -1) ? s.lit : c->ascii;
 	}
 	default: return s.lit;
@@ -72,7 +72,7 @@ mm::Expr translate_term(const Expr& ex, const Type* tp) {
 	return expr;
 }
 
-mm::Const* translate_const(const Const* c) {
+mm::Const* translate_const(const Constant* c) {
 	uint symb = (c->ascii == -1) ? c->id() : c->ascii;
 	mm::Const* constant = new mm::Const(symb);
 	return constant;
@@ -284,7 +284,7 @@ inline void add_turnstile(vector<mm::Source::Node>& nodes) {
 	nodes.emplace_back(unique_ptr<mm::Import>(new mm::Import(Maps::Global::turnstileName())));
 }
 
-inline void add_const(vector<mm::Source::Node>& nodes, const Const* c, Maps& maps) {
+inline void add_const(vector<mm::Source::Node>& nodes, const Constant* c, Maps& maps) {
 	nodes.emplace_back(unique_ptr<mm::Const>(maps.global.constants.at(c)));
 }
 
@@ -332,17 +332,17 @@ vector<mm::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
 	add_turnstile(nodes);
 	for (auto& n : thy->nodes) {
 		switch (Theory::kind(n)) {
-		case Theory::CONST:   add_const(nodes, Theory::const_(n), maps); break;
-		case Theory::TYPE:    add_type(nodes, Theory::type(n), maps);   break;
-		case Theory::RULE:    add_rule(nodes, Theory::rule(n), maps);  break;
+		case Theory::CONSTANT: add_const(nodes, Theory::constant(n), maps); break;
+		case Theory::TYPE:     add_type(nodes, Theory::type(n), maps);   break;
+		case Theory::RULE:     add_rule(nodes, Theory::rule(n), maps);  break;
 
-		case Theory::AXIOM:   add_assertion(nodes, Theory::axiom(n), maps);  break;
-		case Theory::DEF:     add_assertion(nodes, Theory::def(n), maps); break;
-		case Theory::THEOREM: break;  // theorem is translated implicitly in proof
-		case Theory::PROOF:   add_proof(nodes, Theory::proof(n), maps);  break;
-		case Theory::THEORY:  add_theory(nodes, Theory::theory(n), maps); break;
-		case Theory::IMPORT:  add_import(nodes, Theory::import(n));       break;
-		case Theory::COMMENT: add_comment(nodes, Theory::comment(n));      break;
+		case Theory::AXIOM:    add_assertion(nodes, Theory::axiom(n), maps);  break;
+		case Theory::DEF:      add_assertion(nodes, Theory::def(n), maps); break;
+		case Theory::THEOREM:  break;  // theorem is translated implicitly in proof
+		case Theory::PROOF:    add_proof(nodes, Theory::proof(n), maps);  break;
+		case Theory::THEORY:   add_theory(nodes, Theory::theory(n), maps); break;
+		case Theory::IMPORT:   add_import(nodes, Theory::import(n));       break;
+		case Theory::COMMENT:  add_comment(nodes, Theory::comment(n));      break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -391,8 +391,8 @@ static vector<uint> find_dependencies(uint src) {
 
 Maps::Global translate_global() {
 	Maps maps;
-	for (auto& p : Sys::get().math.get<Const>()) {
-		const Const* c = p.second.data;
+	for (auto& p : Sys::get().math.get<Constant>()) {
+		const Constant* c = p.second.data;
 		maps.global.constants[c] = translate_const(c);
 	}
 	for (auto& p : Sys::get().math.get<Type>()) {

@@ -49,7 +49,7 @@ void Comment::write(ostream& os, const Indent& i) const {
 	}
 }
 
-void Const::write(ostream& os, const Indent& i) const {
+void Constant::write(ostream& os, const Indent& i) const {
 	os << i << "constant {\n";
 	os << i + 1 << "symbol " << Lex::toStr(symb) << " " << END_MARKER << "\n";
 	if (ascii != -1) {
@@ -222,16 +222,16 @@ void Import::write(ostream& os, const Indent& i) const {
 
 static void write_node(ostream& os, const Indent& i, const Theory::Node& n) {
 	switch(Theory::kind(n)) {
-	case Theory::CONST:   Theory::const_(n)->write(os, i); break;
-	case Theory::TYPE:    Theory::type(n)->write(os, i);  break;
-	case Theory::RULE:    Theory::rule(n)->write(os, i); break;
-	case Theory::AXIOM:   Theory::axiom(n)->write(os, i);  break;
-	case Theory::DEF:     Theory::def(n)->write(os, i); break;
-	case Theory::THEOREM: Theory::theorem(n)->write(os, i); break;
-	case Theory::PROOF:   Theory::proof(n)->write(os, i); break;
-	case Theory::THEORY:  Theory::theory(n)->write(os, i); break;
-	case Theory::IMPORT:  Theory::import(n)->write(os, i); break;
-	case Theory::COMMENT: Theory::comment(n)->write(os, i); break;
+	case Theory::CONSTANT: Theory::constant(n)->write(os, i); break;
+	case Theory::TYPE:     Theory::type(n)->write(os, i);  break;
+	case Theory::RULE:     Theory::rule(n)->write(os, i); break;
+	case Theory::AXIOM:    Theory::axiom(n)->write(os, i);  break;
+	case Theory::DEF:      Theory::def(n)->write(os, i); break;
+	case Theory::THEOREM:  Theory::theorem(n)->write(os, i); break;
+	case Theory::PROOF:    Theory::proof(n)->write(os, i); break;
+	case Theory::THEORY:   Theory::theory(n)->write(os, i); break;
+	case Theory::IMPORT:   Theory::import(n)->write(os, i); break;
+	case Theory::COMMENT:  Theory::comment(n)->write(os, i); break;
 	default : assert(false && "impossible"); break;
 	}
 }

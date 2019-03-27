@@ -10,7 +10,7 @@ inline Symbol create_var(string str, Type* tp) {
 	return Symbol(Lex::toInt(str), tp->id(), Symbol::VAR);
 }
 
-inline Symbol create_const(string str, Const* c) {
+inline Symbol create_const(string str, Constant* c) {
 	return Symbol(Lex::toInt(str), c->id(), Symbol::CONST);
 }
 
@@ -149,7 +149,7 @@ vector<Qed*> Proof::qeds() const {
 	return ret;
 }
 
-inline Tokenable* find(Const* c, const Token& t) {
+inline Tokenable* find(Constant* c, const Token& t) {
 	return c->token.includes(t) ? c : nullptr;
 }
 
@@ -226,15 +226,15 @@ inline Tokenable* find(Theory* th, const Token& t) {
 
 Tokenable* find(Theory::Node& n, const Token& t) {
 	switch (Theory::kind(n)) {
-	case Theory::CONST:   if (Tokenable* ret = find(Theory::const_(n), t)) return ret; else return nullptr;
-	case Theory::TYPE:    if (Tokenable* ret = find(Theory::type(n), t)) return ret; else return nullptr;
-	case Theory::RULE:    if (Tokenable* ret = find(Theory::rule(n), t)) return ret; else return nullptr;
-	case Theory::AXIOM:   if (Tokenable* ret = find(Theory::axiom(n), t)) return ret; else return nullptr;
-	case Theory::DEF:     if (Tokenable* ret = find(Theory::def(n), t)) return ret; else return nullptr;
-	case Theory::THEOREM: if (Tokenable* ret = find(Theory::theorem(n), t)) return ret; else return nullptr;
-	case Theory::PROOF:   if (Tokenable* ret = find(Theory::proof(n), t)) return ret; else return nullptr;
-	case Theory::THEORY:  if (Tokenable* ret = find(Theory::theory(n), t)) return ret; else return nullptr;
-	case Theory::IMPORT:  if (Tokenable* ret = find(Theory::import(n), t)) return ret; else return nullptr;
+	case Theory::CONSTANT: if (Tokenable* ret = find(Theory::constant(n), t)) return ret; else return nullptr;
+	case Theory::TYPE:     if (Tokenable* ret = find(Theory::type(n), t)) return ret; else return nullptr;
+	case Theory::RULE:     if (Tokenable* ret = find(Theory::rule(n), t)) return ret; else return nullptr;
+	case Theory::AXIOM:    if (Tokenable* ret = find(Theory::axiom(n), t)) return ret; else return nullptr;
+	case Theory::DEF:      if (Tokenable* ret = find(Theory::def(n), t)) return ret; else return nullptr;
+	case Theory::THEOREM:  if (Tokenable* ret = find(Theory::theorem(n), t)) return ret; else return nullptr;
+	case Theory::PROOF:    if (Tokenable* ret = find(Theory::proof(n), t)) return ret; else return nullptr;
+	case Theory::THEORY:   if (Tokenable* ret = find(Theory::theory(n), t)) return ret; else return nullptr;
+	case Theory::IMPORT:   if (Tokenable* ret = find(Theory::import(n), t)) return ret; else return nullptr;
 	case Theory::COMMENT: return nullptr;
 	}
 	return nullptr;

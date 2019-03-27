@@ -38,7 +38,7 @@ size_t memvol(const Expr& ex) {
 size_t memvol(const Comment& c) {
 	return c.text.capacity();
 }
-size_t memvol(const Const& c) {
+size_t memvol(const Constant& c) {
 	return 0;
 }
 size_t memvol(const Vars& vars) {
@@ -121,7 +121,7 @@ size_t memvol(const Import& imp) {
 }
 size_t memvol(const Theory::Node& n) {
 	switch (Theory::kind(n)) {
-	case Theory::CONST   : return memvol(*Theory::const_(n));
+	case Theory::CONSTANT: return memvol(*Theory::constant(n));
 	case Theory::TYPE    : return memvol(*Theory::type(n));
 	case Theory::RULE    : return memvol(*Theory::rule(n));
 	case Theory::AXIOM   : return memvol(*Theory::axiom(n));

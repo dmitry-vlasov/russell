@@ -24,7 +24,7 @@ struct Symbol {
 		if (i.id() != -1) {
 			switch (kind_) {
 			case VAR:   val_.type_ = new User<Type>(i); break;
-			case CONST: val_.const_ = new User<Const>(i); break;
+			case CONST: val_.const_ = new User<Constant>(i); break;
 			default: break;
 			}
 		}
@@ -44,7 +44,7 @@ struct Symbol {
 		kind_ = s.kind_;
 		switch (kind_) {
 		case VAR:   val_.type_ = new User<Type>(s.type_id()); break;
-		case CONST: val_.const_ = new User<Const>(s.constant_id()); break;
+		case CONST: val_.const_ = new User<Constant>(s.constant_id()); break;
 		default:    break;
 		}
 	}
@@ -62,9 +62,9 @@ struct Symbol {
 	uint type_id() const { return kind_ == VAR ? val_.type_->id() : -1; }
 	uint constant_id() const { return kind_ == CONST ? val_.type_->id() : -1; }
 	Type* type() { return kind_ == VAR ? val_.type_->get() : nullptr; }
-	Const* constant() { return kind_ == CONST ? val_.const_->get() : nullptr; }
+	Constant* constant() { return kind_ == CONST ? val_.const_->get() : nullptr; }
 	const Type* type() const { return kind_ == VAR ? val_.type_->get() : nullptr; }
-	const Const* constant() const { return kind_ == CONST ? val_.const_->get() : nullptr; }
+	const Constant* constant() const { return kind_ == CONST ? val_.const_->get() : nullptr; }
 	const Token* token() const {
 		switch (kind_) {
 		case VAR:   return &val_.type_->token;
@@ -82,7 +82,7 @@ struct Symbol {
 	void set_const() {
 		clear();
 		kind_ = CONST;
-		val_.const_ = new User<Const>(lit);
+		val_.const_ = new User<Constant>(lit);
 	}
 
 	struct Hash {
@@ -108,8 +108,8 @@ private:
 		val_.const_ = nullptr;
 	}
 	union Value {
-		User<Const>* const_;
-		User<Type>*  type_;
+		User<Constant>* const_;
+		User<Type>* type_;
 	};
 	Kind kind_;
 	Value val_;

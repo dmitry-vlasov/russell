@@ -117,15 +117,15 @@ void translate_constant(const Const* constant, Maps& state) {
 	auto t = state.supers.find(s);
 	if (t == state.supers.end()) {
 		if (s != turnstile()) {
-			rus::Const* c = nullptr;
+			rus::Constant* c = nullptr;
 			auto p = math_consts().find(s);
 			if (p == math_consts().end()) {
-				c = new rus::Const(s, -1, -1);
+				c = new rus::Constant(s, -1, -1);
 			} else {
-				c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
+				c = new rus::Constant(p->second.symb, p->second.ascii, p->second.latex);
 			}
 			c->token.set(state.source);
-			state.source->theory.nodes.emplace_back(unique_ptr<rus::Const>(c));
+			state.source->theory.nodes.emplace_back(unique_ptr<rus::Constant>(c));
 		}
 	} else {
 		for (rus::Type* type : t->second) {

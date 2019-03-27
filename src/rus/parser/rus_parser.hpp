@@ -279,8 +279,8 @@ struct AddToAssertion {
 
 struct AddToTheory {
 	struct result { typedef void type; };
-	void operator()(Theory* t, Const* c) const {
-		t->nodes.emplace_back(unique_ptr<Const>(c));
+	void operator()(Theory* t, Constant* c) const {
+		t->nodes.emplace_back(unique_ptr<Constant>(c));
 	}
 	void operator()(Theory* t, Type* tp) const {
 		t->nodes.emplace_back(unique_ptr<Type>(tp));
@@ -342,7 +342,7 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Axiom*(), unicode::space_type> axiom;
 	qi::rule<LocationIter, Rule*(), qi::locals<Id, Id>, unicode::space_type> rule;
 	qi::rule<LocationIter, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
-	qi::rule<LocationIter, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
+	qi::rule<LocationIter, Constant*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<LocationIter, Import*(), unicode::space_type> import;
 	qi::rule<LocationIter, string(), qi::unused_type> comment_text;
 	qi::rule<LocationIter, Comment*(), qi::unused_type> comment_ml;

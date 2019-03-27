@@ -12,7 +12,7 @@ inline void add_dep(const User<T>& x, set<uint>& deps) {
 	add_dep(x.get(), deps);
 }
 
-inline void const_deps(const Const* c, set<uint>& deps) {
+inline void const_deps(const Constant* c, set<uint>& deps) {
 }
 
 inline void symb_deps(const Symbol& symb, set<uint>& deps) {
@@ -92,14 +92,14 @@ void proof_deps(const Proof* proof, set<uint>& deps) {
 void theory_deps(const Theory* th, set<uint>& deps) {
 	for (const auto& n : th->nodes) {
 		switch (Theory::kind(n)) {
-		case Theory::CONST:   const_deps(Theory::const_(n), deps);      break;
-		case Theory::TYPE:    type_deps(Theory::type(n), deps);         break;
-		case Theory::RULE:    rule_deps(Theory::rule(n), deps);         break;
-		case Theory::AXIOM:   assertion_deps(Theory::axiom(n), deps);   break;
-		case Theory::DEF:     assertion_deps(Theory::def(n), deps);     break;
-		case Theory::THEOREM: assertion_deps(Theory::theorem(n), deps); break;
-		case Theory::PROOF:   proof_deps(Theory::proof(n), deps);       break;
-		case Theory::THEORY:  theory_deps(Theory::theory(n), deps);     break;
+		case Theory::CONSTANT: const_deps(Theory::constant(n), deps);    break;
+		case Theory::TYPE:     type_deps(Theory::type(n), deps);         break;
+		case Theory::RULE:     rule_deps(Theory::rule(n), deps);         break;
+		case Theory::AXIOM:    assertion_deps(Theory::axiom(n), deps);   break;
+		case Theory::DEF:      assertion_deps(Theory::def(n), deps);     break;
+		case Theory::THEOREM:  assertion_deps(Theory::theorem(n), deps); break;
+		case Theory::PROOF:    proof_deps(Theory::proof(n), deps);       break;
+		case Theory::THEORY:   theory_deps(Theory::theory(n), deps);     break;
 		default : break;
 		}
 	}
@@ -183,15 +183,15 @@ void minimize_imports(Source* src, map<uint, set<uint>>& minimized) {
 		}
 		for (auto& n : src->theory.nodes) {
 			switch (Theory::kind(n)) {
-			case Theory::COMMENT: move_node<Comment>(new_nodes, n); break;
-			case Theory::CONST:   move_node<Const>(new_nodes, n);   break;
-			case Theory::TYPE:    move_node<Type>(new_nodes, n);    break;
-			case Theory::RULE:    move_node<Rule>(new_nodes, n);    break;
-			case Theory::AXIOM:   move_node<Axiom>(new_nodes, n);   break;
-			case Theory::DEF:     move_node<Def>(new_nodes, n);     break;
-			case Theory::THEOREM: move_node<Theorem>(new_nodes, n); break;
-			case Theory::PROOF:   move_node<Proof>(new_nodes, n);   break;
-			case Theory::THEORY:  move_node<Theory>(new_nodes, n);  break;
+			case Theory::COMMENT: move_node<Comment>(new_nodes, n);  break;
+			case Theory::CONSTANT:   move_node<Constant>(new_nodes, n); break;
+			case Theory::TYPE:    move_node<Type>(new_nodes, n);     break;
+			case Theory::RULE:    move_node<Rule>(new_nodes, n);     break;
+			case Theory::AXIOM:   move_node<Axiom>(new_nodes, n);    break;
+			case Theory::DEF:     move_node<Def>(new_nodes, n);      break;
+			case Theory::THEOREM: move_node<Theorem>(new_nodes, n);  break;
+			case Theory::PROOF:   move_node<Proof>(new_nodes, n);    break;
+			case Theory::THEORY:  move_node<Theory>(new_nodes, n);   break;
 			case Theory::IMPORT:  break;
 			default : assert(false && "impossible");
 			}

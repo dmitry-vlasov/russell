@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus {
 
-class Const;
+class Constant;
 class Type;
 class Rule;
 class Axiom;
@@ -15,7 +15,7 @@ class Source;
 class Assertion;
 
 class Math {
-	Table<Const>     consts;
+	Table<Constant>  consts;
 	Table<Type>      types;
 	Table<Rule>      rules;
 	Table<Assertion> assertions;

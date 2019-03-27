@@ -224,7 +224,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 			> liter      [_c = qi::labels::_1]
 			> lit(END_MARKER)
 		)
-		> lit("}")      [_val = new_<Const>(_a, _b, _c)];
+		> lit("}")      [_val = new_<Constant>(_a, _b, _c)];
 
 	import = lit("import") > path [_val = parseImport(qi::labels::_1, phoenix::val(src))] > END_MARKER;
 

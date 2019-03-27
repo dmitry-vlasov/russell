@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus {
 
-string xml(const Const& c, uint bits) {
+string xml(const Constant& c, uint bits) {
 	if (!xml_bit(bits, XmlNode::CONST)) return "";
 	string ret = "<constant ";
 	ret += "sys=\"" + Lex::toStr(c.sys()) + "\" ";
@@ -72,16 +72,16 @@ string xml(const Theory& t, uint bits);
 
 string xml(const Theory::Node& n, uint bits) {
 	switch (Theory::kind(n)) {
-	case Theory::CONST:   return xml(*Theory::const_(n), bits);
-	case Theory::TYPE:    return xml(*Theory::type(n), bits);
-	case Theory::RULE:    return xml(*Theory::rule(n), bits);
-	case Theory::AXIOM:   return xml(*Theory::axiom(n), bits);
-	case Theory::DEF:     return xml(*Theory::def(n), bits);
-	case Theory::THEOREM: return xml(*Theory::theorem(n), bits);
-	case Theory::PROOF:   return xml(*Theory::proof(n), bits);
-	case Theory::THEORY:  return xml(*Theory::theory(n), bits);
-	case Theory::IMPORT:  return xml(*Theory::import(n), bits);
-	case Theory::COMMENT: return "";
+	case Theory::CONSTANT: return xml(*Theory::constant(n), bits);
+	case Theory::TYPE:     return xml(*Theory::type(n), bits);
+	case Theory::RULE:     return xml(*Theory::rule(n), bits);
+	case Theory::AXIOM:    return xml(*Theory::axiom(n), bits);
+	case Theory::DEF:      return xml(*Theory::def(n), bits);
+	case Theory::THEOREM:  return xml(*Theory::theorem(n), bits);
+	case Theory::PROOF:    return xml(*Theory::proof(n), bits);
+	case Theory::THEORY:   return xml(*Theory::theory(n), bits);
+	case Theory::IMPORT:   return xml(*Theory::import(n), bits);
+	case Theory::COMMENT:  return "";
 	default : assert(false && "impossible"); return "";
 	}
 }
@@ -123,7 +123,7 @@ string xml_structure(uint bits) {
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<structure>\n";
 	if (xml_bit(bits, XmlNode::CONST))
-		ret += Indent::paragraph(xml_struct<Const>(bits));
+		ret += Indent::paragraph(xml_struct<Constant>(bits));
 	if (xml_bit(bits, XmlNode::TYPE))
 		ret += Indent::paragraph(xml_struct<Type>(bits));
 	if (xml_bit(bits, XmlNode::RULE))

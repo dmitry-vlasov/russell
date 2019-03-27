@@ -23,13 +23,13 @@ string Math::show() const {
 	return info();
 }
 
-template<> Table<Const>& Math::get<Const>() { return consts; }
+template<> Table<Constant>& Math::get<Constant>() { return consts; }
 template<> Table<Type>& Math::get<Type>() { return types; }
 template<> Table<Rule>& Math::get<Rule>() { return rules; }
 template<> Table<Proof>& Math::get<Proof>() { return proofs; }
 template<> Table<Source>& Math::get<Source>() { return sources; }
 template<> Table<Assertion>& Math::get<Assertion>() { return assertions; }
-template<> const Table<Const>& Math::get<Const>() const { return consts; }
+template<> const Table<Constant>& Math::get<Constant>() const { return consts; }
 template<> const Table<Type>& Math::get<Type>() const { return types; }
 template<> const Table<Rule>& Math::get<Rule>() const { return rules; }
 template<> const Table<Proof>& Math::get<Proof>() const { return proofs; }
@@ -169,7 +169,7 @@ string info() {
 	stats += show_timer("\n\ttotal: ", "total", Sys::timer());
 	stats += "\n\n";
 
-	const size_t const_vol = mdl::memvol(Sys::get().math.get<Const>());
+	const size_t const_vol = mdl::memvol(Sys::get().math.get<Constant>());
 	const size_t types_vol = mdl::memvol(Sys::get().math.get<Type>());
 	const size_t rules_vol = mdl::memvol(Sys::get().math.get<Rule>());
 	//const size_t axiom_vol = mdl::memvol(Sys::get().math.axioms);
@@ -197,7 +197,7 @@ string info() {
 	stats += "\n";
 
 	stats += "Size:\n";
-	stats += "\tconsts:   " + to_string(Sys::get().math.get<Const>().size()) + "\n";
+	stats += "\tconsts:   " + to_string(Sys::get().math.get<Constant>().size()) + "\n";
 	stats += "\ttypes:    " + to_string(Sys::get().math.get<Type>().size()) + "\n";
 	stats += "\trules:    " + to_string(Sys::get().math.get<Rule>().size()) + "\n";
 	//stats += "\taxioms:   " + to_string(Sys::get().math.axioms.size()) + "\n";
