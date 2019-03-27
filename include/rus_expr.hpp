@@ -124,21 +124,8 @@ inline ostream& operator << (ostream& os, const Symbol& s) {
 }
 
 struct Tree {
-	struct Children {
-		~Children();
-		typedef vector<Tree*>::iterator iterator;
-		typedef vector<Tree*>::const_iterator const_iterator;
+	typedef vector<unique_ptr<Tree>> Children;
 
-		iterator begin() { return vect.begin(); }
-		iterator end() { return vect.end(); }
-
-		const_iterator begin() const { return vect.cbegin(); }
-		const_iterator end() const { return vect.cend(); }
-
-		size_t size() const { return vect.size(); }
-
-		vector<Tree*> vect;
-	};
 	enum Kind { NODE, VAR };
 
 	struct Node {
@@ -148,7 +135,7 @@ struct Tree {
 		Node(Id i, const Children& ch);
 		Node(Id i, Children&& ch);
 		Node(Id i, Tree* ch);
-		//~Node();
+
 		CompactUser<Rule> rule;
 		Children children;
 	};
@@ -362,7 +349,7 @@ inline void create_rule_term(Expr& ex, Id id) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
 		if (s.kind() == Symbol::VAR) {
-			children.vect.push_back(new Tree(s));
+			children.push_back(make_unique<Tree>(s));
 		}
 	}
 	ex.set(new Tree(id, children));

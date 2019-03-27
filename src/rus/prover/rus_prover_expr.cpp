@@ -191,9 +191,9 @@ unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	switch (tree.kind()) {
 	case LightTree::RULE: {
 		rus::Tree::Children ch;
-		ch.vect.reserve(tree.children().size());
+		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
-			ch.vect.push_back(convert_tree_ptr(*c).release());
+			ch.emplace_back(convert_tree_ptr(*c).release());
 		}
 		return make_unique<rus::Tree>(tree.rule()->id(), std::move(ch));
 	}
