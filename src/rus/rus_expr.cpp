@@ -133,7 +133,7 @@ static void assemble(const Tree* t, Symbols& s) {
 			}
 		}
 	} else if (t->kind() == Tree::VAR) {
-		s.push_back(*t->var());
+		s.push_back(t->var());
 	}
 }
 
@@ -159,11 +159,11 @@ Tree* apply(const Substitution* s, const Tree* t) {
 		}
 		return new Tree(t->rule()->id(), ch);
 	} else {
-		const Symbol* v = t->var();
-		if (s->sub().count(v->lit)) {
-			return new Tree(s->sub().at(v->lit));
+		const Symbol& v = t->var();
+		if (s->sub().count(v.lit)) {
+			return new Tree(s->sub().at(v.lit));
 		} else {
-			return new Tree(*v);
+			return new Tree(v);
 		}
 	}
 }
@@ -174,7 +174,7 @@ Expr apply(const Substitution* s, const Expr& e) {
 
 string show_ast(const Tree* t, bool full) {
 	if (t->kind() == Tree::VAR) {
-		return t->var() ? show(*t->var(), full) : "<null>";
+		return show(t->var(), full);
 	} else {
 		string s = (t->rule() ? show_id(t->rule()->id()) : "?") + " (";
 		for (uint i = 0; i < t->children().size(); ++ i) {
@@ -188,7 +188,7 @@ string show_ast(const Tree* t, bool full) {
 
 string show(const Tree* t, bool full) {
 	if (t->kind() == Tree::VAR) {
-		return t->var() ? show(*t->var(), full) : "<null>";
+		return show(t->var(), full);
 	} else {
 		string str(" ");
 		uint i = 0;

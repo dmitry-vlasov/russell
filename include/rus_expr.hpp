@@ -141,21 +141,14 @@ struct Tree {
 	};
 
 	Tree() = delete;
-	Tree(const Symbol& v) : val(unique_ptr<Symbol>(new Symbol(v))) { }
-	Tree(Id i, const Children& ch) : val(unique_ptr<Node>(new Node(i, ch))) { }
-	Tree(Id i, Tree* ch) : val(unique_ptr<Node>(new Node(i, ch))) { }
-	Tree(const Tree& ex) { operator = (ex); }
-	Tree(Tree&& ex) { operator = (std::move(ex)); }
+	Tree(const Symbol& v) : val(v) { }
+	Tree(Id i, const Children& ch) : val(std::move(Node(i, ch))) { }
+	Tree(Id i, Tree* ch) : val(std::move(Node(i, ch))) { }
+	Tree(const Tree& ex) = default;
+	Tree(Tree&& ex) = default;
+	Tree& operator = (Tree&& ex) = default;
+	Tree& operator = (const Tree& ex) = default;
 
-	void operator = (Tree&& ex) {
-		val = std::move(ex.val);
-	}
-	void operator = (const Tree& ex) {
-		switch (ex.kind()) {
-		case NODE: val = unique_ptr<Node>(new Node(*ex.node()));     break;
-		case VAR:  val = unique_ptr<Symbol>(new Symbol(*ex.var())); break;
-		}
-	}
 	bool operator == (const Tree& e) const {
 		if (kind() != e.kind()) return false;
 		switch (kind()) {
@@ -166,7 +159,7 @@ struct Tree {
 				e.children().begin(), e.children().end(),
 				[] (auto const& c1, auto const& c2) -> bool { return *c1 == *c2; }
 			);
-		case VAR: return *var() == *e.var();
+		case VAR: return var() == e.var();
 		}
 		return true;
 	}
@@ -174,17 +167,17 @@ struct Tree {
 	bool leaf() const { return kind() == VAR || !children().size(); }
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 
-	uint rule_id() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->rule.id(); }
-	Symbol* var() { return kind() == VAR ? std::get<unique_ptr<Symbol>>(val).get() : nullptr; }
-	Node* node() { return kind() == NODE ? std::get<unique_ptr<Node>>(val).get() : nullptr; }
-	Rule* rule() { return  kind() == NODE ? std::get<unique_ptr<Node>>(val).get()->rule.get() : nullptr; }
-	Children& children() { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
+	uint rule_id() const { assert(kind() == NODE); return std::get<Node>(val).rule.id(); }
+	Symbol& var() { assert(kind() == VAR); return  std::get<Symbol>(val); }
+	Node& node() { assert(kind() == NODE); return std::get<Node>(val); }
+	Rule* rule() { assert(kind() == NODE); return std::get<Node>(val).rule.get(); }
+	Children& children() { assert(kind() == NODE); return std::get<Node>(val).children; }
 	Type* type();
 
-	const Symbol* var() const { return kind() == VAR ? std::get<unique_ptr<Symbol>>(val).get() : nullptr; }
-	const Node* node() const { return kind() == NODE ? std::get<unique_ptr<Node>>(val).get() : nullptr; }
-	const Rule* rule() const { return  kind() == NODE ? std::get<unique_ptr<Node>>(val).get()->rule.get() : nullptr; }
-	const Children& children() const { assert(kind() == NODE); return std::get<unique_ptr<Node>>(val).get()->children; }
+	const Symbol& var() const { assert(kind() == VAR); return std::get<Symbol>(val); }
+	const Node& node() const { assert(kind() == NODE); return std::get<Node>(val); }
+	const Rule* rule() const { assert(kind() == NODE); return std::get<Node>(val).rule.get(); }
+	const Children& children() const { assert(kind() == NODE); return std::get<Node>(val).children; }
 	const Type* type() const;
 	uint arity() const {
 		switch (kind()) {
@@ -197,20 +190,20 @@ struct Tree {
 		set<uint> ret;
 		switch (kind()) {
 		case NODE:
-			for (const auto& c : node()->children) {
+			for (const auto& c : children()) {
 				for (uint v : c->vars()) {
 					ret.insert(v);
 				}
 			}
 			break;
-		case VAR:  ret.insert(var()->lit); break;
+		case VAR:  ret.insert(var().lit); break;
 		default:   assert(0 && "impossible"); return set<uint>();
 		}
 		return ret;
 	}
 
 private:
-	typedef variant<unique_ptr<Node>, unique_ptr<Symbol>> Value;
+	typedef variant<Node, Symbol> Value;
 	Value val;
 };
 

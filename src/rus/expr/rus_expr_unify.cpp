@@ -11,11 +11,11 @@ Rule* find_super(const Type* type, const Type* super) {
 Substitution unify_forth(const Tree* p, const Tree* q) {
 	switch (p->kind()) {
 	case Tree::VAR: {
-		const Symbol* var = p->var();
-		if (var->type() == q->type()) {
-			return Substitution(var->lit, *q);
-		} else if (Rule* super = find_super(q->type(), var->type())) {
-			return Substitution(var->lit, Tree(super->id(), new Tree(*q)));
+		const Symbol& var = p->var();
+		if (var.type() == q->type()) {
+			return Substitution(var.lit, *q);
+		} else if (Rule* super = find_super(q->type(), var.type())) {
+			return Substitution(var.lit, Tree(super->id(), new Tree(*q)));
 		} else {
 			return Substitution(false);
 		}

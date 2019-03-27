@@ -118,7 +118,7 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 		uint i = 0;
 		bool found = false;
 		for (auto& ch : rule->term.tree()->children()) {
-			if (ch->kind() == Tree::VAR && ch->var()->lit == v.lit) {
+			if (ch->kind() == Tree::VAR && ch->var().lit == v.lit) {
 				image.args[v.lit] = i;
 				found = true;
 				break;
@@ -203,12 +203,12 @@ void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, M
 
 void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
 	if (t.kind() == Tree::VAR) {
-		if (maps.local.floatings[thm].count(t.var()->lit)) {
-			proof.emplace_back(maps.local.floatings[thm][t.var()->lit]);
-		} else if (maps.local.inners[thm].count(t.var()->lit)) {
-			proof.emplace_back(maps.local.inners[thm][t.var()->lit]);
+		if (maps.local.floatings[thm].count(t.var().lit)) {
+			proof.emplace_back(maps.local.floatings[thm][t.var().lit]);
+		} else if (maps.local.inners[thm].count(t.var().lit)) {
+			proof.emplace_back(maps.local.inners[thm][t.var().lit]);
 		} else {
-			throw Error("undeclared variable", show(*t.var()));
+			throw Error("undeclared variable", show(t.var()));
 		}
 	} else {
 		for (auto& v : t.rule()->vars.v) {

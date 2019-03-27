@@ -31,7 +31,7 @@ void tree_deps(const Tree* tree, set<uint>& deps) {
 			tree_deps(ch.get(), deps);
 		}
 	} else {
-		symb_deps(*tree->var(), deps);
+		symb_deps(tree->var(), deps);
 	}
 }
 

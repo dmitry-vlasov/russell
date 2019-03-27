@@ -143,5 +143,5 @@ namespace mdl {
 
 #define UNDEF_UINT 0xFFFFFFFF
 
-//#define PARALLEL
+#define PARALLEL
 

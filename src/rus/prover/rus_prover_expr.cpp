@@ -216,7 +216,7 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uin
 		return make_unique<LightTree>(tree.rule(), std::move(ch));
 	}
 	case rus::Tree::VAR:
-		return make_unique<LightTree>(LightSymbol(*tree.var(), mode, ind));
+		return make_unique<LightTree>(LightSymbol(tree.var(), mode, ind));
 	default:
 		assert(false && "impossible");
 		return unique_ptr<LightTree>();
