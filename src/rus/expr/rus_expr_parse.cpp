@@ -45,7 +45,7 @@ template<bool trace>
 Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::iterator beg, Symbols::iterator end) {
 	if (type->rules.nodes.size()) {
 		typedef Rules::NodeIter NodeIter;
-		Tree::Children children;
+		RuleTree::Children children;
 		stack<NodeIter> n;
 		stack<Symbols::iterator> m;
 		stack<NodeIter> childnodes;
@@ -64,7 +64,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					n.top() = par->constLast;
 					Action a = act<trace>(n, m, constIter->second, ch, e, beg, end);
 					switch (a.kind) {
-					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
+					case Action::RET  : x = ch; return new RuleTree(a.rule->id(), children);
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
@@ -78,7 +78,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 					children.emplace_back(child);
 					Action a = act<trace>(n, m, n.top(), ch, e, beg, end);
 					switch (a.kind) {
-					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
+					case Action::RET  : x = ch; return new RuleTree(a.rule->id(), children);
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
@@ -101,9 +101,9 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::i
 	}
 	if (const Var* v = dynamic_cast<const Var*>(x->get())) {
 		if (v->type() == type) {
-			return new Tree(*v);
+			return new VarTree(*v);
 		} else if (Rule* super = find_super(v->type(), type)) {
-			return new Tree(super->id(), new Tree(*v));
+			return new RuleTree(super->id(), new VarTree(*v));
 		}
 	}
 	return nullptr;

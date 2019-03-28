@@ -107,87 +107,68 @@ private:
 
 typedef vector<unique_ptr<Symbol>> Symbols;
 
-struct Tree : public Writable{
+struct Tree : public Writable {
+	enum Kind { RULE, VAR };
+	virtual ~Tree() { }
+
+	virtual Kind kind() const = 0;
+	virtual const Type* type() const = 0;
+	virtual set<uint> vars() const = 0;
+	virtual uint arity() const = 0;
+	virtual Tree* clone() const = 0;
+
+	bool operator == (const Tree&) const;
+	bool operator != (const Tree& t) const { return !operator ==(t); }
+
+	bool leaf() const { return arity() == 0; }
+};
+
+struct RuleTree : public Tree {
 	typedef vector<unique_ptr<Tree>> Children;
 
-	enum Kind { RULE, VAR };
+	RuleTree(Id = Id());
+	RuleTree(const RuleTree& n);
+	RuleTree(RuleTree&& n);
+	RuleTree(Id i, const Children& ch);
+	RuleTree(Id i, Children&& ch);
+	RuleTree(Id i, Tree* ch);
 
-	struct Node {
-		Node(Id = Id());
-		Node(const Node& n);
-		Node(Node&& n);
-		Node(Id i, const Children& ch);
-		Node(Id i, Children&& ch);
-		Node(Id i, Tree* ch);
-
-		CompactUser<Rule> rule;
-		Children children;
-	};
-
-	Tree() = delete;
-	Tree(const Var& v) : val(v) { }
-	Tree(Id i, const Children& ch) : val(std::move(Node(i, ch))) { }
-	Tree(Id i, Tree* ch) : val(std::move(Node(i, ch))) { }
-	Tree(const Tree& ex) = default;
-	Tree(Tree&& ex) = default;
-	Tree& operator = (Tree&& ex) = default;
-	Tree& operator = (const Tree& ex) = default;
-
-	bool operator == (const Tree& e) const {
-		if (kind() != e.kind()) return false;
-		switch (kind()) {
-		case RULE:
-			if (rule() != e.rule()) return false;
-			return std::equal(
-				children().begin(),children().end(),
-				e.children().begin(), e.children().end(),
-				[] (auto const& c1, auto const& c2) -> bool { return *c1 == *c2; }
-			);
-		case VAR: return var() == e.var();
-		}
-		return true;
-	}
-	bool operator != (const Tree& e) const { return !operator == (e); }
-	bool leaf() const { return kind() == VAR || !children().size(); }
-	Kind kind() const { return static_cast<Kind>(val.index()); }
-
-	uint rule_id() const { assert(kind() == RULE); return std::get<Node>(val).rule.id(); }
-	Var& var() { assert(kind() == VAR); return  std::get<Var>(val); }
-	Node& node() { assert(kind() == RULE); return std::get<Node>(val); }
-	Children& children() { assert(kind() == RULE); return std::get<Node>(val).children; }
-
-	const Var& var() const { assert(kind() == VAR); return std::get<Var>(val); }
-	const Node& node() const { assert(kind() == RULE); return std::get<Node>(val); }
-	const Rule* rule() const { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
-	const Children& children() const { assert(kind() == RULE); return std::get<Node>(val).children; }
-	const Type* type() const;
-	uint arity() const {
-		switch (kind()) {
-		case RULE: return children().size();
-		case VAR:  return 0;
-		default:   assert(0 && "impossible"); return -1;
-		}
-	}
-	set<uint> vars() const {
+	Kind kind() const override { return RULE; }
+	const Type* type() const override;
+	set<uint> vars() const override {
 		set<uint> ret;
-		switch (kind()) {
-		case RULE:
-			for (const auto& c : children()) {
-				for (uint v : c->vars()) {
-					ret.insert(v);
-				}
+		for (const auto& c : children) {
+			for (uint v : c->vars()) {
+				ret.insert(v);
 			}
-			break;
-		case VAR:  ret.insert(var().lit()); break;
-		default:   assert(0 && "impossible"); return set<uint>();
 		}
 		return ret;
 	}
+	uint arity() const override { return children.size(); }
+	Tree* clone() const override { return new RuleTree(*this); }
 	void write(ostream& os, const Indent& indent = Indent()) const override;
 
-private:
-	typedef variant<Node, Var> Value;
-	Value val;
+	CompactUser<Rule> rule;
+	Children children;
+};
+
+struct VarTree : public Tree {
+	VarTree(const Var& v) : var(v) { }
+	VarTree(const VarTree& n) = default;
+	VarTree(VarTree&& n) = default;
+
+	Kind kind() const override { return VAR; }
+	const Type* type() const override;
+	set<uint> vars() const override {
+		set<uint> ret;
+		ret.insert(var.lit());
+		return ret;
+	}
+	uint arity() const override { return 0; }
+	Tree* clone() const override { return new VarTree(*this); }
+	void write(ostream& os, const Indent& indent = Indent()) const override;
+
+	Var var;
 };
 
 struct Expr : public Tokenable, public Writable {
@@ -202,7 +183,7 @@ struct Expr : public Tokenable, public Writable {
 	void operator = (const Expr& ex) {
 		type = ex.type;
 		if (ex.tree()) {
-			tree_.reset(new Tree(*ex.tree_));
+			tree_.reset(ex.tree_->clone());
 		}
 		for (const auto& s : ex.symbols) {
 			symbols.emplace_back(s->clone());
@@ -305,7 +286,7 @@ string show(const Rules& tr);
 struct Substitution : public Writable {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
 	Substitution(uint v, const Tree& t) : sub_(), ok_(true) {
-		sub_.emplace(v, t);
+		sub_.emplace(v, t.clone());
 	}
 	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
 		operator = (s);
@@ -316,27 +297,43 @@ struct Substitution : public Writable {
 
 	void operator = (const Substitution& s);
 	void operator = (Substitution&& s);
+	bool join(uint v, unique_ptr<Tree>&& t);
 	bool join(uint v, const Tree& t);
-	bool join(uint v, Tree&& t);
 	bool join(const Substitution* s) {
 		return join(*s);
 	}
 	bool join(const Substitution& s);
 	bool join(Substitution&& s);
 
-	const map<uint, Tree>& sub() const { return sub_; }
+	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
+	const Tree* map(uint v) const {
+		auto it = sub_.find(v);
+		if (sub_.find(v) != sub_.end()) {
+			return it->second.get();
+		} else {
+			return nullptr;
+		}
+	}
+	void erase(uint v) { sub_.erase(v); }
+
+	typedef std::map<uint, unique_ptr<Tree>>::const_iterator const_iterator;
+
+	const_iterator begin() const { return sub_.cbegin(); }
+	const_iterator end() const { return sub_.cend(); }
+
+	uint size() const { return sub_.size(); }
+
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
-	bool mapsVar(uint v) const { return sub_.find(v) != sub_.end(); }
 
 	void write(ostream& os, const Indent& indent = Indent()) const override {
-		for (const auto p : sub_) {
-			os << indent << Lex::toStr(p.first) << " --> " << static_cast<const Writable&>(p.second) << endl;
+		for (const auto& p : sub_) {
+			os << indent << Lex::toStr(p.first) << " --> " << static_cast<const Writable&>(*p.second) << endl;
 		}
 	}
 
 private:
-	map<uint, Tree> sub_;
+	std::map<uint, unique_ptr<Tree>> sub_;
 	bool ok_;
 };
 
@@ -354,13 +351,13 @@ inline Expr apply(const Substitution& s, const Expr& e) {
 }
 
 inline void create_rule_term(Expr& ex, Id id) {
-	Tree::Children children;
+	RuleTree::Children children;
 	for (auto& s : ex.symbols) {
 		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
-			children.push_back(make_unique<Tree>(*v));
+			children.push_back(make_unique<VarTree>(*v));
 		}
 	}
-	ex.set(new Tree(id, children));
+	ex.set(new RuleTree(id, children));
 }
 
 namespace expr {

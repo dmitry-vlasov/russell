@@ -115,13 +115,19 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 	for (auto& v : rule->vars.v) {
 		uint i = 0;
 		bool found = false;
-		for (auto& ch : rule->term.tree()->children()) {
-			if (ch->kind() == Tree::VAR && ch->var().lit() == v.lit()) {
-				image.args[v.lit()] = i;
-				found = true;
-				break;
+		if (const RuleTree* rt = dynamic_cast<const RuleTree*>(rule->term.tree())) {
+			for (auto& ch : rt->children) {
+				if (const VarTree* vt = dynamic_cast<const VarTree*>(ch.get())) {
+					if (vt->var.lit() == v.lit()) {
+						image.args[v.lit()] = i;
+						found = true;
+						break;
+					}
+				}
+				++ i;
 			}
-			++ i;
+		} else {
+			throw Error("impossible");
 		}
 		if (!found) {
 			throw Error("rule arg is not found", Lex::toStr(v.lit()));
@@ -199,26 +205,26 @@ void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, M
 	}
 }
 
-void translate_term(const Tree& t, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
-	if (t.kind() == Tree::VAR) {
-		if (maps.local.floatings[thm].count(t.var().lit())) {
-			proof.emplace_back(maps.local.floatings[thm][t.var().lit()]);
-		} else if (maps.local.inners[thm].count(t.var().lit())) {
-			proof.emplace_back(maps.local.inners[thm][t.var().lit()]);
-		} else {
-			throw Error("undeclared variable", t.var().show());
+void translate_term(const Tree& tree, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(&tree)) {
+		for (auto& v : rule_tree->rule->vars.v) {
+			RuleImage rule = maps.global.rules.at(rule_tree->rule.get());
+			translate_term(*rule_tree->children[rule.args[v.lit()]].get(), thm, proof, maps);
 		}
-	} else {
-		for (auto& v : t.rule()->vars.v) {
-			RuleImage rule = maps.global.rules.at(t.rule());
-			translate_term(*t.children()[rule.args[v.lit()]].get(), thm, proof, maps);
-		}
-	}
-	if (t.kind() == Tree::RULE) {
-		if (!maps.global.rules.count(t.rule())) {
+		if (!maps.global.rules.count(rule_tree->rule.get())) {
 			throw Error("undefined reference to rule");
 		}
-		proof.emplace_back(maps.global.rules.at(t.rule()).rule->id());
+		proof.emplace_back(maps.global.rules.at(rule_tree->rule.get()).rule->id());
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(&tree)) {
+		if (maps.local.floatings[thm].count(var_tree->var.lit())) {
+			proof.emplace_back(maps.local.floatings[thm][var_tree->var.lit()]);
+		} else if (maps.local.inners[thm].count(var_tree->var.lit())) {
+			proof.emplace_back(maps.local.inners[thm][var_tree->var.lit()]);
+		} else {
+			throw Error("undeclared variable", var_tree->var.show());
+		}
+	} else {
+		throw Error("impossible");
 	}
 }
 
@@ -236,7 +242,9 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof
 		throw Error("proof step unification failure", msg);
 	}
 	for (auto& v : ass->vars.v) {
-		translate_term(st->sub.sub().at(v.lit()), thm, proof, maps);
+		if (st->sub.maps(v.lit())) {
+			translate_term(*st->sub.map(v.lit()), thm, proof, maps);
+		}
 	}
 	for (const auto& ref : st->refs) {
 		translate_ref(ref.get(), thm, proof, maps);

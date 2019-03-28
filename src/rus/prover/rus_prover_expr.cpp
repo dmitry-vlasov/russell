@@ -186,40 +186,40 @@ bool composable(const Subst& s1, const Subst& s2) {
 	return false;
 }
 
-
 unique_ptr<rus::Tree> convert_tree_ptr(const LightTree& tree) {
 	switch (tree.kind()) {
 	case LightTree::RULE: {
-		rus::Tree::Children ch;
+		rus::RuleTree::Children ch;
 		ch.reserve(tree.children().size());
 		for (const auto& c : tree.children()) {
 			ch.emplace_back(convert_tree_ptr(*c).release());
 		}
-		return make_unique<rus::Tree>(tree.rule()->id(), std::move(ch));
+		return make_unique<rus::RuleTree>(tree.rule()->id(), std::move(ch));
 	}
 	case LightTree::VAR:
-		return make_unique<rus::Tree>(rus::Var(tree.var().lit, tree.type()->id()));
+		return make_unique<rus::VarTree>(rus::Var(tree.var().lit, tree.type()->id()));
 	default:
-		assert(false && "impossible");
-		return unique_ptr<rus::Tree>();
+		throw Error("impossible");
 	}
 }
 
 unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uint ind) {
 	switch (tree.kind()) {
 	case rus::Tree::RULE: {
+		const rus::RuleTree& rule_tree = dynamic_cast<const rus::RuleTree&>(tree);
 		LightTree::Children ch;
-		ch.reserve(tree.children().size());
-		for (const auto& c : tree.children()) {
+		ch.reserve(rule_tree.children.size());
+		for (const auto& c : rule_tree.children) {
 			ch.push_back(convert_tree_ptr(*c, mode, ind));
 		}
-		return make_unique<LightTree>(tree.rule(), std::move(ch));
+		return make_unique<LightTree>(rule_tree.rule.get(), std::move(ch));
 	}
-	case rus::Tree::VAR:
-		return make_unique<LightTree>(LightSymbol(tree.var(), mode, ind));
+	case rus::Tree::VAR: {
+		const rus::VarTree& var_tree = dynamic_cast<const rus::VarTree&>(tree);
+		return make_unique<LightTree>(LightSymbol(var_tree.var, mode, ind));
+	}
 	default:
-		assert(false && "impossible");
-		return unique_ptr<LightTree>();
+		throw Error("impossible");
 	}
 }
 
@@ -345,8 +345,8 @@ unique_ptr<LightTree> apply_ptr(const Substitution& s, const LightTree& t) {
 		return make_unique<LightTree>(t.rule(), ch);
 	} else {
 		LightSymbol v = t.var();
-		if (v.rep && s.sub().count(v.lit)) {
-			return convert_tree_ptr(s.sub().at(v.lit), ReplMode::KEEP_REPL, LightSymbol::MATH_INDEX);
+		if (v.rep && s.maps(v.lit)) {
+			return convert_tree_ptr(*s.map(v.lit), ReplMode::KEEP_REPL, LightSymbol::MATH_INDEX);
 		} else {
 			return make_unique<LightTree>(v);
 		}
@@ -380,7 +380,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 rus::Substitution convert_sub(const Subst& sub) {
 	rus::Substitution ret(sub.ok());
 	for (const auto& p : sub) {
-		ret.join(p.first.lit, convert_tree(p.second));
+		ret.join(p.first.lit, *convert_tree_ptr(p.second));
 	}
 	return ret;
 }

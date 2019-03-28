@@ -104,37 +104,39 @@ vector<string> Rules::Node::show() const {
 	return ret;
 }
 
-Tree::Node::Node(Id i) : rule(i), children() { }
-Tree::Node::Node(Id i, const Tree::Children& ch) : rule(i), children() {
+RuleTree::RuleTree(Id i) : rule(i), children() { }
+RuleTree::RuleTree(Id i, const RuleTree::Children& ch) : rule(i), children() {
 	children.reserve(ch.size());
 	for (auto& c : ch) {
-		children.push_back(make_unique<Tree>(*c));
+		children.emplace_back(c->clone());
 	}
 }
-Tree::Node::Node(const Node& n) : rule(n.rule), children() {
+RuleTree::RuleTree(const RuleTree& n) : rule(n.rule), children() {
 	children.reserve(n.children.size());
 	for (auto& c : n.children) {
-		children.push_back(make_unique<Tree>(*c));
+		children.emplace_back(c->clone());
 	}
 }
-Tree::Node::Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
-Tree::Node::Node(Id i, Tree::Children&& ch) : rule(i), children(std::move(ch)) { }
-Tree::Node::Node(Id i, Tree* ch) : rule(i), children() {
+RuleTree::RuleTree(RuleTree&& n) : rule(n.rule), children(std::move(n.children)) { }
+RuleTree::RuleTree(Id i, RuleTree::Children&& ch) : rule(i), children(std::move(ch)) { }
+RuleTree::RuleTree(Id i, Tree* ch) : rule(i), children() {
 	children.emplace_back(ch);
 }
 
-static void assemble(const Tree* t, Symbols& s) {
-	if (t->kind() == Tree::RULE) {
-		auto i = t->children().begin();
-		for (auto& x : t->rule()->term) {
+static void assemble(const Tree* tree, Symbols& s) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(tree)) {
+		auto i = rule_tree->children.begin();
+		for (auto& x : rule_tree->rule->term) {
 			switch (x->kind()) {
 			case Symbol::VAR:   assemble((i++)->get(), s); break;
 			case Symbol::CONST: s.push_back(make_unique<Const>(x->lit())); break;
 			default: s.push_back(make_unique<Literal>(x->lit())); break;
 			}
 		}
-	} else if (t->kind() == Tree::VAR) {
-		s.push_back(make_unique<Var>(t->var()));
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
+		s.push_back(make_unique<Var>(var_tree->var));
+	} else {
+		throw Error("impossible");
 	}
 }
 
@@ -151,21 +153,22 @@ void apply(const Substitution* sub, Expr& e) {
 	e.symbols = std::move(sym);
 }
 
-Tree* apply(const Substitution* s, const Tree* t) {
-	if (t->kind() == Tree::RULE) {
-		Tree::Children ch;
-		ch.reserve(t->children().size());
-		for (const auto& n : t->children()) {
+Tree* apply(const Substitution* s, const Tree* tree) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(tree)) {
+		RuleTree::Children ch;
+		ch.reserve(rule_tree->children.size());
+		for (const auto& n : rule_tree->children) {
 			ch.emplace_back(apply(s, n.get()));
 		}
-		return new Tree(t->rule()->id(), ch);
-	} else {
-		const Var& v = t->var();
-		if (s->sub().count(v.lit())) {
-			return new Tree(s->sub().at(v.lit()));
+		return new RuleTree(rule_tree->rule.id(), ch);
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
+		if (s->maps(var_tree->var.lit())) {
+			return s->map(var_tree->var.lit())->clone();
 		} else {
-			return new Tree(v);
+			return new VarTree(var_tree->var);
 		}
+	} else {
+		throw Error("impossible");
 	}
 }
 
@@ -173,50 +176,54 @@ Expr apply(const Substitution* s, const Expr& e) {
 	return assemble(apply(s, e.tree()));
 }
 
-string show_ast(const Tree* t, bool full) {
-	if (t->kind() == Tree::VAR) {
-		return t->var().show();
-	} else {
-		string s = (t->rule() ? show_id(t->rule()->id()) : "?") + " (";
-		for (uint i = 0; i < t->children().size(); ++ i) {
-			s += show_ast(t->children()[i].get(), full);
-			if (i + 1 < t->children().size()) s += ", ";
+string show_ast(const Tree* tree, bool full) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(tree)) {
+		string s = show_id(rule_tree->rule.id()) + " (";
+		for (uint i = 0; i < rule_tree->children.size(); ++ i) {
+			s += show_ast(rule_tree->children[i].get(), full);
+			if (i + 1 < rule_tree->children.size()) s += ", ";
 		}
 		s += ")";
 		return s;
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
+		return var_tree->var.show();
+	} else {
+		throw Error("impossible");
 	}
 }
 
-string show(const Tree* t, bool full) {
-	if (t->kind() == Tree::VAR) {
-		return t->var().show();
-	} else {
-		string str(" ");
-		uint i = 0;
-		for (auto& s : t->rule()->term.symbols) {
-			if (s->type()) {
-				str += show(t->children()[i++].get(), full) + ' ';
-			} else {
-				str += s->show() + ' ';
+bool Tree::operator == (const Tree& tree) const {
+	if (kind() != tree.kind()) {
+		return false;
+	}
+	if (const RuleTree* rule_tree1 = dynamic_cast<const RuleTree*>(&tree)) {
+		const RuleTree* rule_tree2 = dynamic_cast<const RuleTree*>(this);
+		for (uint i = 0; i < rule_tree1->children.size(); ++ i) {
+			if (*rule_tree1->children[i] != *rule_tree2->children[i]) {
+				return false;
 			}
 		}
-		return str;
+		return rule_tree1->rule == rule_tree2->rule;
+	} else if (const VarTree* var_tree1 = dynamic_cast<const VarTree*>(&tree)) {
+		const VarTree* var_tree2 = dynamic_cast<const VarTree*>(this);
+		return var_tree1->var == var_tree2->var;
+	} else {
+		throw Error("impossible");
 	}
 }
 
-void Tree::write(ostream& os, const Indent& indent) const {
-	os << indent;
-	if (kind() == Tree::VAR) {
-		os << indent << var();
-	} else {
-		uint i = 0;
-		for (auto& s : rule()->term.symbols) {
-			if (s->kind() == Symbol::VAR) {
-				children()[i++]->write(os);
-				os << ' ';
-			} else {
-				os << s->show() << ' ';
-			}
+void VarTree::write(ostream& os, const Indent& indent) const {
+	os << var;
+}
+
+void RuleTree::write(ostream& os, const Indent& indent) const {
+	uint i = 0;
+	for (auto& s : rule->term.symbols) {
+		if (s->kind() == Symbol::VAR) {
+			children[i++]->write(os);
+			os << ' ';
+		} else {
+			os << *s << ' ';
 		}
 	}
 }
@@ -224,7 +231,7 @@ void Tree::write(ostream& os, const Indent& indent) const {
 void Substitution::operator = (const Substitution& s) {
 	ok_ = s.ok_;
 	if (ok_) for (const auto& p : s.sub_) {
-		sub_.emplace(p.first, p.second);
+		sub_.emplace(p.first, p.second->clone());
 	}
 }
 
@@ -238,18 +245,18 @@ bool Substitution::join(uint v, const Tree& t) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if ((*it).second != t) ok_ = false;
+		if (*(*it).second != t) ok_ = false;
 	} else {
-		sub_.emplace(v, t);
+		sub_.emplace(v, t.clone());
 	}
 	return ok_;
 }
 
-bool Substitution::join(uint v, Tree&& t) {
+bool Substitution::join(uint v, unique_ptr<Tree>&& t) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if ((*it).second != t) ok_ = false;
+		if (*(*it).second != *t) ok_ = false;
 	} else {
 		sub_.emplace(v, std::move(t));
 	}
@@ -260,7 +267,7 @@ bool Substitution::join(const Substitution& s) {
 	if (s.ok_) {
 		for (const auto& p : s.sub_) {
 			if (!ok_) return false;
-			join(p.first, p.second);
+			join(p.first, *p.second);
 		}
 	} else {
 		ok_ = false;

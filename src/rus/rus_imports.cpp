@@ -17,22 +17,19 @@ inline void const_deps(const Constant* c, set<uint>& deps) {
 
 inline void symb_deps(const Symbol& symb, set<uint>& deps) {
 	add_dep(symb.tokenable(), deps);
-	//switch (symb.kind()) {
-	//case Symbol::VAR:   add_dep(symb.type(), deps); break;
-	//case Symbol::CONST: add_dep(symb.constant(), deps); break;
-	//default: break;
-	//}
 }
 
 void tree_deps(const Tree* tree, set<uint>& deps) {
 	if (!tree) return;
-	if (tree->kind() == Tree::RULE) {
-		add_dep(tree->rule(), deps);
-		for (const auto& ch : tree->children()) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(tree)) {
+		add_dep(rule_tree->rule.get(), deps);
+		for (const auto& ch : rule_tree->children) {
 			tree_deps(ch.get(), deps);
 		}
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
+		symb_deps(var_tree->var, deps);
 	} else {
-		symb_deps(tree->var(), deps);
+		throw Error("impossible");
 	}
 }
 

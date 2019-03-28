@@ -53,13 +53,18 @@ namespace {
 void parse_src() {
 
 	cout << "sizeof(vector<uint>) = " << sizeof(vector<uint>) << endl;
-	cout << "sizeof(unique_ptr<rus::Tree::Node>) = " << sizeof(unique_ptr<rus::Tree::Node>) << endl;
+	cout << endl;
 	cout << "sizeof(rus::Symbol) = " << sizeof(rus::Symbol) << endl;
+	cout << "sizeof(rus::Literal) = " << sizeof(rus::Literal) << endl;
+	cout << "sizeof(rus::Var) = " << sizeof(rus::Var) << endl;
+	cout << "sizeof(rus::Const) = " << sizeof(rus::Const) << endl;
+	cout << endl;
 	cout << "sizeof(rus::Tree) = " << sizeof(rus::Tree) << endl;
-	cout << "sizeof(rus::Tree::Node) = " << sizeof(rus::Tree::Node) << endl;
+	cout << "sizeof(rus::VarTree) = " << sizeof(rus::VarTree) << endl;
+	cout << "sizeof(rus::RuleTree) = " << sizeof(rus::RuleTree) << endl;
+	cout << endl;
 	cout << "sizeof(rus::User<Rule>) = " << sizeof(rus::User<Rule>) << endl;
 	cout << "sizeof(rus::CompactUser<Rule>) = " << sizeof(rus::CompactUser<Rule>) << endl;
-	cout << "sizeof(rus::Tree::Children) = " << sizeof(rus::Tree::Children) << endl;
 	cout << "sizeof(rus::Id<Source>) = " << sizeof(mdl::Id<rus::Source>) << endl;
 	cout << "sizeof(rus::Tokenable<Source>) = " << sizeof(mdl::Tokenable<rus::Source>) << endl;
 	cout << "sizeof(rus::Token<Source>) = " << sizeof(mdl::Token<rus::Source>) << endl;

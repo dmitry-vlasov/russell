@@ -5,14 +5,19 @@ namespace mdl { namespace rus {
 size_t memvol(const Symbol& s) {
 	return 0;
 }
-size_t memvol(const Tree& t) {
-	if (t.kind() != Tree::RULE) return 0;
-	size_t vol = 0;
-	vol += t.children().capacity();
-	for (auto& ch : t.children()) {
-		vol += memvol(*ch);
+size_t memvol(const Tree& tree) {
+	if (const RuleTree* rule_tree = dynamic_cast<const RuleTree*>(&tree)) {
+		size_t vol = 0;
+		vol += rule_tree->children.capacity();
+		for (auto& ch : rule_tree->children) {
+			vol += memvol(*ch);
+		}
+		return vol;
+	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(&tree)) {
+		return 0;
+	} else {
+		throw Error("impossible");
 	}
-	return vol;
 }
 
 size_t memvol(const Rules& rt) {

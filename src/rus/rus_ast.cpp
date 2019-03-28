@@ -69,9 +69,9 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 
 void Disj::check(const Substitution& s, Assertion* t) const {
 	for (const auto& p : dvars) {
-		if (!s.mapsVar(p.v) || !s.mapsVar(p.w)) continue;
-		set<uint> v1_vars = s.sub().at(p.v).vars();
-		set<uint> v2_vars = s.sub().at(p.w).vars();
+		if (!s.maps(p.v) || !s.maps(p.w)) continue;
+		set<uint> v1_vars = s.map(p.v)->vars();
+		set<uint> v2_vars = s.map(p.w)->vars();
 		check_disjointed(v1_vars, v2_vars);
 		if (t) {
 			t->disj.make_pairs_disjointed(v1_vars, v2_vars);
