@@ -154,7 +154,6 @@ struct Tree : public Writable{
 	uint rule_id() const { assert(kind() == RULE); return std::get<Node>(val).rule.id(); }
 	Var& var() { assert(kind() == VAR); return  std::get<Var>(val); }
 	Node& node() { assert(kind() == RULE); return std::get<Node>(val); }
-	//Rule* rule() { assert(kind() == RULE); return std::get<Node>(val).rule.get(); }
 	Children& children() { assert(kind() == RULE); return std::get<Node>(val).children; }
 
 	const Var& var() const { assert(kind() == VAR); return std::get<Var>(val); }
@@ -193,10 +192,6 @@ private:
 
 struct Expr : public Tokenable, public Writable {
 	Expr(const Token& t = Token()) : Tokenable(t) { }
-	//Expr(const Symbol& s, const Token& t = Token()) :
-	//	Tokenable(t), type(s.kind() == Symbol::VAR ? dynamic_cast<const Var&>(s).type() : nullptr) { symbols.emplace_back(s.clone()); }
-	//Expr(const Symbols& ss, const Token& t = Token()) :
-	//	Tokenable(t), symbols(ss) { }
 	Expr(Id tp, Symbols&& ex, const Token& t = Token()) :
 		Tokenable(t), type(tp), symbols(std::move(ex)) { }
 	Expr(Id tp, Symbols&& ex, Tree* tr, const Token& t = Token()) :
@@ -309,9 +304,6 @@ string show(const Rules& tr);
 
 struct Substitution : public Writable {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
-	/*Substitution(uint v, const Symbol& t) : sub_(), ok_(true) {
-		sub_.emplace(v, t);
-	}*/
 	Substitution(uint v, const Tree& t) : sub_(), ok_(true) {
 		sub_.emplace(v, t);
 	}
@@ -324,9 +316,6 @@ struct Substitution : public Writable {
 
 	void operator = (const Substitution& s);
 	void operator = (Substitution&& s);
-	/*bool join(uint v, const Symbol& t) {
-		return join(v, Tree(t));
-	}*/
 	bool join(uint v, const Tree& t);
 	bool join(uint v, Tree&& t);
 	bool join(const Substitution* s) {
