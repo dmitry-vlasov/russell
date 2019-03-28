@@ -216,7 +216,7 @@ unique_ptr<LightTree> convert_tree_ptr(const rus::Tree& tree, ReplMode mode, uin
 	}
 	case rus::Tree::VAR: {
 		const rus::VarTree& var_tree = dynamic_cast<const rus::VarTree&>(tree);
-		return make_unique<LightTree>(LightSymbol(var_tree.var, mode, ind));
+		return make_unique<LightTree>(LightSymbol(var_tree.lit(), var_tree.type(), mode, ind));
 	}
 	default:
 		throw Error("impossible");

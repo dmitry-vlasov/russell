@@ -20,6 +20,19 @@ struct LightSymbol {
 		INTERNAL_MIN_INDEX = 2
 	};
 	LightSymbol() : lit(undefined_value), rep(false), ind(-1), type(nullptr)  { }
+	LightSymbol(uint l, const Type* t, ReplMode mode, uint i) :
+		lit(i == MATH_INDEX ? l :
+			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(l) + "!") :
+				Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
+			)
+		),
+		rep(t),
+		ind(i),
+		type(t) {
+		if (mode == ReplMode::DENY_REPL) {
+			rep = false;
+		}
+	}
 	LightSymbol(const rus::Symbol& s, ReplMode mode, uint i) :
 		lit(i == MATH_INDEX ? s.lit() :
 			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(s.lit()) + "!") :

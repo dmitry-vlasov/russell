@@ -134,7 +134,7 @@ static void assemble(const Tree* tree, Symbols& s) {
 			}
 		}
 	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
-		s.push_back(make_unique<Var>(var_tree->var));
+		s.push_back(make_unique<Var>(var_tree->lit(), var_tree->type()));
 	} else {
 		throw Error("impossible");
 	}
@@ -162,10 +162,10 @@ Tree* apply(const Substitution* s, const Tree* tree) {
 		}
 		return new RuleTree(rule_tree->rule.id(), ch);
 	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
-		if (s->maps(var_tree->var.lit())) {
-			return s->map(var_tree->var.lit())->clone();
+		if (s->maps(var_tree->lit())) {
+			return s->map(var_tree->lit())->clone();
 		} else {
-			return new VarTree(var_tree->var);
+			return var_tree->clone();
 		}
 	} else {
 		throw Error("impossible");
@@ -186,7 +186,7 @@ string show_ast(const Tree* tree, bool full) {
 		s += ")";
 		return s;
 	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
-		return var_tree->var.show();
+		return var_tree->show();
 	} else {
 		throw Error("impossible");
 	}
@@ -206,14 +206,14 @@ bool Tree::operator == (const Tree& tree) const {
 		return rule_tree1->rule == rule_tree2->rule;
 	} else if (const VarTree* var_tree1 = dynamic_cast<const VarTree*>(&tree)) {
 		const VarTree* var_tree2 = dynamic_cast<const VarTree*>(this);
-		return var_tree1->var == var_tree2->var;
+		return var_tree1->lit() == var_tree2->lit();
 	} else {
 		throw Error("impossible");
 	}
 }
 
 void VarTree::write(ostream& os, const Indent& indent) const {
-	os << var;
+	os << Lex::toStr(lit_);
 }
 
 void RuleTree::write(ostream& os, const Indent& indent) const {

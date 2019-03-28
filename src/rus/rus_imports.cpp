@@ -27,7 +27,7 @@ void tree_deps(const Tree* tree, set<uint>& deps) {
 			tree_deps(ch.get(), deps);
 		}
 	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(tree)) {
-		symb_deps(var_tree->var, deps);
+		add_dep(var_tree->type(), deps);
 	} else {
 		throw Error("impossible");
 	}

@@ -83,6 +83,7 @@ private:
 
 struct Var : public Symbol {
 	Var(uint l, uint t) : lit_(l), type_(t) { }
+	Var(uint l, const Type* t) : lit_(l), type_(t) { }
 	Var(const Var& c) = default;
 	Var(Var&& c) = default;
 	Var& operator = (const Var& s) = default;
@@ -153,7 +154,7 @@ struct RuleTree : public Tree {
 };
 
 struct VarTree : public Tree {
-	VarTree(const Var& v) : var(v) { }
+	VarTree(const Var& v) : lit_(v.lit()), type_(v.typeId()) { }
 	VarTree(const VarTree& n) = default;
 	VarTree(VarTree&& n) = default;
 
@@ -161,14 +162,17 @@ struct VarTree : public Tree {
 	const Type* type() const override;
 	set<uint> vars() const override {
 		set<uint> ret;
-		ret.insert(var.lit());
+		ret.insert(lit_);
 		return ret;
 	}
 	uint arity() const override { return 0; }
 	Tree* clone() const override { return new VarTree(*this); }
 	void write(ostream& os, const Indent& indent = Indent()) const override;
+	uint lit() const { return lit_; }
 
-	Var var;
+private:
+	uint lit_;
+	CompactUser<Type> type_;
 };
 
 struct Expr : public Tokenable, public Writable {

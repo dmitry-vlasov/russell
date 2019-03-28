@@ -100,7 +100,7 @@ struct Rule : public Owner<Rule>, public Writable {
 
 Rule* find_super(const Type* type, const Type* super);
 
-inline const Type* VarTree::type() const { return var.type(); }
+inline const Type* VarTree::type() const { return type_.get(); }
 inline const Type* RuleTree::type() const { return rule->term.type.get(); }
 
 struct Hyp : public Tokenable, public Writable {

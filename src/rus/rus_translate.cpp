@@ -118,7 +118,7 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 		if (const RuleTree* rt = dynamic_cast<const RuleTree*>(rule->term.tree())) {
 			for (auto& ch : rt->children) {
 				if (const VarTree* vt = dynamic_cast<const VarTree*>(ch.get())) {
-					if (vt->var.lit() == v.lit()) {
+					if (vt->lit() == v.lit()) {
 						image.args[v.lit()] = i;
 						found = true;
 						break;
@@ -216,12 +216,12 @@ void translate_term(const Tree& tree, const Assertion* thm, vector<mm::Ref>& pro
 		}
 		proof.emplace_back(maps.global.rules.at(rule_tree->rule.get()).rule->id());
 	} else if (const VarTree* var_tree = dynamic_cast<const VarTree*>(&tree)) {
-		if (maps.local.floatings[thm].count(var_tree->var.lit())) {
-			proof.emplace_back(maps.local.floatings[thm][var_tree->var.lit()]);
-		} else if (maps.local.inners[thm].count(var_tree->var.lit())) {
-			proof.emplace_back(maps.local.inners[thm][var_tree->var.lit()]);
+		if (maps.local.floatings[thm].count(var_tree->lit())) {
+			proof.emplace_back(maps.local.floatings[thm][var_tree->lit()]);
+		} else if (maps.local.inners[thm].count(var_tree->lit())) {
+			proof.emplace_back(maps.local.inners[thm][var_tree->lit()]);
 		} else {
-			throw Error("undeclared variable", var_tree->var.show());
+			throw Error("undeclared variable", var_tree->show());
 		}
 	} else {
 		throw Error("impossible");
