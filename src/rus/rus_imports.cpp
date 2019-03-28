@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace {
 
-inline void add_dep(const Tokenable* x, set<uint>& deps) {
+inline void add_dep(const WithToken* x, set<uint>& deps) {
 	if (x && x->token.src()) deps.insert(x->token.src()->id());
 }
 
@@ -12,11 +12,12 @@ inline void add_dep(const User<T>& x, set<uint>& deps) {
 	add_dep(x.get(), deps);
 }
 
-inline void const_deps(const Constant* c, set<uint>& deps) {
-}
-
 inline void symb_deps(const Symbol& symb, set<uint>& deps) {
-	add_dep(symb.tokenable(), deps);
+	if (const Var* var = dynamic_cast<const Var*>(&symb)) {
+		add_dep(var, deps);
+	} else if (const Const* c = dynamic_cast<const Const*>(&symb)) {
+		add_dep(c, deps);
+	}
 }
 
 void tree_deps(const Tree* tree, set<uint>& deps) {
@@ -90,7 +91,7 @@ void proof_deps(const Proof* proof, set<uint>& deps) {
 void theory_deps(const Theory* th, set<uint>& deps) {
 	for (const auto& n : th->nodes) {
 		switch (Theory::kind(n)) {
-		case Theory::CONSTANT: const_deps(Theory::constant(n), deps);    break;
+		case Theory::CONSTANT: break;
 		case Theory::TYPE:     type_deps(Theory::type(n), deps);         break;
 		case Theory::RULE:     rule_deps(Theory::rule(n), deps);         break;
 		case Theory::AXIOM:    assertion_deps(Theory::axiom(n), deps);   break;

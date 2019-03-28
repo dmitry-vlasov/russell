@@ -173,13 +173,20 @@ struct TokenStorage<S, TokenType::SMALL> {
 	TokenStorage() : src_(nullptr), beg_(-1), end_(-1) { }
 	TokenStorage(const Source* s) : src_(s), beg_(-1), end_(-1) { }
 	TokenStorage(const Source* s, const char* b, const char* e) :
-	src_(s), beg_(b - src_beg()), end_(e - src_beg()) { }
+	src_(s), beg_(s ? (b ? b - src_beg() : -1) : -1), end_(s ? (e ? e - src_beg() : -1) : -1) { }
 
 	const Source* src() const { return src_; }
-	const char* beg() const { return src_beg() + beg_; }
-	const char* end() const { return src_beg() + end_; }
+	const char* beg() const { return src_ ? (beg_ == -1 ? nullptr : src_beg() + beg_) : nullptr; }
+	const char* end() const { return src_ ? (end_ == -1 ? nullptr : src_beg() + end_) : nullptr; }
 	void set(const Source* s, const char* b, const char* e) {
-		src_ = s; beg_ = b - src_beg(); end_ = e - src_beg();
+		src_ = s;
+		if (src_) {
+			beg_ = b ? b - src_beg() : -1;
+			end_ = e ? e - src_beg() : -1;
+		} else {
+			beg_ = -1;
+			end_ = -1;
+		}
 	}
 	bool operator < (const TokenStorage& t) const {
 		if (src_ < t.src_) return true;
@@ -217,10 +224,14 @@ struct TokenStorage<S, TokenType::TINY> {
 	}
 
 	const Source* src() const { return bits.srcIsDef() ? src_vect()[bits.src()] : nullptr; }
-	const char* beg() const { return src_beg(src()) + bits.beg(); }
-	const char* end() const { return src_beg(src()) + bits.end(); }
-	void set(const Source* s, const char* b, const char* e) {
-		bits.set(resolve_src(s), b - src_beg(s), e -b);
+	const char* beg() const { return bits.srcIsDef() ? (bits.begIsDef() ? src_beg(src()) + bits.beg() : nullptr) : nullptr; }
+	const char* end() const { return bits.srcIsDef() ? (bits.endIsDef() ? src_beg(src()) + bits.end() : nullptr) : nullptr; }
+	void set(const Source* src, const char* b, const char* e) {
+		uint s = resolve_src(src);
+		bits.setSrc(s);
+		if (src) {
+			bits.set(s, b ? b - src_beg(src) : Bits::UNDEF_BEG, (e && b) ? e - b : Bits::UNDEF_LEN);
+		}
 	}
 	void operator = (const TokenStorage& s) {
 		bits = s.bits;
@@ -242,6 +253,9 @@ struct TokenStorage<S, TokenType::TINY> {
 
 private:
 	uint resolve_src(const Source* s) {
+		if (s == nullptr) {
+			return Bits::UNDEF_SRC;
+		}
 		auto i = src_map().find(s);
 		uint src = -1;
 		if (i == src_map().end()) {
@@ -253,7 +267,7 @@ private:
 		}
 		return src;
 	}
-	static const char* src_beg(const Source* s) { return s->data().c_str(); }
+	static const char* src_beg(const Source* s) { return s ? s->data().c_str() : nullptr; }
 	static map<const Source*, std::uint32_t>& src_map() {
 		static map<const Source*, std::uint32_t> src_map_; return src_map_;
 	}
@@ -274,14 +288,18 @@ private:
 		bool srcIsDef() const { return (bits_ & SRC_MASK) != UNDEF_SRC; }
 		bool begIsDef() const { return ((bits_ & BEG_MASK) >> 16) != UNDEF_BEG; }
 		bool lenIsDef() const { return ((bits_ & LEN_MASK) >> (16 + 32)) != UNDEF_LEN; }
+		bool endIsDef() const { return begIsDef() && lenIsDef(); }
 
 		void set(uint s, uint b, uint l) {
-			if (s >= UNDEF_SRC)
-				throw std::overflow_error("number of sources overflow: don't fit into 16 bit unsigned integer\n");
-			if (b >= UNDEF_BEG)
-				throw std::overflow_error(string("source position ") + to_string(b) + " don't fit into 32 bit unsigned integer\n");
-			if (l >= UNDEF_LEN)
-				throw std::overflow_error(string("source position length ") + to_string(l) + " don't fit into 16 bit unsigned integer\n");
+			if (s > UNDEF_SRC) {
+				throw std::overflow_error("number of sources overflow: " + to_string(s) + " don't fit into 16 bit unsigned integer\n");
+			}
+			if (b > UNDEF_BEG) {
+				throw std::overflow_error("source position " + to_string(b) + " don't fit into 32 bit unsigned integer\n");
+			}
+			if (l > UNDEF_LEN) {
+				throw std::overflow_error("source position length " + to_string(l) + " don't fit into 16 bit unsigned integer\n");
+			}
 			bits_ = s + ((uint64_t)b << 16) + ((uint64_t)l << (16 + 32));
 		}
 		void setSrc(uint s) {
@@ -296,8 +314,6 @@ private:
 		bool operator == (const Bits& b) const {
 			return bits_ == b.bits_;
 		}
-
-	private:
 		enum {
 			UNDEF_ALL = (uint64_t)0xFFFFFFFFFFFFFFFF,    // 64 bits
 			UNDEF_SRC = (uint64_t)0xFFFF,                // 16 bits
@@ -307,6 +323,7 @@ private:
 			BEG_MASK  = (uint64_t)0xFFFFFFFF << 16,      // following 32 bits
 			LEN_MASK  = (uint64_t)0xFFFFFF << (16 + 32), // following 16 bits
 		};
+	private:
 		std::uint64_t bits_;
 	};
 	Bits bits;
@@ -346,6 +363,16 @@ struct Token {
 		LocationIter x = b;
 		while (x != e) ++x;
 		return full ? "token: " + str() + "\n" + x.loc.show() + "\n" : x.loc.show();
+	}
+	string showRaw() const {
+		if (!src()) return "unknown source";
+		if (!beg()) return "unknown begin";
+		if (!end()) return "unknown end_";
+		string ret;
+		ret += "src: " + Lex::toStr(src()->id()) + "\n";
+		ret += "beg: " + string(beg(), 1) + "\n";
+		ret += "end: " + string(end(), 1) + "\n";
+		return ret;
 	}
 	Location locate() const {
 		Location loc(
@@ -394,18 +421,6 @@ private:
 	TokenStorage<Source> storage;
 };
 
-
-template<class S>
-struct Tokenable {
-	typedef S Source;
-	Tokenable(const Token<S>& t) : token(t) { }
-	Tokenable(const Tokenable& t) : token(t.token) { }
-	virtual ~Tokenable() { }
-	void operator = (const Tokenable& t) { token = t.token; }
-	Token<S> token;
-	virtual const Tokenable* ref() const { return nullptr; }
-};
-
 template<class S>
 struct Id {
 	typedef S Sys;
@@ -423,6 +438,21 @@ protected:
 private:
 	uint id_;
 	uint sys_;
+};
+
+template<class S>
+struct WithToken {
+	WithToken(const Token<S>& t) : token(t) { }
+	WithToken(const WithToken&) = default;
+
+	Token<S> token;
+};
+
+template<class S>
+struct TokenId : public Token<S>, public Id<S> {
+	TokenId(uint i, const Token<S>& t = Token<S>()) :
+		Token<S>(t), Id<S>(i) { }
+	TokenId(const TokenId&) = default;
 };
 
 template<class S>

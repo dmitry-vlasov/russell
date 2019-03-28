@@ -75,10 +75,10 @@ inline rus::Symbol* translate_symb(Literal s, const Assertion* ass) {
 	if (s.var) {
 		uint v = translate_var_symb(s.lit);
 		uint t = translate_var_type(s.lit, ass);
-		return new rus::Var(v, t);
+		return new rus::Var(v, t, rus::Token());
 	} else {
 		uint c = translate_const_symb(s.lit);
-		return new rus::Const(c);
+		return new rus::Const(c, rus::Token());
 	}
 }
 
@@ -403,9 +403,12 @@ void translate_assertion(const Assertion* ass, Maps& state) {
 	}
 }
 
-inline void translate_import(const Import* imp, Maps& s) {
-	rus::Import* import = new rus::Import(imp->source.id());
-	s.source->theory.nodes.emplace_back(unique_ptr<rus::Import>(import));
+inline void translate_import(const Import* imp, Maps& maps) {
+	rus::Import* import = new rus::Import(
+		imp->source.id(),
+		rus::Token(maps.sources.at(imp->token.src()->id()), imp->token.beg(), imp->token.end())
+	);
+	maps.source->theory.nodes.emplace_back(unique_ptr<rus::Import>(import));
 }
 
 inline void translate_comment(const Comment* com, Maps& s) {
@@ -459,7 +462,7 @@ void translate_super(const Assertion* ass, Maps& state) {
 	rus::Type* super = state.types.at(sup);
 	rus::Type* infer = state.types.at(inf);
 
-	infer->sup.push_back(super);
+	infer->sup.push_back(rus::User<rus::Type>(super));
 	deque<rus::Type*> sup_defs = std::move(state.supers[sup]);
 	for (auto sup_def = sup_defs.rbegin(); sup_def != sup_defs.rend(); ++ sup_def) {
 		state.supers[inf].push_front(*sup_def);

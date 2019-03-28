@@ -70,9 +70,9 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		auto i = var_stack.mapping.find(s->lit());
 		if (i != var_stack.mapping.end()) {
-			s.reset(new Var(s->lit(), i->second));
+			s.reset(new Var(s->lit(), i->second, Token()));
 		} else {
-			s.reset(new Const(s->lit()));
+			s.reset(new Const(s->lit(), Token()));
 		}
 	}
 }
@@ -153,14 +153,14 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
-		return new Import(id);
+		return new Import(id, Token(src));
 	}
 };
 
 struct SetType {
 	struct result { typedef void type; };
 	void operator()(unique_ptr<Symbol>& s, Id t) const {
-		s.reset(new Var(s->lit(), t.id()));
+		s.reset(new Var(s->lit(), t.id(), Token()));
 	}
 };
 
@@ -210,8 +210,8 @@ struct GetStep {
 
 struct SetToken {
     struct result { typedef void type; };
-    void operator()(Tokenable& tokenable, LocationIter beg, LocationIter end, Source* src) const {
-    	tokenable.token.set(src, &*beg, &*end);
+    void operator()(WithToken& with_token, LocationIter beg, LocationIter end, Source* src) const {
+    	with_token.token.set(src, &*beg, &*end);
     }
 };
 
@@ -304,7 +304,7 @@ struct AddToTheory {
 		t->nodes.emplace_back(unique_ptr<Theorem>(th));
 	}
 	void operator()(Theory* t, Proof* p) const {
-		p->theorem()->proofs.emplace_back(User<Proof>(p->id()));
+		p->theorem()->proofs.emplace_back(p->id());
 		t->nodes.emplace_back(unique_ptr<Proof>(p));
 	}
 	void operator()(Theory* t, Theory* th) const {

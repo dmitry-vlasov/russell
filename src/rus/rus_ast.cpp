@@ -7,12 +7,8 @@ inline uint create_id(string pref, string s1, string s2) {
 }
 
 inline Var create_var(string str, Type* tp) {
-	return Var(Lex::toInt(str), tp->id());
+	return Var(Lex::toInt(str), tp->id(), Token(tp->token.src()));
 }
-
-//inline Const create_const(string str, Constant* c) {
-//	return Const(Lex::toInt(str));
-//}
 
 uint create_super_id(Type* inf, Type* sup) {
 	return create_id("sup", show_id(inf->id()), show_id(sup->id()));
@@ -21,8 +17,16 @@ uint create_super_id(Type* inf, Type* sup) {
 Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_super_id(inf, sup);
 	Rule* rule = new Rule(id);
-	rule->vars.v.emplace_back(Lex::toInt("x"), inf->id());
-	rule->term.symbols.push_back(make_unique<Var>(Lex::toInt("x"), inf->id()));
+	rule->vars.v.emplace_back(
+		Lex::toInt("x"),
+		inf->id(),
+		Token(inf->token.src())
+	);
+	rule->term.symbols.push_back(make_unique<Var>(
+		Lex::toInt("x"),
+		inf->id(),
+		Token(inf->token.src())
+	));
 	rule->term.type.set(sup->id());
 	create_rule_term(rule->term, id);
 	return rule;
@@ -90,7 +94,7 @@ void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2)
 	}
 }
 
-Disj::Disj(const Vector& vect, const Token& t) : Tokenable(t) {
+Disj::Disj(const Vector& vect, const Token& t) : WithToken(t) {
 	for (const auto& dis : vect) {
 		const set<uint>& d = *dis.get();
 		for (auto v : d) {
@@ -149,22 +153,23 @@ vector<Qed*> Proof::qeds() const {
 	return ret;
 }
 
-inline Tokenable* find(Constant* c, const Token& t) {
-	return c->token.includes(t) ? c : nullptr;
+/*
+inline Token* find(Constant* c, const Token& t) {
+	return c->token.includes(t) ? &c->token : nullptr;
 }
 
-inline Tokenable* find(Type* tp, const Token& t) {
-	return tp->token.includes(t) ? tp : nullptr;
+inline Token* find(Type* tp, const Token& t) {
+	return tp->token.includes(t) ? tp-> : nullptr;
 }
 
-inline Tokenable* find(Rule* r, const Token& t) {
+inline Token* find(Rule* r, const Token& t) {
 	if (r->token.includes(t)) return nullptr;
 	if (r->vars.token.includes(t)) return &r->vars;
 	if (r->term.token.includes(t)) return &r->term;
 	return r;
 }
 
-inline Tokenable* find(Assertion* a, const Token& t) {
+inline Token* find(Assertion* a, const Token& t) {
 	if (!a->token.includes(t)) return nullptr;
 	if (a->vars.token.includes(t)) return &a->vars;
 	if (a->disj.token.includes(t)) return &a->disj;
@@ -173,7 +178,7 @@ inline Tokenable* find(Assertion* a, const Token& t) {
 	return a;
 }
 
-inline Tokenable* find(Def* d, const Token& t) {
+inline Token* find(Def* d, const Token& t) {
 	if (!d->token.includes(t)) return nullptr;
 	if (d->dfm.token.includes(t)) return &d->dfm;
 	if (d->dfs.token.includes(t)) return &d->dfs;
@@ -181,19 +186,19 @@ inline Tokenable* find(Def* d, const Token& t) {
 	return find(static_cast<Assertion*>(d), t);
 }
 
-inline Tokenable* find(Qed* q, const Token& t) {
+inline Token* find(Qed* q, const Token& t) {
 	return q->token.includes(t) ? q : nullptr;
 }
 
-inline Tokenable* find(Step* s, const Token& t) {
+inline Token* find(Step* s, const Token& t) {
 	return s->token.includes(t) ? s : nullptr;
 }
 
-inline Tokenable* find(Vars* v, const Token& t) {
+inline Token* find(Vars* v, const Token& t) {
 	return v->token.includes(t) ? v : nullptr;
 }
 
-inline Tokenable* find(Proof::Elem& e, const Token& t) {
+inline Token* find(Proof::Elem& e, const Token& t) {
 	switch (Proof::kind(e)) {
 	case Proof::QED: return find(Proof::qed(e), t);
 	case Proof::STEP: return find(Proof::step(e), t);
@@ -202,47 +207,47 @@ inline Tokenable* find(Proof::Elem& e, const Token& t) {
 	}
 }
 
-inline Tokenable* find(Proof* p, const Token& t) {
+inline Token* find(Proof* p, const Token& t) {
 	if (!p->token.includes(t)) return nullptr;
 	for (auto& e : p->elems) {
-		if (Tokenable* ret = find(e, t)) {
+		if (Token* ret = find(e, t)) {
 			return ret;
 		}
 	}
 	return p;
 }
 
-inline Tokenable* find(Import* i, const Token& t) {
+inline Token* find(Import* i, const Token& t) {
 	return i->token.includes(t) ? i : nullptr;
 }
 
-Tokenable* find(Theory::Node& n, const Token& t);
+Token* find(Theory::Node& n, const Token& t);
 
-inline Tokenable* find(Theory* th, const Token& t) {
+inline Token* find(Theory* th, const Token& t) {
 	for (auto& n : th->nodes)
-		if (Tokenable* ret = find(n, t)) return ret;
+		if (Token* ret = find(n, t)) return ret;
 	return nullptr;
 }
 
-Tokenable* find(Theory::Node& n, const Token& t) {
+Token* find(Theory::Node& n, const Token& t) {
 	switch (Theory::kind(n)) {
-	case Theory::CONSTANT: if (Tokenable* ret = find(Theory::constant(n), t)) return ret; else return nullptr;
-	case Theory::TYPE:     if (Tokenable* ret = find(Theory::type(n), t)) return ret; else return nullptr;
-	case Theory::RULE:     if (Tokenable* ret = find(Theory::rule(n), t)) return ret; else return nullptr;
-	case Theory::AXIOM:    if (Tokenable* ret = find(Theory::axiom(n), t)) return ret; else return nullptr;
-	case Theory::DEF:      if (Tokenable* ret = find(Theory::def(n), t)) return ret; else return nullptr;
-	case Theory::THEOREM:  if (Tokenable* ret = find(Theory::theorem(n), t)) return ret; else return nullptr;
-	case Theory::PROOF:    if (Tokenable* ret = find(Theory::proof(n), t)) return ret; else return nullptr;
-	case Theory::THEORY:   if (Tokenable* ret = find(Theory::theory(n), t)) return ret; else return nullptr;
-	case Theory::IMPORT:   if (Tokenable* ret = find(Theory::import(n), t)) return ret; else return nullptr;
+	case Theory::CONSTANT: if (Token* ret = find(Theory::constant(n), t)) return ret; else return nullptr;
+	case Theory::TYPE:     if (Token* ret = find(Theory::type(n), t)) return ret; else return nullptr;
+	case Theory::RULE:     if (Token* ret = find(Theory::rule(n), t)) return ret; else return nullptr;
+	case Theory::AXIOM:    if (Token* ret = find(Theory::axiom(n), t)) return ret; else return nullptr;
+	case Theory::DEF:      if (Token* ret = find(Theory::def(n), t)) return ret; else return nullptr;
+	case Theory::THEOREM:  if (Token* ret = find(Theory::theorem(n), t)) return ret; else return nullptr;
+	case Theory::PROOF:    if (Token* ret = find(Theory::proof(n), t)) return ret; else return nullptr;
+	case Theory::THEORY:   if (Token* ret = find(Theory::theory(n), t)) return ret; else return nullptr;
+	case Theory::IMPORT:   if (Token* ret = find(Theory::import(n), t)) return ret; else return nullptr;
 	case Theory::COMMENT: return nullptr;
 	}
 	return nullptr;
 }
 
-Tokenable* Source::find(const Token& t) {
+Token* Source::find(const Token& t) {
 	return rus::find(&theory, t);
 }
-
+*/
 
 }} // mdl::rus

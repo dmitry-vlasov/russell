@@ -287,7 +287,9 @@ vector<mm::Assertion*> translate_proof(const Proof* proof, Maps& maps) {
 }
 
 inline void add_turnstile(vector<mm::Source::Node>& nodes) {
-	nodes.emplace_back(unique_ptr<mm::Import>(new mm::Import(Maps::Global::turnstileName())));
+	nodes.emplace_back(unique_ptr<mm::Import>(
+		new mm::Import(Maps::Global::turnstileName())
+	));
 }
 
 inline void add_const(vector<mm::Source::Node>& nodes, const Constant* c, Maps& maps) {

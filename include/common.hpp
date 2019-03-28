@@ -473,7 +473,7 @@ public:
 	const_iterator end() const { return refs.end(); }
 
 	template<class, class> friend class Owner;
-	template<class, class> friend class _User;
+	template<class, class> friend class User;
 
 	void rehash() { refs.rehash(); }
 };
@@ -487,24 +487,24 @@ inline string xml_sys_id(uint sys, uint id) {
 }
 
 template<class T, class S>
-class Owner : public Tokenable<typename S::Src>, public Id<S> {
+class Owner : public Id<S>, public WithToken<typename S::Src> {
 public:
 	typedef S Sys;
 	typedef typename S::Src Src;
-	typedef Tokenable<Src> Tokenable_;
 	typedef Id<S> Id_;
+	typedef WithToken<Src> WithToken_;
 
-	Owner(uint i, const Token<Src>& t) : Tokenable_(t), Id_(i) {
+	Owner(uint i, const Token<Src>& t) : Id_(i), WithToken_(t) {
 		Sys::mod().math.template get<T>().add(Id_::id(), static_cast<T*>(this));
 	}
-	virtual ~Owner() {
+	~Owner() {
 		Sys::mod(Id_::sys()).math.template get<T>().del(Id_::id());
 	}
 	string xml_id() const { return xml_sys_id(Id_::sys(), Id_::id()); }
 };
 
 template<class T, class S>
-class _User : public Id<S> {
+class User : public Id<S> {
 protected:
 	T* ptr;
 public:
@@ -512,22 +512,22 @@ public:
 	typedef typename S::Src Src;
 	typedef Id<S> Id_;
 
-	explicit _User(uint id = -1) : ptr(nullptr) { use(id); }
-	explicit _User(Id_ i) : ptr(nullptr) { use(i.id(), i.sys()); }
-	explicit _User(const T* p) : ptr(nullptr) { if (p) use(p->id(), p->sys()); }
-	_User(const _User& u) :_User(u.id()) { }
-	_User(_User&& u) :_User(u.id()) { u.unuse(); }
-	~_User() { unuse(); }
+	explicit User(uint id = -1) : ptr(nullptr) { use(id); }
+	explicit User(Id_ i) : ptr(nullptr) { use(i.id(), i.sys()); }
+	explicit User(const T* p) : ptr(nullptr) { if (p) use(p->id(), p->sys()); }
+	User(const User& u) :User(u.id()) { }
+	User(User&& u) :User(u.id()) { u.unuse(); }
+	~User() { unuse(); }
 
 	void operator = (const T* p) { if (p) use(p->id(), p->sys()); }
-	void operator = (const _User& u) { use(u.id(), u.sys()); }
+	void operator = (const User& u) { use(u.id(), u.sys()); }
 
-	bool operator == (const _User& u) const { return ptr == u.ptr; }
-	bool operator != (const _User& u) const { return ptr != u.ptr; }
-	bool operator < (const _User& u) const  { return ptr <  u.ptr; }
-	bool operator <= (const _User& u) const { return ptr <= u.ptr; }
-	bool operator > (const _User& u) const  { return ptr >  u.ptr; }
-	bool operator >= (const _User& u) const { return ptr >= u.ptr; }
+	bool operator == (const User& u) const { return ptr == u.ptr; }
+	bool operator != (const User& u) const { return ptr != u.ptr; }
+	bool operator < (const User& u) const  { return ptr <  u.ptr; }
+	bool operator <= (const User& u) const { return ptr <= u.ptr; }
+	bool operator > (const User& u) const  { return ptr >  u.ptr; }
+	bool operator >= (const User& u) const { return ptr >= u.ptr; }
 
 	bool operator == (const T* p) const { return ptr == p; }
 	bool operator != (const T* p) const { return ptr != p; }
@@ -541,12 +541,12 @@ public:
 	T& operator * () { return *ptr; }
 	const T& operator * () const { return *ptr; }
 
-	friend bool operator == (const T* p, const _User<T, S>& u) { return p == u.ptr; }
-	friend bool operator != (const T* p, const _User<T, S>& u) { return p != u.ptr; }
-	friend bool operator < (const T* p, const _User<T, S>& u)  { return p <  u.ptr; }
-	friend bool operator <= (const T* p, const _User<T, S>& u) { return p <= u.ptr; }
-	friend bool operator > (const T* p, const _User<T, S>& u)  { return p >  u.ptr; }
-	friend bool operator >= (const T* p, const _User<T, S>& u) { return p >= u.ptr; }
+	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ptr; }
+	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ptr; }
+	friend bool operator < (const T* p, const User<T, S>& u)  { return p <  u.ptr; }
+	friend bool operator <= (const T* p, const User<T, S>& u) { return p <= u.ptr; }
+	friend bool operator > (const T* p, const User<T, S>& u)  { return p >  u.ptr; }
+	friend bool operator >= (const T* p, const User<T, S>& u) { return p >= u.ptr; }
 
 	operator bool() const { return ptr; }
 
@@ -585,42 +585,6 @@ public:
 	}
 };
 
-template<class T, class S, bool with_token = true> class User;
-
-template<class T, class S>
-class User<T, S, true> : public Tokenable<typename S::Src>, public _User<T, S> {
-public:
-	typedef S Sys;
-	typedef _User<T, S> _User_;
-	typedef typename S::Src Src;
-	typedef Tokenable<Src> Tokenable_;
-	typedef Id<S> Id_;
-
-	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(id) { }
-	explicit User(Id_ i, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(i) { }
-	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t), _User_(p) {  }
-	User(const User& u) : User(u.id(), u.token) { }
-	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
-	virtual ~User() { }
-	void operator = (const User& u) { _User_::use(u.id(), u.sys()); }
-	const Tokenable_* ref() const override { return _User_::ptr; }
-};
-
-template<class T, class S>
-class User<T, S, false> : public _User<T, S> {
-public:
-	typedef S Sys;
-	typedef _User<T, S> _User_;
-	typedef typename S::Src Src;
-	typedef Id<S> Id_;
-
-	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : _User_(id) { }
-	explicit User(Id_ i, const Token<Src>& t = Token<Src>()) : _User_(i) { }
-	User(const T* p, const Token<Src>& t = Token<Src>()) : _User_(p) {  }
-	User(const User& u) : User(u.id()) { }
-	User(User&& u)      : User(u.id()) { u.unuse(); }
-};
-
 template<class Src, class Sys>
 struct Source : public Owner<Src, Sys>, public Writable {
 	typedef Owner<Src, Sys> Owner_;
@@ -629,7 +593,7 @@ struct Source : public Owner<Src, Sys>, public Writable {
 
 	enum class Closure { UNKNOWN, IN_PROGRESS, DONE, };
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closureState(Closure::UNKNOWN) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>(dynamic_cast<Src*>(this))), parsed(false), closureState(Closure::UNKNOWN) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }

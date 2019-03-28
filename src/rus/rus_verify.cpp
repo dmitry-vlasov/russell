@@ -20,6 +20,7 @@ void Step::verify(uint mode) const {
 			msg += show() + "\n";
 			msg += expr.show() + "\n\n";
 			msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
+			unify_forth(ass()->props[0]->expr, expr);
 			throw Error("proposition unification failed", msg);
 		}
 		for (uint i = 0; i < ass()->arity(); ++ i) {

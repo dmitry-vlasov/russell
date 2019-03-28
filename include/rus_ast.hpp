@@ -12,8 +12,8 @@ struct Theory;
 struct Import;
 struct Source;
 
-struct Comment : public Tokenable, public Writable  {
-	Comment(bool ml = false, const string& txt = string(), const Token& t = Token()) : Tokenable(t), text(txt), multiline(ml) { }
+struct Comment : public Writable, public WithToken  {
+	Comment(bool ml = false, const string& txt = string(), const Token& t = Token()) : WithToken(t), text(txt), multiline(ml) { }
 	Comment(const Comment&) = delete;
 	string text;
 	bool multiline;
@@ -30,8 +30,8 @@ struct Constant : public Owner<Constant>, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Vars : public Tokenable, public Writable {
-	Vars(const vector<Var>& vars = vector<Var>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
+struct Vars : public Writable, public WithToken {
+	Vars(const vector<Var>& vars = vector<Var>(), const Token& t = Token()) : WithToken(t), v(vars) { }
 	Vars(const Vars&) = delete;
 	vector<Var> v;
 	bool isDeclared(uint l) const {
@@ -40,7 +40,7 @@ struct Vars : public Tokenable, public Writable {
 	void write(ostream& os, const Indent& = Indent()) const override;
 };
 
-struct Disj : public Tokenable, public Writable {
+struct Disj : public Writable, public WithToken {
 	struct Pair {
 		Pair(uint a, uint b) : v(a < b ? a : b), w(a < b ? b : a) {
 			if (a == b) throw Error("single variable cannot be disjointed from itself", Lex::toStr(a));
@@ -68,7 +68,7 @@ struct Disj : public Tokenable, public Writable {
 
 void parse_expr(Expr& ex);
 
-struct Type : public Owner<Type>, public Writable {
+struct Type : public Writable, public Owner<Type> {
 	typedef map<const Type*, unique_ptr<Rule>> Supers;
 	Type(Id id, const vector<Id>& sup = vector<Id>(), const Token& t = Token());
 	Type(const Type&) = delete;
@@ -87,7 +87,7 @@ inline bool operator <= (const Type& t1, const Type& t2) {
 	return &t1 == &t2 || t1 < t2;
 }
 
-struct Rule : public Owner<Rule>, public Writable {
+struct Rule : public Writable, public Owner<Rule> {
 	Rule(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Rule(const Rule&) = delete;
 	Vars vars;
@@ -103,25 +103,25 @@ Rule* find_super(const Type* type, const Type* super);
 inline const Type* VarTree::type() const { return type_.get(); }
 inline const Type* RuleTree::type() const { return rule->term.type.get(); }
 
-struct Hyp : public Tokenable, public Writable {
+struct Hyp : public Writable, public WithToken {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
-		Tokenable(t), ind(i), expr(e) { }
+		WithToken(t), ind(i), expr(e) { }
 	Hyp(const Hyp&) = delete;
 	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Prop : public Tokenable, public Writable {
+struct Prop : public Writable, public WithToken {
 	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
-		Tokenable(t), ind(i), expr(e) { }
+		WithToken(t), ind(i), expr(e) { }
 	Prop(const Prop&) = delete;
 	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Assertion : public Owner<Assertion> {
+struct Assertion : public Writable, public Owner<Assertion> {
 	enum Kind { AXM, THM, DEF };
 	Assertion(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Assertion(const Assertion&) = delete;
@@ -143,14 +143,14 @@ struct Assertion : public Owner<Assertion> {
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
-struct Axiom : public Assertion, public Writable {
+struct Axiom : public Assertion {
 	Axiom(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Axiom(const Axiom&) = delete;
 	Kind kind() const override { return AXM; }
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Def : public Assertion, public Writable {
+struct Def : public Assertion {
 	Def(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Def(const Def&) = delete;
 	Kind kind() const override { return DEF; }
@@ -160,7 +160,7 @@ struct Def : public Assertion, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Theorem : public Assertion, public Writable {
+struct Theorem : public Assertion {
 	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Theorem(const Theorem&) = delete;
 	Kind kind() const override { return THM; }
@@ -168,12 +168,12 @@ struct Theorem : public Assertion, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Ref : public Tokenable, public Writable {
+struct Ref : public Writable, public WithToken {
 	enum Kind { HYP, PROP, STEP };
 	Kind kind() const { return static_cast<Kind>(val.index()); }
-	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), val(h)  { }
-	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), val(p)  { }
-	Ref(Step* s, const Token& t = Token()) : Tokenable(t), val(s)  { }
+	Ref(Hyp* h, const Token& t = Token())  : WithToken(t), val(h)  { }
+	Ref(Prop* p, const Token& t = Token()) : WithToken(t), val(p)  { }
+	Ref(Step* s, const Token& t = Token()) : WithToken(t), val(s)  { }
 	Ref(const Ref&) = delete;
 	Expr& expr();
 	const Expr& expr() const;
@@ -202,20 +202,22 @@ enum Verify {
 	VERIFY_ALL   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED | VERIFY_DEEP
 };
 
-struct Step : public Tokenable, public Writable {
+struct Step : public Writable, public WithToken {
 	enum Kind { ASS, CLAIM };
-	typedef variant<unique_ptr<User<Assertion>>, unique_ptr<Proof>> Value;
+	typedef User<Assertion> AssUser;
+	typedef unique_ptr<AssUser> AssPtr;
+	typedef variant<AssPtr, unique_ptr<Proof>> Value;
 
 	Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
-		Tokenable(t), sub(false), ind_(i), proof_(p) {
-		if (k == ASS) { val_ = unique_ptr<User<Assertion>>(new User<Assertion>(id)); }
+		WithToken(t), sub(false), ind_(i), proof_(p) {
+		if (k == ASS) { val_ = AssPtr(make_unique<AssUser>(id)); }
 	}
 	Step(const Step&) = delete;
-	uint ass_id() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->id(); }
-	const Token& ass_token() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->token; }
-	Assertion* ass() { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }
+	uint ass_id() const { return std::get<AssPtr>(val_)->id(); }
+	//const Token& ass_token() const { return std::get<AssPtr>(val_).get()->token(); }
+	Assertion* ass() { return std::get<AssPtr>(val_).get()->get(); }
 	Proof* claim() { return std::get<unique_ptr<Proof>>(val_).get(); }
-	const Assertion* ass() const { return std::get<unique_ptr<User<Assertion>>>(val_).get()->get(); }
+	const Assertion* ass() const { return std::get<AssPtr>(val_).get()->get(); }
 	const Proof* claim() const { return std::get<unique_ptr<Proof>>(val_).get(); }
 	Proof* proof() { return proof_; }
 	const Proof* proof() const { return proof_; }
@@ -254,9 +256,9 @@ inline const Expr& Ref::expr() const {
 	return step()->expr;
 }
 
-struct Qed : public Tokenable, public Writable {
+struct Qed : public Writable, public WithToken {
 	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
-		Tokenable(t), prop(p), step(s) { }
+		WithToken(t), prop(p), step(s) { }
 	Qed(const Qed&) = delete;
 	void verify(uint mode = VERIFY_ALL) const;
 	Prop* prop;
@@ -264,7 +266,7 @@ struct Qed : public Tokenable, public Writable {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Proof : public Owner<Proof>, public Writable {
+struct Proof : public Writable, public Owner<Proof> {
 
 	enum Kind { VARS, STEP, QED };
 	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
@@ -292,14 +294,14 @@ struct Proof : public Owner<Proof>, public Writable {
 
 };
 
-struct Import : public Tokenable, public Writable {
-	Import(uint src, const Token& t = Token()) : Tokenable(t), source(src) { }
+struct Import : public Writable, public WithToken {
+	Import(uint src, const Token& t = Token()) : WithToken(t), source(src) { }
 	Import(const Import&) = delete;
 	User<Source> source;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Theory : public Tokenable, public Writable {
+struct Theory : public Writable, public WithToken {
 	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
 	typedef variant<
 		unique_ptr<Constant>,
@@ -315,7 +317,7 @@ struct Theory : public Tokenable, public Writable {
 	> Node;
 
 	Theory(uint n = -1, Theory* p = nullptr, const Token& t = Token()) :
-		Tokenable(t), id(n), nodes(), parent(p) { }
+		WithToken(t), id(n), nodes(), parent(p) { }
 	Theory(const Theory&) = delete;
 
 	void write(ostream& os, const Indent& i = Indent()) const override;
@@ -339,7 +341,7 @@ struct Theory : public Tokenable, public Writable {
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l) : mdl::Source<Source, Sys>(l) { }
 	Source(const Source&) = delete;
-	Tokenable* find(const Token& t);
+	Token* find(const Token& t);
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Theory theory;

@@ -5,8 +5,8 @@
 namespace mdl { namespace mm {
 
 typedef mdl::Token<Source> Token;
-typedef mdl::Tokenable<Source> Tokenable;
 typedef mdl::Id<Source> Id;
+typedef mdl::WithToken<Source> WithToken;
 
 class Source;
 class Assertion;
@@ -20,9 +20,9 @@ struct Comment : public Writable {
 	}
 };
 
-struct Import : public Writable {
+struct Import : public Writable, public WithToken {
 	User<Source> source;
-	Import(uint id) : source(id) { }
+	Import(uint id, const Token& t = Token()) : WithToken(t), source(id) { }
 	Import(const Import&) = delete;
 	void write(ostream& os, const Indent& i = Indent()) const override {
 		os << i << "$[ " << Lex::toStr(source.id()) << ".mm $]\n";
@@ -95,13 +95,13 @@ struct Var : public Writable, public Referable {
 	}
 };
 
-struct Ref : public Writable {
+struct Ref : public Writable, WithToken {
 	typedef User<Assertion> Ass;
 	enum Kind { VAR, HYP, ASS };
 
-	Ref(Hyp* h) : val(h) { }
-	Ref(Var* v) : val(v) { }
-	Ref(uint l) : val(Ass(l)) { }
+	Ref(Hyp* h, const Token& t = Token()) : WithToken(t), val(h) { }
+	Ref(Var* v, const Token& t = Token()) : WithToken(t), val(v) { }
+	Ref(uint l, const Token& t = Token()) : WithToken(t), val(Ass(l)) { }
 	Ref(const Ref&) = default;
 
 	Kind kind() const { return static_cast<Kind>(val.index()); }

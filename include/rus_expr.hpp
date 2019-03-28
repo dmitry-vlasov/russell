@@ -8,7 +8,7 @@ namespace mdl { namespace rus {
 #define END_MARKER ";;"
 
 typedef mdl::Token<Source> Token;
-typedef mdl::Tokenable<Source> Tokenable;
+typedef mdl::WithToken<Source> WithToken;
 typedef mdl::Id<Sys> Id;
 
 struct Type;
@@ -23,8 +23,6 @@ struct Symbol : Writable {
 	virtual Symbol* clone() const = 0;
 
 	virtual const Type* type() const { return nullptr; }
-	virtual const Token* token() const { return nullptr; }
-	virtual const Tokenable* tokenable() const { return nullptr; }
 	virtual string showDetailed() const { return Lex::toStr(lit()); }
 
 	bool operator == (const Symbol& s) const { return lit() == s.lit(); }
@@ -61,8 +59,8 @@ private:
 	uint lit_;
 };
 
-struct Const : public Symbol {
-	Const(uint l) : const_(l) { }
+struct Const : public Symbol, public WithToken {
+	Const(uint l, const Token& t = Token()) : WithToken(t), const_(l) { }
 	Const(const Const& c) = default;
 	Const(Const&& c) = default;
 	Const& operator = (const Const& s) = default;
@@ -74,16 +72,13 @@ struct Const : public Symbol {
 
 	const Constant* constant() const { return const_.get(); }
 
-	const Token* token() const override { return &const_.token; }
-	const Tokenable* tokenable() const override;
-
 private:
 	User<Constant> const_;
 };
 
-struct Var : public Symbol {
-	Var(uint l, uint t) : lit_(l), type_(t) { }
-	Var(uint l, const Type* t) : lit_(l), type_(t) { }
+struct Var : public Symbol, public WithToken {
+	Var(uint l, uint tp, const Token& tk = Token()) : WithToken(tk), lit_(l), type_(tp) { }
+	Var(uint l, const Type* tp, const Token& tk = Token()) : WithToken(tk), lit_(l), type_(tp) { }
 	Var(const Var& c) = default;
 	Var(Var&& c) = default;
 	Var& operator = (const Var& s) = default;
@@ -97,9 +92,6 @@ struct Var : public Symbol {
 	string showDetailed() const override {
 		return Lex::toStr(lit()) + " <" + Lex::toStr(type_.id()) + ">";
 	}
-
-	const Token* token() const override { return &type_.token; }
-	const Tokenable* tokenable() const override;
 
 private:
 	uint lit_;
@@ -149,7 +141,7 @@ struct RuleTree : public Tree {
 	Tree* clone() const override { return new RuleTree(*this); }
 	void write(ostream& os, const Indent& indent = Indent()) const override;
 
-	CompactUser<Rule> rule;
+	User<Rule> rule;
 	Children children;
 };
 
@@ -172,17 +164,17 @@ struct VarTree : public Tree {
 
 private:
 	uint lit_;
-	CompactUser<Type> type_;
+	User<Type> type_;
 };
 
-struct Expr : public Tokenable, public Writable {
-	Expr(const Token& t = Token()) : Tokenable(t) { }
+struct Expr : public Writable, public WithToken {
+	Expr(const Token& t = Token()) : WithToken(t) { }
 	Expr(Id tp, Symbols&& ex, const Token& t = Token()) :
-		Tokenable(t), type(tp), symbols(std::move(ex)) { }
+		WithToken(t), type(tp), symbols(std::move(ex)) { }
 	Expr(Id tp, Symbols&& ex, Tree* tr, const Token& t = Token()) :
-		Tokenable(t), type(tp), tree_(tr), symbols(std::move(ex)) { }
-	Expr(const Expr& ex) : Tokenable(ex) { operator = (ex); }
-	Expr(Expr&& ex) : Tokenable(ex.token) { operator = (std::move(ex)); }
+		WithToken(t), type(tp), tree_(tr), symbols(std::move(ex)) { }
+	Expr(const Expr& ex) : WithToken(ex) { operator = (ex); }
+	Expr(Expr&& ex) : WithToken(ex) { operator = (std::move(ex)); }
 
 	void operator = (const Expr& ex) {
 		type = ex.type;

@@ -2,11 +2,6 @@
 
 namespace mdl { namespace rus {
 
-template<class U, class T>
-static T* find_obj(User<U>& user, const char* pos) {
-	return user.token.includes(pos) ? dynamic_cast<T*>(user.get()) : nullptr;
-}
-
 template<class T>
 static T* find_obj(Vars& vars, const char* pos) {
 	return vars.token.includes(pos) ? dynamic_cast<T*>(&vars) : nullptr;
@@ -19,24 +14,13 @@ static T* find_obj(Expr& expr, const char* pos) {
 
 template<class T>
 static T* find_obj(Type* type, const char* pos) {
-	if (type->token.includes(pos)) {
-		for (auto& sup : type->sup) {
-			if (T* t = find_obj<Type, T>(sup, pos)) {
-				return t;
-			}
-		}
-		return dynamic_cast<T*>(type);
-	}
-	return nullptr;
+	return type->token.includes(pos) ? dynamic_cast<T*>(type) : nullptr;
 }
 
 template<class T>
 static T* find_obj(Rule* rule, const char* pos) {
 	if (rule->token.includes(pos)) {
 		if (T* t = find_obj<T>(rule->vars, pos)) {
-			return t;
-		}
-		if (T* t = find_obj<Type, T>(rule->term.type, pos)) {
 			return t;
 		}
 		if (T* t = find_obj<T>(rule->term, pos)) {
@@ -50,9 +34,6 @@ static T* find_obj(Rule* rule, const char* pos) {
 template<class T>
 static T* find_obj(Hyp* hyp, const char* pos) {
 	if (hyp->token.includes(pos)) {
-		if (T* t = find_obj<Type, T>(hyp->expr.type, pos)) {
-			return t;
-		}
 		if (T* t = find_obj<T>(hyp->expr, pos)) {
 			return t;
 		}
@@ -64,9 +45,6 @@ static T* find_obj(Hyp* hyp, const char* pos) {
 template<class T>
 static T* find_obj(Prop* prop, const char* pos) {
 	if (prop->token.includes(pos)) {
-		if (T* t = find_obj<Type, T>(prop->expr.type, pos)) {
-			return t;
-		}
 		if (T* t = find_obj<T>(prop->expr, pos)) {
 			return t;
 		}
@@ -99,13 +77,7 @@ static T* find_obj(Assertion* ass, const char* pos) {
 template<class T>
 static T* find_obj(Step* step, const char* pos) {
 	if (step->token.includes(pos)) {
-		if (step->kind() == Step::ASS && step->ass_token().includes(pos)) {
-			return dynamic_cast<T*>(step->ass());
-		}
 		if (T* t = find_obj<T>(step->expr, pos)) {
-			return t;
-		}
-		if (T* t = find_obj<Type, T>(step->expr.type, pos)) {
 			return t;
 		}
 		return dynamic_cast<T*>(step);

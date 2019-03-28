@@ -298,7 +298,7 @@ public:
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
-			c->source->contents.emplace_back(unique_ptr<Import>(new Import(id)));
+			c->source->contents.emplace_back(unique_ptr<Import>(new Import(id, c->token(sv))));
 #ifndef PARALLEL_MM_PARSE
 			if (!Sys::get().math.get<Source>().access(id)->parsed) parse(id);
 #endif

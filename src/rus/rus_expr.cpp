@@ -2,14 +2,6 @@
 
 namespace mdl { namespace rus {
 
-const Tokenable* Const::tokenable() const {
-	return constant();
-}
-
-const Tokenable* Var::tokenable() const {
-	return type();
-}
-
 void Rules::add(const Expr& ex, uint id) {
 	assert(ex.symbols.size());
 	Rules* m = this;

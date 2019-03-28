@@ -27,7 +27,11 @@ inline Action act(
 			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << r.get()->term.show() <<  endl;
 			return Action(Action::RET, r.get());
 		} else {
-			if (trace) cout << Indent(ch - beg) << "Act: Rule FAILS - follows: " << Lex::toStr(r.id()) << endl;
+			if (trace) {
+				cout << Indent(ch - beg) << "Act: Rule FAILS - follows: " << Lex::toStr(r.id()) << endl;
+				cout << "r.get()->token: " << endl << r.get()->token.showRaw() << endl;
+				cout << "e->token: " << endl << e->token.showRaw() << endl;
+			}
 			return Action::BREAK;
 		}
 	} else if (ch == end) {

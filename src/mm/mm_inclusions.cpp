@@ -119,7 +119,7 @@ void minimize_imports(uint label, map<uint, set<uint>>& resolved, const map<uint
 			set<uint> minimized = minimize_deps(label, deps, resolved);
 			vector<Source::Node> new_contents;
 			for (uint inc : minimized) {
-				new_contents.emplace_back(unique_ptr<Import>(new Import(inc)));
+				new_contents.emplace_back(unique_ptr<Import>(new Import(inc, Token(s))));
 			}
 			for (auto& n : s->contents) {
 				switch (Source::kind(n)) {
