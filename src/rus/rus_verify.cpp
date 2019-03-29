@@ -151,11 +151,11 @@ void verify(uint src) {
 #endif
 		set<uint> verified;
 		for (const auto& s : Sys::mod().math.get<Source>()) {
-			verify_source(s.first, VERIFY_DISJ | VERIFY_DEEP, verified);
+			verify_source(s.first, VERIFY_DISJ | UPDATE_DISJ | VERIFY_DEEP, verified);
 		}
 	} else {
 		set<uint> verified;
-		verify_source(src, VERIFY_SUB | VERIFY_QED | VERIFY_DISJ, verified);
+		verify_source(src, VERIFY_SUB | VERIFY_QED | VERIFY_DISJ | UPDATE_DISJ, verified);
 	}
 }
 
