@@ -187,7 +187,7 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	auto m_end = r2->term.symbols.end();
 	while (n != n_end && m != m_end) {
 		if (!(*n)->type() && !(*m)->type()) {
-			if (*n != *m) {
+			if (**n != **m) {
 				return false;
 			}
 		} else if ((*n)->type() && (*m)->type()) {
