@@ -593,13 +593,7 @@ struct Source : public Writable, public Owner<Src, Sys> {
 
 	enum class Closure { UNKNOWN, IN_PROGRESS, DONE, };
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closureState(Closure::UNKNOWN) {
-		/*if (Src* s = dynamic_cast<Src*>(this)) {
-			Owner_::token.set(s);
-		} else {
-			throw Error("!dynamic_cast<Src*>(this)");
-		}*/
-	}
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closureState(Closure::UNKNOWN) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
@@ -630,9 +624,13 @@ struct Source : public Writable, public Owner<Src, Sys> {
 		string str;
 		str += string("Source: ") + Lex::toStr(Owner_::id()) + "\n";
 		str += "this_includes:\n";
-		for (auto s : this_includes) str += "\t" + Lex::toStr(s) + "\n";
+		for (auto& s : this_includes) {
+			str += "\t" + Lex::toStr(s->id()) + "\n";
+		}
 		str += "all_includes:\n";
-		for (auto s : all_includes) str += "\t" + Lex::toStr(s) + "\n";
+		for (auto& s : all_includes) {
+			str += "\t" + Lex::toStr(s->id()) + "\n";
+		}
 		return str;
 	}
 
