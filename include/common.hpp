@@ -586,14 +586,20 @@ public:
 };
 
 template<class Src, class Sys>
-struct Source : public Owner<Src, Sys>, public Writable {
+struct Source : public Writable, public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
 	typedef set<User_>     SrcSet;
 
 	enum class Closure { UNKNOWN, IN_PROGRESS, DONE, };
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>(dynamic_cast<Src*>(this))), parsed(false), closureState(Closure::UNKNOWN) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closureState(Closure::UNKNOWN) {
+		/*if (Src* s = dynamic_cast<Src*>(this)) {
+			Owner_::token.set(s);
+		} else {
+			throw Error("!dynamic_cast<Src*>(this)");
+		}*/
+	}
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
