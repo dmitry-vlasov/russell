@@ -227,8 +227,6 @@ string show(LightSymbol s, bool full) {
 	string ret;
 	if (s.is_undef()) {
 		ret += "<UNDEF>";
-	} else if (s.is_lambda()) {
-		ret += "/\\";
 	} else {
 		ret += Lex::toStr(s.lit);
 	}
