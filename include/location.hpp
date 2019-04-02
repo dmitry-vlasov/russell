@@ -220,17 +220,33 @@ struct TokenStorage<S, TokenType::TINY> {
 	TokenStorage() = default;
 	TokenStorage(const Source* s) { bits.setSrc(resolve_src(s)); }
 	TokenStorage(const Source* s, const char* b, const char* e) {
-		bits.set(resolve_src(s), b - src_beg(s), e -b);
+		if (s) {
+			try {
+				bits.set(resolve_src(s), b - src_beg(s), e -b);
+			} catch (std::overflow_error& ex) {
+				string msg = ex.what();
+				msg += "source: " + Lex::toStr(s->id()) + ", beg: " + string(b, 32) + "\n";
+				cout << msg << endl;
+				throw std::overflow_error(msg);
+			}
+		}
 	}
 
-	const Source* src() const { return bits.srcIsDef() ? src_vect()[bits.src()] : nullptr; }
+	const Source* src() const { return bits.srcIsDef() ? return_src(bits.src()) : nullptr; }
 	const char* beg() const { return bits.srcIsDef() ? (bits.begIsDef() ? src_beg(src()) + bits.beg() : nullptr) : nullptr; }
 	const char* end() const { return bits.srcIsDef() ? (bits.endIsDef() ? src_beg(src()) + bits.end() : nullptr) : nullptr; }
 	void set(const Source* src, const char* b, const char* e) {
 		uint s = resolve_src(src);
 		bits.setSrc(s);
 		if (src) {
-			bits.set(s, b ? b - src_beg(src) : Bits::UNDEF_BEG, (e && b) ? e - b : Bits::UNDEF_LEN);
+			try {
+				bits.set(s, b ? b - src_beg(src) : Bits::UNDEF_BEG, (e && b) ? e - b : Bits::UNDEF_LEN);
+			} catch (std::overflow_error& ex) {
+				string msg = ex.what();
+				msg += "source: " + Lex::toStr(src->id()) + ", beg: " + string(b, 32) + "\n";
+				cout << msg << endl;
+				throw std::overflow_error(msg);
+			}
 		}
 	}
 	void operator = (const TokenStorage& s) {
@@ -252,28 +268,43 @@ struct TokenStorage<S, TokenType::TINY> {
 	};
 
 private:
+	typedef cmap<const Source*, uint> SourceMap;
+	typedef cmap<uint, const Source*> IndMap;
 	uint resolve_src(const Source* s) {
 		if (s == nullptr) {
 			return Bits::UNDEF_SRC;
 		}
-		auto i = src_map().find(s);
 		uint src = -1;
-		if (i == src_map().end()) {
-			src = src_vect().size();
-			src_vect().push_back(s);
-			src_map()[s] = src;
+		typename SourceMap::accessor a;
+		if (src_map().insert(a, s)) {
+			src = counter()++;
+			typename IndMap::accessor b;
+			if (ind_map().insert(b, src)) {
+				b->second = s;
+			} else {
+				throw std::runtime_error("Token::resolve_src - ind_map already has value, while it shouldn't");
+			}
+			a->second = src;
 		} else {
-			src = i->second;
+			src = a->second;
+		}
+		return src;
+	}
+	const Source* return_src(uint s) const {
+		if (s == Bits::UNDEF_SRC) {
+			return nullptr;
+		}
+		const Source* src = nullptr;
+		typename IndMap::const_accessor a;
+		if (ind_map().find(a, s)) {
+			src = a->second;
 		}
 		return src;
 	}
 	static const char* src_beg(const Source* s) { return s ? s->data().c_str() : nullptr; }
-	static map<const Source*, std::uint32_t>& src_map() {
-		static map<const Source*, std::uint32_t> src_map_; return src_map_;
-	}
-	static vector<const Source*>& src_vect() {
-		static vector<const Source*> src_vect_; return src_vect_;
-	}
+	static SourceMap& src_map() { static SourceMap src_map_; return src_map_; }
+	static IndMap& ind_map() { static IndMap src_vect_; return src_vect_; }
+	static std::atomic<uint>& counter() { static std::atomic<uint> counter_(0); return counter_; }
 
 	struct Bits {
 		Bits() : bits_(UNDEF_ALL) {}
@@ -298,7 +329,8 @@ private:
 				throw std::overflow_error("source position " + to_string(b) + " don't fit into 32 bit unsigned integer\n");
 			}
 			if (l > UNDEF_LEN) {
-				throw std::overflow_error("source position length " + to_string(l) + " don't fit into 16 bit unsigned integer\n");
+				//throw std::overflow_error("source position length " + to_string(l) + " don't fit into 16 bit unsigned integer\n");
+				l = UNDEF_LEN - 1;
 			}
 			bits_ = s + ((uint64_t)b << 16) + ((uint64_t)l << (16 + 32));
 		}
