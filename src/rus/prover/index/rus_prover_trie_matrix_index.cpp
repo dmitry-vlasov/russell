@@ -1,4 +1,4 @@
-#include "rus_prover_trie_matrix_index.hpp"
+#include "../index/rus_prover_trie_matrix_index.hpp"
 
 #include "../rus_prover_cartesian.hpp"
 

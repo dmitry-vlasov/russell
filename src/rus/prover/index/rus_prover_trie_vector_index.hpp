@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../index/rus_prover_trie_unify_iter.hpp"
 #include "../rus_prover_cartesian.hpp"
-#include "rus_prover_trie_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 

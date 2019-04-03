@@ -51,10 +51,10 @@ else()
 		rus/prover/rus_prover_term.cpp
 		rus/prover/rus_prover_subst.cpp
 		rus/prover/rus_prover_multy_subst.cpp
-		rus/prover/trie_index/rus_prover_trie_index.cpp
-		rus/prover/trie_index/rus_prover_trie_matrix_index.cpp
-		rus/prover/trie_index/rus_prover_trie_unify.cpp
-		rus/prover/trie_index/rus_prover_trie_unify_iter.cpp
+		rus/prover/index/rus_prover_trie_index.cpp
+		rus/prover/index/rus_prover_trie_matrix_index.cpp
+		rus/prover/index/rus_prover_trie_unify.cpp
+		rus/prover/index/rus_prover_trie_unify_iter.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

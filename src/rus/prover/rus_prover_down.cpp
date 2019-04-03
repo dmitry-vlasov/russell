@@ -1,7 +1,7 @@
+#include "index/rus_prover_trie_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
 #include "rus_prover_multy_subst.hpp"
-#include "trie_index/rus_prover_trie_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

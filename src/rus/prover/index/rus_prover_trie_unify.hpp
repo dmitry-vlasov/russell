@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_trie_matrix_index.hpp"
+#include "../index/rus_prover_trie_matrix_index.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
