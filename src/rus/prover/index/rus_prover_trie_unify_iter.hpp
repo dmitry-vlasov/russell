@@ -40,7 +40,7 @@ private:
 struct MultyIter {
 	enum Kind { NONE, TRIE, TERM, EMPTY };
 	MultyIter() : kind_(NONE) { }
-	MultyIter(Index::TrieIter i) : kind_(TRIE), trieIter(i) { }
+	MultyIter(Index::Iter i) : kind_(TRIE), trieIter(i) { }
 	MultyIter(Term::TermIter i) : kind_(TERM), termIter(i) { }
 	MultyIter(EmptyIter i) : kind_(EMPTY), emptyIter(i) { }
 	MultyIter(const MultyIter&) = default;
@@ -225,7 +225,7 @@ struct MultyIter {
 
 private:
 	Kind kind_;
-	Index::TrieIter trieIter;
+	Index::Iter trieIter;
 	Term::TermIter  termIter;
 	EmptyIter           emptyIter;
 };
@@ -389,7 +389,7 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	if (!m.index().size) return ret;
 	vector<MultyIter> iters;
-	iters.emplace_back(Index::TrieIter(m.index().root));
+	iters.emplace_back(Index::Iter(m.index().root));
 	iters.emplace_back(Term::TermIter(t));
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);

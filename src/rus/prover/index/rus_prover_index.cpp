@@ -34,7 +34,7 @@ void Index::add(const Term& t, uint val) {
 	++size;
 }
 
-static Term create_flatterm(const vector<Index::TrieIter>& branch) {
+static Term create_flatterm(const vector<Index::Iter>& branch) {
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
@@ -53,8 +53,8 @@ static Term create_flatterm(const vector<Index::TrieIter>& branch) {
 
 bool debug_trie_subterm = false;
 
-Term Index::TrieIter::subTerm(ConstIterator i) const {
-	vector<TrieIter> branch;
+Term Index::Iter::subTerm(ConstIterator i) const {
+	vector<Iter> branch;
 	ConstIterator start = i;
 	while (i != ConstIterator()) {
 		branch.emplace_back(i);
@@ -69,11 +69,11 @@ Term Index::TrieIter::subTerm(ConstIterator i) const {
 
 vector<pair<Term, uint>> Index::unpack() const {
 	vector<pair<Term, uint>> ret;
-	vector<TrieIter> branch;
+	vector<Iter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
-			TrieIter n = branch.back();
+			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
 				ret.emplace_back(create_flatterm(branch), ind);
 			}
@@ -106,12 +106,12 @@ string Index::show() const {
 }
 
 string Index::show_pointers() const {
-	vector<pair<vector<TrieIter>, uint>> vect;
-	vector<TrieIter> branch;
+	vector<pair<vector<Iter>, uint>> vect;
+	vector<Iter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
-			TrieIter n = branch.back();
+			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
 				vect.emplace_back(branch, ind);
 			}
@@ -146,11 +146,11 @@ string Index::show_pointers() const {
 
 vector<pair<Term, uint>> Index::unpack(const Node& root) {
 	vector<pair<Term, uint>> ret;
-	vector<TrieIter> branch;
+	vector<Iter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
-			TrieIter n = branch.back();
+			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
 				ret.emplace_back(create_flatterm(branch), ind);
 			}
@@ -183,12 +183,12 @@ string Index::show(const Node& root) {
 }
 
 string Index::show_pointers(const Node& root) {
-	vector<pair<vector<TrieIter>, uint>> vect;
-	vector<TrieIter> branch;
+	vector<pair<vector<Iter>, uint>> vect;
+	vector<Iter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
-			TrieIter n = branch.back();
+			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
 				vect.emplace_back(branch, ind);
 			}
@@ -224,11 +224,11 @@ string Index::show_pointers(const Node& root) {
 
 uint Index::totalNodes() const {
 	uint ret = 0;
-	vector<TrieIter> branch;
+	vector<Iter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
-			TrieIter n = branch.back();
+			Iter n = branch.back();
 			ret += n.iter()->second.inds.size();
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());

@@ -20,7 +20,7 @@ struct Index {
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
 	typedef map<uint, Subst> Unified;
-	struct TrieIter;
+	struct Iter;
 
 	void add(const Term& t, uint val = -1);
 	Unified unify(const Term&) const;
@@ -39,39 +39,39 @@ struct Index {
 	Node root;
 };
 
-struct Index::TrieIter {
-	TrieIter() : valid_(false) { }
-	TrieIter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
-	TrieIter(ConstIterator i) : valid_(i != ConstIterator()), iter_(i) { }
-	TrieIter(ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
-	TrieIter(const TrieIter&) = default;
-	TrieIter& operator = (const TrieIter&) = default;
-	bool operator == (const TrieIter& i) const {
+struct Index::Iter {
+	Iter() : valid_(false) { }
+	Iter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
+	Iter(ConstIterator i) : valid_(i != ConstIterator()), iter_(i) { }
+	Iter(ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
+	Iter(const Iter&) = default;
+	Iter& operator = (const Iter&) = default;
+	bool operator == (const Iter& i) const {
 		return &*iter_ == &*i.iter_;
 	}
-	bool operator != (const TrieIter& i) const {
+	bool operator != (const Iter& i) const {
 		return &*iter_ != &*i.iter_;
 	}
-	TrieIter side() const {
+	Iter side() const {
 		if (!valid_ || isSideEnd()) {
-			return TrieIter(beg_, iter_, end_, false);
+			return Iter(beg_, iter_, end_, false);
 		} else {
 			auto i = iter_;
-			return TrieIter(beg_, ++i, end_);
+			return Iter(beg_, ++i, end_);
 		}
 	}
-	TrieIter next() const {
+	Iter next() const {
 		if (!valid_ || isNextEnd()) {
-			return TrieIter(beg_, iter_, end_, false);
+			return Iter(beg_, iter_, end_, false);
 		} else {
-			return TrieIter(iter_->second.nodes.begin(), iter_->second.nodes.end());
+			return Iter(iter_->second.nodes.begin(), iter_->second.nodes.end());
 		}
 	}
-	TrieIter prev() const {
-		return TrieIter(iter_->second.parent);
+	Iter prev() const {
+		return Iter(iter_->second.parent);
 	}
-	TrieIter reset() const {
-		return TrieIter(beg_, end_, valid_);
+	Iter reset() const {
+		return Iter(beg_, end_, valid_);
 	}
 	bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
 	bool isSideEnd() const {
@@ -90,27 +90,27 @@ struct Index::TrieIter {
 		return iter_;
 	}
 	Term subTerm(ConstIterator) const;
-	Term subTerm(const TrieIter& i) const {
+	Term subTerm(const Iter& i) const {
 		return subTerm(i.iter_);
 	}
 
-	vector<pair<Term, TrieIter>> subTerms() const {
-		vector<pair<Term, TrieIter>> ret;
+	vector<pair<Term, Iter>> subTerms() const {
+		vector<pair<Term, Iter>> ret;
 		ret.reserve(iter_->second.ends.size());
 		for (auto end : iter_->second.ends) {
-			ret.emplace_back(subTerm(end), TrieIter(end));
+			ret.emplace_back(subTerm(end), Iter(end));
 		}
 		return ret;
 	}
-	vector<TrieIter> ends() const {
-		vector<TrieIter> ret;
+	vector<Iter> ends() const {
+		vector<Iter> ret;
 		ret.reserve(iter_->second.ends.size());
 		for (auto end : iter_->second.ends) {
 			ret.emplace_back(end);
 		}
 		return ret;
 	}
-	bool isEnd(const TrieIter& i) const {
+	bool isEnd(const Iter& i) const {
 		return iter_->second.ends.find(i.iter()) != iter_->second.ends.end();
 	}
 	bool isVar() const {
@@ -146,8 +146,8 @@ struct Index::TrieIter {
 		return oss.str();
 	}
 	string showBranch() const {
-		vector<TrieIter> branch;
-		TrieIter i = *this;
+		vector<Iter> branch;
+		Iter i = *this;
 		while (i.isValid()) {
 			branch.push_back(i);
 			i = i.prev();
@@ -161,7 +161,7 @@ struct Index::TrieIter {
 	}
 
 private:
-	TrieIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
+	Iter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
 		valid_(v), beg_(b), iter_(i), end_(e) { }
 	bool valid_;
 	ConstIterator beg_;

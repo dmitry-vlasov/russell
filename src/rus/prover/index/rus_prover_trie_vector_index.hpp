@@ -281,7 +281,7 @@ struct VectorIndex {
 				);
 				if (skipped[i]) {
 					only_iter_ind = i;
-					iters.emplace_back(Index::TrieIter(vect[i]->exprs().root));
+					iters.emplace_back(Index::Iter(vect[i]->exprs().root));
 				}
 			}
 			if (iters.size() > 0) {
@@ -289,7 +289,7 @@ struct VectorIndex {
 					for (auto it = vect[only_iter_ind]->exprs().root.nodes.begin(); it != vect[only_iter_ind]->exprs().root.nodes.end(); ++it) {
 						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
-								Index::TrieIter iter(it);
+								Index::Iter iter(it);
 								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), Subst()));
 							}
 						}
