@@ -6,7 +6,7 @@ namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
 template<class Iter> RuleVar ruleVar(Iter);
 template<>
-inline RuleVar ruleVar<FlatTerm::ConstIterator>(FlatTerm::ConstIterator i) {
+inline RuleVar ruleVar<Term::ConstIterator>(Term::ConstIterator i) {
 	return i->ruleVar;
 };
 

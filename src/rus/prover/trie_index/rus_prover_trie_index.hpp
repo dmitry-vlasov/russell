@@ -22,13 +22,13 @@ struct TrieIndex {
 	typedef map<uint, FlatSubst> Unified;
 	struct TrieIter;
 
-	void add(const FlatTerm& t, uint val = -1);
-	Unified unify(const FlatTerm&) const;
-	vector<pair<FlatTerm, uint>> unpack() const;
+	void add(const Term& t, uint val = -1);
+	Unified unify(const Term&) const;
+	vector<pair<Term, uint>> unpack() const;
 	string show() const;
 	string show_pointers() const;
 
-	static vector<pair<FlatTerm, uint>> unpack(const Node&);
+	static vector<pair<Term, uint>> unpack(const Node&);
 	static string show(const Node&);
 	static string show_pointers(const Node&);
 
@@ -89,13 +89,13 @@ struct TrieIndex::TrieIter {
 		assert(valid_ && "TrieIter::iter()");
 		return iter_;
 	}
-	FlatTerm subTerm(ConstIterator) const;
-	FlatTerm subTerm(const TrieIter& i) const {
+	Term subTerm(ConstIterator) const;
+	Term subTerm(const TrieIter& i) const {
 		return subTerm(i.iter_);
 	}
 
-	vector<pair<FlatTerm, TrieIter>> subTerms() const {
-		vector<pair<FlatTerm, TrieIter>> ret;
+	vector<pair<Term, TrieIter>> subTerms() const {
+		vector<pair<Term, TrieIter>> ret;
 		ret.reserve(iter_->second.ends.size());
 		for (auto end : iter_->second.ends) {
 			ret.emplace_back(subTerm(end), TrieIter(end));
@@ -176,13 +176,13 @@ struct TrieIndexMap {
 		Data data;
 		FlatSubst sub;
 	};
-	void add(const FlatTerm& t, const Data& d) {
+	void add(const Term& t, const Data& d) {
 		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
 		index_.add(t);
 		data_.push_back(d);
 	}
 	string show() const {
-		vector<pair<FlatTerm, uint>> terms = index_.unpack();
+		vector<pair<Term, uint>> terms = index_.unpack();
 		if (!terms.size()) {
 			return "\n";
 		} else {
@@ -208,7 +208,7 @@ private:
 typedef TrieIndexMap<uint> IndexInt;
 
 template<class D>
-inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const FlatTerm& t) {
+inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const Term& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	TrieIndex::Unified unif = m.index().unify(t);
 	for (auto& p : unif) {

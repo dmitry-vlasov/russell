@@ -84,9 +84,9 @@ struct Hyp : public Node {
 	Prop*     parent;
 	Variants  variants;
 	Proofs    proofs;
-	FlatTerm expr;
-	Hyp(const FlatTerm& e, Space* s);
-	Hyp(const FlatTerm& e, Prop* p);
+	Term expr;
+	Hyp(const Term& e, Space* s);
+	Hyp(const Term& e, Prop* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -109,12 +109,12 @@ struct ProofNode {
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const FlatSubst& s, const FlatTerm& e);
+	ProofHyp(Hyp& n, const FlatSubst& s, const Term& e);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;
 	Hyp&      node;
-	FlatTerm expr;
+	Term expr;
 };
 
 struct ProofTop : public ProofHyp {

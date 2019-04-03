@@ -114,7 +114,7 @@ struct RuleVar {
 	Var _var() const { return Var(var.lit, var.type); }
 };
 
-struct FlatTerm {
+struct Term {
 	enum Kind { RULE, VAR };
 	struct Node {
 		Node() { }
@@ -133,7 +133,7 @@ struct FlatTerm {
 
 	struct TermIter {
 		TermIter() : valid_(false) { }
-		TermIter(const FlatTerm& ft) :
+		TermIter(const Term& ft) :
 			valid_(true),
 			beg_(ft.nodes.begin()),
 			iter_(ft.nodes.begin()),
@@ -171,10 +171,10 @@ struct FlatTerm {
 		TermIter reset() const {
 			return TermIter(beg_, end_, valid_);
 		}
-		FlatTerm subTerm() const;
-		FlatTerm term() const;
-		vector<pair<FlatTerm, TermIter>> subTerms() const {
-			vector<pair<FlatTerm, TermIter>> ret;
+		Term subTerm() const;
+		Term term() const;
+		vector<pair<Term, TermIter>> subTerms() const {
+			vector<pair<Term, TermIter>> ret;
 			ret.reserve(1);
 			ret.emplace_back(subTerm(), fastForward());
 			return ret;
@@ -258,18 +258,18 @@ struct FlatTerm {
 		ConstIterator end_;
 	};
 
-	FlatTerm(uint s = 0) : nodes(s) { }
-	FlatTerm(const FlatTerm&);
-	FlatTerm(FlatTerm&&) = default;
-	FlatTerm(LightSymbol s);
-	FlatTerm(ConstIterator i);
-	FlatTerm(const Rule* r, const vector<FlatTerm>& ch);
+	Term(uint s = 0) : nodes(s) { }
+	Term(const Term&);
+	Term(Term&&) = default;
+	Term(LightSymbol s);
+	Term(ConstIterator i);
+	Term(const Rule* r, const vector<Term>& ch);
 
-	bool operator == (const FlatTerm& t) const { return nodes == t.nodes; }
-	bool operator != (const FlatTerm& t) const { return nodes != t.nodes; }
+	bool operator == (const Term& t) const { return nodes == t.nodes; }
+	bool operator != (const Term& t) const { return nodes != t.nodes; }
 
-	FlatTerm& operator = (const FlatTerm&);
-	FlatTerm& operator = (FlatTerm&&) = default;
+	Term& operator = (const Term&);
+	Term& operator = (Term&&) = default;
 
 	Kind kind() const {
 		return (nodes.size() == 1 && nodes[0].ruleVar.isVar()) ? VAR : RULE;
@@ -277,9 +277,9 @@ struct FlatTerm {
 	LightSymbol var() const { assert(kind() == VAR); return nodes[0].ruleVar.var; }
 	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
 	bool empty() const { return !nodes.size(); }
-	vector<FlatTerm> children() const;
+	vector<Term> children() const;
 	vector<ConstIterator> childrenIters() const;
-	FlatTerm subTerm(ConstIterator beg) const;
+	Term subTerm(ConstIterator beg) const;
 	const Type* type() const { return nodes.front().ruleVar.type(); }
 	void verify() const;
 	uint len() const; // Length of a corresponding linear expression
@@ -289,12 +289,12 @@ struct FlatTerm {
 	string show_pointers() const;
 };
 
-FlatTerm Tree2FlatTerm(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
-unique_ptr<Tree> FlatTerm2Tree(const FlatTerm&);
-rus::Expr FlatTerm2Expr(const FlatTerm&);
+Term Tree2FlatTerm(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
+unique_ptr<Tree> FlatTerm2Tree(const Term&);
+rus::Expr FlatTerm2Expr(const Term&);
 
-void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
-FlatTerm term(FlatTerm::ConstIterator b);
+void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b);
+Term term(Term::ConstIterator b);
 
 extern bool debug_flatterm;
 

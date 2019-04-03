@@ -70,16 +70,16 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 
 bool debug_unify_general = false;
 
-FlatTerm unify_general(const vector<FlatTerm>& ex, FlatSubst& sub) {
+Term unify_general(const vector<Term>& ex, FlatSubst& sub) {
 	vector<MultyIter> iters;
 	for (const auto& e : ex) {
-		iters.emplace_back(FlatTerm::TermIter(e));
+		iters.emplace_back(Term::TermIter(e));
 	}
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		if (!unif.size()) {
 			sub.spoil();
-			return FlatTerm();
+			return Term();
 		} else if (unif.size() == 1) {
 			if (unif.begin()->second.sub->ok()) {
 				FlatSubst common = unify_subs(*unif.begin()->second.sub, sub);
@@ -88,11 +88,11 @@ FlatTerm unify_general(const vector<FlatTerm>& ex, FlatSubst& sub) {
 					return apply(common, *unif.begin()->second.term);
 				} else {
 					sub.spoil();
-					return FlatTerm();
+					return Term();
 				}
 			} else {
 				sub.spoil();
-				return FlatTerm();
+				return Term();
 			}
 		} else {
 			throw Error("more then 1 unification result");

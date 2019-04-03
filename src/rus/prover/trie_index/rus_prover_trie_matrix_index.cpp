@@ -43,7 +43,7 @@ struct IndexHelper {
 	}
 
 	static FlatTermSubst& emptyTermSubst() {
-		static FlatTerm emptyTerm;
+		static Term emptyTerm;
 		static FlatSubst emptySubst;
 		static FlatTermSubst emptyTermSub(emptyTerm, emptySubst);
 		return emptyTermSub;
@@ -342,7 +342,7 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
-			const FlatTerm& term = *q.second[i].term;
+			const Term& term = *q.second[i].term;
 			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
 				if (unif[c].ok()) {

@@ -16,7 +16,7 @@ static uint proof_node_index = 0;
 ProofNode::ProofNode(const FlatSubst& s) :
 	sub(s), new_(true), ind(proof_node_index++) { }
 
-ProofHyp::ProofHyp(Hyp& h, const FlatSubst& s, const FlatTerm& e) :
+ProofHyp::ProofHyp(Hyp& h, const FlatSubst& s, const Term& e) :
 	ProofNode(s), node(h), expr(e) {
 }
 

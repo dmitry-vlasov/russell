@@ -6,7 +6,7 @@ struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<uint> vars;
 	const Type* least_type = nullptr;
-	vector<vector<FlatTerm>> children;
+	vector<vector<Term>> children;
 	bool consistent = false;
 	LightSymbol var;
 	LightSymbol const_;
@@ -34,7 +34,7 @@ struct UnifStepData {
 		}
 		return true;
 	}
-	bool track_node(const FlatTerm& t) {
+	bool track_node(const Term& t) {
 		if (const_.is_def()) {
 			// If we have any non-replaceable variables (constant), all other
 			// terms must be the same variable (constant).
@@ -65,11 +65,11 @@ struct UnifStepData {
 	}
 };
 
-static UnifStepData gather_unification_data(vector<FlatTerm>& ex) {
+static UnifStepData gather_unification_data(vector<Term>& ex) {
 	std::sort(
 		ex.begin(),
 		ex.end(),
-		[](const FlatTerm& t1, const FlatTerm& t2) {
+		[](const Term& t1, const Term& t2) {
 			return *t1.type() < *t2.type();
 		}
 	);
@@ -81,12 +81,12 @@ static UnifStepData gather_unification_data(vector<FlatTerm>& ex) {
 			return ret;
 		}
 		switch (t.kind()) {
-		case FlatTerm::VAR:
+		case Term::VAR:
 			if (!ret.track_var(t.var())) {
 				return ret;
 			}
 			break;
-		case FlatTerm::RULE:
+		case Term::RULE:
 			if (!ret.track_node(t)) {
 				return ret;
 			}
@@ -98,59 +98,59 @@ static UnifStepData gather_unification_data(vector<FlatTerm>& ex) {
 	return ret;
 }
 
-FlatTerm do_unify(vector<FlatTerm> ex, FlatSubst& sub);
+Term do_unify(vector<Term> ex, FlatSubst& sub);
 
-FlatTerm unify_step(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
-	vector<FlatTerm> to_unify({apply(s, term)});
+Term unify_step(FlatSubst& s, const vector<uint>& vars, const Term& term) {
+	vector<Term> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
 			to_unify.push_back(s.map(v));
 		}
 	}
-	FlatTerm unified = do_unify(to_unify, s);
+	Term unified = do_unify(to_unify, s);
 	if (!unified.empty()) {
 		for (auto v : vars) {
 			if (!s.compose(FlatSubst(v, unified))) {
-				return FlatTerm();
+				return Term();
 			}
 		}
 		return unified;
 	}
-	return FlatTerm();
+	return Term();
 }
 
-FlatTerm do_unify(vector<FlatTerm> ex, FlatSubst& sub) {
+Term do_unify(vector<Term> ex, FlatSubst& sub) {
 	if (!ex.size()) {
-		return FlatTerm();
+		return Term();
 	} else if (ex.size() == 1) {
 		return apply(sub, *ex.begin());
 	}
 	UnifStepData data = gather_unification_data(ex);
 	if (!data.consistent) {
-		return FlatTerm();
+		return Term();
 	}
-	FlatTerm ret;
+	Term ret;
 	if (data.rule) {
-		vector<FlatTerm> ch;
+		vector<Term> ch;
 		for (uint i = 0; i < data.rule->arity(); ++ i) {
-			vector<FlatTerm> x;
+			vector<Term> x;
 			for (const auto& t : data.children) {
 				x.push_back(t[i]);
 			}
-			FlatTerm c = do_unify(x, sub);
+			Term c = do_unify(x, sub);
 			if (!c.empty()) {
 				ch.push_back(c);
 			} else {
-				return FlatTerm();
+				return Term();
 			}
 		}
-		return unify_step(sub, data.vars, FlatTerm(data.rule, ch));
+		return unify_step(sub, data.vars, Term(data.rule, ch));
 	} else {
-		return unify_step(sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+		return unify_step(sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 	}
 }
 
-bool check_unification(const FlatTerm& term, const FlatSubst& sub, const vector<FlatTerm>& ex) {
+bool check_unification(const Term& term, const FlatSubst& sub, const vector<Term>& ex) {
 	if (!term.empty()) {
 		for (auto e : ex) {
 			if (apply(sub, e) != term) {
@@ -161,8 +161,8 @@ bool check_unification(const FlatTerm& term, const FlatSubst& sub, const vector<
 	return true;
 }
 
-FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub) {
-	FlatTerm ret = do_unify(ex, sub);
+Term unify(const vector<Term>& ex, FlatSubst& sub) {
+	Term ret = do_unify(ex, sub);
 	if (!check_unification(ret, sub, ex)) {
 		cout << "unification error: " << endl;
 		for (auto pe : ex) {

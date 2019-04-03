@@ -36,7 +36,7 @@ bool FlatSubst::operator != (const FlatSubst& s) const {
 	return !operator ==(s);
 }
 
-void collect_vars(const FlatTerm& term, set<uint>& vars) {
+void collect_vars(const Term& term, set<uint>& vars) {
 	for (const auto& n : term.nodes) {
 		if (n.ruleVar.isVar()) {
 			vars.insert(n.ruleVar.var.lit);
@@ -44,7 +44,7 @@ void collect_vars(const FlatTerm& term, set<uint>& vars) {
 	}
 }
 
-bool consistent(const FlatSubst* s, uint v, const FlatTerm& t) {
+bool consistent(const FlatSubst* s, uint v, const Term& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
@@ -56,11 +56,11 @@ bool consistent(const FlatSubst* s, uint v, const FlatTerm& t) {
 		for (uint x : x_vars) {
 			if (s->maps(x)) {
 				set<uint> y_vars;
-				const FlatTerm& p = s->map(x);
+				const Term& p = s->map(x);
 				collect_vars(p, y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
-					if (p.kind() == FlatTerm::VAR && p.var() == v &&
-						t.kind() == FlatTerm::VAR && t.var() == x) {
+					if (p.kind() == Term::VAR && p.var() == v &&
+						t.kind() == Term::VAR && t.var() == x) {
 						return true;
 					} else {
 						return false;
@@ -85,8 +85,8 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	FlatSubst ret;
 	set<uint> vars;
 	for (const auto& p : s1) {
-		FlatTerm ex = apply(s2, p.second);
-		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
+		Term ex = apply(s2, p.second);
+		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
 			s1.sub_[p.first] = std::move(ex);
 			vars.insert(p.first);
 		} else {
@@ -158,11 +158,11 @@ string FlatSubst::show() const {
 	return str;
 }
 
-uint applied_len(const FlatSubst& s, const FlatTerm& t) {
+uint applied_len(const FlatSubst& s, const Term& t) {
 	uint len = t.nodes.size();
 	for (const auto& n : t.nodes) {
 		if (n.ruleVar.isVar() && s.maps(n.ruleVar.var)) {
-			const FlatTerm& term = s.map(n.ruleVar.var);
+			const Term& term = s.map(n.ruleVar.var);
 			if (!term.empty()) {
 				len += term.nodes.size() - 1;
 			}
@@ -171,16 +171,16 @@ uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 	return len;
 }
 
-FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
+Term apply(const FlatSubst& s, const Term& t) {
 	uint len = 0;
 	vector<uint> beg_shifts;
 	vector<uint> end_shifts;
-	vector<const FlatTerm*> subs;
+	vector<const Term*> subs;
 	for (uint k = 0; k < t.nodes.size(); ++ k, ++ len) {
 		const auto& n = t.nodes[k];
 		beg_shifts.push_back(len);
 		if (n.ruleVar.isVar()) {
-			const FlatTerm& term = s.map(n.ruleVar.var);
+			const Term& term = s.map(n.ruleVar.var);
 			if (!term.empty()) {
 				len += term.nodes.size() - 1;
 				subs.push_back(&term);
@@ -192,7 +192,7 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		}
 		end_shifts.push_back(len);
 	}
-	FlatTerm ret(len);
+	Term ret(len);
 	for (uint k = 0; k < t.nodes.size(); ++ k) {
 		if (subs[k]) {
 			copyFlatSubTerm(&ret, beg_shifts[k], subs[k]->nodes.begin());

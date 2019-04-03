@@ -4,8 +4,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
-FlatTerm unify_step(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term);
+Term unify(const vector<Term>& ex, FlatSubst& sub);
+Term unify_step(FlatSubst& s, const vector<uint>& vars, const Term& term);
 
 extern bool debug_unify;
 extern bool debug_index;

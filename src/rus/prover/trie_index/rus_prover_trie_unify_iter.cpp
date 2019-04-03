@@ -41,7 +41,7 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 
 vector<UnifyIters> unify_general_2(const UnifyIters& begins);
 
-FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
+Term unify_step_1(FlatSubst& s, const vector<uint>& vars, const Term& term) {
 
 	if (debug_flat_unify) {
 		cout << "vars: ";
@@ -53,10 +53,10 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 		cout << "s: " << s.show() << endl;
 	}
 
-	vector<FlatTerm> to_unify({apply(s, term)});
+	vector<Term> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
-			const FlatTerm& t = s.map(v);
+			const Term& t = s.map(v);
 			if (!t.empty()) {
 				to_unify.push_back(t);
 			} else {
@@ -66,7 +66,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 	}
 	vector<MultyIter> iters;
 	for (const auto& t : to_unify) {
-		iters.emplace_back(FlatTerm::TermIter(t));
+		iters.emplace_back(Term::TermIter(t));
 	}
 	UnifyIters begin = UnifyIters(iters);
 	try {
@@ -75,8 +75,8 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 		if (ends.size() > 0) {
 			UnifyIters end = ends[0];
 			s.compose(end.sub);
-			FlatTerm term_orig = begin.iters[0].subTerm(end.iters[0]);
-			FlatTerm unified = apply(end.sub, term_orig);
+			Term term_orig = begin.iters[0].subTerm(end.iters[0]);
+			Term unified = apply(end.sub, term_orig);
 			for (auto v : vars) {
 				if (!s.compose(FlatSubst(v, unified))) {
 					if (debug_flat_unify) {
@@ -84,7 +84,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 						cout << "v: " << Lex::toStr(v) << endl;
 						cout << "s: " << s.show() << endl;
 					}
-					return FlatTerm();
+					return Term();
 				}
 			}
 			return unified;
@@ -101,12 +101,12 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 		cout << endl;
 		throw err;
 	}
-	return FlatTerm();
+	return Term();
 }
 
-FlatSubst unify_step_1(const FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
+FlatSubst unify_step_1(const FlatSubst& s, const vector<uint>& vars, const Term& term) {
 	FlatSubst ret(s);
-	FlatTerm unified = unify_step_1(ret, vars, term);
+	Term unified = unify_step_1(ret, vars, term);
 	return unified.empty() ? FlatSubst(false) : ret;
 }
 
@@ -168,8 +168,8 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 				vector<UnifyIters> subEnds = unify_general_2(subBegins);
 				for (const auto& ends : subEnds) {
 					MultyIter i0 = ends.iters[0];
-					FlatTerm term_orig = subBegins.iters[0].subTerm(i0);
-					FlatTerm term_applied = apply(ends.sub, term_orig);
+					Term term_orig = subBegins.iters[0].subTerm(i0);
+					Term term_applied = apply(ends.sub, term_orig);
 					FlatSubst s = unify_step_1(i.sub, data.vars, term_applied);
 					s.compose(ends.sub.complement(s.dom()));
 					if (s.ok()) {
@@ -177,7 +177,7 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 					}
 				}
 			} else {
-				FlatSubst s = unify_step_1(i.sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
+				FlatSubst s = unify_step_1(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok()) {
 					ret.emplace_back(i.iters, i.parentSub, s);
 				}
@@ -235,7 +235,7 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 	map<vector<uint>, FlatTermSubst> ret;
 	for (const auto& end : unify_general_2(begin)) {
-		FlatTerm term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
+		Term term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, FlatTermSubst(term, end.sub));
 		}

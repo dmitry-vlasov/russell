@@ -8,11 +8,11 @@ bool debug_trie_index = false;
 bool debug_trie_profile = false;
 bool debug_trie_aftermath = false;
 
-void TrieIndex::add(const FlatTerm& t, uint val) {
+void TrieIndex::add(const Term& t, uint val) {
 	struct NodePair {
-		NodePair(TrieIndex::Iterator t, FlatTerm::ConstIterator e) : trie(t), end(e) { }
+		NodePair(TrieIndex::Iterator t, Term::ConstIterator e) : trie(t), end(e) { }
 		TrieIndex::Iterator trie;
-		FlatTerm::ConstIterator end;
+		Term::ConstIterator end;
 	};
 	stack<NodePair> st;
 	Node* n = &root;
@@ -33,8 +33,8 @@ void TrieIndex::add(const FlatTerm& t, uint val) {
 	++size;
 }
 
-static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
-	FlatTerm ft(branch.size());
+static Term create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
+	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
 		for (auto end : branch[i].iter()->second.ends) {
@@ -52,7 +52,7 @@ static FlatTerm create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 
 bool debug_trie_subterm = false;
 
-FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
+Term TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	vector<TrieIter> branch;
 	ConstIterator start = i;
 	while (i != ConstIterator()) {
@@ -66,8 +66,8 @@ FlatTerm TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	return create_flatterm(branch);
 }
 
-vector<pair<FlatTerm, uint>> TrieIndex::unpack() const {
-	vector<pair<FlatTerm, uint>> ret;
+vector<pair<Term, uint>> TrieIndex::unpack() const {
+	vector<pair<Term, uint>> ret;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);
@@ -143,8 +143,8 @@ string TrieIndex::show_pointers() const {
 }
 
 
-vector<pair<FlatTerm, uint>> TrieIndex::unpack(const Node& root) {
-	vector<pair<FlatTerm, uint>> ret;
+vector<pair<Term, uint>> TrieIndex::unpack(const Node& root) {
+	vector<pair<Term, uint>> ret;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
 		branch.emplace_back(root);

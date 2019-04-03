@@ -6,8 +6,8 @@ namespace mdl { namespace rus { namespace prover {
 
 struct FlatSubst {
 	FlatSubst(bool ok = true) : ok_(ok) { }
-	FlatSubst(uint v, const FlatTerm& t) : ok_(true) {
-		if (!(t.kind() == FlatTerm::VAR && t.var() == v)) {
+	FlatSubst(uint v, const Term& t) : ok_(true) {
+		if (!(t.kind() == Term::VAR && t.var() == v)) {
 			sub_.emplace(v, t);
 		}
 	}
@@ -25,7 +25,7 @@ struct FlatSubst {
 
 	bool consistent(const FlatSubst& s) const;
 	bool compose(const FlatSubst& s, bool full = true);
-	bool compose(uint v, const FlatTerm& t, bool full = true) { return compose(FlatSubst(v, t), full); }
+	bool compose(uint v, const Term& t, bool full = true) { return compose(FlatSubst(v, t), full); }
 	bool bicompose(const FlatSubst& s);
 	bool intersects(const FlatSubst& s) const;
 	bool composeable(const FlatSubst& s) const;
@@ -33,20 +33,20 @@ struct FlatSubst {
 	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
 	bool maps(LightSymbol s) const { return maps(s.lit); }
 	string show() const;
-	const FlatTerm& map(uint v) const {
+	const Term& map(uint v) const {
 		auto it = sub_.find(v);
 		if (sub_.find(v) != sub_.end()) {
 			return it->second;
 		} else {
-			static FlatTerm empty; return empty;
+			static Term empty; return empty;
 		}
 	}
-	const FlatTerm& map(LightSymbol s) const {
+	const Term& map(LightSymbol s) const {
 		return map(s.lit);
 	}
 	void erase(uint v) { sub_.erase(v); }
 
-	typedef std::map<uint, FlatTerm>::const_iterator const_iterator;
+	typedef std::map<uint, Term>::const_iterator const_iterator;
 
 	const_iterator begin() const { return sub_.cbegin(); }
 	const_iterator end() const { return sub_.cend(); }
@@ -70,12 +70,12 @@ struct FlatSubst {
 	void spoil() { ok_ = false; }
 
 private:
-	std::map<uint, FlatTerm> sub_;
+	std::map<uint, Term> sub_;
 	bool ok_;
 	friend void compose(FlatSubst& s1, const FlatSubst& s2, bool full);
 };
 
-FlatTerm apply(const FlatSubst& s, const FlatTerm& t);
+Term apply(const FlatSubst& s, const Term& t);
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full = true);
 bool composable(const FlatSubst& s1, const FlatSubst& s2);
 

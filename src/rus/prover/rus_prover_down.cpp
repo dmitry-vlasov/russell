@@ -118,7 +118,7 @@ bool similar_subs_1(const FlatSubst& s1, const FlatSubst& s2) {
 		return false;
 	}
 	for (const auto& p : unif) {
-		if (p.second.kind() != FlatTerm::VAR) {
+		if (p.second.kind() != Term::VAR) {
 			// is not a var replacement
 			return false;
 		}
@@ -131,7 +131,7 @@ bool similar_subs(const FlatSubst& s1, const FlatSubst& s2, bool verbose = false
 	FlatSubst s1_vars_inv;
 	FlatSubst s1_terms;
 	for (const auto& p : s1) {
-		if (p.second.kind() == FlatTerm::VAR && !s2.maps(p.first)) {
+		if (p.second.kind() == Term::VAR && !s2.maps(p.first)) {
 			//s1_vars_inv.compose(p.second.var().lit, FlatTerm(p.first));
 		} else {
 			s1_terms.compose(p.first, p.second);

@@ -15,7 +15,7 @@ static FlatSubst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars,
 			if (!s.maps(v)) {
 				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				vars[v.lit] = i;
-				ret.compose(v.lit, FlatTerm(LightSymbol(w, ReplMode::KEEP_REPL, i)));
+				ret.compose(v.lit, Term(LightSymbol(w, ReplMode::KEEP_REPL, i)));
 			}
 		}
 		assertion_vars.insert(v.lit);
@@ -23,7 +23,7 @@ static FlatSubst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars,
 	return ret;
 }
 
-Hyp::Hyp(const FlatTerm& e, Space* s) :
+Hyp::Hyp(const Term& e, Space* s) :
 	Node(s), parent(nullptr), expr(e) {
 	if (parent && parent->autoGoDown) {
 		unifyWithGoalHyps();
@@ -31,7 +31,7 @@ Hyp::Hyp(const FlatTerm& e, Space* s) :
 	space->registerNode(this);
 }
 
-Hyp::Hyp(const FlatTerm& e, Prop* p) :
+Hyp::Hyp(const Term& e, Prop* p) :
 	Node(p), parent(p), expr(p ? apply(p->outer, apply(p->sub, apply(p->fresher, e))) : e) {
 	space->registerNode(this);
 }

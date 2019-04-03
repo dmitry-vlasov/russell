@@ -21,7 +21,7 @@ struct EmptyIter {
 	bool isNextEnd() const { return false; }
 	bool isSideEnd() const { return true; }
 	bool isValid() const { return true; }
-	FlatTerm subTerm() const { return FlatTerm(); }
+	Term subTerm() const { return Term(); }
 	vector<uint> inds() const { return inds_; }
 	bool isEnd(const EmptyIter&) const { return true; }
 	bool isVar() const { return false; }
@@ -41,7 +41,7 @@ struct MultyIter {
 	enum Kind { NONE, TRIE, TERM, EMPTY };
 	MultyIter() : kind_(NONE) { }
 	MultyIter(TrieIndex::TrieIter i) : kind_(TRIE), trieIter(i) { }
-	MultyIter(FlatTerm::TermIter i) : kind_(TERM), termIter(i) { }
+	MultyIter(Term::TermIter i) : kind_(TERM), termIter(i) { }
 	MultyIter(EmptyIter i) : kind_(EMPTY), emptyIter(i) { }
 	MultyIter(const MultyIter&) = default;
 	MultyIter& operator = (const MultyIter&) = default;
@@ -120,7 +120,7 @@ struct MultyIter {
 		default: throw Error("impossible");
 		}
 	}
-	FlatTerm subTerm(const MultyIter& i) const {
+	Term subTerm(const MultyIter& i) const {
 		switch (kind_) {
 		case TRIE:  return trieIter.subTerm(i.trieIter);
 		case TERM:  return termIter.subTerm();
@@ -137,8 +137,8 @@ struct MultyIter {
 		default: throw Error("impossible");
 		}
 	}
-	vector<pair<FlatTerm, MultyIter>> subTerms() const {
-		vector<pair<FlatTerm, MultyIter>> ret;
+	vector<pair<Term, MultyIter>> subTerms() const {
+		vector<pair<Term, MultyIter>> ret;
 		switch (kind_) {
 		case TRIE: {
 			auto subterms = trieIter.subTerms();
@@ -226,7 +226,7 @@ struct MultyIter {
 private:
 	Kind kind_;
 	TrieIndex::TrieIter trieIter;
-	FlatTerm::TermIter  termIter;
+	Term::TermIter  termIter;
 	EmptyIter           emptyIter;
 };
 
@@ -370,12 +370,12 @@ struct UnifyIters {
 };
 
 struct FlatTermSubst {
-	FlatTermSubst(const FlatTerm& t, const FlatSubst& s) :
-		term(make_unique<FlatTerm>(t)), sub(make_unique<FlatSubst>(s)) { }
+	FlatTermSubst(const Term& t, const FlatSubst& s) :
+		term(make_unique<Term>(t)), sub(make_unique<FlatSubst>(s)) { }
 	FlatTermSubst(const FlatTermSubst& ts) :
-		term(make_unique<FlatTerm>(*ts.term)), sub(make_unique<FlatSubst>(*ts.sub)) { }
+		term(make_unique<Term>(*ts.term)), sub(make_unique<FlatSubst>(*ts.sub)) { }
 	FlatTermSubst(FlatTermSubst&&) = default;
-	unique_ptr<FlatTerm> term;
+	unique_ptr<Term> term;
 	unique_ptr<FlatSubst> sub;
 	string show() const {
 		return "term: " + term->show() + "\nsub:\n" + sub->show();
@@ -385,12 +385,12 @@ struct FlatTermSubst {
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 
 template<class D>
-vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const FlatTerm& t) {
+vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const Term& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	if (!m.index().size) return ret;
 	vector<MultyIter> iters;
 	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
-	iters.emplace_back(FlatTerm::TermIter(t));
+	iters.emplace_back(Term::TermIter(t));
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {
