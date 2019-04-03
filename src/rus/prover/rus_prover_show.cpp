@@ -1,4 +1,5 @@
 #include "rus_prover_space.hpp"
+#include "rus_prover_multy_subst.hpp"
 #include "rus_prover_show.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -44,7 +45,7 @@ string Prop::show(bool with_proofs) const {
 	ret += "\t</assertion>\n";
 	ret += "\t<substitution>\n";
 	ret += "\t<![CDATA[\n";
-	ret += Indent::paragraph(rus::prover::show(sub), "\t\t");
+	ret += Indent::paragraph(sub.show(), "\t\t");
 	ret += "\t]]>\n";
 	ret += "\t</substitution>\n";
 	if (with_proofs) {
@@ -66,7 +67,7 @@ string Hyp::show(bool with_proofs) const {
 	ret += show_children_idx(variants);
 	ret += ">\n";
 	ret += "\t<expression>";
-	ret += "<![CDATA[" + rus::prover::show(expr) + "]]>";
+	ret += "<![CDATA[" + expr.show() + "]]>";
 	ret += "</expression>\n";
 	if (with_proofs) {
 		for (const auto& p : proofs) {
@@ -79,14 +80,14 @@ string Hyp::show(bool with_proofs) const {
 
 string ProofTop::show() const {
 	ostringstream oss;
-	oss << "<proof expr=\"" << prover::show(apply(sub, node.expr)) << "\" ";
+	oss << "<proof expr=\"" << apply(sub, node.expr).show() << "\" ";
 	oss << "index=\"" << ind << "\">\n";
 	oss << "\t<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
 	oss << "]]>\n";
 	oss << "\t<substitution>\n";
 	oss << "\t<![CDATA[\n";
-	oss << Indent::paragraph(prover::show(sub), "\t\t");
+	oss << Indent::paragraph(sub.show(), "\t\t");
 	oss << "\t]]>\n";
 	oss << "\t</substitution>\n";
 	oss << "</proof>\n";
@@ -96,7 +97,7 @@ string ProofTop::show() const {
 string ProofExp::show() const {
 	ostringstream oss;
 	rus::Step* st = child ? child->step() : nullptr;
-	oss << "<proof expr=\"" << (st ? st->expr.show() : prover::show(node.expr)) << "\" ";
+	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
 	oss << "index=\"" << ind << "\">\n";
 	oss << "\t<![CDATA[\n";
 	try {
@@ -110,7 +111,7 @@ string ProofExp::show() const {
 	oss << "]]>\n";
 	oss << "\t<substitution>\n";
 	oss << "\t<![CDATA[\n";
-	oss << Indent::paragraph(prover::show(sub), "\t\t");
+	oss << Indent::paragraph(sub.show(), "\t\t");
 	oss << "\t]]>\n";
 	oss << "\t</substitution>\n";
 	oss << "</proof>\n";
@@ -134,7 +135,7 @@ string ProofProp::show() const {
 		oss << "\t]]>\n";
 		oss << "\t<substitution>\n";
 		oss << "\t<![CDATA[\n";
-		oss << Indent::paragraph(prover::show(sub), "\t\t");
+		oss << Indent::paragraph(sub.show(), "\t\t");
 		oss << "\t]]>\n";
 		oss << "\t</substitution>\n";
 		oss << "</proof>\n";
@@ -172,8 +173,8 @@ string show_struct(const ProofNode* n) {
 	if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
 		oss << "ProofProp(index = " << p->ind << ", node = " << p->node.ind << endl;
 		oss << "\tprop = " << Lex::toStr(p->node.prop.id()) << endl;
-		oss << "\tsub = " << endl << Indent::paragraph(show(p->sub), "\t\t");
-		oss << "\tnode sub = " << endl << Indent::paragraph(show(p->node.sub), "\t\t");
+		oss << "\tsub = " << endl << Indent::paragraph(p->sub.show(), "\t\t");
+		oss << "\tnode sub = " << endl << Indent::paragraph(p->node.sub.show(), "\t\t");
 		for (auto h : p->premises) {
 			oss << Indent::paragraph(show_struct(h));
 		}
@@ -181,15 +182,15 @@ string show_struct(const ProofNode* n) {
 	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
 		oss << "ProofTop(index = " << t->ind << ", node = " << t->node.ind << endl;
 		oss << "\thyp = " << t->hyp.ind << endl;
-		oss << "\texp = " << show(t->expr) << endl;
-		oss << "\tnode exp = " << show(t->node.expr) << endl;
-		oss << "\tsub = " << endl << Indent::paragraph(show(t->sub), "\t\t");
+		oss << "\texp = " << t->expr.show() << endl;
+		oss << "\tnode exp = " << t->node.expr.show() << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(t->sub.show(), "\t\t");
 		oss << ")" << endl;
 	} else if (const ProofExp* e = dynamic_cast<const ProofExp*>(n)) {
 		oss << "ProofExp(index = " << e->ind << ", node = " << e->node.ind << endl;
-		oss << "\texp = " << show(e->expr) << endl;
-		oss << "\tnode exp = " << show(e->node.expr) << endl;
-		oss << "\tsub = " << endl << Indent::paragraph(show(e->sub), "\t\t");
+		oss << "\texp = " << e->expr.show() << endl;
+		oss << "\tnode exp = " << e->node.expr.show() << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(e->sub.show(), "\t\t");
 		oss << Indent::paragraph(show_struct(e->child));
 		oss << ")" << endl;
 	} else {
@@ -242,7 +243,7 @@ string show(const MultyUnifiedSubs& ms) {
 	string ret;
 	for (const auto& p : ms) {
 		ret += show(p.first) + ":\n";
-		ret += Indent::paragraph(show(p.second)) + "\n";
+		ret += Indent::paragraph(p.second.show()) + "\n";
 	}
 	return ret;
 }

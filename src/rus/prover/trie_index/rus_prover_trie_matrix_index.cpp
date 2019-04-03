@@ -346,10 +346,9 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 			const FlatSubst& sub = *q.second[i].sub;
 			if (!term.empty()) {
 				if (unif[c].ok()) {
-					Subst sb = convert2subst(sub);
-					Subst unified = unify_subs(MultySubst({&unif[c], &sb}));
+					FlatSubst unified = unify_subs(MultySubst({&unif[c], &sub}));
 					unif[c] = unified;
-					s[c].compose(vars[i], apply(unified, convert2lighttree(term)));
+					s[c].compose(vars[i], apply(unified, term));
 				}
 			} else {
 				if (sub.ok()) {
@@ -472,7 +471,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	matrix_vector_counter = 0;
 	for (auto var : optimize_order_mindex(mindex_)) {
 		if (debug_trie_profile) {
-			cout << "start unifying var " << prover::show(var) << " ... " << flush;
+			cout << "start unifying var " << Lex::toStr(var) << " ... " << flush;
 		}
 		Timer timer;
 		timer.start();
@@ -482,12 +481,12 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 				return MultyUnifiedSubs();
 			}
 		} catch (Error& err) {
-			cout << "while unifying matrix var: " << prover::show(var) << endl;
+			cout << "while unifying matrix var: " << Lex::toStr(var) << endl;
 			throw err;
 		}
 		timer.stop();
 		if (debug_trie_index) {
-			cout << "var " << prover::show(var) << " has " << unified_columns[var].card() << " unified in " << timer << endl;
+			cout << "var " << Lex::toStr(var) << " has " << unified_columns[var].card() << " unified in " << timer << endl;
 			cout << unified_columns[var].show() << endl;
 			cout << "INDEX" << endl;
 			cout << mindex_[var]->show() << endl;
@@ -504,7 +503,7 @@ string MatrixIndex::show() const {
 	string ret;
 	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
 	for (auto& p : mindex_) {
-		ret += "\nVAR: " + prover::show(p.first) + "\n";
+		ret += "\nVAR: " + Lex::toStr(p.first) + "\n";
 		ret += p.second->show() + "\n";
 	}
 	return ret;

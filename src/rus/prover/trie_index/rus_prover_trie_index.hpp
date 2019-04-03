@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../rus_prover_flat_subst.hpp"
+#include "../rus_prover_multy_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 
@@ -22,7 +23,6 @@ struct TrieIndex {
 	struct TrieIter;
 
 	void add(const FlatTerm& t, uint val = -1);
-	void add(const LightTree& t, uint val = -1) { add(convert2flatterm(t), val); }
 	Unified unify(const FlatTerm&) const;
 	vector<pair<FlatTerm, uint>> unpack() const;
 	string show() const;
@@ -172,13 +172,13 @@ private:
 template<class Data>
 struct TrieIndexMap {
 	struct Unified {
-		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
-		Data  data;
-		Subst sub;
+		Unified(const Data& d, FlatSubst&& s) : data(d), sub(std::move(s)) { }
+		Data data;
+		FlatSubst sub;
 	};
-	void add(const LightTree& t, const Data& d) {
+	void add(const FlatTerm& t, const Data& d) {
 		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
-		index_.add(convert2flatterm(t));
+		index_.add(t);
 		data_.push_back(d);
 	}
 	string show() const {
@@ -189,7 +189,7 @@ struct TrieIndexMap {
 			string ret;
 			for (const auto&  p : terms) {
 				Data d = data_[p.second];
-				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second)/*prover::show(d)*/ + "\n";
+				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second) + "\n";
 			}
 			return ret;
 		}
@@ -208,13 +208,13 @@ private:
 typedef TrieIndexMap<uint> IndexInt;
 
 template<class D>
-inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const LightTree& t) {
+inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const FlatTerm& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
-	TrieIndex::Unified unif = m.index().unify(convert2flatterm(t));
+	TrieIndex::Unified unif = m.index().unify(t);
 	for (auto& p : unif) {
 		if (p.second.ok()) {
 			//cout << "UNIFIED: " << p.first << endl;
-			ret.emplace_back(m.data().at(p.first), convert2subst(p.second));
+			ret.emplace_back(m.data().at(p.first), p.second);
 		}
 	}
 	return ret;

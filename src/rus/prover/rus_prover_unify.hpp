@@ -1,11 +1,11 @@
 #pragma once
 
-#include "rus_prover_expr.hpp"
+#include "rus_prover_flat_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
-LightTree unify(const vector<LightTree>& ex, Subst& sub);
-LightTree unify_step(Subst& s, const vector<uint>& vars, const LightTree& term);
+FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub);
+FlatTerm unify_step(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term);
 
 extern bool debug_unify;
 extern bool debug_index;

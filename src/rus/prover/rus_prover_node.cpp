@@ -7,15 +7,15 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, set<uint>& assertion_vars, const Subst& s) {
-	Subst ret;
+static FlatSubst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, set<uint>& assertion_vars, const FlatSubst& s) {
+	FlatSubst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
 		if (!ret.maps(v)) {
 			if (!s.maps(v)) {
 				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				vars[v.lit] = i;
-				ret.compose(v.lit, LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i)));
+				ret.compose(v.lit, FlatTerm(LightSymbol(w, ReplMode::KEEP_REPL, i)));
 			}
 		}
 		assertion_vars.insert(v.lit);
@@ -23,7 +23,7 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, set
 	return ret;
 }
 
-Hyp::Hyp(const LightTree& e, Space* s) :
+Hyp::Hyp(const FlatTerm& e, Space* s) :
 	Node(s), parent(nullptr), expr(e) {
 	if (parent && parent->autoGoDown) {
 		unifyWithGoalHyps();
@@ -31,12 +31,12 @@ Hyp::Hyp(const LightTree& e, Space* s) :
 	space->registerNode(this);
 }
 
-Hyp::Hyp(const LightTree& e, Prop* p) :
+Hyp::Hyp(const FlatTerm& e, Prop* p) :
 	Node(p), parent(p), expr(p ? apply(p->outer, apply(p->sub, apply(p->fresher, e))) : e) {
 	space->registerNode(this);
 }
 
-Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p) :
+Prop::Prop(const PropRef& r, const FlatSubst& s, const FlatSubst& o, const FlatSubst& f, Hyp* p) :
 	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
 	space->registerNode(this);
 	if (isLeaf()) {
@@ -46,7 +46,7 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
-		Hyp* hyp = new Hyp(convert_tree(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this);
+		Hyp* hyp = new Hyp(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this);
 		premises.emplace_back(hyp);
 	}
 }
@@ -54,15 +54,15 @@ void Prop::buildUp() {
 void Hyp::buildUp() {
 	for (auto& m : unify_general(space->assertions_, expr)) {
 		set<uint> assertion_vars;
-		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, assertion_vars, m.sub);
+		FlatSubst fresher = make_free_vars_fresh(m.data.ass, space->vars, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
 			if (m.sub.maps(p.first)) {
 				fresher.erase(p.first);
 			}
 		}
 		m.sub.compose(fresher, false);
-		Subst sub;
-		Subst outer;
+		FlatSubst sub;
+		FlatSubst outer;
 		for (const auto& p : m.sub) {
 			if (assertion_vars.count(p.first)  /*p.first.ind == LightSymbol::ASSERTION_INDEX*/) {
 				outer.compose(p.first, p.second);
@@ -79,7 +79,7 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool show_this = false; //(47 <= ind && ind <= 49);
 
 	if (show_this) {
-		cout << "HYP UNIFYING " << ind << " EXPR: " << prover::show(expr) << endl;
+		cout << "HYP UNIFYING " << ind << " EXPR: " << expr.show() << endl;
 	}
 	bool ret = false;
 	for (const auto& m : unify_general(space->hyps_, expr)) {
@@ -87,10 +87,10 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 			if (m.data.get() == hint) {
 				ProofTop* pt = new ProofTop(*this, m.data, m.sub);
 				if (show_this) {
-					cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+					cout << "\tUNIFIED WITH TOP: " << pt->expr.show() << endl;
 					cout << "\tIND: " << pt->ind << endl;
 					cout << "\tSUB:" << endl;
-					cout << Indent::paragraph(prover::show(pt->sub)) << endl;
+					cout << Indent::paragraph(pt->sub.show()) << endl;
 				}
 
 				proofs.emplace_back(pt);
@@ -99,10 +99,10 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 		} else {
 			ProofTop* pt = new ProofTop(*this, m.data, m.sub);
 			if (show_this) {
-				cout << "\tUNIFIED WITH TOP: " << prover::show(pt->expr) << endl;
+				cout << "\tUNIFIED WITH TOP: " << pt->expr.show() << endl;
 				cout << "\tIND: " << pt->ind << endl;
 				cout << "\tSUB:" << endl;
-				cout << Indent::paragraph(prover::show(pt->sub)) << endl;
+				cout << Indent::paragraph(pt->sub.show()) << endl;
 			}
 
 			proofs.emplace_back(pt);

@@ -67,6 +67,7 @@ struct FlatSubst {
 		}
 		return ret;
 	}
+	void spoil() { ok_ = false; }
 
 private:
 	std::map<uint, FlatTerm> sub_;
@@ -78,11 +79,10 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t);
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full = true);
 bool composable(const FlatSubst& s1, const FlatSubst& s2);
 
-FlatSubst convert2flatsubst(const Subst&);
-Subst convert2subst(const FlatSubst&);
-
 FlatSubst Substitution2FlatSubst(const Substitution&);
 Substitution FlatSubst2Substitution(const FlatSubst&);
+
+string show_diff(const FlatSubst& s1, const FlatSubst& s2);
 
 extern bool debug_flat_subst;
 extern bool debug_flat_apply;

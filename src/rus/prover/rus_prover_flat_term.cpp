@@ -58,7 +58,13 @@ static uint flatTermsLen(const vector<FlatTerm>& ch) {
 	return len;
 }
 
-FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsLen(ch)) {
+FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) {
+	uint len = flatTermsLen(ch);
+	if (len > 10000) {
+		cout << "LEN IS TOO MUCH: " << len << endl;
+		throw Error ("LEN IS TOO MUCH: " + to_string(len));
+	}
+	nodes.resize(len);
 	nodes[0].ruleVar.rule = r;
 	nodes[0].end = nodes.begin() + nodes.size() - 1;
 	uint pos = 1;
@@ -123,7 +129,7 @@ vector<FlatTerm> FlatTerm::children() const {
 	vector<FlatTerm> ret;
 	if (kind() == RULE) {
 		ConstIterator x = nodes.begin() + 1;
-		for (uint i = 1; i < nodes[0].ruleVar.rule->arity(); ++i) {
+		for (uint i = 0; i < nodes[0].ruleVar.rule->arity(); ++i) {
 			FlatTerm t = subTerm(x);
 			ret.push_back(t);
 			x = x->end + 1;
@@ -198,71 +204,25 @@ uint FlatTerm::len() const {
 	return l;
 }
 
-FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const LightTree* t) {
-	auto n = ft;
-	auto end = ft;
-	if (t->kind() == LightTree::VAR) {
-		(ft++)->ruleVar.var = t->var();
-	} else {
-		(ft++)->ruleVar.rule = t->rule();
-		for (const auto& c : t->children()) {
-			end = fill_in_flatterm(ft, c.get());
-		}
-	}
-	n->end = end;
-	return end;
-}
-
-FlatTerm convert2flatterm(const LightTree& t) {
-	FlatTerm ret(t.len());
-	auto ft = ret.nodes.begin();
-	fill_in_flatterm(ft, &t);
-	return ret;
-}
-
-unique_ptr<LightTree> fill_in_lighttree(FlatTerm::ConstIterator& ft, FlatTerm::ConstIterator end) {
-	if (ft->ruleVar.isRule()) {
-		const Rule* r = (ft++)->ruleVar.rule;
-		LightTree::Children ch;
-		for (uint i = 0; i < r->arity(); ++ i) {
-			ch.push_back(fill_in_lighttree(ft, end));
-		}
-		return make_unique<LightTree>(r, ch);
-	} else {
-		return make_unique<LightTree>((ft++)->ruleVar.var);
-	}
-}
-
-LightTree convert2lighttree(const FlatTerm& ft) {
-	auto beg = ft.nodes.begin();
-	return LightTree(std::move(*fill_in_lighttree(beg, ft.nodes.end()).get()));
-}
-
-
-
-
-
-
-
-FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const Tree* t) {
+FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const Tree* t, ReplMode mode, uint ind) {
 	auto n = ft;
 	auto end = ft;
 	if (const VarTree* v = dynamic_cast<const VarTree*>(t)) {
-		(ft++)->ruleVar.var = v->var();
+		(ft++)->ruleVar.var = LightSymbol(v->lit(), v->type(), mode, ind);
 	} else if (const RuleTree* r = dynamic_cast<const RuleTree*>(t)) {
 		(ft++)->ruleVar.rule = r->rule.get();
 		for (const auto& c : r->children) {
-			end = fill_in_flatterm(ft, c.get());
+			end = fill_in_flatterm(ft, c.get(), mode, ind);
 		}
 	}
 	n->end = end;
 	return end;
 }
 
-FlatTerm Tree2FlatTerm(const Tree& t) {
+FlatTerm Tree2FlatTerm(const Tree& t, ReplMode mode, uint ind) {
 	FlatTerm ret(t.len());
 	auto ft = ret.nodes.begin();
-	fill_in_flatterm(ft, &t);
+	fill_in_flatterm(ft, &t, mode, ind);
 	return ret;
 }
 

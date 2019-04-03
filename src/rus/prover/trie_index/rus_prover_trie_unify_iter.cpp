@@ -46,7 +46,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 	if (debug_flat_unify) {
 		cout << "vars: ";
 		for (auto w : vars) {
-			cout << "'" << prover::show(w) << "' ";
+			cout << "'" << Lex::toStr(w) << "' ";
 		}
 		cout << endl;
 		cout << "term: " << term.show() << endl;
@@ -81,7 +81,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& te
 				if (!s.compose(FlatSubst(v, unified))) {
 					if (debug_flat_unify) {
 						cout << "!s.compose(FlatSubst(v, unified))" << endl;
-						cout << "v: " << prover::show(v) << endl;
+						cout << "v: " << Lex::toStr(v) << endl;
 						cout << "s: " << s.show() << endl;
 					}
 					return FlatTerm();

@@ -1,5 +1,6 @@
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
+#include "rus_prover_multy_subst.hpp"
 #include "trie_index/rus_prover_trie_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -21,7 +22,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		return;
 	}
 	while (true) {
-		vector<const Subst*> subs;
+		vector<const FlatSubst*> subs;
 		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.inds());
 		if (show_debug) {
 			cout << "CURRENT: " << ind.current() << endl;
@@ -31,9 +32,9 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
 			if (show_debug) {
-				cout << ph->ind << ": " << show(ph->expr) << endl;
+				cout << ph->ind << ": " << ph->expr.show() << endl;
 				cout << "sub:" << endl;
-				cout << Indent::paragraph(show(ph->sub)) << endl;
+				cout << Indent::paragraph(ph->sub.show()) << endl;
 			}
 			subs.push_back(&ph->sub);
 		}
@@ -41,23 +42,23 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			cout << "-------------" << endl;
 			debug_unify_subs_func = true;
 		}
-		Subst sub = unify_subs(MultySubst(subs));
+		FlatSubst sub = unify_subs(MultySubst(subs));
 
 		if (debug_unify_subs) {
-			cout << "SUB: " << show(sub) << endl;
+			cout << "SUB: " << sub.show() << endl;
 		}
 
 		if (sub.ok()) {
-			Subst delta = pr->sub;
+			FlatSubst delta = pr->sub;
 			if (show_debug) {
 				cout << "DELTA" << endl;
-				cout << show(delta) << endl;
+				cout << delta.show() << endl;
 				cout << "SUB" << endl;
-				cout << show(sub) << endl;
+				cout << sub.show() << endl;
 			}
 			delta.compose(sub);
 			if (debug_unify_subs) {
-				cout << "SUB: " << show(delta) << endl;
+				cout << "SUB: " << delta.show() << endl;
 			}
 
 
@@ -109,15 +110,15 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypInde
 	return ret;
 }
 
-bool similar_subs_1(const Subst& s1, const Subst& s2) {
+bool similar_subs_1(const FlatSubst& s1, const FlatSubst& s2) {
 	if (s1 == s2) return true;
-	Subst unif = unify_subs(MultySubst({&s1, &s2}));
+	FlatSubst unif = unify_subs(MultySubst({&s1, &s2}));
 	if (!unif.ok()) {
 		//don't unify
 		return false;
 	}
 	for (const auto& p : unif) {
-		if (p.second.kind() != LightTree::VAR) {
+		if (p.second.kind() != FlatTerm::VAR) {
 			// is not a var replacement
 			return false;
 		}
@@ -125,13 +126,13 @@ bool similar_subs_1(const Subst& s1, const Subst& s2) {
 	return true;
 }
 
-bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
+bool similar_subs(const FlatSubst& s1, const FlatSubst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
-	Subst s1_vars_inv;
-	Subst s1_terms;
+	FlatSubst s1_vars_inv;
+	FlatSubst s1_terms;
 	for (const auto& p : s1) {
-		if (p.second.kind() == LightTree::VAR && !s2.maps(p.first)) {
-			//s1_vars_inv.compose(p.second.var().lit, LightTree(p.first));
+		if (p.second.kind() == FlatTerm::VAR && !s2.maps(p.first)) {
+			//s1_vars_inv.compose(p.second.var().lit, FlatTerm(p.first));
 		} else {
 			s1_terms.compose(p.first, p.second);
 		}
@@ -140,9 +141,9 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	bool ret = (s2 == s1_terms);
 	if (!ret && verbose) {
 		cout << "diff:" << endl << Indent::paragraph(show_diff(s2, s1_terms)) << endl;
-		cout << "s1: " << show(s1) << endl;
-		cout << "s2: " << show(s2) << endl;
-		cout << "var replacement: " << endl << show(s1_vars_inv) << endl;
+		cout << "s1: " << s1.show() << endl;
+		cout << "s2: " << s2.show() << endl;
+		cout << "var replacement: " << endl << s1_vars_inv.show() << endl;
 	}
 	return ret;
 }
@@ -191,22 +192,22 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 		if (!ms2.count(p1.first)) {
 			ret += "matrix doesn't have key" + show(p1.first) + "\n";
 			ret += "sequential value:\n";
-			ret += Indent::paragraph(show(p1.second));
+			ret += Indent::paragraph(p1.second.show());
 		} else if (!similar_subs(p1.second, ms2.at(p1.first), false)) {
 			ret += "sequential and matrix values for key" + show(p1.first) + " differ\n";
 			ret += "diff:\n";
 			ret += Indent::paragraph(show_diff(p1.second, ms2.at(p1.first)));
 			ret += "sequential value:\n";
-			ret += Indent::paragraph(show(p1.second));
+			ret += Indent::paragraph(p1.second.show());
 			ret += "matrix value:\n";
-			ret += Indent::paragraph(show(ms2.at(p1.first)));
+			ret += Indent::paragraph(ms2.at(p1.first).show());
 		}
 	}
 	for (const auto p2 : ms2) {
 		if (!ms1.count(p2.first)) {
 			ret += "sequential doesn't have key" + show(p2.first) + "\n";
 			ret += "matrix value:\n";
-			ret += Indent::paragraph(show(p2.second));
+			ret += Indent::paragraph(p2.second.show());
 		}
 	}
 	return ret;
@@ -325,10 +326,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			string msg;
 			msg += "while unifying down:\n";
 			for (auto c : ch) {
-				msg += show(c->sub) + "\n";
+				msg += c->sub.show() + "\n";
 			}
 			err.msg += "\n" + msg;
-			err.msg += "\nunifier: " + show(p.second);
+			err.msg += "\nunifier: " + p.second.show();
 			error_inds = ind;
 			debug_unify_subs = true;
 			//unify_subs_sequent(pr, hy, hs);

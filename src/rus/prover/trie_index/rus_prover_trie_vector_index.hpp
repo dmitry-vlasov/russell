@@ -241,7 +241,7 @@ struct VectorIndex {
 				}
 			}
 		}
-		void add(const LightTree& e, uint i) {
+		void add(const FlatTerm& e, uint i) {
 			exprs_inds_.push_back(i);
 			exprs_.add(e, i);
 		}

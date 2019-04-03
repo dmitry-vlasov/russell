@@ -25,7 +25,7 @@ bool FlatSubst::operator == (const FlatSubst& s) const {
 		return false;
 	}
 	for (const auto& p : sub_) {
-		if (p.second != s.maps(p.first)) {
+		if (p.second != s.map(p.first)) {
 			return false;
 		}
 	}
@@ -51,14 +51,20 @@ bool consistent(const FlatSubst* s, uint v, const FlatTerm& t) {
 		return false;
 	}
 	if (s->maps(v)) {
-		return s->map(v) == t;
+		return t == s->map(v);
 	} else {
-		for (uint y : x_vars) {
-			if (s->maps(y)) {
+		for (uint x : x_vars) {
+			if (s->maps(x)) {
 				set<uint> y_vars;
-				collect_vars(s->map(y), y_vars);
+				const FlatTerm& p = s->map(x);
+				collect_vars(p, y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
-					return false;
+					if (p.kind() == FlatTerm::VAR && p.var() == v &&
+						t.kind() == FlatTerm::VAR && t.var() == x) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			}
 		}
@@ -90,7 +96,7 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	if (full) {
 		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub_.emplace(p.first, p.second);
+				s1.sub_[p.first] = p.second;
 			}
 		}
 	}
@@ -214,23 +220,8 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2) {
 	return false;
 }
 
-FlatSubst convert2flatsubst(const Subst& sub) {
-	FlatSubst ret;
-	for (const auto& p : sub) {
-		ret.compose(p.first, std::move(convert2flatterm(p.second)));
-	}
-	return ret;
-}
 
-Subst convert2subst(const FlatSubst& s) {
-	Subst ret;
-	for (const auto& p : s) {
-		ret.compose(p.first, std::move(convert2lighttree(p.second)));
-	}
-	return ret;
-}
-/*
-FlatSubst Subst2FlatSubstitution(const Substitution& sub) {
+FlatSubst Substitution2FlatSubst(const Substitution& sub) {
 	FlatSubst ret;
 	for (const auto& p : sub) {
 		ret.compose(p.first, std::move(Tree2FlatTerm(*p.second)));
@@ -238,12 +229,39 @@ FlatSubst Subst2FlatSubstitution(const Substitution& sub) {
 	return ret;
 }
 
-Substitution FlatSubst2Subst(const FlatSubst& s) {
+Substitution FlatSubst2Substitution(const FlatSubst& s) {
 	Substitution ret;
 	for (const auto& p : s) {
-		ret.compose(p.first, std::move(FlatTerm2Tree(p.second)));
+		ret.join(p.first, std::move(FlatTerm2Tree(p.second)));
 	}
 	return ret;
-}*/
+}
+
+string show_diff(const FlatSubst& s1, const FlatSubst& s2) {
+	if (s1 == s2) return "<no diff>"; else {
+		string ret;
+		ret += "iterating s1\n";
+		for (const auto& p : s1) {
+			if (!s2.maps(p.first)) {
+				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
+			} else if (p.second != s2.map(p.first)) {
+				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
+				ret += "\t\t" + p.second.show() + "\n";
+				ret += "\t\t" + s2.map(p.first).show() + "\n";
+			}
+		}
+		ret += "iterating s2\n";
+		for (const auto& p : s2) {
+			if (!s1.maps(p.first)) {
+				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
+			} else if (p.second != s1.map(p.first)) {
+				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
+				ret += "\t\t" + s1.map(p.first).show() + "\n";
+				ret += "\t\t" + p.second.show() + "\n";
+			}
+		}
+		return ret;
+	}
+}
 
 }}}

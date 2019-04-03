@@ -1,7 +1,7 @@
 #pragma once
 
 #include "rus_ast.hpp"
-#include "rus_prover_expr.hpp"
+#include "rus_prover_flat_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -65,11 +65,11 @@ struct Prop : public Node {
 	Premises premises;
 	Proofs   proofs;
 	PropRef  prop;
-	Subst    sub;
-	Subst    outer;
-	Subst    fresher;
+	FlatSubst    sub;
+	FlatSubst    outer;
+	FlatSubst    fresher;
 	bool     autoGoDown = true;
-	Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p);
+	Prop(const PropRef& r, const FlatSubst& s, const FlatSubst& o, const FlatSubst& f, Hyp* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -84,9 +84,9 @@ struct Hyp : public Node {
 	Prop*     parent;
 	Variants  variants;
 	Proofs    proofs;
-	LightTree expr;
-	Hyp(const LightTree& e, Space* s);
-	Hyp(const LightTree& e, Prop* p);
+	FlatTerm expr;
+	Hyp(const FlatTerm& e, Space* s);
+	Hyp(const FlatTerm& e, Prop* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -97,28 +97,28 @@ struct Hyp : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const Subst& s);
+	ProofNode(const FlatSubst& s);
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() const = 0;
 	virtual bool equal(const ProofNode*) const = 0;
 
-	Subst sub;
+	FlatSubst sub;
 	bool  new_;
 	uint  ind;
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const Subst& s, const LightTree& e);
+	ProofHyp(Hyp& n, const FlatSubst& s, const FlatTerm& e);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;
 	Hyp&      node;
-	LightTree expr;
+	FlatTerm expr;
 };
 
 struct ProofTop : public ProofHyp {
-	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
+	ProofTop(Hyp& n, const HypRef& h, const FlatSubst& s);
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -127,7 +127,7 @@ struct ProofTop : public ProofHyp {
 };
 
 struct ProofExp : public ProofHyp {
-	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
+	ProofExp(Hyp& h, ProofProp* c, const FlatSubst& s = FlatSubst());
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -136,7 +136,7 @@ struct ProofExp : public ProofHyp {
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
+	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const FlatSubst& s = FlatSubst());
 	~ProofProp() override;
 	rus::Ref* ref() const override;
 	string show() const override;

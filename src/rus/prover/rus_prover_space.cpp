@@ -1,4 +1,3 @@
-#include "rus_prover_expr.hpp"
 #include "rus_prover_space.hpp"
 #include "rus_prover_node.hpp"
 #include "rus_prover_tactics.hpp"
@@ -25,7 +24,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			for (uint i = 0; i < ass->props.size(); ++i) {
 				auto& prop = ass->props[i];
 				assertions_.add(
-					convert_tree(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+					Tree2FlatTerm(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
 					PropRef(ass, i)
 				);
 			}
@@ -39,12 +38,12 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	//}
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
-		hyps_.add(convert_tree(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
+		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
 	//if (ind == 18) {
 		//cout << "\nHYPS:\n" << hyps1_.show() << endl;
 	//}
-	root = new Hyp(convert_tree(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
+	root = new Hyp(Tree2FlatTerm(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
 	root->buildUp();
 }
 

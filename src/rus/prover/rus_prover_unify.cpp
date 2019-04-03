@@ -6,7 +6,7 @@ struct UnifStepData {
 	const Rule* rule = nullptr;
 	vector<uint> vars;
 	const Type* least_type = nullptr;
-	vector<const LightTree::Children*> children;
+	vector<vector<FlatTerm>> children;
 	bool consistent = false;
 	LightSymbol var;
 	LightSymbol const_;
@@ -34,7 +34,7 @@ struct UnifStepData {
 		}
 		return true;
 	}
-	bool track_node(const LightTree& t) {
+	bool track_node(const FlatTerm& t) {
 		if (const_.is_def()) {
 			// If we have any non-replaceable variables (constant), all other
 			// terms must be the same variable (constant).
@@ -47,7 +47,7 @@ struct UnifStepData {
 			// all other leafs must be with the same rule.
 			return false;
 		}
-		children.push_back(&t.children());
+		children.push_back(t.children());
 		return true;
 	}
 
@@ -65,11 +65,11 @@ struct UnifStepData {
 	}
 };
 
-static UnifStepData gather_unification_data(vector<LightTree>& ex) {
+static UnifStepData gather_unification_data(vector<FlatTerm>& ex) {
 	std::sort(
 		ex.begin(),
 		ex.end(),
-		[](const LightTree& t1, const LightTree& t2) {
+		[](const FlatTerm& t1, const FlatTerm& t2) {
 			return *t1.type() < *t2.type();
 		}
 	);
@@ -81,12 +81,12 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 			return ret;
 		}
 		switch (t.kind()) {
-		case LightTree::VAR:
+		case FlatTerm::VAR:
 			if (!ret.track_var(t.var())) {
 				return ret;
 			}
 			break;
-		case LightTree::RULE:
+		case FlatTerm::RULE:
 			if (!ret.track_node(t)) {
 				return ret;
 			}
@@ -98,72 +98,61 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 	return ret;
 }
 
-LightTree do_unify(vector<LightTree> ex, Subst& sub);
+FlatTerm do_unify(vector<FlatTerm> ex, FlatSubst& sub);
 
-LightTree unify_step(Subst& s, const vector<uint>& vars, const LightTree& term) {
-	vector<LightTree> to_unify({apply(s, term)});
+FlatTerm unify_step(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
+	vector<FlatTerm> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
 			to_unify.push_back(s.map(v));
 		}
 	}
-	LightTree unified = do_unify(to_unify, s);
+	FlatTerm unified = do_unify(to_unify, s);
 	if (!unified.empty()) {
 		for (auto v : vars) {
-			if (!s.compose(Subst(v, unified))) {
-				return LightTree();
+			if (!s.compose(FlatSubst(v, unified))) {
+				return FlatTerm();
 			}
 		}
 		return unified;
 	}
-	return LightTree();
+	return FlatTerm();
 }
 
-LightTree do_unify(vector<LightTree> ex, Subst& sub) {
+FlatTerm do_unify(vector<FlatTerm> ex, FlatSubst& sub) {
 	if (!ex.size()) {
-		return LightTree();
+		return FlatTerm();
 	} else if (ex.size() == 1) {
 		return apply(sub, *ex.begin());
 	}
 	UnifStepData data = gather_unification_data(ex);
 	if (!data.consistent) {
-		return LightTree();
+		return FlatTerm();
 	}
-	LightTree ret;
+	FlatTerm ret;
 	if (data.rule) {
-		LightTree::Children ch;
+		vector<FlatTerm> ch;
 		for (uint i = 0; i < data.rule->arity(); ++ i) {
-			vector<LightTree> x;
-			for (const auto t : data.children) {
-				LightTree* c = (*t)[i].get();
-				x.push_back(*c);
+			vector<FlatTerm> x;
+			for (const auto& t : data.children) {
+				x.push_back(t[i]);
 			}
-			LightTree c = do_unify(x, sub);
+			FlatTerm c = do_unify(x, sub);
 			if (!c.empty()) {
-				ch.push_back(make_unique<LightTree>(c));
+				ch.push_back(c);
 			} else {
-				return LightTree();
+				return FlatTerm();
 			}
 		}
-		return unify_step(sub, data.vars, LightTree(data.rule, ch));
+		return unify_step(sub, data.vars, FlatTerm(data.rule, ch));
 	} else {
-		return unify_step(sub, data.vars, LightTree(data.const_.is_def() ? data.const_ : data.var));
+		return unify_step(sub, data.vars, FlatTerm(data.const_.is_def() ? data.const_ : data.var));
 	}
 }
 
-bool check_unification(const LightTree& term, const Subst& sub, const vector<LightTree>& ex) {
-	/*if (debug_unify_subs_func) {
-		cout << "--- check_unification ---" << endl;
-		cout << "term : " << show(term) << endl;
-		cout << "sub : " << show(sub) << endl;
-	}*/
+bool check_unification(const FlatTerm& term, const FlatSubst& sub, const vector<FlatTerm>& ex) {
 	if (!term.empty()) {
 		for (auto e : ex) {
-			/*if (debug_unify_subs_func) {
-				cout << "expr: " << show(e) << endl;
-				cout << "applied: " << show(apply(sub, e)) << endl;
-			}*/
-
 			if (apply(sub, e) != term) {
 				return false;
 			}
@@ -172,18 +161,18 @@ bool check_unification(const LightTree& term, const Subst& sub, const vector<Lig
 	return true;
 }
 
-LightTree unify(const vector<LightTree>& ex, Subst& sub) {
-	LightTree ret = do_unify(ex, sub);
+FlatTerm unify(const vector<FlatTerm>& ex, FlatSubst& sub) {
+	FlatTerm ret = do_unify(ex, sub);
 	if (!check_unification(ret, sub, ex)) {
 		cout << "unification error: " << endl;
 		for (auto pe : ex) {
-			cout << "\t" << show(pe) << endl;
+			cout << "\t" << pe.show() << endl;
 		}
 		cout << "sub: " << endl;
-		cout << show(sub) << endl;
+		cout << sub.show() << endl;
 
 		cout << "term: " << endl;
-		cout << show(ret) << endl;
+		cout << ret.show() << endl;
 		exit(0);
 	}
 	return ret;

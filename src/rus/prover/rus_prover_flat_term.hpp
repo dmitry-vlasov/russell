@@ -186,7 +186,6 @@ struct FlatTerm {
 	LightSymbol var() const { assert(kind() == VAR); return nodes[0].ruleVar.var; }
 	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
 	bool empty() const { return !nodes.size(); }
-	//uint len() const { return nodes.size(); }
 	vector<FlatTerm> children() const;
 	vector<ConstIterator> childrenIters() const;
 	FlatTerm subTerm(ConstIterator beg) const;
@@ -199,10 +198,7 @@ struct FlatTerm {
 	string show_pointers() const;
 };
 
-FlatTerm convert2flatterm(const LightTree&);
-LightTree convert2lighttree(const FlatTerm&);
-
-FlatTerm Tree2FlatTerm(const Tree&);
+FlatTerm Tree2FlatTerm(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
 unique_ptr<Tree> FlatTerm2Tree(const FlatTerm&);
 rus::Expr FlatTerm2Expr(const FlatTerm&);
 

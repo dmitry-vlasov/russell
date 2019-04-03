@@ -13,10 +13,10 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 
 static uint proof_node_index = 0;
 
-ProofNode::ProofNode(const Subst& s) :
+ProofNode::ProofNode(const FlatSubst& s) :
 	sub(s), new_(true), ind(proof_node_index++) { }
 
-ProofHyp::ProofHyp(Hyp& h, const Subst& s, const LightTree& e) :
+ProofHyp::ProofHyp(Hyp& h, const FlatSubst& s, const FlatTerm& e) :
 	ProofNode(s), node(h), expr(e) {
 }
 
@@ -29,8 +29,8 @@ ProofHyp::~ProofHyp() {
 	}*/
 }
 
-ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
-	ProofHyp(n, s, apply(s, convert_tree(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
+ProofTop::ProofTop(Hyp& n, const HypRef& h, const FlatSubst& s) :
+	ProofHyp(n, s, apply(s, Tree2FlatTerm(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -65,7 +65,7 @@ bool ProofExp::equal(const ProofNode* n) const {
 
 string show_struct(const ProofNode* n);
 
-ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
+ProofExp::ProofExp(Hyp& h, ProofProp* c, const FlatSubst& s) :
 	ProofHyp(h, s, apply(s, h.expr)), child(c) {
 	child->parent = this;
 	child->new_ = false;
@@ -81,27 +81,27 @@ ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 
 }
 
-ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
+ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const FlatSubst& s) :
 	ProofNode(s), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->parents.push_back(this);
 		p->new_ = false;
 	}
 	if (n.prop.ass->arity() > 0) {
-		Subst s0 = premises[0]->sub;
+		FlatSubst s0 = premises[0]->sub;
 		compose(s0, sub);
 		for (uint i = 0; i < premises.size(); ++ i) {
-			Subst si = premises[i]->sub;
+			FlatSubst si = premises[i]->sub;
 			compose(si, sub);
 			if (s0 != si) {
 				string err;
 				err += "s0 != s" + to_string(i) + "\n";
-				err += "s0: " +  prover::show(s0) + "\n";
-				err += "s" + to_string(i) + ": " + prover::show(si) + "\n\n";
-				err += "orig s0: " +  prover::show(premises[0]->sub) + "\n";
-				err += "orig s" + to_string(i) + ": " + prover::show(premises[i]->sub) + "\n";
+				err += "s0: " +  s0.show() + "\n";
+				err += "s" + to_string(i) + ": " + si.show() + "\n\n";
+				err += "orig s0: " + premises[0]->sub.show() + "\n";
+				err += "orig s" + to_string(i) + ": " + premises[i]->sub.show() + "\n";
 				err += "unifier:\n";
-				err += prover::show(s) + "\n";
+				err += s.show() + "\n";
 				throw Error(err);
 			}
 		}
@@ -143,8 +143,8 @@ rus::Step* ProofProp::step() const {
 	const PropRef& p = node.prop;
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
-	step->expr = std::move(convert_expr(parent->expr));
-	Substitution s = convert_sub(sub);
+	step->expr = std::move(FlatTerm2Expr(parent->expr));
+	Substitution s = FlatSubst2Substitution(sub);
 	apply_recursively(s, step);
 	return step;
 }
