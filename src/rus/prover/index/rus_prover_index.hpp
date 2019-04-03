@@ -84,9 +84,8 @@ struct Index::Iter {
 	bool isValid() const { return valid_; }
 	ConstIterator iter() const {
 		if (!valid_) {
-			cout << "NOT VALID!!!" << endl;
+			throw Error("Not valid Index::Iter");
 		}
-		assert(valid_ && "TrieIter::iter()");
 		return iter_;
 	}
 	Term subTerm(ConstIterator) const;
@@ -125,9 +124,7 @@ struct Index::Iter {
 	string show(bool full = false) const {
 		ostringstream oss;
 			if (full) {
-			//ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->first.show()) + "\n";
 			oss << "iter: " << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "\n";
-			//ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->first.show()) + "\n";
 			oss << "inds: ";
 			for (uint i : iter_->second.inds) {
 				oss << to_string(i) << " ";
@@ -177,7 +174,6 @@ struct TrieIndexMap {
 		Subst sub;
 	};
 	void add(const Term& t, const Data& d) {
-		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;
 		index_.add(t);
 		data_.push_back(d);
 	}
@@ -213,17 +209,10 @@ inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m,
 	Index::Unified unif = m.index().unify(t);
 	for (auto& p : unif) {
 		if (p.second.ok()) {
-			//cout << "UNIFIED: " << p.first << endl;
 			ret.emplace_back(m.data().at(p.first), p.second);
 		}
 	}
 	return ret;
 }
-
-extern bool debug_trie_index;
-extern bool debug_trie_subterm;
-extern bool debug_trie_profile;
-extern bool debug_trie_aftermath;
-
 
 }}}}

@@ -1,13 +1,7 @@
 #include "rus_prover_index.hpp"
-
-#include "../index/rus_prover_index_unify_step.hpp"
 #include "rus_prover_index_unify_step.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
-
-bool debug_trie_index = false;
-bool debug_trie_profile = false;
-bool debug_trie_aftermath = false;
 
 void Index::add(const Term& t, uint val) {
 	struct NodePair {
@@ -50,8 +44,6 @@ static Term create_flatterm(const vector<Index::Iter>& branch) {
 	}
 	return ft;
 }
-
-bool debug_trie_subterm = false;
 
 Term Index::Iter::subTerm(ConstIterator i) const {
 	vector<Iter> branch;

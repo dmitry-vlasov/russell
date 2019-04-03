@@ -3,8 +3,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-bool debug_index_helper = false;
-
 struct IndexHelper {
 
 	enum class HypDescr {
@@ -27,10 +25,6 @@ struct IndexHelper {
 		};
 		HypDescr descr = makeHypDescr(c1, c2);
 		hypDescrs[i] = descr;
-		if (debug_index_helper) {
-			cout << "intersectedLeft.vect.at(i).extra_inds: " << prover::show(intersectedLeft.vect.at(i).extra_inds) << endl;
-		}
-
 		if (!intersectedLeft.vect.at(i).skipped && descr == HypDescr::CART_TREE) {
 			if (!intersectedLeft.vect.at(i).extra_inds.size()) {
 				cout << "!intersectedLeft.vect.at(i).extra_inds.size()" << endl;
@@ -140,7 +134,6 @@ struct IndexHelper {
 				return iter1->second;
 			} else {
 				return vector<FlatTermSubst>{emptyTermSubst()};
-				//throw Error("impossible:  IndexHelper::Iterator::termSubstVect()");
 			}
 		}
 
@@ -231,8 +224,6 @@ struct IndexHelper {
 	const MatrixUnified* intersection;
 };
 
-static bool debug_trie_intersect = false;
-
 MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) const {
 	if (kind == EMPTY || vuu.card() == 0) {
 		return MatrixUnifiedUnion(EMPTY);
@@ -254,8 +245,6 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 			if (vu.empty()) continue;
 			for (const auto& mu : union_) {
 				if (mu.empty()) continue;
-
-
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
@@ -290,54 +279,19 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 }
 
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
-
-
-	static int count = 0;
-
 	MatrixUnifiedUnion common;
 	vector<uint> vars;
 	MultyUnifiedSubs s;
 	for (const auto& p : terms) {
-		if (debug_trie_index) {
-			++count;
-		}
-		if (count == 1) {
-			debug_trie_intersect = true;
-		}
 		Timer timer; timer.start();
 		common = std::move(common.intersect(p.second));
 		timer.stop();
-
 		if (common.empty()) {
-			if (debug_trie_index) {
-				cout << "INTERSECTED: EMPTY " << count << endl;
-			}
 			return s;
 		}
-
-		if (debug_trie_index) {
-			cout << "INTERSECTED: " << count << endl;
-			cout << common.show() << endl;
-		}
-		if (debug_trie_profile) {
-			cout << "INTERSECTED IN: " << timer << endl;
-		}
-
 		vars.push_back(p.first);
 	}
 	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
-
-	if (debug_trie_index) {
-		cout << "UNFOLDED:" << endl;
-		for (const auto& p : unfolded) {
-			cout << "\t" << prover::show(p.first) << " --> " << endl;
-			for (const auto& t : p.second) {
-				cout << "\t\t" << t.show() << endl;
-			}
-			cout << endl;
-		}
-	}
-
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
@@ -433,23 +387,6 @@ string Matrix::card_str() const {
 	return ret;
 }
 
-uint matrix_vector_counter = 0;
-
-static vector<uint> optimize_order_mindex(const map<uint, unique_ptr<Vector>>& mindex) {
-	vector<uint> ret;
-	for (const auto& p : mindex) {
-		ret.push_back(p.first);
-	}
-	/*std::sort(
-		ret.begin(),
-		ret.end(),
-		[&mindex](LightSymbol s1, LightSymbol s2) {
-			return mindex.at(s1)->unifyComplexity() < mindex.at(s2)->unifyComplexity();
-		}
-	);*/
-	return ret;
-}
-
 MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -467,15 +404,11 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 		return MultyUnifiedSubs();
 	}
 	map<uint, VectorUnifiedUnion> unified_columns;
-	matrix_vector_counter = 0;
-	for (auto var : optimize_order_mindex(mindex_)) {
-		if (debug_trie_profile) {
-			cout << "start unifying var " << Lex::toStr(var) << " ... " << flush;
-		}
-		Timer timer;
-		timer.start();
+	for (auto& p : mindex_) {
+		uint var = p.first;
+		Vector* vect = p.second.get();
 		try {
-			unified_columns[var] = std::move(mindex_[var]->unify_general());
+			unified_columns[var] = std::move(vect->unify_general());
 			if (unified_columns[var].empty()) {
 				return MultyUnifiedSubs();
 			}
@@ -483,14 +416,6 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 			cout << "while unifying matrix var: " << Lex::toStr(var) << endl;
 			throw err;
 		}
-		timer.stop();
-		if (debug_trie_index) {
-			cout << "var " << Lex::toStr(var) << " has " << unified_columns[var].card() << " unified in " << timer << endl;
-			cout << unified_columns[var].show() << endl;
-			cout << "INDEX" << endl;
-			cout << mindex_[var]->show() << endl;
-		}
-		matrix_vector_counter += 1;
 	}
 	return intersect(unified_columns, unif);
 }
