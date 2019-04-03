@@ -223,16 +223,6 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
 #endif
 
-//if (c == 2288) {
-	//trie_index::debug_trie_profile = true;
-	//trie_index::debug_trie_aftermath = true;
-	//debug_unify_subs = true;
-	//debug_unify_subs_func = true;
-	//cout << "TO SHOW MATRIX:" << endl;
-	//cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
-	//cout << "MATRIX SHOWN." << endl;
-//}
-
 	Timer timer; timer.start();
 #ifdef CHECK_MATRIX_UNIFICATION
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
@@ -250,54 +240,18 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	if (unified_subs_2.size() > 1) {
 		cout << "matrix unification: " << timer << endl;
 		cout << "results with " << unified_subs_2.size() << " variants " << endl;
-		/*cout << "step: ";
-		if (Oracle* oracle = dynamic_cast<Oracle*>(pr->space->tactic_)) {
-			if (const Step* step = oracle->hint(pr)) {
-				step->write(cout);
-			} else {
-				cout << "NONE" << endl;
-			}
-		}
-		cout << "prop proofs: " << endl << Indent::paragraph(showNodeProofs(pr, 8)) << endl;
-		cout << "hyp proofs: " << endl;
-		for (uint i = 0; i < hs.size(); ++ i) {
-			cout << Indent::paragraph(hs[i].show()) << endl;
-			if (i >= 8) break;
-		}
-		cout << endl;*/
 	}
 #endif
 
 #ifdef CHECK_MATRIX_UNIFICATION
 	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
-		//cout << "SEQUENTIAL:" << endl;
-		//cout << show(unified_subs_1) << endl;
-		//cout << "MATRIX:" << endl;
-		//cout << show(unified_subs_2) << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_1, unified_subs_2, true);
-		//cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
-		cout << index::MatrixIndex(pr, hy, hs).show() << endl;
-
-		//trie_index::debug_flat_apply = true;
- 		index::debug_trie_index = true;
- 		//trie_index::debug_flatterm = true;
-		index::unify_subs_matrix(pr, hy, hs);
-
-		//debug_unify_subs = true;
-		//unify_subs_sequent(pr, h);
+		cout << index::Matrix(pr, hy, hs).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
-	} else {
-		//cout << "SUB UNIFICATION EQUAL" << endl;
 	}
 #endif
-
-	if (c == 2288) {
-		//debug_compose = true;
-		//trie_index::debug_trie_profile = false;
-		//exit(0);
-	}
 
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
@@ -329,7 +283,6 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			err.msg += "\n" + msg;
 			err.msg += "\nunifier: " + p.second.show();
 			error_inds = ind;
-			debug_unify_subs = true;
 			//unify_subs_sequent(pr, hy, hs);
 			throw err;
 		}

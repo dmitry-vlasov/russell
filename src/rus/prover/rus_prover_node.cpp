@@ -1,5 +1,4 @@
 #include "rus_prover_space.hpp"
-#include "rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

@@ -1,7 +1,5 @@
 #include "rus_prover_multy_subst.hpp"
-
 #include "index/rus_prover_index_unify.hpp"
-#include "rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
