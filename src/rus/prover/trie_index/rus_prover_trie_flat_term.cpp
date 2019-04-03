@@ -215,4 +215,50 @@ LightTree convert2lighttree(const FlatTerm& ft) {
 	return LightTree(std::move(*fill_in_lighttree(beg, ft.nodes.end()).get()));
 }
 
+
+
+
+
+
+
+FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const Tree* t) {
+	auto n = ft;
+	auto end = ft;
+	if (const VarTree* v = dynamic_cast<const VarTree*>(t)) {
+		(ft++)->ruleVar.var = v->var();
+	} else if (const RuleTree* r = dynamic_cast<const RuleTree*>(t)) {
+		(ft++)->ruleVar.rule = r->rule.get();
+		for (const auto& c : r->children) {
+			end = fill_in_flatterm(ft, c.get());
+		}
+	}
+	n->end = end;
+	return end;
+}
+
+FlatTerm tree2flatterm(const Tree& t) {
+	FlatTerm ret(t.len());
+	auto ft = ret.nodes.begin();
+	fill_in_flatterm(ft, &t);
+	return ret;
+}
+
+unique_ptr<Tree> fill_in_tree(FlatTerm::ConstIterator& ft, FlatTerm::ConstIterator end) {
+	if (ft->ruleVar.isRule()) {
+		const Rule* r = (ft++)->ruleVar.rule;
+		RuleTree::Children ch;
+		for (uint i = 0; i < r->arity(); ++ i) {
+			ch.push_back(fill_in_tree(ft, end));
+		}
+		return make_unique<RuleTree>(r->id(), ch);
+	} else {
+		return make_unique<VarTree>((ft++)->ruleVar._var());
+	}
+}
+
+unique_ptr<Tree> flatterm2tree(const FlatTerm& ft) {
+	auto beg = ft.nodes.begin();
+	return fill_in_tree(beg, ft.nodes.end());
+}
+
 }}}}

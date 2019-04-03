@@ -59,6 +59,13 @@ struct LightSymbol {
 	}
 
 	LightSymbol& operator = (const LightSymbol& s) = default;
+	LightSymbol& operator = (const Symbol& s) {
+		lit = s.lit();
+		type = s.type();
+		ind = 0;
+		rep = (s.kind() == Symbol::VAR);
+		return *this;
+	}
 
 	uint lit:31;
 	bool rep:1;

@@ -20,6 +20,7 @@ struct RuleVar {
 	bool isVar() const  { return var.is_def(); }
 	bool isRule() const { return rule; }
 	const Type* type() const { return rule ? rule->type() : var.type; }
+	Var _var() const { return Var(var.lit, var.type); }
 };
 
 struct FlatTerm {
@@ -198,6 +199,10 @@ struct FlatTerm {
 
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
+
+FlatTerm tree2flatterm(const Tree&);
+unique_ptr<Tree> flatterm2tree(const FlatTerm&);
+
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
 FlatTerm term(FlatTerm::ConstIterator b);
 

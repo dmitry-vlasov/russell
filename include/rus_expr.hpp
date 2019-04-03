@@ -109,6 +109,7 @@ struct Tree : public Writable {
 	virtual set<uint> vars() const = 0;
 	virtual uint arity() const = 0;
 	virtual Tree* clone() const = 0;
+	virtual uint len() const = 0;
 
 	bool operator == (const Tree&) const;
 	bool operator != (const Tree& t) const { return !operator ==(t); }
@@ -139,6 +140,13 @@ struct RuleTree : public Tree {
 	}
 	uint arity() const override { return children.size(); }
 	Tree* clone() const override { return new RuleTree(*this); }
+	uint len() const override {
+		uint l = 1;
+		for (const auto& c : children) {
+			l += c->len();
+		}
+		return l;
+	}
 	void write(ostream& os, const Indent& indent = Indent()) const override;
 
 	User<Rule> rule;
@@ -146,6 +154,7 @@ struct RuleTree : public Tree {
 };
 
 struct VarTree : public Tree {
+	VarTree(uint l, const Type* t) : lit_(l), type_(t) { }
 	VarTree(const Var& v) : lit_(v.lit()), type_(v.typeId()) { }
 	VarTree(const VarTree& n) = default;
 	VarTree(VarTree&& n) = default;
@@ -159,8 +168,10 @@ struct VarTree : public Tree {
 	}
 	uint arity() const override { return 0; }
 	Tree* clone() const override { return new VarTree(*this); }
+	uint len() const override { return 1; }
 	void write(ostream& os, const Indent& indent = Indent()) const override;
 	uint lit() const { return lit_; }
+	Var var() const { return Var(lit_, type_.get()); }
 
 private:
 	uint lit_;
