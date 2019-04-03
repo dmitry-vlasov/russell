@@ -1,8 +1,8 @@
 #pragma once
 
-#include "rus_prover_trie_flat_term.hpp"
+#include "rus_prover_flat_term.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover {
 
 struct FlatSubst {
 	FlatSubst(bool ok = true) : ok_(ok) { }
@@ -80,4 +80,4 @@ Subst convert2subst(const FlatSubst&);
 extern bool debug_flat_subst;
 extern bool debug_flat_apply;
 
-}}}}
+}}}

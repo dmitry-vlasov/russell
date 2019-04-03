@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../rus_prover_expr.hpp"
+#include "rus_prover_expr.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover {
 
 struct RuleVar {
 	const Rule* rule = nullptr;
@@ -208,4 +208,4 @@ FlatTerm term(FlatTerm::ConstIterator b);
 
 extern bool debug_flatterm;
 
-}}}}
+}}}

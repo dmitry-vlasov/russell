@@ -1,6 +1,6 @@
-#include "rus_prover_trie_flat_term.hpp"
+#include "rus_prover_flat_term.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover {
 
 bool debug_flatterm = false;
 
@@ -261,4 +261,4 @@ unique_ptr<Tree> flatterm2tree(const FlatTerm& ft) {
 	return fill_in_tree(beg, ft.nodes.end());
 }
 
-}}}}
+}}}

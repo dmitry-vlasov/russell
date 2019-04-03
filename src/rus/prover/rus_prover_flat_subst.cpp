@@ -1,6 +1,6 @@
-#include "rus_prover_trie_flat_subst.hpp"
+#include "rus_prover_flat_subst.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover {
 
 bool debug_flat_subst = false;
 bool debug_flat_apply = false;
@@ -68,7 +68,7 @@ bool consistent(const FlatSubst* s, LightSymbol v, const FlatTerm& t) {
 
 bool FlatSubst::consistent(const FlatSubst& sub) const {
 	for (const auto& p : sub) {
-		if (!trie_index::consistent(this, p.first, p.second)) {
+		if (!prover::consistent(this, p.first, p.second)) {
 			return false;
 		}
 	}
@@ -100,7 +100,7 @@ bool FlatSubst::compose(const FlatSubst& s, bool full) {
 	if (!ok_ || !consistent(s)) {
 		ok_ = false;
 	} else {
-		trie_index::compose(*this, s, full);
+		prover::compose(*this, s, full);
 	}
 	return ok_;
 }
@@ -110,11 +110,11 @@ bool FlatSubst::bicompose(const FlatSubst& s) {
 		return false;
 	}
 	FlatSubst ss(s);
-	trie_index::compose(ss, *this, false);
+	prover::compose(ss, *this, false);
 	if (!consistent(ss)) {
 		return false;
 	}
-	trie_index::compose(*this, ss, true);
+	prover::compose(*this, ss, true);
 	return true;
 }
 
@@ -230,4 +230,4 @@ Subst convert2subst(const FlatSubst& s) {
 	return ret;
 }
 
-}}}}
+}}}

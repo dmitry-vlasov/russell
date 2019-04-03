@@ -56,9 +56,9 @@ void parse_src() {
 	cout << endl;
 	cout << "sizeof(rus::prover::LightSymbol) = " << sizeof(rus::prover::LightSymbol) << endl;
 	cout << "sizeof(rus::prover::LightTree) = " << sizeof(rus::prover::LightTree) << endl;
-	cout << "sizeof(rus::prover::trie_index::RuleVar) = " << sizeof(rus::prover::trie_index::RuleVar) << endl;
-	cout << "sizeof(rus::prover::trie_index::FlatTerm) = " << sizeof(rus::prover::trie_index::FlatTerm) << endl;
-	cout << "sizeof(rus::prover::trie_index::FlatTerm::Node) = " << sizeof(rus::prover::trie_index::FlatTerm::Node) << endl;
+	cout << "sizeof(rus::prover::RuleVar) = " << sizeof(rus::prover::RuleVar) << endl;
+	cout << "sizeof(rus::prover::FlatTerm) = " << sizeof(rus::prover::FlatTerm) << endl;
+	cout << "sizeof(rus::prover::FlatTerm::Node) = " << sizeof(rus::prover::FlatTerm::Node) << endl;
 	cout << endl;
 	cout << "sizeof(rus::Symbol) = " << sizeof(rus::Symbol) << endl;
 	cout << "sizeof(rus::Literal) = " << sizeof(rus::Literal) << endl;
