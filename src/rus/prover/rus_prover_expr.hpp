@@ -10,15 +10,13 @@ enum class ReplMode {
 	DENY_REPL
 };
 
-constexpr uint undefined_value = uint(-1) >> 1;
-
 struct LightSymbol {
 	enum {
 		MATH_INDEX = 0,
 		ASSERTION_INDEX = 1,
 		INTERNAL_MIN_INDEX = 2
 	};
-	LightSymbol() : lit(undefined_value), rep(false), ind(-1), type(nullptr)  { }
+	LightSymbol() : lit(undef_value()), rep(false), ind(-1), type(nullptr)  { }
 	LightSymbol(uint l, const Type* t, ReplMode mode, uint i) :
 		lit(i == MATH_INDEX ? l :
 			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(l) + "!") :
@@ -47,9 +45,10 @@ struct LightSymbol {
 	}
 	LightSymbol(const LightSymbol& s) = default;
 
-	bool is_undef() const { return lit == undefined_value; }
-	bool is_def() const { return lit != undefined_value; }
+	bool is_undef() const { return lit == undef_value(); }
+	bool is_def() const { return lit != undef_value(); }
 	uint literal() const { return lit; }
+	static uint undef_value() { static uint val = uint(-1) >> 1; return val; }
 
 	bool operator == (const LightSymbol& s) const { return lit == s.lit && ind == s.ind; }
 	bool operator != (const LightSymbol& s) const { return !operator ==(s); }

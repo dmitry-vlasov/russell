@@ -54,6 +54,7 @@ void parse_src() {
 
 	cout << "sizeof(vector<uint>) = " << sizeof(vector<uint>) << endl;
 	cout << endl;
+	cout << "sizeof(rus::prover::LightSymbol) = " << sizeof(rus::prover::LightSymbol) << endl;
 	cout << "sizeof(rus::Symbol) = " << sizeof(rus::Symbol) << endl;
 	cout << "sizeof(rus::Literal) = " << sizeof(rus::Literal) << endl;
 	cout << "sizeof(rus::Var) = " << sizeof(rus::Var) << endl;
