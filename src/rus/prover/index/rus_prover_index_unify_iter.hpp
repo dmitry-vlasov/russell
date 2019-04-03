@@ -327,8 +327,8 @@ struct FlatTermSubst {
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 
 template<class D>
-vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const Term& t) {
-	vector<typename TrieIndexMap<D>::Unified> ret;
+vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const Term& t) {
+	vector<typename IndexMap<D>::Unified> ret;
 	if (!m.index().size) {
 		return ret;
 	}

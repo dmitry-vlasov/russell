@@ -128,9 +128,7 @@ struct CartesianProd {
 		auto j = std::find(data_[i].begin(), data_[i].end(), d);
 		if (j != data_[i].end()) {
 			iter_.fix(i, j - data_[i].begin());
-		} /*else {
-			assert(false && "element not found in CartesianMap vector");
-		}*/
+		}
 	}
 	void skip(uint i) { iter_.skip(i); }
 	void norm(uint i) { iter_.norm(i); }

@@ -21,12 +21,12 @@ Tactic* make_tactic(const string&);
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
-	using TrieIndexMap = index::TrieIndexMap<T>;
+	using IndexMap = index::IndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
 	~Space() {
-		delete root; //TODO: fix
+		delete root;
 		delete tactic_;
 	}
 
@@ -36,8 +36,8 @@ struct Space {
 	PropRef           prop;
 	map<uint, uint>   vars;
 
-	TrieIndexMap<HypRef>  hyps_;
-	TrieIndexMap<PropRef> assertions_;
+	IndexMap<HypRef>  hyps_;
+	IndexMap<PropRef> assertions_;
 
 	Return init();
 	Return info(uint index, string what);

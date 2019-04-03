@@ -167,7 +167,7 @@ private:
 };
 
 template<class Data>
-struct TrieIndexMap {
+struct IndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Data data;
@@ -201,11 +201,9 @@ private:
 	vector<Data> data_;
 };
 
-typedef TrieIndexMap<uint> IndexInt;
-
 template<class D>
-inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const Term& t) {
-	vector<typename TrieIndexMap<D>::Unified> ret;
+inline vector<typename IndexMap<D>::Unified> unify(const IndexMap<D>& m, const Term& t) {
+	vector<typename IndexMap<D>::Unified> ret;
 	Index::Unified unif = m.index().unify(t);
 	for (auto& p : unif) {
 		if (p.second.ok()) {
