@@ -32,17 +32,10 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
 	}
-	//if (ind == 18) {
-	//cout << "\nASSERTIONS_:\n" << assertions1_.show() << endl;
-	//cout << "\nASSERTIONS:\n" << assertions.show() << endl;
-	//}
 	for (uint i = 0; i < prop.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
 		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
-	//if (ind == 18) {
-		//cout << "\nHYPS:\n" << hyps1_.show() << endl;
-	//}
 	root = new Hyp(Tree2FlatTerm(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
 	root->buildUp();
 }
@@ -132,11 +125,8 @@ static void add_shown(set<uint>& shown, set<uint>& to_show, Hyp* hyp) {
 }
 
 void completeDown(set<Node*>& downs) {
-	//cout << "COMPLETING: " << ind << endl;
-	static  uint c = 0;
 	while (!downs.empty()) {
 		Node* n = *downs.begin();
-		//cout << "DOWNING: " << n->ind << ", c = " << c++ << endl;
 		downs.erase(n);
 		n->buildDown(downs);
 	}
@@ -195,9 +185,6 @@ Return Space::expand(uint index) {
 				return Return("already expanded", "</new>");
 			}
 		}
-
-	} else {
-		cout << index << " NOT A PROP" << endl;
 	}
 	return true;
 }
@@ -256,9 +243,6 @@ Space::Proved Space::proved() {
 				cout << "h->show(): " << h->show() << endl;
 			}
 		} else if (ProofTop* h = dynamic_cast<ProofTop*>(p.get())) {
-			//if (rus::Proof* pr = make_proof(h->child->step(), prop.ass->id(), prop.get())) {
-			//	ret.emplace_back(pr);
-			//}
 			// TODO
 			throw Error("incorrect proved node type");
 		} else {

@@ -3,8 +3,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-bool debug_trie_matrix = false;
-
 void unify_subs(Matrix& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
