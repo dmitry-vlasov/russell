@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../rus_prover_flat_subst.hpp"
 #include "../rus_prover_multy_subst.hpp"
+#include "../rus_prover_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace trie_index {
 

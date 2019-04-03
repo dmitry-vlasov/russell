@@ -1,4 +1,4 @@
-#include "rus_prover_flat_term.hpp"
+#include "rus_prover_term.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

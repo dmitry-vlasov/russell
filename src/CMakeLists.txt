@@ -49,8 +49,8 @@ else()
 		rus/prover/rus_prover_tactics.cpp
 		rus/prover/rus_prover_test.cpp
 		rus/prover/rus_prover_unify.cpp	
-		rus/prover/rus_prover_flat_term.cpp
-		rus/prover/rus_prover_flat_subst.cpp
+		rus/prover/rus_prover_term.cpp
+		rus/prover/rus_prover_subst.cpp
 		rus/prover/rus_prover_multy_subst.cpp
 		rus/prover/trie_index/rus_prover_trie_index.cpp
 		rus/prover/trie_index/rus_prover_trie_matrix_index.cpp
