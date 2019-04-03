@@ -153,12 +153,12 @@ string FlatSubst::show() const {
 }
 
 uint applied_len(const FlatSubst& s, const FlatTerm& t) {
-	uint len = t.len();
+	uint len = t.nodes.size();
 	for (const auto& n : t.nodes) {
 		if (n.ruleVar.isVar()) {
 			const FlatTerm& term = s.map(n.ruleVar.var);
 			if (!term.empty()) {
-				len += term.len() - 1;
+				len += term.nodes.size() - 1;
 			}
 		}
 	}
@@ -170,13 +170,13 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 	vector<uint> beg_shifts;
 	vector<uint> end_shifts;
 	vector<const FlatTerm*> subs;
-	for (uint k = 0; k < t.len(); ++ k, ++ len) {
+	for (uint k = 0; k < t.nodes.size(); ++ k, ++ len) {
 		const auto& n = t.nodes[k];
 		beg_shifts.push_back(len);
 		if (n.ruleVar.isVar()) {
 			const FlatTerm& term = s.map(n.ruleVar.var);
 			if (!term.empty()) {
-				len += term.len() - 1;
+				len += term.nodes.size() - 1;
 				subs.push_back(&term);
 			} else {
 				subs.push_back(nullptr);
@@ -187,7 +187,7 @@ FlatTerm apply(const FlatSubst& s, const FlatTerm& t) {
 		end_shifts.push_back(len);
 	}
 	FlatTerm ret(len);
-	for (uint k = 0; k < t.len(); ++ k) {
+	for (uint k = 0; k < t.nodes.size(); ++ k) {
 		if (subs[k]) {
 			copyFlatSubTerm(&ret, beg_shifts[k], subs[k]->nodes.begin());
 		} else {
@@ -229,21 +229,21 @@ Subst convert2subst(const FlatSubst& s) {
 	}
 	return ret;
 }
-
-FlatSubst Subst2FlatSubst(const Subst& sub) {
+/*
+FlatSubst Subst2FlatSubstitution(const Substitution& sub) {
 	FlatSubst ret;
 	for (const auto& p : sub) {
-		ret.compose(p.first, std::move(convert2flatterm(p.second)));
+		ret.compose(p.first, std::move(Tree2FlatTerm(*p.second)));
 	}
 	return ret;
 }
 
-Subst FlatSubst2Subst(const FlatSubst& s) {
-	Subst ret;
+Substitution FlatSubst2Subst(const FlatSubst& s) {
+	Substitution ret;
 	for (const auto& p : s) {
-		ret.compose(p.first, std::move(convert2lighttree(p.second)));
+		ret.compose(p.first, std::move(FlatTerm2Tree(p.second)));
 	}
 	return ret;
-}
+}*/
 
 }}}

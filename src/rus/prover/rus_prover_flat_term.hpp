@@ -46,7 +46,7 @@ struct FlatTerm {
 			valid_(true),
 			beg_(ft.nodes.begin()),
 			iter_(ft.nodes.begin()),
-			end_(ft.nodes.begin() + ft.len() - 1) { }
+			end_(ft.nodes.begin() + ft.nodes.size() - 1) { }
 		TermIter(ConstIterator b, ConstIterator e, bool v = true) :
 			valid_(v), beg_(b), iter_(b), end_(e) { }
 		TermIter(const TermIter&) = default;
@@ -186,11 +186,13 @@ struct FlatTerm {
 	LightSymbol var() const { assert(kind() == VAR); return nodes[0].ruleVar.var; }
 	const Rule* rule() const { assert(kind() == RULE); return nodes[0].ruleVar.rule; }
 	bool empty() const { return !nodes.size(); }
-	uint len() const { return nodes.size(); }
+	//uint len() const { return nodes.size(); }
 	vector<FlatTerm> children() const;
 	vector<ConstIterator> childrenIters() const;
 	FlatTerm subTerm(ConstIterator beg) const;
+	const Type* type() const { return nodes.front().ruleVar.type(); }
 	void verify() const;
+	uint len() const; // Length of a corresponding linear expression
 
 	vector<Node> nodes;
 	string show(bool simple = false) const;
@@ -200,8 +202,9 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 
-FlatTerm Tree2FlatFerm(const Tree&);
+FlatTerm Tree2FlatTerm(const Tree&);
 unique_ptr<Tree> FlatTerm2Tree(const FlatTerm&);
+rus::Expr FlatTerm2Expr(const FlatTerm&);
 
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
 FlatTerm term(FlatTerm::ConstIterator b);

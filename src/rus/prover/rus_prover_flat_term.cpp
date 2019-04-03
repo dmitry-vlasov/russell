@@ -53,7 +53,7 @@ FlatTerm::FlatTerm(LightSymbol s) : nodes(1) {
 static uint flatTermsLen(const vector<FlatTerm>& ch) {
 	uint len = 1;
 	for (const auto& c : ch) {
-		len += c.len();
+		len += c.nodes.size();
 	}
 	return len;
 }
@@ -64,7 +64,7 @@ FlatTerm::FlatTerm(const Rule* r, const vector<FlatTerm>& ch) : nodes(flatTermsL
 	uint pos = 1;
 	for (const auto& c : ch) {
 		copyFlatSubTerm(this, pos, c.nodes.begin());
-		pos += c.len();
+		pos += c.nodes.size();
 	}
 }
 
@@ -175,6 +175,29 @@ void FlatTerm::verify() const {
 	}
 }
 
+static void calculate_linear_len(FlatTerm::ConstIterator& ft, uint& len) {
+	if (ft->ruleVar.isRule()) {
+		const Rule* r = (ft++)->ruleVar.rule;
+		uint i = 0;
+		for (const auto& s : r->term.symbols) {
+			if (s->type()) {
+				calculate_linear_len(ft, len);
+			} else {
+				++len;
+			}
+		}
+	} else {
+		++len;
+	}
+}
+
+uint FlatTerm::len() const {
+	uint l = 0;
+	auto b = nodes.begin();
+	calculate_linear_len(b, l);
+	return l;
+}
+
 FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const LightTree* t) {
 	auto n = ft;
 	auto end = ft;
@@ -259,6 +282,32 @@ unique_ptr<Tree> fill_in_tree(FlatTerm::ConstIterator& ft, FlatTerm::ConstIterat
 unique_ptr<Tree> FlatTerm2Tree(const FlatTerm& ft) {
 	auto beg = ft.nodes.begin();
 	return fill_in_tree(beg, ft.nodes.end());
+}
+
+static void fill_in_linear_expr(FlatTerm::ConstIterator& ft, vector<unique_ptr<Symbol>>& ret) {
+	if (ft->ruleVar.isRule()) {
+		const Rule* r = (ft++)->ruleVar.rule;
+		uint i = 0;
+		for (const auto& s : r->term.symbols) {
+			if (s->type()) {
+				fill_in_linear_expr(ft, ret);
+			} else {
+				ret.emplace_back(s->clone());
+			}
+		}
+	} else {
+		ret.emplace_back((ft++)->ruleVar._var().clone());
+	}
+}
+
+rus::Expr FlatTerm2Expr(const FlatTerm& term) {
+	rus::Expr ret;
+	ret.set(FlatTerm2Tree(term).release());
+	ret.type = term.type();
+	ret.symbols.reserve(term.len());
+	auto b = term.nodes.begin();
+	fill_in_linear_expr(b, ret.symbols);
+	return ret;
 }
 
 }}}

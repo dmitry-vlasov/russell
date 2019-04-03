@@ -77,8 +77,8 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2);
 FlatSubst convert2flatsubst(const Subst&);
 Subst convert2subst(const FlatSubst&);
 
-FlatSubst Subst2FlatSubst(const Subst&);
-Subst FlatSubst2Subst(const FlatSubst&);
+FlatSubst Substitution2FlatSubst(const Substitution&);
+Substitution FlatSubst2Substitution(const FlatSubst&);
 
 extern bool debug_flat_subst;
 extern bool debug_flat_apply;
