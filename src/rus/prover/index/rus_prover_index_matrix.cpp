@@ -390,7 +390,7 @@ static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector
 	}
 }
 
-MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
+Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
 	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
 	for (uint i = 0; i < dim_hyp_; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;
@@ -411,7 +411,7 @@ MatrixIndex::MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
 	}
 }
 
-uint MatrixIndex::card() const {
+uint Matrix::card() const {
 	uint ret = 1;
 	for (const auto& p : proofInds_) {
 		ret *= p.size();
@@ -419,7 +419,7 @@ uint MatrixIndex::card() const {
 	return ret;
 }
 
-string MatrixIndex::card_str() const {
+string Matrix::card_str() const {
 	string ret;
 	bool first = true;
 	for (const auto& p : proofInds_) {
@@ -450,7 +450,7 @@ static vector<uint> optimize_order_mindex(const map<uint, unique_ptr<VectorIndex
 	return ret;
 }
 
-MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
+MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
 		for (uint i = 0; i < dim_hyp_; ++ i) {
@@ -495,7 +495,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 	return intersect(unified_columns, unif);
 }
 
-string MatrixIndex::show() const {
+string Matrix::show() const {
 	if (empty_) {
 		return "empty\n";
 	}

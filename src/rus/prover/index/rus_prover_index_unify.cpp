@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover { namespace index {
 
 bool debug_trie_matrix = false;
 
-void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
+void unify_subs(Matrix& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;
 	MultyUnifiedSubs gen = mi.compute(unif);
 
@@ -38,7 +38,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	if (debug_trie_matrix) {
 		cout << "AAA" << endl;
 	}
-	MatrixIndex mi(pr, hy, hs);
+	Matrix mi(pr, hy, hs);
 	if (mi.empty()) {
 		return MultyUnifiedSubs();
 	}

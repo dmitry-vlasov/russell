@@ -56,8 +56,8 @@ struct MatrixUnifiedUnion {
 	vector<MatrixUnified> union_;
 };
 
-struct MatrixIndex {
-	MatrixIndex(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
+struct Matrix{
+	Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);
 
 	MultyUnifiedSubs compute(MultyUnifiedSubs& unif);
 
