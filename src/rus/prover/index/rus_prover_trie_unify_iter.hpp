@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../index/rus_prover_trie_index.hpp"
 #include "../index/rus_prover_trie_unify_step.hpp"
+#include "rus_prover_index.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
@@ -40,7 +40,7 @@ private:
 struct MultyIter {
 	enum Kind { NONE, TRIE, TERM, EMPTY };
 	MultyIter() : kind_(NONE) { }
-	MultyIter(TrieIndex::TrieIter i) : kind_(TRIE), trieIter(i) { }
+	MultyIter(Index::TrieIter i) : kind_(TRIE), trieIter(i) { }
 	MultyIter(Term::TermIter i) : kind_(TERM), termIter(i) { }
 	MultyIter(EmptyIter i) : kind_(EMPTY), emptyIter(i) { }
 	MultyIter(const MultyIter&) = default;
@@ -225,7 +225,7 @@ struct MultyIter {
 
 private:
 	Kind kind_;
-	TrieIndex::TrieIter trieIter;
+	Index::TrieIter trieIter;
 	Term::TermIter  termIter;
 	EmptyIter           emptyIter;
 };
@@ -389,7 +389,7 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	vector<typename TrieIndexMap<D>::Unified> ret;
 	if (!m.index().size) return ret;
 	vector<MultyIter> iters;
-	iters.emplace_back(TrieIndex::TrieIter(m.index().root));
+	iters.emplace_back(Index::TrieIter(m.index().root));
 	iters.emplace_back(Term::TermIter(t));
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);

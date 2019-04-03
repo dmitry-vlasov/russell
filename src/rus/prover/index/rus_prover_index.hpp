@@ -5,7 +5,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-struct TrieIndex {
+struct Index {
 	struct Node {
 		struct NodeIterLess {
 			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
@@ -39,7 +39,7 @@ struct TrieIndex {
 	Node root;
 };
 
-struct TrieIndex::TrieIter {
+struct Index::TrieIter {
 	TrieIter() : valid_(false) { }
 	TrieIter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
 	TrieIter(ConstIterator i) : valid_(i != ConstIterator()), iter_(i) { }
@@ -197,11 +197,11 @@ struct TrieIndexMap {
 	string show_pointers() const {
 		return index_.show_pointers();
 	}
-	const TrieIndex& index() const { return index_; }
+	const Index& index() const { return index_; }
 	const vector<Data>& data() const { return data_; }
 
 private:
-	TrieIndex index_;
+	Index index_;
 	vector<Data> data_;
 };
 
@@ -210,7 +210,7 @@ typedef TrieIndexMap<uint> IndexInt;
 template<class D>
 inline vector<typename TrieIndexMap<D>::Unified> unify(const TrieIndexMap<D>& m, const Term& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
-	TrieIndex::Unified unif = m.index().unify(t);
+	Index::Unified unif = m.index().unify(t);
 	for (auto& p : unif) {
 		if (p.second.ok()) {
 			//cout << "UNIFIED: " << p.first << endl;

@@ -1,6 +1,6 @@
-#include "rus_prover_trie_unify_step.hpp"
-#include "../index/rus_prover_trie_index.hpp"
+#include "rus_prover_index.hpp"
 
+#include "rus_prover_trie_unify_step.hpp"
 #include "../index/rus_prover_trie_unify_step.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
@@ -9,15 +9,15 @@ bool debug_trie_index = false;
 bool debug_trie_profile = false;
 bool debug_trie_aftermath = false;
 
-void TrieIndex::add(const Term& t, uint val) {
+void Index::add(const Term& t, uint val) {
 	struct NodePair {
-		NodePair(TrieIndex::Iterator t, Term::ConstIterator e) : trie(t), end(e) { }
-		TrieIndex::Iterator trie;
+		NodePair(Index::Iterator t, Term::ConstIterator e) : trie(t), end(e) { }
+		Index::Iterator trie;
 		Term::ConstIterator end;
 	};
 	stack<NodePair> st;
 	Node* n = &root;
-	TrieIndex::Iterator it;
+	Index::Iterator it;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto p = it;
 		auto ni = n->nodes.emplace(i->ruleVar, Node()).first;
@@ -34,7 +34,7 @@ void TrieIndex::add(const Term& t, uint val) {
 	++size;
 }
 
-static Term create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
+static Term create_flatterm(const vector<Index::TrieIter>& branch) {
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
@@ -53,7 +53,7 @@ static Term create_flatterm(const vector<TrieIndex::TrieIter>& branch) {
 
 bool debug_trie_subterm = false;
 
-Term TrieIndex::TrieIter::subTerm(ConstIterator i) const {
+Term Index::TrieIter::subTerm(ConstIterator i) const {
 	vector<TrieIter> branch;
 	ConstIterator start = i;
 	while (i != ConstIterator()) {
@@ -67,7 +67,7 @@ Term TrieIndex::TrieIter::subTerm(ConstIterator i) const {
 	return create_flatterm(branch);
 }
 
-vector<pair<Term, uint>> TrieIndex::unpack() const {
+vector<pair<Term, uint>> Index::unpack() const {
 	vector<pair<Term, uint>> ret;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
@@ -97,7 +97,7 @@ vector<pair<Term, uint>> TrieIndex::unpack() const {
 	return ret;
 }
 
-string TrieIndex::show() const {
+string Index::show() const {
 	string ret;
 	for (const auto& p : unpack()) {
 		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
@@ -105,7 +105,7 @@ string TrieIndex::show() const {
 	return ret;
 }
 
-string TrieIndex::show_pointers() const {
+string Index::show_pointers() const {
 	vector<pair<vector<TrieIter>, uint>> vect;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
@@ -144,7 +144,7 @@ string TrieIndex::show_pointers() const {
 }
 
 
-vector<pair<Term, uint>> TrieIndex::unpack(const Node& root) {
+vector<pair<Term, uint>> Index::unpack(const Node& root) {
 	vector<pair<Term, uint>> ret;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
@@ -174,7 +174,7 @@ vector<pair<Term, uint>> TrieIndex::unpack(const Node& root) {
 	return ret;
 }
 
-string TrieIndex::show(const Node& root) {
+string Index::show(const Node& root) {
 	string ret;
 	for (const auto& p : unpack(root)) {
 		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
@@ -182,7 +182,7 @@ string TrieIndex::show(const Node& root) {
 	return ret;
 }
 
-string TrieIndex::show_pointers(const Node& root) {
+string Index::show_pointers(const Node& root) {
 	vector<pair<vector<TrieIter>, uint>> vect;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {
@@ -222,7 +222,7 @@ string TrieIndex::show_pointers(const Node& root) {
 
 
 
-uint TrieIndex::totalNodes() const {
+uint Index::totalNodes() const {
 	uint ret = 0;
 	vector<TrieIter> branch;
 	if (root.nodes.size()) {

@@ -248,7 +248,7 @@ struct VectorIndex {
 		bool empty() const {
 			return !extra_inds_.size() && exprs_.empty();
 		}
-		const TrieIndex& exprs() const { return exprs_; }
+		const Index& exprs() const { return exprs_; }
 		const vector<uint>& extraInds() const { return extra_inds_; }
 		const vector<uint>& allInds() const { return all_inds_; }
 		const vector<uint>& exprsInds() const { return exprs_inds_; }
@@ -263,7 +263,7 @@ struct VectorIndex {
 		}
 
 	private:
-		TrieIndex    exprs_;
+		Index    exprs_;
 		vector<uint> extra_inds_;
 		vector<uint> all_inds_;
 		vector<uint> exprs_inds_;
@@ -281,7 +281,7 @@ struct VectorIndex {
 				);
 				if (skipped[i]) {
 					only_iter_ind = i;
-					iters.emplace_back(TrieIndex::TrieIter(vect[i]->exprs().root));
+					iters.emplace_back(Index::TrieIter(vect[i]->exprs().root));
 				}
 			}
 			if (iters.size() > 0) {
@@ -289,7 +289,7 @@ struct VectorIndex {
 					for (auto it = vect[only_iter_ind]->exprs().root.nodes.begin(); it != vect[only_iter_ind]->exprs().root.nodes.end(); ++it) {
 						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
-								TrieIndex::TrieIter iter(it);
+								Index::TrieIter iter(it);
 								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), Subst()));
 							}
 						}
