@@ -73,6 +73,7 @@ struct LightSymbol {
 	uint ind;
 	const Type* type;
 };
+
 string show(const set<uint>&);
 string show(const vector<uint>&);
 string show(const vector<bool>& v);
@@ -93,7 +94,6 @@ inline string show(LightSymbol s, bool full = true) {
 inline ostream& operator << (ostream& os, const LightSymbol& s) {
 	os << show(s); return os;
 }
-
 
 struct RuleVar {
 	const Rule* rule = nullptr;
@@ -295,7 +295,5 @@ rus::Expr FlatTerm2Expr(const Term&);
 
 void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b);
 Term term(Term::ConstIterator b);
-
-extern bool debug_flatterm;
 
 }}}

@@ -84,7 +84,4 @@ Substitution FlatSubst2Substitution(const Subst&);
 
 string show_diff(const Subst& s1, const Subst& s2);
 
-extern bool debug_flat_subst;
-extern bool debug_flat_apply;
-
 }}}

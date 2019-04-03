@@ -29,7 +29,6 @@ static string show_assertion(const Assertion* a) {
 	}
 }
 
-
 string Prop::show(bool with_proofs) const {
 	string ret;
 	ret += "<prop ";
