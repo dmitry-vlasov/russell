@@ -4,44 +4,11 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-extern bool debug_trie_index_vector;
-
-struct EmptyIter {
-	EmptyIter(const vector<uint>& i = vector<uint>()) : inds_(i) { }
-	EmptyIter& operator = (const EmptyIter&) = default;
-
-	bool operator == (const EmptyIter& i) const { return true; }
-	bool operator != (const EmptyIter& i) const { return false; }
-
-	EmptyIter side() const { return *this; }
-	EmptyIter next() const { return *this; }
-	EmptyIter prev() const { return *this; }
-	EmptyIter reset() const { return *this; }
-	bool isNextEnd() const { return false; }
-	bool isSideEnd() const { return true; }
-	bool isValid() const { return true; }
-	Term subTerm() const { return Term(); }
-	vector<uint> inds() const { return inds_; }
-	bool isEnd(const EmptyIter&) const { return true; }
-	bool isVar() const { return false; }
-	LightSymbol var() const { return LightSymbol(); }
-	RuleVar ruleVar() const { return RuleVar(); }
-
-	string show() const {
-		return "empty, inds: " + prover::show(inds_);
-	}
-
-private:
-	vector<uint> inds_;
-};
-
-
 struct MultyIter {
-	enum Kind { NONE, TRIE, TERM, EMPTY };
+	enum Kind { NONE, TRIE, TERM, };
 	MultyIter() : kind_(NONE) { }
 	MultyIter(Index::Iter i) : kind_(TRIE), trieIter(i) { }
 	MultyIter(Term::TermIter i) : kind_(TERM), termIter(i) { }
-	MultyIter(EmptyIter i) : kind_(EMPTY), emptyIter(i) { }
 	MultyIter(const MultyIter&) = default;
 	MultyIter& operator = (const MultyIter&) = default;
 
@@ -49,7 +16,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter == i.trieIter;
 		case TERM:  return termIter == i.termIter;
-		case EMPTY: return emptyIter == i.emptyIter;
 		default: throw Error("impossible");
 		}
 	}
@@ -57,7 +23,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter != i.trieIter;
 		case TERM:  return termIter != i.termIter;
-		case EMPTY: return emptyIter != i.emptyIter;
 		default: throw Error("impossible");
 		}
 	}
@@ -67,7 +32,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return MultyIter(trieIter.side());
 		case TERM:  return MultyIter(termIter.side());
-		case EMPTY: return MultyIter(emptyIter.side());
 		default: throw Error("impossible");
 		}
 	}
@@ -75,7 +39,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return MultyIter(trieIter.next());
 		case TERM:  return MultyIter(termIter.next());
-		case EMPTY: return MultyIter(emptyIter.next());
 		default: throw Error("impossible");
 		}
 	}
@@ -83,7 +46,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return MultyIter(trieIter.prev());
 		case TERM:  return MultyIter(termIter.prev());
-		case EMPTY: return MultyIter(emptyIter.prev());
 		default: throw Error("impossible");
 		}
 	}
@@ -91,7 +53,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return MultyIter(trieIter.reset());
 		case TERM:  return MultyIter(termIter.reset());
-		case EMPTY: return MultyIter(emptyIter.reset());
 		default: throw Error("impossible");
 		}
 	}
@@ -99,7 +60,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.isNextEnd();
 		case TERM:  return termIter.isNextEnd();
-		case EMPTY: return emptyIter.isNextEnd();
 		default: throw Error("impossible");
 		}
 	}
@@ -107,7 +67,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.isSideEnd();
 		case TERM:  return termIter.isSideEnd();
-		case EMPTY: return emptyIter.isSideEnd();
 		default: throw Error("impossible");
 		}
 	}
@@ -115,7 +74,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.isValid();
 		case TERM:  return termIter.isValid();
-		case EMPTY: return emptyIter.isValid();
 		default: throw Error("impossible");
 		}
 	}
@@ -123,7 +81,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.subTerm(i.trieIter);
 		case TERM:  return termIter.subTerm();
-		case EMPTY: return emptyIter.subTerm();
 		default: throw Error("impossible");
 		}
 	}
@@ -132,7 +89,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.iter()->second.inds;
 		case TERM:  return {0};
-		case EMPTY: return emptyIter.inds();
 		default: throw Error("impossible");
 		}
 	}
@@ -153,7 +109,6 @@ struct MultyIter {
 			}
 			break;
 		}
-		case EMPTY: break;
 		default: throw Error("impossible");
 		}
 		return ret;
@@ -175,7 +130,6 @@ struct MultyIter {
 			}
 			break;
 		}
-		case EMPTY: break;
 		default: throw Error("impossible");
 		}
 		return ret;
@@ -184,7 +138,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.isEnd(i.trieIter);
 		case TERM:  return termIter.isEnd(i.termIter);
-		case EMPTY: return emptyIter.isEnd(i.emptyIter);
 		default: throw Error("impossible");
 		}
 	}
@@ -192,7 +145,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.isVar();
 		case TERM:  return termIter.isVar();
-		case EMPTY: return emptyIter.isVar();
 		default: throw Error("impossible");
 		}
 	}
@@ -200,15 +152,13 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.var();
 		case TERM:  return termIter.var();
-		case EMPTY: return emptyIter.var();
 		default: throw Error("impossible");
 		}
 	}
 	RuleVar ruleVar() const {
 		switch (kind_) {
 		case TRIE:  return trieIter.ruleVar();
-		case TERM:  return termIter.ruleVar();
-		case EMPTY: return emptyIter.ruleVar();
+		case TERM:  return termIter.ruleVar();;
 		default: throw Error("impossible");
 		}
 	}
@@ -217,7 +167,6 @@ struct MultyIter {
 		switch (kind_) {
 		case TRIE:  return trieIter.show();
 		case TERM:  return termIter.show();
-		case EMPTY: return emptyIter.show();
 		default: throw Error("impossible");
 		}
 	}
@@ -226,7 +175,6 @@ private:
 	Kind kind_;
 	Index::Iter    trieIter;
 	Term::TermIter termIter;
-	EmptyIter      emptyIter;
 };
 
 template<class Iter> RuleVar ruleVar(Iter);

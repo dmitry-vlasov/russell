@@ -211,8 +211,6 @@ string Index::show_pointers(const Node& root) {
 	return oss.str();
 }
 
-
-
 uint Index::totalNodes() const {
 	uint ret = 0;
 	vector<Iter> branch;
