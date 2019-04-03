@@ -2,7 +2,7 @@
 
 #include "../rus_prover_subst.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 template<class Iter> RuleVar ruleVar(Iter);
 template<>

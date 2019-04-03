@@ -3,7 +3,7 @@
 #include "../index/rus_prover_trie_vector_index.hpp"
 #include "../rus_prover_node.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 typedef MapUnified<vector<FlatTermSubst>> MatrixUnified;
 
@@ -46,7 +46,7 @@ struct MatrixUnifiedUnion {
 			string ret;
 			ret += "MatrixUnifiedUnion: Normal\n";
 			ret += "card = " + to_string(card()) + "\n";
-			ret += trie_index::show(union_);
+			ret += index::show(union_);
 			return ret;
 		}
 		}

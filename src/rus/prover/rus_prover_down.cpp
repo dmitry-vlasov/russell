@@ -246,7 +246,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #endif
 	timer.clear();
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = trie_index::unify_subs_matrix(pr, hy, hs);
+	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs);
 	timer.stop();
 #ifdef SHOW_MATRIXES
 	if (unified_subs_2.size() > 1) {
@@ -280,12 +280,12 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_1, unified_subs_2, true);
 		//cout << unified_subs_diff(unified_subs_1, unified_subs_2) << endl;
-		cout << trie_index::MatrixIndex(pr, hy, hs).show() << endl;
+		cout << index::MatrixIndex(pr, hy, hs).show() << endl;
 
 		//trie_index::debug_flat_apply = true;
- 		trie_index::debug_trie_index = true;
+ 		index::debug_trie_index = true;
  		//trie_index::debug_flatterm = true;
-		trie_index::unify_subs_matrix(pr, hy, hs);
+		index::unify_subs_matrix(pr, hy, hs);
 
 		//debug_unify_subs = true;
 		//unify_subs_sequent(pr, h);

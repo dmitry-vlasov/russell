@@ -2,7 +2,7 @@
 
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 bool debug_index_helper = false;
 

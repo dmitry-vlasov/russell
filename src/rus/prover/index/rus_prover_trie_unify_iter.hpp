@@ -3,7 +3,7 @@
 #include "../index/rus_prover_trie_index.hpp"
 #include "../index/rus_prover_trie_unify_step.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 extern bool debug_trie_index_vector;
 

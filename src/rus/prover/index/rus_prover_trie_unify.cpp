@@ -1,7 +1,7 @@
 #include "../index/rus_prover_trie_matrix_index.hpp"
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 bool debug_trie_matrix = false;
 

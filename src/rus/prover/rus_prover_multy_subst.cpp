@@ -24,7 +24,7 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 			}
 		}
 		Subst unif1 = unif;
-		Term term1 = trie_index::unify_general(p.second, unif1);
+		Term term1 = index::unify_general(p.second, unif1);
 		Subst unif2 = unif;
 		Term term2 = unify(p.second, unif2);
 		if (term1 != term2) {
@@ -38,8 +38,8 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 			cout << "term2: " << term2.show() << endl;
 			cout << "unif1: " << unif1.show() << endl;
 			cout << "unif2: " << unif2.show() << endl;
-			trie_index::debug_unify_general = true;
-			trie_index::unify_general(p.second, unif);
+			index::debug_unify_general = true;
+			index::unify_general(p.second, unif);
 			cout << "AAA" << endl;
 			exit(-1);
 		}

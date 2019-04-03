@@ -2,7 +2,7 @@
 
 #include "../index/rus_prover_trie_matrix_index.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 string show(const MultyUnifiedSubs&);
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs);

@@ -3,7 +3,7 @@
 #include "../index/rus_prover_trie_unify_iter.hpp"
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace trie_index {
+namespace mdl { namespace rus { namespace prover { namespace index {
 
 struct CartesianCell {
 	CartesianCell(const vector<uint>& ex, bool em, bool s) :
@@ -220,7 +220,7 @@ struct VectorUnifiedUnion {
 		return true;
 	}
 	string show() const {
-		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + trie_index::show(union_);
+		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + index::show(union_);
 	}
 	vector<VectorUnified> union_;
 };
@@ -295,7 +295,7 @@ struct VectorIndex {
 						}
 					}
 				} else {
-					ret.unified = trie_index::unify_general(iters);
+					ret.unified = index::unify_general(iters);
 				}
 			}
 		} catch (Error& err) {
@@ -305,7 +305,7 @@ struct VectorIndex {
 				cout << c->exprs().show_pointers() << endl << endl;
 			}
 			//debug_trie_index = true;
-			ret.unified = trie_index::unify_general(iters);
+			ret.unified = index::unify_general(iters);
 			throw err;
 		}
 		return ret;
