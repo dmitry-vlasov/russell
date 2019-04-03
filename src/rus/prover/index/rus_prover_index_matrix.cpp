@@ -362,13 +362,13 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	return s;
 }
 
-static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
+static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
 		for (const auto& x : p->sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
+				mindex_.emplace(x.first, new Vector(dim_hyp_));
 			}
 			mindex_.at(x.first)->vect[i]->add(x.second, j);
 		}
@@ -376,13 +376,13 @@ static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector
 	}
 }
 
-static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
+static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
 		for (const auto& x : hi.proof->sub) {
 			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, new VectorIndex(dim_hyp_));
+				mindex_.emplace(x.first, new Vector(dim_hyp_));
 			}
 			mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
 		}
@@ -435,7 +435,7 @@ string Matrix::card_str() const {
 
 uint matrix_vector_counter = 0;
 
-static vector<uint> optimize_order_mindex(const map<uint, unique_ptr<VectorIndex>>& mindex) {
+static vector<uint> optimize_order_mindex(const map<uint, unique_ptr<Vector>>& mindex) {
 	vector<uint> ret;
 	for (const auto& p : mindex) {
 		ret.push_back(p.first);

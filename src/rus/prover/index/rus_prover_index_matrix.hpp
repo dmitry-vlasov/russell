@@ -70,7 +70,7 @@ struct Matrix{
 
 private:
 	uint dim_hyp_;
-	map<uint, unique_ptr<VectorIndex>> mindex_;
+	map<uint, unique_ptr<Vector>> mindex_;
 	vector<vector<uint>> proofInds_;
 	bool empty_;
 };

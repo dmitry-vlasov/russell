@@ -225,8 +225,8 @@ struct VectorUnifiedUnion {
 	vector<VectorUnified> union_;
 };
 
-struct VectorIndex {
-	VectorIndex(uint dim) {
+struct Vector{
+	Vector(uint dim) {
 		for (uint i = 0; i < dim; ++ i) vect.emplace_back(new Cell);
 	}
 	struct Cell {
