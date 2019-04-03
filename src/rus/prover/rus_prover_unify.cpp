@@ -4,7 +4,7 @@ namespace mdl { namespace rus { namespace prover {
 
 struct UnifStepData {
 	const Rule* rule = nullptr;
-	vector<LightSymbol> vars;
+	vector<uint> vars;
 	const Type* least_type = nullptr;
 	vector<const LightTree::Children*> children;
 	bool consistent = false;
@@ -17,7 +17,7 @@ struct UnifStepData {
 				var = v;
 			}
 			// Collect replaceable variables
-			vars.push_back(v);
+			vars.push_back(v.lit);
 		} else {
 			if (const_.is_undef()) {
 				const_ = v;
@@ -56,7 +56,7 @@ struct UnifStepData {
 		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
 		ret += "vars: ";
 		for (const auto& v : vars) {
-			ret += prover::show(v, true) + " ";
+			ret += Lex::toStr(v) + " ";
 		}
 		ret += "\n";
 		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
@@ -100,7 +100,7 @@ static UnifStepData gather_unification_data(vector<LightTree>& ex) {
 
 LightTree do_unify(vector<LightTree> ex, Subst& sub);
 
-LightTree unify_step(Subst& s, const vector<LightSymbol>& vars, const LightTree& term) {
+LightTree unify_step(Subst& s, const vector<uint>& vars, const LightTree& term) {
 	vector<LightTree> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {

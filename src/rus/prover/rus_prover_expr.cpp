@@ -43,9 +43,9 @@ bool Subst::operator != (const Subst& s) const {
 	return !operator ==(s);
 }
 
-void collect_vars(const LightTree& tree, set<LightSymbol>& vars) {
+void collect_vars(const LightTree& tree, set<uint>& vars) {
 	if (tree.kind() == LightTree::VAR) {
-		vars.insert(tree.var());
+		vars.insert(tree.var().lit);
 	} else {
 		for (const auto& c : tree.children()) {
 			collect_vars(*c, vars);
@@ -53,8 +53,8 @@ void collect_vars(const LightTree& tree, set<LightSymbol>& vars) {
 	}
 }
 
-bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
-	set<LightSymbol> x_vars;
+bool consistent(const Subst* s, uint v, const LightTree& t) {
+	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
@@ -62,9 +62,9 @@ bool consistent(const Subst* s, LightSymbol v, const LightTree& t) {
 	if (s->maps(v)) {
 		return t == s->map(v);
 	} else {
-		for (LightSymbol x : x_vars) {
+		for (uint x : x_vars) {
 			if (s->maps(x)) {
-				set<LightSymbol> y_vars;
+				set<uint> y_vars;
 				const LightTree& p = s->map(x);
 				collect_vars(p, y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
@@ -102,7 +102,7 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 		cout << Indent::paragraph(show(s2)) << endl;
 	}
 	Subst ret;
-	set<LightSymbol> vars;
+	set<uint> vars;
 	for (const auto& p : s1) {
 		LightTree ex = apply(s2, p.second);
 		if (!(ex.kind() == LightTree::VAR && ex.var() == p.first)) {
@@ -158,7 +158,7 @@ bool Subst::intersects(const Subst& s) const {
 }
 
 bool Subst::composeable(const Subst& s) const {
-	set<LightSymbol> vars;
+	set<uint> vars;
 	for (const auto& p : sub_) {
 		collect_vars(p.second, vars);
 	}
@@ -283,7 +283,7 @@ string show(const Subst& sub) {
 		str += "empty\n";
 	}
 	for (const auto& p : sub) {
-		str += show(p.first) + " --> " + show(p.second) + "\n";
+		str += Lex::toStr(p.first) + " --> " + show(p.second) + "\n";
 	}
 	return str;
 }
@@ -294,9 +294,9 @@ string show_diff(const Subst& s1, const Subst& s2) {
 		ret += "iterating s1\n";
 		for (const auto& p : s1) {
 			if (!s2.maps(p.first)) {
-				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
 			} else if (p.second != s2.map(p.first)) {
-				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
 				ret += "\t\t" + show(p.second) + "\n";
 				ret += "\t\t" + show(s2.map(p.first)) + "\n";
 			}
@@ -304,9 +304,9 @@ string show_diff(const Subst& s1, const Subst& s2) {
 		ret += "iterating s2\n";
 		for (const auto& p : s2) {
 			if (!s1.maps(p.first)) {
-				ret += "\ts2 doesn't have " + show(p.first) + "\n";
+				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
 			} else if (p.second != s1.map(p.first)) {
-				ret += "\tvalues for '" + show(p.first) + "' differ:\n";
+				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
 				ret += "\t\t" + show(s1.map(p.first)) + "\n";
 				ret += "\t\t" + show(p.second) + "\n";
 			}
@@ -378,7 +378,7 @@ rus::Expr convert_expr(const LightTree& tree) {
 rus::Substitution convert_sub(const Subst& sub) {
 	rus::Substitution ret(sub.ok());
 	for (const auto& p : sub) {
-		ret.join(p.first.lit, *convert_tree_ptr(p.second));
+		ret.join(p.first, *convert_tree_ptr(p.second));
 	}
 	return ret;
 }

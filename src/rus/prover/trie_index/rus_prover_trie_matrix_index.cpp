@@ -290,13 +290,13 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 	return ret;
 }
 
-MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
+MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 
 
 	static int count = 0;
 
 	MatrixUnifiedUnion common;
-	vector<LightSymbol> vars;
+	vector<uint> vars;
 	MultyUnifiedSubs s;
 	for (const auto& p : terms) {
 		if (debug_trie_index) {
@@ -364,7 +364,7 @@ MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, Mu
 	return s;
 }
 
-static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
+static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
 	proofInds_[i] = vector<uint>(proofs.size());
 	for (uint j = 0; j < proofs.size(); ++j) {
 		auto p = proofs[j].get();
@@ -378,7 +378,7 @@ static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector
 	}
 }
 
-static void addProofs(map<LightSymbol, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
+static void addProofs(map<uint, unique_ptr<VectorIndex>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
 	proofInds_[i] = vector<uint>(hs.size());
 	for (uint j = 0; j < hs.size(); ++j) {
 		ProofHypIndexed hi = hs[j];
@@ -437,9 +437,11 @@ string MatrixIndex::card_str() const {
 
 uint matrix_vector_counter = 0;
 
-static vector<LightSymbol> optimize_order_mindex(const map<LightSymbol, unique_ptr<VectorIndex>>& mindex) {
-	vector<LightSymbol> ret;
-	for (const auto& p : mindex) ret.push_back(p.first);
+static vector<uint> optimize_order_mindex(const map<uint, unique_ptr<VectorIndex>>& mindex) {
+	vector<uint> ret;
+	for (const auto& p : mindex) {
+		ret.push_back(p.first);
+	}
 	/*std::sort(
 		ret.begin(),
 		ret.end(),
@@ -466,7 +468,7 @@ MultyUnifiedSubs MatrixIndex::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<LightSymbol, VectorUnifiedUnion> unified_columns;
+	map<uint, VectorUnifiedUnion> unified_columns;
 	matrix_vector_counter = 0;
 	for (auto var : optimize_order_mindex(mindex_)) {
 		if (debug_trie_profile) {

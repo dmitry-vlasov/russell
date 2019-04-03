@@ -14,7 +14,7 @@ template<class Iter>
 struct UnifStepData {
 	enum Kind { VAR, RULE, CONST_VAR };
 	const Rule* rule = nullptr;
-	vector<LightSymbol> vars;
+	vector<uint> vars;
 	const Type* least_type = nullptr;
 	bool consistent = false;
 	LightSymbol var;
@@ -75,7 +75,7 @@ struct UnifStepData {
 				kinds.push_back(CONST_VAR);
 			}
 			// Collect replaceable variables
-			vars.push_back(v);
+			vars.push_back(v.lit);
 		} else {
 			kinds.push_back(CONST_VAR);
 			if (const_.is_undef()) {
@@ -125,7 +125,7 @@ struct UnifStepData {
 		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
 		ret += "vars: ";
 		for (const auto& v : vars) {
-			ret += prover::show(v, true) + " ";
+			ret += Lex::toStr(v) + " ";
 		}
 		ret += "\n";
 		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";

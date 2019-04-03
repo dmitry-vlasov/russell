@@ -36,16 +36,16 @@ bool FlatSubst::operator != (const FlatSubst& s) const {
 	return !operator ==(s);
 }
 
-void collect_vars(const FlatTerm& term, set<LightSymbol>& vars) {
+void collect_vars(const FlatTerm& term, set<uint>& vars) {
 	for (const auto& n : term.nodes) {
 		if (n.ruleVar.isVar()) {
-			vars.insert(n.ruleVar.var);
+			vars.insert(n.ruleVar.var.lit);
 		}
 	}
 }
 
-bool consistent(const FlatSubst* s, LightSymbol v, const FlatTerm& t) {
-	set<LightSymbol> x_vars;
+bool consistent(const FlatSubst* s, uint v, const FlatTerm& t) {
+	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
@@ -53,9 +53,9 @@ bool consistent(const FlatSubst* s, LightSymbol v, const FlatTerm& t) {
 	if (s->maps(v)) {
 		return s->map(v) == t;
 	} else {
-		for (LightSymbol y : x_vars) {
+		for (uint y : x_vars) {
 			if (s->maps(y)) {
-				set<LightSymbol> y_vars;
+				set<uint> y_vars;
 				collect_vars(s->map(y), y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
 					return false;
@@ -77,7 +77,7 @@ bool FlatSubst::consistent(const FlatSubst& sub) const {
 
 void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	FlatSubst ret;
-	set<LightSymbol> vars;
+	set<uint> vars;
 	for (const auto& p : s1) {
 		FlatTerm ex = apply(s2, p.second);
 		if (!(ex.kind() == FlatTerm::VAR && ex.var() == p.first)) {
@@ -128,7 +128,7 @@ bool FlatSubst::intersects(const FlatSubst& sub) const {
 }
 
 bool FlatSubst::composeable(const FlatSubst& s) const {
-	set<LightSymbol> vars;
+	set<uint> vars;
 	for (const auto& p : sub_) {
 		collect_vars(p.second, vars);
 	}
@@ -147,7 +147,7 @@ string FlatSubst::show() const {
 		str += "empty\n";
 	}
 	for (const auto& p : sub_) {
-		str += prover::show(p.first) + " --> " + p.second.show() + "\n";
+		str += Lex::toStr(p.first) + " --> " + p.second.show() + "\n";
 	}
 	return str;
 }
@@ -155,7 +155,7 @@ string FlatSubst::show() const {
 uint applied_len(const FlatSubst& s, const FlatTerm& t) {
 	uint len = t.nodes.size();
 	for (const auto& n : t.nodes) {
-		if (n.ruleVar.isVar()) {
+		if (n.ruleVar.isVar() && s.maps(n.ruleVar.var)) {
 			const FlatTerm& term = s.map(n.ruleVar.var);
 			if (!term.empty()) {
 				len += term.nodes.size() - 1;

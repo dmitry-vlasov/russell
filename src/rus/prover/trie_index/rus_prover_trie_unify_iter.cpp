@@ -41,7 +41,7 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 
 vector<UnifyIters> unify_general_2(const UnifyIters& begins);
 
-FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+FlatTerm unify_step_1(FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
 
 	if (debug_flat_unify) {
 		cout << "vars: ";
@@ -104,7 +104,7 @@ FlatTerm unify_step_1(FlatSubst& s, const vector<LightSymbol>& vars, const FlatT
 	return FlatTerm();
 }
 
-FlatSubst unify_step_1(const FlatSubst& s, const vector<LightSymbol>& vars, const FlatTerm& term) {
+FlatSubst unify_step_1(const FlatSubst& s, const vector<uint>& vars, const FlatTerm& term) {
 	FlatSubst ret(s);
 	FlatTerm unified = unify_step_1(ret, vars, term);
 	return unified.empty() ? FlatSubst(false) : ret;

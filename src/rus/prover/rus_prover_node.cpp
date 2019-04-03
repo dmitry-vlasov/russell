@@ -7,7 +7,7 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, const Subst& s) {
+static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, set<uint>& assertion_vars, const Subst& s) {
 	Subst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
@@ -15,9 +15,10 @@ static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, con
 			if (!s.maps(v)) {
 				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				vars[v.lit] = i;
-				ret.compose(v, LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i)));
+				ret.compose(v.lit, LightTree(LightSymbol(w, ReplMode::KEEP_REPL, i)));
 			}
 		}
+		assertion_vars.insert(v.lit);
 	}
 	return ret;
 }
@@ -52,7 +53,8 @@ void Prop::buildUp() {
 
 void Hyp::buildUp() {
 	for (auto& m : unify_general(space->assertions_, expr)) {
-		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, m.sub);
+		set<uint> assertion_vars;
+		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
 			if (m.sub.maps(p.first)) {
 				fresher.erase(p.first);
@@ -62,7 +64,7 @@ void Hyp::buildUp() {
 		Subst sub;
 		Subst outer;
 		for (const auto& p : m.sub) {
-			if (p.first.ind == LightSymbol::ASSERTION_INDEX) {
+			if (assertion_vars.count(p.first)  /*p.first.ind == LightSymbol::ASSERTION_INDEX*/) {
 				outer.compose(p.first, p.second);
 			} else {
 				sub.compose(p.first, p.second);
@@ -70,11 +72,6 @@ void Hyp::buildUp() {
 		}
 		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
 		variants.emplace_back(prop);
-		/*if (!prop->prop.ass->arity() && prop->autoGoDown) {
-			ProofProp* pp = new ProofProp(*prop, {}, sub);
-			prop->proofs.emplace_back(pp);
-			proofs.emplace_back(new ProofExp(*this, pp, sub));
-		}*/
 	}
 }
 

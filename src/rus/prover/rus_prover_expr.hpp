@@ -57,6 +57,8 @@ struct LightSymbol {
 		else if (lit > s.lit) return false;
 		else return ind < s.ind;
 	}
+	bool operator == (uint l) const { return lit == l; }
+	bool operator != (uint l) const { return !operator ==(l); }
 
 	LightSymbol& operator = (const LightSymbol& s) = default;
 	LightSymbol& operator = (const Symbol& s) {
@@ -217,7 +219,7 @@ private:
 
 struct Subst {
 	Subst(bool ok = true) : ok_(ok) { }
-	Subst(LightSymbol v, const LightTree& t) : ok_(true) {
+	Subst(uint v, const LightTree& t) : ok_(true) {
 		if (!(t.kind() == LightTree::VAR && t.var() == v)) {
 			sub_.emplace(v, t);
 		}
@@ -236,13 +238,14 @@ struct Subst {
 
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s, bool full = true);
-	bool compose(LightSymbol v, const LightTree& t, bool full = true) { return compose(Subst(v, t), full); }
+	bool compose(uint v, const LightTree& t, bool full = true) { return compose(Subst(v, t), full); }
 	bool bicompose(const Subst& s);
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;
 
-	bool maps(LightSymbol v) const { return sub_.find(v) != sub_.end(); }
-	const LightTree& map(LightSymbol v) const {
+	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
+	bool maps(LightSymbol s) const { return maps(s.lit); }
+	const LightTree& map(uint v) const {
 		auto it = sub_.find(v);
 		if (sub_.find(v) != sub_.end()) {
 			return it->second;
@@ -250,9 +253,11 @@ struct Subst {
 			static LightTree empty; return empty;
 		}
 	}
-	void erase(LightSymbol v) { sub_.erase(v); }
+	const LightTree& map(LightSymbol s) const { return map(s.lit); }
+	void erase(uint v) { sub_.erase(v); }
+	void erase(LightSymbol s) { sub_.erase(s.lit); }
 
-	typedef std::map<LightSymbol, LightTree>::const_iterator const_iterator;
+	typedef std::map<uint, LightTree>::const_iterator const_iterator;
 
 	const_iterator begin() const { return sub_.cbegin(); }
 	const_iterator end() const { return sub_.cend(); }
@@ -262,7 +267,7 @@ struct Subst {
 	void spoil() { ok_ = false; }
 
 private:
-	std::map<LightSymbol, LightTree> sub_;
+	std::map<uint, LightTree> sub_;
 	bool ok_;
 	friend void compose(Subst& s1, const Subst& s2, bool full);
 };
@@ -322,7 +327,7 @@ struct MultySubst {
 
 private:
 	void add(const Subst* s);
-	map<LightSymbol, vector<LightTree>> msub_;
+	map<uint, vector<LightTree>> msub_;
 };
 
 extern bool debug_unify_subs_func;
