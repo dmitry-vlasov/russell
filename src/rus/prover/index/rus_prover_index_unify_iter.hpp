@@ -1,7 +1,6 @@
 #pragma once
 
 #include "rus_prover_index.hpp"
-#include "rus_prover_index_unify_step.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
@@ -230,6 +229,11 @@ private:
 	EmptyIter      emptyIter;
 };
 
+template<class Iter> RuleVar ruleVar(Iter);
+template<>
+inline RuleVar ruleVar<Term::ConstIterator>(Term::ConstIterator i) {
+	return i->ruleVar;
+};
 template<> inline RuleVar ruleVar<MultyIter>(MultyIter i) {
 	return i.ruleVar();
 };
