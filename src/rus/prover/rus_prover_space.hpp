@@ -1,7 +1,7 @@
 #pragma once
 
 #include "index/rus_prover_index.hpp"
-#include "index/rus_prover_trie_unify_iter.hpp"
+#include "index/rus_prover_index_unify_iter.hpp"
 #include "rus_prover_show.hpp"
 #include "rus_prover_node.hpp"
 

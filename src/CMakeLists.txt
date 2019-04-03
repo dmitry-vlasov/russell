@@ -54,7 +54,7 @@ else()
 		rus/prover/index/rus_prover_index.cpp
 		rus/prover/index/rus_prover_matrix_index.cpp
 		rus/prover/index/rus_prover_trie_unify.cpp
-		rus/prover/index/rus_prover_trie_unify_iter.cpp
+		rus/prover/index/rus_prover_index_unify_iter.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
