@@ -1,7 +1,7 @@
 #include "rus_prover_index.hpp"
 
-#include "rus_prover_trie_unify_step.hpp"
-#include "../index/rus_prover_trie_unify_step.hpp"
+#include "../index/rus_prover_index_unify_step.hpp"
+#include "rus_prover_index_unify_step.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 

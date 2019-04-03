@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../index/rus_prover_trie_vector_index.hpp"
 #include "../rus_prover_node.hpp"
+#include "rus_prover_index_vector.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
