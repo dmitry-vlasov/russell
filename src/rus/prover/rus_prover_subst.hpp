@@ -4,31 +4,31 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct FlatSubst {
-	FlatSubst(bool ok = true) : ok_(ok) { }
-	FlatSubst(uint v, const Term& t) : ok_(true) {
+struct Subst {
+	Subst(bool ok = true) : ok_(ok) { }
+	Subst(uint v, const Term& t) : ok_(true) {
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
 			sub_.emplace(v, t);
 		}
 	}
-	FlatSubst(const FlatSubst& s) : ok_(s.ok_) {
+	Subst(const Subst& s) : ok_(s.ok_) {
 		operator = (s);
 	}
-	FlatSubst(FlatSubst&& s) : ok_(s.ok_) {
+	Subst(Subst&& s) : ok_(s.ok_) {
 		operator = (std::move(s));
 	}
-	void operator = (const FlatSubst& s);
-	void operator = (FlatSubst&& s);
+	void operator = (const Subst& s);
+	void operator = (Subst&& s);
 
-	bool operator == (const FlatSubst& s) const;
-	bool operator != (const FlatSubst& s) const;
+	bool operator == (const Subst& s) const;
+	bool operator != (const Subst& s) const;
 
-	bool consistent(const FlatSubst& s) const;
-	bool compose(const FlatSubst& s, bool full = true);
-	bool compose(uint v, const Term& t, bool full = true) { return compose(FlatSubst(v, t), full); }
-	bool bicompose(const FlatSubst& s);
-	bool intersects(const FlatSubst& s) const;
-	bool composeable(const FlatSubst& s) const;
+	bool consistent(const Subst& s) const;
+	bool compose(const Subst& s, bool full = true);
+	bool compose(uint v, const Term& t, bool full = true) { return compose(Subst(v, t), full); }
+	bool bicompose(const Subst& s);
+	bool intersects(const Subst& s) const;
+	bool composeable(const Subst& s) const;
 
 	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
 	bool maps(LightSymbol s) const { return maps(s.lit); }
@@ -60,8 +60,8 @@ struct FlatSubst {
 		}
 		return ret;
 	}
-	FlatSubst complement(const set<uint>& vars) const {
-		FlatSubst ret(*this);
+	Subst complement(const set<uint>& vars) const {
+		Subst ret(*this);
 		for (const auto& v : vars) {
 			ret.sub_.erase(v);
 		}
@@ -72,17 +72,17 @@ struct FlatSubst {
 private:
 	std::map<uint, Term> sub_;
 	bool ok_;
-	friend void compose(FlatSubst& s1, const FlatSubst& s2, bool full);
+	friend void compose(Subst& s1, const Subst& s2, bool full);
 };
 
-Term apply(const FlatSubst& s, const Term& t);
-void compose(FlatSubst& s1, const FlatSubst& s2, bool full = true);
-bool composable(const FlatSubst& s1, const FlatSubst& s2);
+Term apply(const Subst& s, const Term& t);
+void compose(Subst& s1, const Subst& s2, bool full = true);
+bool composable(const Subst& s1, const Subst& s2);
 
-FlatSubst Substitution2FlatSubst(const Substitution&);
-Substitution FlatSubst2Substitution(const FlatSubst&);
+Subst Substitution2FlatSubst(const Substitution&);
+Substitution FlatSubst2Substitution(const Subst&);
 
-string show_diff(const FlatSubst& s1, const FlatSubst& s2);
+string show_diff(const Subst& s1, const Subst& s2);
 
 extern bool debug_flat_subst;
 extern bool debug_flat_apply;

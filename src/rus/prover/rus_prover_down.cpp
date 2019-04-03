@@ -22,7 +22,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		return;
 	}
 	while (true) {
-		vector<const FlatSubst*> subs;
+		vector<const Subst*> subs;
 		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.inds());
 		if (show_debug) {
 			cout << "CURRENT: " << ind.current() << endl;
@@ -42,14 +42,14 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			cout << "-------------" << endl;
 			debug_unify_subs_func = true;
 		}
-		FlatSubst sub = unify_subs(MultySubst(subs));
+		Subst sub = unify_subs(MultySubst(subs));
 
 		if (debug_unify_subs) {
 			cout << "SUB: " << sub.show() << endl;
 		}
 
 		if (sub.ok()) {
-			FlatSubst delta = pr->sub;
+			Subst delta = pr->sub;
 			if (show_debug) {
 				cout << "DELTA" << endl;
 				cout << delta.show() << endl;
@@ -110,9 +110,9 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypInde
 	return ret;
 }
 
-bool similar_subs_1(const FlatSubst& s1, const FlatSubst& s2) {
+bool similar_subs_1(const Subst& s1, const Subst& s2) {
 	if (s1 == s2) return true;
-	FlatSubst unif = unify_subs(MultySubst({&s1, &s2}));
+	Subst unif = unify_subs(MultySubst({&s1, &s2}));
 	if (!unif.ok()) {
 		//don't unify
 		return false;
@@ -126,10 +126,10 @@ bool similar_subs_1(const FlatSubst& s1, const FlatSubst& s2) {
 	return true;
 }
 
-bool similar_subs(const FlatSubst& s1, const FlatSubst& s2, bool verbose = false) {
+bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
-	FlatSubst s1_vars_inv;
-	FlatSubst s1_terms;
+	Subst s1_vars_inv;
+	Subst s1_terms;
 	for (const auto& p : s1) {
 		if (p.second.kind() == Term::VAR && !s2.maps(p.first)) {
 			//s1_vars_inv.compose(p.second.var().lit, FlatTerm(p.first));

@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover {
 bool debug_flat_subst = false;
 bool debug_flat_apply = false;
 
-void FlatSubst::operator = (const FlatSubst& s) {
+void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
 	if (ok_) {
 		for (const auto& p : s.sub_) {
@@ -14,13 +14,13 @@ void FlatSubst::operator = (const FlatSubst& s) {
 	}
 }
 
-void FlatSubst::operator = (FlatSubst&& s) {
+void Subst::operator = (Subst&& s) {
 	ok_ = s.ok_;
 	sub_ = std::move(s.sub_);
 	s.ok_ = true;
 }
 
-bool FlatSubst::operator == (const FlatSubst& s) const {
+bool Subst::operator == (const Subst& s) const {
 	if (ok_ != s.ok_ || size() != s.size()) {
 		return false;
 	}
@@ -32,7 +32,7 @@ bool FlatSubst::operator == (const FlatSubst& s) const {
 	return true;
 }
 
-bool FlatSubst::operator != (const FlatSubst& s) const {
+bool Subst::operator != (const Subst& s) const {
 	return !operator ==(s);
 }
 
@@ -44,7 +44,7 @@ void collect_vars(const Term& term, set<uint>& vars) {
 	}
 }
 
-bool consistent(const FlatSubst* s, uint v, const Term& t) {
+bool consistent(const Subst* s, uint v, const Term& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
@@ -72,7 +72,7 @@ bool consistent(const FlatSubst* s, uint v, const Term& t) {
 	}
 }
 
-bool FlatSubst::consistent(const FlatSubst& sub) const {
+bool Subst::consistent(const Subst& sub) const {
 	for (const auto& p : sub) {
 		if (!prover::consistent(this, p.first, p.second)) {
 			return false;
@@ -81,8 +81,8 @@ bool FlatSubst::consistent(const FlatSubst& sub) const {
 	return true;
 }
 
-void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
-	FlatSubst ret;
+void compose(Subst& s1, const Subst& s2, bool full) {
+	Subst ret;
 	set<uint> vars;
 	for (const auto& p : s1) {
 		Term ex = apply(s2, p.second);
@@ -102,7 +102,7 @@ void compose(FlatSubst& s1, const FlatSubst& s2, bool full) {
 	}
 }
 
-bool FlatSubst::compose(const FlatSubst& s, bool full) {
+bool Subst::compose(const Subst& s, bool full) {
 	if (!ok_ || !consistent(s)) {
 		ok_ = false;
 	} else {
@@ -111,11 +111,11 @@ bool FlatSubst::compose(const FlatSubst& s, bool full) {
 	return ok_;
 }
 
-bool FlatSubst::bicompose(const FlatSubst& s) {
+bool Subst::bicompose(const Subst& s) {
 	if (!s.consistent(*this)) {
 		return false;
 	}
-	FlatSubst ss(s);
+	Subst ss(s);
 	prover::compose(ss, *this, false);
 	if (!consistent(ss)) {
 		return false;
@@ -124,7 +124,7 @@ bool FlatSubst::bicompose(const FlatSubst& s) {
 	return true;
 }
 
-bool FlatSubst::intersects(const FlatSubst& sub) const {
+bool Subst::intersects(const Subst& sub) const {
 	for (const auto& p : sub) {
 		if (sub.maps(p.first)) {
 			return true;
@@ -133,7 +133,7 @@ bool FlatSubst::intersects(const FlatSubst& sub) const {
 	return false;
 }
 
-bool FlatSubst::composeable(const FlatSubst& s) const {
+bool Subst::composeable(const Subst& s) const {
 	set<uint> vars;
 	for (const auto& p : sub_) {
 		collect_vars(p.second, vars);
@@ -146,7 +146,7 @@ bool FlatSubst::composeable(const FlatSubst& s) const {
 	return false;
 }
 
-string FlatSubst::show() const {
+string Subst::show() const {
 	string str;
 	str += "OK = " + (ok_ ? string("TRUE") : string("FALSE")) + "\n";
 	if (!sub_.size()) {
@@ -158,7 +158,7 @@ string FlatSubst::show() const {
 	return str;
 }
 
-uint applied_len(const FlatSubst& s, const Term& t) {
+uint applied_len(const Subst& s, const Term& t) {
 	uint len = t.nodes.size();
 	for (const auto& n : t.nodes) {
 		if (n.ruleVar.isVar() && s.maps(n.ruleVar.var)) {
@@ -171,7 +171,7 @@ uint applied_len(const FlatSubst& s, const Term& t) {
 	return len;
 }
 
-Term apply(const FlatSubst& s, const Term& t) {
+Term apply(const Subst& s, const Term& t) {
 	uint len = 0;
 	vector<uint> beg_shifts;
 	vector<uint> end_shifts;
@@ -205,13 +205,13 @@ Term apply(const FlatSubst& s, const Term& t) {
 	return ret;
 }
 
-FlatSubst compose(const FlatSubst& s1, const FlatSubst& s2) {
-	FlatSubst ret(s1);
+Subst compose(const Subst& s1, const Subst& s2) {
+	Subst ret(s1);
 	ret.compose(s2);
 	return ret;
 }
 
-bool composable(const FlatSubst& s1, const FlatSubst& s2) {
+bool composable(const Subst& s1, const Subst& s2) {
 	for (const auto& p : s1) {
 		if (s2.maps(p.first)) {
 			return true;
@@ -221,15 +221,15 @@ bool composable(const FlatSubst& s1, const FlatSubst& s2) {
 }
 
 
-FlatSubst Substitution2FlatSubst(const Substitution& sub) {
-	FlatSubst ret;
+Subst Substitution2FlatSubst(const Substitution& sub) {
+	Subst ret;
 	for (const auto& p : sub) {
 		ret.compose(p.first, std::move(Tree2FlatTerm(*p.second)));
 	}
 	return ret;
 }
 
-Substitution FlatSubst2Substitution(const FlatSubst& s) {
+Substitution FlatSubst2Substitution(const Subst& s) {
 	Substitution ret;
 	for (const auto& p : s) {
 		ret.join(p.first, std::move(FlatTerm2Tree(p.second)));
@@ -237,7 +237,7 @@ Substitution FlatSubst2Substitution(const FlatSubst& s) {
 	return ret;
 }
 
-string show_diff(const FlatSubst& s1, const FlatSubst& s2) {
+string show_diff(const Subst& s1, const Subst& s2) {
 	if (s1 == s2) return "<no diff>"; else {
 		string ret;
 		ret += "iterating s1\n";

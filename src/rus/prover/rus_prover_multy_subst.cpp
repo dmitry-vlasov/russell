@@ -4,13 +4,13 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-MultySubst::MultySubst(const vector<const FlatSubst*>& subs) {
+MultySubst::MultySubst(const vector<const Subst*>& subs) {
 	for (auto s : subs) {
 		add(s);
 	}
 }
-FlatSubst MultySubst::makeSubs(FlatSubst& unif) const {
-	FlatSubst ret;
+Subst MultySubst::makeSubs(Subst& unif) const {
+	Subst ret;
 	uint c = 0;
 	if (debug_unify_subs_func) {
 		cout << "--- MultySubst::makeSubs ---" << endl;
@@ -22,9 +22,9 @@ FlatSubst MultySubst::makeSubs(FlatSubst& unif) const {
 				cout << e.show() << endl;
 			}
 		}
-		FlatSubst unif1 = unif;
+		Subst unif1 = unif;
 		Term term1 = trie_index::unify_general(p.second, unif1);
-		FlatSubst unif2 = unif;
+		Subst unif2 = unif;
 		Term term2 = unify(p.second, unif2);
 		if (term1 != term2) {
 			cout << "vot ono, nachalos !!" << endl;
@@ -45,7 +45,7 @@ FlatSubst MultySubst::makeSubs(FlatSubst& unif) const {
 
 		Term term = unify(p.second, unif);
 		if (term.empty()) {
-			return FlatSubst(false);
+			return Subst(false);
 		}
 		/*FlatTerm un = unify(p.second, unif);
 		if (debug_unify_subs_func && c == 6) {
@@ -81,13 +81,13 @@ FlatSubst MultySubst::makeSubs(FlatSubst& unif) const {
 	return ret;
 }
 
-void MultySubst::add(const FlatSubst* sub) {
+void MultySubst::add(const Subst* sub) {
 	for (const auto& p : *sub) {
 		msub_[p.first].push_back(p.second);
 	}
 }
 
-void sub_closure(FlatSubst& sub) {
+void sub_closure(Subst& sub) {
 	enum { WATCHDOG_THRESHOLD = 32 };
 	uint watchdog = 0;
 	while (sub.composeable(sub)) {
@@ -103,18 +103,18 @@ void sub_closure(FlatSubst& sub) {
 
 bool debug_unify_subs_func = false;
 
-FlatSubst unify_subs(const MultySubst& t) {
+Subst unify_subs(const MultySubst& t) {
 	if (debug_unify_subs_func) {
 		cout << "unify_subs(const MultySubst& t): " << t.show() << endl;
 	}
-	FlatSubst unif;
-	FlatSubst gen = t.makeSubs(unif);
+	Subst unif;
+	Subst gen = t.makeSubs(unif);
 	return unify_subs(unif, gen);
 }
 
-FlatSubst unify_subs(FlatSubst unif, FlatSubst gen) {
+Subst unify_subs(Subst unif, Subst gen) {
 	if (!(gen.ok() && unif.ok())) {
-		return FlatSubst(false);
+		return Subst(false);
 	}
 	if (debug_unify_subs_func) {
 		cout << "--- unify_subs ---" << endl;
@@ -137,11 +137,11 @@ FlatSubst unify_subs(FlatSubst unif, FlatSubst gen) {
 			if (debug_unify_subs_func) {
 				cout << "!!!!!!!!!! gen.compose(unif)"  << endl;
 			}
-			return FlatSubst(false);
+			return Subst(false);
 		}
 	} else {
 		MultySubst msub({&unif, &gen});
-		FlatSubst ret = unify_subs(msub);
+		Subst ret = unify_subs(msub);
 		if (debug_unify_subs_func) {
 			cout << "ret:" << endl;
 			cout << ret.show() << endl;

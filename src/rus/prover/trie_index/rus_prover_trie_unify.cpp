@@ -15,9 +15,9 @@ void unify_subs(MatrixIndex& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	}
 
 	for (const auto& p : unif) {
-		FlatSubst sub = unify_subs(p.second, gen[p.first]);
+		Subst sub = unify_subs(p.second, gen[p.first]);
 		if (sub.ok()) {
-			FlatSubst delta = pr->sub;
+			Subst delta = pr->sub;
 			delta.compose(sub);
 			ret[p.first] = delta;
 		} else if (debug_trie_index) {
@@ -70,7 +70,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 
 bool debug_unify_general = false;
 
-Term unify_general(const vector<Term>& ex, FlatSubst& sub) {
+Term unify_general(const vector<Term>& ex, Subst& sub) {
 	vector<MultyIter> iters;
 	for (const auto& e : ex) {
 		iters.emplace_back(Term::TermIter(e));
@@ -82,7 +82,7 @@ Term unify_general(const vector<Term>& ex, FlatSubst& sub) {
 			return Term();
 		} else if (unif.size() == 1) {
 			if (unif.begin()->second.sub->ok()) {
-				FlatSubst common = unify_subs(*unif.begin()->second.sub, sub);
+				Subst common = unify_subs(*unif.begin()->second.sub, sub);
 				if (common.ok()) {
 					sub = common;
 					return apply(common, *unif.begin()->second.term);

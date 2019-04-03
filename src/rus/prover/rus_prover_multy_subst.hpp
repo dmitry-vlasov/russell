@@ -5,8 +5,8 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct MultySubst {
-	MultySubst(const vector<const FlatSubst*>& subs);
-	FlatSubst makeSubs(FlatSubst& unif) const;
+	MultySubst(const vector<const Subst*>& subs);
+	Subst makeSubs(Subst& unif) const;
 
 	string show() const {
 		ostringstream ret;
@@ -24,20 +24,20 @@ struct MultySubst {
 	}
 
 private:
-	void add(const FlatSubst* s);
+	void add(const Subst* s);
 	map<uint, vector<Term>> msub_;
 };
 
 extern bool debug_unify_subs_func;
 extern bool debug_compose;
 
-void sub_closure(FlatSubst& sub);
-FlatSubst unify_subs(FlatSubst unif, FlatSubst gen);
-FlatSubst unify_subs(const MultySubst& t);
+void sub_closure(Subst& sub);
+Subst unify_subs(Subst unif, Subst gen);
+Subst unify_subs(const MultySubst& t);
 
 // Substitutions, which differ only by varaible replacement
-bool similar_subs(const FlatSubst& s1, const FlatSubst& s2);
+bool similar_subs(const Subst& s1, const Subst& s2);
 
-typedef map<vector<uint>, FlatSubst> MultyUnifiedSubs;
+typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
 }}}

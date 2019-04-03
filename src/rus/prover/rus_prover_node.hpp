@@ -65,11 +65,11 @@ struct Prop : public Node {
 	Premises premises;
 	Proofs   proofs;
 	PropRef  prop;
-	FlatSubst    sub;
-	FlatSubst    outer;
-	FlatSubst    fresher;
+	Subst    sub;
+	Subst    outer;
+	Subst    fresher;
 	bool     autoGoDown = true;
-	Prop(const PropRef& r, const FlatSubst& s, const FlatSubst& o, const FlatSubst& f, Hyp* p);
+	Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -97,19 +97,19 @@ struct Hyp : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const FlatSubst& s);
+	ProofNode(const Subst& s);
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() const = 0;
 	virtual bool equal(const ProofNode*) const = 0;
 
-	FlatSubst sub;
+	Subst sub;
 	bool  new_;
 	uint  ind;
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const FlatSubst& s, const Term& e);
+	ProofHyp(Hyp& n, const Subst& s, const Term& e);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;
@@ -118,7 +118,7 @@ struct ProofHyp : public ProofNode {
 };
 
 struct ProofTop : public ProofHyp {
-	ProofTop(Hyp& n, const HypRef& h, const FlatSubst& s);
+	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -127,7 +127,7 @@ struct ProofTop : public ProofHyp {
 };
 
 struct ProofExp : public ProofHyp {
-	ProofExp(Hyp& h, ProofProp* c, const FlatSubst& s = FlatSubst());
+	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -136,7 +136,7 @@ struct ProofExp : public ProofHyp {
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const FlatSubst& s = FlatSubst());
+	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
 	~ProofProp() override;
 	rus::Ref* ref() const override;
 	string show() const override;

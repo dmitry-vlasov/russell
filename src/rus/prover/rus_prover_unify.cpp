@@ -98,9 +98,9 @@ static UnifStepData gather_unification_data(vector<Term>& ex) {
 	return ret;
 }
 
-Term do_unify(vector<Term> ex, FlatSubst& sub);
+Term do_unify(vector<Term> ex, Subst& sub);
 
-Term unify_step(FlatSubst& s, const vector<uint>& vars, const Term& term) {
+Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
 	vector<Term> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
@@ -110,7 +110,7 @@ Term unify_step(FlatSubst& s, const vector<uint>& vars, const Term& term) {
 	Term unified = do_unify(to_unify, s);
 	if (!unified.empty()) {
 		for (auto v : vars) {
-			if (!s.compose(FlatSubst(v, unified))) {
+			if (!s.compose(Subst(v, unified))) {
 				return Term();
 			}
 		}
@@ -119,7 +119,7 @@ Term unify_step(FlatSubst& s, const vector<uint>& vars, const Term& term) {
 	return Term();
 }
 
-Term do_unify(vector<Term> ex, FlatSubst& sub) {
+Term do_unify(vector<Term> ex, Subst& sub) {
 	if (!ex.size()) {
 		return Term();
 	} else if (ex.size() == 1) {
@@ -150,7 +150,7 @@ Term do_unify(vector<Term> ex, FlatSubst& sub) {
 	}
 }
 
-bool check_unification(const Term& term, const FlatSubst& sub, const vector<Term>& ex) {
+bool check_unification(const Term& term, const Subst& sub, const vector<Term>& ex) {
 	if (!term.empty()) {
 		for (auto e : ex) {
 			if (apply(sub, e) != term) {
@@ -161,7 +161,7 @@ bool check_unification(const Term& term, const FlatSubst& sub, const vector<Term
 	return true;
 }
 
-Term unify(const vector<Term>& ex, FlatSubst& sub) {
+Term unify(const vector<Term>& ex, Subst& sub) {
 	Term ret = do_unify(ex, sub);
 	if (!check_unification(ret, sub, ex)) {
 		cout << "unification error: " << endl;

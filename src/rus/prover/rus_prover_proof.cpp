@@ -13,10 +13,10 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 
 static uint proof_node_index = 0;
 
-ProofNode::ProofNode(const FlatSubst& s) :
+ProofNode::ProofNode(const Subst& s) :
 	sub(s), new_(true), ind(proof_node_index++) { }
 
-ProofHyp::ProofHyp(Hyp& h, const FlatSubst& s, const Term& e) :
+ProofHyp::ProofHyp(Hyp& h, const Subst& s, const Term& e) :
 	ProofNode(s), node(h), expr(e) {
 }
 
@@ -29,7 +29,7 @@ ProofHyp::~ProofHyp() {
 	}*/
 }
 
-ProofTop::ProofTop(Hyp& n, const HypRef& h, const FlatSubst& s) :
+ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
 	ProofHyp(n, s, apply(s, Tree2FlatTerm(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
 }
 
@@ -65,7 +65,7 @@ bool ProofExp::equal(const ProofNode* n) const {
 
 string show_struct(const ProofNode* n);
 
-ProofExp::ProofExp(Hyp& h, ProofProp* c, const FlatSubst& s) :
+ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 	ProofHyp(h, s, apply(s, h.expr)), child(c) {
 	child->parent = this;
 	child->new_ = false;
@@ -81,17 +81,17 @@ ProofExp::ProofExp(Hyp& h, ProofProp* c, const FlatSubst& s) :
 
 }
 
-ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const FlatSubst& s) :
+ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 	ProofNode(s), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->parents.push_back(this);
 		p->new_ = false;
 	}
 	if (n.prop.ass->arity() > 0) {
-		FlatSubst s0 = premises[0]->sub;
+		Subst s0 = premises[0]->sub;
 		compose(s0, sub);
 		for (uint i = 0; i < premises.size(); ++ i) {
-			FlatSubst si = premises[i]->sub;
+			Subst si = premises[i]->sub;
 			compose(si, sub);
 			if (s0 != si) {
 				string err;

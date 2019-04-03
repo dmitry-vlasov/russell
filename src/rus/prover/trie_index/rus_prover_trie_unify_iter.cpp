@@ -41,7 +41,7 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 
 vector<UnifyIters> unify_general_2(const UnifyIters& begins);
 
-Term unify_step_1(FlatSubst& s, const vector<uint>& vars, const Term& term) {
+Term unify_step_1(Subst& s, const vector<uint>& vars, const Term& term) {
 
 	if (debug_flat_unify) {
 		cout << "vars: ";
@@ -78,7 +78,7 @@ Term unify_step_1(FlatSubst& s, const vector<uint>& vars, const Term& term) {
 			Term term_orig = begin.iters[0].subTerm(end.iters[0]);
 			Term unified = apply(end.sub, term_orig);
 			for (auto v : vars) {
-				if (!s.compose(FlatSubst(v, unified))) {
+				if (!s.compose(Subst(v, unified))) {
 					if (debug_flat_unify) {
 						cout << "!s.compose(FlatSubst(v, unified))" << endl;
 						cout << "v: " << Lex::toStr(v) << endl;
@@ -104,10 +104,10 @@ Term unify_step_1(FlatSubst& s, const vector<uint>& vars, const Term& term) {
 	return Term();
 }
 
-FlatSubst unify_step_1(const FlatSubst& s, const vector<uint>& vars, const Term& term) {
-	FlatSubst ret(s);
+Subst unify_step_1(const Subst& s, const vector<uint>& vars, const Term& term) {
+	Subst ret(s);
 	Term unified = unify_step_1(ret, vars, term);
-	return unified.empty() ? FlatSubst(false) : ret;
+	return unified.empty() ? Subst(false) : ret;
 }
 
 bool verify_begins_ends(const UnifyIters& begs, const UnifyIters& ends) {
@@ -170,14 +170,14 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 					MultyIter i0 = ends.iters[0];
 					Term term_orig = subBegins.iters[0].subTerm(i0);
 					Term term_applied = apply(ends.sub, term_orig);
-					FlatSubst s = unify_step_1(i.sub, data.vars, term_applied);
+					Subst s = unify_step_1(i.sub, data.vars, term_applied);
 					s.compose(ends.sub.complement(s.dom()));
 					if (s.ok()) {
 						ret.emplace_back(data.shiftGoals(ends.iters), i.parentSub, s);
 					}
 				}
 			} else {
-				FlatSubst s = unify_step_1(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
+				Subst s = unify_step_1(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok()) {
 					ret.emplace_back(i.iters, i.parentSub, s);
 				}

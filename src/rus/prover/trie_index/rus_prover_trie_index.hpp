@@ -19,7 +19,7 @@ struct TrieIndex {
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
-	typedef map<uint, FlatSubst> Unified;
+	typedef map<uint, Subst> Unified;
 	struct TrieIter;
 
 	void add(const Term& t, uint val = -1);
@@ -172,9 +172,9 @@ private:
 template<class Data>
 struct TrieIndexMap {
 	struct Unified {
-		Unified(const Data& d, FlatSubst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Data data;
-		FlatSubst sub;
+		Subst sub;
 	};
 	void add(const Term& t, const Data& d) {
 		//cout << "ADDING: " << prover::show(t) << " --> " << data_.size() << endl;

@@ -235,9 +235,9 @@ template<> inline RuleVar ruleVar<MultyIter>(MultyIter i) {
 };
 
 struct UnifyIters {
-	UnifyIters(const vector<MultyIter>& i, const FlatSubst& ps = FlatSubst(), const FlatSubst& s = FlatSubst()) :
+	UnifyIters(const vector<MultyIter>& i, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		iters(i), parentSub(ps), sub(s) { }
-	UnifyIters(vector<MultyIter>&& i, FlatSubst&& ps, FlatSubst&& s) :
+	UnifyIters(vector<MultyIter>&& i, Subst&& ps, Subst&& s) :
 		iters(std::move(i)), parentSub(std::move(ps)), sub(std::move(s)) { }
 	UnifyIters(const UnifyIters&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
@@ -365,18 +365,18 @@ struct UnifyIters {
 
 	vector<MultyIter> iters;
 
-	FlatSubst parentSub;
-	FlatSubst sub;
+	Subst parentSub;
+	Subst sub;
 };
 
 struct FlatTermSubst {
-	FlatTermSubst(const Term& t, const FlatSubst& s) :
-		term(make_unique<Term>(t)), sub(make_unique<FlatSubst>(s)) { }
+	FlatTermSubst(const Term& t, const Subst& s) :
+		term(make_unique<Term>(t)), sub(make_unique<Subst>(s)) { }
 	FlatTermSubst(const FlatTermSubst& ts) :
-		term(make_unique<Term>(*ts.term)), sub(make_unique<FlatSubst>(*ts.sub)) { }
+		term(make_unique<Term>(*ts.term)), sub(make_unique<Subst>(*ts.sub)) { }
 	FlatTermSubst(FlatTermSubst&&) = default;
 	unique_ptr<Term> term;
-	unique_ptr<FlatSubst> sub;
+	unique_ptr<Subst> sub;
 	string show() const {
 		return "term: " + term->show() + "\nsub:\n" + sub->show();
 	}

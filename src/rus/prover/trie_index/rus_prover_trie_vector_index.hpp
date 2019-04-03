@@ -290,7 +290,7 @@ struct VectorIndex {
 						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
 								TrieIndex::TrieIter iter(it);
-								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), FlatSubst()));
+								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), Subst()));
 							}
 						}
 					}
