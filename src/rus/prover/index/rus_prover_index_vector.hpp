@@ -68,20 +68,7 @@ struct MapUnified {
 		}
 		return ret;
 	}
-
-	bool empty() const {
-		/*bool all_are_cartesian = true;
-		for (const auto& cell : vect) {
-			if (cell.empty()) {
-				return true;
-			}
-			if (cell.skipped) {
-				all_are_cartesian = false;
-			}
-		}
-		return all_are_cartesian ? false : !unified.size();*/
-		return card() == 0;
-	}
+	bool empty() const { return card() == 0; }
 
 	string showCells() const {
 		string ret;
@@ -255,7 +242,6 @@ struct Vector{
 		string show() const {
 			string ret;
 			ret += "extra inds: " + prover::show(extra_inds_) + "\n";
-			//ret += "all inds: " + prover::show(all_inds_) + "\n";
 			ret += "exprs inds: " + prover::show(exprs_inds_) + "\n";
 			ret += "exprs:\n";
 			ret += exprs_.show();
@@ -304,7 +290,6 @@ struct Vector{
 				cout << "CELL: " << endl;
 				cout << c->exprs().show_pointers() << endl << endl;
 			}
-			//debug_trie_index = true;
 			ret.unified = index::unify_general(iters);
 			throw err;
 		}

@@ -225,9 +225,9 @@ struct MultyIter {
 
 private:
 	Kind kind_;
-	Index::Iter trieIter;
-	Term::TermIter  termIter;
-	EmptyIter           emptyIter;
+	Index::Iter    trieIter;
+	Term::TermIter termIter;
+	EmptyIter      emptyIter;
 };
 
 template<> inline RuleVar ruleVar<MultyIter>(MultyIter i) {
@@ -289,9 +289,6 @@ struct UnifyIters {
 		return true;
 	}
 	void showTermEnd(const UnifyIters& ends) const {
-		if (!sub.ok()) {
-			cout << "!sub.ok" << endl;
-		}
 		for (uint i = 0; i < iters.size(); ++i) {
 			cout << i << ": " << (ends.iters[i].isEnd(iters[i]) ? "END" : "X" ) << endl;
 		}
@@ -355,16 +352,9 @@ struct UnifyIters {
 		}
 		return oss.str();
 	}
-	string showBranch() const {
-		string ret;
-		//ret += "trie: " + trieIter.showBranch() + "\n";
-		//ret += "term: " + termIter.showBranch() + "\n";
-		return ret;
-	}
 	vector<vector<uint>> inds() const;
 
 	vector<MultyIter> iters;
-
 	Subst parentSub;
 	Subst sub;
 };
@@ -387,7 +377,9 @@ map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 template<class D>
 vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m, const Term& t) {
 	vector<typename TrieIndexMap<D>::Unified> ret;
-	if (!m.index().size) return ret;
+	if (!m.index().size) {
+		return ret;
+	}
 	vector<MultyIter> iters;
 	iters.emplace_back(Index::Iter(m.index().root));
 	iters.emplace_back(Term::TermIter(t));
@@ -395,7 +387,6 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {
 			if (p.second.sub->ok()) {
-				//cout << "UNIFIED: " << p.first << endl;
 				ret.emplace_back(m.data().at(p.first[0]), std::move(*p.second.sub));
 			}
 		}
@@ -406,7 +397,5 @@ vector<typename TrieIndexMap<D>::Unified> unify_general(const TrieIndexMap<D>& m
 	}
 	return ret;
 }
-
-extern bool debug_flat_unify;
 
 }}}}

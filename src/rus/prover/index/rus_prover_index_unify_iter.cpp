@@ -42,17 +42,6 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 vector<UnifyIters> unify_general_2(const UnifyIters& begins);
 
 Term unify_step_1(Subst& s, const vector<uint>& vars, const Term& term) {
-
-	if (debug_flat_unify) {
-		cout << "vars: ";
-		for (auto w : vars) {
-			cout << "'" << Lex::toStr(w) << "' ";
-		}
-		cout << endl;
-		cout << "term: " << term.show() << endl;
-		cout << "s: " << s.show() << endl;
-	}
-
 	vector<Term> to_unify({apply(s, term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
@@ -79,18 +68,10 @@ Term unify_step_1(Subst& s, const vector<uint>& vars, const Term& term) {
 			Term unified = apply(end.sub, term_orig);
 			for (auto v : vars) {
 				if (!s.compose(Subst(v, unified))) {
-					if (debug_flat_unify) {
-						cout << "!s.compose(FlatSubst(v, unified))" << endl;
-						cout << "v: " << Lex::toStr(v) << endl;
-						cout << "s: " << s.show() << endl;
-					}
 					return Term();
 				}
 			}
 			return unified;
-		}
-		if (debug_flat_unify) {
-			cout << "unified.empty()" << endl;
 		}
 	} catch (Error& err) {
 		cout << endl << "unify_step_1: ERROR" << endl;
@@ -108,52 +89,6 @@ Subst unify_step_1(const Subst& s, const vector<uint>& vars, const Term& term) {
 	Subst ret(s);
 	Term unified = unify_step_1(ret, vars, term);
 	return unified.empty() ? Subst(false) : ret;
-}
-
-bool verify_begins_ends(const UnifyIters& begs, const UnifyIters& ends) {
-	if (begs.iters.size() != ends.iters.size()) {
-		cout << "begs.iters.size() != ends.iters.size()" << endl;
-		return false;
-	}
-	for (uint i = 0; i < begs.iters.size(); ++ i) {
-		MultyIter beg = begs.iters[i];
-		MultyIter end = ends.iters[i];
-		MultyIter cur = end;
-		bool is_ok = false;
-		uint c = 0;
-		while (cur != MultyIter()) {
-			if (cur == beg) {
-				is_ok = true;
-				break;
-			}
-			cur = cur.prev();
-			c++;
-			if (c == 2048) {
-				cout << "TOO MUCH C" << endl;
-				c = 0;
-				MultyIter x = end;
-				while (x != MultyIter()) {
-					cout <<  c << " -- x: " << x.ruleVar().show() << endl;
-					if (x == beg) {
-						cout << "WTF?..." << endl;
-						break;
-					}
-					x = x.prev();
-					c++;
-					if (c == 2048) {
-						cout << "FUCK THE MIDDLE EAST" << endl;
-						return false;
-					}
-				}
-				return false;
-			}
-		}
-		if (!is_ok) {
-			//cout << "NON REACHEABLE" << endl;
-			return false;
-		}
-	}
-	return true;
 }
 
 vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
@@ -187,7 +122,6 @@ vector<UnifyIters> unify_iters_2(const UnifyIters& i) {
 	return ret;
 }
 
-
 vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 	vector<UnifyIters> ret;
 	if (inits.iters.size() > 0) {
@@ -196,7 +130,6 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 				ret.emplace_back(vector<MultyIter>(1, end), inits.parentSub, inits.sub);
 			}
 		} else {
-
 			struct UnifyPair {
 				UnifyPair(const UnifyIters& b) : is_root(true), beg(b), cur(b) { }
 				UnifyPair(const UnifyIters& b, const UnifyIters& c) : is_root(false), beg(b), cur(c) { }
@@ -204,7 +137,6 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 				UnifyIters beg;
 				UnifyIters cur;
 			};
-
 			stack<UnifyPair> st;
 			st.emplace(inits);
 			while (st.size()) {
@@ -212,7 +144,6 @@ vector<UnifyIters> unify_general_2(const UnifyIters& inits) {
 				st.pop();
 				for (const auto& i : unify_iters_2(p.cur)) {
 					if (i.isTermEnd(p.beg) && i.sub.ok()) {
-						//verify_begins_ends(p.beg, i);
 						ret.push_back(i);
 					}
 					if (!i.isNextEnd(p.beg)) {

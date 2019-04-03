@@ -40,7 +40,6 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		}
 		if (show_debug) {
 			cout << "-------------" << endl;
-			debug_unify_subs_func = true;
 		}
 		Subst sub = unify_subs(MultySubst(subs));
 
@@ -64,7 +63,6 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 
 			ret[ind.inds()] = delta;
 		}
-		debug_unify_subs_func = false;
 		if (!ind.hasNext()) {
 			break;
 		}
