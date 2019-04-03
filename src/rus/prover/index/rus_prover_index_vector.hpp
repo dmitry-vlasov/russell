@@ -336,40 +336,6 @@ struct Vector{
 		return false;
 	}
 
-	uint unifyComplexity() const {
-		uint all_complexity = 0;
-		if (!empty()) {
-			CartesianProd<bool> skipped_variants;
-			for (auto& c : vect) {
-				if (c->extraInds().size()) {
-					if (c->exprs().empty()) {
-						skipped_variants.addDim(vector<bool>{false});
-					} else {
-						skipped_variants.addDim(vector<bool>{false, true});
-					}
-				} else {
-					skipped_variants.addDim(vector<bool>{true});
-				}
-			}
-			while (true) {
-				vector<bool> skipped = skipped_variants.data();
-				uint variant_complexity = 1;
-				for (uint i = 0; i < vect.size(); ++ i) {
-					if (skipped[i]) {
-						variant_complexity *= vect[i]->exprsInds().size();
-					}
-				}
-				all_complexity += variant_complexity;
-				if (skipped_variants.hasNext()) {
-					skipped_variants.makeNext();
-				} else {
-					break;
-				}
-			}
-		}
-		return all_complexity;
-	}
-
 	string show() const {
 		string ret;
 		ret += "=============================\n";
