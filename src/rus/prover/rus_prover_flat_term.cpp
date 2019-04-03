@@ -236,7 +236,7 @@ FlatTerm::Iterator fill_in_flatterm(FlatTerm::Iterator& ft, const Tree* t) {
 	return end;
 }
 
-FlatTerm tree2flatterm(const Tree& t) {
+FlatTerm Tree2FlatTerm(const Tree& t) {
 	FlatTerm ret(t.len());
 	auto ft = ret.nodes.begin();
 	fill_in_flatterm(ft, &t);
@@ -256,7 +256,7 @@ unique_ptr<Tree> fill_in_tree(FlatTerm::ConstIterator& ft, FlatTerm::ConstIterat
 	}
 }
 
-unique_ptr<Tree> flatterm2tree(const FlatTerm& ft) {
+unique_ptr<Tree> FlatTerm2Tree(const FlatTerm& ft) {
 	auto beg = ft.nodes.begin();
 	return fill_in_tree(beg, ft.nodes.end());
 }

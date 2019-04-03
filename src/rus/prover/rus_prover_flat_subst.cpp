@@ -230,4 +230,20 @@ Subst convert2subst(const FlatSubst& s) {
 	return ret;
 }
 
+FlatSubst Subst2FlatSubst(const Subst& sub) {
+	FlatSubst ret;
+	for (const auto& p : sub) {
+		ret.compose(p.first, std::move(convert2flatterm(p.second)));
+	}
+	return ret;
+}
+
+Subst FlatSubst2Subst(const FlatSubst& s) {
+	Subst ret;
+	for (const auto& p : s) {
+		ret.compose(p.first, std::move(convert2lighttree(p.second)));
+	}
+	return ret;
+}
+
 }}}

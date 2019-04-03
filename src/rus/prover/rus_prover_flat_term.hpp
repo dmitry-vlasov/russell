@@ -200,8 +200,8 @@ struct FlatTerm {
 FlatTerm convert2flatterm(const LightTree&);
 LightTree convert2lighttree(const FlatTerm&);
 
-FlatTerm tree2flatterm(const Tree&);
-unique_ptr<Tree> flatterm2tree(const FlatTerm&);
+FlatTerm Tree2FlatFerm(const Tree&);
+unique_ptr<Tree> FlatTerm2Tree(const FlatTerm&);
 
 void copyFlatSubTerm(FlatTerm* t, const uint pos, FlatTerm::ConstIterator b);
 FlatTerm term(FlatTerm::ConstIterator b);
