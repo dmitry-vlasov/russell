@@ -278,18 +278,32 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 	return ret;
 }
 
+static vector<uint> optimize_intersection_order(const map<uint, VectorUnifiedUnion>& terms) {
+	vector<uint> ret;
+	for (const auto& p : terms) {
+		ret.push_back(p.first);
+	}
+	std::sort(
+		ret.begin(),
+		ret.end(),
+		[&terms](uint v1, uint v2) {
+			return terms.at(v1).card() < terms.at(v2).card();
+		}
+	);
+	return ret;
+}
+
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 	MatrixUnifiedUnion common;
-	vector<uint> vars;
 	MultyUnifiedSubs s;
-	for (const auto& p : terms) {
+	vector<uint> vars = optimize_intersection_order(terms);
+	for (uint v : vars) {
 		Timer timer; timer.start();
-		common = std::move(common.intersect(p.second));
+		common = std::move(common.intersect(terms.at(v)));
 		timer.stop();
 		if (common.empty()) {
 			return s;
 		}
-		vars.push_back(p.first);
 	}
 	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
 	for (const auto& q : unfolded) {
