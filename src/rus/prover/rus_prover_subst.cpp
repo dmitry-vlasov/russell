@@ -2,9 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_flat_subst = false;
-bool debug_flat_apply = false;
-
 void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
 	if (ok_) {

@@ -77,9 +77,9 @@ inline bool sets_intersect(const set<T>& right, const set<T>& left) {
 
 template<class T> struct Undef;
 template<> struct Undef<uint> {
-	static uint get()        { return UNDEF_UINT; }
-	static bool is(uint x)   { return x == UNDEF_UINT; }
-	static void set(uint& x) { x = UNDEF_UINT; }
+	static uint get()        { return -1; }
+	static bool is(uint x)   { return x == -1; }
+	static void set(uint& x) { x = -1; }
 };
 
 template<class T> struct Undef<T*> {
@@ -381,7 +381,7 @@ class Table {
 	struct Storage {
 		Storage() : data(nullptr) { }
 		Data* data;
-		unordered_set<Data**> users;
+		hset<Data**> users;
 	};
 	typedef cmap<uint, Storage> Refs;
 	Refs refs;

@@ -1,6 +1,7 @@
 #
 # The Russell language implementation
 #
+cmake_minimum_required (VERSION 3.8)
 project(Russell)
 
 include_directories(
@@ -8,8 +9,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../include
   ${CMAKE_CURRENT_SOURCE_DIR}/../peglib
 )
-
-set(CMAKE_CXX_STANDARD 17)
 
 if (BUILD_SOLID)
 	set(RUSSELL_SRC main.cpp)
@@ -73,6 +72,8 @@ else()
 endif()
 
 add_executable(mdl ${RUSSELL_SRC})	
+
+target_compile_features(mdl PUBLIC cxx_std_17)
 
 target_link_libraries(mdl 
 	${Boost_LIBRARIES}

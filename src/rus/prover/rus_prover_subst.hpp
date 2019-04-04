@@ -46,7 +46,7 @@ struct Subst {
 	}
 	void erase(uint v) { sub_.erase(v); }
 
-	typedef std::map<uint, Term>::const_iterator const_iterator;
+	typedef hmap<uint, Term>::const_iterator const_iterator;
 
 	const_iterator begin() const { return sub_.cbegin(); }
 	const_iterator end() const { return sub_.cend(); }
@@ -70,7 +70,7 @@ struct Subst {
 	void spoil() { ok_ = false; }
 
 private:
-	std::map<uint, Term> sub_;
+	hmap<uint, Term> sub_;
 	bool ok_;
 	friend void compose(Subst& s1, const Subst& s2, bool full);
 };

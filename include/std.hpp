@@ -39,6 +39,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <tuple>
+#include <functional>
 
 #include <cstdlib>
 #include <cstring>
@@ -118,8 +119,6 @@ namespace mdl {
 	using std::mutex;
 	using std::atomic;
 	using std::tuple;
-	using std::unordered_map;
-	using std::unordered_set;
 
 	using std::unique_ptr;
 	using std::shared_ptr;
@@ -139,9 +138,19 @@ namespace mdl {
 	using cmap = tbb::interface5::concurrent_hash_map<K, T, H, A>;
 	template<typename T, typename A = tbb::cache_aligned_allocator<T>>
 	using cvector = tbb::concurrent_vector<T, A>;
-}
 
-#define UNDEF_UINT 0xFFFFFFFF
+	template<typename Key, typename Tp,
+	   typename Hash = std::hash<Key>,
+	   typename Pred = std::equal_to<Key>,
+	   typename Alloc = std::allocator<std::pair<const Key, Tp>>>
+    using hmap = class std::unordered_map<Key, Tp, Hash, Pred, Alloc>;
+
+	template<typename Value,
+	   typename Hash = std::hash<Value>,
+	   typename Pred = std::equal_to<Value>,
+	   typename Alloc = std::allocator<Value>>
+    using hset = class std::unordered_set<Value, Hash, Pred, Alloc>;
+}
 
 #define PARALLEL
 
