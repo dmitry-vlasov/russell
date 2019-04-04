@@ -10,7 +10,6 @@ MultySubst::MultySubst(const vector<const Subst*>& subs) {
 }
 Subst MultySubst::makeSubs(Subst& unif) const {
 	Subst ret;
-	uint c = 0;
 	for (const auto& p : msub_) {
 		Term term = index::unify_general(p.second, unif);
 		if (term.empty()) {

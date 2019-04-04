@@ -68,6 +68,11 @@ struct Subst {
 		return ret;
 	}
 	void spoil() { ok_ = false; }
+	void verify() const {
+		for (const auto& p : sub_) {
+			p.second.verify();
+		}
+	}
 
 private:
 	hmap<uint, Term> sub_;
