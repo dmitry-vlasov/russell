@@ -115,6 +115,7 @@ struct RuleVar {
 };
 
 struct Term {
+	struct Iter;
 	enum Kind { RULE, VAR };
 	struct Node {
 		Node() { }
@@ -130,133 +131,6 @@ struct Term {
 	};
 	typedef vector<Node>::iterator Iterator;
 	typedef vector<Node>::const_iterator ConstIterator;
-
-	struct Iter {
-		Iter() : valid_(false) { }
-		Iter(const Term& ft) :
-			valid_(true),
-			beg_(ft.nodes.begin()),
-			iter_(ft.nodes.begin()),
-			end_(ft.nodes.begin() + ft.nodes.size() - 1) { }
-		Iter(ConstIterator b, ConstIterator e, bool v = true) :
-			valid_(v), beg_(b), iter_(b), end_(e) { }
-		Iter(const Iter&) = default;
-		Iter& operator = (const Iter&) = default;
-		bool operator == (const Iter& i) const {
-			return iter_ == i.iter_;
-		}
-		bool operator != (const Iter& i) const {
-			return iter_ != i.iter_;
-		}
-		Iter side() const {
-			return Iter(beg_, iter_, end_, false);
-		}
-		Iter next() const {
-			if (!valid_ || isNextEnd()) {
-				return Iter(beg_, iter_, end_, false);
-			} else {
-				return Iter(beg_, iter_ + 1, end_, iter_ != end_);
-			}
-		}
-		Iter prev() const {
-			if (!valid_ || isPrevEnd()) {
-				return Iter();
-			} else {
-				return Iter(beg_, iter_ - 1, end_, iter_ != beg_);
-			}
-		}
-		Iter fastForward() const {
-			return Iter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
-		}
-		Iter reset() const {
-			return Iter(beg_, end_, valid_);
-		}
-		Term subTerm() const;
-		Term term() const;
-		vector<pair<Term, Iter>> subTerms() const {
-			vector<pair<Term, Iter>> ret;
-			ret.reserve(1);
-			ret.emplace_back(subTerm(), fastForward());
-			return ret;
-		}
-		vector<Iter> ends() const {
-			vector<Iter> ret;
-			ret.reserve(1);
-			ret.push_back(fastForward());
-			return ret;
-		}
-		bool isEnd(const Iter& i) const {
-			return iter_->end == i.iter_;
-		}
-		bool isVar() const {
-			return iter_->ruleVar.isVar() && iter_->ruleVar.var.rep;
-		}
-		LightSymbol var() const {
-			return iter_->ruleVar.var;
-		}
-		RuleVar ruleVar() const {
-			return iter_->ruleVar;
-		}
-		bool isNextEnd() const { return iter_ == end_; }
-		bool isPrevEnd() const { return iter_ == beg_; }
-		bool isSideEnd() const { return true; }
-		bool isValid() const { return valid_; }
-		ConstIterator iter() const {
-			if (!valid_) {
-				cout << "NOT VALID FlatTerm::TermIter !!!" << endl;
-			}
-			assert(valid_ && "TermIter::iter()");
-			return iter_;
-		}
-
-		vector<ConstIterator> childrenIters() const {
-			vector<ConstIterator> ret;
-			if (valid_ && iter_->ruleVar.isRule()) {
-				ConstIterator x = iter_;
-				for (uint i = 0; i < iter_->ruleVar.rule->arity(); ++i) {
-					ret.push_back(x);
-					x = x->end + 1;
-				}
-			} else {
-				throw Error("node has no children");
-			}
-			return ret;
-		}
-		string show(bool full = false) const {
-			string ret;
-			if (full) {
-				ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->ruleVar.show()) + "\n";
-				ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->ruleVar.show()) + "\n";
-				ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
-				ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
-			} else {
-				ret += iter_->ruleVar.show() + " ";
-			}
-			return ret;
-		}
-		string showBranch() const {
-			vector<Iter> branch;
-			Iter i = *this;
-			while (i.isValid()) {
-				branch.push_back(i);
-				i = i.prev();
-			}
-			std::reverse(branch.begin(), branch.end());
-			string ret;
-			for (auto it : branch) {
-				ret += it.show();
-			}
-			return ret;
-		}
-
-	private:
-		Iter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
-			valid_(v), beg_(b), iter_(i), end_(e) { }
-		bool valid_;
-		ConstIterator beg_;
-		ConstIterator iter_;
-		ConstIterator end_;
-	};
 
 	Term(uint s = 0) : nodes(s) { }
 	Term(const Term&);
@@ -287,6 +161,133 @@ struct Term {
 	vector<Node> nodes;
 	string show(bool simple = false) const;
 	string show_pointers() const;
+};
+
+struct Term::Iter {
+	Iter() : valid_(false) { }
+	Iter(const Term& ft) :
+		valid_(true),
+		beg_(ft.nodes.begin()),
+		iter_(ft.nodes.begin()),
+		end_(ft.nodes.begin() + ft.nodes.size() - 1) { }
+	Iter(ConstIterator b, ConstIterator e, bool v = true) :
+		valid_(v), beg_(b), iter_(b), end_(e) { }
+	Iter(const Iter&) = default;
+	Iter& operator = (const Iter&) = default;
+	bool operator == (const Iter& i) const {
+		return iter_ == i.iter_;
+	}
+	bool operator != (const Iter& i) const {
+		return iter_ != i.iter_;
+	}
+	Iter side() const {
+		return Iter(beg_, iter_, end_, false);
+	}
+	Iter next() const {
+		if (!valid_ || isNextEnd()) {
+			return Iter(beg_, iter_, end_, false);
+		} else {
+			return Iter(beg_, iter_ + 1, end_, iter_ != end_);
+		}
+	}
+	Iter prev() const {
+		if (!valid_ || isPrevEnd()) {
+			return Iter();
+		} else {
+			return Iter(beg_, iter_ - 1, end_, iter_ != beg_);
+		}
+	}
+	Iter fastForward() const {
+		return Iter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
+	}
+	Iter reset() const {
+		return Iter(beg_, end_, valid_);
+	}
+	Term subTerm() const;
+	Term term() const;
+	vector<pair<Term, Iter>> subTerms() const {
+		vector<pair<Term, Iter>> ret;
+		ret.reserve(1);
+		ret.emplace_back(subTerm(), fastForward());
+		return ret;
+	}
+	vector<Iter> ends() const {
+		vector<Iter> ret;
+		ret.reserve(1);
+		ret.push_back(fastForward());
+		return ret;
+	}
+	bool isEnd(const Iter& i) const {
+		return iter_->end == i.iter_;
+	}
+	bool isVar() const {
+		return iter_->ruleVar.isVar() && iter_->ruleVar.var.rep;
+	}
+	LightSymbol var() const {
+		return iter_->ruleVar.var;
+	}
+	RuleVar ruleVar() const {
+		return iter_->ruleVar;
+	}
+	bool isNextEnd() const { return iter_ == end_; }
+	bool isPrevEnd() const { return iter_ == beg_; }
+	bool isSideEnd() const { return true; }
+	bool isValid() const { return valid_; }
+	ConstIterator iter() const {
+		if (!valid_) {
+			cout << "NOT VALID FlatTerm::TermIter !!!" << endl;
+		}
+		assert(valid_ && "TermIter::iter()");
+		return iter_;
+	}
+
+	vector<ConstIterator> childrenIters() const {
+		vector<ConstIterator> ret;
+		if (valid_ && iter_->ruleVar.isRule()) {
+			ConstIterator x = iter_;
+			for (uint i = 0; i < iter_->ruleVar.rule->arity(); ++i) {
+				ret.push_back(x);
+				x = x->end + 1;
+			}
+		} else {
+			throw Error("node has no children");
+		}
+		return ret;
+	}
+	string show(bool full = false) const {
+		string ret;
+		if (full) {
+			ret += "beg: " + ((beg_ == ConstIterator()) ? "<>" : beg_->ruleVar.show()) + "\n";
+			ret += "iter: " + ((iter_ == ConstIterator()) ? "<>" : iter_->ruleVar.show()) + "\n";
+			ret += "end: " + ((end_ == ConstIterator()) ? "<>" : end_->ruleVar.show()) + "\n";
+			ret += "len: " + to_string((end_ - beg_) + 1) + "\n";
+		} else {
+			ret += iter_->ruleVar.show() + " ";
+		}
+		return ret;
+	}
+	string showBranch() const {
+		vector<Iter> branch;
+		Iter i = *this;
+		while (i.isValid()) {
+			branch.push_back(i);
+			i = i.prev();
+		}
+		std::reverse(branch.begin(), branch.end());
+		string ret;
+		for (auto it : branch) {
+			ret += it.show();
+		}
+		return ret;
+	}
+
+private:
+	Iter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
+		valid_(v), beg_(b), iter_(i), end_(e) { }
+	bool valid_;
+	ConstIterator beg_;
+	ConstIterator iter_;
+	ConstIterator end_;
 };
 
 Term Tree2FlatTerm(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
