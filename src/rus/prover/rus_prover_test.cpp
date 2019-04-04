@@ -6,12 +6,17 @@ Return test_proof_with_oracle(const Proof* p) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Oracle* oracle = new prover::Oracle(p);
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
-	Return ret = space->prove();
-	if (!ret.success()) {
-		cout << "oracle status:" << endl;
-		cout << oracle->show() << endl;
+	try {
+		Return ret = space->prove();
+		if (!ret.success()) {
+			cout << "oracle status:" << endl;
+			cout << oracle->show() << endl;
+		}
+		return ret;
+	} catch (Error& err) {
+		err.msg += "\nwhile proving: " + show_id(p->theorem()->id()) + "\n";
+		throw err;
 	}
-	return ret;
 }
 
 Return test_with_oracle(string theorem) {

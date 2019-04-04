@@ -96,6 +96,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
 			if (s0 != si) {
 				string err;
 				err += "s0 != s" + to_string(i) + "\n";
+				err += "diff: " + show_diff(s0, si) + "\n";
 				err += "s0: " +  s0.show() + "\n";
 				err += "s" + to_string(i) + ": " + si.show() + "\n\n";
 				err += "orig s0: " + premises[0]->sub.show() + "\n";
