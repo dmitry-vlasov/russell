@@ -96,8 +96,11 @@ inline ostream& operator << (ostream& os, const LightSymbol& s) {
 }
 
 struct RuleVar {
-	const Rule* rule = nullptr;
-	LightSymbol var;
+	RuleVar() = default;
+	RuleVar(const Rule* r) : rule(r) { }
+	RuleVar(LightSymbol v) : var(v) { }
+	RuleVar(const RuleVar&) = default;
+
 	bool operator == (const RuleVar& rv) const { return rule == rv.rule && var == rv.var; }
 	bool operator != (const RuleVar& rv) const { return !operator == (rv); }
 	bool operator < (const RuleVar& rv) const {
@@ -112,6 +115,9 @@ struct RuleVar {
 	bool isRule() const { return rule; }
 	const Type* type() const { return rule ? rule->type() : var.type; }
 	Var _var() const { return Var(var.lit, var.type); }
+
+	const Rule* rule = nullptr;
+	LightSymbol var;
 };
 
 struct Term {
@@ -182,6 +188,13 @@ struct Term::Iter {
 	}
 	Iter side() const {
 		return Iter(beg_, iter_, end_, false);
+	}
+	Iter hint(const Rule* r) const {
+		if (iter_->ruleVar.rule == r) {
+			return *this;
+		} else {
+			return Iter();
+		}
 	}
 	Iter next() const {
 		if (!valid_ || isNextEnd()) {

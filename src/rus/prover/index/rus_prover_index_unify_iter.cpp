@@ -38,6 +38,7 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 }
 
 static vector<UnifyIters> do_unify_general(const UnifyIters& begins);
+static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
 
 static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
 	vector<Term> to_unify({apply(s, term)});
@@ -223,7 +224,9 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				vector<UnifyIters> subEnds = do_unify_general(subBegins);
+				vector<UnifyIters> subEnds = i.sub.maps(data.var) ?
+					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
+					do_unify_general(subBegins);
 				for (const auto& ends : subEnds) {
 					MultyIter i0 = ends.iters[0];
 					Term term_orig = subBegins.iters[0].subTerm(i0);
@@ -278,6 +281,67 @@ static vector<UnifyIters> do_unify_general(const UnifyIters& inits) {
 						st.emplace(p.cur.side());
 					} else {
 						st.emplace(p.beg, p.cur.side());
+					}
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+
+static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
+	cout << "do_unify_general_with_hint: " << hint.show() << endl;
+	vector<UnifyIters> ret;
+	if (inits.iters.size() > 0) {
+		if (inits.iters.size() == 1) {
+			for (const auto& end : inits.iters[0].ends()) {
+				ret.emplace_back(vector<MultyIter>(1, end), inits.parentSub, inits.sub);
+			}
+		} else {
+			struct UnifyTriple {
+				UnifyTriple(const UnifyIters& b, Term::Iter h) :
+					is_root(true), beg(b), cur(b), hint(h) { }
+				UnifyTriple(const UnifyIters& b, const UnifyIters& c, Term::Iter h) : is_root(false), beg(b), cur(c), hint(h) { }
+				bool is_root;
+				UnifyIters beg;
+				UnifyIters cur;
+				Term::Iter hint;
+			};
+			Term::Iter hiter(hint);
+			UnifyIters start = hiter.ruleVar().rule ? inits.hint(hiter.ruleVar().rule) : inits;
+			if (!start.isValid()) {
+				return ret;
+			}
+
+			stack<UnifyTriple> st;
+			st.emplace(start, hiter);
+			while (st.size()) {
+				UnifyTriple t = st.top();
+				st.pop();
+				for (const auto& i : unify_iters(t.cur)) {
+					if (i.isTermEnd(t.beg) && i.sub.ok()) {
+						ret.push_back(i);
+					}
+					if (!i.isNextEnd(t.beg)) {
+						st.emplace(t.beg, i.next(), t.hint.next());
+					}
+				}
+				if (!t.cur.isSideEnd()) {
+					if (t.is_root) {
+						if (t.hint.ruleVar().rule) {
+							cout << "USING HINT" << endl;
+							st.emplace(t.cur.hint(t.hint.ruleVar().rule), t.hint);
+						} else {
+							st.emplace(t.cur.side(), t.hint);
+						}
+					} else {
+						if (t.hint.ruleVar().rule) {
+							cout << "USING HINT" << endl;
+							st.emplace(t.beg, t.cur.hint(t.hint.ruleVar().rule), t.hint);
+						} else {
+							st.emplace(t.beg, t.cur.side(), t.hint);
+						}
 					}
 				}
 			}

@@ -32,8 +32,6 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	return ret;
 }
 
-bool debug_unify_general = false;
-
 Term unify_general(const vector<Term>& ex, Subst& sub) {
 	vector<MultyIter> iters;
 	for (const auto& e : ex) {

@@ -48,7 +48,7 @@ Term Index::Iter::subTerm(ConstIterator i) const {
 	vector<Iter> branch;
 	ConstIterator start = i;
 	while (i != ConstIterator()) {
-		branch.emplace_back(i);
+		branch.emplace_back(nullptr, i);
 		if (iter_ == i) {
 			break;
 		}

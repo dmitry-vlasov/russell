@@ -40,10 +40,10 @@ struct Index {
 };
 
 struct Index::Iter {
-	Iter() : valid_(false) { }
-	Iter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()) { }
-	Iter(ConstIterator i) : valid_(i != ConstIterator()), iter_(i) { }
-	Iter(ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e) { }
+	Iter() : valid_(false), map_(nullptr) { }
+	Iter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()), map_(&n.nodes) { }
+	Iter(const map<RuleVar, Node>* m, ConstIterator i) : valid_(i != ConstIterator()), iter_(i), map_(m) { }
+	Iter(const map<RuleVar, Node>* m, ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e), map_(m) { }
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
@@ -52,26 +52,38 @@ struct Index::Iter {
 	bool operator != (const Iter& i) const {
 		return &*iter_ != &*i.iter_;
 	}
+	Iter hint(const Rule* r) const {
+		if (!valid_) {
+			return Iter(map_, beg_, iter_, end_, false);
+		} else {
+			auto i = map_->find(RuleVar(r));
+			if (i == map_->end()) {
+				return Iter(map_, beg_, i, end_, false);
+			} else {
+				return Iter(map_, beg_, i, end_, true);
+			}
+		}
+	}
 	Iter side() const {
 		if (!valid_ || isSideEnd()) {
-			return Iter(beg_, iter_, end_, false);
+			return Iter(map_, beg_, iter_, end_, false);
 		} else {
 			auto i = iter_;
-			return Iter(beg_, ++i, end_);
+			return Iter(map_, beg_, ++i, end_, true);
 		}
 	}
 	Iter next() const {
 		if (!valid_ || isNextEnd()) {
-			return Iter(beg_, iter_, end_, false);
+			return Iter(map_, beg_, iter_, end_, false);
 		} else {
-			return Iter(iter_->second.nodes.begin(), iter_->second.nodes.end());
+			return Iter(&iter_->second.nodes, iter_->second.nodes.begin(), iter_->second.nodes.end());
 		}
 	}
 	Iter prev() const {
-		return Iter(iter_->second.parent);
+		return Iter(nullptr, iter_->second.parent, ConstIterator(), ConstIterator(), false);
 	}
 	Iter reset() const {
-		return Iter(beg_, end_, valid_);
+		return Iter(map_, beg_, beg_, end_, valid_);
 	}
 	bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
 	bool isSideEnd() const {
@@ -97,7 +109,7 @@ struct Index::Iter {
 		vector<pair<Term, Iter>> ret;
 		ret.reserve(iter_->second.ends.size());
 		for (auto end : iter_->second.ends) {
-			ret.emplace_back(subTerm(end), Iter(end));
+			ret.emplace_back(subTerm(end), Iter(&iter_->second.nodes, end));
 		}
 		return ret;
 	}
@@ -105,7 +117,7 @@ struct Index::Iter {
 		vector<Iter> ret;
 		ret.reserve(iter_->second.ends.size());
 		for (auto end : iter_->second.ends) {
-			ret.emplace_back(end);
+			ret.emplace_back(&iter_->second.nodes, end);
 		}
 		return ret;
 	}
@@ -158,12 +170,13 @@ struct Index::Iter {
 	}
 
 private:
-	Iter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
-		valid_(v), beg_(b), iter_(i), end_(e) { }
+	Iter(const map<RuleVar, Node>* m, ConstIterator b, ConstIterator i, ConstIterator e, bool v) :
+		valid_(v), beg_(b), iter_(i), end_(e), map_(m) { }
 	bool valid_;
 	ConstIterator beg_;
 	ConstIterator iter_;
 	ConstIterator end_;
+	const map<RuleVar, Node>* map_;
 };
 
 template<class Data>

@@ -35,6 +35,13 @@ struct MultyIter {
 		default: throw Error("impossible");
 		}
 	}
+	MultyIter hint(const Rule* r) const {
+		switch (kind_) {
+		case TRIE:  return MultyIter(trieIter.hint(r));
+		case TERM:  return MultyIter(termIter.hint(r));
+		default: throw Error("impossible");
+		}
+	}
 	MultyIter next() const {
 		switch (kind_) {
 		case TRIE:  return MultyIter(trieIter.next());
@@ -173,7 +180,7 @@ struct MultyIter {
 
 private:
 	Kind kind_;
-	Index::Iter    trieIter;
+	Index::Iter trieIter;
 	Term::Iter termIter;
 };
 
@@ -194,7 +201,7 @@ struct UnifyIters {
 	UnifyIters(const UnifyIters&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
 
-	UnifyIters side() {
+	UnifyIters side() const {
 		vector<MultyIter> side_iters;
 		bool found = false;
 		for (auto i : iters) {
@@ -210,6 +217,14 @@ struct UnifyIters {
 			}
 		}
 		return UnifyIters(side_iters, parentSub, parentSub);
+	}
+	UnifyIters hint(const Rule* r) const {
+		vector<MultyIter> hint_iters;
+		bool found = false;
+		for (auto i : iters) {
+			hint_iters.push_back(i.hint(r));
+		}
+		return UnifyIters(hint_iters, parentSub, parentSub);
 	}
 	UnifyIters next() const {
 		vector<MultyIter> next_iters;
@@ -274,6 +289,17 @@ struct UnifyIters {
 		RuleVar rv = iters[0].ruleVar();
 		for (uint i = 1; i < iters.size(); ++ i) {
 			if (rv != iters[i].ruleVar()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool isValid() const {
+		if (!sub.ok()) {
+			return false;
+		}
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (iters[i].isValid()) {
 				return false;
 			}
 		}

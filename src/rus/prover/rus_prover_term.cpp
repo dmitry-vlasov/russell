@@ -2,8 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_flatterm = false;
-
 void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b) {
 	uint i = 0;
 	for (auto it = b; ; ++ it) {
