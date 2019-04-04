@@ -90,7 +90,11 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 			s1.sub_[p.first] = std::move(ex);
 			vars.insert(p.first);
 		} else {
-			s1.sub_.erase(p.first);
+			if (full) {
+				s1.sub_.erase(p.first);
+			} else {
+				vars.insert(ex.var().lit);
+			}
 		}
 	}
 	if (full) {

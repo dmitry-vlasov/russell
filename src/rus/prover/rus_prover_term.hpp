@@ -49,7 +49,7 @@ struct LightSymbol {
 	uint literal() const { return lit; }
 	static uint undef_value() { static uint val = uint(-1) >> 1; return val; }
 
-	bool operator == (const LightSymbol& s) const { return lit == s.lit && ind == s.ind; }
+	bool operator == (const LightSymbol& s) const { return lit == s.lit; }
 	bool operator != (const LightSymbol& s) const { return !operator ==(s); }
 	bool operator < (const LightSymbol& s) const {
 		if (lit < s.lit) return true;
