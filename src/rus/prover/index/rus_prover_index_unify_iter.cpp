@@ -193,7 +193,7 @@ struct UnifStepData {
 		cout << "rule: " << (rule ? Lex::toStr(rule->id()) : "NULL") << endl;
 		cout << "vars: " << flush;
 		for (const auto& v : vars) {
-			cout << prover::show(v, true) << " " << flush;
+			cout << Lex::toStr(v) << " " << flush;
 		}
 		cout << endl;
 		cout << "consistent: " << (consistent ? "TRUE" : "FALSE") << endl;
