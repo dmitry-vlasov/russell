@@ -131,61 +131,61 @@ struct Term {
 	typedef vector<Node>::iterator Iterator;
 	typedef vector<Node>::const_iterator ConstIterator;
 
-	struct TermIter {
-		TermIter() : valid_(false) { }
-		TermIter(const Term& ft) :
+	struct Iter {
+		Iter() : valid_(false) { }
+		Iter(const Term& ft) :
 			valid_(true),
 			beg_(ft.nodes.begin()),
 			iter_(ft.nodes.begin()),
 			end_(ft.nodes.begin() + ft.nodes.size() - 1) { }
-		TermIter(ConstIterator b, ConstIterator e, bool v = true) :
+		Iter(ConstIterator b, ConstIterator e, bool v = true) :
 			valid_(v), beg_(b), iter_(b), end_(e) { }
-		TermIter(const TermIter&) = default;
-		TermIter& operator = (const TermIter&) = default;
-		bool operator == (const TermIter& i) const {
+		Iter(const Iter&) = default;
+		Iter& operator = (const Iter&) = default;
+		bool operator == (const Iter& i) const {
 			return iter_ == i.iter_;
 		}
-		bool operator != (const TermIter& i) const {
+		bool operator != (const Iter& i) const {
 			return iter_ != i.iter_;
 		}
-		TermIter side() const {
-			return TermIter(beg_, iter_, end_, false);
+		Iter side() const {
+			return Iter(beg_, iter_, end_, false);
 		}
-		TermIter next() const {
+		Iter next() const {
 			if (!valid_ || isNextEnd()) {
-				return TermIter(beg_, iter_, end_, false);
+				return Iter(beg_, iter_, end_, false);
 			} else {
-				return TermIter(beg_, iter_ + 1, end_, iter_ != end_);
+				return Iter(beg_, iter_ + 1, end_, iter_ != end_);
 			}
 		}
-		TermIter prev() const {
+		Iter prev() const {
 			if (!valid_ || isPrevEnd()) {
-				return TermIter();
+				return Iter();
 			} else {
-				return TermIter(beg_, iter_ - 1, end_, iter_ != beg_);
+				return Iter(beg_, iter_ - 1, end_, iter_ != beg_);
 			}
 		}
-		TermIter fastForward() const {
-			return TermIter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
+		Iter fastForward() const {
+			return Iter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
 		}
-		TermIter reset() const {
-			return TermIter(beg_, end_, valid_);
+		Iter reset() const {
+			return Iter(beg_, end_, valid_);
 		}
 		Term subTerm() const;
 		Term term() const;
-		vector<pair<Term, TermIter>> subTerms() const {
-			vector<pair<Term, TermIter>> ret;
+		vector<pair<Term, Iter>> subTerms() const {
+			vector<pair<Term, Iter>> ret;
 			ret.reserve(1);
 			ret.emplace_back(subTerm(), fastForward());
 			return ret;
 		}
-		vector<TermIter> ends() const {
-			vector<TermIter> ret;
+		vector<Iter> ends() const {
+			vector<Iter> ret;
 			ret.reserve(1);
 			ret.push_back(fastForward());
 			return ret;
 		}
-		bool isEnd(const TermIter& i) const {
+		bool isEnd(const Iter& i) const {
 			return iter_->end == i.iter_;
 		}
 		bool isVar() const {
@@ -235,8 +235,8 @@ struct Term {
 			return ret;
 		}
 		string showBranch() const {
-			vector<TermIter> branch;
-			TermIter i = *this;
+			vector<Iter> branch;
+			Iter i = *this;
 			while (i.isValid()) {
 				branch.push_back(i);
 				i = i.prev();
@@ -250,7 +250,7 @@ struct Term {
 		}
 
 	private:
-		TermIter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
+		Iter(ConstIterator b, ConstIterator i, ConstIterator e, bool v = true) :
 			valid_(v), beg_(b), iter_(i), end_(e) { }
 		bool valid_;
 		ConstIterator beg_;

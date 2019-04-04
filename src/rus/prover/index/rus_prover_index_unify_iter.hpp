@@ -8,7 +8,7 @@ struct MultyIter {
 	enum Kind { NONE, TRIE, TERM, };
 	MultyIter() : kind_(NONE) { }
 	MultyIter(Index::Iter i) : kind_(TRIE), trieIter(i) { }
-	MultyIter(Term::TermIter i) : kind_(TERM), termIter(i) { }
+	MultyIter(Term::Iter i) : kind_(TERM), termIter(i) { }
 	MultyIter(const MultyIter&) = default;
 	MultyIter& operator = (const MultyIter&) = default;
 
@@ -174,7 +174,7 @@ struct MultyIter {
 private:
 	Kind kind_;
 	Index::Iter    trieIter;
-	Term::TermIter termIter;
+	Term::Iter termIter;
 };
 
 template<class Iter> RuleVar ruleVar(Iter);
@@ -334,7 +334,7 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 	}
 	vector<MultyIter> iters;
 	iters.emplace_back(Index::Iter(m.index().root));
-	iters.emplace_back(Term::TermIter(t));
+	iters.emplace_back(Term::Iter(t));
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {

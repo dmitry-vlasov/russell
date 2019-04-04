@@ -53,7 +53,7 @@ static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
 	}
 	vector<MultyIter> iters;
 	for (const auto& t : to_unify) {
-		iters.emplace_back(Term::TermIter(t));
+		iters.emplace_back(Term::Iter(t));
 	}
 	UnifyIters begin = UnifyIters(iters);
 	try {

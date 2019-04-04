@@ -37,7 +37,7 @@ bool debug_unify_general = false;
 Term unify_general(const vector<Term>& ex, Subst& sub) {
 	vector<MultyIter> iters;
 	for (const auto& e : ex) {
-		iters.emplace_back(Term::TermIter(e));
+		iters.emplace_back(Term::Iter(e));
 	}
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);

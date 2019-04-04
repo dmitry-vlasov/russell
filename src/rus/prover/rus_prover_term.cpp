@@ -16,7 +16,7 @@ void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b) {
 	}
 }
 
-Term Term::TermIter::subTerm() const {
+Term Term::Iter::subTerm() const {
 	Term ret((iter_->end - iter_) + 1);
 	if (ret.nodes.size()) {
 		copyFlatSubTerm(&ret, 0, iter_);
@@ -24,7 +24,7 @@ Term Term::TermIter::subTerm() const {
 	return ret;
 }
 
-Term Term::TermIter::term() const {
+Term Term::Iter::term() const {
 	Term ret((end_ - beg_) + 1);
 	if (ret.nodes.size()) {
 		copyFlatSubTerm(&ret, 0, beg_);
