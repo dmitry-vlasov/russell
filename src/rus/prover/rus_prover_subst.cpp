@@ -80,8 +80,8 @@ bool Subst::consistent(const Subst& sub) const {
 
 void compose(Subst& s1, const Subst& s2, bool full) {
 	Subst ret;
-	set<uint> vars;
-	set<uint> to_erase;
+	hset<uint> vars;
+	vector<uint> to_erase;
 	for (const auto& p : s1) {
 		Term ex = apply(s2, p.second);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
@@ -89,7 +89,7 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 			vars.insert(p.first);
 		} else {
 			if (full) {
-				to_erase.insert(p.first);
+				to_erase.push_back(p.first);
 			} else {
 				vars.insert(ex.var().lit);
 			}
