@@ -292,6 +292,9 @@ static vector<UnifyIters> do_unify_general(const UnifyIters& inits) {
 
 static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
 	cout << "do_unify_general_with_hint: " << hint.show() << endl;
+	cout << "HINT ITER: " << Term::Iter(hint).show() << endl;
+	cout << "inits.iters.size(): " << inits.iters.size() << endl;
+
 	vector<UnifyIters> ret;
 	if (inits.iters.size() > 0) {
 		if (inits.iters.size() == 1) {
@@ -309,6 +312,9 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 				Term::Iter hint;
 			};
 			Term::Iter hiter(hint);
+			if (hiter.ruleVar().rule) {
+				cout << "HINT RULE: " << Lex::toStr(hiter.ruleVar().rule->id());
+			}
 			UnifyIters start = hiter.ruleVar().rule ? inits.hint(hiter.ruleVar().rule) : inits;
 			if (!start.isValid()) {
 				return ret;
@@ -324,7 +330,9 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 						ret.push_back(i);
 					}
 					if (!i.isNextEnd(t.beg)) {
+						cout << "Next hint: " << t.hint.next().show() << endl;
 						st.emplace(t.beg, i.next(), t.hint.next());
+						exit(-1);
 					}
 				}
 				if (!t.cur.isSideEnd()) {

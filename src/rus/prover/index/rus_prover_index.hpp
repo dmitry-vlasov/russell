@@ -23,7 +23,7 @@ struct Index {
 	struct Iter;
 
 	void add(const Term& t, uint val = -1);
-	Unified unify(const Term&) const;
+	//Unified unify(const Term&) const;
 	vector<pair<Term, uint>> unpack() const;
 	string show() const;
 	string show_pointers() const;
@@ -214,7 +214,7 @@ private:
 	vector<Data> data_;
 };
 
-template<class D>
+/*template<class D>
 inline vector<typename IndexMap<D>::Unified> unify(const IndexMap<D>& m, const Term& t) {
 	vector<typename IndexMap<D>::Unified> ret;
 	Index::Unified unif = m.index().unify(t);
@@ -224,6 +224,6 @@ inline vector<typename IndexMap<D>::Unified> unify(const IndexMap<D>& m, const T
 		}
 	}
 	return ret;
-}
+}*/
 
 }}}}
