@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Return test_proof_with_oracle(const Proof* p) {
+Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Oracle* oracle = new prover::Oracle(p);
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
@@ -19,7 +19,7 @@ Return test_proof_with_oracle(const Proof* p) {
 	}
 }
 
-Return test_with_oracle(string theorem) {
+Return test_with_oracle(string theorem, uint max_proofs) {
 	if (!theorem.size()) {
 		struct SourceLess {
 			bool operator () (const Source* s1, const Source* s2) const {
@@ -41,12 +41,12 @@ Return test_with_oracle(string theorem) {
 						cout << "AAA" << endl;
 					}
 					Timer timer; timer.start();
-					Return r = test_proof_with_oracle(Theory::proof(n));
+					Return r = test_proof_with_oracle(Theory::proof(n), max_proofs);
 					timer.stop();
 					cout << "done in " << timer << endl;
 					if (!r.success()) {
 						debug_oracle = true;
-						test_proof_with_oracle(Theory::proof(n));
+						test_proof_with_oracle(Theory::proof(n), max_proofs);
 						return r;
 					}
 				}

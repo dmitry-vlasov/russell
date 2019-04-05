@@ -75,7 +75,7 @@ struct Space {
 	Return check_proved();
 };
 
-Return test_with_oracle(string theorem);
+Return test_with_oracle(string theorem, uint max_proofs);
 
 }}}
 
