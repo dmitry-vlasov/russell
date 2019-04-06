@@ -39,14 +39,13 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp
 	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
 	space->registerNode(this);
 	if (isLeaf()) {
-		proofs.emplace_back(new ProofProp(*this, vector<ProofHyp*>(), sub));
+		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub));
 	}
 }
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
-		Hyp* hyp = new Hyp(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this);
-		premises.emplace_back(hyp);
+		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
 	}
 }
 
@@ -63,77 +62,36 @@ void Hyp::buildUp() {
 		Subst sub;
 		Subst outer;
 		for (const auto& p : m.sub) {
-			if (assertion_vars.count(p.first)  /*p.first.ind == LightSymbol::ASSERTION_INDEX*/) {
+			if (assertion_vars.count(p.first)) {
 				outer.compose(p.first, p.second);
 			} else {
 				sub.compose(p.first, p.second);
 			}
 		}
-		Prop* prop = new Prop(m.data, sub, outer, fresher, this);
-		variants.emplace_back(prop);
+		variants.emplace_back(make_unique<Prop>(m.data, sub, outer, fresher, this));
 	}
 }
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
-	bool show_this = false; //(47 <= ind && ind <= 49);
-
-	if (show_this) {
-		cout << "HYP UNIFYING " << ind << " EXPR: " << expr.show() << endl;
-	}
 	bool ret = false;
 	for (const auto& m : unify_general(space->hyps_, expr)) {
 		if (hint) {
 			if (m.data.get() == hint) {
-				ProofTop* pt = new ProofTop(*this, m.data, m.sub);
-				if (show_this) {
-					cout << "\tUNIFIED WITH TOP: " << pt->expr.show() << endl;
-					cout << "\tIND: " << pt->ind << endl;
-					cout << "\tSUB:" << endl;
-					cout << Indent::paragraph(pt->sub.show()) << endl;
-				}
-
-				proofs.emplace_back(pt);
+				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));
 				ret = true;
 			}
 		} else {
-			ProofTop* pt = new ProofTop(*this, m.data, m.sub);
-			if (show_this) {
-				cout << "\tUNIFIED WITH TOP: " << pt->expr.show() << endl;
-				cout << "\tIND: " << pt->ind << endl;
-				cout << "\tSUB:" << endl;
-				cout << Indent::paragraph(pt->sub.show()) << endl;
-			}
-
-			proofs.emplace_back(pt);
+			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));
 			ret = true;
 		}
 	}
 	return ret;
-	//cout << endl;
-
-	/*
-	//cout << "COMPLETING: " << ind << endl;
-	static  uint c = 0;
-	set<Node*> downs;
-	downs.insert(this);
-	while (!downs.empty()) {
-		Node* n = *downs.begin();
-		//cout << "DOWNING: " << n->ind << ", c = " << c++ << endl;
-		downs.erase(n);
-		auto n_downs = n->buildDown();
-		for (auto x : n_downs) {
-			downs.insert(x);
-		}
-	}*/
 }
 
 bool Prop::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
-			//cout << "HYP: " << parent->ind << " - " << p.get()->show() << endl;
-			//cout << "PROP: " << ind << endl;
-			//cout << "BUILDING DOWN HYP: " << parent->ind << endl;
 			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub);
 			if (proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
@@ -148,8 +106,6 @@ bool Prop::buildDown(set<Node*>& downs) {
 			}
 			parent->proofs.emplace_back(hp);
 			new_proofs = true;
-		} else {
-			//cout << "OLD PROP: " << p->node.ind << endl;
 		}
 	}
 	if (new_proofs) {
