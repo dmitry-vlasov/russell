@@ -57,7 +57,7 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
 			for (const auto& pr : th->proofs) {
-				Return r = test_proof_with_oracle(pr.get());
+				Return r = test_proof_with_oracle(pr.get(), max_proofs);
 					if (!r.success()) {
 						debug_oracle = true;
 						//test_proof_with_oracle(pr.get());
