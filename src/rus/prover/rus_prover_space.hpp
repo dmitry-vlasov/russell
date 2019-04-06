@@ -71,6 +71,7 @@ struct Space {
 	map<uint, Node*> nodes_;
 	Tactic*          tactic_;
 	set<uint>        shown;
+	uint             max_proofs = -1;
 	Proved proved();
 	Return check_proved();
 };
