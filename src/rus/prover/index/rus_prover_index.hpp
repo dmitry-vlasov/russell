@@ -9,7 +9,7 @@ struct Index {
 	struct Node {
 		struct NodeIterLess {
 			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
-				return &*i1 < &*i2;
+				return i1->first < i2->first;
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
@@ -23,7 +23,6 @@ struct Index {
 	struct Iter;
 
 	void add(const Term& t, uint val = -1);
-	//Unified unify(const Term&) const;
 	vector<pair<Term, uint>> unpack() const;
 	string show() const;
 	string show_pointers() const;
@@ -47,10 +46,11 @@ struct Index::Iter {
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
-		return &*iter_ == &*i.iter_;
+		//return &*iter_ == &*i.iter_;
+		return iter_ == i.iter_;
 	}
 	bool operator != (const Iter& i) const {
-		return &*iter_ != &*i.iter_;
+		return !operator ==(i);
 	}
 	Iter hint(const Rule* r) const {
 		if (!valid_) {
@@ -80,7 +80,7 @@ struct Index::Iter {
 		}
 	}
 	Iter prev() const {
-		return Iter(nullptr, iter_->second.parent, ConstIterator(), ConstIterator(), false);
+		return Iter(nullptr, iter_->second.parent, ConstIterator());
 	}
 	Iter reset() const {
 		return Iter(map_, beg_, beg_, end_, valid_);

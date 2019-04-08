@@ -169,10 +169,10 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 
 rus::Proof* ProofProp::proof() const {
 	rus::Step* st = step();
-	rus::Proof* ret = new rus::Proof(node.space->prop.ass->id());
+	rus::Proof* ret = new rus::Proof(node.space->prop().ass->id());
 	ret->inner = true;
 	fill_in_proof(st, ret);
-	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop.get(), st)));
+	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop().get(), st)));
 	try {
 		ret->verify(VERIFY_SUB);
 	} catch (Error& err) {

@@ -15,7 +15,7 @@ Space::Space(rus::Qed* q, Tactic* t) :
 }
 
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
-	ind(0), root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
+	prop_(a, find_index(a, p)), tactic_(t) {
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
 			if (!ass->token.preceeds(a->token)) {
@@ -32,19 +32,19 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
 	}
-	for (uint i = 0; i < prop.ass->arity(); ++ i) {
+	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
 		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
 	}
-	root = new Hyp(Tree2FlatTerm(*prop.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
-	root->buildUp();
+	root_ = make_unique<Hyp>(Tree2FlatTerm(*prop_.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
+	root_->buildUp();
 }
 
 Return Space::init() {
 	string data;
-	shown.insert(root->ind);
+	shown.insert(root_->ind);
 	data += "<new>\n";
-	data += Indent::paragraph(root->show()) + "\n";
+	data += Indent::paragraph(root_->show()) + "\n";
 	data += "</new>\n";
 	//cout << endl << data << endl;
 	return Return("tree created", data);
@@ -158,7 +158,7 @@ Return Space::expand(uint index) {
 					add_shown(shown, to_show, hyp);
 				}
 				for (auto& h : p->premises) {
-					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_)) {
+					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
 						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
 							h->unifyWithGoalHyps(hint);
 							h->buildDown(downs);
@@ -235,7 +235,7 @@ void delete_steps_recursively(rus::Step* s) {
 
 Space::Proved Space::proved() {
 	Proved ret;
-	for (auto& p : root->proofs) {
+	for (auto& p : root_->proofs) {
 		if (ProofExp* h = dynamic_cast<ProofExp*>(p.get())) {
 			if (rus::Proof* pr = h->proof()) {
 				ret.emplace_back(pr);

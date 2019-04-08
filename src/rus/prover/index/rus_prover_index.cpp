@@ -28,19 +28,55 @@ void Index::add(const Term& t, uint val) {
 }
 
 static Term create_flatterm(const vector<Index::Iter>& branch) {
+
+	static int c = 0;
+	c++;
+	cout << "c = " << c << endl;
+
+	bool debug = false;
+	if (c == 2) {
+		debug = true;
+	}
+
+	for (const auto& i : branch) {
+		cout << i.ruleVar().show() << " ";
+	}
+	cout << endl;
+
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
+
+		bool found = branch[i].iter()->second.ends.size() == 0;
+
 		for (auto end : branch[i].iter()->second.ends) {
+
+			if (debug) {
+				cout << "end to find: " << (void*)&*end << " -- " << end->first.show() << endl;
+			}
+
 			for (uint j = i; j < branch.size(); ++ j) {
+
+				if (debug) {
+					cout << "\tend in branch: " << (void*)&*branch[j].iter() << " -- " << branch[j].iter()->first.show() << endl;
+				}
+
 				if (branch[j].iter() == end) {
 					ft.nodes[i].end = ft.nodes.begin() + j;
+					found = true;
 					goto out;
 				}
 			}
 		}
 		out:;
+		if (debug && !found) {
+			cout << "NOT FOUND: " << endl;
+		}
+
 	}
+	cout << "simple: " << ft.show(true) << endl << endl;
+	ft.verify();
+	cout << "full: " << ft.show() << endl << endl;
 	return ft;
 }
 
@@ -66,6 +102,10 @@ vector<pair<Term, uint>> Index::unpack() const {
 		while (branch.size()) {
 			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
+
+				cout << "BRANCH:" << endl;
+				cout << n.showBranch() << endl;
+
 				ret.emplace_back(create_flatterm(branch), ind);
 			}
 			if (!n.isNextEnd()) {
