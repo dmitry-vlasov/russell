@@ -4,7 +4,6 @@ namespace mdl { namespace rus { namespace prover {
 
 Oracle::Oracle(const rus::Proof* p) :
 	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
-
 }
 
 bool debug_oracle = false;
@@ -13,8 +12,8 @@ void Oracle::add(Prop* p) {
 	//p->autoGoDown = false;
 	const Assertion* ass = p->prop.ass;
 	if (debug_oracle) {
-		//cout << endl;
-		//cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
+		cout << endl;
+		cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
 	}
 	if (props.empty()) {
 		if (ass == root->ass()) {

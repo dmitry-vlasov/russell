@@ -23,7 +23,6 @@ struct Index {
 	struct Iter;
 
 	void add(const Term& t, uint val = -1);
-	//Unified unify(const Term&) const;
 	vector<pair<Term, uint>> unpack() const;
 	string show() const;
 	string show_pointers() const;
@@ -33,10 +32,23 @@ struct Index {
 	static string show_pointers(const Node&);
 
 	uint totalNodes() const;
-	bool empty() const { return root.nodes.empty(); }
+	bool empty() const { return root_.nodes.empty(); }
+	void verify(bool show = false) const;
 
-	uint size = 0;
-	Node root;
+	uint size() const { return size_; }
+	const Node& root() const {
+		if (!endsInitialized) {
+			const_cast<Index*>(this)->initEnds();
+		}
+		return root_;
+	}
+
+private:
+	void initEnds();
+	uint size_ = 0;
+	Node root_;
+	bool endsInitialized = false;
+	vector<Term> terms;
 };
 
 struct Index::Iter {
@@ -47,10 +59,11 @@ struct Index::Iter {
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
-		return &*iter_ == &*i.iter_;
+		//return &*iter_ == &*i.iter_;
+		return iter_ == i.iter_;
 	}
 	bool operator != (const Iter& i) const {
-		return &*iter_ != &*i.iter_;
+		return !operator ==(i);
 	}
 	Iter hint(const Rule* r) const {
 		if (!valid_) {
@@ -80,7 +93,7 @@ struct Index::Iter {
 		}
 	}
 	Iter prev() const {
-		return Iter(nullptr, iter_->second.parent, ConstIterator(), ConstIterator(), false);
+		return Iter(nullptr, iter_->second.parent, ConstIterator());
 	}
 	Iter reset() const {
 		return Iter(map_, beg_, beg_, end_, valid_);
@@ -133,13 +146,26 @@ struct Index::Iter {
 	RuleVar ruleVar() const {
 		return iter_->first;
 	}
+	const Node& node() const {
+		return iter_->second;
+	}
 	string show(bool full = false) const {
 		ostringstream oss;
 			if (full) {
-			oss << "iter: " << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "\n";
-			oss << "inds: ";
-			for (uint i : iter_->second.inds) {
-				oss << to_string(i) << " ";
+			oss << "iter: " << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << " =(" << (void*)&*iter_ << ") " << "\n";
+			if (iter_->second.ends.size()) {
+				oss << "ends: ";
+				for (auto i : iter_->second.ends) {
+					oss << (void*)&*i << " ";
+				}
+				oss << "\n";
+			}
+			if (iter_->second.inds.size()) {
+				oss << "inds: ";
+				for (uint i : iter_->second.inds) {
+					oss << to_string(i) << " ";
+				}
+				oss << "\n";
 			}
 			oss << "\n";
 		} else {
@@ -154,7 +180,7 @@ struct Index::Iter {
 		}
 		return oss.str();
 	}
-	string showBranch() const {
+	string showBranch(bool full = false) const {
 		vector<Iter> branch;
 		Iter i = *this;
 		while (i.isValid()) {
@@ -164,7 +190,7 @@ struct Index::Iter {
 		std::reverse(branch.begin(), branch.end());
 		string ret;
 		for (auto it : branch) {
-			ret += it.show();
+			ret += it.show(full);
 		}
 		return ret;
 	}

@@ -6,14 +6,14 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-static Subst make_free_vars_fresh(const Assertion* a, map<uint, uint>& vars, set<uint>& assertion_vars, const Subst& s) {
+static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
 	Subst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
 		if (!ret.maps(v)) {
 			if (!s.maps(v)) {
-				uint i = vars.count(v.lit) ? vars[v.lit] + 1 : LightSymbol::INTERNAL_MIN_INDEX;
-				vars[v.lit] = i;
+				uint i = space->hasVar(v.lit) ? space->getVar(v.lit) + 1 : LightSymbol::INTERNAL_MIN_INDEX;
+				space->setVar(v.lit, i);
 				ret.compose(v.lit, Term(LightSymbol(w, ReplMode::KEEP_REPL, i)));
 			}
 		}
@@ -50,9 +50,9 @@ void Prop::buildUp() {
 }
 
 void Hyp::buildUp() {
-	for (auto& m : unify_general(space->assertions_, expr)) {
+	for (auto& m : unify_general(space->assertions(), expr)) {
 		set<uint> assertion_vars;
-		Subst fresher = make_free_vars_fresh(m.data.ass, space->vars, assertion_vars, m.sub);
+		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
 			if (m.sub.maps(p.first)) {
 				fresher.erase(p.first);
@@ -74,7 +74,7 @@ void Hyp::buildUp() {
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
-	for (const auto& m : unify_general(space->hyps_, expr)) {
+	for (const auto& m : unify_general(space->hyps(), expr)) {
 		if (hint) {
 			if (m.data.get() == hint) {
 				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));

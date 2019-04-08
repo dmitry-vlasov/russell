@@ -6,12 +6,13 @@ Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Oracle* oracle = new prover::Oracle(p);
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
-	space->max_proofs = max_proofs;
+	space->setMaxProofs(max_proofs);
 	try {
 		Return ret = space->prove();
 		if (!ret.success()) {
 			cout << "oracle status:" << endl;
 			cout << oracle->show() << endl;
+			exit(-1);
 		}
 		return ret;
 	} catch (Error& err) {

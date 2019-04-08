@@ -355,11 +355,11 @@ map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
 template<class D>
 vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const Term& t) {
 	vector<typename IndexMap<D>::Unified> ret;
-	if (!m.index().size) {
+	if (!m.index().size()) {
 		return ret;
 	}
 	vector<MultyIter> iters;
-	iters.emplace_back(Index::Iter(m.index().root));
+	iters.emplace_back(Index::Iter(m.index().root()));
 	iters.emplace_back(Term::Iter(t));
 	try {
 		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);

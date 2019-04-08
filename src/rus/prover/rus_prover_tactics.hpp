@@ -79,7 +79,7 @@ struct ProxyTactic : public Tactic {
 		Prop* p = tactic->next();
 		del(p);
 		if (p) {
-			cout << p->space->root->show() << endl;
+			cout << p->space->root()->show() << endl;
 		}
 		return p;
 	}

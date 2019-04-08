@@ -24,33 +24,12 @@ struct Space {
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
-	~Space() {
-		delete root;
-		delete tactic_;
-	}
-
-	const uint        ind = 0;
-	Proof*            proof = nullptr; // for Oracle tactic
-	Hyp*              root;
-	PropRef           prop;
-	map<uint, uint>   vars;
-
-	IndexMap<HypRef>  hyps_;
-	IndexMap<PropRef> assertions_;
 
 	Return init();
 	Return info(uint index, string what);
 	Return expand(uint index);
 	Return erase(uint index);
 	Return prove();
-
-	Tactic* getTactic() {
-		return tactic_;
-	}
-	void setTactic(Tactic* t) {
-		if (tactic_) delete tactic_;
-		tactic_ = t;
-	}
 
 	void registerNode(Node* n) {
 		n->ind = nodes_.size();
@@ -68,12 +47,31 @@ struct Space {
 	uint count() const { return nodes_.size(); }
 	Node* getNode(uint i) { return nodes_[i]; }
 
-	map<uint, Node*> nodes_;
-	Tactic*          tactic_;
-	set<uint>        shown;
-	uint             max_proofs = -1;
 	Proved proved();
 	Return check_proved();
+
+	const IndexMap<HypRef>& hyps() const { return hyps_; }
+	const IndexMap<PropRef>& assertions() const { return assertions_; }
+	const PropRef& prop() const { return prop_; }
+	uint getVar(uint v) const { return vars.at(v); }
+	void setVar(uint v, uint i) { vars[v] = i; }
+	bool hasVar(uint v) const { return vars.find(v) != vars.end(); }
+	const Hyp* root() const { return root_.get(); }
+	uint maxProofs() const { return max_proofs; }
+	void setMaxProofs(uint mp) { max_proofs = mp; }
+
+private:
+	Proof*            proof = nullptr; // for Oracle tactic
+	map<uint, Node*>  nodes_;
+	unique_ptr<Hyp>   root_;
+	PropRef           prop_;
+	map<uint, uint>   vars;
+
+	IndexMap<HypRef>   hyps_;
+	IndexMap<PropRef>  assertions_;
+	unique_ptr<Tactic> tactic_;
+	set<uint>          shown;
+	uint               max_proofs = -1;
 };
 
 Return test_with_oracle(string theorem, uint max_proofs);
