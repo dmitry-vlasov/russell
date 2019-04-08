@@ -6,7 +6,7 @@ Oracle::Oracle(const rus::Proof* p) :
 	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
 }
 
-bool debug_oracle = true;
+bool debug_oracle = false;
 
 void Oracle::add(Prop* p) {
 	//p->autoGoDown = false;

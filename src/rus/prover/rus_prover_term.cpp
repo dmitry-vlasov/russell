@@ -117,7 +117,7 @@ string Term::show(bool simple) const {
 string Term::show_pointers() const {
 	ostringstream oss;
 	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
-		oss << i->ruleVar.show() << "=(" << (void*)&*i << " ";
+		oss << i->ruleVar.show() << "=(" << (void*)&*i << ", end: " << (void*)&*i->end << ") ";
 	}
 	oss << endl;
 	return oss.str();

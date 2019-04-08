@@ -50,10 +50,6 @@ void Prop::buildUp() {
 }
 
 void Hyp::buildUp() {
-
-	cout << "space->assertions(): " << space->assertions().show() << endl;
-	cout << "expr: " << expr.show() << endl;
-
 	for (auto& m : unify_general(space->assertions(), expr)) {
 		set<uint> assertion_vars;
 		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
@@ -73,8 +69,6 @@ void Hyp::buildUp() {
 			}
 		}
 		variants.emplace_back(make_unique<Prop>(m.data, sub, outer, fresher, this));
-
-		cout << "variants.back()->show(): " << variants.back()->show() << endl;
 	}
 }
 

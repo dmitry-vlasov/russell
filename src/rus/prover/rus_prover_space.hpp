@@ -50,8 +50,8 @@ struct Space {
 	Proved proved();
 	Return check_proved();
 
-	const IndexMap<HypRef> hyps() const { return hyps_; }
-	const IndexMap<PropRef> assertions() const { return assertions_; }
+	const IndexMap<HypRef>& hyps() const { return hyps_; }
+	const IndexMap<PropRef>& assertions() const { return assertions_; }
 	const PropRef& prop() const { return prop_; }
 	uint getVar(uint v) const { return vars.at(v); }
 	void setVar(uint v, uint i) { vars[v] = i; }

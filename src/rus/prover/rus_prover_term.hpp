@@ -242,6 +242,9 @@ struct Term::Iter {
 	RuleVar ruleVar() const {
 		return iter_->ruleVar;
 	}
+	const Node& node() const {
+		return *iter_;
+	}
 	bool isNextEnd() const { return iter_ == end_; }
 	bool isPrevEnd() const { return iter_ == beg_; }
 	bool isSideEnd() const { return true; }

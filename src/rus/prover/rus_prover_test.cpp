@@ -12,6 +12,7 @@ Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 		if (!ret.success()) {
 			cout << "oracle status:" << endl;
 			cout << oracle->show() << endl;
+			exit(-1);
 		}
 		return ret;
 	} catch (Error& err) {
