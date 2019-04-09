@@ -161,6 +161,7 @@ Return Space::expand(uint index) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
 						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
 							h->unifyWithGoalHyps(hint);
+							h->hint = true;
 							h->buildDown(downs);
 						}
 					} else {

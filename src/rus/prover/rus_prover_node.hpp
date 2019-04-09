@@ -56,6 +56,7 @@ struct Node {
 
 	Space* space;
 	uint   ind;
+	bool   hint = false;
 };
 
 struct Prop : public Node {
@@ -106,6 +107,7 @@ struct ProofNode {
 	Subst sub;
 	bool  new_;
 	uint  ind;
+	bool  hint = false;
 };
 
 struct ProofHyp : public ProofNode {

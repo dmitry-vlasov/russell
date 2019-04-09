@@ -240,16 +240,4 @@ private:
 	vector<Data> data_;
 };
 
-/*template<class D>
-inline vector<typename IndexMap<D>::Unified> unify(const IndexMap<D>& m, const Term& t) {
-	vector<typename IndexMap<D>::Unified> ret;
-	Index::Unified unif = m.index().unify(t);
-	for (auto& p : unif) {
-		if (p.second.ok()) {
-			ret.emplace_back(m.data().at(p.first), p.second);
-		}
-	}
-	return ret;
-}*/
-
 }}}}

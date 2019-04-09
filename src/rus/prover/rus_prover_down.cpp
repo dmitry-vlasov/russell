@@ -1,21 +1,37 @@
+#include <cmath>
 #include "index/rus_prover_index_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
 #include "rus_prover_multy_subst.hpp"
+#include "rus_prover_limit.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
 bool debug_unify_subs = false;
 vector<uint> error_inds;
 
-void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret) {
-	CartesianIter ind;
+void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
+	CartesianProd<uint> ind;
 	const ProofHyp* h = hi.proof;
-	for (auto& x : pr->premises) {
-		if (x.get() != hy) {
-			ind.addDim(x->proofs.size());
-		} else {
-			ind.addFixed(x->proofs.size(), hi.ind);
+	if (limit) {
+		for (uint i = 0; i < pr->premises.size(); ++ i) {
+			auto& x = pr->premises[i];
+			if (x.get() != hy) {
+				ind.addDim(limit->descrVect[i].chosen);
+			} else {
+				ind.addFixed(limit->descrVect[i].chosen, hi.ind);
+			}
+		}
+	} else {
+		for (auto& x : pr->premises) {
+			uint i = 0;
+			vector<uint> inds(x->proofs.size(), 0);
+			std::generate_n(inds.begin(), x->proofs.size(), [&i]() { return i++; });
+			if (x.get() != hy) {
+				ind.addDim(inds);
+			} else {
+				ind.addFixed(inds, hi.ind);
+			}
 		}
 	}
 	if (ind.card() == 0) {
@@ -23,14 +39,15 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	}
 	while (true) {
 		vector<const Subst*> subs;
-		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.inds());
+		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.data());
 		if (show_debug) {
-			cout << "CURRENT: " << ind.current() << endl;
+			cout << "CURRENT: " << ind.iter().current() << endl;
 			cout << "UNIFYING: \n--------------" << endl;
 			cout << "PROP: " << pr->ind << endl;
 		}
-		for (uint i = 0; i < ind.size(); ++ i) {
-			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
+		vector<uint> inds = ind.data();
+		for (uint i = 0; i < inds.size(); ++ i) {
+			ProofHyp* ph = pr->premises[i].get()->proofs[inds[i]].get();
 			if (show_debug) {
 				cout << ph->ind << ": " << ph->expr.show() << endl;
 				cout << "sub:" << endl;
@@ -59,7 +76,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			if (debug_unify_subs) {
 				cout << "SUB: " << delta.show() << endl;
 			}
-			ret[ind.inds()] = delta;
+			ret[inds] = delta;
 		}
 		if (!ind.hasNext()) {
 			break;
@@ -98,10 +115,16 @@ string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofHypIndexe
 	return ret;
 }
 
-MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
 	MultyUnifiedSubs ret;
-	for (auto h : hs) {
-		unify_subs_sequent(pr, hy, h, ret);
+	if (limit) {
+		for (auto i : limit->descrVect[limit->hypInd()].chosen) {
+			unify_subs_sequent(pr, hy, hs[i], ret, limit);
+		}
+	} else {
+		for (auto h : hs) {
+			unify_subs_sequent(pr, hy, h, ret, limit);
+		}
 	}
 	return ret;
 }
@@ -128,7 +151,9 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	Subst s1_terms;
 	for (const auto& p : s1) {
 		if (p.second.kind() == Term::VAR && !s2.maps(p.first)) {
-			//s1_vars_inv.compose(p.second.var().lit, FlatTerm(p.first));
+			//LightSymbol(uint l, const Type* t, ReplMode mode, uint i) :
+			LightSymbol w(p.first, nullptr, ReplMode::KEEP_REPL, 0);
+			s1_vars_inv.compose(p.second.var().lit, Term(w));
 		} else {
 			s1_terms.compose(p.first, p.second);
 		}
@@ -209,21 +234,23 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-//#define CHECK_MATRIX_UNIFICATION
-//#define SHOW_MATRIXES
+#define CHECK_MATRIX_UNIFICATION
+#define SHOW_MATRIXES
 
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
+	ProofsSizeLimit limit(pr, hy, hs, pr->space->maxProofs());
 	static int c = 0;
 	c++;
 #ifdef SHOW_MATRIXES
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
+	cout << "Limit: " << limit.show() << endl;
 #endif
 
 	Timer timer; timer.start();
 #ifdef CHECK_MATRIX_UNIFICATION
-	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs);
+	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
 	timer.stop();
 #ifdef SHOW_MATRIXES
 	cout << "sequntial unification: " << timer << endl;
@@ -232,7 +259,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #endif
 	timer.clear();
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs);
+	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
 	timer.stop();
 #ifdef SHOW_MATRIXES
 	if (unified_subs_2.size() > 1) {
@@ -246,7 +273,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_1, unified_subs_2, true);
-		cout << index::Matrix(pr, hy, hs).show() << endl;
+		cout << index::Matrix(pr, hy, hs, nullptr).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif
@@ -254,12 +281,19 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
 		vector<ProofHyp*> ch;
+		bool all_are_hint = true;
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
+			if (!ph->hint) {
+				all_are_hint = false;
+			}
 			ch.push_back(ph);
 		}
 		try {
 			ProofProp* pp = new ProofProp(*pr, ch, p.second);
+			if (all_are_hint) {
+				pp->hint = true;
+			}
 			if (pr->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : pr->proofs) {

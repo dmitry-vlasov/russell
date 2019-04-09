@@ -46,6 +46,7 @@ void Oracle::add(Prop* p) {
 						if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
 							leafs.push_back(p);
 							p->autoGoDown = true;
+							p->hint = true;
 							if (debug_oracle) {
 								cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
 								cout << "this: " << (void*)p << ", parent: " << (void*)grand << endl << endl;

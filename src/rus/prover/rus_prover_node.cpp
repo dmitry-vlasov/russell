@@ -40,12 +40,18 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp
 	space->registerNode(this);
 	if (isLeaf()) {
 		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub));
+		if (hint) {
+			proofs.back()->hint = true;
+		}
 	}
 }
 
 void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
 		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
+		if (hint) {
+			premises.back()->hint = true;
+		}
 	}
 }
 
@@ -78,6 +84,7 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 		if (hint) {
 			if (m.data.get() == hint) {
 				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));
+				proofs.back()->hint = true;
 				ret = true;
 			}
 		} else {
@@ -105,6 +112,9 @@ bool Prop::buildDown(set<Node*>& downs) {
 				}
 			}
 			parent->proofs.emplace_back(hp);
+			if (p->hint) {
+				parent->proofs.back()->hint = true;
+			}
 			new_proofs = true;
 		}
 	}

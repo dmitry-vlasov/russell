@@ -1,4 +1,5 @@
 #include "../rus_prover_cartesian.hpp"
+#include "../rus_prover_limit.hpp"
 #include "rus_prover_index_matrix.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
@@ -16,8 +17,8 @@ void unify_subs(Matrix& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	}
 }
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
-	Matrix mi(pr, hy, hs);
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
+	Matrix mi(pr, hy, hs, limit);
 	if (mi.empty()) {
 		return MultyUnifiedSubs();
 	}

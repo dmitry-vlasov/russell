@@ -330,35 +330,62 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	return s;
 }
 
-static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i) {
+static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
 	proofInds_[i] = vector<uint>(proofs.size());
-	for (uint j = 0; j < proofs.size(); ++j) {
-		auto p = proofs[j].get();
-		for (const auto& x : p->sub) {
-			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, new Vector(dim_hyp_));
+
+	if (limit) {
+		for (uint j : limit->descrVect[i].chosen) {
+			auto p = proofs[j].get();
+			for (const auto& x : p->sub) {
+				if (!mindex_.count(x.first)) {
+					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				}
+				mindex_.at(x.first)->vect[i]->add(x.second, j);
 			}
-			mindex_.at(x.first)->vect[i]->add(x.second, j);
+			proofInds_[i][j] = j;
 		}
-		proofInds_[i][j] = j;
+	} else {
+		for (uint j = 0; j < proofs.size(); ++j) {
+			auto p = proofs[j].get();
+			for (const auto& x : p->sub) {
+				if (!mindex_.count(x.first)) {
+					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				}
+				mindex_.at(x.first)->vect[i]->add(x.second, j);
+			}
+			proofInds_[i][j] = j;
+		}
 	}
 }
 
-static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i) {
+static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
 	proofInds_[i] = vector<uint>(hs.size());
-	for (uint j = 0; j < hs.size(); ++j) {
-		ProofHypIndexed hi = hs[j];
-		for (const auto& x : hi.proof->sub) {
-			if (!mindex_.count(x.first)) {
-				mindex_.emplace(x.first, new Vector(dim_hyp_));
+	if (limit) {
+		for (uint j : limit->descrVect[i].chosen) {
+			ProofHypIndexed hi = hs[j];
+			for (const auto& x : hi.proof->sub) {
+				if (!mindex_.count(x.first)) {
+					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				}
+				mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
 			}
-			mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
+			proofInds_[i][j] = hi.ind;
 		}
-		proofInds_[i][j] = hi.ind;
+	} else {
+		for (uint j = 0; j < hs.size(); ++j) {
+			ProofHypIndexed hi = hs[j];
+			for (const auto& x : hi.proof->sub) {
+				if (!mindex_.count(x.first)) {
+					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				}
+				mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
+			}
+			proofInds_[i][j] = hi.ind;
+		}
 	}
 }
 
-Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
+Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) :
 	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
 	for (uint i = 0; i < dim_hyp_; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;
@@ -367,9 +394,9 @@ Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) :
 			break;
 		}
 		if (pr->premises[i].get() != hy) {
-			addProofs(mindex_, proofInds_, dim_hyp_, proofs, i);
+			addProofs(mindex_, proofInds_, dim_hyp_, proofs, i, limit);
 		} else {
-			addProofs(mindex_, proofInds_, dim_hyp_, hs, i);
+			addProofs(mindex_, proofInds_, dim_hyp_, hs, i, limit);
 		}
 	}
 	for (auto& p : mindex_) {
