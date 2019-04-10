@@ -334,7 +334,7 @@ static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint
 	proofInds_[i] = vector<uint>(proofs.size());
 
 	if (limit) {
-		for (uint j : limit->descrVect[i].chosen) {
+		for (uint j : limit->descrVect()[i].chosen) {
 			auto p = proofs[j].get();
 			for (const auto& x : p->sub) {
 				if (!mindex_.count(x.first)) {
@@ -361,7 +361,7 @@ static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint
 static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
 	proofInds_[i] = vector<uint>(hs.size());
 	if (limit) {
-		for (uint j : limit->descrVect[i].chosen) {
+		for (uint j : limit->descrVect()[i].chosen) {
 			ProofHypIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
 				if (!mindex_.count(x.first)) {

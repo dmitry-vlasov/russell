@@ -295,7 +295,7 @@ static Descr description(string name) {
 			"test prover",
 			Descr::Arg("mode", "oracle", true, "oracle"),
 			Descr::Arg("theorem", "theorem to prove", true, ""),
-			Descr::Arg("max_proofs", "max size of proofs", true, "100")
+			Descr::Arg("max_proofs", "max size of proofs", true, "-1")
 		)},
 		{"min_imports", Descr("minimize imports",  Descr::Arg("in", "file", true, ""))},
 	};

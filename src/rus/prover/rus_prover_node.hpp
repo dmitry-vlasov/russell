@@ -59,6 +59,10 @@ struct Node {
 	bool   hint = false;
 };
 
+inline std::ostream& operator << (std::ostream& os, const Node& n){
+	os << n.show(); return os;
+}
+
 struct Prop : public Node {
 	typedef vector<unique_ptr<Hyp>> Premises;
 	typedef vector<unique_ptr<ProofProp>> Proofs;

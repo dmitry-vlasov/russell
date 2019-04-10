@@ -10,8 +10,9 @@ Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 	try {
 		Return ret = space->prove();
 		if (!ret.success()) {
-			cout << "oracle status:" << endl;
-			cout << oracle->show() << endl;
+			cout << "oracle test failed" << endl;
+			//cout << "oracle status:" << endl;
+			//cout << oracle->show() << endl;
 			exit(-1);
 		}
 		return ret;

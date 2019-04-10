@@ -58,6 +58,9 @@ string Hyp::show(bool with_proofs) const {
 	string ret;
 	ret += string("<") + (parent ? "hyp" : "root") + " ";
 	ret += string("index=\"") + to_string(ind) + "\" ";
+	if (hint) {
+		ret += string("hint=\"1\" ");
+	}
 	if (parent) {
 		ret += string("parent=\"") + to_string(parent->ind) + "\" ";
 	}
@@ -78,7 +81,11 @@ string Hyp::show(bool with_proofs) const {
 string ProofTop::show() const {
 	ostringstream oss;
 	oss << "<proof expr=\"" << apply(sub, node.expr).show() << "\" ";
-	oss << "index=\"" << ind << "\">\n";
+	oss << "index=\"" << ind << "\" ";
+	if (hint) {
+		oss << "hint=\"1\" ";
+	}
+	oss << ">\n";
 	oss << "\t<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
 	oss << "]]>\n";
@@ -95,7 +102,11 @@ string ProofExp::show() const {
 	ostringstream oss;
 	rus::Step* st = child ? child->step() : nullptr;
 	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
-	oss << "index=\"" << ind << "\">\n";
+	oss << "index=\"" << ind << "\" ";
+	if (hint) {
+		oss << "hint=\"1\" ";
+	}
+	oss << ">\n";
 	oss << "\t<![CDATA[\n";
 	try {
 		if (rus::Proof* pr = proof()) {
@@ -119,7 +130,11 @@ string ProofProp::show() const {
 	ostringstream oss;
 	if (rus::Step* st = step()) {
 		oss << "<proof expr=\"" << st->expr << "\" ";
-		oss << "index=\"" << ind << "\">\n";
+		oss << "index=\"" << ind << "\" ";
+		if (hint) {
+			oss << "hint=\"1\" ";
+		}
+		oss << ">\n";
 		oss << "\t<![CDATA[\n";
 		try {
 			if (rus::Proof* pr = proof()) {

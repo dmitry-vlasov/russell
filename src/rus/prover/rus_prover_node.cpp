@@ -40,9 +40,7 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp
 	space->registerNode(this);
 	if (isLeaf()) {
 		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub));
-		if (hint) {
-			proofs.back()->hint = true;
-		}
+		proofs.back()->hint = hint;
 	}
 }
 
@@ -112,9 +110,7 @@ bool Prop::buildDown(set<Node*>& downs) {
 				}
 			}
 			parent->proofs.emplace_back(hp);
-			if (p->hint) {
-				parent->proofs.back()->hint = true;
-			}
+			parent->proofs.back()->hint = p->hint;
 			new_proofs = true;
 		}
 	}

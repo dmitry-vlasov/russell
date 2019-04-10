@@ -17,9 +17,9 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		for (uint i = 0; i < pr->premises.size(); ++ i) {
 			auto& x = pr->premises[i];
 			if (x.get() != hy) {
-				ind.addDim(limit->descrVect[i].chosen);
+				ind.addDim(limit->descrVect()[i].chosen);
 			} else {
-				ind.addFixed(limit->descrVect[i].chosen, hi.ind);
+				ind.addFixed(limit->descrVect()[i].chosen, hi.ind);
 			}
 		}
 	} else {
@@ -37,6 +37,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	if (ind.card() == 0) {
 		return;
 	}
+	cout << "1) IND: " << ind.show() << endl;
 	while (true) {
 		vector<const Subst*> subs;
 		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.data());
@@ -46,6 +47,9 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			cout << "PROP: " << pr->ind << endl;
 		}
 		vector<uint> inds = ind.data();
+
+		cout << "2) INDS: " << show(inds) << endl;
+
 		for (uint i = 0; i < inds.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[inds[i]].get();
 			if (show_debug) {
@@ -118,7 +122,10 @@ string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofHypIndexe
 MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
 	MultyUnifiedSubs ret;
 	if (limit) {
-		for (auto i : limit->descrVect[limit->hypInd()].chosen) {
+		for (auto i : limit->descrVect()[limit->hypInd()].chosen) {
+			if (i >= hs.size()) {
+				throw Error("array index overflow: " + to_string(i) + " >= " + to_string(hs.size()));
+			}
 			unify_subs_sequent(pr, hy, hs[i], ret, limit);
 		}
 	} else {
@@ -241,6 +248,11 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	ProofsSizeLimit limit(pr, hy, hs, pr->space->maxProofs());
+
+	if (limit.empty()) {
+		return false;
+	}
+
 	static int c = 0;
 	c++;
 #ifdef SHOW_MATRIXES
@@ -281,19 +293,17 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
 		vector<ProofHyp*> ch;
-		bool all_are_hint = true;
+		bool hint = true;
 		for (uint i = 0; i < ind.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
 			if (!ph->hint) {
-				all_are_hint = false;
+				hint = false;
 			}
 			ch.push_back(ph);
 		}
 		try {
 			ProofProp* pp = new ProofProp(*pr, ch, p.second);
-			if (all_are_hint) {
-				pp->hint = true;
-			}
+			pp->hint = hint;
 			if (pr->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : pr->proofs) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <algorithm>
 #include "rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -14,7 +15,11 @@ struct ProofsSizeLimit {
 			oss << "size: " << size << ", ";
 			oss << "hint: " << (hint == -1 ? "-" : to_string(hint))<< ", ";
 			oss << "fixed: " << (fixed ? "Y" : "N") << ", ";
-			oss << "chosen size: " << chosen.size();
+			oss << "chosen size: " << chosen.size() << " {";
+			for (uint i = 0; i < std::min(chosen.size(), static_cast<size_t>(30)); ++i) {
+				oss << chosen[i] << ", ";
+			}
+			oss << "}";
 			return oss.str();
 		}
 		uint ind;
@@ -26,6 +31,9 @@ struct ProofsSizeLimit {
 	ProofsSizeLimit(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, uint limit) : cardLimit_(limit) {
 		for (uint i = 0; i < pr->premises.size(); ++ i) {
 			auto& x = pr->premises[i];
+			if (!x->proofs.size()) {
+				return;
+			}
 			if (x.get() != hy) {
 				uint hint = -1;
 				for (uint i = 0; i < x->proofs.size(); ++i) {
@@ -33,7 +41,16 @@ struct ProofsSizeLimit {
 						hint = i;
 					}
 				}
-				descrVect.emplace_back(i, x->proofs.size(), hint, false);
+				/*if (hint == -1) {
+					cout << endl;
+					cout << pr->show(true) << endl;
+					cout << hy->show(true) << endl;
+					for (auto pi : hs) {
+						cout << pi.show() << endl;
+					}
+					throw Error("no hint in proofs");
+				}*/
+				descrVect_.emplace_back(i, x->proofs.size(), hint, false);
 			} else {
 				uint hint = -1;
 				for (uint i = 0; i < hs.size(); ++i) {
@@ -41,22 +58,32 @@ struct ProofsSizeLimit {
 						hint = i;
 					}
 				}
+				/*if (hint == -1) {
+					cout << endl;
+					cout << pr->show(true) << endl;
+					cout << hy->show(true) << endl;
+					for (auto pi : hs) {
+						cout << pi.show() << endl;
+					}
+					throw Error("no hint in proofs");
+				}*/
 				hypInd_ = i;
-				descrVect.emplace_back(i, hs.size(), hint, true);
+				descrVect_.emplace_back(i, hs.size(), hint, true);
 			}
 		}
+		empty_ = false;
 		chooseUniform();
 	}
 	uint cardTotal() const {
 		uint c = 1;
-		for (auto& d : descrVect) {
+		for (auto& d : descrVect_) {
 			c *= d.size;
 		}
 		return c;
 	}
 	uint cardChosen() const {
 		uint c = 1;
-		for (auto& d : descrVect) {
+		for (auto& d : descrVect_) {
 			c *= d.chosen.size();
 		}
 		return c;
@@ -67,16 +94,18 @@ struct ProofsSizeLimit {
 	string show() const {
 		ostringstream oss;
 		oss << "Proof size limits:" << endl;
-		for (const auto& d : descrVect) {
+		for (const auto& d : descrVect_) {
 			oss << "\t" << d.show() << endl;
 		}
 		oss << "card total: " << cardTotal() << endl;
 		oss << "card chosen: " << cardChosen() << endl;
 		oss << "card limit: " << cardLimit() << endl;
+		oss << "factor: " << factor_ << endl;
 		return oss.str();
 	}
 
-	vector<PremiseDescr> descrVect;
+	const vector<PremiseDescr>& descrVect() const { return descrVect_; }
+	bool empty() const { return empty_; }
 
 private:
 	void chooseUniform() {
@@ -95,18 +124,27 @@ private:
 		uint total_card = cardTotal();
 		if (total_card > 0) {
 			if (total_card <= cardLimit_) {
-				for (auto& d : descrVect) {
+				for (auto& d : descrVect_) {
 					uint i = 0;
 					d.chosen.resize(d.size);
 					std::generate_n(d.chosen.begin(), d.size, [&i]() { return i++; });
 				}
 			} else {
-				double factor = exp(log(cardLimit_ / total_card) / descrVect.size());
-				for (auto& d : descrVect) {
-					d.chosen.push_back(d.hint);
-					uint chosen_card = d.size * factor;
-					for (uint i = 0; i < chosen_card - 1; ++ i) {
-						d.chosen.push_back(chooser(i, chosen_card, d.size));
+				factor_ = exp(log(static_cast<double>(cardLimit_) / total_card) / descrVect_.size());
+				for (auto& d : descrVect_) {
+					if (d.hint != -1) {
+						d.chosen.push_back(d.hint);
+					}
+					uint chosen_card = static_cast<double>(d.size) * factor_;
+					if (chosen_card == 0) {
+						chosen_card = 1;
+					}
+					for (uint i = 0; i < ((d.hint != -1) ? chosen_card - 1 : chosen_card); ++ i) {
+						uint ind = chooser(i, chosen_card, d.size);
+						if (ind >= d.size) {
+							throw Error("index overflow: " + to_string(ind) + " >= " + to_string(d.size));
+						}
+						d.chosen.push_back(ind);
 					}
 				}
 			}
@@ -114,6 +152,9 @@ private:
 	}
 	uint cardLimit_;
 	uint hypInd_ = -1;
+	bool empty_ = true;
+	double factor_ = 1;
+	vector<PremiseDescr> descrVect_;
 };
 
 }}}
