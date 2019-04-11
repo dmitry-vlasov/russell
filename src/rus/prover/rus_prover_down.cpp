@@ -19,7 +19,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			if (x.get() != hy) {
 				ind.addDim(limit->descrVect()[i].chosen);
 			} else {
-				ind.addFixed(limit->descrVect()[i].chosen, hi.ind);
+				ind.addFixedData(limit->descrVect()[i].chosen, hi.ind);
 			}
 		}
 	} else {
@@ -30,14 +30,21 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			if (x.get() != hy) {
 				ind.addDim(inds);
 			} else {
-				ind.addFixed(inds, hi.ind);
+				ind.addFixedData(inds, hi.ind);
 			}
 		}
 	}
 	if (ind.card() == 0) {
 		return;
 	}
-	cout << "1) IND: " << ind.show() << endl;
+
+	/*static int c = 0;
+	c++;
+	cout << "c = " << c << endl;
+	if (c == 3) {
+		cout << "vot ono, nachalos" << endl;
+	}
+	cout << "1) IND: " << ind.show() << endl;*/
 	while (true) {
 		vector<const Subst*> subs;
 		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.data());
@@ -48,7 +55,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		}
 		vector<uint> inds = ind.data();
 
-		cout << "2) INDS: " << show(inds) << endl;
+		//cout << "2) INDS: " << show(inds) << endl;
 
 		for (uint i = 0; i < inds.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[inds[i]].get();
@@ -274,10 +281,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
 	timer.stop();
 #ifdef SHOW_MATRIXES
-	if (unified_subs_2.size() > 1) {
+	//if (unified_subs_2.size() > 1) {
 		cout << "matrix unification: " << timer << endl;
 		cout << "results with " << unified_subs_2.size() << " variants " << endl;
-	}
+	//}
 #endif
 
 #ifdef CHECK_MATRIX_UNIFICATION

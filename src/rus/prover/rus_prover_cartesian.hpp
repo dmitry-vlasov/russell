@@ -106,7 +106,23 @@ struct CartesianProd {
 		iter_.addDim(v.size());
 	}
 
-	void addFixed(const vector<Data>& v, uint i) {
+	void addFixedData(const vector<Data>& v, Data d) {
+		data_.push_back(vector<Data>());
+		uint i = -1;
+		for (uint j = 0; j < v.size(); ++ j) {
+			Data b = v[j];
+			if (b == d) {
+				i = j;
+			}
+			data_[data_.size() - 1].push_back(d);
+		}
+		if (i == -1) {
+			throw Error("fixed index is not found");
+		}
+		iter_.addFixed(v.size(), i);
+	}
+
+	void addFixedIndex(const vector<Data>& v, uint i) {
 		data_.push_back(vector<Data>());
 		for (auto d : v) {
 			data_[data_.size() - 1].push_back(d);
