@@ -83,16 +83,20 @@ struct ProofsSizeLimit {
 	uint cardLimit() const { return cardLimit_; }
 	uint hypInd() const { return hypInd_; }
 
-	string show() const {
+	string show(bool brief = true) const {
 		ostringstream oss;
-		oss << "Proof size limits:" << endl;
-		for (const auto& d : descrVect_) {
-			oss << "\t" << d.show() << endl;
+		if (brief) {
+			oss << "Cards: total=" << cardTotal() << ", chose=" << cardChosen() << ", limit=" << cardLimit_;
+		} else {
+			oss << "Proof size limits:" << endl;
+			for (const auto& d : descrVect_) {
+				oss << "\t" << d.show() << endl;
+			}
+			oss << "card total: " << cardTotal() << endl;
+			oss << "card chosen: " << cardChosen() << endl;
+			oss << "card limit: " << cardLimit() << endl;
+			oss << "factor: " << factor_ << endl;
 		}
-		oss << "card total: " << cardTotal() << endl;
-		oss << "card chosen: " << cardChosen() << endl;
-		oss << "card limit: " << cardLimit() << endl;
-		oss << "factor: " << factor_ << endl;
 		return oss.str();
 	}
 
@@ -122,21 +126,40 @@ private:
 					std::generate_n(d.chosen.begin(), d.size, [&i]() { return i++; });
 				}
 			} else {
-				factor_ = exp(log(static_cast<double>(cardLimit_) / total_card) / descrVect_.size());
+				double factor = exp(log(static_cast<double>(cardLimit_) / total_card) / descrVect_.size());
+				uint less_then_one_count = 0;
+				for (uint i = 0; i < descrVect_.size(); ++ i) {
+					PremiseDescr& d = descrVect_ [i];
+					int chosen_card = static_cast<double>(d.size) * factor;
+					if (d.hint != -1) {
+						--chosen_card;
+					}
+					if (chosen_card <= 0) {
+						less_then_one_count++;
+					}
+				}
+
+				factor_ = exp(log(static_cast<double>(cardLimit_) / total_card) / (descrVect_.size() - less_then_one_count));
 				for (auto& d : descrVect_) {
+					int chosen_card = static_cast<double>(d.size) * factor_;
+					set<uint> chosen_inds;
 					if (d.hint != -1) {
 						d.chosen.push_back(d.hint);
+						--chosen_card;
+						chosen_inds.insert(d.hint);
 					}
-					uint chosen_card = static_cast<double>(d.size) * factor_;
-					if (chosen_card == 0) {
+					if (chosen_card <= 0) {
 						chosen_card = 1;
 					}
-					for (uint i = 0; i < ((d.hint != -1) ? chosen_card - 1 : chosen_card); ++ i) {
+					for (uint i = 0; i < chosen_card; ++ i) {
 						uint ind = chooser(i, chosen_card, d.size);
 						if (ind >= d.size) {
 							throw Error("index overflow: " + to_string(ind) + " >= " + to_string(d.size));
 						}
-						d.chosen.push_back(ind);
+						if (chosen_inds.find(ind) == chosen_inds.end()) {
+							d.chosen.push_back(ind);
+							chosen_inds.insert(d.ind);
+						}
 					}
 				}
 			}

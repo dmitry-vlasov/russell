@@ -259,9 +259,10 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-#define CHECK_MATRIX_UNIFICATION
-#define SHOW_MATRIXES
+//#define CHECK_MATRIX_UNIFICATION
+//#define SHOW_MATRIXES
 
+vector<uint> sizes;
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
@@ -271,11 +272,14 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		return false;
 	}
 
+	if (limit.cardChosen() > limit.cardLimit()) {
+		cout << "Limit: " << limit.show(false) << endl << endl;
+	}
+
 	static int c = 0;
 	c++;
 #ifdef SHOW_MATRIXES
 	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
-	cout << "Limit: " << limit.show() << endl;
 #endif
 
 	Timer timer; timer.start();
@@ -283,8 +287,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
 	timer.stop();
 #ifdef SHOW_MATRIXES
-	cout << "sequntial unification: " << timer << endl;
-	cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+	if (unified_subs_1.size() > 1) {
+		cout << "sequntial unification: " << timer << endl;
+		cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+	}
 #endif
 #endif
 	timer.clear();
@@ -292,10 +298,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
 	timer.stop();
 #ifdef SHOW_MATRIXES
-	//if (unified_subs_2.size() > 1) {
+	if (unified_subs_2.size() > 1) {
 		cout << "matrix unification: " << timer << endl;
 		cout << "results with " << unified_subs_2.size() << " variants " << endl;
-	//}
+	}
 #endif
 
 #ifdef CHECK_MATRIX_UNIFICATION
