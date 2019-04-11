@@ -126,30 +126,26 @@ private:
 					std::generate_n(d.chosen.begin(), d.size, [&i]() { return i++; });
 				}
 			} else {
-				double factor = exp(log(static_cast<double>(cardLimit_) / total_card) / descrVect_.size());
+				double prelim_factor = exp(log(static_cast<double>(cardLimit_) / total_card) / descrVect_.size());
 				uint less_then_one_count = 0;
 				for (uint i = 0; i < descrVect_.size(); ++ i) {
 					PremiseDescr& d = descrVect_ [i];
-					int chosen_card = static_cast<double>(d.size) * factor;
-					if (d.hint != -1) {
-						--chosen_card;
-					}
+					int chosen_card = std::floor(static_cast<double>(d.size) * prelim_factor);
 					if (chosen_card <= 0) {
 						less_then_one_count++;
 					}
 				}
-
 				factor_ = exp(log(static_cast<double>(cardLimit_) / total_card) / (descrVect_.size() - less_then_one_count));
 				for (auto& d : descrVect_) {
-					int chosen_card = static_cast<double>(d.size) * factor_;
+					int chosen_card = std::floor(static_cast<double>(d.size) * factor_);
+					if (chosen_card == 0) {
+						chosen_card = 1;
+					}
 					set<uint> chosen_inds;
 					if (d.hint != -1) {
 						d.chosen.push_back(d.hint);
 						--chosen_card;
 						chosen_inds.insert(d.hint);
-					}
-					if (chosen_card <= 0) {
-						chosen_card = 1;
 					}
 					for (uint i = 0; i < chosen_card; ++ i) {
 						uint ind = chooser(i, chosen_card, d.size);
