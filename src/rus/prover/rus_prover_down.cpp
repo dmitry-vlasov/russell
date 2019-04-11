@@ -1,4 +1,5 @@
 #include <cmath>
+#include <numeric>
 #include "index/rus_prover_index_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
@@ -259,10 +260,8 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-//#define CHECK_MATRIX_UNIFICATION
+#define CHECK_MATRIX_UNIFICATION
 //#define SHOW_MATRIXES
-
-vector<uint> sizes;
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
@@ -278,14 +277,18 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	static int c = 0;
 	c++;
+
+	uint card = limit.cardChosen();
+
 #ifdef SHOW_MATRIXES
-	cout << "Matrix no. " << c << ", card: " << unification_space_card_str(pr, hy, hs) << endl;
+	cout << "Matrix no. " << c << ", card: " << card << endl;
 #endif
 
 	Timer timer; timer.start();
 #ifdef CHECK_MATRIX_UNIFICATION
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
 	timer.stop();
+	stats[card].sequential.push_back(timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_1.size() > 1) {
 		cout << "sequntial unification: " << timer << endl;
@@ -297,6 +300,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
 	timer.stop();
+	stats[card].matrix.push_back(timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_2.size() > 1) {
 		cout << "matrix unification: " << timer << endl;

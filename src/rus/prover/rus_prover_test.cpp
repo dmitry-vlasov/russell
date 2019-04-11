@@ -55,6 +55,7 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				}
 			}
 		}
+		print_down_unification_statistics();
 		return Return("Massive prover testing with oracle succeeded :)");
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));

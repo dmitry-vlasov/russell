@@ -44,6 +44,7 @@ else()
 		rus/prover/rus_prover_proof.cpp
 		rus/prover/rus_prover_show.cpp
 		rus/prover/rus_prover_space.cpp
+		rus/prover/rus_prover_stats.cpp
 		rus/prover/rus_prover_tactics.cpp
 		rus/prover/rus_prover_test.cpp	
 		rus/prover/rus_prover_term.cpp
