@@ -24,9 +24,6 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 
 Hyp::Hyp(const Term& e, Space* s) :
 	Node(s), parent(nullptr), expr(e) {
-	if (parent && parent->autoGoDown) {
-		unifyWithGoalHyps();
-	}
 	space->registerNode(this);
 }
 
@@ -79,10 +76,11 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
 	for (const auto& m : unify_general(space->hyps(), expr)) {
 		if (hint) {
-			if (m.data.get() == hint) {
+			/*if (m.data.get() == hint) {
 				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, true));
 				ret = true;
-			}
+			}*/
+			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
 		} else {
 			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, false));
 			ret = true;

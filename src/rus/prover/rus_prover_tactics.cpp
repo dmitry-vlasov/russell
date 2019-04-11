@@ -9,7 +9,6 @@ Oracle::Oracle(const rus::Proof* p) :
 bool debug_oracle = false;
 
 void Oracle::add(Prop* p) {
-	//p->autoGoDown = false;
 	const Assertion* ass = p->prop.ass;
 	if (debug_oracle) {
 		cout << endl;
@@ -18,7 +17,6 @@ void Oracle::add(Prop* p) {
 	if (props.empty()) {
 		if (ass == root->ass()) {
 			leafs.push_back(p);
-			p->autoGoDown = true;
 			props[p] = root;
 			observed.insert(root);
 			if (debug_oracle) {
@@ -45,7 +43,6 @@ void Oracle::add(Prop* p) {
 						const rus::Step* candidate = r.get()->step();
 						if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
 							leafs.push_back(p);
-							p->autoGoDown = true;
 							p->hint = true;
 							if (debug_oracle) {
 								cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
