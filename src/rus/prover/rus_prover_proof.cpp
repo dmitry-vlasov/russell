@@ -13,11 +13,11 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 
 static uint proof_node_index = 0;
 
-ProofNode::ProofNode(const Subst& s) :
-	sub(s), new_(true), ind(proof_node_index++) { }
+ProofNode::ProofNode(const Subst& s, bool h) :
+	sub(s), new_(true), ind(proof_node_index++), hint(h) { }
 
-ProofHyp::ProofHyp(Hyp& h, const Subst& s, const Term& e) :
-	ProofNode(s), node(h), expr(e) {
+ProofHyp::ProofHyp(Hyp& hy, const Subst& s, const Term& e, bool hi) :
+	ProofNode(s, hi), node(hy), expr(e) {
 }
 
 ProofHyp::~ProofHyp() {
@@ -29,8 +29,8 @@ ProofHyp::~ProofHyp() {
 	}*/
 }
 
-ProofTop::ProofTop(Hyp& n, const HypRef& h, const Subst& s) :
-	ProofHyp(n, s, apply(s, Tree2FlatTerm(*h.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))), hyp(h) {
+ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
+	ProofHyp(n, s, apply(s, Tree2FlatTerm(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -65,8 +65,8 @@ bool ProofExp::equal(const ProofNode* n) const {
 
 string show_struct(const ProofNode* n);
 
-ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
-	ProofHyp(h, s, apply(s, h.expr)), child(c) {
+ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
+	ProofHyp(hy, s, apply(s, hy.expr), hi), child(c) {
 	child->parent = this;
 	child->new_ = false;
 	try {
@@ -81,8 +81,8 @@ ProofExp::ProofExp(Hyp& h, ProofProp* c, const Subst& s) :
 
 }
 
-ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s) :
-	ProofNode(s), parent(nullptr), node(n), premises(p) {
+ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h) :
+	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->parents.push_back(this);
 		p->new_ = false;

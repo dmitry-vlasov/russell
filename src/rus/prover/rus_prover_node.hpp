@@ -102,7 +102,7 @@ struct Hyp : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const Subst& s);
+	ProofNode(const Subst& s, bool h);
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() const = 0;
@@ -111,20 +111,20 @@ struct ProofNode {
 	Subst sub;
 	bool  new_;
 	uint  ind;
-	bool  hint = false;
+	bool  hint;
 };
 
 struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const Subst& s, const Term& e);
+	ProofHyp(Hyp& n, const Subst& s, const Term& e, bool h);
 	~ProofHyp() override;
 
 	vector<ProofProp*> parents;
-	Hyp&      node;
+	Hyp& node;
 	Term expr;
 };
 
 struct ProofTop : public ProofHyp {
-	ProofTop(Hyp& n, const HypRef& h, const Subst& s);
+	ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -133,16 +133,17 @@ struct ProofTop : public ProofHyp {
 };
 
 struct ProofExp : public ProofHyp {
-	ProofExp(Hyp& h, ProofProp* c, const Subst& s = Subst());
+	ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
 	rus::Proof* proof() const;
+
 	ProofProp* child;
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p = vector<ProofHyp*>(), const Subst& s = Subst());
+	ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h);
 	~ProofProp() override;
 	rus::Ref* ref() const override;
 	string show() const override;

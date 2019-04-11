@@ -309,8 +309,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 			ch.push_back(ph);
 		}
 		try {
-			ProofProp* pp = new ProofProp(*pr, ch, p.second);
-			pp->hint = hint;
+			ProofProp* pp = new ProofProp(*pr, ch, p.second, hint);
 			if (pr->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : pr->proofs) {

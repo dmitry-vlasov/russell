@@ -4,14 +4,18 @@ namespace mdl { namespace rus { namespace prover {
 
 template<class T>
 static string show_children_idx(const vector<unique_ptr<T>>& ch) {
-	string ret = "children=\"";
+	ostringstream oss;
+	oss << "children=\"";
 	bool first = true;
 	for (const auto& n : ch) {
-		if (!first) ret += ",";
-		ret += to_string(n.get()->ind);
+		if (!first) {
+			oss << ",";
+		}
+		oss << to_string(n.get()->ind);
 		first = false;
 	}
-	return ret + "\" ";
+	oss << "\" ";
+	return oss.str();
 }
 
 static string show_assertion(const Assertion* a) {
@@ -28,63 +32,60 @@ static string show_assertion(const Assertion* a) {
 }
 
 string Prop::show(bool with_proofs) const {
-	string ret;
-	ret += "<prop ";
-	ret += string("name=\"") + Lex::toStr(prop.id()) + "\" ";
-	ret += string("index=\"") + to_string(ind) + "\" ";
-	ret += string("parent=\"") + to_string(parent->ind) + "\" ";
-	ret += show_children_idx(premises);
-	ret += ">\n";
-	ret += "\t<assertion>\n";
-	ret += "\t<![CDATA[\n";
-	ret += Indent::paragraph(show_assertion(prop.ass), "\t\t");
-	ret += "\t]]>";
-	ret += "\t</assertion>\n";
-	ret += "\t<substitution>\n";
-	ret += "\t<![CDATA[\n";
-	ret += Indent::paragraph(sub.show(), "\t\t");
-	ret += "\t]]>\n";
-	ret += "\t</substitution>\n";
+	ostringstream oss;
+	oss << "<prop ";
+	oss << string("name=\"") << Lex::toStr(prop.id()) << "\" ";
+	oss << string("index=\"") << ind << "\" ";
+	oss << string("parent=\"") << parent->ind << "\" ";
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
+	oss << show_children_idx(premises);
+	oss << ">\n";
+	oss << "\t<assertion>\n";
+	oss << "\t<![CDATA[\n";
+	oss << Indent::paragraph(show_assertion(prop.ass), "\t\t");
+	oss << "\t]]>";
+	oss << "\t</assertion>\n";
+	oss << "\t<substitution>\n";
+	oss << "\t<![CDATA[\n";
+	oss << Indent::paragraph(sub.show(), "\t\t");
+	oss << "\t]]>\n";
+	oss << "\t</substitution>\n";
 	if (with_proofs) {
 		for (const auto& p : proofs) {
-			ret += Indent::paragraph(p->show());
+			oss << Indent::paragraph(p->show());
 		}
 	}
-	ret += "</prop>\n";
-	return ret;
+	oss << "</prop>\n";
+	return oss.str();
 }
 
 string Hyp::show(bool with_proofs) const {
-	string ret;
-	ret += string("<") + (parent ? "hyp" : "root") + " ";
-	ret += string("index=\"") + to_string(ind) + "\" ";
-	if (hint) {
-		ret += string("hint=\"1\" ");
-	}
+	ostringstream oss;
+	oss << string("<") << (parent ? "hyp" : "root") << " ";
+	oss << string("index=\"") << ind << "\" ";
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	if (parent) {
-		ret += string("parent=\"") + to_string(parent->ind) + "\" ";
+		oss << string("parent=\"") << parent->ind << "\" ";
 	}
-	ret += show_children_idx(variants);
-	ret += ">\n";
-	ret += "\t<expression>";
-	ret += "<![CDATA[" + expr.show() + "]]>";
-	ret += "</expression>\n";
+	oss << show_children_idx(variants);
+	oss << ">\n";
+	oss << "\t<expression>";
+	oss << "<![CDATA[" << expr.show() << "]]>";
+	oss << "</expression>\n";
 	if (with_proofs) {
 		for (const auto& p : proofs) {
-			ret += Indent::paragraph(p->show());
+			oss << Indent::paragraph(p->show());
 		}
 	}
-	ret += string("</") + (parent ? "hyp" : "root") + ">\n";
-	return ret;
+	oss << string("</") << (parent ? "hyp" : "root") << ">\n";
+	return oss.str();
 }
 
 string ProofTop::show() const {
 	ostringstream oss;
 	oss << "<proof expr=\"" << apply(sub, node.expr).show() << "\" ";
 	oss << "index=\"" << ind << "\" ";
-	if (hint) {
-		oss << "hint=\"1\" ";
-	}
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << ">\n";
 	oss << "\t<![CDATA[";
 	oss << "hyp " << hyp.ind + 1;
@@ -103,9 +104,7 @@ string ProofExp::show() const {
 	rus::Step* st = child ? child->step() : nullptr;
 	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
 	oss << "index=\"" << ind << "\" ";
-	if (hint) {
-		oss << "hint=\"1\" ";
-	}
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << ">\n";
 	oss << "\t<![CDATA[\n";
 	try {
@@ -131,9 +130,7 @@ string ProofProp::show() const {
 	if (rus::Step* st = step()) {
 		oss << "<proof expr=\"" << st->expr << "\" ";
 		oss << "index=\"" << ind << "\" ";
-		if (hint) {
-			oss << "hint=\"1\" ";
-		}
+		oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 		oss << ">\n";
 		oss << "\t<![CDATA[\n";
 		try {

@@ -39,8 +39,7 @@ Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp
 	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
 	space->registerNode(this);
 	if (isLeaf()) {
-		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub));
-		proofs.back()->hint = hint;
+		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub, hint));
 	}
 }
 
@@ -81,12 +80,11 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	for (const auto& m : unify_general(space->hyps(), expr)) {
 		if (hint) {
 			if (m.data.get() == hint) {
-				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));
-				proofs.back()->hint = true;
+				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, true));
 				ret = true;
 			}
 		} else {
-			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub));
+			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, false));
 			ret = true;
 		}
 	}
@@ -97,7 +95,7 @@ bool Prop::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
-			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub);
+			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub, p->hint);
 			if (proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : parent->proofs) {
@@ -110,7 +108,6 @@ bool Prop::buildDown(set<Node*>& downs) {
 				}
 			}
 			parent->proofs.emplace_back(hp);
-			parent->proofs.back()->hint = p->hint;
 			new_proofs = true;
 		}
 	}
