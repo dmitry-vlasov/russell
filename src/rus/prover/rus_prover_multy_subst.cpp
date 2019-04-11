@@ -66,4 +66,13 @@ Subst unify_subs(Subst unif, Subst gen) {
 	}
 }
 
+string show(const MultyUnifiedSubs& ms) {
+	ostringstream oss;
+	for (const auto& p : ms) {
+		oss << show(p.first) << ":" << endl;
+		oss << Indent::paragraph(p.second.show()) << endl;
+	}
+	return oss.str();
+}
+
 }}}

@@ -37,4 +37,6 @@ bool similar_subs(const Subst& s1, const Subst& s2);
 
 typedef map<vector<uint>, Subst> MultyUnifiedSubs;
 
+string show(const MultyUnifiedSubs&);
+
 }}}

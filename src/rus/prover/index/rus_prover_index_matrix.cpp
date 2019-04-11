@@ -330,11 +330,14 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	return s;
 }
 
-static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
-	proofInds_[i] = vector<uint>(proofs.size());
-
+static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
 	if (limit) {
-		for (uint j : limit->descrVect()[i].chosen) {
+		if (limit->descrVect()[i].fixed) {
+			throw Error("should not be fixed");
+		}
+		proofInds_[i] = vector<uint>(limit->descrVect()[i].chosen.size());
+		for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
+			uint j = limit->descrVect()[i].chosen[k];
 			auto p = proofs[j].get();
 			for (const auto& x : p->sub) {
 				if (!mindex_.count(x.first)) {
@@ -342,9 +345,10 @@ static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint
 				}
 				mindex_.at(x.first)->vect[i]->add(x.second, j);
 			}
-			proofInds_[i][j] = j;
+			proofInds_[i][k] = j;
 		}
 	} else {
+		proofInds_[i] = vector<uint>(proofs.size());
 		for (uint j = 0; j < proofs.size(); ++j) {
 			auto p = proofs[j].get();
 			for (const auto& x : p->sub) {
@@ -358,10 +362,15 @@ static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint
 	}
 }
 
-static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
-	proofInds_[i] = vector<uint>(hs.size());
+static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
+
 	if (limit) {
-		for (uint j : limit->descrVect()[i].chosen) {
+		if (!limit->descrVect()[i].fixed) {
+			throw Error("should be fixed");
+		}
+		proofInds_[i] = vector<uint>(limit->descrVect()[i].chosen.size());
+		for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
+			uint j = limit->descrVect()[i].chosen[k];
 			ProofHypIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
 				if (!mindex_.count(x.first)) {
@@ -369,9 +378,10 @@ static void addProofs(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint
 				}
 				mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
 			}
-			proofInds_[i][j] = hi.ind;
+			proofInds_[i][k] = hi.ind;
 		}
 	} else {
+		proofInds_[i] = vector<uint>(hs.size());
 		for (uint j = 0; j < hs.size(); ++j) {
 			ProofHypIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
@@ -394,9 +404,9 @@ Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const Proof
 			break;
 		}
 		if (pr->premises[i].get() != hy) {
-			addProofs(mindex_, proofInds_, dim_hyp_, proofs, i, limit);
+			addProofsProp(mindex_, proofInds_, dim_hyp_, proofs, i, limit);
 		} else {
-			addProofs(mindex_, proofInds_, dim_hyp_, hs, i, limit);
+			addProofsHyp(mindex_, proofInds_, dim_hyp_, hs, i, limit);
 		}
 	}
 	for (auto& p : mindex_) {

@@ -117,7 +117,7 @@ struct CartesianProd {
 			data_[data_.size() - 1].push_back(d);
 		}
 		if (i == -1) {
-			throw Error("fixed index is not found");
+			throw Error("fixed index is not found", "vector: " + prover::show(v) + ", data: " + to_string(d));
 		}
 		iter_.addFixed(v.size(), i);
 	}

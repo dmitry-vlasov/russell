@@ -8,7 +8,7 @@ namespace mdl { namespace rus { namespace prover {
 
 struct ProofsSizeLimit {
 	struct PremiseDescr {
-		PremiseDescr(uint i, uint s, uint h, bool f) : ind(i), size(s), hint(h), fixed(f) { }
+		PremiseDescr(uint i, uint s, uint h, bool f, const vector<uint>& a) : ind(i), size(s), hint(h), fixed(f), all(a) { }
 		string show() const {
 			ostringstream oss;
 			oss << "Premise: " << ind << ", ";
@@ -19,13 +19,19 @@ struct ProofsSizeLimit {
 			for (uint i = 0; i < std::min(chosen.size(), static_cast<size_t>(30)); ++i) {
 				oss << chosen[i] << ", ";
 			}
-			oss << "}";
+			oss << "}, ";
+			oss << "all size: " << all.size() << " {";
+			for (uint i = 0; i < std::min(all.size(), static_cast<size_t>(30)); ++i) {
+				oss << all[i] << ", ";
+			}
+			oss << "}, ";
 			return oss.str();
 		}
 		uint ind;
 		uint size;
 		uint hint;
 		bool fixed;
+		vector<uint> all;
 		vector<uint> chosen;
 	};
 	ProofsSizeLimit(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, uint limit) : cardLimit_(limit) {
@@ -36,39 +42,25 @@ struct ProofsSizeLimit {
 			}
 			if (x.get() != hy) {
 				uint hint = -1;
-				for (uint i = 0; i < x->proofs.size(); ++i) {
-					if (x->proofs[i]->hint) {
-						hint = i;
+				vector<uint> all;
+				for (uint j = 0; j < x->proofs.size(); ++j) {
+					if (x->proofs[j]->hint) {
+						hint = j;
 					}
+					all.push_back(j);
 				}
-				/*if (hint == -1) {
-					cout << endl;
-					cout << pr->show(true) << endl;
-					cout << hy->show(true) << endl;
-					for (auto pi : hs) {
-						cout << pi.show() << endl;
-					}
-					throw Error("no hint in proofs");
-				}*/
-				descrVect_.emplace_back(i, x->proofs.size(), hint, false);
+				descrVect_.emplace_back(i, x->proofs.size(), hint, false, all);
 			} else {
 				uint hint = -1;
-				for (uint i = 0; i < hs.size(); ++i) {
-					if (hs[i].proof->hint) {
-						hint = i;
+				vector<uint> all;
+				for (uint j = 0; j < hs.size(); ++j) {
+					if (hs[j].proof->hint) {
+						hint = j;
 					}
+					all.push_back(hs[j].ind);
 				}
-				/*if (hint == -1) {
-					cout << endl;
-					cout << pr->show(true) << endl;
-					cout << hy->show(true) << endl;
-					for (auto pi : hs) {
-						cout << pi.show() << endl;
-					}
-					throw Error("no hint in proofs");
-				}*/
 				hypInd_ = i;
-				descrVect_.emplace_back(i, hs.size(), hint, true);
+				descrVect_.emplace_back(i, hs.size(), hint, true, all);
 			}
 		}
 		empty_ = false;

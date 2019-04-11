@@ -248,13 +248,4 @@ string show(const vector<LightSymbol>& v) {
 	return ret;
 }
 
-string show(const MultyUnifiedSubs& ms) {
-	string ret;
-	for (const auto& p : ms) {
-		ret += show(p.first) + ":\n";
-		ret += Indent::paragraph(p.second.show()) + "\n";
-	}
-	return ret;
-}
-
 }}}

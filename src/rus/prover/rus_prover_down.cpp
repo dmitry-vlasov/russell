@@ -19,7 +19,11 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			if (x.get() != hy) {
 				ind.addDim(limit->descrVect()[i].chosen);
 			} else {
-				ind.addFixedData(limit->descrVect()[i].chosen, hi.ind);
+				vector<uint> inds;
+				for (uint j : limit->descrVect()[i].chosen) {
+					inds.push_back(limit->descrVect()[i].all[j]);
+				}
+				ind.addFixedData(inds, hi.ind);
 			}
 		}
 	} else {
@@ -185,6 +189,13 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 
 bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2, bool verbose = false) {
 	if (ms1.size() != ms2.size()) {
+		if (verbose) {
+			cout << "sizes differ: " << ms1.size() << " != " << ms2.size() << endl;
+			cout << "first: " << endl;
+			cout << show(ms1) << endl;
+			cout << "second: " << endl;
+			cout << show(ms2) << endl;
+		}
 		return false;
 	}
 	for (const auto p1 : ms1) {
@@ -292,7 +303,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_1, unified_subs_2, true);
-		cout << index::Matrix(pr, hy, hs, nullptr).show() << endl;
+		cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif
