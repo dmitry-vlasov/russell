@@ -1,3 +1,4 @@
+#include "../expr/rus_expr_stats.hpp"
 #include "rus_prover_tactics.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -55,10 +56,10 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				}
 			}
 		}
-		cout << "max_expr_length: " << expr::max_len() << endl;
-		cout << "avg_expr_length: " << expr::avg_len() << endl;
-		cout << "dev_expr_length: " << expr::dev_len() << endl;
-		cout << "max_expr: " << *expr::max_len_expr() << endl;
+		cout << "max_expr_length: " << expr::Stats::stats().maxLen() << endl;
+		cout << "avg_expr_length: " << expr::Stats::stats().avgLen() << endl;
+		cout << "dev_expr_length: " << expr::Stats::stats().devLen() << endl;
+		cout << "max_expr: " << *expr::Stats::stats().maxLenExpr() << endl;
 		print_down_unification_statistics();
 		return Return("Massive prover testing with oracle succeeded :)");
 	} else {

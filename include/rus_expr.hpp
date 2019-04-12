@@ -370,11 +370,6 @@ inline void create_rule_term(Expr& ex, Id id) {
 namespace expr {
 	void enqueue(Expr& ex);
 	void parse();
-
-	uint max_len(); // maximum expression length
-	uint avg_len(); // average expression length
-	uint dev_len(); // standard deviation of expression length
-	const Expr* max_len_expr(); // expression with maximum length
 }
 
 size_t memvol(const Symbol& s);

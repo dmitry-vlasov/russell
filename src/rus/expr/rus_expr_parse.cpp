@@ -1,5 +1,6 @@
 #include <cmath>
 #include <rus_ast.hpp>
+#include "rus_expr_stats.hpp"
 
 namespace mdl { namespace rus { namespace expr {
 
@@ -174,64 +175,16 @@ void parse() {
 #else
 	for (auto e : queue) parse(e);
 #endif
+	for (auto e : queue) {
+		Stats::stats().add(e);
+	}
 	queue.clear();
 	for (auto& ex : exceptions) {
 		if (ex) std::rethrow_exception(ex);
 	}
 }
 
-static cvector<uint> lengths;
-static uint   max_len_ = 0;
-static double avg_len_ = -1;
-static double dev_len_ = -1;
-static const Expr* max_len_expr_;
-
-static void compute_expr_stats() {
-	double sum_len = 0;
-	for (uint len : lengths) {
-		sum_len += len;
-		max_len_ = std::max(len, max_len_);
-	}
-	avg_len_ = sum_len / lengths.size();
-	double sum_dev = 0;
-	for (uint len : lengths) {
-		sum_dev += (len - avg_len_) * (len - avg_len_);
-	}
-	dev_len_ = sqrt(sum_dev / lengths.size());
-}
-
-uint max_len() {
-	if (avg_len_ == -1) {
-		compute_expr_stats();
-	}
-	return max_len_;
-}
-
-uint avg_len() {
-	if (avg_len_ == -1) {
-		compute_expr_stats();
-	}
-	return avg_len_;
-}
-
-uint dev_len() {
-	if (dev_len_ == -1) {
-		compute_expr_stats();
-	}
-	return dev_len_;
-}
-
-const Expr* max_len_expr() {
-	return max_len_expr_;
-}
-
 void enqueue(Expr& ex) {
-	avg_len_ = -1;
-	dev_len_ = -1;
-	if (!max_len_expr_ || max_len_expr_->symbols.size() < ex.symbols.size()) {
-		max_len_expr_ = &ex;
-	}
-	lengths.push_back(ex.symbols.size());
 	queue.push_back(&ex);
 }
 

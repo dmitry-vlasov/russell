@@ -195,7 +195,7 @@ static void calculate_linear_len(Term::ConstIterator& ft, uint& len) {
 	}
 }
 
-uint Term::len() const {
+uint Term::linearLen() const {
 	uint l = 0;
 	auto b = nodes.begin();
 	calculate_linear_len(b, l);
@@ -262,7 +262,7 @@ rus::Expr FlatTerm2Expr(const Term& term) {
 	rus::Expr ret;
 	ret.set(FlatTerm2Tree(term).release());
 	ret.type = term.type();
-	ret.symbols.reserve(term.len());
+	ret.symbols.reserve(term.linearLen());
 	auto b = term.nodes.begin();
 	fill_in_linear_expr(b, ret.symbols);
 	return ret;

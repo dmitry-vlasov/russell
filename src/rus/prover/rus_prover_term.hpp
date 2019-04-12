@@ -162,7 +162,7 @@ struct Term {
 	Term subTerm(ConstIterator beg) const;
 	const Type* type() const { return nodes.front().ruleVar.type(); }
 	void verify() const;
-	uint len() const; // Length of a corresponding linear expression
+	uint linearLen() const; // Length of a corresponding linear expression
 
 	vector<Node> nodes;
 	string show(bool simple = false) const;

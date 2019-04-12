@@ -73,6 +73,12 @@ struct Subst {
 			p.second.verify();
 		}
 	}
+	/*uint maxExprLen() const {
+		uint l = 0;
+		for (const auto& p : sub_) {
+			if (p.second.)
+		}
+	}*/
 
 private:
 	hmap<uint, Term> sub_;
