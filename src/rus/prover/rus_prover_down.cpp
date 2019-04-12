@@ -1,5 +1,6 @@
 #include <cmath>
 #include <numeric>
+#include "../expr/rus_expr_stats.hpp"
 #include "index/rus_prover_index_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
@@ -260,8 +261,13 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-#define CHECK_MATRIX_UNIFICATION
+//#define CHECK_MATRIX_UNIFICATION
 //#define SHOW_MATRIXES
+
+inline uint expr_len_threshold() {
+	return expr::Stats::stats().avgLen() + 2 * expr::Stats::stats().devLen();
+	//return expr::Stats::stats().maxLen();
+}
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
@@ -328,6 +334,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 				hint = false;
 			}
 			ch.push_back(ph);
+		}
+		if (!hint && p.second.maxExprLen() > expr_len_threshold()) {
+			// Expressions are too long - skip them
+			continue;
 		}
 		try {
 			ProofProp* pp = new ProofProp(*pr, ch, p.second, hint);

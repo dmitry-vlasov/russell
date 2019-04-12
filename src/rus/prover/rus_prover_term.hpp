@@ -163,6 +163,7 @@ struct Term {
 	const Type* type() const { return nodes.front().ruleVar.type(); }
 	void verify() const;
 	uint linearLen() const; // Length of a corresponding linear expression
+	uint len() const { return nodes.size(); }
 
 	vector<Node> nodes;
 	string show(bool simple = false) const;

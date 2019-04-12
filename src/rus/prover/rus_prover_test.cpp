@@ -3,6 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+static vector<const Proof*> prove_failed;
+
 Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Oracle* oracle = new prover::Oracle(p);
@@ -11,10 +13,12 @@ Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 	try {
 		Return ret = space->prove();
 		if (!ret.success()) {
-			cout << "oracle test failed" << endl;
-			cout << "oracle status:" << endl;
-			cout << oracle->show() << endl;
-			exit(-1);
+			//cout << "oracle test failed" << endl;
+			//cout << "oracle status:" << endl;
+			//cout << oracle->show() << endl;
+			//exit(-1);
+			prove_failed.push_back(p);
+			cout << "FAILED ";
 		}
 		return ret;
 	} catch (Error& err) {
@@ -41,18 +45,15 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 			for (auto& n : src->theory.nodes) {
 				if (Theory::kind(n) == Theory::PROOF) {
 					cout << counter++ << " ";
-					if (counter == 2100) {
-						cout << "AAA" << endl;
-					}
 					Timer timer; timer.start();
 					Return r = test_proof_with_oracle(Theory::proof(n), max_proofs);
 					timer.stop();
 					cout << "done in " << timer << endl;
-					if (!r.success()) {
+					/*if (!r.success()) {
 						debug_oracle = true;
 						test_proof_with_oracle(Theory::proof(n), max_proofs);
 						return r;
-					}
+					}*/
 				}
 			}
 		}
@@ -60,6 +61,12 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 		cout << "avg_expr_length: " << expr::Stats::stats().avgLen() << endl;
 		cout << "dev_expr_length: " << expr::Stats::stats().devLen() << endl;
 		cout << "max_expr: " << *expr::Stats::stats().maxLenExpr() << endl;
+		cout << endl;
+		cout << "failed proofs number: " << prove_failed.size() << endl;
+		for (const Proof* p : prove_failed) {
+			cout << Lex::toStr(p->theorem()->id()) << ", ";
+		}
+		cout << endl;
 		print_down_unification_statistics();
 		return Return("Massive prover testing with oracle succeeded :)");
 	} else {
