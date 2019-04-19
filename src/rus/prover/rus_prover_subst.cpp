@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-#define DEBUG_SUBST
+//#define DEBUG_SUBST
 
 void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
@@ -81,6 +81,7 @@ bool Subst::consistent(const Subst& sub) const {
 	return true;
 }
 
+#ifdef DEBUG_SUBST
 static void verify_chains(const Subst& s) {
 	for (const auto& p : s) {
 		for (uint v : p.second.vars()) {
@@ -107,6 +108,7 @@ static void verify_composition(const Subst& comp, const Subst& s1, const Subst& 
 		}
 	}
 }
+#endif
 
 static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bool norm) {
 #ifdef DEBUG_SUBST

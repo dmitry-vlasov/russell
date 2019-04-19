@@ -9,12 +9,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-bool debug_unify_subs = false;
 vector<uint> error_inds;
-
-bool debug_test_case = false;
-uint var_dom = -1;
-uint var_im = -1;
+bool debug_unify_subs = false;
 
 void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
 	CartesianProd<uint> ind;
@@ -47,14 +43,6 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	if (ind.card() == 0) {
 		return;
 	}
-
-	/*static int c = 0;
-	c++;
-	cout << "c = " << c << endl;
-	if (c == 3) {
-		cout << "vot ono, nachalos" << endl;
-	}
-	cout << "1) IND: " << ind.show() << endl;*/
 	while (true) {
 		vector<const Subst*> subs;
 		bool show_debug = debug_unify_subs && (!error_inds.size() || error_inds == ind.data());
@@ -64,9 +52,6 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			cout << "PROP: " << pr->ind << endl;
 		}
 		vector<uint> inds = ind.data();
-
-		//cout << "2) INDS: " << show(inds) << endl;
-
 		for (uint i = 0; i < inds.size(); ++ i) {
 			ProofHyp* ph = pr->premises[i].get()->proofs[inds[i]].get();
 			if (show_debug) {
@@ -80,11 +65,9 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			cout << "-------------" << endl;
 		}
 		Subst sub = unify_subs(MultySubst(subs));
-
 		if (debug_unify_subs) {
 			cout << "SUB: " << sub.show() << endl;
 		}
-
 		if (sub.ok()) {
 			Subst delta = pr->sub;
 			if (show_debug) {
@@ -172,8 +155,6 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 		cout << "s1: " << s1.show() << endl;
 		cout << "s2: " << s2.show() << endl;
 		cout << "var replacement: " << endl << s1_vars_inv.show() << endl;
-		var_dom = *s1_vars_inv.dom().begin();
-		var_im = s1_vars_inv.map(var_dom).var().lit;
 	}
 	return ret;
 }
@@ -310,19 +291,6 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_2, unified_subs_1, true);
 		cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
-
-		for (uint i = 0; i < 3; ++ i) {
-			ProofHyp* ph = pr->premises[i].get()->proofs[0].get();
-			cout << "HYPS:" << endl;
-			cout << "hyp[" << ph->ind << "]: " << ph->expr.show() << endl;
-			cout << "sub:" << endl;
-			cout << Indent::paragraph(ph->sub.show()) << endl;
-		}
-
-		debug_test_case = true;
-		debug_unify_subs = true;
-		unify_subs_sequent(pr, hy, hs, &limit);
-
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif
