@@ -107,8 +107,8 @@ static void verify_composition(const Subst& comp, const Subst& s1, const Subst& 
 	for (uint v : vars) {
 		LightSymbol var(v);
 		Term t0(var);
-		Term t1 = apply(comp, var);
-		Term t2 = apply(s2, apply(s1, var));
+		Term t1 = comp.apply(var);
+		Term t2 = s2.apply(s1.apply(var));
 		if (t1 != t2) {
 			string msg;
 			msg += "v: " + Lex::toStr(v) + "\n";
@@ -124,7 +124,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 	hset<uint> vars;
 	vector<uint> to_erase;
 	for (auto& p : sub_) {
-		Term ex = apply(s2, p.second);
+		Term ex = s2.apply(p.second);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
 			p.second = std::move(ex);
 		} else {
@@ -227,7 +227,7 @@ string Subst::showVars(const set<uint>& vars) const {
 	return str;
 }
 
-Term apply(const Subst& s, const Term& t) {
+Term Subst::apply(const Term& t) const {
 	uint len = 0;
 	vector<uint> beg_shifts;
 	vector<uint> end_shifts;
@@ -235,14 +235,10 @@ Term apply(const Subst& s, const Term& t) {
 	for (uint k = 0; k < t.nodes.size(); ++ k, ++ len) {
 		const auto& n = t.nodes[k];
 		beg_shifts.push_back(len);
-		if (n.ruleVar.isVar()) {
-			const Term& term = s.map(n.ruleVar.var);
-			if (!term.empty()) {
-				len += term.nodes.size() - 1;
-				subs.push_back(&term);
-			} else {
-				subs.push_back(nullptr);
-			}
+		if (n.ruleVar.isVar() && maps(n.ruleVar.var)) {
+			const Term& term = map(n.ruleVar.var);
+			len += term.nodes.size() - 1;
+			subs.push_back(&term);
 		} else {
 			subs.push_back(nullptr);
 		}

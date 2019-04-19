@@ -86,13 +86,12 @@ struct Subst {
 		return l;
 	}
 	void verifyChains() const;
+	Term apply(const Term& t) const;
 
 private:
 	hmap<uint, Term> sub_;
 	bool ok_;
 };
-
-Term apply(const Subst& s, const Term& t);
 
 Subst Substitution2FlatSubst(const Substitution&);
 Substitution FlatSubst2Substitution(const Subst&);

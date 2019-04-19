@@ -47,8 +47,8 @@ Term unify_general(const vector<Term>& ex, Subst& sub) {
 			if (unif.begin()->second.sub->ok()) {
 				Subst common = unify_subs(*unif.begin()->second.sub, sub);
 				if (common.ok()) {
-					sub = common;
-					return apply(common, *unif.begin()->second.term);
+					sub = std::move(common);
+					return sub.apply(*unif.begin()->second.term);
 				} else {
 					sub.spoil();
 					return Term();

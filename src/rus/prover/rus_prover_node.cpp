@@ -28,7 +28,7 @@ Hyp::Hyp(const Term& e, Space* s) :
 }
 
 Hyp::Hyp(const Term& e, Prop* p) :
-	Node(p), parent(p), expr(p ? apply(p->outer, apply(p->sub, apply(p->fresher, e))) : e) {
+	Node(p), parent(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : e) {
 	space->registerNode(this);
 }
 
