@@ -12,6 +12,10 @@ namespace mdl { namespace rus { namespace prover {
 bool debug_unify_subs = false;
 vector<uint> error_inds;
 
+bool debug_test_case = false;
+uint var_dom = -1;
+uint var_im = -1;
+
 void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
 	CartesianProd<uint> ind;
 	const ProofHyp* h = hi.proof;
@@ -149,21 +153,37 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypInde
 	return ret;
 }
 
-bool similar_subs_1(const Subst& s1, const Subst& s2) {
+/*
+bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
-	Subst unif = unify_subs(MultySubst({&s1, &s2}));
+	if (s1.size() != s2.size()) {
+		if (verbose) {
+			cout << "sizes differ: " << s1.size() << " != " << s2.size() << endl;
+		}
+	}
+	vector<const Subst*> to_unify;
+	to_unify.push_back(&s1);
+	to_unify.push_back(&s2);
+	Subst unif = unify_subs(MultySubst(to_unify));
 	if (!unif.ok()) {
 		//don't unify
+		if (verbose) {
+			cout << "dont unify: " << unif.show() << endl;
+		}
 		return false;
 	}
 	for (const auto& p : unif) {
 		if (p.second.kind() != Term::VAR) {
 			// is not a var replacement
+			if (verbose) {
+				cout << "is not a var replacement: " << Lex::toStr(p.first) << ": " << p.second.show() << endl;
+			}
 			return false;
 		}
 	}
 	return true;
 }
+*/
 
 bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
@@ -185,9 +205,12 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 		cout << "s1: " << s1.show() << endl;
 		cout << "s2: " << s2.show() << endl;
 		cout << "var replacement: " << endl << s1_vars_inv.show() << endl;
+		var_dom = *s1_vars_inv.dom().begin();
+		var_im = s1_vars_inv.map(var_dom).var().lit;
 	}
 	return ret;
 }
+
 
 bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms2, bool verbose = false) {
 	if (ms1.size() != ms2.size()) {
@@ -261,7 +284,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
-//#define CHECK_MATRIX_UNIFICATION
+#define CHECK_MATRIX_UNIFICATION
 //#define SHOW_MATRIXES
 
 inline uint expr_len_threshold() {
@@ -315,11 +338,24 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #endif
 
 #ifdef CHECK_MATRIX_UNIFICATION
-	if (!compare_unified_subs(unified_subs_1, unified_subs_2)) {
+	if (!compare_unified_subs(unified_subs_2, unified_subs_1)) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
-		compare_unified_subs(unified_subs_1, unified_subs_2, true);
+		compare_unified_subs(unified_subs_2, unified_subs_1, true);
 		cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
+
+		for (uint i = 0; i < 3; ++ i) {
+			ProofHyp* ph = pr->premises[i].get()->proofs[0].get();
+			cout << "HYPS:" << endl;
+			cout << "hyp[" << ph->ind << "]: " << ph->expr.show() << endl;
+			cout << "sub:" << endl;
+			cout << Indent::paragraph(ph->sub.show()) << endl;
+		}
+
+		debug_test_case = true;
+		debug_unify_subs = true;
+		unify_subs_sequent(pr, hy, hs, &limit);
+
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif

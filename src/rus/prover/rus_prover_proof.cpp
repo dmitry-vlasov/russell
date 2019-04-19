@@ -94,7 +94,11 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h
 			Subst si = premises[i]->sub;
 			compose(si, sub);
 			if (s0 != si) {
+				Subst sx = premises[i]->sub;
+				sx.compose(sub);
+
 				string err;
+				err += "sx" + sx.show() + "\n";
 				err += "s0 != s" + to_string(i) + "\n";
 				err += "diff: " + show_diff(s0, si) + "\n";
 				err += "s0: " +  s0.show() + "\n";

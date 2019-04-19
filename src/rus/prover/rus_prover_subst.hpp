@@ -26,13 +26,14 @@ struct Subst {
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s, bool full = true);
 	bool compose(uint v, const Term& t, bool full = true) { return compose(Subst(v, t), full); }
-	bool bicompose(const Subst& s);
+	//bool bicompose(const Subst& s);
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;
 
 	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
 	bool maps(LightSymbol s) const { return maps(s.lit); }
 	string show() const;
+	string showVars(const set<uint>&) const;
 	const Term& map(uint v) const {
 		auto it = sub_.find(v);
 		if (sub_.find(v) != sub_.end()) {
@@ -80,6 +81,7 @@ struct Subst {
 		}
 		return l;
 	}
+	void verifyChains() const;
 
 private:
 	hmap<uint, Term> sub_;

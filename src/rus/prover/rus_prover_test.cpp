@@ -19,6 +19,7 @@ Return test_proof_with_oracle(const Proof* p, uint max_proofs) {
 			//exit(-1);
 			prove_failed.push_back(p);
 			cout << "FAILED ";
+			exit(-1);
 		}
 		return ret;
 	} catch (Error& err) {

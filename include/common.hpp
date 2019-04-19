@@ -75,6 +75,18 @@ inline bool sets_intersect(const set<T>& right, const set<T>& left) {
 	return false;
 }
 
+template<class T>
+inline set<T> sets_unite(const set<T>& right, const set<T>& left) {
+	set<T> ret;
+	for (const T& t : right) {
+		ret.insert(t);
+	}
+	for (const T& t : left) {
+		ret.insert(t);
+	}
+	return ret;
+}
+
 template<class T> struct Undef;
 template<> struct Undef<uint> {
 	static uint get()        { return -1; }
