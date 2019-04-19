@@ -4,6 +4,7 @@ namespace mdl { namespace rus { namespace prover {
 
 void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
+	sub_.clear();
 	if (ok_) {
 		for (const auto& p : s.sub_) {
 			sub_.emplace(p.first, p.second);
