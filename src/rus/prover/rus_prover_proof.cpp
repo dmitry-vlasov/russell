@@ -89,16 +89,12 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h
 	}
 	if (n.prop.ass->arity() > 0) {
 		Subst s0 = premises[0]->sub;
-		compose(s0, sub);
+		s0.compose(sub, CompMode::NORM, false);
 		for (uint i = 0; i < premises.size(); ++ i) {
 			Subst si = premises[i]->sub;
-			compose(si, sub);
+			si.compose(sub, CompMode::NORM, false);
 			if (s0 != si) {
-				Subst sx = premises[i]->sub;
-				sx.compose(sub);
-
 				string err;
-				err += "sx" + sx.show() + "\n";
 				err += "s0 != s" + to_string(i) + "\n";
 				err += "diff: " + show_diff(s0, si) + "\n";
 				err += "s0: " +  s0.show() + "\n";

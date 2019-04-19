@@ -4,6 +4,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+enum class CompMode { SEMI, NORM, DUAL, DEFAULT = DUAL };
+
 struct Subst {
 	Subst(bool ok = true) : ok_(ok) { }
 	Subst(uint v, const Term& t) : ok_(true) {
@@ -24,9 +26,11 @@ struct Subst {
 	bool operator != (const Subst& s) const;
 
 	bool consistent(const Subst& s) const;
-	bool compose(const Subst& s, bool full = true);
-	bool compose(uint v, const Term& t, bool full = true) { return compose(Subst(v, t), full); }
-	//bool bicompose(const Subst& s);
+	bool compose(const Subst& s, CompMode m = CompMode::DEFAULT, bool check = true);
+	bool compose(uint v, const Term& t, CompMode m = CompMode::DEFAULT, bool check = true) {
+		return compose(Subst(v, t), m, check);
+	}
+
 	bool intersects(const Subst& s) const;
 	bool composeable(const Subst& s) const;
 
@@ -86,12 +90,9 @@ struct Subst {
 private:
 	hmap<uint, Term> sub_;
 	bool ok_;
-	friend void compose(Subst& s1, const Subst& s2, bool full);
 };
 
 Term apply(const Subst& s, const Term& t);
-void compose(Subst& s1, const Subst& s2, bool full = true);
-bool composable(const Subst& s1, const Subst& s2);
 
 Subst Substitution2FlatSubst(const Substitution&);
 Substitution FlatSubst2Substitution(const Subst&);

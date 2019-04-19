@@ -58,7 +58,7 @@ void Hyp::buildUp() {
 				fresher.erase(p.first);
 			}
 		}
-		m.sub.compose(fresher, false);
+		m.sub.compose(fresher, CompMode::SEMI);
 		Subst sub;
 		Subst outer;
 		for (const auto& p : m.sub) {
@@ -76,10 +76,6 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
 	for (const auto& m : unify_general(space->hyps(), expr)) {
 		if (hint) {
-			/*if (m.data.get() == hint) {
-				proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, true));
-				ret = true;
-			}*/
 			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
 		} else {
 			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, false));

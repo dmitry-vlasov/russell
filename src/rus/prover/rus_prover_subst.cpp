@@ -34,7 +34,7 @@ bool Subst::operator != (const Subst& s) const {
 	return !operator ==(s);
 }
 
-void collect_vars(const Term& term, set<uint>& vars) {
+static void collect_vars(const Term& term, set<uint>& vars) {
 	for (const auto& n : term.nodes) {
 		if (n.ruleVar.isVar()) {
 			vars.insert(n.ruleVar.var.lit);
@@ -42,14 +42,23 @@ void collect_vars(const Term& term, set<uint>& vars) {
 	}
 }
 
-bool consistent(const Subst& s, uint v, const Term& t) {
+static bool consistent(const Subst& s, uint v, const Term& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
 	if (s.maps(v)) {
-		return apply(s, t) == s.map(v);
+		/*Term t1 = apply(s, t);
+		Term t2 = s.map(v);
+		if (t1 != t2) {
+			cout << "s:" << endl << s.show() << endl;
+			cout << "t: " << t.show() << endl;
+			cout << "v: " << Lex::toStr(v) << endl;
+			cout << "t1: " << t1.show() << " != " << t2.show() << " :t2" << endl;
+		}
+		return apply(s, t) == s.map(v);*/
+		return t == s.map(v);
 	} else {
 		for (uint x : x_vars) {
 			if (s.maps(x)) {
@@ -79,7 +88,7 @@ bool Subst::consistent(const Subst& sub) const {
 	return true;
 }
 
-void verify_chains(const Subst& s) {
+static void verify_chains(const Subst& s) {
 	for (const auto& p : s) {
 		for (uint v : p.second.vars()) {
 			if (s.maps(v)) {
@@ -93,8 +102,8 @@ void Subst::verifyChains() const {
 	verify_chains(*this);
 }
 
-void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, bool full) {
-	set<uint> vars = full ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
+static void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, bool norm) {
+	set<uint> vars = norm ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
 	for (uint v : vars) {
 		LightSymbol var(v);
 		Term t0(var);
@@ -110,33 +119,32 @@ void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, boo
 	}
 }
 
-void compose(Subst& s1, const Subst& s2, bool full) {
+static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bool norm) {
 	Subst s0(s1);
 	hset<uint> vars;
 	vector<uint> to_erase;
-	for (const auto& p : s1) {
+	for (auto& p : sub_) {
 		Term ex = apply(s2, p.second);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
-			s1.sub_[p.first] = std::move(ex);
-			vars.insert(p.first);
+			p.second = std::move(ex);
 		} else {
 			to_erase.push_back(p.first);
-			vars.insert(p.first);
 		}
+		vars.insert(p.first);
 	}
 	for (uint v : to_erase) {
-		s1.sub_.erase(v);
+		sub_.erase(v);
 	}
-	if (full) {
+	if (norm) {
 		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub_[p.first] = p.second;
+				sub_[p.first] = p.second;
 			}
 		}
 	}
 	try {
 		verify_chains(s1);
-		verify_composition(s1, s0, s2, full);
+		verify_composition(s1, s0, s2, norm);
 	} catch (Error& err) {
 		err.msg += "s1:\n" + s0.show() + "\n";
 		err.msg += "s2:\n" + s2.show() + "\n";
@@ -145,18 +153,24 @@ void compose(Subst& s1, const Subst& s2, bool full) {
 	}
 }
 
-bool Subst::compose(const Subst& s, bool full) {
+bool Subst::compose(const Subst& s, CompMode m, bool checked) {
 	try {
-		if (!ok_ || !consistent(s)) {
+		if (checked && (!ok_ || !consistent(s))) {
 			ok_ = false;
 		} else {
-			Subst ss(s);
-			prover::compose(ss, *this, false);
-			if (!consistent(ss)) {
-				ok_ = false;
-				return false;
+			switch (m) {
+			case CompMode::SEMI: prover::compose(*this, sub_, s, false); break;
+			case CompMode::NORM: prover::compose(*this, sub_, s, true);  break;
+			case CompMode::DUAL: {
+				Subst ss(s);
+				prover::compose(ss, ss.sub_, *this, false);
+				if (checked && !consistent(ss)) {
+					ok_ = false;
+					return false;
+				}
+				prover::compose(*this, sub_, ss, true);
 			}
-			prover::compose(*this, ss, full);
+			}
 		}
 		return ok_;
 	} catch (Error& err) {
@@ -164,19 +178,6 @@ bool Subst::compose(const Subst& s, bool full) {
 		throw err;
 	}
 }
-
-/*bool Subst::bicompose(const Subst& s) {
-	if (!s.consistent(*this)) {
-		return false;
-	}
-	Subst ss(s);
-	prover::compose(ss, *this, false);
-	if (!consistent(ss)) {
-		return false;
-	}
-	prover::compose(*this, ss, true);
-	return true;
-}*/
 
 bool Subst::intersects(const Subst& sub) const {
 	for (const auto& p : sub) {
@@ -226,19 +227,6 @@ string Subst::showVars(const set<uint>& vars) const {
 	return str;
 }
 
-uint applied_len(const Subst& s, const Term& t) {
-	uint len = t.nodes.size();
-	for (const auto& n : t.nodes) {
-		if (n.ruleVar.isVar() && s.maps(n.ruleVar.var)) {
-			const Term& term = s.map(n.ruleVar.var);
-			if (!term.empty()) {
-				len += term.nodes.size() - 1;
-			}
-		}
-	}
-	return len;
-}
-
 Term apply(const Subst& s, const Term& t) {
 	uint len = 0;
 	vector<uint> beg_shifts;
@@ -272,22 +260,6 @@ Term apply(const Subst& s, const Term& t) {
 	}
 	return ret;
 }
-
-Subst compose(const Subst& s1, const Subst& s2) {
-	Subst ret(s1);
-	ret.compose(s2);
-	return ret;
-}
-
-bool composable(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1) {
-		if (s2.maps(p.first)) {
-			return true;
-		}
-	}
-	return false;
-}
-
 
 Subst Substitution2FlatSubst(const Substitution& sub) {
 	Subst ret;
