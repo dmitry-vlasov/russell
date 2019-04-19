@@ -315,7 +315,7 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 				if (unif[c].ok()) {
 					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
 					unif[c] = unified;
-					s[c].compose(vars[i], unified.apply(term));
+					s[c].compose(vars[i], unified.apply(term), CompMode::DUAL);
 				}
 			} else {
 				if (sub.ok()) {

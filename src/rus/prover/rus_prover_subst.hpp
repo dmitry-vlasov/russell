@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-enum class CompMode { SEMI, NORM, DUAL, DEFAULT = DUAL };
+enum class CompMode { SEMI, NORM, DUAL, DEFAULT = NORM };
 
 struct Subst {
 	Subst(bool ok = true) : ok_(ok) { }
@@ -32,8 +32,6 @@ struct Subst {
 	}
 
 	bool intersects(const Subst& s) const;
-	bool composeable(const Subst& s) const;
-
 	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
 	bool maps(LightSymbol s) const { return maps(s.lit); }
 	string show() const;
@@ -85,7 +83,6 @@ struct Subst {
 		}
 		return l;
 	}
-	void verifyChains() const;
 	Term apply(const Term& t) const;
 
 private:

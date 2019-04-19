@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+#define DEBUG_SUBST
+
 void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
 	sub_.clear();
@@ -49,15 +51,6 @@ static bool consistent(const Subst& s, uint v, const Term& t) {
 		return false;
 	}
 	if (s.maps(v)) {
-		/*Term t1 = apply(s, t);
-		Term t2 = s.map(v);
-		if (t1 != t2) {
-			cout << "s:" << endl << s.show() << endl;
-			cout << "t: " << t.show() << endl;
-			cout << "v: " << Lex::toStr(v) << endl;
-			cout << "t1: " << t1.show() << " != " << t2.show() << " :t2" << endl;
-		}
-		return apply(s, t) == s.map(v);*/
 		return t == s.map(v);
 	} else {
 		for (uint x : x_vars) {
@@ -98,10 +91,6 @@ static void verify_chains(const Subst& s) {
 	}
 }
 
-void Subst::verifyChains() const {
-	verify_chains(*this);
-}
-
 static void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, bool norm) {
 	set<uint> vars = norm ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
 	for (uint v : vars) {
@@ -120,7 +109,9 @@ static void verify_composition(const Subst& comp, const Subst& s1, const Subst& 
 }
 
 static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bool norm) {
+#ifdef DEBUG_SUBST
 	Subst s0(s1);
+#endif
 	hset<uint> vars;
 	vector<uint> to_erase;
 	for (auto& p : sub_) {
@@ -142,6 +133,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 			}
 		}
 	}
+#ifdef DEBUG_SUBST
 	try {
 		verify_chains(s1);
 		verify_composition(s1, s0, s2, norm);
@@ -151,50 +143,42 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 		err.msg += "comp:\n" + s1.show() + "\n";
 		throw err;
 	}
+#endif
 }
 
 bool Subst::compose(const Subst& s, CompMode m, bool checked) {
+#ifdef DEBUG_SUBST
 	try {
-		if (checked && (!ok_ || !consistent(s))) {
-			ok_ = false;
-		} else {
-			switch (m) {
-			case CompMode::SEMI: prover::compose(*this, sub_, s, false); break;
-			case CompMode::NORM: prover::compose(*this, sub_, s, true);  break;
-			case CompMode::DUAL: {
-				Subst ss(s);
-				prover::compose(ss, ss.sub_, *this, false);
-				if (checked && !consistent(ss)) {
-					ok_ = false;
-					return false;
-				}
-				prover::compose(*this, sub_, ss, true);
+#endif
+	if (checked && (!ok_ || !consistent(s))) {
+		ok_ = false;
+	} else {
+		switch (m) {
+		case CompMode::SEMI: prover::compose(*this, sub_, s, false); break;
+		case CompMode::NORM: prover::compose(*this, sub_, s, true);  break;
+		case CompMode::DUAL: {
+			Subst ss(s);
+			prover::compose(ss, ss.sub_, *this, false);
+			if (checked && !consistent(ss)) {
+				ok_ = false;
+				return false;
 			}
-			}
+			prover::compose(*this, sub_, ss, true);
 		}
-		return ok_;
+		}
+	}
+	return ok_;
+#ifdef DEBUG_SUBST
 	} catch (Error& err) {
 		err.msg += "AT COMPOSITION\n";
 		throw err;
 	}
+#endif
 }
 
 bool Subst::intersects(const Subst& sub) const {
 	for (const auto& p : sub) {
 		if (sub.maps(p.first)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Subst::composeable(const Subst& s) const {
-	set<uint> vars;
-	for (const auto& p : sub_) {
-		collect_vars(p.second, vars);
-	}
-	for (const auto& p : s) {
-		if (vars.find(p.first) != vars.end()) {
 			return true;
 		}
 	}

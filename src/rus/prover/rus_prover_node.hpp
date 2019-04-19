@@ -178,11 +178,5 @@ struct TimeStats {
 extern map<uint, TimeStats> stats;
 void print_down_unification_statistics();
 
-
-extern bool debug_unify_subs;
-extern bool debug_test_case;
-extern uint var_dom;
-extern uint var_im;
-
 }}}
 

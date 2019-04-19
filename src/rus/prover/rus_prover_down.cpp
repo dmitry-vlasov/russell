@@ -153,46 +153,13 @@ MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypInde
 	return ret;
 }
 
-/*
-bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
-	if (s1 == s2) return true;
-	if (s1.size() != s2.size()) {
-		if (verbose) {
-			cout << "sizes differ: " << s1.size() << " != " << s2.size() << endl;
-		}
-	}
-	vector<const Subst*> to_unify;
-	to_unify.push_back(&s1);
-	to_unify.push_back(&s2);
-	Subst unif = unify_subs(MultySubst(to_unify));
-	if (!unif.ok()) {
-		//don't unify
-		if (verbose) {
-			cout << "dont unify: " << unif.show() << endl;
-		}
-		return false;
-	}
-	for (const auto& p : unif) {
-		if (p.second.kind() != Term::VAR) {
-			// is not a var replacement
-			if (verbose) {
-				cout << "is not a var replacement: " << Lex::toStr(p.first) << ": " << p.second.show() << endl;
-			}
-			return false;
-		}
-	}
-	return true;
-}
-*/
-
 bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	if (s1 == s2) return true;
 	Subst s1_vars_inv;
 	Subst s1_terms;
 	for (const auto& p : s1) {
 		if (p.second.kind() == Term::VAR && !s2.maps(p.first)) {
-			//LightSymbol(uint l, const Type* t, ReplMode mode, uint i) :
-			LightSymbol w(p.first, nullptr, ReplMode::KEEP_REPL, 0);
+			LightSymbol w(p.first);
 			s1_vars_inv.compose(p.second.var().lit, Term(w));
 		} else {
 			s1_terms.compose(p.first, p.second);
