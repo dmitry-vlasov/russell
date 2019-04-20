@@ -15,6 +15,16 @@ uint slices_size(const Slices& slices) {
 	return sum_size;
 }
 
+uint slices_total_time(const Slices& slices) {
+	uint total_time = 0;
+	for (auto slice : slices) {
+		for (auto p : *slice.second) {
+			total_time += p.second;
+		}
+	}
+	return total_time;
+}
+
 double avg_slices(const Slices& slices) {
 	double sum_val = 0;
 	uint sum_size = 0;
@@ -58,6 +68,12 @@ void relative_times_stats(std::ostream& os, const Slices& seq, const Slices& mat
 	os << min_ratio << "\t" << max_ratio << "\t";
 }
 
+void total_times_stats(std::ostream& os, const Slices& seq, const Slices& mat) {
+	uint seq_time = slices_total_time(seq);
+	uint mat_time = slices_total_time(mat);
+	os << seq_time << "\t" << mat_time << "\t";
+}
+
 void print_down_unification_statistics() {
 	constexpr uint N = 10;
 	uint max_size = 0;
@@ -73,7 +89,7 @@ void print_down_unification_statistics() {
 	double factor = static_cast<double>(max_size) / m;
 	cout << "max size: " << max_size << endl;
 	cout << "sample size: " << sample_size << endl;
-	cout << "Sz_from\tsz_to\tsize\tseq\tmatrix\tratio\tavg_rat\tdev_rat\tmin_rat\tmax_rat" << endl;
+	cout << "Sz_from\tsz_to\tsize\tseq\tmatrix\tratio\tavg_rat\tdev_rat\tmin_rat\tmax_rat\ttotal_seq\ttotal_mat" << endl;
 	cout << "-------------------------------------------" << endl;
 	uint lower_boundary = 0;
 	uint i = 0;
@@ -97,6 +113,8 @@ void print_down_unification_statistics() {
 
 		avg_times_stats(cout, seq_slices, mat_slices);
 		relative_times_stats(cout, seq_slices, mat_slices);
+		total_times_stats(cout, seq_slices, mat_slices);
+
 		lower_boundary = upper_boundary;
 		cout << endl;
 	}
