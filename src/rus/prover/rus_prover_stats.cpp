@@ -46,6 +46,26 @@ uint slices_total_time(const Slices& slices) {
 	return total_time;
 }
 
+uint slices_min_time(const Slices& slices) {
+	uint min_time = INT_MAX;
+	for (auto slice : slices) {
+		for (auto p : *slice.second) {
+			min_time = std::min(p.second, min_time);
+		}
+	}
+	return min_time;
+}
+
+uint slices_max_time(const Slices& slices) {
+	uint max_time = 0;
+	for (auto slice : slices) {
+		for (auto p : *slice.second) {
+			max_time = std::max(p.second, max_time);
+		}
+	}
+	return max_time;
+}
+
 double avg_slices(const Slices& slices) {
 	double sum_val = 0;
 	uint sum_size = 0;
@@ -95,6 +115,16 @@ void total_times_stats(std::ostream& os, const Slices& seq, const Slices& mat) {
 	os << seq_time << "\t" << mat_time << "\t";
 }
 
+void min_max_times_stats(std::ostream& os, const Slices& seq, const Slices& mat) {
+	double min_seq = slices_min_time(seq);
+	double max_seq = slices_max_time(seq);
+	double min_mat = slices_min_time(mat);
+	double max_mat = slices_max_time(mat);
+
+	os << min_seq << "\t" << max_seq << "\t";
+	os << min_mat << "\t" << max_mat << "\t";
+}
+
 void print_down_unification_statistics() {
 	constexpr uint N = 10;
 	uint max_size = 0;
@@ -111,7 +141,8 @@ void print_down_unification_statistics() {
 	double factor = static_cast<double>(max_size) / m;
 	cout << "max size: " << max_size << endl;
 	cout << "sample size: " << sample_size << endl;
-	cout << "Sz_from\tsz_to\tsize\tseq\tmatrix\tratio\tavg_rat\tdev_rat\tmin_rat\tmax_rat\ttotal_seq\ttotal_mat" << endl;
+	cout << "Sz_from\tsz_to\tsize\tseq\tmatrix\tratio\tavg_rat\tdev_rat\tmin_rat\tmax_rat\ttotal_seq\ttotal_mat\t";
+	cout << "min_seq\tmax_seq\tmin_mat\tmax_mat\t";
 	cout << "-------------------------------------------" << endl;
 	uint lower_boundary = 0;
 	uint i = 0;
@@ -137,6 +168,7 @@ void print_down_unification_statistics() {
 		avg_times_stats(cout, seq_slices, mat_slices);
 		relative_times_stats(cout, seq_slices, mat_slices);
 		total_times_stats(cout, seq_slices, mat_slices);
+		min_max_times_stats(cout, seq_slices, mat_slices);
 
 		lower_boundary = upper_boundary;
 		cout << endl;
