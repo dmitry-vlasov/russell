@@ -65,10 +65,13 @@ bool ProofExp::equal(const ProofNode* n) const {
 
 string show_struct(const ProofNode* n);
 
+//#define VERIFY_PROOF_EXP
+
 ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
 	ProofHyp(hy, s, s.apply(hy.expr), hi), child(c) {
 	child->parent = this;
 	child->new_ = false;
+#ifdef VERIFY_PROOF_EXP
 	try {
 		rus::Proof* pr = proof();
 		//cout << "PROOF: " << *pr << endl;
@@ -78,8 +81,10 @@ ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
 		cout << show_struct(this) << endl;
 		throw err;
 	}
-
+#endif
 }
+
+//#define VERIFY_PROOF_PROP
 
 ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h) :
 	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
@@ -87,6 +92,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h
 		p->parents.push_back(this);
 		p->new_ = false;
 	}
+#ifdef VERIFY_PROOF_PROP
 	if (n.prop.ass->arity() > 0) {
 		Subst s0 = premises[0]->sub;
 		s0.compose(sub, CompMode::NORM, false);
@@ -107,7 +113,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h
 			}
 		}
 	}
-
+#endif
 }
 
 ProofProp::~ProofProp() {

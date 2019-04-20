@@ -85,11 +85,14 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	return ret;
 }
 
+//#define VERIFY_UNIQUE_PROOFS
+
 bool Prop::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
 			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub, p->hint);
+#ifdef VERIFY_UNIQUE_PROOFS
 			if (proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : parent->proofs) {
@@ -101,6 +104,7 @@ bool Prop::buildDown(set<Node*>& downs) {
 					}
 				}
 			}
+#endif
 			parent->proofs.emplace_back(hp);
 			new_proofs = true;
 		}
