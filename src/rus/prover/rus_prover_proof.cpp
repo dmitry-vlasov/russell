@@ -30,7 +30,7 @@ ProofHyp::~ProofHyp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
-	ProofHyp(n, s, apply(s, Tree2FlatTerm(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
+	ProofHyp(n, s, s.apply(Tree2FlatTerm(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -66,7 +66,7 @@ bool ProofExp::equal(const ProofNode* n) const {
 string show_struct(const ProofNode* n);
 
 ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
-	ProofHyp(hy, s, apply(s, hy.expr), hi), child(c) {
+	ProofHyp(hy, s, s.apply(hy.expr), hi), child(c) {
 	child->parent = this;
 	child->new_ = false;
 	try {
@@ -89,10 +89,10 @@ ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h
 	}
 	if (n.prop.ass->arity() > 0) {
 		Subst s0 = premises[0]->sub;
-		compose(s0, sub);
+		s0.compose(sub, CompMode::NORM, false);
 		for (uint i = 0; i < premises.size(); ++ i) {
 			Subst si = premises[i]->sub;
-			compose(si, sub);
+			si.compose(sub, CompMode::NORM, false);
 			if (s0 != si) {
 				string err;
 				err += "s0 != s" + to_string(i) + "\n";

@@ -202,6 +202,16 @@ uint Term::linearLen() const {
 	return l;
 }
 
+set<uint> Term::vars() const {
+	set<uint> ret;
+	for (const auto& n : nodes) {
+		if (n.ruleVar.isVar()) {
+			ret.insert(n.ruleVar.var.lit);
+		}
+	}
+	return ret;
+}
+
 Term::Iterator fill_in_flatterm(Term::Iterator& ft, const Tree* t, ReplMode mode, uint ind) {
 	auto n = ft;
 	auto end = ft;

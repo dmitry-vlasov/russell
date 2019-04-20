@@ -23,16 +23,8 @@ struct Stats {
 private:
 	void compute_expr_stats() {
 		if (needs_computation) {
-			double sum_len = 0;
-			for (uint len : lengths) {
-				sum_len += len;
-			}
-			avg_len = sum_len / lengths.size();
-			double sum_dev = 0;
-			for (uint len : lengths) {
-				sum_dev += (len - avg_len) * (len - avg_len);
-			}
-			dev_len = sqrt(sum_dev / lengths.size());
+			avg_len = avg(lengths);
+			dev_len = stdev(lengths);
 		}
 	}
 	bool needs_computation = true;

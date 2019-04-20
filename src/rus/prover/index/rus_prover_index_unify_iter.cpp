@@ -41,7 +41,7 @@ static vector<UnifyIters> do_unify_general(const UnifyIters& begins);
 static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
 
 static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
-	vector<Term> to_unify({apply(s, term)});
+	vector<Term> to_unify({s.apply(term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
 			const Term& t = s.map(v);
@@ -64,7 +64,7 @@ static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
 			UnifyIters end = ends[0];
 			s.compose(end.sub);
 			Term term_orig = begin.iters[0].subTerm(end.iters[0]);
-			Term unified = apply(end.sub, term_orig);
+			Term unified = end.sub.apply(term_orig);
 			for (auto v : vars) {
 				if (!s.compose(Subst(v, unified))) {
 					return Term();
@@ -227,10 +227,11 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 				vector<UnifyIters> subEnds = i.sub.maps(data.var) ?
 					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
 					do_unify_general(subBegins);
+				//vector<UnifyIters> subEnds = do_unify_general(subBegins);
 				for (const auto& ends : subEnds) {
 					MultyIter i0 = ends.iters[0];
 					Term term_orig = subBegins.iters[0].subTerm(i0);
-					Term term_applied = apply(ends.sub, term_orig);
+					Term term_applied = ends.sub.apply(term_orig);
 					Subst s = unify_step(i.sub, data.vars, term_applied);
 					s.compose(ends.sub.complement(s.dom()));
 					if (s.ok()) {
@@ -361,7 +362,7 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& begin) {
 	map<vector<uint>, FlatTermSubst> ret;
 	for (const auto& end : do_unify_general(begin)) {
-		Term term = apply(end.sub, begin.iters[0].subTerm(end.iters[0]));
+		Term term = end.sub.apply(begin.iters[0].subTerm(end.iters[0]));
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, FlatTermSubst(term, end.sub));
 		}

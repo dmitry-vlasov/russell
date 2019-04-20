@@ -169,13 +169,9 @@ struct ProofHypIndexed {
 string showNodeProofs(const Node* n, uint limit = -1);
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
 
-
-struct TimeStats {
-	vector<uint> sequential;
-	vector<uint> matrix;
-};
-
-extern map<uint, TimeStats> stats;
+// Statistics:
+void add_sequential_stats(uint card, uint count, uint time);
+void add_matrix_stats(uint card, uint count, uint time);
 void print_down_unification_statistics();
 
 }}}

@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+//#define DEBUG_SUBST
+
 void Subst::operator = (const Subst& s) {
 	ok_ = s.ok_;
 	sub_.clear();
@@ -34,7 +36,7 @@ bool Subst::operator != (const Subst& s) const {
 	return !operator ==(s);
 }
 
-void collect_vars(const Term& term, set<uint>& vars) {
+static void collect_vars(const Term& term, set<uint>& vars) {
 	for (const auto& n : term.nodes) {
 		if (n.ruleVar.isVar()) {
 			vars.insert(n.ruleVar.var.lit);
@@ -42,19 +44,19 @@ void collect_vars(const Term& term, set<uint>& vars) {
 	}
 }
 
-bool consistent(const Subst* s, uint v, const Term& t) {
+static bool consistent(const Subst& s, uint v, const Term& t) {
 	set<uint> x_vars;
 	collect_vars(t, x_vars);
 	if (x_vars.find(v) != x_vars.end()) {
 		return false;
 	}
-	if (s->maps(v)) {
-		return t == s->map(v);
+	if (s.maps(v)) {
+		return t == s.map(v);
 	} else {
 		for (uint x : x_vars) {
-			if (s->maps(x)) {
+			if (s.maps(x)) {
 				set<uint> y_vars;
-				const Term& p = s->map(x);
+				const Term& p = s.map(x);
 				collect_vars(p, y_vars);
 				if (y_vars.find(v) != y_vars.end()) {
 					if (p.kind() == Term::VAR && p.var() == v &&
@@ -72,80 +74,113 @@ bool consistent(const Subst* s, uint v, const Term& t) {
 
 bool Subst::consistent(const Subst& sub) const {
 	for (const auto& p : sub) {
-		if (!prover::consistent(this, p.first, p.second)) {
+		if (!prover::consistent(*this, p.first, p.second)) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void compose(Subst& s1, const Subst& s2, bool full) {
-	Subst ret;
+#ifdef DEBUG_SUBST
+static void verify_chains(const Subst& s) {
+	for (const auto& p : s) {
+		for (uint v : p.second.vars()) {
+			if (s.maps(v)) {
+				throw Error("chain in composition:\n" + s.show());
+			}
+		}
+	}
+}
+
+static void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, bool norm) {
+	set<uint> vars = norm ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
+	for (uint v : vars) {
+		LightSymbol var(v);
+		Term t0(var);
+		Term t1 = comp.apply(var);
+		Term t2 = s2.apply(s1.apply(var));
+		if (t1 != t2) {
+			string msg;
+			msg += "v: " + Lex::toStr(v) + "\n";
+			msg += "comp(v): " + t1.show() + "\n";
+			msg += "s2(s1(v)): " + t2.show() + "\n";
+			throw Error("wrong composition:\n" + msg);
+		}
+	}
+}
+#endif
+
+static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bool norm) {
+#ifdef DEBUG_SUBST
+	Subst s0(s1);
+#endif
 	hset<uint> vars;
 	vector<uint> to_erase;
-	for (const auto& p : s1) {
-		Term ex = apply(s2, p.second);
+	for (auto& p : sub_) {
+		Term ex = s2.apply(p.second);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
-			s1.sub_[p.first] = std::move(ex);
-			vars.insert(p.first);
+			p.second = std::move(ex);
 		} else {
-			if (full) {
-				to_erase.push_back(p.first);
-			} else {
-				vars.insert(ex.var().lit);
-			}
+			to_erase.push_back(p.first);
 		}
+		vars.insert(p.first);
 	}
 	for (uint v : to_erase) {
-		s1.sub_.erase(v);
+		sub_.erase(v);
 	}
-	if (full) {
+	if (norm) {
 		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				s1.sub_[p.first] = p.second;
+				sub_[p.first] = p.second;
 			}
 		}
 	}
+#ifdef DEBUG_SUBST
+	try {
+		verify_chains(s1);
+		verify_composition(s1, s0, s2, norm);
+	} catch (Error& err) {
+		err.msg += "s1:\n" + s0.show() + "\n";
+		err.msg += "s2:\n" + s2.show() + "\n";
+		err.msg += "comp:\n" + s1.show() + "\n";
+		throw err;
+	}
+#endif
 }
 
-bool Subst::compose(const Subst& s, bool full) {
-	if (!ok_ || !consistent(s)) {
+bool Subst::compose(const Subst& s, CompMode m, bool checked) {
+#ifdef DEBUG_SUBST
+	try {
+#endif
+	if (checked && (!ok_ || !consistent(s))) {
 		ok_ = false;
 	} else {
-		prover::compose(*this, s, full);
+		switch (m) {
+		case CompMode::SEMI: prover::compose(*this, sub_, s, false); break;
+		case CompMode::NORM: prover::compose(*this, sub_, s, true);  break;
+		case CompMode::DUAL: {
+			Subst ss(s);
+			prover::compose(ss, ss.sub_, *this, false);
+			if (checked && !consistent(ss)) {
+				ok_ = false;
+				return false;
+			}
+			prover::compose(*this, sub_, ss, true);
+		}
+		}
 	}
 	return ok_;
-}
-
-bool Subst::bicompose(const Subst& s) {
-	if (!s.consistent(*this)) {
-		return false;
+#ifdef DEBUG_SUBST
+	} catch (Error& err) {
+		err.msg += "AT COMPOSITION\n";
+		throw err;
 	}
-	Subst ss(s);
-	prover::compose(ss, *this, false);
-	if (!consistent(ss)) {
-		return false;
-	}
-	prover::compose(*this, ss, true);
-	return true;
+#endif
 }
 
 bool Subst::intersects(const Subst& sub) const {
 	for (const auto& p : sub) {
 		if (sub.maps(p.first)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Subst::composeable(const Subst& s) const {
-	set<uint> vars;
-	for (const auto& p : sub_) {
-		collect_vars(p.second, vars);
-	}
-	for (const auto& p : s) {
-		if (vars.find(p.first) != vars.end()) {
 			return true;
 		}
 	}
@@ -164,20 +199,21 @@ string Subst::show() const {
 	return str;
 }
 
-uint applied_len(const Subst& s, const Term& t) {
-	uint len = t.nodes.size();
-	for (const auto& n : t.nodes) {
-		if (n.ruleVar.isVar() && s.maps(n.ruleVar.var)) {
-			const Term& term = s.map(n.ruleVar.var);
-			if (!term.empty()) {
-				len += term.nodes.size() - 1;
-			}
+string Subst::showVars(const set<uint>& vars) const {
+	string str;
+	str += "OK = " + (ok_ ? string("TRUE") : string("FALSE")) + "\n";
+	if (!sub_.size()) {
+		str += "empty\n";
+	}
+	for (const auto& p : sub_) {
+		if (vars.count(p.first)) {
+			str += Lex::toStr(p.first) + " --> " + p.second.show() + "\n";
 		}
 	}
-	return len;
+	return str;
 }
 
-Term apply(const Subst& s, const Term& t) {
+Term Subst::apply(const Term& t) const {
 	uint len = 0;
 	vector<uint> beg_shifts;
 	vector<uint> end_shifts;
@@ -185,14 +221,10 @@ Term apply(const Subst& s, const Term& t) {
 	for (uint k = 0; k < t.nodes.size(); ++ k, ++ len) {
 		const auto& n = t.nodes[k];
 		beg_shifts.push_back(len);
-		if (n.ruleVar.isVar()) {
-			const Term& term = s.map(n.ruleVar.var);
-			if (!term.empty()) {
-				len += term.nodes.size() - 1;
-				subs.push_back(&term);
-			} else {
-				subs.push_back(nullptr);
-			}
+		if (n.ruleVar.isVar() && maps(n.ruleVar.var)) {
+			const Term& term = map(n.ruleVar.var);
+			len += term.nodes.size() - 1;
+			subs.push_back(&term);
 		} else {
 			subs.push_back(nullptr);
 		}
@@ -210,22 +242,6 @@ Term apply(const Subst& s, const Term& t) {
 	}
 	return ret;
 }
-
-Subst compose(const Subst& s1, const Subst& s2) {
-	Subst ret(s1);
-	ret.compose(s2);
-	return ret;
-}
-
-bool composable(const Subst& s1, const Subst& s2) {
-	for (const auto& p : s1) {
-		if (s2.maps(p.first)) {
-			return true;
-		}
-	}
-	return false;
-}
-
 
 Subst Substitution2FlatSubst(const Substitution& sub) {
 	Subst ret;

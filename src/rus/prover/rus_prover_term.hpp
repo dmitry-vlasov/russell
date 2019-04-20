@@ -15,7 +15,8 @@ struct LightSymbol {
 		ASSERTION_INDEX = 1,
 		INTERNAL_MIN_INDEX = 2
 	};
-	LightSymbol() : lit(undef_value()), rep(false), ind(-1), type(nullptr)  { }
+	LightSymbol() : lit(undef_value()), rep(false), ind(-1), type(nullptr) { }
+	explicit LightSymbol(uint l, bool r = true) : lit(l), rep(r), ind(-1), type(nullptr) { }
 	LightSymbol(uint l, const Type* t, ReplMode mode, uint i) :
 		lit(i == MATH_INDEX ? l :
 			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(l) + "!") :
@@ -164,9 +165,10 @@ struct Term {
 	void verify() const;
 	uint linearLen() const; // Length of a corresponding linear expression
 	uint len() const { return nodes.size(); }
+	set<uint> vars() const;
 
 	vector<Node> nodes;
-	string show(bool simple = false) const;
+	string show(bool simple = false) const; // simple = false for corresponding linear expression
 	string show_pointers() const;
 };
 
