@@ -4,6 +4,31 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+struct CTimeStats {
+	// map arg stands for the matrix number
+	cmap<uint, uint> sequential;
+	cmap<uint, uint> matrix;
+};
+
+// map arg stands for unification cardinality
+static cmap<uint, CTimeStats> cstats;
+
+void add_sequential_stats(uint card, uint count, uint time) {
+	cmap<uint, CTimeStats>::accessor a;
+	cstats.insert(a, card);
+	cmap<uint, uint>::accessor b;
+	a->second.sequential.insert(b, count);
+	b->second = time;
+}
+
+void add_matrix_stats(uint card, uint count, uint time) {
+	cmap<uint, CTimeStats>::accessor a;
+	cstats.insert(a, card);
+	cmap<uint, uint>::accessor b;
+	a->second.matrix.insert(b, count);
+	b->second = time;
+}
+
 struct TimeStats {
 	// map arg stands for the matrix number
 	map<uint, uint> sequential;
@@ -11,17 +36,25 @@ struct TimeStats {
 };
 
 // map arg stands for unification cardinality
-map<uint, TimeStats> stats;
+map<uint, TimeStats> make_stats(const cmap<uint, CTimeStats>& s) {
+	map<uint, TimeStats> ret;
+	for (const auto& p : s) {
+		uint card = p.first;
+		for (const auto& q : p.second.sequential) {
+			uint count = q.first;
+			uint time =  q.second;
+			ret[card].sequential[count] = time;
+		}
+		for (const auto& q : p.second.matrix) {
+			uint count = q.first;
+			uint time =  q.second;
+			ret[card].matrix[count] = time;
+		}
+	}
+	return ret;
+}
 
 typedef map<uint, const map<uint, uint>*> Slices;
-
-void add_sequential_stats(uint card, uint count, uint time) {
-	stats[card].sequential[count] = time;
-}
-
-void add_matrix_stats(uint card, uint count, uint time) {
-	stats[card].matrix[count] = time;
-}
 
 uint slices_size(const Slices& slices) {
 	uint sum_size = 0;
@@ -94,6 +127,9 @@ void print_down_unification_statistics() {
 	constexpr uint N = 10;
 	uint max_size = 0;
 	uint sample_size = 0;
+
+	map<uint, TimeStats> stats = make_stats(cstats);
+
 	for (const auto& p : stats) {
 		if (p.first > max_size) max_size = p.first;
 		if (p.second.sequential.size() != p.second.matrix.size()) {
