@@ -233,7 +233,8 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 #define CHECK_MATRIX_UNIFICATION
-//#define SHOW_MATRIXES
+#define SHOW_MATRIXES
+//#define VERIFY_UNIQUE_PROOFS
 
 inline uint expr_len_threshold() {
 	return expr::Stats::stats().avgLen() + 2 * expr::Stats::stats().devLen();
@@ -323,6 +324,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		}
 		try {
 			ProofProp* pp = new ProofProp(*pr, ch, p.second, hint);
+#ifdef VERIFY_UNIQUE_PROOFS
 			if (pr->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : pr->proofs) {
@@ -334,6 +336,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 					}
 				}
 			}
+#endif
 			pr->proofs.emplace_back(pp);
 		} catch (Error& err) {
 			string msg;

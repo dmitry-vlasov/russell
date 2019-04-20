@@ -62,7 +62,6 @@ bool ProofExp::equal(const ProofNode* n) const {
 	}
 }
 
-
 string show_struct(const ProofNode* n);
 
 //#define VERIFY_PROOF_EXP
