@@ -100,11 +100,17 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
 			for (const auto& pr : th->proofs) {
 				Return r = test_proof_with_oracle(-1, pr.get(), max_proofs);
-					if (!r.success()) {
-						debug_oracle = true;
-						//test_proof_with_oracle(pr.get());
-						return r;
-					}
+				if (!r.success()) {
+					debug_oracle = true;
+					//test_proof_with_oracle(pr.get());
+					return r;
+				}
+				cout << "max_expr_length: " << expr::Stats::stats().maxLen() << endl;
+				cout << "avg_expr_length: " << expr::Stats::stats().avgLen() << endl;
+				cout << "dev_expr_length: " << expr::Stats::stats().devLen() << endl;
+				cout << "max_expr: " << *expr::Stats::stats().maxLenExpr() << endl;
+				cout << endl;
+				print_down_unification_statistics();
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");
 		} else {

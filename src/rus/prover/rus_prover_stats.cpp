@@ -159,19 +159,20 @@ void print_down_unification_statistics() {
 		}
 		uint seq_slices_size = slices_size(seq_slices);
 		uint mat_slices_size = slices_size(mat_slices);
-		if (seq_slices_size != mat_slices_size) {
-			cerr << "slices sizes must be equal: " << seq_slices_size << " != " << mat_slices_size << endl;
-			throw Error("slices sizes must be equal");
+		if (seq_slices_size) {
+			if (seq_slices_size != mat_slices_size) {
+				cerr << "slices sizes must be equal: " << seq_slices_size << " != " << mat_slices_size << endl;
+				throw Error("slices sizes must be equal");
+			}
+			cout << lower_boundary << "\t" << upper_boundary << "\t" << seq_slices_size << "\t";
+
+			avg_times_stats(cout, seq_slices, mat_slices);
+			relative_times_stats(cout, seq_slices, mat_slices);
+			total_times_stats(cout, seq_slices, mat_slices);
+			min_max_times_stats(cout, seq_slices, mat_slices);
+			cout << endl;
 		}
-		cout << lower_boundary << "\t" << upper_boundary << "\t" << seq_slices_size << "\t";
-
-		avg_times_stats(cout, seq_slices, mat_slices);
-		relative_times_stats(cout, seq_slices, mat_slices);
-		total_times_stats(cout, seq_slices, mat_slices);
-		min_max_times_stats(cout, seq_slices, mat_slices);
-
 		lower_boundary = upper_boundary;
-		cout << endl;
 	}
 	cout << endl;
 }

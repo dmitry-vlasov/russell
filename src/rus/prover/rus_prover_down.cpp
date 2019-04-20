@@ -266,6 +266,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #ifdef CHECK_MATRIX_UNIFICATION
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
 	timer.stop();
+	uint seq_time = timer.getMicroseconds();
 	add_sequential_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_1.size() > 1) {
@@ -278,6 +279,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	timer.start();
 	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
 	timer.stop();
+	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_2.size() > 1) {
@@ -295,6 +297,14 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif
+
+	if (mat_time > 10 * 1000 * 1000) {
+		cout << "LONG MATRIX TIME: " << timer << endl;
+		cout << "SEQ TIME: " << double(seq_time) / 1000000 << "s." << endl;
+		cout << "CARD: " << card << endl;
+		cout << "THEOREM: " << Lex::toStr(pr->space->theorem()->id()) << endl;
+		//cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
+	}
 
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;

@@ -59,6 +59,7 @@ struct Space {
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
+	const Assertion* theorem() const { return prop_.ass; }
 
 private:
 	Proof*            proof = nullptr; // for Oracle tactic
