@@ -252,8 +252,9 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "Limit: " << limit.show(false) << endl << endl;
 	}
 
-	static int count = 0;
-	count++;
+	static atomic<int> counter = 0;
+	counter++;
+	uint count = counter;
 
 	uint card = limit.cardChosen();
 

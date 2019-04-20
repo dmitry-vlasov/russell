@@ -168,8 +168,9 @@ void parse() {
 #ifdef PARALLEL_PARSE_EXPR
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),
 		[] (const tbb::blocked_range<size_t>& r) {
-			for (size_t i = r.begin(); i != r.end(); ++i)
+			for (size_t i = r.begin(); i != r.end(); ++i) {
 				parse(queue[i]);
+			}
 		}
 	);
 #else
