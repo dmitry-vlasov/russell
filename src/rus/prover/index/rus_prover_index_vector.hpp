@@ -300,6 +300,11 @@ struct Vector{
 		VectorUnifiedUnion ret;
 		if (!empty()) {
 			CartesianProd<bool> skipped_variants;
+
+			if (skipped_variants.card() > 256) {
+				cout << endl << endl << endl << "SKIPPED_VARIANTS.card() = " << skipped_variants.card() << endl << endl;
+			}
+
 			for (auto& c : vect) {
 				if (c->extraInds().size()) {
 					if (c->exprs().empty()) {
