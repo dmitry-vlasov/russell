@@ -4,8 +4,24 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+struct TimeStats {
+	// map arg stands for the matrix number
+	map<uint, uint> sequential;
+	map<uint, uint> matrix;
+};
+
+// map arg stands for unification cardinality
 map<uint, TimeStats> stats;
+
 typedef map<uint, const map<uint, uint>*> Slices;
+
+void add_sequential_stats(uint card, uint count, uint time) {
+	stats[card].sequential[count] = time;
+}
+
+void add_matrix_stats(uint card, uint count, uint time) {
+	stats[card].matrix[count] = time;
+}
 
 uint slices_size(const Slices& slices) {
 	uint sum_size = 0;
