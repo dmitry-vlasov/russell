@@ -1,5 +1,8 @@
 #pragma once
 
+#include <numeric>
+#include <cmath>
+
 #include "std.hpp"
 #include "location.hpp"
 #include "timer.hpp"
@@ -34,7 +37,7 @@ set_unique_ptr<T> make_find_ptr(T* raw){
 }
 
 template<class T>
-inline uint find_in_vector(const vector<unique_ptr<T>>& pv, const T* pn) {
+uint find_in_vector(const vector<unique_ptr<T>>& pv, const T* pn) {
 	uint i = 0;
 	for (auto& p : pv) {
 		if (p.get() == pn) {
@@ -46,7 +49,7 @@ inline uint find_in_vector(const vector<unique_ptr<T>>& pv, const T* pn) {
 }
 
 template<class T>
-inline uint find_in_vector(const vector<T*>& pv, const T* pn) {
+uint find_in_vector(const vector<T*>& pv, const T* pn) {
 	uint i = 0;
 	for (auto& p : pv) {
 		if (p == pn) {
@@ -58,7 +61,7 @@ inline uint find_in_vector(const vector<T*>& pv, const T* pn) {
 }
 
 template<class T>
-inline vector<T> unite_sorted(const vector<T>& right, const vector<T>& left) {
+vector<T> unite_sorted(const vector<T>& right, const vector<T>& left) {
 	vector<T> ret(right.size() + left.size());
 	auto end = std::merge(right.begin(), right.end(), left.begin(), left.end(), ret.begin());
 	ret.resize(end - ret.begin());
@@ -66,7 +69,7 @@ inline vector<T> unite_sorted(const vector<T>& right, const vector<T>& left) {
 }
 
 template<class T>
-inline bool sets_intersect(const set<T>& right, const set<T>& left) {
+bool sets_intersect(const set<T>& right, const set<T>& left) {
 	for (const T& t : right) {
 		if (left.count(t)) {
 			return true;
@@ -76,7 +79,7 @@ inline bool sets_intersect(const set<T>& right, const set<T>& left) {
 }
 
 template<class T>
-inline set<T> sets_unite(const set<T>& right, const set<T>& left) {
+set<T> sets_unite(const set<T>& right, const set<T>& left) {
 	set<T> ret;
 	for (const T& t : right) {
 		ret.insert(t);
@@ -85,6 +88,47 @@ inline set<T> sets_unite(const set<T>& right, const set<T>& left) {
 		ret.insert(t);
 	}
 	return ret;
+}
+
+template<class T1, class T2>
+vector<T1> map_keys(const map<T1, T2>& m) {
+	vector<T1> ret;
+	for (const auto& p : m) {
+		ret.push_back(p.first);
+	}
+	return ret;
+}
+
+template<class T1, class T2>
+vector<T2> map_values(const map<T1, T2>& m) {
+	vector<T2> ret;
+	for (const auto& p : m) {
+		ret.push_back(p.second);
+	}
+	return ret;
+}
+
+// Average
+template<typename T>
+double avg(const vector<T>& v) {
+	return std::accumulate(v.begin(), v.end(), 0.0, [](T s, T a) { return a + s; }) / v.size();
+}
+
+// Standard deviation
+template<typename T>
+double stdev(const vector<T>& v) {
+	double a = avg(v);
+	return sqrt(std::accumulate(v.begin(), v.end(), 0.0, [a](T s, T t) { return s + (t - a) * (t - a); }) / v.size());
+}
+
+template<typename T>
+T vect_min(const vector<T>& v) {
+	return std::accumulate(v.begin(), v.end(), std::numeric_limits<T>::max(), [](T t, T a) { return std::min(a, t); });
+}
+
+template<typename T>
+T vect_max(const vector<T>& v) {
+	return std::accumulate(v.begin(), v.end(), std::numeric_limits<T>::min(), [](T t, T a) { return std::max(a, t); });
 }
 
 template<class T> struct Undef;

@@ -171,10 +171,12 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
 
 
 struct TimeStats {
-	vector<uint> sequential;
-	vector<uint> matrix;
+	// map arg stands for the matrix number
+	map<uint, uint> sequential;
+	map<uint, uint> matrix;
 };
 
+// map arg stands for unification cardinality
 extern map<uint, TimeStats> stats;
 void print_down_unification_statistics();
 

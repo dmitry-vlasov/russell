@@ -227,6 +227,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 				vector<UnifyIters> subEnds = i.sub.maps(data.var) ?
 					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
 					do_unify_general(subBegins);
+				//vector<UnifyIters> subEnds = do_unify_general(subBegins);
 				for (const auto& ends : subEnds) {
 					MultyIter i0 = ends.iters[0];
 					Term term_orig = subBegins.iters[0].subTerm(i0);
