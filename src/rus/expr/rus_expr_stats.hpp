@@ -25,6 +25,7 @@ private:
 		if (needs_computation) {
 			avg_len = avg(lengths);
 			dev_len = stdev(lengths);
+			needs_computation = false;
 		}
 	}
 	bool needs_computation = true;
