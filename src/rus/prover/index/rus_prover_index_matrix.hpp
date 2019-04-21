@@ -76,4 +76,6 @@ private:
 	bool empty_;
 };
 
+MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif);
+
 }}}}
