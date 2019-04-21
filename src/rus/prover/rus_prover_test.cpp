@@ -92,6 +92,13 @@ Return test_all_with_oracle(uint max_proofs) {
 	return Return("Massive prover testing with oracle succeeded :)");
 }
 
+namespace index {
+	extern Timer unify_timer;
+	extern Timer intersect_timer;
+}
+extern Timer seq_unify;
+extern Timer mat_unify;
+
 Return test_with_oracle(string theorem, uint max_proofs) {
 	if (!theorem.size()) {
 		return test_all_with_oracle(max_proofs);
@@ -111,6 +118,11 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "max_expr: " << *expr::Stats::stats().maxLenExpr() << endl;
 				cout << endl;
 				print_down_unification_statistics();
+				cout << "index::unify_timer: " << index::unify_timer << endl;
+				cout << "index::intersect_timer: " << index::intersect_timer << endl;
+				cout << "seq_unify: " << seq_unify << endl;
+				cout << "mat_unify: " << mat_unify << endl;
+
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");
 		} else {

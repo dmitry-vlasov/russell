@@ -438,6 +438,9 @@ string Matrix::card_str() const {
 	return ret;
 }
 
+Timer unify_timer;
+Timer intersect_timer;
+
 MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -455,6 +458,7 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 		return MultyUnifiedSubs();
 	}
 	map<uint, VectorUnifiedUnion> unified_columns;
+	unify_timer.start();
 	for (auto& p : mindex_) {
 		uint var = p.first;
 		Vector* vect = p.second.get();
@@ -468,7 +472,13 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 			throw err;
 		}
 	}
-	return intersect(unified_columns, unif);
+	unify_timer.stop();
+
+	intersect_timer.start();
+	MultyUnifiedSubs ret = intersect(unified_columns, unif);
+	intersect_timer.stop();
+
+	return ret;
 }
 
 string Matrix::show() const {

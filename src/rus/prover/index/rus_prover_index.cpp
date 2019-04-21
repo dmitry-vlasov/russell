@@ -95,9 +95,10 @@ void Index::verify(bool show) const {
 
 static void markup_ends(Index::Node& root, const Term& t) {
 	struct NodePair {
-		NodePair(Index::Iterator t, Term::ConstIterator e) : trie(t), end(e) { }
+		NodePair(Index::Iterator t, Term::ConstIterator e, uint l) : trie(t), end(e), len(l) { }
 		Index::Iterator trie;
 		Term::ConstIterator end;
+		uint len;
 	};
 	stack<NodePair> st;
 	Index::Node* n = &root;
@@ -107,9 +108,11 @@ static void markup_ends(Index::Node& root, const Term& t) {
 		auto ni = n->nodes.find(i->ruleVar);
 		n = &ni->second;
 		it = ni;
-		st.emplace(ni, i->end);
+		st.emplace(ni, i->end, i->end - i);
 		while (!st.empty() && st.top().end == i) {
 			st.top().trie->second.ends.insert(ni);
+			//ni->second.begins.insert(st.top().trie);
+			ni->second.lens.push_back(st.top().len);
 			st.pop();
 		}
 	}
@@ -126,16 +129,11 @@ static Term create_flatterm(const vector<Index::Iter>& branch) {
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
 		ft.nodes[i].ruleVar = branch[i].iter()->first;
-		for (auto end : branch[i].iter()->second.ends) {
-			for (uint j = i; j < branch.size(); ++ j) {
-				if (branch[j].iter() == end) {
-					ft.nodes[i].end = ft.nodes.begin() + j;
-
-					goto out;
-				}
+		for (uint len : branch[i].iter()->second.lens) {
+			if (i >= len) {
+				ft.nodes[i - len].end = ft.nodes.begin() + i;
 			}
 		}
-		out:;
 	}
 	ft.verify();
 	return ft;

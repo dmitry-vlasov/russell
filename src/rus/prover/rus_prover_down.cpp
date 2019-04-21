@@ -21,11 +21,20 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 			if (x.get() != hy) {
 				ind.addDim(limit->descrVect()[i].chosen);
 			} else {
+				uint fixed_ind = -1;
 				vector<uint> inds;
-				for (uint j : limit->descrVect()[i].chosen) {
-					inds.push_back(limit->descrVect()[i].all[j]);
+				for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
+					uint j = limit->descrVect()[i].chosen[k];
+					uint cur_ind = limit->descrVect()[i].all[j];
+					if (cur_ind == hi.ind) {
+						fixed_ind = k;
+					}
+					inds.push_back(cur_ind);
 				}
-				ind.addFixedData(inds, hi.ind);
+				if (fixed_ind == -1) {
+					throw Error("fixed index: " + to_string(hi.ind) + " is not found");
+				}
+				ind.addFixedIndex(inds, fixed_ind);
 			}
 		}
 	} else {
@@ -236,6 +245,9 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 #define SHOW_MATRIXES
 //#define VERIFY_UNIQUE_PROOFS
 
+Timer seq_unify;
+Timer mat_unify;
+
 inline uint expr_len_threshold() {
 	return expr::Stats::stats().avgLen() + 2 * expr::Stats::stats().devLen();
 	//return expr::Stats::stats().maxLen();
@@ -260,32 +272,36 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	uint card = limit.cardChosen();
 
 #ifdef SHOW_MATRIXES
+	cout << endl;
 	cout << "Matrix no. " << count << ", card: " << card << endl;
 #endif
 
-	Timer timer; timer.start();
+	Timer timer;
 #ifdef CHECK_MATRIX_UNIFICATION
+	timer.start();
+	seq_unify.start();
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
+	seq_unify.stop();
 	timer.stop();
 	uint seq_time = timer.getMicroseconds();
 	add_sequential_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_1.size() > 1) {
-		cout << "sequntial unification: " << timer << endl;
-		cout << "results with " << unified_subs_1.size() << " variants " << endl << endl;
+		cout << "sequntial unification: " << timer << " results with " << unified_subs_1.size() << " variants " << endl;
 	}
 #endif
 #endif
 	timer.clear();
 	timer.start();
+	mat_unify.start();
 	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
+	mat_unify.stop();
 	timer.stop();
 	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
 	if (unified_subs_2.size() > 1) {
-		cout << "matrix unification: " << timer << endl;
-		cout << "results with " << unified_subs_2.size() << " variants " << endl;
+		cout << "matrix unification:    " << timer << " results with " << unified_subs_2.size() << " variants " << endl;
 	}
 #endif
 
