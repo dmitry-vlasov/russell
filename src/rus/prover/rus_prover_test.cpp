@@ -122,6 +122,11 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "index::intersect_timer: " << index::intersect_timer << endl;
 				cout << "seq_unify: " << seq_unify << endl;
 				cout << "mat_unify: " << mat_unify << endl;
+				cout << endl;
+				cout << "index::unify_timer: " << index::unify_timer.getCumulativeSeconds() << endl;
+				cout << "index::intersect_timer: " << index::intersect_timer.getCumulativeSeconds() << endl;
+				cout << "seq_unify: " << seq_unify.getCumulativeSeconds() << endl;
+				cout << "mat_unify: " << mat_unify.getCumulativeSeconds() << endl;
 
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");

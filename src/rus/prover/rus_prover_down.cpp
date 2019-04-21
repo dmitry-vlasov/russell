@@ -245,8 +245,8 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 #define SHOW_MATRIXES
 //#define VERIFY_UNIQUE_PROOFS
 
-Timer seq_unify;
-Timer mat_unify;
+Timer seq_unify(true, true);
+Timer mat_unify(true, true);
 
 inline uint expr_len_threshold() {
 	return expr::Stats::stats().avgLen() + 2 * expr::Stats::stats().devLen();

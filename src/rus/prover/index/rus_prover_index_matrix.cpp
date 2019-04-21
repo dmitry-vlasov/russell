@@ -438,8 +438,8 @@ string Matrix::card_str() const {
 	return ret;
 }
 
-Timer unify_timer;
-Timer intersect_timer;
+Timer unify_timer(true, true);
+Timer intersect_timer(true, true);
 
 MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {

@@ -10,7 +10,7 @@ ostream& operator << (ostream& os, const Timer& t);
 
 class Timer {
 public :
-	Timer (const bool brief = false);
+	Timer (bool cumulative = false, bool brief = false);
 
 	void start();
 	void stop();

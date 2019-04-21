@@ -14,7 +14,7 @@
 
 namespace mdl {
 
-Timer :: Timer (const bool brief) :
+Timer :: Timer (bool cumulative, bool brief) :
 isOn_ (false),
 isUsed_ (false),
 brief_ (brief),
@@ -23,7 +23,7 @@ midTime_ (),
 stopTime_ (),
 deltaTime_ (),
 cumulativeTime_ (),
-showCumulativeTime_ (false) {
+showCumulativeTime_ (cumulative) {
 	clear();
 }
 void
@@ -126,7 +126,7 @@ Timer :: getSeconds() const
 double
 Timer :: getMinutes() const
 {
-	if (isUsed_) {
+	if (!isUsed_) {
 		return -1;
 	}
 	return getSeconds() / 60;
@@ -134,7 +134,7 @@ Timer :: getMinutes() const
 double
 Timer :: getHours() const
 {
-	if (isUsed_) {
+	if (!isUsed_) {
 		return -1;
 	}
 	return getMinutes() / 60;
@@ -143,7 +143,7 @@ Timer :: getHours() const
 double
 Timer :: getCumulativeSeconds() const
 {
-	if (isUsed_) {
+	if (!isUsed_) {
 		return -1;
 	}
 	return
@@ -153,7 +153,7 @@ Timer :: getCumulativeSeconds() const
 double
 Timer :: getCumulativeMinutes() const
 {
-	if (isUsed_) {
+	if (!isUsed_) {
 		return -1;
 	}
 	return getCumulativeSeconds() / 60;
@@ -161,7 +161,7 @@ Timer :: getCumulativeMinutes() const
 double
 Timer :: getCumulativeHours() const
 {
-	if (isUsed_) {
+	if (!isUsed_) {
 		return -1;
 	}
 	return getCumulativeMinutes() / 60;
@@ -255,6 +255,8 @@ void
 Timer :: showTime(string& str, const timeval& time) const
 {
 	std :: ostringstream oss;
+	Timer tm;
+	tm.setDelta(time);
 	if (time.tv_sec == 0) {
 		if (time.tv_usec < 1000) {
 			oss << time.tv_usec;
@@ -262,7 +264,7 @@ Timer :: showTime(string& str, const timeval& time) const
 				oss << " us";
 			} else {
 				oss << " microseconds";
-				oss << " (" << getSeconds() << " s)";
+				oss << " (" << tm.getMicroseconds() << " s)";
 			}
 		} else {
 			oss << static_cast<double>(time.tv_usec) / 1000;
@@ -270,11 +272,11 @@ Timer :: showTime(string& str, const timeval& time) const
 				oss << " ms";
 			} else {
 				oss << " milliseconds";
-				oss << " (" << getSeconds() << " s)";
+				oss << " (" << tm.getMilliseconds() << " s)";
 			}
 		}
 	} else if (time.tv_sec < 60) {
-		oss << getSeconds();
+		oss << tm.getSeconds();
 		if (brief_) {
 			oss << " s";
 		} else {
@@ -293,7 +295,7 @@ Timer :: showTime(string& str, const timeval& time) const
 				oss << s;
 			} else {
 				std :: strftime (s, BUFFER_SIZE, "%M minutes, %S seconds", t);
-				oss << s << " (" <<  getSeconds() << " s)";
+				oss << s << " (" <<  tm.getSeconds() << " s)";
 			}
 		} else {
 			if (brief_) {
@@ -301,7 +303,7 @@ Timer :: showTime(string& str, const timeval& time) const
 				oss << s;
 			} else {
 				std :: strftime (s, BUFFER_SIZE, "%H hours, %M minutes, %S seconds", t);
-				oss << s << " (" <<  getSeconds() << " s)";
+				oss << s << " (" <<  tm.getSeconds() << " s)";
 			}
 		}
 	}
@@ -312,7 +314,7 @@ Timer :: addTime (timeval& time_1, const timeval time_2)
 {
 	time_1.tv_sec += time_2.tv_sec;
 	time_1.tv_usec += time_2.tv_usec;
-	if (time_1.tv_usec >= MICROSECONDS_IN_SECOND) {
+	while (time_1.tv_usec >= MICROSECONDS_IN_SECOND) {
 		time_1.tv_usec -= MICROSECONDS_IN_SECOND;
 		++ time_1.tv_sec;
 	}
