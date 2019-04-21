@@ -214,30 +214,31 @@ string Subst::showVars(const set<uint>& vars) const {
 }
 
 Term Subst::apply(const Term& t) const {
+	struct Shift {
+		uint beg = -1;
+		uint end = -1;
+		const Term* sub = nullptr;
+	};
 	uint len = 0;
-	vector<uint> beg_shifts;
-	vector<uint> end_shifts;
-	vector<const Term*> subs;
+	Shift shifts[t.nodes.size()];
 	for (uint k = 0; k < t.nodes.size(); ++ k, ++ len) {
 		const auto& n = t.nodes[k];
-		beg_shifts.push_back(len);
+		shifts[k].beg = len;
 		if (n.ruleVar.isVar() && maps(n.ruleVar.var)) {
 			const Term& term = map(n.ruleVar.var);
 			len += term.nodes.size() - 1;
-			subs.push_back(&term);
-		} else {
-			subs.push_back(nullptr);
+			shifts[k].sub = &term;
 		}
-		end_shifts.push_back(len);
+		shifts[k].end = len;
 	}
 	Term ret(len);
 	for (uint k = 0; k < t.nodes.size(); ++ k) {
-		if (subs[k]) {
-			copyFlatSubTerm(&ret, beg_shifts[k], subs[k]->nodes.begin());
+		if (shifts[k].sub) {
+			copyFlatSubTerm(&ret, shifts[k].beg, shifts[k].sub->nodes.begin());
 		} else {
 			const auto& n = t.nodes[k];
-			ret.nodes[beg_shifts[k]] = n;
-			ret.nodes[beg_shifts[k]].end = ret.nodes.begin() + end_shifts[n.end - t.nodes.begin()];
+			ret.nodes[shifts[k].beg] = n;
+			ret.nodes[shifts[k].end].end = ret.nodes.begin() + shifts[n.end - t.nodes.begin()].end;
 		}
 	}
 	return ret;

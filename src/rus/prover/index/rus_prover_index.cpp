@@ -125,6 +125,8 @@ void Index::initEnds() {
 	endsInitialized = true;
 }
 
+//#define VERIFY_TERM
+
 static Term create_flatterm(const vector<Index::Iter>& branch) {
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
@@ -135,7 +137,9 @@ static Term create_flatterm(const vector<Index::Iter>& branch) {
 			}
 		}
 	}
+#ifdef VERIFY_TERM
 	ft.verify();
+#endif
 	return ft;
 }
 
