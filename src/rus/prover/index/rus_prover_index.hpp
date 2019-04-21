@@ -17,7 +17,7 @@ struct Index {
 		map<RuleVar, Node> nodes;
 
 		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends;
-		vector<uint> lens;
+		set<uint> lens;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;

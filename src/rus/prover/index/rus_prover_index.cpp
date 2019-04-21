@@ -111,8 +111,7 @@ static void markup_ends(Index::Node& root, const Term& t) {
 		st.emplace(ni, i->end, i->end - i);
 		while (!st.empty() && st.top().end == i) {
 			st.top().trie->second.ends.insert(ni);
-			//ni->second.begins.insert(st.top().trie);
-			ni->second.lens.push_back(st.top().len);
+			ni->second.lens.insert(st.top().len);
 			st.pop();
 		}
 	}
