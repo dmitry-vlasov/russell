@@ -95,6 +95,10 @@ Return test_all_with_oracle(uint max_proofs) {
 namespace index {
 	extern Timer unify_timer;
 	extern Timer intersect_timer;
+
+	extern Timer intersect_unfold_timer;
+	extern Timer intersect_inner_timer;
+	extern Timer intersect_compose_timer;
 }
 extern Timer seq_unify;
 extern Timer mat_unify;
@@ -123,11 +127,9 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "seq_unify: " << seq_unify << endl;
 				cout << "mat_unify: " << mat_unify << endl;
 				cout << endl;
-				cout << "index::unify_timer: " << index::unify_timer.getCumulativeSeconds() << endl;
-				cout << "index::intersect_timer: " << index::intersect_timer.getCumulativeSeconds() << endl;
-				cout << "seq_unify: " << seq_unify.getCumulativeSeconds() << endl;
-				cout << "mat_unify: " << mat_unify.getCumulativeSeconds() << endl;
-
+				cout << "intersect_unfold_timer: " << index::intersect_unfold_timer << endl;
+				cout << "intersect_inner_timer: " << index::intersect_inner_timer << endl;
+				cout << "intersect_compose_timer: " << index::intersect_compose_timer << endl;
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");
 		} else {

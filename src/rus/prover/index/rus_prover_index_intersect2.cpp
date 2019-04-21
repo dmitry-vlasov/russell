@@ -3,6 +3,12 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
+template<class T>
+struct VectMap {
+
+	hmap<uint, >
+};
+
 struct IndexHelper {
 
 	enum class HypDescr {
