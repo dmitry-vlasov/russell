@@ -286,7 +286,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	uint seq_time = timer.getMicroseconds();
 	add_sequential_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
-	if (unified_subs_1.size() > 1) {
+	if (unified_subs_1.size() >= 1) {
 		cout << "sequntial unification: " << timer << " results with " << unified_subs_1.size() << " variants " << endl;
 	}
 #endif
@@ -300,7 +300,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer.getMicroseconds());
 #ifdef SHOW_MATRIXES
-	if (unified_subs_2.size() > 1) {
+	if (unified_subs_2.size() >= 1) {
 		cout << "matrix unification:    " << timer << " results with " << unified_subs_2.size() << " variants " << endl;
 	}
 #endif

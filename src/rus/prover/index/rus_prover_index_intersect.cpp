@@ -305,7 +305,8 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	vector<uint> vars = optimize_intersection_order(terms);
 	for (uint v : vars) {
 		Timer timer; timer.start();
-		common = std::move(common.intersect(terms.at(v)));
+		common = std::move(common.intersect1(terms.at(v)));
+		//common = std::move(common.intersect(terms.at(v)));
 		timer.stop();
 		if (common.empty()) {
 			return s;

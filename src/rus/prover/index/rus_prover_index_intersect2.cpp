@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-struct IndexHelper {
+struct IndexHelper1 {
 
 	enum class HypDescr {
 		CART_CART, // both sides are Cartesian products
@@ -12,7 +12,7 @@ struct IndexHelper {
 		TREE_TREE, // Both arguments are expression trees
 	};
 
-	IndexHelper(const MatrixUnified& mu, const VectorUnified& vu) :
+	IndexHelper1(const MatrixUnified& mu, const VectorUnified& vu) :
 		dim(mu.vect.size()),
 		hypDescrs(dim),
 		intersectedLeft(mu),
@@ -31,13 +31,12 @@ struct IndexHelper {
 				cout << "intersectedLeft" << endl;
 				cout << intersectedLeft.show() << endl;
 			}
-			additional.addDim(intersectedLeft.vect.at(i).extra_inds);
 		}
 	}
 
 	struct Keys {
-		Keys(IndexHelper& h) : helper(h) { }
-		Keys(IndexHelper& h, const vector<uint>& a) : helper(h) { }
+		Keys(IndexHelper1& h) : helper(h) { }
+		Keys(IndexHelper1& h, const vector<uint>& a) : helper(h) { }
 		void setRight(const vector<uint>& v) {
 			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
 				switch (helper.hypDescrs.at(n)) {
@@ -58,30 +57,6 @@ struct IndexHelper {
 				}
 			}
 		}
-		/*vector<uint> getLeft() const {
-			vector<uint> ret;
-			for (uint n = 0, i = 0, j = 0; n < helper.dim; ++ n) {
-				switch (helper.hypDescrs[k]) {
-				case HypDescr::CART_CART: break;
-				case HypDescr::TREE_CART: ret.push_back(leftPart[i++]);  break;
-				case HypDescr::CART_TREE: break;
-				case HypDescr::TREE_TREE: ret.push_back(bothPart[j++]);  break;
-				}
-			}
-			return ret;
-		}
-		vector<uint> getRight() const {
-			vector<uint> ret;
-			for (uint n = 0, i = 0, j = 0; n < helper.dim; ++ n) {
-				switch (helper.hypDescrs[k]) {
-				case HypDescr::CART_CART: break;
-				case HypDescr::TREE_CART: break;
-				case HypDescr::CART_TREE: ret.push_back(rightPart[i++]); break;
-				case HypDescr::TREE_TREE: ret.push_back(bothPart[j++]);  break;
-				}
-			}
-			return ret;
-		}*/
 		vector<uint> getAll() const {
 			vector<uint> ret;
 			for (uint n = 0, i = 0, j = 0, k = 0; n < helper.dim; ++ n) {
@@ -121,7 +96,7 @@ struct IndexHelper {
 		vector<uint> leftPart;
 		vector<uint> bothPart;
 		vector<uint> rightPart;
-		IndexHelper& helper;
+		IndexHelper1& helper;
 	};
 
 	map<vector<uint>, map<vector<uint>, FlatTermSubst>> splitMap(const map<vector<uint>, FlatTermSubst>& m) {
@@ -170,14 +145,11 @@ struct IndexHelper {
 			ret << show_descr(d) << ", ";
 		}
 		ret << endl;
-		ret << "additional:" << endl;
-		ret << Indent::paragraph(additional.show()) << endl;
 		return ret.str();
 	}
 
 	uint dim;
 	vector<HypDescr> hypDescrs;
-	CartesianProd<uint> additional;
 	const MatrixUnified& intersectedLeft;
 	const VectorUnified& intersectedRight;
 	const MatrixUnified* intersection;
@@ -205,12 +177,12 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 			for (const auto& mu : union_) {
 				if (mu.empty()) continue;
 				assert(mu.vect.size() == vu.vect.size());
-				IndexHelper indexHelper(mu, vu);
+				IndexHelper1 indexHelper(mu, vu);
 				MatrixUnified mu_new;
 				indexHelper.initIteration(mu_new);
 				map<vector<uint>, map<vector<uint>, FlatTermSubst>> sm = indexHelper.splitMap(vu.unified);
 				for (const auto& p : mu.unified) {
-					IndexHelper::Keys key(indexHelper);
+					IndexHelper1::Keys key(indexHelper);
 					key.setLeft(p.first);
 					if (!key.leftKeyIsInside()) {
 						continue;

@@ -48,7 +48,7 @@ Return test_all_with_oracle(uint max_proofs) {
 	cout << endl;
 	vector<const Proof*> proofs;
 	for (Source* src : ordered_sources) {
-		cout << "testing source: " << Lex::toStr(src->id()) << endl;
+		cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::PROOF) {
 				proofs.push_back(Theory::proof(n));
