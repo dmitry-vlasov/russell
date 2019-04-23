@@ -26,7 +26,7 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	try {
 		unify_subs(mi, pr, ret);
 	} catch (std::exception& e) {
-		//cout << "MATRIX no. " << c << endl;
+		cout << e.what() << endl;
 		cout << mi.show() << endl;
 		throw e;
 	}

@@ -172,11 +172,6 @@ vector<pair<Term, uint>> Index::unpack() const {
 		while (branch.size()) {
 			Iter n = branch.back();
 			for (uint ind : n.iter()->second.inds) {
-
-				//cout << "BRANCH:" << endl;
-				//cout << n.showBranch(true) << endl;
-
-				cout << show_branch(branch) << " --> " << ind << endl;
 				ret.emplace_back(create_flatterm(branch), ind);
 			}
 			if (!n.isNextEnd()) {

@@ -297,6 +297,50 @@ Timer intersect_unfold_timer(true, true);
 Timer intersect_inner_timer(true, true);
 Timer intersect_compose_timer(true, true);
 
+void check_unification_results_equal(const MatrixUnified& old_one, const MatrixUnified& new_one) {
+	if (old_one.vect.size() != new_one.vect.size()) {
+		throw Error("unification cell vect sizes differ: " + to_string(old_one.vect.size()) + " !=  " + to_string(new_one.vect.size()));
+	}
+	for (int i = 0; i < old_one.vect.size(); ++ i) {
+		if (old_one.vect[i] != new_one.vect[i]) {
+			throw Error("unification cell vect differ: " + old_one.vect[i].show() + " != " + new_one.vect[i].show());
+		}
+	}
+	for (const auto& p : old_one.unified) {
+		auto i = new_one.unified.find(p.first);
+		if (i == new_one.unified.end()) {
+			cout << "NEW UNIFIED:" << endl;
+			for (const auto& q : new_one.unified) {
+				cout << prover::show(q.first) << " --> " << endl;
+			}
+
+			throw Error("new unified does't have key: " + prover::show(p.first));
+		}
+	}
+	for (const auto& p : new_one.unified) {
+		auto i = old_one.unified.find(p.first);
+		if (i == old_one.unified.end()) {
+			throw Error("old unified does't have key: " + prover::show(p.first));
+		}
+	}
+}
+
+void check_union_unification_results_equal(const MatrixUnifiedUnion& old_one, const MatrixUnifiedUnion& new_one) {
+	if (old_one.kind != new_one.kind) {
+		throw Error("matrix union unification kinds differ");
+	}
+	if (old_one.union_.size() != new_one.union_.size()) {
+		throw Error("matrix union unification sizes differ: " + to_string(old_one.union_.size()) + " != " + to_string(new_one.union_.size()));
+	}
+	for (int i = 0; i < old_one.union_.size(); ++ i) {
+		check_unification_results_equal(old_one.union_[i], new_one.union_[i]);
+	}
+}
+
+extern bool debug_intersect2;
+
+//#define DEBUG_INTERSECTION
+
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 	MatrixUnifiedUnion common;
 	MultyUnifiedSubs s;
@@ -305,8 +349,26 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	vector<uint> vars = optimize_intersection_order(terms);
 	for (uint v : vars) {
 		Timer timer; timer.start();
-		common = std::move(common.intersect1(terms.at(v)));
-		//common = std::move(common.intersect(terms.at(v)));
+		auto intersection = common.intersect1(terms.at(v));
+#ifdef DEBUG_INTERSECTION
+		auto rightAnswer = common.intersect(terms.at(v));
+		try {
+			check_union_unification_results_equal(intersection, rightAnswer);
+		} catch (Error& err) {
+
+			cout << err.what() << endl;
+			cout << "VAAAR: " << Lex::toStr(v) << endl;
+			cout << "vect uinfied: " << terms.at(v).show() << endl;
+			cout << "common: " << common.show() << endl;
+			cout << "right answer: " << rightAnswer.show() << endl;
+			cout << "wrong answer: " << intersection.show() << endl;
+
+			debug_intersect2 = true;
+			auto x3 = common.intersect1(terms.at(v));
+			check_union_unification_results_equal(rightAnswer, x3);
+		}
+#endif
+		common = std::move(intersection);
 		timer.stop();
 		if (common.empty()) {
 			return s;

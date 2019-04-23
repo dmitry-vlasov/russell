@@ -242,7 +242,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 #define CHECK_MATRIX_UNIFICATION
-#define SHOW_MATRIXES
+//#define SHOW_MATRIXES
 //#define VERIFY_UNIQUE_PROOFS
 
 Timer seq_unify(true, true);

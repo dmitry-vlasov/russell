@@ -158,13 +158,13 @@ string Matrix::show() const {
 	if (empty_) {
 		return "empty\n";
 	}
-	string ret;
-	ret += "DIMENSION: " + to_string(mindex_.size()) + "x" + to_string(dim_hyp_) + "\n";
+	ostringstream oss;
+	oss << "DIMENSION: " << mindex_.size() <<  "x" << endl;
 	for (auto& p : mindex_) {
-		ret += "\nVAR: " + Lex::toStr(p.first) + "\n";
-		ret += p.second->show() + "\n";
+		oss << endl << "VAR: " << Lex::toStr(p.first) << endl;
+		oss << p.second->show() << endl;
 	}
-	return ret;
+	return oss.str();
 }
 
 }}}}

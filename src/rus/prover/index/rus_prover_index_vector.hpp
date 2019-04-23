@@ -30,6 +30,12 @@ struct CartesianCell {
 	uint card() const {
 		return skipped ? 1 : extra_inds.size();
 	}
+	bool operator == (const CartesianCell& c) const {
+		return extra_inds == c.extra_inds && empty_index == c.empty_index && skipped == c.skipped;
+	}
+	bool operator != (const CartesianCell& c) const {
+		return !operator == (c);
+	}
 	vector<uint> extra_inds;
 	const bool empty_index;
 	const bool skipped;
@@ -85,8 +91,13 @@ struct MapUnified {
 		ret += "card: " + to_string(card()) + "\n";
 		ret += showCells();
 		ret += "unified:\n";
+		int c = 0;
 		for (const auto& p : unified) {
 			ret += "\t" + showKeys(p.first) + " -->\n" + Indent::paragraph(show_MapUnified<T>(p.second)) + "\n";
+			if (++c > 8) {
+				ret += "\t...\n";
+				break;
+			}
 		}
 		return ret;
 	}

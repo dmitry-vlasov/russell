@@ -3,6 +3,8 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
+bool debug_intersect2 = false;
+
 struct IndexHelper1 {
 
 	enum class HypDescr {
@@ -23,20 +25,11 @@ struct IndexHelper1 {
 			if (c1.skipped) return c2.skipped ? HypDescr::TREE_TREE : HypDescr::TREE_CART;
 			else            return c2.skipped ? HypDescr::CART_TREE : HypDescr::CART_CART;
 		};
-		HypDescr descr = makeHypDescr(c1, c2);
-		hypDescrs[i] = descr;
-		if (!intersectedLeft.vect.at(i).skipped && descr == HypDescr::CART_TREE) {
-			if (!intersectedLeft.vect.at(i).extra_inds.size()) {
-				cout << "!intersectedLeft.vect.at(i).extra_inds.size()" << endl;
-				cout << "intersectedLeft" << endl;
-				cout << intersectedLeft.show() << endl;
-			}
-		}
+		hypDescrs[i] = makeHypDescr(c1, c2);
 	}
 
 	struct Keys {
 		Keys(IndexHelper1& h) : helper(h) { }
-		Keys(IndexHelper1& h, const vector<uint>& a) : helper(h) { }
 		void setRight(const vector<uint>& v) {
 			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
 				switch (helper.hypDescrs.at(n)) {
@@ -60,7 +53,7 @@ struct IndexHelper1 {
 		vector<uint> getAll() const {
 			vector<uint> ret;
 			for (uint n = 0, i = 0, j = 0, k = 0; n < helper.dim; ++ n) {
-				switch (helper.hypDescrs[k]) {
+				switch (helper.hypDescrs.at(n)) {
 				case HypDescr::CART_CART: break;
 				case HypDescr::TREE_CART: ret.push_back(leftPart[i++]);  break;
 				case HypDescr::CART_TREE: ret.push_back(rightPart[j++]); break;
@@ -138,13 +131,11 @@ struct IndexHelper1 {
 			}
 		};
 		ostringstream ret;
-		ret << "<IndexHelper>" << endl;
-		ret << "dim: " << dim << endl;
-		ret << "hyp descr: " << endl;
+		ret << "dim: " << dim << ", hyp descr: [";
 		for (auto d : hypDescrs) {
 			ret << show_descr(d) << ", ";
 		}
-		ret << endl;
+		ret << "]" << endl;
 		return ret.str();
 	}
 
@@ -178,23 +169,65 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 				if (mu.empty()) continue;
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper1 indexHelper(mu, vu);
+
+				if (debug_intersect2) {
+					cout << "indexHelper: " << indexHelper.show() << endl;
+				}
 				MatrixUnified mu_new;
 				indexHelper.initIteration(mu_new);
-				map<vector<uint>, map<vector<uint>, FlatTermSubst>> sm = indexHelper.splitMap(vu.unified);
-				for (const auto& p : mu.unified) {
-					IndexHelper1::Keys key(indexHelper);
-					key.setLeft(p.first);
-					if (!key.leftKeyIsInside()) {
-						continue;
-					}
-					for (const auto& q : sm[key.bothPart]) {
-						key.rightPart = q.first;
-						if (!key.rightKeyIsInside()) {
+				if (!vu.unified.size()) {
+					for (const auto& p : mu.unified) {
+						IndexHelper1::Keys key(indexHelper);
+						key.setLeft(p.first);
+						if (!key.leftKeyIsInside()) {
 							continue;
 						}
 						vector<FlatTermSubst> w(p.second);
-						w.emplace_back(q.second);
-						mu_new.unified.emplace(key.getAll(), w);
+						w.emplace_back();
+						mu_new.unified.emplace(p.first, w);
+					}
+				} else if (!mu.unified.size()) {
+					for (const auto& p : vu.unified) {
+						IndexHelper1::Keys key(indexHelper);
+						key.setRight(p.first);
+						if (!key.rightKeyIsInside()) {
+							continue;
+						}
+						vector<FlatTermSubst> w(1);
+						w.emplace_back(p.second);
+						mu_new.unified.emplace(p.first, w);
+					}
+				} else {
+					map<vector<uint>, map<vector<uint>, FlatTermSubst>> sm = indexHelper.splitMap(vu.unified);
+					for (const auto& p : mu.unified) {
+						IndexHelper1::Keys key(indexHelper);
+						key.setLeft(p.first);
+
+						if (debug_intersect2) {
+							cout << "key(left): " << key.show() << endl;
+						}
+
+						if (!key.leftKeyIsInside()) {
+							continue;
+						}
+						for (const auto& q : sm[key.bothPart]) {
+							key.rightPart = q.first;
+
+							if (debug_intersect2) {
+								cout << "key(both): " << key.show() << endl;
+							}
+
+							if (!key.rightKeyIsInside()) {
+								continue;
+							}
+
+							if (debug_intersect2) {
+								cout << "key.getAll(): " << prover::show(key.getAll()) << endl;
+							}
+							vector<FlatTermSubst> w(p.second);
+							w.emplace_back(q.second);
+							mu_new.unified.emplace(key.getAll(), w);
+						}
 					}
 				}
 				if (!mu_new.empty()) {

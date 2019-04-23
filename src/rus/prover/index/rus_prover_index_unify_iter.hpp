@@ -338,6 +338,7 @@ struct UnifyIters {
 };
 
 struct FlatTermSubst {
+	FlatTermSubst() : term(new Term()), sub(new Subst) { }
 	FlatTermSubst(const Term& t, const Subst& s) :
 		term(make_unique<Term>(t)), sub(make_unique<Subst>(s)) { }
 	FlatTermSubst(const FlatTermSubst& ts) :
