@@ -12,6 +12,7 @@ struct MatrixUnifiedUnion {
 	enum Kind { FULL, EMPTY, NORM };
 	MatrixUnifiedUnion(Kind k = FULL) : kind(k) { }
 	MatrixUnifiedUnion intersect(const VectorUnifiedUnion&) const;
+	MatrixUnifiedUnion intersect1(const VectorUnifiedUnion&) const;
 	map<vector<uint>, vector<FlatTermSubst>> unfold() const {
 		map<vector<uint>, vector<FlatTermSubst>> ret;
 		for (const auto& mu : union_) {

@@ -3,12 +3,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-template<class T>
-struct VectMap {
-
-	hmap<uint, >
-};
-
 struct IndexHelper {
 
 	enum class HypDescr {
@@ -41,126 +35,106 @@ struct IndexHelper {
 		}
 	}
 
-	static FlatTermSubst& emptyTermSubst() {
-		static Term emptyTerm;
-		static Subst emptySubst;
-		static FlatTermSubst emptyTermSub(emptyTerm, emptySubst);
-		return emptyTermSub;
-	}
-
 	struct Keys {
 		Keys(IndexHelper& h) : helper(h) { }
-		vector<uint> mappingKey;
-		vector<uint> cartesianKey;
-		IndexHelper& helper;
-		string show() const {
-			return "mappingKey: " + prover::show(mappingKey) + ", cartesianKey: " + prover::show(cartesianKey);
+		Keys(IndexHelper& h, const vector<uint>& a) : helper(h) { }
+		void setRight(const vector<uint>& v) {
+			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs.at(n)) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: break;
+				case HypDescr::CART_TREE: rightPart.push_back(v[i++]); break;
+				case HypDescr::TREE_TREE: bothPart.push_back(v[i++]);  break;
+				}
+			}
 		}
-		vector<uint> resultKey() const {
+		void setLeft(const vector<uint>& v) {
+			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs.at(n)) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: leftPart.push_back(v[i++]); break;
+				case HypDescr::CART_TREE: break;
+				case HypDescr::TREE_TREE: bothPart.push_back(v[i++]);  break;
+				}
+			}
+		}
+		/*vector<uint> getLeft() const {
 			vector<uint> ret;
-			for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
+			for (uint n = 0, i = 0, j = 0; n < helper.dim; ++ n) {
 				switch (helper.hypDescrs[k]) {
 				case HypDescr::CART_CART: break;
-				case HypDescr::TREE_CART: ret.push_back(cartesianKey[i++]); break;
-				case HypDescr::CART_TREE: ret.push_back(mappingKey[j++]); break;
-				case HypDescr::TREE_TREE: ret.push_back(mappingKey[j++]); break;
+				case HypDescr::TREE_CART: ret.push_back(leftPart[i++]);  break;
+				case HypDescr::CART_TREE: break;
+				case HypDescr::TREE_TREE: ret.push_back(bothPart[j++]);  break;
 				}
 			}
 			return ret;
 		}
-	};
-
-	struct Iterator {
-		typedef map<vector<uint>, vector<FlatTermSubst>>::const_iterator Iter1;
-		typedef CartesianProd<uint> Iter2;
-		Iterator(Iter1 i1, Iter1 i1e, const Iter2& i2, IndexHelper& h) :
-			iter1(i1), iter1end(i1e), iter2(i2), helper(h), non_trivial_iter1(iter1 != iter1end) { }
-
-		Keys keys() const {
-			Keys ret(helper);
-			if (non_trivial_iter1) {
-				vector<uint> a = iter1->first;
-				vector<uint> b = iter2.data();
-				for (uint k = 0, i = 0, j = 0; k < helper.dim; ++ k) {
-					switch (helper.hypDescrs.at(k)) {
-					case HypDescr::CART_CART: break;
-					case HypDescr::TREE_CART: ret.cartesianKey.push_back(a[i++]); break;
-					case HypDescr::CART_TREE: {
-						if (!ret.helper.intersectedLeft.vect[k].skipped) {
-							ret.mappingKey.push_back(b[j++]);
-						}
-						break;
-					}
-					case HypDescr::TREE_TREE: ret.mappingKey.push_back(a[i++]); break;
-					}
+		vector<uint> getRight() const {
+			vector<uint> ret;
+			for (uint n = 0, i = 0, j = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs[k]) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: break;
+				case HypDescr::CART_TREE: ret.push_back(rightPart[i++]); break;
+				case HypDescr::TREE_TREE: ret.push_back(bothPart[j++]);  break;
 				}
-			} else {
-				vector<uint> b = iter2.data();
-				for (uint k = 0, j = 0; k < helper.dim; ++ k) {
-					switch (helper.hypDescrs.at(k)) {
-					case HypDescr::CART_CART: break;
-					case HypDescr::TREE_CART: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
-					case HypDescr::CART_TREE: {
-						if (!ret.helper.intersectedLeft.vect[k].skipped) {
-							ret.mappingKey.push_back(b[j++]);
-						}
-						break;
-					}
-					case HypDescr::TREE_TREE: throw Error("impossible:  IndexHelper::Iterator::keys()"); break;
-					}
+			}
+			return ret;
+		}*/
+		vector<uint> getAll() const {
+			vector<uint> ret;
+			for (uint n = 0, i = 0, j = 0, k = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs[k]) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: ret.push_back(leftPart[i++]);  break;
+				case HypDescr::CART_TREE: ret.push_back(rightPart[j++]); break;
+				case HypDescr::TREE_TREE: ret.push_back(bothPart[k++]);  break;
 				}
 			}
 			return ret;
 		}
-
-		bool hasNext() const {
-			if (non_trivial_iter1) {
-				auto i1 = iter1; ++i1;
-				return !(i1 == iter1end && !iter2.hasNext());
-			} else {
-				return iter2.hasNext();
-			}
-		}
-
-		void makeNext() {
-			if (non_trivial_iter1) {
-				if (!iter2.hasNext()) {
-					++iter1;
-					iter2.reset();
-				} else {
-					iter2.makeNext();
+		bool leftKeyIsInside() const {
+			for (uint i = 0, j = 0; i < helper.dim; ++ i) {
+				if (helper.hypDescrs.at(i) == HypDescr::TREE_CART) {
+					if (!helper.intersectedRight.vect.at(i).extraContains(leftPart[j++])) {
+						return false;
+					}
 				}
-			} else {
-				iter2.makeNext();
 			}
+			return true;
 		}
-
-		vector<FlatTermSubst> termSubstVect() const {
-			if (non_trivial_iter1) {
-				return iter1->second;
-			} else {
-				return vector<FlatTermSubst>{emptyTermSubst()};
+		bool rightKeyIsInside() const {
+			for (uint i = 0, j = 0; i < helper.dim; ++ i) {
+				if (helper.hypDescrs.at(i) == HypDescr::CART_TREE) {
+					if (!helper.intersectedLeft.vect.at(i).extraContains(rightPart[j++])) {
+						return false;
+					}
+				}
 			}
+			return true;
 		}
-
 		string show() const {
-			ostringstream ret;
-			if (non_trivial_iter1) {
-				ret << "IndexHelper::Iterator: <" << prover::show(iter1->first) << ", " << prover::show(iter2.data()) << ">";
-			} else {
-				ret << "IndexHelper::Iterator: < -- , " << prover::show(iter2.data()) << ">";
-			}
-			return ret.str();
+			return "left: " + prover::show(leftPart) + ", right: " + prover::show(rightPart) + ", both: " + prover::show(bothPart);
 		}
 
-		Iter1 iter1;
-		Iter1 iter1end;
-		Iter2 iter2;
+		vector<uint> leftPart;
+		vector<uint> bothPart;
+		vector<uint> rightPart;
 		IndexHelper& helper;
-		bool non_trivial_iter1;
 	};
 
-	Iterator initIteration(MatrixUnified& ret) {
+	map<vector<uint>, map<vector<uint>, FlatTermSubst>> splitMap(const map<vector<uint>, FlatTermSubst>& m) {
+		map<vector<uint>, map<vector<uint>, FlatTermSubst>> ret;
+		for (const auto& p : m) {
+			Keys keys(*this);
+			keys.setRight(p.first);
+			ret[keys.bothPart].emplace(keys.rightPart, p.second);
+		}
+		return ret;
+	}
+
+	void initIteration(MatrixUnified& ret) {
 		intersection = &ret;
 		for (uint i = 0; i < dim; ++i) {
 			const auto& c1 = intersectedLeft.vect.at(i);
@@ -176,27 +150,6 @@ struct IndexHelper {
 			);
 			c0.resize(end - c0.begin());
 			ret.vect.emplace_back(c0, c1.empty_index && c2.empty_index, c1.skipped || c2.skipped);
-		}
-		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
-	}
-
-	const FlatTermSubst* inside(const Keys& keys) const {
-		for (uint i = 0, j = 0; i < dim; ++ i) {
-			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
-				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
-					return nullptr;
-				}
-			}
-		}
-		if (keys.mappingKey.size()) {
-			auto it = intersectedRight.unified.find(keys.mappingKey);
-			if (it != intersectedRight.unified.end()) {
-				return &it->second;
-			} else {
-				return nullptr;
-			}
-		} else {
-			return &emptyTermSubst();
 		}
 	}
 
@@ -230,7 +183,7 @@ struct IndexHelper {
 	const MatrixUnified* intersection;
 };
 
-MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) const {
+MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu) const {
 	if (kind == EMPTY || vuu.card() == 0) {
 		return MatrixUnifiedUnion(EMPTY);
 	}
@@ -254,26 +207,23 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 				assert(mu.vect.size() == vu.vect.size());
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
-				auto iter = indexHelper.initIteration(mu_new);
-				try {
-					while (true) {
-						IndexHelper::Keys keys = iter.keys();
-						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
-							vector<FlatTermSubst> w(iter.termSubstVect());
-							w.emplace_back(*ts);
-							vector<uint> resultKeys = keys.resultKey();
-							mu_new.unified.emplace(resultKeys, w);
-						}
-						if (iter.hasNext()) {
-							iter.makeNext();
-						} else {
-							break;
-						}
+				indexHelper.initIteration(mu_new);
+				map<vector<uint>, map<vector<uint>, FlatTermSubst>> sm = indexHelper.splitMap(vu.unified);
+				for (const auto& p : mu.unified) {
+					IndexHelper::Keys key(indexHelper);
+					key.setLeft(p.first);
+					if (!key.leftKeyIsInside()) {
+						continue;
 					}
-				} catch (Error& err) {
-					cout << "IndexHelper:" << endl;
-					cout << indexHelper.show() << endl;
-					throw err;
+					for (const auto& q : sm[key.bothPart]) {
+						key.rightPart = q.first;
+						if (!key.rightKeyIsInside()) {
+							continue;
+						}
+						vector<FlatTermSubst> w(p.second);
+						w.emplace_back(q.second);
+						mu_new.unified.emplace(key.getAll(), w);
+					}
 				}
 				if (!mu_new.empty()) {
 					ret.union_.push_back(mu_new);
@@ -282,72 +232,6 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 		}
 	}
 	return ret;
-}
-
-static vector<uint> optimize_intersection_order(const map<uint, VectorUnifiedUnion>& terms) {
-	vector<uint> ret;
-	for (const auto& p : terms) {
-		ret.push_back(p.first);
-	}
-	std::sort(
-		ret.begin(),
-		ret.end(),
-		[&terms](uint v1, uint v2) {
-			return terms.at(v1).card() < terms.at(v2).card();
-		}
-	);
-	return ret;
-}
-
-Timer intersect_unfold_timer(true, true);
-Timer intersect_inner_timer(true, true);
-Timer intersect_compose_timer(true, true);
-
-MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
-	MatrixUnifiedUnion common;
-	MultyUnifiedSubs s;
-
-	intersect_inner_timer.start();
-	vector<uint> vars = optimize_intersection_order(terms);
-	for (uint v : vars) {
-		Timer timer; timer.start();
-		common = std::move(common.intersect(terms.at(v)));
-		timer.stop();
-		if (common.empty()) {
-			return s;
-		}
-	}
-	intersect_inner_timer.stop();
-
-	intersect_unfold_timer.start();
-	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
-	intersect_unfold_timer.stop();
-
-
-	intersect_compose_timer.start();
-	for (const auto& q : unfolded) {
-		vector<uint> c = q.first;
-		for (uint i = 0; i < q.second.size(); ++ i) {
-			const Term& term = *q.second[i].term;
-			const Subst& sub = *q.second[i].sub;
-			if (!term.empty()) {
-				if (unif[c].ok()) {
-					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-					unif[c] = unified;
-					s[c].compose(vars[i], unified.apply(term), CompMode::DUAL);
-				}
-			} else {
-				if (sub.ok()) {
-					s[c];
-					unif[c];
-				} else {
-					unif[c].spoil();
-				}
-			}
-		}
-	}
-	intersect_compose_timer.stop();
-	return s;
 }
 
 }}}}
