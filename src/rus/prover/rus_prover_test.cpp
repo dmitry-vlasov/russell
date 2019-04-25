@@ -42,6 +42,9 @@ namespace index {
 	extern Timer intersect_unfold_timer;
 	extern Timer intersect_inner_timer;
 	extern Timer intersect_compose_timer;
+	extern Timer intersect_compose_unify_subs_timer;
+	extern Timer intersect_compose_apply_timer;
+	extern Timer intersect_compose_compose_timer;
 }
 extern Timer seq_unify;
 extern Timer mat_unify;
@@ -140,6 +143,9 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "intersect_unfold_timer: " << index::intersect_unfold_timer << endl;
 				cout << "intersect_inner_timer: " << index::intersect_inner_timer << endl;
 				cout << "intersect_compose_timer: " << index::intersect_compose_timer << endl;
+				cout << "intersect_compose_unify_subs_timer: " << index::intersect_compose_unify_subs_timer << endl;
+				cout << "intersect_compose_apply_timer: " << index::intersect_compose_apply_timer << endl;
+				cout << "intersect_compose_compose_timer: " << index::intersect_compose_compose_timer << endl;
 				cout << endl;
 				cout << "build_up_timer: " << build_up_timer << endl;
 				cout << "build_up_unify_timer: " << build_up_unify_timer << endl;

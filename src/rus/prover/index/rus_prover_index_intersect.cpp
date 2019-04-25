@@ -242,6 +242,9 @@ static vector<uint> optimize_intersection_order(const map<uint, VectorUnifiedUni
 Timer intersect_unfold_timer(true, true);
 Timer intersect_inner_timer(true, true);
 Timer intersect_compose_timer(true, true);
+Timer intersect_compose_unify_subs_timer(true, true);
+Timer intersect_compose_apply_timer(true, true);
+Timer intersect_compose_compose_timer(true, true);
 
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 	MatrixUnifiedUnion common;
@@ -273,9 +276,19 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 				const Subst& sub = *ts->sub;
 				if (!term.empty()) {
 					if (unif[c].ok()) {
+						intersect_compose_unify_subs_timer.start();
 						Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-						unif[c] = unified;
-						s[c].compose(vars[i], unified.apply(term), CompMode::DUAL);
+						intersect_compose_unify_subs_timer.stop();
+
+						intersect_compose_apply_timer.start();
+						Term t = unified.apply(term);
+						intersect_compose_apply_timer.stop();
+
+						unif[c] = std::move(unified);
+
+						intersect_compose_compose_timer.start();
+						s[c].compose(vars[i], t, CompMode::DUAL, false);
+						intersect_compose_compose_timer.stop();
 					}
 				} else {
 					if (sub.ok()) {
