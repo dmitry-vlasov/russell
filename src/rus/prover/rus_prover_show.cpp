@@ -231,8 +231,11 @@ string show(const vector<uint>& v) {
 string show(const vector<bool>& v) {
 	string ret;
 	ret += "(";
-	for (bool x : v) {
-		ret += x ? "true, " : "false, ";
+	if (v.size()) {
+		ret += v[0] ? "T" : "_|_";
+		for (int i = 1; i < v.size(); ++i) {
+			ret += v[i] ? "T, " : "_|_, ";
+		}
 	}
 	ret += ")";
 	return ret;

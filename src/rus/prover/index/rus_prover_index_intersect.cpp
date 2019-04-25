@@ -35,10 +35,10 @@ struct IndexHelper {
 		}
 	}
 
-	static FlatTermSubst& emptyTermSubst() {
+	static TermSubst& emptyTermSubst() {
 		static Term emptyTerm;
 		static Subst emptySubst;
-		static FlatTermSubst emptyTermSub(emptyTerm, emptySubst);
+		static TermSubst emptyTermSub(emptyTerm, emptySubst);
 		return emptyTermSub;
 	}
 
@@ -64,8 +64,72 @@ struct IndexHelper {
 		}
 	};
 
+	struct Keys2 {
+		Keys2(IndexHelper& h) : helper(h) { }
+		void setRight(const vector<uint>& v) {
+			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs.at(n)) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: break;
+				case HypDescr::CART_TREE: rightPart.push_back(v[i++]); break;
+				case HypDescr::TREE_TREE: bothPart.push_back(v[i++]);  break;
+				}
+			}
+		}
+		void setLeft(const vector<uint>& v) {
+			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs.at(n)) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: leftPart.push_back(v[i++]); break;
+				case HypDescr::CART_TREE: break;
+				case HypDescr::TREE_TREE: bothPart.push_back(v[i++]);  break;
+				}
+			}
+		}
+		vector<uint> getAll() const {
+			vector<uint> ret;
+			for (uint n = 0, i = 0, j = 0, k = 0; n < helper.dim; ++ n) {
+				switch (helper.hypDescrs.at(n)) {
+				case HypDescr::CART_CART: break;
+				case HypDescr::TREE_CART: ret.push_back(leftPart[i++]);  break;
+				case HypDescr::CART_TREE: ret.push_back(rightPart[j++]); break;
+				case HypDescr::TREE_TREE: ret.push_back(bothPart[k++]);  break;
+				}
+			}
+			return ret;
+		}
+		bool leftKeyIsInside() const {
+			for (uint i = 0, j = 0; i < helper.dim; ++ i) {
+				if (helper.hypDescrs.at(i) == HypDescr::TREE_CART) {
+					if (!helper.intersectedRight.vect.at(i).extraContains(leftPart[j++])) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		bool rightKeyIsInside() const {
+			for (uint i = 0, j = 0; i < helper.dim; ++ i) {
+				if (helper.hypDescrs.at(i) == HypDescr::CART_TREE) {
+					if (!helper.intersectedLeft.vect.at(i).extraContains(rightPart[j++])) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		string show() const {
+			return "left: " + prover::show(leftPart) + ", right: " + prover::show(rightPart) + ", both: " + prover::show(bothPart);
+		}
+
+		vector<uint> leftPart;
+		vector<uint> bothPart;
+		vector<uint> rightPart;
+		IndexHelper& helper;
+	};
+
 	struct Iterator {
-		typedef map<vector<uint>, vector<FlatTermSubst>>::const_iterator Iter1;
+		typedef map<vector<uint>, vector<TermSubst>>::const_iterator Iter1;
 		typedef CartesianProd<uint> Iter2;
 		Iterator(Iter1 i1, Iter1 i1e, const Iter2& i2, IndexHelper& h) :
 			iter1(i1), iter1end(i1e), iter2(i2), helper(h), non_trivial_iter1(iter1 != iter1end) { }
@@ -129,11 +193,11 @@ struct IndexHelper {
 			}
 		}
 
-		vector<FlatTermSubst> termSubstVect() const {
+		vector<TermSubst> termSubstVect() const {
 			if (non_trivial_iter1) {
 				return iter1->second;
 			} else {
-				return vector<FlatTermSubst>{emptyTermSubst()};
+				return vector<TermSubst>{emptyTermSubst()};
 			}
 		}
 
@@ -174,7 +238,7 @@ struct IndexHelper {
 		return Iterator(intersectedLeft.unified.begin(), intersectedLeft.unified.end(), additional, *this);
 	}
 
-	const FlatTermSubst* inside(const Keys& keys) const {
+	const TermSubst* inside(const Keys& keys) const {
 		for (uint i = 0, j = 0; i < dim; ++ i) {
 			if (hypDescrs.at(i) == HypDescr::TREE_CART) {
 				if (!intersectedRight.vect.at(i).extraContains(keys.cartesianKey[j++])) {
@@ -224,7 +288,9 @@ struct IndexHelper {
 	const MatrixUnified* intersection;
 };
 
-MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) const {
+bool debug_intersect1;
+
+MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, uint i) const {
 	if (kind == EMPTY || vuu.card() == 0) {
 		return MatrixUnifiedUnion(EMPTY);
 	}
@@ -236,7 +302,7 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 				mu.vect.emplace_back(c);
 			}
 			for (const auto& p : vu.unified) {
-				mu.unified.emplace(p.first, vector<FlatTermSubst>(1, p.second));
+				mu.unified.emplace(p.first, vector<TermSubst>(1, p.second));
 			}
 			ret.union_.push_back(mu);
 		}
@@ -246,29 +312,60 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu) 
 			for (const auto& mu : union_) {
 				if (mu.empty()) continue;
 				assert(mu.vect.size() == vu.vect.size());
+
 				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
 				auto iter = indexHelper.initIteration(mu_new);
-				try {
-					while (true) {
-						IndexHelper::Keys keys = iter.keys();
-						if (const FlatTermSubst* ts = indexHelper.inside(keys)) {
-							vector<FlatTermSubst> w(iter.termSubstVect());
-							w.emplace_back(*ts);
-							vector<uint> resultKeys = keys.resultKey();
-							mu_new.unified.emplace(resultKeys, w);
+
+				/*if (!vu.unified.size()) {
+					for (const auto& p : mu.unified) {
+						IndexHelper::Keys2 key(indexHelper);
+						key.setLeft(p.first);
+						if (!key.leftKeyIsInside()) {
+							continue;
 						}
-						if (iter.hasNext()) {
-							iter.makeNext();
-						} else {
-							break;
-						}
+						vector<TermSubst> w(p.second);
+						w.emplace_back();
+						mu_new.unified.emplace(p.first, w);
 					}
-				} catch (Error& err) {
-					cout << "IndexHelper:" << endl;
-					cout << indexHelper.show() << endl;
-					throw err;
-				}
+				} else if (!mu.unified.size()) {
+					for (const auto& p : vu.unified) {
+						IndexHelper::Keys2 key(indexHelper);
+						key.setRight(p.first);
+						if (!key.rightKeyIsInside()) {
+							continue;
+						}
+						vector<TermSubst> w(i);
+						w.emplace_back(p.second);
+						mu_new.unified.emplace(p.first, w);
+					}
+				} else {*/
+					try {
+						while (true) {
+							IndexHelper::Keys keys = iter.keys();
+							if (const TermSubst* ts = indexHelper.inside(keys)) {
+								vector<TermSubst> w(iter.termSubstVect());
+								w.emplace_back(*ts);
+
+								if (debug_intersect1) {
+									cout << "w.size() = " << w.size() << endl;
+								}
+
+								vector<uint> resultKeys = keys.resultKey();
+								mu_new.unified.emplace(resultKeys, w);
+							}
+							if (iter.hasNext()) {
+								iter.makeNext();
+							} else {
+								break;
+							}
+						}
+					} catch (Error& err) {
+						cout << "IndexHelper:" << endl;
+						cout << indexHelper.show() << endl;
+						throw err;
+					}
+				//}
 				if (!mu_new.empty()) {
 					ret.union_.push_back(mu_new);
 				}
@@ -337,49 +434,90 @@ void check_union_unification_results_equal(const MatrixUnifiedUnion& old_one, co
 	}
 }
 
-extern bool debug_intersect2;
+bool isDefault(const vector<TermSubst>& tsv) {
+	for (const auto& ts : tsv) {
+		if (!ts.isDefault()) {
+			return false;
+		}
+	}
+	return true;
+}
 
-//#define DEBUG_INTERSECTION
+void check_union_unification_results_equal_1(const MatrixUnifiedUnion& old_one, const MatrixUnifiedUnion& new_one, uint c) {
+	map<vector<uint>, vector<TermSubst>> unfolded_old = old_one.unfold([c]() { return vector<TermSubst>(c); });
+	map<vector<uint>, vector<TermSubst>> unfolded_new = new_one.unfold([c]() { return vector<TermSubst>(c); });
+	string err;
+	if (unfolded_old.size() != unfolded_new.size()) {
+		err += "matrix union unification sizes differ: " + to_string(unfolded_old.size()) + " != " + to_string(unfolded_new.size()) + "\n";
+	}
+	for (const auto& p : unfolded_old) {
+		if (!unfolded_new.count(p.first)) {
+			err += "new unified does't have key: " + prover::show(p.first) + "\n";
+		}
+		const auto& v_old = p.second;
+		const auto& v_new = unfolded_new.at(p.first);
+		if (v_old.size() != v_new.size() && !(isDefault(v_old) && isDefault(v_new))) {
+			err += "A) sizes at key: " + prover::show(p.first) + " differ: " + to_string(v_old.size()) + " != " + to_string(v_new.size()) + "\n";
+			err += "c = " + to_string(c) + "\n";
+			err += "old values:\n";
+			err += show_MapUnified(v_old);
+			err += "new values:\n";
+			err += show_MapUnified(v_new);
+		} else if (!(isDefault(v_old) && isDefault(v_new))) {
+			for (uint i = 0; i < v_old.size(); ++i) {
+				if (v_old.at(i) != v_new.at(i)) {
+					err += "A) values at key: " + prover::show(p.first) + " differ:\n";
+					err += show_MapUnified(v_old.at(i)) + "\n != \n";
+					err += show_MapUnified(v_new.at(i)) + "\n";
+				}
+			}
+		}
+	}
+
+	for (const auto& p : unfolded_new) {
+		if (!unfolded_old.count(p.first)) {
+			err += "old unified does't have key: " + prover::show(p.first) + "\n";
+		}
+		const auto& v_new = p.second;
+		const auto& v_old = unfolded_old.at(p.first);
+		if (v_old.size() != v_new.size() && !(isDefault(v_old) && isDefault(v_new))) {
+			err += "B) sizes at key: " + prover::show(p.first) + " differ: " + to_string(v_old.size()) + " != " + to_string(v_new.size()) + "\n";
+		} else if (!(isDefault(v_old) && isDefault(v_new))) {
+			for (uint i = 0; i < v_old.size(); ++i) {
+				if (v_old.at(i) != v_new.at(i)) {
+					err += "B) values at key: " + prover::show(p.first) + " differ:\n";
+					err += show_MapUnified(v_old.at(i)) + "\n != \n";
+					err += show_MapUnified(v_new.at(i)) + "\n";
+				}
+			}
+		}
+	}
+
+	if (err.size()) {
+		throw Error(err);
+	}
+}
+
 
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
-	MatrixUnifiedUnion common;
+	MatrixUnifiedUnion common_new;
 	MultyUnifiedSubs s;
 
 	intersect_inner_timer.start();
 	vector<uint> vars = optimize_intersection_order(terms);
-	for (uint v : vars) {
-		Timer timer; timer.start();
-		auto intersection = common.intersect1(terms.at(v));
-#ifdef DEBUG_INTERSECTION
-		auto rightAnswer = common.intersect(terms.at(v));
-		try {
-			check_union_unification_results_equal(intersection, rightAnswer);
-		} catch (Error& err) {
-
-			cout << err.what() << endl;
-			cout << "VAAAR: " << Lex::toStr(v) << endl;
-			cout << "vect uinfied: " << terms.at(v).show() << endl;
-			cout << "common: " << common.show() << endl;
-			cout << "right answer: " << rightAnswer.show() << endl;
-			cout << "wrong answer: " << intersection.show() << endl;
-
-			debug_intersect2 = true;
-			auto x3 = common.intersect1(terms.at(v));
-			check_union_unification_results_equal(rightAnswer, x3);
-		}
-#endif
-		common = std::move(intersection);
-		timer.stop();
-		if (common.empty()) {
+	for (uint i = 0; i < vars.size(); ++ i) {
+		uint v = vars[i];
+		auto intersection = common_new.intersect1(terms.at(v), i );
+		common_new = std::move(intersection);
+		if (common_new.empty()) {
 			return s;
 		}
 	}
 	intersect_inner_timer.stop();
 
 	intersect_unfold_timer.start();
-	map<vector<uint>, vector<FlatTermSubst>> unfolded = common.unfold();
+	map<vector<uint>, vector<TermSubst>> unfolded = common_new.unfold([&vars]() { return vector<TermSubst>(vars.size()); });
 	intersect_unfold_timer.stop();
-
 
 	intersect_compose_timer.start();
 	for (const auto& q : unfolded) {

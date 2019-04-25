@@ -45,14 +45,17 @@ template<class T>
 string show_MapUnified(const T&);
 
 template<>
-inline string show_MapUnified<FlatTermSubst>(const FlatTermSubst& ts) {
+inline string show_MapUnified<TermSubst>(const TermSubst& ts) {
 	return ts.show();
 }
 
 template<>
-inline string show_MapUnified<vector<FlatTermSubst>>(const vector<FlatTermSubst>& vect) {
+inline string show_MapUnified<vector<TermSubst>>(const vector<TermSubst>& vect) {
 	string ret;
-	for (const auto& ts : vect) ret += ts.show() + "\n";
+	for (uint i = 0; i < vect.size(); ++ i) {
+		const auto& ts = vect.at(i);
+		ret += Indent::paragraph(to_string(i) + " - " + ts.show() + "\n");
+	}
 	return ret;
 }
 
@@ -114,71 +117,41 @@ struct MapUnified {
 		return card_ * (all_are_cartesian ? 1 : unified.size());
 	}
 
-	map<vector<uint>, T> unfold() const {
+	map<vector<uint>, T> unfold(std::function<T()> def_val) const {
 		if (card() == 0) {
 			return map<vector<uint>, T>();
 		}
 		CartesianProd<uint> additional;
-		PowerSetIter both_variants;
-		enum CellDescr { CARTESIAN, INDEX, BOTH };
-		vector<CellDescr> descrs;
 		for (uint i = 0; i < vect.size(); ++ i) {
-			const auto& c = vect[i];
-			if (c.extra_inds.size()) {
-				if (c.empty_index) {
-					descrs.push_back(CARTESIAN);
-				} else {
-					descrs.push_back(BOTH);
-					both_variants.addDim();
-				}
-				additional.addDim(c.extra_inds);
-			} else {
-				descrs.push_back(INDEX);
+			if (!vect[i].skipped) {
+				additional.addDim(vect[i].extra_inds);
 			}
 		}
 		if (!additional.size()) {
 			return unified;
 		}
 		map<vector<uint>, T> ret;
-		if (empty() || !additional.card()) {
-			return ret;
-		}
-		for (const auto& p : unified) {
-			additional.reset();
-			while (true) {
-				vector<uint> extra = additional.data();
-				vector<uint> key;
-				both_variants.reset();
-				while (true) {
-					for (uint i = 0, j = 0, k = 0, b = 0; i < vect.size(); ++ i) {
-						if (vect.at(i).extra_inds.size()) {
-							if (vect.at(i).empty_index) {
-								key.push_back(extra.at(j++));
-							} else {
-								if (both_variants[b++]) {
-									key.push_back(extra.at(j++)); ++k;
-								} else {
-									key.push_back(p.first[k++]); ++j;
-								}
-							}
+		while (true) {
+			vector<uint> extra = additional.data();
+			if (unified.size()) {
+				for (const auto& p : unified) {
+					vector<uint> key;
+					for (uint i = 0, j = 0, k = 0; i < vect.size(); ++ i) {
+						if (!vect.at(i).skipped) {
+							key.push_back(extra.at(j++));
 						} else {
-							key.push_back(p.first[k++]);
+							key.push_back(p.first.at(k++));
 						}
 					}
 					ret.emplace(key, p.second);
-
-					if (both_variants.hasNext()) {
-						both_variants.makeNext();
-					} else {
-						break;
-					}
 				}
-
-				if (additional.hasNext()) {
-					additional.makeNext();
-				} else {
-					break;
-				}
+			} else {
+				ret.emplace(extra, def_val());
+			}
+			if (additional.hasNext()) {
+				additional.makeNext();
+			} else {
+				break;
 			}
 		}
 		return ret;
@@ -201,7 +174,7 @@ string show(const vector<MapUnified<T>>& unif) {
 	return ret;
 }
 
-typedef MapUnified<FlatTermSubst> VectorUnified;
+typedef MapUnified<TermSubst> VectorUnified;
 
 struct VectorUnifiedUnion {
 	uint card() const {
@@ -287,7 +260,7 @@ struct Vector{
 						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
 								Index::Iter iter(&vect[only_iter_ind]->exprs().root().nodes, it);
-								ret.unified.emplace(vector<uint>{ind}, FlatTermSubst(iter.subTerm(end), Subst()));
+								ret.unified.emplace(vector<uint>{ind}, TermSubst(iter.subTerm(end), Subst()));
 							}
 						}
 					}

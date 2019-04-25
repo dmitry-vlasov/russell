@@ -159,7 +159,7 @@ string Matrix::show() const {
 		return "empty\n";
 	}
 	ostringstream oss;
-	oss << "DIMENSION: " << mindex_.size() <<  "x" << endl;
+	oss << "DIMENSION: " << dim_hyp_ << "x" << mindex_.size() << endl;
 	for (auto& p : mindex_) {
 		oss << endl << "VAR: " << Lex::toStr(p.first) << endl;
 		oss << p.second->show() << endl;

@@ -189,7 +189,7 @@ bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& m
 		}
 		if (!similar_subs(p1.second, ms2.at(p1.first), verbose)) {
 			if (verbose) {
-				cout << "on key: " << show(p1.first) << endl;
+				cout << "A) on key: " << show(p1.first) << endl;
 			}
 			return false;
 		}
@@ -203,7 +203,7 @@ bool compare_unified_subs(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& m
 		}
 		if (!similar_subs(p2.second, ms1.at(p2.first), verbose)) {
 			if (verbose) {
-				cout << "on key: " << show(p2.first) << endl;
+				cout << "B) on key: " << show(p2.first) << endl;
 			}
 			return false;
 		}
@@ -317,7 +317,9 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	if (mat_time > 10 * 1000 * 1000) {
 		cout << "LONG MATRIX TIME: " << timer << endl;
+#ifdef CHECK_MATRIX_UNIFICATION
 		cout << "SEQ TIME: " << double(seq_time) / 1000000 << "s." << endl;
+#endif
 		cout << "CARD: " << card << endl;
 		cout << "THEOREM: " << Lex::toStr(pr->space->theorem()->id()) << endl;
 		//cout << index::Matrix(pr, hy, hs, &limit).show() << endl;

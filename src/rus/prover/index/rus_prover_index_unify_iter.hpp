@@ -337,21 +337,30 @@ struct UnifyIters {
 	Subst sub;
 };
 
-struct FlatTermSubst {
-	FlatTermSubst() : term(new Term()), sub(new Subst) { }
-	FlatTermSubst(const Term& t, const Subst& s) :
+struct TermSubst {
+	TermSubst() : term(new Term()), sub(new Subst) { }
+	TermSubst(const Term& t, const Subst& s) :
 		term(make_unique<Term>(t)), sub(make_unique<Subst>(s)) { }
-	FlatTermSubst(const FlatTermSubst& ts) :
+	TermSubst(const TermSubst& ts) :
 		term(make_unique<Term>(*ts.term)), sub(make_unique<Subst>(*ts.sub)) { }
-	FlatTermSubst(FlatTermSubst&&) = default;
+	TermSubst(TermSubst&&) = default;
 	unique_ptr<Term> term;
 	unique_ptr<Subst> sub;
 	string show() const {
 		return "term: " + term->show() + "\nsub:\n" + sub->show();
 	}
+	bool operator == (const TermSubst& ts) const {
+		return *term == *ts.term && *sub == *ts.sub;
+	}
+	bool operator != (const TermSubst& ts) const {
+		return !operator == (ts);
+	}
+	bool isDefault() const {
+		return !term->len() && !sub->size();
+	}
 };
 
-map<vector<uint>, FlatTermSubst> unify_general(const UnifyIters& i);
+map<vector<uint>, TermSubst> unify_general(const UnifyIters& i);
 
 template<class D>
 vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const Term& t) {
@@ -363,7 +372,7 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 	iters.emplace_back(Index::Iter(m.index().root()));
 	iters.emplace_back(Term::Iter(t));
 	try {
-		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
+		map<vector<uint>, TermSubst> unif = unify_general(iters);
 		for (auto& p : unif) {
 			if (p.second.sub->ok()) {
 				ret.emplace_back(m.data().at(p.first[0]), std::move(*p.second.sub));

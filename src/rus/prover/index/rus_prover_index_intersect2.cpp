@@ -92,8 +92,8 @@ struct IndexHelper1 {
 		IndexHelper1& helper;
 	};
 
-	map<vector<uint>, map<vector<uint>, FlatTermSubst>> splitMap(const map<vector<uint>, FlatTermSubst>& m) {
-		map<vector<uint>, map<vector<uint>, FlatTermSubst>> ret;
+	map<vector<uint>, map<vector<uint>, TermSubst>> splitMap(const map<vector<uint>, TermSubst>& m) {
+		map<vector<uint>, map<vector<uint>, TermSubst>> ret;
 		for (const auto& p : m) {
 			Keys keys(*this);
 			keys.setRight(p.first);
@@ -146,7 +146,7 @@ struct IndexHelper1 {
 	const MatrixUnified* intersection;
 };
 
-MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu) const {
+MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu, uint i) const {
 	if (kind == EMPTY || vuu.card() == 0) {
 		return MatrixUnifiedUnion(EMPTY);
 	}
@@ -158,7 +158,7 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 				mu.vect.emplace_back(c);
 			}
 			for (const auto& p : vu.unified) {
-				mu.unified.emplace(p.first, vector<FlatTermSubst>(1, p.second));
+				mu.unified.emplace(p.first, vector<TermSubst>(1, p.second));
 			}
 			ret.union_.push_back(mu);
 		}
@@ -182,7 +182,7 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 						if (!key.leftKeyIsInside()) {
 							continue;
 						}
-						vector<FlatTermSubst> w(p.second);
+						vector<TermSubst> w(p.second);
 						w.emplace_back();
 						mu_new.unified.emplace(p.first, w);
 					}
@@ -193,12 +193,12 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 						if (!key.rightKeyIsInside()) {
 							continue;
 						}
-						vector<FlatTermSubst> w(1);
+						vector<TermSubst> w(i);
 						w.emplace_back(p.second);
 						mu_new.unified.emplace(p.first, w);
 					}
 				} else {
-					map<vector<uint>, map<vector<uint>, FlatTermSubst>> sm = indexHelper.splitMap(vu.unified);
+					map<vector<uint>, map<vector<uint>, TermSubst>> sm = indexHelper.splitMap(vu.unified);
 					for (const auto& p : mu.unified) {
 						IndexHelper1::Keys key(indexHelper);
 						key.setLeft(p.first);
@@ -224,7 +224,7 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect1(const VectorUnifiedUnion& vuu)
 							if (debug_intersect2) {
 								cout << "key.getAll(): " << prover::show(key.getAll()) << endl;
 							}
-							vector<FlatTermSubst> w(p.second);
+							vector<TermSubst> w(p.second);
 							w.emplace_back(q.second);
 							mu_new.unified.emplace(key.getAll(), w);
 						}

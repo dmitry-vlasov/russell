@@ -39,7 +39,7 @@ Term unify_general(const vector<Term>& ex, Subst& sub) {
 		iters.emplace_back(Term::Iter(e));
 	}
 	try {
-		map<vector<uint>, FlatTermSubst> unif = unify_general(iters);
+		map<vector<uint>, TermSubst> unif = unify_general(iters);
 		if (!unif.size()) {
 			sub.spoil();
 			return Term();

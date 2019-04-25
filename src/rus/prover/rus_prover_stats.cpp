@@ -133,7 +133,7 @@ void print_down_unification_statistics() {
 		if (p.first > max_size) max_size = p.first;
 		if (p.second.sequential.size() != p.second.matrix.size()) {
 			cerr << "sample sizes must be equal: " << p.second.sequential.size() << " != " << p.second.matrix.size() << endl;
-			throw Error("sample sizes must be equal");
+			//throw Error("sample sizes must be equal");
 		}
 		sample_size += p.second.sequential.size();
 	}
@@ -162,7 +162,7 @@ void print_down_unification_statistics() {
 		if (seq_slices_size) {
 			if (seq_slices_size != mat_slices_size) {
 				cerr << "slices sizes must be equal: " << seq_slices_size << " != " << mat_slices_size << endl;
-				throw Error("slices sizes must be equal");
+				//throw Error("slices sizes must be equal");
 			}
 			cout << lower_boundary << "\t" << upper_boundary << "\t" << seq_slices_size << "\t";
 
