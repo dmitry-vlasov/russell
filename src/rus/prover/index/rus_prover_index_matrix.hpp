@@ -6,15 +6,22 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-typedef MapUnified<vector<TermSubst>> MatrixUnified;
+typedef MapUnified<vector<const TermSubst*>> MatrixUnified;
 
 struct MatrixUnifiedUnion {
 	enum Kind { FULL, EMPTY, NORM };
 	MatrixUnifiedUnion(Kind k = FULL) : kind(k) { }
+	MatrixUnifiedUnion(MatrixUnifiedUnion&&) = default;
+
+	MatrixUnifiedUnion& operator = (MatrixUnifiedUnion&& mu) {
+		kind = mu.kind;
+		union_ = std::move(mu.union_);
+		return *this;
+	}
+
 	MatrixUnifiedUnion intersect(const VectorUnifiedUnion&, uint i) const;
-	MatrixUnifiedUnion intersect1(const VectorUnifiedUnion&, uint i) const;
-	map<vector<uint>, vector<TermSubst>> unfold(std::function<vector<TermSubst>()> def_val) const {
-		map<vector<uint>, vector<TermSubst>> ret;
+	map<vector<uint>, vector<const TermSubst*>> unfold(std::function<vector<const TermSubst*>()> def_val) const {
+		map<vector<uint>, vector<const TermSubst*>> ret;
 		for (const auto& mu : union_) {
 			for (const auto& p : mu.unfold(def_val)) {
 				ret.emplace(p.first, p.second);

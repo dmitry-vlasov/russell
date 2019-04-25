@@ -90,12 +90,12 @@ struct IndexHelper {
 		IndexHelper& helper;
 	};
 
-	map<vector<uint>, map<vector<uint>, TermSubst>> splitMap(const map<vector<uint>, TermSubst>& m) {
-		map<vector<uint>, map<vector<uint>, TermSubst>> ret;
+	map<vector<uint>, map<vector<uint>, const TermSubst*>> splitMap(const map<vector<uint>, TermSubst>& m) {
+		map<vector<uint>, map<vector<uint>, const TermSubst*>> ret;
 		for (const auto& p : m) {
 			Keys keys(*this);
 			keys.setRight(p.first);
-			ret[keys.bothPart].emplace(keys.rightPart, p.second);
+			ret[keys.bothPart].emplace(keys.rightPart, &p.second);
 		}
 		return ret;
 	}
@@ -156,11 +156,14 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 				mu.vect.emplace_back(c);
 			}
 			for (const auto& p : vu.unified) {
-				mu.unified.emplace(p.first, vector<TermSubst>(1, p.second));
+				mu.unified.emplace(p.first, std::move(vector<const TermSubst*>(1, &p.second)));
 			}
-			ret.union_.push_back(mu);
+			ret.union_.emplace_back(std::move(mu));
 		}
 	} else {
+
+		//cout << "INTERSECT VARS: " << vuu.union_.size() * union_.size() << endl;
+
 		for (const auto& vu : vuu.union_) {
 			if (vu.empty()) continue;
 			for (const auto& mu : union_) {
@@ -176,9 +179,9 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 						if (!key.leftKeyIsInside()) {
 							continue;
 						}
-						vector<TermSubst> w(p.second);
+						vector<const TermSubst*> w(p.second);
 						w.emplace_back();
-						mu_new.unified.emplace(p.first, w);
+						mu_new.unified.emplace(p.first, std::move(w));
 					}
 				} else if (!mu.unified.size()) {
 					for (const auto& p : vu.unified) {
@@ -187,12 +190,12 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 						if (!key.rightKeyIsInside()) {
 							continue;
 						}
-						vector<TermSubst> w(i);
-						w.emplace_back(p.second);
-						mu_new.unified.emplace(p.first, w);
+						vector<const TermSubst*> w(i);
+						w.emplace_back(&p.second);
+						mu_new.unified.emplace(p.first, std::move(w));
 					}
 				} else {
-					map<vector<uint>, map<vector<uint>, TermSubst>> sm = indexHelper.splitMap(vu.unified);
+					map<vector<uint>, map<vector<uint>, const TermSubst*>> sm = indexHelper.splitMap(vu.unified);
 					for (const auto& p : mu.unified) {
 						IndexHelper::Keys key(indexHelper);
 						key.setLeft(p.first);
@@ -204,14 +207,14 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 							if (!key.rightKeyIsInside()) {
 								continue;
 							}
-							vector<TermSubst> w(p.second);
+							vector<const TermSubst*> w(p.second);
 							w.emplace_back(q.second);
-							mu_new.unified.emplace(key.getAll(), w);
+							mu_new.unified.emplace(key.getAll(), std::move(w));
 						}
 					}
 				}
 				if (!mu_new.empty()) {
-					ret.union_.push_back(mu_new);
+					ret.union_.emplace_back(std::move(mu_new));
 				}
 			}
 		}
@@ -254,28 +257,35 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 	intersect_inner_timer.stop();
 
 	intersect_unfold_timer.start();
-	map<vector<uint>, vector<TermSubst>> unfolded = common.unfold([&vars]() { return vector<TermSubst>(vars.size()); });
+	map<vector<uint>, vector<const TermSubst*>> unfolded = common.unfold([&vars]() {
+		return vector<const TermSubst*>(vars.size(), nullptr);
+	});
 	intersect_unfold_timer.stop();
 
 	intersect_compose_timer.start();
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
-			const Term& term = *q.second[i].term;
-			const Subst& sub = *q.second[i].sub;
-			if (!term.empty()) {
-				if (unif[c].ok()) {
-					Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-					unif[c] = unified;
-					s[c].compose(vars[i], unified.apply(term), CompMode::DUAL);
+			if (const TermSubst* ts = q.second[i]) {
+				const Term& term = *ts->term;
+				const Subst& sub = *ts->sub;
+				if (!term.empty()) {
+					if (unif[c].ok()) {
+						Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
+						unif[c] = unified;
+						s[c].compose(vars[i], unified.apply(term), CompMode::DUAL);
+					}
+				} else {
+					if (sub.ok()) {
+						s[c];
+						unif[c];
+					} else {
+						unif[c].spoil();
+					}
 				}
 			} else {
-				if (sub.ok()) {
-					s[c];
-					unif[c];
-				} else {
-					unif[c].spoil();
-				}
+				s[c];
+				unif[c];
 			}
 		}
 	}

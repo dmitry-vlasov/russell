@@ -61,6 +61,11 @@ inline string show_MapUnified<vector<TermSubst>>(const vector<TermSubst>& vect) 
 
 template<class T>
 struct MapUnified {
+	MapUnified() = default;
+	MapUnified(vector<CartesianCell>&& v, map<vector<uint>, T>&& u) : vect(std::move(v)), unified(std::move(u)) { }
+	explicit MapUnified(const MapUnified&) = default;
+	MapUnified(MapUnified&&) = default;
+
 	string showKeys(const vector<uint>& v) const {
 		string ret;
 		for (uint i = 0, j = 0; i < vect.size(); ++ i) {

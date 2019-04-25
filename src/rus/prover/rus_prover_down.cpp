@@ -242,7 +242,7 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 }
 
 #define CHECK_MATRIX_UNIFICATION
-//#define SHOW_MATRIXES
+#define SHOW_MATRIXES
 //#define VERIFY_UNIQUE_PROOFS
 
 Timer seq_unify(true, true);
@@ -320,6 +320,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #ifdef CHECK_MATRIX_UNIFICATION
 		cout << "SEQ TIME: " << double(seq_time) / 1000000 << "s." << endl;
 #endif
+		cout << "MATR TIME: " << double(mat_time) / 1000000 << "s." << endl;
 		cout << "CARD: " << card << endl;
 		cout << "THEOREM: " << Lex::toStr(pr->space->theorem()->id()) << endl;
 		//cout << index::Matrix(pr, hy, hs, &limit).show() << endl;

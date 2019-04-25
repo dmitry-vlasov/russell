@@ -49,8 +49,16 @@ void Prop::buildUp() {
 	}
 }
 
+Timer build_up_timer(true, true);
+Timer build_up_unify_timer(true, true);
+
 void Hyp::buildUp() {
-	for (auto& m : unify_general(space->assertions(), expr)) {
+	build_up_timer.start();
+	build_up_unify_timer.start();
+	auto unified = unify_general(space->assertions(), expr);
+	build_up_unify_timer.stop();
+
+	for (auto& m : unified) {
 		set<uint> assertion_vars;
 		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
@@ -70,6 +78,7 @@ void Hyp::buildUp() {
 		}
 		variants.emplace_back(make_unique<Prop>(m.data, sub, outer, fresher, this));
 	}
+	build_up_timer.stop();
 }
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {

@@ -10,11 +10,20 @@ struct TimeStats {
 	map<uint, uint> matrix;
 };
 
+struct Stats {
+	map<uint, TimeStats> timeStats;
+	map<string, Timer> timers;
+};
+
 // map arg stands for unification cardinality
 static map<uint, TimeStats> stats;
 static mutex m;
 
+//static cmap<uint, Stats> cstats;
+
 void add_sequential_stats(uint card, uint count, uint time) {
+	//cmap<uint, Stats>::accessor a;
+	//cstats.insert(a, std::this_thread::id())
 	m.lock();
 	stats[card].sequential[count] = time;
 	m.unlock();
@@ -142,7 +151,7 @@ void print_down_unification_statistics() {
 	cout << "max size: " << max_size << endl;
 	cout << "sample size: " << sample_size << endl;
 	cout << "Sz_from\tsz_to\tsize\tseq\tmatrix\tratio\tavg_rat\tdev_rat\tmin_rat\tmax_rat\ttotal_seq\ttotal_mat\t";
-	cout << "min_seq\tmax_seq\tmin_mat\tmax_mat\t";
+	cout << "min_seq\tmax_seq\tmin_mat\tmax_mat\t" << endl;
 	cout << "-------------------------------------------" << endl;
 	uint lower_boundary = 0;
 	uint i = 0;

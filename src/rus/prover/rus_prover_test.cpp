@@ -45,6 +45,8 @@ namespace index {
 }
 extern Timer seq_unify;
 extern Timer mat_unify;
+extern Timer build_up_timer;
+extern Timer build_up_unify_timer;
 
 Return test_all_with_oracle(uint max_proofs) {
 	struct SourceLess {
@@ -138,6 +140,10 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "intersect_unfold_timer: " << index::intersect_unfold_timer << endl;
 				cout << "intersect_inner_timer: " << index::intersect_inner_timer << endl;
 				cout << "intersect_compose_timer: " << index::intersect_compose_timer << endl;
+				cout << endl;
+				cout << "build_up_timer: " << build_up_timer << endl;
+				cout << "build_up_unify_timer: " << build_up_unify_timer << endl;
+				cout << endl;
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");
 		} else {
