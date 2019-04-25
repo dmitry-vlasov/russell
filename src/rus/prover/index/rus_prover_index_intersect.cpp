@@ -287,7 +287,7 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 						unif[c] = std::move(unified);
 
 						intersect_compose_compose_timer.start();
-						s[c].compose(vars[i], t, CompMode::DUAL, false);
+						s[c].compose(vars[i], std::move(t), CompMode::DUAL, false);
 						intersect_compose_compose_timer.stop();
 					}
 				} else {

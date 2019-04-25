@@ -132,7 +132,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 	if (norm) {
 		for (const auto& p : s2) {
 			if (vars.find(p.first) == vars.end()) {
-				sub_[p.first] = p.second;
+				sub_.emplace(p.first, p.second);
 			}
 		}
 	}
@@ -148,6 +148,46 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 	}
 #endif
 }
+
+static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool norm) {
+#ifdef DEBUG_SUBST
+	Subst s0(s1);
+#endif
+	hset<uint> vars;
+	vector<uint> to_erase;
+	to_erase.reserve(sub_.size());
+	for (auto& p : sub_) {
+		Term ex = s2.apply(p.second);
+		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
+			p.second = std::move(ex);
+		} else {
+			to_erase.push_back(p.first);
+		}
+		vars.insert(p.first);
+	}
+	for (uint v : to_erase) {
+		sub_.erase(v);
+	}
+	if (norm) {
+		for (const auto& p : s2) {
+			if (vars.find(p.first) == vars.end()) {
+				sub_.emplace(p.first, std::move(p.second));
+			}
+		}
+	}
+#ifdef DEBUG_SUBST
+	try {
+		verify_chains(s1);
+		verify_composition(s1, s0, s2, norm);
+	} catch (Error& err) {
+		err.msg += "s1:\n" + s0.show() + "\n";
+		err.msg += "s2:\n" + s2.show() + "\n";
+		err.msg += "comp:\n" + s1.show() + "\n";
+		throw err;
+	}
+#endif
+}
+
 
 bool Subst::compose(const Subst& s, CompMode m, bool checked) {
 #ifdef DEBUG_SUBST
@@ -167,6 +207,35 @@ bool Subst::compose(const Subst& s, CompMode m, bool checked) {
 				return false;
 			}
 			prover::compose(*this, sub_, ss, true);
+		}
+		}
+	}
+	return ok_;
+#ifdef DEBUG_SUBST
+	} catch (Error& err) {
+		err.msg += "AT COMPOSITION\n";
+		throw err;
+	}
+#endif
+}
+
+bool Subst::compose(Subst&& s, CompMode m, bool checked) {
+#ifdef DEBUG_SUBST
+	try {
+#endif
+	if (checked && (!ok_ || !consistent(s))) {
+		ok_ = false;
+	} else {
+		switch (m) {
+		case CompMode::SEMI: prover::compose(*this, sub_, std::move(s), false); break;
+		case CompMode::NORM: prover::compose(*this, sub_, std::move(s), true);  break;
+		case CompMode::DUAL: {
+			prover::compose(s, s.sub_, *this, false);
+			if (checked && !consistent(s)) {
+				ok_ = false;
+				return false;
+			}
+			prover::compose(*this, sub_, std::move(s), true);
 		}
 		}
 	}

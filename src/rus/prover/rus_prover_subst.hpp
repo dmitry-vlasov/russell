@@ -13,6 +13,11 @@ struct Subst {
 			sub_.emplace(v, t);
 		}
 	}
+	Subst(uint v, Term&& t) : ok_(true) {
+		if (!(t.kind() == Term::VAR && t.var() == v)) {
+			sub_.emplace(v, std::move(t));
+		}
+	}
 	Subst(const Subst& s) : ok_(s.ok_) {
 		operator = (s);
 	}
@@ -29,6 +34,11 @@ struct Subst {
 	bool compose(const Subst& s, CompMode m = CompMode::DEFAULT, bool check = true);
 	bool compose(uint v, const Term& t, CompMode m = CompMode::DEFAULT, bool check = true) {
 		return compose(Subst(v, t), m, check);
+	}
+	bool compose(Subst&& s, CompMode m = CompMode::DEFAULT, bool check = true);
+	bool compose(uint v, Term&& t, CompMode m = CompMode::DEFAULT, bool check = true) {
+		Subst s(v, t);
+		return compose(std::move(s), m, check);
 	}
 
 	bool intersects(const Subst& s) const;
