@@ -116,6 +116,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 #endif
 	hset<uint> vars;
 	vector<uint> to_erase;
+	to_erase.reserve(sub_.size());
 	for (auto& p : sub_) {
 		Term ex = s2.apply(p.second);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
