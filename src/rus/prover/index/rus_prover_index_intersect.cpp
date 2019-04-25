@@ -29,6 +29,7 @@ struct IndexHelper {
 	struct Keys {
 		Keys(IndexHelper& h) : helper(h) { }
 		void setRight(const vector<uint>& v) {
+			clear();
 			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
 				switch (helper.hypDescrs.at(n)) {
 				case HypDescr::CART_CART: break;
@@ -39,6 +40,7 @@ struct IndexHelper {
 			}
 		}
 		void setLeft(const vector<uint>& v) {
+			clear();
 			for (uint n = 0, i = 0; n < helper.dim; ++ n) {
 				switch (helper.hypDescrs.at(n)) {
 				case HypDescr::CART_CART: break;
@@ -82,6 +84,11 @@ struct IndexHelper {
 		}
 		string show() const {
 			return "left: " + prover::show(leftPart) + ", right: " + prover::show(rightPart) + ", both: " + prover::show(bothPart);
+		}
+		void clear() {
+			leftPart.clear();
+			bothPart.clear();
+			rightPart.clear();
 		}
 
 		vector<uint> leftPart;
@@ -161,22 +168,19 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 			ret.union_.emplace_back(std::move(mu));
 		}
 	} else {
-
-		//cout << "INTERSECT VARS: " << vuu.union_.size() * union_.size() << endl;
-
 		for (const auto& vu : vuu.union_) {
 			if (vu.empty()) continue;
 			for (const auto& mu : union_) {
 				if (mu.empty()) continue;
 				assert(mu.vect.size() == vu.vect.size());
-				IndexHelper indexHelper(mu, vu);
 				MatrixUnified mu_new;
+				IndexHelper indexHelper(mu, vu);
 				indexHelper.initIteration(mu_new);
+				IndexHelper::Keys keys(indexHelper);
 				if (!vu.unified.size()) {
 					for (const auto& p : mu.unified) {
-						IndexHelper::Keys key(indexHelper);
-						key.setLeft(p.first);
-						if (!key.leftKeyIsInside()) {
+						keys.setLeft(p.first);
+						if (!keys.leftKeyIsInside()) {
 							continue;
 						}
 						vector<const TermSubst*> w(p.second);
@@ -185,9 +189,8 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 					}
 				} else if (!mu.unified.size()) {
 					for (const auto& p : vu.unified) {
-						IndexHelper::Keys key(indexHelper);
-						key.setRight(p.first);
-						if (!key.rightKeyIsInside()) {
+						keys.setRight(p.first);
+						if (!keys.rightKeyIsInside()) {
 							continue;
 						}
 						vector<const TermSubst*> w(i);
@@ -197,19 +200,18 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 				} else {
 					map<vector<uint>, map<vector<uint>, const TermSubst*>> sm = indexHelper.splitMap(vu.unified);
 					for (const auto& p : mu.unified) {
-						IndexHelper::Keys key(indexHelper);
-						key.setLeft(p.first);
-						if (!key.leftKeyIsInside()) {
+						keys.setLeft(p.first);
+						if (!keys.leftKeyIsInside()) {
 							continue;
 						}
-						for (const auto& q : sm[key.bothPart]) {
-							key.rightPart = q.first;
-							if (!key.rightKeyIsInside()) {
+						for (const auto& q : sm[keys.bothPart]) {
+							keys.rightPart = q.first;
+							if (!keys.rightKeyIsInside()) {
 								continue;
 							}
 							vector<const TermSubst*> w(p.second);
 							w.emplace_back(q.second);
-							mu_new.unified.emplace(key.getAll(), std::move(w));
+							mu_new.unified.emplace(keys.getAll(), std::move(w));
 						}
 					}
 				}
