@@ -32,7 +32,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_PROVER_TEST
+#define PARALLEL_PROVER_TEST
 #endif
 
 namespace index {
