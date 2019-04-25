@@ -328,6 +328,7 @@ ostream& operator << (ostream& os, const Timer& t)
 	}
 	string str;
 	if (t.showCumulativeTime_) {
+		os << "cumulative ";
 		t.showTime(str, t.cumulativeTime_);
 	} else {
 		t.showTime(str, t.deltaTime_);
