@@ -44,11 +44,11 @@ Term unify_general(const vector<Term>& ex, Subst& sub) {
 			sub.spoil();
 			return Term();
 		} else if (unif.size() == 1) {
-			if (unif.begin()->second.sub->ok()) {
-				Subst common = unify_subs(*unif.begin()->second.sub, sub);
+			if (unif.begin()->second.sub.ok()) {
+				Subst common = unify_subs(unif.begin()->second.sub, sub);
 				if (common.ok()) {
 					sub = std::move(common);
-					return sub.apply(*unif.begin()->second.term);
+					return sub.apply(unif.begin()->second.term);
 				} else {
 					sub.spoil();
 					return Term();

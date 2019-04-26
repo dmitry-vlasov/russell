@@ -1,3 +1,4 @@
+#include "rus_prover_node.hpp"
 #include "rus_prover_subst.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -149,6 +150,8 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 #endif
 }
 
+static Timer compose_apply_timer;
+
 static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool norm) {
 #ifdef DEBUG_SUBST
 	Subst s0(s1);
@@ -157,7 +160,11 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool no
 	vector<uint> to_erase;
 	to_erase.reserve(sub_.size());
 	for (auto& p : sub_) {
+
+		compose_apply_timer.start();
 		Term ex = s2.apply(p.second);
+		add_timer_stats("compose_appy", compose_apply_timer);
+
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
 			p.second = std::move(ex);
 		} else {

@@ -10,7 +10,7 @@ struct PropRef {
 	uint id() const { return ass->id(); }
 	rus::Prop* get() const { return ass->props[ind].get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
-		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
+		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass->token.preceeds(a2.ass->token);
 	}
 	bool operator == (const PropRef& pr) const {
 		return ass == pr.ass && ind == pr.ind;

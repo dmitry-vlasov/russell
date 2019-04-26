@@ -265,8 +265,8 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
 			if (const TermSubst* ts = q.second[i]) {
-				const Term& term = *ts->term;
-				const Subst& sub = *ts->sub;
+				const Term& term = ts->term;
+				const Subst& sub = ts->sub;
 				if (!term.empty()) {
 					if (unif[c].ok()) {
 						Timer timer;

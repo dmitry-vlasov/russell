@@ -361,10 +361,14 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 
 map<vector<uint>, TermSubst> unify_general(const UnifyIters& begin) {
 	map<vector<uint>, TermSubst> ret;
-	for (const auto& end : do_unify_general(begin)) {
+	Timer timer;
+	auto unified = do_unify_general(begin);
+	add_timer_stats("do_unify_general", timer);
+
+	for (const auto& end : unified) {
 		Term term = end.sub.apply(begin.iters[0].subTerm(end.iters[0]));
 		for (auto ind :  end.inds()) {
-			ret.emplace(ind, TermSubst(term, end.sub));
+			ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
 		}
 	}
 	return ret;

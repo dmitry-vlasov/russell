@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../rus_prover_node.hpp"
 #include "rus_prover_index.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
@@ -338,26 +339,27 @@ struct UnifyIters {
 };
 
 struct TermSubst {
-	TermSubst() : term(new Term()), sub(new Subst) { }
-	TermSubst(const Term& t, const Subst& s) :
-		term(make_unique<Term>(t)), sub(make_unique<Subst>(s)) { }
-	TermSubst(const TermSubst& ts) :
-		term(make_unique<Term>(*ts.term)), sub(make_unique<Subst>(*ts.sub)) { }
+	TermSubst() = default;
+	TermSubst(const Term& t, const Subst& s) : term(t), sub(s) { }
+	TermSubst(Term&& t, Subst&& s) : term(std::move(t)), sub(std::move(s)) { }
+	TermSubst(const TermSubst& ts) = default;
 	TermSubst(TermSubst&&) = default;
-	unique_ptr<Term> term;
-	unique_ptr<Subst> sub;
+
 	string show() const {
-		return "term: " + term->show() + "\nsub:\n" + sub->show();
+		return "term: " + term.show() + "\nsub:\n" + sub.show();
 	}
 	bool operator == (const TermSubst& ts) const {
-		return *term == *ts.term && *sub == *ts.sub;
+		return term == ts.term && sub == ts.sub;
 	}
 	bool operator != (const TermSubst& ts) const {
 		return !operator == (ts);
 	}
 	bool isDefault() const {
-		return !term->len() && !sub->size();
+		return !term.len() && !sub.size();
 	}
+
+	Term term;
+	Subst sub;
 };
 
 map<vector<uint>, TermSubst> unify_general(const UnifyIters& i);
@@ -369,13 +371,19 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 		return ret;
 	}
 	vector<MultyIter> iters;
-	iters.emplace_back(Index::Iter(m.index().root()));
+	Timer timer;
+	iters.emplace_back(std::move(Index::Iter(m.index().root())));
+	add_timer_stats("unify_general_create_iters", timer);
+
 	iters.emplace_back(Term::Iter(t));
 	try {
+		timer.start();
 		map<vector<uint>, TermSubst> unif = unify_general(iters);
+		add_timer_stats("unify_general_iters", timer);
+
 		for (auto& p : unif) {
-			if (p.second.sub->ok()) {
-				ret.emplace_back(m.data().at(p.first[0]), std::move(*p.second.sub));
+			if (p.second.sub.ok()) {
+				ret.emplace_back(m.data().at(p.first[0]), std::move(p.second.sub));
 			}
 		}
 	} catch (Error& err) {
