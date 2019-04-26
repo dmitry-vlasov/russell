@@ -101,8 +101,8 @@ string showFlatTerm(Term::ConstIterator i) {
 string Term::show(bool simple) const {
 	if (simple) {
 		string ret;
-		for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
-			ret += i->ruleVar.show() + " ";
+		for (const auto& n : nodes) {
+			ret += n.ruleVar.show() + " ";
 		}
 		return ret;
 	} else {

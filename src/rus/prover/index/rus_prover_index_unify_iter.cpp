@@ -292,7 +292,7 @@ static vector<UnifyIters> do_unify_general(const UnifyIters& inits) {
 
 
 static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
-	//cout << "do_unify_general_with_hint: " << hint.show() << endl;
+	//cout << "do_unify_general_with_hint: [" << hint.show(false) << "]   ===   [" << hint.show(true) << "]" << endl;
 	//cout << "HINT ITER: " << Term::Iter(hint).show() << endl;
 	//cout << "inits.iters.size(): " << inits.iters.size() << endl;
 
@@ -313,9 +313,6 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 				Term::Iter hint;
 			};
 			Term::Iter hiter(hint);
-			if (hiter.ruleVar().rule) {
-				//cout << "HINT RULE: " << Lex::toStr(hiter.ruleVar().rule->id());
-			}
 			UnifyIters start = hiter.ruleVar().rule ? inits.hint(hiter.ruleVar().rule) : inits;
 			if (!start.isValid()) {
 				return ret;
@@ -339,14 +336,14 @@ static vector<UnifyIters> do_unify_general_with_hint(const UnifyIters& inits, co
 				if (!t.cur.isSideEnd()) {
 					if (t.is_root) {
 						if (t.hint.ruleVar().rule) {
-							//cout << "USING HINT" << endl;
+							cout << "USING HINT" << endl;
 							st.emplace(t.cur.hint(t.hint.ruleVar().rule), t.hint);
 						} else {
 							st.emplace(t.cur.side(), t.hint);
 						}
 					} else {
 						if (t.hint.ruleVar().rule) {
-							//cout << "USING HINT" << endl;
+							cout << "USING HINT" << endl;
 							st.emplace(t.beg, t.cur.hint(t.hint.ruleVar().rule), t.hint);
 						} else {
 							st.emplace(t.beg, t.cur.side(), t.hint);
@@ -365,12 +362,19 @@ map<vector<uint>, TermSubst> unify_general(const UnifyIters& begin) {
 	auto unified = do_unify_general(begin);
 	add_timer_stats("do_unify_general", timer);
 
+	timer.start();
 	for (const auto& end : unified) {
+		Timer t;
 		Term term = end.sub.apply(begin.iters[0].subTerm(end.iters[0]));
+		add_timer_stats("unify_general_extract_subterm", timer);
+
+		t.start();
 		for (auto ind :  end.inds()) {
 			ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
 		}
+		add_timer_stats("unify_general_emplace_term_subst", timer);
 	}
+	add_timer_stats("unify_general_arrange_ret", timer);
 	return ret;
 }
 
