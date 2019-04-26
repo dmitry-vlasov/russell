@@ -35,22 +35,6 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 //#define PARALLEL_PROVER_TEST
 #endif
 
-namespace index {
-	extern Timer unify_timer;
-	extern Timer intersect_timer;
-
-	extern Timer intersect_unfold_timer;
-	extern Timer intersect_inner_timer;
-	extern Timer intersect_compose_timer;
-	extern Timer intersect_compose_unify_subs_timer;
-	extern Timer intersect_compose_apply_timer;
-	extern Timer intersect_compose_compose_timer;
-}
-extern Timer seq_unify;
-extern Timer mat_unify;
-extern Timer build_up_timer;
-extern Timer build_up_unify_timer;
-
 Return test_all_with_oracle(uint max_proofs) {
 	struct SourceLess {
 		bool operator () (const Source* s1, const Source* s2) const {
@@ -104,22 +88,7 @@ Return test_all_with_oracle(uint max_proofs) {
 		cout << Lex::toStr(p->theorem()->id()) << ", ";
 	}
 	cout << endl;
-	print_down_unification_statistics();
-	cout << "index::unify_timer: " << index::unify_timer << endl;
-	cout << "index::intersect_timer: " << index::intersect_timer << endl;
-	cout << "seq_unify: " << seq_unify << endl;
-	cout << "mat_unify: " << mat_unify << endl;
-	cout << endl;
-	cout << "intersect_unfold_timer: " << index::intersect_unfold_timer << endl;
-	cout << "intersect_inner_timer: " << index::intersect_inner_timer << endl;
-	cout << "intersect_compose_timer: " << index::intersect_compose_timer << endl;
-	cout << "intersect_compose_unify_subs_timer: " << index::intersect_compose_unify_subs_timer << endl;
-	cout << "intersect_compose_apply_timer: " << index::intersect_compose_apply_timer << endl;
-	cout << "intersect_compose_compose_timer: " << index::intersect_compose_compose_timer << endl;
-	cout << endl;
-	cout << "build_up_timer: " << build_up_timer << endl;
-	cout << "build_up_unify_timer: " << build_up_unify_timer << endl;
-	cout << endl;
+	print_statistics();
 	return Return("Massive prover testing with oracle succeeded :)");
 }
 
@@ -141,22 +110,7 @@ Return test_with_oracle(string theorem, uint max_proofs) {
 				cout << "dev_expr_length: " << expr::Stats::stats().devLen() << endl;
 				cout << "max_expr: " << *expr::Stats::stats().maxLenExpr() << endl;
 				cout << endl;
-				print_down_unification_statistics();
-				cout << "index::unify_timer: " << index::unify_timer << endl;
-				cout << "index::intersect_timer: " << index::intersect_timer << endl;
-				cout << "seq_unify: " << seq_unify << endl;
-				cout << "mat_unify: " << mat_unify << endl;
-				cout << endl;
-				cout << "intersect_unfold_timer: " << index::intersect_unfold_timer << endl;
-				cout << "intersect_inner_timer: " << index::intersect_inner_timer << endl;
-				cout << "intersect_compose_timer: " << index::intersect_compose_timer << endl;
-				cout << "intersect_compose_unify_subs_timer: " << index::intersect_compose_unify_subs_timer << endl;
-				cout << "intersect_compose_apply_timer: " << index::intersect_compose_apply_timer << endl;
-				cout << "intersect_compose_compose_timer: " << index::intersect_compose_compose_timer << endl;
-				cout << endl;
-				cout << "build_up_timer: " << build_up_timer << endl;
-				cout << "build_up_unify_timer: " << build_up_unify_timer << endl;
-				cout << endl;
+				print_statistics();
 			}
 			return Return(string("Prover testing of ") + theorem + " with oracle succeeded :)");
 		} else {

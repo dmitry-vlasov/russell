@@ -427,7 +427,7 @@ private:
 
 template<class T>
 string show_timer(const char* message, const string& name, const T& t) {
-	return t.timers.count(name) ? string(message) + show(t.timers.at(name)) : "";
+	return t.timers.count(name) ? string(message) + t.timers.at(name).show() : "";
 }
 
 template<class D>

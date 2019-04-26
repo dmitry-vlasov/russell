@@ -111,9 +111,6 @@ string Matrix::card_str() const {
 	return ret;
 }
 
-Timer unify_timer(true, true);
-Timer intersect_timer(true, true);
-
 MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;
@@ -131,7 +128,7 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 		return MultyUnifiedSubs();
 	}
 	map<uint, VectorUnifiedUnion> unified_columns;
-	unify_timer.start();
+	Timer timer;
 	for (auto& p : mindex_) {
 		uint var = p.first;
 		Vector* vect = p.second.get();
@@ -145,11 +142,11 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 			throw err;
 		}
 	}
-	unify_timer.stop();
+	add_timer_stats("matrix_unify_time", timer);
 
-	intersect_timer.start();
+	timer.start();
 	MultyUnifiedSubs ret = intersect(unified_columns, unif);
-	intersect_timer.stop();
+	add_timer_stats("matrix_intersect_time", timer);
 
 	return ret;
 }

@@ -170,9 +170,10 @@ string showNodeProofs(const Node* n, uint limit = -1);
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
 
 // Statistics:
-void add_sequential_stats(uint card, uint count, uint time);
-void add_matrix_stats(uint card, uint count, uint time);
-void print_down_unification_statistics();
+void add_sequential_stats(uint card, uint count, Timer& timer);
+void add_matrix_stats(uint card, uint count, Timer& timer);
+void add_timer_stats(const string& name, Timer& timer);
+void print_statistics();
 
 }}}
 

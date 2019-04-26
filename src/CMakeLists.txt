@@ -16,7 +16,6 @@ else()
 	set(RUSSELL_SRC
 		com/actions.cpp 
 		com/log.cpp 
-		com/timer.cpp 
 		com/memusage.cpp 
 		com/common.cpp 
 		com/xml.cpp 

@@ -239,18 +239,11 @@ static vector<uint> optimize_intersection_order(const map<uint, VectorUnifiedUni
 	return ret;
 }
 
-Timer intersect_unfold_timer(true, true);
-Timer intersect_inner_timer(true, true);
-Timer intersect_compose_timer(true, true);
-Timer intersect_compose_unify_subs_timer(true, true);
-Timer intersect_compose_apply_timer(true, true);
-Timer intersect_compose_compose_timer(true, true);
-
 MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 	MatrixUnifiedUnion common;
 	MultyUnifiedSubs s;
 
-	intersect_inner_timer.start();
+	Timer timer;
 	vector<uint> vars = optimize_intersection_order(terms);
 	for (uint i = 0; i < vars.size(); ++ i) {
 		uint v = vars[i];
@@ -259,15 +252,15 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 			return s;
 		}
 	}
-	intersect_inner_timer.stop();
+	add_timer_stats("intersect_inner_timer", timer);
 
-	intersect_unfold_timer.start();
+	timer.start();
 	map<vector<uint>, vector<const TermSubst*>> unfolded = common.unfold([&vars]() {
 		return vector<const TermSubst*>(vars.size(), nullptr);
 	});
-	intersect_unfold_timer.stop();
+	add_timer_stats("intersect_unfold_timer", timer);
 
-	intersect_compose_timer.start();
+	timer.start();
 	for (const auto& q : unfolded) {
 		vector<uint> c = q.first;
 		for (uint i = 0; i < q.second.size(); ++ i) {
@@ -276,19 +269,19 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 				const Subst& sub = *ts->sub;
 				if (!term.empty()) {
 					if (unif[c].ok()) {
-						intersect_compose_unify_subs_timer.start();
+						Timer timer;
 						Subst unified = unify_subs(MultySubst({&unif[c], &sub}));
-						intersect_compose_unify_subs_timer.stop();
+						add_timer_stats("intersect_compose_unify_subs_timer", timer);
 
-						intersect_compose_apply_timer.start();
+						timer.start();
 						Term t = unified.apply(term);
-						intersect_compose_apply_timer.stop();
+						add_timer_stats("intersect_compose_apply_timer", timer);
 
 						unif[c] = std::move(unified);
 
-						intersect_compose_compose_timer.start();
+						timer.start();
 						s[c].compose(vars[i], std::move(t), CompMode::DUAL, false);
-						intersect_compose_compose_timer.stop();
+						add_timer_stats("intersect_compose_compose_timer", timer);
 					}
 				} else {
 					if (sub.ok()) {
@@ -304,7 +297,7 @@ MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnif
 			}
 		}
 	}
-	intersect_compose_timer.stop();
+	add_timer_stats("intersect_compose_timer", timer);
 	return s;
 }
 
