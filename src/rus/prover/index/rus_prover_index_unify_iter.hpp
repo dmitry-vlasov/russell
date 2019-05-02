@@ -389,6 +389,8 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 	} catch (Error& err) {
 		cout << "unify_general: " << endl;
 		cout << m.index().show_pointers() << endl << endl;
+		cout << m.index().show() << endl << endl;
+		cout << t.show() << endl << endl;
 		throw err;
 	}
 	return ret;

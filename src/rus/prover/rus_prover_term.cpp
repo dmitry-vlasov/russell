@@ -172,10 +172,10 @@ void Term::verify() const {
 			}
 		}
 		if (!st.empty()) {
-			throw Error("broken term: non-empty stack", show(true) + "\n" + show(false));
+			throw Error("broken term: non-empty stack", show(true) + "\n" + show(true));
 		}
 	} else if (!nodes.begin()->ruleVar.isVar()) {
-		throw Error("broken term: non var neither rule", show(true) + "\n" + show(false));
+		throw Error("broken term: non var neither rule", show(true) + "\n" + show(true));
 	}
 }
 
