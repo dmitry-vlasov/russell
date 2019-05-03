@@ -10,13 +10,27 @@ struct Index {
 		struct NodeIterLess {
 			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
 				return &*i1 < &*i2;
+				/*if (i1->first.isVar()) {
+					if (i2->first.isRule()) {
+						return true;
+					} else {
+						return i1->first.var < i2->first.var;
+					}
+				} else {
+					if (i2->first.isVar()) {
+						return false;
+					} else {
+						return i1->first.rule < i2->first.rule;
+					}
+				}*/
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
 		vector<uint> inds;
 		map<RuleVar, Node> nodes;
 
-		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends;
+		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends; // All ends of terms, which start at current node
+		set<map<RuleVar, Node>::const_iterator, NodeIterLess> vars; // All variables among nodes
 		set<uint> lens;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
@@ -25,12 +39,14 @@ struct Index {
 	struct Iter;
 
 	void add(const Term& t, uint val = -1);
-	vector<pair<Term, uint>> unpack() const;
+	vector<pair<Term, vector<uint>>> unpack() const;
 	string show() const;
 	string show_pointers() const;
 
-	static vector<pair<Term, uint>> unpack(const Node&);
+	static vector<pair<Term, vector<uint>>> unpack(const Node&);
+	static vector<pair<Term, vector<uint>>> unpack(Iter);
 	static string show(const Node&);
+	static string show(Iter);
 	static string show_pointers(const Node&);
 
 	uint totalNodes() const;
@@ -61,30 +77,26 @@ struct Index::Iter {
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
-		//return &*iter_ == &*i.iter_;
 		return iter_ == i.iter_;
 	}
 	bool operator != (const Iter& i) const {
 		return !operator ==(i);
 	}
-	Iter hint(const Rule* r) const {
-		if (!valid_) {
-			return Iter(map_, beg_, iter_, end_, false);
-		} else {
-			auto i = map_->find(RuleVar(r));
-			if (i == map_->end()) {
-				return Iter(map_, beg_, i, end_, false);
-			} else {
-				return Iter(map_, beg_, i, end_, true);
-			}
-		}
+	void setHint(const Rule* r) {
+		hint_ = r;
 	}
 	Iter side() const {
-		if (!valid_ || isSideEnd()) {
-			return Iter(map_, beg_, iter_, end_, false);
+		if (hint_) {
+			Iter i(*this);
+			while (true) {
+				i = i.elementarySide();
+				if (!i.isValid() || i.isVar() || i.ruleVar().rule == hint_) {
+					break;
+				}
+			}
+			return i;
 		} else {
-			auto i = iter_;
-			return Iter(map_, beg_, ++i, end_, true);
+			return elementarySide();
 		}
 	}
 	Iter next() const {
@@ -100,13 +112,11 @@ struct Index::Iter {
 	Iter reset() const {
 		return Iter(map_, beg_, beg_, end_, valid_);
 	}
-	bool isNextEnd() const { return iter_->second.nodes.size() == 0; }
+	bool isNextEnd() const {
+		return iter_->second.nodes.size() == 0;
+	}
 	bool isSideEnd() const {
-		if (end_ == ConstIterator()) {
-			return true;
-		} else {
-			auto i = iter_; return ++i == end_;
-		}
+		return !side().isValid();
 	}
 	bool isValid() const { return valid_; }
 	ConstIterator iter() const {
@@ -196,8 +206,27 @@ struct Index::Iter {
 		}
 		return ret;
 	}
+	string showTree() const {
+		return Index::show(*this);
+	}
 
 private:
+	bool isElementarySideEnd() const {
+		if (end_ == ConstIterator()) {
+			return true;
+		} else {
+			auto i = iter_;
+			return ++i == end_;
+		}
+	}
+	Iter elementarySide() const {
+		if (!valid_ || isElementarySideEnd()) {
+			return Iter(map_, beg_, iter_, end_, false);
+		} else {
+			auto i = iter_;
+			return Iter(map_, beg_, ++i, end_, true);
+		}
+	}
 	Iter(const map<RuleVar, Node>* m, ConstIterator b, ConstIterator i, ConstIterator e, bool v) :
 		valid_(v), beg_(b), iter_(i), end_(e), map_(m) { }
 	bool valid_;
@@ -205,6 +234,7 @@ private:
 	ConstIterator iter_;
 	ConstIterator end_;
 	const map<RuleVar, Node>* map_;
+	const Rule* hint_ = nullptr;
 };
 
 template<class Data>

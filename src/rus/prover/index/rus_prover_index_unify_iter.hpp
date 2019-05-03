@@ -36,10 +36,10 @@ struct MultyIter {
 		default: throw Error("impossible");
 		}
 	}
-	MultyIter hint(const Rule* r) const {
+	void setHint(const Rule* r) {
 		switch (kind_) {
-		case TRIE:  return MultyIter(trieIter.hint(r));
-		case TERM:  return MultyIter(termIter.hint(r));
+		case TRIE:  trieIter.setHint(r); break;
+		case TERM:  termIter.setHint(r); break;
 		default: throw Error("impossible");
 		}
 	}
@@ -178,6 +178,13 @@ struct MultyIter {
 		default: throw Error("impossible");
 		}
 	}
+	string showTree() const {
+		switch (kind_) {
+		case TRIE:  return trieIter.showTree();
+		case TERM:  return termIter.showTree();
+		default: throw Error("impossible");
+		}
+	}
 
 private:
 	Kind kind_;
@@ -219,13 +226,10 @@ struct UnifyIters {
 		}
 		return UnifyIters(side_iters, parentSub, parentSub);
 	}
-	UnifyIters hint(const Rule* r) const {
-		vector<MultyIter> hint_iters;
-		bool found = false;
-		for (auto i : iters) {
-			hint_iters.push_back(i.hint(r));
+	void setHint(const Rule* r) {
+		for (auto& i : iters) {
+			i.setHint(r);
 		}
-		return UnifyIters(hint_iters, parentSub, parentSub);
 	}
 	UnifyIters next() const {
 		vector<MultyIter> next_iters;
@@ -325,13 +329,36 @@ struct UnifyIters {
 				}
 				oss << endl;
 			} else {
-				oss << n << "-iter: " << i.show() << endl;
+				if (isValid()) {
+					oss << n << "-iter: " << i.show() << endl;
+				} else {
+					oss << n << "-iter: NOT VALID " << i.show() << endl;
+				}
 			}
 			++n;
 		}
 		return oss.str();
 	}
+	string showTree() const {
+		ostringstream oss;
+		for (uint i = 0; i < iters.size(); ++ i) {
+			oss << i << "-iter: " << endl;
+			oss << Indent::paragraph(iters[i].showTree()) << endl;
+		}
+		return oss.str();
+	}
 	vector<vector<uint>> inds() const;
+	bool operator == (const UnifyIters& ui) const {
+		for (uint i = 0; i < iters.size(); ++i) {
+			if (iters[i] != ui.iters[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool operator != (const UnifyIters& ui) const {
+		return !operator == (ui);
+	}
 
 	vector<MultyIter> iters;
 	Subst parentSub;
@@ -388,7 +415,7 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 		}
 	} catch (Error& err) {
 		cout << "unify_general: " << endl;
-		cout << m.index().show_pointers() << endl << endl;
+		//cout << m.index().show_pointers() << endl << endl;
 		cout << m.index().show() << endl << endl;
 		cout << t.show() << endl << endl;
 		throw err;

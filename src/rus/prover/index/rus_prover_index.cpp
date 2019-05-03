@@ -117,10 +117,20 @@ static void markup_ends(Index::Node& root, const Term& t) {
 	}
 }
 
+static void markup_vars(Index::Node& n) {
+	for (auto i = n.nodes.begin(); i != n.nodes.end(); ++i) {
+		if (i->first.isVar()) {
+			n.vars.insert(i);
+		}
+		markup_vars(i->second);
+	}
+}
+
 void Index::initEnds() {
 	for (const auto& term : terms) {
 		markup_ends(root_, term);
 	}
+	markup_vars(root_);
 	endsInitialized = true;
 }
 
@@ -164,42 +174,12 @@ string show_branch(const vector<Index::Iter>& branch) {
 	return ret;
 }
 
-vector<pair<Term, uint>> Index::unpack() const {
-	vector<pair<Term, uint>> ret;
-	vector<Iter> branch;
-	if (root().nodes.size()) {
-		branch.emplace_back(root());
-		while (branch.size()) {
-			Iter n = branch.back();
-			for (uint ind : n.iter()->second.inds) {
-				ret.emplace_back(create_flatterm(branch), ind);
-			}
-			if (!n.isNextEnd()) {
-				branch.push_back(n.next());
-			} else {
-				while (true) {
-					branch.pop_back();
-					if (!n.isSideEnd()) {
-						branch.push_back(n.side());
-						break;
-					}
-					if (branch.empty()) {
-						break;
-					}
-					n = branch.back();
-				}
-			}
-		}
-	}
-	return ret;
+vector<pair<Term, vector<uint>>> Index::unpack() const {
+	return unpack(root_);
 }
 
 string Index::show() const {
-	string ret;
-	for (const auto& p : unpack()) {
-		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
-	}
-	return ret;
+	return show(root_);
 }
 
 string Index::show_pointers() const {
@@ -245,43 +225,52 @@ string Index::show_pointers() const {
 	return oss.str();
 }
 
+vector<pair<Term, vector<uint>>> Index::unpack(const Node& root) {
+	return unpack(Iter(root));
+}
 
-vector<pair<Term, uint>> Index::unpack(const Node& root) {
-	vector<pair<Term, uint>> ret;
+vector<pair<Term, vector<uint>>> Index::unpack(Iter root) {
+	vector<pair<Term, vector<uint>>> ret;
 	vector<Iter> branch;
-	if (root.nodes.size()) {
-		branch.emplace_back(root);
-		while (branch.size()) {
-			Iter n = branch.back();
-			for (uint ind : n.iter()->second.inds) {
-				ret.emplace_back(create_flatterm(branch), ind);
-			}
-			if (!n.isNextEnd()) {
-				branch.push_back(n.next());
-			} else {
-				while (true) {
-					branch.pop_back();
-					if (!n.isSideEnd()) {
-						branch.push_back(n.side());
-						break;
-					}
-					if (branch.empty()) {
-						break;
-					}
-					n = branch.back();
+	branch.emplace_back(root);
+	while (branch.size()) {
+		Iter n = branch.back();
+		if (n.iter()->second.inds.size()) {
+			ret.emplace_back(create_flatterm(branch), n.iter()->second.inds);
+		}
+		if (!n.isNextEnd()) {
+			branch.push_back(n.next());
+		} else {
+			while (true) {
+				branch.pop_back();
+				if (!n.isSideEnd()) {
+					branch.push_back(n.side());
+					break;
 				}
+				if (branch.empty()) {
+					break;
+				}
+				n = branch.back();
 			}
 		}
 	}
 	return ret;
 }
 
-string Index::show(const Node& root) {
+string Index::show(Iter root) {
 	string ret;
 	for (const auto& p : unpack(root)) {
-		ret += p.first.show() + " --> " + to_string(p.second) + "\n";
+		ret += p.first.show() + " --> {";
+		for (uint i : p.second) {
+			ret += to_string(i) + " ";
+		}
+		ret += "}\n";
 	}
 	return ret;
+}
+
+string Index::show(const Node& root) {
+	return show(Iter(root));
 }
 
 string Index::show_pointers(const Node& root) {

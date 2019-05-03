@@ -199,6 +199,11 @@ struct Term::Iter {
 			return Iter();
 		}
 	}
+	void setHint(const Rule* r) {
+		if (iter_->ruleVar.isRule() && iter_->ruleVar.rule != r) {
+			valid_ = false;
+		}
+	}
 	Iter next() const {
 		if (!valid_ || isNextEnd()) {
 			return Iter(beg_, iter_, end_, false);
@@ -298,6 +303,9 @@ struct Term::Iter {
 			ret += it.show();
 		}
 		return ret;
+	}
+	string showTree() const {
+		return term().show();
 	}
 
 private:
