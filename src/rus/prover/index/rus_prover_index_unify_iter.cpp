@@ -245,10 +245,10 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				//vector<UnifyPair> subBeginEnds = i.sub.maps(data.var) ?
-				//	do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
-				//	do_unify_general(subBegins);
-				vector<UnifyPair> pairs = do_unify_general(subBegins);
+				vector<UnifyPair> pairs = i.sub.maps(data.var) ?
+					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
+					do_unify_general(subBegins);
+				//vector<UnifyPair> pairs = do_unify_general(subBegins);
 				for (const auto& pair : pairs) {
 					try {
 						Term term_orig = pair.subTerm();
@@ -344,27 +344,27 @@ static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, con
 						ret.push_back(UnifyPair(t.pair.beg, i));
 					}
 					if (!i.isNextEnd(t.pair.beg)) {
-						cout << "Next hint: " << t.hint.next().show() << endl;
+						//cout << "Next hint: " << t.hint.next().show() << endl;
 						st.emplace(t.pair.beg, i.next(), t.hint.next());
 					} else {
-						cout << "hint end: " << t.hint.next().show() << endl;
+						//cout << "hint end: " << t.hint.next().show() << endl;
 					}
 				}
 				if (!t.pair.end.isSideEnd()) {
 					if (t.pair.is_root) {
-						if (t.hint.ruleVar().rule) {
-							cout << "USING HINT" << endl;
-							st.emplace(t.pair.end.hint(t.hint.ruleVar().rule), t.hint);
-						} else {
+						//if (t.hint.ruleVar().rule) {
+						//	cout << "USING HINT" << endl;
+						//	st.emplace(t.pair.end.hint(t.hint.ruleVar().rule), t.hint);
+						//} else {
 							st.emplace(t.pair.end.side(), t.hint);
-						}
+						//}
 					} else {
-						if (t.hint.ruleVar().rule) {
-							cout << "USING HINT" << endl;
-							st.emplace(t.pair.beg, t.pair.end.hint(t.hint.ruleVar().rule), t.hint);
-						} else {
+						//if (t.hint.ruleVar().rule) {
+						//	cout << "USING HINT" << endl;
+						//	st.emplace(t.pair.beg, t.pair.end.hint(t.hint.ruleVar().rule), t.hint);
+						//} else {
 							st.emplace(t.pair.beg, t.pair.end.side(), t.hint);
-						}
+						//}
 					}
 				}
 			//}

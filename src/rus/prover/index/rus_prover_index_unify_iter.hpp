@@ -300,7 +300,7 @@ struct UnifyIters {
 			return false;
 		}
 		for (uint i = 0; i < iters.size(); ++i) {
-			if (iters[i].isValid()) {
+			if (!iters[i].isValid()) {
 				return false;
 			}
 		}
