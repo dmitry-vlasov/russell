@@ -248,9 +248,15 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				vector<UnifyPair> pairs1 = i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE ?
-					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
-					do_unify_general(subBegins);
+				//vector<UnifyPair> pairs1 = i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE ?
+				//	do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
+				//	do_unify_general(subBegins);
+
+				if (i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE) {
+					subBegins.iters.emplace_back(Term::Iter(i.sub.map(data.var)));
+				}
+
+
 				vector<UnifyPair> pairs = do_unify_general(subBegins);
 				for (const auto& pair : pairs) {
 					try {
@@ -261,7 +267,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 						s.compose(pair.end.sub.complement(s.dom()));
 						if (s.ok()) {
 
-							bool found = false;
+							/*bool found = false;
 							for (const auto& p : pairs1) {
 								if (p.end == pair.end) {
 									found = true;
@@ -295,7 +301,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 								do_unify_general_with_hint(subBegins, i.sub.map(data.var));
 
 								exit(0);
-							}
+							}*/
 
 							ret.emplace_back(data.shiftGoals(pair.end.iters), i.parentSub, s);
 						}
