@@ -218,9 +218,9 @@ struct Term::Iter {
 			return Iter(beg_, iter_ - 1, end_, iter_ != beg_);
 		}
 	}
-	Iter fastForward() const {
-		return Iter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
-	}
+	//Iter fastForward() const {
+	//	return end();
+	//}
 	Iter reset() const {
 		return Iter(beg_, end_, valid_);
 	}
@@ -229,14 +229,17 @@ struct Term::Iter {
 	vector<pair<Term, Iter>> subTerms() const {
 		vector<pair<Term, Iter>> ret;
 		ret.reserve(1);
-		ret.emplace_back(subTerm(), fastForward());
+		ret.emplace_back(subTerm(), end());
 		return ret;
 	}
 	vector<Iter> ends() const {
 		vector<Iter> ret;
 		ret.reserve(1);
-		ret.push_back(fastForward());
+		ret.push_back(end());
 		return ret;
+	}
+	Iter end() const {
+		return Iter(beg_, valid_ ? iter_->end : iter_, end_, valid_);
 	}
 	bool isEnd(const Iter& i) const {
 		return iter_->end == i.iter_;

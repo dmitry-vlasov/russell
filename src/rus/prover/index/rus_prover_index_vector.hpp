@@ -244,7 +244,7 @@ struct Vector{
 		vector<uint> exprs_inds_;
 	};
 	VectorUnified unify_general(const vector<bool>& skipped) const {
-		vector<MultyIter> iters;
+		vector<Index::Iter> iters;
 		VectorUnified ret;
 		try {
 			uint only_iter_ind = 0;
@@ -256,7 +256,7 @@ struct Vector{
 				);
 				if (skipped[i]) {
 					only_iter_ind = i;
-					iters.emplace_back(Index::Iter(vect[i]->exprs().root()));
+					iters.emplace_back(vect[i]->exprs().root());
 				}
 			}
 			if (iters.size() > 0) {

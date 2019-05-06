@@ -5,214 +5,36 @@
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 
-struct MultyIter {
-	enum Kind { NONE, TRIE, TERM, };
-	MultyIter() : kind_(NONE) { }
-	MultyIter(Index::Iter i) : kind_(TRIE), trieIter(i) { }
-	MultyIter(Term::Iter i) : kind_(TERM), termIter(i) { }
-	MultyIter(const MultyIter&) = default;
-	MultyIter& operator = (const MultyIter&) = default;
-
-	bool operator == (const MultyIter& i) const {
-		switch (kind_) {
-		case TRIE:  return trieIter == i.trieIter;
-		case TERM:  return termIter == i.termIter;
-		default: throw Error("impossible");
-		}
-	}
-	bool operator != (const MultyIter& i) const {
-		switch (kind_) {
-		case TRIE:  return trieIter != i.trieIter;
-		case TERM:  return termIter != i.termIter;
-		default: throw Error("impossible");
-		}
-	}
-
-	Kind kind() const { return kind_; }
-	MultyIter side() const {
-		switch (kind_) {
-		case TRIE:  return MultyIter(trieIter.side());
-		case TERM:  return MultyIter(termIter.side());
-		default: throw Error("impossible");
-		}
-	}
-	void setHint(const Rule* r) {
-		switch (kind_) {
-		case TRIE:  trieIter.setHint(r); break;
-		case TERM:  termIter.setHint(r); break;
-		default: throw Error("impossible");
-		}
-	}
-	MultyIter next() const {
-		switch (kind_) {
-		case TRIE:  return MultyIter(trieIter.next());
-		case TERM:  return MultyIter(termIter.next());
-		default: throw Error("impossible");
-		}
-	}
-	MultyIter prev() const {
-		switch (kind_) {
-		case TRIE:  return MultyIter(trieIter.prev());
-		case TERM:  return MultyIter(termIter.prev());
-		default: throw Error("impossible");
-		}
-	}
-	MultyIter reset() const {
-		switch (kind_) {
-		case TRIE:  return MultyIter(trieIter.reset());
-		case TERM:  return MultyIter(termIter.reset());
-		default: throw Error("impossible");
-		}
-	}
-	bool isNextEnd() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.isNextEnd();
-		case TERM:  return termIter.isNextEnd();
-		default: throw Error("impossible");
-		}
-	}
-	bool isSideEnd() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.isSideEnd();
-		case TERM:  return termIter.isSideEnd();
-		default: throw Error("impossible");
-		}
-	}
-	bool isValid() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.isValid();
-		case TERM:  return termIter.isValid();
-		default: throw Error("impossible");
-		}
-	}
-	Term subTerm(const MultyIter& i) const {
-		switch (kind_) {
-		case TRIE:  return trieIter.subTerm(i.trieIter);
-		case TERM:  return termIter.subTerm();
-		default: throw Error("impossible");
-		}
-	}
-
-	vector<uint> inds() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.iter()->second.inds;
-		case TERM:  return {0};
-		default: throw Error("impossible");
-		}
-	}
-	vector<pair<Term, MultyIter>> subTerms() const {
-		vector<pair<Term, MultyIter>> ret;
-		switch (kind_) {
-		case TRIE: {
-			auto subterms = trieIter.subTerms();
-			for (auto st : subterms) {
-				ret.emplace_back(std::move(st.first), MultyIter(st.second));
-			}
-			break;
-		}
-		case TERM: {
-			auto subterms = termIter.subTerms();
-			for (auto st : subterms) {
-				ret.emplace_back(std::move(st.first), MultyIter(st.second));
-			}
-			break;
-		}
-		default: throw Error("impossible");
-		}
-		return ret;
-	}
-	vector<MultyIter> ends() const {
-		vector<MultyIter> ret;
-		switch (kind_) {
-		case TRIE: {
-			auto ends = trieIter.ends();
-			for (auto end : ends) {
-				ret.emplace_back(end);
-			}
-			break;
-		}
-		case TERM: {
-			auto ends = termIter.ends();
-			for (auto end : ends) {
-				ret.emplace_back(end);
-			}
-			break;
-		}
-		default: throw Error("impossible");
-		}
-		return ret;
-	}
-	bool isEnd(const MultyIter& i) const {
-		switch (kind_) {
-		case TRIE:  return trieIter.isEnd(i.trieIter);
-		case TERM:  return termIter.isEnd(i.termIter);
-		default: throw Error("impossible");
-		}
-	}
-	bool isVar() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.isVar();
-		case TERM:  return termIter.isVar();
-		default: throw Error("impossible");
-		}
-	}
-	LightSymbol var() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.var();
-		case TERM:  return termIter.var();
-		default: throw Error("impossible");
-		}
-	}
-	RuleVar ruleVar() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.ruleVar();
-		case TERM:  return termIter.ruleVar();;
-		default: throw Error("impossible");
-		}
-	}
-
-	string show() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.show();
-		case TERM:  return termIter.show();
-		default: throw Error("impossible");
-		}
-	}
-	string showTree() const {
-		switch (kind_) {
-		case TRIE:  return trieIter.showTree();
-		case TERM:  return termIter.showTree();
-		default: throw Error("impossible");
-		}
-	}
-
-private:
-	Kind kind_;
-	Index::Iter trieIter;
-	Term::Iter termIter;
-};
-
 template<class Iter> RuleVar ruleVar(Iter);
 template<>
 inline RuleVar ruleVar<Term::ConstIterator>(Term::ConstIterator i) {
 	return i->ruleVar;
 };
-template<> inline RuleVar ruleVar<MultyIter>(MultyIter i) {
+template<> inline RuleVar ruleVar<Index::Iter>(Index::Iter i) {
+	return i.ruleVar();
+};
+template<> inline RuleVar ruleVar<Term::Iter>(Term::Iter i) {
 	return i.ruleVar();
 };
 
 struct UnifyIters {
-	UnifyIters(const vector<MultyIter>& i, const Subst& ps = Subst(), const Subst& s = Subst()) :
-		iters(i), parentSub(ps), sub(s) { }
-	UnifyIters(vector<MultyIter>&& i, Subst&& ps, Subst&& s) :
-		iters(std::move(i)), parentSub(std::move(ps)), sub(std::move(s)) { }
-	UnifyIters(const UnifyIters&) = default;
+	UnifyIters(const UnifyIters& ui, const Subst& ps = Subst(), const Subst& s = Subst()) :
+		indexIters(ui.indexIters), termIters(ui.termIters), parentSub(ps), sub(s) { }
+	UnifyIters(const vector<Index::Iter>& ii, const Subst& ps = Subst(), const Subst& s = Subst()) :
+		indexIters(ii), parentSub(ps), sub(s) { }
+	UnifyIters(const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
+		termIters(ti), parentSub(ps), sub(s) { }
+	UnifyIters(const vector<Index::Iter>& ii, const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
+		indexIters(ii), termIters(ti), parentSub(ps), sub(s) { }
+	UnifyIters(vector<Index::Iter>&& ii, vector<Term::Iter>&& ti, Subst&& ps, Subst&& s) :
+		indexIters(std::move(ii)), termIters(std::move(ti)), parentSub(std::move(ps)), sub(std::move(s)) { }
+	//UnifyIters(const UnifyIters&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
 
 	UnifyIters side() const {
-		vector<MultyIter> side_iters;
+		vector<Index::Iter> side_iters;
 		bool found = false;
-		for (auto i : iters) {
+		for (auto i : indexIters) {
 			if (found) {
 				side_iters.push_back(i);
 			} else {
@@ -224,25 +46,37 @@ struct UnifyIters {
 				}
 			}
 		}
-		return UnifyIters(side_iters, parentSub, parentSub);
+		return UnifyIters(side_iters, termIters, parentSub, parentSub);
 	}
 	void setHint(const Rule* r) {
-		for (auto& i : iters) {
+		for (auto& i : indexIters) {
+			i.setHint(r);
+		}
+		for (auto& i : termIters) {
 			i.setHint(r);
 		}
 	}
 	UnifyIters next() const {
-		vector<MultyIter> next_iters;
-		for (auto i : iters) {
-			next_iters.push_back(i.next());
+		vector<Index::Iter> next_index;
+		for (auto i : indexIters) {
+			next_index.push_back(i.next());
 		}
-		return UnifyIters(next_iters, sub, sub);
+		vector<Term::Iter> next_term;
+		for (auto i : termIters) {
+			next_term.push_back(i.next());
+		}
+		return UnifyIters(next_index, next_term, sub, sub);
 	}
 	bool isNextEnd() const {
 		if (!sub.ok()) {
 			return true;
 		}
-		for (const auto& i : iters) {
+		for (const auto& i : indexIters) {
+			if (i.isNextEnd()) {
+				return true;
+			}
+		}
+		for (const auto& i : termIters) {
 			if (i.isNextEnd()) {
 				return true;
 			}
@@ -253,24 +87,39 @@ struct UnifyIters {
 		if (!sub.ok()) {
 			return true;
 		}
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (!ends.iters[i].isEnd(iters[i])) {
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			if (!ends.indexIters[i].isEnd(indexIters[i])) {
+				return false;
+			}
+		}
+		for (uint i = 0; i < termIters.size(); ++i) {
+			if (!ends.termIters[i].isEnd(termIters[i])) {
 				return false;
 			}
 		}
 		return true;
 	}
 	void showTermEnd(const UnifyIters& ends) const {
-		for (uint i = 0; i < iters.size(); ++i) {
-			cout << i << ": " << (ends.iters[i].isEnd(iters[i]) ? "END" : "X" ) << endl;
+		cout << "Index iters:" << endl;
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			cout << "\t" << i << ": " << (ends.indexIters[i].isEnd(indexIters[i]) ? "END" : "X" ) << endl;
+		}
+		cout << "Term iters:" << endl;
+		for (uint i = 0; i < termIters.size(); ++i) {
+			cout << "\t" << i << ": " << (ends.termIters[i].isEnd(termIters[i]) ? "END" : "X" ) << endl;
 		}
 	}
 	bool isNextEnd(const UnifyIters& ends) const {
 		if (!sub.ok()) {
 			return true;
 		}
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (ends.iters[i].isEnd(iters[i]) || iters[i].isNextEnd()) {
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			if (ends.indexIters[i].isEnd(indexIters[i]) || indexIters[i].isNextEnd()) {
+				return true;
+			}
+		}
+		for (uint i = 0; i < termIters.size(); ++i) {
+			if (ends.termIters[i].isEnd(termIters[i]) || termIters[i].isNextEnd()) {
 				return true;
 			}
 		}
@@ -280,7 +129,7 @@ struct UnifyIters {
 		if (!sub.ok()) {
 			return true;
 		}
-		for (const auto& i : iters) {
+		for (const auto& i : indexIters) {
 			if (!i.isSideEnd()) {
 				return false;
 			}
@@ -288,12 +137,17 @@ struct UnifyIters {
 		return true;
 	}
 	bool equals() const {
-		if (!iters.size()) {
+		if (!size()) {
 			return true;
 		}
-		RuleVar rv = iters[0].ruleVar();
-		for (uint i = 1; i < iters.size(); ++ i) {
-			if (rv != iters[i].ruleVar()) {
+		RuleVar rv = indexIters.size() ? indexIters[0].ruleVar() : termIters[0].ruleVar();
+		for (uint i = (indexIters.size() ? 1 : 0); i < indexIters.size(); ++ i) {
+			if (rv != indexIters[i].ruleVar()) {
+				return false;
+			}
+		}
+		for (uint i = (indexIters.size() ? 0 : 1); i < termIters.size(); ++ i) {
+			if (rv != termIters[i].ruleVar()) {
 				return false;
 			}
 		}
@@ -303,37 +157,62 @@ struct UnifyIters {
 		if (!sub.ok()) {
 			return false;
 		}
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (!iters[i].isValid()) {
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			if (!indexIters[i].isValid()) {
+				return false;
+			}
+		}
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			if (!indexIters[i].isValid()) {
 				return false;
 			}
 		}
 		return true;
 	}
+	Term subTerm(const UnifyIters& ends) const {
+		if (indexIters.size()) {
+			return indexIters[0].subTerm(ends.indexIters[0]);
+		} else if (termIters.size()) {
+			return termIters[0].subTerm();
+		} else {
+			throw Error("empty subterm - impossible");
+		}
+	}
 
 	string show(bool full = false) const {
 		ostringstream oss;
 		uint n = 0;
-		for (const auto& i : iters) {
+		cout << "Index iters:" << endl;
+		for (const auto& i : indexIters) {
 			if (full) {
 				auto j = i;
-				vector<MultyIter> branch;
-				while (j != MultyIter()) {
+				vector<Index::Iter> branch;
+				while (j != Index::Iter()) {
 					branch.push_back(j);
 					j = j.prev();
 				}
 				reverse(branch.begin(), branch.end());
-				oss << n << ": ";
+				oss << "\t" << n << ": ";
 				for (auto x : branch) {
 					oss << x.show();
 				}
 				oss << endl;
 			} else {
 				if (isValid()) {
-					oss << n << "-iter: " << i.show() << endl;
+					oss << "\t" << n << "-iter: " << i.show() << endl;
 				} else {
-					oss << n << "-iter: NOT VALID " << i.show() << endl;
+					oss << "\t" << n << "-iter: NOT VALID " << i.show() << endl;
 				}
+			}
+			++n;
+		}
+		cout << "Term iters:" << endl;
+		n = 0;
+		for (const auto& i : termIters) {
+			if (isValid()) {
+				oss << "\t" << n << "-iter: " << i.show() << endl;
+			} else {
+				oss << "\t" << n << "-iter: NOT VALID " << i.show() << endl;
 			}
 			++n;
 		}
@@ -341,16 +220,36 @@ struct UnifyIters {
 	}
 	string showTree() const {
 		ostringstream oss;
-		for (uint i = 0; i < iters.size(); ++ i) {
+		cout << "Index iters:" << endl;
+		for (uint i = 0; i < indexIters.size(); ++ i) {
 			oss << i << "-iter: " << endl;
-			oss << Indent::paragraph(iters[i].showTree()) << endl;
+			oss << Indent::paragraph(indexIters[i].showTree()) << endl;
+		}
+		cout << "Term iters:" << endl;
+		for (uint i = 0; i < termIters.size(); ++ i) {
+			oss << i << "-iter: " << endl;
+			oss << Indent::paragraph(termIters[i].showTree()) << endl;
 		}
 		return oss.str();
 	}
 	vector<vector<uint>> inds() const;
+	uint size() const {
+		return indexIters.size() + termIters.size();
+	}
 	bool operator == (const UnifyIters& ui) const {
-		for (uint i = 0; i < iters.size(); ++i) {
-			if (iters[i] != ui.iters[i]) {
+		if (indexIters.size() != ui.indexIters.size()) {
+			return false;
+		}
+		for (uint i = 0; i < indexIters.size(); ++i) {
+			if (indexIters[i] != ui.indexIters[i]) {
+				return false;
+			}
+		}
+		if (termIters.size() != ui.termIters.size()) {
+			return false;
+		}
+		for (uint i = 0; i < termIters.size(); ++i) {
+			if (termIters[i] != ui.termIters[i]) {
 				return false;
 			}
 		}
@@ -360,7 +259,8 @@ struct UnifyIters {
 		return !operator == (ui);
 	}
 
-	vector<MultyIter> iters;
+	vector<Index::Iter> indexIters;
+	vector<Term::Iter>  termIters;
 	Subst parentSub;
 	Subst sub;
 };
@@ -397,12 +297,16 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 	if (!m.index().size()) {
 		return ret;
 	}
-	vector<MultyIter> iters;
+	vector<Index::Iter> indexIters;
 	Timer timer;
-	iters.emplace_back(std::move(Index::Iter(m.index().root())));
+	indexIters.emplace_back(std::move(m.index().root()));
 	add_timer_stats("unify_general_create_iters", timer);
 
-	iters.emplace_back(Term::Iter(t));
+	vector<Term::Iter> termIters;
+	termIters.emplace_back(t);
+
+	UnifyIters iters(indexIters, termIters);
+
 	try {
 		timer.start();
 		map<vector<uint>, TermSubst> unif = unify_general(iters);

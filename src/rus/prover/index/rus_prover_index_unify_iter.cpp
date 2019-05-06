@@ -5,8 +5,8 @@ namespace mdl { namespace rus { namespace prover { namespace index {
 
 vector<vector<uint>> UnifyIters::inds() const {
 	CartesianProd<uint> inds_prod;
-	for (const auto& i : iters) {
-		inds_prod.addDim(i.inds());
+	for (const auto& i : indexIters) {
+		inds_prod.addDim(i.iter()->second.inds);
 	}
 	vector<vector<uint>> ret;
 	while (true) {
@@ -42,7 +42,7 @@ struct UnifyPair {
 	UnifyPair(const UnifyIters& b, const UnifyIters& c) : is_root(false), beg(b), end(c) { }
 
 	Term subTerm() const {
-		return beg.iters[0].subTerm(end.iters[0]);
+		return beg.subTerm(end);
 	}
 	string show() const {
 		ostringstream oss;
@@ -72,9 +72,9 @@ static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
 			}
 		}
 	}
-	vector<MultyIter> iters;
+	vector<Term::Iter> iters;
 	for (const auto& t : to_unify) {
-		iters.emplace_back(Term::Iter(t));
+		iters.emplace_back(t);
 	}
 	UnifyIters begin = UnifyIters(iters);
 	try {
@@ -112,74 +112,109 @@ static Subst unify_step(const Subst& s, const vector<uint>& vars, const Term& te
 	return unified.empty() ? Subst(false) : ret;
 }
 
-template<class Iter>
 struct UnifStepData {
-	enum Kind { VAR, RULE, CONST_VAR };
+	enum class Kind { VAR, RULE, CONST_VAR };
+	enum class Origin { INDEX, TERM };
 	const Rule* rule = nullptr;
 	vector<uint> vars;
 	const Type* least_type = nullptr;
 	bool consistent = false;
 	LightSymbol var;
 	LightSymbol const_;
-	vector<Kind> kinds;
-	vector<Iter> iters;
+	vector<Kind> indexKinds;
+	vector<Kind> termKinds;
+	UnifyIters   iters;
 
-	vector<Iter> subGoals() const {
-		vector<Iter> ret;
-		assert(kinds.size() == iters.size());
-		for (uint i = 0; i < kinds.size(); ++ i) {
-			if (kinds[i] == RULE) {
-				ret.push_back(iters[i]);
+	UnifyIters subGoals() const {
+		vector<Index::Iter> indexIters;
+		for (uint i = 0; i < indexKinds.size(); ++ i) {
+			if (indexKinds[i] == Kind::RULE) {
+				indexIters.push_back(iters.indexIters[i]);
 			}
 		}
-		return ret;
+		vector<Term::Iter> termIters;
+		for (uint i = 0; i < termKinds.size(); ++ i) {
+			if (termKinds[i] == Kind::RULE) {
+				termIters.push_back(iters.termIters[i]);
+			}
+		}
+		return UnifyIters(std::move(indexIters), std::move(termIters));
 	}
 
-	vector<Iter> shiftGoals(const vector<Iter>& ends) const {
-		vector<Iter> ret;
-		assert(kinds.size() == iters.size());
-		for (uint i = 0, j = 0; i < kinds.size(); ++ i) {
-			if (kinds[i] == RULE) {
-				ret.push_back(ends[j++]);
+	UnifyIters shiftGoals(const UnifyIters& ends) const {
+		vector<Index::Iter> indexIters;
+		for (uint i = 0, j = 0; i < indexKinds.size(); ++ i) {
+			if (indexKinds[i] == Kind::RULE) {
+				indexIters.push_back(ends.indexIters[j++]);
 			} else {
-				ret.push_back(iters[i]);
+				indexIters.push_back(iters.indexIters[i]);
 			}
 		}
-		return ret;
+		vector<Term::Iter> termIters;
+		for (uint i = 0, j = 0; i < termKinds.size(); ++ i) {
+			if (termKinds[i] == Kind::RULE) {
+				termIters.push_back(ends.termIters[j++]);
+			} else {
+				termIters.push_back(iters.termIters[i]);
+			}
+		}
+		return UnifyIters(std::move(indexIters), std::move(termIters));
 	}
 
-	UnifStepData(const vector<Iter>& is) : iters(is) {
-		least_type = ruleVar(*is.begin()).type();
-		for (uint k = 0; k < is.size(); ++ k) {
-			if (!(*least_type <= *(ruleVar(is[k]).type()))) {
-				// There's no unification because of type constraints
+	UnifStepData(const UnifyIters& is) : iters(is) {
+		least_type = nullptr;
+		for (const auto& ii : is.indexIters) {
+			if (!track_iter(ii, Origin::INDEX)) {
 				return;
 			}
-			if (ruleVar(is[k]).isVar()) {
-				if (!track_var(ruleVar(is[k]).var)) {
-					return;
-				}
-			} else {
-				if (!track_node(is[k])) {
-					return;
-				}
+		}
+		for (const auto& ti : is.termIters) {
+			if (!track_iter(ti, Origin::TERM)) {
+				return;
 			}
 		}
 		consistent = true;
 	}
 
-	bool track_var(LightSymbol v) {
+	template<class Iter>
+	bool track_iter(Iter it, Origin o) {
+		RuleVar rv = it.ruleVar();
+		if (!least_type) {
+			least_type = rv.type();
+		} else {
+			if (*least_type <= *rv.type()) {
+				// ok
+			} else if (*rv.type() <= *least_type) {
+				least_type = rv.type();
+			} else {
+				// There's no unification because of type constraints
+				return false;
+			}
+		}
+		if (rv.isVar()) {
+			if (!track_var(rv.var, o)) {
+				return false;
+			}
+		} else {
+			if (!track_rule(rv.rule, o)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool track_var(LightSymbol v, Origin o) {
 		if (v.rep) {
 			if (var.is_undef()) {
 				var = v;
-				kinds.push_back(VAR);
+				push_kind(Kind::VAR, o);
 			} else {
-				kinds.push_back(CONST_VAR);
+				push_kind(Kind::CONST_VAR, o);
 			}
 			// Collect replaceable variables
 			vars.push_back(v.lit);
 		} else {
-			kinds.push_back(CONST_VAR);
+			push_kind(Kind::CONST_VAR, o);
 			if (const_.is_undef()) {
 				const_ = v;
 			} else if (const_ != v) {
@@ -195,21 +230,28 @@ struct UnifStepData {
 		}
 		return true;
 	}
-	bool track_node(Iter i) {
+	bool track_rule(const Rule* r, Origin o) {
 		if (const_.is_def()) {
 			// If we have any non-replaceable variables (constant), all other
 			// terms must be the same variable (constant).
 			return false;
 		}
 		if (!rule) {
-			rule = ruleVar(i).rule;
-		} else if (rule != ruleVar(i).rule) {
+			rule = r;
+		} else if (rule != r) {
 			// In case we have a non-leaf with some rule,
 			// all other leafs must be with the same rule.
 			return false;
 		}
-		kinds.push_back(RULE);
+		push_kind(Kind::RULE, o);
 		return true;
+	}
+	void push_kind(Kind k, Origin o) {
+		if (o == Origin::INDEX) {
+			indexKinds.push_back(k);
+		} else {
+			termKinds.push_back(k);
+		}
 	}
 
 	string show() const {
@@ -244,13 +286,16 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 	if (i.equals()) {
 		ret.emplace_back(i);
 	} else {
-		UnifStepData<MultyIter> data(i.iters);
+		UnifStepData data(i);
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				vector<UnifyPair> pairs1 = i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE ?
+				/*vector<UnifyPair> pairs1 = i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE ?
 					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
-					do_unify_general(subBegins);
+					do_unify_general(subBegins);*/
+				//if (i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE) {
+				//	subBegins.iters.emplace_back(Term::Iter(i.sub.map(data.var)));
+				//}
 				vector<UnifyPair> pairs = do_unify_general(subBegins);
 				for (const auto& pair : pairs) {
 					try {
@@ -260,44 +305,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 						Subst s = unify_step(i.sub, data.vars, term_applied);
 						s.compose(pair.end.sub.complement(s.dom()));
 						if (s.ok()) {
-
-							bool found = false;
-							for (const auto& p : pairs1) {
-								if (p.end == pair.end) {
-									found = true;
-									if (p.end.sub.ok() != pair.end.sub.ok()) {
-										cout << "subs differ:" << endl;
-										cout << "p.end.sub: " << endl << Indent::paragraph(p.end.sub.show()) << endl;
-										cout << "pair.end.sub: " << endl << Indent::paragraph(pair.end.sub.show()) << endl;
-										exit(0);
-									}
-								}
-							}
-							if (!found) {
-								cout << "pair:" << endl;
-								cout << pair.show() << endl;
-								cout << "is not found" << endl;
-								cout << endl;
-								cout << "term_orig: " << term_orig.show() << endl;
-								cout << "term_applied: " << term_applied.show() << endl;
-								cout << "subst: " << endl << Indent::paragraph(s.show()) << endl;
-								cout << "i.sub: " << endl << Indent::paragraph(i.sub.show()) << endl;
-								cout << endl;
-								cout << "hint: " << i.sub.map(data.var).show() << endl;
-								cout << "i: " << endl;
-								cout << i.showTree() << endl;
-								cout << i.show(true) << endl;
-								cout << endl;
-								cout << data.show() << endl;
-								cout << "-----------------------" << endl;
-
-								debug_unify = true;
-								do_unify_general_with_hint(subBegins, i.sub.map(data.var));
-
-								exit(0);
-							}
-
-							ret.emplace_back(data.shiftGoals(pair.end.iters), i.parentSub, s);
+							ret.emplace_back(data.shiftGoals(pair.end), i.parentSub, s);
 						}
 					} catch (Error& err) {
 						err.msg += pair.show() + "\n";
@@ -307,7 +315,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 			} else {
 				Subst s = unify_step(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok()) {
-					ret.emplace_back(i.iters, i.parentSub, s);
+					ret.emplace_back(i, i.parentSub, s);
 				}
 			}
 		}
@@ -317,12 +325,15 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 
 static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 	vector<UnifyPair> ret;
-	if (inits.iters.size() > 0) {
-		if (inits.iters.size() == 1) {
-			for (const auto& end : inits.iters[0].ends()) {
-				UnifyIters ends(vector<MultyIter>(1, end), inits.parentSub, inits.sub);
+	if (inits.size() > 0) {
+		if (inits.indexIters.size() == 1) {
+			for (const auto& end : inits.indexIters[0].ends()) {
+				UnifyIters ends(vector<Index::Iter>(1, end), inits.parentSub, inits.sub);
 				ret.emplace_back(inits, std::move(ends));
 			}
+		} else if (inits.termIters.size() == 1) {
+			UnifyIters ends(vector<Term::Iter>(1, inits.termIters[0].end()), inits.parentSub, inits.sub);
+			ret.emplace_back(inits, std::move(ends));
 		} else {
 			stack<UnifyPair> st;
 			st.emplace(inits);
@@ -350,7 +361,7 @@ static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 	return ret;
 }
 
-static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
+/*static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
 	vector<UnifyPair> ret;
 	if (inits.iters.size() > 0) {
 		struct UnifyPairWithHint {
@@ -420,7 +431,7 @@ static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, con
 	}
 	return ret;
 }
-
+*/
 
 /*
 static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
