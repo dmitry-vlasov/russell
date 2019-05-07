@@ -20,6 +20,10 @@ template<> inline RuleVar ruleVar<Term::Iter>(Term::Iter i) {
 struct UnifyIters {
 	explicit UnifyIters(const UnifyIters& ui, const Subst& ps, const Subst& s = Subst()) :
 		indexIters(ui.indexIters), termIters(ui.termIters), parentSub(ps), sub(s) { }
+	explicit UnifyIters(const UnifyIters& ui, const Subst& ps, Subst&& s) :
+		indexIters(ui.indexIters), termIters(ui.termIters), parentSub(ps), sub(std::move(s)) { }
+	explicit UnifyIters(UnifyIters&& ui, const Subst& ps, Subst&& s) :
+		indexIters(std::move(ui.indexIters)), termIters(std::move(ui.termIters)), parentSub(ps), sub(std::move(s)) { }
 	explicit UnifyIters(const vector<Index::Iter>& ii, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		indexIters(ii), parentSub(ps), sub(s) { }
 	explicit UnifyIters(const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
