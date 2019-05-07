@@ -326,14 +326,18 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 	vector<UnifyPair> ret;
 	if (inits.size() > 0) {
-		if (inits.indexIters.size() == 1) {
-			for (const auto& end : inits.indexIters[0].ends()) {
-				UnifyIters ends(vector<Index::Iter>(1, end), inits.parentSub, inits.sub);
+		if (inits.size() == 1) {
+			if (inits.indexIters.size() == 1) {
+				for (const auto& end : inits.indexIters[0].ends()) {
+					UnifyIters ends(vector<Index::Iter>(1, end), inits.parentSub, inits.sub);
+					ret.emplace_back(inits, std::move(ends));
+				}
+			} else if (inits.termIters.size() == 1) {
+				UnifyIters ends(vector<Term::Iter>(1, inits.termIters[0].end()), inits.parentSub, inits.sub);
 				ret.emplace_back(inits, std::move(ends));
+			} else {
+				throw Error("impossible");
 			}
-		} else if (inits.termIters.size() == 1) {
-			UnifyIters ends(vector<Term::Iter>(1, inits.termIters[0].end()), inits.parentSub, inits.sub);
-			ret.emplace_back(inits, std::move(ends));
 		} else {
 			stack<UnifyPair> st;
 			st.emplace(inits);
@@ -535,6 +539,140 @@ map<vector<uint>, TermSubst> unify_general(const UnifyIters& begin) {
 		add_timer_stats("unify_general_emplace_term_subst", timer);
 	}
 	add_timer_stats("unify_general_arrange_ret", timer);
+	return ret;
+}
+
+string show_unification_args(const vector<const Index*>& inds, const vector<const Term*>& terms) {
+	ostringstream oss;
+	oss << "indexes:" << endl;
+	oss << "---------" << endl;
+	for (uint i = 0; i < inds.size(); ++i) {
+		oss << "ind " << i << ":" << endl;
+		oss << Indent::paragraph(inds[i]->show()) << endl;
+	}
+	oss << "terms:" << endl;
+	oss << "---------" << endl;
+	for (uint i = 0; i < terms.size(); ++i) {
+		oss << "term " << i << ": " << terms[i]->show() << endl;
+	}
+	return oss.str();
+}
+
+string show_unification_result(const map<vector<uint>, TermSubst>& result) {
+	ostringstream oss;
+	oss << "result:" << endl;
+	oss << "---------" << endl;
+	for (const auto& p : result) {
+		oss << prover::show(p.first) << " --> " << p.second.show() << endl;
+	}
+	return oss.str();
+}
+
+void check_unification(const vector<const Index*>& inds, const vector<const Term*>& terms, const map<vector<uint>, TermSubst>& result) {
+	vector<Index::Unpacked> unpackedInds;
+	for (auto ind : inds) {
+		unpackedInds.emplace_back(std::move(ind->unpack()));
+	}
+	for (const auto& p : result) {
+		const vector<uint>& key = p.first;
+		const TermSubst& ts = p.second;
+		for (uint i = 0; i < unpackedInds.size(); ++i) {
+			Term t;
+			for (const auto& p : unpackedInds[i]) {
+				for (uint k : p.second) {
+					if (k == key[i]) {
+						t = p.first;
+						break;
+					}
+				}
+			}
+			if (t.empty()) {
+				string msg;
+				msg += "no key " + prover::show(key) + " in unpacked inds\n";
+				msg += "unif. term:   " + ts.term.show() + "\n";
+				msg += "unif. subst:\n";
+				msg += Indent::paragraph(ts.sub.show()) + "\n";
+				msg += "unpacked index:\n";
+				for (const auto& p : unpackedInds[i]) {
+					msg += "\t" + p.first.show() + " --> " + prover::show(p.second) + "\n";
+				}
+				msg += show_unification_args(inds, terms);
+				msg += show_unification_result(result);
+				throw Error(msg);
+			}
+			Term applied = ts.sub.apply(t);
+			if (applied != ts.term) {
+				string msg;
+				msg += "wrong index unification: " + applied.show() + " != " + ts.term.show() + "\n";
+				msg += "orig. term:   " + t.show() + "\n";
+				msg += "applied term: " + applied.show() + "\n";
+				msg += "unif. term:   " + ts.term.show() + "\n";
+				msg += "unif. subst:\n";
+				msg += Indent::paragraph(ts.sub.show()) + "\n";
+				throw Error(msg);
+			}
+		}
+		for (auto t : terms) {
+			Term applied = ts.sub.apply(*t);
+			if (applied != ts.term) {
+				string msg;
+				msg += "wrong term unification: " + applied.show() + " != " + ts.term.show() + "\n";
+				msg += "orig. term:   " + t->show() + "\n";
+				msg += "applied term: " + applied.show() + "\n";
+				msg += "unif. term:   " + ts.term.show() + "\n";
+				msg += "unif. subst:\n";
+				msg += Indent::paragraph(ts.sub.show()) + "\n";
+				throw Error(msg);
+			}
+		}
+	}
+}
+
+map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, const vector<const Term*>& terms) {
+
+	Timer timer;
+	vector<Index::Iter> indexIters;
+	for (auto i : inds) {
+		indexIters.emplace_back(std::move(i->root()));
+	}
+	vector<Term::Iter> termIters;
+	for (auto t : terms) {
+		termIters.emplace_back(*t);
+	}
+	add_timer_stats("unify_general_create_iters", timer);
+
+	UnifyIters iters(indexIters, termIters);
+
+	map<vector<uint>, TermSubst> ret;
+
+	auto unified = do_unify_general(iters);
+	add_timer_stats("do_unify_general", timer);
+
+	timer.start();
+	for (const auto& pair : unified) {
+		const UnifyIters& end = pair.end;
+		Timer t;
+		Term term = end.sub.apply(pair.subTerm());
+		add_timer_stats("unify_general_extract_subterm", timer);
+
+		t.start();
+		for (auto ind : end.inds()) {
+			ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
+		}
+		add_timer_stats("unify_general_emplace_term_subst", timer);
+	}
+	add_timer_stats("unify_general_arrange_ret", timer);
+
+	/*try {
+		check_unification(inds, terms, ret);
+	} catch (Error& err) {
+		cout << "ERR" << err.msg << endl;
+		debug_unify = true;
+		do_unify_general(iters);
+		cout << "To throw..." << endl;
+		throw err;
+	}*/
+
 	return ret;
 }
 

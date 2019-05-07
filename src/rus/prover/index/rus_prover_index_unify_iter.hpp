@@ -18,17 +18,18 @@ template<> inline RuleVar ruleVar<Term::Iter>(Term::Iter i) {
 };
 
 struct UnifyIters {
-	UnifyIters(const UnifyIters& ui, const Subst& ps = Subst(), const Subst& s = Subst()) :
+	explicit UnifyIters(const UnifyIters& ui, const Subst& ps, const Subst& s = Subst()) :
 		indexIters(ui.indexIters), termIters(ui.termIters), parentSub(ps), sub(s) { }
-	UnifyIters(const vector<Index::Iter>& ii, const Subst& ps = Subst(), const Subst& s = Subst()) :
+	explicit UnifyIters(const vector<Index::Iter>& ii, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		indexIters(ii), parentSub(ps), sub(s) { }
-	UnifyIters(const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
+	explicit UnifyIters(const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		termIters(ti), parentSub(ps), sub(s) { }
-	UnifyIters(const vector<Index::Iter>& ii, const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
+	explicit UnifyIters(const vector<Index::Iter>& ii, const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		indexIters(ii), termIters(ti), parentSub(ps), sub(s) { }
-	UnifyIters(vector<Index::Iter>&& ii, vector<Term::Iter>&& ti, Subst&& ps, Subst&& s) :
+	explicit UnifyIters(vector<Index::Iter>&& ii, vector<Term::Iter>&& ti, Subst&& ps, Subst&& s) :
 		indexIters(std::move(ii)), termIters(std::move(ti)), parentSub(std::move(ps)), sub(std::move(s)) { }
-	//UnifyIters(const UnifyIters&) = default;
+	explicit UnifyIters(const UnifyIters&) = default;
+
 	UnifyIters& operator = (const UnifyIters&) = default;
 
 	UnifyIters side() const {
@@ -289,7 +290,17 @@ struct TermSubst {
 	Subst sub;
 };
 
-map<vector<uint>, TermSubst> unify_general(const UnifyIters& i);
+//map<vector<uint>, TermSubst> unify_general(const UnifyIters& i);
+
+map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, const vector<const Term*>& terms);
+
+inline map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds) {
+	return unify_general(inds, vector<const Term*>());
+}
+
+inline map<vector<uint>, TermSubst> unify_general(const vector<const Term*>& terms) {
+	return unify_general(vector<const Index*>(), terms);
+}
 
 template<class D>
 vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const Term& t) {
@@ -297,19 +308,13 @@ vector<typename IndexMap<D>::Unified> unify_general(const IndexMap<D>& m, const 
 	if (!m.index().size()) {
 		return ret;
 	}
-	vector<Index::Iter> indexIters;
-	Timer timer;
-	indexIters.emplace_back(std::move(m.index().root()));
-	add_timer_stats("unify_general_create_iters", timer);
-
-	vector<Term::Iter> termIters;
-	termIters.emplace_back(t);
-
-	UnifyIters iters(indexIters, termIters);
-
 	try {
+		Timer timer;
 		timer.start();
-		map<vector<uint>, TermSubst> unif = unify_general(iters);
+		map<vector<uint>, TermSubst> unif = unify_general(
+			vector<const Index*>(1, &m.index()),
+			vector<const Term*>(1, &t)
+		);
 		add_timer_stats("unify_general_iters", timer);
 
 		for (auto& p : unif) {
