@@ -18,14 +18,11 @@ struct Subst {
 			sub_.emplace(v, std::move(t));
 		}
 	}
-	Subst(const Subst& s) : ok_(s.ok_) {
-		operator = (s);
-	}
-	Subst(Subst&& s) : ok_(s.ok_) {
-		operator = (std::move(s));
-	}
-	void operator = (const Subst& s);
-	void operator = (Subst&& s);
+	Subst(const Subst& s) = default;
+	Subst(Subst&& s) = default;
+
+	Subst& operator = (const Subst& s) = default;
+	Subst& operator = (Subst&& s) = default;
 
 	bool operator == (const Subst& s) const;
 	bool operator != (const Subst& s) const;
