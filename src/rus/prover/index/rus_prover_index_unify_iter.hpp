@@ -23,18 +23,19 @@ struct UnifyIters {
 	explicit UnifyIters(const UnifyIters& ui, const Subst& ps, Subst&& s) :
 		indexIters(ui.indexIters), termIters(ui.termIters), parentSub(ps), sub(std::move(s)) { }
 	explicit UnifyIters(UnifyIters&& ui, const Subst& ps, Subst&& s) :
-		indexIters(std::move(ui.indexIters)), termIters(std::move(ui.termIters)), parentSub(ps), sub(std::move(s)) { }
+		indexIters(std::move(ui.indexIters)), termIters(std::move(ui.termIters)), parentSub(ps), sub(std::move(s)) {	}
 	explicit UnifyIters(const vector<Index::Iter>& ii, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		indexIters(ii), parentSub(ps), sub(s) { }
 	explicit UnifyIters(const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		termIters(ti), parentSub(ps), sub(s) { }
 	explicit UnifyIters(const vector<Index::Iter>& ii, const vector<Term::Iter>& ti, const Subst& ps = Subst(), const Subst& s = Subst()) :
 		indexIters(ii), termIters(ti), parentSub(ps), sub(s) { }
-	explicit UnifyIters(vector<Index::Iter>&& ii, vector<Term::Iter>&& ti, Subst&& ps, Subst&& s) :
-		indexIters(std::move(ii)), termIters(std::move(ti)), parentSub(std::move(ps)), sub(std::move(s)) { }
+
 	explicit UnifyIters(const UnifyIters&) = default;
+	explicit UnifyIters(UnifyIters&&) = default;
 
 	UnifyIters& operator = (const UnifyIters&) = default;
+	UnifyIters& operator = (UnifyIters&&) = default;
 
 	UnifyIters side() const {
 		vector<Index::Iter> side_iters;
@@ -52,14 +53,6 @@ struct UnifyIters {
 			}
 		}
 		return UnifyIters(side_iters, termIters, parentSub, parentSub);
-	}
-	void setHint(const Rule* r) {
-		for (auto& i : indexIters) {
-			i.setHint(r);
-		}
-		for (auto& i : termIters) {
-			i.setHint(r);
-		}
 	}
 	UnifyIters next() const {
 		vector<Index::Iter> next_index;
@@ -187,7 +180,7 @@ struct UnifyIters {
 	string show(bool full = false) const {
 		ostringstream oss;
 		uint n = 0;
-		cout << "Index iters:" << endl;
+		oss << "Index iters:" << endl;
 		for (const auto& i : indexIters) {
 			if (full) {
 				auto j = i;
@@ -211,7 +204,7 @@ struct UnifyIters {
 			}
 			++n;
 		}
-		cout << "Term iters:" << endl;
+		oss << "Term iters:" << endl;
 		n = 0;
 		for (const auto& i : termIters) {
 			if (isValid()) {
@@ -221,6 +214,10 @@ struct UnifyIters {
 			}
 			++n;
 		}
+		oss << "sub: " << endl;
+		oss << Indent::paragraph(sub.show()) << endl;
+		oss << "parentSub: " << endl;
+		oss << Indent::paragraph(parentSub.show()) << endl;
 		return oss.str();
 	}
 	string showTree() const {
@@ -264,10 +261,10 @@ struct UnifyIters {
 		return !operator == (ui);
 	}
 
-	vector<Index::Iter> indexIters;
-	vector<Term::Iter>  termIters;
-	Subst parentSub;
-	Subst sub;
+	const vector<Index::Iter> indexIters;
+	const vector<Term::Iter>  termIters;
+	const Subst parentSub;
+	const Subst sub;
 };
 
 struct TermSubst {

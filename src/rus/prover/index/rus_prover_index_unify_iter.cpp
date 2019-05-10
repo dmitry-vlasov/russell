@@ -42,6 +42,9 @@ struct UnifyPair {
 	UnifyPair(const UnifyIters& b, const UnifyIters& e) : is_root(false), beg(b), end(e) { }
 	UnifyPair(const UnifyIters& b, UnifyIters&& e) : is_root(false), beg(b), end(std::move(e)) { }
 
+	UnifyPair(const UnifyPair&) = default;
+	UnifyPair(UnifyPair&&) = default;
+
 	Term subTerm() const {
 		return beg.subTerm(end);
 	}
@@ -396,7 +399,7 @@ map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, con
 	}
 	add_timer_stats("unify_general_arrange_ret", timer);
 
-	//check_unification(inds, terms, ret);
+	check_unification(inds, terms, ret);
 	return ret;
 }
 
