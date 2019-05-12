@@ -1,5 +1,6 @@
 #include "rus_prover_multy_subst.hpp"
-#include "index/rus_prover_index_unify.hpp"
+
+#include "unify/rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -12,7 +13,7 @@ MultySubst::MultySubst(const vector<const Subst*>& subs) {
 Subst MultySubst::makeSubs(Subst& unif) const {
 	Subst ret;
 	for (const auto& p : msub_) {
-		Term term = index::unify_general(p.second, unif);
+		Term term = unify::unify_general(p.second, unif);
 		if (term.empty()) {
 			return Subst(false);
 		}

@@ -47,14 +47,20 @@ Return test_all_with_oracle(uint max_proofs) {
 	}
 	cout << endl;
 	vector<const Proof*> proofs;
+	const Proof* longest_proof = nullptr;
 	for (Source* src : ordered_sources) {
 		cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::PROOF) {
-				proofs.push_back(Theory::proof(n));
+				const Proof* proof = Theory::proof(n);
+				proofs.push_back(proof);
+				if (!longest_proof  || proof->elems.size() > longest_proof->elems.size()) {
+					longest_proof = proof;
+				}
 			}
 		}
 	}
+	cout << "longest proof: " << Lex::toStr(longest_proof->thm->id()) << ", proof length: " << longest_proof->elems.size() << endl;
 #ifdef PARALLEL_PROVER_TEST
 	tbb::parallel_for(tbb::blocked_range<size_t>(0, proofs.size()),
 		[max_proofs, &proofs] (const tbb::blocked_range<size_t>& r) {

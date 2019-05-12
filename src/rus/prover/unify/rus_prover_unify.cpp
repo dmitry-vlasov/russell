@@ -1,21 +1,8 @@
 #include "../rus_prover_cartesian.hpp"
 #include "../rus_prover_limit.hpp"
-#include "rus_prover_index_matrix.hpp"
+#include "rus_prover_unify_matrix.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
-
-void unify_subs(Matrix& mi, const Prop* pr, MultyUnifiedSubs& ret) {
-	MultyUnifiedSubs unif;
-	MultyUnifiedSubs gen = mi.compute(unif);
-	for (const auto& p : unif) {
-		Subst sub = unify_subs(p.second, gen[p.first]);
-		if (sub.ok()) {
-			Subst delta = pr->sub;
-			delta.compose(sub);
-			ret[p.first] = delta;
-		}
-	}
-}
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
 	Matrix mi(pr, hy, hs, limit);
@@ -24,7 +11,16 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 	}
 	MultyUnifiedSubs ret;
 	try {
-		unify_subs(mi, pr, ret);
+		MultyUnifiedSubs unif;
+		MultyUnifiedSubs gen = mi.compute(unif);
+		for (const auto& p : unif) {
+			Subst sub = unify_subs(p.second, gen[p.first]);
+			if (sub.ok()) {
+				Subst delta = pr->sub;
+				delta.compose(sub);
+				ret[p.first] = delta;
+			}
+		}
 	} catch (std::exception& e) {
 		cout << e.what() << endl;
 		cout << mi.show() << endl;
@@ -34,12 +30,12 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndex
 }
 
 Term unify_general(const vector<Term>& ex, Subst& sub) {
-	vector<MultyIter> iters;
+	vector<const Term*> terms;
 	for (const auto& e : ex) {
-		iters.emplace_back(Term::Iter(e));
+		terms.emplace_back(&e);
 	}
 	try {
-		map<vector<uint>, TermSubst> unif = unify_general(iters);
+		map<vector<uint>, TermSubst> unif = unify_general(terms);
 		if (!unif.size()) {
 			sub.spoil();
 			return Term();

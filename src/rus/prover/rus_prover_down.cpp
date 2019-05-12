@@ -1,11 +1,11 @@
 #include <cmath>
 #include <numeric>
 #include "../expr/rus_expr_stats.hpp"
-#include "index/rus_prover_index_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
 #include "rus_prover_multy_subst.hpp"
 #include "rus_prover_limit.hpp"
+#include "unify/rus_prover_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -288,7 +288,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #endif
 #endif
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
+	MultyUnifiedSubs unified_subs_2 = unify::unify_subs_matrix(pr, hy, hs, &limit);
 	add_timer_stats("down_mat_time", timer);
 	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer);
@@ -303,7 +303,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_2, unified_subs_1, true);
-		cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
+		cout << unify::Matrix(pr, hy, hs, &limit).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "index/rus_prover_index.hpp"
-#include "index/rus_prover_index_unify_iter.hpp"
 #include "rus_prover_node.hpp"
+#include "unify/rus_prover_unify_general.hpp"
+#include "unify/rus_prover_unify_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -20,7 +20,7 @@ Tactic* make_tactic(const string&);
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
-	using IndexMap = index::IndexMap<T>;
+	using IndexMap = unify::IndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);

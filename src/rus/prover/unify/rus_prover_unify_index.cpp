@@ -1,6 +1,6 @@
-#include "rus_prover_index.hpp"
+#include "rus_prover_unify_index.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 void Index::add(const Term& t, uint val) {
 	terms.emplace_back(t);
@@ -174,7 +174,7 @@ string show_branch(const vector<Index::Iter>& branch) {
 	return ret;
 }
 
-vector<pair<Term, vector<uint>>> Index::unpack() const {
+Index::Unpacked Index::unpack() const {
 	return unpack(root_);
 }
 
@@ -225,12 +225,12 @@ string Index::show_pointers() const {
 	return oss.str();
 }
 
-vector<pair<Term, vector<uint>>> Index::unpack(const Node& root) {
+Index::Unpacked Index::unpack(const Node& root) {
 	return unpack(Iter(root));
 }
 
-vector<pair<Term, vector<uint>>> Index::unpack(Iter root) {
-	vector<pair<Term, vector<uint>>> ret;
+Index::Unpacked Index::unpack(Iter root) {
+	Unpacked ret;
 	vector<Iter> branch;
 	branch.emplace_back(root);
 	while (branch.size()) {

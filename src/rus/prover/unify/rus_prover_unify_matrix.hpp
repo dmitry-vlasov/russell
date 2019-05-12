@@ -2,9 +2,9 @@
 
 #include "../rus_prover_node.hpp"
 #include "../rus_prover_limit.hpp"
-#include "rus_prover_index_vector.hpp"
+#include "rus_prover_unify_vector.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 typedef MapUnified<vector<const TermSubst*>> MatrixUnified;
 
@@ -55,7 +55,7 @@ struct MatrixUnifiedUnion {
 			string ret;
 			ret += "MatrixUnifiedUnion: Normal\n";
 			ret += "card = " + to_string(card()) + "\n";
-			ret += index::show(union_);
+			ret += unify::show(union_);
 			return ret;
 		}
 		}

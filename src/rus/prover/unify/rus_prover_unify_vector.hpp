@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../rus_prover_cartesian.hpp"
-#include "rus_prover_index_unify_iter.hpp"
+#include "../unify/rus_prover_unify_general.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 struct CartesianCell {
 	CartesianCell(const vector<uint>& ex, bool em, bool s) :
@@ -196,7 +196,7 @@ struct VectorUnifiedUnion {
 		return true;
 	}
 	string show() const {
-		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + index::show(union_);
+		return "VectorUnifiedUnion:\ncard = " + to_string(card()) + "\n" + unify::show(union_);
 	}
 	vector<VectorUnified> union_;
 };
@@ -244,7 +244,7 @@ struct Vector{
 		vector<uint> exprs_inds_;
 	};
 	VectorUnified unify_general(const vector<bool>& skipped) const {
-		vector<MultyIter> iters;
+		vector<const Index*> inds;
 		VectorUnified ret;
 		try {
 			uint only_iter_ind = 0;
@@ -256,11 +256,11 @@ struct Vector{
 				);
 				if (skipped[i]) {
 					only_iter_ind = i;
-					iters.emplace_back(Index::Iter(vect[i]->exprs().root()));
+					inds.emplace_back(&vect[i]->exprs());
 				}
 			}
-			if (iters.size() > 0) {
-				if (iters.size() == 1) {
+			if (inds.size() > 0) {
+				if (inds.size() == 1) {
 					for (auto it = vect[only_iter_ind]->exprs().root().nodes.begin(); it != vect[only_iter_ind]->exprs().root().nodes.end(); ++it) {
 						for (const auto& end : it->second.ends) {
 							for (uint ind : end->second.inds) {
@@ -270,7 +270,7 @@ struct Vector{
 						}
 					}
 				} else {
-					ret.unified = index::unify_general(iters);
+					ret.unified = unify::unify_general(inds);
 				}
 			}
 		} catch (Error& err) {
@@ -279,7 +279,7 @@ struct Vector{
 				cout << "CELL: " << endl;
 				cout << c->exprs().show_pointers() << endl << endl;
 			}
-			ret.unified = index::unify_general(iters);
+			ret.unified = unify::unify_general(inds);
 			throw err;
 		}
 		return ret;

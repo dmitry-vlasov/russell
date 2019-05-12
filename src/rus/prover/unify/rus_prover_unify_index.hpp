@@ -3,7 +3,7 @@
 #include "../rus_prover_multy_subst.hpp"
 #include "../rus_prover_subst.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 struct Index {
 	struct Node {
@@ -36,15 +36,16 @@ struct Index {
 	typedef map<RuleVar, Node>::iterator Iterator;
 	typedef map<RuleVar, Node>::const_iterator ConstIterator;
 	typedef map<uint, Subst> Unified;
+	typedef vector<pair<Term, vector<uint>>> Unpacked;
 	struct Iter;
 
 	void add(const Term& t, uint val = -1);
-	vector<pair<Term, vector<uint>>> unpack() const;
+	Unpacked unpack() const;
 	string show() const;
 	string show_pointers() const;
 
-	static vector<pair<Term, vector<uint>>> unpack(const Node&);
-	static vector<pair<Term, vector<uint>>> unpack(Iter);
+	static Unpacked unpack(const Node&);
+	static Unpacked unpack(Iter);
 	static string show(const Node&);
 	static string show(Iter);
 	static string show_pointers(const Node&);
@@ -241,6 +242,8 @@ template<class Data>
 struct IndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Unified&) = default;
+		Unified(Unified&&) = default;
 		Data data;
 		Subst sub;
 	};

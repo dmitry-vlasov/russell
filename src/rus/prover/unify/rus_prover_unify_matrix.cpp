@@ -1,7 +1,8 @@
-#include "../rus_prover_cartesian.hpp"
-#include "rus_prover_index_matrix.hpp"
+#include "rus_prover_unify_matrix.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+#include "../rus_prover_cartesian.hpp"
+
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
 	if (limit) {

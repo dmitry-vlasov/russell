@@ -5,22 +5,6 @@ namespace mdl { namespace rus { namespace prover {
 
 //#define DEBUG_SUBST
 
-void Subst::operator = (const Subst& s) {
-	ok_ = s.ok_;
-	sub_.clear();
-	if (ok_) {
-		for (const auto& p : s.sub_) {
-			sub_.emplace(p.first, p.second);
-		}
-	}
-}
-
-void Subst::operator = (Subst&& s) {
-	ok_ = s.ok_;
-	sub_ = std::move(s.sub_);
-	s.ok_ = true;
-}
-
 bool Subst::operator == (const Subst& s) const {
 	if (ok_ != s.ok_ || size() != s.size()) {
 		return false;

@@ -18,14 +18,11 @@ struct Subst {
 			sub_.emplace(v, std::move(t));
 		}
 	}
-	Subst(const Subst& s) : ok_(s.ok_) {
-		operator = (s);
-	}
-	Subst(Subst&& s) : ok_(s.ok_) {
-		operator = (std::move(s));
-	}
-	void operator = (const Subst& s);
-	void operator = (Subst&& s);
+	Subst(const Subst& s) = default;
+	Subst(Subst&& s) = default;
+
+	Subst& operator = (const Subst& s) = default;
+	Subst& operator = (Subst&& s) = default;
 
 	bool operator == (const Subst& s) const;
 	bool operator != (const Subst& s) const;
@@ -98,6 +95,30 @@ struct Subst {
 private:
 	hmap<uint, Term> sub_;
 	bool ok_;
+};
+
+struct TermSubst {
+	TermSubst() = default;
+	TermSubst(const Term& t, const Subst& s) : term(t), sub(s) { }
+	TermSubst(Term&& t, Subst&& s) : term(std::move(t)), sub(std::move(s)) { }
+	TermSubst(const TermSubst& ts) = default;
+	TermSubst(TermSubst&&) = default;
+
+	string show() const {
+		return "term: " + term.show() + "\nsub:\n" + sub.show();
+	}
+	bool operator == (const TermSubst& ts) const {
+		return term == ts.term && sub == ts.sub;
+	}
+	bool operator != (const TermSubst& ts) const {
+		return !operator == (ts);
+	}
+	bool isDefault() const {
+		return !term.len() && !sub.size();
+	}
+
+	Term term;
+	Subst sub;
 };
 
 Subst Substitution2FlatSubst(const Substitution&);
