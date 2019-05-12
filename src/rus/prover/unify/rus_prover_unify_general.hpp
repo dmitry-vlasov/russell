@@ -5,30 +5,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-struct TermSubst {
-	TermSubst() = default;
-	TermSubst(const Term& t, const Subst& s) : term(t), sub(s) { }
-	TermSubst(Term&& t, Subst&& s) : term(std::move(t)), sub(std::move(s)) { }
-	TermSubst(const TermSubst& ts) = default;
-	TermSubst(TermSubst&&) = default;
-
-	string show() const {
-		return "term: " + term.show() + "\nsub:\n" + sub.show();
-	}
-	bool operator == (const TermSubst& ts) const {
-		return term == ts.term && sub == ts.sub;
-	}
-	bool operator != (const TermSubst& ts) const {
-		return !operator == (ts);
-	}
-	bool isDefault() const {
-		return !term.len() && !sub.size();
-	}
-
-	Term term;
-	Subst sub;
-};
-
 map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, const vector<const Term*>& terms);
 
 inline map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds) {
