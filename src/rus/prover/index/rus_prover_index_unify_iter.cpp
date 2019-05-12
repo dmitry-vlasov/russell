@@ -40,6 +40,11 @@ inline void dump(const UnifyIters& ui, const char* msg = "") {
 struct UnifyPair {
 	UnifyPair(const UnifyIters& b) : is_root(true), beg(b), end(b) { }
 	UnifyPair(const UnifyIters& b, const UnifyIters& c) : is_root(false), beg(b), end(c) { }
+	UnifyPair(const UnifyPair& b) = default;
+	UnifyPair(UnifyPair&& b) = default;
+
+	UnifyPair& operator = (const UnifyPair& b) = default;
+	UnifyPair& operator = (UnifyPair&& b) = default;
 
 	Term subTerm() const {
 		return beg.iters[0].subTerm(end.iters[0]);
@@ -252,9 +257,9 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 				//	do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
 				//	do_unify_general(subBegins);
 
-				if (i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE) {
-					subBegins.iters.emplace_back(Term::Iter(i.sub.map(data.var)));
-				}
+				//if (i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE) {
+				//	subBegins.iters.emplace_back(Term::Iter(i.sub.map(data.var)));
+				//}
 
 
 				vector<UnifyPair> pairs = do_unify_general(subBegins);

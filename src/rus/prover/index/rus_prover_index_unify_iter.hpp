@@ -207,7 +207,9 @@ struct UnifyIters {
 	UnifyIters(vector<MultyIter>&& i, Subst&& ps, Subst&& s) :
 		iters(std::move(i)), parentSub(std::move(ps)), sub(std::move(s)) { }
 	UnifyIters(const UnifyIters&) = default;
+	UnifyIters(UnifyIters&&) = default;
 	UnifyIters& operator = (const UnifyIters&) = default;
+	UnifyIters& operator = (UnifyIters&&) = default;
 
 	UnifyIters side() const {
 		vector<MultyIter> side_iters;
