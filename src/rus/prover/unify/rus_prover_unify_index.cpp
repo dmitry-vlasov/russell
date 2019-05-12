@@ -1,4 +1,4 @@
-#include "rus_prover_index.hpp"
+#include "rus_prover_unify_index.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 

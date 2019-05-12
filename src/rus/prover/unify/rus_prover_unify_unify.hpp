@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../rus_prover_limit.hpp"
-#include "rus_prover_index_matrix.hpp"
+#include "rus_prover_unify_matrix.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 

@@ -2,7 +2,7 @@
 
 #include "../rus_prover_node.hpp"
 #include "../rus_prover_limit.hpp"
-#include "rus_prover_index_vector.hpp"
+#include "rus_prover_unify_vector.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace index {
 

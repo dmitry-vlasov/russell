@@ -1,11 +1,11 @@
 #include <cmath>
 #include <numeric>
 #include "../expr/rus_expr_stats.hpp"
-#include "index/rus_prover_index_unify.hpp"
 #include "rus_prover_cartesian.hpp"
 #include "rus_prover_tactics.hpp"
 #include "rus_prover_multy_subst.hpp"
 #include "rus_prover_limit.hpp"
+#include "unify/rus_prover_unify_unify.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

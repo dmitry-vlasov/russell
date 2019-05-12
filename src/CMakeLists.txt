@@ -49,11 +49,11 @@ else()
 		rus/prover/rus_prover_term.cpp
 		rus/prover/rus_prover_subst.cpp
 		rus/prover/rus_prover_multy_subst.cpp
-		rus/prover/index/rus_prover_index.cpp
-		rus/prover/index/rus_prover_index_intersect.cpp
-		rus/prover/index/rus_prover_index_matrix.cpp
-		rus/prover/index/rus_prover_index_unify.cpp
-		rus/prover/index/rus_prover_index_unify_iter.cpp
+		rus/prover/unify/rus_prover_unify_index.cpp
+		rus/prover/unify/rus_prover_unify_intersect.cpp
+		rus/prover/unify/rus_prover_unify_matrix.cpp
+		rus/prover/unify/rus_prover_unify_unify.cpp
+		rus/prover/unify/rus_prover_unify_unify_iter.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

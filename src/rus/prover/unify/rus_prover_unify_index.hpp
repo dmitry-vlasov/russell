@@ -242,6 +242,8 @@ template<class Data>
 struct IndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Unified&) = default;
+		Unified(Unified&&) = default;
 		Data data;
 		Subst sub;
 	};
