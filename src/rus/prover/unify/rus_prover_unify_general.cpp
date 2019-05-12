@@ -1,4 +1,4 @@
-#include "rus_prover_unify_unify_iter.hpp"
+#include "rus_prover_unify_general.hpp"
 
 #include "../rus_prover_cartesian.hpp"
 

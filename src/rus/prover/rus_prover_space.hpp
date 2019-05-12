@@ -1,8 +1,8 @@
 #pragma once
 
 #include "rus_prover_node.hpp"
+#include "unify/rus_prover_unify_general.hpp"
 #include "unify/rus_prover_unify_index.hpp"
-#include "unify/rus_prover_unify_unify_iter.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

@@ -53,7 +53,7 @@ else()
 		rus/prover/unify/rus_prover_unify_intersect.cpp
 		rus/prover/unify/rus_prover_unify_matrix.cpp
 		rus/prover/unify/rus_prover_unify_unify.cpp
-		rus/prover/unify/rus_prover_unify_unify_iter.cpp
+		rus/prover/unify/rus_prover_unify_general.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
