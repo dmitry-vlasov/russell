@@ -72,7 +72,7 @@ struct UnifStepData {
 	LightSymbol const_;
 	vector<Kind> indexKinds;
 	vector<Kind> termKinds;
-	UnifyIters   iters;
+	const UnifyIters& iters;
 
 	UnifyIters subGoals() const {
 		vector<Index::Iter> indexIters;
@@ -228,7 +228,7 @@ struct UnifStepData {
 	}
 };
 
-static vector<unique_ptr<UnifyPair>> do_unify_general(const UnifyIters& begins);
+static vector<UnifyPair> do_unify_general(const UnifyIters& begins);
 //static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
 
 static Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
@@ -250,17 +250,17 @@ static Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	UnifyIters begin = UnifyIters(iters);
 	Subst ret(s);
 	try {
-		vector<unique_ptr<UnifyPair>> pairs = do_unify_general(begin);
+		vector<UnifyPair> pairs = do_unify_general(begin);
 		if (pairs.size() > 1) {
 			throw Error("too much unified pairs: " + to_string(pairs.size()));
 		}
 		if (pairs.size() == 1) {
-			unique_ptr<UnifyPair> pair = std::move(pairs[0]);
-			if (!ret.compose(pair->end.sub)) {
+			const UnifyPair& pair = pairs.at(0);
+			if (!ret.compose(pair.end.sub)) {
 				return Subst(false);
 			}
-			Term term_orig = pair->subTerm();
-			Term unified = pair->end.sub.apply(term_orig);
+			Term term_orig = pair.subTerm();
+			Term unified = pair.end.sub.apply(term_orig);
 			for (auto v : vars) {
 				if (!ret.compose(Subst(v, unified))) {
 					return Subst(false);
@@ -282,10 +282,10 @@ static Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 
 bool debug_unify = false;
 
-static vector<unique_ptr<UnifyIters>> unify_iters(const UnifyIters& i) {
-	vector<unique_ptr<UnifyIters>> ret;
+static vector<UnifyIters> unify_iters(const UnifyIters& i) {
+	vector<UnifyIters> ret;
 	if (i.equals()) {
-		ret.emplace_back(make_unique<UnifyIters>(i));
+		ret.emplace_back(i);
 	} else {
 		UnifStepData data(i);
 		if (data.consistent) {
@@ -299,20 +299,20 @@ static vector<unique_ptr<UnifyIters>> unify_iters(const UnifyIters& i) {
 				}*/
 				for (auto& pair : do_unify_general(subBegins)) {
 					try {
-						Subst s = unify_step(i.sub, data.vars, pair->end.sub.apply(pair->subTerm()));
-						s.compose(pair->end.sub.complement(s.dom()));
+						Subst s = unify_step(i.sub, data.vars, pair.end.sub.apply(pair.subTerm()));
+						s.compose(pair.end.sub.complement(s.dom()));
 						if (s.ok()) {
-							ret.emplace_back(make_unique<UnifyIters>(data.shiftGoals(pair->end), i.parentSub, std::move(s)));
+							ret.emplace_back(data.shiftGoals(pair.end), i.parentSub, std::move(s));
 						}
 					} catch (Error& err) {
-						err.msg += pair->show() + "\n";
+						err.msg += pair.show() + "\n";
 						throw err;
 					}
 				}
 			} else {
 				Subst s = unify_step(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok()) {
-					ret.emplace_back(make_unique<UnifyIters>(i, i.parentSub, std::move(s)));
+					ret.emplace_back(i, i.parentSub, std::move(s));
 				}
 			}
 		}
@@ -320,40 +320,40 @@ static vector<unique_ptr<UnifyIters>> unify_iters(const UnifyIters& i) {
 	return ret;
 }
 
-static vector<unique_ptr<UnifyPair>> do_unify_general(const UnifyIters& inits) {
-	vector<unique_ptr<UnifyPair>> ret;
+static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
+	vector<UnifyPair> ret;
 	if (inits.size() > 0) {
 		if (inits.size() == 1) {
 			if (inits.indexIters.size() == 1) {
 				for (const auto& end : inits.indexIters[0].ends()) {
 					UnifyIters ends(vector<Index::Iter>(1, end), inits.parentSub, inits.sub);
-					ret.emplace_back(make_unique<UnifyPair>(inits, std::move(ends)));
+					ret.emplace_back(inits, std::move(ends));
 				}
 			} else if (inits.termIters.size() == 1) {
 				UnifyIters ends(vector<Term::Iter>(1, inits.termIters[0].end()), inits.parentSub, inits.sub);
-				ret.emplace_back(make_unique<UnifyPair>(inits, std::move(ends)));
+				ret.emplace_back(inits, std::move(ends));
 			} else {
 				throw Error("impossible");
 			}
 		} else {
-			stack<unique_ptr<UnifyPair>> st;
-			st.emplace(make_unique<UnifyPair>(inits));
+			stack<UnifyPair> st;
+			st.emplace(inits);
 			while (st.size()) {
-				unique_ptr<UnifyPair> p = std::move(st.top());
+				UnifyPair p = std::move(st.top());
 				st.pop();
-				for (auto& i : unify_iters(p->end)) {
-					if (i->isTermEnd(p->beg) && i->sub.ok()) {
-						ret.emplace_back(make_unique<UnifyPair>(p->beg, *i));
+				for (auto& i : unify_iters(p.end)) {
+					if (i.isTermEnd(p.beg) && i.sub.ok()) {
+						ret.emplace_back(p.beg, i);
 					}
-					if (!i->isNextEnd(p->beg)) {
-						st.emplace(make_unique<UnifyPair>(p->beg, i->next()));
+					if (!i.isNextEnd(p.beg)) {
+						st.emplace(p.beg, i.next());
 					}
 				}
-				if (!p->end.isSideEnd()) {
-					if (p->is_root) {
-						st.emplace(make_unique<UnifyPair>(p->end.side()));
+				if (!p.end.isSideEnd()) {
+					if (p.is_root) {
+						st.emplace(p.end.side());
 					} else {
-						st.emplace(make_unique<UnifyPair>(p->beg, p->end.side()));
+						st.emplace(p.beg, p.end.side());
 					}
 				}
 			}
@@ -386,9 +386,9 @@ map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, con
 
 	timer.start();
 	for (auto& pair : unified) {
-		const UnifyIters& end = pair->end;
+		const UnifyIters& end = pair.end;
 		Timer t;
-		Term term = end.sub.apply(pair->subTerm());
+		Term term = end.sub.apply(pair.subTerm());
 		add_timer_stats("unify_general_extract_subterm", timer);
 
 		t.start();
