@@ -579,7 +579,7 @@ static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 }
 
 }
-
+/*
 Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	vector<Term> to_unify({s.apply(term)});
 	for (auto v : vars) {
@@ -628,7 +628,7 @@ Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	}
 	return Subst(false);
 }
-
+*/
 
 void check_unification(const vector<const Index*>& inds, const vector<const Term*>& terms, const map<vector<uint>, TermSubst>& result);
 
