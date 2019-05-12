@@ -402,13 +402,17 @@ TermSubst unify_terms(const vector<const Term*>& terms) {
 
 		UnifyPair pair = do_unify_terms(iters);
 		const UnifyIters& end = pair.end;
-		Term term = end.sub.apply(pair.subTerm());
-		add_timer_stats("do_unify_terms", timer);
+		if (end.sub.ok()) {
+			Term term = end.sub.apply(pair.subTerm());
+			add_timer_stats("do_unify_terms", timer);
 
-		TermSubst ret(std::move(term), std::move(end.sub));
+			TermSubst ret(std::move(term), std::move(end.sub));
 
-		check_term_unification(terms, ret);
-		return ret;
+			check_term_unification(terms, ret);
+			return ret;
+		} else {
+			return TermSubst(Term(), Subst(false));
+		}
 	}
 }
 
