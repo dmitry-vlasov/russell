@@ -1,8 +1,9 @@
 #include "rus_prover_unify_general.hpp"
+#include "rus_prover_unify_terms.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
-
-/*Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
+/*
+Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	vector<Term> to_unify({s.apply(term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
@@ -21,7 +22,7 @@ namespace mdl { namespace rus { namespace prover { namespace unify {
 	UnifyIters begin = UnifyIters(iters);
 	Subst ret(s);
 	try {
-		vector<UnifyPair> pairs = do_unify_general(begin);
+		vector<UnifyPair> pairs = do_unify_terms(begin);
 		if (pairs.size() > 1) {
 			throw Error("too much unified pairs: " + to_string(pairs.size()));
 		}
