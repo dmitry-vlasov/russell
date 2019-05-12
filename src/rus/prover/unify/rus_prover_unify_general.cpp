@@ -2,7 +2,7 @@
 
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace unify {
+namespace mdl { namespace rus { namespace prover { namespace unify { namespace {
 
 template<class Iter> RuleVar ruleVar(Iter);
 template<>
@@ -495,7 +495,9 @@ struct UnifStepData {
 static vector<UnifyPair> do_unify_general(const UnifyIters& begins);
 //static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
 
-static Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
+bool debug_unify = false;
+
+Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	vector<Term> to_unify({s.apply(term)});
 	for (auto v : vars) {
 		if (s.maps(v)) {
@@ -543,8 +545,6 @@ static Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 	}
 	return Subst(false);
 }
-
-bool debug_unify = false;
 
 static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 	vector<UnifyIters> ret;
@@ -626,6 +626,8 @@ static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 	return ret;
 }
 
+}
+
 void check_unification(const vector<const Index*>& inds, const vector<const Term*>& terms, const map<vector<uint>, TermSubst>& result);
 
 map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, const vector<const Term*>& terms) {
@@ -666,283 +668,6 @@ map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, con
 	//check_unification(inds, terms, ret);
 	return ret;
 }
-
-
-
-
-/*
-struct UnifTermsStepData {
-	enum class Kind { VAR, RULE, CONST_VAR };
-	const Rule* rule = nullptr;
-	vector<uint> vars;
-	const Type* least_type = nullptr;
-	bool consistent = false;
-	LightSymbol var;
-	LightSymbol const_;
-	vector<Kind> kinds;
-	const vector<Term::Iter>& iters;
-
-	UnifTermsStepData(const vector<Term::Iter>& is) : iters(is) {
-		least_type = nullptr;
-		for (const auto& i : iters) {
-			if (!track_iter(i)) {
-				return;
-			}
-		}
-		consistent = true;
-	}
-
-	vector<Term::Iter> subGoals() const {
-		vector<Term::Iter> termIters;
-		for (uint i = 0; i < kinds.size(); ++ i) {
-			if (kinds[i] == Kind::RULE) {
-				termIters.push_back(iters.termIters[i]);
-			}
-		}
-		return termIters;
-	}
-
-	vector<Term::Iter> shiftGoals(const vector<Term::Iter>& ends) const {
-		vector<Term::Iter> termIters;
-		for (uint i = 0, j = 0; i < kinds.size(); ++ i) {
-			if (kinds[i] == Kind::RULE) {
-				termIters.push_back(ends.termIters[j++]);
-			} else {
-				termIters.push_back(iters.termIters[i]);
-			}
-		}
-		return termIters;
-	}
-
-	bool track_iter(Term::Iter it) {
-		RuleVar rv = it.ruleVar();
-		if (!least_type) {
-			least_type = rv.type();
-		} else {
-			if (*least_type <= *rv.type()) {
-				// ok
-			} else if (*rv.type() <= *least_type) {
-				least_type = rv.type();
-			} else {
-				// There's no unification because of type constraints
-				return false;
-			}
-		}
-		if (rv.isVar()) {
-			if (!track_var(rv.var)) {
-				return false;
-			}
-		} else {
-			if (!track_rule(rv.rule)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	bool track_var(LightSymbol v) {
-		if (v.rep) {
-			if (var.is_undef()) {
-				var = v;
-				kinds.push_back(Kind::VAR);
-			} else {
-				kinds.push_back(Kind::CONST_VAR);
-			}
-			// Collect replaceable variables
-			vars.push_back(v.lit);
-		} else {
-			kinds.push_back(Kind::CONST_VAR);
-			if (const_.is_undef()) {
-				const_ = v;
-			} else if (const_ != v) {
-				// If we have any non-replaceable variables (constant), all other
-				// constants must be the same variable (constant).
-				return false;
-			}
-			if (rule) {
-				// If we have any non-replaceable variables (constant),
-				// complex terms are not allowed.
-				return false;
-			}
-		}
-		return true;
-	}
-	bool track_rule(const Rule* r) {
-		if (const_.is_def()) {
-			// If we have any non-replaceable variables (constant), all other
-			// terms must be the same variable (constant).
-			return false;
-		}
-		if (!rule) {
-			rule = r;
-		} else if (rule != r) {
-			// In case we have a non-leaf with some rule,
-			// all other leafs must be with the same rule.
-			return false;
-		}
-		kinds.push_back(Kind::RULE);
-		return true;
-	}
-
-	string show() const {
-		cout << "rule: " << (rule ? Lex::toStr(rule->id()) : "NULL") << endl;
-		cout << "vars: " << flush;
-		for (const auto& v : vars) {
-			cout << Lex::toStr(v) << " " << flush;
-		}
-		cout << endl;
-		cout << "consistent: " << (consistent ? "TRUE" : "FALSE") << endl;
-		cout << "var: " << prover::show(var, true) << endl;
-		cout << endl;
-
-		string ret;
-		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
-		ret += "vars: ";
-		for (const auto& v : vars) {
-			ret += Lex::toStr(v) + " ";
-		}
-		ret += "\n";
-		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
-		ret += string("var: ") + prover::show(var, true) + "\n";
-		ret += "\n";
-		return ret;
-	}
-};
-
-static bool equal_term_iters(const vector<Term::Iter>& iters) const {
-	RuleVar rv = iters.at(0).ruleVar();
-	for (uint i = 1; i < iters.size(); ++ i) {
-		if (rv != iter.at(i).ruleVar()) {
-			return false;
-		}
-	}
-	return true;
-}
-
-static vector<UnifyIters> unify_term_iters(const UnifyIters& i) {
-	vector<UnifyIters> ret;
-	if (i.equals()) {
-		ret.emplace_back(i);
-	} else {
-		UnifStepData data(i);
-		if (data.consistent) {
-			if (data.rule) {
-				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				for (auto& pair : do_unify_general(subBegins)) {
-					try {
-						Subst s = unify_step(i.sub, data.vars, pair.end.sub.apply(pair.subTerm()));
-						s.compose(pair.end.sub.complement(s.dom()));
-						if (s.ok()) {
-							ret.emplace_back(data.shiftGoals(pair.end), i.parentSub, std::move(s));
-						}
-					} catch (Error& err) {
-						err.msg += pair.show() + "\n";
-						throw err;
-					}
-				}
-			} else {
-				Subst s = unify_step(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
-				if (s.ok()) {
-					ret.emplace_back(i, i.parentSub, std::move(s));
-				}
-			}
-		}
-	}
-	return ret;
-}
-
-
-TermSubst unify_terms(const vector<const Term*>& terms) {
-
-	if (terms.size() == 0) {
-		return TermSubst(Term(), Subst(false));
-	} else if (terms.size() == 1) {
-		return TermSubst(*terms.at(0), Subst());
-	} else {
-		Timer timer;
-		vector<Term::Iter> termIters;
-		for (auto t : terms) {
-			termIters.emplace_back(*t);
-		}
-		add_timer_stats("unify_terms_create_iters", timer);
-
-		UnifyIters iters(termIters);
-		UnifyIters begin(iters);
-		Subst sub;
-		while (true) {
-			if (!equal_term_iters(iters)) {
-				UnifTermsStepData data(iters);
-				if (!data.consistent) {
-					return TermSubst(Term(), Subst(false));
-				} else {
-					if (data.rule) {
-						vector<Term::Iter> subIters = data.subGoals();
-						UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-						TermSubst sub =
-						for (auto& pair : do_unify_general(subBegins)) {
-							try {
-								Subst s = unify_step(i.sub, data.vars, pair.end.sub.apply(pair.subTerm()));
-								s.compose(pair.end.sub.complement(s.dom()));
-								if (s.ok()) {
-									ret.emplace_back(data.shiftGoals(pair.end), i.parentSub, std::move(s));
-								}
-							} catch (Error& err) {
-								err.msg += pair.show() + "\n";
-								throw err;
-							}
-						}
-					} else {
-						Subst s = unify_step(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
-						if (s.ok()) {
-							ret.emplace_back(i, i.parentSub, std::move(s));
-						}
-					}
-				}
-			}
-
-			for (auto& i : unify_term_iters(iters)) {
-				if (i.isTermEnd(p.beg) && i.sub.ok()) {
-					return TermSubst(term, std::move(sub));
-				}
-				if (!i.isNextEnd(p.beg)) {
-					st.emplace(p.beg, i.next());
-				}
-			}
-			if (i.isTermEnd(begin) && i.sub.ok()) {
-				return TermSubst(term, std::move(sub));
-			}
-			if (i.isNextEnd(begin)) {
-				return TermSubst(Term(), Subst(false));
-			}
-
-		}
-
-
-		map<vector<uint>, TermSubst> ret;
-
-		auto unified = do_unify_terms(iters);
-		add_timer_stats("do_unify_general", timer);
-
-		timer.start();
-		for (auto& pair : unified) {
-			const UnifyIters& end = pair.end;
-			Timer t;
-			Term term = end.sub.apply(pair.subTerm());
-			add_timer_stats("unify_general_extract_subterm", timer);
-
-			t.start();
-			for (auto ind : end.inds()) {
-				ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
-			}
-			add_timer_stats("unify_general_emplace_term_subst", timer);
-		}
-		add_timer_stats("unify_general_arrange_ret", timer);
-
-		//check_unification(inds, terms, ret);
-		return ret;
-	}
-}
-*/
 
 string show_unification_args(const vector<const Index*>& inds, const vector<const Term*>& terms) {
 	ostringstream oss;
