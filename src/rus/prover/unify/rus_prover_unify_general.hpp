@@ -29,8 +29,6 @@ struct TermSubst {
 	Subst sub;
 };
 
-//map<vector<uint>, TermSubst> unify_general(const UnifyIters& i);
-
 map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, const vector<const Term*>& terms);
 
 inline map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds) {
