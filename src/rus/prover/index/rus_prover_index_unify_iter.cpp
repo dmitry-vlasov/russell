@@ -62,61 +62,6 @@ struct UnifyPair {
 	UnifyIters end;
 };
 
-static vector<UnifyPair> do_unify_general(const UnifyIters& begins);
-static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
-
-static Term unify_step(Subst& s, const vector<uint>& vars, const Term& term) {
-	vector<Term> to_unify({s.apply(term)});
-	for (auto v : vars) {
-		if (s.maps(v)) {
-			const Term& t = s.map(v);
-			if (!t.empty()) {
-				to_unify.push_back(t);
-			} else {
-				throw Error("empty term at unify_step_1");
-			}
-		}
-	}
-	vector<MultyIter> iters;
-	for (const auto& t : to_unify) {
-		iters.emplace_back(Term::Iter(t));
-	}
-	UnifyIters begin = UnifyIters(iters);
-	try {
-		vector<UnifyPair> pairs = do_unify_general(begin);
-		if (pairs.size() > 1) {
-			throw Error("too much unified pairs: " + to_string(pairs.size()));
-		}
-		if (pairs.size() == 1) {
-			const UnifyPair& pair = pairs[0];
-			s.compose(pair.end.sub);
-			Term term_orig = pair.subTerm();
-			Term unified = pair.end.sub.apply(term_orig);
-			for (auto v : vars) {
-				if (!s.compose(Subst(v, unified))) {
-					return Term();
-				}
-			}
-			return unified;
-		}
-	} catch (Error& err) {
-		cout << endl << "unify_step_1: ERROR" << endl;
-		for (const auto& t : to_unify) {
-			cout << "TERM: " << endl;
-			cout << t.show_pointers();
-		}
-		cout << endl;
-		throw err;
-	}
-	return Term();
-}
-
-static Subst unify_step(const Subst& s, const vector<uint>& vars, const Term& term) {
-	Subst ret(s);
-	Term unified = unify_step(ret, vars, term);
-	return unified.empty() ? Subst(false) : ret;
-}
-
 template<class Iter>
 struct UnifStepData {
 	enum Kind { VAR, RULE, CONST_VAR };
@@ -244,6 +189,57 @@ struct UnifStepData {
 
 bool debug_unify = false;
 
+static vector<UnifyPair> do_unify_general(const UnifyIters& begins);
+static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
+
+static Subst unify_step(const Subst& s, const vector<uint>& vars, const Term& term) {
+	Subst ret(s);
+	vector<Term> to_unify({s.apply(term)});
+	for (auto v : vars) {
+		if (s.maps(v)) {
+			const Term& t = s.map(v);
+			if (!t.empty()) {
+				to_unify.push_back(t);
+			} else {
+				throw Error("empty term at unify_step_1");
+			}
+		}
+	}
+	vector<MultyIter> iters;
+	for (const auto& t : to_unify) {
+		iters.emplace_back(Term::Iter(t));
+	}
+	UnifyIters begin = UnifyIters(iters);
+	try {
+		vector<UnifyPair> pairs = do_unify_general(begin);
+		if (pairs.size() > 1) {
+			throw Error("too much unified pairs: " + to_string(pairs.size()));
+		}
+		if (pairs.size() == 1) {
+			const UnifyPair& pair = pairs[0];
+			if (ret.compose(pair.end.sub)) {
+				Term term_orig = pair.subTerm();
+				Term unified = pair.end.sub.apply(term_orig);
+				for (auto v : vars) {
+					if (!ret.compose(Subst(v, unified))) {
+						return Subst(false);
+					}
+				}
+				return ret;
+			}
+		}
+	} catch (Error& err) {
+		cout << endl << "unify_step_1: ERROR" << endl;
+		for (const auto& t : to_unify) {
+			cout << "TERM: " << endl;
+			cout << t.show_pointers();
+		}
+		cout << endl;
+		throw err;
+	}
+	return Subst(false);
+}
+
 static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 	vector<UnifyIters> ret;
 	if (i.equals()) {
@@ -265,10 +261,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 				vector<UnifyPair> pairs = do_unify_general(subBegins);
 				for (const auto& pair : pairs) {
 					try {
-						Term term_orig = pair.subTerm();
-						term_orig.verify();
-						Term term_applied = pair.end.sub.apply(term_orig);
-						Subst s = unify_step(i.sub, data.vars, term_applied);
+						Subst s = unify_step(i.sub, data.vars, pair.end.sub.apply(pair.subTerm()));
 						s.compose(pair.end.sub.complement(s.dom()));
 						if (s.ok()) {
 
@@ -308,7 +301,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 								exit(0);
 							}*/
 
-							ret.emplace_back(data.shiftGoals(pair.end.iters), i.parentSub, s);
+							ret.emplace_back(data.shiftGoals(pair.end.iters), i.parentSub, std::move(s));
 						}
 					} catch (Error& err) {
 						err.msg += pair.show() + "\n";
@@ -318,7 +311,7 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 			} else {
 				Subst s = unify_step(i.sub, data.vars, Term(data.const_.is_def() ? data.const_ : data.var));
 				if (s.ok()) {
-					ret.emplace_back(i.iters, i.parentSub, s);
+					ret.emplace_back(i.iters, i.parentSub, std::move(s));
 				}
 			}
 		}
@@ -338,7 +331,7 @@ static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 			stack<UnifyPair> st;
 			st.emplace(inits);
 			while (st.size()) {
-				UnifyPair p = st.top();
+				UnifyPair p = std::move(st.top());
 				st.pop();
 				for (const auto& i : unify_iters(p.end)) {
 					if (i.isTermEnd(p.beg) && i.sub.ok()) {
