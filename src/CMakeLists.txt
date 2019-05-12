@@ -50,7 +50,7 @@ else()
 		rus/prover/rus_prover_subst.cpp
 		rus/prover/rus_prover_multy_subst.cpp
 		rus/prover/unify/rus_prover_unify_index.cpp
-		rus/prover/unify/rus_prover_unify_intersect.cpp
+		rus/prover/unify/rus_prover_unify_vector.cpp
 		rus/prover/unify/rus_prover_unify_matrix.cpp
 		rus/prover/unify/rus_prover_unify_general.cpp
 		rus/prover/unify/rus_prover_unify.cpp
