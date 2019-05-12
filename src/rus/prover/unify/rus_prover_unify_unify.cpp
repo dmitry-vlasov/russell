@@ -2,7 +2,7 @@
 #include "../rus_prover_limit.hpp"
 #include "rus_prover_unify_matrix.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 void unify_subs(Matrix& mi, const Prop* pr, MultyUnifiedSubs& ret) {
 	MultyUnifiedSubs unif;

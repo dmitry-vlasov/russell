@@ -3,7 +3,7 @@
 #include "../rus_prover_node.hpp"
 #include "../unify/rus_prover_unify_index.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 template<class Iter> RuleVar ruleVar(Iter);
 template<>

@@ -2,7 +2,7 @@
 
 #include "../rus_prover_cartesian.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 vector<vector<uint>> UnifyIters::inds() const {
 	CartesianProd<uint> inds_prod;

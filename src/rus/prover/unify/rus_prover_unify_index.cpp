@@ -1,6 +1,6 @@
 #include "rus_prover_unify_index.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 void Index::add(const Term& t, uint val) {
 	terms.emplace_back(t);

@@ -3,7 +3,7 @@
 #include "../rus_prover_limit.hpp"
 #include "rus_prover_unify_matrix.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 string show(const MultyUnifiedSubs&);
 MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit*);

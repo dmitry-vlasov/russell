@@ -3,7 +3,7 @@
 #include "../rus_prover_multy_subst.hpp"
 #include "../rus_prover_subst.hpp"
 
-namespace mdl { namespace rus { namespace prover { namespace index {
+namespace mdl { namespace rus { namespace prover { namespace unify {
 
 struct Index {
 	struct Node {

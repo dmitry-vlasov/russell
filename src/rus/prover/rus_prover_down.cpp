@@ -288,7 +288,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 #endif
 #endif
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = index::unify_subs_matrix(pr, hy, hs, &limit);
+	MultyUnifiedSubs unified_subs_2 = unify::unify_subs_matrix(pr, hy, hs, &limit);
 	add_timer_stats("down_mat_time", timer);
 	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer);
@@ -303,7 +303,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_2, unified_subs_1, true);
-		cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
+		cout << unify::Matrix(pr, hy, hs, &limit).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif
