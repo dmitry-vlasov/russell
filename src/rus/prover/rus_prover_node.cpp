@@ -51,7 +51,8 @@ void Prop::buildUp() {
 
 void Hyp::buildUp() {
 	Timer timer;
-	auto unified = unify_general(space->assertions(), expr);
+	//auto unified = unify_general(space->assertions(), expr);
+	auto unified = unify_index_term(space->assertions(), expr);
 	add_timer_stats("build_up_unify_timer", timer);
 
 	for (auto& m : unified) {

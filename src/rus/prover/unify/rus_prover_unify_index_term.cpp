@@ -125,12 +125,28 @@ struct UnifyIters {
 		return indexIter.ruleVar() == termIter.ruleVar();
 	}
 	bool termVar() const {
+		if (!indexIter.ruleVar().var.type) {
+			cout << "NO INDEX TYPE: " << Lex::toStr(indexIter.ruleVar().var.lit) << endl;
+			exit(0);
+		}
+		if (!termIter.ruleVar().var.type) {
+			cout << "NO TERM TYPE: " << Lex::toStr(termIter.ruleVar().var.lit) << endl;
+			exit(0);
+		}
 		return
 			termIter.ruleVar().isVar() &&
 			termIter.ruleVar().var.rep &&
 			*indexIter.ruleVar().var.type <= *termIter.ruleVar().var.type;
 	}
 	bool indexVar() const {
+		if (!indexIter.ruleVar().var.type) {
+			cout << "NO INDEX TYPE: " << Lex::toStr(indexIter.ruleVar().var.lit) << endl;
+			exit(0);
+		}
+		if (!termIter.ruleVar().var.type) {
+			cout << "NO TERM TYPE: " << Lex::toStr(termIter.ruleVar().var.lit) << endl;
+			exit(0);
+		}
 		return
 			indexIter.ruleVar().isVar() &&
 			indexIter.ruleVar().var.rep &&
