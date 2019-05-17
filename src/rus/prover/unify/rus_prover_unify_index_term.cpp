@@ -125,32 +125,16 @@ struct UnifyIters {
 		return indexIter.ruleVar() == termIter.ruleVar();
 	}
 	bool termVar() const {
-		if (!indexIter.ruleVar().var.type) {
-			cout << "NO INDEX TYPE: " << Lex::toStr(indexIter.ruleVar().var.lit) << endl;
-			exit(0);
-		}
-		if (!termIter.ruleVar().var.type) {
-			cout << "NO TERM TYPE: " << Lex::toStr(termIter.ruleVar().var.lit) << endl;
-			exit(0);
-		}
 		return
 			termIter.ruleVar().isVar() &&
 			termIter.ruleVar().var.rep &&
-			*indexIter.ruleVar().var.type <= *termIter.ruleVar().var.type;
+			*indexIter.ruleVar().type() <= *termIter.ruleVar().type();
 	}
 	bool indexVar() const {
-		if (!indexIter.ruleVar().var.type) {
-			cout << "NO INDEX TYPE: " << Lex::toStr(indexIter.ruleVar().var.lit) << endl;
-			exit(0);
-		}
-		if (!termIter.ruleVar().var.type) {
-			cout << "NO TERM TYPE: " << Lex::toStr(termIter.ruleVar().var.lit) << endl;
-			exit(0);
-		}
 		return
 			indexIter.ruleVar().isVar() &&
 			indexIter.ruleVar().var.rep &&
-			*termIter.ruleVar().var.type <= *indexIter.ruleVar().var.type;
+			*termIter.ruleVar().type() <= *indexIter.ruleVar().type();
 	}
 
 	Index::Iter indexIter;
@@ -270,19 +254,12 @@ map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term) {
 	timer.start();
 	for (auto& pair : unified) {
 		const UnifyIters& end = pair.end;
-		Timer t;
 		Term term = end.sub.apply(pair.subTerm());
-		add_timer_stats("unify_general_extract_subterm", timer);
-
-		t.start();
 		for (auto ind : end.inds()) {
 			ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
 		}
-		add_timer_stats("unify_general_emplace_term_subst", timer);
 	}
-	add_timer_stats("unify_general_arrange_ret", timer);
-
-	check_index_term_unification(ind, term, ret);
+	//check_index_term_unification(ind, term, ret);
 	return ret;
 }
 
