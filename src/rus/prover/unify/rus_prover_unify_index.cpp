@@ -56,8 +56,7 @@ void Index::add(const Term& t, uint val) {
 		it = ni;
 		it->second.parent = p;
 	}
-	n->inds.push_back(size_);
-	n->vals.push_back(val == -1 ? size_ : val);
+	n->indVals.emplace_back(size_, val);
 	++size_;
 }
 
@@ -232,8 +231,8 @@ string Index::show_pointers() const {
 		branch.emplace_back(root_);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (uint val : n.iter()->second.vals) {
-				vect.emplace_back(branch, val);
+			for (auto indVal : n.iter()->second.indVals) {
+				vect.emplace_back(branch, indVal.val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -278,8 +277,12 @@ Index::Unpacked Index::unpack(Iter root) {
 	branch.emplace_back(root);
 	while (branch.size()) {
 		Iter n = branch.back();
-		if (n.iter()->second.vals.size()) {
-			ret.emplace_back(create_flatterm(branch), n.iter()->second.vals);
+		if (n.iter()->second.indVals.size()) {
+			vector<uint> vals;
+			for (auto indVal : n.iter()->second.indVals) {
+				vals.push_back(indVal.val);
+			}
+			ret.emplace_back(create_flatterm(branch), vals);
 		}
 		if (!n.isNextEnd()) {
 			branch.push_back(n.next());
@@ -323,8 +326,8 @@ string Index::show_pointers(const Node& root) {
 		branch.emplace_back(root);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (uint val : n.iter()->second.vals) {
-				vect.emplace_back(branch, val);
+			for (auto indVal : n.iter()->second.indVals) {
+				vect.emplace_back(branch, indVal.val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -366,7 +369,7 @@ uint Index::totalNodes() const {
 		branch.emplace_back(root());
 		while (branch.size()) {
 			Iter n = branch.back();
-			ret += n.iter()->second.vals.size();
+			ret += n.iter()->second.indVals.size();
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
 			} else {
