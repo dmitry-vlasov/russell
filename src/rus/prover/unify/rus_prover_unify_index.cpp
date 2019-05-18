@@ -14,23 +14,27 @@ struct Normalizer {
 				}
 				types[rv.var.type] = c;
 				uint norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
-				vars[rv.var.lit] = norm_v;
+				vars[rv.var.lit] = pair(norm_v, rv.var.type);
 				rv.var.lit = norm_v;
 			} else {
-				rv.var.lit = vi->second;
+				rv.var.lit = vi->second.first;
 			}
 		}
 	}
-	Term normalize(const Term& t) {
+	TermSubst normalize(const Term& t) {
 		Term norm(t);
 		for (auto& n : norm.nodes) {
 			normalize(n.ruleVar);
 		}
-		return norm;
+		Subst sub;
+		for (const auto& p : vars) {
+			sub.compose(p.second.first, Term(LightSymbol(p.first, p.second.second)));
+		}
+		return TermSubst(std::move(norm), std::move(sub));
 	}
 
 private:
-	hmap<uint, uint> vars;
+	hmap<uint, pair<uint, const Type*>> vars;
 	hmap<const Type*, uint> types;
 };
 

@@ -34,9 +34,9 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	}
 	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
-		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), hypRef);
+		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
 	}
-	root_ = make_unique<Hyp>(Tree2FlatTerm(*prop_.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX), this);
+	root_ = make_unique<Hyp>(Tree2FlatTerm(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
 	root_->buildUp();
 }
 
