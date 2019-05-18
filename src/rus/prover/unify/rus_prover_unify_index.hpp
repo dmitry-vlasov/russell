@@ -27,7 +27,7 @@ struct Index {
 	typedef vector<pair<Term, vector<uint>>> Unpacked;
 	struct Iter;
 
-	void add(const Term& t, uint val = -1);
+	void add(const Term& t, uint val);
 	Unpacked unpack() const;
 	string show() const;
 	string show_pointers() const;
@@ -243,7 +243,7 @@ struct IndexMap {
 		Subst sub;
 	};
 	void add(const Term& t, const Data& d) {
-		index_.add(t);
+		index_.add(t, data_.size());
 		data_.push_back(d);
 	}
 	string show() const {
