@@ -42,11 +42,14 @@ void Index::add(const Term& t, uint val) {
 	//cout << "to add: " << t0.show() << endl;
 	//Term t = Normalizer().normalize(t0);
 	//cout << "normalized: " << t.show() << endl;
-	terms.emplace_back(t);
+
+	TermSubst ts = TermSubst(t, Subst());
+
+	terms.emplace_back(ts);
 	endsInitialized = false;
 	Node* n = &root_;
 	Index::Iterator it;
-	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
+	for (auto i = ts.term.nodes.begin(); i != ts.term.nodes.end(); ++i) {
 		auto p = it;
 		auto ni = n->nodes.emplace(i->ruleVar, Node()).first;
 		n = &ni->second;
@@ -167,8 +170,8 @@ static void markup_vars(Index::Node& n) {
 }
 
 void Index::initEnds() {
-	for (const auto& term : terms) {
-		markup_ends(root_, term);
+	for (const auto& ts : terms) {
+		markup_ends(root_, ts.term);
 	}
 	markup_vars(root_);
 	endsInitialized = true;

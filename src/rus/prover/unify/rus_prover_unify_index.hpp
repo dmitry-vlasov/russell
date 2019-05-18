@@ -55,7 +55,7 @@ private:
 	uint size_ = 0;
 	Node root_;
 	bool endsInitialized = false;
-	vector<Term> terms;
+	vector<TermSubst> terms;
 };
 
 struct Index::Iter {
