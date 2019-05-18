@@ -69,6 +69,16 @@ struct LightSymbol {
 		return *this;
 	}
 
+	struct Hash {
+		typedef size_t result_type;
+		typedef Symbol argument_type;
+		size_t operator() (const LightSymbol& s) const {
+			return hash(s.lit);
+		}
+	private:
+		static std::hash<uint> hash;
+	};
+
 	uint lit:31;
 	bool rep:1;
 	uint ind;
