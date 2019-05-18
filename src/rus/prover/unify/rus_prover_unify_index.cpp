@@ -39,9 +39,9 @@ private:
 };
 
 void Index::add(const Term& t, uint val) {
-	//cout << "to add: " << t0.show() << endl;
-	//Term t = Normalizer().normalize(t0);
-	//cout << "normalized: " << t.show() << endl;
+	//cout << "to add: " << t.show() << endl;
+	//TermSubst ts = Normalizer().normalize(t);
+	//cout << "normalized: " << ts.term.show() << endl;
 
 	TermSubst ts = TermSubst(t, Subst());
 

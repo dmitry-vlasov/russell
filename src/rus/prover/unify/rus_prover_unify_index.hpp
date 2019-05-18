@@ -49,6 +49,9 @@ struct Index {
 		}
 		return root_;
 	}
+	void denormalize(uint i, Subst& s) const {
+		s.compose(terms.at(i).sub);
+	}
 
 private:
 	void initEnds();
