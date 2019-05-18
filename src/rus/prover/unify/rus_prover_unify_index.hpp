@@ -10,23 +10,11 @@ struct Index {
 		struct NodeIterLess {
 			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
 				return &*i1 < &*i2;
-				/*if (i1->first.isVar()) {
-					if (i2->first.isRule()) {
-						return true;
-					} else {
-						return i1->first.var < i2->first.var;
-					}
-				} else {
-					if (i2->first.isVar()) {
-						return false;
-					} else {
-						return i1->first.rule < i2->first.rule;
-					}
-				}*/
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
-		vector<uint> inds;
+		vector<uint> inds1;
+		vector<uint> vals;
 		map<RuleVar, Node> nodes;
 
 		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends; // All ends of terms, which start at current node
@@ -173,9 +161,16 @@ struct Index::Iter {
 				}
 				oss << "\n";
 			}
-			if (iter_->second.inds.size()) {
+			if (iter_->second.vals.size()) {
+				oss << "vals: ";
+				for (uint i : iter_->second.vals) {
+					oss << to_string(i) << " ";
+				}
+				oss << "\n";
+			}
+			if (iter_->second.inds1.size()) {
 				oss << "inds: ";
-				for (uint i : iter_->second.inds) {
+				for (uint i : iter_->second.inds1) {
 					oss << to_string(i) << " ";
 				}
 				oss << "\n";
@@ -183,9 +178,9 @@ struct Index::Iter {
 			oss << "\n";
 		} else {
 			oss << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "=(" << (void*)&*iter_ << ") " ;
-			if (iter_->second.inds.size()) {
+			if (iter_->second.vals.size()) {
 				oss << "[";
-				for (uint i : iter_->second.inds) {
+				for (uint i : iter_->second.vals) {
 					oss << to_string(i) + " ";
 				}
 				oss << "]";

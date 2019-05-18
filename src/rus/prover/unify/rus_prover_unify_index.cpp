@@ -2,7 +2,42 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
+struct Normalizer {
+	void normalize(RuleVar& rv) {
+		if (rv.isVar() && rv.var.rep) {
+			auto vi = vars.find(rv.var.lit);
+			if (vi == vars.end()) {
+				uint c = 0;
+				auto ti = types.find(rv.var.type);
+				if (ti != types.end()) {
+					c = ti->second + 1;
+				}
+				types[rv.var.type] = c;
+				uint norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
+				vars[rv.var.lit] = norm_v;
+				rv.var.lit = norm_v;
+			} else {
+				rv.var.lit = vi->second;
+			}
+		}
+	}
+	Term normalize(const Term& t) {
+		Term norm(t);
+		for (auto& n : norm.nodes) {
+			normalize(n.ruleVar);
+		}
+		return norm;
+	}
+
+private:
+	hmap<uint, uint> vars;
+	hmap<const Type*, uint> types;
+};
+
 void Index::add(const Term& t, uint val) {
+	//cout << "to add: " << t0.show() << endl;
+	//Term t = Normalizer().normalize(t0);
+	//cout << "normalized: " << t.show() << endl;
 	terms.emplace_back(t);
 	endsInitialized = false;
 	Node* n = &root_;
@@ -14,7 +49,8 @@ void Index::add(const Term& t, uint val) {
 		it = ni;
 		it->second.parent = p;
 	}
-	n->inds.push_back(val == -1 ? size_ : val);
+	n->inds1.push_back(size_);
+	n->vals.push_back(val == -1 ? size_ : val);
 	++size_;
 }
 
@@ -189,8 +225,8 @@ string Index::show_pointers() const {
 		branch.emplace_back(root_);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (uint ind : n.iter()->second.inds) {
-				vect.emplace_back(branch, ind);
+			for (uint val : n.iter()->second.vals) {
+				vect.emplace_back(branch, val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -235,8 +271,8 @@ Index::Unpacked Index::unpack(Iter root) {
 	branch.emplace_back(root);
 	while (branch.size()) {
 		Iter n = branch.back();
-		if (n.iter()->second.inds.size()) {
-			ret.emplace_back(create_flatterm(branch), n.iter()->second.inds);
+		if (n.iter()->second.vals.size()) {
+			ret.emplace_back(create_flatterm(branch), n.iter()->second.vals);
 		}
 		if (!n.isNextEnd()) {
 			branch.push_back(n.next());
@@ -280,8 +316,8 @@ string Index::show_pointers(const Node& root) {
 		branch.emplace_back(root);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (uint ind : n.iter()->second.inds) {
-				vect.emplace_back(branch, ind);
+			for (uint val : n.iter()->second.vals) {
+				vect.emplace_back(branch, val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -323,7 +359,7 @@ uint Index::totalNodes() const {
 		branch.emplace_back(root());
 		while (branch.size()) {
 			Iter n = branch.back();
-			ret += n.iter()->second.inds.size();
+			ret += n.iter()->second.vals.size();
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
 			} else {

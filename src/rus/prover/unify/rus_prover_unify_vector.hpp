@@ -263,9 +263,9 @@ struct Vector{
 				if (inds.size() == 1) {
 					for (auto it = vect[only_iter_ind]->exprs().root().nodes.begin(); it != vect[only_iter_ind]->exprs().root().nodes.end(); ++it) {
 						for (const auto& end : it->second.ends) {
-							for (uint ind : end->second.inds) {
+							for (uint val : end->second.vals) {
 								Index::Iter iter(&vect[only_iter_ind]->exprs().root().nodes, it);
-								ret.unified.emplace(vector<uint>{ind}, TermSubst(iter.subTerm(end), Subst()));
+								ret.unified.emplace(vector<uint>{val}, TermSubst(iter.subTerm(end), Subst()));
 							}
 						}
 					}
