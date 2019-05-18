@@ -49,7 +49,7 @@ void Index::add(const Term& t, uint val) {
 		it = ni;
 		it->second.parent = p;
 	}
-	n->inds1.push_back(size_);
+	n->inds.push_back(size_);
 	n->vals.push_back(val == -1 ? size_ : val);
 	++size_;
 }

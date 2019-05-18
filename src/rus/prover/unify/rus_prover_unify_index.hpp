@@ -13,7 +13,7 @@ struct Index {
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
-		vector<uint> inds1;
+		vector<uint> inds;
 		vector<uint> vals;
 		map<RuleVar, Node> nodes;
 
@@ -168,9 +168,9 @@ struct Index::Iter {
 				}
 				oss << "\n";
 			}
-			if (iter_->second.inds1.size()) {
+			if (iter_->second.inds.size()) {
 				oss << "inds: ";
-				for (uint i : iter_->second.inds1) {
+				for (uint i : iter_->second.inds) {
 					oss << to_string(i) << " ";
 				}
 				oss << "\n";
