@@ -119,7 +119,7 @@ static void markup_ends(Index::Node& root, const Term& t) {
 
 static void markup_vars(Index::Node& n) {
 	for (auto i = n.map.begin(); i != n.map.end(); ++i) {
-		if (i->first.isVar()) {
+		if (i->first.isVar() && i->first.var.rep) {
 			n.vars.insert(i);
 		}
 		markup_vars(i->second);

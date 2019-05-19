@@ -133,9 +133,9 @@ struct Index::Iter {
 	}
 	vector<Iter> vars() const {
 		vector<Iter> ret;
-		ret.reserve(iter_->second.vars.size());
-		for (auto var : iter_->second.vars) {
-			ret.emplace_back(&iter_->second, var);
+		ret.reserve(node_->vars.size());
+		for (auto var : node_->vars) {
+			ret.emplace_back(node_, var);
 		}
 		return ret;
 	}
@@ -287,6 +287,7 @@ struct IndexMap {
 			map<uint, TermSubst> unif = unify_index_term(index_, t);
 			add_timer_stats("unify_index_term", timer);
 
+			timer.start();
 			for (auto& p : unif) {
 				if (p.second.sub.ok()) {
 					uint ind = p.first;
@@ -295,6 +296,7 @@ struct IndexMap {
 					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
 				}
 			}
+			add_timer_stats("Index::unify: form result", timer);
 		} catch (Error& err) {
 			cout << "unify_index_term: " << endl;
 			cout << index_.show() << endl << endl;
