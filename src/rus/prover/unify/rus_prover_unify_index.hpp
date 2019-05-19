@@ -6,11 +6,6 @@
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
 struct Index {
-	struct IndVal {
-		IndVal(uint i, uint v) : ind(i), val(v) { }
-		const uint ind;
-		const uint val;
-	};
 	struct Node {
 		struct NodeIterLess {
 			bool operator () (map<RuleVar, Node>::const_iterator i1, map<RuleVar, Node>::const_iterator i2) const {
@@ -18,7 +13,7 @@ struct Index {
 			}
 		};
 		map<RuleVar, Node>::iterator parent;
-		vector<IndVal> indVals;
+		vector<uint> vals;
 		map<RuleVar, Node> nodes;
 
 		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends; // All ends of terms, which start at current node
@@ -53,16 +48,13 @@ struct Index {
 		}
 		return root_;
 	}
-	void denormalize(uint i, Subst& s) const {
-		s.compose(terms.at(i).sub);
-	}
 
 private:
 	void initEnds();
 	uint size_ = 0;
 	Node root_;
 	bool endsInitialized = false;
-	vector<TermSubst> terms;
+	vector<Term> terms;
 };
 
 struct Index::Iter {
@@ -168,20 +160,20 @@ struct Index::Iter {
 				}
 				oss << "\n";
 			}
-			if (iter_->second.indVals.size()) {
-				oss << "indVals: ";
-				for (auto iv : iter_->second.indVals) {
-					oss << "[ind=" << iv.ind << ",val=" << iv.val << "] ";
+			if (iter_->second.vals.size()) {
+				oss << "vals: ";
+				for (uint val : iter_->second.vals) {
+					oss << val << " ";
 				}
 				oss << "\n";
 			}
 			oss << "\n";
 		} else {
 			oss << ((iter_ == ConstIterator()) ? "<>" : iter_->first.show()) << "=(" << (void*)&*iter_ << ") " ;
-			if (iter_->second.indVals.size()) {
+			if (iter_->second.vals.size()) {
 				oss << "[";
-				for (auto iv : iter_->second.indVals) {
-					oss << "[ind=" << iv.ind << ",val=" << iv.val << "] ";
+				for (uint val : iter_->second.vals) {
+					oss << val << " ";
 				}
 				oss << "]";
 			}

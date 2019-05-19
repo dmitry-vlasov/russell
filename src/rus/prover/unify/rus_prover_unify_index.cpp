@@ -3,24 +3,18 @@
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
 void Index::add(const Term& t, uint val) {
-	//cout << "to add: " << t.show() << endl;
-	//TermSubst ts = Normalizer().normalize(t);
-	//cout << "normalized: " << ts.term.show() << endl;
-
-	TermSubst ts = TermSubst(t, Subst());
-
-	terms.emplace_back(ts);
+	terms.emplace_back(t);
 	endsInitialized = false;
 	Node* n = &root_;
 	Index::Iterator it;
-	for (auto i = ts.term.nodes.begin(); i != ts.term.nodes.end(); ++i) {
+	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto p = it;
 		auto ni = n->nodes.emplace(i->ruleVar, Node()).first;
 		n = &ni->second;
 		it = ni;
 		it->second.parent = p;
 	}
-	n->indVals.emplace_back(size_, val);
+	n->vals.push_back(val);
 	++size_;
 }
 
@@ -133,8 +127,8 @@ static void markup_vars(Index::Node& n) {
 }
 
 void Index::initEnds() {
-	for (const auto& ts : terms) {
-		markup_ends(root_, ts.term);
+	for (const auto& t : terms) {
+		markup_ends(root_, t);
 	}
 	markup_vars(root_);
 	endsInitialized = true;
@@ -195,8 +189,8 @@ string Index::show_pointers() const {
 		branch.emplace_back(root_);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (auto indVal : n.iter()->second.indVals) {
-				vect.emplace_back(branch, indVal.val);
+			for (uint val : n.iter()->second.vals) {
+				vect.emplace_back(branch, val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -241,12 +235,8 @@ Index::Unpacked Index::unpack(Iter root) {
 	branch.emplace_back(root);
 	while (branch.size()) {
 		Iter n = branch.back();
-		if (n.iter()->second.indVals.size()) {
-			vector<uint> vals;
-			for (auto indVal : n.iter()->second.indVals) {
-				vals.push_back(indVal.val);
-			}
-			ret.emplace_back(create_flatterm(branch), vals);
+		if (n.iter()->second.vals.size()) {
+			ret.emplace_back(create_flatterm(branch), n.iter()->second.vals);
 		}
 		if (!n.isNextEnd()) {
 			branch.push_back(n.next());
@@ -290,8 +280,8 @@ string Index::show_pointers(const Node& root) {
 		branch.emplace_back(root);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (auto indVal : n.iter()->second.indVals) {
-				vect.emplace_back(branch, indVal.val);
+			for (uint val : n.iter()->second.vals) {
+				vect.emplace_back(branch, val);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -333,7 +323,7 @@ uint Index::totalNodes() const {
 		branch.emplace_back(root());
 		while (branch.size()) {
 			Iter n = branch.back();
-			ret += n.iter()->second.indVals.size();
+			ret += n.iter()->second.vals.size();
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
 			} else {

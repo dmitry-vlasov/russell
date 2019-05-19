@@ -110,8 +110,8 @@ struct UnifyIters {
 		oss << Indent::paragraph(termIter.showTree()) << endl;
 		return oss.str();
 	}
-	const vector<Index::IndVal>& vals() const {
-		return indexIter.iter()->second.indVals;
+	const vector<uint>& vals() const {
+		return indexIter.iter()->second.vals;
 	}
 
 	bool operator == (const UnifyIters& ui) const {
@@ -255,8 +255,8 @@ map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term) {
 	for (auto& pair : unified) {
 		const UnifyIters& end = pair.end;
 		Term term = end.sub.apply(pair.subTerm());
-		for (auto indVal : end.vals()) {
-			ret.emplace(indVal.val, TermSubst(std::move(term), std::move(end.sub)));
+		for (uint val : end.vals()) {
+			ret.emplace(val, TermSubst(std::move(term), std::move(end.sub)));
 		}
 	}
 	//check_index_term_unification(ind, term, ret);

@@ -234,12 +234,12 @@ struct UnifyIters {
 		}
 		return oss.str();
 	}
-	vector<vector<Index::IndVal>> indVals() const {
-		CartesianProd<Index::IndVal> vals_prod;
+	vector<vector<uint>> vals() const {
+		CartesianProd<uint> vals_prod;
 		for (const auto& i : indexIters) {
-			vals_prod.addDim(i.iter()->second.indVals);
+			vals_prod.addDim(i.iter()->second.vals);
 		}
-		vector<vector<Index::IndVal>> ret;
+		vector<vector<uint>> ret;
 		while (true) {
 			ret.push_back(vals_prod.data());
 			if (!vals_prod.hasNext()) {
@@ -657,11 +657,7 @@ map<vector<uint>, TermSubst> unify_general(const vector<const Index*>& inds, con
 		add_timer_stats("unify_general_extract_subterm", timer);
 
 		t.start();
-		for (vector<Index::IndVal> indVals: end.indVals()) {
-			vector<uint> vals; vals.reserve(indVals.size());
-			for (auto iv : indVals) {
-				vals.push_back(iv.val);
-			}
+		for (vector<uint> vals : end.vals()) {
 			ret.emplace(vals, TermSubst(std::move(term), std::move(end.sub)));
 		}
 		add_timer_stats("unify_general_emplace_term_subst", timer);
