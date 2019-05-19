@@ -58,10 +58,9 @@ private:
 };
 
 struct Index::Iter {
-	Iter() : valid_(false), node_(nullptr) { }
-	Iter(const Node& n) : valid_(true), iter_(n.nodes.begin()), node_(&n) { }
-	Iter(const Node* n, ConstIterator i) : valid_(i != ConstIterator()), iter_(i), node_(n) { }
-	Iter(const Node* n, ConstIterator i, bool v) : valid_(v && i != ConstIterator()), iter_(i), node_(n) { }
+	Iter() : node_(nullptr) { }
+	Iter(const Node& n) : iter_(n.nodes.begin()), node_(&n) { }
+	Iter(const Node* n, ConstIterator i = ConstIterator()) : iter_(i), node_(n) { }
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
@@ -71,16 +70,16 @@ struct Index::Iter {
 		return !operator ==(i);
 	}
 	Iter side() const {
-		if (!valid_ || isSideEnd()) {
-			return Iter(nullptr, iter_, false);
+		if (!isValid() || isSideEnd()) {
+			return Iter();
 		} else {
 			auto i = iter_;
-			return Iter(node_, ++i, true);
+			return Iter(node_, ++i);
 		}
 	}
 	Iter next() const {
-		if (!valid_ || isNextEnd()) {
-			return Iter(nullptr, iter_, false);
+		if (!isValid() || isNextEnd()) {
+			return Iter();
 		} else {
 			return Iter(&iter_->second, iter_->second.nodes.begin());
 		}
@@ -89,24 +88,26 @@ struct Index::Iter {
 		return Iter(nullptr, iter_->second.parent);
 	}
 	Iter reset() const {
-		return Iter(node_, node_->nodes.begin(), valid_);
+		return isValid() ? Iter(node_, node_->nodes.begin()) : Iter();
 	}
 	bool isNextEnd() const {
-		return iter_->second.nodes.size() == 0;
+		return !isValid() || iter_->second.nodes.size() == 0;
 	}
 	bool isSideEnd() const {
-		if (!valid_) {
+		if (!isValid()) {
 			return true;
 		} else {
 			auto i = iter_;
 			return ++i == node_->nodes.end();
 		}
 	}
-	bool isValid() const { return valid_; }
+	bool isValid() const {
+		return iter_ != ConstIterator();
+	}
 	ConstIterator iter() const {
-		if (!valid_) {
+		/*if (!isValid()) {
 			throw Error("Not valid Index::Iter");
-		}
+		}*/
 		return iter_;
 	}
 	Term subTerm(ConstIterator) const;
@@ -203,7 +204,6 @@ struct Index::Iter {
 	}
 
 private:
-	bool valid_;
 	ConstIterator iter_;
 	const Node* node_;
 };
