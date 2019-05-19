@@ -2,42 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-struct Normalizer {
-	void normalize(RuleVar& rv) {
-		if (rv.isVar() && rv.var.rep) {
-			auto vi = vars.find(rv.var);
-			if (vi == vars.end()) {
-				uint c = 0;
-				auto ti = types.find(rv.var.type);
-				if (ti != types.end()) {
-					c = ti->second + 1;
-				}
-				types[rv.var.type] = c;
-				uint norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
-				vars[rv.var] = norm_v;
-				rv.var.lit = norm_v;
-			} else {
-				rv.var.lit = vi->second;
-			}
-		}
-	}
-	TermSubst normalize(const Term& t) {
-		Term norm(t);
-		for (auto& n : norm.nodes) {
-			normalize(n.ruleVar);
-		}
-		Subst sub;
-		for (const auto& p : vars) {
-			sub.compose(p.second, Term(p.first));
-		}
-		return TermSubst(std::move(norm), std::move(sub));
-	}
-
-private:
-	hmap<LightSymbol, uint, LightSymbol::Hash> vars;
-	hmap<const Type*, uint> types;
-};
-
 void Index::add(const Term& t, uint val) {
 	//cout << "to add: " << t.show() << endl;
 	//TermSubst ts = Normalizer().normalize(t);

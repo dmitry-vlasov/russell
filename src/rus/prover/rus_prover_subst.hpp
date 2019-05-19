@@ -93,9 +93,14 @@ struct Subst {
 	Term apply(const Term& t) const;
 
 private:
+	friend struct VarRepl;
 	hmap<uint, Term> sub_;
 	bool ok_;
 };
+
+Subst Substitution2FlatSubst(const Substitution&);
+Substitution FlatSubst2Substitution(const Subst&);
+string show_diff(const Subst& s1, const Subst& s2);
 
 struct TermSubst {
 	TermSubst() = default;
@@ -121,9 +126,51 @@ struct TermSubst {
 	Subst sub;
 };
 
-Subst Substitution2FlatSubst(const Substitution&);
-Substitution FlatSubst2Substitution(const Subst&);
+struct VarRepl {
+	void addReplacement(uint v, uint w) {
+		replacement_[v] = w;
+	}
+	uint replace(uint v) const {
+		auto iv = replacement_.find(v);
+		if (iv != replacement_.end()) {
+			return iv->second;
+		} else {
+			return -1;
+		}
+	}
+	void apply(Term& t) const {
+		for (auto& n : t.nodes) {
+			if (n.ruleVar.isVar() && n.ruleVar.var.rep) {
+				auto ri = replacement_.find(n.ruleVar.var.lit);
+				if (ri != replacement_.end()) {
+					n.ruleVar.var.lit = ri->second;
+				}
+			}
+		}
+	}
+	void apply(Subst& s) const {
+		hmap<uint, Term> new_sub;
+		for (auto& p : s.sub_) {
+			apply(p.second);
+			uint var = p.first;
+			auto ri = replacement_.find(var);
+			if (ri != replacement_.end()) {
+				var = ri->second;
+			}
+			new_sub[var] = std::move(p.second);
+		}
+		s.sub_ = std::move(new_sub);
+	}
+	string show() const {
+		ostringstream oss;
+		for (const auto& p : replacement_) {
+			oss << Lex::toStr(p.first) << " --> " << Lex::toStr(p.second) << endl;
+		}
+		return oss.str();
+	}
 
-string show_diff(const Subst& s1, const Subst& s2);
+private:
+	hmap<uint, uint> replacement_;
+};
 
 }}}

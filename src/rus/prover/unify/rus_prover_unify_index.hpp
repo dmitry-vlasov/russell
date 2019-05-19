@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../rus_prover_multy_subst.hpp"
-#include "../rus_prover_subst.hpp"
+#include "../rus_prover_node.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
@@ -233,6 +233,8 @@ private:
 	const Rule* hint_ = nullptr;
 };
 
+map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term);
+
 template<class Data>
 struct IndexMap {
 	struct Unified {
@@ -262,12 +264,142 @@ struct IndexMap {
 	string show_pointers() const {
 		return index_.show_pointers();
 	}
+
+	vector<Unified> unify(const Term& t) const {
+		vector<Unified> ret;
+		if (!index_.size()) {
+			return ret;
+		}
+		try {
+			Timer timer;
+			timer.start();
+			map<uint, TermSubst> unif = unify_index_term(index_, t);
+			add_timer_stats("unify_index_term", timer);
+
+			for (auto& p : unif) {
+				if (p.second.sub.ok()) {
+					ret.emplace_back(data_.at(p.first), std::move(p.second.sub));
+				}
+			}
+		} catch (Error& err) {
+			cout << "unify_index_term: " << endl;
+			cout << index_.show() << endl << endl;
+			cout << t.show() << endl << endl;
+			throw err;
+		}
+		return ret;
+	}
+
 	const Index& index() const { return index_; }
 	const vector<Data>& data() const { return data_; }
 
 private:
 	Index index_;
 	vector<Data> data_;
+};
+
+struct Normalizer {
+	Normalizer(const Term& t) : normalized(t) {
+		for (auto& n : normalized.nodes) {
+			normalize(n.ruleVar);
+		}
+	}
+
+	VarRepl norm;
+	VarRepl denorm;
+	Term normalized;
+
+private:
+	void normalize(RuleVar& rv) {
+		if (rv.isVar() && rv.var.rep) {
+			uint v = rv.var.lit;
+			uint norm_v = norm.replace(v);
+			if (norm_v == -1) {
+				uint c = 0;
+				auto ti = types.find(rv.var.type);
+				if (ti != types.end()) {
+					c = ti->second + 1;
+				}
+				types[rv.var.type] = c;
+				norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
+				norm.addReplacement(v, norm_v);
+				denorm.addReplacement(norm_v, v);
+				rv.var.lit = norm_v;
+			} else {
+				rv.var.lit = norm_v;
+			}
+		}
+	}
+	hmap<const Type*, uint> types;
+};
+
+template<class Data>
+struct NormIndexMap {
+	struct Unified {
+		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Unified&) = default;
+		Unified(Unified&&) = default;
+		Data data;
+		Subst sub;
+	};
+	void add(const Term& t, const Data& d) {
+		Normalizer n(t);
+		index_.add(n.normalized, stored_.size());
+		stored_.emplace_back(d, std::move(n.denorm));
+	}
+	string show() const {
+		vector<pair<Term, uint>> terms = index_.unpack();
+		if (!terms.size()) {
+			return "\n";
+		} else {
+			string ret;
+			for (const auto&  p : terms) {
+				Data d = stored_[p.second].data;
+				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second) + "\n";
+			}
+			return ret;
+		}
+	}
+	string show_pointers() const {
+		return index_.show_pointers();
+	}
+
+	vector<Unified> unify(const Term& t) const {
+		vector<Unified> ret;
+		if (!index_.size()) {
+			return ret;
+		}
+		try {
+			Timer timer;
+			timer.start();
+			map<uint, TermSubst> unif = unify_index_term(index_, t);
+			add_timer_stats("unify_index_term", timer);
+
+			for (auto& p : unif) {
+				if (p.second.sub.ok()) {
+					uint ind = p.first;
+					const VarRepl& repl = stored_.at(ind).denorm;
+					repl.apply(p.second.sub);
+					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
+				}
+			}
+		} catch (Error& err) {
+			cout << "unify_index_term: " << endl;
+			cout << index_.show() << endl << endl;
+			cout << t.show() << endl << endl;
+			throw err;
+		}
+		return ret;
+	}
+
+private:
+	struct Storage {
+		Storage(const Data& d, VarRepl&& s) : data(d), denorm(std::move(s)) { }
+		Data data;
+		VarRepl denorm;
+	};
+	Index index_;
+	vector<Storage> stored_;
 };
 
 }}}}
