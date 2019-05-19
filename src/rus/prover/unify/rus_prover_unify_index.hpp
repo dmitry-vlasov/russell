@@ -105,9 +105,9 @@ struct Index::Iter {
 		return iter_ != ConstIterator();
 	}
 	ConstIterator iter() const {
-		/*if (!isValid()) {
+		if (!isValid()) {
 			throw Error("Not valid Index::Iter");
-		}*/
+		}
 		return iter_;
 	}
 	Term subTerm(ConstIterator) const;
