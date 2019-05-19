@@ -59,9 +59,9 @@ private:
 
 struct Index::Iter {
 	Iter() : valid_(false), node_(nullptr) { }
-	Iter(const Node& n) : valid_(true), beg_(n.nodes.begin()), iter_(n.nodes.begin()), end_(n.nodes.end()), node_(&n) { }
+	Iter(const Node& n) : valid_(true), iter_(n.nodes.begin()), node_(&n) { }
 	Iter(const Node* n, ConstIterator i) : valid_(i != ConstIterator()), iter_(i), node_(n) { }
-	Iter(const Node* n, ConstIterator b, ConstIterator e, bool v = true) : valid_(v && b != ConstIterator()), beg_(b), iter_(b), end_(e), node_(n) { }
+	Iter(const Node* n, ConstIterator i, bool v) : valid_(v && i != ConstIterator()), iter_(i), node_(n) { }
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
 	bool operator == (const Iter& i) const {
@@ -89,16 +89,16 @@ struct Index::Iter {
 	}
 	Iter next() const {
 		if (!valid_ || isNextEnd()) {
-			return Iter(nullptr, beg_, iter_, end_, false);
+			return Iter(nullptr, iter_, false);
 		} else {
-			return Iter(&iter_->second, iter_->second.nodes.begin(), iter_->second.nodes.end());
+			return Iter(&iter_->second, iter_->second.nodes.begin());
 		}
 	}
 	Iter prev() const {
-		return Iter(nullptr, iter_->second.parent, ConstIterator());
+		return Iter(nullptr, iter_->second.parent);
 	}
 	Iter reset() const {
-		return Iter(node_, beg_, beg_, end_, valid_);
+		return Iter(node_, node_->nodes.begin(), valid_);
 	}
 	bool isNextEnd() const {
 		return iter_->second.nodes.size() == 0;
@@ -154,9 +154,6 @@ struct Index::Iter {
 	RuleVar ruleVar() const {
 		return iter_->first;
 	}
-	/*const Node& node() const {
-		return iter_->second;
-	}*/
 	string show(bool full = false) const {
 		ostringstream oss;
 			if (full) {
@@ -211,27 +208,23 @@ struct Index::Iter {
 
 private:
 	bool isElementarySideEnd() const {
-		if (end_ == ConstIterator()) {
+		if (!valid_) {
 			return true;
 		} else {
 			auto i = iter_;
-			return ++i == end_;
+			return ++i == node_->nodes.end();
 		}
 	}
 	Iter elementarySide() const {
 		if (!valid_ || isElementarySideEnd()) {
-			return Iter(nullptr, beg_, iter_, end_, false);
+			return Iter(nullptr, iter_, false);
 		} else {
 			auto i = iter_;
-			return Iter(node_, beg_, ++i, end_, true);
+			return Iter(node_, ++i, true);
 		}
 	}
-	Iter(const Node* n, ConstIterator b, ConstIterator i, ConstIterator e, bool v) :
-		valid_(v), beg_(b), iter_(i), end_(e), node_(n) { }
 	bool valid_;
-	ConstIterator beg_;
 	ConstIterator iter_;
-	ConstIterator end_;
 	const Node* node_;
 	const Rule* hint_ = nullptr;
 };
