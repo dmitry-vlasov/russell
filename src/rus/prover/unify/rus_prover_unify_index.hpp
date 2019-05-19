@@ -70,21 +70,12 @@ struct Index::Iter {
 	bool operator != (const Iter& i) const {
 		return !operator ==(i);
 	}
-	void setHint(const Rule* r) {
-		hint_ = r;
-	}
 	Iter side() const {
-		if (hint_) {
-			Iter i(*this);
-			while (true) {
-				i = i.elementarySide();
-				if (!i.isValid() || i.isVar() || i.ruleVar().rule == hint_) {
-					break;
-				}
-			}
-			return i;
+		if (!valid_ || isSideEnd()) {
+			return Iter(nullptr, iter_, false);
 		} else {
-			return elementarySide();
+			auto i = iter_;
+			return Iter(node_, ++i, true);
 		}
 	}
 	Iter next() const {
@@ -104,7 +95,12 @@ struct Index::Iter {
 		return iter_->second.nodes.size() == 0;
 	}
 	bool isSideEnd() const {
-		return !side().isValid();
+		if (!valid_) {
+			return true;
+		} else {
+			auto i = iter_;
+			return ++i == node_->nodes.end();
+		}
 	}
 	bool isValid() const { return valid_; }
 	ConstIterator iter() const {
@@ -207,26 +203,9 @@ struct Index::Iter {
 	}
 
 private:
-	bool isElementarySideEnd() const {
-		if (!valid_) {
-			return true;
-		} else {
-			auto i = iter_;
-			return ++i == node_->nodes.end();
-		}
-	}
-	Iter elementarySide() const {
-		if (!valid_ || isElementarySideEnd()) {
-			return Iter(nullptr, iter_, false);
-		} else {
-			auto i = iter_;
-			return Iter(node_, ++i, true);
-		}
-	}
 	bool valid_;
 	ConstIterator iter_;
 	const Node* node_;
-	const Rule* hint_ = nullptr;
 };
 
 struct Normalizer {
