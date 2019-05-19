@@ -261,7 +261,7 @@ struct Vector{
 			}
 			if (inds.size() > 0) {
 				if (inds.size() == 1) {
-					for (auto it = vect[only_iter_ind]->exprs().root().nodes.begin(); it != vect[only_iter_ind]->exprs().root().nodes.end(); ++it) {
+					for (auto it = vect[only_iter_ind]->exprs().root().map.begin(); it != vect[only_iter_ind]->exprs().root().map.end(); ++it) {
 						for (const auto& end : it->second.ends) {
 							for (auto val : end->second.vals) {
 								Index::Iter iter(&vect[only_iter_ind]->exprs().root(), it);

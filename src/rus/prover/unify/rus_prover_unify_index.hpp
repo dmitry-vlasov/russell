@@ -12,12 +12,12 @@ struct Index {
 				return &*i1 < &*i2;
 			}
 		};
-		map<RuleVar, Node>::iterator parent;
+		std::map<RuleVar, Node>::iterator parent;
 		vector<uint> vals;
-		map<RuleVar, Node> nodes;
+		std::map<RuleVar, Node> map;
 
-		set<map<RuleVar, Node>::const_iterator, NodeIterLess> ends; // All ends of terms, which start at current node
-		set<map<RuleVar, Node>::const_iterator, NodeIterLess> vars; // All variables among nodes
+		set<std::map<RuleVar, Node>::const_iterator, NodeIterLess> ends; // All ends of terms, which start at current node
+		set<std::map<RuleVar, Node>::const_iterator, NodeIterLess> vars; // All variables among nodes
 		set<uint> lens;
 	};
 	typedef map<RuleVar, Node>::iterator Iterator;
@@ -38,7 +38,7 @@ struct Index {
 	static string show_pointers(const Node&);
 
 	uint totalNodes() const;
-	bool empty() const { return root_.nodes.empty(); }
+	bool empty() const { return root_.map.empty(); }
 	void verify(bool show = false) const;
 
 	uint size() const { return size_; }
@@ -59,7 +59,7 @@ private:
 
 struct Index::Iter {
 	Iter() : node_(nullptr) { }
-	Iter(const Node& n) : iter_(n.nodes.begin()), node_(&n) { }
+	Iter(const Node& n) : iter_(n.map.begin()), node_(&n) { }
 	Iter(const Node* n, ConstIterator i = ConstIterator()) : iter_(i), node_(n) { }
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
@@ -81,24 +81,24 @@ struct Index::Iter {
 		if (!isValid() || isNextEnd()) {
 			return Iter();
 		} else {
-			return Iter(&iter_->second, iter_->second.nodes.begin());
+			return Iter(&iter_->second, iter_->second.map.begin());
 		}
 	}
 	Iter prev() const {
 		return Iter(nullptr, iter_->second.parent);
 	}
 	Iter reset() const {
-		return isValid() ? Iter(node_, node_->nodes.begin()) : Iter();
+		return isValid() ? Iter(node_, node_->map.begin()) : Iter();
 	}
 	bool isNextEnd() const {
-		return !isValid() || iter_->second.nodes.size() == 0;
+		return !isValid() || iter_->second.map.size() == 0;
 	}
 	bool isSideEnd() const {
 		if (!isValid()) {
 			return true;
 		} else {
 			auto i = iter_;
-			return ++i == node_->nodes.end();
+			return ++i == node_->map.end();
 		}
 	}
 	bool isValid() const {

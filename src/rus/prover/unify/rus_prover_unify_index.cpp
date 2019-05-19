@@ -9,7 +9,7 @@ void Index::add(const Term& t, uint val) {
 	Index::Iterator it;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto p = it;
-		auto ni = n->nodes.emplace(i->ruleVar, Node()).first;
+		auto ni = n->map.emplace(i->ruleVar, Node()).first;
 		n = &ni->second;
 		it = ni;
 		it->second.parent = p;
@@ -24,7 +24,7 @@ void Index::verify(bool show) const {
 	cout << show_pointers() << endl;
 
 	vector<Iter> branch;
-	if (root_.nodes.size()) {
+	if (root_.map.size()) {
 		branch.emplace_back(root_);
 		while (branch.size()) {
 			Iter n = branch.back();
@@ -61,7 +61,7 @@ void Index::verify(bool show) const {
 						throw Error("pi != p, i: " + pi.show() + ", p: " + p.show());
 					}
 					if (i + 1 < path.size()) {
-						auto next = p.iter()->second.nodes.find(path[i + 1].ruleVar());
+						auto next = p.iter()->second.map.find(path[i + 1].ruleVar());
 						p = Iter(p.node(), next);
 					}
 				}
@@ -105,7 +105,7 @@ static void markup_ends(Index::Node& root, const Term& t) {
 	Index::Iterator it;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto p = it;
-		auto ni = n->nodes.find(i->ruleVar);
+		auto ni = n->map.find(i->ruleVar);
 		n = &ni->second;
 		it = ni;
 		st.emplace(ni, i->end, i->end - i);
@@ -118,7 +118,7 @@ static void markup_ends(Index::Node& root, const Term& t) {
 }
 
 static void markup_vars(Index::Node& n) {
-	for (auto i = n.nodes.begin(); i != n.nodes.end(); ++i) {
+	for (auto i = n.map.begin(); i != n.map.end(); ++i) {
 		if (i->first.isVar()) {
 			n.vars.insert(i);
 		}
@@ -185,7 +185,7 @@ string Index::show() const {
 string Index::show_pointers() const {
 	vector<pair<vector<Iter>, uint>> vect;
 	vector<Iter> branch;
-	if (root_.nodes.size()) {
+	if (root_.map.size()) {
 		branch.emplace_back(root_);
 		while (branch.size()) {
 			Iter n = branch.back();
@@ -282,7 +282,7 @@ string Index::show(const Node& root) {
 string Index::show_pointers(const Node& root) {
 	vector<pair<vector<Iter>, uint>> vect;
 	vector<Iter> branch;
-	if (root.nodes.size()) {
+	if (root.map.size()) {
 		branch.emplace_back(root);
 		while (branch.size()) {
 			Iter n = branch.back();
@@ -325,7 +325,7 @@ string Index::show_pointers(const Node& root) {
 uint Index::totalNodes() const {
 	uint ret = 0;
 	vector<Iter> branch;
-	if (root().nodes.size()) {
+	if (root().map.size()) {
 		branch.emplace_back(root());
 		while (branch.size()) {
 			Iter n = branch.back();
