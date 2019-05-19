@@ -139,17 +139,20 @@ struct UnifyIters {
 			indexIter.ruleVar().var.rep &&
 			*termIter.ruleVar().type() <= *indexIter.ruleVar().type();
 	}
-	/*vector<UnifyIter> prepareIndexIters(RuleVar rv) const {
-		vector<UnifyIter> ret;
-		for (Index::Iter i : indexIter.vars()) {
+	vector<UnifyIters> prepareIndexIters() const {
+		vector<UnifyIters> ret;
+		/*for (Index::Iter i : indexIter.vars()) {
 			ret.emplace_back(i, termIter, parentSub, sub);
 		}
-		auto i = indexIter.map()->find(rv);
-		if (i != indexIter.map()->end()) {
-			ret.emplace_back(Index::Iter(indexIter.map(), i), termIter, parentSub, sub);
+		auto i = indexIter.node()->map.find(termIter.ruleVar());
+		if (i != indexIter.node()->map.end()) {
+			ret.emplace_back(Index::Iter(indexIter.node(), i), termIter, parentSub, sub);
+		}*/
+		for (auto i = indexIter.node()->map.begin(); i != indexIter.node()->map.end(); ++ i) {
+			ret.emplace_back(Index::Iter(indexIter.node(), i), termIter, parentSub, sub);
 		}
 		return ret;
-	}*/
+	}
 
 	Index::Iter indexIter;
 	Term::Iter  termIter;
@@ -227,21 +230,35 @@ static vector<UnifyIters> unify_iters_index_term(const UnifyIters& i) {
 
 static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
 	vector<UnifyPair> ret;
-	stack<UnifyPair> st;
-	queue<UnifyPair> qu;
-
-
-	st.emplace(inits);
-
-	/*vector<Index::Iter> init_variants = inits.indexIter.vars();
-	for (Index::Iter i : inits.indexIter.vars()) {
-		qu.emplace(i)
+	std::queue<UnifyPair> queue;
+	for (const auto& i : inits.prepareIndexIters()) {
+		queue.emplace(i);
 	}
-	auto it = p.end.indexIter.map()->find(p.end.termIter.ruleVar());
-	if (it != p.end.indexIter.map()->end()) {
-		init_variants.emplace_back(p.end.indexIter.map(), it);
-	}*/
+	while (queue.size()) {
+		uint n = queue.size();
+		while (n--) {
+			UnifyPair p = std::move(queue.front());
+			queue.pop();
+			for (auto& i : unify_iters_index_term(p.end)) {
+				if (i.isTermEnd(p.beg) && i.sub.ok()) {
+					ret.emplace_back(p.beg, i);
+				}
+				if (!i.isNextEnd(p.beg)) {
+					for (const auto& j : i.next().prepareIndexIters()) {
+						queue.emplace(p.beg, j);
+					}
+				}
+			}
+		}
+	}
+	return ret;
+}
 
+/*
+static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
+ 	vector<UnifyPair> ret;
+	stack<UnifyPair> st;
+	st.emplace(inits);
 	while (st.size()) {
 		UnifyPair p = std::move(st.top());
 		st.pop();
@@ -254,23 +271,6 @@ static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
 				st.emplace(p.beg, i.next());
 			}
 		}
-/*
-		vector<Index::Iter> variants = p.end.indexIter.vars();
-		auto it = p.end.indexIter.map()->find(p.end.termIter.ruleVar());
-		if (it != p.end.indexIter.map()->end()) {
-			variants.emplace_back(p.end.indexIter.map(), it);
-		}
-		for (auto i : variants) {
-			if (i.iter() == p.end.indexIter.iter()) {
-				continue;
-			}
-			if (p.is_root) {
-				st.emplace(UnifyIters(i, p.end.termIter, p.end.parentSub, p.end.sub));
-			} else {
-				st.emplace(p.beg, UnifyIters(i, p.end.termIter, p.end.parentSub, p.end.sub));
-			}
-		}
-	*/
 		if (!p.end.isSideEnd()) {
  			if (p.is_root) {
 				st.emplace(p.end.side());
@@ -278,10 +278,10 @@ static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
 				st.emplace(p.beg, p.end.side());
  			}
  		}
-	}
-	return ret;
-}
-
+ 	}
+ 	return ret;
+ }
+*/
 }
 
 void check_index_term_unification(const Index& ind, const Term& term, const map<uint, TermSubst>& result);
