@@ -136,11 +136,11 @@ void Index::initEnds() {
 
 //#define VERIFY_TERM
 
-static Term create_flatterm(const vector<Index::Iter>& branch) {
+static Term create_flatterm(const vector<Index::ConstIterator>& branch) {
 	Term ft(branch.size());
 	for (uint i = 0; i < branch.size(); ++i) {
-		ft.nodes[i].ruleVar = branch[i].iter()->first;
-		for (uint len : branch[i].iter()->second.lens) {
+		ft.nodes[i].ruleVar = branch[i]->first;
+		for (uint len : branch[i]->second.lens) {
 			if (i >= len) {
 				ft.nodes[i - len].end = ft.nodes.begin() + i;
 			}
@@ -153,10 +153,10 @@ static Term create_flatterm(const vector<Index::Iter>& branch) {
 }
 
 Term Index::Iter::subTerm(ConstIterator i) const {
-	vector<Iter> branch;
+	vector<ConstIterator> branch;
 	ConstIterator start = i;
 	while (i != ConstIterator()) {
-		branch.emplace_back(nullptr, i);
+		branch.push_back(i);
 		if (iter_ == i) {
 			break;
 		}
@@ -232,11 +232,17 @@ Index::Unpacked Index::unpack(const Node& root) {
 Index::Unpacked Index::unpack(Iter root) {
 	Unpacked ret;
 	vector<Iter> branch;
+	vector<ConstIterator> subterm;
 	branch.emplace_back(root);
 	while (branch.size()) {
 		Iter n = branch.back();
 		if (n.iter()->second.vals.size()) {
-			ret.emplace_back(create_flatterm(branch), n.iter()->second.vals);
+			subterm.reserve(branch.size());
+			subterm.clear();
+			for (auto i : branch) {
+				subterm.push_back(i.iter());
+			}
+			ret.emplace_back(create_flatterm(subterm), n.iter()->second.vals);
 		}
 		if (!n.isNextEnd()) {
 			branch.push_back(n.next());
