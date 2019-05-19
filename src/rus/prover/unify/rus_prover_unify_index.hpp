@@ -225,71 +225,6 @@ private:
 	const Rule* hint_ = nullptr;
 };
 
-map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term);
-
-template<class Data>
-struct IndexMap {
-	struct Unified {
-		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
-		Unified(const Unified&) = default;
-		Unified(Unified&&) = default;
-		Data data;
-		Subst sub;
-	};
-	void add(const Term& t, const Data& d) {
-		index_.add(t, data_.size());
-		data_.push_back(d);
-	}
-	string show() const {
-		vector<pair<Term, uint>> terms = index_.unpack();
-		if (!terms.size()) {
-			return "\n";
-		} else {
-			string ret;
-			for (const auto&  p : terms) {
-				Data d = data_[p.second];
-				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second) + "\n";
-			}
-			return ret;
-		}
-	}
-	string show_pointers() const {
-		return index_.show_pointers();
-	}
-
-	vector<Unified> unify(const Term& t) const {
-		vector<Unified> ret;
-		if (!index_.size()) {
-			return ret;
-		}
-		try {
-			Timer timer;
-			timer.start();
-			map<uint, TermSubst> unif = unify_index_term(index_, t);
-			add_timer_stats("unify_index_term", timer);
-
-			for (auto& p : unif) {
-				if (p.second.sub.ok()) {
-					ret.emplace_back(data_.at(p.first), std::move(p.second.sub));
-				}
-			}
-		} catch (Error& err) {
-			cout << "unify_index_term: " << endl;
-			cout << index_.show() << endl << endl;
-			cout << t.show() << endl << endl;
-			throw err;
-		}
-		return ret;
-	}
-
-	const Index& index() const { return index_; }
-	const vector<Data>& data() const { return data_; }
-
-private:
-	Index index_;
-	vector<Data> data_;
-};
-
 struct Normalizer {
 	Normalizer(const Term& t) : normalized(t) {
 		for (auto& n : normalized.nodes) {
@@ -325,8 +260,10 @@ private:
 	hmap<const Type*, uint> types;
 };
 
+map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term);
+
 template<class Data>
-struct NormIndexMap {
+struct IndexMap {
 	struct Unified {
 		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
 		Unified(const Unified&) = default;

@@ -21,7 +21,7 @@ Tactic* make_tactic(const string&);
 struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
-	using IndexMap = unify::NormIndexMap<T>;
+	using IndexMap = unify::IndexMap<T>;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);

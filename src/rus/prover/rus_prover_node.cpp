@@ -52,7 +52,6 @@ void Prop::buildUp() {
 void Hyp::buildUp() {
 	Timer timer;
 	auto unified = space->assertions().unify(expr);
-	//auto unified = unify_index_term(space->assertions(), expr);
 	add_timer_stats("build_up_unify_timer", timer);
 
 	for (auto& m : unified) {
@@ -79,7 +78,6 @@ void Hyp::buildUp() {
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
-	//for (const auto& m : unify_general(space->hyps(), expr)) {
 	for (const auto& m : space->hyps().unify(expr)) {
 		if (hint) {
 			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
