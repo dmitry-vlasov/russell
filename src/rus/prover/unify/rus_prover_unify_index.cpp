@@ -35,8 +35,8 @@ void Index::verify(bool show) const {
 				}
 
 				bool endIsReacheable = false;
-				Iter end = Iter(&n.iter()->second.nodes, e);
-				Iter i = Iter(&n.iter()->second.nodes, e);
+				Iter end = Iter(&n.iter()->second, e);
+				Iter i = Iter(&n.iter()->second, e);
 				deque<Iter> path;
 				while (i.isValid()) {
 					path.push_front(i);
@@ -61,8 +61,8 @@ void Index::verify(bool show) const {
 						throw Error("pi != p, i: " + pi.show() + ", p: " + p.show());
 					}
 					if (i + 1 < path.size()) {
-						auto next = p.node().nodes.find(path[i + 1].ruleVar());
-						p = Iter(&p.node().nodes, next);
+						auto next = p.iter()->second.nodes.find(path[i + 1].ruleVar());
+						p = Iter(p.node(), next);
 					}
 				}
 				if (!endIsReacheable) {
@@ -215,7 +215,7 @@ string Index::show_pointers() const {
 		for (const auto& i : p.first) {
 			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
 			oss << "ends=(";
-			for (const auto& e : i.node().ends) {
+			for (const auto& e : i.iter()->second.ends) {
 				oss << (void*)&*e << " ";
 			}
 			oss << ") ";
@@ -306,7 +306,7 @@ string Index::show_pointers(const Node& root) {
 		for (const auto& i : p.first) {
 			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
 			oss << " ends=(";
-			for (const auto& e : i.node().ends) {
+			for (const auto& e : i.iter()->second.ends) {
 				oss << (void*)&*e << " ";
 			}
 			oss << ") ";
