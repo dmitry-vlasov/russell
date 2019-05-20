@@ -75,7 +75,7 @@ private:
 	uint               max_proofs = -1;
 };
 
-Return test_with_oracle(string theorem, uint max_proofs);
+Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len);
 
 }}}
 

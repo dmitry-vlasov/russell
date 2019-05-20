@@ -35,7 +35,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 //#define PARALLEL_PROVER_TEST
 #endif
 
-Return test_all_with_oracle(uint max_proofs) {
+Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 	struct SourceLess {
 		bool operator () (const Source* s1, const Source* s2) const {
 			return s1->id() < s2->id();
@@ -53,9 +53,12 @@ Return test_all_with_oracle(uint max_proofs) {
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::PROOF) {
 				const Proof* proof = Theory::proof(n);
-				proofs.push_back(proof);
-				if (!longest_proof  || proof->elems.size() > longest_proof->elems.size()) {
+				uint proof_len = proof->elems.size();
+				if (!longest_proof  || proof_len > longest_proof->elems.size()) {
 					longest_proof = proof;
+				}
+				if (proof_len <= max_proof_len) {
+					proofs.push_back(proof);
 				}
 			}
 		}
@@ -98,9 +101,9 @@ Return test_all_with_oracle(uint max_proofs) {
 	return Return("Massive prover testing with oracle succeeded :)");
 }
 
-Return test_with_oracle(string theorem, uint max_proofs) {
+Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len) {
 	if (!theorem.size()) {
-		return test_all_with_oracle(max_proofs);
+		return test_all_with_oracle(max_proofs, max_proof_len);
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
