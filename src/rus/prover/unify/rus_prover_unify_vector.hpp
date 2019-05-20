@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../rus_prover_cartesian.hpp"
-#include "../unify/rus_prover_unify_general.hpp"
+#include "../unify/rus_prover_unify_indexes.hpp"
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
@@ -270,7 +270,7 @@ struct Vector{
 						}
 					}
 				} else {
-					ret.unified = unify::unify_general(inds);
+					ret.unified = unify_indexes(inds);
 				}
 			}
 		} catch (Error& err) {
