@@ -16,6 +16,7 @@ Space::Space(rus::Qed* q, Tactic* t) :
 
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	prop_(a, find_index(a, p)), tactic_(t) {
+	Timer timer;
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
 			if (!ass->token.preceeds(a->token)) {
@@ -38,6 +39,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	}
 	root_ = make_unique<Hyp>(Tree2FlatTerm(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
 	root_->buildUp();
+	add_timer_stats("space_init", timer);
 }
 
 Return Space::init() {
@@ -141,7 +143,9 @@ Return Space::expand(uint index) {
 		set<Node*> downs;
 		if (p->isLeaf()) {
 			downs.insert(p);
+			Timer timer;
 			completeDown(downs);
+			add_timer_stats("complete_down_leaf", timer);
 			Return ret = check_proved();
 			if (ret.success()) {
 				return ret;
@@ -150,6 +154,7 @@ Return Space::expand(uint index) {
 			}
 		} else {
 			if (p->mayGrowUp()) {
+				Timer timer;
 				p->buildUp();
 				set<uint> to_show;
 				for (auto& h : p->premises) {
@@ -157,6 +162,9 @@ Return Space::expand(uint index) {
 					hyp->buildUp();
 					add_shown(shown, to_show, hyp);
 				}
+				add_timer_stats("build_up", timer);
+
+				timer.start();
 				for (auto& h : p->premises) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
 						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
@@ -172,6 +180,7 @@ Return Space::expand(uint index) {
 					}
 				}
 				completeDown(downs);
+				add_timer_stats("complete_down", timer);
 				Return ret = check_proved();
 				if (ret.success()) {
 					return ret;
@@ -213,7 +222,9 @@ Return Space::check_proved() {
 
 Return Space::prove() {
 	while (Prop* p = tactic_->next()) {
+		Timer timer;
 		Return ret = expand(p->ind);
+		add_timer_stats("expand", timer);
 		if (ret.msg == "goal proved") {
 			return ret;
 		}
