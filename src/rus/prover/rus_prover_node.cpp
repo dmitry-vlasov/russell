@@ -22,18 +22,18 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
-Hyp::Hyp(const Term& e, Space* s) :
-	Node(s), parent(nullptr), expr(e) {
+Hyp::Hyp(Term&& e, Space* s) :
+	Node(s), parent(nullptr), expr(std::move(e)) {
 	space->registerNode(this);
 }
 
-Hyp::Hyp(const Term& e, Prop* p) :
-	Node(p), parent(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : e) {
+Hyp::Hyp(Term&& e, Prop* p) :
+	Node(p), parent(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : std::move(e)) {
 	space->registerNode(this);
 }
 
-Prop::Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p) :
-	Node(p), parent(p), prop(r), sub(s), outer(o), fresher(f) {
+Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
+	Node(p), parent(p), prop(r), sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) {
 	space->registerNode(this);
 	if (isLeaf()) {
 		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub, hint));
@@ -72,7 +72,7 @@ void Hyp::buildUp() {
 				sub.compose(p.first, p.second);
 			}
 		}
-		variants.emplace_back(make_unique<Prop>(m.data, sub, outer, fresher, this));
+		variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));
 	}
 }
 

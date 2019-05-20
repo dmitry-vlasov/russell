@@ -73,7 +73,7 @@ struct Prop : public Node {
 	Subst    sub;
 	Subst    outer;
 	Subst    fresher;
-	Prop(const PropRef& r, const Subst& s, const Subst& o, const Subst& f, Hyp* p);
+	Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -89,8 +89,8 @@ struct Hyp : public Node {
 	Variants  variants;
 	Proofs    proofs;
 	Term expr;
-	Hyp(const Term& e, Space* s);
-	Hyp(const Term& e, Prop* p);
+	Hyp(Term&& e, Space* s);
+	Hyp(Term&& e, Prop* p);
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
