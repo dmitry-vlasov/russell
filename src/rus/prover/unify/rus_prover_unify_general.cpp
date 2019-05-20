@@ -491,7 +491,6 @@ struct UnifStepData {
 };
 
 static vector<UnifyPair> do_unify_general(const UnifyIters& begins);
-//static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint);
 
 bool debug_unify = false;
 
@@ -504,12 +503,6 @@ static vector<UnifyIters> unify_iters(const UnifyIters& i) {
 		if (data.consistent) {
 			if (data.rule) {
 				UnifyIters subBegins(data.subGoals(), i.parentSub, i.sub);
-				/*vector<UnifyPair> pairs1 = i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE ?
-					do_unify_general_with_hint(subBegins, i.sub.map(data.var)) :
-					do_unify_general(subBegins);*/
-				/*if (i.sub.maps(data.var) && i.sub.map(data.var).kind() == Term::RULE) {
-					subBegins.termIters.emplace_back(i.sub.map(data.var));
-				}*/
 				for (auto& pair : do_unify_general(subBegins)) {
 					try {
 						Subst s = unify_step(i.sub, data.vars, pair.end.sub.apply(pair.subTerm()));
@@ -576,56 +569,6 @@ static vector<UnifyPair> do_unify_general(const UnifyIters& inits) {
 }
 
 }
-/*
-Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
-	vector<Term> to_unify({s.apply(term)});
-	for (auto v : vars) {
-		if (s.maps(v)) {
-			const Term& t = s.map(v);
-			if (!t.empty()) {
-				to_unify.push_back(t);
-			} else {
-				throw Error("empty term at unify_step_1");
-			}
-		}
-	}
-	vector<Term::Iter> iters;
-	for (const auto& t : to_unify) {
-		iters.emplace_back(t);
-	}
-	UnifyIters begin = UnifyIters(iters);
-	Subst ret(s);
-	try {
-		vector<UnifyPair> pairs = do_unify_general(begin);
-		if (pairs.size() > 1) {
-			throw Error("too much unified pairs: " + to_string(pairs.size()));
-		}
-		if (pairs.size() == 1) {
-			const UnifyPair& pair = pairs.at(0);
-			if (!ret.compose(pair.end.sub)) {
-				return Subst(false);
-			}
-			Term term_orig = pair.subTerm();
-			Term unified = pair.end.sub.apply(term_orig);
-			for (auto v : vars) {
-				if (!ret.compose(Subst(v, unified))) {
-					return Subst(false);
-				}
-			}
-			return ret;
-		}
-	} catch (Error& err) {
-		cout << endl << "unify_step_1: ERROR" << endl;
-		for (const auto& t : to_unify) {
-			cout << "TERM: " << endl;
-			cout << t.show_pointers();
-		}
-		cout << endl;
-		throw err;
-	}
-	return Subst(false);
-}
-*/
 
 void check_unification(const vector<const Index*>& inds, const vector<const Term*>& terms, const map<vector<uint>, TermSubst>& result);
 
@@ -753,182 +696,5 @@ void check_unification(const vector<const Index*>& inds, const vector<const Term
 		}
 	}
 }
-
-/*map<vector<uint>, TermSubst> unify_general(const UnifyIters& begin) {
-	map<vector<uint>, TermSubst> ret;
-	Timer timer;
-	auto unified = do_unify_general(begin);
-	add_timer_stats("do_unify_general", timer);
-
-	timer.start();
-	for (const auto& pair : unified) {
-		const UnifyIters& end = pair.end;
-		Timer t;
-		Term term = end.sub.apply(pair.subTerm());
-		add_timer_stats("unify_general_extract_subterm", timer);
-
-		t.start();
-		for (auto ind : end.inds()) {
-			ret.emplace(ind, TermSubst(std::move(term), std::move(end.sub)));
-		}
-		add_timer_stats("unify_general_emplace_term_subst", timer);
-	}
-	add_timer_stats("unify_general_arrange_ret", timer);
-	return ret;
-}*/
-
-/*static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
-	vector<UnifyPair> ret;
-	if (inits.iters.size() > 0) {
-		struct UnifyPairWithHint {
-			UnifyPairWithHint(const UnifyIters& b, Term::Iter h) : pair(b), hint_(h) {
-				if (hint_.ruleVar().rule) {
-					pair.end.setHint(hint_.ruleVar().rule);
-				}
-			}
-			UnifyPairWithHint(const UnifyIters& b, const UnifyIters& c, Term::Iter h) : pair(b, c), hint_(h) {
-				if (hint_.ruleVar().rule) {
-					pair.end.setHint(hint_.ruleVar().rule);
-				}
-			}
-			bool useHint() const {
-				return hint_.ruleVar().rule;
-			}
-			string show() const {
-				ostringstream oss;
-				oss << pair.show() << endl;
-				oss << "hint: " << hint_.show() << endl;
-				return oss.str();
-			}
-			UnifyPair  pair;
-			Term::Iter hint_;
-		};
-		stack<UnifyPairWithHint> st;
-		st.emplace(inits, Term::Iter(hint));
-		while (st.size()) {
-			UnifyPairWithHint t = st.top();
-			st.pop();
-			if (!t.pair.end.isValid()) {
-				if (debug_unify) {
-					cout << t.show() << endl;
-				}
-				continue;
-			}
-			for (const auto& i : unify_iters(t.pair.end)) {
-				if (i.isTermEnd(t.pair.beg) && i.sub.ok()) {
-					ret.push_back(UnifyPair(t.pair.beg, i));
-				}
-				Term::Iter pass_mapped(t.hint_);
-				if (debug_unify) {
-					cout << "t.hint_ = " << t.hint_.show() << endl;
-					cout << "i.sub = " << endl << Indent::paragraph(i.sub.show()) << endl;
-				}
-				if (t.hint_.isVar() && i.sub.maps(t.hint_.var().lit)) {
-					uint len = i.sub.map(t.hint_.var().lit).len();
-					if (debug_unify) {
-						cout << "LEN: " << len << endl;
-					}
-					while (len --) {
-						pass_mapped = pass_mapped.next();
-					}
-				}
-				if (!i.isNextEnd(t.pair.beg)) {
-					st.emplace(t.pair.beg, i.next(), pass_mapped.next());
-				}
-			}
-			if (!t.pair.end.isSideEnd()) {
-				if (t.pair.is_root) {
-					st.emplace(t.pair.end.side(), t.hint_);
-				} else {
-					st.emplace(t.pair.beg, t.pair.end.side(), t.hint_);
-				}
-			}
-		}
-	}
-	return ret;
-}
-*/
-
-/*
-static vector<UnifyPair> do_unify_general_with_hint(const UnifyIters& inits, const Term& hint) {
-	//cout << "do_unify_general_with_hint: [" << hint.show(false) << "]   ===   [" << hint.show(true) << "]" << endl;
-	//cout << "HINT ITER: " << Term::Iter(hint).show() << endl;
-	//cout << "inits.iters.size(): " << inits.iters.size() << endl;
-
-	vector<UnifyPair> ret;
-	if (inits.iters.size() > 0) {
-		/*if (inits.iters.size() == 1) {
-			for (const auto& end : inits.iters[0].ends()) {
-				ret.emplace_back(vector<MultyIter>(1, end), inits.parentSub, inits.sub);
-			}
-		} else {* /
-			struct UnifyPairWithHint {
-				UnifyPairWithHint(const UnifyIters& b, Term::Iter h) : pair(b), hint_(h) { }
-				UnifyPairWithHint(const UnifyIters& b, const UnifyIters& c, Term::Iter h) : pair(b, c), hint_(h) { }
-
-				bool useHint() const {
-					if (!hint_.ruleVar().rule) {
-						return false;
-					} else {
-						return hint() != pair.end;
-					}
-				}
-				UnifyIters hint() const {
-					return pair.end.hint(hint_.ruleVar().rule);
-				}
-				UnifyPair  pair;
-				Term::Iter hint_;
-			};
-			Term::Iter hiter(hint);
-			UnifyIters start = hiter.ruleVar().rule ? inits.hint(hiter.ruleVar().rule) : inits;
-			if (!start.isValid()) {
-				return ret;
-			}
-
-			stack<UnifyPairWithHint> st;
-			st.emplace(start, hiter);
-			uint c = 0;
-			while (st.size()) {
-				++c;
-				if (c > 10000) {
-					cout << "C IS TOO MUCH..." << endl;
-					exit(0);
-				}
-				UnifyPairWithHint t = st.top();
-				st.pop();
-				for (const auto& i : unify_iters(t.pair.end)) {
-					if (i.isTermEnd(t.pair.beg) && i.sub.ok()) {
-						ret.push_back(UnifyPair(t.pair.beg, i));
-					}
-					if (!i.isNextEnd(t.pair.beg)) {
-						//cout << "Next hint: " << t.hint.next().show() << endl;
-						st.emplace(t.pair.beg, i.next(), t.hint_.next());
-					} else {
-						//cout << "hint end: " << t.hint.next().show() << endl;
-					}
-				}
-				if (!t.pair.end.isSideEnd()) {
-					if (t.pair.is_root) {
-						if (t.useHint()) {
-							cout << "USING HINT" << endl;
-							st.emplace(t.hint(), t.hint_);
-						} else {
-							st.emplace(t.pair.end.side(), t.hint_);
-						}
-					} else {
-						if (t.useHint()) {
-							cout << "USING HINT" << endl;
-							st.emplace(t.pair.beg, t.hint(), t.hint_);
-						} else {
-							st.emplace(t.pair.beg, t.pair.end.side(), t.hint_);
-						}
-					}
-				}
-			//}
-		}
-	}
-	return ret;
-}
-*/
 
 }}}}

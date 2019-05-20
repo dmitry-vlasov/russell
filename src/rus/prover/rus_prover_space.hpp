@@ -63,7 +63,6 @@ struct Space {
 	const Assertion* theorem() const { return prop_.ass; }
 
 private:
-	Proof*            proof = nullptr; // for Oracle tactic
 	map<uint, Node*>  nodes_;
 	unique_ptr<Hyp>   root_;
 	PropRef           prop_;
