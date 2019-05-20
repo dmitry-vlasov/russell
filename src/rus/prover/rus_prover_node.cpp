@@ -41,19 +41,23 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 }
 
 void Prop::buildUp() {
+	Timer timer;
 	for (auto& h : prop.ass->hyps) {
 		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
 		if (hint) {
 			premises.back()->hint = true;
 		}
 	}
+	add_timer_stats("build_up_PROP", timer);
 }
 
 void Hyp::buildUp() {
+	Timer timer1;
 	Timer timer;
 	auto unified = space->assertions().unify(expr);
-	add_timer_stats("build_up_unify_timer", timer);
+	add_timer_stats("build_up_hyp_unify_timer", timer);
 
+	timer.start();
 	for (auto& m : unified) {
 		set<uint> assertion_vars;
 		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
@@ -74,6 +78,8 @@ void Hyp::buildUp() {
 		}
 		variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));
 	}
+	add_timer_stats("build_up_hyp_arrange_variants", timer);
+	add_timer_stats("build_up_HYP", timer1);
 }
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
