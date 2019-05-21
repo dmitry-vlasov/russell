@@ -22,6 +22,18 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
+void Ref::buildUp() {
+
+}
+
+bool Ref::buildDown(set<Node*>& nodes) {
+	return false;
+}
+
+string Ref::show(bool with_proofs) const {
+	return "";
+}
+
 Hyp::Hyp(Term&& e, Space* s) :
 	Node(s), parent(nullptr), expr(std::move(e)) {
 	space->registerNode(this);
@@ -30,25 +42,6 @@ Hyp::Hyp(Term&& e, Space* s) :
 Hyp::Hyp(Term&& e, Prop* p) :
 	Node(p), parent(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : std::move(e)) {
 	space->registerNode(this);
-}
-
-Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
-	Node(p), parent(p), prop(r), sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) {
-	space->registerNode(this);
-	if (isLeaf()) {
-		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub, hint));
-	}
-}
-
-void Prop::buildUp() {
-	Timer timer;
-	for (auto& h : prop.ass->hyps) {
-		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
-		if (hint) {
-			premises.back()->hint = true;
-		}
-	}
-	add_timer_stats("build_up_PROP", timer);
 }
 
 void Hyp::buildUp() {
@@ -82,6 +75,26 @@ void Hyp::buildUp() {
 	add_timer_stats("build_up_HYP", timer1);
 }
 
+bool Hyp::buildDown(set<Node*>& downs) {
+	bool new_proofs = false;
+	if (parent) {
+		vector<ProofHypIndexed> news;
+		for (uint i = 0; i < proofs.size(); ++i) {
+			const ProofHyp* p = proofs[i].get();
+			if (p->new_) {
+				news.push_back({p, i});
+			}
+		}
+		if (news.size()) {
+			if (unify_down(parent, this, news)) {
+				downs.insert(parent);
+				new_proofs = true;
+			}
+		}
+	}
+	return new_proofs;
+}
+
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
 	for (const auto& m : space->hyps().unify(expr)) {
@@ -93,6 +106,25 @@ bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 		}
 	}
 	return ret;
+}
+
+Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
+	Node(p), parent(p), prop(r), sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) {
+	space->registerNode(this);
+	if (isLeaf()) {
+		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub, hint));
+	}
+}
+
+void Prop::buildUp() {
+	Timer timer;
+	for (auto& h : prop.ass->hyps) {
+		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
+		if (hint) {
+			premises.back()->hint = true;
+		}
+	}
+	add_timer_stats("build_up_PROP", timer);
 }
 
 //#define VERIFY_UNIQUE_PROOFS
@@ -121,26 +153,6 @@ bool Prop::buildDown(set<Node*>& downs) {
 	}
 	if (new_proofs) {
 		downs.insert(parent);
-	}
-	return new_proofs;
-}
-
-bool Hyp::buildDown(set<Node*>& downs) {
-	bool new_proofs = false;
-	if (parent) {
-		vector<ProofHypIndexed> news;
-		for (uint i = 0; i < proofs.size(); ++i) {
-			const ProofHyp* p = proofs[i].get();
-			if (p->new_) {
-				news.push_back({p, i});
-			}
-		}
-		if (news.size()) {
-			if (unify_down(parent, this, news)) {
-				downs.insert(parent);
-				new_proofs = true;
-			}
-		}
 	}
 	return new_proofs;
 }

@@ -48,6 +48,9 @@ struct Index {
 		}
 		return root_;
 	}
+	map<uint, TermSubst> unifyTerm(const Term& t) const;
+	map<uint, TermVarRepl> replacementUnifyTerm(const Term& t) const;
+	const vector<uint>* findTerm(const Term& t) const;
 
 private:
 	void initEnds();
@@ -254,6 +257,13 @@ struct IndexMap {
 		Data data;
 		Subst sub;
 	};
+	struct Replaced {
+		Replaced(const Data& d, VarRepl&& r) : data(d), repl(std::move(r)) { }
+		Replaced(const Replaced&) = default;
+		Replaced(Replaced&&) = default;
+		Data data;
+		VarRepl repl;
+	};
 	void add(const Term& t, const Data& d) {
 		Normalizer n(t);
 		index_.add(n.normalized, stored_.size());
@@ -278,6 +288,64 @@ struct IndexMap {
 
 	vector<Unified> unify(const Term& t) const {
 		vector<Unified> ret;
+		if (!index_.size()) {
+			return ret;
+		}
+		try {
+			Timer timer;
+			timer.start();
+			map<uint, TermSubst> unif = unify_index_term(index_, t);
+			add_timer_stats("unify_index_term", timer);
+
+			timer.start();
+			for (auto& p : unif) {
+				if (p.second.sub.ok()) {
+					uint ind = p.first;
+					const VarRepl& repl = stored_.at(ind).denorm;
+					repl.apply(p.second.sub);
+					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
+				}
+			}
+			add_timer_stats("Index::unify: form result", timer);
+		} catch (Error& err) {
+			cout << "unify_index_term: " << endl;
+			cout << index_.show() << endl << endl;
+			cout << t.show() << endl << endl;
+			throw err;
+		}
+		return ret;
+	}
+	vector<Replaced> replacementUnify(const Term& t) const {
+		vector<Replaced> ret;
+		if (!index_.size()) {
+			return ret;
+		}
+		try {
+			Timer timer;
+			timer.start();
+			map<uint, TermSubst> unif = unify_index_term(index_, t);
+			add_timer_stats("unify_index_term", timer);
+
+			timer.start();
+			for (auto& p : unif) {
+				if (p.second.sub.ok()) {
+					uint ind = p.first;
+					const VarRepl& repl = stored_.at(ind).denorm;
+					repl.apply(p.second.sub);
+					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
+				}
+			}
+			add_timer_stats("Index::unify: form result", timer);
+		} catch (Error& err) {
+			cout << "unify_index_term: " << endl;
+			cout << index_.show() << endl << endl;
+			cout << t.show() << endl << endl;
+			throw err;
+		}
+		return ret;
+	}
+	Data* find(const Term& t) const {
+		vector<Replaced> ret;
 		if (!index_.size()) {
 			return ret;
 		}

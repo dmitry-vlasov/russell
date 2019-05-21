@@ -329,6 +329,43 @@ map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term) {
 	return ret;
 }
 
+map<uint, TermSubst> Index::unifyTerm(const Term& term) const {
+	UnifyIters iters(root_, term);
+	Timer timer;
+	auto unified = do_unify_index_term(iters);
+	add_timer_stats("do_unify_index_term", timer);
+
+	map<uint, TermSubst> ret;
+	timer.start();
+	for (auto& pair : unified) {
+		const UnifyIters& end = pair.end;
+		Term term = end.sub.apply(pair.subTerm());
+		for (uint val : end.vals()) {
+			ret.emplace(val, TermSubst(std::move(term), std::move(end.sub)));
+		}
+	}
+	add_timer_stats("unify_index_term: form result", timer);
+	//check_index_term_unification(ind, term, ret);
+	return ret;
+}
+
+map<uint, TermVarRepl> Index::replacementUnifyTerm(const Term& t) const {
+	map<uint, TermVarRepl> ret;
+	return ret;
+}
+
+const vector<uint>* Index::findTerm(const Term& t) const {
+	const Node* n = &root_;
+	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
+		auto ni = n->map.find(i->ruleVar);
+		if (ni == n->map.end()) {
+			return nullptr;
+		}
+		n = &ni->second;
+	}
+	return &n->vals;
+}
+
 string show_index_term_unification_args(const Index& ind, const Term& term) {
 	ostringstream oss;
 	oss << "index:" << endl;

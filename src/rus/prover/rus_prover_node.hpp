@@ -100,6 +100,18 @@ struct Hyp : public Node {
 	bool unifyWithGoalHyps(const rus::Hyp* hint = nullptr);
 };
 
+struct Ref : public Node {
+	Hyp*    down;
+	Hyp*    up;
+	VarRepl repl;
+	Ref(Hyp* d, Hyp* u, Space* s, VarRepl&& r) :
+		Node(s), down(d), up(u), repl(std::move(r)) { }
+
+	void buildUp();
+	bool buildDown(set<Node*>&) override;
+	string show(bool with_proofs = false) const override;
+};
+
 struct ProofNode {
 	ProofNode(const Subst& s, bool h);
 	virtual ~ProofNode() { }

@@ -168,9 +168,42 @@ struct VarRepl {
 		}
 		return oss.str();
 	}
+	bool operator == (const VarRepl& vr) const {
+		return replacement_ == vr.replacement_;
+	}
+	bool operator != (const VarRepl& vr) const {
+		return !operator == (vr);
+	}
+	uint size() const {
+		return replacement_.size();
+	}
 
 private:
 	hmap<uint, uint> replacement_;
+};
+
+struct TermVarRepl {
+	TermVarRepl() = default;
+	TermVarRepl(const Term& t, const VarRepl& r) : term(t), repl(r) { }
+	TermVarRepl(Term&& t, VarRepl&& r) : term(std::move(t)), repl(std::move(r)) { }
+	TermVarRepl(const TermVarRepl&) = default;
+	TermVarRepl(TermVarRepl&&) = default;
+
+	string show() const {
+		return "term: " + term.show() + "\nreplacement:\n" + repl.show();
+	}
+	bool operator == (const TermVarRepl& ts) const {
+		return term == ts.term && repl == ts.repl;
+	}
+	bool operator != (const TermVarRepl& ts) const {
+		return !operator == (ts);
+	}
+	bool isDefault() const {
+		return !term.len() && !repl.size();
+	}
+
+	Term term;
+	VarRepl repl;
 };
 
 }}}
