@@ -13,7 +13,7 @@ unique_ptr<Proof> reduce_duplcate_steps(const Proof* proof) {
 	for (const auto& e : proof->elems) {
 		if (Proof::kind(e) == Proof::STEP) {
 			const Step* step = Proof::step(e);
-			prover::Term term = prover::Tree2FlatTerm(*step->expr.tree());
+			prover::Term term = prover::Tree2Term(*step->expr.tree());
 			const vector<uint>* previous = expressions.findTerm(term);
 			if (previous && previous->size()) {
 				uint prev = previous->at(0);

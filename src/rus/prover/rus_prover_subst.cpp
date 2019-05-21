@@ -295,7 +295,7 @@ Term Subst::apply(const Term& t) const {
 	Term ret(len);
 	for (uint k = 0; k < t.nodes.size(); ++ k) {
 		if (shifts[k].sub) {
-			copyFlatSubTerm(&ret, shifts[k].beg, shifts[k].sub->nodes.begin());
+			copySubTerm(&ret, shifts[k].beg, shifts[k].sub->nodes.begin());
 		} else {
 			const auto& n = t.nodes[k];
 			ret.nodes[shifts[k].beg] = n;
@@ -308,7 +308,7 @@ Term Subst::apply(const Term& t) const {
 Subst Substitution2FlatSubst(const Substitution& sub) {
 	Subst ret;
 	for (const auto& p : sub) {
-		ret.compose(p.first, std::move(Tree2FlatTerm(*p.second)));
+		ret.compose(p.first, std::move(Tree2Term(*p.second)));
 	}
 	return ret;
 }
@@ -316,7 +316,7 @@ Subst Substitution2FlatSubst(const Substitution& sub) {
 Substitution FlatSubst2Substitution(const Subst& s) {
 	Substitution ret;
 	for (const auto& p : s) {
-		ret.join(p.first, std::move(FlatTerm2Tree(p.second)));
+		ret.join(p.first, std::move(Term2Tree(p.second)));
 	}
 	return ret;
 }

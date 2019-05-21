@@ -25,7 +25,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 			for (uint i = 0; i < ass->props.size(); ++i) {
 				auto& prop = ass->props[i];
 				assertions_.add(
-					Tree2FlatTerm(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
 					PropRef(ass, i)
 				);
 			}
@@ -35,9 +35,9 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	}
 	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
 		HypRef hypRef(a, i);
-		hyps_.add(Tree2FlatTerm(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
+		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
 	}
-	root_ = make_unique<Hyp>(Tree2FlatTerm(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
+	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
 	root_->buildUp();
 	add_timer_stats("space_init", timer);
 }

@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b) {
+void copySubTerm(Term* t, const uint pos, Term::ConstIterator b) {
 	uint i = 0;
 	for (auto it = b; ; ++ it) {
 		t->nodes[pos + i].ruleVar = it->ruleVar;
@@ -17,7 +17,7 @@ void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b) {
 Term Term::Iter::subTerm() const {
 	Term ret((iter_->end - iter_) + 1);
 	if (ret.nodes.size()) {
-		copyFlatSubTerm(&ret, 0, iter_);
+		copySubTerm(&ret, 0, iter_);
 	}
 	return ret;
 }
@@ -25,7 +25,7 @@ Term Term::Iter::subTerm() const {
 Term Term::Iter::term() const {
 	Term ret((end_ - beg_) + 1);
 	if (ret.nodes.size()) {
-		copyFlatSubTerm(&ret, 0, beg_);
+		copySubTerm(&ret, 0, beg_);
 	}
 	return ret;
 }
@@ -33,13 +33,13 @@ Term Term::Iter::term() const {
 
 Term::Term(const Term& t) : nodes(t.nodes.size()) {
 	if (t.nodes.size()) {
-		copyFlatSubTerm(this, 0, t.nodes.begin());
+		copySubTerm(this, 0, t.nodes.begin());
 	}
 }
 
 Term::Term(ConstIterator i) : nodes(i->end - i) {
 	if (nodes.size()) {
-		copyFlatSubTerm(this, 0, i);
+		copySubTerm(this, 0, i);
 	}
 }
 
@@ -67,7 +67,7 @@ Term::Term(const Rule* r, const vector<Term>& ch) {
 	nodes[0].end = nodes.begin() + nodes.size() - 1;
 	uint pos = 1;
 	for (const auto& c : ch) {
-		copyFlatSubTerm(this, pos, c.nodes.begin());
+		copySubTerm(this, pos, c.nodes.begin());
 		pos += c.nodes.size();
 	}
 }
@@ -75,7 +75,7 @@ Term::Term(const Rule* r, const vector<Term>& ch) {
 Term& Term::operator = (const Term& t) {
 	nodes = vector<Node>(t.nodes.size());
 	if (t.nodes.size()) {
-		copyFlatSubTerm(this, 0, t.nodes.begin());
+		copySubTerm(this, 0, t.nodes.begin());
 	}
 	return *this;
 }
@@ -150,13 +150,13 @@ vector<Term::ConstIterator> Term::childrenIters() const {
 
 Term term(Term::ConstIterator beg) {
 	Term ret((beg->end - beg) + 1);
-	copyFlatSubTerm(&ret, 0, beg);
+	copySubTerm(&ret, 0, beg);
 	return ret;
 }
 
 Term Term::subTerm(ConstIterator beg) const {
 	Term ret((beg->end - beg) + 1);
-	copyFlatSubTerm(&ret, 0, beg);
+	copySubTerm(&ret, 0, beg);
 	return ret;
 }
 
@@ -227,7 +227,7 @@ Term::Iterator fill_in_flatterm(Term::Iterator& ft, const Tree* t, ReplMode mode
 	return end;
 }
 
-Term Tree2FlatTerm(const Tree& t, ReplMode mode, uint ind) {
+Term Tree2Term(const Tree& t, ReplMode mode, uint ind) {
 	Term ret(t.len());
 	auto ft = ret.nodes.begin();
 	fill_in_flatterm(ft, &t, mode, ind);
@@ -247,7 +247,7 @@ unique_ptr<Tree> fill_in_tree(Term::ConstIterator& ft, Term::ConstIterator end) 
 	}
 }
 
-unique_ptr<Tree> FlatTerm2Tree(const Term& ft) {
+unique_ptr<Tree> Term2Tree(const Term& ft) {
 	auto beg = ft.nodes.begin();
 	return fill_in_tree(beg, ft.nodes.end());
 }
@@ -268,9 +268,9 @@ static void fill_in_linear_expr(Term::ConstIterator& ft, vector<unique_ptr<Symbo
 	}
 }
 
-rus::Expr FlatTerm2Expr(const Term& term) {
+rus::Expr Term2Expr(const Term& term) {
 	rus::Expr ret;
-	ret.set(FlatTerm2Tree(term).release());
+	ret.set(Term2Tree(term).release());
 	ret.type = term.type();
 	ret.symbols.reserve(term.linearLen());
 	auto b = term.nodes.begin();

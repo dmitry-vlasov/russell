@@ -119,7 +119,7 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 void Prop::buildUp() {
 	Timer timer;
 	for (auto& h : prop.ass->hyps) {
-		premises.push_back(make_unique<Hyp>(Tree2FlatTerm(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
+		premises.push_back(make_unique<Hyp>(Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
 		if (hint) {
 			premises.back()->hint = true;
 		}

@@ -30,7 +30,7 @@ ProofHyp::~ProofHyp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
-	ProofHyp(n, s, s.apply(Tree2FlatTerm(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
+	ProofHyp(n, s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -149,7 +149,7 @@ rus::Step* ProofProp::step() const {
 	const PropRef& p = node.prop;
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
-	step->expr = std::move(FlatTerm2Expr(parent->expr));
+	step->expr = std::move(Term2Expr(parent->expr));
 	Substitution s = FlatSubst2Substitution(sub);
 	apply_recursively(s, step);
 	return step;

@@ -331,11 +331,11 @@ private:
 	ConstIterator end_;
 };
 
-Term Tree2FlatTerm(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
-unique_ptr<Tree> FlatTerm2Tree(const Term&);
-rus::Expr FlatTerm2Expr(const Term&);
+Term Tree2Term(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
+unique_ptr<Tree> Term2Tree(const Term&);
+rus::Expr Term2Expr(const Term&);
 
-void copyFlatSubTerm(Term* t, const uint pos, Term::ConstIterator b);
+void copySubTerm(Term* t, const uint pos, Term::ConstIterator b);
 Term term(Term::ConstIterator b);
 
 }}}
