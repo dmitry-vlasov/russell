@@ -21,6 +21,7 @@ void reduce_duplcate_steps(Proof* proof) {
 				Step* new_step = new Step(
 					new_ind, step->kind(), step->ass_id(), step->proof_, step->token
 				);
+				new_step->expr = std::move(step->expr);
 				new_step->sub = std::move(step->sub);
 				for (const auto& ref : step->refs) {
 					switch (ref->kind()) {
@@ -37,7 +38,8 @@ void reduce_duplcate_steps(Proof* proof) {
 			break;
 		}
 		case Proof::QED: {
-			new_elems.push_back(std::move(e)); break;
+			const Qed* qed = Proof::qed(e);
+			new_elems.emplace_back(make_unique<Qed>(qed->prop, steps_map.at(qed->step))); break;
 		}
 		case Proof::VARS: {
 			new_elems.push_back(std::move(e)); break;
