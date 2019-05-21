@@ -64,7 +64,8 @@ else()
 		rus/rus_imports.cpp
 		rus/rus_lookup.cpp
 		rus/rus_memvol.cpp  
-		rus/rus_sys.cpp 
+		rus/rus_sys.cpp
+		rus/rus_refactor.cpp  
 		#rus/rus_parser.cpp
 		rus/rus_read.cpp  
 		rus/rus_show.cpp 
