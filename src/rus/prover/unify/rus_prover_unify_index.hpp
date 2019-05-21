@@ -345,6 +345,12 @@ struct IndexMap {
 		return ret;
 	}
 	Data* find(const Term& t) const {
+		const vector<uint>* inds = index_.findTerm(t);
+		if (inds && inds->size()) {
+			uint ind = inds->at(0);
+
+		}
+
 		vector<Replaced> ret;
 		if (!index_.size()) {
 			return ret;

@@ -48,6 +48,8 @@ string xml_outline(const Source&, uint);
 string xml_structure(uint bits);
 string xml_types();
 
+void reduce_duplcate_steps();
+
 namespace {
 
 void parse_src() {
@@ -100,6 +102,13 @@ Return structure(uint bits) {
 
 Return types() {
 	return Return("", xml_types());
+}
+
+Return refactor(const string& job) {
+	if (job == "reduce_proofs") {
+		reduce_duplcate_steps();
+	}
+	return Return();
 }
 
 unique_ptr<prover::Space> space;
@@ -246,6 +255,7 @@ static Descr description(string name) {
 		{"parse_src",  Descr("parse all unparsed sources")},
 		{"parse_expr", Descr("parse all unparsed expressions")},
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
+		{"refactor",   Descr("Refactor theories",    Descr::Arg("job", "reduce_proofs"))},
 		{"info",       Descr("info about math")},
 		{"show",       Descr("show entity")},
 		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
@@ -315,6 +325,7 @@ const Sys::Actions& Sys::actions() {
 		{"parse_src",  Action([](const Args& args) { parse_src(); return Return(); }, description("parse_src"))},
 		{"parse_expr", Action([](const Args& args) { parse_expr(); return Return(); }, description("parse_expr"))},
 		{"verify",     Action([](const Args& args) { verify(Sys::make_name(args[0])); return Return(); }, description("verify"))},
+		{"refactor",   Action([](const Args& args) { refactor(args[0]); return Return(); }, description("refactor"))},
 		{"transl",     Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
