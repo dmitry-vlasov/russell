@@ -88,7 +88,7 @@ struct Hyp : public Node {
 	vector<Node*> parents;
 	Variants      variants;
 	Proofs        proofs;
-	Term expr;
+	Term          expr;
 	Hyp(Term&& e, Space* s);
 	Hyp(Term&& e, Prop* p);
 
@@ -169,10 +169,10 @@ struct ProofRef : public ProofExp {
 		ProofExp(Subst(), hi), node(n), child(c) { }
 	string show() const override;
 	rus::Ref* ref() const override;
+	rus::Proof* proof() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return parent->expr(); }
 	void addParent(ProofNode* p) override { parent = p; }
-	rus::Proof* proof() const override;
 
 	Ref& node;
 	ProofExp* child = nullptr;
@@ -194,8 +194,8 @@ struct ProofProp : public ProofNode {
 	vector<ProofExp*> premises;
 };
 
-struct ProofHypIndexed {
-	const ProofExp* proof = nullptr;
+struct ProofExpIndexed {
+	ProofExp* proof = nullptr;
 	uint ind = -1;
 	string show() const {
 		string ret;
@@ -206,8 +206,7 @@ struct ProofHypIndexed {
 };
 
 string showNodeProofs(const Node* n, uint limit = -1);
-bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
-bool unify_down(Ref* ref, Hyp* hy, const vector<ProofHypIndexed>& h);
+bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
 
 // Statistics:
 void add_sequential_stats(uint card, uint count, Timer& timer);

@@ -12,7 +12,7 @@ namespace mdl { namespace rus { namespace prover {
 vector<uint> error_inds;
 bool debug_unify_subs = false;
 
-void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
+void unify_subs_sequent(Prop* pr, Hyp* hy, ProofExpIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
 	CartesianProd<uint> ind;
 	const ProofExp* h = hi.proof;
 	if (limit) {
@@ -98,7 +98,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 	}
 }
 
-uint unification_space_card(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+uint unification_space_card(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 	uint ret = 1;
 	for (auto& x : pr->premises) {
 		if (x.get() != hy) {
@@ -110,7 +110,7 @@ uint unification_space_card(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs
 	return ret;
 }
 
-string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 	string ret;
 	bool first = true;
 	for (auto& x : pr->premises) {
@@ -128,7 +128,7 @@ string unification_space_card_str(Prop* pr, Hyp* hy, const vector<ProofHypIndexe
 	return ret;
 }
 
-MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
+MultyUnifiedSubs unify_subs_sequent(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit) {
 	MultyUnifiedSubs ret;
 	if (limit) {
 		for (auto i : limit->descrVect()[limit->hypInd()].chosen) {
@@ -250,7 +250,7 @@ inline uint expr_len_threshold() {
 	//return expr::Stats::stats().maxLen();
 }
 
-bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
+bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 
 	ProofsSizeLimit limit(pr, hy, hs, pr->space->maxProofs());
 
@@ -365,11 +365,6 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	}
 	return unified_subs_2.size() > 0;
 }
-
-bool unify_down(Ref* ref, Hyp* hy, const vector<ProofHypIndexed>& h) {
-
-}
-
 
 }}}
 

@@ -150,6 +150,31 @@ string ProofHyp::show() const {
 	return oss.str();
 }
 
+string ProofRef::show() const {
+	ostringstream oss;
+	oss << "<proof expr=\"" << expr().show() << "\" ";
+	oss << "index=\"" << ind << "\" ";
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
+	oss << ">\n";
+	oss << "\t<![CDATA[\n";
+	try {
+		if (rus::Proof* pr = proof()) {
+			oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
+			delete pr;
+		}
+	} catch (Error&) {
+		oss << "FAILED PROOF" << endl;
+	}
+	oss << "]]>\n";
+	oss << "\t<substitution>\n";
+	oss << "\t<![CDATA[\n";
+	oss << Indent::paragraph(sub.show(), "\t\t");
+	oss << "\t]]>\n";
+	oss << "\t</substitution>\n";
+	oss << "</proof>\n";
+	return oss.str();
+}
+
 string ProofProp::show() const {
 	ostringstream oss;
 	if (rus::Step* st = step()) {

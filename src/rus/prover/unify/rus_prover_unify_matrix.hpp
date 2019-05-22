@@ -66,7 +66,7 @@ struct MatrixUnifiedUnion {
 };
 
 struct Matrix{
-	Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit);
+	Matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit);
 
 	MultyUnifiedSubs compute(MultyUnifiedSubs& unif);
 

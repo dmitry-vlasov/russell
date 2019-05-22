@@ -28,11 +28,16 @@ void Ref::buildUp() {
 
 bool Ref::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
-	/*for (auto& p : proofs) {
+	for (auto& p : proofs) {
 		if (p->new_) {
-			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub, p->hint);
+			/*ProofHyp* parent_proof =  new ProofHyp(
+				*parent,
+				p.get(),
+				repl.apply(ancestor->sub),
+				p->hint
+			);
 #ifdef VERIFY_UNIQUE_PROOFS
-			if (proofs.size() < 64) {
+			if (parent->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
 				for (auto& h : parent->proofs) {
 					if (hp->equal(h.get())) {
@@ -44,10 +49,10 @@ bool Ref::buildDown(set<Node*>& downs) {
 				}
 			}
 #endif
-			parent->proofs.emplace_back(hp);
+			parent->proofs.emplace_back(parent_proof);*/
 			new_proofs = true;
 		}
-	}*/
+	}
 	if (new_proofs) {
 		downs.insert(parent);
 	}
@@ -100,9 +105,9 @@ bool Hyp::buildDown(set<Node*>& downs) {
 	bool new_proofs;
 	for (uint i = 0; i < parents.size(); ++ i) {
 		Node* parent = parents.at(i);
-		vector<ProofHypIndexed> news;
+		vector<ProofExpIndexed> news;
 		for (uint i = 0; i < proofs.size(); ++i) {
-			const ProofExp* p = proofs[i].get();
+			ProofExp* p = proofs[i].get();
 			if (p->new_) {
 				news.push_back({p, i});
 			}
@@ -111,13 +116,14 @@ bool Hyp::buildDown(set<Node*>& downs) {
 			if (Prop* prop = dynamic_cast<Prop*>(parent)) {
 				if (unify_down(prop, this, news)) {
 					downs.insert(parent);
-					new_proofs = true;
 				}
 			} else if (Ref* ref = dynamic_cast<Ref*>(parent)) {
-				if (unify_down(ref, this, news)) {
-					downs.insert(parent);
-					new_proofs = true;
+				for (auto& p : news) {
+					ProofRef* r = new ProofRef(*ref, p.proof, p.proof->hint);
+					ref->proofs.emplace_back(r);
+					downs.insert(ref);
 				}
+				new_proofs = true;
 			} else {
 				throw Error("impossibe: no Proof nor Ref");
 			}

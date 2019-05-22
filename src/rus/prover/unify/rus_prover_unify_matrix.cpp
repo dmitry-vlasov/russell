@@ -36,7 +36,7 @@ static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<
 	}
 }
 
-static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofHypIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
+static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofExpIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
 
 	if (limit) {
 		if (!limit->descrVect()[i].fixed) {
@@ -45,7 +45,7 @@ static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<u
 		proofInds_[i] = vector<uint>(limit->descrVect()[i].chosen.size());
 		for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
 			uint j = limit->descrVect()[i].chosen[k];
-			ProofHypIndexed hi = hs[j];
+			ProofExpIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
 				if (!mindex_.count(x.first)) {
 					mindex_.emplace(x.first, new Vector(dim_hyp_));
@@ -57,7 +57,7 @@ static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<u
 	} else {
 		proofInds_[i] = vector<uint>(hs.size());
 		for (uint j = 0; j < hs.size(); ++j) {
-			ProofHypIndexed hi = hs[j];
+			ProofExpIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
 				if (!mindex_.count(x.first)) {
 					mindex_.emplace(x.first, new Vector(dim_hyp_));
@@ -69,7 +69,7 @@ static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<u
 	}
 }
 
-Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) :
+Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit) :
 	dim_hyp_(pr->premises.size()), proofInds_(dim_hyp_), empty_(false) {
 	for (uint i = 0; i < dim_hyp_; ++ i) {
 		const auto& proofs = pr->premises[i]->proofs;

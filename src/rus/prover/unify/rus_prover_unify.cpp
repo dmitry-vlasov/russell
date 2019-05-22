@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, const ProofsSizeLimit* limit) {
+MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit) {
 	Matrix mi(pr, hy, hs, limit);
 	if (mi.empty()) {
 		return MultyUnifiedSubs();

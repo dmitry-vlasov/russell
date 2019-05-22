@@ -34,7 +34,7 @@ struct ProofsSizeLimit {
 		vector<uint> all;
 		vector<uint> chosen;
 	};
-	ProofsSizeLimit(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs, uint limit) : cardLimit_(limit) {
+	ProofsSizeLimit(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, uint limit) : cardLimit_(limit) {
 		for (uint i = 0; i < pr->premises.size(); ++ i) {
 			auto& x = pr->premises[i];
 			if (!x->proofs.size()) {

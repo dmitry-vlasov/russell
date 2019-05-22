@@ -50,8 +50,6 @@ bool ProofHyp::equal(const ProofNode* n) const {
 	}
 }
 
-
-
 rus::Ref* ProofRef::ref() const {
 	return child->ref();
 }
