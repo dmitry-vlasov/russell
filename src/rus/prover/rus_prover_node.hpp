@@ -121,6 +121,7 @@ struct ProofNode {
 	virtual rus::Ref* ref() const = 0;
 	virtual bool equal(const ProofNode*) const = 0;
 	virtual const Term& expr() const = 0;
+	virtual void addParent(ProofNode*) = 0;
 
 	Subst sub;
 	bool  new_;
@@ -131,7 +132,6 @@ struct ProofNode {
 struct ProofExp : public ProofNode {
 	ProofExp(const Subst& s, bool h) : ProofNode(s, h) { }
 
-	vector<ProofNode*> parents;
 };
 
 struct ProofTop : public ProofExp {
@@ -140,10 +140,12 @@ struct ProofTop : public ProofExp {
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
+	void addParent(ProofNode* p) override { parents.push_back(p); }
 
 	HypRef hyp;
 	Hyp& node;
 	Term expr_;
+	vector<ProofNode*> parents;
 };
 
 struct ProofHyp : public ProofExp {
@@ -153,10 +155,12 @@ struct ProofHyp : public ProofExp {
 	bool equal(const ProofNode* n) const override;
 	rus::Proof* proof() const;
 	const Term& expr() const override { return expr_; }
+	void addParent(ProofNode* p) override { parents.push_back(p); }
 
 	ProofProp* child;
 	Hyp& node;
 	Term expr_;
+	vector<ProofNode*> parents;
 };
 
 /*
@@ -183,8 +187,9 @@ struct ProofProp : public ProofNode {
 	rus::Step* step() const;
 	rus::Proof* proof() const;
 	const Term& expr() const override { return parent->expr(); }
+	void addParent(ProofNode* p) override { parent = p; }
 
-	ProofExp*         parent;
+	ProofNode*        parent;
 	Prop&             node;
 	vector<ProofExp*> premises;
 };

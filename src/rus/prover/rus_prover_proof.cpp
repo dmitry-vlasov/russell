@@ -56,7 +56,7 @@ string show_struct(const ProofNode* n);
 
 ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
 	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
-	child->parent = this;
+	child->addParent(this);
 	child->new_ = false;
 #ifdef VERIFY_PROOF_EXP
 	try {
@@ -76,7 +76,7 @@ ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
 ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h) :
 	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
-		p->parents.push_back(this);
+		p->addParent(this);
 		p->new_ = false;
 	}
 #ifdef VERIFY_PROOF_PROP
