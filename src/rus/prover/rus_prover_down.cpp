@@ -14,7 +14,7 @@ bool debug_unify_subs = false;
 
 void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs& ret, const ProofsSizeLimit* limit) {
 	CartesianProd<uint> ind;
-	const ProofHyp* h = hi.proof;
+	const ProofExp* h = hi.proof;
 	if (limit) {
 		for (uint i = 0; i < pr->premises.size(); ++ i) {
 			auto& x = pr->premises[i];
@@ -62,7 +62,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		}
 		vector<uint> inds = ind.data();
 		for (uint i = 0; i < inds.size(); ++ i) {
-			ProofHyp* ph = pr->premises[i].get()->proofs[inds[i]].get();
+			ProofExp* ph = pr->premises[i].get()->proofs[inds[i]].get();
 			if (show_debug) {
 				cout << ph->ind << ": " << ph->expr.show() << endl;
 				cout << "sub:" << endl;
@@ -321,10 +321,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 
 	for (const auto& p : unified_subs_2) {
 		vector<uint> ind = p.first;
-		vector<ProofHyp*> ch;
+		vector<ProofExp*> ch;
 		bool hint = true;
 		for (uint i = 0; i < ind.size(); ++ i) {
-			ProofHyp* ph = pr->premises[i].get()->proofs[ind[i]].get();
+			ProofExp* ph = pr->premises[i].get()->proofs[ind[i]].get();
 			if (!ph->hint) {
 				hint = false;
 			}

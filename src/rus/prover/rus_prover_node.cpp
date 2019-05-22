@@ -102,7 +102,7 @@ bool Hyp::buildDown(set<Node*>& downs) {
 		Node* parent = parents.at(i);
 		vector<ProofHypIndexed> news;
 		for (uint i = 0; i < proofs.size(); ++i) {
-			const ProofHyp* p = proofs[i].get();
+			const ProofExp* p = proofs[i].get();
 			if (p->new_) {
 				news.push_back({p, i});
 			}
@@ -143,7 +143,7 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 	Node(p), parent(p), prop(r), sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) {
 	space->registerNode(this);
 	if (isLeaf()) {
-		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofHyp*>(), sub, hint));
+		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofExp*>(), sub, hint));
 	}
 }
 
@@ -181,7 +181,7 @@ bool Prop::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (auto& p : proofs) {
 		if (p->new_) {
-			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub, p->hint);
+			ProofHyp* hp =  new ProofHyp(*parent, p.get(), p->sub, p->hint);
 #ifdef VERIFY_UNIQUE_PROOFS
 			if (proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)

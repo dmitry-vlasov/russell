@@ -124,7 +124,7 @@ string ProofTop::show() const {
 	return oss.str();
 }
 
-string ProofExp::show() const {
+string ProofHyp::show() const {
 	ostringstream oss;
 	rus::Step* st = child ? child->step() : nullptr;
 	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
@@ -220,7 +220,7 @@ string show_struct(const ProofNode* n) {
 		oss << "\tnode exp = " << t->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(t->sub.show(), "\t\t");
 		oss << ")" << endl;
-	} else if (const ProofExp* e = dynamic_cast<const ProofExp*>(n)) {
+	} else if (const ProofHyp* e = dynamic_cast<const ProofHyp*>(n)) {
 		oss << "ProofExp(index = " << e->ind << ", node = " << e->node.ind << endl;
 		oss << "\texp = " << e->expr.show() << endl;
 		oss << "\tnode exp = " << e->node.expr.show() << endl;

@@ -16,11 +16,11 @@ static uint proof_node_index = 0;
 ProofNode::ProofNode(const Subst& s, bool h) :
 	sub(s), new_(true), ind(proof_node_index++), hint(h) { }
 
-ProofHyp::ProofHyp(Hyp& hy, const Subst& s, const Term& e, bool hi) :
+ProofExp::ProofExp(Hyp& hy, const Subst& s, const Term& e, bool hi) :
 	ProofNode(s, hi), node(hy), expr(e) {
 }
 
-ProofHyp::~ProofHyp() {
+ProofExp::~ProofExp() {
 	/*for (auto p : parents) {
 		uint i = find_in_vector(p->node.proofs, p);
 		if (i != -1) {
@@ -30,7 +30,7 @@ ProofHyp::~ProofHyp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
-	ProofHyp(n, s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
+	ProofExp(n, s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -46,16 +46,16 @@ rus::Ref* ProofTop::ref() const {
 }
 
 
-rus::Ref* ProofExp::ref() const {
+rus::Ref* ProofHyp::ref() const {
 	return child->ref();
 }
 
-rus::Proof* ProofExp::proof() const {
+rus::Proof* ProofHyp::proof() const {
 	return child->proof();
 }
 
-bool ProofExp::equal(const ProofNode* n) const {
-	if (const ProofExp* e = dynamic_cast<const ProofExp*>(n)) {
+bool ProofHyp::equal(const ProofNode* n) const {
+	if (const ProofHyp* e = dynamic_cast<const ProofHyp*>(n)) {
 		return &node == &e->node && child->equal(e->child);
 	} else {
 		return false;
@@ -66,8 +66,8 @@ string show_struct(const ProofNode* n);
 
 //#define VERIFY_PROOF_EXP
 
-ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
-	ProofHyp(hy, s, s.apply(hy.expr), hi), child(c) {
+ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
+	ProofExp(hy, s, s.apply(hy.expr), hi), child(c) {
 	child->parent = this;
 	child->new_ = false;
 #ifdef VERIFY_PROOF_EXP
@@ -85,7 +85,7 @@ ProofExp::ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
 
 //#define VERIFY_PROOF_PROP
 
-ProofProp::ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h) :
+ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h) :
 	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->parents.push_back(this);

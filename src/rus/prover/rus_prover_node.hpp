@@ -43,7 +43,7 @@ class Space;
 class Prop;
 class Hyp;
 class ProofProp;
-class ProofHyp;
+class ProofExp;
 class ProofNode;
 
 struct Node {
@@ -84,7 +84,7 @@ struct Prop : public Node {
 
 struct Hyp : public Node {
 	typedef vector<unique_ptr<Node>> Variants;
-	typedef vector<unique_ptr<ProofHyp>> Proofs;
+	typedef vector<unique_ptr<ProofExp>> Proofs;
 	vector<Node*> parents;
 	Variants      variants;
 	Proofs        proofs;
@@ -101,7 +101,7 @@ struct Hyp : public Node {
 };
 
 struct Ref : public Node {
-	typedef vector<unique_ptr<ProofHyp>> Proofs;
+	typedef vector<unique_ptr<ProofExp>> Proofs;
 	Hyp*    parent;
 	Hyp*    ancestor;
 	VarRepl repl;
@@ -127,16 +127,16 @@ struct ProofNode {
 	bool  hint;
 };
 
-struct ProofHyp : public ProofNode {
-	ProofHyp(Hyp& n, const Subst& s, const Term& e, bool h);
-	~ProofHyp() override;
+struct ProofExp : public ProofNode {
+	ProofExp(Hyp& n, const Subst& s, const Term& e, bool h);
+	~ProofExp() override;
 
 	vector<ProofProp*> parents;
 	Hyp& node;
 	Term expr;
 };
 
-struct ProofTop : public ProofHyp {
+struct ProofTop : public ProofExp {
 	ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
@@ -145,8 +145,8 @@ struct ProofTop : public ProofHyp {
 	HypRef hyp;
 };
 
-struct ProofExp : public ProofHyp {
-	ProofExp(Hyp& hy, ProofProp* c, const Subst& s, bool hi);
+struct ProofHyp : public ProofExp {
+	ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
@@ -156,7 +156,7 @@ struct ProofExp : public ProofHyp {
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofHyp*>& p, const Subst& s, bool h);
+	ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h);
 	~ProofProp() override;
 	rus::Ref* ref() const override;
 	string show() const override;
@@ -164,13 +164,13 @@ struct ProofProp : public ProofNode {
 	rus::Step* step() const;
 	rus::Proof* proof() const;
 
-	ProofHyp*         parent;
+	ProofExp*         parent;
 	Prop&             node;
-	vector<ProofHyp*> premises;
+	vector<ProofExp*> premises;
 };
 
 struct ProofHypIndexed {
-	const ProofHyp* proof = nullptr;
+	const ProofExp* proof = nullptr;
 	uint ind = -1;
 	string show() const {
 		string ret;

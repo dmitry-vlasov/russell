@@ -248,7 +248,7 @@ void delete_steps_recursively(rus::Step* s) {
 Space::Proved Space::proved() {
 	Proved ret;
 	for (auto& p : root_->proofs) {
-		if (ProofExp* h = dynamic_cast<ProofExp*>(p.get())) {
+		if (ProofHyp* h = dynamic_cast<ProofHyp*>(p.get())) {
 			if (rus::Proof* pr = h->proof()) {
 				ret.emplace_back(pr);
 			} /*else {
