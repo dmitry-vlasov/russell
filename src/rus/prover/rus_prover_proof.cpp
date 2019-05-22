@@ -50,6 +50,24 @@ bool ProofHyp::equal(const ProofNode* n) const {
 	}
 }
 
+
+
+rus::Ref* ProofRef::ref() const {
+	return child->ref();
+}
+
+rus::Proof* ProofRef::proof() const {
+	return child->proof();
+}
+
+bool ProofRef::equal(const ProofNode* n) const {
+	if (const ProofRef* r = dynamic_cast<const ProofRef*>(r)) {
+		return &node == &r->node && child->equal(r->child);
+	} else {
+		return false;
+	}
+}
+
 string show_struct(const ProofNode* n);
 
 //#define VERIFY_PROOF_EXP
@@ -101,15 +119,6 @@ ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h
 		}
 	}
 #endif
-}
-
-ProofProp::~ProofProp() {
-	/*if (parent) {
-		uint i = find_in_vector(parent->node.proofs, parent);
-		assert(i != -1);
-		parent->node.proofs[i].reset(nullptr);
-		//parent->node.proofs.erase(parent->node.proofs.begin() + i);
-	}*/
 }
 
 bool ProofProp::equal(const ProofNode* n) const {
