@@ -16,8 +16,8 @@ static uint proof_node_index = 0;
 ProofNode::ProofNode(const Subst& s, bool h) :
 	sub(s), new_(true), ind(proof_node_index++), hint(h) { }
 
-ProofExp::ProofExp(Hyp& hy, const Subst& s, const Term& e, bool hi) :
-	ProofNode(s, hi), node(hy), expr(e) {
+ProofExp::ProofExp(const Subst& s, const Term& e, bool hi) :
+	ProofNode(s, hi), expr(e) {
 }
 
 ProofExp::~ProofExp() {
@@ -30,7 +30,7 @@ ProofExp::~ProofExp() {
 }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
-	ProofExp(n, s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), hyp(hy) {
+	ProofExp(s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), node(n), hyp(hy) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -67,7 +67,7 @@ string show_struct(const ProofNode* n);
 //#define VERIFY_PROOF_EXP
 
 ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
-	ProofExp(hy, s, s.apply(hy.expr), hi), child(c) {
+	ProofExp(s, s.apply(hy.expr), hi), child(c), node(hy) {
 	child->parent = this;
 	child->new_ = false;
 #ifdef VERIFY_PROOF_EXP

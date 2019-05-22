@@ -108,7 +108,7 @@ string Ref::show(bool with_proofs) const {
 
 string ProofTop::show() const {
 	ostringstream oss;
-	oss << "<proof expr=\"" << sub.apply(node.expr).show() << "\" ";
+	oss << "<proof expr=\"" << expr.show() << "\" ";
 	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << ">\n";
