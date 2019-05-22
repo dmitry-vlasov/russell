@@ -37,6 +37,8 @@ struct Space {
 		nodes_.emplace(n->ind, n);
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->add(p);
+		} else if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+			expressions_.add(h->expr, h);
 		}
 	}
 	void unregisterNode(Node* n) {
@@ -53,6 +55,7 @@ struct Space {
 
 	const IndexMap<HypRef>& hyps() const { return hyps_; }
 	const IndexMap<PropRef>& assertions() const { return assertions_; }
+	const IndexMap<Hyp*>& expressions() const { return expressions_; }
 	const PropRef& prop() const { return prop_; }
 	uint getVar(uint v) const { return vars.at(v); }
 	void setVar(uint v, uint i) { vars[v] = i; }
@@ -70,6 +73,7 @@ private:
 
 	IndexMap<HypRef>   hyps_;
 	IndexMap<PropRef>  assertions_;
+	IndexMap<Hyp*>     expressions_;
 	unique_ptr<Tactic> tactic_;
 	set<uint>          shown;
 	uint               max_proofs = -1;
