@@ -83,7 +83,7 @@ struct Prop : public Node {
 };
 
 struct Hyp : public Node {
-	typedef vector<unique_ptr<Prop>> Variants;
+	typedef vector<unique_ptr<Node>> Variants;
 	typedef vector<unique_ptr<ProofHyp>> Proofs;
 	vector<Node*> parents;
 	Variants      variants;
@@ -101,9 +101,11 @@ struct Hyp : public Node {
 };
 
 struct Ref : public Node {
+	typedef vector<unique_ptr<ProofHyp>> Proofs;
 	Hyp*    parent;
 	Hyp*    ancestor;
 	VarRepl repl;
+	Proofs  proofs;
 	Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
 		Node(s), parent(p), ancestor(a), repl(std::move(r)) { }
 

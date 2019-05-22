@@ -23,15 +23,11 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 }
 
 void Ref::buildUp() {
-
+	// no need to grow up - already done
 }
 
 bool Ref::buildDown(set<Node*>& nodes) {
 	return false;
-}
-
-string Ref::show(bool with_proofs) const {
-	return "";
 }
 
 Hyp::Hyp(Term&& e, Space* s) :
@@ -130,7 +126,24 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 void Prop::buildUp() {
 	Timer timer;
 	for (auto& h : prop.ass->hyps) {
-		premises.push_back(make_unique<Hyp>(Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX), this));
+		Term expr = Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
+		auto variants = space->expressions().varify(expr);
+		Hyp* hyp = new Hyp(std::move(expr), this);
+		if (variants.size()) {
+			if (variants.size() > 1) {
+				throw Error("variants size must be == 1");
+			}
+			hyp->variants.push_back(make_unique<Ref>(
+				hyp,
+				variants.at(0).data,
+				space,
+				std::move(variants.at(0).repl
+			)));
+			if (hint) {
+				hyp->variants.back()->hint = true;
+			}
+		}
+		premises.emplace_back(hyp);
 		if (hint) {
 			premises.back()->hint = true;
 		}

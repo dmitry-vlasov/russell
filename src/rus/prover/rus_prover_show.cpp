@@ -82,7 +82,27 @@ string Hyp::show(bool with_proofs) const {
 			oss << Indent::paragraph(p->show());
 		}
 	}
-	oss << string("</") << (root() ? "root" : "hyp") << ">\n";
+	oss << "</" << (root() ? "root" : "hyp") << ">\n";
+	return oss.str();
+}
+
+string Ref::show(bool with_proofs) const {
+	ostringstream oss;
+	oss << "<ref ";
+	oss << "index=\"" << ind << "\" ";
+	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
+	oss << "parent=\"" << parent->ind << "\" ";
+	oss << "ancestor=\"" << ancestor->ind << "\" ";
+	oss << ">\n";
+	//oss << "\t<expression>";
+	//oss << "<![CDATA[" << parent->expr.show() << "]]>";
+	//oss << "</expression>\n";
+	if (with_proofs) {
+		for (const auto& p : proofs) {
+			oss << Indent::paragraph(p->show());
+		}
+	}
+	oss << "</ref>\n";
 	return oss.str();
 }
 

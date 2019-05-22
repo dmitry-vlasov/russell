@@ -247,6 +247,7 @@ private:
 };
 
 map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term);
+map<uint, TermVarRepl> varify_index_term(const Index& ind, const Term& term);
 
 template<class Data>
 struct IndexMap {
@@ -323,15 +324,15 @@ struct IndexMap {
 		try {
 			Timer timer;
 			timer.start();
-			map<uint, VarRepl> varified = varify_index_term(index_, t);
+			map<uint, TermVarRepl> varified = varify_index_term(index_, t);
 			add_timer_stats("varify_index_term", timer);
 
 			timer.start();
 			for (auto& p : varified) {
 				uint ind = p.first;
 				const VarRepl& repl = stored_.at(ind).denorm;
-				repl.apply(p.second);
-				ret.emplace_back(stored_.at(ind).data, std::move(p.second));
+				repl.apply(p.second.repl);
+				ret.emplace_back(stored_.at(ind).data, std::move(p.second.repl));
 			}
 			add_timer_stats("Index::varify: form result", timer);
 		} catch (Error& err) {
