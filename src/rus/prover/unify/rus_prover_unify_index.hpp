@@ -225,7 +225,7 @@ private:
 	void normalize(RuleVar& rv) {
 		if (rv.isVar() && rv.var.rep) {
 			uint v = rv.var.lit;
-			uint norm_v = norm.forward().replace(v);
+			uint norm_v = norm.direct().replace(v);
 			if (norm_v == -1) {
 				uint c = 0;
 				auto ti = types.find(rv.var.type);
@@ -301,7 +301,7 @@ struct IndexMap {
 				if (p.second.sub.ok()) {
 					uint ind = p.first;
 					const VarRepl& repl = stored_.at(ind).norm;
-					repl.backward().apply(p.second.sub);
+					repl.inverse().apply(p.second.sub);
 					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
 				}
 			}

@@ -216,30 +216,30 @@ private:
 
 struct VarRepl {
 	bool compose(VarPair p) {
-		return forward_.compose(p) && backward_.compose(p.invert());
+		return direct_.compose(p) && inverse_.compose(p.invert());
 	}
 	void apply(VarRepl& vr) const {
-		forward_.apply(vr.forward_);
-		backward_.apply(vr.backward_);
+		direct_.apply(vr.direct_);
+		inverse_.apply(vr.inverse_);
 	}
-	const VarMap& forward() const { return forward_; }
-	const VarMap& backward() const { return backward_; }
+	const VarMap& direct() const { return direct_; }
+	const VarMap& inverse() const { return inverse_; }
 	string show() const {
-		return forward_.show();
+		return direct_.show();
 	}
 	bool operator == (const VarRepl& vr) const {
-		return forward_ == vr.forward_;
+		return direct_ == vr.direct_;
 	}
 	bool operator != (const VarRepl& vr) const {
 		return !operator == (vr);
 	}
 	uint size() const {
-		return forward_.size();
+		return direct_.size();
 	}
 
 private:
-	VarMap forward_;
-	VarMap backward_;
+	VarMap direct_;
+	VarMap inverse_;
 };
 
 struct TermVarRepl {

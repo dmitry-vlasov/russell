@@ -277,7 +277,7 @@ map<uint, TermVarRepl> varify_index_term(const Index& ind, const Term& term) {
 	timer.start();
 	for (auto& pair : unified) {
 		const VarifyIters& end = pair.end;
-		Term term = end.repl.forward().apply(pair.subTerm());
+		Term term = end.repl.direct().apply(pair.subTerm());
 		for (uint val : end.vals()) {
 			ret.emplace(val, TermVarRepl(std::move(term), std::move(end.repl)));
 		}
@@ -337,7 +337,7 @@ void check_index_term_varification(const Index& ind, const Term& term, const map
 			throw Error(msg);
 		}
 		Term applied_ind(t);
-		ts.repl.forward().apply(applied_ind);
+		ts.repl.direct().apply(applied_ind);
 		if (applied_ind != ts.term) {
 			string msg;
 			msg += "wrong index varification: " + applied_ind.show() + " != " + ts.term.show() + "\n";
@@ -349,7 +349,7 @@ void check_index_term_varification(const Index& ind, const Term& term, const map
 			throw Error(msg);
 		}
 
-		Term applied_term = ts.repl.forward().apply(term);
+		Term applied_term = ts.repl.direct().apply(term);
 		if (applied_term != ts.term) {
 			string msg;
 			msg += "wrong term varification: " + applied_term.show() + " != " + ts.term.show() + "\n";
