@@ -65,10 +65,11 @@ check "${binpath}/mdl --verb
     \"mm transl in=${file}.mm out=${file}.rus\"
     \"rus parse_expr \"
     \"rus min_imports \"
-    \"rus refactor job=reduce_proofs \"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
+
+#\"rus refactor job=reduce_proofs \"
 
 #\"mm2 minimize in=${file}.mm\"
 

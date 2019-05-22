@@ -35,12 +35,13 @@ string Ref::show(bool with_proofs) const {
 }
 
 Hyp::Hyp(Term&& e, Space* s) :
-	Node(s), parent(nullptr), expr(std::move(e)) {
+	Node(s), expr(std::move(e)) {
 	space->registerNode(this);
 }
 
 Hyp::Hyp(Term&& e, Prop* p) :
-	Node(p), parent(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : std::move(e)) {
+	Node(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : std::move(e)) {
+	parents.push_back(p);
 	space->registerNode(this);
 }
 
@@ -76,8 +77,9 @@ void Hyp::buildUp() {
 }
 
 bool Hyp::buildDown(set<Node*>& downs) {
-	bool new_proofs = false;
-	if (parent) {
+	bool new_proofs;
+	for (uint i = 0; i < parents.size(); ++ i) {
+		Node* parent = parents.at(i);
 		vector<ProofHypIndexed> news;
 		for (uint i = 0; i < proofs.size(); ++i) {
 			const ProofHyp* p = proofs[i].get();
@@ -86,9 +88,18 @@ bool Hyp::buildDown(set<Node*>& downs) {
 			}
 		}
 		if (news.size()) {
-			if (unify_down(parent, this, news)) {
-				downs.insert(parent);
-				new_proofs = true;
+			if (Prop* prop = dynamic_cast<Prop*>(parent)) {
+				if (unify_down(prop, this, news)) {
+					downs.insert(parent);
+					new_proofs = true;
+				}
+			} else if (Ref* ref = dynamic_cast<Ref*>(parent)) {
+				if (unify_down(ref, this, news)) {
+					downs.insert(parent);
+					new_proofs = true;
+				}
+			} else {
+				throw Error("impossibe: no Proof nor Ref");
 			}
 		}
 	}

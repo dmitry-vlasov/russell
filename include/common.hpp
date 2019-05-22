@@ -161,6 +161,23 @@ template<class D>
 inline string shower(const D&) { return ""; }
 
 template<class T>
+void show_vector(const vector<T>& v, ostream& os, const string& delim = ", ") {
+	if (v.size()) {
+		os << v.at(0);
+		for (uint i = 1; i < v.size(); ++i) {
+			os << delim << v.at(i);
+		}
+	}
+}
+
+template<class T>
+string show_vector(const vector<T>& v, const string& delim = ", ") {
+	ostringstream oss;
+	show_vector(v, oss, delim);
+	return oss.str();
+}
+
+template<class T>
 size_t memvol(const T& x) {
 	return 0;
 }

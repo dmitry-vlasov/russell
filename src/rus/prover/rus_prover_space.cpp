@@ -106,22 +106,20 @@ Return Space::info(uint index, string what) {
 	return Return("node info", data);
 }
 
-static void add_shown(set<uint>& shown, set<uint>& to_show, Hyp* hyp);
-
-static void add_shown(set<uint>& shown, set<uint>& to_show, Prop* prop) {
-	if (!shown.count(prop->ind)) {
-		to_show.insert(prop->ind);
-		shown.insert(prop->ind);
-		add_shown(shown, to_show, prop->parent);
-	}
-}
-
-static void add_shown(set<uint>& shown, set<uint>& to_show, Hyp* hyp) {
-	if (!shown.count(hyp->ind)) {
-		to_show.insert(hyp->ind);
-		shown.insert(hyp->ind);
-		if (hyp->parent) {
-			add_shown(shown, to_show, hyp->parent);
+static void add_shown(set<uint>& shown, set<uint>& to_show, Node* node) {
+	if (!shown.count(node->ind)) {
+		to_show.insert(node->ind);
+		shown.insert(node->ind);
+		if (Prop* prop = dynamic_cast<Prop*>(node)) {
+			add_shown(shown, to_show, prop->parent);
+		} else if (Hyp* hyp = dynamic_cast<Hyp*>(node)) {
+			for (Node* parent : hyp->parents) {
+				add_shown(shown, to_show, parent);
+			}
+		} else if (Ref* ref = dynamic_cast<Ref*>(node)) {
+			add_shown(shown, to_show, ref->parent);
+		} else {
+			throw Error("impossibe: no Proof nor Ref nor Hyp");
 		}
 	}
 }

@@ -34,9 +34,9 @@ static string show_assertion(const Assertion* a) {
 string Prop::show(bool with_proofs) const {
 	ostringstream oss;
 	oss << "<prop ";
-	oss << string("name=\"") << Lex::toStr(prop.id()) << "\" ";
-	oss << string("index=\"") << ind << "\" ";
-	oss << string("parent=\"") << parent->ind << "\" ";
+	oss << "name=\"" << Lex::toStr(prop.id()) << "\" ";
+	oss << "index=\"" << ind << "\" ";
+	oss << "parent=\"" << parent->ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << show_children_idx(premises);
 	oss << ">\n";
@@ -61,11 +61,16 @@ string Prop::show(bool with_proofs) const {
 
 string Hyp::show(bool with_proofs) const {
 	ostringstream oss;
-	oss << string("<") << (parent ? "hyp" : "root") << " ";
-	oss << string("index=\"") << ind << "\" ";
+	oss << "<" << (root() ? "root" : "hyp") << " ";
+	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
-	if (parent) {
-		oss << string("parent=\"") << parent->ind << "\" ";
+	if (parents.size()) {
+		oss << "parents=\"";
+		oss << parents.at(0)->ind;
+		for (uint i = 1; i < parents.size(); ++i) {
+			oss << "," << parents.at(i)->ind;
+		}
+		oss << "\" ";
 	}
 	oss << show_children_idx(variants);
 	oss << ">\n";
@@ -77,7 +82,7 @@ string Hyp::show(bool with_proofs) const {
 			oss << Indent::paragraph(p->show());
 		}
 	}
-	oss << string("</") << (parent ? "hyp" : "root") << ">\n";
+	oss << string("</") << (root() ? "root" : "hyp") << ">\n";
 	return oss.str();
 }
 

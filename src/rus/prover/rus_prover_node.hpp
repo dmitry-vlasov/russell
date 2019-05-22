@@ -85,9 +85,9 @@ struct Prop : public Node {
 struct Hyp : public Node {
 	typedef vector<unique_ptr<Prop>> Variants;
 	typedef vector<unique_ptr<ProofHyp>> Proofs;
-	Prop*     parent;
-	Variants  variants;
-	Proofs    proofs;
+	vector<Node*> parents;
+	Variants      variants;
+	Proofs        proofs;
 	Term expr;
 	Hyp(Term&& e, Space* s);
 	Hyp(Term&& e, Prop* p);
@@ -95,17 +95,17 @@ struct Hyp : public Node {
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
-	bool root() const { return !parent; }
+	bool root() const { return !parents.size(); }
 
 	bool unifyWithGoalHyps(const rus::Hyp* hint = nullptr);
 };
 
 struct Ref : public Node {
-	Hyp*    down;
-	Hyp*    up;
+	Hyp*    parent;
+	Hyp*    ancestor;
 	VarRepl repl;
-	Ref(Hyp* d, Hyp* u, Space* s, VarRepl&& r) :
-		Node(s), down(d), up(u), repl(std::move(r)) { }
+	Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
+		Node(s), parent(p), ancestor(a), repl(std::move(r)) { }
 
 	void buildUp();
 	bool buildDown(set<Node*>&) override;
@@ -180,6 +180,7 @@ struct ProofHypIndexed {
 
 string showNodeProofs(const Node* n, uint limit = -1);
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& h);
+bool unify_down(Ref* ref, Hyp* hy, const vector<ProofHypIndexed>& h);
 
 // Statistics:
 void add_sequential_stats(uint card, uint count, Timer& timer);

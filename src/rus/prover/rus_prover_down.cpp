@@ -365,6 +365,10 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	}
 	return unified_subs_2.size() > 0;
 }
+bool unify_down(Ref* ref, Hyp* hy, const vector<ProofHypIndexed>& h) {
+
+}
+
 
 }}}
 

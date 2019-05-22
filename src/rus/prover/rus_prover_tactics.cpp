@@ -27,33 +27,40 @@ void Oracle::add(Prop* p) {
 		}
 	} else {
 		if (p->parent && !p->parent->root()) {
-			Prop* grand = dynamic_cast<Prop*>(p->parent->parent);
-			uint ind = 0;
-			for (const auto& premise : grand->premises) {
-				if (p->parent == premise.get()) {
-					break;
-				}
-				++ind;
-			}
-			if (props.count(grand)) {
-				const rus::Step* st = props.at(grand);
-				uint i = 0;
-				for (const auto& r : st->refs) {
-					if (r.get()->kind() == rus::Ref::STEP) {
-						const rus::Step* candidate = r.get()->step();
-						if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
-							leafs.push_back(p);
-							p->hint = true;
-							if (debug_oracle) {
-								cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
-								cout << "this: " << (void*)p << ", parent: " << (void*)grand << endl << endl;
-								//cout << p->show() << endl << endl;
+			for (Node* grand : p->parent->parents) {
+				if (Prop* grand_prop = dynamic_cast<Prop*>(grand)) {
+					uint ind = 0;
+					for (const auto& premise : grand_prop->premises) {
+						if (p->parent == premise.get()) {
+							break;
+						}
+						++ind;
+					}
+					if (props.count(grand_prop)) {
+						const rus::Step* st = props.at(grand_prop);
+						uint i = 0;
+						for (const auto& r : st->refs) {
+							if (r.get()->kind() == rus::Ref::STEP) {
+								const rus::Step* candidate = r.get()->step();
+								if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
+									leafs.push_back(p);
+									p->hint = true;
+									if (debug_oracle) {
+										cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
+										cout << "this: " << (void*)p << ", parent: " << (void*)grand_prop << endl << endl;
+										//cout << p->show() << endl << endl;
+									}
+									props[p] = candidate;
+									observed.insert(candidate);
+								}
 							}
-							props[p] = candidate;
-							observed.insert(candidate);
+							++i;
 						}
 					}
-					++i;
+				} else if (Ref* grand_ref = dynamic_cast<Ref*>(grand)) {
+					// TODO: implement
+				} else {
+					throw Error("impossibe: no Proof nor Ref");
 				}
 			}
 		}
