@@ -16,21 +16,9 @@ static uint proof_node_index = 0;
 ProofNode::ProofNode(const Subst& s, bool h) :
 	sub(s), new_(true), ind(proof_node_index++), hint(h) { }
 
-ProofExp::ProofExp(const Subst& s, const Term& e, bool hi) :
-	ProofNode(s, hi), expr(e) {
-}
-
-ProofExp::~ProofExp() {
-	/*for (auto p : parents) {
-		uint i = find_in_vector(p->node.proofs, p);
-		if (i != -1) {
-			p->node.proofs.erase(p->node.proofs.begin() + i);
-		}
-	}*/
-}
-
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
-	ProofExp(s, s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX)), hi), node(n), hyp(hy) {
+	ProofExp(s, hi), node(n), hyp(hy),
+	expr_(s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -67,7 +55,7 @@ string show_struct(const ProofNode* n);
 //#define VERIFY_PROOF_EXP
 
 ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
-	ProofExp(s, s.apply(hy.expr), hi), child(c), node(hy) {
+	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
 	child->parent = this;
 	child->new_ = false;
 #ifdef VERIFY_PROOF_EXP
@@ -149,7 +137,7 @@ rus::Step* ProofProp::step() const {
 	const PropRef& p = node.prop;
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
-	step->expr = std::move(Term2Expr(parent->expr));
+	step->expr = std::move(Term2Expr(parent->expr()));
 	Substitution s = FlatSubst2Substitution(sub);
 	apply_recursively(s, step);
 	return step;

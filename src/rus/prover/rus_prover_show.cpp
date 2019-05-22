@@ -108,7 +108,7 @@ string Ref::show(bool with_proofs) const {
 
 string ProofTop::show() const {
 	ostringstream oss;
-	oss << "<proof expr=\"" << expr.show() << "\" ";
+	oss << "<proof expr=\"" << expr().show() << "\" ";
 	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << ">\n";
@@ -216,13 +216,13 @@ string show_struct(const ProofNode* n) {
 	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
 		oss << "ProofTop(index = " << t->ind << ", node = " << t->node.ind << endl;
 		oss << "\thyp = " << t->hyp.ind << endl;
-		oss << "\texp = " << t->expr.show() << endl;
+		oss << "\texp = " << t->expr().show() << endl;
 		oss << "\tnode exp = " << t->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(t->sub.show(), "\t\t");
 		oss << ")" << endl;
 	} else if (const ProofHyp* e = dynamic_cast<const ProofHyp*>(n)) {
 		oss << "ProofExp(index = " << e->ind << ", node = " << e->node.ind << endl;
-		oss << "\texp = " << e->expr.show() << endl;
+		oss << "\texp = " << e->expr().show() << endl;
 		oss << "\tnode exp = " << e->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(e->sub.show(), "\t\t");
 		oss << Indent::paragraph(show_struct(e->child));

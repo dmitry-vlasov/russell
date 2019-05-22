@@ -64,7 +64,7 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofHypIndexed hi, MultyUnifiedSubs&
 		for (uint i = 0; i < inds.size(); ++ i) {
 			ProofExp* ph = pr->premises[i].get()->proofs[inds[i]].get();
 			if (show_debug) {
-				cout << ph->ind << ": " << ph->expr.show() << endl;
+				cout << ph->ind << ": " << ph->expr().show() << endl;
 				cout << "sub:" << endl;
 				cout << Indent::paragraph(ph->sub.show()) << endl;
 			}
@@ -365,6 +365,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofHypIndexed>& hs) {
 	}
 	return unified_subs_2.size() > 0;
 }
+
 bool unify_down(Ref* ref, Hyp* hy, const vector<ProofHypIndexed>& h) {
 
 }

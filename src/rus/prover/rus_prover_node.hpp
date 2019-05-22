@@ -128,11 +128,9 @@ struct ProofNode {
 };
 
 struct ProofExp : public ProofNode {
-	ProofExp(const Subst& s, const Term& e, bool h);
-	~ProofExp() override;
-
+	ProofExp(const Subst& s, bool h) : ProofNode(s, h) { }
+	virtual const Term& expr() const = 0;
 	vector<ProofNode*> parents;
-	Term expr;
 };
 
 struct ProofTop : public ProofExp {
@@ -140,9 +138,11 @@ struct ProofTop : public ProofExp {
 	string show() const override;
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
+	const Term& expr() const override { return expr_; }
 
 	HypRef hyp;
 	Hyp& node;
+	Term expr_;
 };
 
 struct ProofHyp : public ProofExp {
@@ -151,9 +151,11 @@ struct ProofHyp : public ProofExp {
 	rus::Ref* ref() const override;
 	bool equal(const ProofNode* n) const override;
 	rus::Proof* proof() const;
+	const Term& expr() const override { return expr_; }
 
 	ProofProp* child;
 	Hyp& node;
+	Term expr_;
 };
 
 struct ProofProp : public ProofNode {
