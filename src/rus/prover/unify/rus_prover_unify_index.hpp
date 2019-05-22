@@ -344,38 +344,13 @@ struct IndexMap {
 		}
 		return ret;
 	}
-	Data* find(const Term& t) const {
+	vector<Data> find(const Term& t) const {
+		vector<Data> ret;
 		const vector<uint>* inds = index_.findTerm(t);
-		if (inds && inds->size()) {
-			uint ind = inds->at(0);
-
-		}
-
-		vector<Replaced> ret;
-		if (!index_.size()) {
-			return ret;
-		}
-		try {
-			Timer timer;
-			timer.start();
-			map<uint, TermSubst> unif = unify_index_term(index_, t);
-			add_timer_stats("unify_index_term", timer);
-
-			timer.start();
-			for (auto& p : unif) {
-				if (p.second.sub.ok()) {
-					uint ind = p.first;
-					const VarRepl& repl = stored_.at(ind).denorm;
-					repl.apply(p.second.sub);
-					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
-				}
+		if (inds) {
+			for (uint ind : *inds) {
+				ret.push_back(stored_.at(ind).data_);
 			}
-			add_timer_stats("Index::unify: form result", timer);
-		} catch (Error& err) {
-			cout << "unify_index_term: " << endl;
-			cout << index_.show() << endl << endl;
-			cout << t.show() << endl << endl;
-			throw err;
 		}
 		return ret;
 	}
