@@ -26,8 +26,32 @@ void Ref::buildUp() {
 	// no need to grow up - already done
 }
 
-bool Ref::buildDown(set<Node*>& nodes) {
-	return false;
+bool Ref::buildDown(set<Node*>& downs) {
+	bool new_proofs = false;
+	/*for (auto& p : proofs) {
+		if (p->new_) {
+			ProofExp* hp =  new ProofExp(*parent, p.get(), p->sub, p->hint);
+#ifdef VERIFY_UNIQUE_PROOFS
+			if (proofs.size() < 64) {
+				// Don't check ALL proofs if there's too much (43050 for example)
+				for (auto& h : parent->proofs) {
+					if (hp->equal(h.get())) {
+						cout << "DUPLICATE EXP PROOF" << endl;
+						cout << hp->show() << endl;
+						cout << "-----------" << endl;
+						cout << h->show() << endl;
+					}
+				}
+			}
+#endif
+			parent->proofs.emplace_back(hp);
+			new_proofs = true;
+		}
+	}*/
+	if (new_proofs) {
+		downs.insert(parent);
+	}
+	return new_proofs;
 }
 
 Hyp::Hyp(Term&& e, Space* s) :

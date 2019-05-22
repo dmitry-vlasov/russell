@@ -219,14 +219,13 @@ struct Normalizer {
 	}
 
 	VarRepl norm;
-	VarRepl denorm;
 	Term normalized;
 
 private:
 	void normalize(RuleVar& rv) {
 		if (rv.isVar() && rv.var.rep) {
 			uint v = rv.var.lit;
-			uint norm_v = norm.replace(v);
+			uint norm_v = norm.forward().replace(v);
 			if (norm_v == -1) {
 				uint c = 0;
 				auto ti = types.find(rv.var.type);
@@ -235,8 +234,7 @@ private:
 				}
 				types[rv.var.type] = c;
 				norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
-				norm.compose(VarRepl::Pair(v, norm_v));
-				denorm.compose(VarRepl::Pair(norm_v, v));
+				norm.compose(VarPair(v, norm_v));
 				rv.var.lit = norm_v;
 			} else {
 				rv.var.lit = norm_v;
@@ -268,7 +266,7 @@ struct IndexMap {
 	void add(const Term& t, const Data& d) {
 		Normalizer n(t);
 		index_.add(n.normalized, stored_.size());
-		stored_.emplace_back(d, std::move(n.denorm));
+		stored_.emplace_back(d, std::move(n.norm));
 	}
 	string show() const {
 		vector<pair<Term, uint>> terms = index_.unpack();
@@ -302,8 +300,8 @@ struct IndexMap {
 			for (auto& p : unif) {
 				if (p.second.sub.ok()) {
 					uint ind = p.first;
-					const VarRepl& repl = stored_.at(ind).denorm;
-					repl.apply(p.second.sub);
+					const VarRepl& repl = stored_.at(ind).norm;
+					repl.backward().apply(p.second.sub);
 					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
 				}
 			}
@@ -330,7 +328,7 @@ struct IndexMap {
 			timer.start();
 			for (auto& p : varified) {
 				uint ind = p.first;
-				const VarRepl& repl = stored_.at(ind).denorm;
+				const VarRepl& repl = stored_.at(ind).norm;
 				repl.apply(p.second.repl);
 				ret.emplace_back(stored_.at(ind).data, std::move(p.second.repl));
 			}
@@ -356,9 +354,9 @@ struct IndexMap {
 
 private:
 	struct Storage {
-		Storage(const Data& d, VarRepl&& s) : data(d), denorm(std::move(s)) { }
+		Storage(const Data& d, VarRepl&& s) : data(d), norm(std::move(s)) { }
 		Data data;
-		VarRepl denorm;
+		VarRepl norm;
 	};
 	Index index_;
 	vector<Storage> stored_;

@@ -122,17 +122,17 @@ struct VarifyIters {
 	bool termSubtype() const {
 		return *termIter.ruleVar().type() <= *indexIter.ruleVar().type();
 	}
-	VarRepl::Pair replPair() const {
+	VarPair replPair() const {
 		if (bothVars()) {
 			if (indexSubtype()) {
-				return VarRepl::Pair(termIter.ruleVar().var.lit, indexIter.ruleVar().var.lit);
+				return VarPair(termIter.ruleVar().var.lit, indexIter.ruleVar().var.lit);
 			} else if (termSubtype()) {
-				return VarRepl::Pair(indexIter.ruleVar().var.lit, termIter.ruleVar().var.lit);
+				return VarPair(indexIter.ruleVar().var.lit, termIter.ruleVar().var.lit);
 			} else {
-				return VarRepl::Pair();
+				return VarPair();
 			}
 		} else {
-			return VarRepl::Pair();
+			return VarPair();
 		}
 	}
 
@@ -214,7 +214,7 @@ static bool varify_iters_index_term(VarifyIters& i) {
 	if (i.equals()) {
 		return true;
 	} else {
-		VarRepl::Pair replPair = i.replPair();
+		VarPair replPair = i.replPair();
 		return replPair.isDefined() ? i.repl.compose(replPair) : false;
 	}
 }
@@ -277,7 +277,7 @@ map<uint, TermVarRepl> varify_index_term(const Index& ind, const Term& term) {
 	timer.start();
 	for (auto& pair : unified) {
 		const VarifyIters& end = pair.end;
-		Term term = end.repl.apply(pair.subTerm());
+		Term term = end.repl.forward().apply(pair.subTerm());
 		for (uint val : end.vals()) {
 			ret.emplace(val, TermVarRepl(std::move(term), std::move(end.repl)));
 		}
@@ -337,7 +337,7 @@ void check_index_term_varification(const Index& ind, const Term& term, const map
 			throw Error(msg);
 		}
 		Term applied_ind(t);
-		ts.repl.apply(applied_ind);
+		ts.repl.forward().apply(applied_ind);
 		if (applied_ind != ts.term) {
 			string msg;
 			msg += "wrong index varification: " + applied_ind.show() + " != " + ts.term.show() + "\n";
@@ -349,7 +349,7 @@ void check_index_term_varification(const Index& ind, const Term& term, const map
 			throw Error(msg);
 		}
 
-		Term applied_term = ts.repl.apply(term);
+		Term applied_term = ts.repl.forward().apply(term);
 		if (applied_term != ts.term) {
 			string msg;
 			msg += "wrong term varification: " + applied_term.show() + " != " + ts.term.show() + "\n";

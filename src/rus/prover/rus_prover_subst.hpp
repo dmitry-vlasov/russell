@@ -93,7 +93,7 @@ struct Subst {
 	Term apply(const Term& t) const;
 
 private:
-	friend struct VarRepl;
+	friend struct VarMap;
 	hmap<uint, Term> sub_;
 	bool ok_;
 };
@@ -126,34 +126,36 @@ struct TermSubst {
 	Subst sub;
 };
 
-struct VarRepl {
-	struct Pair {
-		Pair() : from(-1), to(-1) { }
-		Pair(uint f, uint t) : from(f), to(t) { }
-		bool isDefined() const { return from == -1; }
-		const uint from;
-		const uint to;
-	};
-	bool compose(Pair p) {
-		auto it = repl_.find(p.from);
-		if (it == repl_.end()) {
-			repl_[p.from] = p.to;
+struct VarPair {
+	VarPair() : from(-1), to(-1) { }
+	VarPair(uint f, uint t) : from(f), to(t) { }
+	bool isDefined() const { return from == -1; }
+	VarPair invert() const { return VarPair(to, from); }
+	const uint from;
+	const uint to;
+};
+
+struct VarMap {
+	bool compose(VarPair p) {
+		auto it = repl.find(p.from);
+		if (it == repl.end()) {
+			repl[p.from] = p.to;
 			return true;
 		} else {
 			return it->second == p.to;
 		}
 	}
 	uint replace(uint v) const {
-		auto iv = repl_.find(v);
-		if (iv != repl_.end()) {
+		auto iv = repl.find(v);
+		if (iv != repl.end()) {
 			return iv->second;
 		} else {
 			return -1;
 		}
 	}
 	uint apply(uint v) const {
-		auto iv = repl_.find(v);
-		if (iv != repl_.end()) {
+		auto iv = repl.find(v);
+		if (iv != repl.end()) {
 			return iv->second;
 		} else {
 			return v;
@@ -184,32 +186,60 @@ struct VarRepl {
 		apply(ret);
 		return ret;
 	}
-	void apply(VarRepl& vr) const {
+	void apply(VarMap& vr) const {
 		hmap<uint, uint> new_repl;
-		for (auto& p : vr.repl_) {
+		for (auto& p : vr.repl) {
 			new_repl[apply(p.first)] = apply(p.second);
 		}
-		vr.repl_ = std::move(new_repl);
+		vr.repl = std::move(new_repl);
 	}
 	string show() const {
 		ostringstream oss;
-		for (const auto& p : repl_) {
+		for (const auto& p : repl) {
 			oss << Lex::toStr(p.first) << " --> " << Lex::toStr(p.second) << endl;
 		}
 		return oss.str();
 	}
+	bool operator == (const VarMap& vr) const {
+		return repl == vr.repl;
+	}
+	bool operator != (const VarMap& vr) const {
+		return !operator == (vr);
+	}
+	uint size() const {
+		return repl.size();
+	}
+
+private:
+	hmap<uint, uint> repl;
+};
+
+struct VarRepl {
+	bool compose(VarPair p) {
+		return forward_.compose(p) && backward_.compose(p.invert());
+	}
+	void apply(VarRepl& vr) const {
+		forward_.apply(vr.forward_);
+		backward_.apply(vr.backward_);
+	}
+	const VarMap& forward() const { return forward_; }
+	const VarMap& backward() const { return backward_; }
+	string show() const {
+		return forward_.show();
+	}
 	bool operator == (const VarRepl& vr) const {
-		return repl_ == vr.repl_;
+		return forward_ == vr.forward_;
 	}
 	bool operator != (const VarRepl& vr) const {
 		return !operator == (vr);
 	}
 	uint size() const {
-		return repl_.size();
+		return forward_.size();
 	}
 
 private:
-	hmap<uint, uint> repl_;
+	VarMap forward_;
+	VarMap backward_;
 };
 
 struct TermVarRepl {
