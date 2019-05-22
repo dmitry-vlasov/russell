@@ -47,17 +47,35 @@ void reduce_duplcate_steps(Proof* proof) {
 		}
 	}
 	if (new_elems.size() < proof->elems.size()) {
-		cout << "diff: " << (proof->elems.size() - new_elems.size()) << ", new_elems.size() = " << new_elems.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
+		//cout << "diff: " << (proof->elems.size() - new_elems.size()) << ", new_elems.size() = " << new_elems.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
 		proof->elems = std::move(new_elems);
 	}
 }
 
+#ifdef PARALLEL
+#define PARALLEL_DUPLICATE_STEPS
+#endif
+
 void reduce_duplcate_steps()  {
+	vector<Proof*> proofs;
 	for (auto& p : Sys::mod().math.get<Proof>()) {
 		if (Proof* proof = p.second.data) {
-			reduce_duplcate_steps(proof);
+			proofs.push_back(proof);
 		}
 	}
+#ifdef PARALLEL_DUPLICATE_STEPS
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
+		[&proofs] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i) {
+				reduce_duplcate_steps(proofs[i]);
+			}
+		}
+	);
+#else
+	for (auto proof : proofs) {
+		reduce_duplcate_steps(proof);
+	}
+#endif
 }
 
 }} // mdl::rus

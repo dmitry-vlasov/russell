@@ -174,7 +174,9 @@ void parse() {
 		}
 	);
 #else
-	for (auto e : queue) parse(e);
+	for (auto e : queue) {
+		parse(e);
+	}
 #endif
 	for (auto e : queue) {
 		Stats::stats().add(e);
