@@ -131,7 +131,7 @@ struct ProofExp : public ProofNode {
 	ProofExp(Hyp& n, const Subst& s, const Term& e, bool h);
 	~ProofExp() override;
 
-	vector<ProofProp*> parents;
+	vector<ProofNode*> parents;
 	Hyp& node;
 	Term expr;
 };
