@@ -127,59 +127,89 @@ struct TermSubst {
 };
 
 struct VarRepl {
-	void addReplacement(uint v, uint w) {
-		replacement_[v] = w;
+	struct Pair {
+		Pair() : from(-1), to(-1) { }
+		Pair(uint f, uint t) : from(f), to(t) { }
+		bool isDefined() const { return from == -1; }
+		const uint from;
+		const uint to;
+	};
+	bool compose(Pair p) {
+		auto it = repl_.find(p.from);
+		if (it == repl_.end()) {
+			repl_[p.from] = p.to;
+			return true;
+		} else {
+			return it->second == p.to;
+		}
 	}
 	uint replace(uint v) const {
-		auto iv = replacement_.find(v);
-		if (iv != replacement_.end()) {
+		auto iv = repl_.find(v);
+		if (iv != repl_.end()) {
 			return iv->second;
 		} else {
 			return -1;
 		}
 	}
+	uint apply(uint v) const {
+		auto iv = repl_.find(v);
+		if (iv != repl_.end()) {
+			return iv->second;
+		} else {
+			return v;
+		}
+	}
 	void apply(Term& t) const {
 		for (auto& n : t.nodes) {
 			if (n.ruleVar.isVar() && n.ruleVar.var.rep) {
-				auto ri = replacement_.find(n.ruleVar.var.lit);
-				if (ri != replacement_.end()) {
-					n.ruleVar.var.lit = ri->second;
-				}
+				n.ruleVar.var.lit = apply(n.ruleVar.var.lit);
 			}
 		}
+	}
+	Term apply(const Term& t) const {
+		Term ret(t);
+		apply(ret);
+		return ret;
 	}
 	void apply(Subst& s) const {
 		hmap<uint, Term> new_sub;
 		for (auto& p : s.sub_) {
 			apply(p.second);
-			uint var = p.first;
-			auto ri = replacement_.find(var);
-			if (ri != replacement_.end()) {
-				var = ri->second;
-			}
-			new_sub[var] = std::move(p.second);
+			new_sub[apply(p.first)] = std::move(p.second);
 		}
 		s.sub_ = std::move(new_sub);
 	}
+	Subst apply(const Subst& s) const {
+		Subst ret(s);
+		apply(ret);
+		return ret;
+	}
+	void apply(VarRepl& vr) const {
+		hmap<uint, uint> new_repl;
+		for (auto& p : vr.repl_) {
+			new_repl[apply(p.first)] = apply(p.second);
+		}
+		vr.repl_ = std::move(new_repl);
+	}
 	string show() const {
 		ostringstream oss;
-		for (const auto& p : replacement_) {
+		for (const auto& p : repl_) {
 			oss << Lex::toStr(p.first) << " --> " << Lex::toStr(p.second) << endl;
 		}
 		return oss.str();
 	}
 	bool operator == (const VarRepl& vr) const {
-		return replacement_ == vr.replacement_;
+		return repl_ == vr.repl_;
 	}
 	bool operator != (const VarRepl& vr) const {
 		return !operator == (vr);
 	}
 	uint size() const {
-		return replacement_.size();
+		return repl_.size();
 	}
 
 private:
-	hmap<uint, uint> replacement_;
+	hmap<uint, uint> repl_;
 };
 
 struct TermVarRepl {

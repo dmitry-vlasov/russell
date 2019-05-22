@@ -18,6 +18,18 @@ void Index::add(const Term& t, uint val) {
 	++size_;
 }
 
+const vector<uint>* Index::find(const Term& t) const {
+	const Node* n = &root_;
+	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
+		auto ni = n->map.find(i->ruleVar);
+		if (ni == n->map.end()) {
+			return nullptr;
+		}
+		n = &ni->second;
+	}
+	return &n->vals;
+}
+
 void Index::verify(bool show) const {
 
 	cout << "verifying index: START VERIFICATION" << endl;

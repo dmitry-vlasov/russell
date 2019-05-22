@@ -48,9 +48,9 @@ struct Index {
 		}
 		return root_;
 	}
-	map<uint, TermSubst> unifyTerm(const Term& t) const;
-	map<uint, TermVarRepl> replacementUnifyTerm(const Term& t) const;
-	const vector<uint>* findTerm(const Term& t) const;
+	map<uint, TermSubst> unify(const Term& t) const;
+	map<uint, TermVarRepl> varify(const Term& t) const;
+	const vector<uint>* find(const Term& t) const;
 
 private:
 	void initEnds();
@@ -235,8 +235,8 @@ private:
 				}
 				types[rv.var.type] = c;
 				norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
-				norm.addReplacement(v, norm_v);
-				denorm.addReplacement(norm_v, v);
+				norm.compose(VarRepl::Pair(v, norm_v));
+				denorm.compose(VarRepl::Pair(norm_v, v));
 				rv.var.lit = norm_v;
 			} else {
 				rv.var.lit = norm_v;
@@ -315,7 +315,7 @@ struct IndexMap {
 		}
 		return ret;
 	}
-	vector<Replaced> replacementUnify(const Term& t) const {
+	vector<Replaced> varify(const Term& t) const {
 		vector<Replaced> ret;
 		if (!index_.size()) {
 			return ret;
@@ -323,21 +323,19 @@ struct IndexMap {
 		try {
 			Timer timer;
 			timer.start();
-			map<uint, TermSubst> unif = unify_index_term(index_, t);
-			add_timer_stats("unify_index_term", timer);
+			map<uint, VarRepl> varified = varify_index_term(index_, t);
+			add_timer_stats("varify_index_term", timer);
 
 			timer.start();
-			for (auto& p : unif) {
-				if (p.second.sub.ok()) {
-					uint ind = p.first;
-					const VarRepl& repl = stored_.at(ind).denorm;
-					repl.apply(p.second.sub);
-					ret.emplace_back(stored_.at(ind).data, std::move(p.second.sub));
-				}
+			for (auto& p : varified) {
+				uint ind = p.first;
+				const VarRepl& repl = stored_.at(ind).denorm;
+				repl.apply(p.second);
+				ret.emplace_back(stored_.at(ind).data, std::move(p.second));
 			}
-			add_timer_stats("Index::unify: form result", timer);
+			add_timer_stats("Index::varify: form result", timer);
 		} catch (Error& err) {
-			cout << "unify_index_term: " << endl;
+			cout << "varify_index_term: " << endl;
 			cout << index_.show() << endl << endl;
 			cout << t.show() << endl << endl;
 			throw err;
@@ -346,7 +344,7 @@ struct IndexMap {
 	}
 	vector<Data> find(const Term& t) const {
 		vector<Data> ret;
-		const vector<uint>* inds = index_.findTerm(t);
+		const vector<uint>* inds = index_.find(t);
 		if (inds) {
 			for (uint ind : *inds) {
 				ret.push_back(stored_.at(ind).data_);

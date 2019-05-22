@@ -5,6 +5,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-//map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term);
+//map<uint, TermVarRepl> varify_index_term(const Index& ind, const Term& term);
 
 }}}}

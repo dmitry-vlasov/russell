@@ -13,7 +13,7 @@ void reduce_duplcate_steps(Proof* proof) {
 		case Proof::STEP: {
 			const Step* step = Proof::step(e);
 			prover::Term term = prover::Tree2Term(*step->expr.tree());
-			const vector<uint>* previous = expressions.findTerm(term);
+			const vector<uint>* previous = expressions.find(term);
 			if (previous && previous->size()) {
 				steps_map[step] = new_steps.at(previous->at(0));
 			} else {
