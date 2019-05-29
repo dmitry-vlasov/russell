@@ -150,11 +150,11 @@ bool similar_subs(const Subst& s1, const Subst& s2, bool verbose = false) {
 	Subst s1_vars_inv;
 	Subst s1_terms;
 	for (const auto& p : s1) {
-		if (p.second.kind() == Term::VAR && !s2.maps(p.first)) {
+		if (p.second.term.kind() == Term::VAR && !s2.maps(p.first)) {
 			LightSymbol w(p.first);
-			s1_vars_inv.compose(p.second.var().lit, Term(w));
+			s1_vars_inv.compose(p.second.term.var(), Term(w));
 		} else {
-			s1_terms.compose(p.first, p.second);
+			s1_terms.compose(LightSymbol(p.first, p.second.type), p.second.term);
 		}
 	}
 	s1_terms.compose(s1_vars_inv);

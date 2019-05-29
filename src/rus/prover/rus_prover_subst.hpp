@@ -8,14 +8,14 @@ enum class CompMode { SEMI, NORM, DUAL, DEFAULT = NORM };
 
 struct Subst {
 	Subst(bool ok = true) : ok_(ok) { }
-	Subst(uint v, const Term& t) : ok_(true) {
+	Subst(LightSymbol v, const Term& t) : ok_(true) {
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
-			sub_.emplace(v, t);
+			sub_.emplace(v.literal(), TypeTerm(v.type, t));
 		}
 	}
-	Subst(uint v, Term&& t) : ok_(true) {
+	Subst(LightSymbol v, Term&& t) : ok_(true) {
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
-			sub_.emplace(v, std::move(t));
+			sub_.emplace(v.literal(), TypeTerm(v.type, std::move(t)));
 		}
 	}
 	Subst(const Subst& s) = default;
@@ -29,64 +29,79 @@ struct Subst {
 
 	bool consistent(const Subst& s) const;
 	bool compose(const Subst& s, CompMode m = CompMode::DEFAULT, bool check = true);
-	bool compose(uint v, const Term& t, CompMode m = CompMode::DEFAULT, bool check = true) {
+	bool compose(LightSymbol v, const Term& t, CompMode m = CompMode::DEFAULT, bool check = true) {
 		return compose(Subst(v, t), m, check);
 	}
 	bool compose(Subst&& s, CompMode m = CompMode::DEFAULT, bool check = true);
-	bool compose(uint v, Term&& t, CompMode m = CompMode::DEFAULT, bool check = true) {
-		Subst s(v, t);
-		return compose(std::move(s), m, check);
+	bool compose(LightSymbol v, Term&& t, CompMode m = CompMode::DEFAULT, bool check = true) {
+		return compose(Subst(v, t), m, check);
 	}
 
 	bool intersects(const Subst& s) const;
-	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
-	bool maps(LightSymbol s) const { return maps(s.lit); }
+	bool maps(LightSymbol v) const {
+		return maps(v.lit);
+	}
+	bool maps(uint v) const {
+		return sub_.find(v) != sub_.end();
+	}
 	string show() const;
 	string showVars(const set<uint>&) const;
+	const Term& map(LightSymbol v) const {
+		return map(v.lit);
+	}
 	const Term& map(uint v) const {
 		auto it = sub_.find(v);
 		if (sub_.find(v) != sub_.end()) {
-			return it->second;
+			return it->second.term;
 		} else {
 			static Term empty; return empty;
 		}
 	}
-	const Term& map(LightSymbol s) const {
-		return map(s.lit);
-	}
+	void erase(LightSymbol v) { erase(v.lit); }
 	void erase(uint v) { sub_.erase(v); }
 
-	typedef hmap<uint, Term>::const_iterator const_iterator;
+	struct TypeTerm {
+		TypeTerm(const LightSymbol& v, const Term& t) : type(v.type), term(t) { }
+		TypeTerm(const Type* tp, const Term& tr) : type(tp), term(tr) { }
+		TypeTerm(const Type* tp, Term&& tr) : type(tp), term(std::move(tr)) { }
+		TypeTerm(TypeTerm&&) = default;
+		TypeTerm(const TypeTerm& tt) : type(tt.type), term(tt.term) { }
+		const Type* type;
+		Term term;
+	};
+
+	typedef hmap<uint, TypeTerm> Sub_;
+	typedef Sub_::const_iterator const_iterator;
 
 	const_iterator begin() const { return sub_.cbegin(); }
 	const_iterator end() const { return sub_.cend(); }
 
 	uint size() const { return sub_.size(); }
 	bool ok() const { return ok_; }
-	set<uint> dom() const {
-		set<uint> ret;
+	set<LightSymbol> dom() const {
+		set<LightSymbol> ret;
 		for (const auto& p : sub_) {
-			ret.insert(p.first);
+			ret.insert(LightSymbol(p.first, p.second.type));
 		}
 		return ret;
 	}
-	Subst complement(const set<uint>& vars) const {
+	Subst complement(const set<LightSymbol>& vars) const {
 		Subst ret(*this);
 		for (const auto& v : vars) {
-			ret.sub_.erase(v);
+			ret.sub_.erase(v.lit);
 		}
 		return ret;
 	}
 	void spoil() { ok_ = false; }
 	void verify() const {
 		for (const auto& p : sub_) {
-			p.second.verify();
+			p.second.term.verify();
 		}
 	}
 	uint maxExprLen() const {
 		uint l = 0;
 		for (const auto& p : sub_) {
-			l = std::max(p.second.len(), l);
+			l = std::max(p.second.term.len(), l);
 		}
 		return l;
 	}
@@ -94,12 +109,15 @@ struct Subst {
 
 private:
 	friend struct VarMap;
-	hmap<uint, Term> sub_;
+	Sub_ sub_;
 	bool ok_;
 };
 
-Subst Substitution2FlatSubst(const Substitution&);
-Substitution FlatSubst2Substitution(const Subst&);
+inline ostream& operator << (ostream& os, const Subst& s) {
+	os << s.show(); return os;
+}
+
+Substitution Subst2Substitution(const Subst&);
 string show_diff(const Subst& s1, const Subst& s2);
 
 struct TermSubst {
@@ -126,45 +144,59 @@ struct TermSubst {
 	Subst sub;
 };
 
+inline ostream& operator << (ostream& os, const TermSubst& ts) {
+	os << ts.show(); return os;
+}
+
 struct VarPair {
 	VarPair() : from(-1), to(-1) { }
-	VarPair(uint f, uint t) : from(f), to(t) { }
-	bool isDefined() const { return from == -1; }
+	VarPair(LightSymbol f, LightSymbol t) : from(f), to(t) {
+		if (from.type != to.type) {
+			throw Error("at variable replacement type should be preserved");
+		}
+	}
 	VarPair invert() const { return VarPair(to, from); }
-	const uint from;
-	const uint to;
+	const LightSymbol from;
+	const LightSymbol to;
 };
 
 struct VarMap {
 	bool compose(VarPair p) {
-		auto it = repl.find(p.from);
+		auto it = repl.find(p.from.lit);
 		if (it == repl.end()) {
-			repl[p.from] = p.to;
+			repl[p.from.lit] = p.to;
 			return true;
 		} else {
 			return it->second == p.to;
 		}
 	}
-	uint replace(uint v) const {
-		auto iv = repl.find(v);
+	LightSymbol replace(LightSymbol v) const {
+		auto iv = repl.find(v.lit);
 		if (iv != repl.end()) {
 			return iv->second;
 		} else {
-			return -1;
+			return LightSymbol();
 		}
 	}
-	uint apply(uint v) const {
+	uint apply(uint v, const Type* t) const {
 		auto iv = repl.find(v);
 		if (iv != repl.end()) {
-			return iv->second;
+			if (iv->second.type != t) {
+				throw Error("at variable replacement type should be preserved");
+			}
+			return iv->second.lit;
 		} else {
 			return v;
 		}
 	}
+	LightSymbol apply(LightSymbol v) const {
+		v.lit = apply(v.lit, v.type);
+		return v;
+	}
 	void apply(Term& t) const {
 		for (auto& n : t.nodes) {
 			if (n.ruleVar.isVar() && n.ruleVar.var.rep) {
-				n.ruleVar.var.lit = apply(n.ruleVar.var.lit);
+				n.ruleVar.var = apply(n.ruleVar.var);
 			}
 		}
 	}
@@ -174,10 +206,13 @@ struct VarMap {
 		return ret;
 	}
 	void apply(Subst& s) const {
-		hmap<uint, Term> new_sub;
+		Subst::Sub_ new_sub;
 		for (auto& p : s.sub_) {
-			apply(p.second);
-			new_sub[apply(p.first)] = std::move(p.second);
+			apply(p.second.term);
+			new_sub.emplace(
+				apply(p.first, p.second.type),
+				Subst::TypeTerm(p.second.type, std::move(p.second.term))
+			);
 		}
 		s.sub_ = std::move(new_sub);
 	}
@@ -187,16 +222,20 @@ struct VarMap {
 		return ret;
 	}
 	void apply(VarMap& vr) const {
-		hmap<uint, uint> new_repl;
+		Repl_ new_repl;
 		for (auto& p : vr.repl) {
-			new_repl[apply(p.first)] = apply(p.second);
+			uint v = apply(p.first, p.second.type);
+			LightSymbol im = apply(p.second);
+			if (v != im.lit) {
+				new_repl.emplace(v, im);
+			}
 		}
 		vr.repl = std::move(new_repl);
 	}
 	string show() const {
 		ostringstream oss;
 		for (const auto& p : repl) {
-			oss << Lex::toStr(p.first) << " --> " << Lex::toStr(p.second) << endl;
+			oss << p.first << " --> " << p.second << endl;
 		}
 		return oss.str();
 	}
@@ -211,8 +250,13 @@ struct VarMap {
 	}
 
 private:
-	hmap<uint, uint> repl;
+	typedef hmap<uint, LightSymbol> Repl_;
+	Repl_ repl;
 };
+
+inline ostream& operator << (ostream& os, const VarMap& vm) {
+	os << vm.show(); return os;
+}
 
 struct VarRepl {
 	bool compose(VarPair p) {
@@ -242,6 +286,10 @@ private:
 	VarMap inverse_;
 };
 
+inline ostream& operator << (ostream& os, const VarRepl& vr) {
+	os << vr.show(); return os;
+}
+
 struct TermVarRepl {
 	TermVarRepl() = default;
 	TermVarRepl(const Term& t, const VarRepl& r) : term(t), repl(r) { }
@@ -265,5 +313,9 @@ struct TermVarRepl {
 	Term term;
 	VarRepl repl;
 };
+
+inline ostream& operator << (ostream& os, const TermVarRepl& tvr) {
+	os << tvr.show(); return os;
+}
 
 }}}

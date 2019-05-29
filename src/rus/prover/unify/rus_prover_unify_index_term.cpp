@@ -139,7 +139,7 @@ struct UnifyIters {
 			indexIter.ruleVar().var.rep &&
 			*termIter.ruleVar().type() <= *indexIter.ruleVar().type();
 	}
-	vector<UnifyIters> prepareIndexIters() const {
+	/*vector<UnifyIters> prepareIndexIters() const {
 		vector<UnifyIters> ret;
 		if (termIter.ruleVar().isRule() || (termIter.ruleVar().isVar() && !termIter.ruleVar().var.rep)) {
 			for (Index::Iter i : indexIter.vars()) {
@@ -155,7 +155,7 @@ struct UnifyIters {
 			}
 		}
 		return ret;
-	}
+	}*/
 
 	Index::Iter indexIter;
 	Term::Iter  termIter;
@@ -214,14 +214,14 @@ static vector<UnifyIters> unify_iters_index_term(const UnifyIters& i) {
 	if (i.equals()) {
 		ret.emplace_back(i);
 	} else if (i.indexVar()) {
-		Subst s = unify_step(i.sub, {i.indexIter.ruleVar().var.lit}, i.sub.apply(i.termIter.subTerm()));
+		Subst s = unify_step(i.sub, {i.indexIter.ruleVar().var}, i.sub.apply(i.termIter.subTerm()));
 		s.compose(i.sub.complement(s.dom()));
 		if (s.ok()) {
 			ret.emplace_back(i.indexIter, i.termIter.end(), i.parentSub, std::move(s));
 		}
 	} else if (i.termVar()) {
 		for (const auto& end : i.indexIter.ends()) {
-			Subst s = unify_step(i.sub, {i.termIter.ruleVar().var.lit}, i.sub.apply(i.indexIter.subTerm(end)));
+			Subst s = unify_step(i.sub, {i.termIter.ruleVar().var}, i.sub.apply(i.indexIter.subTerm(end)));
 			s.compose(i.sub.complement(s.dom()));
 			if (s.ok()) {
 				ret.emplace_back(end, i.termIter, i.parentSub, std::move(s));
@@ -250,9 +250,10 @@ void prepareIndexIters(const UnifyIters& beg, const UnifyIters& iters, std::queu
 static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
 	vector<UnifyPair> ret;
 	std::queue<UnifyPair> queue;
-	for (const auto& i : inits.prepareIndexIters()) {
+	prepareIndexIters(inits, inits, queue);
+	/*for (const auto& i : inits.prepareIndexIters()) {
 		queue.emplace(i);
-	}
+	}*/
 	while (queue.size()) {
 		uint n = queue.size();
 		while (n--) {
@@ -307,11 +308,8 @@ static vector<UnifyPair> do_unify_index_term(const UnifyIters& inits) {
 void check_index_term_unification(const Index& ind, const Term& term, const map<uint, TermSubst>& result);
 
 map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term) {
-
 	UnifyIters iters(ind.root(), term);
-
 	map<uint, TermSubst> ret;
-
 	Timer timer;
 	auto unified = do_unify_index_term(iters);
 	add_timer_stats("do_unify_index_term", timer);
@@ -325,7 +323,7 @@ map<uint, TermSubst> unify_index_term(const Index& ind, const Term& term) {
 		}
 	}
 	add_timer_stats("unify_index_term: form result", timer);
-	//check_index_term_unification(ind, term, ret);
+	check_index_term_unification(ind, term, ret);
 	return ret;
 }
 

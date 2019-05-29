@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
+Subst unify_step(const Subst& s, const vector<LightSymbol>& vars, Term&& term) {
 	Term applied = s.apply(term);
 	vector<const Term*> to_unify({&applied});
 	for (auto v : vars) {
@@ -26,6 +26,7 @@ Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term) {
 			return Subst(false);
 		}
 		for (auto v : vars) {
+			Subst r(ret);
 			if (!ret.compose(v, unified.term)) {
 				return Subst(false);
 			}

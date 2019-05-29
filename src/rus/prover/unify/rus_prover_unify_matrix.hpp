@@ -79,11 +79,11 @@ struct Matrix{
 
 private:
 	uint dim_hyp_;
-	map<uint, unique_ptr<Vector>> mindex_;
+	map<LightSymbol, unique_ptr<Vector>> mindex_;
 	vector<vector<uint>> proofInds_;
 	bool empty_;
 };
 
-MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif);
+MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif);
 
 }}}}

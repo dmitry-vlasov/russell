@@ -145,7 +145,7 @@ rus::Step* ProofProp::step() const {
 	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
 	step->refs = std::move(refs);
 	step->expr = std::move(Term2Expr(parent->expr()));
-	Substitution s = FlatSubst2Substitution(sub);
+	Substitution s = Subst2Substitution(sub);
 	apply_recursively(s, step);
 	return step;
 }

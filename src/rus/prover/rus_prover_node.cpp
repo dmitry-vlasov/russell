@@ -14,7 +14,7 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 			if (!s.maps(v)) {
 				uint i = space->hasVar(v.lit) ? space->getVar(v.lit) + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 				space->setVar(v.lit, i);
-				ret.compose(v.lit, Term(LightSymbol(w, ReplMode::KEEP_REPL, i)));
+				ret.compose(v, Term(LightSymbol(w, ReplMode::KEEP_REPL, i)));
 			}
 		}
 		assertion_vars.insert(v.lit);
@@ -73,11 +73,22 @@ Hyp::Hyp(Term&& e, Prop* p) :
 void Hyp::buildUp() {
 	Timer timer1;
 	Timer timer;
+
+	cout << "TO UNIFY: " << expr.show() << endl;
+	cout << "ASSERTIONS: " << space->assertions().show() << endl;
+
 	auto unified = space->assertions().unify(expr);
 	add_timer_stats("build_up_hyp_unify_timer", timer);
 
+	if (unified.size() == 0) {
+		cout << "UNIFICATION FAILED" << endl;
+	}
+
 	timer.start();
 	for (auto& m : unified) {
+
+		cout << "UNIFIED: " << Lex::toStr(m.data.ass->id()) << endl;
+
 		set<uint> assertion_vars;
 		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
@@ -90,9 +101,9 @@ void Hyp::buildUp() {
 		Subst outer;
 		for (const auto& p : m.sub) {
 			if (assertion_vars.count(p.first)) {
-				outer.compose(p.first, p.second);
+				outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
 			} else {
-				sub.compose(p.first, p.second);
+				sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
 			}
 		}
 		variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));

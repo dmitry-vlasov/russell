@@ -4,6 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-Subst unify_step(const Subst& s, const vector<uint>& vars, Term&& term);
+Subst unify_step(const Subst& s, const vector<LightSymbol>& vars, Term&& term);
 
 }}}}

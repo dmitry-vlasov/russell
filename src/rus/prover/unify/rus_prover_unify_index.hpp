@@ -224,20 +224,22 @@ struct Normalizer {
 private:
 	void normalize(RuleVar& rv) {
 		if (rv.isVar() && rv.var.rep) {
-			uint v = rv.var.lit;
-			uint norm_v = norm.direct().replace(v);
-			if (norm_v == -1) {
+			LightSymbol v = rv.var;
+			LightSymbol norm_v = norm.direct().replace(v);
+			if (norm_v.is_undef()) {
 				uint c = 0;
 				auto ti = types.find(rv.var.type);
 				if (ti != types.end()) {
 					c = ti->second + 1;
 				}
 				types[rv.var.type] = c;
-				norm_v = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
+				norm_v.rep = true;
+				norm_v.type = v.type;
+				norm_v.lit = Lex::toInt(Lex::toStr(rv.var.type->id()) + "_" + to_string(c));
 				norm.compose(VarPair(v, norm_v));
-				rv.var.lit = norm_v;
+				rv.var = norm_v;
 			} else {
-				rv.var.lit = norm_v;
+				rv.var = norm_v;
 			}
 		}
 	}
@@ -269,14 +271,16 @@ struct IndexMap {
 		stored_.emplace_back(d, std::move(n.norm));
 	}
 	string show() const {
-		vector<pair<Term, uint>> terms = index_.unpack();
+		Index::Unpacked terms = index_.unpack();
 		if (!terms.size()) {
 			return "\n";
 		} else {
 			string ret;
 			for (const auto&  p : terms) {
-				Data d = stored_[p.second].data;
-				ret += "[" + p.first.show() + "]" + " -> " + to_string(p.second) + "\n";
+				for (uint i : p.second) {
+					//Data d = stored_[i].data;
+					ret += "[" + p.first.show() + "]" + " -> " + to_string(i) + "\n";
+				}
 			}
 			return ret;
 		}

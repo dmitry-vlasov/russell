@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
+static void addProofsProp(map<LightSymbol, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const Hyp::Proofs& proofs, uint i, const ProofsSizeLimit* limit) {
 	if (limit) {
 		if (limit->descrVect()[i].fixed) {
 			throw Error("should not be fixed");
@@ -14,10 +14,11 @@ static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<
 			uint j = limit->descrVect()[i].chosen[k];
 			auto p = proofs[j].get();
 			for (const auto& x : p->sub) {
-				if (!mindex_.count(x.first)) {
-					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				LightSymbol v(x.first, x.second.type);
+				if (!mindex_.count(v)) {
+					mindex_.emplace(v, new Vector(dim_hyp_));
 				}
-				mindex_.at(x.first)->vect[i]->add(x.second, j);
+				mindex_.at(v)->vect[i]->add(x.second.term, j);
 			}
 			proofInds_[i][k] = j;
 		}
@@ -26,17 +27,18 @@ static void addProofsProp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<
 		for (uint j = 0; j < proofs.size(); ++j) {
 			auto p = proofs[j].get();
 			for (const auto& x : p->sub) {
-				if (!mindex_.count(x.first)) {
-					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				LightSymbol v(x.first, x.second.type);
+				if (!mindex_.count(v)) {
+					mindex_.emplace(v, new Vector(dim_hyp_));
 				}
-				mindex_.at(x.first)->vect[i]->add(x.second, j);
+				mindex_.at(v)->vect[i]->add(x.second.term, j);
 			}
 			proofInds_[i][j] = j;
 		}
 	}
 }
 
-static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofExpIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
+static void addProofsHyp(map<LightSymbol, unique_ptr<Vector>>& mindex_, vector<vector<uint>>& proofInds_, uint dim_hyp_, const vector<ProofExpIndexed>& hs, uint i, const ProofsSizeLimit* limit) {
 
 	if (limit) {
 		if (!limit->descrVect()[i].fixed) {
@@ -47,10 +49,11 @@ static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<u
 			uint j = limit->descrVect()[i].chosen[k];
 			ProofExpIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
-				if (!mindex_.count(x.first)) {
-					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				LightSymbol v(x.first, x.second.type);
+				if (!mindex_.count(v)) {
+					mindex_.emplace(v, new Vector(dim_hyp_));
 				}
-				mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
+				mindex_.at(v)->vect[i]->add(x.second.term, hi.ind);
 			}
 			proofInds_[i][k] = hi.ind;
 		}
@@ -59,10 +62,11 @@ static void addProofsHyp(map<uint, unique_ptr<Vector>>& mindex_, vector<vector<u
 		for (uint j = 0; j < hs.size(); ++j) {
 			ProofExpIndexed hi = hs[j];
 			for (const auto& x : hi.proof->sub) {
-				if (!mindex_.count(x.first)) {
-					mindex_.emplace(x.first, new Vector(dim_hyp_));
+				LightSymbol v(x.first, x.second.type);
+				if (!mindex_.count(v)) {
+					mindex_.emplace(v, new Vector(dim_hyp_));
 				}
-				mindex_.at(x.first)->vect[i]->add(x.second, hi.ind);
+				mindex_.at(v)->vect[i]->add(x.second.term, hi.ind);
 			}
 			proofInds_[i][j] = hi.ind;
 		}
@@ -128,10 +132,10 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 		}
 		return MultyUnifiedSubs();
 	}
-	map<uint, VectorUnifiedUnion> unified_columns;
+	map<LightSymbol, VectorUnifiedUnion> unified_columns;
 	Timer timer;
 	for (auto& p : mindex_) {
-		uint var = p.first;
+		LightSymbol var = p.first;
 		Vector* vect = p.second.get();
 		try {
 			unified_columns[var] = std::move(vect->unify_general());
@@ -139,7 +143,7 @@ MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 				return MultyUnifiedSubs();
 			}
 		} catch (Error& err) {
-			cout << "while unifying matrix var: " << Lex::toStr(var) << endl;
+			cout << "while unifying matrix var: " << var << endl;
 			throw err;
 		}
 	}
@@ -159,7 +163,7 @@ string Matrix::show() const {
 	ostringstream oss;
 	oss << "DIMENSION: " << dim_hyp_ << "x" << mindex_.size() << endl;
 	for (auto& p : mindex_) {
-		oss << endl << "VAR: " << Lex::toStr(p.first) << endl;
+		oss << endl << "VAR: " << p.first << endl;
 		oss << p.second->show() << endl;
 	}
 	return oss.str();

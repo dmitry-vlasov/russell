@@ -291,11 +291,14 @@ struct Rules::Node {
 string show(const Rules& tr);
 
 struct Substitution : public Writable {
-	Substitution(bool ok = true) : sub_(), ok_(ok) { }
-	Substitution(uint v, const Tree& t) : sub_(), ok_(true) {
-		sub_.emplace(v, t.clone());
+	Substitution(bool ok = true) : ok_(ok) { }
+	Substitution(const Var& v, const Tree& t) : sub_(), ok_(true) {
+		sub_.emplace(v.lit(), TypeTree(v, t));
 	}
-	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
+	Substitution(uint v, const Type* tp,  const Tree& tr) : sub_(), ok_(true) {
+		sub_.emplace(v, TypeTree(tp, tr));
+	}
+	Substitution(const Substitution& s) : ok_(s.ok_) {
 		operator = (s);
 	}
 	Substitution(Substitution&& s) : sub_(), ok_(s.ok_) {
@@ -304,8 +307,10 @@ struct Substitution : public Writable {
 
 	void operator = (const Substitution& s);
 	void operator = (Substitution&& s);
-	bool join(uint v, unique_ptr<Tree>&& t);
-	bool join(uint v, const Tree& t);
+	bool join(const Var& v, unique_ptr<Tree>&& t);
+	bool join(const Var& v, const Tree& t);
+	bool join(uint v, const Type* tp, const Tree& tr);
+	bool join(uint v, const Type* tp, unique_ptr<Tree>&& tr);
 	bool join(const Substitution* s) {
 		return join(*s);
 	}
@@ -316,14 +321,24 @@ struct Substitution : public Writable {
 	const Tree* map(uint v) const {
 		auto it = sub_.find(v);
 		if (sub_.find(v) != sub_.end()) {
-			return it->second.get();
+			return it->second.tree.get();
 		} else {
 			return nullptr;
 		}
 	}
-	void erase(uint v) { sub_.erase(v); }
+	//void erase(const Var& v) { sub_.erase(v); }
 
-	typedef std::map<uint, unique_ptr<Tree>>::const_iterator const_iterator;
+	struct TypeTree {
+		TypeTree(const Var& v, const Tree& t) : type(v.type()), tree(t.clone()) { }
+		TypeTree(const Type* tp, const Tree& tr) : type(tp), tree(tr.clone()) { }
+		TypeTree(const Type* tp, unique_ptr<Tree>&& tr) : type(tp), tree(std::move(tr)) { }
+		TypeTree(TypeTree&&) = default;
+		TypeTree(const TypeTree& tt) : type(tt.type), tree(tt.tree->clone()) { }
+		User<Type> type;
+		unique_ptr<Tree> tree;
+	};
+	typedef hmap<uint, TypeTree> Sub_;
+	typedef Sub_::const_iterator const_iterator;
 
 	const_iterator begin() const { return sub_.cbegin(); }
 	const_iterator end() const { return sub_.cend(); }
@@ -335,12 +350,12 @@ struct Substitution : public Writable {
 
 	void write(ostream& os, const Indent& indent = Indent()) const override {
 		for (const auto& p : sub_) {
-			os << indent << Lex::toStr(p.first) << " --> " << static_cast<const Writable&>(*p.second) << endl;
+			os << indent << Lex::toStr(p.first) << " --> " << static_cast<const Writable&>(*p.second.tree) << endl;
 		}
 	}
 
 private:
-	std::map<uint, unique_ptr<Tree>> sub_;
+	Sub_ sub_;
 	bool ok_;
 };
 

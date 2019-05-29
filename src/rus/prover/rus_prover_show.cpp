@@ -295,7 +295,7 @@ string show(const vector<LightSymbol>& v) {
 	string ret;
 	ret += "(";
 	for (auto s : v) {
-		ret += prover::show(s) + ", ";
+		ret += s.show() + ", ";
 	}
 	ret += ")";
 	return ret;

@@ -13,9 +13,9 @@ Substitution unify_forth(const Tree* p, const Tree* q) {
 	case Tree::VAR: {
 		const VarTree* pv = dynamic_cast<const VarTree*>(p);
 		if (pv->type() == q->type()) {
-			return Substitution(pv->lit(), *q);
+			return Substitution(pv->var(), *q);
 		} else if (Rule* super = find_super(q->type(), pv->type())) {
-			return Substitution(pv->lit(), RuleTree(super->id(), q->clone()));
+			return Substitution(pv->var(), RuleTree(super->id(), q->clone()));
 		} else {
 			return Substitution(false);
 		}

@@ -52,13 +52,13 @@ struct LightSymbol {
 
 	bool operator == (const LightSymbol& s) const { return lit == s.lit; }
 	bool operator != (const LightSymbol& s) const { return !operator ==(s); }
+	bool operator == (uint s) const { return lit == s; }
+	bool operator != (uint s) const { return !operator ==(s); }
 	bool operator < (const LightSymbol& s) const {
 		if (lit < s.lit) return true;
 		else if (lit > s.lit) return false;
 		else return ind < s.ind;
 	}
-	bool operator == (uint l) const { return lit == l; }
-	bool operator != (uint l) const { return !operator ==(l); }
 
 	LightSymbol& operator = (const LightSymbol& s) = default;
 	LightSymbol& operator = (const Symbol& s) {
@@ -69,12 +69,15 @@ struct LightSymbol {
 		return *this;
 	}
 
+	string show(bool full = false) const {
+		return (is_undef() ? "<UNDEF>" : Lex::toStr(lit)) + (full && rep ? "*" : "");
+	}
+
 	struct Hash {
 		typedef size_t result_type;
 		typedef Symbol argument_type;
 		size_t operator() (const LightSymbol& s) const {
-			//return hash(s.lit);
-			return std::hash<uint>()(s.lit);
+			return hash(s.lit);
 		}
 	private:
 		static std::hash<uint> hash;
@@ -90,21 +93,9 @@ string show(const set<uint>&);
 string show(const vector<uint>&);
 string show(const vector<bool>& v);
 string show(const vector<LightSymbol>& v);
-inline string show(LightSymbol s, bool full = true) {
-	string ret;
-	if (s.is_undef()) {
-		ret += "<UNDEF>";
-	} else {
-		ret += Lex::toStr(s.lit);
-	}
-	if (full && s.rep) {
-		ret += "*";
-	}
-	return ret;
-}
 
 inline ostream& operator << (ostream& os, const LightSymbol& s) {
-	os << show(s); return os;
+	os << s.show(); return os;
 }
 
 struct RuleVar {
@@ -122,7 +113,7 @@ struct RuleVar {
 			return rv.isRule() ? rule < rv.rule : false;
 		}
 	}
-	string show() const { return rule ? Lex::toStr(rule->id()) : prover::show(var); }
+	string show() const { return rule ? Lex::toStr(rule->id()) : var.show(true); }
 	bool isVar() const  { return var.is_def(); }
 	bool isRule() const { return rule; }
 	const Type* type() const { return rule ? rule->type() : var.type; }
@@ -131,6 +122,10 @@ struct RuleVar {
 	const Rule* rule = nullptr;
 	LightSymbol var;
 };
+
+inline ostream& operator << (ostream& os, const RuleVar& rv) {
+	os << rv.show(); return os;
+}
 
 struct Term {
 	struct Iter;
@@ -182,6 +177,10 @@ struct Term {
 	string show(bool simple = false) const; // simple = false for corresponding linear expression
 	string show_pointers() const;
 };
+
+inline ostream& operator << (ostream& os, const Term& t) {
+	os << t.show(); return os;
+}
 
 struct Term::Iter {
 	Iter() : valid_(false) { }

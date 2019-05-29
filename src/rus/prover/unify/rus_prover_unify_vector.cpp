@@ -224,29 +224,29 @@ MatrixUnifiedUnion MatrixUnifiedUnion::intersect(const VectorUnifiedUnion& vuu, 
 	return ret;
 }
 
-static vector<uint> optimize_intersection_order(const map<uint, VectorUnifiedUnion>& terms) {
-	vector<uint> ret;
+static vector<LightSymbol> optimize_intersection_order(const map<LightSymbol, VectorUnifiedUnion>& terms) {
+	vector<LightSymbol> ret;
 	for (const auto& p : terms) {
 		ret.push_back(p.first);
 	}
 	std::sort(
 		ret.begin(),
 		ret.end(),
-		[&terms](uint v1, uint v2) {
+		[&terms](auto v1, auto v2) {
 			return terms.at(v1).card() < terms.at(v2).card();
 		}
 	);
 	return ret;
 }
 
-MultyUnifiedSubs intersect(const map<uint, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
+MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif) {
 	MatrixUnifiedUnion common;
 	MultyUnifiedSubs s;
 
 	Timer timer;
-	vector<uint> vars = optimize_intersection_order(terms);
+	vector<LightSymbol> vars = optimize_intersection_order(terms);
 	for (uint i = 0; i < vars.size(); ++ i) {
-		uint v = vars[i];
+		LightSymbol v = vars[i];
 		common = std::move(common.intersect(terms.at(v), i ));
 		if (common.empty()) {
 			return s;

@@ -182,7 +182,7 @@ struct UnifyPair {
 struct UnifStepData {
 	enum class Kind { VAR, RULE, CONST_VAR };
 	const Rule* rule = nullptr;
-	vector<uint> vars;
+	vector<LightSymbol> vars;
 	const Type* least_type = nullptr;
 	bool consistent = false;
 	LightSymbol var;
@@ -257,7 +257,7 @@ struct UnifStepData {
 				kinds.push_back(Kind::CONST_VAR);
 			}
 			// Collect replaceable variables
-			vars.push_back(v.lit);
+			vars.push_back(v);
 		} else {
 			kinds.push_back(Kind::CONST_VAR);
 			if (const_.is_undef()) {
@@ -293,25 +293,15 @@ struct UnifStepData {
 	}
 
 	string show() const {
-		cout << "rule: " << (rule ? Lex::toStr(rule->id()) : "NULL") << endl;
-		cout << "vars: " << flush;
-		for (const auto& v : vars) {
-			cout << Lex::toStr(v) << " " << flush;
-		}
-		cout << endl;
-		cout << "consistent: " << (consistent ? "TRUE" : "FALSE") << endl;
-		cout << "var: " << prover::show(var, true) << endl;
-		cout << endl;
-
 		string ret;
 		ret += "rule: " + (rule ? Lex::toStr(rule->id()) : "NULL") + "\n";
 		ret += "vars: ";
 		for (const auto& v : vars) {
-			ret += Lex::toStr(v) + " ";
+			ret += v.show() + " ";
 		}
 		ret += "\n";
 		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
-		ret += string("var: ") + prover::show(var, true) + "\n";
+		ret += string("var: ") + var.show(true) + "\n";
 		ret += "\n";
 		return ret;
 	}

@@ -125,9 +125,9 @@ struct VarifyIters {
 	VarPair replPair() const {
 		if (bothVars()) {
 			if (indexSubtype()) {
-				return VarPair(termIter.ruleVar().var.lit, indexIter.ruleVar().var.lit);
+				return VarPair(termIter.ruleVar().var, indexIter.ruleVar().var);
 			} else if (termSubtype()) {
-				return VarPair(indexIter.ruleVar().var.lit, termIter.ruleVar().var.lit);
+				return VarPair(indexIter.ruleVar().var, termIter.ruleVar().var);
 			} else {
 				return VarPair();
 			}
@@ -215,7 +215,7 @@ static bool varify_iters_index_term(VarifyIters& i) {
 		return true;
 	} else {
 		VarPair replPair = i.replPair();
-		return replPair.isDefined() ? i.repl.compose(replPair) : false;
+		return replPair.from.is_def() ? i.repl.compose(replPair) : false;
 	}
 }
 

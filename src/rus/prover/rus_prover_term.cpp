@@ -88,13 +88,17 @@ string showFlatTerm(Term::ConstIterator i) {
 			if (s->kind() == Symbol::CONST) {
 				ret += s->show() + " ";
 			} else {
+				if (it == Term::ConstIterator()) {
+					cout << "MMMMM" << endl;
+					exit(-2);
+				}
 				ret += showFlatTerm(it) + " ";
 				it = it->end + 1;
 			}
 		}
 		return ret;
 	} else {
-		return show(i->ruleVar.var);
+		return i->ruleVar.var.show(true);
 	}
 }
 

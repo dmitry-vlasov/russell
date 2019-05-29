@@ -10,7 +10,7 @@ bool Subst::operator == (const Subst& s) const {
 		return false;
 	}
 	for (const auto& p : sub_) {
-		if (p.second != s.map(p.first)) {
+		if (p.second.term != s.map(p.first)) {
 			return false;
 		}
 	}
@@ -38,7 +38,7 @@ static bool consistent(const Subst& s, uint v, const Term& t) {
 	if (s.maps(v)) {
 		return t == s.map(v);
 	} else {
-		for (uint x : x_vars) {
+		for (auto x : x_vars) {
 			if (s.maps(x)) {
 				set<uint> y_vars;
 				const Term& p = s.map(x);
@@ -59,7 +59,7 @@ static bool consistent(const Subst& s, uint v, const Term& t) {
 
 bool Subst::consistent(const Subst& sub) const {
 	for (const auto& p : sub) {
-		if (!prover::consistent(*this, p.first, p.second)) {
+		if (!prover::consistent(*this, p.first, p.second.term)) {
 			return false;
 		}
 	}
@@ -69,7 +69,7 @@ bool Subst::consistent(const Subst& sub) const {
 #ifdef DEBUG_SUBST
 static void verify_chains(const Subst& s) {
 	for (const auto& p : s) {
-		for (uint v : p.second.vars()) {
+		for (auto v : p.second.vars()) {
 			if (s.maps(v)) {
 				throw Error("chain in composition:\n" + s.show());
 			}
@@ -78,8 +78,8 @@ static void verify_chains(const Subst& s) {
 }
 
 static void verify_composition(const Subst& comp, const Subst& s1, const Subst& s2, bool norm) {
-	set<uint> vars = norm ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
-	for (uint v : vars) {
+	set<LightSymbol> vars = norm ? sets_unite<uint>(s1.dom(), s2.dom()) : s1.dom();
+	for (auto v : vars) {
 		LightSymbol var(v);
 		Term t0(var);
 		Term t1 = comp.apply(var);
@@ -95,7 +95,8 @@ static void verify_composition(const Subst& comp, const Subst& s1, const Subst& 
 }
 #endif
 
-static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bool norm) {
+template<class S>
+static void compose(const Subst& s1, Subst::Sub_& sub_, S s2, bool norm) {
 #ifdef DEBUG_SUBST
 	Subst s0(s1);
 #endif
@@ -103,15 +104,15 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 	vector<uint> to_erase;
 	to_erase.reserve(sub_.size());
 	for (auto& p : sub_) {
-		Term ex = s2.apply(p.second);
+		Term ex = s2.apply(p.second.term);
 		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
-			p.second = std::move(ex);
+			p.second.term = std::move(ex);
 		} else {
 			to_erase.push_back(p.first);
 		}
 		vars.insert(p.first);
 	}
-	for (uint v : to_erase) {
+	for (auto v : to_erase) {
 		sub_.erase(v);
 	}
 	if (norm) {
@@ -136,12 +137,13 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, const Subst& s2, bo
 
 static Timer compose_apply_timer;
 
-static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool norm) {
+/*
+static void compose(const Subst& s1, hmap<LightSymbol, Term>& sub_, Subst&& s2, bool norm) {
 #ifdef DEBUG_SUBST
 	Subst s0(s1);
 #endif
-	hset<uint> vars;
-	vector<uint> to_erase;
+	hset<LightSymbol, LightSymbol::Hash> vars;
+	vector<LightSymbol> to_erase;
 	to_erase.reserve(sub_.size());
 	for (auto& p : sub_) {
 
@@ -156,7 +158,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool no
 		}
 		vars.insert(p.first);
 	}
-	for (uint v : to_erase) {
+	for (auto v : to_erase) {
 		sub_.erase(v);
 	}
 	if (norm) {
@@ -177,7 +179,7 @@ static void compose(const Subst& s1, hmap<uint, Term>& sub_, Subst&& s2, bool no
 		throw err;
 	}
 #endif
-}
+}*/
 
 
 bool Subst::compose(const Subst& s, CompMode m, bool checked) {
@@ -255,7 +257,7 @@ string Subst::show() const {
 		str += "empty\n";
 	}
 	for (const auto& p : sub_) {
-		str += Lex::toStr(p.first) + " --> " + p.second.show() + "\n";
+		str += Lex::toStr(p.first) + " --> " + p.second.term.show() + "\n";
 	}
 	return str;
 }
@@ -268,7 +270,7 @@ string Subst::showVars(const set<uint>& vars) const {
 	}
 	for (const auto& p : sub_) {
 		if (vars.count(p.first)) {
-			str += Lex::toStr(p.first) + " --> " + p.second.show() + "\n";
+			str += Lex::toStr(p.first) + " --> " + p.second.term.show() + "\n";
 		}
 	}
 	return str;
@@ -305,18 +307,10 @@ Term Subst::apply(const Term& t) const {
 	return ret;
 }
 
-Subst Substitution2FlatSubst(const Substitution& sub) {
-	Subst ret;
-	for (const auto& p : sub) {
-		ret.compose(p.first, std::move(Tree2Term(*p.second)));
-	}
-	return ret;
-}
-
-Substitution FlatSubst2Substitution(const Subst& s) {
+Substitution Subst2Substitution(const Subst& s) {
 	Substitution ret;
 	for (const auto& p : s) {
-		ret.join(p.first, std::move(Term2Tree(p.second)));
+		ret.join(p.first, p.second.type, Term2Tree(p.second.term));
 	}
 	return ret;
 }
@@ -328,9 +322,9 @@ string show_diff(const Subst& s1, const Subst& s2) {
 		for (const auto& p : s1) {
 			if (!s2.maps(p.first)) {
 				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
-			} else if (p.second != s2.map(p.first)) {
+			} else if (p.second.term != s2.map(p.first)) {
 				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
-				ret += "\t\t" + p.second.show() + "\n";
+				ret += "\t\t" + p.second.term.show() + "\n";
 				ret += "\t\t" + s2.map(p.first).show() + "\n";
 			}
 		}
@@ -338,10 +332,10 @@ string show_diff(const Subst& s1, const Subst& s2) {
 		for (const auto& p : s2) {
 			if (!s1.maps(p.first)) {
 				ret += "\ts2 doesn't have " + Lex::toStr(p.first) + "\n";
-			} else if (p.second != s1.map(p.first)) {
+			} else if (p.second.term != s1.map(p.first)) {
 				ret += "\tvalues for '" + Lex::toStr(p.first) + "' differ:\n";
 				ret += "\t\t" + s1.map(p.first).show() + "\n";
-				ret += "\t\t" + p.second.show() + "\n";
+				ret += "\t\t" + p.second.term.show() + "\n";
 			}
 		}
 		return ret;

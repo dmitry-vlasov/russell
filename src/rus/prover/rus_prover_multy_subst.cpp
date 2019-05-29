@@ -27,7 +27,7 @@ Subst MultySubst::makeSubs(Subst& unif) const {
 
 void MultySubst::add(const Subst* sub) {
 	for (const auto& p : *sub) {
-		msub_[p.first].push_back(p.second);
+		msub_[LightSymbol(p.first, p.second.type)].push_back(p.second.term);
 	}
 }
 

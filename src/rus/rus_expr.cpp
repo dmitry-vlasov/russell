@@ -222,8 +222,10 @@ void RuleTree::write(ostream& os, const Indent& indent) const {
 
 void Substitution::operator = (const Substitution& s) {
 	ok_ = s.ok_;
-	if (ok_) for (const auto& p : s.sub_) {
-		sub_.emplace(p.first, p.second->clone());
+	if (ok_) {
+		for (const auto& p : s.sub_) {
+			sub_.emplace(p.first, p.second);
+		}
 	}
 }
 
@@ -233,24 +235,36 @@ void Substitution::operator = (Substitution&& s) {
 	s.ok_ = true;
 }
 
-bool Substitution::join(uint v, const Tree& t) {
+bool Substitution::join(const Var& v, const Tree& tr) {
+	return join(v.lit(), v.type(), tr);
+}
+
+bool Substitution::join(const Var& v, unique_ptr<Tree>&& tr) {
+	return join(v.lit(), v.type(), std::move(tr));
+}
+
+bool Substitution::join(uint v, const Type* tp, const Tree& tr) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if (*(*it).second != t) ok_ = false;
+		if (*(*it).second.tree != tr) {
+			ok_ = false;
+		}
 	} else {
-		sub_.emplace(v, t.clone());
+		sub_.emplace(v, TypeTree(tp, tr));
 	}
 	return ok_;
 }
 
-bool Substitution::join(uint v, unique_ptr<Tree>&& t) {
+bool Substitution::join(uint v, const Type* tp, unique_ptr<Tree>&& tr) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if (*(*it).second != *t) ok_ = false;
+		if (*(*it).second.tree != *tr) {
+			ok_ = false;
+		}
 	} else {
-		sub_.emplace(v, std::move(t));
+		sub_.emplace(v, TypeTree(tp, std::move(tr)));
 	}
 	return ok_;
 }
@@ -259,7 +273,7 @@ bool Substitution::join(const Substitution& s) {
 	if (s.ok_) {
 		for (const auto& p : s.sub_) {
 			if (!ok_) return false;
-			join(p.first, *p.second);
+			join(p.first, p.second.type.get(), *p.second.tree);
 		}
 	} else {
 		ok_ = false;
@@ -271,7 +285,7 @@ bool Substitution::join(Substitution&& s) {
 	if (s.ok_) {
 		for (auto&& p : s.sub_) {
 			if (!ok_) return false;
-			join(p.first, std::move(p.second));
+			join(p.first, p.second.type.get(), std::move(p.second.tree));
 		}
 	} else {
 		ok_ = false;

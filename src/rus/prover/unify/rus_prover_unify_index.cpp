@@ -19,7 +19,7 @@ void Index::add(const Term& t, uint val) {
 }
 
 const vector<uint>* Index::find(const Term& t) const {
-	const Node* n = &root_;
+	const Node* n = &root();
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto ni = n->map.find(i->ruleVar);
 		if (ni == n->map.end()) {
@@ -36,8 +36,8 @@ void Index::verify(bool show) const {
 	cout << show_pointers() << endl;
 
 	vector<Iter> branch;
-	if (root_.map.size()) {
-		branch.emplace_back(root_);
+	if (root().map.size()) {
+		branch.emplace_back(root());
 		while (branch.size()) {
 			Iter n = branch.back();
 			for (auto e : n.iter()->second.ends) {
@@ -175,7 +175,12 @@ Term Index::Iter::subTerm(ConstIterator i) const {
 		i = i->second.parent;
 	}
 	std::reverse(branch.begin(), branch.end());
-	return create_flatterm(branch);
+	try {
+		return create_flatterm(branch);
+	} catch (Error& err) {
+
+		throw err;
+	}
 }
 
 string show_branch(const vector<Index::Iter>& branch) {
@@ -187,11 +192,11 @@ string show_branch(const vector<Index::Iter>& branch) {
 }
 
 Index::Unpacked Index::unpack() const {
-	return unpack(root_);
+	return unpack(root());
 }
 
 string Index::show() const {
-	return show(root_);
+	return show(root());
 }
 
 string Index::show_pointers() const {

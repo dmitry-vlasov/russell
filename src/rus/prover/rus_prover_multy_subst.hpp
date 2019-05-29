@@ -14,7 +14,7 @@ struct MultySubst {
 		ret << "==========" << endl;
 		uint c = 0;
 		for (const auto& p : msub_) {
-			ret << c++ << " VAR: " << Lex::toStr(p.first) << endl;
+			ret << c++ << " VAR: " << p.first << endl;
 			ret << "TREES:" << endl;
 			for (const auto& tree : p.second) {
 				ret << Indent::paragraph(tree.show()) << endl;
@@ -25,7 +25,7 @@ struct MultySubst {
 
 private:
 	void add(const Subst* s);
-	map<uint, vector<Term>> msub_;
+	map<LightSymbol, vector<Term>> msub_;
 };
 
 void sub_closure(Subst& sub);
