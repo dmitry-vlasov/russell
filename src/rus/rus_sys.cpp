@@ -49,6 +49,7 @@ string xml_structure(uint bits);
 string xml_types();
 
 void reduce_duplcate_steps();
+void factorize_subproofs();
 
 namespace {
 
@@ -107,6 +108,10 @@ Return types() {
 Return refactor(const string& job) {
 	if (job == "reduce_proofs") {
 		reduce_duplcate_steps();
+	} else if (job == "factorize_subproofs") {
+		factorize_subproofs();
+	} else {
+		return Return("unknown refactor job: " + job, false);
 	}
 	return Return();
 }
@@ -255,7 +260,7 @@ static Descr description(string name) {
 		{"parse_src",  Descr("parse all unparsed sources")},
 		{"parse_expr", Descr("parse all unparsed expressions")},
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
-		{"refactor",   Descr("Refactor theories",    Descr::Arg("job", "reduce_proofs"))},
+		{"refactor",   Descr("Refactor theories",    Descr::Arg("job", "reduce_proofs|factorize_subproofs"))},
 		{"info",       Descr("info about math")},
 		{"show",       Descr("show entity")},
 		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},

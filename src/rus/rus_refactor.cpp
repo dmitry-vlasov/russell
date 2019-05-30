@@ -79,7 +79,23 @@ struct ProofImpl {
 	ProofImpl(uint l, const Step* s) : abst(l, s->refs.size()) {
 		impls.emplace_back(s, s->refs.size());
 	}
+	ProofImpl(uint l, const vector<const Step*>& steps) : abst(l, steps[0]->refs.size()) {
+		for (auto s : steps) {
+			impls.emplace_back(s, s->refs.size());
+		}
+	}
 	ProofImpl(const ProofImpl& pi) : abst(pi.abst) { }
+
+	string show() const {
+		string ret;
+		ret += "abstract:\n\t" + abst.getRoot(0)->show([](uint l) { return Lex::toStr(l); }) + "\n";
+		ret += "impls:\n";
+		for (const auto& im : impls) {
+			ret += "\t" + im.getRoot(0)->show([](const Step* s) { return "S:" + Lex::toStr(s->ass_id()); }) + "\n";
+		}
+		return ret;
+	}
+
 	AbstProof abst;
 	vector<SubProof> impls;
 	bool was_tested = false;
@@ -89,9 +105,8 @@ vector<unique_ptr<ProofImpl>> init_subproofs(const AssertionMap& ass_map) {
 	vector<unique_ptr<ProofImpl>> ret;
 	for (auto& p : ass_map) {
 		uint ass_id = p.first;
-		for (const Step* step : p.second) {
-			ret.emplace_back(make_unique<ProofImpl>(ass_id, step));
-		}
+		ret.emplace_back(make_unique<ProofImpl>(ass_id, p.second));
+		//cout << ret.back()->show() << endl;
 	}
 	return ret;
 }
@@ -109,10 +124,14 @@ ProofImpl* try_to_expand(const ProofImpl* pi, uint subproof_ind, uint leaf_ind, 
 			}
 		}
 	}
+	if (new_impls.size() == 0) {
+		throw Error("WRONG: new_impls.size() == 0");
+	}
 	if (new_impls.size() > 1) {
 		ProofImpl* new_pi = new ProofImpl(*pi);
 		new_pi->abst.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
 		new_pi->impls = std::move(new_impls);
+		//cout << new_pi->show() << endl;
 		return new_pi;
 	} else {
 		return nullptr;
@@ -144,20 +163,23 @@ bool next_subproofs(uint start, vector<unique_ptr<ProofImpl>>& v, const Assertio
 	return ret;
 }
 
+}
+
 void factorize_subproofs() {
 	AssertionMap ass_map = init_assertion_map();
+	cout << "ass_map.size() = " << ass_map.size() << endl;
 	vector<unique_ptr<ProofImpl>> common_subproofs = init_subproofs(ass_map);
 	uint start = 0;
 	while (true) {
 		uint new_start = common_subproofs.size();
+		cout << "TO ANALYZE: " << new_start << endl;
 		if (next_subproofs(start, common_subproofs, ass_map)) {
+			cout << "ADDED: " << common_subproofs.size() - new_start << endl;
 			start = new_start;
 		} else {
 			break;
 		}
 	}
-}
-
 }
 
 #ifdef PARALLEL

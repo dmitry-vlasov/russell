@@ -9,7 +9,9 @@ struct DAG {
 		Node(Label l, uint a) : label_(l), children_(a) { }
 		Node(const Node& d) : label_(d.label_), children_(d.childrenArity()) {
 			for (uint i = 0; i < d.childrenArity(); ++ i) {
-				setChild(i, new Node(*d.getChild(i)));
+				if (d.getChild(i)) {
+					setChild(i, new Node(*d.getChild(i)));
+				}
 			}
 		}
 		Label label() const { return label_; }
@@ -26,6 +28,26 @@ struct DAG {
 		}
 		void traverse(std::function<void (const Node&)> f) const {
 			f(*this); for (const auto& c : children_) if (c) c->traverse(f);
+		}
+		string show(std::function<string (const Label&)> f) const {
+			string ret;
+			ret += f(label_) + "(";
+			if (children_.size()) {
+				if (children_[0]) {
+					ret += children_[0]->show(f);
+				} else {
+					ret += "*";
+				}
+				for (uint i = 1; i < children_.size(); ++ i) {
+					if (children_[i]) {
+						ret += ", " + children_[i]->show(f);
+					} else {
+						ret += ", *";
+					}
+				}
+			}
+			ret += ")";
+			return ret;
 		}
 	private:
 		Label label_;
