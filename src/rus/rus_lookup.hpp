@@ -1,3 +1,5 @@
+#pragma once
+
 #include <rus_ast.hpp>
 
 namespace mdl { namespace rus {

@@ -1,7 +1,8 @@
 #include <rus_ast.hpp>
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
+#include "../../include/dag.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl { namespace rus { namespace {
 
 void reduce_duplcate_steps(Proof* proof) {
 	vector<Proof::Elem> new_elems;
@@ -50,6 +51,113 @@ void reduce_duplcate_steps(Proof* proof) {
 		//cout << "diff: " << (proof->elems.size() - new_elems.size()) << ", new_elems.size() = " << new_elems.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
 		proof->elems = std::move(new_elems);
 	}
+}
+
+
+
+typedef map<uint, vector<const Step*>> AssertionMap;
+
+AssertionMap init_assertion_map() {
+	AssertionMap ass_map;
+	for (auto& p : Sys::mod().math.get<Proof>()) {
+		if (Proof* proof = p.second.data) {
+			for (const auto& e : proof->elems) {
+				if (Proof::kind(e) == Proof::STEP) {
+					const Step* step = Proof::step(e);
+					ass_map[step->ass_id()].push_back(step);
+				}
+			}
+		}
+	}
+	return ass_map;
+}
+
+typedef DAG<uint> AbstProof;
+typedef DAG<const Step*> SubProof;
+
+struct ProofImpl {
+	ProofImpl(uint l, const Step* s) : abst(l, s->refs.size()) {
+		impls.emplace_back(s, s->refs.size());
+	}
+	ProofImpl(const ProofImpl& pi) : abst(pi.abst) { }
+	AbstProof abst;
+	vector<SubProof> impls;
+	bool was_tested = false;
+};
+
+vector<unique_ptr<ProofImpl>> init_subproofs(const AssertionMap& ass_map) {
+	vector<unique_ptr<ProofImpl>> ret;
+	for (auto& p : ass_map) {
+		uint ass_id = p.first;
+		for (const Step* step : p.second) {
+			ret.emplace_back(make_unique<ProofImpl>(ass_id, step));
+		}
+	}
+	return ret;
+}
+
+ProofImpl* try_to_expand(const ProofImpl* pi, uint subproof_ind, uint leaf_ind, SubProof::Leaf leaf, uint ref_ind, const Step* ch, const AssertionMap& ass_map) {
+	vector<SubProof> new_impls;
+	for (const SubProof& sp : pi->impls) {
+		const SubProof::Node* ln = sp.getLeaf(leaf_ind).node;
+		const auto& r = ln->label()->refs.at(ref_ind);
+		if (r->kind() == Ref::STEP) {
+			const Step* lst = r->step();
+			if (ch->ass_id() == lst->ass_id()) {
+				new_impls.emplace_back(sp);
+				new_impls.back().expandLeaf(leaf_ind, lst, lst->refs.size());
+			}
+		}
+	}
+	if (new_impls.size() > 1) {
+		ProofImpl* new_pi = new ProofImpl(*pi);
+		new_pi->abst.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+		new_pi->impls = std::move(new_impls);
+		return new_pi;
+	} else {
+		return nullptr;
+	}
+}
+
+bool next_subproofs(uint start, vector<unique_ptr<ProofImpl>>& v, const AssertionMap& ass_map) {
+	bool ret = false;
+	for (uint i0 = start; i0 < v.size(); ++i0) {
+		const ProofImpl* pi = v.at(i0).get();
+		for (uint i = 0; i < pi->impls.size(); ++i) {
+			const SubProof& subproof = pi->impls.at(i);
+			for (uint j = 0; j < subproof.leafSize(); ++ j) {
+				SubProof::Leaf leaf = subproof.getLeaf(j);
+				const Step* step = leaf.node->label();
+				for (uint k = 0; k < step->refs.size(); ++k) {
+					const auto& r = step->refs.at(k);
+					if (r->kind() == Ref::STEP) {
+						const Step* ch = r->step();
+						if (ProofImpl* ni = try_to_expand(pi, i, j, leaf, k, ch, ass_map)) {
+							v.emplace_back(ni);
+							ret = true;
+						}
+					}
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+void factorize_subproofs() {
+	AssertionMap ass_map = init_assertion_map();
+	vector<unique_ptr<ProofImpl>> common_subproofs = init_subproofs(ass_map);
+	uint start = 0;
+	while (true) {
+		uint new_start = common_subproofs.size();
+		if (next_subproofs(start, common_subproofs, ass_map)) {
+			start = new_start;
+		} else {
+			break;
+		}
+	}
+}
+
 }
 
 #ifdef PARALLEL
