@@ -29,13 +29,16 @@ struct Index {
 	void add(const Term& t, uint val);
 	Unpacked unpack() const;
 	string show() const;
-	string show_pointers() const;
+	string showTypes() const;
+	string showPointers() const;
 
 	static Unpacked unpack(const Node&);
 	static Unpacked unpack(Iter);
 	static string show(const Node&);
 	static string show(Iter);
-	static string show_pointers(const Node&);
+	static string showTypes(const Node&);
+	static string showTypes(Iter);
+	static string showPointers(const Node&);
 
 	uint totalNodes() const;
 	bool empty() const { return root_.map.empty(); }
@@ -49,7 +52,6 @@ struct Index {
 		return root_;
 	}
 	map<uint, TermSubst> unify(const Term& t) const;
-	map<uint, TermVarRepl> varify(const Term& t) const;
 	const vector<uint>* find(const Term& t) const;
 
 private:
@@ -62,7 +64,7 @@ private:
 
 struct Index::Iter {
 	Iter() : node_(nullptr) { }
-	Iter(const Node& n) : iter_(n.map.begin()), node_(&n) { }
+	Iter(const Node& n) : iter_(n.map.size() ? n.map.begin() : ConstIterator()), node_(&n) { }
 	Iter(const Node* n, ConstIterator i = ConstIterator()) : iter_(i), node_(n) { }
 	Iter(const Iter&) = default;
 	Iter& operator = (const Iter&) = default;
@@ -100,8 +102,8 @@ struct Index::Iter {
 		if (!isValid()) {
 			return true;
 		} else {
-			auto i = iter_;
-			return ++i == node_->map.end();
+			auto i = iter_; ++i;
+			return i == node_->map.end();
 		}
 	}
 	bool isValid() const {
@@ -285,8 +287,11 @@ struct IndexMap {
 			return ret;
 		}
 	}
-	string show_pointers() const {
-		return index_.show_pointers();
+	string showPointers() const {
+		return index_.showPointers();
+	}
+	string showTypes() const {
+		return index_.showTypes();
 	}
 
 	vector<Unified> unify(const Term& t) const {
@@ -318,39 +323,15 @@ struct IndexMap {
 		}
 		return ret;
 	}
-	vector<Replaced> varify(const Term& t) const {
+	vector<Replaced> find(const Term& t) const {
+		const Normalizer n(t);
 		vector<Replaced> ret;
-		if (!index_.size()) {
-			return ret;
-		}
-		try {
-			Timer timer;
-			timer.start();
-			map<uint, TermVarRepl> varified = varify_index_term(index_, t);
-			add_timer_stats("varify_index_term", timer);
-
-			timer.start();
-			for (auto& p : varified) {
-				uint ind = p.first;
-				const VarRepl& repl = stored_.at(ind).norm;
-				repl.apply(p.second.repl);
-				ret.emplace_back(stored_.at(ind).data, std::move(p.second.repl));
-			}
-			add_timer_stats("Index::varify: form result", timer);
-		} catch (Error& err) {
-			cout << "varify_index_term: " << endl;
-			cout << index_.show() << endl << endl;
-			cout << t.show() << endl << endl;
-			throw err;
-		}
-		return ret;
-	}
-	vector<Data> find(const Term& t) const {
-		vector<Data> ret;
-		const vector<uint>* inds = index_.find(t);
+		const vector<uint>* inds = index_.find(n.normalized);
 		if (inds) {
 			for (uint ind : *inds) {
-				ret.push_back(stored_.at(ind).data_);
+				const VarRepl& norm = stored_.at(ind).norm;
+				VarRepl repl = norm.inversed().apply(n.norm);
+				ret.emplace_back(stored_.at(ind).data, std::move(repl));
 			}
 		}
 		return ret;

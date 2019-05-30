@@ -277,7 +277,7 @@ struct Vector{
 			cout << endl << "VectorIndex::unify_general(): ERROR" << endl;
 			for (auto& c : vect) {
 				cout << "CELL: " << endl;
-				cout << c->exprs().show_pointers() << endl << endl;
+				cout << c->exprs().showTypes() << endl << endl;
 			}
 			ret.unified = unify::unify_general(inds);
 			throw err;

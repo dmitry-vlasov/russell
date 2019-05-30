@@ -73,22 +73,10 @@ Hyp::Hyp(Term&& e, Prop* p) :
 void Hyp::buildUp() {
 	Timer timer1;
 	Timer timer;
-
-	cout << "TO UNIFY: " << expr.show() << endl;
-	cout << "ASSERTIONS: " << space->assertions().show() << endl;
-
 	auto unified = space->assertions().unify(expr);
 	add_timer_stats("build_up_hyp_unify_timer", timer);
-
-	if (unified.size() == 0) {
-		cout << "UNIFICATION FAILED" << endl;
-	}
-
 	timer.start();
 	for (auto& m : unified) {
-
-		cout << "UNIFIED: " << Lex::toStr(m.data.ass->id()) << endl;
-
 		set<uint> assertion_vars;
 		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
 		for (const auto& p : fresher) {
@@ -145,7 +133,8 @@ bool Hyp::buildDown(set<Node*>& downs) {
 
 bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
 	bool ret = false;
-	for (const auto& m : space->hyps().unify(expr)) {
+	auto unified = space->hyps().unify(expr);
+	for (const auto& m : unified) {
 		if (hint) {
 			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
 		} else {
@@ -168,18 +157,24 @@ void Prop::buildUp() {
 	Timer timer;
 	for (auto& h : prop.ass->hyps) {
 		Term expr = Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
-		auto variants = space->expressions().varify(expr);
+		auto variants = space->expressions().find(expr);
 		Hyp* hyp = new Hyp(std::move(expr), this);
 		if (variants.size()) {
 			if (variants.size() > 1) {
-				throw Error("variants size must be == 1");
+				cout << "EXPRS: " << space->expressions().show() << endl;
+				cout << "HYP: " << h->expr.show() << endl;
+				for (uint i = 0; i < variants.size(); ++ i) {
+					cout << i << " variant: "  << variants[i].data->expr.show() << endl;
+					cout << variants[i].repl.show() << endl;
+				}
+				throw Error("variants size must be == 1, but is: " + to_string(variants.size()));
 			}
 			hyp->variants.push_back(make_unique<Ref>(
 				hyp,
 				variants.at(0).data,
 				space,
-				std::move(variants.at(0).repl
-			)));
+				std::move(variants.at(0).repl)
+			));
 			if (hint) {
 				hyp->variants.back()->hint = true;
 			}

@@ -175,7 +175,8 @@ struct Term {
 
 	vector<Node> nodes;
 	string show(bool simple = false) const; // simple = false for corresponding linear expression
-	string show_pointers() const;
+	string showPointers() const;
+	string showTypes() const;
 };
 
 inline ostream& operator << (ostream& os, const Term& t) {

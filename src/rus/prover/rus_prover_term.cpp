@@ -80,26 +80,26 @@ Term& Term::operator = (const Term& t) {
 	return *this;
 }
 
-string showFlatTerm(Term::ConstIterator i) {
+static string showTerm(Term::ConstIterator i, bool with_types = false) {
+	const Type* type = i->ruleVar.type();
+	string ret;
 	if (i->ruleVar.isRule()) {
-		string ret;
 		auto it = i + 1;
 		for (const auto& s : i->ruleVar.rule->term) {
 			if (s->kind() == Symbol::CONST) {
 				ret += s->show() + " ";
 			} else {
-				if (it == Term::ConstIterator()) {
-					cout << "MMMMM" << endl;
-					exit(-2);
-				}
-				ret += showFlatTerm(it) + " ";
+				ret += showTerm(it) + " ";
 				it = it->end + 1;
 			}
 		}
-		return ret;
 	} else {
-		return i->ruleVar.var.show(true);
+		ret += i->ruleVar.var.show(true);
 	}
+	if (with_types) {
+		ret += ":" + Lex::toStr(type->id());
+	}
+	return ret;
 }
 
 string Term::show(bool simple) const {
@@ -113,12 +113,16 @@ string Term::show(bool simple) const {
 		if (!nodes.size()) {
 			return "<empty>";
 		} else {
-			return showFlatTerm(nodes.begin());
+			return showTerm(nodes.begin());
 		}
 	}
 }
 
-string Term::show_pointers() const {
+string Term::showTypes() const {
+	return showTerm(nodes.begin(), true);
+}
+
+string Term::showPointers() const {
 	ostringstream oss;
 	for (auto i = nodes.cbegin(); i != nodes.cend(); ++i) {
 		oss << i->ruleVar.show() << "=(" << (void*)&*i << ", end: " << (void*)&*i->end << ") ";

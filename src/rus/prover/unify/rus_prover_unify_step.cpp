@@ -36,7 +36,7 @@ Subst unify_step(const Subst& s, const vector<LightSymbol>& vars, Term&& term) {
 		cout << endl << "unify_step: ERROR" << endl;
 		for (auto t : to_unify) {
 			cout << "TERM: " << endl;
-			cout << t->show_pointers();
+			cout << t->showPointers();
 		}
 		cout << endl;
 		throw err;

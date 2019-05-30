@@ -19,7 +19,7 @@ void Index::add(const Term& t, uint val) {
 }
 
 const vector<uint>* Index::find(const Term& t) const {
-	const Node* n = &root();
+	const Node* n = &root_;
 	for (auto i = t.nodes.begin(); i != t.nodes.end(); ++i) {
 		auto ni = n->map.find(i->ruleVar);
 		if (ni == n->map.end()) {
@@ -31,10 +31,7 @@ const vector<uint>* Index::find(const Term& t) const {
 }
 
 void Index::verify(bool show) const {
-
 	cout << "verifying index: START VERIFICATION" << endl;
-	cout << show_pointers() << endl;
-
 	vector<Iter> branch;
 	if (root().map.size()) {
 		branch.emplace_back(root());
@@ -102,7 +99,7 @@ void Index::verify(bool show) const {
 		}
 	}
 	cout << "verifying index: success" << endl;
-	cout << show_pointers() << endl;
+	//cout << showPointers() << endl;
 }
 
 static void markup_ends(Index::Node& root, const Term& t) {
@@ -199,15 +196,33 @@ string Index::show() const {
 	return show(root());
 }
 
-string Index::show_pointers() const {
-	vector<pair<vector<Iter>, uint>> vect;
-	vector<Iter> branch;
-	if (root_.map.size()) {
-		branch.emplace_back(root_);
+string Index::showTypes() const {
+	return showTypes(root());
+}
+
+string Index::showPointers() const {
+	return showPointers(root());
+}
+
+Index::Unpacked Index::unpack(const Node& root) {
+	return unpack(Iter(root));
+}
+
+Index::Unpacked Index::unpack(Iter root) {
+	Unpacked ret;
+	if (root.isValid()) {
+		vector<Iter> branch;
+		vector<ConstIterator> subterm;
+		branch.emplace_back(root);
 		while (branch.size()) {
 			Iter n = branch.back();
-			for (uint val : n.iter()->second.vals) {
-				vect.emplace_back(branch, val);
+			if (n.iter()->second.vals.size()) {
+				subterm.reserve(branch.size());
+				subterm.clear();
+				for (auto i : branch) {
+					subterm.push_back(i.iter());
+				}
+				ret.emplace_back(create_flatterm(subterm), n.iter()->second.vals);
 			}
 			if (!n.isNextEnd()) {
 				branch.push_back(n.next());
@@ -226,57 +241,6 @@ string Index::show_pointers() const {
 			}
 		}
 	}
-	ostringstream oss;
-	oss << "ROOT: " << (void*)&root_ << endl;
-	for (const auto& p : vect) {
-		for (const auto& i : p.first) {
-			oss << i.ruleVar().show() << "=(" << (void*)&*i.iter() << ") ";
-			oss << "ends=(";
-			for (const auto& e : i.iter()->second.ends) {
-				oss << (void*)&*e << " ";
-			}
-			oss << ") ";
-		}
-		oss << " --> " << p.second << "\n";
-	}
-	return oss.str();
-}
-
-Index::Unpacked Index::unpack(const Node& root) {
-	return unpack(Iter(root));
-}
-
-Index::Unpacked Index::unpack(Iter root) {
-	Unpacked ret;
-	vector<Iter> branch;
-	vector<ConstIterator> subterm;
-	branch.emplace_back(root);
-	while (branch.size()) {
-		Iter n = branch.back();
-		if (n.iter()->second.vals.size()) {
-			subterm.reserve(branch.size());
-			subterm.clear();
-			for (auto i : branch) {
-				subterm.push_back(i.iter());
-			}
-			ret.emplace_back(create_flatterm(subterm), n.iter()->second.vals);
-		}
-		if (!n.isNextEnd()) {
-			branch.push_back(n.next());
-		} else {
-			while (true) {
-				branch.pop_back();
-				if (!n.isSideEnd()) {
-					branch.push_back(n.side());
-					break;
-				}
-				if (branch.empty()) {
-					break;
-				}
-				n = branch.back();
-			}
-		}
-	}
 	return ret;
 }
 
@@ -292,11 +256,27 @@ string Index::show(Iter root) {
 	return ret;
 }
 
+string Index::showTypes(Iter root) {
+	string ret;
+	for (const auto& p : unpack(root)) {
+		ret += p.first.showTypes() + " --> {";
+		for (uint i : p.second) {
+			ret += to_string(i) + " ";
+		}
+		ret += "}\n";
+	}
+	return ret;
+}
+
 string Index::show(const Node& root) {
 	return show(Iter(root));
 }
 
-string Index::show_pointers(const Node& root) {
+string Index::showTypes(const Node& root) {
+	return showTypes(Iter(root));
+}
+
+string Index::showPointers(const Node& root) {
 	vector<pair<vector<Iter>, uint>> vect;
 	vector<Iter> branch;
 	if (root.map.size()) {

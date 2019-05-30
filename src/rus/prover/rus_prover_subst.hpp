@@ -78,17 +78,17 @@ struct Subst {
 
 	uint size() const { return sub_.size(); }
 	bool ok() const { return ok_; }
-	set<LightSymbol> dom() const {
-		set<LightSymbol> ret;
+	set<uint> dom() const {
+		set<uint> ret;
 		for (const auto& p : sub_) {
-			ret.insert(LightSymbol(p.first, p.second.type));
+			ret.insert(p.first);
 		}
 		return ret;
 	}
-	Subst complement(const set<LightSymbol>& vars) const {
+	Subst complement(const set<uint>& vars) const {
 		Subst ret(*this);
 		for (const auto& v : vars) {
-			ret.sub_.erase(v.lit);
+			ret.sub_.erase(v);
 		}
 		return ret;
 	}
@@ -259,12 +259,21 @@ inline ostream& operator << (ostream& os, const VarMap& vm) {
 }
 
 struct VarRepl {
+	VarRepl() = default;
+	VarRepl inversed() const {
+		return VarRepl(inverse_, direct_);
+	}
 	bool compose(VarPair p) {
 		return direct_.compose(p) && inverse_.compose(p.invert());
 	}
 	void apply(VarRepl& vr) const {
 		direct_.apply(vr.direct_);
 		inverse_.apply(vr.inverse_);
+	}
+	VarRepl apply(const VarRepl& vr) const {
+		VarRepl ret(vr);
+		apply(ret);
+		return ret;
 	}
 	const VarMap& direct() const { return direct_; }
 	const VarMap& inverse() const { return inverse_; }
@@ -282,6 +291,7 @@ struct VarRepl {
 	}
 
 private:
+	VarRepl(const VarMap& d, const VarMap& i) : direct_(d), inverse_(i) { }
 	VarMap direct_;
 	VarMap inverse_;
 };

@@ -38,7 +38,9 @@ struct Space {
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->add(p);
 		} else if (Hyp* h = dynamic_cast<Hyp*>(n)) {
-			expressions_.add(h->expr, h);
+			if (!expressions_.find(h->expr).size()) {
+				expressions_.add(h->expr, h);
+			}
 		}
 	}
 	void unregisterNode(Node* n) {
