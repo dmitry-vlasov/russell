@@ -115,7 +115,8 @@ struct Ref : public Node {
 };
 
 struct ProofNode {
-	ProofNode(const Subst& s, bool h);
+	ProofNode(const Subst& s, bool h) : sub(s), new_(true), ind(global_index()++), hint(h) { }
+	ProofNode(Subst&& s, bool h) : sub(std::move(s)), new_(true), ind(global_index()++), hint(h) { }
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual rus::Ref* ref() const = 0;
@@ -128,10 +129,13 @@ struct ProofNode {
 	bool  new_;
 	uint  ind;
 	bool  hint;
+private:
+	static uint& global_index() { static uint i = 0; return i; }
 };
 
 struct ProofExp : public ProofNode {
 	ProofExp(const Subst& s, bool h) : ProofNode(s, h) { }
+	ProofExp(Subst&& s, bool h) : ProofNode(std::move(s), h) { }
 };
 
 struct ProofTop : public ProofExp {
@@ -150,7 +154,8 @@ struct ProofTop : public ProofExp {
 };
 
 struct ProofHyp : public ProofExp {
-	ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi);
+	ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi);
+	ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
 	rus::Proof* proof() const override;
@@ -158,7 +163,7 @@ struct ProofHyp : public ProofExp {
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
 
-	ProofProp* child = nullptr;
+	ProofNode* child = nullptr;
 	Hyp& node;
 	Term expr_;
 	vector<ProofNode*> parents;

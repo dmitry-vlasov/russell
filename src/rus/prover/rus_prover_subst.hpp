@@ -248,6 +248,17 @@ struct VarMap {
 	uint size() const {
 		return repl.size();
 	}
+	Subst subst() const {
+		Subst ret;
+		for (const auto& p : repl) {
+			ret.compose(
+				LightSymbol(p.first, p.second.type),
+				Term(p.second),
+				CompMode::NORM, false
+			);
+		}
+		return ret;
+	}
 
 private:
 	typedef hmap<uint, LightSymbol> Repl_;

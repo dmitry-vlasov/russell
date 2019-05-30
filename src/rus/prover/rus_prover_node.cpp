@@ -28,14 +28,11 @@ void Ref::buildUp() {
 
 bool Ref::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
-	for (auto& p : proofs) {
+	for (const auto& p : proofs) {
 		if (p->new_) {
-			/*ProofHyp* parent_proof =  new ProofHyp(
-				*parent,
-				p.get(),
-				repl.apply(ancestor->sub),
-				p->hint
-			);
+			Subst sub = p->sub;
+			repl.direct().apply(sub);
+			ProofHyp* parent_proof =  new ProofHyp(*parent, p.get(), std::move(sub), p->hint);
 #ifdef VERIFY_UNIQUE_PROOFS
 			if (parent->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
@@ -49,7 +46,7 @@ bool Ref::buildDown(set<Node*>& downs) {
 				}
 			}
 #endif
-			parent->proofs.emplace_back(parent_proof);*/
+			parent->proofs.emplace_back(parent_proof);
 			new_proofs = true;
 		}
 	}

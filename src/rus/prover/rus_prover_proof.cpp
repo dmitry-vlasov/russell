@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-void apply_recursively(const Substitution& sub, rus::Step* step) {
+static void apply_recursively(const Substitution& sub, rus::Step* step) {
 	step->expr = apply(sub, step->expr);
 	for (auto& r : step->refs) {
 		if (r.get()->kind() == rus::Ref::STEP) {
@@ -10,11 +10,6 @@ void apply_recursively(const Substitution& sub, rus::Step* step) {
 		}
 	}
 }
-
-static uint proof_node_index = 0;
-
-ProofNode::ProofNode(const Subst& s, bool h) :
-	sub(s), new_(true), ind(proof_node_index++), hint(h) { }
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
 	ProofExp(s, hi), node(n), hyp(hy),
@@ -70,7 +65,24 @@ string show_struct(const ProofNode* n);
 
 //#define VERIFY_PROOF_EXP
 
-ProofHyp::ProofHyp(Hyp& hy, ProofProp* c, const Subst& s, bool hi) :
+ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
+	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
+	child->addParent(this);
+	child->new_ = false;
+#ifdef VERIFY_PROOF_EXP
+	try {
+		rus::Proof* pr = proof();
+		//cout << "PROOF: " << *pr << endl;
+		delete pr;
+	} catch (Error& err) {
+		cout << "ERR proof: " << ind << endl;
+		cout << show_struct(this) << endl;
+		throw err;
+	}
+#endif
+}
+
+ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
 	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
 	child->addParent(this);
 	child->new_ = false;

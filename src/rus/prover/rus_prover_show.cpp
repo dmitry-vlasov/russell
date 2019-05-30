@@ -126,7 +126,12 @@ string ProofTop::show() const {
 
 string ProofHyp::show() const {
 	ostringstream oss;
-	rus::Step* st = child ? child->step() : nullptr;
+	rus::Step* st = nullptr;
+	if (child) {
+		if (const ProofProp* pp = dynamic_cast<const ProofProp*>(child)) {
+			st = pp->step();
+		}
+	}
 	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
 	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
