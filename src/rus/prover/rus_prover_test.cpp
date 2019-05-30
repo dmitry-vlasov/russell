@@ -71,22 +71,26 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 		[max_proofs, &proofs] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
 				Return r = test_proof_with_oracle(i, proofs.at(i), max_proofs);
-				/*if (!r.success()) {
+				if (!r.success()) {
 					debug_oracle = true;
+					cout << "TEST PROOF WITH ORACLE: BEGIN" << endl;
 					test_proof_with_oracle(Theory::proof(n), max_proofs);
+					cout << "TEST PROOF WITH ORACLE: END" << endl;
 					return r;
-				}*/
+				}
 			}
 		}
 	);
 #else
 	for (uint i = 0; i < proofs.size(); ++ i) {
 		Return r = test_proof_with_oracle(i, proofs.at(i), max_proofs);
-		/*if (!r.success()) {
+		if (!r.success()) {
 			debug_oracle = true;
-			test_proof_with_oracle(Theory::proof(n), max_proofs);
+			cout << "TEST PROOF WITH ORACLE: BEGIN" << endl;
+			test_proof_with_oracle(i, proofs.at(i), max_proofs);
+			cout << "TEST PROOF WITH ORACLE: END" << endl;
 			return r;
-		}*/
+		}
 	}
 #endif
 	cout << "max_expr_length: " << expr::Stats::stats().maxLen() << endl;

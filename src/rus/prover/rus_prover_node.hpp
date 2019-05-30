@@ -107,9 +107,10 @@ struct Ref : public Node {
 	VarRepl repl;
 	Proofs  proofs;
 	Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
-		Node(s), parent(p), ancestor(a), repl(std::move(r)) { }
+		Node(s), parent(p), ancestor(a), repl(std::move(r)) {
+		cout << "Ref is built, parent: " << p->expr << ", child: " << a->expr << endl;
+	}
 
-	void buildUp();
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
 };

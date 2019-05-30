@@ -14,54 +14,54 @@ void Oracle::add(Prop* p) {
 		cout << endl;
 		cout << "orcale observing: " << show_id(ass->id()) << ", parent: " << p->parent->ind << endl;
 	}
-	if (props.empty()) {
+	if (p->parent->root()) {
 		if (ass == root->ass()) {
 			leafs.push_back(p);
+			p->hint = true;
 			props[p] = root;
 			observed.insert(root);
 			if (debug_oracle) {
-				cout << endl << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << endl;
+				cout << endl << "orcale PUSHED ROOT: " << show_id(p->prop.id()) << ", index = " << p->ind << endl;
 				cout << "this: " << (void*)p << ", parent: " << (void*)root << endl << endl;
 				//cout << p->show() << endl << endl;
 			}
 		}
 	} else {
-		if (p->parent && !p->parent->root()) {
-			for (Node* grand : p->parent->parents) {
-				if (Prop* grand_prop = dynamic_cast<Prop*>(grand)) {
-					uint ind = 0;
-					for (const auto& premise : grand_prop->premises) {
-						if (p->parent == premise.get()) {
-							break;
-						}
-						++ind;
+		for (Node* grand : p->parent->parents) {
+			if (Prop* grand_prop = dynamic_cast<Prop*>(grand)) {
+				uint ind = 0;
+				for (const auto& premise : grand_prop->premises) {
+					if (p->parent == premise.get()) {
+						break;
 					}
-					if (props.count(grand_prop)) {
-						const rus::Step* st = props.at(grand_prop);
-						uint i = 0;
-						for (const auto& r : st->refs) {
-							if (r.get()->kind() == rus::Ref::STEP) {
-								const rus::Step* candidate = r.get()->step();
-								if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
-									leafs.push_back(p);
-									p->hint = true;
-									if (debug_oracle) {
-										cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
-										cout << "this: " << (void*)p << ", parent: " << (void*)grand_prop << endl << endl;
-										//cout << p->show() << endl << endl;
-									}
-									props[p] = candidate;
-									observed.insert(candidate);
-								}
-							}
-							++i;
-						}
-					}
-				} else if (Ref* grand_ref = dynamic_cast<Ref*>(grand)) {
-					// TODO: implement
-				} else {
-					throw Error("impossibe: no Proof nor Ref");
+					++ind;
 				}
+				if (props.count(grand_prop)) {
+					const rus::Step* st = props.at(grand_prop);
+					uint i = 0;
+					for (const auto& r : st->refs) {
+						if (r.get()->kind() == rus::Ref::STEP) {
+							const rus::Step* candidate = r.get()->step();
+							if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
+								leafs.push_back(p);
+								p->hint = true;
+								if (debug_oracle) {
+									cout << "orcale PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << i << endl;
+									cout << "this: " << (void*)p << ", parent: " << (void*)grand_prop << endl << endl;
+									//cout << p->show() << endl << endl;
+								}
+								props[p] = candidate;
+								observed.insert(candidate);
+							}
+						}
+						++i;
+					}
+				}
+			} else if (Ref* grand_ref = dynamic_cast<Ref*>(grand)) {
+				// TODO: implement
+				cout << "// TODO: implement" << endl;
+			} else {
+				throw Error("impossibe: no Proof nor Ref");
 			}
 		}
 	}
@@ -87,12 +87,19 @@ string Oracle::show() const {
 	for (auto p : all) {
 		ret += p->show() + "\n";
 	}
-	ret += "\n\n";
+	ret += "MISSED STEPS DONE\n\n";
 
+	ret += "NODES:\n";
 	for (auto p : props) {
-		ret += p.first->parent->show(true);
+		ret += "--------------------\n";
 		ret += p.first->show(true);
+		ret += p.first->parent->show(true);
+		for (const auto& ch : p.first->premises) {
+			ret += ch->show(true);
+		}
+		ret += "\n";
 	}
+	ret += "PROOFS DONE\n";
 	return ret;
 }
 

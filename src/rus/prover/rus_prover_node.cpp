@@ -22,10 +22,6 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
-void Ref::buildUp() {
-	// no need to grow up - already done
-}
-
 bool Ref::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (const auto& p : proofs) {
@@ -155,11 +151,16 @@ void Prop::buildUp() {
 	for (auto& h : prop.ass->hyps) {
 		Term expr = Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
 		auto variants = space->expressions().find(expr);
+
+		cout << "space->expressions(): " << endl;
+		cout << space->expressions().show() << endl;
+
 		Hyp* hyp = new Hyp(std::move(expr), this);
 		if (variants.size()) {
 			if (variants.size() > 1) {
 				throw Error("variants size must be == 1");
 			}
+			cout << "Variant is found" << endl;
 			hyp->variants.push_back(make_unique<Ref>(
 				hyp,
 				variants.at(0).data,
