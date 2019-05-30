@@ -58,7 +58,6 @@ else()
 		rus/prover/unify/rus_prover_unify_step.cpp
 		rus/prover/unify/rus_prover_unify_terms.cpp
 		rus/prover/unify/rus_prover_unify.cpp
-		rus/prover/unify/rus_prover_varify_index_term.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

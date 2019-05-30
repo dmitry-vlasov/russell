@@ -161,13 +161,7 @@ void Prop::buildUp() {
 		Hyp* hyp = new Hyp(std::move(expr), this);
 		if (variants.size()) {
 			if (variants.size() > 1) {
-				cout << "EXPRS: " << space->expressions().show() << endl;
-				cout << "HYP: " << h->expr.show() << endl;
-				for (uint i = 0; i < variants.size(); ++ i) {
-					cout << i << " variant: "  << variants[i].data->expr.show() << endl;
-					cout << variants[i].repl.show() << endl;
-				}
-				throw Error("variants size must be == 1, but is: " + to_string(variants.size()));
+				throw Error("variants size must be == 1");
 			}
 			hyp->variants.push_back(make_unique<Ref>(
 				hyp,
