@@ -54,7 +54,7 @@ namespace {
 
 void parse_src() {
 
-	cout << "sizeof(vector<uint>) = " << sizeof(vector<uint>) << endl;
+	/*cout << "sizeof(vector<uint>) = " << sizeof(vector<uint>) << endl;
 	cout << endl;
 	cout << "sizeof(rus::prover::LightSymbol) = " << sizeof(rus::prover::LightSymbol) << endl;
 	cout << "sizeof(rus::prover::FlatSubst) = " << sizeof(rus::prover::Subst) << endl;
@@ -74,7 +74,7 @@ void parse_src() {
 	cout << "sizeof(rus::User<Rule>) = " << sizeof(rus::User<Rule>) << endl;
 	cout << "sizeof(rus::Id<Source>) = " << sizeof(mdl::Id<rus::Source>) << endl;
 	cout << "sizeof(rus::Token<Source>) = " << sizeof(mdl::Token<rus::Source>) << endl;
-	cout << "sizeof(rus::TokenStorage<Source>) = " << sizeof(mdl::TokenStorage<rus::Source>) << endl;
+	cout << "sizeof(rus::TokenStorage<Source>) = " << sizeof(mdl::TokenStorage<rus::Source>) << endl;*/
 
 	//if (Sys::get().config.has("peg-parser")) parse_src_peg();
 	//else parse_src_spirit();

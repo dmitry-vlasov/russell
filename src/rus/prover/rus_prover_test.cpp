@@ -20,6 +20,8 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			//exit(-1);
 			prove_failed.push_back(p);
 			cout << "FAILED ";
+			cout << "original proof:" << endl;
+			cout << *p << endl;
 			exit(-1);
 		}
 		timer.stop();
@@ -49,7 +51,7 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 	vector<const Proof*> proofs;
 	const Proof* longest_proof = nullptr;
 	for (Source* src : ordered_sources) {
-		cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
+		//cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::PROOF) {
 				const Proof* proof = Theory::proof(n);
