@@ -2,6 +2,7 @@
 
 #include "lex.hpp"
 #include "error.hpp"
+#include "lib.hpp"
 
 namespace mdl {
 
@@ -26,6 +27,11 @@ struct Return {
 typedef vector<string> Args;
 typedef function<Return (const Args&)> Function;
 
+inline ostream& operator << (ostream& os, const Args& args) {
+	for (auto& arg : args) os << arg << " ";
+	return os;
+}
+
 struct Descr {
 	struct Arg {
 		Arg() : opt(false) { }
@@ -38,10 +44,10 @@ struct Descr {
 
 		string show() const { return name + (value.size() ? "=<" + value + ">" : ""); }
 		bool fits(const string& arg) const {
-			return (arg.substr(0, arg.find_last_of("=")) == name);
+			return (arg.substr(0, arg.find_first_of("=")) == name);
 		}
 		bool parse(const string& arg, string& value) const {
-			int i = arg.find_last_of("=");
+			int i = arg.find_first_of("=");
 			if (arg.substr(0, i) != name) return false;
 			value = (i == string::npos) ? "" : arg.substr(i + 1);
 			return true;

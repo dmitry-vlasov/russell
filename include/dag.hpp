@@ -91,6 +91,7 @@ struct DAG {
 			);
 		}
 	}
+	DAG(DAG&& d) : roots_(std::move(d.roots_)), leafs_(std::move(d.leafs_)), size_(d.size_) { }
 	uint rootSize() const { return roots_.size(); }
 	uint leafSize() const { return leafs_.size(); }
 	const Node* getRoot(uint i) const { return roots_.at(i).get(); }

@@ -3,6 +3,7 @@
 #include "std.hpp"
 #include "actions.hpp"
 #include "path.hpp"
+#include "lib.hpp"
 
 namespace mdl {
 
@@ -73,4 +74,22 @@ private:
 	map<string, string> opts;
 };
 
+// Parse options in the format:
+//  'k1=v1,k2=v2,...,kn=vn'
+
+inline map<string, string> parse_options(const string& options, const string& delim = ",", const string& to_trim = "'") {
+	map<string, string> ret;
+	for (const auto& opt : split_string(trim_string(options, to_trim), delim)) {
+		vector<string> opt_vect = split_string(opt, "=");
+		switch (opt_vect.size()) {
+		case 0: break;
+		case 1: ret.emplace(opt_vect[0], opt_vect[0]); break;
+		case 2: ret.emplace(opt_vect[0], opt_vect[1]); break;
+		default: ret.emplace(opt_vect[0], opt_vect[1]); break;
+		}
+	}
+	return ret;
 }
+
+}
+
