@@ -57,7 +57,7 @@ struct DAG {
 					if (bool(children_.at(i)) != bool(n.children_.at(i))) {
 						return false;
 					}
-					if (children_.at(i) && !*children_.at(i) == *n.children_.at(i)) {
+					if (children_.at(i) && *children_.at(i) != *n.children_.at(i)) {
 						return false;
 					}
 				}
@@ -68,18 +68,18 @@ struct DAG {
 			return !operator ==(n);
 		}
 		bool operator < (const Node& n) const {
-			if (label_ < n.label_) return true;
-			else if (n.label_ <label_) return false;
+			     if (label_ < n.label_) return true;
+			else if (n.label_ < label_) return false;
 			else if (children_.size() < n.children_.size()) return true;
 			else if (n.children_.size() < children_.size()) return false;
 			else {
 				for (uint i = 0; i < children_.size(); ++i) {
-					auto a = children_.at(i);
-					auto b = n.children_.at(i);
-					if (bool(a) < bool(b)) return true;
+					auto& a = children_.at(i);
+					auto& b = n.children_.at(i);
+					     if (bool(a) < bool(b)) return true;
 					else if (bool(b) < bool(a)) return false;
 					else if (a) {
-						if (*a < *b) return true;
+						     if (*a < *b) return true;
 						else if (*b < *a) return false;
 					}
 				}
@@ -94,7 +94,7 @@ struct DAG {
 	struct Leaf {
 		Leaf(Node* n, uint i) : node(n), ind(i) { }
 		bool operator < (const Leaf& l) const {
-			if (node < l.node) return true;
+			     if (node < l.node) return true;
 			else if (node > l.node) return false;
 			else return ind < l.ind;
 		}
@@ -129,6 +129,12 @@ struct DAG {
 		}
 	}
 	DAG(DAG&& d) : roots_(std::move(d.roots_)), leafs_(std::move(d.leafs_)), size_(d.size_) { }
+	DAG& operator = (DAG&& d) {
+		roots_ = std::move(d.roots_);
+		leafs_ = std::move(d.leafs_);
+		size_ = d.size_;
+		return *this;
+	}
 	uint rootSize() const { return roots_.size(); }
 	uint leafSize() const { return leafs_.size(); }
 	const Node* getRoot(uint i) const { return roots_.at(i).get(); }
@@ -154,11 +160,11 @@ struct DAG {
 	}
 	uint size() const { return size_; }
 	bool operator == (const DAG& d) const {
-		if (roots_.size() != d.roots_.size()) {
-			return false;
-		} else {
+		     if (size_ != d.size_) return false;
+		else if (roots_.size() != d.roots_.size()) return false;
+		else {
 			for (uint i = 0; i < roots_.size(); ++ i){
-				if (*roots_.at(i) != d.roots_.at(i)) {
+				if (*roots_.at(i) != *d.roots_.at(i)) {
 					return false;
 				}
 			}
@@ -169,11 +175,13 @@ struct DAG {
 		return !operator==(d);
 	}
 	bool operator < (const DAG& d) const {
-		if (roots_.size() < d.roots_.size()) return true;
-		else if (roots_.size() > d.roots_.size()) return false;
+		     if (size_ < d.size_) return true;
+		else if (d.size_ < size_) return false;
+		else if (roots_.size() < d.roots_.size()) return true;
+		else if (d.roots_.size() < roots_.size()) return false;
 		else {
 			for (uint i = 0; i < roots_.size(); ++i) {
-				if (*roots_.at(i) < *d.roots_.at(i)) return true;
+				     if (*roots_.at(i) < *d.roots_.at(i)) return true;
 				else if (*d.roots_.at(i) < *roots_.at(i)) return false;
 			}
 			return false;
