@@ -49,6 +49,43 @@ struct DAG {
 			ret += ")";
 			return ret;
 		}
+		bool operator == (const Node& n) const {
+			if (label_ != n.label_ || children_.size() != n.children_.size()) {
+				return false;
+			} else {
+				for (uint i = 0; i < children_.size(); ++i) {
+					if (bool(children_.at(i)) != bool(n.children_.at(i))) {
+						return false;
+					}
+					if (children_.at(i) && !*children_.at(i) == *n.children_.at(i)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		bool operator != (const Node& n) const {
+			return !operator ==(n);
+		}
+		bool operator < (const Node& n) const {
+			if (label_ < n.label_) return true;
+			else if (n.label_ <label_) return false;
+			else if (children_.size() < n.children_.size()) return true;
+			else if (n.children_.size() < children_.size()) return false;
+			else {
+				for (uint i = 0; i < children_.size(); ++i) {
+					auto a = children_.at(i);
+					auto b = n.children_.at(i);
+					if (bool(a) < bool(b)) return true;
+					else if (bool(b) < bool(a)) return false;
+					else if (a) {
+						if (*a < *b) return true;
+						else if (*b < *a) return false;
+					}
+				}
+				return false;
+			}
+		}
 	private:
 		Label label_;
 		vector<unique_ptr<Node>> children_;
@@ -116,6 +153,32 @@ struct DAG {
 		expandLeaf(leafs_[leaf_ind], new Node(l, a));
 	}
 	uint size() const { return size_; }
+	bool operator == (const DAG& d) const {
+		if (roots_.size() != d.roots_.size()) {
+			return false;
+		} else {
+			for (uint i = 0; i < roots_.size(); ++ i){
+				if (*roots_.at(i) != d.roots_.at(i)) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	bool operator != (const DAG& d) const {
+		return !operator==(d);
+	}
+	bool operator < (const DAG& d) const {
+		if (roots_.size() < d.roots_.size()) return true;
+		else if (roots_.size() > d.roots_.size()) return false;
+		else {
+			for (uint i = 0; i < roots_.size(); ++i) {
+				if (*roots_.at(i) < *d.roots_.at(i)) return true;
+				else if (*d.roots_.at(i) < *roots_.at(i)) return false;
+			}
+			return false;
+		}
+	}
 
 private:
 	vector<unique_ptr<Node>> roots_;
