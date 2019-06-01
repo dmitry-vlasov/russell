@@ -309,6 +309,8 @@ static ProofImpls* expand_subproof_impl_leaf_total(ProofImpls* pi, uint leaf_ind
 			} else {
 				return nullptr;
 			}
+		} else {
+			return nullptr;
 		}
 	}
 	ProofImpls* new_pi = new ProofImpls(*pi);
@@ -317,43 +319,34 @@ static ProofImpls* expand_subproof_impl_leaf_total(ProofImpls* pi, uint leaf_ind
 	return new_pi;
 }
 
-static ProofImpls* expand_subproof_impl_total(ProofImpls* pi, bool& del_pi) {
-	return pi;
+static ProofImpls* expand_subproof_impl_total(ProofImpls* pi, bool initial = true) {
 	const SubProof& subproof = pi->impls_.subproofs().at(0);
-	bool was_improved = false;
 	for (uint j = 0; j < subproof.leafSize(); ++ j) {
 		SubProof::Leaf leaf = subproof.getLeaf(j);
 		if (const Step* step = leaf.node->label()) {
 			if (const auto& r = step->refs.at(leaf.ind)) {
 				if (const Step* ch = r->step()) {
 					if (ProofImpls* expanded = expand_subproof_impl_leaf_total(pi, j, leaf, ch)) {
-						pi = expanded;
-						was_improved = true;
-						del_pi = true;
+						if (!initial) {
+							delete pi;
+						}
+						return expand_subproof_impl_total(expanded, false);
 					}
 				}
 			}
 		}
 	}
-	if (was_improved) {
-		return expand_subproof_impl_total(pi, del_pi);
-	} else {
-		return pi;
-	}
+	return pi;
 }
 
 
 static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
 	vector<ProofImpls*> ret;
-	bool del_pi = false;
-	pi = expand_subproof_impl_total(pi, del_pi);
+	pi = expand_subproof_impl_total(pi);
 	for (uint i = 0 ; i < pi->impls_.subproofs().size(); ++i) {
 		for (ProofImpls* expanded : expand_subproof_impl(pi, i)) {
 			ret.push_back(expanded);
 		}
-	}
-	if (del_pi) {
-		delete pi;
 	}
 	return ret;
 }
@@ -384,17 +377,17 @@ void factorize_subproofs(const string& opts) {
 		cout << "ADDED: " << common_subproofs.new_.size() << endl;
 		if (common_subproofs.new_.size()) {
 			common_subproofs.makeNewOld();
-			cout << "old  volume: " << common_subproofs.old_.volume() << endl;
+			/*cout << "old  volume: " << common_subproofs.old_.volume() << endl;
 			cout << "max. volume: " << endl << common_subproofs.old_.set().back()->show() << endl;
 			cout << "min. volume: " << endl << common_subproofs.old_.set().front()->show() << endl;
 			cout << "avg. volume: " << double(common_subproofs.old_.volume()) / common_subproofs.old_.size() << endl;
-			cout << endl;
+			cout << endl;*/
 		} else {
-			cout << "old  volume: " << common_subproofs.old_.volume() << endl;
+			/*cout << "old  volume: " << common_subproofs.old_.volume() << endl;
 			cout << "max. volume: " << endl << common_subproofs.old_.set().back()->show() << endl;
 			cout << "min. volume: " << endl << common_subproofs.old_.set().front()->show() << endl;
 			cout << "avg. volume: " << double(common_subproofs.old_.volume()) / common_subproofs.old_.size() << endl;
-			cout << endl;
+			cout << endl;*/
 			break;
 		}
 		timer.stop();
@@ -402,21 +395,23 @@ void factorize_subproofs(const string& opts) {
 			break;
 		}
 	}
+	uint start = 0;
+	while (common_subproofs.all_.set().at(start++)->volume() == 0);
+	cout << "common_subproofs.all_.size(): " << common_subproofs.all_.size() << endl;
 	cout << "first 10 max volume: " << endl;
 	for (uint i = 0; i < 10; ++ i) {
 		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->show() << endl;
 	}
 	cout << "first 10 min volume: " << endl;
-	uint start = 0;
-	while (common_subproofs.all_.set().at(start++)->volume() == 0);
 	cout << "starts at index: " << start << endl;
 	for (uint i = start; i < start + 10; ++ i) {
 		cout << common_subproofs.all_.set().at(i)->show() << endl;
 	}
-	/*cout << "all volumes: " << endl;
-	for (uint i = 0; i < common_subproofs.all_.size() - start; ++ i) {
-		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
-	}*/
+	cout << "all volumes: " << endl;
+	for (uint i = start; i < common_subproofs.all_.size(); ++ i) {
+		cout << common_subproofs.all_.set().at(i)->show() << endl;
+		//cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
+	}
 }
 
 #ifdef PARALLEL
