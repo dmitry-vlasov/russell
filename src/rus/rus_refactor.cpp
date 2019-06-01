@@ -269,10 +269,10 @@ static ProofImpls* expand_subproof_impl_leaf(ProofImpls* pi, uint i, uint leaf_i
 		throw Error("WRONG: new_impls.size() == 0");
 	}
 	if (new_impls.subproofs().size() > 1) {
-			ProofImpls* new_pi = new ProofImpls(*pi);
-			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
-			new_pi->impls_ = std::move(new_impls);
-			return new_pi;
+		ProofImpls* new_pi = new ProofImpls(*pi);
+		new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+		new_pi->impls_ = std::move(new_impls);
+		return new_pi;
 	} else {
 		return nullptr;
 	}
@@ -296,12 +296,64 @@ static vector<ProofImpls*> expand_subproof_impl(ProofImpls* pi, uint i) {
 	return ret;
 }
 
+static ProofImpls* expand_subproof_impl_leaf_total(ProofImpls* pi, uint leaf_ind, SubProof::Leaf leaf, const Step* ch) {
+	SubProofSet new_impls;
+	for (const SubProof& sp : pi->impls_.subproofs()) {
+		const SubProof::Node* ln = sp.getLeaf(leaf_ind).node;
+		const auto& r = ln->label()->refs.at(leaf.ind);
+		if (const Step* lst = r->step()) {
+			if (ch->ass_id() == lst->ass_id()) {
+				SubProof new_sp(sp);
+				new_sp.expandLeaf(leaf_ind, lst, lst->refs.size());
+				new_impls.add(std::move(new_sp));
+			} else {
+				return nullptr;
+			}
+		}
+	}
+	ProofImpls* new_pi = new ProofImpls(*pi);
+	new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+	new_pi->impls_ = std::move(new_impls);
+	return new_pi;
+}
+
+static ProofImpls* expand_subproof_impl_total(ProofImpls* pi, bool& del_pi) {
+	return pi;
+	const SubProof& subproof = pi->impls_.subproofs().at(0);
+	bool was_improved = false;
+	for (uint j = 0; j < subproof.leafSize(); ++ j) {
+		SubProof::Leaf leaf = subproof.getLeaf(j);
+		if (const Step* step = leaf.node->label()) {
+			if (const auto& r = step->refs.at(leaf.ind)) {
+				if (const Step* ch = r->step()) {
+					if (ProofImpls* expanded = expand_subproof_impl_leaf_total(pi, j, leaf, ch)) {
+						pi = expanded;
+						was_improved = true;
+						del_pi = true;
+					}
+				}
+			}
+		}
+	}
+	if (was_improved) {
+		return expand_subproof_impl_total(pi, del_pi);
+	} else {
+		return pi;
+	}
+}
+
+
 static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
 	vector<ProofImpls*> ret;
+	bool del_pi = false;
+	pi = expand_subproof_impl_total(pi, del_pi);
 	for (uint i = 0 ; i < pi->impls_.subproofs().size(); ++i) {
 		for (ProofImpls* expanded : expand_subproof_impl(pi, i)) {
 			ret.push_back(expanded);
 		}
+	}
+	if (del_pi) {
+		delete pi;
 	}
 	return ret;
 }
