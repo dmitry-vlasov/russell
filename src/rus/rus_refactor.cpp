@@ -210,6 +210,14 @@ struct ProofImplsSet {
 		}
 	}
 
+	string show() const {
+		string ret;
+		for (const auto& pi : set_) {
+			ret += pi->show() + "\n";
+		}
+		return ret;
+	}
+
 private:
 	vector<unique_ptr<ProofImpls>> set_;
 };
@@ -242,9 +250,9 @@ static ProofImplsSample init_subproofs(const AssertionMap& ass_map, uint max_siz
 	return ret;
 }
 
-static ProofImplsSet expand_subproof(ProofImpls* pi, uint depth = 0);
+//static ProofImplsSet expand_subproof(ProofImpls* pi, uint i);
 
-static ProofImplsSet expand_subproof(ProofImpls* pi, uint leaf_ind, SubProof::Leaf leaf, const Step* ch, uint depth = 0) {
+static ProofImpls* expand_subproof_impl_leaf(ProofImpls* pi, uint i, uint leaf_ind, SubProof::Leaf leaf, const Step* ch) {
 	SubProofSet new_impls;
 	for (const SubProof& sp : pi->impls_.subproofs()) {
 		const SubProof::Node* ln = sp.getLeaf(leaf_ind).node;
@@ -260,57 +268,26 @@ static ProofImplsSet expand_subproof(ProofImpls* pi, uint leaf_ind, SubProof::Le
 	if (new_impls.subproofs().size() == 0) {
 		throw Error("WRONG: new_impls.size() == 0");
 	}
-	ProofImplsSet ret(256);
 	if (new_impls.subproofs().size() > 1) {
-		/*if (new_impls.subproofs().size() == pi->impls_.subproofs().size()) {
 			ProofImpls* new_pi = new ProofImpls(*pi);
 			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
 			new_pi->impls_ = std::move(new_impls);
-			vector<ProofImpls*> expanded = expand_subproof(new_pi, depth + 1);
-			if (expanded.size()) {
-				pi->to_remove = true;
-				cout << "depth: " << depth << endl;
-				cout << "expanded.size() = " << expanded.size() << endl;
-				delete new_pi;
-				return expanded;
-			} else {
-				return {new_pi};
-			}
-		} else {*/
-			ProofImpls* new_pi = new ProofImpls(*pi);
-			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
-			new_pi->impls_ = std::move(new_impls);
-			ret.add(new_pi);
-		//}
-
-		/*bool keep_expanding = new_impls.subproofs().size() == pi->impls_.subproofs().size();
-		ProofImpls* new_pi = new ProofImpls(*pi);
-		new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
-		new_pi->impls_ = std::move(new_impls);
-		if (keep_expanding) {
-			cout << "depth: " << depth << endl;
-			return expand_subproof(new_pi, depth + 1);
-		} else {
-			return {new_pi};
-		}*/
+			return new_pi;
+	} else {
+		return nullptr;
 	}
-	return ret;
 }
 
-static ProofImplsSet expand_subproof(ProofImpls* pi, uint depth) {
-	ProofImplsSet ret(256);
-	for (const SubProof& subproof: pi->impls_.subproofs()) {
-		for (uint j = 0; j < subproof.leafSize(); ++ j) {
-			SubProof::Leaf leaf = subproof.getLeaf(j);
-			if (const Step* step = leaf.node->label()) {
-				if (const auto& r = step->refs.at(leaf.ind)) {
-					if (const Step* ch = r->step()) {
-						ProofImplsSet expanded_vect = expand_subproof(pi, j, leaf, ch, depth);
-						for (auto& expanded : expanded_vect.set()) {
-							if (expanded) {
-								ret.add(expanded.release());
-							}
-						}
+static vector<ProofImpls*> expand_subproof_impl(ProofImpls* pi, uint i) {
+	vector<ProofImpls*> ret;
+	const SubProof& subproof = pi->impls_.subproofs().at(i);
+	for (uint j = 0; j < subproof.leafSize(); ++ j) {
+		SubProof::Leaf leaf = subproof.getLeaf(j);
+		if (const Step* step = leaf.node->label()) {
+			if (const auto& r = step->refs.at(leaf.ind)) {
+				if (const Step* ch = r->step()) {
+					if (ProofImpls* expanded = expand_subproof_impl_leaf(pi, i, j, leaf, ch)) {
+						ret.push_back(expanded);
 					}
 				}
 			}
@@ -319,14 +296,20 @@ static ProofImplsSet expand_subproof(ProofImpls* pi, uint depth) {
 	return ret;
 }
 
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
+	vector<ProofImpls*> ret;
+	for (uint i = 0 ; i < pi->impls_.subproofs().size(); ++i) {
+		for (ProofImpls* expanded : expand_subproof_impl(pi, i)) {
+			ret.push_back(expanded);
+		}
+	}
+	return ret;
+}
+
 static void next_subproofs(ProofImplsSample& pis) {
 	for (uint i = 0; i < pis.old_.size(); ++ i) {
-		ProofImplsSet expanded_vect = expand_subproof(pis.old_.get(i));
-		//cout << "expanded_vect.size() = " << expanded_vect.size() << endl;
-		for (auto& expanded : expanded_vect.set()) {
-			if (expanded) {
-				pis.new_.add(expanded.release());
-			}
+		for (ProofImpls* expanded : expand_subproof(pis.old_.get(i))) {
+			pis.new_.add(expanded);
 		}
 	}
 }
