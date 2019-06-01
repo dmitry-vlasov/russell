@@ -156,88 +156,96 @@ struct ProofImpls {
 
 	AbstProof proof_;
 	SubProofSet impls_;
+	bool to_remove = false;
 };
 
 struct ProofImplsSet {
 	ProofImplsSet(uint ms) : max_size(ms) {
-		old_.reserve(max_size + 1);
-		new_.reserve(max_size + 1);
-		all_.reserve(max_size + 1);
+		set_.reserve(max_size + 1);
 	}
-	const uint max_size;
+	ProofImplsSet(ProofImplsSet&&) = default;
+	ProofImplsSet& operator = (ProofImplsSet&&) = default;
 
-	void addNew(ProofImpls* pi) {
-		add(pi, new_);
-	}
-	void makeNewOld() {
-		for (auto& o : old_) {
-			add(o.release(), all_);
-		}
-		old_ = std::move(new_);
-	}
+	uint max_size;
+
 	uint volume() const {
 		return std::accumulate(
-			old_.begin(),
-			old_.end(), 0,
+			set_.begin(),
+			set_.end(), 0,
 			[](uint a, auto& pi) { return a + pi->volume(); }
 		);
 	}
 
-	ProofImpls* getOld(uint i) {
-		return old_.at(i).get();
+	ProofImpls* get(uint i) {
+		return set_.at(i).get();
 	}
-	uint oldSize() const {
-		return old_.size();
+	uint size() const {
+		return set_.size();
 	}
-	uint newSize() const {
-		return new_.size();
+	const vector<unique_ptr<ProofImpls>>& set() const {
+		return set_;
 	}
-	const vector<unique_ptr<ProofImpls>>& all() const {
-		return all_;
-	}
-	const vector<unique_ptr<ProofImpls>>& old() const {
-		return old_;
-	}
-	const vector<unique_ptr<ProofImpls>>& _new() const {
-		return new_;
+	vector<unique_ptr<ProofImpls>>& set() {
+		return set_;
 	}
 
-private:
-	void add(ProofImpls* pi, vector<unique_ptr<ProofImpls>>& vect) {
+	void add(ProofImpls* pi) {
 		auto it = std::lower_bound(
-			vect.begin(),
-			vect.end(), pi,
+			set_.begin(),
+			set_.end(), pi,
 			[](auto& x, ProofImpls* y) { return *x < *y; }
 		);
-		if (it != vect.end() && (*it)->proof_ == pi->proof_) {
+		if (it != set_.end() && (*it)->proof_ == pi->proof_) {
 			for (const auto& sp : pi->impls_.subproofs()) {
 				(*it)->impls_.add(sp);
 			}
 			delete pi;
 		} else {
-			vect.emplace(it, pi);
+			set_.emplace(it, pi);
 		}
-		if (vect.size() > max_size) {
-			vect.erase(vect.begin());
+		if (set_.size() > max_size) {
+			set_.erase(set_.begin());
 		}
 	}
 
-	vector<unique_ptr<ProofImpls>> old_;
-	vector<unique_ptr<ProofImpls>> new_;
-	vector<unique_ptr<ProofImpls>> all_;
+private:
+	vector<unique_ptr<ProofImpls>> set_;
 };
 
-static ProofImplsSet init_subproofs(const AssertionMap& ass_map, uint max_size) {
-	ProofImplsSet ret(max_size);
+struct ProofImplsSample {
+	ProofImplsSample(uint max_size) :
+		old_(max_size),
+		new_(max_size),
+		all_(max_size) { }
+
+	void addNew(ProofImpls* pi) {
+		new_.add(pi);
+	}
+	void makeNewOld() {
+		for (auto& o : old_.set()) {
+			if (!o->to_remove) {
+				all_.add(o.release());
+			}
+		}
+		old_ = std::move(new_);
+	}
+
+	ProofImplsSet old_;
+	ProofImplsSet new_;
+	ProofImplsSet all_;
+};
+
+static ProofImplsSample init_subproofs(const AssertionMap& ass_map, uint max_size) {
+	ProofImplsSample ret(max_size);
 	for (auto& p : ass_map) {
 		ret.addNew(new ProofImpls(p.first, p.second));
 	}
 	return ret;
 }
 
-static vector<ProofImpls*> expand_subproof(ProofImpls* pi);
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint depth = 0);
 
-static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint leaf_ind, SubProof::Leaf leaf, const Step* ch) {
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint leaf_ind, SubProof::Leaf leaf, const Step* ch, uint depth = 0) {
 	SubProofSet new_impls;
 	for (const SubProof& sp : pi->impls_.subproofs()) {
 		const SubProof::Node* ln = sp.getLeaf(leaf_ind).node;
@@ -255,29 +263,51 @@ static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint leaf_ind, SubPro
 	}
 	if (new_impls.subproofs().size() > 1) {
 		/*if (new_impls.subproofs().size() == pi->impls_.subproofs().size()) {
-			pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
-			pi->impls_ = std::move(new_impls);
-			return expand_subproof(pi);
+			ProofImpls* new_pi = new ProofImpls(*pi);
+			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+			new_pi->impls_ = std::move(new_impls);
+			vector<ProofImpls*> expanded = expand_subproof(new_pi, depth + 1);
+			if (expanded.size()) {
+				pi->to_remove = true;
+				cout << "depth: " << depth << endl;
+				cout << "expanded.size() = " << expanded.size() << endl;
+				delete new_pi;
+				return expanded;
+			} else {
+				return {new_pi};
+			}
 		} else {*/
 			ProofImpls* new_pi = new ProofImpls(*pi);
 			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
 			new_pi->impls_ = std::move(new_impls);
 			return {new_pi};
 		//}
+
+		/*bool keep_expanding = new_impls.subproofs().size() == pi->impls_.subproofs().size();
+		ProofImpls* new_pi = new ProofImpls(*pi);
+		new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+		new_pi->impls_ = std::move(new_impls);
+		if (keep_expanding) {
+			cout << "depth: " << depth << endl;
+			return expand_subproof(new_pi, depth + 1);
+		} else {
+			return {new_pi};
+		}*/
 	}
 	return {};
 }
 
-static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint depth) {
 	vector<ProofImpls*> ret;
 	for (const SubProof& subproof: pi->impls_.subproofs()) {
 		for (uint j = 0; j < subproof.leafSize(); ++ j) {
 			SubProof::Leaf leaf = subproof.getLeaf(j);
 			if (const Step* step = leaf.node->label()) {
-				const auto& r = step->refs.at(leaf.ind);
-				if (const Step* ch = r->step()) {
-					for (ProofImpls* expanded : expand_subproof(pi, j, leaf, ch)) {
-						ret.push_back(expanded);
+				if (const auto& r = step->refs.at(leaf.ind)) {
+					if (const Step* ch = r->step()) {
+						for (ProofImpls* expanded : expand_subproof(pi, j, leaf, ch, depth)) {
+							ret.push_back(expanded);
+						}
 					}
 				}
 			}
@@ -286,9 +316,11 @@ static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
 	return ret;
 }
 
-static void next_subproofs(ProofImplsSet& pis) {
-	for (uint i = 0; i < pis.oldSize(); ++ i) {
-		for (ProofImpls* expanded : expand_subproof(pis.getOld(i))) {
+static void next_subproofs(ProofImplsSample& pis) {
+	for (uint i = 0; i < pis.old_.size(); ++ i) {
+		vector<ProofImpls*> expanded_vect = expand_subproof(pis.old_.get(i));
+		//cout << "expanded_vect.size() = " << expanded_vect.size() << endl;
+		for (ProofImpls* expanded : expanded_vect) {
 			pis.addNew(expanded);
 		}
 	}
@@ -302,26 +334,26 @@ void factorize_subproofs(const string& opts) {
 	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : ass_map.size();
 	cout << "max_size: " << max_size << endl;
 
-	ProofImplsSet common_subproofs = init_subproofs(ass_map, max_size);
+	ProofImplsSample common_subproofs = init_subproofs(ass_map, max_size);
 	common_subproofs.makeNewOld();
 	uint c = 0;
 	Timer timer;
 	while (true) {
-		cout << ++c << ": TO ANALYZE: " << common_subproofs.oldSize() << endl;
+		cout << ++c << ": TO ANALYZE: " << common_subproofs.old_.size() << endl;
 		next_subproofs(common_subproofs);
-		cout << "ADDED: " << common_subproofs.newSize() << endl;
-		if (common_subproofs.newSize()) {
+		cout << "ADDED: " << common_subproofs.new_.size() << endl;
+		if (common_subproofs.new_.size()) {
 			common_subproofs.makeNewOld();
-			cout << "volume: " << common_subproofs.volume() << endl;
-			cout << "max. volume: " << endl << common_subproofs.old().back()->show() << endl;
-			cout << "min. volume: " << endl << common_subproofs.old().front()->show() << endl;
-			cout << "avg. volume: " << double(common_subproofs.volume()) / common_subproofs.oldSize() << endl;
+			cout << "old  volume: " << common_subproofs.old_.volume() << endl;
+			cout << "max. volume: " << endl << common_subproofs.old_.set().back()->show() << endl;
+			cout << "min. volume: " << endl << common_subproofs.old_.set().front()->show() << endl;
+			cout << "avg. volume: " << double(common_subproofs.old_.volume()) / common_subproofs.old_.size() << endl;
 			cout << endl;
 		} else {
-			cout << "volume: " << common_subproofs.volume() << endl;
-			cout << "max. volume: " << endl << common_subproofs.old().back()->show() << endl;
-			cout << "min. volume: " << endl << common_subproofs.old().front()->show() << endl;
-			cout << "avg. volume: " << double(common_subproofs.volume()) / common_subproofs.oldSize() << endl;
+			cout << "old  volume: " << common_subproofs.old_.volume() << endl;
+			cout << "max. volume: " << endl << common_subproofs.old_.set().back()->show() << endl;
+			cout << "min. volume: " << endl << common_subproofs.old_.set().front()->show() << endl;
+			cout << "avg. volume: " << double(common_subproofs.old_.volume()) / common_subproofs.old_.size() << endl;
 			cout << endl;
 			break;
 		}
@@ -332,19 +364,19 @@ void factorize_subproofs(const string& opts) {
 	}
 	cout << "first 10 max volume: " << endl;
 	for (uint i = 0; i < 10; ++ i) {
-		cout << common_subproofs.all().at(common_subproofs.all().size() - i - 1)->show() << endl;
+		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->show() << endl;
 	}
 	cout << "first 10 min volume: " << endl;
 	uint start = 0;
-	while (common_subproofs.all().at(start++)->volume() == 0);
+	while (common_subproofs.all_.set().at(start++)->volume() == 0);
 	cout << "starts at index: " << start << endl;
 	for (uint i = start; i < start + 10; ++ i) {
-		cout << common_subproofs.all().at(i)->show() << endl;
+		cout << common_subproofs.all_.set().at(i)->show() << endl;
 	}
-	cout << "all volumes: " << endl;
-	for (uint i = 0; i < common_subproofs.all().size() - start; ++ i) {
-		cout << common_subproofs.all().at(common_subproofs.all().size() - i - 1)->volume() << endl;
-	}
+	/*cout << "all volumes: " << endl;
+	for (uint i = 0; i < common_subproofs.all_.size() - start; ++ i) {
+		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
+	}*/
 }
 
 #ifdef PARALLEL
