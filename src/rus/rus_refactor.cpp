@@ -183,7 +183,7 @@ struct ProofImplsSet {
 		);
 	}
 
-	const ProofImpls* get(uint i) const {
+	ProofImpls* getOld(uint i) {
 		return old_.at(i).get();
 	}
 	uint oldSize() const {
@@ -227,7 +227,7 @@ private:
 	vector<unique_ptr<ProofImpls>> all_;
 };
 
-ProofImplsSet init_subproofs(const AssertionMap& ass_map, uint max_size) {
+static ProofImplsSet init_subproofs(const AssertionMap& ass_map, uint max_size) {
 	ProofImplsSet ret(max_size);
 	for (auto& p : ass_map) {
 		ret.addNew(new ProofImpls(p.first, p.second));
@@ -235,13 +235,14 @@ ProofImplsSet init_subproofs(const AssertionMap& ass_map, uint max_size) {
 	return ret;
 }
 
-ProofImpls* try_to_expand(const ProofImpls* pi, uint subproof_ind, uint leaf_ind, SubProof::Leaf leaf, const Step* ch, const AssertionMap& ass_map) {
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi);
+
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi, uint leaf_ind, SubProof::Leaf leaf, const Step* ch) {
 	SubProofSet new_impls;
 	for (const SubProof& sp : pi->impls_.subproofs()) {
 		const SubProof::Node* ln = sp.getLeaf(leaf_ind).node;
 		const auto& r = ln->label()->refs.at(leaf.ind);
-		if (r->kind() == Ref::STEP) {
-			const Step* lst = r->step();
+		if (const Step* lst = r->step()) {
 			if (ch->ass_id() == lst->ass_id()) {
 				SubProof new_sp(sp);
 				new_sp.expandLeaf(leaf_ind, lst, lst->refs.size());
@@ -253,31 +254,42 @@ ProofImpls* try_to_expand(const ProofImpls* pi, uint subproof_ind, uint leaf_ind
 		throw Error("WRONG: new_impls.size() == 0");
 	}
 	if (new_impls.subproofs().size() > 1) {
-		ProofImpls* new_pi = new ProofImpls(*pi);
-		new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
-		new_pi->impls_ = std::move(new_impls);
-		return new_pi;
-	} else {
-		return nullptr;
+		/*if (new_impls.subproofs().size() == pi->impls_.subproofs().size()) {
+			pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+			pi->impls_ = std::move(new_impls);
+			return expand_subproof(pi);
+		} else {*/
+			ProofImpls* new_pi = new ProofImpls(*pi);
+			new_pi->proof_.expandLeaf(leaf_ind, ch->ass_id(), ch->refs.size());
+			new_pi->impls_ = std::move(new_impls);
+			return {new_pi};
+		//}
 	}
+	return {};
 }
 
-void next_subproofs(ProofImplsSet& pis, const AssertionMap& ass_map) {
-	for (uint i0 = 0; i0 < pis.oldSize(); ++ i0) {
-		const ProofImpls* pi = pis.get(i0);
-		for (uint i = 0; i < pi->impls_.subproofs().size(); ++i) {
-			const SubProof& subproof = pi->impls_.subproofs().at(i);
-			for (uint j = 0; j < subproof.leafSize(); ++ j) {
-				SubProof::Leaf leaf = subproof.getLeaf(j);
-				const Step* step = leaf.node->label();
+static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
+	vector<ProofImpls*> ret;
+	for (const SubProof& subproof: pi->impls_.subproofs()) {
+		for (uint j = 0; j < subproof.leafSize(); ++ j) {
+			SubProof::Leaf leaf = subproof.getLeaf(j);
+			if (const Step* step = leaf.node->label()) {
 				const auto& r = step->refs.at(leaf.ind);
-				if (r->kind() == Ref::STEP) {
-					const Step* ch = r->step();
-					if (ProofImpls* ni = try_to_expand(pi, i, j, leaf, ch, ass_map)) {
-						pis.addNew(ni);
+				if (const Step* ch = r->step()) {
+					for (ProofImpls* expanded : expand_subproof(pi, j, leaf, ch)) {
+						ret.push_back(expanded);
 					}
 				}
 			}
+		}
+	}
+	return ret;
+}
+
+static void next_subproofs(ProofImplsSet& pis) {
+	for (uint i = 0; i < pis.oldSize(); ++ i) {
+		for (ProofImpls* expanded : expand_subproof(pis.getOld(i))) {
+			pis.addNew(expanded);
 		}
 	}
 }
@@ -287,7 +299,8 @@ void next_subproofs(ProofImplsSet& pis, const AssertionMap& ass_map) {
 void factorize_subproofs(const string& opts) {
 	AssertionMap ass_map = init_assertion_map();
 	auto parsed_opts = parse_options(opts);
-	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : 10000;
+	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : ass_map.size();
+	cout << "max_size: " << max_size << endl;
 
 	ProofImplsSet common_subproofs = init_subproofs(ass_map, max_size);
 	common_subproofs.makeNewOld();
@@ -295,7 +308,7 @@ void factorize_subproofs(const string& opts) {
 	Timer timer;
 	while (true) {
 		cout << ++c << ": TO ANALYZE: " << common_subproofs.oldSize() << endl;
-		next_subproofs(common_subproofs, ass_map);
+		next_subproofs(common_subproofs);
 		cout << "ADDED: " << common_subproofs.newSize() << endl;
 		if (common_subproofs.newSize()) {
 			common_subproofs.makeNewOld();

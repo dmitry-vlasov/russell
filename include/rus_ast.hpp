@@ -177,9 +177,9 @@ struct Ref : public Writable, public WithToken {
 	Ref(const Ref&) = delete;
 	Expr& expr();
 	const Expr& expr() const;
-	Hyp* hyp() const { return std::get<Hyp*>(val); }
-	Prop* prop() const { return std::get<Prop*>(val); }
-	Step* step() const { return std::get<Step*>(val); }
+	Hyp* hyp() const   { return kind() == HYP  ? std::get<Hyp*>(val) : nullptr; }
+	Prop* prop() const { return kind() == PROP ? std::get<Prop*>(val): nullptr; }
+	Step* step() const { return kind() == STEP ? std::get<Step*>(val): nullptr; }
 
 	typedef variant<Hyp*, Prop*, Step*> Value;
 	Value val;
