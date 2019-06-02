@@ -72,9 +72,6 @@ AssertionMap init_assertion_map() {
 	return ass_map;
 }
 
-typedef DAG<uint> AbstProof;
-typedef DAG<const Step*> SubProof;
-
 void verify_sub_proof(const SubProof::Node* n) {
 	if (n) {
 		const Step* s = n->label();
