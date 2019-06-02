@@ -1,4 +1,5 @@
-#include "rus_prover_space.hpp"
+#include "rus_prover_prover.hpp"
+
 #include "rus_prover_node.hpp"
 #include "rus_prover_tactics.hpp"
 
@@ -10,11 +11,11 @@ inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	throw Error("prop is not found");
 }
 
-Space::Space(rus::Qed* q, Tactic* t) :
-	Space(q->step->proof()->thm.get(), q->prop, t) {
+Prover::Prover(rus::Qed* q, Tactic* t) :
+	Prover(q->step->proof()->thm.get(), q->prop, t) {
 }
 
-Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
+Prover::Prover(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	prop_(a, find_index(a, p)), tactic_(t) {
 	Timer timer;
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
@@ -42,7 +43,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
 	add_timer_stats("space_init", timer);
 }
 
-Return Space::init() {
+Return Prover::init() {
 	string data;
 	shown.insert(root_->ind);
 	data += "<new>\n";
@@ -52,7 +53,7 @@ Return Space::init() {
 	return Return("tree created", data);
 }
 
-Return Space::info(uint index, string what) {
+Return Prover::info(uint index, string what) {
 	if (index >= nodes_.size()) return false;
 	string data;
 	data += "<info>\n";
@@ -132,7 +133,7 @@ void completeDown(set<Node*>& downs) {
 	}
 }
 
-Return Space::expand(uint index) {
+Return Prover::expand(uint index) {
 	if (index >= nodes_.size()) {
 		cout << index << " OUT OF BOUNDARIES" << endl;
 		return false;
@@ -199,7 +200,7 @@ Return Space::expand(uint index) {
 	return true;
 }
 
-Return Space::check_proved() {
+Return Prover::check_proved() {
 	Proved prov = proved();
 	if (prov.size()) {
 		ostringstream oss;
@@ -218,7 +219,7 @@ Return Space::check_proved() {
 	}
 }
 
-Return Space::prove() {
+Return Prover::prove() {
 	while (Prop* p = tactic_->next()) {
 		Timer timer;
 		Return ret = expand(p->ind);
@@ -230,7 +231,7 @@ Return Space::prove() {
 	return check_proved();
 }
 
-Return Space::erase(uint index) {
+Return Prover::erase(uint index) {
 	if (index >= nodes_.size()) return false;
 	delete nodes_[index];
 	return true;
@@ -245,7 +246,7 @@ void delete_steps_recursively(rus::Step* s) {
 	delete s;
 }
 
-Space::Proved Space::proved() {
+Prover::Proved Prover::proved() {
 	Proved ret;
 	for (auto& p : root_->proofs) {
 		if (ProofHyp* h = dynamic_cast<ProofHyp*>(p.get())) {

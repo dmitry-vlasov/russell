@@ -9,7 +9,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
-	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
+	unique_ptr<prover::Prover> space = make_unique<prover::Prover>(*p->qeds().begin(), oracle);
 	space->setMaxProofs(max_proofs);
 	try {
 		Return ret = space->prove();

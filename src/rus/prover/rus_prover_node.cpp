@@ -1,4 +1,4 @@
-#include "rus_prover_space.hpp"
+#include "rus_prover_prover.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -6,7 +6,7 @@ Node::~Node() {
 	space->unregisterNode(this);
 }
 
-static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
+static Subst make_free_vars_fresh(const Assertion* a, Prover* space, set<uint>& assertion_vars, const Subst& s) {
 	Subst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
@@ -22,7 +22,7 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
-Ref::Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
+Ref::Ref(Hyp* p, Hyp* a, Prover* s, VarRepl&& r) :
 	Node(s), parent(p), ancestor(a), repl(std::move(r)) {
 	cout << "Ref is built, parent: " << p->expr << ", child: " << a->expr << endl;
 }
@@ -57,7 +57,7 @@ bool Ref::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
-Hyp::Hyp(Term&& e, Space* s) :
+Hyp::Hyp(Term&& e, Prover* s) :
 	Node(s), expr(std::move(e)) {
 	space->registerNode(this);
 }

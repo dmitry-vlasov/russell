@@ -1,7 +1,7 @@
 #include "rus_ast.hpp"
 #include "mm_ast.hpp"
+#include "prover/rus_prover_prover.hpp"
 #include "rus_lookup.hpp"
-#include "prover/rus_prover_space.hpp"
 
 namespace mdl { namespace rus {
 
@@ -116,7 +116,7 @@ Return refactor(const string& job, const string& opts) {
 	return Return();
 }
 
-unique_ptr<prover::Space> space;
+unique_ptr<prover::Prover> space;
 
 Return prove(uint src, uint line, uint col, string tact) {
 	Source* source = Sys::mod().math.get<Source>().access(src);
@@ -125,7 +125,7 @@ Return prove(uint src, uint line, uint col, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		space = make_unique<prover::Space>(qed, tactic);
+		space = make_unique<prover::Prover>(qed, tactic);
 		return space->prove();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
@@ -140,7 +140,7 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		space = make_unique<prover::Space>(qed, tactic);
+		space = make_unique<prover::Prover>(qed, tactic);
 		return space->init();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
