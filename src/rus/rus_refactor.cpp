@@ -336,16 +336,19 @@ static ProofImpls* expand_subproof_impl_total(ProofImpls* pi, bool initial = tru
 			}
 		}
 	}
-	return pi;
+	return initial ? nullptr : pi;
 }
 
 
 static vector<ProofImpls*> expand_subproof(ProofImpls* pi) {
 	vector<ProofImpls*> ret;
-	pi = expand_subproof_impl_total(pi);
-	for (uint i = 0 ; i < pi->impls_.subproofs().size(); ++i) {
-		for (ProofImpls* expanded : expand_subproof_impl(pi, i)) {
-			ret.push_back(expanded);
+	if (ProofImpls* exp_pi = expand_subproof_impl_total(pi)) {
+		ret.push_back(exp_pi);
+	} else {
+		for (uint i = 0 ; i < pi->impls_.subproofs().size(); ++i) {
+			for (ProofImpls* expanded : expand_subproof_impl(pi, i)) {
+				ret.push_back(expanded);
+			}
 		}
 	}
 	return ret;
