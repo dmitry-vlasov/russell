@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dag.hpp"
 #include "rus_expr.hpp"
 #include "rus_sys.hpp"
 
@@ -235,6 +236,9 @@ struct Step : public Writable, public WithToken {
 	Value  val_;
 	Proof* proof_;
 };
+
+typedef DAG<uint> AbstProof;
+typedef DAG<const Step*> SubProof;
 
 inline Expr& Ref::expr() {
 	switch (kind()) {
