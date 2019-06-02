@@ -361,7 +361,22 @@ static void next_subproofs(ProofImplsSample& pis) {
 		}
 	}
 }
+/*
+static Step* generate_proof_step(const AbstProof::Node* n) {
 
+}
+
+namespace prover { void fill_in_proof(rus::Step* step, rus::Proof* proof); }
+
+static Proof* generate_proof(const AbstProof& p) {
+	rus::Proof* ret = new rus::Proof(node.space->prop().ass->id());
+	ret->inner = true;
+	Step* root_step = generate_proof_step(p.getRoot(0));
+	prover::fill_in_proof(root_step, ret);
+	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop().get(), root_step)));
+	return ret;
+}
+*/
 }
 
 void factorize_subproofs(const string& opts) {

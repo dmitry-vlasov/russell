@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_node.hpp"
+#include "rus_prover_proof.hpp"
 #include "unify/rus_prover_unify_general.hpp"
 #include "unify/rus_prover_unify_index.hpp"
 #include "unify/rus_prover_unify_index_term.hpp"

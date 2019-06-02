@@ -22,6 +22,11 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
+Ref::Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
+	Node(s), parent(p), ancestor(a), repl(std::move(r)) {
+	cout << "Ref is built, parent: " << p->expr << ", child: " << a->expr << endl;
+}
+
 bool Ref::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (const auto& p : proofs) {

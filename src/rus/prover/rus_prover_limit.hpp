@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <algorithm>
-#include "rus_prover_node.hpp"
+#include "rus_prover_proof.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

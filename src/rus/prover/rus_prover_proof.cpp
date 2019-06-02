@@ -162,7 +162,7 @@ rus::Step* ProofProp::step() const {
 	return step;
 }
 
-static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
+void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	for (auto& r : step->refs) {
 		if (r.get()->kind() == rus::Ref::STEP)
 			fill_in_proof(r.get()->step(), proof);
