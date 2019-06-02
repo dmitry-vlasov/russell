@@ -39,7 +39,7 @@ struct HypRef {
 	uint       ind;
 };
 
-class Prover;
+class Space;
 class Prop;
 class Hyp;
 class ProofProp;
@@ -47,14 +47,14 @@ class ProofExp;
 class ProofNode;
 
 struct Node {
-	Node(Prover* s) : space(s), ind(-1) { }
+	Node(Space* s) : space(s), ind(-1) { }
 	Node(Node* n) : space(n->space), ind(-1) { }
 	virtual ~Node();
 
 	virtual bool buildDown(set<Node*>&) = 0;
 	virtual string show(bool with_proofs = false) const = 0;
 
-	Prover* space;
+	Space* space;
 	uint   ind;
 	bool   hint = false;
 };
@@ -89,7 +89,7 @@ struct Hyp : public Node {
 	Variants      variants;
 	Proofs        proofs;
 	Term          expr;
-	Hyp(Term&& e, Prover* s);
+	Hyp(Term&& e, Space* s);
 	Hyp(Term&& e, Prop* p);
 
 	void buildUp();
@@ -106,7 +106,7 @@ struct Ref : public Node {
 	Hyp*    ancestor;
 	VarRepl repl;
 	Proofs  proofs;
-	Ref(Hyp* p, Hyp* a, Prover* s, VarRepl&& r);
+	Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r);
 
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;

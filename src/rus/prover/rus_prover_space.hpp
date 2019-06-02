@@ -7,6 +7,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+class Space;
+
 struct Tactic {
 	virtual ~Tactic() { }
 	virtual void add(Prop*) = 0;
@@ -16,13 +18,13 @@ struct Tactic {
 
 Tactic* make_tactic(const string&);
 
-struct Prover {
+struct Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
 	using IndexMap = unify::IndexMap<T>;
 
-	Prover(rus::Qed*, Tactic*);
-	Prover(rus::Assertion*, rus::Prop*, Tactic*);
+	Space(rus::Qed*, Tactic*);
+	Space(rus::Assertion*, rus::Prop*, Tactic*);
 
 	Return init();
 	Return info(uint index, string what);

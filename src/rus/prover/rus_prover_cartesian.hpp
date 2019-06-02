@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rus_prover_prover.hpp"
+#include "rus_prover_space.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

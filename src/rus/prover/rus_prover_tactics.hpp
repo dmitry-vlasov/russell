@@ -2,7 +2,7 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include "peglib.h"
-#include "rus_prover_prover.hpp"
+#include "rus_prover_space.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
