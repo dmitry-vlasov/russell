@@ -23,8 +23,7 @@ struct Space {
 	template<class T>
 	using IndexMap = unify::IndexMap<T>;
 
-	Space(rus::Qed*, Tactic*);
-	Space(rus::Assertion*, rus::Prop*, Tactic*);
+	Space(Tactic* t) : tactic_(t) { }
 
 	Return init();
 	Return info(uint index, string what);
@@ -37,10 +36,6 @@ struct Space {
 		nodes_.emplace(n->ind, n);
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->add(p);
-		} else if (Hyp* h = dynamic_cast<Hyp*>(n)) {
-			if (!expressions_.find(h->expr).size()) {
-				expressions_.add(h->expr, h);
-			}
 		}
 	}
 	void unregisterNode(Node* n) {
@@ -55,31 +50,52 @@ struct Space {
 	Proved proved();
 	Return check_proved();
 
-	const IndexMap<HypRef>& hyps() const { return hyps_; }
-	const IndexMap<PropRef>& assertions() const { return assertions_; }
-	const IndexMap<Hyp*>& expressions() const { return expressions_; }
-	const PropRef& prop() const { return prop_; }
 	uint getVar(uint v) const { return vars.at(v); }
 	void setVar(uint v, uint i) { vars[v] = i; }
 	bool hasVar(uint v) const { return vars.find(v) != vars.end(); }
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
-	const Assertion* theorem() const { return prop_.ass; }
 
-private:
+protected:
 	map<uint, Node*>  nodes_;
 	unique_ptr<Hyp>   root_;
-	PropRef           prop_;
 	map<uint, uint>   vars;
-
-	IndexMap<HypRef>   hyps_;
-	IndexMap<PropRef>  assertions_;
-	IndexMap<Hyp*>     expressions_;
 	unique_ptr<Tactic> tactic_;
 	set<uint>          shown;
 	uint               max_proofs = -1;
 };
+
+struct Prover : public Space {
+	typedef vector<unique_ptr<rus::Proof>> Proved;
+	template<class T>
+	using IndexMap = unify::IndexMap<T>;
+
+	Prover(rus::Qed*, Tactic*);
+	Prover(rus::Assertion*, rus::Prop*, Tactic*);
+
+	void registerNode(Node* n) {
+		Space::registerNode(n);
+		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+			if (!expressions_.find(h->expr).size()) {
+				expressions_.add(h->expr, h);
+			}
+		}
+	}
+
+	const IndexMap<HypRef>& hyps() const { return hyps_; }
+	const IndexMap<PropRef>& assertions() const { return assertions_; }
+	const IndexMap<Hyp*>& expressions() const { return expressions_; }
+	const PropRef& prop() const { return prop_; }
+	const Assertion* theorem() const { return prop_.ass; }
+
+private:
+	PropRef           prop_;
+	IndexMap<HypRef>   hyps_;
+	IndexMap<PropRef>  assertions_;
+	IndexMap<Hyp*>     expressions_;
+};
+
 
 Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len);
 

@@ -10,38 +10,6 @@ inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	throw Error("prop is not found");
 }
 
-Space::Space(rus::Qed* q, Tactic* t) :
-	Space(q->step->proof()->thm.get(), q->prop, t) {
-}
-
-Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
-	prop_(a, find_index(a, p)), tactic_(t) {
-	Timer timer;
-	for (auto& p : Sys::mod().math.get<Assertion>()) {
-		if (Assertion* ass = p.second.data) {
-			if (!ass->token.preceeds(a->token)) {
-				continue;
-			}
-			for (uint i = 0; i < ass->props.size(); ++i) {
-				auto& prop = ass->props[i];
-				assertions_.add(
-					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
-			}
-		} else {
-			throw Error("undefined reference to assertion", Lex::toStr(p.first));
-		}
-	}
-	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
-		HypRef hypRef(a, i);
-		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
-	}
-	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
-	root_->buildUp();
-	add_timer_stats("space_init", timer);
-}
-
 Return Space::init() {
 	string data;
 	shown.insert(root_->ind);
@@ -262,6 +230,38 @@ Space::Proved Space::proved() {
 		}
 	}
 	return ret;
+}
+
+Prover::Prover(rus::Qed* q, Tactic* t) :
+	Prover(q->step->proof()->thm.get(), q->prop, t) {
+}
+
+Prover::Prover(rus::Assertion* a, rus::Prop* p, Tactic* t) : Space(t),
+	prop_(a, find_index(a, p)) {
+	Timer timer;
+	for (auto& p : Sys::mod().math.get<Assertion>()) {
+		if (Assertion* ass = p.second.data) {
+			if (!ass->token.preceeds(a->token)) {
+				continue;
+			}
+			for (uint i = 0; i < ass->props.size(); ++i) {
+				auto& prop = ass->props[i];
+				assertions_.add(
+					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+					PropRef(ass, i)
+				);
+			}
+		} else {
+			throw Error("undefined reference to assertion", Lex::toStr(p.first));
+		}
+	}
+	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
+		HypRef hypRef(a, i);
+		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
+	}
+	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
+	root_->buildUp();
+	add_timer_stats("space_init", timer);
 }
 
 }}}
