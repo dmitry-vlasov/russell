@@ -63,7 +63,7 @@ Hyp::Hyp(Term&& e, Space* s) :
 }
 
 Hyp::Hyp(Term&& e, Prop* p) :
-	Node(p), expr(p ? p->outer.apply(p->sub.apply(p->fresher.apply(e))) : std::move(e)) {
+	Node(p), expr(std::move(e)) {
 	parents.push_back(p);
 	space->registerNode(this);
 }
@@ -154,18 +154,15 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 void Prop::buildUp() {
 	Timer timer;
 	for (auto& h : prop.ass->hyps) {
-		Term expr = Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
+		Term expr = outer.apply(sub.apply(fresher.apply(
+			Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
+		)));
 		auto variants = space->expressions().find(expr);
-
-		cout << "space->expressions(): " << endl;
-		cout << space->expressions().show() << endl;
-
 		Hyp* hyp = new Hyp(std::move(expr), this);
 		if (variants.size()) {
 			if (variants.size() > 1) {
 				throw Error("variants size must be == 1");
 			}
-			cout << "Variant is found" << endl;
 			hyp->variants.push_back(make_unique<Ref>(
 				hyp,
 				variants.at(0).data,
