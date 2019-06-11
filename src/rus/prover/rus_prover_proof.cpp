@@ -148,7 +148,9 @@ bool ProofProp::equal(const ProofNode* n) const {
 }
 
 rus::Step* ProofProp::step() const {
-	if (!parent) return nullptr;
+	if (!parent) {
+		throw Error("no parent");
+	}
 	vector<unique_ptr<rus::Ref>> refs;
 	for (auto ch : premises) {
 		refs.emplace_back(ch->ref());

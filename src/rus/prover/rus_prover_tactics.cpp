@@ -42,7 +42,7 @@ void Oracle::add(Prop* p) {
 					for (const auto& r : st->refs) {
 						if (r.get()->kind() == rus::Ref::STEP) {
 							const rus::Step* candidate = r.get()->step();
-							if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
+							if (ass == candidate->ass() && !props.count(p) && /*!observed.count(candidate) &&*/ i == ind) {
 								leafs.push_back(p);
 								p->hint = true;
 								if (debug_oracle) {

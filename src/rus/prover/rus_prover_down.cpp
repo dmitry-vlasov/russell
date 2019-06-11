@@ -350,6 +350,11 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 			}
 #endif
 			pr->proofs.emplace_back(pp);
+
+			//if (rus::Proof* rus_proof = pp->proof()) {
+			//	delete pp;
+			//}
+
 		} catch (Error& err) {
 			string msg;
 			msg += "while unifying down:\n";

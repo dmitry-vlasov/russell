@@ -48,6 +48,9 @@ bool Ref::buildDown(set<Node*>& downs) {
 			}
 #endif
 			parent->proofs.emplace_back(parent_proof);
+			if (rus::Proof* rus_proof = parent_proof->proof()) {
+				delete rus_proof;
+			}
 			new_proofs = true;
 		}
 	}
@@ -119,6 +122,10 @@ bool Hyp::buildDown(set<Node*>& downs) {
 					ProofRef* r = new ProofRef(*ref, p.proof, p.proof->hint);
 					ref->proofs.emplace_back(r);
 					downs.insert(ref);
+
+					if (rus::Proof* rus_proof = r->proof()) {
+						delete r;
+					}
 				}
 				new_proofs = true;
 			} else {
