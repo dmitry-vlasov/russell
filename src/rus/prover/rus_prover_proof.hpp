@@ -60,14 +60,25 @@ struct ProofHyp : public ProofExp {
 };
 
 struct ProofRef : public ProofExp {
-	ProofRef(Ref& n, ProofExp* c, bool hi) :
-		ProofExp(Subst(), hi), node(n), child(c) { }
+	ProofRef(Ref& n, ProofExp* c, bool hi);
 	string show() const override;
 	rus::Ref* ref() const override;
 	rus::Proof* proof() const override;
 	bool equal(const ProofNode* n) const override;
-	const Term& expr() const override { return parent->expr(); }
-	void addParent(ProofNode* p) override { parent = p; }
+	const Term& expr() const override {
+		if (parent) {
+			return parent->expr();
+		} else {
+			static Term term;
+			return term;
+		}
+	}
+	void addParent(ProofNode* p) override {
+		if (parent) {
+			throw Error("ProofRef parent is already set");
+		}
+		parent = p;
+	}
 
 	Ref& node;
 	ProofExp* child = nullptr;
@@ -81,12 +92,19 @@ struct ProofProp : public ProofNode {
 	bool equal(const ProofNode* n) const override;
 	rus::Proof* proof() const override;
 	const Term& expr() const override { return parent->expr(); }
-	void addParent(ProofNode* p) override { parent = p; }
+	void addParent(ProofNode* p) override {
+		if (parent) {
+			throw Error("ProofProp parent is already set");
+		}
+		parent = p;
+	}
 	rus::Step* step() const;
 
 	ProofNode*        parent = nullptr;
 	Prop&             node;
 	vector<ProofExp*> premises;
+private:
+	mutable rus::Step* step_ = nullptr;
 };
 
 struct ProofExpIndexed {
@@ -101,6 +119,7 @@ struct ProofExpIndexed {
 };
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
+string show_proof_struct(const ProofNode* n);
 
 }}}
 

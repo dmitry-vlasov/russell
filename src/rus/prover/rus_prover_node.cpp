@@ -24,16 +24,18 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 
 Ref::Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
 	Node(s), parent(p), ancestor(a), repl(std::move(r)) {
-	cout << "Ref is built, parent: " << p->expr << ", child: " << a->expr << endl;
+	space->registerNode(this);
+	ancestor->parents.push_back(this);
+	cout << "Ref is built, parent: " << p->ind << " = " << p->expr << ", child: " << a->ind << " = " << a->expr << endl;
+	cout << "var repl:" << endl;
+	cout << repl.show() << endl;
 }
 
 bool Ref::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (const auto& p : proofs) {
 		if (p->new_) {
-			Subst sub = p->sub;
-			repl.direct().apply(sub);
-			ProofHyp* parent_proof =  new ProofHyp(*parent, p.get(), std::move(sub), p->hint);
+			ProofHyp* parent_proof = new ProofHyp(*parent, p.get(), p->sub, p->hint);
 #ifdef VERIFY_UNIQUE_PROOFS
 			if (parent->proofs.size() < 64) {
 				// Don't check ALL proofs if there's too much (43050 for example)
@@ -48,9 +50,19 @@ bool Ref::buildDown(set<Node*>& downs) {
 			}
 #endif
 			parent->proofs.emplace_back(parent_proof);
-			if (rus::Proof* rus_proof = parent_proof->proof()) {
-				delete rus_proof;
+
+			try {
+				if (rus::Proof* rus_proof = parent_proof->proof()) {
+					delete rus_proof;
+				}
+			} catch (Error& err) {
+				cout << "FUCK 2)" << endl;
+				cout << "THIS: " << endl << show() << endl;
+				//cout << "PARENT: " << endl << ref->show() << endl;
+				//cout << "proof: " << p.proof->show() << endl;
+				throw err;
 			}
+
 			new_proofs = true;
 		}
 	}
@@ -102,7 +114,7 @@ void Hyp::buildUp() {
 }
 
 bool Hyp::buildDown(set<Node*>& downs) {
-	bool new_proofs;
+	bool new_proofs = false;
 	for (uint i = 0; i < parents.size(); ++ i) {
 		Node* parent = parents.at(i);
 		vector<ProofExpIndexed> news;
@@ -116,6 +128,7 @@ bool Hyp::buildDown(set<Node*>& downs) {
 			if (Prop* prop = dynamic_cast<Prop*>(parent)) {
 				if (unify_down(prop, this, news)) {
 					downs.insert(parent);
+					new_proofs = true;
 				}
 			} else if (Ref* ref = dynamic_cast<Ref*>(parent)) {
 				for (auto& p : news) {
@@ -123,11 +136,25 @@ bool Hyp::buildDown(set<Node*>& downs) {
 					ref->proofs.emplace_back(r);
 					downs.insert(ref);
 
-					if (rus::Proof* rus_proof = r->proof()) {
-						delete r;
+					try {
+						if (rus::Proof* rus_proof = r->proof()) {
+							delete rus_proof;
+						}
+					} catch (Error& err) {
+						cout << "FUCK 1)" << endl;
+						cout << "THIS: " << endl << show() << endl;
+						cout << "PARENT: " << endl << ref->show() << endl;
+						cout << "proof: " << p.proof->show() << endl;
+						/*cout << "CHILDREN: " << endl;
+						for (const auto& v : variants) {
+							cout << v->show() << endl;
+						}*/
+
+						throw err;
 					}
+
+					new_proofs = true;
 				}
-				new_proofs = true;
 			} else {
 				throw Error("impossibe: no Proof nor Ref");
 			}
@@ -158,15 +185,37 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 	}
 }
 
+bool reacheable(const Node* parent, const Node* ancestor) {
+	stack<const Node*> st;
+	st.push(ancestor);
+	while(!st.empty()) {
+		const Node* n = st.top(); st.pop();
+		if (n == parent) {
+			return true;
+		}
+		if (const Prop* p = dynamic_cast<const Prop*>(n)) {
+			st.push(p->parent);
+		} else if (const Ref* r = dynamic_cast<const Ref*>(n)) {
+			st.push(r->parent);
+		} else if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
+			for (const Node* p : h->parents) {
+				st.push(p);
+			}
+		}
+	}
+	return false;
+}
+
 void Prop::buildUp() {
 	Timer timer;
+	bool vars = false;
 	for (auto& h : prop.ass->hyps) {
 		Term expr = outer.apply(sub.apply(fresher.apply(
 			Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
 		)));
 		auto variants = space->expressions().find(expr);
 		Hyp* hyp = new Hyp(std::move(expr), this);
-		if (variants.size()) {
+		if (variants.size() && !reacheable(variants.at(0).data, this)) {
 			if (variants.size() > 1) {
 				throw Error("variants size must be == 1");
 			}
@@ -179,11 +228,16 @@ void Prop::buildUp() {
 			if (hint) {
 				hyp->variants.back()->hint = true;
 			}
+			vars = true;
 		}
 		premises.emplace_back(hyp);
 		if (hint) {
 			premises.back()->hint = true;
 		}
+	}
+	if (vars) {
+		cout << "Prop::buildUp(): vars" << endl;
+		cout << show_nodes_struct(this) << endl;
 	}
 	add_timer_stats("build_up_PROP", timer);
 }

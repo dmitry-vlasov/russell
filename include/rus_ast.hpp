@@ -276,9 +276,9 @@ struct Proof : public Writable, public Owner<Proof> {
 	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
 
 	static Kind  kind(const Elem& e) { return static_cast<Kind>(e.index()); }
-	static Vars* vars(const Elem& e) { return std::get<unique_ptr<Vars>>(e).get(); }
-	static Step* step(const Elem& e) { return std::get<unique_ptr<Step>>(e).get(); }
-	static Qed*  qed(const Elem& e) { return std::get<unique_ptr<Qed>>(e).get(); }
+	static Vars* vars(const Elem& e) { return kind(e) == VARS ? std::get<unique_ptr<Vars>>(e).get() : nullptr; }
+	static Step* step(const Elem& e) { return kind(e) == STEP ? std::get<unique_ptr<Step>>(e).get() : nullptr; }
+	static Qed*  qed(const Elem& e)  { return kind(e) == QED  ? std::get<unique_ptr<Qed>>(e).get()  : nullptr; }
 
 	Proof(Id thm, Id id = Id(), const Token& t = Token());
 	Proof(const Proof&) = delete;

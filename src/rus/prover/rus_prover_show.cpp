@@ -232,7 +232,7 @@ string showNodeProofs(const Node* n, uint limit) {
 	return data;
 }
 
-string show_struct(const ProofNode* n) {
+string show_proof_struct(const ProofNode* n) {
 	ostringstream oss;
 	if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
 		oss << "ProofProp(index = " << p->ind << ", node = " << p->node.ind << endl;
@@ -240,7 +240,7 @@ string show_struct(const ProofNode* n) {
 		oss << "\tsub = " << endl << Indent::paragraph(p->sub.show(), "\t\t");
 		oss << "\tnode sub = " << endl << Indent::paragraph(p->node.sub.show(), "\t\t");
 		for (auto h : p->premises) {
-			oss << Indent::paragraph(show_struct(h));
+			oss << Indent::paragraph(show_proof_struct(h));
 		}
 		oss << ")" << endl;
 	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
@@ -250,17 +250,74 @@ string show_struct(const ProofNode* n) {
 		oss << "\tnode exp = " << t->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(t->sub.show(), "\t\t");
 		oss << ")" << endl;
+	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+		oss << "ProofRef(index = " << r->ind << ", node = " << r->node.ind << endl;
+		oss << "\texp = " << r->expr().show() << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(r->sub.show(), "\t\t");
+		oss << Indent::paragraph(show_proof_struct(r->child));
+		oss << ")" << endl;
 	} else if (const ProofHyp* e = dynamic_cast<const ProofHyp*>(n)) {
 		oss << "ProofExp(index = " << e->ind << ", node = " << e->node.ind << endl;
 		oss << "\texp = " << e->expr().show() << endl;
 		oss << "\tnode exp = " << e->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(e->sub.show(), "\t\t");
-		oss << Indent::paragraph(show_struct(e->child));
+		oss << Indent::paragraph(show_proof_struct(e->child));
 		oss << ")" << endl;
 	} else {
 		oss << "IMPOSSIBLE" << endl;
 	}
 	return oss.str();
+}
+
+static string show_nodes_struct(const Node* n, set<const Node*>& visited) {
+	ostringstream oss;
+	if (const Prop* p = dynamic_cast<const Prop*>(n)) {
+		oss << "Prop(index = " << p->ind << endl;
+		oss << "\tprop = " << Lex::toStr(p->prop.id()) << endl;
+		oss << "\tsub = " << endl << Indent::paragraph(p->sub.show(), "\t\t");
+		for (const auto& h : p->premises) {
+			if (visited.count(h.get())) {
+				oss << "\talready visited: " << h.get()->ind << endl;
+			} else {
+				visited.insert(h.get());
+				oss << Indent::paragraph(show_nodes_struct(h.get(), visited));
+			}
+		}
+		oss << ")" << endl;
+	} else if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
+		oss << "Hyp(index = " << h->ind << endl;
+		oss << "\texp = " << h->expr << endl;
+		for (const auto& v : h->variants) {
+			if (visited.count(v.get())) {
+				oss << "\talready visited: " << v.get()->ind << endl;
+			} else {
+				visited.insert(v.get());
+				oss << Indent::paragraph(show_nodes_struct(v.get(), visited));
+			}
+		}
+		oss << ")" << endl;
+	} else if (const Ref* r = dynamic_cast<const Ref*>(n)) {
+		oss << "Ref(index = " << r->ind << endl;
+		oss << "\tparent = " << r->parent->ind << endl;
+		oss << "\tancestor = " << r->ancestor->ind << endl;
+		//oss << "\tnode exp = " << r->node.expr.show() << endl;
+		oss << "\trepl = " << endl << Indent::paragraph(r->repl.show(), "\t\t");
+		if (visited.count(r->ancestor)) {
+			oss << "\talready visited: " << r->ancestor->ind << endl;
+		} else {
+			visited.insert(r->ancestor);
+			oss << Indent::paragraph(show_nodes_struct(r->ancestor, visited));
+		}
+		oss << ")" << endl;
+	} else {
+		oss << "IMPOSSIBLE" << endl;
+	}
+	return oss.str();
+}
+
+string show_nodes_struct(const Node* n) {
+	set<const Node*> visited;
+	return show_nodes_struct(n, visited);
 }
 
 string show(const set<uint>& s) {

@@ -45,6 +45,7 @@ class Hyp;
 class ProofProp;
 class ProofExp;
 class ProofNode;
+class ProofRef;
 
 struct Node {
 	Node(Space* s) : space(s), ind(-1) { }
@@ -101,7 +102,7 @@ struct Hyp : public Node {
 };
 
 struct Ref : public Node {
-	typedef vector<unique_ptr<ProofExp>> Proofs;
+	typedef vector<unique_ptr<ProofRef>> Proofs;
 	Hyp*    parent;
 	Hyp*    ancestor;
 	VarRepl repl;
@@ -113,6 +114,7 @@ struct Ref : public Node {
 };
 
 string showNodeProofs(const Node* n, uint limit = -1);
+string show_nodes_struct(const Node* n);
 
 // Statistics:
 void add_sequential_stats(uint card, uint count, Timer& timer);
