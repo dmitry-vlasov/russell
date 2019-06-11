@@ -278,9 +278,10 @@ struct IndexMap {
 			return "\n";
 		} else {
 			string ret;
-			for (const auto&  p : terms) {
+			for (auto&  p : terms) {
 				for (uint i : p.second) {
-					//Data d = stored_[i].data;
+					const VarRepl& norm = stored_.at(i).norm;
+					norm.inverse().apply(p.first);
 					ret += "[" + p.first.show() + "]" + " -> " + to_string(i) + "\n";
 				}
 			}
