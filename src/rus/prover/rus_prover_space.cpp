@@ -167,15 +167,15 @@ Return Space::expand(uint index) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
 						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
 							h->unifyWithGoalHyps(hint);
-							h->buildDown(downs);
 						} else {
 							h->unifyWithGoalHyps();
-							h->buildDown(downs);
 						}
 					} else {
 						h->unifyWithGoalHyps();
-						h->buildDown(downs);
 					}
+				}
+				for (auto& h : p->premises) {
+					h->buildDown(downs);
 				}
 				completeDown(downs);
 				add_timer_stats("complete_down", timer);

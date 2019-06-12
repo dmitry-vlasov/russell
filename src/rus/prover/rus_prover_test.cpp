@@ -5,6 +5,23 @@ namespace mdl { namespace rus { namespace prover {
 
 static vector<const Proof*> prove_failed;
 
+static bool proof_has_refs(const Proof* p) {
+	map<const Step*, vector<const Step*>> parents;
+	for (const auto& e : p->elems) {
+		if (const Step* parent = Proof::step(e)) {
+			for (const auto& ref : parent->refs) {
+				if (const Step* child = ref->step()) {
+					parents[child].push_back(parent);
+					if (parents[child].size() > 1) {
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
 Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
@@ -12,6 +29,13 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
 	space->setMaxProofs(max_proofs);
 	try {
+		bool orig_proof_has_refs = proof_has_refs(p);
+
+		if (orig_proof_has_refs) {
+			cout << "ORIG _PROOF HAS REFS:" << endl;
+			cout << *p << endl;
+		}
+
 		Return ret = space->prove();
 		if (!ret.success()) {
 			//cout << "oracle test failed" << endl;
@@ -24,6 +48,19 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			cout << *p << endl;
 			exit(-1);
 		}
+		bool prover_proof_has_refs = proof_has_refs(space->proved().at(0).get());
+		if (prover_proof_has_refs) {
+			cout << "PROVER _PROOF HAS REFS:" << endl;
+			cout << *space->proved().at(0).get() << endl;
+		}
+		if (orig_proof_has_refs && !prover_proof_has_refs) {
+			cout << "PROVER _PROOF HAS NO REFS:" << endl;
+			cout << *space->proved().at(0).get() << endl;
+			cout << "FUCK" << endl;
+			exit(0);
+		}
+
+
 		timer.stop();
 		cout << "done in " << timer << endl;
 		return ret;
