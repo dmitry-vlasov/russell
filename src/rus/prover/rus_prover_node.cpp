@@ -26,9 +26,9 @@ Ref::Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
 	Node(s), parent(p), ancestor(a), repl(std::move(r)) {
 	space->registerNode(this);
 	ancestor->parents.push_back(this);
-	cout << "Ref is built, parent: " << p->ind << " = " << p->expr << ", child: " << a->ind << " = " << a->expr << endl;
+	/*cout << "Ref is built, parent: " << p->ind << " = " << p->expr << ", child: " << a->ind << " = " << a->expr << endl;
 	cout << "var repl:" << endl;
-	cout << repl.show() << endl;
+	cout << repl.show() << endl;*/
 }
 
 bool Ref::buildDown(set<Node*>& downs) {
@@ -235,10 +235,10 @@ void Prop::buildUp() {
 			premises.back()->hint = true;
 		}
 	}
-	if (vars) {
+	/*if (vars) {
 		cout << "Prop::buildUp(): vars" << endl;
 		cout << show_nodes_struct(this) << endl;
-	}
+	}*/
 	add_timer_stats("build_up_PROP", timer);
 }
 

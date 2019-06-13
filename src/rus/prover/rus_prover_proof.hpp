@@ -104,6 +104,7 @@ struct ProofProp : public ProofNode {
 	Prop&             node;
 	vector<ProofExp*> premises;
 private:
+	friend void reset_steps(const ProofNode* n);
 	mutable rus::Step* step_ = nullptr;
 };
 
