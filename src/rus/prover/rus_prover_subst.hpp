@@ -36,6 +36,9 @@ struct Subst {
 	bool compose(LightSymbol v, Term&& t, CompMode m = CompMode::DEFAULT, bool check = true) {
 		return compose(Subst(v, t), m, check);
 	}
+	bool compose(LightSymbol v, LightSymbol t, CompMode m = CompMode::DEFAULT, bool check = true) {
+		return compose(Subst(v, Term(t)), m, check);
+	}
 
 	bool intersects(const Subst& s) const;
 	bool maps(LightSymbol v) const {

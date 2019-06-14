@@ -5,7 +5,7 @@ namespace mdl { namespace rus { namespace prover {
 
 static vector<const Proof*> prove_failed;
 
-static bool proof_has_refs(const Proof* p) {
+static bool proof_has_shared(const Proof* p) {
 	map<const Step*, vector<const Step*>> parents;
 	for (const auto& e : p->elems) {
 		if (const Step* parent = Proof::step(e)) {
@@ -29,10 +29,10 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
 	space->setMaxProofs(max_proofs);
 	try {
-		bool orig_proof_has_refs = proof_has_refs(p);
+		bool orig_proof_has_shared = proof_has_shared(p);
 
-		if (orig_proof_has_refs) {
-			cout << "ORIG _PROOF HAS REFS:" << endl;
+		if (orig_proof_has_shared) {
+			cout << "ORIG _PROOF HAS SHARED:" << endl;
 			cout << *p << endl;
 		}
 
@@ -48,16 +48,16 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			cout << *p << endl;
 			exit(-1);
 		}
-		bool prover_proof_has_refs = proof_has_refs(space->proved().at(0).get());
-		if (prover_proof_has_refs) {
-			cout << "PROVER _PROOF HAS REFS:" << endl;
+		bool prover_proof_has_shared = proof_has_shared(space->proved().at(0).get());
+		if (prover_proof_has_shared) {
+			cout << "PROVER _PROOF HAS SHARED:" << endl;
 			cout << *space->proved().at(0).get() << endl;
 		}
-		if (orig_proof_has_refs && !prover_proof_has_refs) {
+		if (orig_proof_has_shared && !prover_proof_has_shared) {
 			cout << "PROVER _PROOF HAS NO REFS:" << endl;
 			cout << *space->proved().at(0).get() << endl;
-			cout << "FUCK" << endl;
-			exit(0);
+			//cout << "FUCK" << endl;
+			//exit(0);
 		}
 
 

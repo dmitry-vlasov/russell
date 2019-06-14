@@ -2,19 +2,13 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Node::~Node() {
-	space->unregisterNode(this);
-}
-
 static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
 	Subst ret;
 	for (const auto& w : a->vars.v) {
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
 		if (!ret.maps(v)) {
 			if (!s.maps(v)) {
-				uint i = space->hasVar(v.lit) ? space->getVar(v.lit) + 1 : LightSymbol::INTERNAL_MIN_INDEX;
-				space->setVar(v.lit, i);
-				ret.compose(v, Term(LightSymbol(w, ReplMode::KEEP_REPL, i)));
+				ret.compose(v, space->freshVar(v));
 			}
 		}
 		assertion_vars.insert(v.lit);
@@ -22,13 +16,43 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 	return ret;
 }
 
+static bool is_reacheable(const Node* parent, const Node* ancestor) {
+	stack<const Node*> st;
+	st.push(ancestor);
+	while(!st.empty()) {
+		const Node* n = st.top(); st.pop();
+		if (n == parent) {
+			return true;
+		}
+		if (const Prop* p = dynamic_cast<const Prop*>(n)) {
+			st.push(p->parent);
+		} else if (const Ref* r = dynamic_cast<const Ref*>(n)) {
+			st.push(r->parent);
+		} else if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
+			for (const Node* p : h->parents) {
+				st.push(p);
+			}
+		}
+	}
+	return false;
+}
+
+Node::~Node() {
+	space->unregisterNode(this);
+}
+
+// Ref -------------------------
+
 Ref::Ref(Hyp* p, Hyp* a, Space* s, VarRepl&& r) :
 	Node(s), parent(p), ancestor(a), repl(std::move(r)) {
 	space->registerNode(this);
 	ancestor->parents.push_back(this);
-	/*cout << "Ref is built, parent: " << p->ind << " = " << p->expr << ", child: " << a->ind << " = " << a->expr << endl;
+	cout << "Ref  " << ind << " is built, parent: " << p->ind << " = " << p->expr << ", child: " << a->ind << " = " << a->expr << endl;
 	cout << "var repl:" << endl;
-	cout << repl.show() << endl;*/
+	cout << repl.show() << endl;
+	for (auto& p : ancestor->proofs) {
+		proofs.emplace_back(make_unique<ProofRef>(*this, p.get(), p->hint));
+	}
 }
 
 bool Ref::buildDown(set<Node*>& downs) {
@@ -72,6 +96,10 @@ bool Ref::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
+
+
+// Hyp -------------------------
+
 Hyp::Hyp(Term&& e, Space* s) :
 	Node(s), expr(std::move(e)) {
 	space->registerNode(this);
@@ -84,33 +112,49 @@ Hyp::Hyp(Term&& e, Prop* p) :
 }
 
 void Hyp::buildUp() {
-	Timer timer1;
-	Timer timer;
-	auto unified = space->assertions().unify(expr);
-	add_timer_stats("build_up_hyp_unify_timer", timer);
-	timer.start();
-	for (auto& m : unified) {
-		set<uint> assertion_vars;
-		Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
-		for (const auto& p : fresher) {
-			if (m.sub.maps(p.first)) {
-				fresher.erase(p.first);
-			}
+	auto already_occured = space->expressions().find(expr);
+	if (already_occured.size() && !is_reacheable(already_occured.at(0).data, this)) {
+		if (already_occured.size() > 1) {
+			throw Error("already_occured size must be == 1");
 		}
-		m.sub.compose(fresher, CompMode::SEMI);
-		Subst sub;
-		Subst outer;
-		for (const auto& p : m.sub) {
-			if (assertion_vars.count(p.first)) {
-				outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
-			} else {
-				sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
-			}
+		variants.emplace_back(make_unique<Ref>(
+			this,
+			already_occured.at(0).data,
+			space,
+			std::move(already_occured.at(0).repl)
+		));
+		if (hint) {
+			variants.back()->hint = true;
 		}
-		variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));
+	} else {
+		Timer timer1;
+		Timer timer;
+		auto unified = space->assertions().unify(expr);
+		add_timer_stats("build_up_hyp_unify_timer", timer);
+		timer.start();
+		for (auto& m : unified) {
+			set<uint> assertion_vars;
+			Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
+			for (const auto& p : fresher) {
+				if (m.sub.maps(p.first)) {
+					fresher.erase(p.first);
+				}
+			}
+			m.sub.compose(fresher, CompMode::SEMI);
+			Subst sub;
+			Subst outer;
+			for (const auto& p : m.sub) {
+				if (assertion_vars.count(p.first)) {
+					outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
+				} else {
+					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
+				}
+			}
+			variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));
+		}
+		add_timer_stats("build_up_hyp_arrange_variants", timer);
+		add_timer_stats("build_up_HYP", timer1);
 	}
-	add_timer_stats("build_up_hyp_arrange_variants", timer);
-	add_timer_stats("build_up_HYP", timer1);
 }
 
 bool Hyp::buildDown(set<Node*>& downs) {
@@ -163,19 +207,31 @@ bool Hyp::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
-bool Hyp::unifyWithGoalHyps(const rus::Hyp* hint) {
-	bool ret = false;
-	auto unified = space->hyps().unify(expr);
-	for (const auto& m : unified) {
-		if (hint) {
-			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
-		} else {
-			proofs.push_back(make_unique<ProofTop>(*this, m.data, m.sub, false));
-			ret = true;
+void Hyp::initProofs(const rus::Hyp* hint) {
+	if (Ref* ref = dynamic_cast<Ref*>(variants.at(0).get())) {
+		for (const auto& p : ref->proofs) {
+
+			cout << "REF PROOF EMPLACED: " << p->show() << endl;
+
+			proofs.emplace_back(make_unique<ProofHyp>(*this, p.get(), p->sub, p->hint));
+		}
+	} else {
+		auto unified = space->hyps().unify(expr);
+		for (const auto& m : unified) {
+			if (hint) {
+				proofs.emplace_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
+			} else {
+				proofs.emplace_back(make_unique<ProofTop>(*this, m.data, m.sub, false));
+			}
 		}
 	}
-	return ret;
 }
+
+
+
+
+
+// Prop -------------------------
 
 Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 	Node(p), parent(p), prop(r), sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) {
@@ -185,60 +241,21 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 	}
 }
 
-bool reacheable(const Node* parent, const Node* ancestor) {
-	stack<const Node*> st;
-	st.push(ancestor);
-	while(!st.empty()) {
-		const Node* n = st.top(); st.pop();
-		if (n == parent) {
-			return true;
-		}
-		if (const Prop* p = dynamic_cast<const Prop*>(n)) {
-			st.push(p->parent);
-		} else if (const Ref* r = dynamic_cast<const Ref*>(n)) {
-			st.push(r->parent);
-		} else if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
-			for (const Node* p : h->parents) {
-				st.push(p);
-			}
-		}
-	}
-	return false;
-}
-
 void Prop::buildUp() {
 	Timer timer;
 	bool vars = false;
 	for (auto& h : prop.ass->hyps) {
-		Term expr = outer.apply(sub.apply(fresher.apply(
-			Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
-		)));
-		auto variants = space->expressions().find(expr);
-		Hyp* hyp = new Hyp(std::move(expr), this);
-		if (variants.size() && !reacheable(variants.at(0).data, this)) {
-			if (variants.size() > 1) {
-				throw Error("variants size must be == 1");
-			}
-			hyp->variants.push_back(make_unique<Ref>(
-				hyp,
-				variants.at(0).data,
-				space,
-				std::move(variants.at(0).repl)
-			));
-			if (hint) {
-				hyp->variants.back()->hint = true;
-			}
-			vars = true;
-		}
+		Hyp* hyp = new Hyp(
+			outer.apply(sub.apply(fresher.apply(
+				Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
+			))),
+			this
+		);
 		premises.emplace_back(hyp);
 		if (hint) {
 			premises.back()->hint = true;
 		}
 	}
-	/*if (vars) {
-		cout << "Prop::buildUp(): vars" << endl;
-		cout << show_nodes_struct(this) << endl;
-	}*/
 	add_timer_stats("build_up_PROP", timer);
 }
 

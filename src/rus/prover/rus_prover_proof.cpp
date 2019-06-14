@@ -71,7 +71,7 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
 		cout << "ERR proof: " << ind << endl;
 		cout << show_proof_struct(this) << endl;
 		cout << endl;
-		cout << show_nodes_struct(&node) << endl;
+		//cout << show_nodes_struct(&node) << endl;
 		throw err;
 	}
 #endif
@@ -93,7 +93,7 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
 		cout << "ERR proof: " << ind << endl;
 		cout << show_proof_struct(this) << endl;
 		cout << endl;
-		cout << show_nodes_struct(&node) << endl;
+		//cout << show_nodes_struct(&node) << endl;
 		throw err;
 	}
 #endif
@@ -103,10 +103,23 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
 
 // ProofRef -------------------------
 
+static set<LightSymbol> vars_in_subst_image(const Subst& sub) {
+	set<LightSymbol> vars;
+	for (const auto& p : sub) {
+		for (const auto& v : p.second.term.vars()) {
+			vars.insert(v);
+		}
+	}
+	return vars;
+}
+
 ProofRef::ProofRef(Ref& n, ProofExp* c, bool hi) :
 	ProofExp(n.repl.direct().subst(), hi), node(n), child(c) {
 	sub.compose(child->sub, CompMode::SEMI);
-	//sub.compose(child->sub);
+	//set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
+	//for (auto v : s_im_vars) {
+	//	sub.compose(v, n.space->freshVar(v), CompMode::SEMI);
+	//}
 }
 
 rus::Ref* ProofRef::ref() const {

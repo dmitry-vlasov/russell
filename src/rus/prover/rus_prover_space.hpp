@@ -59,9 +59,12 @@ struct Space {
 	const IndexMap<PropRef>& assertions() const { return assertions_; }
 	const IndexMap<Hyp*>& expressions() const { return expressions_; }
 	const PropRef& prop() const { return prop_; }
-	uint getVar(uint v) const { return vars.at(v); }
-	void setVar(uint v, uint i) { vars[v] = i; }
-	bool hasVar(uint v) const { return vars.find(v) != vars.end(); }
+	LightSymbol freshVar(LightSymbol v) {
+		auto it = vars.find(v.lit);
+		uint fresh = it != vars.end() ? it->second + 1 : LightSymbol::INTERNAL_MIN_INDEX;
+		vars[v.lit] = fresh;
+		return LightSymbol(v.lit, v.type, ReplMode::KEEP_REPL, fresh);
+	}
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
