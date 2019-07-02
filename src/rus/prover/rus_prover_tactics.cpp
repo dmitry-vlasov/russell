@@ -28,7 +28,7 @@ void Oracle::add(Prop* p) {
 			for (const auto& r : st->refs) {
 				if (r.get()->kind() == rus::Ref::STEP) {
 					const rus::Step* candidate = r.get()->step();
-					if (ass == candidate->ass() && !props.count(p) && !observed.count(candidate) && i == ind) {
+					if (ass == candidate->ass() && !props.count(p) && /*!observed.count(candidate) &&*/ i == ind) {
 						leafs.push_back(p);
 						p->hint = true;
 						if (debug_oracle) {
@@ -104,6 +104,12 @@ string Oracle::show() const {
 		ret += p.first->parent->show(true);
 		for (const auto& ch : p.first->premises) {
 			ret += ch->show(true);
+			if (ch->variants.size() == 1) {
+				if (const Ref* r = dynamic_cast<const Ref*>(ch->variants[0].get())) {
+					ret += r->show(true);
+					ret += r->ancestor->show(true);
+				}
+			}
 		}
 		ret += "\n";
 	}

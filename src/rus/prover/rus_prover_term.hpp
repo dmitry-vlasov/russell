@@ -171,7 +171,7 @@ struct Term {
 	void verify() const;
 	uint linearLen() const; // Length of a corresponding linear expression
 	uint len() const { return nodes.size(); }
-	set<uint> vars() const;
+	set<LightSymbol> vars() const;
 
 	vector<Node> nodes;
 	string show(bool simple = false) const; // simple = false for corresponding linear expression

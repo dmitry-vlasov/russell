@@ -98,7 +98,7 @@ struct Hyp : public Node {
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parents.size(); }
 
-	bool unifyWithGoalHyps(const rus::Hyp* hint = nullptr);
+	void initProofs(const rus::Hyp* hint = nullptr);
 };
 
 struct Ref : public Node {
