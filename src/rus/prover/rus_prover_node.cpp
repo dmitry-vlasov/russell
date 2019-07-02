@@ -113,7 +113,7 @@ Hyp::Hyp(Term&& e, Prop* p) :
 
 void Hyp::buildUp() {
 	auto already_occured = space->expressions().find(expr);
-	if (already_occured.size() && !is_reacheable(already_occured.at(0).data, this)) {
+	if (false && already_occured.size() && !is_reacheable(already_occured.at(0).data, this)) {
 		if (already_occured.size() > 1) {
 			throw Error("already_occured size must be == 1");
 		}

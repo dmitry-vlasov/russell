@@ -116,10 +116,10 @@ static set<LightSymbol> vars_in_subst_image(const Subst& sub) {
 ProofRef::ProofRef(Ref& n, ProofExp* c, bool hi) :
 	ProofExp(n.repl.direct().subst(), hi), node(n), child(c) {
 	sub.compose(child->sub, CompMode::SEMI);
-	//set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
-	//for (auto v : s_im_vars) {
-	//	sub.compose(v, n.space->freshVar(v), CompMode::SEMI);
-	//}
+	set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
+	for (auto v : s_im_vars) {
+		sub.compose(v, n.space->freshVar(v), CompMode::SEMI);
+	}
 }
 
 rus::Ref* ProofRef::ref() const {
