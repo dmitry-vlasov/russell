@@ -210,11 +210,11 @@ uint Term::linearLen() const {
 	return l;
 }
 
-set<uint> Term::vars() const {
-	set<uint> ret;
+set<LightSymbol> Term::vars() const {
+	set<LightSymbol> ret;
 	for (const auto& n : nodes) {
 		if (n.ruleVar.isVar()) {
-			ret.insert(n.ruleVar.var.lit);
+			ret.insert(n.ruleVar.var);
 		}
 	}
 	return ret;

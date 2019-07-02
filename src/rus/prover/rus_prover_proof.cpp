@@ -2,14 +2,24 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-static void apply_recursively(const Substitution& sub, rus::Step* step) {
+static void apply_recursively(const Substitution& sub, rus::Step* step, set<const rus::Step*>& visited) {
 	step->expr = apply(sub, step->expr);
 	for (auto& r : step->refs) {
-		if (r.get()->kind() == rus::Ref::STEP) {
-			apply_recursively(sub, r.get()->step());
+		if (rus::Step* s = r.get()->step()) {
+			if (!visited.count(s)) {
+				visited.insert(s);
+				apply_recursively(sub, s, visited);
+			}
 		}
 	}
 }
+
+static void apply_recursively(const Substitution& sub, rus::Step* step) {
+	set<const rus::Step*> visited;
+	apply_recursively(sub, step, visited);
+}
+
+// ProofTop -------------------------
 
 ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
 	ProofExp(s, hi), node(n), hyp(hy),
@@ -28,6 +38,7 @@ rus::Ref* ProofTop::ref() const {
 	return new rus::Ref(hyp.get());
 }
 
+// ProofHyp -------------------------
 
 rus::Ref* ProofHyp::ref() const {
 	return child->ref();
@@ -45,12 +56,86 @@ bool ProofHyp::equal(const ProofNode* n) const {
 	}
 }
 
+#define VERIFY_PROOF_HYP
+
+ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
+	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
+	child->addParent(this);
+	child->new_ = false;
+#ifdef VERIFY_PROOF_HYP
+	try {
+		rus::Proof* pr = proof();
+		//cout << "PROOF: " << *pr << endl;
+		delete pr;
+	} catch (Error& err) {
+		cout << "ERR proof: " << ind << endl;
+		cout << show_proof_struct(this) << endl;
+		cout << endl;
+		//cout << show_nodes_struct(&node) << endl;
+		throw err;
+	}
+#endif
+}
+
+ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
+	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
+	if (!child) {
+		throw Error("!child ProofHyp::ProofHyp");
+	}
+	child->addParent(this);
+	child->new_ = false;
+#ifdef VERIFY_PROOF_HYP
+	try {
+		rus::Proof* pr = proof();
+		//cout << "PROOF: " << *pr << endl;
+		delete pr;
+	} catch (Error& err) {
+		cout << "ERR proof: " << ind << endl;
+		cout << show_proof_struct(this) << endl;
+		cout << endl;
+		//cout << show_nodes_struct(&node) << endl;
+		throw err;
+	}
+#endif
+}
+
+
+
+// ProofRef -------------------------
+
+static set<LightSymbol> vars_in_subst_image(const Subst& sub) {
+	set<LightSymbol> vars;
+	for (const auto& p : sub) {
+		for (const auto& v : p.second.term.vars()) {
+			vars.insert(v);
+		}
+	}
+	return vars;
+}
+
+ProofRef::ProofRef(Ref& n, ProofExp* c, bool hi) :
+	ProofExp(n.repl.direct().subst(), hi), node(n), child(c) {
+	sub.compose(child->sub, CompMode::SEMI);
+	set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
+	for (auto v : s_im_vars) {
+		sub.compose(v, n.space->freshVar(v), CompMode::SEMI);
+	}
+}
+
 rus::Ref* ProofRef::ref() const {
 	return child->ref();
 }
 
 rus::Proof* ProofRef::proof() const {
-	return child->proof();
+	rus::Proof* proof = child->proof();
+	if (proof) {
+		Substitution s = Subst2Substitution(sub);
+		Step* step = Proof::step(proof->elems.at(proof->elems.size() - 2));
+		apply_recursively(s, step);
+	} else {
+		//throw Error("no proof: ProofRef: " + node.show());
+	}
+	return proof;
 }
 
 bool ProofRef::equal(const ProofNode* n) const {
@@ -61,45 +146,9 @@ bool ProofRef::equal(const ProofNode* n) const {
 	}
 }
 
-string show_struct(const ProofNode* n);
+#define VERIFY_PROOF_PROP
 
-//#define VERIFY_PROOF_EXP
-
-ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
-	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
-	child->addParent(this);
-	child->new_ = false;
-#ifdef VERIFY_PROOF_EXP
-	try {
-		rus::Proof* pr = proof();
-		//cout << "PROOF: " << *pr << endl;
-		delete pr;
-	} catch (Error& err) {
-		cout << "ERR proof: " << ind << endl;
-		cout << show_struct(this) << endl;
-		throw err;
-	}
-#endif
-}
-
-ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
-	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
-	child->addParent(this);
-	child->new_ = false;
-#ifdef VERIFY_PROOF_EXP
-	try {
-		rus::Proof* pr = proof();
-		//cout << "PROOF: " << *pr << endl;
-		delete pr;
-	} catch (Error& err) {
-		cout << "ERR proof: " << ind << endl;
-		cout << show_struct(this) << endl;
-		throw err;
-	}
-#endif
-}
-
-//#define VERIFY_PROOF_PROP
+// ProofProp -------------------------
 
 ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h) :
 	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
@@ -124,6 +173,7 @@ ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h
 				err += "orig s" + to_string(i) + ": " + premises[i]->sub.show() + "\n";
 				err += "unifier:\n";
 				err += s.show() + "\n";
+				err += show_proof_struct(this);
 				throw Error(err);
 			}
 		}
@@ -148,24 +198,32 @@ bool ProofProp::equal(const ProofNode* n) const {
 }
 
 rus::Step* ProofProp::step() const {
-	if (!parent) return nullptr;
-	vector<unique_ptr<rus::Ref>> refs;
-	for (auto ch : premises) {
-		refs.emplace_back(ch->ref());
+	if (!parent) {
+		throw Error("no parent: ProofProp");
 	}
-	const PropRef& p = node.prop;
-	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
-	step->refs = std::move(refs);
-	step->expr = std::move(Term2Expr(parent->expr()));
-	Substitution s = Subst2Substitution(sub);
-	apply_recursively(s, step);
-	return step;
+	if (!step_) {
+		vector<unique_ptr<rus::Ref>> refs;
+		for (auto ch : premises) {
+			refs.emplace_back(ch->ref());
+		}
+		const PropRef& p = node.prop;
+		step_ = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
+		step_->refs = std::move(refs);
+		step_->expr = std::move(Term2Expr(parent->expr()));
+		Substitution s = Subst2Substitution(sub);
+		apply_recursively(s, step_);
+	}
+	return step_;
 }
 
-void fill_in_proof(rus::Step* step, rus::Proof* proof) {
+static void fill_in_proof(rus::Step* step, rus::Proof* proof, set<const rus::Step*>& visited) {
 	for (auto& r : step->refs) {
-		if (r.get()->kind() == rus::Ref::STEP)
-			fill_in_proof(r.get()->step(), proof);
+		if (rus::Step* s = r.get()->step()) {
+			if (!visited.count(s)) {
+				visited.insert(s);
+				fill_in_proof(s, proof, visited);
+			}
+		}
 	}
 	for (auto& s : step->expr.symbols) {
 		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
@@ -179,11 +237,30 @@ void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	proof->elems.emplace_back(unique_ptr<Step>(step));
 }
 
+static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
+	set<const rus::Step*> visited;
+	fill_in_proof(step, proof, visited);
+}
+
+void reset_steps(const ProofNode* n) {
+	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
+		reset_steps(h->child);
+	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+		reset_steps(r->child);
+	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+		p->step_ = nullptr;
+		for (auto c : p->premises) {
+			reset_steps(c);
+		}
+	}
+}
+
 rus::Proof* ProofProp::proof() const {
 	rus::Step* st = step();
 	rus::Proof* ret = new rus::Proof(node.space->prop().ass->id());
 	ret->inner = true;
 	fill_in_proof(st, ret);
+	reset_steps(this);
 	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop().get(), st)));
 	try {
 		ret->verify(VERIFY_SUB);
@@ -206,7 +283,6 @@ rus::Proof* ProofProp::proof() const {
 rus::Ref* ProofProp::ref() const {
 	return new rus::Ref(step());
 }
-
 
 }}}
 

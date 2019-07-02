@@ -133,16 +133,12 @@ Return Space::expand(uint index) {
 				timer.start();
 				for (auto& h : p->premises) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
-						if (const rus::Hyp* hint = oracle->hint(p, h.get())) {
-							h->unifyWithGoalHyps(hint);
-							h->buildDown(downs);
-						} else {
-							h->unifyWithGoalHyps();
-							h->buildDown(downs);
-						}
+						h->initProofs(oracle->hint(p, h.get()));
 					} else {
-						h->unifyWithGoalHyps();
-						h->buildDown(downs);
+						h->initProofs();
+					}
+					if (h->proofs.size()) {
+						downs.insert(h.get());
 					}
 				}
 				completeDown(downs);

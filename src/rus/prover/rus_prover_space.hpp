@@ -36,6 +36,10 @@ struct Space {
 		nodes_.emplace(n->ind, n);
 		if (Prop* p = dynamic_cast<Prop*>(n)) {
 			tactic_->add(p);
+		} else if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+			if (!expressions_.find(h->expr).size()) {
+				expressions_.add(h->expr, h);
+			}
 		}
 	}
 	void unregisterNode(Node* n) {
@@ -50,12 +54,20 @@ struct Space {
 	Proved proved();
 	Return check_proved();
 
-	uint getVar(uint v) const { return vars.at(v); }
-	void setVar(uint v, uint i) { vars[v] = i; }
-	bool hasVar(uint v) const { return vars.find(v) != vars.end(); }
+	const IndexMap<HypRef>& hyps() const { return hyps_; }
+	const IndexMap<PropRef>& assertions() const { return assertions_; }
+	const IndexMap<Hyp*>& expressions() const { return expressions_; }
+	const PropRef& prop() const { return prop_; }
+	LightSymbol freshVar(LightSymbol v) {
+		auto it = vars.find(v.lit);
+		uint fresh = it != vars.end() ? it->second + 1 : LightSymbol::INTERNAL_MIN_INDEX;
+		vars[v.lit] = fresh;
+		return LightSymbol(v.lit, v.type, ReplMode::KEEP_REPL, fresh);
+	}
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
+	const Assertion* theorem() const { return prop_.ass; }
 
 protected:
 	map<uint, Node*>  nodes_;
@@ -95,7 +107,6 @@ private:
 	IndexMap<PropRef>  assertions_;
 	IndexMap<Hyp*>     expressions_;
 };
-
 
 Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len);
 

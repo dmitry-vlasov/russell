@@ -36,6 +36,9 @@ struct Subst {
 	bool compose(LightSymbol v, Term&& t, CompMode m = CompMode::DEFAULT, bool check = true) {
 		return compose(Subst(v, t), m, check);
 	}
+	bool compose(LightSymbol v, LightSymbol t, CompMode m = CompMode::DEFAULT, bool check = true) {
+		return compose(Subst(v, Term(t)), m, check);
+	}
 
 	bool intersects(const Subst& s) const;
 	bool maps(LightSymbol v) const {
@@ -232,10 +235,23 @@ struct VarMap {
 		}
 		vr.repl = std::move(new_repl);
 	}
+	VarMap apply(const VarMap& vr) const {
+		VarMap ret;
+		for (const auto& p : vr.repl) {
+			uint v = apply(p.first, p.second.type);
+			LightSymbol im = apply(p.second);
+			if (v != im.lit) {
+				ret.repl.emplace(v, im);
+			} else {
+				ret.repl.emplace(v, p.second);
+			}
+		}
+		return ret;
+	}
 	string show() const {
 		ostringstream oss;
 		for (const auto& p : repl) {
-			oss << p.first << " --> " << p.second << endl;
+			oss << Lex::toStr(p.first) << " --> " << p.second << endl;
 		}
 		return oss.str();
 	}
@@ -277,20 +293,15 @@ struct VarRepl {
 	bool compose(VarPair p) {
 		return direct_.compose(p) && inverse_.compose(p.invert());
 	}
-	void apply(VarRepl& vr) const {
-		direct_.apply(vr.direct_);
-		inverse_.apply(vr.inverse_);
-	}
 	VarRepl apply(const VarRepl& vr) const {
-		VarRepl ret(vr);
-		apply(ret);
-		return ret;
+		return VarRepl(
+			direct_.apply(vr.direct_),
+			vr.inverse_.apply(inverse_)
+		);
 	}
 	const VarMap& direct() const { return direct_; }
 	const VarMap& inverse() const { return inverse_; }
-	string show() const {
-		return direct_.show();
-	}
+	string show() const { return direct_.show(); }
 	bool operator == (const VarRepl& vr) const {
 		return direct_ == vr.direct_;
 	}
