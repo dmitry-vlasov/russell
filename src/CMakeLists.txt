@@ -60,13 +60,16 @@ else()
 		rus/prover/unify/rus_prover_unify_terms.cpp
 		rus/prover/unify/rus_prover_unify.cpp
 
+		rus/transform/rus_transform_factor_subproofs.cpp
+		rus/transform/rus_transform_rem_dupsteps.cpp  
+
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
 		rus/rus_imports.cpp
 		rus/rus_lookup.cpp
 		rus/rus_memvol.cpp  
 		rus/rus_sys.cpp
-		rus/rus_refactor.cpp  
+		#rus/rus_refactor.cpp  
 		#rus/rus_parser.cpp
 		rus/rus_read.cpp  
 		rus/rus_show.cpp 
