@@ -76,7 +76,6 @@ struct Prop : public Node {
 	Subst    fresher;
 	Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p);
 
-	void buildUp();
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
 	bool mayGrowUp() const { return premises.size() < prop.ass->arity(); }
@@ -93,12 +92,9 @@ struct Hyp : public Node {
 	Hyp(Term&& e, Space* s);
 	Hyp(Term&& e, Prop* p);
 
-	void buildUp();
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parents.size(); }
-
-	void initProofs(const rus::Hyp* hint = nullptr);
 };
 
 struct Ref : public Node {

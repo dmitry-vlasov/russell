@@ -2,41 +2,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
-	Subst ret;
-	for (const auto& w : a->vars.v) {
-		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
-		if (!ret.maps(v)) {
-			if (!s.maps(v)) {
-				ret.compose(v, space->freshVar(v));
-			}
-		}
-		assertion_vars.insert(v.lit);
-	}
-	return ret;
-}
-
-static bool is_reacheable(const Node* parent, const Node* ancestor) {
-	stack<const Node*> st;
-	st.push(ancestor);
-	while(!st.empty()) {
-		const Node* n = st.top(); st.pop();
-		if (n == parent) {
-			return true;
-		}
-		if (const Prop* p = dynamic_cast<const Prop*>(n)) {
-			st.push(p->parent);
-		} else if (const Ref* r = dynamic_cast<const Ref*>(n)) {
-			st.push(r->parent);
-		} else if (const Hyp* h = dynamic_cast<const Hyp*>(n)) {
-			for (const Node* p : h->parents) {
-				st.push(p);
-			}
-		}
-	}
-	return false;
-}
-
 Node::~Node() {
 	space->unregisterNode(this);
 }
@@ -111,52 +76,6 @@ Hyp::Hyp(Term&& e, Prop* p) :
 	space->registerNode(this);
 }
 
-void Hyp::buildUp() {
-	auto already_occured = space->expressions().find(expr);
-	if (false && already_occured.size() && !is_reacheable(already_occured.at(0).data, this)) {
-		if (already_occured.size() > 1) {
-			throw Error("already_occured size must be == 1");
-		}
-		variants.emplace_back(make_unique<Ref>(
-			this,
-			already_occured.at(0).data,
-			space,
-			std::move(already_occured.at(0).repl)
-		));
-		if (hint) {
-			variants.back()->hint = true;
-		}
-	} else {
-		Timer timer1;
-		Timer timer;
-		auto unified = space->assertions().unify(expr);
-		add_timer_stats("build_up_hyp_unify_timer", timer);
-		timer.start();
-		for (auto& m : unified) {
-			set<uint> assertion_vars;
-			Subst fresher = make_free_vars_fresh(m.data.ass, space, assertion_vars, m.sub);
-			for (const auto& p : fresher) {
-				if (m.sub.maps(p.first)) {
-					fresher.erase(p.first);
-				}
-			}
-			m.sub.compose(fresher, CompMode::SEMI);
-			Subst sub;
-			Subst outer;
-			for (const auto& p : m.sub) {
-				if (assertion_vars.count(p.first)) {
-					outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
-				} else {
-					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
-				}
-			}
-			variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), this));
-		}
-		add_timer_stats("build_up_hyp_arrange_variants", timer);
-		add_timer_stats("build_up_HYP", timer1);
-	}
-}
-
 bool Hyp::buildDown(set<Node*>& downs) {
 	bool new_proofs = false;
 	for (uint i = 0; i < parents.size(); ++ i) {
@@ -207,25 +126,6 @@ bool Hyp::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
-void Hyp::initProofs(const rus::Hyp* hint) {
-	if (Ref* ref = dynamic_cast<Ref*>(variants.at(0).get())) {
-		for (const auto& p : ref->proofs) {
-
-			cout << "REF PROOF EMPLACED: " << p->show() << endl;
-
-			proofs.emplace_back(make_unique<ProofHyp>(*this, p.get(), p->sub, p->hint));
-		}
-	} else {
-		auto unified = space->hyps().unify(expr);
-		for (const auto& m : unified) {
-			if (hint) {
-				proofs.emplace_back(make_unique<ProofTop>(*this, m.data, m.sub, m.data.get() == hint));
-			} else {
-				proofs.emplace_back(make_unique<ProofTop>(*this, m.data, m.sub, false));
-			}
-		}
-	}
-}
 
 
 
@@ -239,24 +139,6 @@ Prop::Prop(PropRef r, Subst&& s, Subst&& o, Subst&& f, Hyp* p) :
 	if (isLeaf()) {
 		proofs.push_back(make_unique<ProofProp>(*this, vector<ProofExp*>(), sub, hint));
 	}
-}
-
-void Prop::buildUp() {
-	Timer timer;
-	bool vars = false;
-	for (auto& h : prop.ass->hyps) {
-		Hyp* hyp = new Hyp(
-			outer.apply(sub.apply(fresher.apply(
-				Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
-			))),
-			this
-		);
-		premises.emplace_back(hyp);
-		if (hint) {
-			premises.back()->hint = true;
-		}
-	}
-	add_timer_stats("build_up_PROP", timer);
 }
 
 //#define VERIFY_UNIQUE_PROOFS

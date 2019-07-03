@@ -1,7 +1,7 @@
 #include "rus_ast.hpp"
 #include "mm_ast.hpp"
 #include "rus_lookup.hpp"
-#include "prover/rus_prover_space.hpp"
+#include "prover/rus_prover_prover.hpp"
 
 namespace mdl { namespace rus {
 
@@ -116,7 +116,7 @@ Return refactor(const string& job, const string& opts) {
 	return Return();
 }
 
-unique_ptr<prover::Space> space;
+unique_ptr<prover::Prover> prover;
 
 Return prove(uint src, uint line, uint col, string tact) {
 	Source* source = Sys::mod().math.get<Source>().access(src);
@@ -125,8 +125,8 @@ Return prove(uint src, uint line, uint col, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		space = make_unique<prover::Space>(qed, tactic);
-		return space->prove();
+		prover = make_unique<prover::Prover>(qed, tactic);
+		return prover->prove();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
@@ -140,8 +140,8 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 		return Return();
 	} else if (Qed* qed = find_obj<Qed>(source, pos)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);
-		space = make_unique<prover::Space>(qed, tactic);
-		return space->init();
+		prover = make_unique<prover::Prover>(qed, tactic);
+		return prover->init();
 	} else if (Proof* proof = find_obj<Proof>(source, pos)) {
 		return Return();
 	}
@@ -149,11 +149,11 @@ Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 }
 
 Return prove_step(uint index) {
-	return space ? space->expand(index) : Return("prover is not started", false);
+	return prover ? prover->expand(index) : Return("prover is not started", false);
 }
 
 Return prove_delete(uint index) {
-	return space ? space->erase(index) : Return("prover is not started", false);
+	return prover ? prover->erase(index) : Return("prover is not started", false);
 }
 
 Return prove_tactic(string tact) {
@@ -166,11 +166,11 @@ Return prove_confirm(uint index) {
 }
 
 Return prove_stop() {
-	return space ? space.release() : Return("prover is not started", false);
+	return prover ? prover.release() : Return("prover is not started", false);
 }
 
 Return prove_info(uint index, string what) {
-	return space ? space->info(index, what) : Return("prover is not started", false);
+	return prover ? prover->info(index, what) : Return("prover is not started", false);
 }
 
 Return prove_test(string mode, string theorem, uint max_proofs, uint max_proof_len) {

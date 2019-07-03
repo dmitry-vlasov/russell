@@ -1,5 +1,6 @@
 #include "../expr/rus_expr_stats.hpp"
 #include "rus_prover_tactics.hpp"
+#include "rus_prover_prover.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -26,7 +27,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
-	unique_ptr<prover::Space> space = make_unique<prover::Space>(*p->qeds().begin(), oracle);
+	unique_ptr<prover::Prover> space = make_unique<prover::Prover>(*p->qeds().begin(), oracle);
 	space->setMaxProofs(max_proofs);
 	try {
 		bool orig_proof_has_shared = proof_has_shared(p);
@@ -56,7 +57,6 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 		if (orig_proof_has_shared && !prover_proof_has_shared) {
 			cout << "PROVER _PROOF HAS NO REFS:" << endl;
 			cout << *space->proved().at(0).get() << endl;
-			//cout << "FUCK" << endl;
 			//exit(0);
 		}
 
@@ -170,6 +170,5 @@ Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len) {
 		}
 	}
 }
-
 
 }}}

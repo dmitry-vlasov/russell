@@ -4,12 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
-	uint c = 0;
-	for (auto& x : a->props) if (x.get() == p) return c; else ++c;
-	throw Error("prop is not found");
-}
-
 Return Space::init() {
 	string data;
 	shown.insert(root_->ind);
@@ -121,11 +115,11 @@ Return Space::expand(uint index) {
 		} else {
 			if (p->mayGrowUp()) {
 				Timer timer;
-				p->buildUp();
+				buildUp(p);
 				set<uint> to_show;
 				for (auto& h : p->premises) {
 					Hyp* hyp = h.get();
-					hyp->buildUp();
+					buildUp(hyp);
 					add_shown(shown, to_show, hyp);
 				}
 				add_timer_stats("build_up", timer);
@@ -133,9 +127,9 @@ Return Space::expand(uint index) {
 				timer.start();
 				for (auto& h : p->premises) {
 					if (Oracle* oracle = dynamic_cast<Oracle*>(tactic_.get())) {
-						h->initProofs(oracle->hint(p, h.get()));
+						initProofs(h.get(), oracle->hint(p, h.get()));
 					} else {
-						h->initProofs();
+						initProofs(h.get());
 					}
 					if (h->proofs.size()) {
 						downs.insert(h.get());
@@ -226,38 +220,6 @@ Space::Proved Space::proved() {
 		}
 	}
 	return ret;
-}
-
-Prover::Prover(rus::Qed* q, Tactic* t) :
-	Prover(q->step->proof()->thm.get(), q->prop, t) {
-}
-
-Prover::Prover(rus::Assertion* a, rus::Prop* p, Tactic* t) : Space(t),
-	prop_(a, find_index(a, p)) {
-	Timer timer;
-	for (auto& p : Sys::mod().math.get<Assertion>()) {
-		if (Assertion* ass = p.second.data) {
-			if (!ass->token.preceeds(a->token)) {
-				continue;
-			}
-			for (uint i = 0; i < ass->props.size(); ++i) {
-				auto& prop = ass->props[i];
-				assertions_.add(
-					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
-			}
-		} else {
-			throw Error("undefined reference to assertion", Lex::toStr(p.first));
-		}
-	}
-	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
-		HypRef hypRef(a, i);
-		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
-	}
-	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
-	root_->buildUp();
-	add_timer_stats("space_init", timer);
 }
 
 }}}
