@@ -17,6 +17,8 @@ struct DAG {
 			}
 		}
 		Label label() const { return label_; }
+		bool isLeaf() const { return childrenArity() == 0; }
+		bool isRoot() const { return parentsArity() == 0; }
 		uint parentsArity() const { return parents_.size(); }
 		uint childrenArity() const { return children_.size(); }
 		const Node* getParent(uint i) const { return parents_.at(i); }

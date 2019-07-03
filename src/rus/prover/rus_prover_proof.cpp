@@ -257,11 +257,11 @@ void reset_steps(const ProofNode* n) {
 
 rus::Proof* ProofProp::proof() const {
 	rus::Step* st = step();
-	rus::Proof* ret = new rus::Proof(node.space->prop().ass->id());
+	rus::Proof* ret = new rus::Proof(node.space->theoremId());
 	ret->inner = true;
 	fill_in_proof(st, ret);
 	reset_steps(this);
-	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop().get(), st)));
+	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop(st).get(), st)));
 	try {
 		ret->verify(VERIFY_SUB);
 	} catch (Error& err) {

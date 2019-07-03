@@ -337,6 +337,21 @@ struct IndexMap {
 		}
 		return ret;
 	}
+	vector<Data> findExact(const Term& t) const {
+		const Normalizer n(t);
+		vector<Data> ret;
+		const vector<uint>* inds = index_.find(n.normalized);
+		if (inds) {
+			for (uint ind : *inds) {
+				const VarRepl& norm = stored_.at(ind).norm;
+				VarRepl repl = norm.inversed().apply(n.norm);
+				if (repl.size() == 0) {
+					ret.emplace_back(stored_.at(ind).data);
+				}
+			}
+		}
+		return ret;
+	}
 
 private:
 	struct Storage {

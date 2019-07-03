@@ -171,4 +171,3 @@ void Prover::buildUpHyp(Hyp* h) {
 }
 
 }}}
-

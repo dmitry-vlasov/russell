@@ -107,6 +107,8 @@ inline const Type* RuleTree::type() const { return rule->term.type.get(); }
 struct Hyp : public Writable, public WithToken {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		WithToken(t), ind(i), expr(e) { }
+	Hyp(uint i, Expr&& e, const Token& t = Token()) :
+		WithToken(t), ind(i), expr(std::move(e)) { }
 	Hyp(const Hyp&) = delete;
 	uint ind;
 	Expr expr;
@@ -116,6 +118,8 @@ struct Hyp : public Writable, public WithToken {
 struct Prop : public Writable, public WithToken {
 	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		WithToken(t), ind(i), expr(e) { }
+	Prop(uint i, Expr&& e, const Token& t = Token()) :
+		WithToken(t), ind(i), expr(std::move(e)) { }
 	Prop(const Prop&) = delete;
 	uint ind;
 	Expr expr;

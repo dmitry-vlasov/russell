@@ -9,8 +9,7 @@ struct Maker : public Space {
 	template<class T>
 	using IndexMap = unify::IndexMap<T>;
 
-	Maker(rus::Qed*, Tactic*);
-	Maker(rus::Assertion*, rus::Prop*, Tactic*);
+	Maker(const AbstProof& aproof, uint id);
 
 	void registerNode(Node* n) {
 		Space::registerNode(n);
@@ -27,12 +26,18 @@ struct Maker : public Space {
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	const PropRef& prop() const override { return prop_; }
-	uint theoremId() const override { return prop_.id(); }
+	const PropRef& prop(rus::Step* s) const override;
+	uint theoremId() const override { return theorem_id_; }
+
+	unique_ptr<Theorem> theorem_;
+	unique_ptr<Proof>   proof_;
 
 private:
 	void buildUpProp(Prop*);
 	void buildUpHyp(Hyp*);
+
+	uint theorem_id_;
+	const AbstProof& abst_proof_;
 
 	PropRef            prop_;
 	IndexMap<HypRef>   hyps_;

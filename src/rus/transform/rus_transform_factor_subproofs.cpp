@@ -1,5 +1,5 @@
 #include <rus_ast.hpp>
-#include <rus/prover/unify/rus_prover_unify_index.hpp>
+#include <rus/prover/rus_prover_maker.hpp>
 #include <dag.hpp>
 
 namespace mdl { namespace rus { namespace {
@@ -307,22 +307,22 @@ static void next_subproofs(ProofImplsSample& pis) {
 		}
 	}
 }
-/*
-static Step* generate_proof_step(const AbstProof::Node* n) {
 
-}
 
-namespace prover { void fill_in_proof(rus::Step* step, rus::Proof* proof); }
-
-static Proof* generate_proof(const AbstProof& p) {
-	rus::Proof* ret = new rus::Proof(node.space->prop().ass->id());
-	ret->inner = true;
-	Step* root_step = generate_proof_step(p.getRoot(0));
-	prover::fill_in_proof(root_step, ret);
-	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop().get(), root_step)));
+static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstProof& aproof) {
+	pair<unique_ptr<Theorem>, unique_ptr<Proof>> ret;
+	static uint i = 0;
+	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i) + "_th"));
+	Return r = maker.prove();
+	if (r) {
+		ret.first = std::move(maker.theorem_);
+		ret.second = std::move(maker.proved()[0]);
+	} else {
+		cout << "prover failed" << endl;
+	}
 	return ret;
 }
-*/
+
 }
 
 void factorize_subproofs(const string& opts) {
@@ -364,7 +364,11 @@ void factorize_subproofs(const string& opts) {
 	cout << "common_subproofs.all_.size(): " << common_subproofs.all_.size() << endl;
 	cout << "first 10 max volume: " << endl;
 	for (uint i = 0; i < 10; ++ i) {
-		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->show() << endl;
+		ProofImpls* impls = common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1).get();
+		cout << impls->show() << endl;
+		pair<unique_ptr<Theorem>, unique_ptr<Proof>> generated = generate_theorem(impls->proof_);
+		cout << (generated.first ? generated.first->show() : "theorem: <null>") << endl;
+		cout << (generated.second ? generated.second->show() : "proof: <null>") << endl;
 	}
 	cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;
