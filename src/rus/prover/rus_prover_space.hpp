@@ -14,6 +14,7 @@ struct Tactic {
 	virtual void add(Prop*) = 0;
 	virtual void del(Prop*) = 0;
 	virtual Prop* next() = 0;
+	virtual string show() const { return ""; }
 };
 
 Tactic* make_tactic(const string&);
@@ -64,6 +65,7 @@ struct Space {
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
+	const Tactic* tactic() const { return tactic_.get(); }
 
 protected:
 	map<uint, Node*>  nodes_;

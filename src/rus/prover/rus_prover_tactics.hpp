@@ -37,7 +37,7 @@ struct Oracle : public QueueTactic {
 	Oracle(const rus::Proof* = nullptr);
 	void add(Prop* p) override;
 	void setProof(const rus::Proof* p) { proof = p; }
-	string show() const;
+	string show() const override;
 	const rus::Step* hint(const Prop* p) const {
 		if (props.count(p)) {
 			return props.at(p);

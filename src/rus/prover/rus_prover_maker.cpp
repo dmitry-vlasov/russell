@@ -5,6 +5,22 @@ namespace mdl { namespace rus { namespace prover {
 
 static bool debug_make_tactic = true;
 
+void all_nodes(const AbstProof::Node* n, set<const AbstProof::Node*>& all) {
+	if (n) {
+		all.insert(n);
+		for (uint i = 0; i < n->childrenArity(); ++ i) {
+			all_nodes(n->getChild(i), all);
+		}
+	}
+}
+
+inline uint find_index(const Prop* p, const Hyp* h) {
+	uint c = 0;
+	for (auto& x : p->premises) if (x.get() == h) return c; else ++c;
+	throw Error("prop is not found");
+}
+
+
 struct MakerTactic : public QueueTactic {
 	MakerTactic(const AbstProof& aproof) : abst_proof_(aproof) {
 		if (aproof.rootSize() == 1) {
@@ -34,8 +50,10 @@ struct MakerTactic : public QueueTactic {
 					leafs.push_back(p);
 					p->hint = true;
 					if (debug_make_tactic) {
-						cout << "make_tactic PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << ind << endl;
-						cout << "this: " << (void*)p << ", parent: " << (void*)grand_prop << endl << endl;
+						cout << "make_tactic PUSHED: " << show_id(p->prop.id()) << ", index = " << p->ind << ", ref: " << ind << ", ";
+						//cout << "p: " << p->show() << endl;
+						cout << "cand: " << candidate->show([](uint l) { return Lex::toStr(l); }) << endl;
+						//cout << "this: " << (void*)p << ", parent: " << (void*)grand_prop << endl << endl;
 						//cout << p->show() << endl << endl;
 					}
 					propMap[p] = candidate;
@@ -89,14 +107,50 @@ struct MakerTactic : public QueueTactic {
 		} else {
 			for (const Node* n : h->parents) {
 				if (const Prop* p = dynamic_cast<const Prop*>(n)) {
+					uint ind = find_index(p, h);
 					if (const AbstProof::Node* x = mapProp(p)) {
-						ret.push_back(x);
+						if (ind < x->childrenArity() && x->getChild(ind)) {
+							ret.push_back(x->getChild(ind));
+						}
 					}
 				}
 			}
 		}
 		return ret;
 	}
+	string show() const override {
+		set<const AbstProof::Node*> all;
+		all_nodes(root, all);
+		string ret;
+		for (auto p : propMap) {
+			all.erase(p.second);
+		}
+		ret += "MISSED STEPS:\n";
+		for (auto p : all) {
+			ret += Lex::toStr(p->label()) + "\n";
+		}
+		ret += "MISSED STEPS DONE\n\n";
+
+		ret += "NODES:\n";
+		for (auto p : propMap) {
+			ret += "--------------------\n";
+			ret += p.first->show(true);
+			ret += p.first->parent->show(true);
+			for (const auto& ch : p.first->premises) {
+				ret += ch->show(true);
+				if (ch->variants.size() == 1) {
+					if (const Ref* r = dynamic_cast<const Ref*>(ch->variants[0].get())) {
+						ret += r->show(true);
+						ret += r->ancestor->show(true);
+					}
+				}
+			}
+			ret += "\n";
+		}
+		ret += "PROOFS DONE\n";
+		return ret;
+	}
+
 
 private:
 	const AbstProof& abst_proof_;
@@ -135,40 +189,6 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 	add_timer_stats("maker_init", timer);
 }
 
-/*inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
-	uint c = 0;
-	for (auto& x : a->props) if (x.get() == p) return c; else ++c;
-	throw Error("prop is not found");
-}*/
-/*
-Maker::Maker(rus::Assertion* a, rus::Prop* p, Tactic* t) : Space(t),
-	prop_(a, find_index(a, p)) {
-	Timer timer;
-	for (auto& p : Sys::mod().math.get<Assertion>()) {
-		if (Assertion* ass = p.second.data) {
-			if (!ass->token.preceeds(a->token)) {
-				continue;
-			}
-			for (uint i = 0; i < ass->props.size(); ++i) {
-				auto& prop = ass->props[i];
-				assertions_.add(
-					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
-			}
-		} else {
-			throw Error("undefined reference to assertion", Lex::toStr(p.first));
-		}
-	}
-	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
-		HypRef hypRef(a, i);
-		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
-	}
-	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
-	buildUp(root_.get());
-	add_timer_stats("space_init", timer);
-}*/
-
 void Maker::buildUp(Node* n) {
 	if (Prop* p = dynamic_cast<Prop*>(n)) {
 		buildUpProp(p);
@@ -180,7 +200,7 @@ void Maker::buildUp(Node* n) {
 }
 
 void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
-	if (Ref* ref = dynamic_cast<Ref*>(h->variants.at(0).get())) {
+	if (Ref* ref = h->ref()) {
 		for (const auto& p : ref->proofs) {
 
 			cout << "REF PROOF EMPLACED: " << p->show() << endl;
@@ -188,16 +208,55 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 			h->proofs.emplace_back(make_unique<ProofHyp>(*h, p.get(), p->sub, p->hint));
 		}
 	} else {
-		for (const auto& par : h->parents) {
+		vector<const AbstProof::Node*> children = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
+		if (!children.size()) {
+			cout << "LEAF : " << h->expr.show() << endl;
+			if (hyps_.findExact(h->expr).size() == 0) {
+
+				cout << "NEW LEAF : " << h->expr.show() << endl;
+
+				uint ind = theorem_->hyps.size();
+				theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
+				hyps_.add(h->expr, HypRef(theorem_.get(), ind));
+			}
+		} else {
+			cout << "NON-LEAF : " << h->expr.show() << endl;
+		}
+
+		/*for (const AbstProof::Node* n : dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h)) {
+			if (n->isLeaf()) {
+				cout << "LEAF : " << h->expr.show() << endl;
+			} else {
+				cout << "NON-LEAF : " << h->expr.show() << endl;
+			}
+			if (n->isLeaf() && hyps_.findExact(h->expr).size() == 0) {
+
+				cout << "NEW LEAF : " << h->expr.show() << endl;
+
+				uint ind = theorem_->hyps.size();
+				theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
+				hyps_.add(h->expr, HypRef(theorem_.get(), ind));
+			}
+		}*/
+
+		/*for (const auto& par : h->parents) {
 			if (const Prop* p = dynamic_cast<const Prop*>(par)) {
-				const AbstProof::Node* n = dynamic_cast<MakerTactic*>(tactic_.get())->mapProp(p);
+				const AbstProof::Node* n = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
+				if (n->isLeaf()) {
+					cout << "LEAF : " << h->expr.show() << endl;
+				} else {
+					cout << "NON-LEAF : " << h->expr.show() << endl;
+				}
 				if (n->isLeaf() && hyps_.findExact(h->expr).size() == 0) {
+
+					cout << "NEW LEAF : " << h->expr.show() << endl;
+
 					uint ind = theorem_->hyps.size();
 					theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
 					hyps_.add(h->expr, HypRef(theorem_.get(), ind));
 				}
 			}
-		}
+		}*/
 		auto unified = hyps_.unify(h->expr);
 		for (const auto& m : unified) {
 			if (hint) {
@@ -286,9 +345,15 @@ void Maker::buildUpHyp(Hyp* h) {
 	} else {
 		MakerTactic* t = dynamic_cast<MakerTactic*>(tactic_.get());
 		set<uint> labels;
+		cout << "building up: " << h->ind << ", labels: {";
 		for (auto c : t->mapHyp(h)) {
-			labels.insert(c->label());
+			if (c) {
+				labels.insert(c->label());
+				cout << Lex::toStr(c->label()) << " [" << c->show([](uint l) { return Lex::toStr(l); }) << "], ";
+			}
 		}
+		cout << "}" << endl;
+
 		Timer timer1;
 		Timer timer;
 		auto unified = assertions_.unify(h->expr);
@@ -315,6 +380,7 @@ void Maker::buildUpHyp(Hyp* h) {
 			}
 			h->variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), h));
 		}
+		cout << "building up finished" << endl;
 		add_timer_stats("build_up_hyp_arrange_variants", timer);
 		add_timer_stats("build_up_HYP", timer1);
 	}

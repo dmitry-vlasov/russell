@@ -51,7 +51,7 @@ void Prover::buildUp(Node* n) {
 }
 
 void Prover::initProofs(Hyp* h, const rus::Hyp* hint) {
-	if (Ref* ref = dynamic_cast<Ref*>(h->variants.at(0).get())) {
+	if (Ref* ref = h->ref()) {
 		for (const auto& p : ref->proofs) {
 
 			cout << "REF PROOF EMPLACED: " << p->show() << endl;

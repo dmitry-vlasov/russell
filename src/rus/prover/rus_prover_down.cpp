@@ -89,7 +89,9 @@ void unify_subs_sequent(Prop* pr, Hyp* hy, ProofExpIndexed hi, MultyUnifiedSubs&
 			if (debug_unify_subs) {
 				cout << "SUB: " << delta.show() << endl;
 			}
-			ret[inds] = delta;
+			if (delta.ok()) {
+				ret[inds] = delta;
+			}
 		}
 		if (!ind.hasNext()) {
 			break;

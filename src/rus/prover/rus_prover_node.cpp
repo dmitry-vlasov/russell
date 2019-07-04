@@ -61,8 +61,6 @@ bool Ref::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
-
-
 // Hyp -------------------------
 
 Hyp::Hyp(Term&& e, Space* s) :
@@ -126,10 +124,9 @@ bool Hyp::buildDown(set<Node*>& downs) {
 	return new_proofs;
 }
 
-
-
-
-
+Ref* Hyp::ref() {
+	return variants.size() ? dynamic_cast<Ref*>(variants.at(0).get()) : nullptr;
+}
 
 // Prop -------------------------
 

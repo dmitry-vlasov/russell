@@ -42,6 +42,7 @@ struct HypRef {
 class Space;
 class Prop;
 class Hyp;
+class Ref;
 class ProofProp;
 class ProofExp;
 class ProofNode;
@@ -95,6 +96,7 @@ struct Hyp : public Node {
 	bool buildDown(set<Node*>&) override;
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parents.size(); }
+	Ref* ref();
 };
 
 struct Ref : public Node {

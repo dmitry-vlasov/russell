@@ -17,8 +17,9 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndex
 			Subst sub = unify_subs(p.second, gen[p.first]);
 			if (sub.ok()) {
 				Subst delta = pr->sub;
-				delta.compose(sub);
-				ret[p.first] = delta;
+				if (delta.compose(sub)) {
+					ret[p.first] = delta;
+				}
 			}
 		}
 	} catch (std::exception& e) {
