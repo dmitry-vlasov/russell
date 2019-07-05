@@ -95,6 +95,8 @@ static void verify_composition(const Subst& comp, const Subst& s1, const Subst& 
 }
 #endif
 
+uint count = 0;
+
 template<class S>
 static void compose(const Subst& s1, Subst::Sub_& sub_, S s2, bool norm) {
 #ifdef DEBUG_SUBST
@@ -105,9 +107,16 @@ static void compose(const Subst& s1, Subst::Sub_& sub_, S s2, bool norm) {
 	to_erase.reserve(sub_.size());
 	for (auto& p : sub_) {
 		Term ex = s2.apply(p.second.term);
-		if (!(ex.kind() == Term::VAR && ex.var() == p.first)) {
+		//count += 1;
+		//cout << count <<  " " << Lex::toStr(p.first) << " => " << ex << endl;
+
+		if (!(ex.kind() == Term::VAR && ex.var().lit == p.first)) {
 			p.second.term = std::move(ex);
 		} else {
+			/*if (ex.var().type != p.second.type) {
+				cout << "VOT ONO: " << ex.var() << " != " << Lex::toStr(p.first) << endl;
+				exit(-1);
+			}*/
 			to_erase.push_back(p.first);
 		}
 		vars.insert(p.first);

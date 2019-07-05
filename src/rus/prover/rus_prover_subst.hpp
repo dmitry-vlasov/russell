@@ -6,14 +6,18 @@ namespace mdl { namespace rus { namespace prover {
 
 enum class CompMode { SEMI, NORM, DUAL, DEFAULT = NORM };
 
+extern uint count;
+
 struct Subst {
 	Subst(bool ok = true) : ok_(ok) { }
 	Subst(LightSymbol v, const Term& t) : ok_(true) {
+		//cout << ++count <<  " " << v << " => " << t << endl;
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
 			sub_.emplace(v.literal(), TypeTerm(v.type, t));
 		}
 	}
 	Subst(LightSymbol v, Term&& t) : ok_(true) {
+		//cout << ++count <<  " " << v << " => " << t << endl;
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
 			sub_.emplace(v.literal(), TypeTerm(v.type, std::move(t)));
 		}
@@ -159,12 +163,14 @@ struct VarPair {
 		}
 	}
 	VarPair invert() const { return VarPair(to, from); }
+	bool isIdentical() const { return from == to; }
 	const LightSymbol from;
 	const LightSymbol to;
 };
 
 struct VarMap {
 	bool compose(VarPair p) {
+		if (p.isIdentical()) return true;
 		auto it = repl.find(p.from.lit);
 		if (it == repl.end()) {
 			repl[p.from.lit] = p.to;
@@ -212,10 +218,13 @@ struct VarMap {
 		Subst::Sub_ new_sub;
 		for (auto& p : s.sub_) {
 			apply(p.second.term);
-			new_sub.emplace(
-				apply(p.first, p.second.type),
-				Subst::TypeTerm(p.second.type, std::move(p.second.term))
-			);
+			uint new_var = apply(p.first, p.second.type);
+			if (!(p.second.term.kind() == Term::VAR && p.second.term.var() == new_var)) {
+				new_sub.emplace(
+					new_var,
+					Subst::TypeTerm(p.second.type, std::move(p.second.term))
+				);
+			}
 		}
 		s.sub_ = std::move(new_sub);
 	}
@@ -227,10 +236,10 @@ struct VarMap {
 	void apply(VarMap& vr) const {
 		Repl_ new_repl;
 		for (auto& p : vr.repl) {
-			uint v = apply(p.first, p.second.type);
+			uint new_var = apply(p.first, p.second.type);
 			LightSymbol im = apply(p.second);
-			if (v != im.lit) {
-				new_repl.emplace(v, im);
+			if (new_var != im.lit) {
+				new_repl.emplace(new_var, im);
 			}
 		}
 		vr.repl = std::move(new_repl);
@@ -291,6 +300,7 @@ struct VarRepl {
 		return VarRepl(inverse_, direct_);
 	}
 	bool compose(VarPair p) {
+		if (p.isIdentical()) return true;
 		return direct_.compose(p) && inverse_.compose(p.invert());
 	}
 	VarRepl apply(const VarRepl& vr) const {

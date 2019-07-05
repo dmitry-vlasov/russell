@@ -314,10 +314,10 @@ static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstP
 	static uint i = 0;
 	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i) + "_th"));
 	try {
-		Return r = maker.prove();
+		Return r = maker.make();
 		if (r) {
-			ret.first = std::move(maker.theorem_);
 			ret.second = std::move(maker.proved()[0]);
+			ret.first = std::move(maker.theorem_);
 		} else {
 			cout << "prover failed" << endl;
 

@@ -260,8 +260,8 @@ rus::Proof* ProofProp::proof() const {
 	rus::Proof* ret = new rus::Proof(node.space->theoremId());
 	ret->inner = true;
 	fill_in_proof(st, ret);
-	reset_steps(this);
 	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop(st).get(), st)));
+	reset_steps(this);
 	try {
 		ret->verify(VERIFY_SUB);
 	} catch (Error& err) {

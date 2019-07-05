@@ -24,6 +24,8 @@ struct Maker : public Space {
 		// TODO:
 	}
 
+	Return make();
+
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
 	const PropRef& prop(rus::Step* s) const override;
@@ -33,6 +35,8 @@ struct Maker : public Space {
 	unique_ptr<Proof>   proof_;
 
 private:
+	void expandUp(uint index, set<Node*>& leafs);
+
 	void buildUpProp(Prop*);
 	void buildUpHyp(Hyp*);
 

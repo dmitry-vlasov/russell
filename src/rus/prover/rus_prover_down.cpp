@@ -352,6 +352,15 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 			}
 #endif
 			pr->proofs.emplace_back(pp);
+
+			cout << "ind: " << show_vector(ind) << endl;
+			for (uint i = 0; i < ind.size(); ++ i) {
+				ProofExp* ph = pr->premises[i].get()->proofs[ind[i]].get();
+				cout << "\t" << ph->expr() << endl;
+			}
+			cout << "Proof: [" << endl << show_proof_struct(pp) << "]" << endl;
+			cout << "subst: " << p.second.show() << endl;
+
 		} catch (Error& err) {
 			string msg;
 			msg += "while unifying down:\n";

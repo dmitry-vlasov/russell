@@ -68,6 +68,8 @@ struct Space {
 	const Tactic* tactic() const { return tactic_.get(); }
 
 protected:
+	void completeDown(set<Node*>& downs);
+
 	map<uint, Node*>  nodes_;
 	unique_ptr<Hyp>   root_;
 	map<uint, uint>   vars;

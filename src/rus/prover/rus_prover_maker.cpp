@@ -211,60 +211,31 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 		vector<const AbstProof::Node*> children = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
 		if (!children.size()) {
 			cout << "LEAF : " << h->expr.show() << endl;
-			if (hyps_.findExact(h->expr).size() == 0) {
-
-				cout << "NEW LEAF : " << h->expr.show() << endl;
-
+			vector<HypRef> refs = hyps_.findExact(h->expr);
+			if (refs.size() == 0) {
 				uint ind = theorem_->hyps.size();
 				theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
-				hyps_.add(h->expr, HypRef(theorem_.get(), ind));
+				HypRef ref(theorem_.get(), ind);
+				hyps_.add(h->expr, ref);
+				refs.push_back(ref);
+				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << ind << endl;
 			}
+			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0), Subst(), true));
 		} else {
 			cout << "NON-LEAF : " << h->expr.show() << endl;
 		}
-
-		/*for (const AbstProof::Node* n : dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h)) {
-			if (n->isLeaf()) {
-				cout << "LEAF : " << h->expr.show() << endl;
-			} else {
-				cout << "NON-LEAF : " << h->expr.show() << endl;
-			}
-			if (n->isLeaf() && hyps_.findExact(h->expr).size() == 0) {
-
-				cout << "NEW LEAF : " << h->expr.show() << endl;
-
-				uint ind = theorem_->hyps.size();
-				theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
-				hyps_.add(h->expr, HypRef(theorem_.get(), ind));
-			}
-		}*/
-
-		/*for (const auto& par : h->parents) {
-			if (const Prop* p = dynamic_cast<const Prop*>(par)) {
-				const AbstProof::Node* n = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
-				if (n->isLeaf()) {
-					cout << "LEAF : " << h->expr.show() << endl;
-				} else {
-					cout << "NON-LEAF : " << h->expr.show() << endl;
-				}
-				if (n->isLeaf() && hyps_.findExact(h->expr).size() == 0) {
-
-					cout << "NEW LEAF : " << h->expr.show() << endl;
-
-					uint ind = theorem_->hyps.size();
-					theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
-					hyps_.add(h->expr, HypRef(theorem_.get(), ind));
-				}
-			}
-		}*/
-		auto unified = hyps_.unify(h->expr);
+		/*auto unified = hyps_.unify(h->expr);
 		for (const auto& m : unified) {
+
+			cout << "Unified with: " << m.data.ind << endl;
+			cout << "subst: " << endl << m.sub << endl;
+
 			if (hint) {
 				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, m.data.get() == hint));
 			} else {
 				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, false));
 			}
-		}
+		}*/
 	}
 }
 
@@ -385,6 +356,48 @@ void Maker::buildUpHyp(Hyp* h) {
 		add_timer_stats("build_up_HYP", timer1);
 	}
 }
+
+void Maker::expandUp(uint index, set<Node*>& leafs) {
+	if (index >= nodes_.size()) {
+		throw Error("OUT OF BOUNDARIES");
+	}
+	if (Prop* p = dynamic_cast<Prop*>(nodes_[index])) {
+		if (p->isLeaf()) {
+			leafs.insert(p);
+		} else {
+			if (p->mayGrowUp()) {
+				buildUp(p);
+				for (auto& h : p->premises) {
+					Hyp* hyp = h.get();
+					buildUp(hyp);
+				}
+				for (auto& h : p->premises) {
+					if (h->isLeaf()) {
+						leafs.insert(h.get());
+					}
+				}
+			}
+		}
+	}
+}
+
+Return Maker::make() {
+	set<Node*> leafs;
+	cout << "BUILD TREE" << endl;
+	while (Prop* p = tactic_->next()) {
+		expandUp(p->ind, leafs);
+	}
+	cout << "INIT PROOF LEAFS" << endl;
+	for (Node* n : leafs) {
+		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+			initProofs(h);
+		}
+	}
+	cout << "COMPLETE DOWN" << endl;
+	completeDown(leafs);
+	return check_proved();
+}
+
 
 }}}
 

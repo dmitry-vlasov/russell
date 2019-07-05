@@ -86,7 +86,7 @@ static void add_shown(set<uint>& shown, set<uint>& to_show, Node* node) {
 	}
 }
 
-void completeDown(set<Node*>& downs) {
+void Space::completeDown(set<Node*>& downs) {
 	while (!downs.empty()) {
 		Node* n = *downs.begin();
 		downs.erase(n);

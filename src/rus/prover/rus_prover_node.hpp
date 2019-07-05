@@ -97,6 +97,7 @@ struct Hyp : public Node {
 	string show(bool with_proofs = false) const override;
 	bool root() const { return !parents.size(); }
 	Ref* ref();
+	bool isLeaf() const { return variants.size() == 0; }
 };
 
 struct Ref : public Node {
