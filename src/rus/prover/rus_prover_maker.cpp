@@ -164,22 +164,25 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 	theorem_ = make_unique<Theorem>(id);
 	prop_.ass = theorem_.get();
 	Timer timer;
-	for (auto& p : Sys::mod().math.get<Assertion>()) {
-		if (Assertion* ass = p.second.data) {
-			/*if (!ass->token.preceeds(a->token)) {
-				continue;
-			}*/
-			for (uint i = 0; i < ass->props.size(); ++i) {
-				auto& prop = ass->props[i];
-				assertions_.add(
-					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
+
+	set<uint> visited;
+	aproof.getRoot(0)->traverse([this, &visited](const AbstProof::Node& n) {
+		if (!visited.count(n.label())) {
+			visited.insert(n.label());
+			if (Assertion* ass = Sys::mod().math.get<Assertion>().access(n.label())) {
+				for (uint i = 0; i < ass->props.size(); ++i) {
+					auto& prop = ass->props[i];
+					assertions_.add(
+						Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+						PropRef(ass, i)
+					);
+				}
+				cout << "ADDED: " << Lex::toStr(n.label()) << endl;
+			} else {
+				throw Error("undefined reference to assertion", Lex::toStr(n.label()));
 			}
-		} else {
-			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}
-	}
+	});
 	if (abst_proof_.rootSize() != 1) {
 		throw Error("ivalid proof tree - non a single root");
 	}
@@ -224,18 +227,6 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 		} else {
 			cout << "NON-LEAF : " << h->expr.show() << endl;
 		}
-		/*auto unified = hyps_.unify(h->expr);
-		for (const auto& m : unified) {
-
-			cout << "Unified with: " << m.data.ind << endl;
-			cout << "subst: " << endl << m.sub << endl;
-
-			if (hint) {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, m.data.get() == hint));
-			} else {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, false));
-			}
-		}*/
 	}
 }
 
@@ -381,10 +372,19 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 	}
 }
 
+uint make_counter = 0;
+
 Return Maker::make() {
+	if (++make_counter >= 15) {
+		cout << "MAKE STOP" << endl;
+		exit(0);
+	} else {
+		cout << "MAKE COUNT: " << make_counter << endl;
+	}
 	set<Node*> leafs;
 	cout << "BUILD TREE" << endl;
 	while (Prop* p = tactic_->next()) {
+		cout << "expanding: " << p->ind << endl;
 		expandUp(p->ind, leafs);
 	}
 	cout << "INIT PROOF LEAFS" << endl;

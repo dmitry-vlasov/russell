@@ -31,7 +31,7 @@ struct DAG {
 			f(*this); for (auto& c : children_) if (c) c->traverse(f);
 		}
 		void traverse(std::function<void (const Node&)> f) const {
-			f(*this); for (const auto& c : children_) if (c) c->traverse(f);
+			f(*this); for (auto& c : children_) if (c) const_cast<const Node*>(c.get())->traverse(f);
 		}
 		string show(std::function<string (const Label&)> f) const {
 			string ret;

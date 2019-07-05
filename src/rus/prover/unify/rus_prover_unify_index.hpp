@@ -352,6 +352,9 @@ struct IndexMap {
 		}
 		return ret;
 	}
+	bool contains(const Term& t) const {
+		return findExact(t).size();
+	}
 
 private:
 	struct Storage {
