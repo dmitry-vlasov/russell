@@ -284,5 +284,84 @@ rus::Ref* ProofProp::ref() const {
 	return new rus::Ref(step());
 }
 
+
+
+
+
+
+
+
+
+
+
+struct ProofEnv {
+	map<const ProofProp*, rus::Step*> steps;
+	map<const ProofNode*, rus::Ref*> refs;
+};
+
+
+void gen_steps(const ProofNode* n, ProofEnv& env) {
+	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
+		gen_steps(h->child, env);
+	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+		gen_steps(r->child, env);
+	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
+		if (!env.refs.count(t)) {
+			env.refs[t] = new rus::Ref(t->hyp.get());
+		}
+	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+		if (!env.steps.count(p) && p->parent) {
+			vector<unique_ptr<rus::Ref>> refs;
+			for (auto ch : p->premises) {
+				gen_steps(ch, env);
+				refs.emplace_back(env.refs.at(ch));
+			}
+			rus::Step* step = new rus::Step(-1, rus::Step::ASS, p->node.prop.id(), nullptr);
+			step->refs = std::move(refs);
+			step->expr = std::move(Term2Expr(p->parent->expr()));
+			Substitution s = Subst2Substitution(p->sub);
+			apply_recursively(s, step);
+			env.steps[p] = step;
+			env.refs[p] = new rus::Ref(step);
+		}
+	} else {
+		throw Error("Impossible ProofNode type");
+	}
+}
+
+rus::Proof* gen_proof(const ProofNode* n) {
+	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
+		return gen_proof(h->child);
+	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+		return gen_proof(r->child);
+	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+		ProofEnv env;
+		gen_steps(p, env);
+		rus::Step* st = env.steps.at(p);
+		rus::Proof* ret = new rus::Proof(p->node.space->theoremId());
+		ret->inner = true;
+		fill_in_proof(st, ret);
+		ret->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
+		try {
+			ret->verify(VERIFY_SUB);
+		} catch (Error& err) {
+			cout << "WRONG PROOF:" << endl;
+			ostringstream oss;
+			ret->write(oss);
+			cout << oss.str() << endl;
+			throw err;
+		}
+		try {
+			ret->verify(VERIFY_DISJ);
+		} catch (Error& err) {
+			delete ret;
+			ret = nullptr;
+		}
+		return ret;
+	} else {
+		throw Error("Impossible ProofNode type");
+	}
+}
+
 }}}
 

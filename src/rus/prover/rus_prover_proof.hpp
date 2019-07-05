@@ -121,6 +121,7 @@ struct ProofExpIndexed {
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
 string show_proof_struct(const ProofNode* n);
+rus::Proof* gen_proof(const ProofNode* n);
 
 }}}
 
