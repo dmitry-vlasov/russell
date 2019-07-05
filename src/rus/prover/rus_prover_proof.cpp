@@ -211,6 +211,20 @@ struct ProofEnv {
 	}
 	unique_ptr<rus::Proof> proof;
 
+	void internalVars() {
+		for (auto& e : proof->elems) {
+			if (rus::Step* step = rus::Proof::step(e)) {
+				for (auto& s : step->expr.symbols) {
+					if (const Var* v = dynamic_cast<const Var*>(s.get())) {
+						if (proof->allvars.isDeclared(v->lit())) continue;
+						if (proof->theorem()->vars.isDeclared(v->lit())) continue;
+						proof->allvars.v.push_back(*v);
+					}
+				}
+			}
+		}
+	}
+
 private:
 	const rus::Ref& getRef(const ProofNode* n) {
 		if (refMap.count(n)) {
