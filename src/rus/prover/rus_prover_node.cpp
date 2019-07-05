@@ -41,9 +41,7 @@ bool Ref::buildDown(set<Node*>& downs) {
 			parent->proofs.emplace_back(parent_proof);
 
 			try {
-				if (rus::Proof* rus_proof = parent_proof->proof()) {
-					delete rus_proof;
-				}
+				gen_proof(parent_proof);
 			} catch (Error& err) {
 				cout << "FUCK 2)" << endl;
 				cout << "THIS: " << endl << show() << endl;
@@ -98,9 +96,7 @@ bool Hyp::buildDown(set<Node*>& downs) {
 					downs.insert(ref);
 
 					try {
-						if (rus::Proof* rus_proof = r->proof()) {
-							delete rus_proof;
-						}
+						gen_proof(r);
 					} catch (Error& err) {
 						cout << "FUCK 1)" << endl;
 						cout << "THIS: " << endl << show() << endl;

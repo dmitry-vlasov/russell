@@ -125,84 +125,82 @@ string ProofTop::show() const {
 }
 
 string ProofHyp::show() const {
-	ostringstream oss;
 	rus::Step* st = nullptr;
-	if (child) {
-		if (const ProofProp* pp = dynamic_cast<const ProofProp*>(child)) {
-			st = pp->step();
-		}
+	unique_ptr<rus::Proof> proof;
+	try {
+		proof = std::move(gen_proof(this));
+		st = rus::Proof::step(proof->elems.back());
+	} catch (Error& err) {
+		proof.reset();
 	}
+	ostringstream oss;
 	oss << "<proof expr=\"" << (st ? st->expr.show() : node.expr.show()) << "\" ";
 	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
-	oss << ">\n";
-	oss << "\t<![CDATA[\n";
-	try {
-		if (rus::Proof* pr = proof()) {
-			oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
-			delete pr;
-		}
-	} catch (Error&) {
-		oss << "FAILED PROOF" << endl;
-	}
-	oss << "]]>\n";
-	oss << "\t<substitution>\n";
-	oss << "\t<![CDATA[\n";
+	oss << ">" << endl;
+	oss << "\t<![CDATA[" << endl;
+	oss << (proof ? Indent::paragraph(proof->show(), "\t\t") : "\t\tFAILED PROOF") << endl;
+	oss << "]]>" << endl;
+	oss << "\t<substitution>" << endl;
+	oss << "\t<![CDATA[" << endl;
 	oss << Indent::paragraph(sub.show(), "\t\t");
-	oss << "\t]]>\n";
-	oss << "\t</substitution>\n";
-	oss << "</proof>\n";
+	oss << "\t]]>" << endl;
+	oss << "\t</substitution>" << endl;
+	oss << "</proof>" << endl;
 	return oss.str();
 }
 
 string ProofRef::show() const {
+	rus::Step* st = nullptr;
+	unique_ptr<rus::Proof> proof;
+	try {
+		proof = std::move(gen_proof(this));
+		st = rus::Proof::step(proof->elems.back());
+	} catch (Error& err) {
+		proof.reset();
+	}
 	ostringstream oss;
-	oss << "<proof expr=\"" << expr().show() << "\" ";
+	oss << "<proof expr=\"" << (st ? st->expr.show() : "") << "\" ";
 	oss << "index=\"" << ind << "\" ";
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
-	oss << ">\n";
-	oss << "\t<![CDATA[\n";
-	try {
-		if (rus::Proof* pr = proof()) {
-			oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
-			delete pr;
-		}
-	} catch (Error&) {
-		oss << "FAILED PROOF" << endl;
-	}
-	oss << "]]>\n";
-	oss << "\t<substitution>\n";
-	oss << "\t<![CDATA[\n";
+	oss << ">" << endl;
+	oss << "\t<![CDATA[" << endl;
+	oss << (proof ? Indent::paragraph(proof->show(), "\t\t") : "\t\tFAILED PROOF") << endl;
+	oss << "]]>" << endl;
+	oss << "\t<substitution>" << endl;
+	oss << "\t<substitution>" << endl;
+	oss << "\t<![CDATA[" << endl;
 	oss << Indent::paragraph(sub.show(), "\t\t");
-	oss << "\t]]>\n";
-	oss << "\t</substitution>\n";
-	oss << "</proof>\n";
+	oss << "\t]]>" << endl;
+	oss << "\t</substitution>" << endl;
+	oss << "</proof>" << endl;
 	return oss.str();
 }
 
 string ProofProp::show() const {
+	rus::Step* st = nullptr;
+	unique_ptr<rus::Proof> proof;
+	try {
+		proof = std::move(gen_proof(this));
+		st = rus::Proof::step(proof->elems.back());
+	} catch (Error& err) {
+		proof.reset();
+	}
 	ostringstream oss;
-	if (rus::Step* st = step()) {
+	if (st) {
 		oss << "<proof expr=\"" << st->expr << "\" ";
 		oss << "index=\"" << ind << "\" ";
 		oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
-		oss << ">\n";
-		oss << "\t<![CDATA[\n";
-		try {
-			if (rus::Proof* pr = proof()) {
-				oss << Indent::paragraph(pr->show(), "\t\t") << "\n";
-				delete pr;
-			}
-		} catch(Error&) {
-			oss << "\tFAILED PROOF" << endl;
-		}
-		oss << "\t]]>\n";
-		oss << "\t<substitution>\n";
-		oss << "\t<![CDATA[\n";
+		oss << ">" << endl;
+		oss << "\t<![CDATA[" << endl;
+		oss << (proof ? Indent::paragraph(proof->show(), "\t\t") : "\t\tFAILED PROOF") << endl;
+		oss << "]]>" << endl;
+		oss << "\t<substitution>" << endl;
+		oss << "\t<![CDATA[" << endl;
 		oss << Indent::paragraph(sub.show(), "\t\t");
-		oss << "\t]]>\n";
-		oss << "\t</substitution>\n";
-		oss << "</proof>\n";
+		oss << "\t]]>" << endl;
+		oss << "\t</substitution>" << endl;
+		oss << "</proof>" << endl;
 	} else {
 		oss << "UNFINISHED" << endl;
 	}

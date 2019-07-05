@@ -34,19 +34,7 @@ bool ProofTop::equal(const ProofNode* n) const {
 	}
 }
 
-rus::Ref* ProofTop::ref() const {
-	return new rus::Ref(hyp.get());
-}
-
 // ProofHyp -------------------------
-
-rus::Ref* ProofHyp::ref() const {
-	return child->ref();
-}
-
-rus::Proof* ProofHyp::proof() const {
-	return child->proof();
-}
 
 bool ProofHyp::equal(const ProofNode* n) const {
 	if (const ProofHyp* e = dynamic_cast<const ProofHyp*>(n)) {
@@ -64,9 +52,8 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
 	child->new_ = false;
 #ifdef VERIFY_PROOF_HYP
 	try {
-		rus::Proof* pr = proof();
+		auto pr = gen_proof(this);
 		//cout << "PROOF: " << *pr << endl;
-		delete pr;
 	} catch (Error& err) {
 		cout << "ERR proof: " << ind << endl;
 		cout << show_proof_struct(this) << endl;
@@ -86,9 +73,8 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
 	child->new_ = false;
 #ifdef VERIFY_PROOF_HYP
 	try {
-		rus::Proof* pr = proof();
+		auto pr = gen_proof(this);
 		//cout << "PROOF: " << *pr << endl;
-		delete pr;
 	} catch (Error& err) {
 		cout << "ERR proof: " << ind << endl;
 		cout << show_proof_struct(this) << endl;
@@ -120,22 +106,6 @@ ProofRef::ProofRef(Ref& n, ProofExp* c, bool hi) :
 	for (auto v : s_im_vars) {
 		sub.compose(v, n.space->freshVar(v), CompMode::SEMI);
 	}
-}
-
-rus::Ref* ProofRef::ref() const {
-	return child->ref();
-}
-
-rus::Proof* ProofRef::proof() const {
-	rus::Proof* proof = child->proof();
-	if (proof) {
-		Substitution s = Subst2Substitution(sub);
-		Step* step = Proof::step(proof->elems.at(proof->elems.size() - 2));
-		apply_recursively(s, step);
-	} else {
-		//throw Error("no proof: ProofRef: " + node.show());
-	}
-	return proof;
 }
 
 bool ProofRef::equal(const ProofNode* n) const {
@@ -197,95 +167,6 @@ bool ProofProp::equal(const ProofNode* n) const {
 	}
 }
 
-rus::Step* ProofProp::step() const {
-	if (!parent) {
-		throw Error("no parent: ProofProp");
-	}
-	if (!step_) {
-		vector<unique_ptr<rus::Ref>> refs;
-		for (auto ch : premises) {
-			refs.emplace_back(ch->ref());
-		}
-		const PropRef& p = node.prop;
-		step_ = new rus::Step(-1, rus::Step::ASS, p.id(), nullptr);
-		step_->refs = std::move(refs);
-		step_->expr = std::move(Term2Expr(parent->expr()));
-		Substitution s = Subst2Substitution(sub);
-		apply_recursively(s, step_);
-	}
-	return step_;
-}
-
-static void fill_in_proof(rus::Step* step, rus::Proof* proof, set<const rus::Step*>& visited) {
-	for (auto& r : step->refs) {
-		if (rus::Step* s = r.get()->step()) {
-			if (!visited.count(s)) {
-				visited.insert(s);
-				fill_in_proof(s, proof, visited);
-			}
-		}
-	}
-	for (auto& s : step->expr.symbols) {
-		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
-			if (proof->allvars.isDeclared(v->lit())) continue;
-			if (proof->theorem()->vars.isDeclared(v->lit())) continue;
-			proof->allvars.v.push_back(*v);
-		}
-	}
-	step->proof_ = proof;
-	step->set_ind(proof->elems.size());
-	proof->elems.emplace_back(unique_ptr<Step>(step));
-}
-
-static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
-	set<const rus::Step*> visited;
-	fill_in_proof(step, proof, visited);
-}
-
-void reset_steps(const ProofNode* n) {
-	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
-		reset_steps(h->child);
-	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
-		reset_steps(r->child);
-	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
-		p->step_ = nullptr;
-		for (auto c : p->premises) {
-			reset_steps(c);
-		}
-	}
-}
-
-rus::Proof* ProofProp::proof() const {
-	rus::Step* st = step();
-	rus::Proof* ret = new rus::Proof(node.space->theoremId());
-	ret->inner = true;
-	fill_in_proof(st, ret);
-	ret->elems.emplace_back(unique_ptr<Qed>(new Qed(node.space->prop(st).get(), st)));
-	reset_steps(this);
-	try {
-		ret->verify(VERIFY_SUB);
-	} catch (Error& err) {
-		cout << "WRONG PROOF:" << endl;
-		ostringstream oss;
-		ret->write(oss);
-		cout << oss.str() << endl;
-		throw err;
-	}
-	try {
-		ret->verify(VERIFY_DISJ);
-	} catch (Error& err) {
-		delete ret;
-		ret = nullptr;
-	}
-	return ret;
-}
-
-rus::Ref* ProofProp::ref() const {
-	return new rus::Ref(step());
-}
-
-
-
 
 
 
@@ -295,69 +176,82 @@ rus::Ref* ProofProp::ref() const {
 
 
 struct ProofEnv {
-	map<const ProofProp*, rus::Step*> steps;
-	map<const ProofNode*, rus::Ref*> refs;
+	ProofEnv(uint id = Lex::toInt("none_thm")) : proof(make_unique<rus::Proof>(id)) {
+		proof->inner = true;
+	}
+
+	void genSteps(const ProofNode* n) {
+		if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
+			if (h->child) genSteps(h->child);
+		} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+			if (r->child) genSteps(r->child);
+		} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
+			if (!refMap.count(t)) {
+				refMap.emplace(t, rus::Ref(t->hyp.get()));
+			}
+		} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
+			if (!stepMap.count(p) && p->parent) {
+				for (auto prem : p->premises) {
+					genSteps(prem);
+				}
+				rus::Step* step = new rus::Step(proof->elems.size(), rus::Step::ASS, p->node.prop.id(), proof.get());
+				for (auto prem : p->premises) {
+					step->refs.emplace_back(make_unique<rus::Ref>(getRef(prem)));
+				}
+				step->expr = std::move(Term2Expr(p->parent->expr()));
+				step->set_ind(proof->elems.size());
+				apply_recursively(Subst2Substitution(p->sub), step);
+				stepMap.emplace(p, step);
+				refMap.emplace(p, rus::Ref(step));
+				proof->elems.emplace_back(unique_ptr<Step>(step));
+			}
+		} else {
+			throw Error("Impossible ProofNode type");
+		}
+	}
+	unique_ptr<rus::Proof> proof;
+
+private:
+	const rus::Ref& getRef(const ProofNode* n) {
+		if (refMap.count(n)) {
+			return refMap.at(n);
+		} else if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
+			if (h->child) return getRef(h->child); else throw Error("undefined reference to:\n" + n->show());
+		} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
+			if (r->child) return getRef(r->child); else throw Error("undefined reference to:\n" + n->show());
+		} else {
+			throw Error("undefined reference to:\n" + n->show());
+		}
+	}
+	map<const ProofProp*, rus::Step*> stepMap;
+	map<const ProofNode*, rus::Ref> refMap;
 };
 
-
-void gen_steps(const ProofNode* n, ProofEnv& env) {
-	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
-		gen_steps(h->child, env);
-	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
-		gen_steps(r->child, env);
-	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
-		if (!env.refs.count(t)) {
-			env.refs[t] = new rus::Ref(t->hyp.get());
-		}
-	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
-		if (!env.steps.count(p) && p->parent) {
-			vector<unique_ptr<rus::Ref>> refs;
-			for (auto ch : p->premises) {
-				gen_steps(ch, env);
-				refs.emplace_back(env.refs.at(ch));
-			}
-			rus::Step* step = new rus::Step(-1, rus::Step::ASS, p->node.prop.id(), nullptr);
-			step->refs = std::move(refs);
-			step->expr = std::move(Term2Expr(p->parent->expr()));
-			Substitution s = Subst2Substitution(p->sub);
-			apply_recursively(s, step);
-			env.steps[p] = step;
-			env.refs[p] = new rus::Ref(step);
-		}
-	} else {
-		throw Error("Impossible ProofNode type");
-	}
-}
-
-rus::Proof* gen_proof(const ProofNode* n) {
+unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
 		return gen_proof(h->child);
 	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
 		return gen_proof(r->child);
 	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
-		ProofEnv env;
-		gen_steps(p, env);
-		rus::Step* st = env.steps.at(p);
-		rus::Proof* ret = new rus::Proof(p->node.space->theoremId());
-		ret->inner = true;
-		fill_in_proof(st, ret);
-		ret->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
+		ProofEnv env(p->node.space->theoremId());
+		env.genSteps(p);
+		rus::Step* st = rus::Proof::step(env.proof->elems.back());
+		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
 		try {
-			ret->verify(VERIFY_SUB);
+			env.proof->verify(VERIFY_SUB);
 		} catch (Error& err) {
 			cout << "WRONG PROOF:" << endl;
 			ostringstream oss;
-			ret->write(oss);
+			env.proof->write(oss);
 			cout << oss.str() << endl;
 			throw err;
 		}
 		try {
-			ret->verify(VERIFY_DISJ);
+			env.proof->verify(VERIFY_DISJ);
 		} catch (Error& err) {
-			delete ret;
-			ret = nullptr;
+			env.proof.reset();
 		}
-		return ret;
+		return std::move(env.proof);
 	} else {
 		throw Error("Impossible ProofNode type");
 	}

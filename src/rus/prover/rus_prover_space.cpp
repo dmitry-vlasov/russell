@@ -207,8 +207,8 @@ Space::Proved Space::proved() {
 	Proved ret;
 	for (auto& p : root_->proofs) {
 		if (ProofHyp* h = dynamic_cast<ProofHyp*>(p.get())) {
-			if (rus::Proof* pr = h->proof()) {
-				ret.emplace_back(pr);
+			if (auto pr = gen_proof(h)) {
+				ret.emplace_back(std::move(pr));
 			} /*else {
 				cout << "h->show(): " << h->show() << endl;
 			}*/

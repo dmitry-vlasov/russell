@@ -176,10 +176,11 @@ struct Theorem : public Assertion {
 struct Ref : public Writable, public WithToken {
 	enum Kind { HYP, PROP, STEP };
 	Kind kind() const { return static_cast<Kind>(val.index()); }
-	Ref(Hyp* h, const Token& t = Token())  : WithToken(t), val(h)  { }
-	Ref(Prop* p, const Token& t = Token()) : WithToken(t), val(p)  { }
-	Ref(Step* s, const Token& t = Token()) : WithToken(t), val(s)  { }
-	Ref(const Ref&) = delete;
+	explicit Ref() : WithToken(Token()) { }
+	explicit Ref(Hyp* h, const Token& t = Token())  : WithToken(t), val(h)  { }
+	explicit Ref(Prop* p, const Token& t = Token()) : WithToken(t), val(p)  { }
+	explicit Ref(Step* s, const Token& t = Token()) : WithToken(t), val(s)  { }
+	explicit Ref(const Ref& r) : WithToken(r.token), val(r.val) { }
 	Expr& expr();
 	const Expr& expr() const;
 	Hyp* hyp() const   { return kind() == HYP  ? std::get<Hyp*>(val) : nullptr; }
@@ -213,7 +214,7 @@ struct Step : public Writable, public WithToken {
 	typedef unique_ptr<AssUser> AssPtr;
 	typedef variant<AssPtr, unique_ptr<Proof>> Value;
 
-	Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
+	explicit Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
 		WithToken(t), sub(false), ind_(i), proof_(p) {
 		if (k == ASS) { val_ = AssPtr(make_unique<AssUser>(id)); }
 	}
