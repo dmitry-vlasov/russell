@@ -176,7 +176,7 @@ bool ProofProp::equal(const ProofNode* n) const {
 
 
 struct ProofEnv {
-	ProofEnv(uint id = Lex::toInt("none_thm")) : proof(make_unique<rus::Proof>(id)) {
+	ProofEnv(uint th_id) : proof(make_unique<rus::Proof>(th_id)) {
 		proof->inner = true;
 	}
 
@@ -250,7 +250,7 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		ProofEnv env(p->node.space->theoremId());
 		env.genSteps(p);
 		rus::Step* st = rus::Proof::step(env.proof->elems.back());
-		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
+		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st)->get(), st)));
 		try {
 			env.proof->verify(VERIFY_SUB);
 		} catch (Error& err) {
@@ -270,8 +270,8 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		throw Error("Impossible ProofNode type");
 	}
 }
-
-/*TheoremProof gen_theorem_proof(const ProofNode* n) {
+/*
+TheoremProof gen_theorem_proof(const ProofNode* n) {
 	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
 		return gen_theorem_proof(h->child);
 	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
@@ -284,6 +284,7 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		ProofEnv env(Lex::toInt("tmp_thm"));
 		env.genSteps(p);
 		rus::Step* st = rus::Proof::step(env.proof->elems.back());
+		theorem_->props.emplace_back(make_unique<rus::Prop>(0, s->expr));
 		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
 		try {
 			env.proof->verify(VERIFY_SUB);

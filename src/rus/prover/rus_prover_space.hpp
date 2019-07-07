@@ -51,7 +51,7 @@ struct Space {
 
 	virtual void buildUp(Node*) = 0;
 	virtual void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) = 0;
-	virtual const PropRef& prop(rus::Step*) const = 0;
+	virtual const PropRef* prop(rus::Step*) const = 0;
 	virtual uint theoremId() const = 0;
 
 	Proved proved();

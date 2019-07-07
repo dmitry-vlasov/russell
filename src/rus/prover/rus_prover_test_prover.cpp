@@ -27,8 +27,8 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
-	unique_ptr<prover::Prover> space = make_unique<prover::Prover>(*p->qeds().begin(), oracle);
-	space->setMaxProofs(max_proofs);
+	prover::Prover prover(*p->qeds().begin(), oracle);
+	prover.setMaxProofs(max_proofs);
 	try {
 		bool orig_proof_has_shared = proof_has_shared(p);
 
@@ -37,7 +37,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			cout << *p << endl;
 		}
 
-		Return ret = space->prove();
+		Return ret = prover.prove();
 		if (!ret.success()) {
 			//cout << "oracle test failed" << endl;
 			cout << "oracle status:" << endl;
@@ -49,14 +49,14 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			cout << *p << endl;
 			exit(-1);
 		}
-		bool prover_proof_has_shared = proof_has_shared(space->proved().at(0).get());
+		bool prover_proof_has_shared = proof_has_shared(prover.proved().at(0).get());
 		if (prover_proof_has_shared) {
 			cout << "PROVER _PROOF HAS SHARED:" << endl;
-			cout << *space->proved().at(0).get() << endl;
+			cout << *prover.proved().at(0).get() << endl;
 		}
 		if (orig_proof_has_shared && !prover_proof_has_shared) {
 			cout << "PROVER _PROOF HAS NO REFS:" << endl;
-			cout << *space->proved().at(0).get() << endl;
+			cout << *prover.proved().at(0).get() << endl;
 			//exit(0);
 		}
 

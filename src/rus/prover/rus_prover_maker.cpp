@@ -230,9 +230,10 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 	}
 }
 
-const PropRef& Maker::prop(rus::Step* s) const {
+const PropRef* Maker::prop(rus::Step* s) const {
+	theorem_->props.clear();
 	theorem_->props.emplace_back(make_unique<rus::Prop>(0, s->expr));
-	return prop_;
+	return &prop_;
 }
 
 void Maker::buildUpProp(Prop* p) {

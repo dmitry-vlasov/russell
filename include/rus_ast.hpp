@@ -293,6 +293,7 @@ struct Proof : public Writable, public Owner<Proof> {
 	void verify(uint mode = VERIFY_ALL) const;
 	bool check(uint mode = VERIFY_ALL) const;
 	vector<Qed*> qeds() const;
+	AbstProof abst() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Vars            allvars;
@@ -331,16 +332,16 @@ struct Theory : public Writable, public WithToken {
 
 	void write(ostream& os, const Indent& i = Indent()) const override;
 	static Kind kind(const Node& n) { return static_cast<Kind>(n.index()); }
-	static Constant* constant(const Node& n) { return std::get<unique_ptr<Constant>>(n).get(); }
-	static Type* type(const Node& n) { return std::get<unique_ptr<Type>>(n).get(); }
-	static Rule* rule(const Node& n) { return std::get<unique_ptr<Rule>>(n).get(); }
-	static Axiom* axiom(const Node& n) { return std::get<unique_ptr<Axiom>>(n).get(); }
-	static Def* def(const Node& n) { return std::get<unique_ptr<Def>>(n).get(); }
-	static Theorem* theorem(const Node& n) { return std::get<unique_ptr<Theorem>>(n).get(); }
-	static Proof* proof(const Node& n) { return std::get<unique_ptr<Proof>>(n).get(); }
-	static Theory* theory(const Node& n) { return std::get<unique_ptr<Theory>>(n).get(); }
-	static Import* import(const Node& n) { return std::get<unique_ptr<Import>>(n).get(); }
-	static Comment* comment(const Node& n) { return std::get<unique_ptr<Comment>>(n).get(); }
+	static Constant* constant(const Node& n) { return kind(n) == CONSTANT ? std::get<unique_ptr<Constant>>(n).get() : nullptr; }
+	static Type* type(const Node& n) { return kind(n) == TYPE ? std::get<unique_ptr<Type>>(n).get() : nullptr; }
+	static Rule* rule(const Node& n) { return kind(n) == RULE ? std::get<unique_ptr<Rule>>(n).get() : nullptr; }
+	static Axiom* axiom(const Node& n) { return kind(n) == AXIOM ? std::get<unique_ptr<Axiom>>(n).get() : nullptr; }
+	static Def* def(const Node& n) { return kind(n) == DEF ? std::get<unique_ptr<Def>>(n).get() : nullptr; }
+	static Theorem* theorem(const Node& n) { return kind(n) == THEOREM ? std::get<unique_ptr<Theorem>>(n).get() : nullptr; }
+	static Proof* proof(const Node& n) { return kind(n) == PROOF ? std::get<unique_ptr<Proof>>(n).get() : nullptr; }
+	static Theory* theory(const Node& n) { return kind(n) == THEORY ? std::get<unique_ptr<Theory>>(n).get() : nullptr; }
+	static Import* import(const Node& n) { return kind(n) == IMPORT ? std::get<unique_ptr<Import>>(n).get() : nullptr; }
+	static Comment* comment(const Node& n) { return kind(n) == COMMENT ? std::get<unique_ptr<Comment>>(n).get() : nullptr; }
 
 	uint         id;
 	vector<Node> nodes;

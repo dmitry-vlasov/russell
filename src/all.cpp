@@ -32,7 +32,7 @@
 #include "rus/prover/rus_prover_show.cpp"
 #include "rus/prover/rus_prover_space.cpp"
 #include "rus/prover/rus_prover_tactics.cpp"
-#include "rus/prover/rus_prover_test.cpp"
+#include "rus/prover/rus_prover_test_prover.cpp"
 #include "rus/prover/rus_prover_unify.cpp"
 #include "rus/prover/tree_index/rus_prover_matrix_index.cpp"
 #include "rus/prover/tree_index/rus_prover_vector_index.cpp"

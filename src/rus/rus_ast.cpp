@@ -153,6 +153,24 @@ vector<Qed*> Proof::qeds() const {
 	return ret;
 }
 
+static AbstProof::Node* abstProof(const Step* step) {
+	AbstProof::Node* ret = new AbstProof::Node(step->ass_id(), step->refs.size());
+	for (uint i = 0; i < step->refs.size(); ++i) {
+		if (const Step* ch = step->refs[i]->step()) {
+			ret->setChild(i, abstProof(ch));
+		}
+	}
+	return ret;
+}
+
+AbstProof Proof::abst() const {
+	vector<Qed*> qs = qeds();
+	if (!qs.size()) {
+		throw Error("no qeds in a proof");
+	}
+	return abstProof(qeds().at(0)->step);
+}
+
 /*
 inline Token* find(Constant* c, const Token& t) {
 	return c->token.includes(t) ? &c->token : nullptr;

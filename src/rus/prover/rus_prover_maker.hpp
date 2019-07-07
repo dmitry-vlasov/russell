@@ -28,7 +28,7 @@ struct Maker : public Space {
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	const PropRef& prop(rus::Step* s) const override;
+	const PropRef* prop(rus::Step* s) const override;
 	uint theoremId() const override { return theorem_id_; }
 
 	unique_ptr<Theorem> theorem_;
@@ -49,7 +49,7 @@ private:
 	IndexMap<Hyp*>     expressions_;
 };
 
-Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len);
+Return test_maker(string theorem);
 
 }}}
 

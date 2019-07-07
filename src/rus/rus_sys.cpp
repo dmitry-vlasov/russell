@@ -2,6 +2,7 @@
 #include "mm_ast.hpp"
 #include "rus_lookup.hpp"
 #include "prover/rus_prover_prover.hpp"
+#include "prover/rus_prover_maker.hpp"
 
 namespace mdl { namespace rus {
 
@@ -176,6 +177,8 @@ Return prove_info(uint index, string what) {
 Return prove_test(string mode, string theorem, uint max_proofs, uint max_proof_len) {
 	if (mode == "oracle") {
 		return prover::test_with_oracle(theorem, max_proofs, max_proof_len);
+	} else if (mode == "maker") {
+		return prover::test_maker(theorem);
 	}
 	return Return();
 }

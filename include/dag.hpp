@@ -21,6 +21,8 @@ struct DAG {
 		bool isRoot() const { return parentsArity() == 0; }
 		uint parentsArity() const { return parents_.size(); }
 		uint childrenArity() const { return children_.size(); }
+		Node* getParent(uint i) { return parents_.at(i); }
+		Node* getChild(uint i) { return children_.at(i).get(); }
 		const Node* getParent(uint i) const { return parents_.at(i); }
 		const Node* getChild(uint i) const { return children_.at(i).get(); }
 		void setChild(uint i, Node* ch) {
@@ -116,6 +118,21 @@ struct DAG {
 		roots_.emplace_back(new Node(l, a));
 		for (uint i = 0; i < a; ++ i) {
 			leafs_.emplace_back(roots_[0].get(), i);
+		}
+	}
+	DAG(Node* root) : size_(1) {
+		roots_.emplace_back(root);
+		stack<Node*> st;
+		st.push(root);
+		while (!st.empty()) {
+			Node* n = st.top(); st.pop();
+			for (uint i = 0; i < n->childrenArity(); ++ i) {
+				if (!n->getChild(i)) {
+					leafs_.emplace_back(n, i);
+				} else {
+					st.push(n->getChild(i));
+				}
+			}
 		}
 	}
 	DAG(const DAG& d) : size_(d.size_) {
