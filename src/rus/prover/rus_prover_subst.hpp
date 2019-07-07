@@ -251,8 +251,26 @@ struct VarMap {
 			LightSymbol im = apply(p.second);
 			if (v != im.lit) {
 				ret.repl.emplace(v, im);
-			} else {
-				ret.repl.emplace(v, p.second);
+			}
+		}
+		return ret;
+	}
+	void compose(VarMap& vr) const {
+		Repl_ new_repl;
+		for (auto& p : vr.repl) {
+			LightSymbol im = apply(p.second);
+			if (p.first != im.lit) {
+				new_repl.emplace(p.first, im);
+			}
+		}
+		vr.repl = std::move(new_repl);
+	}
+	VarMap compose(const VarMap& vr) const {
+		VarMap ret;
+		for (const auto& p : vr.repl) {
+			LightSymbol im = apply(p.second);
+			if (p.first != im.lit) {
+				ret.repl.emplace(p.first, im);
 			}
 		}
 		return ret;
@@ -307,6 +325,12 @@ struct VarRepl {
 		return VarRepl(
 			direct_.apply(vr.direct_),
 			vr.inverse_.apply(inverse_)
+		);
+	}
+	VarRepl compose(const VarRepl& vr) const {
+		return VarRepl(
+			direct_.compose(vr.direct_),
+			vr.inverse_.compose(inverse_)
 		);
 	}
 	const VarMap& direct() const { return direct_; }

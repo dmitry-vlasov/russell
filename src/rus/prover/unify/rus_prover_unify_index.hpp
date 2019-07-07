@@ -336,7 +336,7 @@ struct IndexMap {
 		if (inds) {
 			for (uint ind : *inds) {
 				const VarRepl& norm = stored_.at(ind).norm;
-				VarRepl repl = norm.inversed().apply(n.norm);
+				VarRepl repl = norm.inversed().compose(n.norm);
 				ret.emplace_back(stored_.at(ind).data, std::move(repl));
 			}
 		}
@@ -349,7 +349,7 @@ struct IndexMap {
 		if (inds) {
 			for (uint ind : *inds) {
 				const VarRepl& norm = stored_.at(ind).norm;
-				VarRepl repl = norm.inversed().apply(n.norm);
+				VarRepl repl = norm.inversed().compose(n.norm);
 				if (repl.size() == 0) {
 					ret.push_back(&stored_.at(ind).data);
 				}

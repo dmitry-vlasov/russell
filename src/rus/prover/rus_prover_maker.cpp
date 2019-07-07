@@ -221,9 +221,24 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 				//Hyp hyp();
 				hyps_.emplace(h->expr, make_unique<rus::Hyp>(hyps_.size(), std::move(Term2Expr(h->expr))));
 				refs = hyps_.findExact(h->expr);
+				if (refs.size() == 0) {
+					cout << "UNPOSSIBLA" << endl;
+
+					cout << hyps_.show() << endl;
+					cout << h->expr.show() << endl;
+					auto x = hyps_.find(h->expr);
+					cout << "x.size() == " << x.size() << endl;
+					for (const auto& y : x) {
+						cout << "y.repl: " << y.repl.show() << endl;
+					}
+
+					exit(-1);
+					throw Error("UNPOSSIBLA");
+				}
 				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << (hyps_.size() - 1) << endl;
 			}
 			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0)->get(), Subst(), true));
+			cout << "LEAF : " << h->expr.show() <<  " DANE " << endl;
 		} else {
 			cout << "NON-LEAF : " << h->expr.show() << endl;
 		}
