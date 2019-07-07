@@ -4,23 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct HypRef {
-	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
-	uint id() const { return ass->id(); }
-	rus::Hyp* get() const { return ass->hyps[ind].get(); }
-	friend bool operator < (const HypRef& a1, const HypRef& a2) {
-		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
-	}
-	bool operator == (const HypRef& hr) const {
-		return ass == hr.ass && ind == hr.ind;
-	}
-	bool operator != (const HypRef& hr) const {
-		return !operator == (hr);
-	}
-	Assertion* ass;
-	uint       ind;
-};
-
 struct ProofNode {
 	ProofNode(const Subst& s, bool h) : sub(s), new_(true), ind(global_index()++), hint(h) { }
 	ProofNode(Subst&& s, bool h) : sub(std::move(s)), new_(true), ind(global_index()++), hint(h) { }
@@ -44,13 +27,13 @@ struct ProofExp : public ProofNode {
 };
 
 struct ProofTop : public ProofExp {
-	ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi);
+	ProofTop(Hyp& n, rus::Hyp* hy, const Subst& s, bool hi);
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
 
-	HypRef hyp;
+	rus::Hyp* hyp;
 	Hyp& node;
 	Term expr_;
 	vector<ProofNode*> parents;

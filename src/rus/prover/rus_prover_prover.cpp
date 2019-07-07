@@ -62,9 +62,9 @@ void Prover::initProofs(Hyp* h, const rus::Hyp* hint) {
 		auto unified = hyps_.unify(h->expr);
 		for (const auto& m : unified) {
 			if (hint) {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, m.data.get() == hint));
+				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data.get(), m.sub, m.data.get() == hint));
 			} else {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data, m.sub, false));
+				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data.get(), m.sub, false));
 			}
 		}
 	}

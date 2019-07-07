@@ -21,9 +21,9 @@ static void apply_recursively(const Substitution& sub, rus::Step* step) {
 
 // ProofTop -------------------------
 
-ProofTop::ProofTop(Hyp& n, const HypRef& hy, const Subst& s, bool hi) :
+ProofTop::ProofTop(Hyp& n, rus::Hyp* hy, const Subst& s, bool hi) :
 	ProofExp(s, hi), node(n), hyp(hy),
-	expr_(s.apply(Tree2Term(*hy.get()->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))) {
+	expr_(s.apply(Tree2Term(*hy->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -187,7 +187,7 @@ struct ProofEnv {
 			if (r->child) genSteps(r->child);
 		} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
 			if (!refMap.count(t)) {
-				refMap.emplace(t, rus::Ref(t->hyp.get()));
+				refMap.emplace(t, rus::Ref(t->hyp));
 			}
 		} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
 			if (!stepMap.count(p) && p->parent) {

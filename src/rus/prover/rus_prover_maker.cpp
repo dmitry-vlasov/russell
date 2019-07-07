@@ -223,7 +223,7 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 				refs.push_back(ref);
 				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << ind << endl;
 			}
-			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0), Subst(), true));
+			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0).get(), Subst(), true));
 		} else {
 			cout << "NON-LEAF : " << h->expr.show() << endl;
 		}

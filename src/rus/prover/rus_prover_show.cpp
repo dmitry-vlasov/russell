@@ -113,7 +113,7 @@ string ProofTop::show() const {
 	oss << "hint=\"" << (hint ? "Y" : "N") <<  "\" ";
 	oss << ">\n";
 	oss << "\t<![CDATA[";
-	oss << "hyp " << hyp.ind + 1;
+	oss << "hyp " << hyp->ind + 1;
 	oss << "]]>\n";
 	oss << "\t<substitution>\n";
 	oss << "\t<![CDATA[\n";
@@ -243,7 +243,7 @@ string show_proof_struct(const ProofNode* n) {
 		oss << ")" << endl;
 	} else if (const ProofTop* t = dynamic_cast<const ProofTop*>(n)) {
 		oss << "ProofTop(index = " << t->ind << ", node = " << t->node.ind << endl;
-		oss << "\thyp = " << t->hyp.ind << endl;
+		oss << "\thyp = " << t->hyp->ind << endl;
 		oss << "\texp = " << t->expr().show() << endl;
 		oss << "\tnode exp = " << t->node.expr.show() << endl;
 		oss << "\tsub = " << endl << Indent::paragraph(t->sub.show(), "\t\t");
