@@ -34,15 +34,15 @@ struct Maker : public Space {
 		// TODO:
 	}
 
-	Return make();
+	unique_ptr<Thm> make();
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	const PropRef* prop(rus::Step* s) const override;
+	//const PropRef* prop(rus::Step* s) const override;
 	uint theoremId() const override { return theorem_id_; }
 
-	unique_ptr<Theorem> theorem_;
-	unique_ptr<Proof>   proof_;
+	//unique_ptr<Theorem> theorem_;
+	//unique_ptr<Proof>   proof_;
 
 private:
 	void expandUp(uint index, set<Node*>& leafs);
@@ -53,8 +53,8 @@ private:
 	uint theorem_id_;
 	const AbstProof& abst_proof_;
 
-	PropRef            prop_;
-	IndexMap<HypRef>   hyps_;
+	//PropRef            prop_;
+	IndexMap<unique_ptr<rus::Hyp>> hyps_;
 	IndexMap<PropRef>  assertions_;
 	IndexMap<Hyp*>     expressions_;
 };

@@ -314,12 +314,13 @@ static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstP
 	static uint i = 0;
 	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i) + "_th"));
 	try {
-		Return r = maker.make();
+		unique_ptr<prover::Thm> r = maker.make();
 		if (r) {
-			ret.second = std::move(maker.proved()[0]);
-			ret.first = std::move(maker.theorem_);
+			//ret.second = std::move(maker.proved()[0]);
+			//ret.first = std::move(maker.theorem_);
+			cout << "maker succeeded" << endl;
 		} else {
-			cout << "prover failed" << endl;
+			cout << "maker failed" << endl;
 
 			//cout << "oracle test failed" << endl;
 			cout << "maker status:" << endl;
@@ -331,7 +332,7 @@ static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstP
 		}
 	} catch (Error& err) {
 		cout << "prover theorem: " << endl;
-		cout << maker.theorem_->show() << endl;
+		//cout << maker.theorem_->show() << endl;
 		throw err;
 	}
 	return ret;

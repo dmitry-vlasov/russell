@@ -254,23 +254,28 @@ map<uint, TermVarRepl> varify_index_term(const Index& ind, const Term& term);
 template<class Data>
 struct IndexMap {
 	struct Unified {
-		Unified(const Data& d, Subst&& s) : data(d), sub(std::move(s)) { }
+		Unified(const Data& d, Subst&& s) : data(&d), sub(std::move(s)) { }
 		Unified(const Unified&) = default;
 		Unified(Unified&&) = default;
-		Data data;
+		const Data* data;
 		Subst sub;
 	};
 	struct Replaced {
-		Replaced(const Data& d, VarRepl&& r) : data(d), repl(std::move(r)) { }
+		Replaced(const Data& d, VarRepl&& r) : data(&d), repl(std::move(r)) { }
 		Replaced(const Replaced&) = default;
 		Replaced(Replaced&&) = default;
-		Data data;
+		const Data* data;
 		VarRepl repl;
 	};
 	void add(const Term& t, const Data& d) {
 		Normalizer n(t);
 		index_.add(n.normalized, stored_.size());
 		stored_.emplace_back(d, std::move(n.norm));
+	}
+	void emplace(const Term& t, Data&& d) {
+		Normalizer n(t);
+		index_.add(n.normalized, stored_.size());
+		stored_.emplace_back(std::move(d), std::move(n.norm));
 	}
 	string show() const {
 		Index::Unpacked terms = index_.unpack();
@@ -337,16 +342,16 @@ struct IndexMap {
 		}
 		return ret;
 	}
-	vector<Data> findExact(const Term& t) const {
+	vector<const Data*> findExact(const Term& t) const {
 		const Normalizer n(t);
-		vector<Data> ret;
+		vector<const Data*> ret;
 		const vector<uint>* inds = index_.find(n.normalized);
 		if (inds) {
 			for (uint ind : *inds) {
 				const VarRepl& norm = stored_.at(ind).norm;
 				VarRepl repl = norm.inversed().apply(n.norm);
 				if (repl.size() == 0) {
-					ret.emplace_back(stored_.at(ind).data);
+					ret.push_back(&stored_.at(ind).data);
 				}
 			}
 		}
@@ -355,10 +360,14 @@ struct IndexMap {
 	bool contains(const Term& t) const {
 		return findExact(t).size();
 	}
+	uint size() const {
+		return index_.size();
+	}
 
 private:
 	struct Storage {
 		Storage(const Data& d, VarRepl&& s) : data(d), norm(std::move(s)) { }
+		Storage(Data&& d, VarRepl&& s) : data(std::move(d)), norm(std::move(s)) { }
 		Data data;
 		VarRepl norm;
 	};

@@ -161,8 +161,8 @@ private:
 
 Maker::Maker(const AbstProof& aproof, uint id) :
 	Space(new MakerTactic(aproof)), abst_proof_(aproof), theorem_id_(id) {
-	theorem_ = make_unique<Theorem>(id);
-	prop_.ass = theorem_.get();
+	//theorem_ = make_unique<Theorem>(id);
+	//prop_.ass = theorem_.get();
 	Timer timer;
 
 	set<uint> visited;
@@ -214,27 +214,27 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 		vector<const AbstProof::Node*> children = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
 		if (!children.size()) {
 			cout << "LEAF : " << h->expr.show() << endl;
-			vector<HypRef> refs = hyps_.findExact(h->expr);
+			vector<const unique_ptr<rus::Hyp>*> refs = hyps_.findExact(h->expr);
 			if (refs.size() == 0) {
-				uint ind = theorem_->hyps.size();
-				theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
-				HypRef ref(theorem_.get(), ind);
-				hyps_.add(h->expr, ref);
-				refs.push_back(ref);
-				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << ind << endl;
+				//uint ind = hyps.size();
+				//theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
+				//Hyp hyp();
+				hyps_.emplace(h->expr, make_unique<rus::Hyp>(hyps_.size(), std::move(Term2Expr(h->expr))));
+				refs = hyps_.findExact(h->expr);
+				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << (hyps_.size() - 1) << endl;
 			}
-			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0).get(), Subst(), true));
+			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0)->get(), Subst(), true));
 		} else {
 			cout << "NON-LEAF : " << h->expr.show() << endl;
 		}
 	}
 }
 
-const PropRef* Maker::prop(rus::Step* s) const {
+/*const PropRef* Maker::prop(rus::Step* s) const {
 	theorem_->props.clear();
 	theorem_->props.emplace_back(make_unique<rus::Prop>(0, s->expr));
 	return &prop_;
-}
+}*/
 
 void Maker::buildUpProp(Prop* p) {
 	Timer timer;
@@ -292,13 +292,13 @@ static bool is_reacheable(const Node* parent, const Node* ancestor) {
 void Maker::buildUpHyp(Hyp* h) {
 	auto already_occured = expressions_.find(h->expr);
 	// TODO: implement refs
-	if (false && already_occured.size() && !is_reacheable(already_occured.at(0).data, h)) {
+	if (false && already_occured.size() && !is_reacheable(*already_occured.at(0).data, h)) {
 		if (already_occured.size() > 1) {
 			throw Error("already_occured size must be == 1");
 		}
 		h->variants.emplace_back(make_unique<Ref>(
 			h,
-			already_occured.at(0).data,
+			*already_occured.at(0).data,
 			this,
 			std::move(already_occured.at(0).repl)
 		));
@@ -323,9 +323,9 @@ void Maker::buildUpHyp(Hyp* h) {
 		add_timer_stats("build_up_hyp_unify_timer", timer);
 		timer.start();
 		for (auto& m : unified) {
-			if (labels.find(m.data.ass->id()) == labels.end()) continue;
+			if (labels.find(m.data->ass->id()) == labels.end()) continue;
 			set<uint> assertion_vars;
-			Subst fresher = make_free_vars_fresh(m.data.ass, this, assertion_vars, m.sub);
+			Subst fresher = make_free_vars_fresh(m.data->ass, this, assertion_vars, m.sub);
 			for (const auto& p : fresher) {
 				if (m.sub.maps(p.first)) {
 					fresher.erase(p.first);
@@ -341,7 +341,7 @@ void Maker::buildUpHyp(Hyp* h) {
 					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
 				}
 			}
-			h->variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), h));
+			h->variants.emplace_back(make_unique<Prop>(*m.data, std::move(sub), std::move(outer), std::move(fresher), h));
 		}
 		cout << "building up finished" << endl;
 		add_timer_stats("build_up_hyp_arrange_variants", timer);
@@ -375,7 +375,7 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 
 uint make_counter = 0;
 
-Return Maker::make() {
+unique_ptr<Thm> Maker::make() {
 	if (++make_counter >= 15) {
 		cout << "MAKE STOP" << endl;
 		exit(0);
@@ -396,7 +396,7 @@ Return Maker::make() {
 	}
 	cout << "COMPLETE DOWN" << endl;
 	completeDown(leafs);
-	return check_proved();
+	vector<unique_ptr<rus::Proof>> proofs = proved();
 }
 
 

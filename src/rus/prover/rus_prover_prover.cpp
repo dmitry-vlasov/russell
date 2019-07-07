@@ -62,9 +62,9 @@ void Prover::initProofs(Hyp* h, const rus::Hyp* hint) {
 		auto unified = hyps_.unify(h->expr);
 		for (const auto& m : unified) {
 			if (hint) {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data.get(), m.sub, m.data.get() == hint));
+				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data->get(), m.sub, m.data->get() == hint));
 			} else {
-				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data.get(), m.sub, false));
+				h->proofs.emplace_back(make_unique<ProofTop>(*h, m.data->get(), m.sub, false));
 			}
 		}
 	}
@@ -126,13 +126,13 @@ static bool is_reacheable(const Node* parent, const Node* ancestor) {
 void Prover::buildUpHyp(Hyp* h) {
 	auto already_occured = expressions_.find(h->expr);
 	// TODO: implement refs
-	if (false && already_occured.size() && !is_reacheable(already_occured.at(0).data, h)) {
+	if (false && already_occured.size() && !is_reacheable(*already_occured.at(0).data, h)) {
 		if (already_occured.size() > 1) {
 			throw Error("already_occured size must be == 1");
 		}
 		h->variants.emplace_back(make_unique<Ref>(
 			h,
-			already_occured.at(0).data,
+			*already_occured.at(0).data,
 			this,
 			std::move(already_occured.at(0).repl)
 		));
@@ -147,7 +147,7 @@ void Prover::buildUpHyp(Hyp* h) {
 		timer.start();
 		for (auto& m : unified) {
 			set<uint> assertion_vars;
-			Subst fresher = make_free_vars_fresh(m.data.ass, this, assertion_vars, m.sub);
+			Subst fresher = make_free_vars_fresh(m.data->ass, this, assertion_vars, m.sub);
 			for (const auto& p : fresher) {
 				if (m.sub.maps(p.first)) {
 					fresher.erase(p.first);
@@ -163,11 +163,21 @@ void Prover::buildUpHyp(Hyp* h) {
 					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
 				}
 			}
-			h->variants.emplace_back(make_unique<Prop>(m.data, std::move(sub), std::move(outer), std::move(fresher), h));
+			h->variants.emplace_back(make_unique<Prop>(*m.data, std::move(sub), std::move(outer), std::move(fresher), h));
 		}
 		add_timer_stats("build_up_hyp_arrange_variants", timer);
 		add_timer_stats("build_up_HYP", timer1);
 	}
 }
+
+vector<unique_ptr<rus::Proof>> Prover::proved() {
+	vector<unique_ptr<rus::Proof>> ret(Space::proved());
+	for (auto& proof : ret) {
+		rus::Step* st = rus::Proof::step(proof->elems.back());
+		proof->elems.emplace_back(unique_ptr<Qed>(new Qed(prop_.get(), st)));
+	}
+	return ret;
+}
+
 
 }}}

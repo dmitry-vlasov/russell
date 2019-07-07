@@ -158,7 +158,7 @@ Return Space::expand(uint index) {
 }
 
 Return Space::check_proved() {
-	Proved prov = proved();
+	vector<unique_ptr<rus::Proof>> prov = proved();
 	if (prov.size()) {
 		ostringstream oss;
 		oss << "<proved>\n";
@@ -203,8 +203,8 @@ void delete_steps_recursively(rus::Step* s) {
 	delete s;
 }
 
-Space::Proved Space::proved() {
-	Proved ret;
+vector<unique_ptr<rus::Proof>> Space::proved() {
+	vector<unique_ptr<rus::Proof>> ret;
 	for (auto& p : root_->proofs) {
 		if (ProofHyp* h = dynamic_cast<ProofHyp*>(p.get())) {
 			if (auto pr = gen_proof(h)) {

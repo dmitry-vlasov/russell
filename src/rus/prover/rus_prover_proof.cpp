@@ -249,8 +249,8 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
 		ProofEnv env(p->node.space->theoremId());
 		env.genSteps(p);
-		rus::Step* st = rus::Proof::step(env.proof->elems.back());
-		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st)->get(), st)));
+		//rus::Step* st = rus::Proof::step(env.proof->elems.back());
+		//env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st)->get(), st)));
 		try {
 			env.proof->verify(VERIFY_SUB);
 		} catch (Error& err) {
