@@ -105,7 +105,7 @@ inline const Type* VarTree::type() const { return type_.get(); }
 inline const Type* RuleTree::type() const { return rule->term.type.get(); }
 
 struct Hyp : public Writable, public WithToken {
-	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
+	Hyp(uint i = 0, const Expr& e = Expr(), const Token& t = Token()) :
 		WithToken(t), ind(i), expr(e) { }
 	Hyp(uint i, Expr&& e, const Token& t = Token()) :
 		WithToken(t), ind(i), expr(std::move(e)) { }
@@ -116,7 +116,7 @@ struct Hyp : public Writable, public WithToken {
 };
 
 struct Prop : public Writable, public WithToken {
-	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
+	Prop(uint i = 0, const Expr& e = Expr(), const Token& t = Token()) :
 		WithToken(t), ind(i), expr(e) { }
 	Prop(uint i, Expr&& e, const Token& t = Token()) :
 		WithToken(t), ind(i), expr(std::move(e)) { }
@@ -301,7 +301,6 @@ struct Proof : public Writable, public Owner<Proof> {
 	User<Assertion> thm;
 	Proof*          par;
 	bool            inner;
-
 };
 
 struct Import : public Writable, public WithToken {

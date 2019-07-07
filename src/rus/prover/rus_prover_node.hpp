@@ -22,23 +22,6 @@ struct PropRef {
 	uint       ind;
 };
 
-struct HypRef {
-	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
-	uint id() const { return ass->id(); }
-	rus::Hyp* get() const { return ass->hyps[ind].get(); }
-	friend bool operator < (const HypRef& a1, const HypRef& a2) {
-		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
-	}
-	bool operator == (const HypRef& hr) const {
-		return ass == hr.ass && ind == hr.ind;
-	}
-	bool operator != (const HypRef& hr) const {
-		return !operator == (hr);
-	}
-	Assertion* ass;
-	uint       ind;
-};
-
 class Space;
 class Prop;
 class Hyp;

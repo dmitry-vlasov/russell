@@ -4,6 +4,16 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+struct Ass {
+	vector<unique_ptr<Hyp>> hyps;
+	unique_ptr<Prop> prop;
+};
+
+struct Thm {
+	Ass ass;
+	unique_ptr<rus::Proof> proof;
+};
+
 struct Maker : public Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
