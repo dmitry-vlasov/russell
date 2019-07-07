@@ -109,7 +109,7 @@ struct Hyp : public Writable, public WithToken {
 		WithToken(t), ind(i), expr(e) { }
 	Hyp(uint i, Expr&& e, const Token& t = Token()) :
 		WithToken(t), ind(i), expr(std::move(e)) { }
-	Hyp(const Hyp&) = delete;
+	explicit Hyp(const Hyp& h) : WithToken(h.token), ind(h.ind), expr(h.expr) { }
 	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;

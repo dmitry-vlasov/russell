@@ -396,7 +396,13 @@ unique_ptr<Thm> Maker::make() {
 	}
 	cout << "COMPLETE DOWN" << endl;
 	completeDown(leafs);
+	unique_ptr<Thm> ret;
 	vector<unique_ptr<rus::Proof>> proofs = proved();
+	if (proofs.size() > 0) {
+		ret->proof = std::move(proofs.at(0));
+
+	}
+	return ret;
 }
 
 

@@ -12,6 +12,7 @@ struct ProofNode {
 	virtual bool equal(const ProofNode*) const = 0;
 	virtual const Term& expr() const = 0;
 	virtual void addParent(ProofNode*) = 0;
+	virtual ProofNode* detach() const = 0;
 
 	Subst sub;
 	bool  new_;
@@ -27,34 +28,50 @@ struct ProofExp : public ProofNode {
 };
 
 struct ProofTop : public ProofExp {
-	ProofTop(Hyp& n, rus::Hyp* hy, const Subst& s, bool hi);
+	ProofTop(const Hyp& n, rus::Hyp* hy, const Subst& s, bool hi);
+	ProofTop(const Hyp& n, rus::Hyp* hy, const Term& e) :
+		ProofExp(sub, hint), node(n), hyp(hy), expr_(e) { }
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
+	ProofNode* detach() const {
+		return new ProofTop(node, new rus::Hyp(*hyp), expr_);
+	}
 
-	rus::Hyp* hyp;
-	Hyp& node;
-	Term expr_;
+	const Hyp& node;
+	rus::Hyp*  hyp;
+	Term       expr_;
 	vector<ProofNode*> parents;
 };
 
 struct ProofHyp : public ProofExp {
-	ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi);
-	ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi);
+	ProofHyp(const Hyp& n, ProofNode* c, const Subst& s, bool hi);
+	ProofHyp(const Hyp& n, ProofNode* c, Subst&& s, bool hi);
+	ProofHyp(const Hyp& n, ProofNode* c, const Term& e) :
+		ProofExp(sub, hint), node(n), child(c), expr_(e) {
+		child->addParent(this);
+	}
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
+	ProofNode* detach() const {
+		return new ProofHyp(node, child ? child->detach() : nullptr, expr_);
+	}
 
+	const Hyp& node;
 	ProofNode* child = nullptr;
-	Hyp& node;
 	Term expr_;
 	vector<ProofNode*> parents;
 };
 
 struct ProofRef : public ProofExp {
-	ProofRef(Ref& n, ProofExp* c, bool hi);
+	ProofRef(const Ref& n, ProofExp* c, bool hi);
+	ProofRef(const Ref& n, ProofExp* c) :
+		ProofExp(sub, hint), node(n), child(c) {
+		child->addParent(this);
+	}
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override {
@@ -71,14 +88,23 @@ struct ProofRef : public ProofExp {
 		}
 		parent = p;
 	}
+	ProofNode* detach() const {
+		return new ProofRef(node, child ? static_cast<ProofExp*>(child->detach()) : nullptr);
+	}
 
-	Ref& node;
+	const Ref& node;
 	ProofExp* child = nullptr;
 	ProofNode* parent = nullptr;
 };
 
 struct ProofProp : public ProofNode {
-	ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h);
+	ProofProp(const Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h);
+	ProofProp(const Prop& n, vector<ProofExp*>&& p) :
+		ProofNode(sub, hint), node(n), premises(std::move(p)) {
+		for (auto p : premises) {
+			p->addParent(this);
+		}
+	}
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return parent->expr(); }
@@ -88,13 +114,17 @@ struct ProofProp : public ProofNode {
 		}
 		parent = p;
 	}
+	ProofNode* detach() const {
+		vector<ProofExp*> det_prem;
+		for (ProofExp* p : premises) {
+			det_prem.push_back(static_cast<ProofExp*>(p->detach()));
+		}
+		return new ProofProp(node, std::move(det_prem));
+	}
 
+	const Prop&       node;
 	ProofNode*        parent = nullptr;
-	Prop&             node;
 	vector<ProofExp*> premises;
-private:
-	friend void reset_steps(const ProofNode* n);
-	mutable rus::Step* step_ = nullptr;
 };
 
 struct ProofExpIndexed {
@@ -108,15 +138,15 @@ struct ProofExpIndexed {
 	}
 };
 
-struct TheoremProof {
+/*struct TheoremProof {
 	unique_ptr<rus::Theorem> thm;
 	unique_ptr<rus::Proof>   proof;
-};
+};*/
 
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
 string show_proof_struct(const ProofNode* n);
 unique_ptr<rus::Proof> gen_proof(const ProofNode* n);
-TheoremProof gen_theorem_proof(const ProofNode* n);
+//TheoremProof gen_theorem_proof(const ProofNode* n);
 
 }}}
 

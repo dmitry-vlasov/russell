@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-static void apply_recursively(const Substitution& sub, rus::Step* step, set<const rus::Step*>& visited) {
+static void apply_recursively(const Substitution& sub, rus::Step* step, set<const Writable*>& visited) {
 	step->expr = apply(sub, step->expr);
 	for (auto& r : step->refs) {
 		if (rus::Step* s = r.get()->step()) {
@@ -10,18 +10,23 @@ static void apply_recursively(const Substitution& sub, rus::Step* step, set<cons
 				visited.insert(s);
 				apply_recursively(sub, s, visited);
 			}
+		} else if (rus::Hyp* h = r.get()->hyp()) {
+			if (!visited.count(h)) {
+				visited.insert(h);
+				h->expr = apply(sub, h->expr);
+			}
 		}
 	}
 }
 
 static void apply_recursively(const Substitution& sub, rus::Step* step) {
-	set<const rus::Step*> visited;
+	set<const Writable*> visited;
 	apply_recursively(sub, step, visited);
 }
 
 // ProofTop -------------------------
 
-ProofTop::ProofTop(Hyp& n, rus::Hyp* hy, const Subst& s, bool hi) :
+ProofTop::ProofTop(const Hyp& n, rus::Hyp* hy, const Subst& s, bool hi) :
 	ProofExp(s, hi), node(n), hyp(hy),
 	expr_(s.apply(Tree2Term(*hy->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))) {
 }
@@ -46,7 +51,7 @@ bool ProofHyp::equal(const ProofNode* n) const {
 
 #define VERIFY_PROOF_HYP
 
-ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
+ProofHyp::ProofHyp(const Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
 	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
 	child->addParent(this);
 	child->new_ = false;
@@ -64,7 +69,7 @@ ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
 #endif
 }
 
-ProofHyp::ProofHyp(Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
+ProofHyp::ProofHyp(const Hyp& hy, ProofNode* c, Subst&& s, bool hi) :
 	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
 	if (!child) {
 		throw Error("!child ProofHyp::ProofHyp");
@@ -99,7 +104,7 @@ static set<LightSymbol> vars_in_subst_image(const Subst& sub) {
 	return vars;
 }
 
-ProofRef::ProofRef(Ref& n, ProofExp* c, bool hi) :
+ProofRef::ProofRef(const Ref& n, ProofExp* c, bool hi) :
 	ProofExp(n.repl.direct().subst(), hi), node(n), child(c) {
 	sub.compose(child->sub, CompMode::SEMI);
 	set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
@@ -120,7 +125,7 @@ bool ProofRef::equal(const ProofNode* n) const {
 
 // ProofProp -------------------------
 
-ProofProp::ProofProp(Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h) :
+ProofProp::ProofProp(const Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h) :
 	ProofNode(s, h), parent(nullptr), node(n), premises(p) {
 	for (auto p : premises) {
 		p->addParent(this);
@@ -249,8 +254,6 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
 		ProofEnv env(p->node.space->theoremId());
 		env.genSteps(p);
-		//rus::Step* st = rus::Proof::step(env.proof->elems.back());
-		//env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st)->get(), st)));
 		try {
 			env.proof->verify(VERIFY_SUB);
 		} catch (Error& err) {
