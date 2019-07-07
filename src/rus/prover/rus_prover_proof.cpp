@@ -273,41 +273,6 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		throw Error("Impossible ProofNode type");
 	}
 }
-/*
-TheoremProof gen_theorem_proof(const ProofNode* n) {
-	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
-		return gen_theorem_proof(h->child);
-	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
-		return gen_theorem_proof(r->child);
-	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
-		if (Assertion* tmp_thm = Sys::mod().math.get<Assertion>().access(Lex::toInt("tmp_thm"))) {
-			delete tmp_thm;
-		}
-		TheoremProof ret;
-		ProofEnv env(Lex::toInt("tmp_thm"));
-		env.genSteps(p);
-		rus::Step* st = rus::Proof::step(env.proof->elems.back());
-		theorem_->props.emplace_back(make_unique<rus::Prop>(0, s->expr));
-		env.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(p->node.space->prop(st).get(), st)));
-		try {
-			env.proof->verify(VERIFY_SUB);
-		} catch (Error& err) {
-			cout << "WRONG PROOF:" << endl;
-			ostringstream oss;
-			env.proof->write(oss);
-			cout << oss.str() << endl;
-			throw err;
-		}
-		try {
-			env.proof->verify(VERIFY_DISJ);
-		} catch (Error& err) {
-			env.proof.reset();
-		}
-		return std::move(env.proof);
-	} else {
-		throw Error("Impossible ProofNode type");
-	}
-}*/
 
 }}}
 

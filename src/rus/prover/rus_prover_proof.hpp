@@ -138,15 +138,9 @@ struct ProofExpIndexed {
 	}
 };
 
-/*struct TheoremProof {
-	unique_ptr<rus::Theorem> thm;
-	unique_ptr<rus::Proof>   proof;
-};*/
-
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
 string show_proof_struct(const ProofNode* n);
 unique_ptr<rus::Proof> gen_proof(const ProofNode* n);
-//TheoremProof gen_theorem_proof(const ProofNode* n);
 
 }}}
 

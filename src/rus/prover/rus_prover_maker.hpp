@@ -5,8 +5,8 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct Ass {
-	vector<unique_ptr<Hyp>> hyps;
-	unique_ptr<Prop> prop;
+	vector<unique_ptr<rus::Hyp>> hyps;
+	unique_ptr<rus::Prop> prop;
 };
 
 struct Thm {
