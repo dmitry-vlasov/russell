@@ -194,29 +194,11 @@ Return Space::erase(uint index) {
 	return true;
 }
 
-void delete_steps_recursively(rus::Step* s) {
-	for (auto& r : s->refs) {
-		if (r.get()->kind() == rus::Ref::STEP) {
-			delete_steps_recursively(r.get()->step());
-		}
-	}
-	delete s;
-}
-
 vector<unique_ptr<rus::Proof>> Space::proved() {
 	vector<unique_ptr<rus::Proof>> ret;
 	for (auto& p : root_->proofs) {
-		if (ProofHyp* h = dynamic_cast<ProofHyp*>(p.get())) {
-			if (auto pr = gen_proof(h)) {
-				ret.emplace_back(std::move(pr));
-			} /*else {
-				cout << "h->show(): " << h->show() << endl;
-			}*/
-		} else if (ProofTop* h = dynamic_cast<ProofTop*>(p.get())) {
-			// TODO
-			throw Error("incorrect proved node type");
-		} else {
-			throw Error("incorrect proved node type");
+		if (auto pr = gen_proof(p.get())) {
+			ret.emplace_back(std::move(pr));
 		}
 	}
 	return ret;

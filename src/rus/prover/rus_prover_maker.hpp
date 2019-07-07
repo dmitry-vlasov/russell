@@ -7,11 +7,26 @@ namespace mdl { namespace rus { namespace prover {
 struct Ass {
 	vector<unique_ptr<rus::Hyp>> hyps;
 	unique_ptr<rus::Prop> prop;
+	string show() const {
+		ostringstream oss;
+		for (const auto& h : hyps) {
+			oss << *h << endl;
+		}
+		oss << "--------------" << endl;
+		oss << *prop << endl;
+		return oss.str();
+	}
 };
 
 struct Thm {
 	Ass ass;
 	unique_ptr<rus::Proof> proof;
+	string show() const {
+		ostringstream oss;
+		oss << ass.show() << endl;
+		oss << *proof << endl;
+		return oss.str();
+	}
 };
 
 struct Maker : public Space {

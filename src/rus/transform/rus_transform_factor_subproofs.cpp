@@ -319,6 +319,7 @@ static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstP
 			//ret.second = std::move(maker.proved()[0]);
 			//ret.first = std::move(maker.theorem_);
 			cout << "maker succeeded" << endl;
+			cout << r->show() << endl;
 		} else {
 			cout << "maker failed" << endl;
 
