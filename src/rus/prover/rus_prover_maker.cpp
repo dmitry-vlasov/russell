@@ -390,6 +390,31 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 
 uint make_counter = 0;
 
+void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f) {
+	stack<ProofNode*> st;
+	st.push(root);
+	while (!st.empty()) {
+		ProofNode* n = st.top();
+		st.pop();
+		f(n);
+		if (ProofHyp* h = dynamic_cast<ProofHyp*>(n)) {
+			if (h->child) {
+				st.push(h->child);
+			}
+		} else if (ProofRef* r = dynamic_cast<ProofRef*>(n)) {
+			if (r->child) {
+				st.push(r->child);
+			}
+		} else if (ProofProp* p = dynamic_cast<ProofProp*>(n)) {
+			for (auto c : p->premises) {
+				if (c) {
+					st.push(c);
+				}
+			}
+		}
+	}
+}
+
 unique_ptr<Thm> Maker::make() {
 	if (++make_counter >= 15) {
 		cout << "MAKE STOP" << endl;
@@ -417,11 +442,40 @@ unique_ptr<Thm> Maker::make() {
 	}
 	unique_ptr<Thm> ret;
 	if (root_->proofs.size() > 0) {
-		unique_ptr<ProofNode> root(root_->proofs.at(0)->detach());
+		ProofNode* root = root_->proofs.at(0)->clone();
+		vector<unique_ptr<ProofNode>> detached;
+		vector<unique_ptr<rus::Hyp>> leafs;
+
+		traverseProof(root, [&detached, &leafs](ProofNode* n) {
+			detached.emplace_back(n);
+			if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
+				t->hyp = new rus::Hyp(*t->hyp);
+				//leafs.emplace_back(t->hyp);
+			}
+		});
+
 		cout << "DETACHED" << endl;
-		ret->proof = gen_proof(root.get());
-		if (ret->proof) {
-			stack<ProofNode*> st;
+		auto generated_proof = gen_proof(root);
+		if (generated_proof) {
+			ret.reset(new Thm);
+			ret->proof = std::move(generated_proof);
+			traverseProof(root, [&ret](ProofNode* n) {
+				if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
+					bool found = false;
+					for (auto& h : ret->ass.hyps) {
+						if (h->expr == t->hyp->expr) {
+							//delete t->hyp;
+							t->hyp = h.get();
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						ret->ass.hyps.emplace_back(t->hyp);
+					}
+				}
+			});
+			/*stack<ProofNode*> st;
 			st.push(root.get());
 			while (!st.empty()) {
 				ProofNode* n = st.top(); st.pop();
@@ -453,7 +507,7 @@ unique_ptr<Thm> Maker::make() {
 						}
 					}
 				}
-			}
+			}*/
 			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
 			ret->ass.prop = make_unique<rus::Prop>(0, step->expr);
 			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->ass.prop.get(), step)));

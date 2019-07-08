@@ -7,12 +7,13 @@ namespace mdl { namespace rus { namespace prover {
 struct ProofNode {
 	ProofNode(const Subst& s, bool h) : sub(s), new_(true), ind(global_index()++), hint(h) { }
 	ProofNode(Subst&& s, bool h) : sub(std::move(s)), new_(true), ind(global_index()++), hint(h) { }
+	explicit ProofNode(const ProofNode& n) = default;
 	virtual ~ProofNode() { }
 	virtual string show() const = 0;
 	virtual bool equal(const ProofNode*) const = 0;
 	virtual const Term& expr() const = 0;
 	virtual void addParent(ProofNode*) = 0;
-	virtual ProofNode* detach() const = 0;
+	virtual ProofNode* clone() const = 0;
 
 	Subst sub;
 	bool  new_;
@@ -25,19 +26,18 @@ private:
 struct ProofExp : public ProofNode {
 	ProofExp(const Subst& s, bool h) : ProofNode(s, h) { }
 	ProofExp(Subst&& s, bool h) : ProofNode(std::move(s), h) { }
+	explicit ProofExp(const ProofExp& n) = default;
 };
 
 struct ProofTop : public ProofExp {
 	ProofTop(const Hyp& n, rus::Hyp* hy, const Subst& s, bool hi);
-	ProofTop(const Hyp& n, rus::Hyp* hy, const Term& e) :
-		ProofExp(sub, hint), node(n), hyp(hy), expr_(e) { }
+	ProofTop(const ProofTop& n) :
+		ProofExp(n), node(n.node), hyp(n.hyp), expr_(n.expr_) { }
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
-	ProofNode* detach() const {
-		return new ProofTop(node, new rus::Hyp(*hyp), expr_);
-	}
+	ProofNode* clone() const override { return new ProofTop(*this); }
 
 	const Hyp& node;
 	rus::Hyp*  hyp;
@@ -48,16 +48,16 @@ struct ProofTop : public ProofExp {
 struct ProofHyp : public ProofExp {
 	ProofHyp(const Hyp& n, ProofNode* c, const Subst& s, bool hi);
 	ProofHyp(const Hyp& n, ProofNode* c, Subst&& s, bool hi);
-	ProofHyp(const Hyp& n, ProofNode* c, const Term& e) :
-		ProofExp(sub, hint), node(n), child(c), expr_(e) {
+	ProofHyp(const ProofHyp& n) :
+		ProofExp(n), node(n.node), child(n.child ? n.child->clone() : nullptr), expr_(n.expr_) {
 		child->addParent(this);
 	}
 	string show() const override;
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
-	ProofNode* detach() const {
-		return new ProofHyp(node, child ? child->detach() : nullptr, expr_);
+	ProofNode* clone() const {
+		return new ProofHyp(*this);
 	}
 
 	const Hyp& node;
@@ -68,8 +68,8 @@ struct ProofHyp : public ProofExp {
 
 struct ProofRef : public ProofExp {
 	ProofRef(const Ref& n, ProofExp* c, bool hi);
-	ProofRef(const Ref& n, ProofExp* c) :
-		ProofExp(sub, hint), node(n), child(c) {
+	ProofRef(const ProofRef& n) :
+		ProofExp(n), node(n.node), child(static_cast<ProofExp*>(n.child ? n.child->clone() : nullptr)) {
 		child->addParent(this);
 	}
 	string show() const override;
@@ -88,8 +88,8 @@ struct ProofRef : public ProofExp {
 		}
 		parent = p;
 	}
-	ProofNode* detach() const {
-		return new ProofRef(node, child ? static_cast<ProofExp*>(child->detach()) : nullptr);
+	ProofNode* clone() const {
+		return new ProofRef(*this);
 	}
 
 	const Ref& node;
@@ -99,10 +99,12 @@ struct ProofRef : public ProofExp {
 
 struct ProofProp : public ProofNode {
 	ProofProp(const Prop& n, const vector<ProofExp*>& p, const Subst& s, bool h);
-	ProofProp(const Prop& n, vector<ProofExp*>&& p) :
-		ProofNode(sub, hint), node(n), premises(std::move(p)) {
-		for (auto p : premises) {
-			p->addParent(this);
+	ProofProp(const ProofProp& n) :
+		ProofNode(n), node(n.node) {
+		premises.reserve(n.premises.size());
+		for (auto p : n.premises) {
+			premises.push_back(static_cast<ProofExp*>(p->clone()));
+			premises.back()->addParent(this);
 		}
 	}
 	string show() const override;
@@ -114,12 +116,8 @@ struct ProofProp : public ProofNode {
 		}
 		parent = p;
 	}
-	ProofNode* detach() const {
-		vector<ProofExp*> det_prem;
-		for (ProofExp* p : premises) {
-			det_prem.push_back(static_cast<ProofExp*>(p->detach()));
-		}
-		return new ProofProp(node, std::move(det_prem));
+	ProofNode* clone() const {
+		return new ProofProp(*this);
 	}
 
 	const Prop&       node;
