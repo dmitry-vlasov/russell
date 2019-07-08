@@ -49,7 +49,7 @@ bool ProofHyp::equal(const ProofNode* n) const {
 	}
 }
 
-#define VERIFY_PROOF_HYP
+//#define VERIFY_PROOF_HYP
 
 ProofHyp::ProofHyp(const Hyp& hy, ProofNode* c, const Subst& s, bool hi) :
 	ProofExp(s, hi), child(c), node(hy), expr_(s.apply(hy.expr)) {
@@ -121,7 +121,7 @@ bool ProofRef::equal(const ProofNode* n) const {
 	}
 }
 
-#define VERIFY_PROOF_PROP
+//#define VERIFY_PROOF_PROP
 
 // ProofProp -------------------------
 

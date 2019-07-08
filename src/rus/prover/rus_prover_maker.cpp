@@ -410,10 +410,15 @@ unique_ptr<Thm> Maker::make() {
 		}
 	}
 	cout << "COMPLETE DOWN" << endl;
-	completeDown(leafs);
+	try {
+		completeDown(leafs);
+	} catch (std::bad_alloc& ba) {
+		throw ba;
+	}
 	unique_ptr<Thm> ret;
 	if (root_->proofs.size() > 0) {
 		unique_ptr<ProofNode> root(root_->proofs.at(0)->detach());
+		cout << "DETACHED" << endl;
 		ret->proof = gen_proof(root.get());
 		if (ret->proof) {
 			stack<ProofNode*> st;
