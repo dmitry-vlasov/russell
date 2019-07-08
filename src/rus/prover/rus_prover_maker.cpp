@@ -161,10 +161,7 @@ private:
 
 Maker::Maker(const AbstProof& aproof, uint id) :
 	Space(new MakerTactic(aproof)), abst_proof_(aproof), theorem_id_(id) {
-	//theorem_ = make_unique<Theorem>(id);
-	//prop_.ass = theorem_.get();
 	Timer timer;
-
 	set<uint> visited;
 	aproof.getRoot(0)->traverse([this, &visited](const AbstProof::Node& n) {
 		if (!visited.count(n.label())) {
@@ -216,9 +213,6 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 			cout << "LEAF : " << h->expr.show() << endl;
 			vector<const unique_ptr<rus::Hyp>*> refs = hyps_.findExact(h->expr);
 			if (refs.size() == 0) {
-				//uint ind = hyps.size();
-				//theorem_->hyps.emplace_back(make_unique<rus::Hyp>(ind, Term2Expr(h->expr)));
-				//Hyp hyp();
 				hyps_.emplace(h->expr, make_unique<rus::Hyp>(hyps_.size(), std::move(Term2Expr(h->expr))));
 				refs = hyps_.findExact(h->expr);
 				if (refs.size() == 0) {
@@ -244,12 +238,6 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 		}
 	}
 }
-
-/*const PropRef* Maker::prop(rus::Step* s) const {
-	theorem_->props.clear();
-	theorem_->props.emplace_back(make_unique<rus::Prop>(0, s->expr));
-	return &prop_;
-}*/
 
 void Maker::buildUpProp(Prop* p) {
 	Timer timer;
@@ -481,7 +469,6 @@ unique_ptr<Thm> Maker::make() {
 	}
 	return ret;
 }
-
 
 }}}
 

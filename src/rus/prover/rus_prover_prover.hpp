@@ -27,7 +27,6 @@ struct Prover : public Space {
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	//const PropRef* prop(rus::Step*) const override { return &prop_; }
 	uint theoremId() const override { return prop_.id(); }
 	Proved proved();
 
