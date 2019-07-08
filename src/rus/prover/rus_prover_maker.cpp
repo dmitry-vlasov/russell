@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-static bool debug_make_tactic = true;
+static bool debug_make_tactic = false;
 
 void all_nodes(const AbstProof::Node* n, set<const AbstProof::Node*>& all) {
 	if (n) {
@@ -174,7 +174,7 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 						PropRef(ass, i)
 					);
 				}
-				cout << "ADDED: " << Lex::toStr(n.label()) << endl;
+				//cout << "ADDED: " << Lex::toStr(n.label()) << endl;
 			} else {
 				throw Error("undefined reference to assertion", Lex::toStr(n.label()));
 			}
@@ -210,31 +210,17 @@ void Maker::initProofs(Hyp* h, const rus::Hyp* hint) {
 	} else {
 		vector<const AbstProof::Node*> children = dynamic_cast<MakerTactic*>(tactic_.get())->mapHyp(h);
 		if (!children.size()) {
-			cout << "LEAF : " << h->expr.show() << endl;
+			//cout << "LEAF : " << h->expr.show() << endl;
 			vector<const unique_ptr<rus::Hyp>*> refs = hyps_.findExact(h->expr);
 			if (refs.size() == 0) {
 				hyps_.emplace(h->expr, make_unique<rus::Hyp>(hyps_.size(), std::move(Term2Expr(h->expr))));
 				refs = hyps_.findExact(h->expr);
-				if (refs.size() == 0) {
-					cout << "UNPOSSIBLA" << endl;
-
-					cout << hyps_.show() << endl;
-					cout << h->expr.show() << endl;
-					auto x = hyps_.find(h->expr);
-					cout << "x.size() == " << x.size() << endl;
-					for (const auto& y : x) {
-						cout << "y.repl: " << y.repl.show() << endl;
-					}
-
-					exit(-1);
-					throw Error("UNPOSSIBLA");
-				}
-				cout << "NEW LEAF : " << h->expr.show() << ", ind = " << (hyps_.size() - 1) << endl;
+				//cout << "NEW LEAF : " << h->expr.show() << ", ind = " << (hyps_.size() - 1) << endl;
 			}
 			h->proofs.emplace_back(make_unique<ProofTop>(*h, refs.at(0)->get(), Subst(), true));
-			cout << "LEAF : " << h->expr.show() <<  " DANE " << endl;
+			//cout << "LEAF : " << h->expr.show() <<  " DANE " << endl;
 		} else {
-			cout << "NON-LEAF : " << h->expr.show() << endl;
+			//cout << "NON-LEAF : " << h->expr.show() << endl;
 		}
 	}
 }
@@ -311,14 +297,14 @@ void Maker::buildUpHyp(Hyp* h) {
 	} else {
 		MakerTactic* t = dynamic_cast<MakerTactic*>(tactic_.get());
 		set<uint> labels;
-		cout << "building up: " << h->ind << ", labels: {";
+		//cout << "building up: " << h->ind << ", labels: {";
 		for (auto c : t->mapHyp(h)) {
 			if (c) {
 				labels.insert(c->label());
-				cout << Lex::toStr(c->label()) << " [" << c->show([](uint l) { return Lex::toStr(l); }) << "], ";
+				//cout << Lex::toStr(c->label()) << " [" << c->show([](uint l) { return Lex::toStr(l); }) << "], ";
 			}
 		}
-		cout << "}" << endl;
+		//cout << "}" << endl;
 
 		Timer timer1;
 		Timer timer;
@@ -346,7 +332,6 @@ void Maker::buildUpHyp(Hyp* h) {
 			}
 			h->variants.emplace_back(make_unique<Prop>(*m.data, std::move(sub), std::move(outer), std::move(fresher), h));
 		}
-		cout << "building up finished" << endl;
 		add_timer_stats("build_up_hyp_arrange_variants", timer);
 		add_timer_stats("build_up_HYP", timer1);
 	}
@@ -376,8 +361,6 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 	}
 }
 
-uint make_counter = 0;
-
 void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f) {
 	stack<ProofNode*> st;
 	st.push(root);
@@ -404,25 +387,19 @@ void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f) {
 }
 
 unique_ptr<Thm> Maker::make() {
-	if (++make_counter >= 15) {
-		cout << "MAKE STOP" << endl;
-		exit(0);
-	} else {
-		cout << "MAKE COUNT: " << make_counter << endl;
-	}
 	set<Node*> leafs;
-	cout << "BUILD TREE" << endl;
+	//cout << "BUILD TREE" << endl;
 	while (Prop* p = tactic_->next()) {
-		cout << "expanding: " << p->ind << endl;
+		//cout << "expanding: " << p->ind << endl;
 		expandUp(p->ind, leafs);
 	}
-	cout << "INIT PROOF LEAFS" << endl;
+	//cout << "INIT PROOF LEAFS" << endl;
 	for (Node* n : leafs) {
 		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
 			initProofs(h);
 		}
 	}
-	cout << "COMPLETE DOWN" << endl;
+	//cout << "COMPLETE DOWN" << endl;
 	try {
 		completeDown(leafs);
 	} catch (std::bad_alloc& ba) {
@@ -442,7 +419,7 @@ unique_ptr<Thm> Maker::make() {
 			}
 		});
 
-		cout << "DETACHED" << endl;
+		//cout << "DETACHED" << endl;
 		auto generated_proof = gen_proof(root);
 		if (generated_proof) {
 			ret.reset(new Thm);

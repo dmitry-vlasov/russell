@@ -10,10 +10,10 @@ struct Ass {
 	string show() const {
 		ostringstream oss;
 		for (const auto& h : hyps) {
-			oss << *h << endl;
+			oss << *h;
 		}
 		oss << "--------------" << endl;
-		oss << *prop << endl;
+		oss << *prop;
 		return oss.str();
 	}
 };
@@ -23,9 +23,14 @@ struct Thm {
 	unique_ptr<rus::Proof> proof;
 	string show() const {
 		ostringstream oss;
-		oss << ass.show() << endl;
-		oss << *proof << endl;
+		oss << ass.show() << *proof;
 		return oss.str();
+	}
+	unique_ptr<Theorem> theorem() {
+		unique_ptr<Theorem> ret(new Theorem(proof->thm.id()));
+		ret->hyps = std::move(ass.hyps);
+		ret->props.emplace_back(std::move(ass.prop));
+		return ret;
 	}
 };
 

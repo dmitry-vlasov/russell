@@ -312,14 +312,16 @@ static void next_subproofs(ProofImplsSample& pis) {
 static pair<unique_ptr<Theorem>, unique_ptr<Proof>> generate_theorem(const AbstProof& aproof) {
 	pair<unique_ptr<Theorem>, unique_ptr<Proof>> ret;
 	static uint i = 0;
-	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i) + "_th"));
+	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
 	try {
 		unique_ptr<prover::Thm> r = maker.make();
 		if (r) {
 			//ret.second = std::move(maker.proved()[0]);
 			//ret.first = std::move(maker.theorem_);
 			cout << "maker succeeded" << endl;
-			cout << r->show() << endl;
+			//cout << r->show() << endl;
+			ret.first = r->theorem();
+			ret.second = std::move(r->proof);
 		} else {
 			cout << "maker failed" << endl;
 
@@ -386,7 +388,7 @@ void factorize_subproofs(const string& opts) {
 		cout << (generated.first ? generated.first->show() : "theorem: <null>") << endl;
 		cout << (generated.second ? generated.second->show() : "proof: <null>") << endl;
 	}
-	cout << "first 10 min volume: " << endl;
+	/*cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;
 	for (uint i = start; i < start + 10; ++ i) {
 		cout << common_subproofs.all_.set().at(i)->show() << endl;
@@ -395,7 +397,7 @@ void factorize_subproofs(const string& opts) {
 	for (uint i = start; i < common_subproofs.all_.size(); ++ i) {
 		cout << common_subproofs.all_.set().at(i)->show() << endl;
 		//cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
-	}
+	}*/
 }
 
 }} // mdl::rus
