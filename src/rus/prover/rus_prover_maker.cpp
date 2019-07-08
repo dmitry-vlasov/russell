@@ -450,7 +450,7 @@ unique_ptr<Thm> Maker::make() {
 			detached.emplace_back(n);
 			if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
 				t->hyp = new rus::Hyp(*t->hyp);
-				//leafs.emplace_back(t->hyp);
+				leafs.emplace_back(t->hyp);
 			}
 		});
 
@@ -464,50 +464,16 @@ unique_ptr<Thm> Maker::make() {
 					bool found = false;
 					for (auto& h : ret->ass.hyps) {
 						if (h->expr == t->hyp->expr) {
-							//delete t->hyp;
 							t->hyp = h.get();
 							found = true;
 							break;
 						}
 					}
 					if (!found) {
-						ret->ass.hyps.emplace_back(t->hyp);
+						ret->ass.hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
 					}
 				}
 			});
-			/*stack<ProofNode*> st;
-			st.push(root.get());
-			while (!st.empty()) {
-				ProofNode* n = st.top(); st.pop();
-				if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
-					bool found = false;
-					for (auto& h : ret->ass.hyps) {
-						if (h->expr == t->hyp->expr) {
-							delete t->hyp;
-							t->hyp = h.get();
-							found = true;
-							break;
-						}
-					}
-					if (!found) {
-						ret->ass.hyps.emplace_back(t->hyp);
-					}
-				} else if (ProofHyp* h = dynamic_cast<ProofHyp*>(n)) {
-					if (h->child) {
-						st.push(h->child);
-					}
-				} else if (ProofRef* r = dynamic_cast<ProofRef*>(n)) {
-					if (r->child) {
-						st.push(r->child);
-					}
-				} else if (ProofProp* p = dynamic_cast<ProofProp*>(n)) {
-					for (auto c : p->premises) {
-						if (c) {
-							st.push(c);
-						}
-					}
-				}
-			}*/
 			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
 			ret->ass.prop = make_unique<rus::Prop>(0, step->expr);
 			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->ass.prop.get(), step)));
