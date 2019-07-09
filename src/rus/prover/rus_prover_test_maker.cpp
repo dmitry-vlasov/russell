@@ -11,8 +11,8 @@ Return test_proof_maker(uint i, const Proof* p) {
 	AbstProof abstProof = p->abst();
 	Maker maker = Maker(abstProof, Lex::toInt("remaked_" + Lex::toStr(p->theorem()->id())));
 	try {
-		unique_ptr<Thm> ret = maker.make();
-		if (!ret) {
+		TheoremWithProof ret = maker.make();
+		if (!ret.theorem) {
 			//cout << "oracle test failed" << endl;
 			//cout << "oracle status:" << endl;
 			//cout << oracle->show() << endl;
@@ -25,7 +25,7 @@ Return test_proof_maker(uint i, const Proof* p) {
 		}
 		timer.stop();
 		cout << "done in " << timer << endl;
-		return Return(bool(ret));
+		return Return(bool(ret.theorem));
 	} catch (Error& err) {
 		err.msg += "\nwhile making: " + show_id(p->theorem()->id()) + "\n";
 		throw err;

@@ -303,6 +303,14 @@ struct Proof : public Writable, public Owner<Proof> {
 	bool            inner;
 };
 
+struct TheoremWithProof {
+	TheoremWithProof() = default;
+	TheoremWithProof(unique_ptr<rus::Theorem>&& t, unique_ptr<rus::Proof>&& p) :
+		theorem(std::move(t)), proof(std::move(p)) { }
+	unique_ptr<rus::Theorem> theorem;
+	unique_ptr<rus::Proof> proof;
+};
+
 struct Import : public Writable, public WithToken {
 	Import(uint src, const Token& t = Token()) : WithToken(t), source(src) { }
 	Import(const Import&) = delete;

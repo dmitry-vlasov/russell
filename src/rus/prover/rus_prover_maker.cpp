@@ -361,7 +361,37 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 	}
 }
 
-unique_ptr<Thm> Maker::make() {
+struct Ass {
+	vector<unique_ptr<rus::Hyp>> hyps;
+	unique_ptr<rus::Prop> prop;
+	string show() const {
+		ostringstream oss;
+		for (const auto& h : hyps) {
+			oss << *h;
+		}
+		oss << "--------------" << endl;
+		oss << *prop;
+		return oss.str();
+	}
+};
+
+struct Thm {
+	Ass ass;
+	unique_ptr<rus::Proof> proof;
+	string show() const {
+		ostringstream oss;
+		oss << ass.show() << *proof;
+		return oss.str();
+	}
+	unique_ptr<Theorem> theorem() {
+		unique_ptr<Theorem> ret(new Theorem(proof->thm.id()));
+		ret->hyps = std::move(ass.hyps);
+		ret->props.emplace_back(std::move(ass.prop));
+		return ret;
+	}
+};
+
+TheoremWithProof Maker::make() {
 	set<Node*> leafs;
 	//cout << "BUILD TREE" << endl;
 	while (Prop* p = tactic_->next()) {
@@ -380,7 +410,6 @@ unique_ptr<Thm> Maker::make() {
 	} catch (std::bad_alloc& ba) {
 		throw ba;
 	}
-	unique_ptr<Thm> ret;
 	if (root_->proofs.size() > 0) {
 		ProofNode* root = root_->proofs.at(0)->clone();
 		vector<unique_ptr<ProofNode>> detached;
@@ -397,12 +426,12 @@ unique_ptr<Thm> Maker::make() {
 		//cout << "DETACHED" << endl;
 		auto generated_proof = gen_proof(root);
 		if (generated_proof) {
-			ret.reset(new Thm);
-			ret->proof = std::move(generated_proof);
-			traverseProof(root, [&ret](ProofNode* n) {
+			Thm thm;
+			thm.proof = std::move(generated_proof);
+			traverseProof(root, [&thm](ProofNode* n) {
 				if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
 					bool found = false;
-					for (auto& h : ret->ass.hyps) {
+					for (auto& h : thm.ass.hyps) {
 						if (h->expr == t->hyp->expr) {
 							t->hyp = h.get();
 							found = true;
@@ -410,16 +439,20 @@ unique_ptr<Thm> Maker::make() {
 						}
 					}
 					if (!found) {
-						ret->ass.hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
+						thm.ass.hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
 					}
 				}
 			});
-			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
-			ret->ass.prop = make_unique<rus::Prop>(0, step->expr);
-			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->ass.prop.get(), step)));
+			rus::Step* step = rus::Proof::step(thm.proof->elems.back());
+			thm.ass.prop = make_unique<rus::Prop>(0, step->expr);
+			thm.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(thm.ass.prop.get(), step)));
+			return TheoremWithProof(thm.theorem(), std::move(thm.proof));
+		} else {
+			return TheoremWithProof();
 		}
+	} else {
+		return TheoremWithProof();
 	}
-	return ret;
 }
 
 }}}
