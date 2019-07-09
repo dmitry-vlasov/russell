@@ -139,6 +139,7 @@ struct ProofExpIndexed {
 bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& h);
 string show_proof_struct(const ProofNode* n);
 unique_ptr<rus::Proof> gen_proof(const ProofNode* n);
+void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f);
 
 }}}
 

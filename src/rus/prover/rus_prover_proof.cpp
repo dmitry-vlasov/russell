@@ -274,5 +274,31 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	}
 }
 
+void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f) {
+	stack<ProofNode*> st;
+	st.push(root);
+	while (!st.empty()) {
+		ProofNode* n = st.top();
+		st.pop();
+		f(n);
+		if (ProofHyp* h = dynamic_cast<ProofHyp*>(n)) {
+			if (h->child) {
+				st.push(h->child);
+			}
+		} else if (ProofRef* r = dynamic_cast<ProofRef*>(n)) {
+			if (r->child) {
+				st.push(r->child);
+			}
+		} else if (ProofProp* p = dynamic_cast<ProofProp*>(n)) {
+			for (auto c : p->premises) {
+				if (c) {
+					st.push(c);
+				}
+			}
+		}
+	}
+}
+
+
 }}}
 

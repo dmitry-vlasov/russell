@@ -314,7 +314,7 @@ static Descr description(string name) {
 		)},
 		{"prove_test", Descr(
 			"test prover",
-			Descr::Arg("mode", "oracle", true, "oracle"),
+			Descr::Arg("mode", "oracle|maker", true, "oracle"),
 			Descr::Arg("theorem", "theorem to prove", true, ""),
 			Descr::Arg("max_proofs", "max size of proofs", true, "-1"),
 			Descr::Arg("max_proof_len", "max length of tested proof", true, "-1")
