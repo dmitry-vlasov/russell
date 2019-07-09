@@ -311,31 +311,17 @@ static void next_subproofs(ProofImplsSample& pis) {
 
 static TheoremWithProof generate_theorem(const AbstProof& aproof) {
 	static uint i = 0;
-	prover::Maker maker(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
 	try {
-		TheoremWithProof ret = maker.make();
+		TheoremWithProof ret = prover::make_theorem_with_proof(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
 		if (ret.theorem) {
-			//ret.second = std::move(maker.proved()[0]);
-			//ret.first = std::move(maker.theorem_);
 			cout << "maker succeeded" << endl;
-			//cout << r->show() << endl;
-			//ret.first = r->theorem();
-			//ret.second = std::move(r->proof);
 		} else {
 			cout << "maker failed" << endl;
-
-			//cout << "oracle test failed" << endl;
-			cout << "maker status:" << endl;
-			cout << maker.tactic()->show() << endl;
-			//cout << "FAILED ";
-			//cout << "original abst proof:" << endl;
-			//cout << *p << endl;
 			exit(-1);
 		}
 		return ret;
 	} catch (Error& err) {
-		cout << "prover theorem: " << endl;
-		//cout << maker.theorem_->show() << endl;
+		err.msg += "\nwhile generating from proof:\n" + aproof.show([](uint l) { return Lex::toStr(l); }) + "\n";
 		throw err;
 	}
 	return TheoremWithProof();

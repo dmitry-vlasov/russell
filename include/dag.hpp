@@ -208,6 +208,13 @@ struct DAG {
 			return false;
 		}
 	}
+	string show(std::function<string (const Label&)> f) const {
+		string ret;
+		for (const auto& r : roots_) {
+			ret += r->show(f) + "\n";
+		}
+		return ret;
+	}
 
 private:
 	vector<unique_ptr<Node>> roots_;

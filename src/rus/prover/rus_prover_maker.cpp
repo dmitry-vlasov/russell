@@ -3,6 +3,52 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+struct Maker : public Space {
+	typedef vector<unique_ptr<rus::Proof>> Proved;
+	template<class T>
+	using IndexMap = unify::IndexMap<T>;
+
+	Maker(const AbstProof& aproof, uint id);
+
+	void registerNode(Node* n) {
+		Space::registerNode(n);
+		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
+			if (!expressions_.find(h->expr).size()) {
+				expressions_.add(h->expr, h);
+			}
+		}
+	}
+	void unregisterNode(Node* n) {
+		Space::unregisterNode(n);
+		// TODO:
+	}
+
+	TheoremWithProof make();
+
+	void buildUp(Node* n) override;
+	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
+	uint theoremId() const override { return theorem_id_; }
+
+private:
+	void expandUp(uint index, set<Node*>& leafs);
+
+	void buildUpProp(Prop*);
+	void buildUpHyp(Hyp*);
+
+	uint theorem_id_;
+	const AbstProof& abst_proof_;
+
+	IndexMap<unique_ptr<rus::Hyp>> hyps_;
+	IndexMap<PropRef>  assertions_;
+	IndexMap<Hyp*>     expressions_;
+};
+
+
+TheoremWithProof make_theorem_with_proof(const AbstProof& aproof, uint id) {
+	Maker maker(aproof, id);
+	return maker.make();
+}
+
 static bool debug_make_tactic = false;
 
 void all_nodes(const AbstProof::Node* n, set<const AbstProof::Node*>& all) {

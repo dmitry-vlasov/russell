@@ -9,14 +9,9 @@ Return test_proof_maker(uint i, const Proof* p) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem()->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	AbstProof abstProof = p->abst();
-	Maker maker = Maker(abstProof, Lex::toInt("remaked_" + Lex::toStr(p->theorem()->id())));
 	try {
-		TheoremWithProof ret = maker.make();
+		TheoremWithProof ret = make_theorem_with_proof(abstProof, Lex::toInt("remaked_" + Lex::toStr(p->theorem()->id())));
 		if (!ret.theorem) {
-			//cout << "oracle test failed" << endl;
-			//cout << "oracle status:" << endl;
-			//cout << oracle->show() << endl;
-			//exit(-1);
 			prove_failed.push_back(p);
 			cout << "FAILED ";
 			cout << "original proof:" << endl;
