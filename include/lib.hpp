@@ -69,7 +69,18 @@ bool sets_intersect(const set<T>& right, const set<T>& left) {
 }
 
 template<class T>
-set<T> sets_unite(const set<T>& right, const set<T>& left) {
+set<T> sets_intersection(const set<T>& right, const set<T>& left) {
+	set<T> ret;
+	for (const T& t : right) {
+		if (left.count(t)) {
+			ret.insert(t);
+		}
+	}
+	return ret;
+}
+
+template<class T>
+set<T> sets_union(const set<T>& right, const set<T>& left) {
 	set<T> ret;
 	for (const T& t : right) {
 		ret.insert(t);

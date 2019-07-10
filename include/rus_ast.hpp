@@ -148,6 +148,9 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
+vector<Substitution> match(const Assertion& as1, const Assertion& as2);
+void complete_assertion_vars(Assertion* a);
+
 struct Axiom : public Assertion {
 	Axiom(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Axiom(const Axiom&) = delete;
@@ -302,6 +305,8 @@ struct Proof : public Writable, public Owner<Proof> {
 	Proof*          par;
 	bool            inner;
 };
+
+void complete_proof_vars(Proof* proof);
 
 struct TheoremWithProof {
 	TheoremWithProof() = default;

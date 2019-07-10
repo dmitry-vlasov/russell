@@ -461,6 +461,9 @@ TheoremWithProof Maker::make() {
 			rus::Step* step = rus::Proof::step(ret.proof->elems.back());
 			ret.theorem->props.emplace_back(make_unique<rus::Prop>(0, step->expr));
 			ret.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret.theorem->props.at(0).get(), step)));
+			complete_assertion_vars(ret.theorem.get());
+			complete_proof_vars(ret.proof.get());
+			ret.proof->verify(VERIFY_SRC);
 			return ret;
 		} else {
 			return TheoremWithProof();

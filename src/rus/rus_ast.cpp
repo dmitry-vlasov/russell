@@ -171,6 +171,37 @@ AbstProof Proof::abst() const {
 	return abstProof(qeds().at(0)->step);
 }
 
+static void complete_expr_vars(const Expr& expr, Vars& vars, std::function<bool(uint)> decled_somewehre_else = [](uint) { return false; }) {
+	for (auto& s : expr.symbols) {
+		if (const Var* v = dynamic_cast<const Var*>(s.get())) {
+			if (!vars.isDeclared(v->lit()) && !decled_somewehre_else(v->lit())) {
+				vars.v.emplace_back(*v);
+			}
+		}
+	}
+}
+
+void complete_assertion_vars(Assertion* a) {
+	for (auto& h : a->hyps) {
+		complete_expr_vars(h->expr, a->vars);
+	}
+	for (auto& p : a->props) {
+		complete_expr_vars(p->expr, a->vars);
+	}
+}
+
+void complete_proof_vars(Proof* proof) {
+	for (auto& e : proof->elems) {
+		if (rus::Step* step = rus::Proof::step(e)) {
+			complete_expr_vars(
+				step->expr,
+				proof->allvars,
+				[proof](uint l) { return proof->theorem()->vars.isDeclared(l); }
+			);
+		}
+	}
+}
+
 /*
 inline Token* find(Constant* c, const Token& t) {
 	return c->token.includes(t) ? &c->token : nullptr;

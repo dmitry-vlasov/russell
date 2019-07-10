@@ -216,7 +216,7 @@ struct ProofEnv {
 	}
 	unique_ptr<rus::Proof> proof;
 
-	void internalVars() {
+	/*void internalVars() {
 		for (auto& e : proof->elems) {
 			if (rus::Step* step = rus::Proof::step(e)) {
 				for (auto& s : step->expr.symbols) {
@@ -228,7 +228,7 @@ struct ProofEnv {
 				}
 			}
 		}
-	}
+	}*/
 
 private:
 	const rus::Ref& getRef(const ProofNode* n) {
@@ -298,7 +298,6 @@ void traverseProof(ProofNode* root, std::function<void(ProofNode*)> f) {
 		}
 	}
 }
-
 
 }}}
 
