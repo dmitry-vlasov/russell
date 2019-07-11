@@ -1,5 +1,6 @@
 #include <rus_ast.hpp>
 #include <rus/prover/unify/rus_prover_unify.hpp>
+#include <rus/prover/unify/rus_prover_unify_index.hpp>
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -84,49 +85,17 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 		rename_common_vars.compose(v, w);
 	}
 	Ass a1 = a10.apply(rename_common_vars);
+	typedef unify::IndexMap<uint> HypsMap;
+	HypsMap hypsMap;
+	for (uint i = 0; i < a2.hyps.size(); ++i) {
+		hypsMap.add(a2.hyps.at(i), i);
+	}
 
 	//cout << "a1:" << endl << a1.show() << endl;
 	//cout << "a2:" << endl << a2.show() << endl;
 
 	vector<unique_ptr<Subst>> subs;
 	subs.emplace_back(make_unique<Subst>());
-	for (const auto& a1_hyp : a1.hyps) {
-
-		//cout << "a1_hyp: " << a1_hyp << endl;
-
-		vector<unique_ptr<Subst>> new_subs;
-		for (const auto& sub : subs) {
-			Term a1_hyp_prime = sub->apply(a1_hyp);
-
-			//cout << "a1_hyp_prime: " << a1_hyp_prime << endl;
-
-			for (const auto& a2_hyp : a2.hyps) {
-
-				//cout << "a2_hyp: " << a2_hyp << endl;
-				//cout << "sub: " << endl << *sub << endl;
-
-				vector<Term> hyps;
-				hyps.emplace_back(a1_hyp_prime);
-				hyps.emplace_back(a2_hyp);
-				unique_ptr<Subst> new_sub = make_unique<Subst>(*sub);
-				unify::unify_general(hyps, *new_sub);
-				if (new_sub->ok()) {
-					//cout << "sub ok: " << *new_sub << endl;
-					new_subs.emplace_back(std::move(new_sub));
-				} else {
-					//cout << "sub not ok: " << *new_sub << endl;
-				}
-			}
-		}
-		if (!new_subs.size()) {
-			//cout << "AAA end" << endl;
-			return vector<Substitution>();
-		}
-		subs = std::move(new_subs);
-	}
-
-	//cout << "AAA" << endl;
-
 	for (const auto& a2_prop : a2.props) {
 		vector<unique_ptr<Subst>> new_subs;
 		for (const auto& sub : subs) {
@@ -147,9 +116,32 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 		}
 		subs = std::move(new_subs);
 	}
-
-	//cout << "BBB" << endl;
-
+	for (const auto& a1_hyp : a1.hyps) {
+		vector<unique_ptr<Subst>> new_subs;
+		for (const auto& sub : subs) {
+			Term a1_hyp_prime = sub->apply(a1_hyp);
+			for (auto unified : hypsMap.unify(a1_hyp_prime)) {
+				unique_ptr<Subst> new_sub = make_unique<Subst>(*sub);
+				if (new_sub->compose(unified.sub)) {
+					new_subs.emplace_back(std::move(new_sub));
+				}
+			}
+			/*for (const auto& a2_hyp : a2.hyps) {
+				vector<Term> hyps;
+				hyps.emplace_back(a1_hyp_prime);
+				hyps.emplace_back(a2_hyp);
+				unique_ptr<Subst> new_sub = make_unique<Subst>(*sub);
+				unify::unify_general(hyps, *new_sub);
+				if (new_sub->ok()) {
+					new_subs.emplace_back(std::move(new_sub));
+				}
+			}*/
+		}
+		if (!new_subs.size()) {
+			return vector<Substitution>();
+		}
+		subs = std::move(new_subs);
+	}
 	vector<Substitution> ret;
 	for (const auto& s : subs) {
 		if (!check_sub(a1.apply(*s), a2)) {

@@ -4,14 +4,7 @@
 
 namespace mdl {
 
-class Timer {
-public :
-	enum {
-		MICROSECONDS_IN_SECOND      = 1000000,
-		MICROSECONDS_IN_MILLISECOND = 1000,
-		MILLISECONDS_IN_SECOND      = 1000
-	};
-
+struct Timer {
 	Timer(const Timer&) = default;
 	Timer() {
 		start();
@@ -23,9 +16,10 @@ public :
 	}
 
 	void stop() {
-		::gettimeofday(&stopTime_, nullptr);
-		deltaTime_.tv_sec = stopTime_.tv_sec - startTime_.tv_sec;
-		deltaTime_.tv_usec = stopTime_.tv_usec - startTime_.tv_usec;
+		timeval stopTime;
+		::gettimeofday(&stopTime, nullptr);
+		deltaTime_.tv_sec = stopTime.tv_sec - startTime_.tv_sec;
+		deltaTime_.tv_usec = stopTime.tv_usec - startTime_.tv_usec;
 		if (deltaTime_.tv_usec < 0) {
 			deltaTime_.tv_usec += MICROSECONDS_IN_SECOND;
 			-- deltaTime_.tv_sec;
@@ -33,15 +27,6 @@ public :
 			deltaTime_.tv_usec -= MICROSECONDS_IN_SECOND;
 			++ deltaTime_.tv_sec;
 		}
-	}
-
-	void clear() {
-		startTime_.tv_sec  = 0;
-		startTime_.tv_usec = 0;
-		stopTime_.tv_sec   = 0;
-		stopTime_.tv_usec  = 0;
-		deltaTime_.tv_sec  = 0;
-		deltaTime_.tv_usec = 0;
 	}
 
 	double getMicroseconds() const {
@@ -117,14 +102,51 @@ public :
 		return oss.str();
 	}
 
+private:
+	enum {
+		MICROSECONDS_IN_SECOND      = 1000'000,
+		MICROSECONDS_IN_MILLISECOND = 1000,
+		MILLISECONDS_IN_SECOND      = 1000
+	};
+	void clear() {
+		startTime_.tv_sec  = 0;
+		startTime_.tv_usec = 0;
+		deltaTime_.tv_sec  = 0;
+		deltaTime_.tv_usec = 0;
+	}
 	timeval startTime_;
-	timeval stopTime_;
 	timeval deltaTime_;
 };
 
 inline ostream& operator << (ostream& os, const Timer& t) {
 	os << t.show(); return os;
 }
+
+class Timeout : public std::exception {
+public :
+	Timeout (const string& str) throw() : msg("timeout: " + str) { }
+	virtual ~Timeout() { }
+	virtual const char* what() const throw() {
+		return msg.c_str();
+	}
+	string msg;
+};
+
+struct Watchdog {
+	Watchdog(uint m, const string& msg) : millis(m), message(msg) { }
+
+	void check() {
+		timer.stop();
+		if (timer.getMilliseconds() > millis) {
+			throw Timeout(message);
+		}
+	}
+
+private:
+	Timer timer;
+	uint millis;
+	string message;
+};
 
 }
 
