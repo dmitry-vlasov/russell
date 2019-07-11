@@ -18,19 +18,23 @@ Return test_proof_maker(uint i, const Proof* p) {
 			cout << *p << endl;
 			exit(-1);
 		}
-		vector<Substitution> matches1 = match(*ret.theorem, *p->theorem());
-		if (!matches1.size()) {
-			string err;
-			err += "wrong proof remaked\n";
-			err += "ret.theorem:\n" + ret.theorem->show() + "\n";
-			err += "p->theorem():\n" + p->theorem()->show() + "\n";
-			throw Error(err);
-		}
-		vector<Substitution> matches2 = match(*p->theorem(), *ret.theorem);
-		if (!matches2.size()) {
-			cout << "strongly more general remaked theorem" << endl;
-			cout << "ret.theorem:\n" << ret.theorem->show() << endl;
-			cout << "p->theorem():\n" << p->theorem()->show() << endl;
+		try {
+			vector<Substitution> matches1 = match(*ret.theorem, *p->theorem());
+			if (!matches1.size()) {
+				string err;
+				err += "wrong proof remaked\n";
+				err += "ret.theorem:\n" + ret.theorem->show() + "\n";
+				err += "p->theorem():\n" + p->theorem()->show() + "\n";
+				throw Error(err);
+			}
+			vector<Substitution> matches2 = match(*p->theorem(), *ret.theorem);
+			if (!matches2.size()) {
+				cout << "strongly more general remaked theorem" << endl;
+				cout << "ret.theorem:\n" << ret.theorem->show() << endl;
+				cout << "p->theorem():\n" << p->theorem()->show() << endl;
+			}
+		} catch (Timeout& timeout) {
+			cout << timeout.what();
 		}
 
 		timer.stop();

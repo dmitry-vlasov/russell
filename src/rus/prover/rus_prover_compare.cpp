@@ -94,12 +94,15 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 	//cout << "a1:" << endl << a1.show() << endl;
 	//cout << "a2:" << endl << a2.show() << endl;
 
+	Watchdog watchdog(1000, "match assertions " + Lex::toStr(as1.id()) + " and " + Lex::toStr(as2.id()));
+
 	vector<unique_ptr<Subst>> subs;
 	subs.emplace_back(make_unique<Subst>());
 	for (const auto& a2_prop : a2.props) {
 		vector<unique_ptr<Subst>> new_subs;
 		for (const auto& sub : subs) {
 			for (const auto& a1_prop : a1.props) {
+				watchdog.check();
 				Term a1_prop_prime = sub->apply(a1_prop);
 				vector<Term> props;
 				props.emplace_back(a2_prop);
@@ -121,6 +124,7 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 		for (const auto& sub : subs) {
 			Term a1_hyp_prime = sub->apply(a1_hyp);
 			for (auto unified : hypsMap.unify(a1_hyp_prime)) {
+				watchdog.check();
 				unique_ptr<Subst> new_sub = make_unique<Subst>(*sub);
 				if (new_sub->compose(unified.sub)) {
 					new_subs.emplace_back(std::move(new_sub));
