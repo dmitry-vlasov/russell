@@ -166,10 +166,12 @@ void Proof::write(ostream& os, const Indent& i) const {
 	for (const auto& e : elems) {
 		switch (kind(e)) {
 		case STEP: step(e)->write(os, i + 1); break;
-		case QED: qed(e)->write(os, i + 1); break;
 		}
 	}
-	os << "}\n";
+	if (qed) {
+		qed->write(os, i + 1);
+	}
+	os << i << "}\n";
 }
 
 void Step::write(ostream& os, const Indent& i) const {

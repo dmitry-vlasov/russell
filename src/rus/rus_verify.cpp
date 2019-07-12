@@ -74,9 +74,11 @@ void Proof::verify(uint mode) const {
 	for (const auto& el : elems) {
 		switch (kind(el)){
 		case Proof::STEP: step(el)->verify(mode); break;
-		case Proof::QED: qed(el)->verify(mode);  break;
 		default : break;
 		}
+	}
+	if (qed) {
+		qed->verify(mode);
 	}
 }
 

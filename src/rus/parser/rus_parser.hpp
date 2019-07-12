@@ -194,7 +194,7 @@ struct CreateStepRef {
 
 struct GetProp {
 	struct result { typedef Prop* type; };
-	Prop* operator()(uint ind, Proof* p) const {
+	Prop* operator()(Proof* p) const {
 		return p->theorem->prop.get();
 	}
 };
@@ -202,6 +202,11 @@ struct GetProp {
 struct GetStep {
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
+		if (ind > 10000) {
+			cout << "AAA" << endl;
+			cout << ind << endl;
+			exit(-1);
+		}
 		return Proof::step(p->elems[ind]);
 	}
 };
@@ -250,13 +255,17 @@ struct AppendComment {
 	}
 };
 
-struct AddProofElem {
+struct AddProofStep {
 	struct result { typedef void type; };
 	void operator()(Proof* p, Step* s) const {
 		p->elems.emplace_back(unique_ptr<Step>(s));
 	}
+};
+
+struct AddProofQed {
+	struct result { typedef void type; };
 	void operator()(Proof* p, Qed* q) const {
-		p->elems.emplace_back(unique_ptr<Qed>(q));
+		p->qed.reset(q);
 	}
 };
 
@@ -335,8 +344,7 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Ref*(Proof*), unicode::space_type> ref;
 	qi::rule<LocationIter, vector<Ref*>(Proof*), unicode::space_type> refs;
 	qi::rule<LocationIter, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Id, vector<Ref*>>, unicode::space_type> step;
-	qi::rule<LocationIter, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
-	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_elem;
+	qi::rule<LocationIter, Qed*(Proof*), unicode::space_type> qed;
 	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_body;
 	qi::rule<LocationIter, Proof*(Theorem*), unicode::space_type> proof;
 	qi::rule<LocationIter, Theorem*(), unicode::space_type> theorem;
@@ -370,7 +378,6 @@ inline void Grammar::initNames() {
 	refs.name("refs");
 	step.name("step");
 	qed.name("qed");
-	proof_elem.name("proof_elem");
 	proof_body.name("proof_body");
 	proof.name("proof");
 	theorem.name("theorem");

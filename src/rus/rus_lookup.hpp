@@ -94,7 +94,6 @@ template<class T>
 static T* find_obj(Proof::Elem& e, const char* pos) {
 	switch (Proof::kind(e)) {
 	case Proof::STEP: return find_obj<T>(Proof::step(e), pos);
-	case Proof::QED:  return find_obj<T>(Proof::qed(e), pos);
 	default: assert(false && "impossible"); return nullptr;
 	}
 }

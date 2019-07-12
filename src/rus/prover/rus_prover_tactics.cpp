@@ -3,7 +3,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 Oracle::Oracle(const rus::Proof* p) :
-	proof(p), root(p ? (*p->qeds().begin())->step : nullptr) {
+	proof(p), root(p ? p->qed->step : nullptr) {
 }
 
 bool debug_oracle = false;

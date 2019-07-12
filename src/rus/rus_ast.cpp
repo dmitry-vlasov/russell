@@ -143,16 +143,6 @@ Proof::Proof(Theorem* th, const Token& t) :
 	WithToken(t), theorem(th), par(nullptr), inner(false) {
 }
 
-vector<Qed*> Proof::qeds() const {
-	vector<Qed*> ret;
-	for (const auto& e : elems) {
-		if (kind(e) == QED) {
-			ret.push_back(qed(e));
-		}
-	}
-	return ret;
-}
-
 static AbstProof::Node* abstProof(const Step* step) {
 	AbstProof::Node* ret = new AbstProof::Node(step->ass_id(), step->refs.size());
 	for (uint i = 0; i < step->refs.size(); ++i) {
@@ -164,11 +154,10 @@ static AbstProof::Node* abstProof(const Step* step) {
 }
 
 AbstProof Proof::abst() const {
-	vector<Qed*> qs = qeds();
-	if (!qs.size()) {
-		throw Error("no qeds in a proof");
+	if (!qed) {
+		throw Error("no qed in a proof");
 	}
-	return abstProof(qeds().at(0)->step);
+	return abstProof(qed->step);
 }
 
 static void complete_expr_vars(const Expr& expr, Vars& vars, std::function<bool(uint)> decled_somewehre_else = [](uint) { return false; }) {

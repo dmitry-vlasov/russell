@@ -27,7 +27,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
-	prover::Prover prover(*p->qeds().begin(), oracle);
+	prover::Prover prover(p->qed.get(), oracle);
 	prover.setMaxProofs(max_proofs);
 	try {
 		bool orig_proof_has_shared = proof_has_shared(p);

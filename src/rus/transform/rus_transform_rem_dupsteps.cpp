@@ -37,10 +37,10 @@ void reduce_duplcate_steps(Proof* proof) {
 			}
 			break;
 		}
-		case Proof::QED: {
+		/*case Proof::QED: {
 			const Qed* qed = Proof::qed(e);
 			new_elems.emplace_back(make_unique<Qed>(qed->prop, steps_map.at(qed->step))); break;
-		}
+		}*/
 		case Proof::VARS: {
 			new_elems.push_back(std::move(e)); break;
 		}

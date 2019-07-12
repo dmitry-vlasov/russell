@@ -121,7 +121,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
 	(mdl::rus::Theorem*, theorem)
 	(mdl::rus::Proof*, par)
-	(bool, has_id)
+	(mdl::unique_ptr<mdl::rus::Qed>, qed)
+	(bool, inner)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
