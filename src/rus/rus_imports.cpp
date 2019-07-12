@@ -88,6 +88,13 @@ void proof_deps(const Proof* proof, set<uint>& deps) {
 	}
 }
 
+inline void theorem_deps(const Theorem* th, set<uint>& deps) {
+	assertion_deps(th, deps);
+	if (th->proof) {
+		proof_deps(th->proof.get(), deps);
+	}
+}
+
 void theory_deps(const Theory* th, set<uint>& deps) {
 	for (const auto& n : th->nodes) {
 		switch (Theory::kind(n)) {
@@ -96,8 +103,7 @@ void theory_deps(const Theory* th, set<uint>& deps) {
 		case Theory::RULE:     rule_deps(Theory::rule(n), deps);         break;
 		case Theory::AXIOM:    assertion_deps(Theory::axiom(n), deps);   break;
 		case Theory::DEF:      assertion_deps(Theory::def(n), deps);     break;
-		case Theory::THEOREM:  assertion_deps(Theory::theorem(n), deps); break;
-		case Theory::PROOF:    proof_deps(Theory::proof(n), deps);       break;
+		case Theory::THEOREM:  theorem_deps(Theory::theorem(n), deps); break;
 		case Theory::THEORY:   theory_deps(Theory::theory(n), deps);     break;
 		default : break;
 		}
@@ -189,7 +195,6 @@ void minimize_imports(Source* src, map<uint, set<uint>>& minimized) {
 			case Theory::AXIOM:   move_node<Axiom>(new_nodes, n);    break;
 			case Theory::DEF:     move_node<Def>(new_nodes, n);      break;
 			case Theory::THEOREM: move_node<Theorem>(new_nodes, n);  break;
-			case Theory::PROOF:   move_node<Proof>(new_nodes, n);    break;
 			case Theory::THEORY:  move_node<Theory>(new_nodes, n);   break;
 			case Theory::IMPORT:  break;
 			default : assert(false && "impossible");

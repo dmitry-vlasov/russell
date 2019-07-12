@@ -60,9 +60,11 @@ void reduce_duplcate_steps(Proof* proof) {
 
 void reduce_duplcate_steps()  {
 	vector<Proof*> proofs;
-	for (auto& p : Sys::mod().math.get<Proof>()) {
-		if (Proof* proof = p.second.data) {
-			proofs.push_back(proof);
+	for (auto& a : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+			if (Proof* proof = thm->proof.get()) {
+				proofs.push_back(proof);
+			}
 		}
 	}
 #ifdef PARALLEL_DUPLICATE_STEPS

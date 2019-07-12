@@ -19,7 +19,6 @@ class Math {
 	Table<Type>      types;
 	Table<Rule>      rules;
 	Table<Assertion> assertions;
-	Table<Proof>     proofs;
 	Table<Source>    sources;
 public:
 

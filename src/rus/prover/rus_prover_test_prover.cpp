@@ -24,7 +24,7 @@ static bool proof_has_shared(const Proof* p) {
 }
 
 Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
-	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
+	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
 	prover::Prover prover(*p->qeds().begin(), oracle);
@@ -65,7 +65,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 		cout << "done in " << timer << endl;
 		return ret;
 	} catch (Error& err) {
-		err.msg += "\nwhile proving: " + show_id(p->theorem()->id()) + "\n";
+		err.msg += "\nwhile proving: " + show_id(p->theorem->id()) + "\n";
 		throw err;
 	}
 }
@@ -90,8 +90,8 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 	for (Source* src : ordered_sources) {
 		//cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		for (auto& n : src->theory.nodes) {
-			if (Theory::kind(n) == Theory::PROOF) {
-				const Proof* proof = Theory::proof(n);
+			if (Theory::kind(n) == Theory::THEOREM) {
+				const Proof* proof = Theory::theorem(n)->proof.get();
 				uint proof_len = proof->elems.size();
 				if (!longest_proof  || proof_len > longest_proof->elems.size()) {
 					longest_proof = proof;
@@ -102,7 +102,7 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 			}
 		}
 	}
-	cout << "longest proof: " << Lex::toStr(longest_proof->thm->id()) << ", proof length: " << longest_proof->elems.size() << endl;
+	cout << "longest proof: " << Lex::toStr(longest_proof->theorem->id()) << ", proof length: " << longest_proof->elems.size() << endl;
 #ifdef PARALLEL_PROVER_TEST
 	tbb::parallel_for(tbb::blocked_range<size_t>(0, proofs.size()),
 		[max_proofs, &proofs] (const tbb::blocked_range<size_t>& r) {
@@ -137,7 +137,7 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 	cout << endl;
 	cout << "failed proofs number: " << prove_failed.size() << endl;
 	for (const Proof* p : prove_failed) {
-		cout << Lex::toStr(p->theorem()->id()) << ", ";
+		cout << Lex::toStr(p->theorem->id()) << ", ";
 	}
 	cout << endl;
 	print_statistics();
@@ -150,8 +150,8 @@ Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len) {
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
-			for (const auto& pr : th->proofs) {
-				Return r = test_proof_with_oracle(-1, pr.get(), max_proofs);
+			if (const rus::Proof* pr = th->proof.get()) {
+				Return r = test_proof_with_oracle(-1, pr, max_proofs);
 				if (!r.success()) {
 					debug_oracle = true;
 					//test_proof_with_oracle(pr.get());

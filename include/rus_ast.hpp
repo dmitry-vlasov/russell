@@ -172,7 +172,7 @@ struct Theorem : public Assertion {
 	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Theorem(const Theorem&) = delete;
 	Kind kind() const override { return THM; }
-	vector<User<Proof>> proofs;
+	unique_ptr<Proof> proof;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
@@ -278,7 +278,7 @@ struct Qed : public Writable, public WithToken {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
-struct Proof : public Writable, public Owner<Proof> {
+struct Proof : public Writable, public WithToken {
 
 	enum Kind { VARS, STEP, QED };
 	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
@@ -288,33 +288,23 @@ struct Proof : public Writable, public Owner<Proof> {
 	static Step* step(const Elem& e) { return kind(e) == STEP ? std::get<unique_ptr<Step>>(e).get() : nullptr; }
 	static Qed*  qed(const Elem& e)  { return kind(e) == QED  ? std::get<unique_ptr<Qed>>(e).get()  : nullptr; }
 
-	Proof(Id thm, Id id = Id(), const Token& t = Token());
+	Proof(Theorem* th = nullptr, const Token& t = Token());
 	Proof(const Proof&) = delete;
 
-	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
-	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
 	void verify(uint mode = VERIFY_ALL) const;
 	bool check(uint mode = VERIFY_ALL) const;
 	vector<Qed*> qeds() const;
 	AbstProof abst() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
-	Vars            allvars;
-	vector<Elem>    elems;
-	User<Assertion> thm;
-	Proof*          par;
-	bool            inner;
+	Vars         allvars;
+	vector<Elem> elems;
+	Theorem*     theorem;
+	Proof*       par;
+	bool         inner;
 };
 
 void complete_proof_vars(Proof* proof);
-
-struct TheoremWithProof {
-	TheoremWithProof() = default;
-	TheoremWithProof(unique_ptr<rus::Theorem>&& t, unique_ptr<rus::Proof>&& p) :
-		theorem(std::move(t)), proof(std::move(p)) { }
-	unique_ptr<rus::Theorem> theorem;
-	unique_ptr<rus::Proof> proof;
-};
 
 struct Import : public Writable, public WithToken {
 	Import(uint src, const Token& t = Token()) : WithToken(t), source(src) { }
@@ -324,7 +314,7 @@ struct Import : public Writable, public WithToken {
 };
 
 struct Theory : public Writable, public WithToken {
-	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, PROOF, THEORY, IMPORT, COMMENT };
+	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, THEORY, IMPORT, COMMENT };
 	typedef variant<
 		unique_ptr<Constant>,
 		unique_ptr<Type>,
@@ -332,7 +322,6 @@ struct Theory : public Writable, public WithToken {
 		unique_ptr<Axiom>,
 		unique_ptr<Def>,
 		unique_ptr<Theorem>,
-		unique_ptr<Proof>,
 		unique_ptr<Theory>,
 		unique_ptr<Import>,
 		unique_ptr<Comment>
@@ -350,7 +339,6 @@ struct Theory : public Writable, public WithToken {
 	static Axiom* axiom(const Node& n) { return kind(n) == AXIOM ? std::get<unique_ptr<Axiom>>(n).get() : nullptr; }
 	static Def* def(const Node& n) { return kind(n) == DEF ? std::get<unique_ptr<Def>>(n).get() : nullptr; }
 	static Theorem* theorem(const Node& n) { return kind(n) == THEOREM ? std::get<unique_ptr<Theorem>>(n).get() : nullptr; }
-	static Proof* proof(const Node& n) { return kind(n) == PROOF ? std::get<unique_ptr<Proof>>(n).get() : nullptr; }
 	static Theory* theory(const Node& n) { return kind(n) == THEORY ? std::get<unique_ptr<Theory>>(n).get() : nullptr; }
 	static Import* import(const Node& n) { return kind(n) == IMPORT ? std::get<unique_ptr<Import>>(n).get() : nullptr; }
 	static Comment* comment(const Node& n) { return kind(n) == COMMENT ? std::get<unique_ptr<Comment>>(n).get() : nullptr; }

@@ -366,12 +366,12 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 		err.msg += "in proof of " + Lex::toStr(ass->id()) + "\n";
 		throw err;
 	}
-	rus::Proof* p = new rus::Proof(thm->id());
+	rus::Proof* p = new rus::Proof(thm);
 	p->allvars = std::move(translate_vars(ass->innerVars));
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->props.front().get();
 	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));
-	state.source->theory.nodes.emplace_back(unique_ptr<rus::Proof>(p));
+	thm->proof.reset(p);
 	p->token.set(state.source);
 	delete tree;
 }

@@ -119,7 +119,9 @@ size_t memvol(const Proof& proof) {
 }
 
 size_t memvol(const Theorem& th) {
-	return memvol(static_cast<const Assertion&>(th)) + th.proofs.capacity() * sizeof(Proof*);
+	return
+		memvol(static_cast<const Assertion&>(th)) +
+		(th.proof ? memvol(*th.proof) * sizeof(Proof*) : 0);
 }
 size_t memvol(const Import& imp) {
 	return 0;
@@ -132,7 +134,6 @@ size_t memvol(const Theory::Node& n) {
 	case Theory::AXIOM   : return memvol(*Theory::axiom(n));
 	case Theory::DEF     : return memvol(*Theory::def(n));
 	case Theory::THEOREM : return memvol(*Theory::theorem(n));
-	case Theory::PROOF   : return memvol(*Theory::proof(n));
 	case Theory::THEORY  : return memvol(*Theory::theory(n));
 	case Theory::IMPORT  : return memvol(*Theory::import(n));
 	case Theory::COMMENT : return memvol(*Theory::comment(n));

@@ -8,12 +8,14 @@ typedef map<uint, vector<const Step*>> AssertionMap;
 
 AssertionMap init_assertion_map() {
 	AssertionMap ass_map;
-	for (auto& p : Sys::mod().math.get<Proof>()) {
-		if (Proof* proof = p.second.data) {
-			for (const auto& e : proof->elems) {
-				if (Proof::kind(e) == Proof::STEP) {
-					const Step* step = Proof::step(e);
-					ass_map[step->ass_id()].push_back(step);
+	for (auto& a : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+			if (Proof* proof = thm->proof.get()) {
+				for (const auto& e : proof->elems) {
+					if (Proof::kind(e) == Proof::STEP) {
+						const Step* step = Proof::step(e);
+						ass_map[step->ass_id()].push_back(step);
+					}
 				}
 			}
 		}
@@ -46,7 +48,7 @@ struct SubProofSet {
 		string ret;
 		for (const auto& sp : subproofs_) {
 			ret += "\t[" +
-				Lex::toStr(sp.getRoot(0)->label()->proof()->theorem()->id()) + "] " +
+				Lex::toStr(sp.getRoot(0)->label()->proof()->theorem->id()) + "] " +
 				sp.getRoot(0)->show([](const Step* s) { return to_string(s->ind()) + ":" + Lex::toStr(s->ass_id()); }) +
 				"\n";
 		}
@@ -309,11 +311,11 @@ static void next_subproofs(ProofImplsSample& pis) {
 }
 
 
-static TheoremWithProof generate_theorem(const AbstProof& aproof) {
+static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 	static uint i = 0;
 	try {
-		TheoremWithProof ret = prover::make_theorem_with_proof(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
-		if (ret.theorem) {
+		unique_ptr<Theorem> ret = prover::make_theorem(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
+		if (ret) {
 			cout << "maker succeeded" << endl;
 		} else {
 			cout << "maker failed" << endl;
@@ -324,7 +326,7 @@ static TheoremWithProof generate_theorem(const AbstProof& aproof) {
 		err.msg += "\nwhile generating from proof:\n" + aproof.show([](uint l) { return Lex::toStr(l); }) + "\n";
 		throw err;
 	}
-	return TheoremWithProof();
+	return nullptr;
 }
 
 }
@@ -370,9 +372,9 @@ void factorize_subproofs(const string& opts) {
 	for (uint i = 0; i < 10; ++ i) {
 		ProofImpls* impls = common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1).get();
 		cout << impls->show() << endl;
-		TheoremWithProof generated = generate_theorem(impls->proof_);
-		cout << (generated.theorem ? generated.theorem->show() : "theorem: <null>") << endl;
-		cout << (generated.proof ? generated.proof->show() : "proof: <null>") << endl;
+		unique_ptr<Theorem> theorem = generate_theorem(impls->proof_);
+		cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
+		cout << (theorem ? theorem->proof->show() : "proof: <null>") << endl;
 	}
 	/*cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;

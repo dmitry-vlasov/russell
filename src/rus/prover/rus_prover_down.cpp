@@ -317,7 +317,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 #endif
 		cout << "MATR TIME: " << double(mat_time) / 1000000 << "s." << endl;
 		cout << "CARD: " << card << endl;
-		cout << "THEOREM: " << Lex::toStr(pr->space->theoremId()) << endl;
+		//cout << "THEOREM: " << Lex::toStr(pr->space->theoremId()) << endl;
 		//cout << index::Matrix(pr, hy, hs, &limit).show() << endl;
 	}
 

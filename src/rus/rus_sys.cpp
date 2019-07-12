@@ -15,7 +15,6 @@ string Math::info() const {
 	stats += "\ttypes:      " + to_string(types.size()) + "\n";
 	stats += "\trules:      " + to_string(rules.size()) + "\n";
 	stats += "\tassertions: " + to_string(assertions.size()) + "\n";
-	stats += "\tproofs:     " + to_string(proofs.size()) + "\n";
 	stats += "\tsources:    " + to_string(sources.size()) + "\n";
 	return stats;
 }
@@ -27,13 +26,11 @@ string Math::show() const {
 template<> Table<Constant>& Math::get<Constant>() { return consts; }
 template<> Table<Type>& Math::get<Type>() { return types; }
 template<> Table<Rule>& Math::get<Rule>() { return rules; }
-template<> Table<Proof>& Math::get<Proof>() { return proofs; }
 template<> Table<Source>& Math::get<Source>() { return sources; }
 template<> Table<Assertion>& Math::get<Assertion>() { return assertions; }
 template<> const Table<Constant>& Math::get<Constant>() const { return consts; }
 template<> const Table<Type>& Math::get<Type>() const { return types; }
 template<> const Table<Rule>& Math::get<Rule>() const { return rules; }
-template<> const Table<Proof>& Math::get<Proof>() const { return proofs; }
 template<> const Table<Source>& Math::get<Source>() const { return sources; }
 template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
 
@@ -203,13 +200,10 @@ string info() {
 	//const size_t axiom_vol = mdl::memvol(Sys::get().math.axioms);
 	//const size_t defs_vol  = mdl::memvol(Sys::get().math.defs);
 	//const size_t thems_vol = mdl::memvol(Sys::get().math.theorems);
-	const size_t proof_vol = mdl::memvol(Sys::get().math.get<Proof>());
 	//uint lab = Lex::toInt(Sys::conf().in.name);
 	const size_t source_vol = 0; //memvol(*Sys::get().math.get<Source>().access(lab));
 	const size_t total_vol =
-		const_vol + types_vol + rules_vol +
-		//axiom_vol + defs_vol + thems_vol +
-		proof_vol;
+		const_vol + types_vol + rules_vol;
 
 	stats += "Volume:\n";
 	stats += "\tconsts:   " + showmem(const_vol) + "\n";
@@ -218,7 +212,6 @@ string info() {
 	//stats += "\taxioms:   " + showmem(axiom_vol) + "\n";
 	//stats += "\tdefs:     " + showmem(defs_vol) + "\n";
 	//stats += "\ttheorems: " + showmem(thems_vol) + "\n";
-	stats += "\tproofs:   " + showmem(proof_vol) + "\n";
 	stats += "\n";
 	stats += "\ttotal:  " + showmem(total_vol) + "\n";
 	stats += "\tsource: " + showmem(source_vol) + "\n";
@@ -231,7 +224,6 @@ string info() {
 	//stats += "\taxioms:   " + to_string(Sys::get().math.axioms.size()) + "\n";
 	//stats += "\tdefs:     " + to_string(Sys::get().math.defs.size()) + "\n";
 	//stats += "\ttheorems: " + to_string(Sys::get().math.theorems.size()) + "\n";
-	stats += "\tproofs:   " + to_string(Sys::get().math.get<Proof>().size()) + "\n";
 	stats += "\n";
 
 	return stats;

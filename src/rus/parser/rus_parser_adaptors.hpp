@@ -89,6 +89,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Disj, disj)
 	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
 	(mdl::vector<mdl::unique_ptr<mdl::rus::Prop>>, props)
+	(mdl::unique_ptr<mdl::rus::Proof>, proof)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -118,7 +119,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::uint, id)
 	(mdl::rus::Vars, allvars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
-	(mdl::rus::User<mdl::rus::Assertion>, thm)
+	(mdl::rus::Theorem*, theorem)
 	(mdl::rus::Proof*, par)
 	(bool, has_id)
 )

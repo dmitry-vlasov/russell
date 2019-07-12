@@ -65,7 +65,7 @@ struct Space {
 
 	virtual void buildUp(Node*) = 0;
 	virtual void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) = 0;
-	virtual uint theoremId() const = 0;
+	//virtual rus::Theorem* theorem() const = 0;
 
 	vector<unique_ptr<rus::Proof>> proved();
 	Return check_proved();

@@ -138,10 +138,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
 	proof =
-		lit("proof") [_a = phoenix::val(-1)]
-		> - (!lit("of") > - id [_a = qi::labels::_1])
-		> "of"
-		> id         [_val = new_<Proof>(qi::labels::_1, _a)]
+		lit("proof") [_val = new_<Proof>(_r1)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
 		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
 		> proof_body(_val)
@@ -157,6 +154,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> - ( + (hyp [addToAssertion(_val, qi::labels::_1)]) > bar )
 		> + (prop    [addToAssertion(_val, qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
+		> proof(_val) [addToAssertion(_val, qi::labels::_1)]
 		> eps        [enqueue(_val)];
 
 	axiom =
@@ -252,7 +250,6 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 			axiom    [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
 			def      [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
 			theorem  [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			proof    [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
 			comment  [addToTheory(&at_c<0>(*_val), qi::labels::_1)]
 		);
 

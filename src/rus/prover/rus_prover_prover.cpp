@@ -3,21 +3,29 @@
 namespace mdl { namespace rus { namespace prover {
 
 Prover::Prover(rus::Qed* q, Tactic* t) :
-	Prover(q->step->proof()->thm.get(), q->prop, t) {
+	Prover(q->step->proof()->theorem, q->prop, t) {
 }
 
-inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
-	uint c = 0;
-	for (auto& x : a->props) if (x.get() == p) return c; else ++c;
-	throw Error("prop is not found");
+inline uint find_index(const rus::Theorem* t, const rus::Prop* p) {
+	auto it = std::find_if(
+		t->props.begin(),
+		t->props.end(),
+		[p](const auto& x) { return x.get() == p; }
+	);
+	if (it == t->props.end()) {
+		throw Error("prop is not found");
+	} else {
+		return it - t->props.begin();
+	}
 }
 
-Prover::Prover(rus::Assertion* a, rus::Prop* p, Tactic* t) : Space(t),
-	prop_(a, find_index(a, p)) {
+Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
+	theorem(thm),
+	prop_(thm, find_index(thm, p)) {
 	Timer timer;
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
-			if (!ass->token.preceeds(a->token)) {
+			if (!ass->token.preceeds(theorem->token)) {
 				continue;
 			}
 			for (uint i = 0; i < ass->props.size(); ++i) {
@@ -32,7 +40,7 @@ Prover::Prover(rus::Assertion* a, rus::Prop* p, Tactic* t) : Space(t),
 		}
 	}
 	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
-		HypRef hypRef(a, i);
+		HypRef hypRef(theorem, i);
 		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
 	}
 	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
@@ -175,6 +183,7 @@ vector<unique_ptr<rus::Proof>> Prover::proved() {
 	for (auto& proof : ret) {
 		rus::Step* st = rus::Proof::step(proof->elems.back());
 		proof->elems.emplace_back(unique_ptr<Qed>(new Qed(prop_.get(), st)));
+		proof->theorem = theorem;
 	}
 	return ret;
 }

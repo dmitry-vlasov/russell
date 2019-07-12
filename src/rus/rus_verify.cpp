@@ -19,7 +19,7 @@ void Step::verify(uint mode) const {
 			msg += "step:\n";
 			msg += show() + "\n";
 			msg += expr.show() + "\n\n";
-			msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
+			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 			unify_forth(ass()->props[0]->expr, expr);
 			throw Error("proposition unification failed", msg);
 		}
@@ -32,7 +32,7 @@ void Step::verify(uint mode) const {
 				msg += refs[i]->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
-				msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
+				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 				msg += "substitution:\n" + sub.show() + "\n";
 				throw Error("hypothesis unification failed", msg);
 			}
@@ -43,7 +43,7 @@ void Step::verify(uint mode) const {
 				msg += refs[i]->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
-				msg += "theorem " + Lex::toStr(proof()->thm.id()) + "\n";
+				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 				msg += "prop substitution:\n" + sub.show() + "\n";
 				msg += "hyp substitution:\n" + hs.show() + "\n";
 				throw Error("substitution join failed", msg);
@@ -52,7 +52,7 @@ void Step::verify(uint mode) const {
 	}
 	if (mode & VERIFY_DISJ) {
 		try {
-			Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem()) : nullptr;
+			Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem) : nullptr;
 			ass()->disj.check(sub, th);
 		} catch (Error& err) {
 			ostringstream oss;
@@ -95,14 +95,13 @@ void verify_theory(Theory* theory, uint mode) {
 		case Theory::THEORY: verify_theory(Theory::theory(n), mode); break;
 		case Theory::THEOREM: {
 			Theorem* t = Theory::theorem(n);
-			if (!t->proofs.size()) {
+			if (!t->proof) {
 				throw Error("Theorem has no proof", show_id(t->id()));
-			}
-			for (const User<Proof>& p : t->proofs) {
-				if (mode & VERIFY_DISJ) {
+			} else {
+				if (mode & UPDATE_DISJ) {
 					t->disj.dvars.clear();
 				}
-				p.get()->verify(mode);
+				t->proof->verify(mode);
 			}
 			break;
 		}
@@ -134,9 +133,11 @@ void verify(uint src) {
 		vector<const Proof*> proofs;
 		for (const auto& a : Sys::mod().math.get<Assertion>()) {
 			if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
-				if (!t->proofs.size()) throw Error("Theorem is not proved", show_id(t->id()));
-				for (const User<Proof>& p : t->proofs)
-					proofs.push_back(p.get());
+				if (!t->proof) {
+					throw Error("Theorem is not proved", show_id(t->id()));
+				} else {
+					proofs.push_back(t->proof.get());
+				}
 			}
 		}
 #ifdef PARALLEL_VERIFY

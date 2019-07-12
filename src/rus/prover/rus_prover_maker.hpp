@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-TheoremWithProof make_theorem_with_proof(const AbstProof& aproof, uint id);
+unique_ptr<Theorem> make_theorem(const AbstProof& aproof, uint id);
 Return test_maker(string theorem);
 
 }}}

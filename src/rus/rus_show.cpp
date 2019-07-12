@@ -139,6 +139,9 @@ void Axiom::write(ostream& os, const Indent& i) const {
 
 void Theorem::write(ostream& os, const Indent& i) const {
 	os << i << "theorem "; Assertion::write(os, i);
+	if (proof) {
+		proof->write(os, i);
+	}
 }
 
 void Ref::write(ostream& os, const Indent& i) const {
@@ -156,15 +159,7 @@ void Qed::write(ostream& os, const Indent& i) const {
 }
 
 void Proof::write(ostream& os, const Indent& i) const {
-	os << i << "proof ";
-	if (!inner) {
-		const string& name = Lex::toStr(id());
-		if (name.size() > 1 && name[0] != '_') {
-			os << name << " ";
-		}
-		os << "of " << Lex::toStr(thm.id()) << " ";
-	}
-	os << "{\n";
+	os << i << "proof {\n";
 	if (allvars.v.size()) {
 		os << i + 1 << "var ";
 		allvars.write(os, i + 1);
@@ -216,7 +211,6 @@ static void write_node(ostream& os, const Indent& i, const Theory::Node& n) {
 	case Theory::AXIOM:    Theory::axiom(n)->write(os, i);  break;
 	case Theory::DEF:      Theory::def(n)->write(os, i); break;
 	case Theory::THEOREM:  Theory::theorem(n)->write(os, i); break;
-	case Theory::PROOF:    Theory::proof(n)->write(os, i); break;
 	case Theory::THEORY:   Theory::theory(n)->write(os, i); break;
 	case Theory::IMPORT:   Theory::import(n)->write(os, i); break;
 	case Theory::COMMENT:  Theory::comment(n)->write(os, i); break;

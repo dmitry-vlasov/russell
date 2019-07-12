@@ -6,12 +6,12 @@ namespace mdl { namespace rus { namespace prover {
 static vector<const Proof*> prove_failed;
 
 Return test_proof_maker(uint i, const Proof* p) {
-	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem()->id()) << " ... " << std::flush;
+	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	Timer timer; timer.start();
 	AbstProof abstProof = p->abst();
 	try {
-		TheoremWithProof ret = make_theorem_with_proof(abstProof, Lex::toInt("remaked_" + Lex::toStr(p->theorem()->id())));
-		if (!ret.theorem) {
+		unique_ptr<Theorem> ret = make_theorem(abstProof, Lex::toInt("remaked_" + Lex::toStr(p->theorem->id())));
+		if (!ret) {
 			prove_failed.push_back(p);
 			cout << "FAILED ";
 			cout << "original proof:" << endl;
@@ -19,19 +19,19 @@ Return test_proof_maker(uint i, const Proof* p) {
 			exit(-1);
 		}
 		try {
-			vector<Substitution> matches1 = match(*ret.theorem, *p->theorem());
+			vector<Substitution> matches1 = match(*ret, *p->theorem);
 			if (!matches1.size()) {
 				string err;
 				err += "wrong proof remaked\n";
-				err += "ret.theorem:\n" + ret.theorem->show() + "\n";
-				err += "p->theorem():\n" + p->theorem()->show() + "\n";
+				err += "ret.theorem:\n" + ret->show() + "\n";
+				err += "p->theorem:\n" + p->theorem->show() + "\n";
 				throw Error(err);
 			}
-			vector<Substitution> matches2 = match(*p->theorem(), *ret.theorem);
+			vector<Substitution> matches2 = match(*p->theorem, *ret);
 			if (!matches2.size()) {
 				cout << "strongly more general remaked theorem" << endl;
-				cout << "ret.theorem:\n" << ret.theorem->show() << endl;
-				cout << "p->theorem():\n" << p->theorem()->show() << endl;
+				cout << "ret.theorem:\n" << ret->show() << endl;
+				cout << "p->theorem:\n" << p->theorem->show() << endl;
 			}
 		} catch (Timeout& timeout) {
 			cout << timeout.what();
@@ -39,9 +39,9 @@ Return test_proof_maker(uint i, const Proof* p) {
 
 		timer.stop();
 		cout << "done in " << timer << endl;
-		return Return(bool(ret.theorem));
+		return Return(bool(ret));
 	} catch (Error& err) {
-		err.msg += "\nwhile making: " + show_id(p->theorem()->id()) + "\n";
+		err.msg += "\nwhile making: " + show_id(p->theorem->id()) + "\n";
 		throw err;
 	}
 }
@@ -65,8 +65,10 @@ Return test_all_maker() {
 	for (Source* src : ordered_sources) {
 		//cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		for (auto& n : src->theory.nodes) {
-			if (const Proof* p = Theory::proof(n)) {
-				proofs.push_back(p);
+			if (const Theorem* th = Theory::theorem(n)) {
+				if (th->proof) {
+					proofs.push_back(th->proof.get());
+				}
 			}
 		}
 	}
@@ -103,7 +105,7 @@ Return test_all_maker() {
 	cout << endl;
 	cout << "failed proofs number: " << prove_failed.size() << endl;
 	for (const Proof* p : prove_failed) {
-		cout << Lex::toStr(p->theorem()->id()) << ", ";
+		cout << Lex::toStr(p->theorem->id()) << ", ";
 	}
 	cout << endl;
 	print_statistics();
@@ -116,8 +118,8 @@ Return test_maker(string theorem) {
 	} else {
 		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
 		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
-			for (const auto& pr : th->proofs) {
-				Return r = test_proof_maker(-1, pr.get());
+			if (const Proof* pr = th->proof.get()) {
+				Return r = test_proof_maker(-1, pr);
 				if (!r.success()) {
 					//debug_oracle = true;
 					//test_proof_maker(pr.get());

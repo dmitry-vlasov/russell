@@ -181,7 +181,7 @@ bool ProofProp::equal(const ProofNode* n) const {
 
 
 struct ProofEnv {
-	ProofEnv(uint th_id) : proof(make_unique<rus::Proof>(th_id)) {
+	ProofEnv() : proof(make_unique<rus::Proof>()) {
 		proof->inner = true;
 	}
 
@@ -252,7 +252,7 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	} else if (const ProofRef* r = dynamic_cast<const ProofRef*>(n)) {
 		return gen_proof(r->child);
 	} else if (const ProofProp* p = dynamic_cast<const ProofProp*>(n)) {
-		ProofEnv env(p->node.space->theoremId());
+		ProofEnv env;
 		env.genSteps(p);
 		try {
 			env.proof->verify(VERIFY_SUB);

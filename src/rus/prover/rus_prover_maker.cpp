@@ -23,11 +23,11 @@ struct Maker : public Space {
 		// TODO:
 	}
 
-	TheoremWithProof make();
+	unique_ptr<Theorem> make();
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	uint theoremId() const override { return theorem_id_; }
+	//uint theoremId() const override { return theorem_id_; }
 
 private:
 	void expandUp(uint index, set<Node*>& leafs);
@@ -44,7 +44,7 @@ private:
 };
 
 
-TheoremWithProof make_theorem_with_proof(const AbstProof& aproof, uint id) {
+unique_ptr<Theorem> make_theorem(const AbstProof& aproof, uint id) {
 	Maker maker(aproof, id);
 	return maker.make();
 }
@@ -407,7 +407,7 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 	}
 }
 
-TheoremWithProof Maker::make() {
+unique_ptr<Theorem> Maker::make() {
 	set<Node*> leafs;
 	//cout << "BUILD TREE" << endl;
 	while (Prop* p = tactic_->next()) {
@@ -442,11 +442,13 @@ TheoremWithProof Maker::make() {
 		//cout << "DETACHED" << endl;
 		auto generated_proof = gen_proof(root);
 		if (generated_proof) {
-			TheoremWithProof ret(make_unique<Theorem>(theorem_id_), std::move(generated_proof));
+			unique_ptr<Theorem> ret = make_unique<Theorem>(theorem_id_);
+			generated_proof->theorem = ret.get();
+			ret->proof = std::move(generated_proof);
 			traverseProof(root, [&ret](ProofNode* n) {
 				if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
 					bool found = false;
-					for (auto& h : ret.theorem->hyps) {
+					for (auto& h : ret->hyps) {
 						if (h->expr == t->hyp->expr) {
 							t->hyp = h.get();
 							found = true;
@@ -454,22 +456,22 @@ TheoremWithProof Maker::make() {
 						}
 					}
 					if (!found) {
-						ret.theorem->hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
+						ret->hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
 					}
 				}
 			});
-			rus::Step* step = rus::Proof::step(ret.proof->elems.back());
-			ret.theorem->props.emplace_back(make_unique<rus::Prop>(0, step->expr));
-			ret.proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret.theorem->props.at(0).get(), step)));
-			complete_assertion_vars(ret.theorem.get());
-			complete_proof_vars(ret.proof.get());
-			ret.proof->verify(VERIFY_SRC);
+			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
+			ret->props.emplace_back(make_unique<rus::Prop>(0, step->expr));
+			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->props.at(0).get(), step)));
+			complete_assertion_vars(ret.get());
+			complete_proof_vars(ret->proof.get());
+			ret->proof->verify(VERIFY_SRC);
 			return ret;
 		} else {
-			return TheoremWithProof();
+			return nullptr;
 		}
 	} else {
-		return TheoremWithProof();
+		return nullptr;
 	}
 }
 

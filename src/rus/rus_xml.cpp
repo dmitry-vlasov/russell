@@ -53,9 +53,17 @@ string xml(const Assertion& a, uint bits) {
 string xml(const Proof& p, uint bits) {
 	if (!xml_bit(bits, XmlNode::PROOF)) return "";
 	string ret = "<proof ";
-	ret += p.xml_id();
 	ret += p.token.locate().xml();
 	ret += "/>\n";
+	return ret;
+}
+
+string xml(const Theorem& t, uint bits) {
+	string ret;
+	ret += xml(static_cast<const Assertion&>(t), bits);
+	if (t.proof) {
+		ret += xml(*t.proof, bits);
+	}
 	return ret;
 }
 
@@ -78,7 +86,6 @@ string xml(const Theory::Node& n, uint bits) {
 	case Theory::AXIOM:    return xml(*Theory::axiom(n), bits);
 	case Theory::DEF:      return xml(*Theory::def(n), bits);
 	case Theory::THEOREM:  return xml(*Theory::theorem(n), bits);
-	case Theory::PROOF:    return xml(*Theory::proof(n), bits);
 	case Theory::THEORY:   return xml(*Theory::theory(n), bits);
 	case Theory::IMPORT:   return xml(*Theory::import(n), bits);
 	case Theory::COMMENT:  return "";

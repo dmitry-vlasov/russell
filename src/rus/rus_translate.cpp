@@ -275,13 +275,10 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& 
 }
 
 vector<mm::Assertion*> translate_proof(const Proof* proof, Maps& maps) {
-	vector<mm::Assertion*> asss = std::move(translate_assertion(proof->thm.get(), maps));
-	if (proof->id() != static_cast<uint>(-1)) {
-		// TODO ? WTF??
-	}
+	vector<mm::Assertion*> asss = std::move(translate_assertion(proof->theorem, maps));
 	for (uint i = 0; i < asss.size(); ++ i) {
 		maps.local.thm = asss[i];
-		translate_proof(proof, proof->thm.get(), maps.local.thm->proof.refs, maps, i);
+		translate_proof(proof, proof->theorem, maps.local.thm->proof.refs, maps, i);
 	}
 	return asss;
 }
@@ -320,6 +317,12 @@ inline void add_proof(vector<mm::Source::Node>& nodes, const Proof* p, Maps& map
 	}
 }
 
+inline void add_theorem(vector<mm::Source::Node>& nodes, const Theorem* t, Maps& maps) {
+	if (t->proof) {
+		add_proof(nodes, t->proof.get(), maps);
+	}
+}
+
 inline void add_import(vector<mm::Source::Node>& nodes, const Import* i) {
 	nodes.emplace_back(unique_ptr<mm::Import>(new mm::Import(i->source.id())));
 }
@@ -346,8 +349,7 @@ vector<mm::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
 
 		case Theory::AXIOM:    add_assertion(nodes, Theory::axiom(n), maps);  break;
 		case Theory::DEF:      add_assertion(nodes, Theory::def(n), maps); break;
-		case Theory::THEOREM:  break;  // theorem is translated implicitly in proof
-		case Theory::PROOF:    add_proof(nodes, Theory::proof(n), maps);  break;
+		case Theory::THEOREM:  add_theorem(nodes, Theory::theorem(n), maps);  break;
 		case Theory::THEORY:   add_theory(nodes, Theory::theory(n), maps); break;
 		case Theory::IMPORT:   add_import(nodes, Theory::import(n));       break;
 		case Theory::COMMENT:  add_comment(nodes, Theory::comment(n));      break;

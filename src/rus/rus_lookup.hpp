@@ -145,7 +145,6 @@ static T* find_obj(Theory::Node& n, const char* pos) {
 	case Theory::AXIOM:    return find_obj<T>(Theory::axiom(n), pos);
 	case Theory::DEF:      return find_obj<T>(Theory::def(n), pos);
 	case Theory::THEOREM:  return find_obj<T>(Theory::theorem(n), pos);
-	case Theory::PROOF:    return find_obj<T>(Theory::proof(n), pos);
 	case Theory::IMPORT:   return find_obj<T>(Theory::import(n), pos);
 	case Theory::THEORY:   return find_obj<T>(Theory::theory(n), pos);
 	case Theory::COMMENT:  return find_obj<T>(Theory::comment(n), pos);

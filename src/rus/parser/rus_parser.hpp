@@ -40,8 +40,8 @@ struct AddVars {
 			var_stack.mapping[v.lit()] = v.typeId();
 		}
 	}
-	void operator()(VarStack& var_stack, User<Assertion>& thm) const {
-		for (auto& v : thm.get()->vars.v) {
+	void operator()(VarStack& var_stack, const Assertion* thm) const {
+		for (auto& v : thm->vars.v) {
 			var_stack.vstack.top().push_back(v.lit());
 			var_stack.mapping[v.lit()] = v.typeId();
 		}
@@ -185,8 +185,8 @@ struct CreateStepRef {
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return new Ref(p->thm.get()->hyps[ind].get());
-		case Ref::PROP: return new Ref(p->thm.get()->props[ind].get());
+		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
+		case Ref::PROP: return new Ref(p->theorem->props[ind].get());
 		case Ref::STEP: return new Ref(Proof::step(p->elems[ind]));
 		default : assert(false && "impossible"); break;
 		}
@@ -197,7 +197,7 @@ struct CreateStepRef {
 struct GetProp {
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
-		return p->thm.get()->props[ind].get();
+		return p->theorem->props[ind].get();
 	}
 };
 
@@ -281,6 +281,9 @@ struct AddToAssertion {
 	void operator()(Assertion* a, Prop* p) const {
 		a->props.emplace_back(p);
 	}
+	void operator()(Theorem* t, Proof* p) const {
+		t->proof.reset(p);
+	}
 };
 
 struct AddToTheory {
@@ -302,10 +305,6 @@ struct AddToTheory {
 	}
 	void operator()(Theory* t, Theorem* th) const {
 		t->nodes.emplace_back(unique_ptr<Theorem>(th));
-	}
-	void operator()(Theory* t, Proof* p) const {
-		p->theorem()->proofs.emplace_back(p->id());
-		t->nodes.emplace_back(unique_ptr<Proof>(p));
 	}
 	void operator()(Theory* t, Theory* th) const {
 		t->nodes.emplace_back(unique_ptr<Theory>(th));
@@ -342,7 +341,7 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
 	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_elem;
 	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_body;
-	qi::rule<LocationIter, Proof*(), qi::locals<Id>, unicode::space_type> proof;
+	qi::rule<LocationIter, Proof*(Theorem*), unicode::space_type> proof;
 	qi::rule<LocationIter, Theorem*(), unicode::space_type> theorem;
 	qi::rule<LocationIter, Def*(), qi::locals<Id>, unicode::space_type> def;
 	qi::rule<LocationIter, Axiom*(), unicode::space_type> axiom;

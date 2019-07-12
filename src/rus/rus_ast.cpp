@@ -139,8 +139,8 @@ Disj::Vector Disj::toVector() const {
 	return v;
 }
 
-Proof::Proof(Id th, Id i, const Token& t) :
-	Owner(make_proof_id(i.id(), th), t), thm(th), par(nullptr), inner(false) {
+Proof::Proof(Theorem* th, const Token& t) :
+	WithToken(t), theorem(th), par(nullptr), inner(false) {
 }
 
 vector<Qed*> Proof::qeds() const {
@@ -196,7 +196,7 @@ void complete_proof_vars(Proof* proof) {
 			complete_expr_vars(
 				step->expr,
 				proof->allvars,
-				[proof](uint l) { return proof->theorem()->vars.isDeclared(l); }
+				[proof](uint l) { return proof->theorem->vars.isDeclared(l); }
 			);
 		}
 	}

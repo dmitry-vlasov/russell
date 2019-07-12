@@ -10,7 +10,7 @@ struct Prover : public Space {
 	using IndexMap = unify::IndexMap<T>;
 
 	Prover(rus::Qed*, Tactic*);
-	Prover(rus::Assertion*, rus::Prop*, Tactic*);
+	Prover(rus::Theorem*, rus::Prop*, Tactic*);
 
 	void registerNode(Node* n) {
 		Space::registerNode(n);
@@ -27,13 +27,14 @@ struct Prover : public Space {
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	uint theoremId() const override { return prop_.id(); }
+	//uint theoremId() const override { return prop_.id(); }
 	Proved proved();
 
 private:
 	void buildUpProp(Prop*);
 	void buildUpHyp(Hyp*);
 
+	Theorem*          theorem;
 	PropRef           prop_;
 	IndexMap<HypRef>  hyps_;
 	IndexMap<PropRef> assertions_;
