@@ -254,7 +254,7 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 }
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps) {
-	maps.local.thm->innerVars = std::move(translate_inners(proof->allvars, maps, thm, maps.local.thm->innerVars.size()));
+	maps.local.thm->innerVars = std::move(translate_inners(proof->vars, maps, thm, maps.local.thm->innerVars.size()));
 	for (const auto& el : proof->elems) {
 		if (Proof::kind(el) == Proof::QED) {
 			translate_step(Proof::qed(el)->step, thm, mm_proof, maps);
@@ -329,7 +329,6 @@ vector<mm::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
 		case Theory::CONSTANT: add_const(nodes, Theory::constant(n), maps); break;
 		case Theory::TYPE:     add_type(nodes, Theory::type(n), maps);   break;
 		case Theory::RULE:     add_rule(nodes, Theory::rule(n), maps);  break;
-
 		case Theory::AXIOM:    add_assertion(nodes, Theory::axiom(n), maps);  break;
 		case Theory::DEF:      add_assertion(nodes, Theory::def(n), maps); break;
 		case Theory::THEOREM:  add_theorem(nodes, Theory::theorem(n), maps);  break;

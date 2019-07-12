@@ -78,7 +78,7 @@ void step_deps(const Step* step, set<uint>& deps) {
 }
 
 void proof_deps(const Proof* proof, set<uint>& deps) {
-	vars_deps(proof->allvars, deps);
+	vars_deps(proof->vars, deps);
 	for (const auto& e : proof->elems) {
 		if (Proof::kind(e) == Proof::STEP) {
 			step_deps(Proof::step(e), deps);

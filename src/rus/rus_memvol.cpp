@@ -109,7 +109,6 @@ size_t memvol(const Proof& proof) {
 	s += proof.elems.capacity() * sizeof(Proof::Elem);
 	for (const auto& e : proof.elems) {
 		switch (Proof::kind(e)) {
-		case Proof::VARS: s += memsize(*Proof::vars(e)); break;
 		case Proof::QED:  s += memsize(*Proof::qed(e));  break;
 		case Proof::STEP: s += memsize(*Proof::step(e)); break;
 		default: break;

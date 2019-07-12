@@ -158,14 +158,13 @@ void Qed::write(ostream& os, const Indent& i) const {
 
 void Proof::write(ostream& os, const Indent& i) const {
 	os << i << "proof {\n";
-	if (allvars.v.size()) {
+	if (vars.v.size()) {
 		os << i + 1 << "var ";
-		allvars.write(os, i + 1);
+		vars.write(os, i + 1);
 		os << END_MARKER << "\n";
 	}
 	for (const auto& e : elems) {
 		switch (kind(e)) {
-		case VARS: vars(e)->write(os, i + 1); break;
 		case STEP: step(e)->write(os, i + 1); break;
 		case QED: qed(e)->write(os, i + 1); break;
 		}

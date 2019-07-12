@@ -193,7 +193,7 @@ void complete_proof_vars(Proof* proof) {
 		if (rus::Step* step = rus::Proof::step(e)) {
 			complete_expr_vars(
 				step->expr,
-				proof->allvars,
+				proof->vars,
 				[proof](uint l) { return proof->theorem->vars.isDeclared(l); }
 			);
 		}

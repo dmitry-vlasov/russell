@@ -465,7 +465,7 @@ private:
 			// TODO: Do a right var/elem tracking!
 			if (Proof::kind(e) == Proof::VARS) {
 				for (const auto& v : Proof::vars(e)->v) {
-					p->allvars.v.push_back(v);
+					p->vars.v.push_back(v);
 				}
 			}
 		};
