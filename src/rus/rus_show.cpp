@@ -98,7 +98,7 @@ void Hyp::write(ostream& os, const Indent& i) const {
 }
 
 void Prop::write(ostream& os, const Indent& i) const {
-	os << i << "prop " << (ind + 1) << " : ";
+	os << i << "prop : " ;
 	os << Lex::toStr(expr.type.id()) << " = |- " << expr << END_MARKER << "\n";
 }
 
@@ -145,14 +145,14 @@ void Theorem::write(ostream& os, const Indent& i) const {
 void Ref::write(ostream& os, const Indent& i) const {
 	switch (kind()) {
 		case Ref::HYP:  os << "hyp " << (hyp()->ind + 1);     break;
-		case Ref::PROP: os << "prop " << (prop()->ind + 1);   break;
+		case Ref::PROP: os << "prop "; break;
 		case Ref::STEP: os << "step " << (step()->ind() + 1); break;
 		default : assert(false && "impossible");
 	}
 }
 
 void Qed::write(ostream& os, const Indent& i) const {
-	os << i << "qed prop " << (prop->ind + 1) << " = ";
+	os << i << "qed prop = ";
 	os << "step " << (step->ind() + 1) << " " << END_MARKER << "\n";
 }
 

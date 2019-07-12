@@ -116,12 +116,11 @@ struct Hyp : public Writable, public WithToken {
 };
 
 struct Prop : public Writable, public WithToken {
-	Prop(uint i = 0, const Expr& e = Expr(), const Token& t = Token()) :
-		WithToken(t), ind(i), expr(e) { }
-	Prop(uint i, Expr&& e, const Token& t = Token()) :
-		WithToken(t), ind(i), expr(std::move(e)) { }
+	Prop(const Expr& e = Expr(), const Token& t = Token()) :
+		WithToken(t), expr(e) { }
+	Prop(Expr&& e, const Token& t = Token()) :
+		WithToken(t), expr(std::move(e)) { }
 	Prop(const Prop&) = delete;
-	uint ind;
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };

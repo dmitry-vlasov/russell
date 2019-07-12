@@ -228,7 +228,7 @@ void translate_assertion(const Assertion* ass, T* a, const Maps& maps) {
 		rus::expr::enqueue(hyp->expr);
 	}
 	rus::Expr&& ex = translate_expr(ass->expr, ass, maps);
-	a->prop = make_unique<rus::Prop>(0, ex);
+	a->prop = make_unique<rus::Prop>(ex);
 	rus::expr::enqueue(a->prop->expr);
 	a->token.set(maps.source);
 }

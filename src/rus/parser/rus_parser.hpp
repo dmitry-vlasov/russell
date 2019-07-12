@@ -219,24 +219,23 @@ static Literal dfs(Lex::toInt("definiens"));
 struct AssembleDef {
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
-		Prop* prop = new Prop(0);
+		d->prop = make_unique<Prop>();
 		for (auto& s : d->def.symbols) {
 			if (*s == dfm) {
 				for (auto& s_dfm : d->dfm.symbols) {
-					prop->expr.symbols.emplace_back(s_dfm->clone());
+					d->prop->expr.symbols.emplace_back(s_dfm->clone());
 				}
 			} else if (*s == dfs) {
 				for (auto& s_dfs : d->dfs.symbols) {
-					prop->expr.symbols.emplace_back(s_dfs->clone());
+					d->prop->expr.symbols.emplace_back(s_dfs->clone());
 				}
 			} else {
-				prop->expr.symbols.emplace_back(s->clone());
+				d->prop->expr.symbols.emplace_back(s->clone());
 			}
 		}
-		prop->expr.type = d->def.type;
-		prop->expr.token = d->def.token;
-		mark_vars(prop->expr, varsStack);
-		d->prop.reset(prop);
+		d->prop->expr.type = d->def.type;
+		d->prop->expr.token = d->def.token;
+		mark_vars(d->prop->expr, varsStack);
 	}
 };
 

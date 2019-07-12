@@ -82,8 +82,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> eps        [addVars(phoenix::ref(var_stack), _r1), _val = &_r1];
 
 	prop =
-		lit("prop")
-		> - uint_    [_val = new_<Prop>(qi::labels::_1 - 1)]
+		lit("prop")  [_val = new_<Prop>()]
 		> ":"
 		> id         [_a = qi::labels::_1]
 		> "=" > "|-" > expr(_a, phoenix::at_c<1>(*_val))

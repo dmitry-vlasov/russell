@@ -458,7 +458,7 @@ unique_ptr<Theorem> Maker::make() {
 				}
 			});
 			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
-			ret->prop = make_unique<rus::Prop>(0, step->expr);
+			ret->prop = make_unique<rus::Prop>(step->expr);
 			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->prop.get(), step)));
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
