@@ -66,10 +66,8 @@ static T* find_obj(Assertion* ass, const char* pos) {
 				return t;
 			}
 		}
-		for (const auto& prop : ass->props) {
-			if (T* t = find_obj<T>(prop.get(), pos)) {
-				return t;
-			}
+		if (T* t = find_obj<T>(ass->prop.get(), pos)) {
+			return t;
 		}
 		return dynamic_cast<T*>(ass);
 	}

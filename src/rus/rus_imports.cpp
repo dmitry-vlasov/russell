@@ -64,9 +64,7 @@ inline void assertion_deps(const Assertion* ass, set<uint>& deps) {
 	for (const auto& h : ass->hyps) {
 		expr_deps(h.get()->expr, deps);
 	}
-	for (const auto& p : ass->props) {
-		expr_deps(p.get()->expr, deps);
-	}
+	expr_deps(ass->prop->expr, deps);
 }
 
 void proof_deps(const Proof* proof, set<uint>& deps);

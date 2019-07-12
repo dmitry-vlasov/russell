@@ -111,9 +111,7 @@ void Assertion::write(ostream& os, const Indent& i) const {
 		}
 		os << i + 1 << "-----------------------\n";
 	}
-	for (auto& p : props) {
-		p.get()->write(os, i + 1);
-	}
+	prop->write(os, i + 1);
 	os << i << "}\n";
 }
 
@@ -128,8 +126,8 @@ void Def::write(ostream& os, const Indent& i) const {
 	os << i + 1 << "definiens : " << Lex::toStr(dfs.type.id()) << " ";
 	os << "= # " << dfs << END_MARKER << "\n";
 	os << i + 1 << "-----------------------\n";
-	os << i + 1 << "prop : " << Lex::toStr(prop.type.id()) << " ";
-	os << "= |- " << prop << END_MARKER << "\n";
+	os << i + 1 << "prop : " << Lex::toStr(def.type.id()) << " ";
+	os << "= |- " << def << END_MARKER << "\n";
 	os << i << "}\n";
 }
 

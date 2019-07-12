@@ -82,11 +82,10 @@ size_t memvol(const Assertion& ass) {
 	s += memvol(ass.vars);
 	s += memvol(ass.disj);
 	s += ass.hyps.capacity() * sizeof(Hyp*);
-	s += ass.props.capacity() * sizeof(Prop*);
-	for (auto& h : ass.hyps)
+	for (auto& h : ass.hyps) {
 		s += memsize(*h.get());
-	for (auto& p : ass.props)
-		s += memsize(*p.get());
+	}
+	s += memsize(*ass.prop);
 	return s;
 }
 size_t memvol(const Ref& ref) {
@@ -99,8 +98,9 @@ size_t memvol(const Step& step) {
 	size_t s = 0;
 	s += memvol(step.expr);
 	s += step.refs.capacity() * sizeof(Ref);
-	if (step.kind() == Step::CLAIM)
+	if (step.kind() == Step::CLAIM) {
 		s += memsize(*step.proof());
+	}
 	return s;
 }
 size_t memvol(const Proof& proof) {

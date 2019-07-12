@@ -130,6 +130,8 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	enum Kind { AXM, THM, DEF };
 	Assertion(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Assertion(const Assertion&) = delete;
+	virtual ~Assertion() { }
+
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
 	string kindStr() const {
@@ -144,7 +146,7 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	Vars vars;
 	Disj disj;
 	vector<unique_ptr<Hyp>>  hyps;
-	vector<unique_ptr<Prop>> props;
+	unique_ptr<Prop>         prop;
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
@@ -164,7 +166,7 @@ struct Def : public Assertion {
 	Kind kind() const override { return DEF; }
 	Expr dfm;
 	Expr dfs;
-	Expr prop;
+	Expr def;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 

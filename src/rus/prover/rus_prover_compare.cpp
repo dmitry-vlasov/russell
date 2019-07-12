@@ -9,9 +9,7 @@ struct Ass {
 		for (const auto& h : a.hyps) {
 			hyps.emplace_back(Tree2Term(*h->expr.tree(), mode, 0));
 		}
-		for (const auto& p : a.props) {
-			props.emplace_back(Tree2Term(*p->expr.tree(), mode, 0));
-		}
+		props.emplace_back(Tree2Term(*a.prop->expr.tree(), mode, 0));
 	}
 	Ass apply(const Subst& s) const {
 		Ass a(*this);

@@ -185,9 +185,7 @@ void complete_assertion_vars(Assertion* a) {
 	for (auto& h : a->hyps) {
 		complete_expr_vars(h->expr, a->vars);
 	}
-	for (auto& p : a->props) {
-		complete_expr_vars(p->expr, a->vars);
-	}
+	complete_expr_vars(a->prop->expr, a->vars);
 }
 
 void complete_proof_vars(Proof* proof) {

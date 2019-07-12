@@ -70,7 +70,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
 	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
-	(mdl::vector<mdl::unique_ptr<mdl::rus::Prop>>, props)
+	(mdl::unique_ptr<mdl::rus::Prop>, prop)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -80,7 +80,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::vector<mdl::unique_ptr<mdl::rus::Hyp>>,  hyps)
 	(mdl::rus::Expr, dfm)
 	(mdl::rus::Expr, dfs)
-	(mdl::rus::Expr, prop)
+	(mdl::rus::Expr, def)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

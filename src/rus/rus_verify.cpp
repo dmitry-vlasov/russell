@@ -10,17 +10,17 @@ void Step::verify(uint mode) const {
 	if (mode & VERIFY_SUB) {
 		assert(kind() == Step::ASS);
 		if (!ass()) throw Error("unknown assertion", Lex::toStr(ass_id()));
-		sub = unify_forth(ass()->props[0]->expr, expr);
+		sub = unify_forth(ass()->prop->expr, expr);
 		if (!sub) {
 			string msg = "proposition:\n";
-			msg += ass()->props[0]->show() + "\n";
+			msg += ass()->prop->show() + "\n";
 			msg += "ref expr:\n";
-			msg += ass()->props[0]->expr.show() + "\n";
+			msg += ass()->prop->expr.show() + "\n";
 			msg += "step:\n";
 			msg += show() + "\n";
 			msg += expr.show() + "\n\n";
 			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
-			unify_forth(ass()->props[0]->expr, expr);
+			unify_forth(ass()->prop->expr, expr);
 			throw Error("proposition unification failed", msg);
 		}
 		for (uint i = 0; i < ass()->arity(); ++ i) {

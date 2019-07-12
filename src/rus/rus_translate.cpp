@@ -161,38 +161,27 @@ vector<unique_ptr<mm::Var>> translate_floatings(const Vars& vars, Maps& maps, ui
 	return flo_vect;
 }
 
-vector<mm::Assertion*> translate_assertion(const Assertion* ass, Maps& maps) {
-	vector<mm::Assertion*> image;
-	image.reserve(ass->props.size());
-	for (auto& p : ass->props) {
-		const Prop* prop = p.get();
-		string ass_str = Lex::toStr(ass->id());
-		if (prop->ind) {
-			ass_str += "_" + to_string(prop->ind);
-		}
-		uint ass_lab = Lex::toInt(ass_str);
-		mm::Assertion* ra = new mm::Assertion(ass_lab);
-		if (ass->vars.v.size()) {
-			ra->vars.vars = std::move(translate_vars(ass->vars));
-		}
-		if (ass->disj.dvars.size()) {
-			ra->disj.vect = std::move(translate_disj(ass->disj));
-		}
-		ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));
-		ra->hyps = std::move(translate_essentials(ass, maps));
-		ra->expr = std::move(translate_expr(prop->expr, maps));
-		image.push_back(ra);
+mm::Assertion* translate_assertion(const Assertion* ass, Maps& maps) {
+	mm::Assertion* ra = new mm::Assertion(ass->id());
+	if (ass->vars.v.size()) {
+		ra->vars.vars = std::move(translate_vars(ass->vars));
 	}
-	return image;
+	if (ass->disj.dvars.size()) {
+		ra->disj.vect = std::move(translate_disj(ass->disj));
+	}
+	ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));
+	ra->hyps = std::move(translate_essentials(ass, maps));
+	ra->expr = std::move(translate_expr(ass->prop->expr, maps));
+	return ra;
 }
 
-inline vector<mm::Assertion*> translate_axiom(const Axiom* ax, Maps& maps) {
+/*inline mm::Assertion* translate_axiom(const Axiom* ax, Maps& maps) {
 	return translate_assertion(ax, maps);
 }
 
-inline vector<mm::Assertion*> translate_def(const Def* def, Maps& maps) {
+inline mm::Assertion* translate_def(const Def* def, Maps& maps) {
 	return translate_assertion(def, maps);
-}
+}*/
 
 void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps);
 
@@ -228,7 +217,7 @@ void translate_term(const Tree& tree, const Assertion* thm, vector<mm::Ref>& pro
 	}
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps, uint ind = 0);
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps);
 
 void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof, Maps& maps) {
 	if (st->kind() == Step::CLAIM) {
@@ -264,23 +253,21 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 	return inn_vect;
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps, uint ind) {
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps) {
 	maps.local.thm->innerVars = std::move(translate_inners(proof->allvars, maps, thm, maps.local.thm->innerVars.size()));
 	for (const auto& el : proof->elems) {
-		if (Proof::kind(el) == Proof::QED && Proof::qed(el)->prop->ind == ind) {
+		if (Proof::kind(el) == Proof::QED) {
 			translate_step(Proof::qed(el)->step, thm, mm_proof, maps);
 			break;
 		}
 	}
 }
 
-vector<mm::Assertion*> translate_proof(const Proof* proof, Maps& maps) {
-	vector<mm::Assertion*> asss = std::move(translate_assertion(proof->theorem, maps));
-	for (uint i = 0; i < asss.size(); ++ i) {
-		maps.local.thm = asss[i];
-		translate_proof(proof, proof->theorem, maps.local.thm->proof.refs, maps, i);
-	}
-	return asss;
+mm::Assertion* translate_proof(const Proof* proof, Maps& maps) {
+	mm::Assertion* ass = translate_assertion(proof->theorem, maps);
+	maps.local.thm = ass;
+	translate_proof(proof, proof->theorem, maps.local.thm->proof.refs, maps);
+	return ass;
 }
 
 inline void add_turnstile(vector<mm::Source::Node>& nodes) {
@@ -306,15 +293,11 @@ inline void add_rule(vector<mm::Source::Node>& nodes, const Rule* r, Maps& maps)
 }
 
 inline void add_assertion(vector<mm::Source::Node>& nodes, const Assertion* a, Maps& maps) {
-	for (auto ass : translate_assertion(a, maps)) {
-		nodes.emplace_back(unique_ptr<mm::Assertion>(ass));
-	}
+	nodes.emplace_back(unique_ptr<mm::Assertion>(translate_assertion(a, maps)));
 }
 
 inline void add_proof(vector<mm::Source::Node>& nodes, const Proof* p, Maps& maps) {
-	for (auto ass : translate_proof(p, maps)) {
-		nodes.emplace_back(unique_ptr<mm::Assertion>(ass));
-	}
+	nodes.emplace_back(unique_ptr<mm::Assertion>(translate_proof(p, maps)));
 }
 
 inline void add_theorem(vector<mm::Source::Node>& nodes, const Theorem* t, Maps& maps) {

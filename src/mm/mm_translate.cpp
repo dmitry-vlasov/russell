@@ -228,9 +228,8 @@ void translate_assertion(const Assertion* ass, T* a, const Maps& maps) {
 		rus::expr::enqueue(hyp->expr);
 	}
 	rus::Expr&& ex = translate_expr(ass->expr, ass, maps);
-	rus::Prop* prop = new rus::Prop{0, ex};
-	a->props.emplace_back(prop);
-	rus::expr::enqueue(prop->expr);
+	a->prop = make_unique<rus::Prop>(0, ex);
+	rus::expr::enqueue(a->prop->expr);
 	a->token.set(maps.source);
 }
 
@@ -289,20 +288,20 @@ void translate_def(const Assertion* ass, Maps& state) {
 		def->dfm.type.set(clas());
 		def->dfs.type.set(clas());
 	}
-	def->prop.type.set(wff());
+	def->def.type.set(wff());
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it) {
-				def->prop.symbols.push_back(make_unique<rus::Literal>(dfm()));
+				def->def.symbols.push_back(make_unique<rus::Literal>(dfm()));
 			}
 			def->dfm.symbols.emplace_back(translate_symb(*it, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it) {
-				def->prop.symbols.push_back(make_unique<rus::Literal>(dfs()));
+				def->def.symbols.push_back(make_unique<rus::Literal>(dfs()));
 			}
 			def->dfs.symbols.emplace_back(translate_symb(*it, ass));
 		} else {
-			def->prop.symbols.emplace_back(translate_symb(*it, ass));
+			def->def.symbols.emplace_back(translate_symb(*it, ass));
 		}
 	}
 	def->dfm.token = translate_token(ass->token, state);
@@ -369,8 +368,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	rus::Proof* p = new rus::Proof(thm);
 	p->allvars = std::move(translate_vars(ass->innerVars));
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
-	rus::Prop* pr = thm->props.front().get();
-	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(pr, st)));
+	p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(thm->prop.get(), st)));
 	thm->proof.reset(p);
 	p->token.set(state.source);
 	delete tree;

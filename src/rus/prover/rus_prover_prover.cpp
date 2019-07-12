@@ -6,35 +6,19 @@ Prover::Prover(rus::Qed* q, Tactic* t) :
 	Prover(q->step->proof()->theorem, q->prop, t) {
 }
 
-inline uint find_index(const rus::Theorem* t, const rus::Prop* p) {
-	auto it = std::find_if(
-		t->props.begin(),
-		t->props.end(),
-		[p](const auto& x) { return x.get() == p; }
-	);
-	if (it == t->props.end()) {
-		throw Error("prop is not found");
-	} else {
-		return it - t->props.begin();
-	}
-}
-
 Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
 	theorem(thm),
-	prop_(thm, find_index(thm, p)) {
+	prop_(thm, 0) {
 	Timer timer;
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
 			if (!ass->token.preceeds(theorem->token)) {
 				continue;
 			}
-			for (uint i = 0; i < ass->props.size(); ++i) {
-				auto& prop = ass->props[i];
-				assertions_.add(
-					Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, i)
-				);
-			}
+			assertions_.add(
+				Tree2Term(*ass->prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+				PropRef(ass, 0)
+			);
 		} else {
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
 		}

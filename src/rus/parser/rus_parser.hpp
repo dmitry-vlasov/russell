@@ -82,9 +82,7 @@ struct Enqueue {
 		for (auto& h : ass->hyps) {
 			expr::enqueue(h.get()->expr);
 		}
-		for (auto& p : ass->props) {
-			expr::enqueue(p.get()->expr);
-		}
+		expr::enqueue(ass->prop->expr);
 	}
 	void operator()(Def* def) const {
 		expr::enqueue(def->dfm);
@@ -186,7 +184,7 @@ struct CreateStepRef {
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
 		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
-		case Ref::PROP: return new Ref(p->theorem->props[ind].get());
+		case Ref::PROP: return new Ref(p->theorem->prop.get());
 		case Ref::STEP: return new Ref(Proof::step(p->elems[ind]));
 		default : assert(false && "impossible"); break;
 		}
@@ -197,7 +195,7 @@ struct CreateStepRef {
 struct GetProp {
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
-		return p->theorem->props[ind].get();
+		return p->theorem->prop.get();
 	}
 };
 
@@ -222,7 +220,7 @@ struct AssembleDef {
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
 		Prop* prop = new Prop(0);
-		for (auto& s : d->prop.symbols) {
+		for (auto& s : d->def.symbols) {
 			if (*s == dfm) {
 				for (auto& s_dfm : d->dfm.symbols) {
 					prop->expr.symbols.emplace_back(s_dfm->clone());
@@ -235,10 +233,10 @@ struct AssembleDef {
 				prop->expr.symbols.emplace_back(s->clone());
 			}
 		}
-		prop->expr.type = d->prop.type;
-		prop->expr.token = d->prop.token;
+		prop->expr.type = d->def.type;
+		prop->expr.token = d->def.token;
 		mark_vars(prop->expr, varsStack);
-		d->props.emplace_back(prop);
+		d->prop.reset(prop);
 	}
 };
 
@@ -279,7 +277,7 @@ struct AddToAssertion {
 		a->hyps.emplace_back(h);
 	}
 	void operator()(Assertion* a, Prop* p) const {
-		a->props.emplace_back(p);
+		a->prop.reset(p);
 	}
 	void operator()(Theorem* t, Proof* p) const {
 		t->proof.reset(p);

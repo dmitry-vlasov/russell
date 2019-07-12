@@ -213,13 +213,10 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 		if (!visited.count(n.label())) {
 			visited.insert(n.label());
 			if (Assertion* ass = Sys::mod().math.get<Assertion>().access(n.label())) {
-				for (uint i = 0; i < ass->props.size(); ++i) {
-					auto& prop = ass->props[i];
-					assertions_.add(
-						Tree2Term(*prop.get()->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-						PropRef(ass, i)
-					);
-				}
+				assertions_.add(
+					Tree2Term(*ass->prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+					PropRef(ass, 0)
+				);
 				//cout << "ADDED: " << Lex::toStr(n.label()) << endl;
 			} else {
 				throw Error("undefined reference to assertion", Lex::toStr(n.label()));
@@ -230,7 +227,7 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 		throw Error("ivalid proof tree - non a single root");
 	}
 	const Assertion* root_ass = Sys::mod().math.get<Assertion>().access(abst_proof_.getRoot(0)->label());
-	root_ = make_unique<Hyp>(Tree2Term(*root_ass->props[0].get()->expr.tree(), ReplMode::KEEP_REPL), this);
+	root_ = make_unique<Hyp>(Tree2Term(*root_ass->prop->expr.tree(), ReplMode::KEEP_REPL), this);
 	buildUp(root_.get());
 	add_timer_stats("maker_init", timer);
 }
@@ -461,8 +458,8 @@ unique_ptr<Theorem> Maker::make() {
 				}
 			});
 			rus::Step* step = rus::Proof::step(ret->proof->elems.back());
-			ret->props.emplace_back(make_unique<rus::Prop>(0, step->expr));
-			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->props.at(0).get(), step)));
+			ret->prop = make_unique<rus::Prop>(0, step->expr);
+			ret->proof->elems.emplace_back(unique_ptr<Qed>(new Qed(ret->prop.get(), step)));
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
 			ret->proof->verify(VERIFY_SRC);
