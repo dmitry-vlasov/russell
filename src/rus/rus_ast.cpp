@@ -178,7 +178,7 @@ void complete_assertion_vars(Assertion* a) {
 }
 
 void complete_proof_vars(Proof* proof) {
-	for (auto& e : proof->elems) {
+	for (auto& e : proof->steps) {
 		if (rus::Step* step = rus::Proof::step(e)) {
 			complete_expr_vars(
 				step->expr,

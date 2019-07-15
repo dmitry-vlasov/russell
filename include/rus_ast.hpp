@@ -285,9 +285,7 @@ struct Proof : public Writable, public WithToken {
 	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
 
 	static Kind  kind(const Elem& e) { return static_cast<Kind>(e.index()); }
-	//static Vars* vars(const Elem& e) { return kind(e) == VARS ? std::get<unique_ptr<Vars>>(e).get() : nullptr; }
 	static Step* step(const Elem& e) { return kind(e) == STEP ? std::get<unique_ptr<Step>>(e).get() : nullptr; }
-	//static Qed*  qed(const Elem& e)  { return kind(e) == QED  ? std::get<unique_ptr<Qed>>(e).get()  : nullptr; }
 
 	Proof(Theorem* th = nullptr, const Token& t = Token());
 	Proof(const Proof&) = delete;
@@ -298,7 +296,7 @@ struct Proof : public Writable, public WithToken {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Vars            vars;
-	vector<Elem>    elems;
+	vector<Elem>    steps;
 	Theorem*        theorem;
 	Proof*          par;
 	unique_ptr<Qed> qed;

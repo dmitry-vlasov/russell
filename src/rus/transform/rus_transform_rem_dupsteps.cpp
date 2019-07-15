@@ -8,7 +8,7 @@ void reduce_duplcate_steps(Proof* proof) {
 	prover::unify::Index expressions;
 	vector<Step*> new_steps;
 	map<const Step*, Step*> steps_map;
-	for (auto& e : proof->elems) {
+	for (auto& e : proof->steps) {
 		switch (Proof::kind(e)) {
 		case Proof::STEP: {
 			const Step* step = Proof::step(e);
@@ -46,9 +46,10 @@ void reduce_duplcate_steps(Proof* proof) {
 		}
 		}
 	}
-	if (new_elems.size() < proof->elems.size()) {
+	if (new_elems.size() < proof->steps.size()) {
 		//cout << "diff: " << (proof->elems.size() - new_elems.size()) << ", new_elems.size() = " << new_elems.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
-		proof->elems = std::move(new_elems);
+		proof->steps = std::move(new_elems);
+		proof->qed->step = steps_map.at(proof->qed->step);
 	}
 }
 

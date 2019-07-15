@@ -104,7 +104,7 @@ static T* find_obj(Proof* proof, const char* pos) {
 		if (T* t = find_obj<T>(proof->vars, pos)) {
 			return t;
 		}
-		for (auto& e : proof->elems) {
+		for (auto& e : proof->steps) {
 			if (T* t = find_obj<T>(e, pos)) {
 				return t;
 			}

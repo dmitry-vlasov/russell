@@ -129,7 +129,7 @@ string ProofHyp::show() const {
 	unique_ptr<rus::Proof> proof;
 	try {
 		proof = std::move(gen_proof(this));
-		st = rus::Proof::step(proof->elems.back());
+		st = rus::Proof::step(proof->steps.back());
 	} catch (Error& err) {
 		proof.reset();
 	}
@@ -155,7 +155,7 @@ string ProofRef::show() const {
 	unique_ptr<rus::Proof> proof;
 	try {
 		proof = std::move(gen_proof(this));
-		st = rus::Proof::step(proof->elems.back());
+		st = rus::Proof::step(proof->steps.back());
 	} catch (Error& err) {
 		proof.reset();
 	}
@@ -182,7 +182,7 @@ string ProofProp::show() const {
 	unique_ptr<rus::Proof> proof;
 	try {
 		proof = std::move(gen_proof(this));
-		st = rus::Proof::step(proof->elems.back());
+		st = rus::Proof::step(proof->steps.back());
 	} catch (Error& err) {
 		proof.reset();
 	}

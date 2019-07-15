@@ -106,9 +106,9 @@ size_t memvol(const Step& step) {
 size_t memvol(const Proof& proof) {
 	size_t s = 0;
 	s += memvol(proof.vars);
-	s += proof.elems.capacity() * sizeof(Proof::Elem);
+	s += proof.steps.capacity() * sizeof(Proof::Elem);
 	s += proof.qed ? sizeof(Qed) : 0;
-	for (const auto& e : proof.elems) {
+	for (const auto& e : proof.steps) {
 		switch (Proof::kind(e)) {
 		case Proof::STEP: s += memsize(*Proof::step(e)); break;
 		default: break;

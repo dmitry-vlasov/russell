@@ -90,7 +90,7 @@ struct Enqueue {
 		operator()(static_cast<Assertion*>(def));
 	}
 	void operator()(Proof* proof) const {
-		for (auto& e : proof->elems) {
+		for (auto& e : proof->steps) {
 			if (Proof::kind(e) == Proof::STEP) {
 				Step* step = Proof::step(e);
 				expr::enqueue(step->expr);
@@ -185,7 +185,7 @@ struct CreateStepRef {
 		switch (k) {
 		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
 		case Ref::PROP: return new Ref(p->theorem->prop.get());
-		case Ref::STEP: return new Ref(Proof::step(p->elems[ind]));
+		case Ref::STEP: return new Ref(Proof::step(p->steps[ind]));
 		default : assert(false && "impossible"); break;
 		}
 		return nullptr;
@@ -202,12 +202,7 @@ struct GetProp {
 struct GetStep {
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
-		if (ind > 10000) {
-			cout << "AAA" << endl;
-			cout << ind << endl;
-			exit(-1);
-		}
-		return Proof::step(p->elems[ind]);
+		return Proof::step(p->steps[ind]);
 	}
 };
 
@@ -258,7 +253,7 @@ struct AppendComment {
 struct AddProofStep {
 	struct result { typedef void type; };
 	void operator()(Proof* p, Step* s) const {
-		p->elems.emplace_back(unique_ptr<Step>(s));
+		p->steps.emplace_back(unique_ptr<Step>(s));
 	}
 };
 

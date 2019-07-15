@@ -71,7 +71,7 @@ void Qed::verify(uint mode) const {
 }
 
 void Proof::verify(uint mode) const {
-	for (const auto& el : elems) {
+	for (const auto& el : steps) {
 		switch (kind(el)){
 		case Proof::STEP: step(el)->verify(mode); break;
 		default : break;

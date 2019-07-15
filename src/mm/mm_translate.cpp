@@ -331,7 +331,7 @@ rus::Theory::Kind node_kind(const Assertion* ass) {
 }
 
 rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps& state, const Assertion* a) {
-	vector<rus::Proof::Elem>& elems = proof->elems;
+	vector<rus::Proof::Elem>& elems = proof->steps;
 	assert(tree->nodes.back().kind() == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	const Assertion* ass = node.ref()->ass();

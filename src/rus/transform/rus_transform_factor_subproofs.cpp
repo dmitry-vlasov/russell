@@ -11,7 +11,7 @@ AssertionMap init_assertion_map() {
 	for (auto& a : Sys::mod().math.get<Assertion>()) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
 			if (Proof* proof = thm->proof.get()) {
-				for (const auto& e : proof->elems) {
+				for (const auto& e : proof->steps) {
 					if (Proof::kind(e) == Proof::STEP) {
 						const Step* step = Proof::step(e);
 						ass_map[step->ass_id()].push_back(step);

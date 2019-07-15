@@ -423,10 +423,10 @@ private:
 			Context* c = ctx.get<Context*>();
 			uint ind = sv[0].get<uint>() - 1;
 			Proof* p = c->stacks.proof();
-			if (ind >= p->elems.size()) {
+			if (ind >= p->steps.size()) {
 				throw Error("invalid step index", sv.token());
 			}
-			Proof::Elem& e = p->elems[ind];
+			Proof::Elem& e = p->steps[ind];
 			if (Proof::kind(e) != Proof::STEP) {
 				throw Error("by reference is not a step", sv.token());
 			}
@@ -448,7 +448,7 @@ private:
 			Proof* p = c->stacks.proof();
 			return new Qed(
 				p->theorem()->props[prop - 1].get(),
-				Proof::step(p->elems[step - 1])
+				Proof::step(p->steps[step - 1])
 			);
 		};
 		// PROOF_ELEM <- VAR_DECL / STEP / QED
@@ -456,11 +456,11 @@ private:
 			Context* c = ctx.get<Context*>();
 			Proof* p = c->stacks.proof();
 			switch (sv.choice()) {
-			case 0: p->elems.emplace_back(unique_ptr<Vars>(sv[0].get<Vars*>())); break;
-			case 1: p->elems.emplace_back(unique_ptr<Step>(sv[0].get<Step*>())); break;
-			case 2: p->elems.emplace_back(unique_ptr<Qed>(sv[0].get<Qed*>()));  break;
+			case 0: p->steps.emplace_back(unique_ptr<Vars>(sv[0].get<Vars*>())); break;
+			case 1: p->steps.emplace_back(unique_ptr<Step>(sv[0].get<Step*>())); break;
+			case 2: p->steps.emplace_back(unique_ptr<Qed>(sv[0].get<Qed*>()));  break;
 			}
-			Proof::Elem& e = p->elems.back();
+			Proof::Elem& e = p->steps.back();
 
 			// TODO: Do a right var/elem tracking!
 			if (Proof::kind(e) == Proof::VARS) {
@@ -565,7 +565,7 @@ private:
 		}
 	}
 	static void enqueue_expr(Proof* proof) {
-		for (const auto& e : proof->elems) {
+		for (const auto& e : proof->steps) {
 			if (Proof::kind(e) == Proof::STEP) {
 				Step* step = Proof::step(e);
 				expr::enqueue(step->expr);

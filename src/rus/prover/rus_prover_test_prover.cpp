@@ -8,7 +8,7 @@ static vector<const Proof*> prove_failed;
 
 static bool proof_has_shared(const Proof* p) {
 	map<const Step*, vector<const Step*>> parents;
-	for (const auto& e : p->elems) {
+	for (const auto& e : p->steps) {
 		if (const Step* parent = Proof::step(e)) {
 			for (const auto& ref : parent->refs) {
 				if (const Step* child = ref->step()) {
@@ -92,8 +92,8 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 		for (auto& n : src->theory.nodes) {
 			if (Theory::kind(n) == Theory::THEOREM) {
 				const Proof* proof = Theory::theorem(n)->proof.get();
-				uint proof_len = proof->elems.size();
-				if (!longest_proof  || proof_len > longest_proof->elems.size()) {
+				uint proof_len = proof->steps.size();
+				if (!longest_proof  || proof_len > longest_proof->steps.size()) {
 					longest_proof = proof;
 				}
 				if (proof_len <= max_proof_len) {
@@ -102,7 +102,7 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 			}
 		}
 	}
-	cout << "longest proof: " << Lex::toStr(longest_proof->theorem->id()) << ", proof length: " << longest_proof->elems.size() << endl;
+	cout << "longest proof: " << Lex::toStr(longest_proof->theorem->id()) << ", proof length: " << longest_proof->steps.size() << endl;
 #ifdef PARALLEL_PROVER_TEST
 	tbb::parallel_for(tbb::blocked_range<size_t>(0, proofs.size()),
 		[max_proofs, &proofs] (const tbb::blocked_range<size_t>& r) {

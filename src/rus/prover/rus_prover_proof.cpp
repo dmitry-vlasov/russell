@@ -199,16 +199,16 @@ struct ProofEnv {
 				for (auto prem : p->premises) {
 					genSteps(prem);
 				}
-				rus::Step* step = new rus::Step(proof->elems.size(), rus::Step::ASS, p->node.prop.id(), proof.get());
+				rus::Step* step = new rus::Step(proof->steps.size(), rus::Step::ASS, p->node.prop.id(), proof.get());
 				for (auto prem : p->premises) {
 					step->refs.emplace_back(make_unique<rus::Ref>(getRef(prem)));
 				}
 				step->expr = std::move(Term2Expr(p->parent->expr()));
-				step->set_ind(proof->elems.size());
+				step->set_ind(proof->steps.size());
 				apply_recursively(Subst2Substitution(p->sub), step);
 				stepMap.emplace(p, step);
 				refMap.emplace(p, rus::Ref(step));
-				proof->elems.emplace_back(unique_ptr<Step>(step));
+				proof->steps.emplace_back(unique_ptr<Step>(step));
 			}
 		} else {
 			throw Error("Impossible ProofNode type");
