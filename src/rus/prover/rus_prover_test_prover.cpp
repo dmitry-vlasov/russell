@@ -8,14 +8,12 @@ static vector<const Proof*> prove_failed;
 
 static bool proof_has_shared(const Proof* p) {
 	map<const Step*, vector<const Step*>> parents;
-	for (const auto& e : p->steps) {
-		if (const Step* parent = Proof::step(e)) {
-			for (const auto& ref : parent->refs) {
-				if (const Step* child = ref->step()) {
-					parents[child].push_back(parent);
-					if (parents[child].size() > 1) {
-						return true;
-					}
+	for (const auto& s : p->steps) {
+		for (const auto& ref : s->refs) {
+			if (const Step* child = ref->step()) {
+				parents[child].push_back(s.get());
+				if (parents[child].size() > 1) {
+					return true;
 				}
 			}
 		}

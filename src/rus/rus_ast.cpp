@@ -178,14 +178,12 @@ void complete_assertion_vars(Assertion* a) {
 }
 
 void complete_proof_vars(Proof* proof) {
-	for (auto& e : proof->steps) {
-		if (rus::Step* step = rus::Proof::step(e)) {
-			complete_expr_vars(
-				step->expr,
-				proof->vars,
-				[proof](uint l) { return proof->theorem->vars.isDeclared(l); }
-			);
-		}
+	for (auto& step : proof->steps) {
+		complete_expr_vars(
+			step->expr,
+			proof->vars,
+			[proof](uint l) { return proof->theorem->vars.isDeclared(l); }
+		);
 	}
 }
 

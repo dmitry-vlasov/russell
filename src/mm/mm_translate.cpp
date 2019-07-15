@@ -331,11 +331,10 @@ rus::Theory::Kind node_kind(const Assertion* ass) {
 }
 
 rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps& state, const Assertion* a) {
-	vector<rus::Proof::Elem>& elems = proof->steps;
 	assert(tree->nodes.back().kind() == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	const Assertion* ass = node.ref()->ass();
-	rus::Step* step = new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof);
+	rus::Step* step = new rus::Step(proof->steps.size(), rus::Step::ASS, ass->id(), proof);
 
 	for (uint i = 0; i < ass->hyps.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i + ass->outerVars.size()];
@@ -349,10 +348,10 @@ rus::Step* translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, Maps
 			new rus::Ref(thm->hyps[h.ref()->index()].get());
 		step->refs.emplace_back(hr);
 	}
-	step->set_ind(elems.size());
+	step->set_ind(proof->steps.size());
 	step->expr = std::move(translate_expr(node.expr, a, state));
 	rus::expr::enqueue(step->expr);
-	elems.emplace_back(unique_ptr<rus::Step>(step));
+	proof->steps.emplace_back(step);
 	return step;
 }
 

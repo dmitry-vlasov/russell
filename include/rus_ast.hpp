@@ -280,13 +280,6 @@ struct Qed : public Writable, public WithToken {
 };
 
 struct Proof : public Writable, public WithToken {
-
-	enum Kind { VARS, STEP, QED };
-	typedef variant<unique_ptr<Vars>, unique_ptr<Step>, unique_ptr<Qed>> Elem;
-
-	static Kind  kind(const Elem& e) { return static_cast<Kind>(e.index()); }
-	static Step* step(const Elem& e) { return kind(e) == STEP ? std::get<unique_ptr<Step>>(e).get() : nullptr; }
-
 	Proof(Theorem* th = nullptr, const Token& t = Token());
 	Proof(const Proof&) = delete;
 
@@ -295,12 +288,12 @@ struct Proof : public Writable, public WithToken {
 	AbstProof abst() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
-	Vars            vars;
-	vector<Elem>    steps;
-	Theorem*        theorem;
-	Proof*          par;
+	Vars vars;
+	vector<unique_ptr<Step>> steps;
+	Theorem* theorem;
+	Proof* par;
 	unique_ptr<Qed> qed;
-	bool            inner;
+	bool inner;
 };
 
 void complete_proof_vars(Proof* proof);

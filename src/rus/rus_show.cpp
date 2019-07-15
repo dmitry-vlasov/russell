@@ -163,10 +163,8 @@ void Proof::write(ostream& os, const Indent& i) const {
 		vars.write(os, i + 1);
 		os << END_MARKER << "\n";
 	}
-	for (const auto& e : steps) {
-		switch (kind(e)) {
-		case STEP: step(e)->write(os, i + 1); break;
-		}
+	for (const auto& step : steps) {
+		step->write(os, i + 1);
 	}
 	if (qed) {
 		qed->write(os, i + 1);

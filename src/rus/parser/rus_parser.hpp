@@ -90,13 +90,10 @@ struct Enqueue {
 		operator()(static_cast<Assertion*>(def));
 	}
 	void operator()(Proof* proof) const {
-		for (auto& e : proof->steps) {
-			if (Proof::kind(e) == Proof::STEP) {
-				Step* step = Proof::step(e);
-				expr::enqueue(step->expr);
-				if (step->kind() == Step::CLAIM) {
-					operator()(step->proof());
-				}
+		for (auto& s : proof->steps) {
+			expr::enqueue(s->expr);
+			if (s->kind() == Step::CLAIM) {
+				operator()(s->proof());
 			}
 		}
 	}
@@ -185,7 +182,7 @@ struct CreateStepRef {
 		switch (k) {
 		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
 		case Ref::PROP: return new Ref(p->theorem->prop.get());
-		case Ref::STEP: return new Ref(Proof::step(p->steps[ind]));
+		case Ref::STEP: return new Ref(p->steps[ind].get());
 		default : assert(false && "impossible"); break;
 		}
 		return nullptr;
@@ -202,7 +199,7 @@ struct GetProp {
 struct GetStep {
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
-		return Proof::step(p->steps[ind]);
+		return p->steps[ind].get();
 	}
 };
 

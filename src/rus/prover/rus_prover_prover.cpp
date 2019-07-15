@@ -165,8 +165,8 @@ void Prover::buildUpHyp(Hyp* h) {
 vector<unique_ptr<rus::Proof>> Prover::proved() {
 	vector<unique_ptr<rus::Proof>> ret(Space::proved());
 	for (auto& proof : ret) {
-		rus::Step* st = rus::Proof::step(proof->steps.back());
-		proof->steps.emplace_back(unique_ptr<Qed>(new Qed(prop_.get(), st)));
+		rus::Step* st = proof->steps.back().get();
+		proof->qed = make_unique<Qed>(prop_.get(), st);
 		proof->theorem = theorem;
 	}
 	return ret;

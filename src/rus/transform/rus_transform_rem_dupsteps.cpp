@@ -4,53 +4,38 @@
 namespace mdl { namespace rus { namespace {
 
 void reduce_duplcate_steps(Proof* proof) {
-	vector<Proof::Elem> new_elems;
+	vector<unique_ptr<Step>> new_steps;
 	prover::unify::Index expressions;
-	vector<Step*> new_steps;
 	map<const Step*, Step*> steps_map;
-	for (auto& e : proof->steps) {
-		switch (Proof::kind(e)) {
-		case Proof::STEP: {
-			const Step* step = Proof::step(e);
-			prover::Term term = prover::Tree2Term(*step->expr.tree());
-			const vector<uint>* previous = expressions.find(term);
-			if (previous && previous->size()) {
-				steps_map[step] = new_steps.at(previous->at(0));
-			} else {
-				uint new_ind = new_steps.size();
-				Step* new_step = new Step(
-					new_ind, step->kind(), step->ass_id(), step->proof_, step->token
-				);
-				new_step->expr = std::move(step->expr);
-				new_step->sub = std::move(step->sub);
-				for (const auto& ref : step->refs) {
-					switch (ref->kind()) {
-					case Ref::HYP:  new_step->refs.emplace_back(make_unique<Ref>(ref->hyp(), ref->token)); break;
-					case Ref::PROP: new_step->refs.emplace_back(make_unique<Ref>(ref->prop(), ref->token)); break;
-					case Ref::STEP: new_step->refs.emplace_back(make_unique<Ref>(steps_map.at(ref->step()), ref->token)); break;
-					}
+	for (auto& step : proof->steps) {
+		prover::Term term = prover::Tree2Term(*step->expr.tree());
+		const vector<uint>* previous = expressions.find(term);
+		if (previous && previous->size()) {
+			steps_map[step.get()] = new_steps.at(previous->at(0)).get();
+		} else {
+			uint new_ind = new_steps.size();
+			Step* new_step = new Step(
+				new_ind, step->kind(), step->ass_id(), step->proof_, step->token
+			);
+			new_step->expr = std::move(step->expr);
+			new_step->sub = std::move(step->sub);
+			for (const auto& ref : step->refs) {
+				switch (ref->kind()) {
+				case Ref::HYP:  new_step->refs.emplace_back(make_unique<Ref>(ref->hyp(), ref->token)); break;
+				case Ref::PROP: new_step->refs.emplace_back(make_unique<Ref>(ref->prop(), ref->token)); break;
+				case Ref::STEP: new_step->refs.emplace_back(make_unique<Ref>(steps_map.at(ref->step()), ref->token)); break;
 				}
-				expressions.add(term, new_ind);
-				steps_map[step] = new_step;
-				new_steps.push_back(new_step);
-				new_elems.emplace_back(unique_ptr<Step>(new_step));
 			}
-			break;
-		}
-		/*case Proof::QED: {
-			const Qed* qed = Proof::qed(e);
-			new_elems.emplace_back(make_unique<Qed>(qed->prop, steps_map.at(qed->step))); break;
-		}*/
-		case Proof::VARS: {
-			new_elems.push_back(std::move(e)); break;
-		}
+			expressions.add(term, new_ind);
+			steps_map[step.get()] = new_step;
+			new_steps.emplace_back(new_step);
 		}
 	}
-	if (new_elems.size() < proof->steps.size()) {
-		//cout << "diff: " << (proof->elems.size() - new_elems.size()) << ", new_elems.size() = " << new_elems.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
-		proof->steps = std::move(new_elems);
-		proof->qed->step = steps_map.at(proof->qed->step);
-	}
+	//if (new_steps.size() < proof->steps.size()) {
+		//cout << "diff: " << (proof->elems.size() - new_steps.size()) << ", new_steps.size() = " << new_steps.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
+	//}
+	proof->steps = std::move(new_steps);
+	proof->qed->step = steps_map.at(proof->qed->step);
 }
 
 }

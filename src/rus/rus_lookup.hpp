@@ -91,21 +91,16 @@ static T* find_obj(Qed* qed, const char* pos) {
 }
 
 template<class T>
-static T* find_obj(Proof::Elem& e, const char* pos) {
-	switch (Proof::kind(e)) {
-	case Proof::STEP: return find_obj<T>(Proof::step(e), pos);
-	default: assert(false && "impossible"); return nullptr;
-	}
-}
-
-template<class T>
 static T* find_obj(Proof* proof, const char* pos) {
 	if (proof->token.includes(pos)) {
 		if (T* t = find_obj<T>(proof->vars, pos)) {
 			return t;
 		}
-		for (auto& e : proof->steps) {
-			if (T* t = find_obj<T>(e, pos)) {
+		if (T* t = find_obj<T>(proof->qed, pos)) {
+			return t;
+		}
+		for (auto& step : proof->steps) {
+			if (T* t = find_obj<T>(step.get(), pos)) {
 				return t;
 			}
 		}
