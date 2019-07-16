@@ -64,7 +64,8 @@ else()
 		rus/prover/unify/rus_prover_unify.cpp
 
 		rus/transform/rus_transform_factor_subproofs.cpp
-		rus/transform/rus_transform_rem_dupsteps.cpp  
+		rus/transform/rus_transform_rem_dupsteps.cpp
+		rus/transform/rus_transform_rem_unused_hyps.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp

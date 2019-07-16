@@ -188,7 +188,6 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm::Ref>& proof
 void translate_ref(Ref* ref, const Assertion* thm, vector<mm::Ref>& mm2_proof, Maps& maps) {
 	switch (ref->kind()) {
 	case Ref::HYP:  mm2_proof.emplace_back(maps.local.essentials[thm][ref->hyp()]); break;
-	case Ref::PROP: break;
 	case Ref::STEP: translate_step(ref->step(), thm, mm2_proof, maps); break;
 	default : assert(false); break;
 	}

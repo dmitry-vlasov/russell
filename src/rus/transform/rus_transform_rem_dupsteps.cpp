@@ -22,7 +22,6 @@ void reduce_duplcate_steps(Proof* proof) {
 			for (const auto& ref : step->refs) {
 				switch (ref->kind()) {
 				case Ref::HYP:  new_step->refs.emplace_back(make_unique<Ref>(ref->hyp(), ref->token)); break;
-				case Ref::PROP: new_step->refs.emplace_back(make_unique<Ref>(ref->prop(), ref->token)); break;
 				case Ref::STEP: new_step->refs.emplace_back(make_unique<Ref>(steps_map.at(ref->step()), ref->token)); break;
 				}
 			}

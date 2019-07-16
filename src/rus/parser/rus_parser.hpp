@@ -181,7 +181,6 @@ struct CreateStepRef {
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
 		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
-		case Ref::PROP: return new Ref(p->theorem->prop.get());
 		case Ref::STEP: return new Ref(p->steps[ind].get());
 		default : assert(false && "impossible"); break;
 		}

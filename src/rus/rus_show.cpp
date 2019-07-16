@@ -145,7 +145,6 @@ void Theorem::write(ostream& os, const Indent& i) const {
 void Ref::write(ostream& os, const Indent& i) const {
 	switch (kind()) {
 		case Ref::HYP:  os << "hyp " << (hyp()->ind + 1);     break;
-		case Ref::PROP: os << "prop "; break;
 		case Ref::STEP: os << "step " << (step()->ind() + 1); break;
 		default : assert(false && "impossible");
 	}

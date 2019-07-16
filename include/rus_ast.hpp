@@ -178,20 +178,18 @@ struct Theorem : public Assertion {
 };
 
 struct Ref : public Writable, public WithToken {
-	enum Kind { HYP, PROP, STEP };
+	enum Kind { HYP, STEP };
 	Kind kind() const { return static_cast<Kind>(val.index()); }
 	explicit Ref() : WithToken(Token()) { }
 	explicit Ref(Hyp* h, const Token& t = Token())  : WithToken(t), val(h)  { }
-	explicit Ref(Prop* p, const Token& t = Token()) : WithToken(t), val(p)  { }
 	explicit Ref(Step* s, const Token& t = Token()) : WithToken(t), val(s)  { }
 	explicit Ref(const Ref& r) : WithToken(r.token), val(r.val) { }
 	Expr& expr();
 	const Expr& expr() const;
 	Hyp* hyp() const   { return kind() == HYP  ? std::get<Hyp*>(val) : nullptr; }
-	Prop* prop() const { return kind() == PROP ? std::get<Prop*>(val): nullptr; }
 	Step* step() const { return kind() == STEP ? std::get<Step*>(val): nullptr; }
 
-	typedef variant<Hyp*, Prop*, Step*> Value;
+	typedef variant<Hyp*, Step*> Value;
 	Value val;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
@@ -246,13 +244,14 @@ struct Step : public Writable, public WithToken {
 	Proof* proof_;
 };
 
+void traverseProof(Step* step, std::function<void(Writable*)> f);
+
 typedef DAG<uint> AbstProof;
 typedef DAG<const Step*> SubProof;
 
 inline Expr& Ref::expr() {
 	switch (kind()) {
 	case HYP : return hyp()->expr;
-	case PROP: return prop()->expr;
 	case STEP: return step()->expr;
 	default  : assert(false && "impossible");
 	}
@@ -262,7 +261,6 @@ inline Expr& Ref::expr() {
 inline const Expr& Ref::expr() const {
 	switch (kind()) {
 	case HYP : return hyp()->expr;
-	case PROP: return prop()->expr;
 	case STEP: return step()->expr;
 	default  : assert(false && "impossible");
 	}

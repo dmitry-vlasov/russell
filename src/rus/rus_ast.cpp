@@ -143,6 +143,17 @@ Proof::Proof(Theorem* th, const Token& t) :
 	WithToken(t), theorem(th), par(nullptr), inner(false) {
 }
 
+void traverseProof(Step* step, std::function<void(Writable*)> f) {
+	for (auto& ref : step->refs) {
+		if (ref->step()) {
+			traverseProof(ref->step(), f);
+			f(ref->step());
+		} else if (ref->hyp()) {
+			f(ref->hyp());
+		}
+	}
+}
+
 static AbstProof::Node* abstProof(const Step* step) {
 	AbstProof::Node* ret = new AbstProof::Node(step->ass_id(), step->refs.size());
 	for (uint i = 0; i < step->refs.size(); ++i) {

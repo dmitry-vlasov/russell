@@ -99,7 +99,6 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 
 	ref =
 		("hyp"  > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::HYP))])  |
-		("prop" > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::PROP))]) |
 		("step" > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::STEP))]);
 
 	refs =
@@ -115,7 +114,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		)
 		> eps [_val = new_<Step>(_a, _c, _d, _r1)]
 		> refs(_r1) [addStepRefs(_val, qi::labels::_1)]
-		> lit("|-") //[addProofStep(_r1, _val)]
+		> lit("|-")
 		> expr(_b, phoenix::at_c<1>(*_val))
 		> lit(END_MARKER);
 
