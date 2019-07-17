@@ -11,10 +11,10 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 		}
 	});
 	uint unused_count = 0;
-	vector<bool> hyps_usage;
+	vector<bool> hyps_usage(th->hyps.size(), false);
 	for (uint i = 0; i < th->hyps.size(); ++ i) {
-		auto& h = th->hyps.at(i);
-		if (!used_hyps.count(h.get())) {
+		Hyp* h = th->hyps.at(i).get();
+		if (!used_hyps.count(h)) {
 			++ unused_count;
 			hyps_usage[i] = false;
 		} else {
@@ -25,32 +25,40 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 		cout << "Theorem " << Lex::toStr(th->id()) << " has " << unused_count << " unused hyps." << endl;
 		vector<unique_ptr<Hyp>> reduced_hyps;
 		map<Hyp*, Hyp*> old2new;
+		map<Hyp*, Hyp*> new2old;
 		for (uint i = 0; i < th->hyps.size(); ++ i) {
-			auto& h = th->hyps.at(i);
+			Hyp* old_hyp = th->hyps.at(i).get();
 			if (hyps_usage.at(i)) {
-				reduced_hyps.emplace_back(make_unique<Hyp>(*h));
-				old2new[h.get()] = reduced_hyps.back().get();
+				Hyp* new_hyp = new Hyp(*old_hyp);
+				old2new[old_hyp] = new_hyp;
+				new2old[new_hyp] = old_hyp;
+				new_hyp->ind = reduced_hyps.size();
+				reduced_hyps.emplace_back(new_hyp);
 			}
 		}
-		th->hyps = std::move(reduced_hyps);
-		traverseProof(th->proof->qed->step, [&old2new](Writable* n) {
+		traverseProof(th->proof->qed->step, [&old2new, &new2old](Writable* n) {
 			if (Step* s = dynamic_cast<Step*>(n)) {
 				for (auto& ref : s->refs) {
-					if (Hyp* oldHyp = ref->hyp()) {
-						ref.reset(new Ref(old2new.at(oldHyp)));
+					if (Hyp* h = ref->hyp()) {
+						if (!new2old.count(h)) {
+							ref.reset(new Ref(old2new.at(h)));
+						}
 					}
 				}
 			}
 		});
-		for (Step* s : steps_map.at(th)) {
-			vector<unique_ptr<Ref>> new_refs;
-			for (uint i = 0; i < s->refs.size(); ++ i) {
-				auto& ref = s->refs.at(i);
-				if (hyps_usage[i]) {
-					new_refs.emplace_back(ref.release());
+		th->hyps = std::move(reduced_hyps);
+		if (steps_map.count(th)) {
+			for (Step* s : steps_map.at(th)) {
+				vector<unique_ptr<Ref>> new_refs;
+				for (uint i = 0; i < s->refs.size(); ++ i) {
+					auto& ref = s->refs.at(i);
+					if (hyps_usage[i]) {
+						new_refs.emplace_back(ref.release());
+					}
 				}
+				s->refs = std::move(new_refs);
 			}
-			s->refs = std::move(new_refs);
 		}
 	}
 }
@@ -58,7 +66,7 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 }
 
 #ifdef PARALLEL
-#define PARALLEL_UNUSED_HYPS
+//#define PARALLEL_UNUSED_HYPS
 #endif
 
 void reduce_unused_hyps()  {

@@ -30,9 +30,9 @@ void reduce_duplcate_steps(Proof* proof) {
 			new_steps.emplace_back(new_step);
 		}
 	}
-	//if (new_steps.size() < proof->steps.size()) {
-		//cout << "diff: " << (proof->elems.size() - new_steps.size()) << ", new_steps.size() = " << new_steps.size() << " < " << proof->elems.size() << " = proof->elems.size()" << endl;
-	//}
+	if (new_steps.size() < proof->steps.size()) {
+		cout << "proof of theorem " << Lex::toStr(proof->theorem->id()) << " reduced by " << (proof->steps.size() - new_steps.size()) << " steps" << endl;
+	}
 	proof->steps = std::move(new_steps);
 	proof->qed->step = steps_map.at(proof->qed->step);
 }

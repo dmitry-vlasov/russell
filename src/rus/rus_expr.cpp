@@ -222,6 +222,7 @@ void RuleTree::write(ostream& os, const Indent& indent) const {
 
 void Substitution::operator = (const Substitution& s) {
 	ok_ = s.ok_;
+	sub_.clear();
 	if (ok_) {
 		for (const auto& p : s.sub_) {
 			sub_.emplace(p.first, p.second);

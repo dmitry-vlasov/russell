@@ -10,7 +10,7 @@ void Step::verify(uint mode) const {
 	if (mode & VERIFY_SUB) {
 		assert(kind() == Step::ASS);
 		if (!ass()) throw Error("unknown assertion", Lex::toStr(ass_id()));
-		sub = unify_forth(ass()->prop->expr, expr);
+		sub = std::move(unify_forth(ass()->prop->expr, expr));
 		if (!sub) {
 			string msg = "proposition:\n";
 			msg += ass()->prop->show() + "\n";
@@ -24,7 +24,7 @@ void Step::verify(uint mode) const {
 			throw Error("proposition unification failed", msg);
 		}
 		for (uint i = 0; i < ass()->arity(); ++ i) {
-			Substitution hs = unify_forth(ass()->hyps[i]->expr, refs[i]->expr());
+			Substitution hs = std::move(unify_forth(ass()->hyps[i]->expr, refs[i]->expr()));
 			if (!hs) {
 				string msg = "\nhypothesis:\n";
 				msg += ass()->hyps[i]->show() + "\n";

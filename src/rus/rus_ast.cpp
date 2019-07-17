@@ -144,10 +144,10 @@ Proof::Proof(Theorem* th, const Token& t) :
 }
 
 void traverseProof(Step* step, std::function<void(Writable*)> f) {
+	f(step);
 	for (auto& ref : step->refs) {
 		if (ref->step()) {
 			traverseProof(ref->step(), f);
-			f(ref->step());
 		} else if (ref->hyp()) {
 			f(ref->hyp());
 		}
