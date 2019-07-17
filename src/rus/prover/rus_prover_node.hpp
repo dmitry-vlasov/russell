@@ -6,20 +6,21 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct PropRef {
-	PropRef(Assertion* a, uint i = 0) : ass(a), ind(i) { }
+	PropRef(Assertion* a) : ass(a) { }
 	uint id() const { return ass->id(); }
 	rus::Prop* get() const { return ass->prop.get(); }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {
-		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass->token.preceeds(a2.ass->token);
+		return a1.ass->token.preceeds(a2.ass->token);
 	}
-	bool operator == (const PropRef& pr) const {
+	/*bool operator == (const PropRef& pr) const {
 		return ass == pr.ass && ind == pr.ind;
 	}
 	bool operator != (const PropRef& pr) const {
 		return !operator == (pr);
-	}
+	}*/
+	//bool operator == (const PropRef& pr) const = default;
+	//bool operator != (const PropRef& pr) const = default;
 	Assertion* ass;
-	uint       ind;
 };
 
 class Space;

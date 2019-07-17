@@ -215,7 +215,7 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 			if (Assertion* ass = Sys::mod().math.get<Assertion>().access(n.label())) {
 				assertions_.add(
 					Tree2Term(*ass->prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-					PropRef(ass, 0)
+					PropRef(ass)
 				);
 				//cout << "ADDED: " << Lex::toStr(n.label()) << endl;
 			} else {

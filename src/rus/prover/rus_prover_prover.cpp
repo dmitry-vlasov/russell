@@ -8,7 +8,7 @@ Prover::Prover(rus::Qed* q, Tactic* t) :
 
 Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
 	theorem(thm),
-	prop_(thm, 0) {
+	prop_(thm) {
 	Timer timer;
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		if (Assertion* ass = p.second.data) {
@@ -17,7 +17,7 @@ Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
 			}
 			assertions_.add(
 				Tree2Term(*ass->prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
-				PropRef(ass, 0)
+				PropRef(ass)
 			);
 		} else {
 			throw Error("undefined reference to assertion", Lex::toStr(p.first));
