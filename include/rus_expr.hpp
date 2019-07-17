@@ -317,6 +317,13 @@ struct Substitution : public Writable {
 	bool join(const Substitution& s);
 	bool join(Substitution&& s);
 
+	bool joinable(const Var& v, const Tree& t) const;
+	bool joinable(uint v, const Type* tp, const Tree& tr) const;
+	bool joinable(const Substitution* s) const {
+		return joinable(*s);
+	}
+	bool joinable(const Substitution& s) const;
+
 	bool maps(uint v) const { return sub_.find(v) != sub_.end(); }
 	const Tree* map(uint v) const {
 		auto it = sub_.find(v);

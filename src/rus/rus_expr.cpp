@@ -248,7 +248,7 @@ bool Substitution::join(uint v, const Type* tp, const Tree& tr) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if (*(*it).second.tree != tr) {
+		if (*(it->second.tree) != tr) {
 			ok_ = false;
 		}
 	} else {
@@ -261,7 +261,7 @@ bool Substitution::join(uint v, const Type* tp, unique_ptr<Tree>&& tr) {
 	if (!ok_) return false;
 	auto it = sub_.find(v);
 	if (it != sub_.end()) {
-		if (*(*it).second.tree != *tr) {
+		if (*(it->second.tree) != *tr) {
 			ok_ = false;
 		}
 	} else {
@@ -273,8 +273,8 @@ bool Substitution::join(uint v, const Type* tp, unique_ptr<Tree>&& tr) {
 bool Substitution::join(const Substitution& s) {
 	if (s.ok_) {
 		for (const auto& p : s.sub_) {
-			if (!ok_) return false;
 			join(p.first, p.second.type.get(), *p.second.tree);
+			if (!ok_) return false;
 		}
 	} else {
 		ok_ = false;
@@ -285,13 +285,43 @@ bool Substitution::join(const Substitution& s) {
 bool Substitution::join(Substitution&& s) {
 	if (s.ok_) {
 		for (auto&& p : s.sub_) {
-			if (!ok_) return false;
 			join(p.first, p.second.type.get(), std::move(p.second.tree));
+			if (!ok_) return false;
 		}
 	} else {
 		ok_ = false;
 	}
 	return ok_;
+}
+
+bool Substitution::joinable(const Var& v, const Tree& t) const {
+	if (!ok_) return false;
+	auto it = sub_.find(v.lit());
+	if (it != sub_.end()) {
+		return *(it->second.tree) == t;
+	} else {
+		return true;
+	}
+}
+
+bool Substitution::joinable(uint v, const Type* tp, const Tree& tr) const{
+	if (!ok_) return false;
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		return *(it->second.tree) == tr;
+	} else {
+		return true;
+	}
+}
+
+bool Substitution::joinable(const Substitution& s) const {
+	if (ok_ || !s.ok_) return false;
+	for (const auto& p : s.sub_) {
+		if (!joinable(p.first, p.second.type.get(), *p.second.tree)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 }} // mdl::rus

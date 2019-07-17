@@ -351,4 +351,76 @@ string show_diff(const Subst& s1, const Subst& s2) {
 	}
 }
 
+bool Subst::join(const LightSymbol& v, const Term& tr) {
+	return join(v.lit, v.type, tr);
+}
+
+bool Subst::join(uint v, const Type* tp, const Term& tr) {
+	if (!ok_) return false;
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		if (it->second.term != tr) {
+			ok_ = false;
+		}
+	} else {
+		sub_.emplace(v, TypeTerm(tp, tr));
+	}
+	return ok_;
+}
+
+bool Subst::join(const Subst& s) {
+	if (s.ok_) {
+		for (const auto& p : s.sub_) {
+			join(p.first, p.second.type, p.second.term);
+			if (!ok_) return false;
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
+bool Subst::join(Subst&& s) {
+	if (s.ok_) {
+		for (auto&& p : s.sub_) {
+			join(p.first, p.second.type, std::move(p.second.term));
+			if (!ok_) return false;
+		}
+	} else {
+		ok_ = false;
+	}
+	return ok_;
+}
+
+bool Subst::joinable(const LightSymbol& v, const Term& t) const {
+	if (!ok_) return false;
+	auto it = sub_.find(v.lit);
+	if (it != sub_.end()) {
+		return it->second.term == t;
+	} else {
+		return true;
+	}
+}
+
+bool Subst::joinable(uint v, const Type* tp, const Term& tr) const{
+	if (!ok_) return false;
+	auto it = sub_.find(v);
+	if (it != sub_.end()) {
+		return it->second.term == tr;
+	} else {
+		return true;
+	}
+}
+
+bool Subst::joinable(const Subst& s) const {
+	if (ok_ || !s.ok_) return false;
+	for (const auto& p : s.sub_) {
+		if (!joinable(p.first, p.second.type, p.second.term)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
 }}}

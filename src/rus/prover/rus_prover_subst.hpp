@@ -44,6 +44,15 @@ struct Subst {
 		return compose(Subst(v, Term(t)), m, check);
 	}
 
+	bool join(const LightSymbol& v, const Term& t);
+	bool join(uint v, const Type* tp, const Term& t);
+	bool join(const Subst& s);
+	bool join(Subst&& s);
+
+	bool joinable(const LightSymbol& v, const Term& t) const;
+	bool joinable(uint v, const Type* tp, const Term& tr) const;
+	bool joinable(const Subst& s) const;
+
 	bool intersects(const Subst& s) const;
 	bool maps(LightSymbol v) const {
 		return maps(v.lit);

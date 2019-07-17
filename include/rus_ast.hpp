@@ -215,6 +215,13 @@ struct Ref : public Writable, public WithToken {
 	const Expr& expr() const;
 	Hyp* hyp() const   { return kind() == HYP  ? std::get<Hyp*>(val) : nullptr; }
 	Step* step() const { return kind() == STEP ? std::get<Step*>(val): nullptr; }
+	bool operator < (const Ref& r) const {
+		if (hyp()) {
+			return r.hyp() ? hyp() < r.hyp() : true;
+		} else {
+			return r.step() ? step() < r.step() : false;
+		}
+	}
 
 	typedef variant<Hyp*, Step*> Value;
 	Value val;
