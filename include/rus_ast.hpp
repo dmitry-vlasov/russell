@@ -149,6 +149,33 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
+struct HypRef {
+	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
+	uint id() const { return ass->id(); }
+	rus::Hyp* get() const { return ass->hyps[ind].get(); }
+	friend bool operator < (const HypRef& h1, const HypRef& h2) {
+		return h1.ass == h2.ass ? h1.ind  < h2.ind : h1.ass < h2.ass;
+	}
+	bool operator == (const HypRef& hr) const {
+		return ass == hr.ass && ind == hr.ind;
+	}
+	bool operator != (const HypRef& hr) const {
+		return !operator == (hr);
+	}
+	Assertion* ass;
+	uint       ind;
+};
+
+struct PropRef {
+	PropRef(Assertion* a) : ass(a) { }
+	uint id() const { return ass->id(); }
+	rus::Prop* get() const { return ass->prop.get(); }
+	friend bool operator < (const PropRef& a1, const PropRef& a2) {
+		return a1.ass->token.preceeds(a2.ass->token);
+	}
+	Assertion* ass;
+};
+
 vector<Substitution> match(const Assertion& as1, const Assertion& as2);
 void complete_assertion_vars(Assertion* a);
 

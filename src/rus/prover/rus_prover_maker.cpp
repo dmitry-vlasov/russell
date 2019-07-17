@@ -27,7 +27,6 @@ struct Maker : public Space {
 
 	void buildUp(Node* n) override;
 	void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) override;
-	//uint theoremId() const override { return theorem_id_; }
 
 private:
 	void expandUp(uint index, set<Node*>& leafs);
