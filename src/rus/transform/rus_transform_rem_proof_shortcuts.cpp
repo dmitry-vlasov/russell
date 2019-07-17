@@ -7,8 +7,45 @@ typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
 typedef prover::unify::IndexMap<Step*> StepIndex;
 
-void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex, const StepIndex& stepIndex) {
+struct Shortcut {
+	Shortcut() = default;
+	Shortcut(const vector<Step*>& hs, Step* pr) : hyps(hs), prop(pr) { }
+	vector<Step*> hyps;
+	Step* prop = nullptr;
+};
 
+void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex, const StepIndex& stepIndex) {
+	map<const Step*, vector<PropIndex::Unified>> props;
+	map<const Step*, map<const Assertion*, HypIndex::Unified>> hyps;
+	traverseProof(proof->qed->step, [&props, &hyps, &propIndex, &hypIndex](Writable* n) {
+		if (Step* step = dynamic_cast<Step*>(n)) {
+			prover::Term expr = prover::Tree2Term(
+				*step->expr.tree(),
+				prover::ReplMode::DENY_REPL,
+				prover::LightSymbol::MATH_INDEX
+			);
+			props.emplace(step, std::move(propIndex.unify(expr)));
+			map<const Assertion*, HypIndex::Unified> hypsMap;
+			for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
+				Assertion* ass = unif.data->ass;
+				hypsMap.emplace(ass, std::move(unif));
+			}
+			hyps.emplace(step, std::move(hypsMap));
+		}
+	});
+	map<const Assertion*, Shortcut> shortcuts;
+	traverseProof(proof->qed->step, [&props, &hyps, &shortcuts](Writable* n) {
+		if (Step* step = dynamic_cast<Step*>(n)) {
+			for (PropIndex::Unified& unif : props.at(step)) {
+				Assertion* ass = unif.data->ass;
+				traverseProof(step, [&hyps, &shortcuts, ass](Writable* m) {
+					if (Step* s = dynamic_cast<Step*>(m)) {
+
+					}
+				});
+			}
+		}
+	});
 }
 
 }
