@@ -49,6 +49,7 @@ string xml_types();
 void reduce_duplcate_steps();
 void factorize_subproofs(const string& opts);
 void reduce_unused_hyps();
+void reduce_proof_shortcuts(const string& opts);
 
 namespace {
 
@@ -111,6 +112,8 @@ Return refactor(const string& job, const string& opts) {
 		factorize_subproofs(opts);
 	} else if (job == "reduce_unused_hyps") {
 		reduce_unused_hyps();
+	} else if (job == "shortcut_proofs") {
+		reduce_proof_shortcuts(opts);
 	} else {
 		return Return("unknown refactor job: " + job, false);
 	}
@@ -259,7 +262,7 @@ static Descr description(string name) {
 		{"parse_expr", Descr("parse all unparsed expressions")},
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
 		{"refactor",   Descr("Refactor theories",
-			Descr::Arg("job", "reduce_proofs|factorize_subproofs|reduce_unused_hyps"),
+			Descr::Arg("job", "reduce_proofs|factorize_subproofs|reduce_unused_hyps|shortcut_proofs"),
 			Descr::Arg("opts", "options like <key>=<value> in '' separated by ,", true, "")
 		)},
 		{"info",       Descr("info about math")},

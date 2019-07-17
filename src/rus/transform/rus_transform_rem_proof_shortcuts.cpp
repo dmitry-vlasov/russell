@@ -33,6 +33,8 @@ struct UnifPair {
 };
 
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex, const StepIndex& stepIndex) {
+
+	//cout << "finding shortcuts: " << Lex::toStr(proof->theorem->id()) << endl;
 	map<Ref, vector<PropIndex::Unified>> props;
 	map<Ref, map<const Assertion*, vector<HypIndex::Unified>>> hyps;
 	traverseProof(proof->qed->step, [&props, &hyps, &propIndex, &hypIndex](Writable* n) {
@@ -73,15 +75,19 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				vector<vector<UnifPair>> matched_hyps(prop_unif.data->ass->hyps.size());
 				traverseProof(step, [&hyps, &matched_hyps, &prop_unif](Writable* m) {
 					if (Step* s = dynamic_cast<Step*>(m)) {
-						for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
-							if (prop_unif.sub.joinable(hyp_unif.sub)) {
-								matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), s));
+						if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
+							for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
+								if (prop_unif.sub.joinable(hyp_unif.sub)) {
+									matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), s));
+								}
 							}
 						}
 					} else if (Hyp* h = dynamic_cast<Hyp*>(m)) {
-						for (HypIndex::Unified& hyp_unif : hyps.at(Ref(h)).at(prop_unif.data->ass)) {
-							if (prop_unif.sub.joinable(hyp_unif.sub)) {
-								matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), h));
+						if (hyps.at(Ref(h)).count(prop_unif.data->ass)) {
+							for (HypIndex::Unified& hyp_unif : hyps.at(Ref(h)).at(prop_unif.data->ass)) {
+								if (prop_unif.sub.joinable(hyp_unif.sub)) {
+									matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), h));
+								}
 							}
 						}
 					} else {
@@ -130,7 +136,10 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 //#define PARALLEL_REDUCE_PROOF_SHORTCUTS
 #endif
 
-void reduce_proof_shortcuts()  {
+void reduce_proof_shortcuts(const string& opts)  {
+	auto parsed_opts = parse_options(opts);
+	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
+
 	vector<Proof*> proofs;
 	PropIndex propIndex;
 	HypIndex hypIndex;
@@ -138,7 +147,9 @@ void reduce_proof_shortcuts()  {
 		Assertion* ass = a.second.data;
 		if (Theorem* thm = dynamic_cast<Theorem*>(ass)) {
 			if (Proof* proof = thm->proof.get()) {
-				proofs.push_back(proof);
+				if (theorem == -1 || thm->id() == theorem) {
+					proofs.push_back(proof);
+				}
 			}
 		}
 		propIndex.add(
