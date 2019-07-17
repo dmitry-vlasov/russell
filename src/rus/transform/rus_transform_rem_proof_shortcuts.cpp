@@ -68,6 +68,77 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 			throw Error("must be a Step or Hyp");
 		}
 	});
+	/*cout << "props" << endl;
+	for (auto& p : props) {
+		cout << p.first.show() << endl;
+		cout << p.first.expr().show() << " --> {" << endl;
+		for (auto& u : p.second) {
+			cout << "\t[" << endl;
+			cout << Indent::paragraph(Lex::toStr(u.data->ass->id()), 2) << endl;
+			//cout << Indent::paragraph(u.data->ass->show(), 2) << endl;
+			cout << Indent::paragraph(u.sub.show(), 2) << endl;
+			cout << "\t], " << endl;
+
+		}
+		cout << "}" << endl;
+	}
+	cout << "hyps" << endl;
+	for (auto& p : hyps) {
+		cout << p.first.show() << endl;
+		cout << p.first.expr().show() << " --> {" << endl;
+		for (auto& q : p.second) {
+			//cout << Indent::paragraph(q.first->show()) << " --> " << endl;
+			cout << Indent::paragraph(Lex::toStr(q.first->id()), 2) << " --> " << endl;
+			cout << "\t[" << endl;
+			for (auto& u : q.second) {
+				//cout << Indent::paragraph(u.data->ass->show(), 2) << endl;
+				cout << Indent::paragraph(Lex::toStr(u.data->ass->id()), 2) << endl;
+				cout << Indent::paragraph(u.sub.show(), 2) << endl;
+			}
+			cout << "\t], " << endl;
+
+		}
+		cout << "}" << endl;
+	}*/
+
+	traverseProof(proof->qed->step, [&props, &hyps](Writable* n) {
+		if (Step* step = dynamic_cast<Step*>(n)) {
+			bool found = false;
+			for (auto& u : props.at(Ref(step))) {
+				if (u.data->ass == step->ass()) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				throw Error("ass not found");
+			}
+			for (uint i = 0; i < step->refs.size(); ++i) {
+				auto& r = step->refs.at(i);
+				if (Step* s = r->step()) {
+					map<const Assertion*, vector<HypIndex::Unified>> m = hyps.at(Ref(s));
+					if (!m.count(step->ass())) {
+						throw Error("ass from hyp not found");
+					}
+					found = false;
+					for (auto& u : m.at(step->ass())) {
+						if (u.data->ass == step->ass() && u.data->ind == i) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						throw Error("hyp not found");
+					}
+				}
+			}
+
+		} else if (Hyp* hyp = dynamic_cast<Hyp*>(n)) {
+
+		}
+	});
+
+
 	map<const Assertion*, Shortcut> shortcuts;
 	traverseProof(proof->qed->step, [&props, &hyps, &shortcuts](Writable* n) {
 		if (Step* step = dynamic_cast<Step*>(n)) {
@@ -99,6 +170,9 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 					variants.addDim(hyp_vect);
 				}
 				if (variants.card()) {
+
+					cout << "variants.card() = " << variants.card() << endl;
+
 					while (true) {
 						Assertion* ass = prop_unif.data->ass;
 						prover::Subst sub = prop_unif.sub;
@@ -111,12 +185,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 							hyps.push_back(up.node);
 						}
 						if (sub.ok()) {
-							Shortcut shortcut(hyps, step);
-							cout << "shortcut found:" << endl;
-							cout << shortcut.show() << endl;
-							cout << "for assertion: " << Lex::toStr(ass->id()) << endl;
-							cout << endl;
-							shortcuts.emplace(ass, std::move(shortcut));
+							shortcuts.emplace(ass, std::move(Shortcut(hyps, step)));
 						}
 						if (!variants.hasNext()) {
 							break;
@@ -128,6 +197,16 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 			}
 		}
 	});
+
+	if (!shortcuts.empty()) {
+		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
+		for (auto& p : shortcuts) {
+			cout << "shortcut found:" << endl;
+			cout << p.second.show() << endl;
+			cout << "for assertion: " << Lex::toStr(p.first->id()) << endl;
+			cout << endl;
+		}
+	}
 }
 
 }
