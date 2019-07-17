@@ -413,7 +413,7 @@ bool Subst::joinable(uint v, const Type* tp, const Term& tr) const{
 }
 
 bool Subst::joinable(const Subst& s) const {
-	if (ok_ || !s.ok_) return false;
+	if (!ok_ || !s.ok_) return false;
 	for (const auto& p : s.sub_) {
 		if (!joinable(p.first, p.second.type, p.second.term)) {
 			return false;
