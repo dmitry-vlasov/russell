@@ -34,20 +34,29 @@ struct UnifPair {
 
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex, const StepIndex& stepIndex) {
 
-	//cout << "finding shortcuts: " << Lex::toStr(proof->theorem->id()) << endl;
+	cout << "finding shortcuts: " << Lex::toStr(proof->theorem->id()) << endl;
 	map<Ref, vector<PropIndex::Unified>> props;
 	map<Ref, map<const Assertion*, vector<HypIndex::Unified>>> hyps;
-	traverseProof(proof->qed->step, [&props, &hyps, &propIndex, &hypIndex](Writable* n) {
+	traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex](Writable* n) {
 		if (Step* step = dynamic_cast<Step*>(n)) {
 			prover::Term expr = prover::Tree2Term(
 				*step->expr.tree(),
 				prover::ReplMode::DENY_REPL,
 				prover::LightSymbol::MATH_INDEX
 			);
-			props.emplace(Ref(step), std::move(propIndex.unify(expr)));
+			for (PropIndex::Unified& unif : propIndex.unify(expr)) {
+				Assertion* ass = unif.data->ass;
+				if (!ass->token.preceeds(proof->theorem->token)) {
+					continue;
+				}
+				props[Ref(step)].emplace_back(std::move(unif));
+			}
 			map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
 			for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
 				Assertion* ass = unif.data->ass;
+				if (!ass->token.preceeds(proof->theorem->token)) {
+					continue;
+				}
 				hypsMap[ass].emplace_back(std::move(unif));
 			}
 			hyps.emplace(Ref(step), std::move(hypsMap));
@@ -57,10 +66,19 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				prover::ReplMode::DENY_REPL,
 				prover::LightSymbol::MATH_INDEX
 			);
-			props.emplace(Ref(hyp), std::move(propIndex.unify(expr)));
+			for (PropIndex::Unified& unif : propIndex.unify(expr)) {
+				Assertion* ass = unif.data->ass;
+				if (!ass->token.preceeds(proof->theorem->token)) {
+					continue;
+				}
+				props[Ref(hyp)].emplace_back(std::move(unif));
+			}
 			map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
 			for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
 				Assertion* ass = unif.data->ass;
+				if (!ass->token.preceeds(proof->theorem->token)) {
+					continue;
+				}
 				hypsMap[ass].emplace_back(std::move(unif));
 			}
 			hyps.emplace(Ref(hyp), std::move(hypsMap));
@@ -68,7 +86,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 			throw Error("must be a Step or Hyp");
 		}
 	});
-	/*cout << "props" << endl;
+	cout << "props" << endl;
 	for (auto& p : props) {
 		cout << p.first.show() << endl;
 		cout << p.first.expr().show() << " --> {" << endl;
@@ -99,7 +117,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 
 		}
 		cout << "}" << endl;
-	}*/
+	}
 
 	traverseProof(proof->qed->step, [&props, &hyps](Writable* n) {
 		if (Step* step = dynamic_cast<Step*>(n)) {
@@ -117,6 +135,21 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				auto& r = step->refs.at(i);
 				if (Step* s = r->step()) {
 					map<const Assertion*, vector<HypIndex::Unified>> m = hyps.at(Ref(s));
+					if (!m.count(step->ass())) {
+						throw Error("ass from step not found");
+					}
+					found = false;
+					for (auto& u : m.at(step->ass())) {
+						if (u.data->ass == step->ass() && u.data->ind == i) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						throw Error("step not found");
+					}
+				} else if (Hyp* h = r->hyp()) {
+					map<const Assertion*, vector<HypIndex::Unified>> m = hyps.at(Ref(h));
 					if (!m.count(step->ass())) {
 						throw Error("ass from hyp not found");
 					}
@@ -144,21 +177,43 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 		if (Step* step = dynamic_cast<Step*>(n)) {
 			for (PropIndex::Unified& prop_unif : props.at(Ref(step))) {
 				vector<vector<UnifPair>> matched_hyps(prop_unif.data->ass->hyps.size());
-				traverseProof(step, [&hyps, &matched_hyps, &prop_unif](Writable* m) {
+				traverseProof(step, [step, &hyps, &matched_hyps, &prop_unif](Writable* m) {
 					if (Step* s = dynamic_cast<Step*>(m)) {
+						bool child = false;
+						for (auto& r : step->refs) {
+							if (r->step() == s) {
+								child = true;
+								break;
+							}
+						}
 						if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
 							for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
 								if (prop_unif.sub.joinable(hyp_unif.sub)) {
 									matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), s));
 								}
 							}
+						} else {
+							if (child) {
+								throw Error("child step not found");
+							}
 						}
 					} else if (Hyp* h = dynamic_cast<Hyp*>(m)) {
+						bool child = false;
+						for (auto& r : step->refs) {
+							if (r->hyp() == h) {
+								child = true;
+								break;
+							}
+						}
 						if (hyps.at(Ref(h)).count(prop_unif.data->ass)) {
 							for (HypIndex::Unified& hyp_unif : hyps.at(Ref(h)).at(prop_unif.data->ass)) {
 								if (prop_unif.sub.joinable(hyp_unif.sub)) {
 									matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), h));
 								}
+							}
+						} else {
+							if (child) {
+								throw Error("child hyp not found");
 							}
 						}
 					} else {
@@ -166,7 +221,9 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 					}
 				});
 				prover::CartesianProd<UnifPair> variants;
+				uint i = 0;
 				for (auto& hyp_vect : matched_hyps) {
+					cout << "hyp_vect[" << i++ << "].size() " << hyp_vect.size() << endl;
 					variants.addDim(hyp_vect);
 				}
 				if (variants.card()) {
