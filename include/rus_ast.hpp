@@ -254,7 +254,9 @@ struct Step : public Writable, public WithToken {
 
 	explicit Step(uint i, Step::Kind k, Id id, Proof* p, const Token& t = Token()) :
 		WithToken(t), sub(false), ind_(i), proof_(p) {
-		if (k == ASS) { val_ = AssPtr(make_unique<AssUser>(id)); }
+		if (k == ASS) {
+			set_ass(id.id());
+		}
 	}
 	Step(const Step&) = delete;
 	uint ass_id() const { return std::get<AssPtr>(val_)->id(); }
@@ -268,6 +270,7 @@ struct Step : public Writable, public WithToken {
 	Kind kind() const { return static_cast<Kind>(val_.index()); }
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
+	void set_ass(uint id) { val_ = AssPtr(make_unique<AssUser>(id)); }
 	void verify(uint mode = VERIFY_ALL) const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
