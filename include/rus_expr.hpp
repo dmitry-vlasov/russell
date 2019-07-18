@@ -293,10 +293,10 @@ string show(const Rules& tr);
 struct Substitution : public Writable {
 	Substitution(bool ok = true) : ok_(ok) { }
 	Substitution(const Var& v, const Tree& t) : sub_(), ok_(true) {
-		sub_.emplace(v.lit(), TypeTree(v, t));
+		join(v, t);
 	}
 	Substitution(uint v, const Type* tp,  const Tree& tr) : sub_(), ok_(true) {
-		sub_.emplace(v, TypeTree(tp, tr));
+		join(v, tp, tr);
 	}
 	Substitution(const Substitution& s) : ok_(s.ok_) {
 		operator = (s);

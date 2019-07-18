@@ -66,7 +66,7 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 	if (s1.size() > s2.size()) return check_disjointed(s2, s1);
 	for (uint x : s1) {
 		if (s2.find(x) != s2.end()) {
-			throw Error("disjointed variable restriction violation", Lex::toStr(x));
+			throw Error("disjointed variable restriction violation, common var", Lex::toStr(x));
 		}
 	}
 }
@@ -76,7 +76,12 @@ void Disj::check(const Substitution& s, Assertion* t) const {
 		if (!s.maps(p.v) || !s.maps(p.w)) continue;
 		set<uint> v1_vars = s.map(p.v)->vars();
 		set<uint> v2_vars = s.map(p.w)->vars();
-		check_disjointed(v1_vars, v2_vars);
+		try {
+			check_disjointed(v1_vars, v2_vars);
+		} catch (Error& err) {
+			err.msg += "disjointed pair: " + Lex::toStr(p.v) + " and " + Lex::toStr(p.w) + "\n";
+			throw err;
+		}
 		if (t) {
 			t->disj.make_pairs_disjointed(v1_vars, v2_vars);
 		}

@@ -59,7 +59,7 @@ void Step::verify(uint mode) const {
 			ass()->disj.write(oss);
 			err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
 			err.msg += "disjointeds: " + oss.str() + "\n";
-			err.msg += "substitution: " + sub.show() + "\n";
+			err.msg += "substitution:\n" + Indent::paragraph(sub.show()) + "\n";
 			throw err;
 		}
 	}

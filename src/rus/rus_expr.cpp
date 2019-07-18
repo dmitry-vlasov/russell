@@ -252,7 +252,9 @@ bool Substitution::join(uint v, const Type* tp, const Tree& tr) {
 			ok_ = false;
 		}
 	} else {
-		sub_.emplace(v, TypeTree(tp, tr));
+		if (tr.kind() != Tree::VAR || dynamic_cast<const VarTree*>(&tr)->lit() != v) {
+			sub_.emplace(v, TypeTree(tp, tr));
+		}
 	}
 	return ok_;
 }
@@ -265,7 +267,9 @@ bool Substitution::join(uint v, const Type* tp, unique_ptr<Tree>&& tr) {
 			ok_ = false;
 		}
 	} else {
-		sub_.emplace(v, TypeTree(tp, std::move(tr)));
+		if (tr->kind() != Tree::VAR || dynamic_cast<VarTree*>(tr.get())->lit() != v) {
+			sub_.emplace(v, TypeTree(tp, std::move(tr)));
+		}
 	}
 	return ok_;
 }

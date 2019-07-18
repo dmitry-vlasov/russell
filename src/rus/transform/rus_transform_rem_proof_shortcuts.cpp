@@ -71,8 +71,8 @@ struct Shortcut {
 		}
 		oss << "------------" << endl;
 		oss << *prop << endl;
-		//oss << "subst:" << endl;
-		//oss << Indent::paragraph(sub.show());
+		oss << "subst:" << endl;
+		oss << Indent::paragraph(sub.show());
 		return oss.str();
 	}
 	string showIntermediate() const {
@@ -116,6 +116,7 @@ int child_ind(const Step* s, const Writable* ch) {
 };
 
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
+	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
 	map<Ref, vector<PropIndex::Unified>> props;
 	map<Ref, map<const Assertion*, vector<HypIndex::Unified>>> hyps;
 	traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex](Writable* n) {
@@ -216,9 +217,18 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 								hyps.push_back(up.node);
 							}
 							if (sub.ok()) {
+								Substitution s = Subst2Substitution(sub);
 								Shortcut shortcut(step, std::move(sub), hyps);
 								if (shortcut.gain(ass) > 0) {
-									shortcuts.emplace(ass, std::move(shortcut));
+									try {
+										//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+										//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
+										ass->disj.check(s);
+										//cout << "passed" << endl;
+										shortcuts.emplace(ass, std::move(shortcut));
+									} catch (Error& err) {
+										//cout << err.msg << endl;
+									}
 								}
 							}
 							if (!variants.hasNext()) {
@@ -229,9 +239,18 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 						}
 					}
 				} else {
+					Substitution s = Subst2Substitution(prop_unif.sub);
 					Shortcut shortcut(step, std::move(prop_unif.sub));
 					if (shortcut.gain(prop_unif.data->ass) > 0) {
-						shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
+						try {
+							//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+							//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
+							prop_unif.data->ass->disj.check(s);
+							//cout << "passed" << endl;
+							shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
+						} catch (Error& err) {
+							//cout << err.msg << endl;
+						}
 					}
 				}
 			}
@@ -241,13 +260,15 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 	if (!shortcuts.empty()) {
 		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
 		for (auto& p : shortcuts) {
-			cout << "shortcut for assertion: " << Lex::toStr(p.first->id()) << endl;
-			cout << p.second.show() << endl;
-			cout << "gain: " << p.second.gain(p.first) << endl;
-			//cout << p.second.showIntermediate() << endl;
-			//cout << endl << endl << endl;
-			p.second.apply(p.first);
+			if (p.second.gain(p.first) > 0) {
+				cout << "for assertion: " << Lex::toStr(p.first->id()) << ", gain: " << p.second.gain(p.first) << endl;
+				//cout << p.second.show() << endl;
+				//cout << p.second.showIntermediate() << endl;
+				//cout << endl << endl << endl;
+				p.second.apply(p.first);
+			}
 		}
+		cout << endl;
 	}
 	proof->verify();
 }
@@ -275,12 +296,12 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 		propIndex.add(
-			prover::Tree2Term(*ass->prop->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::ASSERTION_INDEX),
+			prover::Tree2Term(*ass->prop->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
 			PropRef(ass)
 		);
 		for (uint i = 0; i < ass->hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass->hyps.at(i)->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::ASSERTION_INDEX),
+				prover::Tree2Term(*ass->hyps.at(i)->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
 				HypRef(ass, i)
 			);
 		}
