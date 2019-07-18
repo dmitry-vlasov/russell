@@ -179,42 +179,50 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				vector<vector<UnifPair>> matched_hyps(prop_unif.data->ass->hyps.size());
 				traverseProof(step, [step, &hyps, &matched_hyps, &prop_unif](Writable* m) {
 					if (Step* s = dynamic_cast<Step*>(m)) {
-						uint ch_ind = -1;
-						for (uint i = 0; i < step->refs.size(); ++ i) {
-							auto& r = step->refs.at(i);
-							if (r->step() == s) {
-								ch_ind = i;
-								break;
+						if (s != step) {
+							uint ch_ind = -1;
+							for (uint i = 0; i < step->refs.size(); ++ i) {
+								auto& r = step->refs.at(i);
+								if (r->step() == s) {
+									ch_ind = i;
+									break;
+								}
 							}
-						}
-						if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
-							bool ch_found = false;
-							for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
-								ch_found = ch_found || (hyp_unif.data->ass == prop_unif.data->ass && hyp_unif.data->ind == ch_ind);
-								if (prop_unif.sub.joinable(hyp_unif.sub)) {
-									matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), s));
-								} else {
-									if (ch_found && ch_ind != -1) {
-										string err("child step not unified\n");
-										err += "prop_unif.sub:\n" + prop_unif.sub.show() + "\n";
-										err += "hyp_unif.sub:\n" + hyp_unif.sub.show() + "\n";
-										throw Error(err);
+							if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
+								bool ch_found = false;
+								for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
+									ch_found = ch_found ||
+										(hyp_unif.data->ass == prop_unif.data->ass &&
+										hyp_unif.data->ass == step->ass() &&
+										hyp_unif.data->ind == ch_ind );
+									if (prop_unif.sub.joinable(hyp_unif.sub)) {
+										matched_hyps[hyp_unif.data->ind].push_back(UnifPair(std::move(hyp_unif), s));
+									} else {
+										/*if (ch_found && ch_ind != -1 && prop_unif.data->ass == step->ass()) {
+											string err("child step not unified\n");
+											err += "prop_unif.sub:\n" + prop_unif.sub.show() + "\n";
+											err += "hyp_unif.sub:\n" + hyp_unif.sub.show() + "\n\n";
+											err += "prop_unif.data->ass: " + Lex::toStr(prop_unif.data->ass->id()) + "\n";
+											err += "ch_ind: " + to_string(ch_ind) + "\n\n";
+											err += "ass: " + prop_unif.data->ass->show() + "\n";
+											throw Error(err);
+										}*/
 									}
 								}
-							}
-							if (!ch_found && ch_ind != -1) {
-								string err("child step hyp not found\n");
-								err += "prop_unif.data->ass: " + Lex::toStr(prop_unif.data->ass->id()) + "\n";
-								err += "ch_ind: " + to_string(ch_ind) + "\n\n";
-								for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
-									err += "hyp_unif.data->ass: " + Lex::toStr(hyp_unif.data->ass->id()) + "\n";
-									err += "hyp_unif.data->ind: " + to_string(hyp_unif.data->ind) + "\n";
+								if (!ch_found && ch_ind != -1 && prop_unif.data->ass == step->ass()) {
+									string err("child step hyp not found\n");
+									err += "prop_unif.data->ass: " + Lex::toStr(prop_unif.data->ass->id()) + "\n";
+									err += "ch_ind: " + to_string(ch_ind) + "\n\n";
+									for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
+										err += "hyp_unif.data->ass: " + Lex::toStr(hyp_unif.data->ass->id()) + "\n";
+										err += "hyp_unif.data->ind: " + to_string(hyp_unif.data->ind) + "\n";
+									}
+									throw Error(err);
 								}
-								throw Error(err);
-							}
-						} else {
-							if (ch_ind != -1) {
-								throw Error("child step not found");
+							} else {
+								if (ch_ind != -1 && prop_unif.data->ass == step->ass()) {
+									throw Error("child step not found");
+								}
 							}
 						}
 					} else if (Hyp* h = dynamic_cast<Hyp*>(m)) {
