@@ -115,148 +115,160 @@ int child_ind(const Step* s, const Writable* ch) {
 	return ch_ind;
 };
 
-void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
-	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
+map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
 	map<Ref, vector<PropIndex::Unified>> props;
 	map<Ref, map<const Assertion*, vector<HypIndex::Unified>>> hyps;
-	traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex](Writable* n) {
-		if (Step* step = dynamic_cast<Step*>(n)) {
-			prover::Term expr = prover::Tree2Term(
-				*step->expr.tree(),
-				prover::ReplMode::DENY_REPL,
-				prover::LightSymbol::MATH_INDEX
-			);
-			for (PropIndex::Unified& unif : propIndex.unify(expr)) {
-				Assertion* ass = unif.data->ass;
-				if (!ass->token.preceeds(proof->theorem->token)) {
-					continue;
-				}
-				props[Ref(step)].emplace_back(std::move(unif));
-			}
-			map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
-			for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
-				Assertion* ass = unif.data->ass;
-				if (!ass->token.preceeds(proof->theorem->token)) {
-					continue;
-				}
-				hypsMap[ass].emplace_back(std::move(unif));
-			}
-			hyps.emplace(Ref(step), std::move(hypsMap));
-		} else if (Hyp* hyp = dynamic_cast<Hyp*>(n)) {
-			prover::Term expr = prover::Tree2Term(
-				*hyp->expr.tree(),
-				prover::ReplMode::DENY_REPL,
-				prover::LightSymbol::MATH_INDEX
-			);
-			for (PropIndex::Unified& unif : propIndex.unify(expr)) {
-				Assertion* ass = unif.data->ass;
-				if (!ass->token.preceeds(proof->theorem->token)) {
-					continue;
-				}
-				props[Ref(hyp)].emplace_back(std::move(unif));
-			}
-			map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
-			for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
-				Assertion* ass = unif.data->ass;
-				if (!ass->token.preceeds(proof->theorem->token)) {
-					continue;
-				}
-				hypsMap[ass].emplace_back(std::move(unif));
-			}
-			hyps.emplace(Ref(hyp), std::move(hypsMap));
-		} else {
-			throw Error("must be a Step or Hyp");
-		}
-	});
 	map<const Assertion*, Shortcut> shortcuts;
-	traverseProof(proof->qed->step, [&props, &hyps, &shortcuts](Writable* n) {
-		if (Step* step = dynamic_cast<Step*>(n)) {
-			for (PropIndex::Unified& prop_unif : props.at(Ref(step))) {
-				if (prop_unif.data->ass == step->ass()) {
-					continue;
+	Watchdog watchdog(1000, "reduce shortcuts in " + Lex::toStr(proof->theorem->id()));
+	try {
+		traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex, &watchdog](Writable* n) {
+			if (Step* step = dynamic_cast<Step*>(n)) {
+				prover::Term expr = prover::Tree2Term(
+					*step->expr.tree(),
+					prover::ReplMode::DENY_REPL,
+					prover::LightSymbol::MATH_INDEX
+				);
+				for (PropIndex::Unified& unif : propIndex.unify(expr)) {
+					Assertion* ass = unif.data->ass;
+					if (!ass->token.preceeds(proof->theorem->token)) {
+						continue;
+					}
+					props[Ref(step)].emplace_back(std::move(unif));
 				}
-				if (prop_unif.data->ass->hyps.size()) {
-					vector<vector<UnifPair>> matched_hyps(prop_unif.data->ass->hyps.size());
-					traverseProof(step, [step, &hyps, &matched_hyps, &prop_unif](Writable* m) {
-						if (Step* s = dynamic_cast<Step*>(m)) {
-							if (s != step) {
-								if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
-									for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
-										if (prop_unif.sub.joinable(hyp_unif.sub)) {
-											matched_hyps[hyp_unif.data->ind].push_back(UnifPair(hyp_unif, s));
+				map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
+				for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
+					Assertion* ass = unif.data->ass;
+					if (!ass->token.preceeds(proof->theorem->token)) {
+						continue;
+					}
+					hypsMap[ass].emplace_back(std::move(unif));
+				}
+				hyps.emplace(Ref(step), std::move(hypsMap));
+				watchdog.check();
+			} else if (Hyp* hyp = dynamic_cast<Hyp*>(n)) {
+				prover::Term expr = prover::Tree2Term(
+					*hyp->expr.tree(),
+					prover::ReplMode::DENY_REPL,
+					prover::LightSymbol::MATH_INDEX
+				);
+				for (PropIndex::Unified& unif : propIndex.unify(expr)) {
+					Assertion* ass = unif.data->ass;
+					if (!ass->token.preceeds(proof->theorem->token)) {
+						continue;
+					}
+					props[Ref(hyp)].emplace_back(std::move(unif));
+				}
+				map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
+				for (HypIndex::Unified& unif : hypIndex.unify(expr)) {
+					Assertion* ass = unif.data->ass;
+					if (!ass->token.preceeds(proof->theorem->token)) {
+						continue;
+					}
+					hypsMap[ass].emplace_back(std::move(unif));
+				}
+				hyps.emplace(Ref(hyp), std::move(hypsMap));
+				watchdog.check();
+			} else {
+				throw Error("must be a Step or Hyp");
+			}
+		});
+		traverseProof(proof->qed->step, [&props, &hyps, &shortcuts, &watchdog](Writable* n) {
+			watchdog.check();
+			if (Step* step = dynamic_cast<Step*>(n)) {
+				for (PropIndex::Unified& prop_unif : props.at(Ref(step))) {
+					if (prop_unif.data->ass == step->ass()) {
+						continue;
+					}
+					if (prop_unif.data->ass->hyps.size()) {
+						vector<vector<UnifPair>> matched_hyps(prop_unif.data->ass->hyps.size());
+						traverseProof(step, [step, &hyps, &matched_hyps, &prop_unif, &watchdog](Writable* m) {
+							watchdog.check();
+							if (Step* s = dynamic_cast<Step*>(m)) {
+								if (s != step) {
+									if (hyps.at(Ref(s)).count(prop_unif.data->ass)) {
+										for (HypIndex::Unified& hyp_unif : hyps.at(Ref(s)).at(prop_unif.data->ass)) {
+											if (prop_unif.sub.joinable(hyp_unif.sub)) {
+												matched_hyps[hyp_unif.data->ind].push_back(UnifPair(hyp_unif, s));
+											}
 										}
 									}
 								}
-							}
-						} else if (Hyp* h = dynamic_cast<Hyp*>(m)) {
-							if (hyps.at(Ref(h)).count(prop_unif.data->ass)) {
-								for (HypIndex::Unified& hyp_unif : hyps.at(Ref(h)).at(prop_unif.data->ass)) {
-									if (prop_unif.sub.joinable(hyp_unif.sub)) {
-										matched_hyps[hyp_unif.data->ind].push_back(UnifPair(hyp_unif, h));
+							} else if (Hyp* h = dynamic_cast<Hyp*>(m)) {
+								if (hyps.at(Ref(h)).count(prop_unif.data->ass)) {
+									for (HypIndex::Unified& hyp_unif : hyps.at(Ref(h)).at(prop_unif.data->ass)) {
+										if (prop_unif.sub.joinable(hyp_unif.sub)) {
+											matched_hyps[hyp_unif.data->ind].push_back(UnifPair(hyp_unif, h));
+										}
 									}
 								}
-							}
-						} else {
-							throw Error("must be a Step or Hyp");
-						}
-					});
-					prover::CartesianProd<UnifPair> variants;
-					for (auto& hyp_vect : matched_hyps) {
-						variants.addDim(hyp_vect);
-					}
-					if (variants.card()) {
-						while (true) {
-							Assertion* ass = prop_unif.data->ass;
-							prover::Subst sub = prop_unif.sub;
-							vector<UnifPair> variant = variants.data();
-							vector<Writable*> hyps;
-							for (UnifPair& up : variant) {
-								if (!sub.join(up.unif.sub)) {
-									break;
-								}
-								hyps.push_back(up.node);
-							}
-							if (sub.ok()) {
-								Substitution s = Subst2Substitution(sub);
-								Shortcut shortcut(step, std::move(sub), hyps);
-								if (shortcut.gain(ass) > 0) {
-									try {
-										//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
-										//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
-										ass->disj.check(s);
-										//cout << "passed" << endl;
-										shortcuts.emplace(ass, std::move(shortcut));
-									} catch (Error& err) {
-										//cout << err.msg << endl;
-									}
-								}
-							}
-							if (!variants.hasNext()) {
-								break;
 							} else {
-								variants.makeNext();
+								throw Error("must be a Step or Hyp");
+							}
+						});
+						prover::CartesianProd<UnifPair> variants;
+						for (auto& hyp_vect : matched_hyps) {
+							variants.addDim(hyp_vect);
+						}
+						if (variants.card()) {
+							while (true) {
+								Assertion* ass = prop_unif.data->ass;
+								prover::Subst sub = prop_unif.sub;
+								vector<UnifPair> variant = variants.data();
+								vector<Writable*> hyps;
+								for (UnifPair& up : variant) {
+									if (!sub.join(up.unif.sub)) {
+										break;
+									}
+									hyps.push_back(up.node);
+								}
+								if (sub.ok()) {
+									Substitution s = Subst2Substitution(sub);
+									Shortcut shortcut(step, std::move(sub), hyps);
+									if (shortcut.gain(ass) > 0) {
+										try {
+											//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+											//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
+											ass->disj.check(s);
+											//cout << "passed" << endl;
+											shortcuts.emplace(ass, std::move(shortcut));
+										} catch (Error& err) {
+											//cout << err.msg << endl;
+										}
+									}
+								}
+								if (!variants.hasNext()) {
+									break;
+								} else {
+									variants.makeNext();
+								}
 							}
 						}
-					}
-				} else {
-					Substitution s = Subst2Substitution(prop_unif.sub);
-					Shortcut shortcut(step, std::move(prop_unif.sub));
-					if (shortcut.gain(prop_unif.data->ass) > 0) {
-						try {
-							//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
-							//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
-							prop_unif.data->ass->disj.check(s);
-							//cout << "passed" << endl;
-							shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
-						} catch (Error& err) {
-							//cout << err.msg << endl;
+					} else {
+						Substitution s = Subst2Substitution(prop_unif.sub);
+						Shortcut shortcut(step, std::move(prop_unif.sub));
+						if (shortcut.gain(prop_unif.data->ass) > 0) {
+							try {
+								//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+								//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
+								prop_unif.data->ass->disj.check(s);
+								//cout << "passed" << endl;
+								shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
+							} catch (Error& err) {
+								//cout << err.msg << endl;
+							}
 						}
 					}
 				}
 			}
-		}
-	});
-
+		});
+	} catch (Timeout& timeout) {
+		cout << timeout.what() << endl;
+	}
+	return shortcuts;
+}
+void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
+	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
+	map<const Assertion*, Shortcut> shortcuts = find_proof_shortcuts(proof, propIndex, hypIndex);
 	if (!shortcuts.empty()) {
 		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
 		for (auto& p : shortcuts) {
