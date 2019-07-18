@@ -211,10 +211,12 @@ struct Ref : public Writable, public WithToken {
 	explicit Ref(Hyp* h, const Token& t = Token())  : WithToken(t), val(h)  { }
 	explicit Ref(Step* s, const Token& t = Token()) : WithToken(t), val(s)  { }
 	explicit Ref(const Ref& r) : WithToken(r.token), val(r.val) { }
+	explicit Ref(Writable* w);
 	Expr& expr();
 	const Expr& expr() const;
 	Hyp* hyp() const   { return kind() == HYP  ? std::get<Hyp*>(val) : nullptr; }
 	Step* step() const { return kind() == STEP ? std::get<Step*>(val): nullptr; }
+	Writable* ref() const;
 	bool operator < (const Ref& r) const {
 		if (hyp()) {
 			return r.hyp() ? hyp() < r.hyp() : true;
@@ -277,6 +279,21 @@ struct Step : public Writable, public WithToken {
 	Value  val_;
 	Proof* proof_;
 };
+
+inline Writable* Ref::ref() const {
+	switch (kind()) {
+	case HYP: return hyp();
+	case STEP: return step();
+	default: assert(false && "impossible ref ind"); return nullptr;
+	}
+}
+inline Ref::Ref(Writable* w) : WithToken(Token()) {
+	if (dynamic_cast<Hyp*>(w)) {
+		val = dynamic_cast<Hyp*>(w);
+	} else {
+		val = dynamic_cast<Step*>(w);
+	}
+}
 
 void traverseProof(Step* step, std::function<void(Writable*)> f);
 

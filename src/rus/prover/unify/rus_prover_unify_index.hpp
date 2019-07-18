@@ -363,6 +363,9 @@ struct IndexMap {
 	uint size() const {
 		return index_.size();
 	}
+	void init() {
+		index_.root();
+	}
 
 private:
 	struct Storage {
