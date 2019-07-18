@@ -46,7 +46,8 @@ string xml_outline(const Source&, uint);
 string xml_structure(uint bits);
 string xml_types();
 
-void reduce_duplcate_steps();
+void reduce_duplicate_steps();
+void reduce_unused_steps();
 void factorize_subproofs(const string& opts);
 void reduce_unused_hyps();
 void reduce_proof_shortcuts(const string& opts);
@@ -106,8 +107,10 @@ Return types() {
 }
 
 Return refactor(const string& job, const string& opts) {
-	if (job == "reduce_proofs") {
-		reduce_duplcate_steps();
+	if (job == "reduce_duplicate_steps") {
+		reduce_duplicate_steps();
+	} else if (job == "reduce_unused_steps") {
+		reduce_unused_steps();
 	} else if (job == "factorize_subproofs") {
 		factorize_subproofs(opts);
 	} else if (job == "reduce_unused_hyps") {
@@ -262,7 +265,7 @@ static Descr description(string name) {
 		{"parse_expr", Descr("parse all unparsed expressions")},
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
 		{"refactor",   Descr("Refactor theories",
-			Descr::Arg("job", "reduce_proofs|factorize_subproofs|reduce_unused_hyps|shortcut_proofs"),
+			Descr::Arg("job", "reduce_duplicate_steps|reduce_unused_steps|factorize_subproofs|reduce_unused_hyps|shortcut_proofs"),
 			Descr::Arg("opts", "options like <key>=<value> in '' separated by ,", true, "")
 		)},
 		{"info",       Descr("info about math")},

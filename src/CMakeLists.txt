@@ -67,6 +67,7 @@ else()
 		rus/transform/rus_transform_rem_dupsteps.cpp
 		rus/transform/rus_transform_rem_proof_shortcuts.cpp
 		rus/transform/rus_transform_rem_unused_hyps.cpp
+		rus/transform/rus_transform_rem_unused_steps.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_expr.cpp
