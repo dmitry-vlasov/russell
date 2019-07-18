@@ -210,7 +210,11 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 							variants.addDim(hyp_vect);
 						}
 						if (variants.card()) {
+							if (variants.card() > 1024 * 32) {
+								cout << "variants.card() = " << variants.card() << endl;
+							}
 							while (true) {
+								watchdog.check();
 								Assertion* ass = prop_unif.data->ass;
 								prover::Subst sub = prop_unif.sub;
 								vector<UnifPair> variant = variants.data();
@@ -274,15 +278,20 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 		for (auto& p : shortcuts) {
 			if (p.second.gain(p.first) > 0) {
 				cout << "for assertion: " << Lex::toStr(p.first->id()) << ", gain: " << p.second.gain(p.first) << endl;
-				//cout << p.second.show() << endl;
-				//cout << p.second.showIntermediate() << endl;
+				cout << p.second.show() << endl;
+				cout << p.second.showIntermediate() << endl;
 				//cout << endl << endl << endl;
 				p.second.apply(p.first);
 			}
 		}
 		cout << endl;
 	}
-	proof->verify();
+	try {
+		proof->verify();
+	} catch (Error& err) {
+		err.msg += "of theorem:\n" + proof->theorem->show() + "\n";
+		throw err;
+	}
 }
 
 }
