@@ -190,6 +190,9 @@ bool Tree::operator == (const Tree& tree) const {
 	}
 	if (const RuleTree* rule_tree1 = dynamic_cast<const RuleTree*>(&tree)) {
 		const RuleTree* rule_tree2 = dynamic_cast<const RuleTree*>(this);
+		if (rule_tree1->children.size() != rule_tree2->children.size()) {
+			return false;
+		}
 		for (uint i = 0; i < rule_tree1->children.size(); ++ i) {
 			if (*rule_tree1->children[i] != *rule_tree2->children[i]) {
 				return false;
@@ -252,9 +255,7 @@ bool Substitution::join(uint v, const Type* tp, const Tree& tr) {
 			ok_ = false;
 		}
 	} else {
-		if (tr.kind() != Tree::VAR || dynamic_cast<const VarTree*>(&tr)->lit() != v) {
-			sub_.emplace(v, TypeTree(tp, tr));
-		}
+		sub_.emplace(v, TypeTree(tp, tr));
 	}
 	return ok_;
 }
@@ -267,9 +268,7 @@ bool Substitution::join(uint v, const Type* tp, unique_ptr<Tree>&& tr) {
 			ok_ = false;
 		}
 	} else {
-		if (tr->kind() != Tree::VAR || dynamic_cast<VarTree*>(tr.get())->lit() != v) {
-			sub_.emplace(v, TypeTree(tp, std::move(tr)));
-		}
+		sub_.emplace(v, TypeTree(tp, std::move(tr)));
 	}
 	return ok_;
 }

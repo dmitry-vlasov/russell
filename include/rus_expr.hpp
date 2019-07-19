@@ -251,6 +251,15 @@ struct Expr : public Writable, public WithToken {
 
 	const_iterator begin() const { return symbols.cbegin(); }
 	const_iterator end() const { return symbols.cend(); }
+	vector<const Var*> vars() const {
+		vector<const Var*> ret;
+		for (auto& s : symbols) {
+			if (const Var* v = dynamic_cast<const Var*>(s.get())) {
+				ret.push_back(v);
+			}
+		}
+		return ret;
+	}
 
 	User<Type> type;
 	Symbols symbols;

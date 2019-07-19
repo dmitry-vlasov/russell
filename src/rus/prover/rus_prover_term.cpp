@@ -247,7 +247,7 @@ unique_ptr<Tree> fill_in_tree(Term::ConstIterator& ft, Term::ConstIterator end) 
 		const Rule* r = (ft++)->ruleVar.rule;
 		RuleTree::Children ch;
 		for (uint i = 0; i < r->arity(); ++ i) {
-			ch.push_back(fill_in_tree(ft, end));
+			ch.emplace_back(std::move(fill_in_tree(ft, end)));
 		}
 		return make_unique<RuleTree>(r->id(), ch);
 	} else {

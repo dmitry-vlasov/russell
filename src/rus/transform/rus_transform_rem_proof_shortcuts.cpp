@@ -40,11 +40,11 @@ set<const Writable*> intermediate(const Step* parent, const vector<const Writabl
 
 struct Shortcut {
 	Shortcut() = default;
-	Shortcut(Step* pr, prover::Subst&& s, const vector<Writable*>& hs = vector<Writable*>()) : hyps(hs), prop(pr), sub(std::move(s)) { }
+	Shortcut(Step* pr, Substitution&& s, const vector<Writable*>& hs = vector<Writable*>()) : hyps(hs), prop(pr), sub(std::move(s)) { }
 	Shortcut(Shortcut&&) = default;
 	vector<Writable*> hyps;
 	Step* prop = nullptr;
-	prover::Subst sub;
+	Substitution sub;
 
 	int gain(const Assertion* ass) const {
 		vector<const Writable*> children;
@@ -216,23 +216,35 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 							while (true) {
 								watchdog.check();
 								Assertion* ass = prop_unif.data->ass;
-								prover::Subst sub = prop_unif.sub;
+								Substitution sub = Subst2Substitution(prop_unif.sub);
+								for (const Var* v : prop_unif.data->get()->expr.vars()) {
+									if (!sub.maps(v->lit())) {
+										sub.join(*v, VarTree(*v));
+									}
+								}
 								vector<UnifPair> variant = variants.data();
 								vector<Writable*> hyps;
 								for (UnifPair& up : variant) {
-									if (!sub.join(up.unif.sub)) {
+									Substitution s = Subst2Substitution(up.unif.sub);
+									for (const Var* v : up.unif.data->get()->expr.vars()) {
+										if (!s.maps(v->lit())) {
+											s.join(*v, VarTree(*v));
+										}
+									}
+									if (!sub.join(s)) {
 										break;
 									}
 									hyps.push_back(up.node);
 								}
 								if (sub.ok()) {
-									Substitution s = Subst2Substitution(sub);
 									Shortcut shortcut(step, std::move(sub), hyps);
 									if (shortcut.gain(ass) > 0) {
 										try {
 											//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
 											//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
-											ass->disj.check(s);
+											//cout << "step->expr: " << step->expr << endl;
+											//cout << "apply(s, ass->prop->expr): " << apply(s, ass->prop->expr) << endl;
+											ass->disj.check(shortcut.sub);
 											//cout << "passed" << endl;
 											shortcuts.emplace(ass, std::move(shortcut));
 										} catch (Error& err) {
@@ -248,13 +260,12 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 							}
 						}
 					} else {
-						Substitution s = Subst2Substitution(prop_unif.sub);
-						Shortcut shortcut(step, std::move(prop_unif.sub));
+						Shortcut shortcut(step, std::move(Subst2Substitution(prop_unif.sub)));
 						if (shortcut.gain(prop_unif.data->ass) > 0) {
 							try {
 								//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
 								//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
-								prop_unif.data->ass->disj.check(s);
+								prop_unif.data->ass->disj.check(shortcut.sub);
 								//cout << "passed" << endl;
 								shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
 							} catch (Error& err) {
@@ -271,21 +282,28 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 	return shortcuts;
 }
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
-	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
+	cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
 	map<const Assertion*, Shortcut> shortcuts = find_proof_shortcuts(proof, propIndex, hypIndex);
 	if (!shortcuts.empty()) {
 		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
 		for (auto& p : shortcuts) {
-			if (p.second.gain(p.first) > 0) {
-				cout << "for assertion: " << Lex::toStr(p.first->id()) << ", gain: " << p.second.gain(p.first) << endl;
-				cout << p.second.show() << endl;
-				cout << p.second.showIntermediate() << endl;
-				//cout << endl << endl << endl;
-				p.second.apply(p.first);
+			const Assertion* ass = p.first;
+			Shortcut& shortcut = p.second;
+			if (shortcut.gain(ass) > 0) {
+				try {
+					ass->disj.check(shortcut.sub);
+					cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
+					cout << shortcut.show() << endl;
+					cout << shortcut.showIntermediate() << endl;
+					cout << endl << endl << endl;
+					shortcut.apply(ass);
+				} catch (Error&) {
+					//cout << err.msg << endl;
+				}
 			}
 		}
-		cout << endl;
 	}
+	//cout << *proof->theorem << endl;
 	try {
 		proof->verify();
 	} catch (Error& err) {
@@ -297,7 +315,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 }
 
 #ifdef PARALLEL
-#define PARALLEL_REDUCE_PROOF_SHORTCUTS
+//#define PARALLEL_REDUCE_PROOF_SHORTCUTS
 #endif
 
 void reduce_proof_shortcuts(const string& opts)  {
