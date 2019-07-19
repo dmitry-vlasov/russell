@@ -1,9 +1,10 @@
+#include <atomic>
 #include <rus_ast.hpp>
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 
 namespace mdl { namespace rus { namespace {
 
-void reduce_unused_steps(Proof* proof) {
+void reduce_unused_steps(Proof* proof, std::atomic<uint>& counter) {
 	set<const Step*> used_steps;
 	traverseProof(proof->qed->step, [&used_steps](Writable* n) {
 		if (Step* s = dynamic_cast<Step*>(n)) {
@@ -30,9 +31,11 @@ void reduce_unused_steps(Proof* proof) {
 			new_steps.emplace_back(new_step);
 		}
 	}
-	if (new_steps.size() < proof->steps.size()) {
-		cout << "proof of theorem " << Lex::toStr(proof->theorem->id()) << " reduced by " << (proof->steps.size() - new_steps.size()) << " unused steps" << endl;
+	int diff = new_steps.size() < proof->steps.size();
+	if (diff) {
+		cout << "proof of theorem " << Lex::toStr(proof->theorem->id()) << " reduced by " << diff << " unused steps" << endl;
 	}
+	counter.store(counter.load() + diff);
 	proof->steps = std::move(new_steps);
 	proof->qed->step = steps_map.at(proof->qed->step);
 }
@@ -44,6 +47,7 @@ void reduce_unused_steps(Proof* proof) {
 #endif
 
 void reduce_unused_steps()  {
+	std::atomic<uint> counter(0);
 	vector<Proof*> proofs;
 	for (auto& a : Sys::mod().math.get<Assertion>()) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
@@ -54,17 +58,18 @@ void reduce_unused_steps()  {
 	}
 #ifdef PARALLEL_UNUSED_STEPS
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
-		[&proofs] (const tbb::blocked_range<size_t>& r) {
+		[&proofs, &counter] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
-				reduce_unused_steps(proofs[i]);
+				reduce_unused_steps(proofs[i], counter);
 			}
 		}
 	);
 #else
 	for (auto proof : proofs) {
-		reduce_unused_steps(proof);
+		reduce_unused_steps(proof, counter);
 	}
 #endif
+	cout << "totally removed: " << counter.load() << endl;
 }
 
 }} // mdl::rus

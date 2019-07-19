@@ -142,15 +142,6 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 					if (!ass->token.preceeds(proof->theorem->token)) {
 						continue;
 					}
-					if (ass == proof->theorem) {
-						cout << "A proof cannot refer to itself" << endl;
-						cout << ass->token.preceeds(proof->theorem->token) << endl;
-						cout << ass->token.show() <<  endl;
-						cout << ass->token.locate().show() <<  endl << "--------" << endl;
-						cout << proof->theorem->token.show() <<  endl;
-						cout << proof->theorem->token.locate().show() <<  endl;
-						throw Error("A proof cannot refer to itself");
-					}
 					props[Ref(step)].emplace_back(std::move(unif));
 				}
 				map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
@@ -158,10 +149,6 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 					Assertion* ass = unif.data->ass;
 					if (!ass->token.preceeds(proof->theorem->token)) {
 						continue;
-					}
-					if (ass == proof->theorem) {
-						cout << "A proof cannot refer to itself" << endl;
-						throw Error("A proof cannot refer to itself");
 					}
 					hypsMap[ass].emplace_back(std::move(unif));
 				}
@@ -178,10 +165,6 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 					if (!ass->token.preceeds(proof->theorem->token)) {
 						continue;
 					}
-					if (ass == proof->theorem) {
-						cout << "A proof cannot refer to itself" << endl;
-						throw Error("A proof cannot refer to itself");
-					}
 					props[Ref(hyp)].emplace_back(std::move(unif));
 				}
 				map<const Assertion*, vector<HypIndex::Unified>> hypsMap;
@@ -189,10 +172,6 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 					Assertion* ass = unif.data->ass;
 					if (!ass->token.preceeds(proof->theorem->token)) {
 						continue;
-					}
-					if (ass == proof->theorem) {
-						cout << "A proof cannot refer to itself" << endl;
-						throw Error("A proof cannot refer to itself");
 					}
 					hypsMap[ass].emplace_back(std::move(unif));
 				}
@@ -307,7 +286,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 			}
 		});
 	} catch (Timeout& timeout) {
-		cout << timeout.what() << endl;
+		//cout << timeout.what() << endl;
 	}
 	return shortcuts;
 }
@@ -329,7 +308,6 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				Disj disj;
 				proof->verify(VERIFY_SRC, &disj);
 				if (!(disj <= proof->theorem->disj)) {
-					cout << "RESTORED" << endl;
 					shortcut.restore();
 				}
 			}
