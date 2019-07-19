@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus { namespace {
 
-void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps_map) {
+void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps_map, std::atomic<int>& counter) {
 	set<Hyp*> used_hyps;
 	traverseProof(th->proof->qed->step, [&used_hyps](Writable* n) {
 		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
@@ -60,6 +60,7 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 				s->refs = std::move(new_refs);
 			}
 		}
+		counter.store(counter.load() + unused_count);
 	}
 }
 
@@ -70,6 +71,7 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 #endif
 
 void reduce_unused_hyps()  {
+	std::atomic<int> counter(0);
 	vector<Theorem*> theorems;
 	map<Assertion*, vector<Step*>> steps_map;
 	for (auto& a : Sys::mod().math.get<Assertion>()) {
@@ -86,17 +88,20 @@ void reduce_unused_hyps()  {
 	}
 #ifdef PARALLEL_UNUSED_HYPS
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, theorems.size()),
-		[&theorems, &steps_map] (const tbb::blocked_range<size_t>& r) {
+		[&theorems, &steps_map, &counter] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
-				reduce_unused_hyps(theorems[i], steps_map);
+				reduce_unused_hyps(theorems[i], steps_map, counter);
 			}
 		}
 	);
 #else
 	for (auto th : theorems) {
-		reduce_unused_hyps(th, steps_map);
+		reduce_unused_hyps(th, steps_map, counter);
 	}
 #endif
+	if (counter.load() > 0) {
+		cout << "unused hypotheses totally removed: " << counter.load() << endl;
+	}
 }
 
 }} // mdl::rus
