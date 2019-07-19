@@ -63,6 +63,14 @@ struct Disj : public Writable, public WithToken {
 	void write(ostream& os, const Indent& = Indent()) const override;
 	void check(const Substitution&, Disj* outer = nullptr) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
+	bool operator <= (const Disj& d) const {
+		for (auto p : dvars) {
+			if (!d.dvars.count(p)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	set<Pair> dvars;
 };

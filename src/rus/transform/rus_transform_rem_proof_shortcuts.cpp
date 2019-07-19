@@ -39,12 +39,18 @@ set<const Writable*> intermediate(const Step* parent, const vector<const Writabl
 }
 
 struct Shortcut {
+	struct Longcut {
+		uint ass_id = -1;
+		vector<unique_ptr<Ref>> refs;
+	};
+
 	Shortcut() = default;
 	Shortcut(Step* pr, Substitution&& s, const vector<Writable*>& hs = vector<Writable*>()) : hyps(hs), prop(pr), sub(std::move(s)) { }
 	Shortcut(Shortcut&&) = default;
 	vector<Writable*> hyps;
 	Step* prop = nullptr;
 	Substitution sub;
+	Longcut longcut;
 
 	int gain(const Assertion* ass) const {
 		vector<const Writable*> children;
@@ -55,13 +61,16 @@ struct Shortcut {
 		return inter.size() - (hyps.size() + 1);
 	}
 	void apply(const Assertion* ass) {
+		longcut.ass_id = prop->ass_id();
+		longcut.refs = std::move(prop->refs);
 		prop->set_ass(ass->id());
-		vector<unique_ptr<Ref>> refs;
 		for (auto w : hyps) {
-			refs.emplace_back(make_unique<Ref>(w));
+			prop->refs.emplace_back(make_unique<Ref>(w));
 		}
-		prop->refs = std::move(refs);
-		//prop->sub.clear();
+	}
+	void restore() {
+		prop->set_ass(longcut.ass_id);
+		prop->refs = std::move(longcut.refs);
 	}
 
 	string show() const {
@@ -283,22 +292,24 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 }
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
 	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
-	map<const Assertion*, Shortcut> shortcuts = find_proof_shortcuts(proof, propIndex, hypIndex);
+	map<const Assertion*, Shortcut> shortcuts = std::move(find_proof_shortcuts(proof, propIndex, hypIndex));
 	if (!shortcuts.empty()) {
 		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
 		for (auto& p : shortcuts) {
 			const Assertion* ass = p.first;
 			Shortcut& shortcut = p.second;
 			if (shortcut.gain(ass) > 0) {
-				try {
-					ass->disj.check(shortcut.sub);
-					cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
-					//cout << shortcut.show() << endl;
-					//cout << shortcut.showIntermediate() << endl;
-					//cout << endl << endl << endl;
-					shortcut.apply(ass);
-				} catch (Error&) {
-					//cout << err.msg << endl;
+				//ass->disj.check(shortcut.sub);
+				cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
+				//cout << shortcut.show() << endl;
+				//cout << shortcut.showIntermediate() << endl;
+				//cout << endl << endl << endl;
+				shortcut.apply(ass);
+				Disj disj;
+				proof->verify(VERIFY_SRC, &disj);
+				if (!(disj <= proof->theorem->disj)) {
+					cout << "RESTORED" << endl;
+					shortcut.restore();
 				}
 			}
 		}
