@@ -282,7 +282,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 	return shortcuts;
 }
 void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
-	cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
+	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
 	map<const Assertion*, Shortcut> shortcuts = find_proof_shortcuts(proof, propIndex, hypIndex);
 	if (!shortcuts.empty()) {
 		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
@@ -293,9 +293,9 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				try {
 					ass->disj.check(shortcut.sub);
 					cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
-					cout << shortcut.show() << endl;
-					cout << shortcut.showIntermediate() << endl;
-					cout << endl << endl << endl;
+					//cout << shortcut.show() << endl;
+					//cout << shortcut.showIntermediate() << endl;
+					//cout << endl << endl << endl;
 					shortcut.apply(ass);
 				} catch (Error&) {
 					//cout << err.msg << endl;
@@ -307,6 +307,21 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 	try {
 		proof->verify();
 	} catch (Error& err) {
+		err.msg += "shortcuts in: " + Lex::toStr(proof->theorem->id()) + to_string(shortcuts.size()) + "\n";
+		for (auto& p : shortcuts) {
+			const Assertion* ass = p.first;
+			Shortcut& shortcut = p.second;
+			if (shortcut.gain(ass) > 0) {
+				try {
+					//ass->disj.check(shortcut.sub);
+					err.msg += "\tfor assertion: " + Lex::toStr(ass->id()) + ", gain: " + to_string(shortcut.gain(ass)) + "\n";
+					err.msg += shortcut.show() + "\n";
+					err.msg += shortcut.showIntermediate() + "\n\n\n";
+				} catch (Error&) {
+					//cout << err.msg << endl;
+				}
+			}
+		}
 		err.msg += "of theorem:\n" + proof->theorem->show() + "\n";
 		throw err;
 	}
@@ -315,7 +330,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_REDUCE_PROOF_SHORTCUTS
+#define PARALLEL_REDUCE_PROOF_SHORTCUTS
 #endif
 
 void reduce_proof_shortcuts(const string& opts)  {

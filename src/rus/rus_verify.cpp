@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus {
 
-void Step::verify(uint mode) const {
+void Step::verify(uint mode, Disj* disj) const {
 	if (kind() == Step::CLAIM) {
 		claim()->verify(mode);
 		return;
@@ -52,8 +52,8 @@ void Step::verify(uint mode) const {
 	}
 	if (mode & VERIFY_DISJ) {
 		try {
-			Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem) : nullptr;
-			ass()->disj.check(sub, th);
+			//Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem) : nullptr;
+			ass()->disj.check(sub, disj);
 		} catch (Error& err) {
 			ostringstream oss;
 			ass()->disj.write(oss);
@@ -70,9 +70,9 @@ void Qed::verify(uint mode) const {
 		throw Error("qed prop doesn't match qed step", prop->expr.show() + " != " + step->expr.show());
 }
 
-void Proof::verify(uint mode) const {
+void Proof::verify(uint mode, Disj* disj) const {
 	for (const auto& step : steps) {
-		step->verify(mode);
+		step->verify(mode, disj);
 	}
 	if (qed) {
 		qed->verify(mode);
@@ -99,8 +99,10 @@ void verify_theory(Theory* theory, uint mode) {
 			} else {
 				if (mode & UPDATE_DISJ) {
 					t->disj.dvars.clear();
+					t->proof->verify(mode, &t->disj);
+				} else {
+					t->proof->verify(mode);
 				}
-				t->proof->verify(mode);
 			}
 			break;
 		}

@@ -71,7 +71,7 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 	}
 }
 
-void Disj::check(const Substitution& s, Assertion* t) const {
+void Disj::check(const Substitution& s, Disj* outer) const {
 	for (const auto& p : dvars) {
 		if (!s.maps(p.v) || !s.maps(p.w)) continue;
 		set<uint> v1_vars = s.map(p.v)->vars();
@@ -82,8 +82,8 @@ void Disj::check(const Substitution& s, Assertion* t) const {
 			err.msg += "disjointed pair: " + Lex::toStr(p.v) + " and " + Lex::toStr(p.w) + "\n";
 			throw err;
 		}
-		if (t) {
-			t->disj.make_pairs_disjointed(v1_vars, v2_vars);
+		if (outer) {
+			outer->make_pairs_disjointed(v1_vars, v2_vars);
 		}
 	}
 }

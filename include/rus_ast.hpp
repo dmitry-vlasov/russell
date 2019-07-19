@@ -61,7 +61,7 @@ struct Disj : public Writable, public WithToken {
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
-	void check(const Substitution&, Assertion* t = nullptr) const;
+	void check(const Substitution&, Disj* outer = nullptr) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
 
 	set<Pair> dvars;
@@ -271,7 +271,7 @@ struct Step : public Writable, public WithToken {
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
 	void set_ass(uint id) { val_ = AssPtr(make_unique<AssUser>(id)); }
-	void verify(uint mode = VERIFY_ALL) const;
+	void verify(uint mode = VERIFY_ALL, Disj* = nullptr) const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Expr expr;
@@ -335,7 +335,7 @@ struct Proof : public Writable, public WithToken {
 	Proof(Theorem* th = nullptr, const Token& t = Token());
 	Proof(const Proof&) = delete;
 
-	void verify(uint mode = VERIFY_ALL) const;
+	void verify(uint mode = VERIFY_ALL, Disj* = nullptr) const;
 	bool check(uint mode = VERIFY_ALL) const;
 	AbstProof abst() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
