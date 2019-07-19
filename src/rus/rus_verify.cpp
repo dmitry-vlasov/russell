@@ -52,7 +52,6 @@ void Step::verify(uint mode, Disj* disj) const {
 	}
 	if (mode & VERIFY_DISJ) {
 		try {
-			//Theorem* th = (mode & UPDATE_DISJ) ? const_cast<Theorem*>(proof_->theorem) : nullptr;
 			ass()->disj.check(sub, disj);
 		} catch (Error& err) {
 			ostringstream oss;
@@ -60,6 +59,8 @@ void Step::verify(uint mode, Disj* disj) const {
 			err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
 			err.msg += "disjointeds: " + oss.str() + "\n";
 			err.msg += "substitution:\n" + Indent::paragraph(sub.show()) + "\n";
+			err.msg += "step: " + to_string(ind_) + "\n";
+			err.msg += "in proof of theorem: " + Lex::toStr(proof_->theorem->id()) + "\n";
 			throw err;
 		}
 	}
@@ -149,7 +150,9 @@ void verify(uint src) {
 			}
 		);
 #else
-	for (auto p : proofs) p->verify(VERIFY_SUB | VERIFY_QED);
+	for (auto p : proofs) {
+		p->verify(VERIFY_SUB | VERIFY_QED);
+	}
 #endif
 		set<uint> verified;
 		for (const auto& s : Sys::mod().math.get<Source>()) {

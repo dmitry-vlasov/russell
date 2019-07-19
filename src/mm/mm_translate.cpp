@@ -230,7 +230,7 @@ void translate_assertion(const Assertion* ass, T* a, const Maps& maps) {
 	rus::Expr&& ex = translate_expr(ass->expr, ass, maps);
 	a->prop = make_unique<rus::Prop>(ex);
 	rus::expr::enqueue(a->prop->expr);
-	a->token.set(maps.source);
+	a->token = translate_token(ass->token, maps);
 }
 
 void translate_axiom(const Assertion* ass, Maps& state) {

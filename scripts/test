@@ -66,14 +66,25 @@ check "${binpath}/mdl --verb
     \"rus parse_expr \"
     \"rus min_imports \"
     \"rus verify \"
-    \"rus refactor job=reduce_duplicate_steps \"
+	\"rus refactor job=reduce_duplicate_steps \"
     \"rus refactor job=reduce_unused_hyps \"
     \"rus refactor job=reduce_unused_steps \"
+    \"rus refactor job=shortcut_proofs \"
+	\"rus refactor job=reduce_unused_steps \"
+    \"rus refactor job=reduce_unused_hyps \"
     \"rus verify \"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
 
+
+#\"rus refactor job=shortcut_proofs \"
+
+# \"rus refactor job=reduce_duplicate_steps \"
+#\"rus refactor job=reduce_unused_hyps \"
+#\"rus refactor job=reduce_unused_steps \"
+# \"rus refactor job=shortcut_proofs \"
+#\"rus refactor job=reduce_unused_steps \"
 #\"rus refactor job=reduce_proofs \"
 
 #\"mm2 minimize in=${file}.mm\"
@@ -89,6 +100,14 @@ check "${binpath}/mdl --verb
     \"rus read in=${file}.rus\"
     \"rus parse_src \"
     \"rus parse_expr \"
+    \"rus refactor job=reduce_duplicate_steps \"
+    \"rus refactor job=reduce_unused_hyps \"
+    \"rus refactor job=reduce_unused_steps \"
+    \"rus refactor job=shortcut_proofs \"
+    \"rus verify \"
+    \"rus refactor job=reduce_unused_steps \"
+    \"rus verify \"
+    \"rus refactor job=reduce_unused_hyps \"
     \"rus verify \"
     \"rus transl in=${file}.rus out=${file}.mm\" 
     \"mm write in=${file}.mm deep=true\"
@@ -108,7 +127,6 @@ check "${binpath}/mdl --verb
     \"mm verify \"
     exit"
 echo -e 'done\n\n'
-
 
 echo "----------------------"
 echo "   Metamath VERIFY    "

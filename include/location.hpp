@@ -407,6 +407,9 @@ struct Token {
 		return ret;
 	}
 	Location locate() const {
+		if (!src() || !beg() || !end()) {
+			return Location();
+		}
 		Location loc(
 			src()->id(),
 			Source::Sys::ext(),
