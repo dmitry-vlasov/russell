@@ -91,6 +91,18 @@ set<T> sets_union(const set<T>& right, const set<T>& left) {
 	return ret;
 }
 
+template<class K, class T>
+map<K, T> maps_union(const map<K, T>& right, const map<K, T>& left) {
+	map<K, T> ret;
+	for (auto& p : right) {
+		ret.emplace(p.first, p.second);
+	}
+	for (auto& p : left) {
+		ret.emplace(p.first, p.second);
+	}
+	return ret;
+}
+
 template<class T1, class T2>
 vector<T1> map_keys(const map<T1, T2>& m) {
 	vector<T1> ret;

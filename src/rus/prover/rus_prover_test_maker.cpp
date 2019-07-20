@@ -4,6 +4,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 static vector<const Proof*> prove_failed;
+void beautify(Assertion& a);
 
 Return test_proof_maker(uint i, const Proof* p) {
 	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
@@ -19,6 +20,7 @@ Return test_proof_maker(uint i, const Proof* p) {
 			exit(-1);
 		}
 		try {
+			beautify(*ret);
 			vector<Substitution> matches1 = match(*ret, *p->theorem);
 			if (!matches1.size()) {
 				string err;

@@ -473,4 +473,3 @@ unique_ptr<Theorem> Maker::make() {
 }
 
 }}}
-
