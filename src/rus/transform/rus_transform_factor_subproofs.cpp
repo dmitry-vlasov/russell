@@ -332,16 +332,15 @@ void factorize_subproofs(const string& opts) {
 	AssertionMap ass_map = init_assertion_map();
 	auto parsed_opts = parse_options(opts);
 	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : ass_map.size();
-	cout << "max_size: " << max_size << endl;
 
 	ProofImplsSample common_subproofs = init_subproofs(ass_map, max_size);
 	common_subproofs.makeNewOld();
 	uint c = 0;
 	Timer timer;
 	while (true) {
-		cout << ++c << ": TO ANALYZE: " << common_subproofs.old_.size() << endl;
+		//cout << ++c << ": TO ANALYZE: " << common_subproofs.old_.size() << endl;
 		next_subproofs(common_subproofs);
-		cout << "ADDED: " << common_subproofs.new_.size() << endl;
+		//cout << "ADDED: " << common_subproofs.new_.size() << endl;
 		if (common_subproofs.new_.size()) {
 			common_subproofs.makeNewOld();
 			/*cout << "old  volume: " << common_subproofs.old_.volume() << endl;
@@ -369,9 +368,9 @@ void factorize_subproofs(const string& opts) {
 	for (uint i = 0; i < 10; ++ i) {
 		ProofImpls* impls = common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1).get();
 		cout << impls->show() << endl;
+		//cout << "volume: " << impls->volume() << endl;
 		unique_ptr<Theorem> theorem = generate_theorem(impls->proof_);
 		cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
-		cout << (theorem ? theorem->proof->show() : "proof: <null>") << endl;
 	}
 	/*cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;

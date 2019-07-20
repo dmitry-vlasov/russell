@@ -456,12 +456,13 @@ unique_ptr<Theorem> Maker::make() {
 					}
 				}
 			});
+			std::sort(ret->hyps.begin(), ret->hyps.end(), [](auto& h1, auto& h2) { return h1->ind < h2->ind; });
 			rus::Step* step = ret->proof->steps.back().get();
 			ret->prop = make_unique<rus::Prop>(step->expr);
 			ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
-			ret->proof->verify(VERIFY_SRC);
+			ret->proof->verify(VERIFY_SRC, &ret->disj);
 			return ret;
 		} else {
 			return nullptr;
