@@ -8,6 +8,8 @@ struct Lex {
 	static uint getInt(const string& str) { return get().getIndex(str); }
 	static uint toInt(const string& str) { return get().toIndex(str); }
 	static string toStr (uint i) { return get().toString(i); }
+	static bool isDef(uint i) { Back::const_accessor a; return get().back.find(a, i); }
+	static bool isDef(const string& str) { There::const_accessor a; return get().there.find(a, str);  }
 
 private:
 	typedef cmap<string, uint> There;

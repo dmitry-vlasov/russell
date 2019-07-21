@@ -7,7 +7,12 @@ namespace mdl { namespace rus { namespace {
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	AbstProof abstProof = thm->proof->abst();
-	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, Lex::toInt("gen_" + Lex::toStr(thm->id())));
+	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
+	uint i = 0;
+	while (Lex::isDef(gen_name(i))) {
+		++i;
+	}
+	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, Lex::toInt(gen_name(i)));
 	try {
 		vector<Substitution> matches1 = match(*gen_thm, *thm);
 		if (!matches1.size()) {
@@ -35,9 +40,9 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 
 			}
 
-			cout << "strongly more general theorem" << endl;
-			cout << "more general:\n" << gen_thm->show() << endl;
-			cout << "original:\n" << thm->show() << endl;
+			cout << "theorem " << Lex::toStr(thm->id()) << " is generalized" << endl;
+			//cout << "more general:\n" << gen_thm->show() << endl;
+			//cout << "original:\n" << thm->show() << endl;
 			if (pos == -1) {
 				throw Error("theorem " + Lex::toStr(thm->id()) + " couldn't be located");
 			}
