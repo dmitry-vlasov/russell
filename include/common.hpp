@@ -338,6 +338,99 @@ public:
 	}
 	int size() const { return refs.size(); }
 
+	struct Iterator {
+		typedef typename Refs::iterator Iter;
+		Iterator() = default;
+		Iterator(const Iterator&) = default;
+		Iterator(const Iter& i, const Iter& e) : iter(i), end(e) {
+			while (iter != end && !iter.second.data) {
+				++iter;
+			}
+		}
+		Iterator operator = (const Iterator& i) = default;
+
+		bool operator == (const Iterator& i) const { return iter == i.iter; }
+		bool operator != (const Iterator& i) const { return iter != i.iter; }
+		Data& operator * () { return *iter.second.data; }
+		Data* operator -> () { return iter.second.data; }
+		Data& operator++() {
+			if (iter != end) {
+				++iter;
+				while (iter != end && !iter.second.data) {
+					++iter;
+				}
+				if (iter != end) {
+					return *iter.second.data;
+				} else {
+					throw Error("deref of an end iterator");
+				}
+			} else {
+				throw Error("deref of an end iterator");
+			}
+		}
+		Data& operator++(int) {
+			Iter i = iter;
+			if (iter != end) {
+				++iter;
+				while (iter != end && !iter.second.data) {
+					++iter;
+				}
+				return *i.second.data;
+			} else {
+				throw Error("deref of an end iterator");
+			}
+		}
+	private:
+		Iter iter;
+		Iter end;
+	};
+	struct ConstIterator {
+		typedef typename Refs::const_iterator Iter;
+		ConstIterator() = default;
+		ConstIterator(const ConstIterator&) = default;
+		ConstIterator(const Iter& i, const Iter& e) : iter(i), end(e) {
+			while (iter != end && !iter.second.data) {
+				++iter;
+			}
+		}
+		ConstIterator operator = (const ConstIterator& i) = default;
+
+		bool operator == (const Iterator& i) const { return iter == i.iter; }
+		bool operator != (const Iterator& i) const { return iter != i.iter; }
+		const Data& operator * () const { return *iter.second.data; }
+		const Data* operator -> () const { return iter.second.data; }
+		const Data& operator++() const {
+			if (iter != end) {
+				++iter;
+				while (iter != end && !iter.second.data) {
+					++iter;
+				}
+				if (iter != end) {
+					return *iter.second.data;
+				} else {
+					throw Error("deref of an end iterator");
+				}
+			} else {
+				throw Error("deref of an end iterator");
+			}
+		}
+		const Data& operator++(int) const {
+			Iter i = iter;
+			if (iter != end) {
+				++iter;
+				while (iter != end && !iter.second.data) {
+					++iter;
+				}
+				return *i.second.data;
+			} else {
+				throw Error("deref of an end iterator");
+			}
+		}
+	private:
+		Iter iter;
+		Iter end;
+	};
+
 	typedef typename Refs::iterator iterator;
 	typedef typename Refs::const_iterator const_iterator;
 
@@ -349,6 +442,12 @@ public:
 
 	template<class, class> friend class Owner;
 	template<class, class> friend class User;
+
+	Iterator beginIter() { return Iterator(refs.begin(), refs.end()); }
+	Iterator endIter() { return Iterator(refs.end(), refs.end()); }
+
+	ConstIterator beginIter() const { return ConstIterator(refs.end(), refs.end()); }
+	ConstIterator endIter() const { return ConstIterator(refs.end(), refs.end()); }
 
 	void rehash() { refs.rehash(); }
 };
