@@ -37,7 +37,6 @@ else()
 		rus/expr/rus_expr_unify.cpp
 		rus/parser/rus_parser.cpp 
 		
-		rus/prover/rus_prover_beautify.cpp
 		rus/prover/rus_prover_cartesian.cpp
 		rus/prover/rus_prover_compare.cpp
 		rus/prover/rus_prover_down.cpp
@@ -64,6 +63,7 @@ else()
 		rus/prover/unify/rus_prover_unify_terms.cpp
 		rus/prover/unify/rus_prover_unify.cpp
 
+		rus/transform/rus_transform_generalize_theorems.cpp
 		rus/transform/rus_transform_factor_subproofs.cpp
 		rus/transform/rus_transform_duplicate_steps.cpp
 		rus/transform/rus_transform_proof_shortcuts.cpp
@@ -71,6 +71,7 @@ else()
 		rus/transform/rus_transform_unused_steps.cpp
 
 		rus/rus_ast.cpp
+		rus/rus_beautify.cpp
 		rus/rus_expr.cpp
 		rus/rus_imports.cpp
 		rus/rus_lookup.cpp

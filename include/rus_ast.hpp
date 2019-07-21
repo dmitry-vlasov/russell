@@ -157,6 +157,8 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
+void beautify(Assertion& a);
+
 struct HypRef {
 	HypRef(Assertion* a = nullptr, uint i = 0) : ass(a), ind(i) { }
 	uint id() const { return ass->id(); }

@@ -1,7 +1,6 @@
-#include "rus_prover_tactics.hpp"
-#include "rus_prover_maker.hpp"
+#include <rus_ast.hpp>
 
-namespace mdl { namespace rus { namespace prover {
+namespace mdl { namespace rus {
 
 struct SymbInfo {
 	SymbInfo(uint o, const Type* t, uint l, bool e, uint i) :
@@ -149,4 +148,4 @@ void beautify(Assertion& a) {
 	}
 }
 
-}}}
+}}
