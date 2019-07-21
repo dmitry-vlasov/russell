@@ -9,6 +9,11 @@ struct SymbInfo {
 	bool operator < (const SymbInfo& si) const {
 		return orig < si.orig;
 	}
+	string show() const {
+		ostringstream oss;
+		oss << "orig: " << Lex::toStr(orig) << ", lit: " << Lex::toStr(lit) << ", excl: " << (exclamation ? "T" : "F") << ", ind: " << ind;
+		return oss.str();
+	}
 	uint orig;
 	const Type* type;
 	uint lit;
@@ -22,7 +27,7 @@ SymbInfo symb_info(uint orig, const Type* type) {
 	string::size_type under_pos = str.rfind('_');
 	uint ind = -1;
 	if (under_pos != string::npos) {
-		string numb = str.substr(under_pos);
+		string numb = str.substr(under_pos + 1);
 		try {
 			ind = stoi(numb);
 		} catch (std::invalid_argument&) { }
@@ -41,13 +46,7 @@ map<uint, SymbInfo> collect_vars_info(const rus::Expr& ex) {
 	map<uint, SymbInfo> ret;
 	for (auto& s : ex.symbols) {
 		if (Var* v = dynamic_cast<Var*>(s.get())) {
-			try {
-				ret.emplace(v->lit(), symb_info(v->lit(), v->type()));
-			} catch (std::exception& ex) {
-				cout << "V: " << *v << endl;
-				cout << ex.what() << endl;
-				throw ex;
-			}
+			ret.emplace(v->lit(), symb_info(v->lit(), v->type()));
 		}
 	}
 	return ret;
@@ -74,7 +73,7 @@ void optimize_exclamation(map<uint, SymbInfo>& si_map) {
 			break;
 		}
 	}
-	if (!excl_the_same) {
+	if (excl_the_same) {
 		for (auto& p : si_map) {
 			p.second.exclamation = false;
 		}
@@ -121,7 +120,7 @@ Substitution optimize_inds(const map<uint, SymbInfo>& symb_info) {
 			excl_reindex.at(si.lit).at(si.ind) :
 			norm_reindex.at(si.lit).at(si.ind);
 		string new_lit =
-			orig_lit + (si.exclamation ? "_" : "") +
+			orig_lit + (si.exclamation ? "'" : "") +
 			(new_ind == 0 ? "" : "_" + to_string(new_ind));
 		ret.join(orig, si.type, VarTree(Lex::toInt(new_lit), si.type));
 	}
@@ -135,7 +134,7 @@ void beautify(Assertion& a) {
 	for (auto& h : a.hyps) {
 		h->expr = std::move(apply(opt_inds, h->expr));
 	}
-	cout << "SUBST: " << endl << opt_inds.show() << endl;
+	//cout << "SUBST: " << endl << opt_inds.show() << endl;
 	a.prop->expr = std::move(apply(opt_inds, a.prop->expr));
 	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
 		traverseProof(th->proof->qed->step,[&opt_inds](Writable* w) {
@@ -143,6 +142,10 @@ void beautify(Assertion& a) {
 				step->expr = std::move(apply(opt_inds, step->expr));
 			}
 		});
+	}
+	complete_assertion_vars(&a);
+	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
+		th->proof->verify(VERIFY_ALL, &th->disj);
 	}
 }
 

@@ -187,6 +187,7 @@ static void complete_expr_vars(const Expr& expr, Vars& vars, std::function<bool(
 }
 
 void complete_assertion_vars(Assertion* a) {
+	a->vars.v.clear();
 	for (auto& h : a->hyps) {
 		complete_expr_vars(h->expr, a->vars);
 	}

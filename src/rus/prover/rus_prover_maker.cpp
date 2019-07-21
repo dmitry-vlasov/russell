@@ -434,6 +434,7 @@ unique_ptr<Theorem> Maker::make() {
 				leafs.emplace_back(t->hyp);
 			}
 		});
+		map<rus::Hyp*, rus::Hyp*> map_hyp2ret;
 
 		//cout << "DETACHED" << endl;
 		auto generated_proof = gen_proof(root);
@@ -441,25 +442,35 @@ unique_ptr<Theorem> Maker::make() {
 			unique_ptr<Theorem> ret = make_unique<Theorem>(theorem_id_);
 			generated_proof->theorem = ret.get();
 			ret->proof = std::move(generated_proof);
-			traverseProof(root, [&ret](ProofNode* n) {
+			traverseProof(root, [&ret, &map_hyp2ret](ProofNode* n) {
 				if (ProofTop* t = dynamic_cast<ProofTop*>(n)) {
 					bool found = false;
 					for (auto& h : ret->hyps) {
 						if (h->expr == t->hyp->expr) {
-							t->hyp = h.get();
+							map_hyp2ret[t->hyp] = h.get();
 							found = true;
 							break;
 						}
 					}
 					if (!found) {
 						ret->hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
+						map_hyp2ret[t->hyp] = ret->hyps.back().get();
+					}
+				}
+			});
+			rus::Step* step = ret->proof->steps.back().get();
+			ret->prop = make_unique<rus::Prop>(step->expr);
+			ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
+			rus::traverseProof(ret->proof->qed->step, [&map_hyp2ret](Writable* n) {
+				if (rus::Step* s = dynamic_cast<rus::Step*>(n)) {
+					for (auto& r : s->refs) {
+						if (rus::Hyp* h = r->hyp()) {
+							r.reset(new rus::Ref(map_hyp2ret.at(h)));
+						}
 					}
 				}
 			});
 			std::sort(ret->hyps.begin(), ret->hyps.end(), [](auto& h1, auto& h2) { return h1->ind < h2->ind; });
-			rus::Step* step = ret->proof->steps.back().get();
-			ret->prop = make_unique<rus::Prop>(step->expr);
-			ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
 			ret->proof->verify(VERIFY_SRC, &ret->disj);

@@ -20,7 +20,6 @@ Return test_proof_maker(uint i, const Proof* p) {
 			exit(-1);
 		}
 		try {
-			beautify(*ret);
 			vector<Substitution> matches1 = match(*ret, *p->theorem);
 			if (!matches1.size()) {
 				string err;
@@ -31,6 +30,7 @@ Return test_proof_maker(uint i, const Proof* p) {
 			}
 			vector<Substitution> matches2 = match(*p->theorem, *ret);
 			if (!matches2.size()) {
+				beautify(*ret);
 				cout << "strongly more general remaked theorem" << endl;
 				cout << "ret.theorem:\n" << ret->show() << endl;
 				cout << "p->theorem:\n" << p->theorem->show() << endl;

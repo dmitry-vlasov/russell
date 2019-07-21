@@ -72,6 +72,9 @@ void Qed::verify(uint mode) const {
 }
 
 void Proof::verify(uint mode, Disj* disj) const {
+	if (disj) {
+		disj->dvars.clear();
+	}
 	for (const auto& step : steps) {
 		step->verify(mode, disj);
 	}
