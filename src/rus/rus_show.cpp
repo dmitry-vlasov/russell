@@ -28,10 +28,13 @@ string show(const Rules& tr) {
 }
 
 void Comment::write(ostream& os, const Indent& i) const {
-	if (multiline) {
-		os << i << "/* " << text << " */\n";
-	} else {
-		os << i << "// " << text << " \n";
+	std::function<string(char)> addws = [](char c) { return isspace(c) ? "" : " "; };
+	if (text.size()) {
+		if (multiline) {
+			os << i << "/*" << addws(*text.begin()) << text << addws(*text.rbegin()) << "*/\n";
+		} else {
+			os << i << "//" << addws(*text.begin()) << text << "\n";
+		}
 	}
 }
 
@@ -217,14 +220,14 @@ static void write_node(ostream& os, const Indent& i, const Theory::Node& n) {
 void Theory::write(ostream& os, const Indent& i) const {
 	os << i << "theory " << Lex::toStr(id) << " {";
 	for (const auto& n : nodes) {
-		write_node(os, i + 1, n);
+		write_node(os, i + 1, n); os << "\n";
 	}
 	os << "}\n";
 }
 
 void Source::write(ostream& os, const Indent& i) const {
 	for (const auto& n : theory.nodes) {
-		write_node(os, i + 1, n);
+		write_node(os, i + 1, n); os << "\n";
 	}
 }
 

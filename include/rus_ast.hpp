@@ -397,6 +397,9 @@ struct Theory : public Writable, public WithToken {
 	static Import* import(const Node& n) { return kind(n) == IMPORT ? std::get<unique_ptr<Import>>(n).get() : nullptr; }
 	static Comment* comment(const Node& n) { return kind(n) == COMMENT ? std::get<unique_ptr<Comment>>(n).get() : nullptr; }
 
+	void insert(Writable*, uint pos);
+	static Writable* get(const Node& n);
+
 	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;

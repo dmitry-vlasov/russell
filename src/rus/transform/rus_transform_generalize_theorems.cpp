@@ -20,9 +20,29 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		vector<Substitution> matches2 = match(*thm, *gen_thm);
 		if (!matches2.size()) {
 			beautify(*gen_thm);
+			gen_thm->token = thm->token;
+			Source* src = Sys::mod().math.get<Source>().access(thm->token.src()->id());
+			uint pos = -1;
+			for (uint i = 0; i < src->theory.nodes.size(); ++i) {
+				const Theory::Node& n = src->theory.nodes.at(i);
+				const Writable* w = Theory::get(n);
+				if (const WithToken* t = dynamic_cast<const WithToken*>(w)) {
+					if (t->token == thm->token) {
+						pos = i;
+						break;
+					}
+				}
+
+			}
+
 			cout << "strongly more general theorem" << endl;
 			cout << "more general:\n" << gen_thm->show() << endl;
 			cout << "original:\n" << thm->show() << endl;
+			if (pos == -1) {
+				throw Error("theorem " + Lex::toStr(thm->id()) + " couldn't be located");
+			}
+			src->theory.insert(gen_thm.release(), pos);
+
 			counter.store(counter.load() + 1);
 		}
 	} catch (Timeout& timeout) {

@@ -204,6 +204,52 @@ void complete_proof_vars(Proof* proof) {
 	}
 }
 
+void Theory::insert(Writable* w, uint pos) {
+	if (!w) {
+		throw Error("at insert: nullptr");
+	}
+	if (pos > nodes.size()) {
+		throw Error("at insert: theory size " + to_string(nodes.size()) + " < " + to_string(pos));
+	}
+	if (Constant* c = dynamic_cast<Constant*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Constant>(c));
+	} else if (Type* t = dynamic_cast<Type*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Type>(t));
+	} else if (Rule* r = dynamic_cast<Rule*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Rule>(r));
+	} else if (Axiom* a = dynamic_cast<Axiom*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Axiom>(a));
+	} else if (Def* d = dynamic_cast<Def*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Def>(d));
+	} else if (Theorem* t = dynamic_cast<Theorem*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Theorem>(t));
+	} else if (Theory* t = dynamic_cast<Theory*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Theory>(t));
+	} else if (Import* i = dynamic_cast<Import*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Import>(i));
+	} else if (Comment* c = dynamic_cast<Comment*>(w)) {
+		nodes.emplace(nodes.begin() + pos, unique_ptr<Comment>(c));
+	} else {
+		throw Error("unknown kind of theory contents: " + w->show());
+	}
+
+}
+Writable* Theory::get(const Node& n) {
+	switch (kind(n)) {
+	case CONSTANT: return constant(n);
+	case TYPE:     return type(n);
+	case RULE:     return rule(n);
+	case AXIOM:    return axiom(n);
+	case DEF:      return def(n);
+	case THEOREM:  return theorem(n);
+	case THEORY:   return theory(n);
+	case IMPORT:   return import(n);
+	case COMMENT:  return comment(n);
+	default: throw Error("unknown kind of theory contents");
+	}
+}
+
+
 /*
 inline Token* find(Constant* c, const Token& t) {
 	return c->token.includes(t) ? &c->token : nullptr;
