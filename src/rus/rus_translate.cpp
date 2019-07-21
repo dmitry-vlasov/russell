@@ -379,18 +379,15 @@ static vector<uint> find_dependencies(uint src) {
 
 Maps::Global translate_global() {
 	Maps maps;
-	for (auto& p : Sys::get().math.get<Constant>()) {
-		const Constant* c = p.second.data;
-		maps.global.constants[c] = translate_const(c);
+	for (const Constant& c : Sys::get().math.get<Constant>()) {
+		maps.global.constants[&c] = translate_const(&c);
 	}
-	for (auto& p : Sys::get().math.get<Type>()) {
-		const Type* t = p.second.data;
-		maps.global.types[t] = translate_type(t, maps);
+	for (const Type& t : Sys::get().math.get<Type>()) {
+		maps.global.types[&t] = translate_type(&t, maps);
 	}
-	for (auto& p : Sys::get().math.get<Rule>()) {
-		const Rule* r = p.second.data;
-		if (!maps.global.rules.count(r)) {
-			maps.global.rules[r] = translate_rule(r, maps);
+	for (const Rule& r : Sys::get().math.get<Rule>()) {
+		if (!maps.global.rules.count(&r)) {
+			maps.global.rules[&r] = translate_rule(&r, maps);
 		}
 	}
 	return maps.global;

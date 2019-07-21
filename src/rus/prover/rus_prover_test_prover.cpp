@@ -79,8 +79,8 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 		}
 	};
 	set<Source*, SourceLess> ordered_sources;
-	for (auto& p : Sys::mod().math.get<Source>()) {
-		ordered_sources.insert(p.second.data);
+	for (Source& s : Sys::mod().math.get<Source>()) {
+		ordered_sources.insert(&s);
 	}
 	cout << endl;
 	vector<const Proof*> proofs;

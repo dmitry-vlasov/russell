@@ -136,8 +136,8 @@ void verify_source(uint src, uint mode, set<uint>& verified) {
 void verify(uint src) {
 	if (src == -1) {
 		vector<const Proof*> proofs;
-		for (const auto& a : Sys::mod().math.get<Assertion>()) {
-			if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
+		for (const Assertion& a : Sys::get().math.get<Assertion>()) {
+			if (const Theorem* t = dynamic_cast<const Theorem*>(&a)) {
 				if (!t->proof) {
 					throw Error("Theorem is not proved", show_id(t->id()));
 				} else {
@@ -158,8 +158,8 @@ void verify(uint src) {
 	}
 #endif
 		set<uint> verified;
-		for (const auto& s : Sys::mod().math.get<Source>()) {
-			verify_source(s.first, VERIFY_DISJ | UPDATE_DISJ | VERIFY_DEEP, verified);
+		for (const Source& s : Sys::mod().math.get<Source>()) {
+			verify_source(s.id(), VERIFY_DISJ | UPDATE_DISJ | VERIFY_DEEP, verified);
 		}
 	} else {
 		set<uint> verified;

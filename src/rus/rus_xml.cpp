@@ -120,7 +120,7 @@ template<class T>
 string xml_struct(uint bits) {
 	string  ret;
 	for (auto& p : Sys::mod().math.get<T>())
-		ret += xml(*p.second.data, bits);
+		ret += xml(p, bits);
 	return ret;
 }
 

@@ -302,9 +302,9 @@ void parse_src_spirit(uint label) {
 
 void parse_src_spirit() {
 	vector<uint> labels;
-	for (auto p : Sys::mod().math.get<Source>()) {
-		if (!p.second.data->parsed) {
-			labels.push_back(p.first);
+	for (const Source& s : Sys::get().math.get<Source>()) {
+		if (!s.parsed) {
+			labels.push_back(s.id());
 		}
 	}
 #ifdef PARALLEL_RUS_PARSE

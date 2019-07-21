@@ -44,10 +44,9 @@ void write(uint src, bool deep) {
 	typedef typename Sys::Src Source;
 	if (deep) {
 		vector<const Source*> sources;
-		for (const auto& p : Sys::get().math.template get<Source>()) {
-			const Source* s = p.second.data;
-			s->ensure_dir_exists();
-			sources.push_back(s);
+		for (const Source& s : Sys::get().math.template get<Source>()) {
+			s.ensure_dir_exists();
+			sources.push_back(&s);
 		}
 		tbb::parallel_for (tbb::blocked_range<size_t>(0, sources.size()),
 			[sources] (const tbb::blocked_range<size_t>& r) {
@@ -336,49 +335,40 @@ public:
 		refs.clear();
 		m.unlock();
 	}
-	int size() const { return refs.size(); }
 
 	struct Iterator {
 		typedef typename Refs::iterator Iter;
 		Iterator() = default;
 		Iterator(const Iterator&) = default;
 		Iterator(const Iter& i, const Iter& e) : iter(i), end(e) {
-			while (iter != end && !iter.second.data) {
+			while (iter != end && !iter->second.data) {
 				++iter;
 			}
 		}
-		Iterator operator = (const Iterator& i) = default;
+		Iterator& operator = (const Iterator& i) = default;
 
 		bool operator == (const Iterator& i) const { return iter == i.iter; }
 		bool operator != (const Iterator& i) const { return iter != i.iter; }
-		Data& operator * () { return *iter.second.data; }
-		Data* operator -> () { return iter.second.data; }
-		Data& operator++() {
+		Data& operator * () { return *iter->second.data; }
+		Data* operator -> () { return iter->second.data; }
+		Iterator operator++() {
 			if (iter != end) {
 				++iter;
-				while (iter != end && !iter.second.data) {
+				while (iter != end && !iter->second.data) {
 					++iter;
 				}
-				if (iter != end) {
-					return *iter.second.data;
-				} else {
-					throw Error("deref of an end iterator");
-				}
-			} else {
-				throw Error("deref of an end iterator");
 			}
+			return *this;
 		}
-		Data& operator++(int) {
-			Iter i = iter;
+		Iterator operator++(int) {
+			Iterator i = *this;
 			if (iter != end) {
 				++iter;
 				while (iter != end && !iter.second.data) {
 					++iter;
 				}
-				return *i.second.data;
-			} else {
-				throw Error("deref of an end iterator");
 			}
+			return i;
 		}
 	private:
 		Iter iter;
@@ -389,67 +379,60 @@ public:
 		ConstIterator() = default;
 		ConstIterator(const ConstIterator&) = default;
 		ConstIterator(const Iter& i, const Iter& e) : iter(i), end(e) {
-			while (iter != end && !iter.second.data) {
+			while (iter != end && !iter->second.data) {
 				++iter;
 			}
 		}
-		ConstIterator operator = (const ConstIterator& i) = default;
+		ConstIterator& operator = (const ConstIterator& i) = default;
 
-		bool operator == (const Iterator& i) const { return iter == i.iter; }
-		bool operator != (const Iterator& i) const { return iter != i.iter; }
-		const Data& operator * () const { return *iter.second.data; }
-		const Data* operator -> () const { return iter.second.data; }
-		const Data& operator++() const {
+		bool operator == (const ConstIterator& i) const { return iter == i.iter; }
+		bool operator != (const ConstIterator& i) const { return iter != i.iter; }
+		const Data& operator * () { return *iter->second.data; }
+		const Data* operator -> () { return iter.second.data; }
+		ConstIterator operator++() {
 			if (iter != end) {
 				++iter;
-				while (iter != end && !iter.second.data) {
+				while (iter != end && !iter->second.data) {
 					++iter;
 				}
-				if (iter != end) {
-					return *iter.second.data;
-				} else {
-					throw Error("deref of an end iterator");
-				}
-			} else {
-				throw Error("deref of an end iterator");
 			}
+			return *this;
 		}
-		const Data& operator++(int) const {
-			Iter i = iter;
+		ConstIterator operator++(int) {
+			ConstIterator i = this;
 			if (iter != end) {
 				++iter;
-				while (iter != end && !iter.second.data) {
+				while (iter != end && !iter.second->data) {
 					++iter;
 				}
-				return *i.second.data;
-			} else {
-				throw Error("deref of an end iterator");
 			}
+			return i;
 		}
 	private:
 		Iter iter;
 		Iter end;
 	};
 
-	typedef typename Refs::iterator iterator;
-	typedef typename Refs::const_iterator const_iterator;
-
-	iterator begin() { return refs.begin(); }
-	iterator end() { return refs.end(); }
-
-	const_iterator begin() const { return refs.begin(); }
-	const_iterator end() const { return refs.end(); }
-
 	template<class, class> friend class Owner;
 	template<class, class> friend class User;
 
-	Iterator beginIter() { return Iterator(refs.begin(), refs.end()); }
-	Iterator endIter() { return Iterator(refs.end(), refs.end()); }
+	Iterator begin() { return Iterator(refs.begin(), refs.end()); }
+	Iterator end() { return Iterator(refs.end(), refs.end()); }
 
-	ConstIterator beginIter() const { return ConstIterator(refs.end(), refs.end()); }
-	ConstIterator endIter() const { return ConstIterator(refs.end(), refs.end()); }
+	ConstIterator begin() const { return ConstIterator(refs.begin(), refs.end()); }
+	ConstIterator end() const { return ConstIterator(refs.end(), refs.end()); }
 
 	void rehash() { refs.rehash(); }
+	int fullSize() const { return refs.size(); }
+	int size() const {
+		int s = 0;
+		for (auto& p :refs) {
+			if (p.second.data) {
+				s += 1;
+			}
+		}
+		return s;
+	}
 };
 
 inline string xml_sys_id(uint sys, uint id) {

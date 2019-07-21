@@ -151,19 +151,13 @@ static cvector<Expr*> queue;
 
 void parse() {
 	Sys::mod().math.get<Rule>().rehash();
-	for (const auto& p : Sys::get().math.get<Rule>()) {
-		if (Rule* r = p.second.data) {
-			Type* tp = r->term.type.get();
-			tp->rules.add(r->term, r->id());
-		}
+	for (Rule& r : Sys::mod().math.get<Rule>()) {
+		Type* tp = r.term.type.get();
+		tp->rules.add(r.term, r.id());
 	}
 	Sys::mod().math.get<Type>().rehash();
-	for (const auto& p : Sys::get().math.get<Type>()) {
-		Type* tp = p.second.data;
-		if (!tp) {
-			throw Error("!tp: " + Lex::toStr(p.first) + " -- " + to_string(p.first));
-		}
-		tp->rules.sort();
+	for (Type& t : Sys::mod().math.get<Type>()) {
+		t.rules.sort();
 	}
 #ifdef PARALLEL_PARSE_EXPR
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),

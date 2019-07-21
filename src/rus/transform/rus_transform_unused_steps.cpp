@@ -52,8 +52,8 @@ void reduce_unused_steps(const string& opts)  {
 
 	std::atomic<int> counter(0);
 	vector<Proof*> proofs;
-	for (auto& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
 			if (theorem == -1 || thm->id() == theorem) {
 				if (Proof* proof = thm->proof.get()) {
 					proofs.push_back(proof);

@@ -147,11 +147,10 @@ void minimize_imports(uint label, map<uint, set<uint>>& resolved, const map<uint
 
 map<uint, set<uint>> create_rule_deps() {
 	vector<const Assertion*> rules;
-	for (const auto& p : Sys::get().math.get<Assertion>()) {
-		const Assertion* a = p.second.data;
-		Literal first = a->expr.front();
+	for (const Assertion& a : Sys::get().math.get<Assertion>()) {
+		Literal first = a.expr.front();
 		if (!first.is_turnstile()) {
-			rules.push_back(a);
+			rules.push_back(&a);
 		}
 	}
 

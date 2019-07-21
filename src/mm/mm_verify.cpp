@@ -190,12 +190,14 @@ void verify() {
 	Sys::timer()["verify"].start();
 #ifdef PARALLEL_MM_VERIFY
 	vector<const Assertion*> assertions;
-	for (auto p : Sys::mod().math.get<Assertion>())
-		assertions.push_back(p.second.data);
+	for (const Assertion& a : Sys::mod().math.get<Assertion>()) {
+		assertions.push_back(&a);
+	}
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, assertions.size()),
 		[assertions] (const tbb::blocked_range<size_t>& r) {
-			for (size_t i = r.begin(); i != r.end(); ++i)
+			for (size_t i = r.begin(); i != r.end(); ++i) {
 				verify_assertion(assertions[i]);
+			}
 		}
 	);
 #else

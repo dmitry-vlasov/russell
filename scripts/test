@@ -69,7 +69,6 @@ check "${binpath}/mdl --verb
     \"rus refactor job=reduce_duplicate_steps \"
     \"rus refactor job=reduce_unused_hyps \"
     \"rus refactor job=reduce_unused_steps \"
-    \"rus refactor job=generalize_theorems \"
     \"rus refactor job=shortcut_proofs \"
     \"rus refactor job=reduce_unused_steps \"
     \"rus refactor job=reduce_unused_hyps \"
@@ -81,7 +80,7 @@ check "${binpath}/mdl --verb
     exit"
 echo -e 'done\n\n'
 
-
+#\"rus refactor job=generalize_theorems \"
 #\"rus refactor job=shortcut_proofs \"
 
 # \"rus refactor job=reduce_duplicate_steps \"

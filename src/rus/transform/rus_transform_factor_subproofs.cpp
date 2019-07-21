@@ -8,8 +8,8 @@ typedef map<uint, vector<const Step*>> AssertionMap;
 
 AssertionMap init_assertion_map() {
 	AssertionMap ass_map;
-	for (auto& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
 			if (Proof* proof = thm->proof.get()) {
 				for (const auto& step : proof->steps) {
 					ass_map[step->ass_id()].push_back(step.get());

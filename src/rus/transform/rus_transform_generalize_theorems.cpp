@@ -67,8 +67,8 @@ void generalize_theorems(const string& opts)  {
 
 	std::atomic<int> counter(0);
 	vector<Theorem*> theorems;
-	for (auto& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
 			if (thm->proof) {
 				if (theorem == -1 || thm->id() == theorem) {
 					theorems.push_back(thm);

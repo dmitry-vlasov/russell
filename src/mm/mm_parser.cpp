@@ -346,8 +346,8 @@ using parser::Parser;
 void parse() {
 #ifdef PARALLEL_MM_PARSE
 	vector<uint> labels;
-	for (auto p : Sys::mod().math.get<Source>())
-		if (!p.second.data->parsed) labels.push_back(p.first);
+	for (const Source& s : Sys::mod().math.get<Source>())
+		if (!s.parsed) labels.push_back(s.id());
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
 		[labels] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)

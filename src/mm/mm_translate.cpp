@@ -367,7 +367,6 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	rus::Proof* p = new rus::Proof(thm);
 	p->vars = std::move(translate_vars(ass->innerVars));
 	rus::Step* st = translate_step(tree, p, thm, state, ass);
-	//p->elems.emplace_back(unique_ptr<rus::Qed>(new rus::Qed(thm->prop.get(), st)));
 	p->qed = make_unique<rus::Qed>(thm->prop.get(), st);
 	thm->proof.reset(p);
 	p->token.set(state.source);
@@ -499,11 +498,11 @@ Maps create_maps(uint src, uint tgt) {
 	Maps maps;
 	vector<rus::Source*> targets;
 	Sys::mod().math.get<Source>().rehash();
-	for (const auto& p : Sys::get().math.get<Source>()) {
-		if (p.first == src) {
+	for (const Source& s : Sys::get().math.get<Source>()) {
+		if (s.id() == src) {
 			targets.push_back(create_source(src, maps, tgt));
 		} else {
-			targets.push_back(create_source(p.first, maps));
+			targets.push_back(create_source(s.id(), maps));
 		}
 	}
 	for (auto t : targets) {
@@ -512,20 +511,19 @@ Maps create_maps(uint src, uint tgt) {
 	vector<Assertion*> rules;
 	vector<Assertion*> supers;
 	Sys::mod().math.get<Assertion>().rehash();
-	for (const auto& p : Sys::get().math.get<Assertion>()) {
-		Assertion* a = p.second.data;
-		if (a->proof.refs.size() == 1) {
-			maps.redundant_assertions[a->id()] = &a->proof.refs[0];
+	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
+		if (a.proof.refs.size() == 1) {
+			maps.redundant_assertions[a.id()] = &a.proof.refs[0];
 		} else {
-			if (node_kind(a) == rus::Theory::RULE) {
-				for (const auto& v : a->outerVars) {
+			if (node_kind(&a) == rus::Theory::RULE) {
+				for (const auto& v : a.outerVars) {
 					translate_type(v.get()->type(), maps);
 				}
-				translate_type(a->expr.front().lit, maps);
-				if (rule_term_is_super(a->expr)) {
-					supers.push_back(a);
+				translate_type(a.expr.front().lit, maps);
+				if (rule_term_is_super(a.expr)) {
+					supers.push_back(&a);
 				} else {
-					rules.push_back(a);
+					rules.push_back(&a);
 				}
 			}
 		}
@@ -550,8 +548,8 @@ Maps create_maps(uint src, uint tgt) {
 static vector<uint> find_dependencies(uint src) {
 	vector<uint> ret;
 	ret.reserve(Sys::get().math.get<Source>().size());
-	for (const auto& s : Sys::get().math.get<Source>()) {
-		ret.push_back(s.second.data->id());
+	for (const Source& s : Sys::get().math.get<Source>()) {
+		ret.push_back(s.id());
 	}
 	ret.push_back(src);
 	return ret;

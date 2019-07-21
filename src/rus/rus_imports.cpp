@@ -205,8 +205,8 @@ void minimize_imports(Source* src, map<uint, set<uint>>& minimized) {
 void min_imports(uint src) {
 	map<uint, set<uint>> minimized;
 	if (src == -1) {
-		for (const auto& s : Sys::mod().math.get<Source>()) {
-			minimize_imports(s.second.data, minimized);
+		for (Source& s : Sys::mod().math.get<Source>()) {
+			minimize_imports(&s, minimized);
 		}
 	} else {
 		if (Source* s = Sys::mod().math.get<Source>().access(src)) {

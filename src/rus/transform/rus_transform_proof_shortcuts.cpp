@@ -350,9 +350,8 @@ void reduce_proof_shortcuts(const string& opts)  {
 	vector<Proof*> proofs;
 	PropIndex propIndex;
 	HypIndex hypIndex;
-	for (auto& a : Sys::mod().math.get<Assertion>()) {
-		Assertion* ass = a.second.data;
-		if (Theorem* thm = dynamic_cast<Theorem*>(ass)) {
+	for (Assertion& ass : Sys::mod().math.get<Assertion>()) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(&ass)) {
 			if (Proof* proof = thm->proof.get()) {
 				if (theorem == -1 || thm->id() == theorem) {
 					proofs.push_back(proof);
@@ -360,13 +359,13 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 		propIndex.add(
-			prover::Tree2Term(*ass->prop->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
-			PropRef(ass)
+			prover::Tree2Term(*ass.prop->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
+			PropRef(&ass)
 		);
-		for (uint i = 0; i < ass->hyps.size(); ++i) {
+		for (uint i = 0; i < ass.hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass->hyps.at(i)->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
-				HypRef(ass, i)
+				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
+				HypRef(&ass, i)
 			);
 		}
 	}
