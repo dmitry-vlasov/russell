@@ -20,9 +20,10 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		vector<Substitution> matches2 = match(*thm, *gen_thm);
 		if (!matches2.size()) {
 			beautify(*gen_thm);
-			cout << "strongly more general remaked theorem" << endl;
-			cout << "ret.theorem:\n" << gen_thm->show() << endl;
-			cout << "p->theorem:\n" << thm->show() << endl;
+			cout << "strongly more general theorem" << endl;
+			cout << "more general:\n" << gen_thm->show() << endl;
+			cout << "original:\n" << thm->show() << endl;
+			counter.store(counter.load() + 1);
 		}
 	} catch (Timeout& timeout) {
 		cout << timeout.what();
