@@ -330,7 +330,7 @@ static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 
 void factorize_subproofs(const string& opts) {
 	AssertionMap ass_map = init_assertion_map();
-	auto parsed_opts = parse_options(opts);
+	map<string, string> parsed_opts = parse_options(opts);
 	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : ass_map.size();
 
 	ProofImplsSample common_subproofs = init_subproofs(ass_map, max_size);

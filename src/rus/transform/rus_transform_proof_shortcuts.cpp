@@ -344,7 +344,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 #endif
 
 void reduce_proof_shortcuts(const string& opts)  {
-	auto parsed_opts = parse_options(opts);
+	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
 	vector<Proof*> proofs;

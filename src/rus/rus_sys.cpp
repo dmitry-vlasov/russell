@@ -46,10 +46,10 @@ string xml_outline(const Source&, uint);
 string xml_structure(uint bits);
 string xml_types();
 
-void reduce_duplicate_steps();
-void reduce_unused_steps();
+void reduce_duplicate_steps(const string& opts);
+void reduce_unused_steps(const string& opts);
 void factorize_subproofs(const string& opts);
-void reduce_unused_hyps();
+void reduce_unused_hyps(const string& opts);
 void reduce_proof_shortcuts(const string& opts);
 
 namespace {
@@ -108,13 +108,13 @@ Return types() {
 
 Return refactor(const string& job, const string& opts) {
 	if (job == "reduce_duplicate_steps") {
-		reduce_duplicate_steps();
+		reduce_duplicate_steps(opts);
 	} else if (job == "reduce_unused_steps") {
-		reduce_unused_steps();
+		reduce_unused_steps(opts);
 	} else if (job == "factorize_subproofs") {
 		factorize_subproofs(opts);
 	} else if (job == "reduce_unused_hyps") {
-		reduce_unused_hyps();
+		reduce_unused_hyps(opts);
 	} else if (job == "shortcut_proofs") {
 		reduce_proof_shortcuts(opts);
 	} else {

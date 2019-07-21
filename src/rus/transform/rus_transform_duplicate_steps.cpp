@@ -46,13 +46,18 @@ void reduce_duplicate_steps(Proof* proof, std::atomic<int>& counter) {
 #define PARALLEL_DUPLICATE_STEPS
 #endif
 
-void reduce_duplicate_steps()  {
+void reduce_duplicate_steps(const string& opts)  {
+	map<string, string> parsed_opts = parse_options(opts);
+	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
+
 	std::atomic<int> counter(0);
 	vector<Proof*> proofs;
 	for (auto& a : Sys::mod().math.get<Assertion>()) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
-			if (Proof* proof = thm->proof.get()) {
-				proofs.push_back(proof);
+			if (theorem == -1 || thm->id() == theorem) {
+				if (Proof* proof = thm->proof.get()) {
+					proofs.push_back(proof);
+				}
 			}
 		}
 	}

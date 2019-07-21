@@ -70,19 +70,24 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 //#define PARALLEL_UNUSED_HYPS
 #endif
 
-void reduce_unused_hyps()  {
+void reduce_unused_hyps(const string& opts)  {
+	map<string, string> parsed_opts = parse_options(opts);
+	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
+
 	std::atomic<int> counter(0);
 	vector<Theorem*> theorems;
 	map<Assertion*, vector<Step*>> steps_map;
 	for (auto& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* th = dynamic_cast<Theorem*>(a.second.data)) {
-			if (th->proof) {
-				theorems.push_back(th);
-				traverseProof(th->proof->qed->step, [&steps_map](Writable* n) {
-					if (Step* s = dynamic_cast<Step*>(n)) {
-						steps_map[s->ass()].push_back(s);
-					}
-				});
+		if (Theorem* thm = dynamic_cast<Theorem*>(a.second.data)) {
+			if (thm->proof) {
+				if (theorem == -1 || thm->id() == theorem) {
+					theorems.push_back(thm);
+					traverseProof(thm->proof->qed->step, [&steps_map](Writable* n) {
+						if (Step* s = dynamic_cast<Step*>(n)) {
+							steps_map[s->ass()].push_back(s);
+						}
+					});
+				}
 			}
 		}
 	}
