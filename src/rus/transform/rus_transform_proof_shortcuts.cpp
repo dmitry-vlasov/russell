@@ -332,7 +332,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 				}
 			}
 		}
-		err.msg += "of theorem:\n" + proof->theorem->show() + "\n";
+		//err.msg += "of theorem:\n" + proof->theorem->show() + "\n";
 		throw err;
 	}
 }
