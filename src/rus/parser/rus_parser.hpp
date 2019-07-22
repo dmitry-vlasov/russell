@@ -187,7 +187,7 @@ struct CreateStepRef {
 				err += "theorem: " + Lex::toStr(p->theorem->id()) + "\n";
 				throw Error(err);
 			}
-			return new Ref(p->theorem->hyps[ind].get());
+			return new Ref(p->theorem->hyps.at(ind).get());
 		}
 		case Ref::STEP: {
 			if (p->steps.size() <= ind) {
@@ -196,7 +196,7 @@ struct CreateStepRef {
 				err += "theorem: " + Lex::toStr(p->theorem->id()) + "\n";
 				throw Error(err);
 			}
-			return new Ref(p->steps[ind].get());
+			return new Ref(p->steps.at(ind).get());
 		}
 		default : assert(false && "impossible"); break;
 		}
@@ -214,7 +214,13 @@ struct GetProp {
 struct GetStep {
 	struct result { typedef Step* type; };
 	Step* operator()(uint ind, Proof* p) const {
-		return p->steps[ind].get();
+		if (p->steps.size() <= ind) {
+			string err;
+			err += "step index exceeded steps size: " + to_string(p->steps.size()) + " <= " + to_string(ind) + "\n";
+			err += "theorem: " + Lex::toStr(p->theorem->id()) + "\n";
+			throw Error(err);
+		}
+		return p->steps.at(ind).get();
 	}
 };
 

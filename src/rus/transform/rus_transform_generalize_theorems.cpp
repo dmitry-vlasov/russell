@@ -9,7 +9,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	AbstProof abstProof = thm->proof->abst();
 	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
 	uint i = 0;
-	while (Lex::isDef(gen_name(i))) {
+	while (Sys::get().math.get<Assertion>().has(Lex::toInt(gen_name(i)))) {
 		++i;
 	}
 	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, Lex::toInt(gen_name(i)));
