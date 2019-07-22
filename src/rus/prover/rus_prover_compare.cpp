@@ -5,20 +5,17 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct Ass {
-	Ass(const Assertion& a, ReplMode mode) {
+	Ass(const Assertion& a, ReplMode mode) : prop(Tree2Term(*a.prop->expr.tree(), mode, 0)) {
 		for (const auto& h : a.hyps) {
 			hyps.emplace_back(Tree2Term(*h->expr.tree(), mode, 0));
 		}
-		props.emplace_back(Tree2Term(*a.prop->expr.tree(), mode, 0));
 	}
 	Ass apply(const Subst& s) const {
 		Ass a(*this);
 		for (auto& h : a.hyps) {
 			h = std::move(s.apply(h));
 		}
-		for (auto& p : a.props) {
-			p = std::move(s.apply(p));
-		}
+		a.prop = std::move(s.apply(prop));
 		return a;
 	}
 	Ass(const Ass&) = default;
@@ -31,9 +28,7 @@ struct Ass {
 		if (hyps.size()) {
 			ret += "--------------\n";
 		}
-		for (auto& p : props) {
-			ret += "prop " + p.show() + "\n";
-		}
+		ret += "prop " + prop.show() + "\n";
 		return ret;
 	}
 	set<LightSymbol> vars() const {
@@ -41,13 +36,11 @@ struct Ass {
 		for (auto& h : hyps) {
 			ret = std::move(sets_union(ret, h.vars()));
 		}
-		for (auto& p : props) {
-			ret = std::move(sets_union(ret, p.vars()));
-		}
+		ret = std::move(sets_union(ret, prop.vars()));
 		return ret;
 	}
 	vector<Term> hyps;
-	vector<Term> props;
+	Term prop;
 };
 
 bool check_sub(const Ass& a1, const Ass& a2) {
@@ -56,12 +49,7 @@ bool check_sub(const Ass& a1, const Ass& a2) {
 			return false;
 		}
 	}
-	for (const auto& p : a2.props) {
-		if (std::find(a1.props.begin(), a1.props.end(), p) == a1.props.end()) {
-			return false;
-		}
-	}
-	return true;
+	return a1.prop == a2.prop;
 }
 
 }
@@ -95,27 +83,15 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 	Watchdog watchdog(1000, "match assertions " + Lex::toStr(as1.id()) + " and " + Lex::toStr(as2.id()));
 
 	vector<unique_ptr<Subst>> subs;
-	subs.emplace_back(make_unique<Subst>());
-	for (const auto& a2_prop : a2.props) {
-		vector<unique_ptr<Subst>> new_subs;
-		for (const auto& sub : subs) {
-			for (const auto& a1_prop : a1.props) {
-				watchdog.check();
-				Term a1_prop_prime = sub->apply(a1_prop);
-				vector<Term> props;
-				props.emplace_back(a2_prop);
-				props.emplace_back(a1_prop_prime);
-				unique_ptr<Subst> new_sub = make_unique<Subst>(*sub);
-				unify::unify_general(props, *new_sub);
-				if (new_sub->ok()) {
-					new_subs.emplace_back(std::move(new_sub));
-				}
-			}
-		}
-		if (!new_subs.size()) {
-			return vector<Substitution>();
-		}
-		subs = std::move(new_subs);
+	vector<Term> props;
+	props.emplace_back(a1.prop);
+	props.emplace_back(a2.prop);
+	unique_ptr<Subst> new_sub = make_unique<Subst>();
+	unify::unify_general(props, *new_sub);
+	if (new_sub->ok()) {
+		subs.emplace_back(std::move(new_sub));
+	} else {
+		return vector<Substitution>();
 	}
 	for (const auto& a1_hyp : a1.hyps) {
 		vector<unique_ptr<Subst>> new_subs;
