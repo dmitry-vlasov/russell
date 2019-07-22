@@ -180,8 +180,24 @@ struct CreateStepRef {
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return new Ref(p->theorem->hyps[ind].get());
-		case Ref::STEP: return new Ref(p->steps[ind].get());
+		case Ref::HYP:  {
+			if (p->theorem->hyps.size() <= ind) {
+				string err;
+				err += "hyp index exceeded hyps size: " + to_string(p->theorem->hyps.size()) + " <= " + to_string(ind) + "\n";
+				err += "theorem: " + Lex::toStr(p->theorem->id()) + "\n";
+				throw Error(err);
+			}
+			return new Ref(p->theorem->hyps[ind].get());
+		}
+		case Ref::STEP: {
+			if (p->steps.size() <= ind) {
+				string err;
+				err += "step index exceeded steps size: " + to_string(p->steps.size()) + " <= " + to_string(ind) + "\n";
+				err += "theorem: " + Lex::toStr(p->theorem->id()) + "\n";
+				throw Error(err);
+			}
+			return new Ref(p->steps[ind].get());
+		}
 		default : assert(false && "impossible"); break;
 		}
 		return nullptr;

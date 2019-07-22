@@ -454,6 +454,7 @@ unique_ptr<Theorem> Maker::make() {
 					}
 					if (!found) {
 						ret->hyps.emplace_back(make_unique<rus::Hyp>(*t->hyp));
+						ret->hyps.back()->ind = ret->hyps.size() - 1;
 						map_hyp2ret[t->hyp] = ret->hyps.back().get();
 					}
 				}
