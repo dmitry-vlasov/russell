@@ -1,14 +1,90 @@
 #include <rus_ast.hpp>
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 #include <rus/prover/rus_prover_maker.hpp>
+#include <rus/prover/rus_prover_ass.hpp>
+#include <rus/prover/rus_prover_cartesian.hpp>
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
+
+using namespace prover;
+
+namespace {
 
 typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
 
-void generaliziation_relation(Assertion* thm, const PropIndex& propIndex, const HypIndex& hypIndex, std::atomic<int>& counter) {
+void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const HypIndex& hypIndex, std::atomic<int>& counter) {
+	Ass a = Ass(*as, ReplMode::KEEP_REPL).specialFreshVars();
 
+	map<const Assertion*, vector<vector<HypIndex::Unified>>> hyps_map;
+	for (uint i = 0; i < a.hyps.size(); ++ i) {
+		const Term& h = a.hyps.at(i);
+		for (const HypIndex::Unified& unif : hypIndex.unify(h)) {
+			if (!hyps_map.count(unif.data->ass)) {
+				hyps_map.emplace(unif.data->ass, vector<vector<HypIndex::Unified>>(a.hyps.size()));
+			}
+			hyps_map.at(unif.data->ass).at(i).emplace_back(unif);
+		}
+	}
+	map<const Assertion*, vector<Subst>> less_general;
+	for (const PropIndex::Unified& unif : propIndex.unify(a.prop)) {
+		const Assertion* ass = unif.data->ass;
+		if (ass == as || !hyps_map.count(ass)) {
+			continue;
+		}
+		CartesianProd<HypIndex::Unified> variants;
+		for (auto& v : hyps_map.at(ass)) {
+			variants.addDim(v);
+		}
+		if (!variants.card()) {
+			continue;
+		} else {
+			Watchdog watchdog(1000, "check generalizations of assertion " + Lex::toStr(as->id()));
+			try {
+				while (true) {
+					watchdog.check();
+					const vector<HypIndex::Unified>& var = variants.data();
+					Subst s = unif.sub;
+					for (const HypIndex::Unified& unif : var) {
+						if (!s.compose(unif.sub)) {
+							break;
+						}
+					}
+					if (s.ok()) {
+						less_general[ass].emplace_back(std::move(s));
+					}
+					if (variants.hasNext()) {
+						variants.makeNext();
+					} else {
+						break;
+					}
+				}
+			} catch (Timeout& timeout) {
+				cout << timeout.what() << endl;
+			}
+		}
+	}
+	if (less_general.size()) {
+		cout << "Assertion " << Lex::toStr(as->id()) << " is more general then {";
+		for (auto& p : less_general) {
+			const Assertion* ass = p.first;
+			if (ass != as) {
+				cout << Lex::toStr(ass->id()) << ", ";
+			}
+			for (const auto& s : p.second) {
+				Ass a1(*ass, ReplMode::DENY_REPL);
+				if (a.apply(s) != a1) {
+					string err;
+					err += "wrong matching:\n";
+					err += "a:\n" + a.show() + "\n";
+					err += "a1:\n" + a1.show() + "\n";
+					err += "sub:\n" + s.show() + "\n";
+					throw Error(err);
+				}
+			}
+		}
+		cout << "}" << endl;
+	}
 }
 
 }

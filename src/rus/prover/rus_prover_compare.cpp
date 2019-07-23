@@ -16,10 +16,6 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 	for (uint i = 0; i < a2.hyps.size(); ++i) {
 		hypsMap.add(a2.hyps.at(i), i);
 	}
-
-	//cout << "a1:" << endl << a1.show() << endl;
-	//cout << "a2:" << endl << a2.show() << endl;
-
 	Watchdog watchdog(1000, "match assertions " + Lex::toStr(as1.id()) + " and " + Lex::toStr(as2.id()));
 
 	vector<unique_ptr<Subst>> subs;
