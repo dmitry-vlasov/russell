@@ -135,7 +135,9 @@ struct Prop : public Writable, public WithToken {
 
 struct Assertion : public Writable, public Owner<Assertion> {
 	struct Info {
-		vector<uint> moreGneral;
+		vector<uint> moreGeneral;
+		vector<uint> lessGeneral;
+		vector<uint> equalGeneral;
 	};
 
 	enum Kind { AXM, THM, DEF };

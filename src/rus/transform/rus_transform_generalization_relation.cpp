@@ -65,11 +65,14 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 		}
 	}
 	if (less_general.size()) {
-		cout << "Assertion " << Lex::toStr(as->id()) << " is more general then {";
+		vector<uint> less_general_ids;
+		vector<uint> equal_general_ids;
 		for (auto& p : less_general) {
 			const Assertion* ass = p.first;
-			if (ass != as) {
-				cout << Lex::toStr(ass->id()) << ", ";
+			if (match(*ass, *as).size()) {
+				equal_general_ids.push_back(ass->id());
+			} else {
+				less_general_ids.push_back(ass->id());
 			}
 			for (const auto& s : p.second) {
 				Ass a1(*ass, ReplMode::DENY_REPL);
@@ -83,7 +86,12 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 				}
 			}
 		}
-		cout << "}" << endl;
+		if (!as->info) {
+			as->info = make_unique<Assertion::Info>();
+		}
+		as->info->lessGeneral = std::move(less_general_ids);
+		as->info->equalGeneral = std::move(equal_general_ids);
+		counter.store(counter.load() + 1);
 	}
 }
 
@@ -129,8 +137,47 @@ void generaliziation_relation(const string& opts)  {
 		generaliziation_relation(a, propIndex, hypIndex, counter);
 	}
 #endif
+
+	for (auto a : assertions) {
+		if (a->info && a->info->lessGeneral.size()) {
+			for (uint id : a->info->lessGeneral) {
+				Assertion* less = Sys::mod().math.get<Assertion>().access(id);
+				if (!less->info) {
+					less->info = make_unique<Assertion::Info>();
+				}
+				less->info->moreGeneral.push_back(a->id());
+			}
+		}
+	}
+	for (auto a : assertions) {
+		if (a->info && (a->info->lessGeneral.size() || a->info->moreGeneral.size() || a->info->equalGeneral.size())) {
+			cout << "For assertion " << Lex::toStr(a->id()) << " those are ";
+			if (a->info->lessGeneral.size()) {
+				cout << "less general: {";
+				for (auto l : a->info->lessGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "} ";
+			}
+			if (a->info->equalGeneral.size()) {
+				cout << "equal general: {";
+				for (auto l : a->info->equalGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "} ";
+			}
+			if (a->info->moreGeneral.size()) {
+				cout << "more general: {";
+				for (auto l : a->info->moreGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "}";
+			}
+			cout << endl;
+		}
+	}
 	if (counter.load() > 0) {
-		cout << "totally generalization pairs: " << counter.load() << endl;
+		cout << "total number of generalizations: " << counter.load() << endl;
 	}
 }
 
