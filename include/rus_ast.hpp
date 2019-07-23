@@ -134,6 +134,10 @@ struct Prop : public Writable, public WithToken {
 };
 
 struct Assertion : public Writable, public Owner<Assertion> {
+	struct Info {
+		vector<uint> moreGneral;
+	};
+
 	enum Kind { AXM, THM, DEF };
 	Assertion(Id i, const Token& t = Token()) : Owner(i.id(), t) { }
 	Assertion(const Assertion&) = delete;
@@ -154,6 +158,7 @@ struct Assertion : public Writable, public Owner<Assertion> {
 	Disj disj;
 	vector<unique_ptr<Hyp>>  hyps;
 	unique_ptr<Prop>         prop;
+	unique_ptr<Info>         info;
 	void write(ostream& os, const Indent& i = Indent()) const;
 };
 
