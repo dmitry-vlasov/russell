@@ -6,7 +6,6 @@ namespace mdl { namespace rus { namespace {
 
 typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
-typedef prover::unify::IndexMap<Step*> StepIndex;
 
 set<const Writable*> intermediate(const Step* parent, const vector<const Writable*>& children) {
 	struct Pair {

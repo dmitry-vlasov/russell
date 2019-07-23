@@ -1,76 +1,16 @@
 #include <rus_ast.hpp>
+#include <rus/prover/rus_prover_ass.hpp>
 #include <rus/prover/unify/rus_prover_unify.hpp>
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 
-namespace mdl { namespace rus { namespace prover {
-
-struct Ass {
-	Ass(const Assertion& a, ReplMode mode) : prop(Tree2Term(*a.prop->expr.tree(), mode, 0)) {
-		for (const auto& h : a.hyps) {
-			hyps.emplace_back(Tree2Term(*h->expr.tree(), mode, 0));
-		}
-	}
-	Ass apply(const Subst& s) const {
-		Ass a(*this);
-		for (auto& h : a.hyps) {
-			h = std::move(s.apply(h));
-		}
-		a.prop = std::move(s.apply(prop));
-		return a;
-	}
-	Ass(const Ass&) = default;
-	Ass(Ass&&) = default;
-	string show() const {
-		string ret;
-		for (auto& h : hyps) {
-			ret += "hyp " + h.show() + "\n";
-		}
-		if (hyps.size()) {
-			ret += "--------------\n";
-		}
-		ret += "prop " + prop.show() + "\n";
-		return ret;
-	}
-	set<LightSymbol> vars() const {
-		set<LightSymbol> ret;
-		for (auto& h : hyps) {
-			ret = std::move(sets_union(ret, h.vars()));
-		}
-		ret = std::move(sets_union(ret, prop.vars()));
-		return ret;
-	}
-	vector<Term> hyps;
-	Term prop;
-};
-
-bool check_sub(const Ass& a1, const Ass& a2) {
-	for (const auto& h : a1.hyps) {
-		if (std::find(a2.hyps.begin(), a2.hyps.end(), h) == a2.hyps.end()) {
-			return false;
-		}
-	}
-	return a1.prop == a2.prop;
-}
-
-}
+namespace mdl { namespace rus {
 
 using namespace prover;
 
 vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
-	Ass a10(as1, ReplMode::KEEP_REPL);
+	Ass a1 = Ass(as1, ReplMode::KEEP_REPL).specialFreshVars();
 	Ass a2(as2, ReplMode::DENY_REPL);
-	set<LightSymbol> a2_vars = a2.vars();
-	set<LightSymbol> common_vars = sets_intersection(a10.vars(), a2_vars);
-	Subst rename_common_vars;
-	for (auto v : common_vars) {
-		LightSymbol w = v;
-		uint i = 0;
-		while (a2_vars.find(w) != a2_vars.end()) {
-			w.lit = Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(i));
-		}
-		rename_common_vars.compose(v, w);
-	}
-	Ass a1 = a10.apply(rename_common_vars);
+
 	typedef unify::IndexMap<uint> HypsMap;
 	HypsMap hypsMap;
 	for (uint i = 0; i < a2.hyps.size(); ++i) {
@@ -122,7 +62,7 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 	}
 	vector<Substitution> ret;
 	for (const auto& s : subs) {
-		if (!check_sub(a1.apply(*s), a2)) {
+		if (a1.apply(*s) !=  a2) {
 			string err;
 			err += "wrong matching:\n";
 			err += "a1:\n" + a1.show() + "\n";
