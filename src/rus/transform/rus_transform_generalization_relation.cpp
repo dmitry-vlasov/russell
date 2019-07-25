@@ -101,6 +101,72 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 #define PARALLEL_GENERALIZATION_RELATION
 #endif
 
+void show_generalization_info(const vector<Assertion*>& assertions) {
+	for (auto a : assertions) {
+		if (a->info && (a->info->lessGeneral.size() || a->info->moreGeneral.size() || a->info->equalGeneral.size())) {
+			cout << "For assertion " << Lex::toStr(a->id()) << " ";
+			cout << "optimal is: " << Lex::toStr(a->info->optimal) << ", ";
+			cout << "those are ";
+			if (a->info->lessGeneral.size()) {
+				cout << "less general: {";
+				for (auto l : a->info->lessGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "} ";
+			}
+			if (a->info->equalGeneral.size()) {
+				cout << "equal general: {";
+				for (auto l : a->info->equalGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "} ";
+			}
+			if (a->info->moreGeneral.size()) {
+				cout << "more general: {";
+				for (auto l : a->info->moreGeneral) {
+					cout << Lex::toStr(l) << ", ";
+				}
+				cout << "}";
+			}
+			cout << endl;
+		}
+	}
+}
+
+void decide_an_optimal(Assertion* a, set<Assertion*>& visited) {
+	if (visited.count(a) || !a->info) {
+		visited.insert(a);
+		return;
+	}
+	visited.insert(a);
+	if (!a->info->moreGeneral.size()) {
+		if (!a->info->equalGeneral.size()) {
+			a->info->optimal = a->id();
+		} else {
+			for (uint equal : a->info->equalGeneral) {
+				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(equal);
+				if (dynamic_cast<Theorem*>(eq_a)) {
+					a->info->optimal = eq_a->id();
+				}
+			}
+			if (a->info->optimal == -1) {
+				a->info->optimal = a->id();
+			}
+			for (uint equal : a->info->equalGeneral) {
+				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(equal);
+				eq_a->info->optimal = a->info->optimal;
+				visited.insert(eq_a);
+			}
+		}
+	} else {
+		for (uint more : a->info->moreGeneral) {
+			Assertion* more_a = Sys::mod().math.get<Assertion>().access(more);
+			decide_an_optimal(more_a, visited);
+			a->info->optimal = more_a->info->optimal;
+		}
+	}
+}
+
 void generaliziation_relation(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
@@ -149,33 +215,11 @@ void generaliziation_relation(const string& opts)  {
 			}
 		}
 	}
+	set<Assertion*> visited;
 	for (auto a : assertions) {
-		if (a->info && (a->info->lessGeneral.size() || a->info->moreGeneral.size() || a->info->equalGeneral.size())) {
-			cout << "For assertion " << Lex::toStr(a->id()) << " those are ";
-			if (a->info->lessGeneral.size()) {
-				cout << "less general: {";
-				for (auto l : a->info->lessGeneral) {
-					cout << Lex::toStr(l) << ", ";
-				}
-				cout << "} ";
-			}
-			if (a->info->equalGeneral.size()) {
-				cout << "equal general: {";
-				for (auto l : a->info->equalGeneral) {
-					cout << Lex::toStr(l) << ", ";
-				}
-				cout << "} ";
-			}
-			if (a->info->moreGeneral.size()) {
-				cout << "more general: {";
-				for (auto l : a->info->moreGeneral) {
-					cout << Lex::toStr(l) << ", ";
-				}
-				cout << "}";
-			}
-			cout << endl;
-		}
+		decide_an_optimal(a, visited);
 	}
+	show_generalization_info(assertions);
 	if (counter.load() > 0) {
 		cout << "total number of generalizations: " << counter.load() << endl;
 	}

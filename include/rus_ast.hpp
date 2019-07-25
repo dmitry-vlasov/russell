@@ -135,9 +135,10 @@ struct Prop : public Writable, public WithToken {
 
 struct Assertion : public Writable, public Owner<Assertion> {
 	struct Info {
-		vector<uint> moreGeneral;
-		vector<uint> lessGeneral;
-		vector<uint> equalGeneral;
+		vector<uint> moreGeneral;  // these assertions are more general, then current
+		vector<uint> lessGeneral;  // these assertions are less general, then current
+		vector<uint> equalGeneral; // these assertions are equivalent to the current
+		uint optimal = -1;         // use this assertion instead of current (it is equivalent or more general)
 	};
 
 	enum Kind { AXM, THM, DEF };
