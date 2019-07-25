@@ -53,6 +53,7 @@ void reduce_unused_hyps(const string& opts);
 void reduce_proof_shortcuts(const string& opts);
 void generalize_theorems(const string& opts);
 void generaliziation_relation(const string& opts);
+void replace_with_optimal(const string& opts);
 
 namespace {
 
@@ -123,6 +124,8 @@ Return refactor(const string& job, const string& opts) {
 		generalize_theorems(opts);
 	} else if (job == "generalization_relation") {
 		generaliziation_relation(opts);
+	} else if (job == "replace_with_optimal") {
+		replace_with_optimal(opts);
 	} else {
 		return Return("unknown refactor job: " + job, false);
 	}
@@ -271,7 +274,7 @@ static Descr description(string name) {
 		{"parse_expr", Descr("parse all unparsed expressions")},
 		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
 		{"refactor",   Descr("Refactor theories",
-			Descr::Arg("job", "reduce_duplicate_steps|reduce_unused_steps|factorize_subproofs|reduce_unused_hyps|shortcut_proofs|generalize_theorems|generalization_relation"),
+			Descr::Arg("job", "reduce_duplicate_steps|reduce_unused_steps|factorize_subproofs|reduce_unused_hyps|shortcut_proofs|generalize_theorems|generalization_relation|replace_with_optimal"),
 			Descr::Arg("opts", "options like <key>=<value> in '' separated by ,", true, "")
 		)},
 		{"info",       Descr("info about math")},

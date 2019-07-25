@@ -68,6 +68,7 @@ else()
 		rus/transform/rus_transform_factor_subproofs.cpp
 		rus/transform/rus_transform_duplicate_steps.cpp
 		rus/transform/rus_transform_proof_shortcuts.cpp
+		rus/transform/rus_transform_replace_with_optimal.cpp
 		rus/transform/rus_transform_unused_hyps.cpp
 		rus/transform/rus_transform_unused_steps.cpp
 
