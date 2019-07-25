@@ -22,11 +22,13 @@ void replace_with_optimal(Proof* proof) {
 					vector<StepRef> dimData;
 					for (uint j = 0; j < step->refs.size(); ++ j) {
 						Substitution s = std::move(unify_forth(optimal->hyps.at(i)->expr, step->refs.at(j)->expr()));
-						if (s.join(sub)) {
+						if (s.ok()) {
 							dimData.emplace_back(j,std::move(s));
 						}
 					}
-					vars.addDim(dimData);
+					if (dimData.size() == step->refs.size()) {
+						vars.addDim(dimData);
+					}
 				}
 				if (!vars.card()) {
 					throw Error("must not be empty");
