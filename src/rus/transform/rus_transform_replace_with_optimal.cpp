@@ -12,56 +12,65 @@ struct StepRef {
 
 
 void replace_with_optimal(Proof* proof) {
-	traverseProof(proof->qed->step, [](Writable* w) {
-		if (Step* step = dynamic_cast<Step*>(w)) {
-			if (step->ass()->info && step->ass()->info->optimal != step->ass()->id()) {
-				const Assertion* optimal = Sys::get().math.get<Assertion>().access(step->ass()->info->optimal);
-				Substitution sub = std::move(unify_forth(optimal->prop->expr, step->expr));
-				prover::CartesianProd<StepRef> vars;
-				for (uint i = 0; i < optimal->hyps.size(); ++ i) {
-					vector<StepRef> dimData;
-					for (uint j = 0; j < step->refs.size(); ++ j) {
-						Substitution s = std::move(unify_forth(optimal->hyps.at(i)->expr, step->refs.at(j)->expr()));
-						if (s.ok()) {
-							dimData.emplace_back(j,std::move(s));
-						}
-					}
-					if (dimData.size() == step->refs.size()) {
-						vars.addDim(dimData);
-					}
-				}
-				if (!vars.card()) {
-					throw Error("must not be empty");
-				}
-				while (true) {
-					const vector<StepRef>& var = vars.data();
-					Substitution s(sub);
-					for (uint i = 0; i < optimal->hyps.size(); ++ i) {
-						if (!s.join(var.at(i).sub)) {
-							break;
-						}
-					}
+	for(auto& s : proof->steps) {
+		Step* step = s.get();
+		if (step->ass()->info && step->ass()->info->optimal != step->ass()->id()) {
+			const Assertion* optimal = Sys::get().math.get<Assertion>().access(step->ass()->info->optimal);
+			prover::CartesianProd<StepRef> vars;
+			for (uint i = 0; i < optimal->hyps.size(); ++ i) {
+				vector<StepRef> dimData;
+				const Expr& hyp = optimal->hyps.at(i)->expr;
+				for (uint j = 0; j < step->refs.size(); ++ j) {
+					const Expr& ref = step->refs.at(j)->expr();
+					Substitution s = std::move(unify_forth(hyp, ref));
 					if (s.ok()) {
-						step->set_ass(optimal->id());
-						step->refs.clear();
-						vector<unique_ptr<Ref>> new_refs;
-						for (uint i = 0; i < optimal->hyps.size(); ++ i) {
-							int j = var.at(i).ind;
-							new_refs.emplace_back(make_unique<Ref>(*step->refs.at(j)));
-						}
-						step->refs = std::move(new_refs);
-						return;
+						dimData.emplace_back(j,std::move(s));
 					}
-					if (vars.hasNext()) {
-						vars.makeNext();
-					} else {
+				}
+				vars.addDim(dimData);
+			}
+			if (!vars.card()) {
+				throw Error("must not be empty");
+			}
+			Substitution sub = std::move(unify_forth(optimal->prop->expr, step->expr));
+			while (true) {
+				const vector<StepRef>& var = vars.data();
+				Substitution s(sub);
+				for (uint i = 0; i < optimal->hyps.size(); ++ i) {
+					if (!s.join(var.at(i).sub)) {
 						break;
 					}
 				}
-				throw Error("must unify somehow");
+				if (s.ok() && optimal->disj.satisfies(s)) {
+					cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
+					cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
+					cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
+					step->set_ass(optimal->id());
+					vector<unique_ptr<Ref>> new_refs;
+					for (uint i = 0; i < optimal->hyps.size(); ++ i) {
+						int j = var.at(i).ind;
+						new_refs.emplace_back(make_unique<Ref>(*step->refs.at(j)));
+					}
+					step->refs = std::move(new_refs);
+					return;
+				}
+				if (vars.hasNext()) {
+					vars.makeNext();
+				} else {
+					break;
+				}
 			}
+			string err = "must unify somehow\n";
+			err += "Assertion " + Lex::toStr(step->ass()->id()) + " must be replaced with ";
+			err += Lex::toStr(optimal->id()) + " in step " + to_string(step->ind());
+			err += " of proof of " + Lex::toStr(proof->theorem->id()) + "\n";
+			err += step->show() + "\n";
+			err += step->ass()->show() + "\n";
+			err += optimal->show() + "\n";
+			throw Error(err);
 		}
-	});
+	}
+	proof->verify(VERIFY_SRC, &proof->theorem->disj);
 }
 
 }

@@ -66,7 +66,10 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 			err += "sub:\n" + s->show() + "\n";
 			throw Error(err);
 		}
-		ret.emplace_back(Subst2Substitution(*s));
+		Substitution sub = Subst2Substitution(*s);
+		if (as1.disj.satisfies(sub)) {
+			ret.emplace_back(sub);
+		}
 	}
 	return ret;
 }

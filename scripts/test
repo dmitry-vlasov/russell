@@ -77,12 +77,17 @@ check "${binpath}/mdl --verb
     \"rus refactor job=reduce_unused_steps \"
     \"rus refactor job=reduce_unused_hyps \"
     \"rus refactor job=generalization_relation \"
+    \"rus verify \"
+    \"rus write in=${file}.rus deep=true\"
     \"rus refactor job=replace_with_optimal \"
     \"rus verify \"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
 
+exit
+
+#\"rus refactor job=replace_with_optimal \"
 #\"rus refactor job=generalize_theorems \"
 #\"rus refactor job=shortcut_proofs \"
 

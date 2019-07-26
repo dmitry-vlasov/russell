@@ -50,7 +50,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 							break;
 						}
 					}
-					if (s.ok()) {
+					if (s.ok() && as->disj.satisfies(Subst2Substitution(s))) {
 						less_general[ass].emplace_back(std::move(s));
 					}
 					if (variants.hasNext()) {

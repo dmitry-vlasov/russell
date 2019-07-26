@@ -88,6 +88,28 @@ void Disj::check(const Substitution& s, Disj* outer) const {
 	}
 }
 
+inline bool disjointed_are_satisfied(const set<uint>& s1, const set<uint>& s2) {
+	if (s1.size() > s2.size()) return disjointed_are_satisfied(s2, s1);
+	for (uint x : s1) {
+		if (s2.find(x) != s2.end()) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Disj::satisfies(const Substitution& s) const {
+	for (const auto& p : dvars) {
+		if (!s.maps(p.v) || !s.maps(p.w)) continue;
+		set<uint> v1_vars = s.map(p.v)->vars();
+		set<uint> v2_vars = s.map(p.w)->vars();
+		if (!disjointed_are_satisfied(v1_vars, v2_vars)) {
+			return false;
+		}
+	}
+	return true;
+}
+
 void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2) {
 	if (vars1.empty() || vars2.empty()) return;
 	for (uint v1 : vars1) {
