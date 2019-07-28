@@ -89,6 +89,14 @@ struct Disj : public Writable, public WithToken {
 	set<Pair> dvars;
 };
 
+inline Disj unite(const Disj& d1, const Disj& d2) {
+	Disj ret(d1);
+	for (auto& p : d2.dvars) {
+		ret.dvars.insert(p);
+	}
+	return ret;
+}
+
 void parse_expr(Expr& ex);
 
 struct Type : public Writable, public Owner<Type> {

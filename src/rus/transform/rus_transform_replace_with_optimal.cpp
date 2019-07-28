@@ -2,7 +2,11 @@
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 #include <rus/prover/rus_prover_cartesian.hpp>
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
+
+extern bool debug_check_disj;
+
+namespace {
 
 struct StepRef {
 	StepRef(uint i, Substitution&& s) : ind(i), sub(s) { }
@@ -10,9 +14,9 @@ struct StepRef {
 	Substitution sub;
 };
 
-
 void replace_with_optimal(Proof* proof) {
-	for(auto& s : proof->steps) {
+	Disj theorem_disj = unite(proof->theorem->disj, proof->disj);
+	for (auto& s : proof->steps) {
 		Step* step = s.get();
 		if (step->ass()->info && step->ass()->info->optimal != step->ass()->id()) {
 			const Assertion* optimal = Sys::get().math.get<Assertion>().access(step->ass()->info->optimal);
@@ -41,7 +45,27 @@ void replace_with_optimal(Proof* proof) {
 						break;
 					}
 				}
-				if (s.ok() && optimal->disj.satisfies(s, step->ass()->disj)) {
+
+				/*if ((step->ass()->id() == Lex::toInt("elab2") && optimal->id() == Lex::toInt("gen_elab2")) ||
+				    (step->ass()->id() == Lex::toInt("nfcri") && optimal->id() == Lex::toInt("nfel2"))) {
+					cout << "Assertion " << Lex::toStr(step->ass()->id()) << " SHOULD BE replaced with ";
+					cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
+					cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
+					cout << "sub: " << endl;
+					cout << s << endl;
+					cout << "optimal:" << endl;
+					cout << *optimal << endl;
+					cout << "ass:" << endl;
+					cout << *step->ass() << endl;
+					cout << "theorem:" << endl;
+					cout << *step->proof()->theorem << endl;
+					cout << "optimal->disj.satisfies(s, theorem_disj): " << optimal->disj.satisfies(s, theorem_disj) << endl;
+					debug_check_disj = true;
+					optimal->disj.satisfies(s, step->ass()->disj);
+					debug_check_disj = false;
+				}*/
+
+				if (s.ok() && optimal->disj.satisfies(s, theorem_disj)) {
 					cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
 					cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
 					cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
@@ -70,7 +94,7 @@ void replace_with_optimal(Proof* proof) {
 			throw Error(err);
 		}
 	}
-	proof->verify(VERIFY_SRC, &proof->theorem->disj);
+	proof->theorem->verify(VERIFY_SRC);
 }
 
 }

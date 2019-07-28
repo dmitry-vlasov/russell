@@ -55,7 +55,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 					renaming.inverse().apply(s);
 					if (s.ok() && as->disj.satisfies(Subst2Substitution(s), ass->disj)) {
 
-						if (as->id() == Lex::toInt("nfel2") && ass->id() == Lex::toInt("nfcri")) {
+						/*if (as->id() == Lex::toInt("nfel2") && ass->id() == Lex::toInt("nfcri")) {
 							//cout << "AAAAA" << endl;
 							//cout << a << endl;
 							cout << *as << endl;
@@ -69,7 +69,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 							//Subst s2(s);
 							//renaming.inverse().apply(s2);
 							//cout << s2 << endl;
-						}
+						}*/
 
 						less_general[ass].emplace_back(std::move(s));
 					}

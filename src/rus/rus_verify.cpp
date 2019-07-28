@@ -60,8 +60,10 @@ void Step::verify(uint mode, Disj* disj) const {
 			err.msg += "assertion:\n" + ass()->show() + "\n";
 			//err.msg += "disjointeds: " + oss.str() + "\n";
 			err.msg += "substitution:\n" + Indent::paragraph(sub.show()) + "\n";
-			err.msg += "step: " + to_string(ind_) + "\n";
-			err.msg += "in proof of theorem: " + Lex::toStr(proof_->theorem->id()) + "\n";
+			//err.msg += "step: " + to_string(ind_) + "\n";
+			err.msg += "step: " + show() + "\n";
+			//err.msg += "in proof of theorem: " + Lex::toStr(proof_->theorem->id()) + "\n";
+			err.msg += "theorem:\n" + proof_->theorem->show() + "\n";
 			throw err;
 		}
 	}

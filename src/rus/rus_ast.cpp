@@ -107,10 +107,15 @@ void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2)
 	}
 }
 
+bool debug_check_disj = false;
+
 inline bool disjointed_are_satisfied(const set<uint>& s1, const set<uint>& s2) {
 	if (s1.size() > s2.size()) return disjointed_are_satisfied(s2, s1);
 	for (uint x : s1) {
 		if (s2.find(x) != s2.end()) {
+			if (debug_check_disj) {
+				cout << "s2.find(x) != s2.end(): " << Lex::toStr(x) << endl;
+			}
 			return false;
 		}
 	}
@@ -122,9 +127,41 @@ bool Disj::satisfies(const Substitution& s, const Disj& outer) const {
 		set<uint> v1_vars = s.maps(p.v) ? s.map(p.v)->vars() : set<uint>({p.v});
 		set<uint> v2_vars = s.maps(p.w) ? s.map(p.w)->vars() : set<uint>({p.w});
 		if (!disjointed_are_satisfied(v1_vars, v2_vars)) {
+
+			if (debug_check_disj) {
+				cout << "AAA" << endl;
+				cout << "v1_vars: {";
+				for (uint v : v1_vars) {
+					cout << Lex::toStr(v) << ", ";
+				}
+				cout << "}" << endl;
+				cout << "v2_vars: {";
+				for (uint v : v2_vars) {
+					cout << Lex::toStr(v) << ", ";
+				}
+				cout << "}" << endl;
+				cout << "s:" << endl << s << endl;
+			}
+
 			return false;
 		}
 		if (!outer.check_pairs_disjointed(v1_vars, v2_vars)) {
+
+			if (debug_check_disj) {
+				cout << "BBB" << endl;
+				cout << "v1_vars: {";
+				for (uint v : v1_vars) {
+					cout << Lex::toStr(v) << ", ";
+				}
+				cout << "}" << endl;
+				cout << "v2_vars: {";
+				for (uint v : v2_vars) {
+					cout << Lex::toStr(v) << ", ";
+				}
+				cout << "}" << endl;
+				cout << "outer:" << endl << outer << endl;
+			}
+
 			return false;
 		}
 	}
@@ -136,6 +173,11 @@ bool Disj::check_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2
 		for (uint v2 : vars2) {
 			if (v1 != v2) {
 				if (!dvars.count(Pair(v1, v2))) {
+
+					if (debug_check_disj) {
+						cout << "!dvars.count(Pair(v1, v2)): " << Lex::toStr(v1) << " " << Lex::toStr(v2)  << endl;
+					}
+
 					return false;
 				}
 			}
