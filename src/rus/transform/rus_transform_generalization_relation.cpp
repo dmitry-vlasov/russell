@@ -14,7 +14,9 @@ typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
 
 void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const HypIndex& hypIndex, std::atomic<int>& counter) {
-	Ass a = Ass(*as, ReplMode::KEEP_REPL).specialFreshVars();
+	Ass a0(*as, ReplMode::KEEP_REPL);
+	VarRepl renaming = specialFreshVars(a0.vars());
+	Ass a = a0.apply(renaming);
 
 	map<const Assertion*, vector<vector<HypIndex::Unified>>> hyps_map;
 	for (uint i = 0; i < a.hyps.size(); ++ i) {
@@ -27,8 +29,8 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 		}
 	}
 	map<const Assertion*, vector<Subst>> less_general;
-	for (const PropIndex::Unified& unif : propIndex.unify(a.prop)) {
-		const Assertion* ass = unif.data->ass;
+	for (const PropIndex::Unified& prop_unif : propIndex.unify(a.prop)) {
+		const Assertion* ass = prop_unif.data->ass;
 		if (ass == as || !hyps_map.count(ass)) {
 			continue;
 		}
@@ -44,13 +46,31 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 				while (true) {
 					watchdog.check();
 					const vector<HypIndex::Unified>& var = variants.data();
-					Subst s = unif.sub;
-					for (const HypIndex::Unified& unif : var) {
-						if (!s.compose(unif.sub)) {
+					Subst s = prop_unif.sub;
+					for (const HypIndex::Unified& hyp_unif : var) {
+						if (!s.compose(hyp_unif.sub)) {
 							break;
 						}
 					}
-					if (s.ok() && as->disj.satisfies(Subst2Substitution(s))) {
+					renaming.inverse().apply(s);
+					if (s.ok() && as->disj.satisfies(Subst2Substitution(s), ass->disj)) {
+
+						if (as->id() == Lex::toInt("nfel2") && ass->id() == Lex::toInt("nfcri")) {
+							//cout << "AAAAA" << endl;
+							//cout << a << endl;
+							cout << *as << endl;
+							cout << *ass << endl;
+							cout << s << endl;
+							//cout << "direct:" << endl;
+							//Subst s1(s);
+							//renaming.direct().apply(s1);
+							//cout << s1 << endl;
+							//cout << "inverse:" << endl;
+							//Subst s2(s);
+							//renaming.inverse().apply(s2);
+							//cout << s2 << endl;
+						}
+
 						less_general[ass].emplace_back(std::move(s));
 					}
 					if (variants.hasNext()) {
@@ -75,11 +95,12 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 				less_general_ids.push_back(ass->id());
 			}
 			for (const auto& s : p.second) {
+				Ass a0(*as, ReplMode::KEEP_REPL);
 				Ass a1(*ass, ReplMode::DENY_REPL);
-				if (a.apply(s) != a1) {
+				if (a0.apply(s) != a1) {
 					string err;
 					err += "wrong matching:\n";
-					err += "a:\n" + a.show() + "\n";
+					err += "a:\n" + a0.show() + "\n";
 					err += "a1:\n" + a1.show() + "\n";
 					err += "sub:\n" + s.show() + "\n";
 					throw Error(err);

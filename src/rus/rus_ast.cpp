@@ -73,9 +73,18 @@ inline void check_disjointed(const set<uint>& s1, const set<uint>& s2) {
 
 void Disj::check(const Substitution& s, Disj* outer) const {
 	for (const auto& p : dvars) {
-		if (!s.maps(p.v) || !s.maps(p.w)) continue;
-		set<uint> v1_vars = s.map(p.v)->vars();
-		set<uint> v2_vars = s.map(p.w)->vars();
+		/*if (!s.maps(p.v) || !s.maps(p.w)) {
+			string err;
+			err += "this disj: " + show() + "\n";
+			err += "outer: " + (outer ? outer->show() : "") + "\n";
+			err += "pair: " + Lex::toStr(p.v) + " " + Lex::toStr(p.w) + "\n";
+			err += "sub:\n" + s.show() + "\n";
+			throw Error(err);
+			continue;
+		}*/
+		//if (!s.maps(p.v) || !s.maps(p.w)) continue;
+		set<uint> v1_vars = s.maps(p.v) ? s.map(p.v)->vars() : set<uint>({p.v});
+		set<uint> v2_vars = s.maps(p.w) ? s.map(p.w)->vars() : set<uint>({p.w});
 		try {
 			check_disjointed(v1_vars, v2_vars);
 		} catch (Error& err) {
@@ -84,6 +93,16 @@ void Disj::check(const Substitution& s, Disj* outer) const {
 		}
 		if (outer) {
 			outer->make_pairs_disjointed(v1_vars, v2_vars);
+		}
+	}
+}
+
+void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2) {
+	for (uint v1 : vars1) {
+		for (uint v2 : vars2) {
+			if (v1 != v2) {
+				dvars.emplace(v1, v2);
+			}
 		}
 	}
 }
@@ -98,27 +117,31 @@ inline bool disjointed_are_satisfied(const set<uint>& s1, const set<uint>& s2) {
 	return true;
 }
 
-bool Disj::satisfies(const Substitution& s) const {
+bool Disj::satisfies(const Substitution& s, const Disj& outer) const {
 	for (const auto& p : dvars) {
-		if (!s.maps(p.v) || !s.maps(p.w)) continue;
-		set<uint> v1_vars = s.map(p.v)->vars();
-		set<uint> v2_vars = s.map(p.w)->vars();
+		set<uint> v1_vars = s.maps(p.v) ? s.map(p.v)->vars() : set<uint>({p.v});
+		set<uint> v2_vars = s.maps(p.w) ? s.map(p.w)->vars() : set<uint>({p.w});
 		if (!disjointed_are_satisfied(v1_vars, v2_vars)) {
+			return false;
+		}
+		if (!outer.check_pairs_disjointed(v1_vars, v2_vars)) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void Disj::make_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2) {
-	if (vars1.empty() || vars2.empty()) return;
+bool Disj::check_pairs_disjointed(const set<uint>& vars1, const set<uint>& vars2) const {
 	for (uint v1 : vars1) {
 		for (uint v2 : vars2) {
 			if (v1 != v2) {
-				dvars.emplace(v1, v2);
+				if (!dvars.count(Pair(v1, v2))) {
+					return false;
+				}
 			}
 		}
 	}
+	return true;
 }
 
 Disj::Disj(const Vector& vect, const Token& t) : WithToken(t) {

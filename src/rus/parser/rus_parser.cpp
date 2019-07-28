@@ -129,6 +129,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	proof_body =
 		lit("{")       [pushVars(phoenix::ref(var_stack))]
 		> - ("var" > vars(phoenix::at_c<1>(*_r1)) > lit(END_MARKER))
+		> - (disj(phoenix::at_c<2>(*_r1)) > lit(END_MARKER))
 		> + (step(_r1) [addProofStep(_r1, qi::labels::_1)])
 		> qed(_r1)     [addProofQed(_r1, qi::labels::_1)]
 		> lit("}")     [popVars(phoenix::ref(var_stack))];
@@ -136,7 +137,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	proof =
 		lit("proof") [_val = new_<Proof>(_r1)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
-		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
+		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<4>(*_val))]
 		> proof_body(_val)
 		> eps        [popVars(phoenix::ref(var_stack))]
 		> eps        [enqueue(_val)];

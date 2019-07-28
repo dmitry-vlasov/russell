@@ -41,7 +41,7 @@ void replace_with_optimal(Proof* proof) {
 						break;
 					}
 				}
-				if (s.ok() && optimal->disj.satisfies(s)) {
+				if (s.ok() && optimal->disj.satisfies(s, step->ass()->disj)) {
 					cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
 					cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
 					cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;

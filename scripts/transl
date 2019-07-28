@@ -65,6 +65,7 @@ check "${binpath}/mdl --verb
     \"mm transl in=${file}.mm out=${file}.rus\"
     \"rus parse_expr \"
     \"rus min_imports \"
+    \"rus write in=${file}.rus deep=true\"
     \"rus verify \"
     \"rus write in=${file}.rus deep=true\"
     exit"

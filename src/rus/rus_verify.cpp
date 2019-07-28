@@ -54,10 +54,11 @@ void Step::verify(uint mode, Disj* disj) const {
 		try {
 			ass()->disj.check(sub, disj);
 		} catch (Error& err) {
-			ostringstream oss;
-			ass()->disj.write(oss);
-			err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
-			err.msg += "disjointeds: " + oss.str() + "\n";
+			//ostringstream oss;
+			//ass()->disj.write(oss);
+			//err.msg += "assertion: " + Lex::toStr(ass()->id()) + "\n";
+			err.msg += "assertion:\n" + ass()->show() + "\n";
+			//err.msg += "disjointeds: " + oss.str() + "\n";
 			err.msg += "substitution:\n" + Indent::paragraph(sub.show()) + "\n";
 			err.msg += "step: " + to_string(ind_) + "\n";
 			err.msg += "in proof of theorem: " + Lex::toStr(proof_->theorem->id()) + "\n";
@@ -72,14 +73,34 @@ void Qed::verify(uint mode) const {
 }
 
 void Proof::verify(uint mode, Disj* disj) const {
-	if (disj) {
-		disj->dvars.clear();
-	}
 	for (const auto& step : steps) {
 		step->verify(mode, disj);
 	}
 	if (qed) {
 		qed->verify(mode);
+	}
+}
+
+void Theorem::verify(uint mode) {
+	if (proof) {
+		if (mode & UPDATE_DISJ) {
+			disj.dvars.clear();
+			proof->disj.dvars.clear();
+			Disj all_disj;
+			proof->verify(mode, &all_disj);
+			std::set<uint> theorem_vars = vars.vars();
+			for (auto& p : all_disj.dvars) {
+				if (theorem_vars.count(p.v) && theorem_vars.count(p.w)) {
+					disj.dvars.insert(p);
+				} else {
+					proof->disj.dvars.insert(p);
+				}
+			}
+		} else {
+			proof->verify(mode);
+		}
+	} else {
+		throw Error("Theorem has no proof", Lex::toStr(id()));
 	}
 }
 
@@ -95,21 +116,8 @@ bool Proof::check(uint mode) const {
 void verify_theory(Theory* theory, uint mode) {
 	for (auto& n : theory->nodes) {
 		switch (Theory::kind(n)) {
-		case Theory::THEORY: verify_theory(Theory::theory(n), mode); break;
-		case Theory::THEOREM: {
-			Theorem* t = Theory::theorem(n);
-			if (!t->proof) {
-				throw Error("Theorem has no proof", show_id(t->id()));
-			} else {
-				if (mode & UPDATE_DISJ) {
-					t->disj.dvars.clear();
-					t->proof->verify(mode, &t->disj);
-				} else {
-					t->proof->verify(mode);
-				}
-			}
-			break;
-		}
+		case Theory::THEORY:  verify_theory(Theory::theory(n), mode); break;
+		case Theory::THEOREM: Theory::theorem(n)->verify(mode);       break;
 		default: break;
 		}
 	}

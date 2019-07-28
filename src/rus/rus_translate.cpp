@@ -161,13 +161,23 @@ vector<unique_ptr<mm::Var>> translate_floatings(const Vars& vars, Maps& maps, ui
 	return flo_vect;
 }
 
-mm::Assertion* translate_assertion(const Assertion* ass, Maps& maps) {
+mm::Assertion* translate_assertion(const Assertion* ass, Maps& maps, const Disj* inner_disj = nullptr ) {
 	mm::Assertion* ra = new mm::Assertion(ass->id());
 	if (ass->vars.v.size()) {
 		ra->vars.vars = std::move(translate_vars(ass->vars));
 	}
-	if (ass->disj.dvars.size()) {
-		ra->disj.vect = std::move(translate_disj(ass->disj));
+	if (!inner_disj) {
+		if (ass->disj.dvars.size()) {
+			ra->disj.vect = std::move(translate_disj(ass->disj));
+		}
+	} else {
+		Disj united(ass->disj);
+		for (auto& p : inner_disj->dvars) {
+			united.dvars.insert(p);
+		}
+		if (united.dvars.size()) {
+			ra->disj.vect = std::move(translate_disj(united));
+		}
 	}
 	ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));
 	ra->hyps = std::move(translate_essentials(ass, maps));
@@ -260,7 +270,7 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& 
 }
 
 mm::Assertion* translate_proof(const Proof* proof, Maps& maps) {
-	mm::Assertion* ass = translate_assertion(proof->theorem, maps);
+	mm::Assertion* ass = translate_assertion(proof->theorem, maps, &proof->disj);
 	maps.local.thm = ass;
 	translate_proof(proof, proof->theorem, maps.local.thm->proof.refs, maps);
 	return ass;
@@ -299,6 +309,8 @@ inline void add_proof(vector<mm::Source::Node>& nodes, const Proof* p, Maps& map
 inline void add_theorem(vector<mm::Source::Node>& nodes, const Theorem* t, Maps& maps) {
 	if (t->proof) {
 		add_proof(nodes, t->proof.get(), maps);
+	} else {
+		throw Error("Theorem has no proof", Lex::toStr(t->id()));
 	}
 }
 

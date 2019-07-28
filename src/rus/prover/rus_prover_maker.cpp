@@ -474,7 +474,7 @@ unique_ptr<Theorem> Maker::make() {
 			std::sort(ret->hyps.begin(), ret->hyps.end(), [](auto& h1, auto& h2) { return h1->ind < h2->ind; });
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
-			ret->proof->verify(VERIFY_SRC, &ret->disj);
+			ret->verify(VERIFY_SRC);
 			return ret;
 		} else {
 			return nullptr;

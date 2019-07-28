@@ -38,6 +38,13 @@ struct Vars : public Writable, public WithToken {
 	bool isDeclared(uint l) const {
 		return std::find_if(v.begin(), v.end(), [l](const Var& v) { return v.lit() == l; }) != v.end();
 	}
+	set<uint> vars() const {
+		set<uint> ret;
+		for (auto& w : v) {
+			ret.insert(w.lit());
+		}
+		return ret;
+	}
 	void write(ostream& os, const Indent& = Indent()) const override;
 };
 
@@ -46,6 +53,7 @@ struct Disj : public Writable, public WithToken {
 		Pair(uint a, uint b) : v(a < b ? a : b), w(a < b ? b : a) {
 			if (a == b) throw Error("single variable cannot be disjointed from itself", Lex::toStr(a));
 		}
+		Pair(const Pair&) = default;
 		uint v;
 		uint w;
 		bool operator < (const Pair& p) const {
@@ -57,13 +65,18 @@ struct Disj : public Writable, public WithToken {
 	typedef vector<unique_ptr<set<uint>>> Vector;
 
 	Disj(const Vector& d = Vector(), const Token& t = Token());
-	Disj(const Disj& disj) = delete;
+	Disj(const Disj& disj) = default;
+	Disj(Disj&& disj) = default;
+
+	Disj& operator = (const Disj&) = default;
+	Disj& operator = (Disj&&) = default;
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
 	void check(const Substitution&, Disj* outer = nullptr) const;
-	bool satisfies(const Substitution&) const;
+	bool satisfies(const Substitution&, const Disj& outer) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
+	bool check_pairs_disjointed(const set<uint>&, const set<uint>&) const;
 	bool operator <= (const Disj& d) const {
 		for (auto p : dvars) {
 			if (!d.dvars.count(p)) {
@@ -215,12 +228,29 @@ struct Def : public Assertion {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
+// Modes of verification:
+//   VERIFY_SUB   verify substitutions,
+//   VERIFY_DISJ  verify disjointed restrictions,
+//   UPDATE_DISJ  update disjointed restrictions due to verification,
+//   VERIFY_QED   verify qed statements
+//   VERIFY_DEEP  consider all imported sources
+enum Verify {
+	VERIFY_SUB   = 0x01,
+	VERIFY_DISJ  = 0x02,
+	UPDATE_DISJ  = 0x04,
+	VERIFY_QED   = 0x08,
+	VERIFY_DEEP  = 0x10,
+	VERIFY_SRC   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED,
+	VERIFY_ALL   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED | VERIFY_DEEP
+};
+
 struct Theorem : public Assertion {
 	Theorem(Id id, const Token& t = Token()) : Assertion(id, t) { }
 	Theorem(const Theorem&) = delete;
 	Kind kind() const override { return THM; }
 	unique_ptr<Proof> proof;
 	void write(ostream& os, const Indent& i = Indent()) const override;
+	void verify(uint mode = VERIFY_ALL);
 };
 
 struct Ref : public Writable, public WithToken {
@@ -247,22 +277,6 @@ struct Ref : public Writable, public WithToken {
 	typedef variant<Hyp*, Step*> Value;
 	Value val;
 	void write(ostream& os, const Indent& i = Indent()) const override;
-};
-
-// Modes of verification:
-//   VERIFY_SUB   verify substitutions,
-//   VERIFY_DISJ  verify disjointed restrictions,
-//   UPDATE_DISJ  update disjointed restrictions due to verification,
-//   VERIFY_QED   verify qed statements
-//   VERIFY_DEEP  consider all imported sources
-enum Verify {
-	VERIFY_SUB   = 0x01,
-	VERIFY_DISJ  = 0x02,
-	UPDATE_DISJ  = 0x04,
-	VERIFY_QED   = 0x08,
-	VERIFY_DEEP  = 0x10,
-	VERIFY_SRC   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED,
-	VERIFY_ALL   = VERIFY_SUB | VERIFY_DISJ | UPDATE_DISJ | VERIFY_QED | VERIFY_DEEP
 };
 
 struct Step : public Writable, public WithToken {
@@ -360,6 +374,7 @@ struct Proof : public Writable, public WithToken {
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
 	Vars vars;
+	Disj disj;
 	vector<unique_ptr<Step>> steps;
 	Theorem* theorem;
 	Proof* par;

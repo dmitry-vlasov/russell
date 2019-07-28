@@ -5,7 +5,7 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct Ass {
-	Ass(const Assertion& a, ReplMode mode) : prop(Tree2Term(*a.prop->expr.tree(), mode, 0)) {
+	Ass(const Assertion& a, ReplMode mode) : disj(a.disj), prop(Tree2Term(*a.prop->expr.tree(), mode, 0)) {
 		for (const auto& h : a.hyps) {
 			hyps.emplace_back(Tree2Term(*h->expr.tree(), mode, 0));
 		}
@@ -18,10 +18,23 @@ struct Ass {
 		a.prop = std::move(s.apply(prop));
 		return a;
 	}
+	Ass apply(const VarRepl& r) const {
+		Ass a(*this);
+		for (auto& h : a.hyps) {
+			h = std::move(r.apply(h));
+		}
+		a.prop = std::move(r.apply(prop));
+		a.disj.dvars.clear();
+		for (auto& p : disj.dvars) {
+			a.disj.dvars.emplace(r.apply(p.v), r.apply(p.w));
+		}
+		return a;
+	}
 	Ass(const Ass&) = default;
 	Ass(Ass&&) = default;
 	string show() const {
 		string ret;
+		ret += disj.show() + "\n";
 		for (auto& h : hyps) {
 			ret += "hyp " + h.show() + "\n";
 		}
@@ -39,16 +52,6 @@ struct Ass {
 		ret = std::move(sets_union(ret, prop.vars()));
 		return ret;
 	}
-	Ass specialFreshVars() const {
-		Ass a(*this);
-		Subst rename_vars;
-		for (auto v : vars()) {
-			LightSymbol w = v;
-			w.lit = Lex::toInt(Lex::toStr(v.lit) + "_,_");
-			rename_vars.compose(v, w);
-		}
-		return a.apply(rename_vars);
-	}
 	bool operator == (const Ass& a) const {
 		for (const auto& h : hyps) {
 			if (std::find(a.hyps.begin(), a.hyps.end(), h) == a.hyps.end()) {
@@ -60,8 +63,14 @@ struct Ass {
 	bool operator != (const Ass& a) const {
 		return !operator == (a);
 	}
+	Disj disj;
 	vector<Term> hyps;
 	Term prop;
 };
+
+inline ostream& operator << (ostream& os, const Ass& a) {
+	os << a.show();
+	return os;
+}
 
 }}}

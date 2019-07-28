@@ -8,7 +8,9 @@ namespace mdl { namespace rus {
 using namespace prover;
 
 vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
-	Ass a1 = Ass(as1, ReplMode::KEEP_REPL).specialFreshVars();
+	Ass a0(as1, ReplMode::KEEP_REPL);
+	VarRepl renaming = specialFreshVars(a0.vars());
+	Ass a1 = a0.apply(renaming);
 	Ass a2(as2, ReplMode::DENY_REPL);
 
 	typedef unify::IndexMap<uint> HypsMap;
@@ -66,8 +68,10 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 			err += "sub:\n" + s->show() + "\n";
 			throw Error(err);
 		}
-		Substitution sub = Subst2Substitution(*s);
-		if (as1.disj.satisfies(sub)) {
+		Subst ss(*s);
+		renaming.inverse().apply(ss);
+		Substitution sub = Subst2Substitution(ss);
+		if (as1.disj.satisfies(sub, as2.disj)) {
 			ret.emplace_back(sub);
 		}
 	}

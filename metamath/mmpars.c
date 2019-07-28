@@ -4078,6 +4078,7 @@ void sourceError(char *ptr, long tokLen, long stmtNum, vstring errMsg)
   }
   let(&errLine,"");
   let(&errorMsg,"");
+  exit(-1);
 } /* sourceError */
 
 

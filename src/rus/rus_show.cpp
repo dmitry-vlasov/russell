@@ -165,6 +165,11 @@ void Proof::write(ostream& os, const Indent& i) const {
 		vars.write(os, i + 1);
 		os << END_MARKER << "\n";
 	}
+	if (disj.dvars.size()) {
+		os << i + 1 ;
+		disj.write(os, i + 1);
+		os << END_MARKER << "\n";
+	}
 	for (const auto& step : steps) {
 		step->write(os, i + 1);
 	}

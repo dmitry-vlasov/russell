@@ -196,6 +196,14 @@ struct VarMap {
 			return LightSymbol();
 		}
 	}
+	uint apply(uint v) const {
+		auto iv = repl.find(v);
+		if (iv != repl.end()) {
+			return iv->second.lit;
+		} else {
+			return v;
+		}
+	}
 	uint apply(uint v, const Type* t) const {
 		auto iv = repl.find(v);
 		if (iv != repl.end()) {
@@ -336,6 +344,21 @@ struct VarRepl {
 			vr.inverse_.apply(inverse_)
 		);
 	}
+	uint apply(uint v) const {
+		return direct_.apply(v);
+	}
+	uint apply(uint v, const Type* t) const {
+		return direct_.apply(v, t);
+	}
+	LightSymbol apply(LightSymbol v) const {
+		return direct_.apply(v);
+	}
+	//void apply(Term& t) const {
+	//	direct_.apply(t);
+	//}
+	Term apply(const Term& t) const {
+		return direct_.apply(t);
+	}
 	VarRepl compose(const VarRepl& vr) const {
 		return VarRepl(
 			direct_.compose(vr.direct_),
@@ -360,6 +383,16 @@ private:
 	VarMap direct_;
 	VarMap inverse_;
 };
+
+inline VarRepl specialFreshVars(const set<LightSymbol>& vars) {
+	VarRepl rename_vars;
+	for (auto v : vars) {
+		LightSymbol w = v;
+		w.lit = Lex::toInt(Lex::toStr(v.lit) + "_,_");
+		rename_vars.compose(VarPair(v, w));
+	}
+	return rename_vars;
+}
 
 inline ostream& operator << (ostream& os, const VarRepl& vr) {
 	os << vr.show(); return os;
