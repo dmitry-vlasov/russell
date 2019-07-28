@@ -7,6 +7,9 @@ namespace mdl { namespace rus {
 
 using namespace prover;
 
+bool debug_match = false;
+extern bool debug_check_disj;
+
 vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 	Ass a0(as1, ReplMode::KEEP_REPL);
 	VarRepl renaming = specialFreshVars(a0.vars());
@@ -73,6 +76,15 @@ vector<Substitution> match(const Assertion& as1, const Assertion& as2) {
 		Substitution sub = Subst2Substitution(ss);
 		if (as1.disj.satisfies(sub, as2.disj)) {
 			ret.emplace_back(sub);
+		} else {
+			if (debug_match) {
+				cout << "!as1.disj.satisfies(sub, as2.disj)" << endl;
+				debug_check_disj = true;
+				as1.disj.satisfies(sub, as2.disj);
+				cout << as1.disj << endl;
+				cout << as2.disj << endl;
+				debug_check_disj = false;
+			}
 		}
 	}
 	return ret;

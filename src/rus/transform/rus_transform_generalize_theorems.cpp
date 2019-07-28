@@ -2,7 +2,11 @@
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 #include <rus/prover/rus_prover_maker.hpp>
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
+
+extern bool debug_match;
+
+namespace {
 
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
@@ -13,9 +17,18 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		++i;
 	}
 	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, Lex::toInt(gen_name(i)));
+	if (!gen_thm) {
+		string err;
+		err += "theorem " + Lex::toStr(thm->id()) + " couldn't be generalized\n";
+		err += thm->show() + "\n";
+		throw Error(err);
+	}
 	try {
 		vector<Substitution> matches1 = match(*gen_thm, *thm);
 		if (!matches1.size()) {
+			debug_match = true;
+			match(*gen_thm, *thm);
+			debug_match = false;
 			string err;
 			err += "wrong proof remaked\n";
 			err += "ret.theorem:\n" + gen_thm->show() + "\n";

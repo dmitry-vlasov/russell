@@ -1,9 +1,11 @@
 #include <rus_ast.hpp>
 #include <rus/prover/unify/rus_prover_unify_index.hpp>
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
 
-void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps_map, std::atomic<int>& counter) {
+void reduce_unused_steps(Proof* proof, std::atomic<int>& counter);
+
+void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps_map, std::atomic<int>& hyp_counter, std::atomic<int>& step_counter) {
 	set<Hyp*> used_hyps;
 	traverseProof(th->proof->qed->step, [&used_hyps](Writable* n) {
 		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
@@ -23,6 +25,7 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 	}
 	if (unused_count > 0) {
 		cout << "Theorem " << Lex::toStr(th->id()) << " has " << unused_count << " unused hyps." << endl;
+		//cout << *th << endl;
 		vector<unique_ptr<Hyp>> reduced_hyps;
 		map<Hyp*, Hyp*> old2new;
 		map<Hyp*, Hyp*> new2old;
@@ -36,17 +39,20 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 				reduced_hyps.emplace_back(new_hyp);
 			}
 		}
-		traverseProof(th->proof->qed->step, [&old2new, &new2old](Writable* n) {
-			if (Step* s = dynamic_cast<Step*>(n)) {
-				for (auto& ref : s->refs) {
-					if (Hyp* h = ref->hyp()) {
-						if (!new2old.count(h)) {
+		for (auto& step : th->proof->steps) {
+			for (auto& ref : step->refs) {
+				if (Hyp* h = ref->hyp()) {
+					if (!new2old.count(h)) {
+						if (old2new.count(h)) {
 							ref.reset(new Ref(old2new.at(h)));
+						} else {
+							// Unused step
+							ref.reset();
 						}
 					}
 				}
 			}
-		});
+		}
 		th->hyps = std::move(reduced_hyps);
 		if (steps_map.count(th)) {
 			for (Step* s : steps_map.at(th)) {
@@ -60,10 +66,10 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 				s->refs = std::move(new_refs);
 			}
 		}
-		counter.store(counter.load() + unused_count);
+		reduce_unused_steps(th->proof.get(), step_counter);
+		//cout << *th << endl;
+		hyp_counter.store(hyp_counter.load() + unused_count);
 	}
-}
-
 }
 
 #ifdef PARALLEL
@@ -74,7 +80,8 @@ void reduce_unused_hyps(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
-	std::atomic<int> counter(0);
+	std::atomic<int> hyp_counter(0);
+	std::atomic<int> step_counter(0);
 	vector<Theorem*> theorems;
 	map<Assertion*, vector<Step*>> steps_map;
 	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
@@ -95,17 +102,20 @@ void reduce_unused_hyps(const string& opts)  {
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, theorems.size()),
 		[&theorems, &steps_map, &counter] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
-				reduce_unused_hyps(theorems[i], steps_map, counter);
+				reduce_unused_hyps(theorems[i], steps_map, hyp_counter, step_counter);
 			}
 		}
 	);
 #else
 	for (auto th : theorems) {
-		reduce_unused_hyps(th, steps_map, counter);
+		reduce_unused_hyps(th, steps_map, hyp_counter, step_counter);
 	}
 #endif
-	if (counter.load() > 0) {
-		cout << "unused hypotheses totally removed: " << counter.load() << endl;
+	if (hyp_counter.load() > 0) {
+		cout << "unused hypotheses totally removed: " << hyp_counter.load() << endl;
+	}
+	if (step_counter.load() > 0) {
+		cout << "unused steps totally removed: " << step_counter.load() << endl;
 	}
 }
 

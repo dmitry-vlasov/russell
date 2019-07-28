@@ -9,8 +9,11 @@ void Step::verify(uint mode, Disj* disj) const {
 	}
 	if (mode & VERIFY_SUB) {
 		assert(kind() == Step::ASS);
+
+		//cout << "ASSS " << Lex::toStr(ass()->id()) << endl;
+
 		if (!ass()) throw Error("unknown assertion", Lex::toStr(ass_id()));
-		sub = std::move(unify_forth(ass()->prop->expr, expr));
+		sub = unify_forth(ass()->prop->expr, expr);
 		if (!sub) {
 			string msg = "proposition:\n";
 			msg += ass()->prop->show() + "\n";
@@ -20,27 +23,37 @@ void Step::verify(uint mode, Disj* disj) const {
 			msg += show() + "\n";
 			msg += expr.show() + "\n\n";
 			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
-			unify_forth(ass()->prop->expr, expr);
+			throw Error("proposition unification failed", msg);
+		}
+		if (ass()->arity() != refs.size()) {
+			string msg = "proposition:\n";
+			msg += ass()->prop->show() + "\n";
+			msg += "refs size: " + to_string(refs.size()) + " != " + to_string(ass()->arity()) + "\n";
+			msg += "step:\n";
+			msg += show() + "\n";
+
+			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 			throw Error("proposition unification failed", msg);
 		}
 		for (uint i = 0; i < ass()->arity(); ++ i) {
-			Substitution hs = std::move(unify_forth(ass()->hyps[i]->expr, refs[i]->expr()));
+			Substitution hs = unify_forth(ass()->hyps.at(i)->expr, refs.at(i)->expr());
 			if (!hs) {
 				string msg = "\nhypothesis:\n";
-				msg += ass()->hyps[i]->show() + "\n";
+				msg += ass()->hyps.at(i)->show() + "\n";
 				msg += "ref expr:\n";
-				msg += refs[i]->expr().show() + "\n\n";
+				msg += refs.at(i)->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
 				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 				msg += "substitution:\n" + sub.show() + "\n";
 				throw Error("hypothesis unification failed", msg);
 			}
+			//if (!sub.join(const_cast<const Substitution&>(hs))) {
 			if (!sub.join(hs)) {
 				string msg = "\nhypothesis:\n";
-				msg += ass()->hyps[i]->show() + "\n";
+				msg += ass()->hyps.at(i)->show() + "\n";
 				msg += "ref expr:\n";
-				msg += refs[i]->expr().show() + "\n\n";
+				msg += refs.at(i)->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
 				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
@@ -75,6 +88,10 @@ void Qed::verify(uint mode) const {
 }
 
 void Proof::verify(uint mode, Disj* disj) const {
+	//cout << "PROOF OF " << Lex::toStr(theorem->id()) << endl;
+	//if (theorem->id() == Lex::toInt("19.8w")) {
+	//	cout << "RRRRR" << endl << *theorem << endl;
+	//}
 	for (const auto& step : steps) {
 		step->verify(mode, disj);
 	}
@@ -159,7 +176,7 @@ void verify(uint src) {
 		tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
 			[proofs] (const tbb::blocked_range<size_t>& r) {
 				for (size_t i = r.begin(); i != r.end(); ++i)
-					proofs[i]->verify(VERIFY_SUB | VERIFY_QED);
+					proofs.at(i)->verify(VERIFY_SUB | VERIFY_QED);
 			}
 		);
 #else
