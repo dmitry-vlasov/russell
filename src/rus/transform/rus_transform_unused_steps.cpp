@@ -47,6 +47,7 @@ void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 		}
 		proof->steps = std::move(new_steps);
 		proof->qed->step = steps_map.at(proof->qed->step);
+		proof->theorem->verify();
 		//cout << *proof->theorem << endl;
 	}
 }

@@ -246,6 +246,8 @@ private:
 	map<const ProofNode*, rus::Ref> refMap;
 };
 
+bool debug_gen_proof = false;
+
 unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 	if (const ProofHyp* h = dynamic_cast<const ProofHyp*>(n)) {
 		return gen_proof(h->child);
@@ -266,6 +268,9 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		try {
 			env.proof->verify(VERIFY_DISJ);
 		} catch (Error& err) {
+			//if (debug_gen_proof) {
+				cout << "!env.proof->verify(VERIFY_DISJ)" << endl;
+			//}
 			env.proof.reset();
 		}
 		return std::move(env.proof);

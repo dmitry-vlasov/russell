@@ -10,6 +10,7 @@ namespace {
 
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
+	//thm->verify();
 	AbstProof abstProof = thm->proof->abst();
 	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
 	uint i = 0;
@@ -71,7 +72,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 }
 
 #ifdef PARALLEL
-#define PARALLEL_GENERALIZE_THEOREMS
+//#define PARALLEL_GENERALIZE_THEOREMS
 #endif
 
 void generalize_theorems(const string& opts)  {

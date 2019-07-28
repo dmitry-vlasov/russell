@@ -314,7 +314,7 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 	}
 	//cout << *proof->theorem << endl;
 	try {
-		proof->verify();
+		proof->theorem->verify();
 	} catch (Error& err) {
 		err.msg += "shortcuts in: " + Lex::toStr(proof->theorem->id()) + to_string(shortcuts.size()) + "\n";
 		for (auto& p : shortcuts) {

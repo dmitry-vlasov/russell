@@ -403,6 +403,8 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 	}
 }
 
+extern bool debug_gen_proof;
+
 unique_ptr<Theorem> Maker::make() {
 	set<Node*> leafs;
 	//cout << "BUILD TREE" << endl;
@@ -417,11 +419,7 @@ unique_ptr<Theorem> Maker::make() {
 		}
 	}
 	//cout << "COMPLETE DOWN" << endl;
-	try {
-		completeDown(leafs);
-	} catch (std::bad_alloc& ba) {
-		throw ba;
-	}
+	completeDown(leafs);
 	if (root_->proofs.size() > 0) {
 		ProofNode* root = root_->proofs.at(0)->clone();
 		vector<unique_ptr<ProofNode>> detached;
@@ -436,7 +434,7 @@ unique_ptr<Theorem> Maker::make() {
 		});
 		map<rus::Hyp*, rus::Hyp*> map_hyp2ret;
 
-		//cout << "DETACHED" << endl;
+		//cout << "DETACHED " << Lex::toStr(theorem_id_) << endl;
 		auto generated_proof = gen_proof(root);
 		if (generated_proof) {
 			unique_ptr<Theorem> ret = make_unique<Theorem>(theorem_id_);
@@ -477,9 +475,11 @@ unique_ptr<Theorem> Maker::make() {
 			ret->verify(VERIFY_SRC);
 			return ret;
 		} else {
+			cout << "gen_proof failed: " << Lex::toStr(theorem_id_) << endl;
 			return nullptr;
 		}
 	} else {
+		cout << "root_->proofs.size() == 0: " << Lex::toStr(theorem_id_) << endl;
 		return nullptr;
 	}
 }

@@ -67,6 +67,7 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, vector<Step*>>& steps
 			}
 		}
 		reduce_unused_steps(th->proof.get(), step_counter);
+		th->verify();
 		//cout << *th << endl;
 		hyp_counter.store(hyp_counter.load() + unused_count);
 	}
