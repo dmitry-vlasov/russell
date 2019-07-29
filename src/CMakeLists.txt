@@ -82,7 +82,8 @@ else()
 		#rus/rus_refactor.cpp  
 		#rus/rus_parser.cpp
 		rus/rus_read.cpp  
-		rus/rus_show.cpp 
+		rus/rus_show.cpp
+		rus/rus_stats.cpp 
 		rus/rus_translate.cpp 
 		rus/rus_verify.cpp 
 		rus/rus_xml.cpp 

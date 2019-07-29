@@ -55,6 +55,8 @@ void generalize_theorems(const string& opts);
 void generaliziation_relation(const string& opts);
 void replace_with_optimal(const string& opts);
 
+string report_stats(const string& opts);
+
 namespace {
 
 void parse_src() {
@@ -103,6 +105,10 @@ Return outline(uint s, uint bits) {
 
 Return structure(uint bits) {
 	return Return("", xml_structure(bits));
+}
+
+Return stats(const string& opts) {
+	return Return("", report_stats(opts));
 }
 
 Return types() {
@@ -279,6 +285,7 @@ static Descr description(string name) {
 		)},
 		{"info",       Descr("info about math")},
 		{"show",       Descr("show entity")},
+		{"stats",      Descr("math statistics", Descr::Arg("opts", "options like <key>=<value> in '' separated by ,", true, ""))},
 		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
@@ -351,6 +358,7 @@ const Sys::Actions& Sys::actions() {
 		{"write",      Action([](const Args& args) { write<Sys>(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
 		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
+		{"stats",      Action([](const Args& args) { return stats(args[0]); }, description("stats"))},
 		{"opts",       Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
 		{"lookup",     Action([](const Args& args) { return lookup_ref(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
 		{"outline",    Action([](const Args& args) { return outline(Sys::make_name(args[0]), xml_bits(args[1])); }, description("outline"))},
