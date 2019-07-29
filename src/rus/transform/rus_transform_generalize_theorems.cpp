@@ -5,8 +5,8 @@
 namespace mdl { namespace rus {
 
 extern bool debug_match;
-
-namespace {
+extern bool debug_verify;
+namespace prover { extern bool debug_maker; }
 
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
@@ -14,6 +14,16 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	AbstProof abstProof = thm->proof->abst();
 
 	if (thm->id() == Lex::toInt("alimd")) {
+
+		debug_verify = true;
+		thm->verify();
+		debug_verify = false;
+
+		cout << endl;
+		prover::debug_maker = true;
+		prover::make_theorem(abstProof, Lex::toInt("AAAAAAAAAAAAXX"));
+		prover::debug_maker = false;
+
 		cout << "abstProof" << endl;
 		cout << abstProof.show([](uint l) { return Lex::toStr(l); });
 		AbstProof abstProof1(abstProof);
@@ -92,8 +102,6 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	} catch (Timeout& timeout) {
 		cout << timeout.what();
 	}
-}
-
 }
 
 #ifdef PARALLEL

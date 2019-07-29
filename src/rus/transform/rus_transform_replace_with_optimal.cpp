@@ -28,7 +28,7 @@ void replace_with_optimal(Proof* proof) {
 					const Expr& ref = step->refs.at(j)->expr();
 					Substitution s = std::move(unify_forth(hyp, ref));
 					if (s.ok()) {
-						dimData.emplace_back(j,std::move(s));
+						dimData.emplace_back(j, std::move(s));
 					}
 				}
 				vars.addDim(dimData);

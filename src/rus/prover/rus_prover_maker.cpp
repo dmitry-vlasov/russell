@@ -404,6 +404,7 @@ void Maker::expandUp(uint index, set<Node*>& leafs) {
 }
 
 extern bool debug_gen_proof;
+bool debug_maker = false;
 
 unique_ptr<Theorem> Maker::make() {
 	set<Node*> leafs;
@@ -420,6 +421,11 @@ unique_ptr<Theorem> Maker::make() {
 	}
 	//cout << "COMPLETE DOWN" << endl;
 	completeDown(leafs);
+
+	if (debug_maker) {
+		cout << show_nodes_struct(root()) << endl;
+	}
+
 	if (root_->proofs.size() > 0) {
 		ProofNode* root = root_->proofs.at(0)->clone();
 		vector<unique_ptr<ProofNode>> detached;

@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus {
 
+bool debug_verify = false;
+
 void Step::verify(uint mode, Disj* disj) const {
 	if (kind() == Step::CLAIM) {
 		claim()->verify(mode);
@@ -10,7 +12,9 @@ void Step::verify(uint mode, Disj* disj) const {
 	if (mode & VERIFY_SUB) {
 		assert(kind() == Step::ASS);
 
-		//cout << "ASSS " << Lex::toStr(ass()->id()) << endl;
+		if (debug_verify) {
+			cout << "unifying step: " << *this << endl;
+		}
 
 		if (!ass()) throw Error("unknown assertion", Lex::toStr(ass_id()));
 		sub = unify_forth(ass()->prop->expr, expr);
@@ -35,7 +39,16 @@ void Step::verify(uint mode, Disj* disj) const {
 			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
 			throw Error("proposition unification failed", msg);
 		}
+		if (debug_verify) {
+			cout << "sub_0: " << endl << sub;
+			cout << ass()->prop->expr << " -- " << expr << endl << endl;
+		}
 		for (uint i = 0; i < ass()->arity(); ++ i) {
+			if (debug_verify) {
+				cout << "TO UNIFY:" << endl;
+				cout << ass()->hyps.at(i)->expr << " -- " << refs.at(i)->expr() << endl << endl;
+			}
+
 			Substitution hs = unify_forth(ass()->hyps.at(i)->expr, refs.at(i)->expr());
 			if (!hs) {
 				string msg = "\nhypothesis:\n";
@@ -60,6 +73,20 @@ void Step::verify(uint mode, Disj* disj) const {
 				msg += "prop substitution:\n" + sub.show() + "\n";
 				msg += "hyp substitution:\n" + hs.show() + "\n";
 				throw Error("substitution join failed", msg);
+			}
+			if (debug_verify) {
+				cout << "hs: " << endl << hs << endl;
+				cout << "sub_" << (i + 1) << ": " << endl << sub;
+				cout << ass()->hyps.at(i)->expr << " -- " << refs.at(i)->expr() << endl << endl;
+			}
+		}
+		if (debug_verify) {
+			//cout << "unifying step: " << *this << endl;
+			//cout << "ass: " << *ass() << endl;
+			//cout << "sub: " << endl << sub << endl;
+			cout << "hyps: " << endl;
+			for (uint i = 0; i < ass()->arity(); ++ i) {
+				cout << "\t" << apply(sub, ass()->hyps.at(i)->expr) << " ?= " << apply(sub, refs.at(i)->expr()) << endl;
 			}
 		}
 	}

@@ -363,6 +363,7 @@ struct Substitution : public Writable {
 
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
+	void spoil() { ok_ = false; }
 
 	void write(ostream& os, const Indent& indent = Indent()) const override {
 		for (const auto& p : sub_) {
