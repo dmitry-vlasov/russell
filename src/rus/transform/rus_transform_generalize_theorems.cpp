@@ -10,8 +10,31 @@ namespace {
 
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
-	//thm->verify();
+	thm->verify();
 	AbstProof abstProof = thm->proof->abst();
+
+	if (thm->id() == Lex::toInt("alimd")) {
+		cout << "abstProof" << endl;
+		cout << abstProof.show([](uint l) { return Lex::toStr(l); });
+		AbstProof abstProof1(abstProof);
+		abstProof1.traverse([](AbstProof::Node& n) {
+			if (n.label() == Lex::toInt("gen_alimdh")) {
+				n.setLabel(Lex::toInt("alimdh"));
+			}
+		});
+		cout << abstProof1.show([](uint l) { return Lex::toStr(l); });
+		unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof1, Lex::toInt("AAAAAAAAAAAA"));
+		if (!gen_thm) {
+			string err;
+			err += "ASAAAAA theorem " + Lex::toStr(thm->id()) + " couldn't be generalized\n";
+			err += thm->show() + "\n";
+			//throw Error(err);
+			cout << err;
+		} else {
+			cout << "ASAAAAA theorem - Ok" << endl;
+		}
+	}
+
 	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
 	uint i = 0;
 	while (Sys::get().math.get<Assertion>().has(Lex::toInt(gen_name(i)))) {
@@ -27,14 +50,16 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	try {
 		vector<Substitution> matches1 = match(*gen_thm, *thm);
 		if (!matches1.size()) {
-			debug_match = true;
-			match(*gen_thm, *thm);
-			debug_match = false;
+			beautify(*gen_thm);
+			//debug_match = true;
+			//match(*gen_thm, *thm);
+			//debug_match = false;
 			string err;
-			err += "wrong proof remaked\n";
-			err += "ret.theorem:\n" + gen_thm->show() + "\n";
-			err += "p->theorem:\n" + thm->show() + "\n";
-			throw Error(err);
+			err += "remaked proof is less general then the original\n";
+			err += "remaked theorem:\n" + gen_thm->show() + "\n";
+			err += "original theorem:\n" + thm->show() + "\n";
+			cout << err;
+			//throw Error(err);
 		}
 		vector<Substitution> matches2 = match(*thm, *gen_thm);
 		if (!matches2.size()) {

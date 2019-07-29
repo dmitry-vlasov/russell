@@ -17,6 +17,7 @@ struct DAG {
 			}
 		}
 		Label label() const { return label_; }
+		void setLabel(Label l) { label_ = l; }
 		bool isLeaf() const { return childrenArity() == 0; }
 		bool isRoot() const { return parentsArity() == 0; }
 		uint parentsArity() const { return parents_.size(); }
@@ -214,6 +215,16 @@ struct DAG {
 			ret += r->show(f) + "\n";
 		}
 		return ret;
+	}
+	void traverse(std::function<void (Node&)> f) {
+		for (auto& r : roots_) {
+			r->traverse(f);
+		}
+	}
+	void traverse(std::function<void (const Node&)> f) const {
+		for (auto& r : roots_) {
+			r->traverse(f);
+		}
 	}
 
 private:
