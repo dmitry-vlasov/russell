@@ -103,7 +103,9 @@ void Step::verify(uint mode, Disj* disj) const {
 			//err.msg += "step: " + to_string(ind_) + "\n";
 			err.msg += "step: " + show() + "\n";
 			//err.msg += "in proof of theorem: " + Lex::toStr(proof_->theorem->id()) + "\n";
-			err.msg += "theorem:\n" + proof_->theorem->show() + "\n";
+			if (proof_->theorem) {
+				err.msg += "theorem:\n" + proof_->theorem->show() + "\n";
+			}
 			throw err;
 		}
 	}

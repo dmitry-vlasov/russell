@@ -109,11 +109,12 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 				if (!r.success()) {
 					debug_oracle = true;
 					cout << "TEST PROOF WITH ORACLE: BEGIN" << endl;
-					test_proof_with_oracle(Theory::proof(n), max_proofs);
+					test_proof_with_oracle(i, proofs.at(i), max_proofs);
 					cout << "TEST PROOF WITH ORACLE: END" << endl;
 					return r;
 				}
 			}
+			return Return();
 		}
 	);
 #else

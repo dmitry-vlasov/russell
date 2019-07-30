@@ -13,6 +13,17 @@ struct SymbInfo {
 		oss << "orig: " << Lex::toStr(orig) << ", lit: " << Lex::toStr(lit) << ", excl: " << (exclamation ? "T" : "F") << ", ind: " << ind;
 		return oss.str();
 	}
+	/*VarTree beautify() const {
+		string orig_lit = Lex::toStr(lit);
+		uint new_ind =
+			exclamation ?
+			excl_reindex.at(lit).at(ind) :
+			norm_reindex.at(lit).at(ind);
+		string new_lit =
+			orig_lit + (si.exclamation ? "'" : "") +
+			(new_ind == 0 ? "" : "_" + to_string(new_ind));
+		return VarTree()
+	}*/
 	uint orig;
 	const Type* type;
 	uint lit;
@@ -108,6 +119,7 @@ Substitution optimize_inds(const map<uint, SymbInfo>& symb_info) {
 		}
 		excl_reindex.emplace(p.first, std::move(reindex));
 	}
+	auto mult_prime = [](int n) { string ret; while (n--) ret += "'"; return ret; };
 	Substitution ret;
 	for (auto& p : symb_info) {
 		uint orig = p.first;
@@ -119,8 +131,8 @@ Substitution optimize_inds(const map<uint, SymbInfo>& symb_info) {
 			excl_reindex.at(si.lit).at(si.ind) :
 			norm_reindex.at(si.lit).at(si.ind);
 		string new_lit =
-			orig_lit + (si.exclamation ? "'" : "") +
-			(new_ind == 0 ? "" : "_" + to_string(new_ind));
+			orig_lit + (si.exclamation ? "*" : "") +
+			mult_prime(new_ind);
 		ret.join(orig, si.type, VarTree(Lex::toInt(new_lit), si.type));
 	}
 	return ret;
@@ -141,8 +153,13 @@ void beautify(Assertion& a) {
 				step->expr = std::move(apply(opt_inds, step->expr));
 			}
 		});
+		complete_proof_vars(th->proof.get());
 	}
 	complete_assertion_vars(&a);
+
+	//cout << "BEAUTIFIED:" << endl;
+	//cout << a << endl;
+
 	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
 		th->proof->verify(VERIFY_ALL, &th->disj);
 	}

@@ -478,8 +478,13 @@ unique_ptr<Theorem> Maker::make() {
 			std::sort(ret->hyps.begin(), ret->hyps.end(), [](auto& h1, auto& h2) { return h1->ind < h2->ind; });
 			complete_assertion_vars(ret.get());
 			complete_proof_vars(ret->proof.get());
-			ret->verify(VERIFY_SRC);
-			return ret;
+			try {
+				ret->verify(VERIFY_SRC);
+				return ret;
+			} catch (Error& err) {
+				err.msg += "at maker\n";
+				throw err;
+			}
 		} else {
 			cout << "gen_proof failed: " << Lex::toStr(theorem_id_) << endl;
 			return nullptr;

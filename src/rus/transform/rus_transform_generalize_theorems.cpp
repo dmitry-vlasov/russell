@@ -6,7 +6,14 @@ namespace mdl { namespace rus {
 
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
-	thm->verify();
+	try {
+		thm->verify();
+		//cout << "TO GENERALIZE" << endl;
+		//cout << *thm << endl;
+	} catch (Error& err) {
+		err.msg += "at generalize_theorems: thm->verify();\n";
+		throw err;
+	}
 	AbstProof abstProof = thm->proof->abst();
 	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
 	uint i = 0;
@@ -22,8 +29,21 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	}
 	try {
 		vector<Substitution> matches1 = match(*gen_thm, *thm);
+		try {
+			//gen_thm->verify();
+			//cout << "GENERALIZED" << endl;
+			//cout << *gen_thm << endl;
+		} catch (Error& err) {
+			err.msg += "at generalize_theorems: gen_thm->veryfy();;\n";
+			throw err;
+		}
 		if (!matches1.size()) {
-			beautify(*gen_thm);
+			try {
+				beautify(*gen_thm);
+			} catch (Error& err) {
+				err.msg += "at generalize_theorems: beautify(*gen_thm);\n";
+				throw err;
+			}
 			//debug_match = true;
 			//match(*gen_thm, *thm);
 			//debug_match = false;
@@ -36,7 +56,12 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		}
 		vector<Substitution> matches2 = match(*thm, *gen_thm);
 		if (!matches2.size()) {
-			beautify(*gen_thm);
+			try {
+				beautify(*gen_thm);
+			} catch (Error& err) {
+				err.msg += "at generalize_theorems: beautify(*gen_thm);\n";
+				throw err;
+			}
 			gen_thm->token = thm->token;
 			Source* src = Sys::mod().math.get<Source>().access(thm->token.src()->id());
 			uint pos = -1;
@@ -64,6 +89,9 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		}
 	} catch (Timeout& timeout) {
 		cout << timeout.what();
+	} catch (Error& err) {
+		err.msg += "at generalize_theorems: " + Lex::toStr(thm->id()) + "\n";
+		throw err;
 	}
 }
 
