@@ -18,12 +18,7 @@ struct LightSymbol {
 	LightSymbol() : lit(undef_value()), rep(false), ind(-1), type(nullptr) { }
 	explicit LightSymbol(uint l, bool r = true) : lit(l), rep(r), ind(-1), type(nullptr) { }
 	LightSymbol(uint l, const Type* t, ReplMode mode = ReplMode::KEEP_REPL, uint i = MATH_INDEX) :
-		lit(i == MATH_INDEX ? l :
-			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(l) + "!") :
-				Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
-			)
-		),
-		//lit(i == MATH_INDEX ? l : Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::ASSERTION_INDEX))),
+		lit(i == MATH_INDEX ? l : Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::ASSERTION_INDEX))),
 		rep(t),
 		ind(i),
 		type(t) {
