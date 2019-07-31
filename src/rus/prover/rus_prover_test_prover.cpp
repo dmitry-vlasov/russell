@@ -28,12 +28,12 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	prover::Prover prover(p->qed.get(), oracle);
 	prover.setMaxProofs(max_proofs);
 	try {
-		bool orig_proof_has_shared = proof_has_shared(p);
+		//bool orig_proof_has_shared = proof_has_shared(p);
 
-		if (orig_proof_has_shared) {
+		/*if (orig_proof_has_shared) {
 			cout << "ORIG _PROOF HAS SHARED:" << endl;
 			cout << *p << endl;
-		}
+		}*/
 
 		Return ret = prover.prove();
 		if (!ret.success()) {
@@ -48,7 +48,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			exit(-1);
 		}
 		bool prover_proof_has_shared = proof_has_shared(prover.proved().at(0).get());
-		if (prover_proof_has_shared) {
+		/*if (prover_proof_has_shared) {
 			cout << "PROVER _PROOF HAS SHARED:" << endl;
 			cout << *prover.proved().at(0).get() << endl;
 		}
@@ -56,7 +56,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			cout << "PROVER _PROOF HAS NO REFS:" << endl;
 			cout << *prover.proved().at(0).get() << endl;
 			//exit(0);
-		}
+		}*/
 
 
 		timer.stop();
