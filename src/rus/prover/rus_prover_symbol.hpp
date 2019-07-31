@@ -23,6 +23,7 @@ struct LightSymbol {
 				Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
 			)
 		),
+		//lit(i == MATH_INDEX ? l : Lex::toInt(Lex::toStr(l) + "_" + to_string(i - LightSymbol::ASSERTION_INDEX))),
 		rep(t),
 		ind(i),
 		type(t) {
@@ -31,18 +32,7 @@ struct LightSymbol {
 		}
 	}
 	LightSymbol(const rus::Symbol& s, ReplMode mode, uint i) :
-		lit(i == MATH_INDEX ? s.lit() :
-			(i == ASSERTION_INDEX ? Lex::toInt(Lex::toStr(s.lit()) + "!") :
-				Lex::toInt(Lex::toStr(s.lit()) + "_" + to_string(i - LightSymbol::INTERNAL_MIN_INDEX))
-			)
-		),
-		rep(s.kind() == Symbol::VAR),
-		ind(i),
-		type(s.kind() == Symbol::VAR ? s.type() : nullptr) {
-		if (mode == ReplMode::DENY_REPL) {
-			rep = false;
-		}
-	}
+		LightSymbol(s.lit(), s.kind() == Symbol::VAR ? s.type() : nullptr, mode, i) { }
 	LightSymbol(const LightSymbol& s) = default;
 
 	bool is_undef() const { return lit == undef_value(); }
@@ -104,7 +94,7 @@ struct VarProvider {
 	}
 	LightSymbol makeFresh(uint l, const Type* t, ReplMode m = ReplMode::KEEP_REPL) {
 		auto it = vars.find(l);
-		uint fresh_ind = it != vars.end() ? it->second + 1 : 1;
+		uint fresh_ind = it != vars.end() ? it->second + 1 : LightSymbol::INTERNAL_MIN_INDEX;
 		vars[l] = fresh_ind;
 		return LightSymbol(l, t, m, fresh_ind);
 	}
