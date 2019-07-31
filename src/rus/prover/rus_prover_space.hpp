@@ -47,28 +47,22 @@ struct Space {
 	Node* getNode(uint i) { return nodes_[i]; }
 
 	virtual void buildUp(Node*) = 0;
-	virtual void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) = 0;
-	//virtual rus::Theorem* theorem() const = 0;
+	virtual void initProofs(Hyp* h, const rus::Hyp* hint = nullptr) = 0;;
 
 	vector<unique_ptr<rus::Proof>> proved();
 	Return check_proved();
-	LightSymbol freshVar(LightSymbol v) {
-		auto it = vars.find(v.lit);
-		uint fresh = it != vars.end() ? it->second + 1 : LightSymbol::INTERNAL_MIN_INDEX;
-		vars[v.lit] = fresh;
-		return LightSymbol(v.lit, v.type, ReplMode::KEEP_REPL, fresh);
-	}
 	const Hyp* root() const { return root_.get(); }
 	uint maxProofs() const { return max_proofs; }
 	void setMaxProofs(uint mp) { max_proofs = mp; }
 	const Tactic* tactic() const { return tactic_.get(); }
+	VarProvider& vars() { return vars_; }
 
 protected:
 	void completeDown(set<Node*>& downs);
 
 	map<uint, Node*>  nodes_;
 	unique_ptr<Hyp>   root_;
-	map<uint, uint>   vars;
+	VarProvider       vars_;
 	unique_ptr<Tactic> tactic_;
 	set<uint>          shown;
 	uint               max_proofs = -1;

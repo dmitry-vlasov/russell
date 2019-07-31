@@ -82,7 +82,7 @@ static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& a
 		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
 		if (!ret.maps(v)) {
 			if (!s.maps(v)) {
-				ret.compose(v, space->freshVar(v));
+				ret.compose(v, space->vars().makeFresh(v));
 			}
 		}
 		assertion_vars.insert(v.lit);

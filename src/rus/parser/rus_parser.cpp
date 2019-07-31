@@ -292,7 +292,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 } // parser namespace
 
 #ifdef PARALLEL
-//#define PARALLEL_RUS_PARSE
+#define PARALLEL_RUS_PARSE
 #endif
 
 void parse_src_spirit(uint label) {
