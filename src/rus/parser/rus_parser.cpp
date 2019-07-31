@@ -77,7 +77,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	vars =
 		lit("(") >
 		- (
-			(   //!lit(")") >
+			(
 				var          [_a = qi::labels::_1]
 				> ":" > id   [_b = qi::labels::_1]
 				> eps        [addVar(phoenix::at_c<0>(_r1), _a, _b)]
