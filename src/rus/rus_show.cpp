@@ -51,17 +51,18 @@ void Constant::write(ostream& os, const Indent& i) const {
 }
 
 void Vars::write(ostream& os, const Indent&) const {
+	os << "(";
 	if (v.size()) {
 		os << v.at(0) << " : " << Lex::toStr(v.at(0).typeId());
 		for (uint i = 1; i < v.size(); ++ i) {
 			os << ", " << v.at(i) << " : " << Lex::toStr(v.at(i).typeId());
 		}
 	}
+	os << ")";
 }
 
 void Disj::write(ostream& os, const Indent&) const {
 	Disj::Vector d = toVector();
-	if (d.size() == 0) return;
 	os << "disjointed(";
 	for (uint i = 0; i < d.size(); ++ i) {
 		const set<uint>& dis = *d[i];
@@ -89,7 +90,10 @@ void Type::write(ostream& os, const Indent& i) const {
 
 void Rule::write(ostream& os, const Indent& i) const {
 	os << i << "rule " << Lex::toStr(id()) << " ";
-	os << "("; vars.write(os); os << ") {\n";
+	if (vars.v.size()) {
+		vars.write(os); os << " ";
+	}
+	os << "{\n";
 	os << i + 1 << "term : " << Lex::toStr(term.type.id()) << " = ";
 	os << "# " << term << END_MARKER << "\n";
 	os << i << "}\n";
@@ -107,7 +111,13 @@ void Prop::write(ostream& os, const Indent& i) const {
 
 void Assertion::write(ostream& os, const Indent& i) const {
 	os << Lex::toStr(id()) << " ";
-	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
+	if (vars.v.size()) {
+		vars.write(os); os << " ";
+	}
+	if (disj.dvars.size()) {
+		disj.write(os); os << " ";
+	}
+	os << "{\n";
 	if (hyps.size() > 0) {
 		for (const auto& h : hyps) {
 			h.get()->write(os, i + 1);
@@ -120,7 +130,13 @@ void Assertion::write(ostream& os, const Indent& i) const {
 
 void Def::write(ostream& os, const Indent& i) const {
 	os << i << "definition " << Lex::toStr(id()) << " ";
-	os << "("; vars.write(os); os << ") "; disj.write(os); os << " {\n";
+	if (vars.v.size()) {
+		vars.write(os); os << " ";
+	}
+	if (disj.dvars.size()) {
+		disj.write(os); os << " ";
+	}
+	os << "{\n";
 	for (const auto& h : hyps) {
 		h.get()->write(os, i + 1);
 	}
@@ -159,17 +175,14 @@ void Qed::write(ostream& os, const Indent& i) const {
 }
 
 void Proof::write(ostream& os, const Indent& i) const {
-	os << i << "proof {\n";
+	os << i << "proof ";
 	if (vars.v.size()) {
-		os << i + 1 << "var ";
-		vars.write(os, i + 1);
-		os << END_MARKER << "\n";
+		vars.write(os); os << " ";
 	}
 	if (disj.dvars.size()) {
-		os << i + 1 ;
-		disj.write(os, i + 1);
-		os << END_MARKER << "\n";
+		disj.write(os); os << " ";
 	}
+	os << "{\n";
 	for (const auto& step : steps) {
 		step->write(os, i + 1);
 	}
