@@ -145,6 +145,8 @@ void beautify(Assertion& a) {
 	for (auto& h : a.hyps) {
 		h->expr = std::move(apply(opt_inds, h->expr));
 	}
+	//cout << "ORIG:" << endl;
+	//cout << a << endl;
 	//cout << "SUBST: " << endl << opt_inds.show() << endl;
 	a.prop->expr = std::move(apply(opt_inds, a.prop->expr));
 	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
@@ -156,13 +158,13 @@ void beautify(Assertion& a) {
 		complete_proof_vars(th->proof.get());
 	}
 	complete_assertion_vars(&a);
+	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
+		th->verify();
+	}
 
 	//cout << "BEAUTIFIED:" << endl;
 	//cout << a << endl;
-
-	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
-		th->proof->verify(VERIFY_ALL, &th->disj);
-	}
+	//exit(0);
 }
 
 }}
