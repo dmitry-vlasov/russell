@@ -73,8 +73,8 @@ struct Disj : public Writable, public WithToken {
 
 	Vector toVector() const;
 	void write(ostream& os, const Indent& = Indent()) const override;
-	void check(const Substitution&, Disj* outer = nullptr) const;
-	bool satisfies(const Substitution&, const Disj& outer) const;
+	void check(const Substitution&, Disj* outer) const;
+	bool satisfies(const Substitution&, const Disj* outer) const;
 	void make_pairs_disjointed(const set<uint>&, const set<uint>&);
 	bool check_pairs_disjointed(const set<uint>&, const set<uint>&) const;
 	bool operator <= (const Disj& d) const {

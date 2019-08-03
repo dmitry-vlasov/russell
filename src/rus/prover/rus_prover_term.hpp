@@ -19,7 +19,7 @@ struct RuleVar {
 			return rv.isRule() ? rule < rv.rule : false;
 		}
 	}
-	string show() const { return rule ? Lex::toStr(rule->id()) : var.show(true); }
+	string show() const { return rule ? Lex::toStr(rule->id()) : var.show(); }
 	bool isVar() const  { return var.is_def(); }
 	bool isRule() const { return rule; }
 	const Type* type() const { return rule ? rule->type() : var.type; }
@@ -237,7 +237,7 @@ private:
 	ConstIterator end_;
 };
 
-Term Tree2Term(const Tree&, ReplMode m = ReplMode::KEEP_REPL, uint i = 0);
+Term Tree2Term(const Tree&, bool is_mutable, bool keep_vars = false);
 unique_ptr<Tree> Term2Tree(const Term&);
 rus::Expr Term2Expr(const Term&);
 

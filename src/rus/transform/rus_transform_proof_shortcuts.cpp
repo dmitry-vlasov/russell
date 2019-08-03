@@ -131,11 +131,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 	try {
 		traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex, &watchdog](Writable* n) {
 			if (Step* step = dynamic_cast<Step*>(n)) {
-				prover::Term expr = prover::Tree2Term(
-					*step->expr.tree(),
-					prover::ReplMode::DENY_REPL,
-					prover::LightSymbol::MATH_INDEX
-				);
+				prover::Term expr = prover::Tree2Term(*step->expr.tree(), false);
 				for (PropIndex::Unified& unif : propIndex.unify(expr)) {
 					Assertion* ass = unif.data->ass;
 					if (!ass->token.preceeds(proof->theorem->token)) {
@@ -154,11 +150,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 				hyps.emplace(Ref(step), std::move(hypsMap));
 				watchdog.check();
 			} else if (Hyp* hyp = dynamic_cast<Hyp*>(n)) {
-				prover::Term expr = prover::Tree2Term(
-					*hyp->expr.tree(),
-					prover::ReplMode::DENY_REPL,
-					prover::LightSymbol::MATH_INDEX
-				);
+				prover::Term expr = prover::Tree2Term(*hyp->expr.tree(), false);
 				for (PropIndex::Unified& unif : propIndex.unify(expr)) {
 					Assertion* ass = unif.data->ass;
 					if (!ass->token.preceeds(proof->theorem->token)) {
@@ -247,7 +239,17 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 								if (sub.ok()) {
 									Shortcut shortcut(step, std::move(sub), hyps);
 									if (shortcut.gain(ass) > 0) {
-										try {
+										if (ass->disj.satisfies(shortcut.sub, nullptr)) {
+											//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+											//cout << "shortcut.sub:" << endl << Indent::paragraph(shortcut.sub.show()) << endl;
+											//cout << "step->expr: " << step->expr << endl;
+											//cout << "apply(s, ass->prop->expr): " << apply(shortcut.sub, ass->prop->expr) << endl;
+											//ass->disj.check(shortcut.sub, nullptr);
+											//cout << "passed" << endl;
+
+											shortcuts.emplace(ass, std::move(shortcut));
+										}
+										/*try {
 											//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
 											//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
 											//cout << "step->expr: " << step->expr << endl;
@@ -257,7 +259,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 											shortcuts.emplace(ass, std::move(shortcut));
 										} catch (Error& err) {
 											//cout << err.msg << endl;
-										}
+										}*/
 									}
 								}
 								if (!variants.hasNext()) {
@@ -270,7 +272,16 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 					} else {
 						Shortcut shortcut(step, std::move(Subst2Substitution(prop_unif.sub)));
 						if (shortcut.gain(prop_unif.data->ass) > 0) {
-							try {
+							if (prop_unif.data->ass->disj.satisfies(shortcut.sub, nullptr)) {
+								//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
+								//cout << "shortcut.sub:" << endl << Indent::paragraph(shortcut.sub.show()) << endl;
+								//prop_unif.data->ass->disj.check(shortcut.sub, nullptr);
+								//cout << "passed" << endl;
+
+								shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
+							}
+
+							/*try {
 								//cout << "2) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
 								//cout << "s:" << endl << Indent::paragraph(s.show()) << endl;
 								prop_unif.data->ass->disj.check(shortcut.sub);
@@ -278,7 +289,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 								shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
 							} catch (Error& err) {
 								//cout << err.msg << endl;
-							}
+							}*/
 						}
 					}
 				}
@@ -358,12 +369,12 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 		propIndex.add(
-			prover::Tree2Term(*ass.prop->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
+			prover::Tree2Term(*ass.prop->expr.tree(), true, true),
 			PropRef(&ass)
 		);
 		for (uint i = 0; i < ass.hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), prover::ReplMode::KEEP_REPL, prover::LightSymbol::MATH_INDEX),
+				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), true, true),
 				HypRef(&ass, i)
 			);
 		}

@@ -5,9 +5,12 @@
 namespace mdl { namespace rus { namespace prover {
 
 struct Ass {
-	Ass(const Assertion& a, ReplMode mode) : disj(a.disj), prop(Tree2Term(*a.prop->expr.tree(), mode, 0)) {
+	Ass(const Assertion& a, bool is_mutable) :
+		disj(a.disj),
+		prop(Tree2Term(*a.prop->expr.tree(), is_mutable, true))
+	{
 		for (const auto& h : a.hyps) {
-			hyps.emplace_back(Tree2Term(*h->expr.tree(), mode, 0));
+			hyps.emplace_back(Tree2Term(*h->expr.tree(), is_mutable, true));
 		}
 	}
 	Ass apply(const Subst& s) const {

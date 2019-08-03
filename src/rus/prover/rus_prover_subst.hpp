@@ -13,13 +13,13 @@ struct Subst {
 	Subst(LightSymbol v, const Term& t) : ok_(true) {
 		//cout << ++count <<  " " << v << " => " << t << endl;
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
-			sub_.emplace(v.literal(), TypeTerm(v.type, t));
+			sub_.emplace(v.lit, TypeTerm(v.type, t));
 		}
 	}
 	Subst(LightSymbol v, Term&& t) : ok_(true) {
 		//cout << ++count <<  " " << v << " => " << t << endl;
 		if (!(t.kind() == Term::VAR && t.var() == v)) {
-			sub_.emplace(v.literal(), TypeTerm(v.type, std::move(t)));
+			sub_.emplace(v.lit, TypeTerm(v.type, std::move(t)));
 		}
 	}
 	Subst(const Subst& s) = default;
@@ -135,6 +135,22 @@ inline ostream& operator << (ostream& os, const Subst& s) {
 
 Substitution Subst2Substitution(const Subst&);
 string show_diff(const Subst& s1, const Subst& s2);
+class Space;
+
+struct AssertionSubs {
+	AssertionSubs(const Subst& s, const Subst& o, const Subst& f) :
+		sub(s), outer(o), fresher(f) { }
+	AssertionSubs(Subst&& s, Subst&& o, Subst&& f) :
+		sub(std::move(s)), outer(std::move(o)), fresher(std::move(f)) { }
+	AssertionSubs(const AssertionSubs&) = default;
+	AssertionSubs(AssertionSubs&&) = default;
+	Subst sub;
+	Subst outer;
+	Subst fresher;
+};
+
+Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s);
+AssertionSubs makeAssertionSubs(const Assertion* a, Space* space, const Subst& s);
 
 struct TermSubst {
 	TermSubst() = default;
@@ -165,7 +181,7 @@ inline ostream& operator << (ostream& os, const TermSubst& ts) {
 }
 
 struct VarPair {
-	VarPair() : from(-1), to(-1) { }
+	VarPair() = default;
 	VarPair(LightSymbol f, LightSymbol t) : from(f), to(t) {
 		if (from.type != to.type) {
 			throw Error("at variable replacement type should be preserved");
@@ -312,7 +328,7 @@ struct VarMap {
 		Subst ret;
 		for (const auto& p : repl) {
 			ret.compose(
-				LightSymbol(p.first, p.second.type),
+				LightSymbol(p.first, p.second.type, true),
 				Term(p.second),
 				CompMode::NORM, false
 			);

@@ -53,7 +53,7 @@ void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_UNUSED_STEPS
+#define PARALLEL_UNUSED_STEPS
 #endif
 
 void reduce_unused_steps(const string& opts)  {

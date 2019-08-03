@@ -9,7 +9,7 @@ void reduce_duplicate_steps(Proof* proof, std::atomic<int>& counter) {
 	prover::unify::Index expressions;
 	map<const Step*, Step*> steps_map;
 	for (auto& step : proof->steps) {
-		prover::Term term = prover::Tree2Term(*step->expr.tree());
+		prover::Term term = prover::Tree2Term(*step->expr.tree(), false);
 		const vector<uint>* previous = expressions.find(term);
 		if (previous && previous->size()) {
 			steps_map[step.get()] = new_steps.at(previous->at(0)).get();

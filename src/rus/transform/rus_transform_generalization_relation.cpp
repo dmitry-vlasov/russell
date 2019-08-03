@@ -14,7 +14,7 @@ typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
 
 void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const HypIndex& hypIndex, std::atomic<int>& counter) {
-	Ass a0(*as, ReplMode::KEEP_REPL);
+	Ass a0(*as, true);
 	VarRepl renaming = specialFreshVars(a0.vars());
 	Ass a = a0.apply(renaming);
 
@@ -53,7 +53,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 						}
 					}
 					renaming.inverse().apply(s);
-					if (s.ok() && as->disj.satisfies(Subst2Substitution(s), ass->disj)) {
+					if (s.ok() && as->disj.satisfies(Subst2Substitution(s), &ass->disj)) {
 
 						/*if (as->id() == Lex::toInt("nfel2") && ass->id() == Lex::toInt("nfcri")) {
 							//cout << "AAAAA" << endl;
@@ -95,8 +95,8 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 				less_general_ids.push_back(ass->id());
 			}
 			for (const auto& s : p.second) {
-				Ass a0(*as, ReplMode::KEEP_REPL);
-				Ass a1(*ass, ReplMode::DENY_REPL);
+				Ass a0(*as, true);
+				Ass a1(*ass, false);
 				if (a0.apply(s) != a1) {
 					string err;
 					err += "wrong matching:\n";
@@ -199,12 +199,12 @@ void generaliziation_relation(const string& opts)  {
 	for (Assertion& ass : Sys::mod().math.get<Assertion>()) {
 		assertions.push_back(&ass);
 		propIndex.add(
-			prover::Tree2Term(*ass.prop->expr.tree(), prover::ReplMode::DENY_REPL, prover::LightSymbol::MATH_INDEX),
+			prover::Tree2Term(*ass.prop->expr.tree(), false),
 			PropRef(&ass)
 		);
 		for (uint i = 0; i < ass.hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), prover::ReplMode::DENY_REPL, prover::LightSymbol::MATH_INDEX),
+				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), false),
 				HypRef(&ass, i)
 			);
 		}

@@ -28,7 +28,7 @@ static void apply_recursively(const Substitution& sub, rus::Step* step) {
 
 ProofTop::ProofTop(const Hyp& n, rus::Hyp* hy, const Subst& s, bool hi) :
 	ProofExp(s, hi), node(n), hyp(hy),
-	expr_(s.apply(Tree2Term(*hy->expr.tree(), ReplMode::DENY_REPL, LightSymbol::MATH_INDEX))) {
+	expr_(s.apply(Tree2Term(*hy->expr.tree(), false))) {
 }
 
 bool ProofTop::equal(const ProofNode* n) const {
@@ -109,7 +109,7 @@ ProofRef::ProofRef(const Ref& n, ProofExp* c, bool hi) :
 	sub.compose(child->sub, CompMode::SEMI);
 	set<LightSymbol> s_im_vars = vars_in_subst_image(child->sub);
 	for (auto v : s_im_vars) {
-		sub.compose(v, n.space->vars().makeFresh(v), CompMode::SEMI);
+		sub.compose(v, n.space->vars().makeFreshVar(v.lit, v.type), CompMode::SEMI);
 	}
 }
 
@@ -261,6 +261,7 @@ unique_ptr<rus::Proof> gen_proof(const ProofNode* n) {
 		} catch (Error& err) {
 			cout << "WRONG PROOF:" << endl;
 			ostringstream oss;
+			oss << show_proof_struct(n) << endl;
 			env.proof->write(oss);
 			cout << oss.str() << endl;
 			throw err;

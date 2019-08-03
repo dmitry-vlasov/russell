@@ -26,7 +26,9 @@ void Step::verify(uint mode, Disj* disj) const {
 			msg += "step:\n";
 			msg += show() + "\n";
 			msg += expr.show() + "\n\n";
-			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+			if (proof()->theorem) {
+				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+			}
 			throw Error("proposition unification failed", msg);
 		}
 		if (ass()->arity() != refs.size()) {
@@ -35,8 +37,9 @@ void Step::verify(uint mode, Disj* disj) const {
 			msg += "refs size: " + to_string(refs.size()) + " != " + to_string(ass()->arity()) + "\n";
 			msg += "step:\n";
 			msg += show() + "\n";
-
-			msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+			if (proof()->theorem) {
+				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+			}
 			throw Error("proposition unification failed", msg);
 		}
 		if (debug_verify) {
@@ -57,7 +60,9 @@ void Step::verify(uint mode, Disj* disj) const {
 				msg += refs.at(i)->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
-				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+				if (proof()->theorem) {
+					msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+				}
 				msg += "substitution:\n" + sub.show() + "\n";
 				throw Error("hypothesis unification failed", msg);
 			}
@@ -69,7 +74,9 @@ void Step::verify(uint mode, Disj* disj) const {
 				msg += refs.at(i)->expr().show() + "\n\n";
 				msg += "step:\n";
 				msg += show() + "\n\n";
-				msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+				if (proof()->theorem) {
+					msg += "theorem " + Lex::toStr(proof()->theorem->id()) + "\n";
+				}
 				msg += "prop substitution:\n" + sub.show() + "\n";
 				msg += "hyp substitution:\n" + hs.show() + "\n";
 				throw Error("substitution join failed", msg);

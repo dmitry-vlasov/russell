@@ -94,7 +94,7 @@ static string showTerm(Term::ConstIterator i, bool with_types = false) {
 			}
 		}
 	} else {
-		ret += i->ruleVar.var.show(true);
+		ret += i->ruleVar.var.show();
 	}
 	if (with_types) {
 		ret += ":" + Lex::toStr(type->id());
@@ -220,25 +220,32 @@ set<LightSymbol> Term::vars() const {
 	return ret;
 }
 
-Term::Iterator fill_in_flatterm(Term::Iterator& ft, const Tree* t, ReplMode mode, uint ind) {
+Term::Iterator fill_in_flatterm(Term::Iterator& ft, const Tree* t, bool is_mutable, bool keep_vars) {
 	auto n = ft;
 	auto end = ft;
 	if (const VarTree* v = dynamic_cast<const VarTree*>(t)) {
-		(ft++)->ruleVar.var = LightSymbol(v->lit(), v->type(), mode, ind);
+		(ft++)->ruleVar.var =
+			is_mutable ?
+			(
+				keep_vars ?
+				VarProvider::makeVar(v->lit(), v->type()) :
+				VarProvider::makeVarZero(v->lit(), v->type())
+			):
+			LightSymbol(v->lit(), v->type(), false);
 	} else if (const RuleTree* r = dynamic_cast<const RuleTree*>(t)) {
 		(ft++)->ruleVar.rule = r->rule.get();
 		for (const auto& c : r->children) {
-			end = fill_in_flatterm(ft, c.get(), mode, ind);
+			end = fill_in_flatterm(ft, c.get(), is_mutable, keep_vars);
 		}
 	}
 	n->end = end;
 	return end;
 }
 
-Term Tree2Term(const Tree& t, ReplMode mode, uint ind) {
+Term Tree2Term(const Tree& t, bool is_mutable, bool keep_vars) {
 	Term ret(t.len());
 	auto ft = ret.nodes.begin();
-	fill_in_flatterm(ft, &t, mode, ind);
+	fill_in_flatterm(ft, &t, is_mutable, keep_vars);
 	return ret;
 }
 

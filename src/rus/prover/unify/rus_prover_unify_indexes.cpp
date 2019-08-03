@@ -352,7 +352,7 @@ struct UnifStepData {
 		}
 		ret += "\n";
 		ret += string("consistent: ") + (consistent ? "TRUE" : "FALSE") + "\n";
-		ret += string("var: ") + var.show(true) + "\n";
+		ret += string("var: ") + var.show() + "\n";
 		ret += "\n";
 		return ret;
 	}

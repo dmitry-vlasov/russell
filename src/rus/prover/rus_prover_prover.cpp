@@ -15,15 +15,15 @@ Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
 			continue;
 		}
 		assertions_.add(
-			Tree2Term(*ass.prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+			Tree2Term(*ass.prop->expr.tree(), true),
 			PropRef(&ass)
 		);
 	}
 	for (uint i = 0; i < prop_.ass->arity(); ++ i) {
 		HypRef hypRef(theorem, i);
-		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), ReplMode::DENY_REPL), hypRef);
+		hyps_.add(Tree2Term(*hypRef.get()->expr.tree(), false), hypRef);
 	}
-	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), ReplMode::DENY_REPL), this);
+	root_ = make_unique<Hyp>(Tree2Term(*prop_.get()->expr.tree(), false), this);
 	buildUp(root_.get());
 	add_timer_stats("space_init", timer);
 }
@@ -64,7 +64,7 @@ void Prover::buildUpProp(Prop* p) {
 	for (auto& h : p->prop.ass->hyps) {
 		Hyp* hyp = new Hyp(
 			p->outer.apply(p->sub.apply(p->fresher.apply(
-				Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
+				Tree2Term(*h->expr.tree(), true)
 			))),
 			p
 		);
@@ -74,20 +74,6 @@ void Prover::buildUpProp(Prop* p) {
 		}
 	}
 	add_timer_stats("build_up_PROP", timer);
-}
-
-static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
-	Subst ret;
-	for (const auto& w : a->vars.v) {
-		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
-		if (!ret.maps(v)) {
-			if (!s.maps(v)) {
-				ret.compose(v, space->vars().makeFresh(v));
-			}
-		}
-		assertion_vars.insert(v.lit);
-	}
-	return ret;
 }
 
 static bool is_reacheable(const Node* parent, const Node* ancestor) {

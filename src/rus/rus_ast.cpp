@@ -122,7 +122,7 @@ inline bool disjointed_are_satisfied(const set<uint>& s1, const set<uint>& s2) {
 	return true;
 }
 
-bool Disj::satisfies(const Substitution& s, const Disj& outer) const {
+bool Disj::satisfies(const Substitution& s, const Disj* outer) const {
 	for (const auto& p : dvars) {
 		set<uint> v1_vars = s.maps(p.v) ? s.map(p.v)->vars() : set<uint>({p.v});
 		set<uint> v2_vars = s.maps(p.w) ? s.map(p.w)->vars() : set<uint>({p.w});
@@ -145,7 +145,7 @@ bool Disj::satisfies(const Substitution& s, const Disj& outer) const {
 
 			return false;
 		}
-		if (!outer.check_pairs_disjointed(v1_vars, v2_vars)) {
+		if (outer && !outer->check_pairs_disjointed(v1_vars, v2_vars)) {
 
 			if (debug_check_disj) {
 				cout << "BBB" << endl;
@@ -159,7 +159,7 @@ bool Disj::satisfies(const Substitution& s, const Disj& outer) const {
 					cout << Lex::toStr(v) << ", ";
 				}
 				cout << "}" << endl;
-				cout << "outer:" << endl << outer << endl;
+				cout << "outer:" << endl << *outer << endl;
 			}
 
 			return false;

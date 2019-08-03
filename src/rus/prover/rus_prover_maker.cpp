@@ -3,6 +3,90 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
+	Subst ret;
+
+	//cout << "------------" << endl;
+	//cout << "ASS: " << endl << *a << endl;
+	//cout << "sub:" << s << endl;
+	//cout << "vars:" << space->vars().show() << endl;
+
+	for (const auto& w : a->vars.v) {
+		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		if (!ret.maps(v)) {
+			if (!s.maps(v)) {
+				ret.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
+			}
+		}
+		assertion_vars.insert(v.lit);
+	}
+	//cout << "fresher:" << ret << endl;
+	return ret;
+}
+
+Subst make_free_vars_fresh(const Assertion* a, Space* space, const Subst& s = Subst()) {
+	Subst ret;
+
+	//cout << "------------" << endl;
+	//cout << "ASS: " << endl << *a << endl;
+	//cout << "sub:" << s << endl;
+	//cout << "vars:" << space->vars().show() << endl;
+
+	for (const auto& w : a->vars.v) {
+		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		if (!ret.maps(v) && !s.maps(v)) {
+			ret.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
+		}
+	}
+	//cout << "fresher:" << ret << endl;
+	return ret;
+}
+
+AssertionSubs makeAssertionSubs(const Assertion* a, Space* space, Subst s) {
+	Subst sub;
+	Subst outer;
+	Subst fresher;
+	set<uint> assertion_vars;
+	for (const auto& w : a->vars.v) {
+		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		if (!fresher.maps(v) && !s.maps(v)) {
+			fresher.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
+		}
+		assertion_vars.insert(v.lit);
+	}
+	s.compose(fresher, CompMode::SEMI);
+	for (const auto& p : s) {
+		if (assertion_vars.count(p.first)) {
+			outer.compose(LightSymbol(p.first, p.second.type, true), p.second.term);
+		} else {
+			sub.compose(LightSymbol(p.first, p.second.type, true), p.second.term);
+		}
+	}
+	return AssertionSubs(std::move(sub), std::move(outer), std::move(fresher));
+
+
+	/*
+	 * 		set<uint> assertion_vars;
+			Subst fresher = make_free_vars_fresh(m.data->ass, this, assertion_vars, m.sub);
+			for (const auto& p : fresher) {
+				if (m.sub.maps(p.first)) {
+					fresher.erase(p.first);
+				}
+			}
+			m.sub.compose(fresher, CompMode::SEMI);
+			Subst sub;
+			Subst outer;
+			for (const auto& p : m.sub) {
+				if (assertion_vars.count(p.first)) {
+					outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
+				} else {
+					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
+				}
+			}
+	}*/
+}
+
+
 struct Maker : public Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;
 	template<class T>
@@ -213,7 +297,7 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 			visited.insert(n.label());
 			if (Assertion* ass = Sys::mod().math.get<Assertion>().access(n.label())) {
 				assertions_.add(
-					Tree2Term(*ass->prop->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX),
+					Tree2Term(*ass->prop->expr.tree(), true),
 					PropRef(ass)
 				);
 				//cout << "ADDED: " << Lex::toStr(n.label()) << endl;
@@ -225,8 +309,13 @@ Maker::Maker(const AbstProof& aproof, uint id) :
 	if (abst_proof_.rootSize() != 1) {
 		throw Error("ivalid proof tree - non a single root");
 	}
+	//cout << "ASSSERTIONS: " << endl;
+	//cout << assertions_.show() << endl;
 	const Assertion* root_ass = Sys::mod().math.get<Assertion>().access(abst_proof_.getRoot(0)->label());
-	root_ = make_unique<Hyp>(Tree2Term(*root_ass->prop->expr.tree(), ReplMode::KEEP_REPL), this);
+	Subst fresher = make_free_vars_fresh(root_ass, this);
+	root_ = make_unique<Hyp>(
+		fresher.apply(Tree2Term(*root_ass->prop->expr.tree(), true)), this
+	);
 	buildUp(root_.get());
 	add_timer_stats("maker_init", timer);
 }
@@ -273,7 +362,7 @@ void Maker::buildUpProp(Prop* p) {
 	for (auto& h : p->prop.ass->hyps) {
 		Hyp* hyp = new Hyp(
 			p->outer.apply(p->sub.apply(p->fresher.apply(
-				Tree2Term(*h->expr.tree(), ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX)
+				Tree2Term(*h->expr.tree(), true)
 			))),
 			p
 		);
@@ -283,20 +372,6 @@ void Maker::buildUpProp(Prop* p) {
 		}
 	}
 	add_timer_stats("build_up_PROP", timer);
-}
-
-static Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
-	Subst ret;
-	for (const auto& w : a->vars.v) {
-		LightSymbol v(w, ReplMode::KEEP_REPL, LightSymbol::ASSERTION_INDEX);
-		if (!ret.maps(v)) {
-			if (!s.maps(v)) {
-				ret.compose(v, space->vars().makeFresh(v));
-			}
-		}
-		assertion_vars.insert(v.lit);
-	}
-	return ret;
 }
 
 static bool is_reacheable(const Node* parent, const Node* ancestor) {
@@ -354,6 +429,9 @@ void Maker::buildUpHyp(Hyp* h) {
 		add_timer_stats("build_up_hyp_unify_timer", timer);
 		timer.start();
 		for (auto& m : unified) {
+
+			//cout << "unified: " << Lex::toStr(m.data->ass->id()) << endl;
+
 			if (labels.find(m.data->ass->id()) == labels.end()) continue;
 			set<uint> assertion_vars;
 			Subst fresher = make_free_vars_fresh(m.data->ass, this, assertion_vars, m.sub);
@@ -491,6 +569,7 @@ unique_ptr<Theorem> Maker::make() {
 		}
 	} else {
 		cout << "root_->proofs.size() == 0: " << Lex::toStr(theorem_id_) << endl;
+		cout << show_nodes_struct(root_.get()) << endl;
 		return nullptr;
 	}
 }

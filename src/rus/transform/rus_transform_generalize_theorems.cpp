@@ -4,6 +4,8 @@
 
 namespace mdl { namespace rus {
 
+extern bool debug_match;
+
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	try {
@@ -28,40 +30,37 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		throw Error(err);
 	}
 	try {
-		vector<Substitution> matches1 = match(*gen_thm, *thm);
+		//cout << "GENERALIZED" << endl;
+		//cout << *gen_thm << endl;
 		try {
-			//gen_thm->verify();
+			beautify(*gen_thm);
+		} catch (Error& err) {
+			err.msg += "at generalize_theorems: beautify(*gen_thm);\n";
+			throw err;
+		}
+		/*try {
+			gen_thm->verify();
 			//cout << "GENERALIZED" << endl;
 			//cout << *gen_thm << endl;
 		} catch (Error& err) {
 			err.msg += "at generalize_theorems: gen_thm->veryfy();;\n";
 			throw err;
-		}
+		}*/
+		vector<Substitution> matches1 = match(*gen_thm, *thm);
 		if (!matches1.size()) {
-			try {
-				beautify(*gen_thm);
-			} catch (Error& err) {
-				err.msg += "at generalize_theorems: beautify(*gen_thm);\n";
-				throw err;
-			}
-			//debug_match = true;
-			//match(*gen_thm, *thm);
-			//debug_match = false;
+
+			debug_match = true;
+			match(*gen_thm, *thm);
+			debug_match = false;
 			string err;
 			err += "remaked proof is less general then the original\n";
 			err += "remaked theorem:\n" + gen_thm->show() + "\n";
 			err += "original theorem:\n" + thm->show() + "\n";
 			cout << err;
-			//throw Error(err);
+			throw Error(err);
 		}
 		vector<Substitution> matches2 = match(*thm, *gen_thm);
 		if (!matches2.size()) {
-			try {
-				beautify(*gen_thm);
-			} catch (Error& err) {
-				err.msg += "at generalize_theorems: beautify(*gen_thm);\n";
-				throw err;
-			}
 			gen_thm->token = thm->token;
 			Source* src = Sys::mod().math.get<Source>().access(thm->token.src()->id());
 			uint pos = -1;
@@ -96,7 +95,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_GENERALIZE_THEOREMS
+#define PARALLEL_GENERALIZE_THEOREMS
 #endif
 
 void generalize_theorems(const string& opts)  {
