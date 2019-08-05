@@ -28,7 +28,12 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 			hyps_map.at(unif.data->ass).at(i).emplace_back(unif);
 		}
 	}
-	map<const Assertion*, vector<Subst>> less_general;
+	struct HypsUnified {
+		HypsUnified(vector<uint>&& i, Subst&& s) : inds(std::move(i)), sub(std::move(s)) { }
+		vector<uint> inds;
+		Subst sub;
+	};
+	map<const Assertion*, vector<HypsUnified>> less_general;
 	for (const PropIndex::Unified& prop_unif : propIndex.unify(a.prop)) {
 		const Assertion* ass = prop_unif.data->ass;
 		if (ass == as || !hyps_map.count(ass)) {
@@ -46,8 +51,10 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 				while (true) {
 					watchdog.check();
 					const vector<HypIndex::Unified>& var = variants.data();
+					vector<uint> inds;
 					Subst s = prop_unif.sub;
 					for (const HypIndex::Unified& hyp_unif : var) {
+						inds.push_back(hyp_unif.data->ind);
 						if (!s.compose(hyp_unif.sub)) {
 							break;
 						}
@@ -71,7 +78,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 							//cout << s2 << endl;
 						}*/
 
-						less_general[ass].emplace_back(std::move(s));
+						less_general[ass].emplace_back(HypsUnified(std::move(inds), std::move(s)));
 					}
 					if (variants.hasNext()) {
 						variants.makeNext();
@@ -97,12 +104,12 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 			for (const auto& s : p.second) {
 				Ass a0(*as, true);
 				Ass a1(*ass, false);
-				if (a0.apply(s) != a1) {
+				if (a0.apply(s.sub) != a1) {
 					string err;
 					err += "wrong matching:\n";
 					err += "a:\n" + a0.show() + "\n";
 					err += "a1:\n" + a1.show() + "\n";
-					err += "sub:\n" + s.show() + "\n";
+					err += "sub:\n" + s.sub.show() + "\n";
 					throw Error(err);
 				}
 			}
