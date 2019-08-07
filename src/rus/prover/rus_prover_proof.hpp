@@ -56,7 +56,7 @@ struct ProofHyp : public ProofExp {
 	bool equal(const ProofNode* n) const override;
 	const Term& expr() const override { return expr_; }
 	void addParent(ProofNode* p) override { parents.push_back(p); }
-	ProofNode* clone() const {
+	ProofNode* clone() const override {
 		return new ProofHyp(*this);
 	}
 
@@ -88,7 +88,7 @@ struct ProofRef : public ProofExp {
 		}
 		parent = p;
 	}
-	ProofNode* clone() const {
+	ProofNode* clone() const override {
 		return new ProofRef(*this);
 	}
 
@@ -116,7 +116,7 @@ struct ProofProp : public ProofNode {
 		}
 		parent = p;
 	}
-	ProofNode* clone() const {
+	ProofNode* clone() const override {
 		return new ProofProp(*this);
 	}
 

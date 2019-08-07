@@ -150,17 +150,36 @@ struct Prop : public Writable, public WithToken {
 		WithToken(t), expr(e) { }
 	Prop(Expr&& e, const Token& t = Token()) :
 		WithToken(t), expr(std::move(e)) { }
-	Prop(const Prop&) = delete;
+	explicit Prop(const Prop& p) : WithToken(p.token), expr(p.expr) { }
 	Expr expr;
 	void write(ostream& os, const Indent& i = Indent()) const override;
 };
 
+// Generalization relation on assertions
+struct GenRel {
+	GenRel() = default;
+	GenRel(uint l, uint m, bool e, const vector<uint>& h) : equal(e), less(l), more(m), hyps(h) { }
+	GenRel(uint l, uint m, bool e, vector<uint>&& h) : equal(e), less(l), more(m), hyps(std::move(h)) { }
+	GenRel(const GenRel&) = default;
+	GenRel(GenRel&&) = default;
+	GenRel& operator = (const GenRel&) = default;
+	GenRel& operator = (GenRel&&) = default;
+	//operator bool() const { return less != -1; }
+	bool isDefined() const { return less != -1; }
+	bool equal = false;
+	uint less = -1;
+	uint more = -1;
+	vector<uint> hyps;
+};
+
 struct Assertion : public Writable, public Owner<Assertion> {
 	struct Info {
-		vector<uint> moreGeneral;  // these assertions are more general, then current
-		vector<uint> lessGeneral;  // these assertions are less general, then current
-		vector<uint> equalGeneral; // these assertions are equivalent to the current
-		uint optimal = -1;         // use this assertion instead of current (it is equivalent or more general)
+		vector<GenRel> moreGeneral;  // these assertions are more general, then current
+		vector<GenRel> lessGeneral;  // these assertions are less general, then current
+		vector<GenRel> equalGeneral; // these assertions are equivalent to the current
+		GenRel optimal;              // use this assertion instead of current (it is equivalent or more general)
+		bool isOptimal = false;      // this assertion is optimal itself
+		bool optimalIsDefined() const { return isOptimal || optimal.isDefined(); }
 	};
 
 	enum Kind { AXM, THM, DEF };

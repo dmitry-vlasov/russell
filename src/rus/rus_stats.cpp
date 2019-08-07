@@ -35,7 +35,7 @@ Stats produce_stats(const string& opts) {
 	stats.num_assertions = Sys::get().math.get<Assertion>().size();
 	for (const Assertion& a : Sys::get().math.get<Assertion>()) {
 		stats.all_assertions.insert(a.id());
-		if (a.info && a.info->optimal != a.id()) {
+		if (a.info && !a.info->isOptimal) {
 			stats.replaceable_assertions.insert(a.id());
 		}
 		stats.num_hyps += a.hyps.size();

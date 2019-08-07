@@ -18,16 +18,52 @@ void replace_with_optimal(Proof* proof) {
 	Disj theorem_disj = unite(proof->theorem->disj, proof->disj);
 	for (auto& s : proof->steps) {
 		Step* step = s.get();
-		if (step->ass()->info && step->ass()->info->optimal != step->ass()->id()) {
-			const Assertion* optimal = Sys::get().math.get<Assertion>().access(step->ass()->info->optimal);
+		if (step->ass()->info && step->ass()->info->optimal.isDefined() && !step->ass()->info->isOptimal) {
+			const GenRel& opt_rel = step->ass()->info->optimal;
+			const Assertion* optimal = Sys::get().math.get<Assertion>().access(opt_rel.more);
 			if (optimal->token.preceeds(proof->theorem->token)) {
-				prover::CartesianProd<StepRef> vars;
+
+				Substitution sub = unify_forth(optimal->prop->expr, step->expr);
+				for (uint i = 0; i < opt_rel.hyps.size(); ++i) {
+					const Expr& hyp = optimal->hyps.at(i)->expr;
+					uint j = opt_rel.hyps.at(i);
+					const Expr& ref = step->refs.at(j)->expr();
+					Substitution s = unify_forth(hyp, ref);
+					if (!s.ok()) {
+						string err = "\n";
+						err += "hyp: " + hyp.show() + "\n";
+						err += "ref: " + ref.show() + "\n";
+						err += "optimal:\n" + optimal->show() + "\n";
+						err += "current:\n" + step->ass()->show() + "\n";
+						throw Error("hyp and ref must unify", err);
+					}
+					if (!sub.join(s)) {
+						throw Error("hyps must join");
+					}
+				}
+				if (!optimal->disj.satisfies(sub, &theorem_disj)) {
+					throw Error("disj must satisfy");
+				}
+				cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
+				cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
+				cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
+				step->set_ass(optimal->id());
+				vector<unique_ptr<Ref>> new_refs;
+				for (uint i = 0; i < optimal->hyps.size(); ++ i) {
+					int j = opt_rel.hyps.at(i);
+					new_refs.emplace_back(make_unique<Ref>(*step->refs.at(j)));
+				}
+				step->refs = std::move(new_refs);
+
+
+
+				/*prover::CartesianProd<StepRef> vars;
 				for (uint i = 0; i < optimal->hyps.size(); ++ i) {
 					vector<StepRef> dimData;
 					const Expr& hyp = optimal->hyps.at(i)->expr;
 					for (uint j = 0; j < step->refs.size(); ++ j) {
 						const Expr& ref = step->refs.at(j)->expr();
-						Substitution s = std::move(unify_forth(hyp, ref));
+						Substitution s = unify_forth(hyp, ref);
 						if (s.ok()) {
 							dimData.emplace_back(j, std::move(s));
 						}
@@ -46,26 +82,6 @@ void replace_with_optimal(Proof* proof) {
 							break;
 						}
 					}
-
-					/*if ((step->ass()->id() == Lex::toInt("elab2") && optimal->id() == Lex::toInt("gen_elab2")) ||
-						(step->ass()->id() == Lex::toInt("nfcri") && optimal->id() == Lex::toInt("nfel2"))) {
-						cout << "Assertion " << Lex::toStr(step->ass()->id()) << " SHOULD BE replaced with ";
-						cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
-						cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
-						cout << "sub: " << endl;
-						cout << s << endl;
-						cout << "optimal:" << endl;
-						cout << *optimal << endl;
-						cout << "ass:" << endl;
-						cout << *step->ass() << endl;
-						cout << "theorem:" << endl;
-						cout << *step->proof()->theorem << endl;
-						cout << "optimal->disj.satisfies(s, theorem_disj): " << optimal->disj.satisfies(s, theorem_disj) << endl;
-						debug_check_disj = true;
-						optimal->disj.satisfies(s, step->ass()->disj);
-						debug_check_disj = false;
-					}*/
-
 					if (s.ok() && optimal->disj.satisfies(s, &theorem_disj)) {
 						cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
 						cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
@@ -92,7 +108,7 @@ void replace_with_optimal(Proof* proof) {
 				err += step->show() + "\n";
 				err += step->ass()->show() + "\n";
 				err += optimal->show() + "\n";
-				throw Error(err);
+				throw Error(err);*/
 			}
 		}
 	}

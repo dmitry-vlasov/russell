@@ -13,6 +13,47 @@ namespace {
 typedef prover::unify::IndexMap<PropRef> PropIndex;
 typedef prover::unify::IndexMap<HypRef> HypIndex;
 
+unique_ptr<Theorem> make_gen_rel_theorem(const GenRel& rel, uint th_name) {
+	unique_ptr<Theorem> ret = make_unique<Theorem>(th_name);
+	const Assertion* less = Sys::get().math.get<Assertion>().access(rel.less);
+	for (auto& h : less->hyps) {
+		ret->hyps.emplace_back(make_unique<rus::Hyp>(*h));
+	}
+	ret->prop = make_unique<rus::Prop>(*less->prop);
+	ret->proof = make_unique<Proof>();
+	Step* step = new Step(0, Step::ASS, rel.more, ret->proof.get());
+	for (uint i = 0; i < rel.hyps.size(); ++ i) {
+		uint j = rel.hyps.at(i);
+		step->refs.emplace_back(new rus::Ref(ret->hyps.at(j).get()));
+	}
+	step->expr = ret->prop->expr;
+	ret->proof->steps.emplace_back(step);
+	ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
+	return ret;
+}
+
+void process_gen_rel(const GenRel& rel) {
+	uint th_name = Lex::toInt(Lex::toStr(rel.less) + "_less_gen_then_" + Lex::toStr(rel.more));
+	if (Sys::get().math.get<Assertion>().has(th_name)) {
+		// check
+		Assertion* ass = Sys::mod().math.get<Assertion>().access(th_name);
+		if (Theorem* thm = dynamic_cast<Theorem*>(ass)) {
+			thm->verify();
+		} else {
+			throw Error("must be a theorem");
+		}
+	} else {
+		unique_ptr<Theorem> gen_thm = make_gen_rel_theorem(rel, th_name);
+		try {
+			gen_thm->verify();
+		} catch (Error& err) {
+			err.msg += "testing gen relation: " + Lex::toStr(th_name) + "\n";
+			err.msg += gen_thm->show() + "\n";
+			throw err;
+		}
+	}
+}
+
 void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const HypIndex& hypIndex, std::atomic<int>& counter) {
 	Ass a0(*as, true);
 	VarRepl renaming = specialFreshVars(a0.vars());
@@ -61,23 +102,6 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 					}
 					renaming.inverse().apply(s);
 					if (s.ok() && as->disj.satisfies(Subst2Substitution(s), &ass->disj)) {
-
-						/*if (as->id() == Lex::toInt("nfel2") && ass->id() == Lex::toInt("nfcri")) {
-							//cout << "AAAAA" << endl;
-							//cout << a << endl;
-							cout << *as << endl;
-							cout << *ass << endl;
-							cout << s << endl;
-							//cout << "direct:" << endl;
-							//Subst s1(s);
-							//renaming.direct().apply(s1);
-							//cout << s1 << endl;
-							//cout << "inverse:" << endl;
-							//Subst s2(s);
-							//renaming.inverse().apply(s2);
-							//cout << s2 << endl;
-						}*/
-
 						less_general[ass].emplace_back(HypsUnified(std::move(inds), std::move(s)));
 					}
 					if (variants.hasNext()) {
@@ -92,14 +116,19 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 		}
 	}
 	if (less_general.size()) {
-		vector<uint> less_general_ids;
-		vector<uint> equal_general_ids;
+		vector<GenRel> less_general_rel;
+		vector<GenRel> equal_general_rel;
 		for (auto& p : less_general) {
 			const Assertion* ass = p.first;
+			if (!p.second.size()) {
+				throw Error("less general subs vector must be non-empty");
+			}
 			if (match(*ass, *as).size()) {
-				equal_general_ids.push_back(ass->id());
+				equal_general_rel.emplace_back(ass->id(), as->id(), true, p.second.front().inds);
+				process_gen_rel(equal_general_rel.back());
 			} else {
-				less_general_ids.push_back(ass->id());
+				less_general_rel.emplace_back(ass->id(), as->id(), false, p.second.front().inds);
+				process_gen_rel(less_general_rel.back());
 			}
 			for (const auto& s : p.second) {
 				Ass a0(*as, true);
@@ -117,8 +146,8 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 		if (!as->info) {
 			as->info = make_unique<Assertion::Info>();
 		}
-		as->info->lessGeneral = std::move(less_general_ids);
-		as->info->equalGeneral = std::move(equal_general_ids);
+		as->info->lessGeneral = std::move(less_general_rel);
+		as->info->equalGeneral = std::move(equal_general_rel);
 		counter.store(counter.load() + 1);
 	}
 }
@@ -126,33 +155,33 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 }
 
 #ifdef PARALLEL
-#define PARALLEL_GENERALIZATION_RELATION
+//#define PARALLEL_GENERALIZATION_RELATION
 #endif
 
 void show_generalization_info(const vector<Assertion*>& assertions) {
 	for (auto a : assertions) {
 		if (a->info && (a->info->lessGeneral.size() || a->info->moreGeneral.size() || a->info->equalGeneral.size())) {
 			cout << "For assertion " << Lex::toStr(a->id()) << " ";
-			cout << "optimal is: " << Lex::toStr(a->info->optimal) << ", ";
+			cout << "optimal is: " << Lex::toStr(a->info->isOptimal ? a->id() : a->info->optimal.more) << ", ";
 			cout << "those are ";
 			if (a->info->lessGeneral.size()) {
 				cout << "less general: {";
-				for (auto l : a->info->lessGeneral) {
-					cout << Lex::toStr(l) << ", ";
+				for (auto& l : a->info->lessGeneral) {
+					cout << Lex::toStr(l.less) << ", ";
 				}
 				cout << "} ";
 			}
 			if (a->info->equalGeneral.size()) {
 				cout << "equal general: {";
-				for (auto l : a->info->equalGeneral) {
-					cout << Lex::toStr(l) << ", ";
+				for (auto& e : a->info->equalGeneral) {
+					cout << Lex::toStr(e.less) << ", ";
 				}
 				cout << "} ";
 			}
 			if (a->info->moreGeneral.size()) {
 				cout << "more general: {";
-				for (auto l : a->info->moreGeneral) {
-					cout << Lex::toStr(l) << ", ";
+				for (auto& m : a->info->moreGeneral) {
+					cout << Lex::toStr(m.more) << ", ";
 				}
 				cout << "}";
 			}
@@ -161,36 +190,67 @@ void show_generalization_info(const vector<Assertion*>& assertions) {
 	}
 }
 
-void decide_an_optimal(Assertion* a, set<Assertion*>& visited) {
-	if (visited.count(a) || !a->info) {
-		visited.insert(a);
+void decide_an_optimal(Assertion* a) {
+	if (!a->info) {
+		throw Error("info must be defined");
+	}
+	if (a->info->optimalIsDefined()) {
 		return;
 	}
-	visited.insert(a);
 	if (!a->info->moreGeneral.size()) {
 		if (!a->info->equalGeneral.size()) {
-			a->info->optimal = a->id();
+			a->info->isOptimal = true;
 		} else {
-			for (uint equal : a->info->equalGeneral) {
-				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(equal);
-				if (dynamic_cast<Theorem*>(eq_a)) {
-					a->info->optimal = eq_a->id();
+			std::sort(
+				a->info->equalGeneral.begin(),
+				a->info->equalGeneral.end(),
+				[](const GenRel& l, const GenRel& g) {
+					return Lex::toStr(l.more).size() < Lex::toStr(g.more).size();
+				}
+			);
+			GenRel optimal;
+			Assertion* optimal_a = nullptr;
+			for (GenRel& e : a->info->equalGeneral) {
+				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(e.more);
+				if (!optimal.isDefined()) {
+					optimal = e;
+					optimal_a = eq_a;
+				}
+				if (Theorem* th = dynamic_cast<Theorem*>(eq_a)) {
+					optimal = e;
+					optimal_a = th;
+					break;
 				}
 			}
-			if (a->info->optimal == -1) {
-				a->info->optimal = a->id();
-			}
-			for (uint equal : a->info->equalGeneral) {
-				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(equal);
-				eq_a->info->optimal = a->info->optimal;
-				visited.insert(eq_a);
+			a->info->optimal = optimal;
+			optimal_a->info->isOptimal = true;
+
+			optimal_a->info->isOptimal = true;
+			for (GenRel& e : a->info->equalGeneral) {
+				Assertion* eq_a = Sys::mod().math.get<Assertion>().access(e.more);
+				auto it = std::find_if(
+					eq_a->info->equalGeneral.begin(),
+					eq_a->info->equalGeneral.end(),
+					[optimal](const GenRel& r) { return r.more == optimal.more; }
+				);
+				if (it == eq_a->info->equalGeneral.end()) {
+					throw Error("optimal is not found");
+				}
+				eq_a->info->optimal = *it;
 			}
 		}
 	} else {
-		for (uint more : a->info->moreGeneral) {
-			Assertion* more_a = Sys::mod().math.get<Assertion>().access(more);
-			decide_an_optimal(more_a, visited);
-			a->info->optimal = more_a->info->optimal;
+		for (auto& m : a->info->moreGeneral) {
+			decide_an_optimal(Sys::mod().math.get<Assertion>().access(m.more));
+		}
+		Assertion* more_a = Sys::mod().math.get<Assertion>().access(a->info->moreGeneral.front().more);
+		a->info->optimal =
+			more_a->info->isOptimal ?
+			a->info->moreGeneral.front() :
+			more_a->info->optimal;
+		Assertion* optimal_a = Sys::mod().math.get<Assertion>().access(a->info->optimal.more);
+		if (!optimal_a->info->isOptimal) {
+			throw Error("must be optimal");
 		}
 	}
 }
@@ -234,18 +294,19 @@ void generaliziation_relation(const string& opts)  {
 
 	for (auto a : assertions) {
 		if (a->info && a->info->lessGeneral.size()) {
-			for (uint id : a->info->lessGeneral) {
-				Assertion* less = Sys::mod().math.get<Assertion>().access(id);
+			for (GenRel l : a->info->lessGeneral) {
+				Assertion* less = Sys::mod().math.get<Assertion>().access(l.less);
 				if (!less->info) {
 					less->info = make_unique<Assertion::Info>();
 				}
-				less->info->moreGeneral.push_back(a->id());
+				less->info->moreGeneral.emplace_back(l);
 			}
 		}
 	}
-	set<Assertion*> visited;
 	for (auto a : assertions) {
-		decide_an_optimal(a, visited);
+		if (a->info) {
+			decide_an_optimal(a);
+		}
 	}
 	show_generalization_info(assertions);
 	if (counter.load() > 0) {
