@@ -15,6 +15,7 @@ struct StepRef {
 };
 
 void replace_with_optimal(Proof* proof) {
+	proof->theorem->verify();
 	Disj theorem_disj = unite(proof->theorem->disj, proof->disj);
 	for (auto& s : proof->steps) {
 		Step* step = s.get();
@@ -35,14 +36,29 @@ void replace_with_optimal(Proof* proof) {
 						err += "ref: " + ref.show() + "\n";
 						err += "optimal:\n" + optimal->show() + "\n";
 						err += "current:\n" + step->ass()->show() + "\n";
+						err += "theorem:\n" + proof->theorem->show() + "\n";
 						throw Error("hyp and ref must unify", err);
 					}
 					if (!sub.join(s)) {
-						throw Error("hyps must join");
+						string err = "\n";
+						err += "hyp: " + hyp.show() + "\n";
+						err += "ref: " + ref.show() + "\n";
+						err += "optimal:\n" + optimal->show() + "\n";
+						err += "current:\n" + step->ass()->show() + "\n";
+						err += "sub:\n" + sub.show() + "\n";
+						err += "s:\n" + s.show() + "\n";
+						err += "theorem:\n" + proof->theorem->show() + "\n";
+						throw Error("hyps must join", err);
 					}
 				}
 				if (!optimal->disj.satisfies(sub, &theorem_disj)) {
-					throw Error("disj must satisfy");
+					string err = "\n";
+					err += "optimal:\n" + optimal->show() + "\n";
+					err += "current:\n" + step->ass()->show() + "\n";
+					err += "sub:\n" + sub.show() + "\n";
+					err += "theorem:\n" + proof->theorem->show() + "\n";
+					err += "disj:\n" + theorem_disj.show() + "\n";
+					throw Error("disj must satisfy", err);
 				}
 				cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
 				cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
@@ -112,7 +128,7 @@ void replace_with_optimal(Proof* proof) {
 			}
 		}
 	}
-	proof->theorem->verify(VERIFY_SRC);
+	proof->theorem->verify();
 }
 
 }

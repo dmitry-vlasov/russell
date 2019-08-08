@@ -6,7 +6,27 @@ namespace mdl { namespace rus {
 
 extern bool debug_match;
 
+bool is_already_a_generalization(const Theorem* thm) {
+	string thm_name = Lex::toStr(thm->id());
+	auto under = thm_name.find('_');
+	if (under == string::npos) {
+		return false;
+	} else {
+		string pref = thm_name.substr(0, under);
+		string post = thm_name.substr(under + 1);
+		return pref == "gen" && Sys::get().math.get<Assertion>().has(Lex::toInt(post));
+	}
+}
+
+bool has_already_a_generalization(const Theorem* thm) {
+	string thm_name = Lex::toStr(thm->id());
+	return Sys::get().math.get<Assertion>().has(Lex::toInt("gen_" + thm_name));
+}
+
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
+	if (is_already_a_generalization(thm) || has_already_a_generalization(thm)) {
+		return;
+	}
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
 	try {
 		thm->verify();
@@ -17,12 +37,8 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		throw err;
 	}
 	AbstProof abstProof = thm->proof->abst();
-	auto gen_name = [thm](uint i) { return "gen_" + string(i == 0 ? "" : to_string(i) + "_") + Lex::toStr(thm->id()); };
-	uint i = 0;
-	while (Sys::get().math.get<Assertion>().has(Lex::toInt(gen_name(i)))) {
-		++i;
-	}
-	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, Lex::toInt(gen_name(i)));
+	uint gen_name = Lex::toInt("gen_" + Lex::toStr(thm->id()));
+	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, gen_name);
 	if (!gen_thm) {
 		string err;
 		err += "theorem " + Lex::toStr(thm->id()) + " couldn't be generalized\n";
