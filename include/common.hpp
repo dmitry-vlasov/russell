@@ -426,12 +426,36 @@ public:
 	int fullSize() const { return refs.size(); }
 	int size() const {
 		int s = 0;
-		for (auto& p :refs) {
+		for (auto& p : refs) {
 			if (p.second.data) {
 				s += 1;
 			}
 		}
 		return s;
+	}
+	vector<Data*> values() {
+		vector<Data*> ret;
+		for (Data& d : *this) {
+			ret.push_back(&d);
+		}
+		return ret;
+	}
+	vector<const Data*> values() const {
+		vector<const Data*> ret;
+		for (const Data& d : *this) {
+			ret.push_back(&d);
+		}
+		return ret;
+	}
+	vector<Data*> sortedValues(std::function<bool(const Data*, const Data*)> comp) {
+		vector<Data*> ret = values();
+		std::sort(ret.begin(), ret.end(), comp);
+		return ret;
+	}
+	vector<const Data*> sortedValues(std::function<bool(const Data*, const Data*)> comp) const {
+		vector<Data*> ret = values();
+		std::sort(ret.begin(), ret.end(), comp);
+		return ret;
 	}
 };
 

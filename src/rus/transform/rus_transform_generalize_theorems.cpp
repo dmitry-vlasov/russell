@@ -118,10 +118,16 @@ void generalize_theorems(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
+	/*vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().soredValues(
+		[](const Assertion* a1, const Assertion* a2) {
+			return a1->token.preceeds(a2->token);
+		}
+	);*/
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	std::atomic<int> counter(0);
 	vector<Theorem*> theorems;
-	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
+	for (Assertion* a : assertions) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(a)) {
 			if (thm->proof) {
 				if (theorem == -1 || thm->id() == theorem) {
 					theorems.push_back(thm);

@@ -350,18 +350,24 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 }
 
 #ifdef PARALLEL
-#define PARALLEL_REDUCE_PROOF_SHORTCUTS
+//#define PARALLEL_REDUCE_PROOF_SHORTCUTS
 #endif
 
 void reduce_proof_shortcuts(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
+	/*vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().sortedValues(
+		[](const Assertion* a1, const Assertion* a2) {
+			return a1->token.preceeds(a2->token);
+		}
+	);*/
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	vector<Proof*> proofs;
 	PropIndex propIndex;
 	HypIndex hypIndex;
-	for (Assertion& ass : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(&ass)) {
+	for (Assertion* ass : assertions) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(ass)) {
 			if (Proof* proof = thm->proof.get()) {
 				if (theorem == -1 || thm->id() == theorem) {
 					proofs.push_back(proof);
@@ -369,13 +375,13 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 		propIndex.add(
-			prover::Tree2Term(*ass.prop->expr.tree(), true, true),
-			PropRef(&ass)
+			prover::Tree2Term(*ass->prop->expr.tree(), true, true),
+			PropRef(ass)
 		);
-		for (uint i = 0; i < ass.hyps.size(); ++i) {
+		for (uint i = 0; i < ass->hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), true, true),
-				HypRef(&ass, i)
+				prover::Tree2Term(*ass->hyps.at(i)->expr.tree(), true, true),
+				HypRef(ass, i)
 			);
 		}
 	}

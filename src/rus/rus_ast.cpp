@@ -282,6 +282,7 @@ void complete_assertion_vars(Assertion* a) {
 }
 
 void complete_proof_vars(Proof* proof) {
+	proof->vars.v.clear();
 	for (auto& step : proof->steps) {
 		complete_expr_vars(
 			step->expr,

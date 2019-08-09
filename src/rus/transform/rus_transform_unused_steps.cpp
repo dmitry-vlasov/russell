@@ -60,10 +60,16 @@ void reduce_unused_steps(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
+	//vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().sortedValues(
+	//	[](const Assertion* a1, const Assertion* a2) {
+	//		return a1->token.preceeds(a2->token);
+	//	}
+	//);
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	std::atomic<int> counter(0);
 	vector<Proof*> proofs;
-	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
+	for (Assertion* a : assertions) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(a)) {
 			if (theorem == -1 || thm->id() == theorem) {
 				if (Proof* proof = thm->proof.get()) {
 					proofs.push_back(proof);

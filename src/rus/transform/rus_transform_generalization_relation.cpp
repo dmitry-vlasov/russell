@@ -155,7 +155,7 @@ void generaliziation_relation(Assertion* as, const PropIndex& propIndex, const H
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_GENERALIZATION_RELATION
+#define PARALLEL_GENERALIZATION_RELATION
 #endif
 
 void show_generalization_info(const vector<Assertion*>& assertions) {
@@ -260,19 +260,23 @@ void generaliziation_relation(const string& opts)  {
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
 	std::atomic<int> counter(0);
-	vector<Assertion*> assertions;
+	/*vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().soredValues(
+		[](const Assertion* a1, const Assertion* a2) {
+			return a1->token.preceeds(a2->token);
+		}
+	);*/
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	PropIndex propIndex;
 	HypIndex hypIndex;
-	for (Assertion& ass : Sys::mod().math.get<Assertion>()) {
-		assertions.push_back(&ass);
+	for (Assertion* ass : assertions) {
 		propIndex.add(
-			prover::Tree2Term(*ass.prop->expr.tree(), false),
-			PropRef(&ass)
+			prover::Tree2Term(*ass->prop->expr.tree(), false),
+			PropRef(ass)
 		);
-		for (uint i = 0; i < ass.hyps.size(); ++i) {
+		for (uint i = 0; i < ass->hyps.size(); ++i) {
 			hypIndex.add(
-				prover::Tree2Term(*ass.hyps.at(i)->expr.tree(), false),
-				HypRef(&ass, i)
+				prover::Tree2Term(*ass->hyps.at(i)->expr.tree(), false),
+				HypRef(ass, i)
 			);
 		}
 	}

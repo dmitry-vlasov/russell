@@ -52,6 +52,9 @@ void replace_with_optimal(Proof* proof) {
 					}
 				}
 				if (!optimal->disj.satisfies(sub, &theorem_disj)) {
+					debug_check_disj = true;
+					optimal->disj.satisfies(sub, &theorem_disj);
+					debug_check_disj = false;
 					string err = "\n";
 					err += "optimal:\n" + optimal->show() + "\n";
 					err += "current:\n" + step->ass()->show() + "\n";
@@ -134,16 +137,22 @@ void replace_with_optimal(Proof* proof) {
 }
 
 #ifdef PARALLEL
-#define PARALLEL_REPLACE_WITH_OPTIMAL_SHORTCUTS
+//#define PARALLEL_REPLACE_WITH_OPTIMAL_SHORTCUTS
 #endif
 
 void replace_with_optimal(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
 
+	/*vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().sortedValues(
+		[](const Assertion* a1, const Assertion* a2) {
+			return a1->token.preceeds(a2->token);
+		}
+	);*/
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	vector<Proof*> proofs;
-	for (Assertion& ass : Sys::mod().math.get<Assertion>()) {
-		if (Theorem* thm = dynamic_cast<Theorem*>(&ass)) {
+	for (Assertion* ass : assertions) {
+		if (Theorem* thm = dynamic_cast<Theorem*>(ass)) {
 			if (Proof* proof = thm->proof.get()) {
 				if (theorem == -1 || thm->id() == theorem) {
 					proofs.push_back(proof);
