@@ -6,42 +6,43 @@ namespace mdl { namespace rus {
 void reduce_unused_steps(Proof* proof, std::atomic<int>& counter);
 //void reduce_unused_steps(const string& opts);
 
-void reduce_unused_hyps(Theorem* th, const map<Assertion*, set<Proof*>>& proofs_map, std::atomic<int>& hyp_counter, std::atomic<int>& step_counter) {
+struct HypsInfo {
+	HypsInfo() = default;
+	HypsInfo(uint a) : hyps_usage(a, false) { }
+	HypsInfo(const HypsInfo&) = default;
+	HypsInfo(HypsInfo&&) = default;
+	HypsInfo& operator = (const HypsInfo&) = default;
+	uint unused_count = 0;
+	vector<bool> hyps_usage;
+};
+
+typedef cmap<Assertion*, HypsInfo> HypsInfoMap;
+
+HypsInfo find_unused_hyps(Theorem* th, std::atomic<int>& hyp_counter, std::atomic<int>& step_counter) {
 	set<Hyp*> used_hyps;
 	traverseProof(th->proof->qed->step, [&used_hyps](Writable* n) {
 		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
 			used_hyps.insert(h);
 		}
 	});
-	uint unused_count = 0;
-	vector<bool> hyps_usage(th->hyps.size(), false);
+	HypsInfo info(th->hyps.size());
 	for (uint i = 0; i < th->hyps.size(); ++ i) {
 		Hyp* h = th->hyps.at(i).get();
 		if (!used_hyps.count(h)) {
-			++ unused_count;
-			hyps_usage[i] = false;
+			++ info.unused_count;
+			info.hyps_usage[i] = false;
 		} else {
-			hyps_usage[i] = true;
+			info.hyps_usage[i] = true;
 		}
 	}
-	if (unused_count > 0) {
-		th->verify();
-		bool AAA = false && (th->id() == Lex::toInt("dvelim"));
-		cout << "Theorem " << Lex::toStr(th->id()) << " has " << unused_count << " unused hyps." << endl;
-		if (AAA) {
-			cout << *th << endl;
-			cout << "hyps_usage: {";
-			for (bool hu : hyps_usage) {
-				cout << (hu ? "T, " : "F, ");
-			}
-			cout << "}" << endl;
-		}
+	if (info.unused_count > 0) {
+		cout << "Theorem " << Lex::toStr(th->id()) << " has " << info.unused_count << " unused hyps." << endl;
 		vector<unique_ptr<Hyp>> reduced_hyps;
 		map<Hyp*, Hyp*> old2new;
 		map<Hyp*, Hyp*> new2old;
 		for (uint i = 0; i < th->hyps.size(); ++ i) {
 			Hyp* old_hyp = th->hyps.at(i).get();
-			if (hyps_usage.at(i)) {
+			if (info.hyps_usage.at(i)) {
 				Hyp* new_hyp = new Hyp(*old_hyp);
 				old2new[old_hyp] = new_hyp;
 				new2old[new_hyp] = old_hyp;
@@ -64,44 +65,38 @@ void reduce_unused_hyps(Theorem* th, const map<Assertion*, set<Proof*>>& proofs_
 			}
 		}
 		th->hyps = std::move(reduced_hyps);
-		complete_assertion_vars(th);
-		complete_proof_vars(th->proof.get());
-		if (proofs_map.count(th)) {
-			for (Proof* p : proofs_map.at(th)) {
-				for (auto& s : p->steps) {
-					if (s->ass() == th) {
-						if (AAA) {
-							cout << "in theorem " << Lex::toStr(s->proof()->theorem->id()) << endl;
-							cout << "old step: " << *s;
-						}
-						vector<unique_ptr<Ref>> new_refs;
-						for (uint i = 0; i < s->refs.size(); ++ i) {
-							auto& ref = s->refs.at(i);
-							if (hyps_usage[i]) {
-								new_refs.emplace_back(ref.release());
-							}
-						}
-						s->refs = std::move(new_refs);
-						if (AAA) {
-							cout << "new step: " << *s;
-							cout << endl;
-						}
-					}
-				}
-				complete_proof_vars(p);
-			}
-		}
+		hyp_counter.store(hyp_counter.load() + info.unused_count);
 		reduce_unused_steps(th->proof.get(), step_counter);
-		th->verify();
-		if (AAA) {
-			cout << *th << endl;
-		}
-		hyp_counter.store(hyp_counter.load() + unused_count);
 	}
+	return info;
+}
+
+void reduce_unused_hyps(Theorem* th, const HypsInfoMap& info_map, std::atomic<int>& step_counter) {
+	bool was_changed = false;
+	for (auto& s : th->proof->steps) {
+		HypsInfoMap::const_accessor a;
+		if (info_map.find(a, s->ass())) {
+			HypsInfo info = a->second;
+			vector<unique_ptr<Ref>> new_refs;
+			for (uint i = 0; i < s->refs.size(); ++ i) {
+				auto& ref = s->refs.at(i);
+				if (info.hyps_usage[i]) {
+					new_refs.emplace_back(ref.release());
+				}
+			}
+			s->refs = std::move(new_refs);
+			was_changed = true;
+		}
+	}
+	if (was_changed) {
+		complete_proof_vars(th->proof.get());
+		reduce_unused_steps(th->proof.get(), step_counter);
+	}
+	th->verify();
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_UNUSED_HYPS
+#define PARALLEL_UNUSED_HYPS
 #endif
 
 void reduce_unused_hyps(const string& opts)  {
@@ -117,30 +112,47 @@ void reduce_unused_hyps(const string& opts)  {
 	std::atomic<int> hyp_counter(0);
 	std::atomic<int> step_counter(0);
 	vector<Theorem*> theorems;
-	map<Assertion*, set<Proof*>> proofs_map;
 	for (Assertion* a : assertions) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(a)) {
 			if (thm->proof) {
 				if (theorem == -1 || thm->id() == theorem) {
 					theorems.push_back(thm);
-					for (auto& s : thm->proof->steps) {
-						proofs_map[s->ass()].insert(thm->proof.get());
-					}
 				}
 			}
 		}
 	}
+	HypsInfoMap hyps_info_map;
 #ifdef PARALLEL_UNUSED_HYPS
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, theorems.size()),
-		[&theorems, &proofs_map, &counter] (const tbb::blocked_range<size_t>& r) {
+		[&theorems, &hyp_counter, &step_counter, &hyps_info_map] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
-				reduce_unused_hyps(theorems[i], proofs_map, hyp_counter, step_counter);
+				HypsInfo info = find_unused_hyps(theorems[i], hyp_counter, step_counter);
+				if (info.unused_count > 0) {
+					HypsInfoMap::accessor a;
+					hyps_info_map.insert(a, theorems[i]);
+					a->second = info;
+				}
+			}
+		}
+	);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, theorems.size()),
+		[&theorems, &hyps_info_map, &step_counter] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i) {
+				reduce_unused_hyps(theorems[i], hyps_info_map, step_counter);
 			}
 		}
 	);
 #else
-	for (auto th : theorems) {
-		reduce_unused_hyps(th, proofs_map, hyp_counter, step_counter);
+	for (auto thm : theorems) {
+		HypsInfo info = find_unused_hyps(thm, hyp_counter, step_counter);
+		if (info.unused_count > 0) {
+			HypsInfoMap::accessor a;
+			hyps_info_map.insert(a, thm);
+			a->second = info;
+		}
+	}
+	for (auto thm : theorems) {
+		reduce_unused_hyps(thm, hyps_info_map, step_counter);
 	}
 #endif
 	if (hyp_counter.load() > 0) {
