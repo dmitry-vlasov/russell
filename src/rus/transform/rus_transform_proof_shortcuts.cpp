@@ -123,10 +123,10 @@ int child_ind(const Step* s, const Writable* ch) {
 	return ch_ind;
 };
 
-map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
+unique_ptr<map<const Assertion*, Shortcut>> find_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
 	map<Ref, vector<PropIndex::Unified>> props;
 	map<Ref, map<const Assertion*, vector<HypIndex::Unified>>> hyps;
-	map<const Assertion*, Shortcut> shortcuts;
+	unique_ptr<map<const Assertion*, Shortcut>> shortcuts = make_unique<map<const Assertion*, Shortcut>>();
 	Watchdog watchdog(1000, "reduce shortcuts in " + Lex::toStr(proof->theorem->id()));
 	try {
 		traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex, &watchdog](Writable* n) {
@@ -247,7 +247,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 											//ass->disj.check(shortcut.sub, nullptr);
 											//cout << "passed" << endl;
 
-											shortcuts.emplace(ass, std::move(shortcut));
+											shortcuts->emplace(ass, std::move(shortcut));
 										}
 										/*try {
 											//cout << "1) ass: " << Lex::toStr(prop_unif.data->ass->id()) << endl;
@@ -278,7 +278,7 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 								//prop_unif.data->ass->disj.check(shortcut.sub, nullptr);
 								//cout << "passed" << endl;
 
-								shortcuts.emplace(prop_unif.data->ass, std::move(shortcut));
+								shortcuts->emplace(prop_unif.data->ass, std::move(shortcut));
 							}
 
 							/*try {
@@ -300,30 +300,26 @@ map<const Assertion*, Shortcut> find_proof_shortcuts(Proof* proof, const PropInd
 	}
 	return shortcuts;
 }
-void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypIndex& hypIndex) {
-	//cout << "to find shortcuts in: " << Lex::toStr(proof->theorem->id()) << " ...." << endl;
-	map<const Assertion*, Shortcut> shortcuts = std::move(find_proof_shortcuts(proof, propIndex, hypIndex));
-	if (!shortcuts.empty()) {
-		cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
-		for (auto& p : shortcuts) {
-			const Assertion* ass = p.first;
-			Shortcut& shortcut = p.second;
-			if (shortcut.gain(ass) > 0) {
-				//ass->disj.check(shortcut.sub);
-				cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
-				//cout << shortcut.show() << endl;
-				//cout << shortcut.showIntermediate() << endl;
-				//cout << endl << endl << endl;
-				shortcut.apply(ass);
-				Disj disj;
-				proof->verify(VERIFY_SRC, &disj);
-				if (!(disj <= proof->theorem->disj)) {
-					shortcut.restore();
-				}
+
+void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortcuts) {
+	cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
+	for (auto& p : shortcuts) {
+		const Assertion* ass = p.first;
+		Shortcut& shortcut = p.second;
+		if (shortcut.gain(ass) > 0) {
+			//ass->disj.check(shortcut.sub);
+			cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
+			//cout << shortcut.show() << endl;
+			//cout << shortcut.showIntermediate() << endl;
+			//cout << endl << endl << endl;
+			shortcut.apply(ass);
+			Disj disj;
+			proof->verify(VERIFY_SRC, &disj);
+			if (!(disj <= proof->theorem->disj)) {
+				shortcut.restore();
 			}
 		}
 	}
-	//cout << *proof->theorem << endl;
 	try {
 		proof->theorem->verify();
 	} catch (Error& err) {
@@ -347,10 +343,11 @@ void reduce_proof_shortcuts(Proof* proof, const PropIndex& propIndex, const HypI
 	}
 }
 
+
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_REDUCE_PROOF_SHORTCUTS
+#define PARALLEL_REDUCE_PROOF_SHORTCUTS
 #endif
 
 void reduce_proof_shortcuts(const string& opts)  {
@@ -387,17 +384,42 @@ void reduce_proof_shortcuts(const string& opts)  {
 	}
 	propIndex.init();
 	hypIndex.init();
+
+	typedef cmap<Proof*, unique_ptr<map<const Assertion*, Shortcut>>> ShortcutsMap;
+	ShortcutsMap shortcuts;
+
 #ifdef PARALLEL_REDUCE_PROOF_SHORTCUTS
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
-		[&proofs, &propIndex, &hypIndex] (const tbb::blocked_range<size_t>& r) {
+		[&proofs, &propIndex, &hypIndex, &shortcuts] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i) {
-				reduce_proof_shortcuts(proofs[i], propIndex, hypIndex);
+				unique_ptr<map<const Assertion*, Shortcut>>
+					proof_shortcuts = find_proof_shortcuts(proofs[i], propIndex, hypIndex);
+				if (!proof_shortcuts->empty()) {
+					ShortcutsMap::accessor a;
+					shortcuts.insert(a, proofs[i]);
+					a->second = std::move(proof_shortcuts);
+				}
+			}
+		}
+	);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
+		[&proofs, &shortcuts] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i) {
+				ShortcutsMap::const_accessor a;
+				if (shortcuts.find(a, proofs[i])) {
+					map<const Assertion*, Shortcut>& proof_shortcuts = *a->second;
+					apply_proof_shortcuts(proofs[i], proof_shortcuts);
+				}
 			}
 		}
 	);
 #else
 	for (auto proof : proofs) {
-		reduce_proof_shortcuts(proof, propIndex, hypIndex);
+		unique_ptr<map<const Assertion*, Shortcut>>
+			proof_shortcuts = find_proof_shortcuts(proof, propIndex, hypIndex);
+		if (!proof_shortcuts->empty()) {
+			apply_proof_shortcuts(proof, *proof_shortcuts);
+		}
 	}
 #endif
 }
