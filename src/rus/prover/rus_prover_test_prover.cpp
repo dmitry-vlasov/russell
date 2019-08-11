@@ -43,8 +43,8 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 			//exit(-1);
 			prove_failed.push_back(p);
 			cout << "FAILED ";
-			cout << "original proof:" << endl;
-			cout << *p << endl;
+			cout << "original theorem:" << endl;
+			cout << *p->theorem << endl;
 			exit(-1);
 		}
 		bool prover_proof_has_shared = proof_has_shared(prover.proved().at(0).get());
