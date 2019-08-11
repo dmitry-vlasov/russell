@@ -28,14 +28,14 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		return;
 	}
 	//cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof maker of " << show_id(p->theorem->id()) << " ... " << std::flush;
-	try {
+	/*try {
 		thm->verify();
 		//cout << "TO GENERALIZE" << endl;
 		//cout << *thm << endl;
 	} catch (Error& err) {
 		err.msg += "at generalize_theorems: thm->verify();\n";
 		throw err;
-	}
+	}*/
 	AbstProof abstProof = thm->proof->abst();
 	uint gen_name = Lex::toInt("gen_" + Lex::toStr(thm->id()));
 	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, gen_name);
@@ -143,10 +143,12 @@ void generalize_theorems(const string& opts)  {
 			}
 		}
 	);
+	verify();
 #else
 	for (auto th : theorems) {
 		generalize_theorems(th, counter);
 	}
+	verify();
 #endif
 	if (counter.load() > 0) {
 		cout << "totally generalized theorems: " << counter.load() << endl;

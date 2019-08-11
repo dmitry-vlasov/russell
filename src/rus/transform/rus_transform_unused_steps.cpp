@@ -47,7 +47,7 @@ void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 		}
 		proof->steps = std::move(new_steps);
 		proof->qed->step = steps_map.at(proof->qed->step);
-		proof->theorem->verify();
+		//proof->theorem->verify();
 		//cout << *proof->theorem << endl;
 	}
 }
@@ -85,10 +85,12 @@ void reduce_unused_steps(const string& opts)  {
 			}
 		}
 	);
+	verify();
 #else
 	for (auto proof : proofs) {
 		reduce_unused_steps(proof, counter);
 	}
+	verify();
 #endif
 	if (counter.load() > 0) {
 		cout << "unused steps totally removed: " << counter.load() << endl;

@@ -2,7 +2,9 @@
 
 #include "common.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl {
+namespace mm { class Source; }
+namespace rus {
 
 class Constant;
 class Type;
@@ -46,6 +48,30 @@ using User = mdl::User<T, Sys>;
 
 template<class T>
 using Owner = mdl::Owner<T, Sys>;
+
+void verify(uint src = -1);
+mm::Source* translate(uint src, uint tgt);
+void parse_src_peg();
+void parse_src_spirit();
+void read(uint src);
+void min_imports(uint src);
+Return lookup_ref(uint src, uint line, uint col, string what);
+
+string xml_outline(const Source&, uint);
+string xml_structure(uint bits);
+string xml_types();
+
+void reduce_duplicate_steps(const string& opts);
+void reduce_unused_steps(const string& opts);
+void factorize_subproofs(const string& opts);
+void reduce_unused_hyps(const string& opts);
+void reduce_proof_shortcuts(const string& opts);
+void generalize_theorems(const string& opts);
+void generaliziation_relation(const string& opts);
+void replace_with_optimal(const string& opts);
+
+string report_stats(const string& opts);
+
 
 }} // mdl::rus
 

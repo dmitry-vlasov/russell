@@ -92,7 +92,7 @@ void reduce_unused_hyps(Theorem* th, const HypsInfoMap& info_map, std::atomic<in
 		complete_proof_vars(th->proof.get());
 		reduce_unused_steps(th->proof.get(), step_counter);
 	}
-	th->verify();
+	//th->verify();
 }
 
 #ifdef PARALLEL
@@ -142,6 +142,7 @@ void reduce_unused_hyps(const string& opts)  {
 			}
 		}
 	);
+	verify();
 #else
 	for (auto thm : theorems) {
 		HypsInfo info = find_unused_hyps(thm, hyp_counter, step_counter);
@@ -154,6 +155,7 @@ void reduce_unused_hyps(const string& opts)  {
 	for (auto thm : theorems) {
 		reduce_unused_hyps(thm, hyps_info_map, step_counter);
 	}
+	verify();
 #endif
 	if (hyp_counter.load() > 0) {
 		cout << "unused hypotheses totally removed: " << hyp_counter.load() << endl;

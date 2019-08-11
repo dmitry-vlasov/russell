@@ -15,7 +15,7 @@ struct StepRef {
 };
 
 void replace_with_optimal(Proof* proof) {
-	proof->theorem->verify();
+	//proof->theorem->verify();
 	Disj theorem_disj = unite(proof->theorem->disj, proof->disj);
 	for (auto& s : proof->steps) {
 		Step* step = s.get();
@@ -131,7 +131,7 @@ void replace_with_optimal(Proof* proof) {
 			}
 		}
 	}
-	proof->theorem->verify();
+	//proof->theorem->verify();
 }
 
 }
@@ -168,10 +168,12 @@ void replace_with_optimal(const string& opts)  {
 			}
 		}
 	);
+	verify();
 #else
 	for (auto proof : proofs) {
 		replace_with_optimal(proof);
 	}
+	verify();
 #endif
 }
 

@@ -320,7 +320,7 @@ void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortc
 			}
 		}
 	}
-	try {
+	/*try {
 		proof->theorem->verify();
 	} catch (Error& err) {
 		err.msg += "shortcuts in: " + Lex::toStr(proof->theorem->id()) + to_string(shortcuts.size()) + "\n";
@@ -340,7 +340,7 @@ void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortc
 		}
 		//err.msg += "of theorem:\n" + proof->theorem->show() + "\n";
 		throw err;
-	}
+	}*/
 }
 
 
@@ -413,6 +413,7 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 	);
+	verify();
 #else
 	for (auto proof : proofs) {
 		unique_ptr<map<const Assertion*, Shortcut>>
@@ -421,6 +422,7 @@ void reduce_proof_shortcuts(const string& opts)  {
 			apply_proof_shortcuts(proof, *proof_shortcuts);
 		}
 	}
+	verify();
 #endif
 }
 

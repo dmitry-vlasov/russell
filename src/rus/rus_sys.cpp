@@ -34,29 +34,6 @@ template<> const Table<Rule>& Math::get<Rule>() const { return rules; }
 template<> const Table<Source>& Math::get<Source>() const { return sources; }
 template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
 
-void verify(uint src);
-mm::Source* translate(uint src, uint tgt);
-void parse_src_peg();
-void parse_src_spirit();
-void read(uint src);
-void min_imports(uint src);
-Return lookup_ref(uint src, uint line, uint col, string what);
-
-string xml_outline(const Source&, uint);
-string xml_structure(uint bits);
-string xml_types();
-
-void reduce_duplicate_steps(const string& opts);
-void reduce_unused_steps(const string& opts);
-void factorize_subproofs(const string& opts);
-void reduce_unused_hyps(const string& opts);
-void reduce_proof_shortcuts(const string& opts);
-void generalize_theorems(const string& opts);
-void generaliziation_relation(const string& opts);
-void replace_with_optimal(const string& opts);
-
-string report_stats(const string& opts);
-
 namespace {
 
 void parse_src() {
