@@ -2,120 +2,6 @@
 
 namespace mdl { namespace rus {
 
-struct SymbInfo {
-	SymbInfo(uint o, const Type* t, uint l, uint i) :
-		orig(o), type(t), lit(l), ind(i) { }
-	bool operator < (const SymbInfo& si) const {
-		return orig < si.orig;
-	}
-	string show() const {
-		ostringstream oss;
-		oss << "orig: " << Lex::toStr(orig) << ", lit: " << Lex::toStr(lit) << ", ind: " << ind;
-		return oss.str();
-	}
-	uint orig;
-	const Type* type;
-	uint lit;
-	uint ind;
-};
-
-SymbInfo symb_info(uint orig, const Type* type) {
-	string str = Lex::toStr(orig);
-	string::size_type under_pos = str.rfind('_');
-	uint ind = -1;
-	if (under_pos != string::npos) {
-		string numb = str.substr(under_pos + 1);
-		try {
-			ind = stoi(numb);
-			str = str.substr(0, under_pos);
-		} catch (std::invalid_argument&) { }
-	}
-	return SymbInfo(orig, type, Lex::toInt(str), ind);
-}
-
-map<uint, SymbInfo> collect_vars_info(const rus::Expr& ex) {
-	map<uint, SymbInfo> ret;
-	for (auto& s : ex.symbols) {
-		if (Var* v = dynamic_cast<Var*>(s.get())) {
-			ret.emplace(v->lit(), symb_info(v->lit(), v->type()));
-		}
-	}
-	return ret;
-}
-
-map<uint, SymbInfo> collect_vars_info(const rus::Proof& proof) {
-	map<uint, SymbInfo> ret;
-	for (auto& s : proof.steps) {
-		ret = std::move(maps_union(ret, collect_vars_info(s->expr)));
-	}
-	return ret;
-}
-
-map<uint, SymbInfo> collect_vars_info(const rus::Assertion& ass) {
-	map<uint, SymbInfo> ret;
-	for (auto& h : ass.hyps) {
-		ret = std::move(maps_union(ret, collect_vars_info(h->expr)));
-	}
-	ret = std::move(maps_union(ret, collect_vars_info(ass.prop->expr)));
-	if (const Theorem* th = dynamic_cast<const Theorem*>(&ass)) {
-		if (th->proof) {
-			ret = std::move(maps_union(ret, collect_vars_info(*th->proof)));
-		}
-	}
-	return ret;
-}
-
-Substitution optimize_inds(const map<uint, SymbInfo>& symb_info) {
-	map<uint, set<int>> collected;
-	for (auto& p : symb_info) {
-		const SymbInfo& si = p.second;
-		if (si.ind != -1) {
-			collected[si.lit].insert(si.ind);
-		}
-	}
-	map<uint, map<uint, uint>> reindex;
-	for (auto& p : collected) {
-		map<uint, uint> m;
-		uint i = 0;
-		for (uint k : p.second) {
-			m.emplace(k, i++);
-		}
-		reindex.emplace(p.first, std::move(m));
-	}
-	auto mult_prime = [](int n) { string ret; while (n--) ret += "'"; return ret; };
-	Substitution ret;
-	for (auto& p : symb_info) {
-		const SymbInfo& si = p.second;
-		if (si.ind != -1) {
-			uint orig = p.first;
-			uint optimized = -1;
-			string orig_lit = Lex::toStr(si.lit);
-			uint new_ind = reindex.at(si.lit).at(si.ind);
-			string new_lit = orig_lit + mult_prime(new_ind);
-			ret.join(orig, si.type, VarTree(Lex::toInt(new_lit), si.type));
-		}
-	}
-	return ret;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void raw_vars(const rus::Expr& ex, set<uint>& r) {
 	for (auto& s : ex.symbols) {
 		if (Var* v = dynamic_cast<Var*>(s.get())) {
@@ -140,7 +26,6 @@ void raw_vars(const rus::Assertion& ass, set<uint>& r) {
 		}
 	}
 }
-
 
 void make_sub(uint orig, const Type* type, Substitution& sub, map<uint, uint>& m, const set<uint>& r) {
 	if (!sub.maps(orig)) {
@@ -188,8 +73,6 @@ void make_sub(const rus::Assertion& ass, Substitution& sub, map<uint, uint>& m, 
 }
 
 void beautify(Assertion& a) {
-	//map<uint, SymbInfo> si_map = collect_vars_info(a);
-	//Substitution opt_inds = optimize_inds(si_map);
 	set<uint> raw;
 	raw_vars(a, raw);
 	Substitution opt_inds;
@@ -214,10 +97,8 @@ void beautify(Assertion& a) {
 	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
 		th->verify();
 	}
-
 	//cout << "BEAUTIFIED:" << endl;
 	//cout << a << endl;
-	//exit(0);
 }
 
 }}
