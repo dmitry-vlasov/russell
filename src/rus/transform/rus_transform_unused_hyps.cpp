@@ -35,7 +35,7 @@ HypsInfo find_unused_hyps(Theorem* th, std::atomic<int>& hyp_counter, std::atomi
 		}
 	}
 	if (info.unused_count > 0) {
-		cout << "Theorem " << Lex::toStr(th->id()) << " has " << info.unused_count << " unused hyps." << endl;
+		Io::io().println("Theorem " + Lex::toStr(th->id()) + " has " + to_string(info.unused_count) + " unused hyps\n");
 		vector<unique_ptr<Hyp>> reduced_hyps;
 		map<Hyp*, Hyp*> old2new;
 		map<Hyp*, Hyp*> new2old;

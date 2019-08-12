@@ -63,9 +63,11 @@ void replace_with_optimal(Proof* proof) {
 					err += "disj:\n" + theorem_disj.show() + "\n";
 					throw Error("disj must satisfy", err);
 				}
-				cout << "Assertion " << Lex::toStr(step->ass()->id()) << " replaced with ";
-				cout << Lex::toStr(optimal->id()) << " in step " << step->ind();
-				cout << " of proof of " << Lex::toStr(proof->theorem->id()) << endl;
+				string msg;
+				msg += "Assertion " + Lex::toStr(step->ass()->id()) + " replaced with ";
+				msg += Lex::toStr(optimal->id()) + " in step " + to_string(step->ind()) + " ";
+				msg += "of proof of " + Lex::toStr(proof->theorem->id()) + "\n";
+				Io::io().println(msg);
 				step->set_ass(optimal->id());
 				vector<unique_ptr<Ref>> new_refs;
 				for (uint i = 0; i < optimal->hyps.size(); ++ i) {
@@ -137,7 +139,7 @@ void replace_with_optimal(Proof* proof) {
 }
 
 #ifdef PARALLEL
-//#define PARALLEL_REPLACE_WITH_OPTIMAL_SHORTCUTS
+#define PARALLEL_REPLACE_WITH_OPTIMAL_SHORTCUTS
 #endif
 
 void replace_with_optimal(const string& opts)  {

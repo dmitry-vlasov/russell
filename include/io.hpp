@@ -15,9 +15,9 @@ struct Io {
 		static mutex m;
 		m.lock();
 		if (e) {
-			err() << msg << endl;
+			err() << msg << flush;
 		} else {
-			out() << msg << endl;
+			out() << msg << flush;
 		}
 		m.unlock();
 	}

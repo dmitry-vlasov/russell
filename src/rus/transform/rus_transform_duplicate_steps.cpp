@@ -33,7 +33,7 @@ void reduce_duplicate_steps(Proof* proof, std::atomic<int>& counter) {
 	}
 	int diff = proof->steps.size() - new_steps.size();
 	if (diff > 0) {
-		cout << "proof of theorem " << Lex::toStr(proof->theorem->id()) << " reduced by " << diff << " steps" << endl;
+		Io::io().println("proof of theorem " + Lex::toStr(proof->theorem->id()) + " reduced by " + to_string(diff) + " duplicate steps\n");
 		counter.store(counter.load() + diff);
 	}
 	proof->steps = std::move(new_steps);

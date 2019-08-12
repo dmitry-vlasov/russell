@@ -92,7 +92,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 
 			}
 
-			cout << "theorem " << Lex::toStr(thm->id()) << " is generalized" << endl;
+			Io::io().println("theorem " + Lex::toStr(thm->id()) + " is generalized\n");
 			//cout << "more general:\n" << gen_thm->show() << endl;
 			//cout << "original:\n" << thm->show() << endl;
 			if (pos == -1) {
@@ -103,7 +103,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 			counter.store(counter.load() + 1);
 		}
 	} catch (Timeout& timeout) {
-		cout << timeout.what();
+		//Io::io().println(timeout.what());
 	} catch (Error& err) {
 		err.msg += "at generalize_theorems: " + Lex::toStr(thm->id()) + "\n";
 		throw err;

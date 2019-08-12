@@ -40,7 +40,7 @@ void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 		//	throw Error("diff != d: " + to_string(diff) + " != " + to_string(d));
 		//}
 		if (diff > 0) {
-			cout << "proof of theorem " << Lex::toStr(proof->theorem->id()) << " reduced by " << diff << " unused steps" << endl;
+			Io::io().println("proof of theorem " + Lex::toStr(proof->theorem->id()) + " reduced by " + to_string(diff) + " unused steps\n");
 			counter.store(counter.load() + diff);
 		} else {
 			throw Error("diff must be > 0");

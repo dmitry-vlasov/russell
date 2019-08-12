@@ -302,13 +302,12 @@ unique_ptr<map<const Assertion*, Shortcut>> find_proof_shortcuts(Proof* proof, c
 }
 
 void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortcuts) {
-	cout << "shortcuts in: " << Lex::toStr(proof->theorem->id()) << endl;
+	string msg;
 	for (auto& p : shortcuts) {
 		const Assertion* ass = p.first;
 		Shortcut& shortcut = p.second;
 		if (shortcut.gain(ass) > 0) {
 			//ass->disj.check(shortcut.sub);
-			cout << "\tfor assertion: " << Lex::toStr(ass->id()) << ", gain: " << shortcut.gain(ass) << endl;
 			//cout << shortcut.show() << endl;
 			//cout << shortcut.showIntermediate() << endl;
 			//cout << endl << endl << endl;
@@ -317,8 +316,13 @@ void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortc
 			proof->verify(VERIFY_SRC, &disj);
 			if (!(disj <= proof->theorem->disj)) {
 				shortcut.restore();
+			} else {
+				msg += string(msg.size() ? ", " : " ") + "for: " + Lex::toStr(ass->id()) + ", gain: " + to_string(shortcut.gain(ass));
 			}
 		}
+	}
+	if (msg.size()) {
+		Io::io().println("shortcuts in " + Lex::toStr(proof->theorem->id()) + ": " + msg + "\n");
 	}
 	/*try {
 		proof->theorem->verify();
