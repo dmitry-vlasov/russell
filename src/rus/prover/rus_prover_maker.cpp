@@ -5,12 +5,6 @@ namespace mdl { namespace rus { namespace prover {
 
 Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s) {
 	Subst ret;
-
-	//cout << "------------" << endl;
-	//cout << "ASS: " << endl << *a << endl;
-	//cout << "sub:" << s << endl;
-	//cout << "vars:" << space->vars().show() << endl;
-
 	for (const auto& w : a->vars.v) {
 		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
 		if (!ret.maps(v)) {
@@ -20,72 +14,19 @@ Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertio
 		}
 		assertion_vars.insert(v.lit);
 	}
-	//cout << "fresher:" << ret << endl;
 	return ret;
 }
 
-Subst make_free_vars_fresh(const Assertion* a, Space* space, const Subst& s = Subst()) {
+Subst make_free_vars_fresh(const Assertion* a, Space* space) {
 	Subst ret;
-
-	//cout << "------------" << endl;
-	//cout << "ASS: " << endl << *a << endl;
-	//cout << "sub:" << s << endl;
-	//cout << "vars:" << space->vars().show() << endl;
-
 	for (const auto& w : a->vars.v) {
 		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
-		if (!ret.maps(v) && !s.maps(v)) {
+		if (!ret.maps(v)) {
 			ret.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
 		}
 	}
-	//cout << "fresher:" << ret << endl;
 	return ret;
 }
-
-AssertionSubs makeAssertionSubs(const Assertion* a, Space* space, Subst s) {
-	Subst sub;
-	Subst outer;
-	Subst fresher;
-	set<uint> assertion_vars;
-	for (const auto& w : a->vars.v) {
-		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
-		if (!fresher.maps(v) && !s.maps(v)) {
-			fresher.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
-		}
-		assertion_vars.insert(v.lit);
-	}
-	s.compose(fresher, CompMode::SEMI);
-	for (const auto& p : s) {
-		if (assertion_vars.count(p.first)) {
-			outer.compose(LightSymbol(p.first, p.second.type, true), p.second.term);
-		} else {
-			sub.compose(LightSymbol(p.first, p.second.type, true), p.second.term);
-		}
-	}
-	return AssertionSubs(std::move(sub), std::move(outer), std::move(fresher));
-
-
-	/*
-	 * 		set<uint> assertion_vars;
-			Subst fresher = make_free_vars_fresh(m.data->ass, this, assertion_vars, m.sub);
-			for (const auto& p : fresher) {
-				if (m.sub.maps(p.first)) {
-					fresher.erase(p.first);
-				}
-			}
-			m.sub.compose(fresher, CompMode::SEMI);
-			Subst sub;
-			Subst outer;
-			for (const auto& p : m.sub) {
-				if (assertion_vars.count(p.first)) {
-					outer.compose(LightSymbol(p.first, p.second.type), p.second.term);
-				} else {
-					sub.compose(LightSymbol(p.first, p.second.type), p.second.term);
-				}
-			}
-	}*/
-}
-
 
 struct Maker : public Space {
 	typedef vector<unique_ptr<rus::Proof>> Proved;

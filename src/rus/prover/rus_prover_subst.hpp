@@ -150,7 +150,6 @@ struct AssertionSubs {
 };
 
 Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertion_vars, const Subst& s);
-AssertionSubs makeAssertionSubs(const Assertion* a, Space* space, const Subst& s);
 
 struct TermSubst {
 	TermSubst() = default;
