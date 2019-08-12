@@ -55,11 +55,8 @@ inline ostream& operator << (ostream& os, const LightSymbol& s) {
 }
 
 struct VarProvider {
-	static LightSymbol makeVarZero(uint lit, const Type* type) {
-		return LightSymbol(addIndex(lit, 0), type, true);
-	}
-	static LightSymbol makeVar(uint lit, const Type* type) {
-		return LightSymbol(lit, type, true);
+	static LightSymbol makeVar(uint lit, const Type* type, bool keep_vars = false) {
+		return LightSymbol(keep_vars ? lit : addIndex(lit, 0), type, true);
 	}
 	LightSymbol makeFreshVar(uint lit, const Type* type) {
 		auto it = vars.find(lit);

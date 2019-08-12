@@ -12,7 +12,7 @@ Subst make_free_vars_fresh(const Assertion* a, Space* space, set<uint>& assertio
 	//cout << "vars:" << space->vars().show() << endl;
 
 	for (const auto& w : a->vars.v) {
-		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
 		if (!ret.maps(v)) {
 			if (!s.maps(v)) {
 				ret.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
@@ -33,7 +33,7 @@ Subst make_free_vars_fresh(const Assertion* a, Space* space, const Subst& s = Su
 	//cout << "vars:" << space->vars().show() << endl;
 
 	for (const auto& w : a->vars.v) {
-		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
 		if (!ret.maps(v) && !s.maps(v)) {
 			ret.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
 		}
@@ -48,7 +48,7 @@ AssertionSubs makeAssertionSubs(const Assertion* a, Space* space, Subst s) {
 	Subst fresher;
 	set<uint> assertion_vars;
 	for (const auto& w : a->vars.v) {
-		LightSymbol v = VarProvider::makeVarZero(w.lit(), w.type());
+		LightSymbol v = VarProvider::makeVar(w.lit(), w.type());
 		if (!fresher.maps(v) && !s.maps(v)) {
 			fresher.compose(v, space->vars().makeFreshVar(w.lit(), w.type()));
 		}

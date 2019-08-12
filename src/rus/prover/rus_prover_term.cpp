@@ -226,11 +226,7 @@ Term::Iterator fill_in_flatterm(Term::Iterator& ft, const Tree* t, bool is_mutab
 	if (const VarTree* v = dynamic_cast<const VarTree*>(t)) {
 		(ft++)->ruleVar.var =
 			is_mutable ?
-			(
-				keep_vars ?
-				VarProvider::makeVar(v->lit(), v->type()) :
-				VarProvider::makeVarZero(v->lit(), v->type())
-			):
+			VarProvider::makeVar(v->lit(), v->type(), keep_vars):
 			LightSymbol(v->lit(), v->type(), false);
 	} else if (const RuleTree* r = dynamic_cast<const RuleTree*>(t)) {
 		(ft++)->ruleVar.rule = r->rule.get();

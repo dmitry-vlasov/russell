@@ -23,7 +23,7 @@ static bool proof_has_shared(const Proof* p) {
 
 Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 	string msg;
-	msg += string(i == -1 ? "" : to_string(i) + " ") + "testing proof of " + Lex::toStr(p->theorem->id()) + " ... ";
+	msg +=  "testing proof of " + Lex::toStr(p->theorem->id()) + string(i == -1 ? "" : " (no. " + to_string(i) + ")") + " ... ";
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
 	prover::Prover prover(p->qed.get(), oracle);
@@ -61,7 +61,7 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 
 
 		timer.stop();
-		msg += "done in " + timer.show();
+		msg += "done in " + timer.show() + "\n";
 		Io::io().println(msg);
 		return ret;
 	} catch (Error& err) {
