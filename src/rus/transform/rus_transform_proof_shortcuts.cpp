@@ -413,7 +413,6 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto proof : proofs) {
 		unique_ptr<map<const Assertion*, Shortcut>>
@@ -422,8 +421,8 @@ void reduce_proof_shortcuts(const string& opts)  {
 			apply_proof_shortcuts(proof, *proof_shortcuts);
 		}
 	}
-	verify();
 #endif
+	verify();
 }
 
 }} // mdl::rus

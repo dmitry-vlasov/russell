@@ -168,13 +168,13 @@ void replace_with_optimal(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto proof : proofs) {
 		replace_with_optimal(proof);
 	}
-	verify();
 #endif
+	verify();
+	min_imports();
 }
 
 }} // mdl::rus

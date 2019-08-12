@@ -76,13 +76,12 @@ void reduce_duplicate_steps(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto proof : proofs) {
 		reduce_duplicate_steps(proof, counter);
 	}
-	verify();
 #endif
+	verify();
 	if (counter.load() > 0) {
 		cout << "duplicate steps totally removed: " << counter.load() << endl;
 	}

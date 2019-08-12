@@ -85,13 +85,12 @@ void reduce_unused_steps(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto proof : proofs) {
 		reduce_unused_steps(proof, counter);
 	}
-	verify();
 #endif
+	verify();
 	if (counter.load() > 0) {
 		cout << "unused steps totally removed: " << counter.load() << endl;
 	}

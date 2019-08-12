@@ -4,7 +4,6 @@
 namespace mdl { namespace rus {
 
 void reduce_unused_steps(Proof* proof, std::atomic<int>& counter);
-//void reduce_unused_steps(const string& opts);
 
 struct HypsInfo {
 	HypsInfo() = default;
@@ -142,7 +141,6 @@ void reduce_unused_hyps(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto thm : theorems) {
 		HypsInfo info = find_unused_hyps(thm, hyp_counter, step_counter);
@@ -155,8 +153,8 @@ void reduce_unused_hyps(const string& opts)  {
 	for (auto thm : theorems) {
 		reduce_unused_hyps(thm, hyps_info_map, step_counter);
 	}
-	verify();
 #endif
+	verify();
 	if (hyp_counter.load() > 0) {
 		cout << "unused hypotheses totally removed: " << hyp_counter.load() << endl;
 	}

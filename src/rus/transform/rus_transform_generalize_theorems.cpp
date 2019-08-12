@@ -143,13 +143,12 @@ void generalize_theorems(const string& opts)  {
 			}
 		}
 	);
-	verify();
 #else
 	for (auto th : theorems) {
 		generalize_theorems(th, counter);
 	}
-	verify();
 #endif
+	verify();
 	if (counter.load() > 0) {
 		cout << "totally generalized theorems: " << counter.load() << endl;
 	}

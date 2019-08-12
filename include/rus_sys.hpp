@@ -54,7 +54,7 @@ mm::Source* translate(uint src, uint tgt);
 void parse_src_peg();
 void parse_src_spirit();
 void read(uint src);
-void min_imports(uint src);
+void min_imports(uint src = -1);
 Return lookup_ref(uint src, uint line, uint col, string what);
 
 string xml_outline(const Source&, uint);
