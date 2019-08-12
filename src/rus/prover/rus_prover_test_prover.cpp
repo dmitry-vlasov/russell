@@ -22,7 +22,8 @@ static bool proof_has_shared(const Proof* p) {
 }
 
 Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
-	cout << (i == -1 ? "" : to_string(i) + " ")  << "testing proof of " << show_id(p->theorem->id()) << " ... " << std::flush;
+	string msg;
+	msg += string(i == -1 ? "" : to_string(i) + " ") + "testing proof of " + Lex::toStr(p->theorem->id()) + " ... ";
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
 	prover::Prover prover(p->qed.get(), oracle);
@@ -60,7 +61,8 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 
 
 		timer.stop();
-		cout << "done in " << timer << endl;
+		msg += "done in " + timer.show();
+		Io::io().println(msg);
 		return ret;
 	} catch (Error& err) {
 		err.msg += "\nwhile proving: " + show_id(p->theorem->id()) + "\n";
@@ -98,7 +100,7 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 			}
 		}
 	}
-	cout << "longest proof: " << Lex::toStr(longest_proof->theorem->id()) << ", proof length: " << longest_proof->steps.size() << endl;
+	Io::io().out() << "longest proof: " << Lex::toStr(longest_proof->theorem->id()) << ", proof length: " << longest_proof->steps.size() << endl;
 #ifdef PARALLEL_PROVER_TEST
 	tbb::parallel_for(tbb::blocked_range<size_t>(0, proofs.size()),
 		[max_proofs, &proofs] (const tbb::blocked_range<size_t>& r) {
