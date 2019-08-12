@@ -73,30 +73,28 @@ Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
 #endif
 
 Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
-	struct SourceLess {
-		bool operator () (const Source* s1, const Source* s2) const {
-			return s1->id() < s2->id();
-		}
-	};
-	set<Source*, SourceLess> ordered_sources;
-	for (Source& s : Sys::mod().math.get<Source>()) {
-		ordered_sources.insert(&s);
-	}
 	cout << endl;
+#ifdef PARALLEL_PROVER_TEST
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
+#else
+	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().sortedValues(
+		[](const Assertion* a1, const Assertion* a2) {
+			return a1->token.preceeds(a2->token);
+		}
+	);
+#endif
 	vector<const Proof*> proofs;
 	const Proof* longest_proof = nullptr;
-	for (Source* src : ordered_sources) {
+	for (Assertion* ass : assertions) {
 		//cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
-		for (auto& n : src->theory.nodes) {
-			if (Theory::kind(n) == Theory::THEOREM) {
-				const Proof* proof = Theory::theorem(n)->proof.get();
-				uint proof_len = proof->steps.size();
-				if (!longest_proof  || proof_len > longest_proof->steps.size()) {
-					longest_proof = proof;
-				}
-				if (proof_len <= max_proof_len) {
-					proofs.push_back(proof);
-				}
+		if (Theorem* theorem = dynamic_cast<Theorem*>(ass)) {
+			const Proof* proof = theorem->proof.get();
+			uint proof_len = proof->steps.size();
+			if (!longest_proof  || proof_len > longest_proof->steps.size()) {
+				longest_proof = proof;
+			}
+			if (proof_len <= max_proof_len) {
+				proofs.push_back(proof);
 			}
 		}
 	}
