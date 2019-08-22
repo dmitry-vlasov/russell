@@ -310,8 +310,13 @@ static void next_subproofs(ProofImplsSample& pis) {
 
 static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 	static uint i = 0;
+	uint gen_id = Lex::toInt("gen_" + to_string(i++) + "_th");
+	if (Sys::get().math.get<Assertion>().has(gen_id)) {
+		cout << "name " << Lex::toStr(gen_id) << " is used" << endl;
+		return nullptr;
+	}
 	try {
-		unique_ptr<Theorem> ret = prover::make_theorem(aproof, Lex::toInt("gen_" + to_string(i++) + "_th"));
+		unique_ptr<Theorem> ret = prover::make_theorem(aproof, gen_id);
 		if (ret) {
 			cout << "maker succeeded" << endl;
 		} else {
@@ -370,17 +375,27 @@ void factorize_subproofs(const string& opts) {
 		cout << impls->show() << endl;
 		//cout << "volume: " << impls->volume() << endl;
 		unique_ptr<Theorem> theorem = generate_theorem(impls->proof_);
-		cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
+		if (theorem) {
+			beautify(*theorem);
+			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
+			insert_theorem(theorem);
+		}
 	}
-	/*cout << "first 10 min volume: " << endl;
+	cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;
 	for (uint i = start; i < start + 10; ++ i) {
-		cout << common_subproofs.all_.set().at(i)->show() << endl;
+		ProofImpls* impls = common_subproofs.all_.set().at(i).get();
+		cout << impls->show() << endl;
+		unique_ptr<Theorem> theorem = generate_theorem(impls->proof_);
+		if (theorem) {
+			beautify(*theorem);
+			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
+		}
 	}
-	cout << "all volumes: " << endl;
+	/*cout << "all volumes: " << endl;
 	for (uint i = start; i < common_subproofs.all_.size(); ++ i) {
-		cout << common_subproofs.all_.set().at(i)->show() << endl;
-		//cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
+		//cout << common_subproofs.all_.set().at(i)->show() << endl;
+		cout << common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1)->volume() << endl;
 	}*/
 }
 

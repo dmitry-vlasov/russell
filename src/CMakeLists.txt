@@ -71,6 +71,7 @@ else()
 		rus/transform/rus_transform_replace_with_optimal.cpp
 		rus/transform/rus_transform_unused_hyps.cpp
 		rus/transform/rus_transform_unused_steps.cpp
+		rus/transform/rus_transform_insert_theorem.cpp
 
 		rus/rus_ast.cpp
 		rus/rus_beautify.cpp

@@ -82,7 +82,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 			uint pos = -1;
 			for (uint i = 0; i < src->theory.nodes.size(); ++i) {
 				const Theory::Node& n = src->theory.nodes.at(i);
-				const Writable* w = Theory::get(n);
+				const Writable* w = Theory::getWritable(n);
 				if (const WithToken* t = dynamic_cast<const WithToken*>(w)) {
 					if (t->token == thm->token) {
 						pos = i;

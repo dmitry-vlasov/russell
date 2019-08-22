@@ -449,7 +449,8 @@ struct Theory : public Writable, public WithToken {
 	static Comment* comment(const Node& n) { return kind(n) == COMMENT ? std::get<unique_ptr<Comment>>(n).get() : nullptr; }
 
 	void insert(Writable*, uint pos);
-	static Writable* get(const Node& n);
+	static Writable* getWritable(const Node& n);
+	static WithToken* getWithToken(const Node& n);
 
 	uint         id;
 	vector<Node> nodes;

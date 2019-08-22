@@ -231,6 +231,7 @@ struct TokenStorage<S, TokenType::TINY> {
 			}
 		}
 	}
+	TokenStorage(const TokenStorage& ts) : bits(ts.bits) { }
 
 	const Source* src() const { return bits.srcIsDef() ? return_src(bits.src()) : nullptr; }
 	const char* beg() const { return bits.srcIsDef() ? (bits.begIsDef() ? src_beg(src()) + bits.beg() : nullptr) : nullptr; }

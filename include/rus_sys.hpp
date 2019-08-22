@@ -56,6 +56,7 @@ void parse_src_spirit();
 void read(uint src);
 void min_imports(uint src = -1);
 Return lookup_ref(uint src, uint line, uint col, string what);
+void insert_theorem(unique_ptr<Theorem>& thm);
 
 string xml_outline(const Source&, uint);
 string xml_structure(uint bits);

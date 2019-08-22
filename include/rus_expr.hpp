@@ -110,6 +110,8 @@ struct Tree : public Writable {
 	virtual uint arity() const = 0;
 	virtual Tree* clone() const = 0;
 	virtual uint len() const = 0;
+	virtual void traverse(std::function<void (Tree&)> f) = 0;
+	virtual void traverse(std::function<void (const Tree&)> f) const = 0;
 
 	bool operator == (const Tree&) const;
 	bool operator != (const Tree& t) const { return !operator ==(t); }
@@ -148,6 +150,12 @@ struct RuleTree : public Tree {
 		return l;
 	}
 	void write(ostream& os, const Indent& indent = Indent()) const override;
+	void traverse(std::function<void (Tree&)> f) override {
+		f(*this); for (auto& c : children) if (c) c->traverse(f);
+	}
+	void traverse(std::function<void (const Tree&)> f) const override {
+		f(*this); for (auto& c : children) if (c) const_cast<const Tree*>(c.get())->traverse(f);
+	}
 
 	User<Rule> rule;
 	Children children;
@@ -172,6 +180,8 @@ struct VarTree : public Tree {
 	void write(ostream& os, const Indent& indent = Indent()) const override;
 	uint lit() const { return lit_; }
 	Var var() const { return Var(lit_, type_.get()); }
+	void traverse(std::function<void (Tree&)> f) override { f(*this); }
+	void traverse(std::function<void (const Tree&)> f) const override { f(*this); }
 
 private:
 	uint lit_;

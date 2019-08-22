@@ -16,7 +16,7 @@ uint create_super_id(Type* inf, Type* sup) {
 
 Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_super_id(inf, sup);
-	Rule* rule = new Rule(id);
+	Rule* rule = new Rule(id, inf->token);
 	rule->vars.v.emplace_back(
 		Lex::toInt("x"),
 		inf->id(),
@@ -322,7 +322,7 @@ void Theory::insert(Writable* w, uint pos) {
 	}
 
 }
-Writable* Theory::get(const Node& n) {
+Writable* Theory::getWritable(const Node& n) {
 	switch (kind(n)) {
 	case CONSTANT: return constant(n);
 	case TYPE:     return type(n);
@@ -337,6 +337,20 @@ Writable* Theory::get(const Node& n) {
 	}
 }
 
+WithToken* Theory::getWithToken(const Node& n) {
+	switch (kind(n)) {
+	case CONSTANT: return constant(n);
+	case TYPE:     return type(n);
+	case RULE:     return rule(n);
+	case AXIOM:    return axiom(n);
+	case DEF:      return def(n);
+	case THEOREM:  return theorem(n);
+	case THEORY:   return theory(n);
+	case IMPORT:   return import(n);
+	case COMMENT:  return comment(n);
+	default: throw Error("unknown kind of theory contents");
+	}
+}
 
 /*
 inline Token* find(Constant* c, const Token& t) {
