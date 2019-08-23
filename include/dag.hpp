@@ -19,6 +19,10 @@ struct DAG {
 		Label label() const { return label_; }
 		void setLabel(Label l) { label_ = l; }
 		bool isLeaf() const { return childrenArity() == 0; }
+		bool alChildrenAreNull() const {
+			for (auto& c : children_) if (c) return false;
+			return true;
+		}
 		bool isRoot() const { return parentsArity() == 0; }
 		uint parentsArity() const { return parents_.size(); }
 		uint childrenArity() const { return children_.size(); }
@@ -159,7 +163,7 @@ struct DAG {
 	}
 	uint rootSize() const { return roots_.size(); }
 	uint leafSize() const { return leafs_.size(); }
-	const Node* getRoot(uint i) const { return roots_.at(i).get(); }
+	const Node* getRoot(uint i = 0) const { return roots_.at(i).get(); }
 	const Leaf& getLeaf(uint i) const { return leafs_.at(i); }
 	void expandLeaf(Leaf leaf, Node* new_leaf) {
 		auto li = std::find(leafs_.begin(), leafs_.end(), leaf);

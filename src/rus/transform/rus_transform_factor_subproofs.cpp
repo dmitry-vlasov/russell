@@ -333,6 +333,93 @@ static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 
 }
 
+struct AbstProofForest {
+	struct Node {
+		Node(uint arity) : children(arity) { }
+		Node(const Node&) = default;
+		Node(Node&&) = default;
+		vector<AbstProofForest> children;
+		set<uint> proofs;
+	};
+	map<uint, Node> nodes;
+	void add(const AbstProof::Node& n, uint id) {
+		if (!nodes.count(n.label())) {
+			nodes.emplace(n.label(), Node(n.childrenArity()));
+		}
+		Node& m = nodes.at(n.label());
+		bool is_leaf = true;
+		for (uint i = 0; i < n.childrenArity(); ++ i) {
+			if (n.getChild(i)) {
+				is_leaf = false;
+				add(*n.getChild(i), id);
+			}
+		}
+		if (is_leaf) {
+			m.proofs.insert(id);
+		}
+	}
+	void add(const AbstProof& p, uint id) {
+		add(*p.getRoot(), id);
+	}
+	bool collect(const AbstProof::Node& n, unique_ptr<set<uint>>& ids) const {
+		if (!nodes.count(n.label())) {
+			return false;
+		} else {
+			const Node& m = nodes.at(n.label());
+			bool is_leaf = true;
+			for (uint i = 0; i < n.childrenArity(); ++ i) {
+				if (n.getChild(i)) {
+					is_leaf = false;
+					if (!collect(*n.getChild(i), ids)) {
+						return false;
+					}
+				}
+			}
+			if (is_leaf) {
+				if (!ids) {
+					ids.reset(new set<uint>(m.proofs));
+				} else {
+					vector<uint> to_remove;
+					for (uint id : *ids) {
+						if (!m.proofs.count(id)) {
+							to_remove.push_back(id);
+						}
+					}
+					for (uint id : to_remove) {
+						ids->erase(id);
+					}
+					if (!ids->size()) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+	}
+	bool contains(AbstProof& p) const {
+		unique_ptr<set<uint>> ids;
+		return collect(*p.getRoot(), ids);
+	}
+	static AbstProofForest produce() {
+		vector<const Assertion*> assertions = Sys::get().math.get<Assertion>().values();
+		vector<const Proof*> proofs;
+		for (const Assertion* a : assertions) {
+			if (const Theorem* thm = dynamic_cast<const Theorem*>(a)) {
+				if (const Proof* proof = thm->proof.get()) {
+					proofs.push_back(proof);
+				}
+			}
+		}
+		AbstProofForest ret;
+		uint i = 0;
+		for (const Proof* p : proofs) {
+			AbstProof aproof = p->abst();
+			ret.add(aproof, p->theorem->id());
+		}
+		return ret;
+	}
+};
+
 void factorize_subproofs(const string& opts) {
 	AssertionMap ass_map = init_assertion_map();
 	map<string, string> parsed_opts = parse_options(opts);
@@ -366,10 +453,12 @@ void factorize_subproofs(const string& opts) {
 			break;
 		}
 	}
+	AbstProofForest proofsForest = AbstProofForest::produce();
 	uint start = 0;
 	while (common_subproofs.all_.set().at(start++)->volume() == 0);
 	cout << "common_subproofs.all_.size(): " << common_subproofs.all_.size() << endl;
 	cout << "first 10 max volume: " << endl;
+	uint inserted_count = 0;
 	for (uint i = 0; i < 10; ++ i) {
 		ProofImpls* impls = common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1).get();
 		cout << impls->show() << endl;
@@ -378,10 +467,17 @@ void factorize_subproofs(const string& opts) {
 		if (theorem) {
 			beautify(*theorem);
 			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
-			insert_theorem(theorem);
+			if (proofsForest.contains(impls->proof_)) {
+				cout << "this proof is already in the system" << endl;
+			} else {
+				cout << "this proof is new, inserting" << endl;
+				insert_theorem(theorem);
+				inserted_count += 1;
+			}
 		}
 	}
-	cout << "first 10 min volume: " << endl;
+	cout << "Total number of inserted theorems: " << inserted_count << endl;
+	/*cout << "first 10 min volume: " << endl;
 	cout << "starts at index: " << start << endl;
 	for (uint i = start; i < start + 10; ++ i) {
 		ProofImpls* impls = common_subproofs.all_.set().at(i).get();
@@ -391,7 +487,7 @@ void factorize_subproofs(const string& opts) {
 			beautify(*theorem);
 			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
 		}
-	}
+	}*/
 	/*cout << "all volumes: " << endl;
 	for (uint i = start; i < common_subproofs.all_.size(); ++ i) {
 		//cout << common_subproofs.all_.set().at(i)->show() << endl;
