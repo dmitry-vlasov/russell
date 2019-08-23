@@ -307,16 +307,16 @@ static void next_subproofs(ProofImplsSample& pis) {
 	}
 }
 
+int new_gen_id() {
+	static uint i = 0;
+	auto gen_id = [](uint ind) { return Lex::toInt("gen_" + to_string(ind) + "_th"); };
+	while (Sys::get().math.get<Assertion>().has(gen_id(i))) i += 1;
+	return gen_id(i);
+}
 
 static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
-	static uint i = 0;
-	uint gen_id = Lex::toInt("gen_" + to_string(i++) + "_th");
-	if (Sys::get().math.get<Assertion>().has(gen_id)) {
-		cout << "name " << Lex::toStr(gen_id) << " is used" << endl;
-		return nullptr;
-	}
 	try {
-		unique_ptr<Theorem> ret = prover::make_theorem(aproof, gen_id);
+		unique_ptr<Theorem> ret = prover::make_theorem(aproof, new_gen_id());
 		if (ret) {
 			cout << "maker succeeded" << endl;
 		} else {
