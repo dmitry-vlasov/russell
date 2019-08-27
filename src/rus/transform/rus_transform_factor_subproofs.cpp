@@ -334,14 +334,59 @@ static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 }
 
 struct AbstProofForest {
+	struct Node;
+	typedef std::map<uint, Node> Nodes;
+	Nodes nodes;
+
 	struct Node {
 		Node(uint arity) : children(arity) { }
 		Node(const Node&) = default;
 		Node(Node&&) = default;
+		vector<string> showLines(vector<Nodes::const_iterator>& path) const {
+			vector<string> lines;
+			for (auto& ch : children) {
+				for (auto line : ch.showLines(path)) {
+					lines.push_back(line);
+				}
+				if (proofs.size()) {
+					string line;
+					for (auto& i : path) {
+						line += Lex::toStr(i->first) + " ";
+					}
+					line += " -> {";
+					for (uint p : proofs) {
+						line += Lex::toStr(p) + ", ";
+					}
+					line += "}";
+					lines.push_back(line);
+				}
+			}
+			return lines;
+		}
 		vector<AbstProofForest> children;
 		set<uint> proofs;
 	};
-	map<uint, Node> nodes;
+
+	vector<string> showLines(vector<Nodes::const_iterator>& path) const {
+		vector<string> lines;
+		for (auto i = nodes.begin(); i != nodes.end(); ++i) {
+			path.push_back(i);
+			for (string line : i->second.showLines(path)) {
+				lines.push_back(line);
+			}
+			path.pop_back();
+		}
+		return lines;
+	}
+	string show() const {
+		vector<Nodes::const_iterator> path;
+		vector<string> lines = showLines(path);
+		string ret;
+		for (auto& line : lines) {
+			ret += line + "\n";
+		}
+		return ret;
+	}
 	void add(const AbstProof::Node& n, uint id) {
 		if (!nodes.count(n.label())) {
 			nodes.emplace(n.label(), Node(n.childrenArity()));
@@ -351,7 +396,7 @@ struct AbstProofForest {
 		for (uint i = 0; i < n.childrenArity(); ++ i) {
 			if (n.getChild(i)) {
 				is_leaf = false;
-				add(*n.getChild(i), id);
+				m.children.at(i).add(*n.getChild(i), id);
 			}
 		}
 		if (is_leaf) {
@@ -370,14 +415,17 @@ struct AbstProofForest {
 			for (uint i = 0; i < n.childrenArity(); ++ i) {
 				if (n.getChild(i)) {
 					is_leaf = false;
-					if (!collect(*n.getChild(i), ids)) {
+					if (!m.children.at(i).collect(*n.getChild(i), ids)) {
 						return false;
 					}
 				}
 			}
 			if (is_leaf) {
 				if (!ids) {
-					ids.reset(new set<uint>(m.proofs));
+					ids.reset(new set<uint>());
+					for (uint l : m.proofs) {
+						ids->insert(l);
+					}
 				} else {
 					vector<uint> to_remove;
 					for (uint id : *ids) {
@@ -396,9 +444,13 @@ struct AbstProofForest {
 			return true;
 		}
 	}
-	bool contains(AbstProof& p) const {
+	unique_ptr<set<uint>> map(AbstProof& p) const {
 		unique_ptr<set<uint>> ids;
-		return collect(*p.getRoot(), ids);
+		collect(*p.getRoot(), ids);
+		if (!ids) {
+			ids.reset(new set<uint>());
+		}
+		return ids;
 	}
 	static AbstProofForest produce() {
 		vector<const Assertion*> assertions = Sys::get().math.get<Assertion>().values();
@@ -411,7 +463,6 @@ struct AbstProofForest {
 			}
 		}
 		AbstProofForest ret;
-		uint i = 0;
 		for (const Proof* p : proofs) {
 			AbstProof aproof = p->abst();
 			ret.add(aproof, p->theorem->id());
@@ -467,8 +518,12 @@ void factorize_subproofs(const string& opts) {
 		if (theorem) {
 			beautify(*theorem);
 			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
-			if (proofsForest.contains(impls->proof_)) {
-				cout << "this proof is already in the system" << endl;
+			unique_ptr<set<uint>> other = proofsForest.map(impls->proof_);
+			if (other->size()) {
+				cout << "this proof is already in the system: " << endl;
+				for (uint id : *other) {
+					cout << "\t" << Lex::toStr(id) << endl;
+				}
 			} else {
 				cout << "this proof is new, inserting" << endl;
 				insert_theorem(theorem);

@@ -2,6 +2,8 @@
 
 namespace mdl { namespace rus {
 
+bool debug_insert_theorem = false;
+
 vector<Token> leave_minimal(const set<Token>& src_points_set) {
 	vector<Token> src_points;
 	for (const Token& sp : src_points_set) {
@@ -55,27 +57,33 @@ struct SrcPos {
 
 SrcPos find_infimum(const set<Token>& src_points) {
 
-	cout << "src_points:" << endl;
-	for (auto& t : src_points) {
-		cout << "\t" << t.show() << endl;
+	if (debug_insert_theorem) {
+		cout << "src_points:" << endl;
+		for (auto& t : src_points) {
+			cout << "\t" << t.show() << endl;
+		}
+		cout << endl;
 	}
-	cout << endl;
 
 	vector<Token> min_src_points = leave_minimal(src_points);
 
-	cout << "min_src_points:" << endl;
-	for (auto& t : min_src_points) {
-		cout << "\t" << t.show() << endl;
+	if (debug_insert_theorem) {
+		cout << "min_src_points:" << endl;
+		for (auto& t : min_src_points) {
+			cout << "\t" << t.show() << endl;
+		}
+		cout << endl;
 	}
-	cout << endl;
 
 	set<const Source*> upper_bounds;
 	for (auto& t : min_src_points) {
 		upper_bounds.insert(t.src());
 	}
-	cout << "upper_bounds:" << endl;
-	for (auto& s : upper_bounds) {
-		cout << "\t" << Lex::toStr(s->id()) << endl;
+	if (debug_insert_theorem) {
+		cout << "upper_bounds:" << endl;
+		for (auto& s : upper_bounds) {
+			cout << "\t" << Lex::toStr(s->id()) << endl;
+		}
 	}
 	cout << endl;
 	vector<Source*> lower_bounds;
@@ -91,21 +99,25 @@ SrcPos find_infimum(const set<Token>& src_points) {
 			lower_bounds.push_back(&s);
 		}
 	}
-	cout << "lower_bounds:" << endl;
-	for (auto& s : lower_bounds) {
-		cout << "\t" << Lex::toStr(s->id()) << endl;
+	if (debug_insert_theorem) {
+		cout << "lower_bounds:" << endl;
+		for (auto& s : lower_bounds) {
+			cout << "\t" << Lex::toStr(s->id()) << endl;
+		}
+		cout << endl;
 	}
-	cout << endl;
 
 	SrcPos ret;
 	if (lower_bounds.size()) {
 		vector<Source*> max_lower_bounds = leave_maximal(lower_bounds);
 
-		cout << "max_lower_bounds:" << endl;
-		for (auto& s : max_lower_bounds) {
-			cout << "\t" << Lex::toStr(s->id()) << endl;
+		if (debug_insert_theorem) {
+			cout << "max_lower_bounds:" << endl;
+			for (auto& s : max_lower_bounds) {
+				cout << "\t" << Lex::toStr(s->id()) << endl;
+			}
+			cout << endl;
 		}
-		cout << endl;
 
 		vector<Source*> upper_lower;
 		for (Source* s : lower_bounds) {
@@ -114,11 +126,13 @@ SrcPos find_infimum(const set<Token>& src_points) {
 			}
 		}
 
-		cout << "upper_lower:" << endl;
-		for (auto& s : upper_lower) {
-			cout << "\t" << Lex::toStr(s->id()) << endl;
+		if (debug_insert_theorem) {
+			cout << "upper_lower:" << endl;
+			for (auto& s : upper_lower) {
+				cout << "\t" << Lex::toStr(s->id()) << endl;
+			}
+			cout << endl;
 		}
-		cout << endl;
 
 		if (upper_lower.size()) {
 			ret.src = upper_lower.front();
@@ -220,12 +234,6 @@ void find_dependencies(const Theorem& thm, set<Token>& deps) {
 void insert_theorem(unique_ptr<Theorem>& thm) {
 	set<Token> deps;
 	find_dependencies(*thm, deps);
-	for (auto t : deps) {
-		if (!t.src()) {
-			cout << "xxxx" << endl;
-			exit(-1);
-		}
-	}
 	SrcPos sp = find_infimum(deps);
 	cout << "to insert into: " << sp.show() << endl;
 	sp.src->theory.insert(thm.release(), sp.pos);
