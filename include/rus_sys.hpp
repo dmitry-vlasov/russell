@@ -43,6 +43,12 @@ struct Sys : public mdl::Sys<Sys, Math> {
 	static const Actions& actions();
 };
 
+struct SrcPos : Writable {
+	Source* src = nullptr;
+	uint    pos = 0;
+	void write(ostream& os, const Indent& i = Indent()) const override;
+};
+
 template<class T>
 using User = mdl::User<T, Sys>;
 
@@ -56,7 +62,7 @@ void parse_src_spirit();
 void read(uint src);
 void min_imports(uint src = -1);
 Return lookup_ref(uint src, uint line, uint col, string what);
-void insert_theorem(unique_ptr<Theorem>& thm);
+SrcPos insert_theorem(unique_ptr<Theorem>& thm);
 
 string xml_outline(const Source&, uint);
 string xml_structure(uint bits);

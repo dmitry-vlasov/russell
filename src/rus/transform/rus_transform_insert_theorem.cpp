@@ -44,17 +44,6 @@ vector<Source*> leave_maximal(const vector<Source*>& srcs) {
 	return ret;
 }
 
-struct SrcPos {
-	Source* src = nullptr;
-	uint    pos = 0;
-	string show() const {
-		string ret;
-		ret += "source: " + (src ? Lex::toStr(src->id()) : "<null>") + ", ";
-		ret += "pos: " + to_string(pos);
-		return ret;
-	}
-};
-
 SrcPos find_infimum(const set<Token>& src_points) {
 
 	if (debug_insert_theorem) {
@@ -84,8 +73,8 @@ SrcPos find_infimum(const set<Token>& src_points) {
 		for (auto& s : upper_bounds) {
 			cout << "\t" << Lex::toStr(s->id()) << endl;
 		}
+		cout << endl;
 	}
-	cout << endl;
 	vector<Source*> lower_bounds;
 	for (Source& s : Sys::mod().math.get<Source>()) {
 		bool is_lower_bound = true;
@@ -231,12 +220,13 @@ void find_dependencies(const Theorem& thm, set<Token>& deps) {
 	find_dependencies(*thm.proof, deps);
 }
 
-void insert_theorem(unique_ptr<Theorem>& thm) {
+SrcPos insert_theorem(unique_ptr<Theorem>& thm) {
 	set<Token> deps;
 	find_dependencies(*thm, deps);
 	SrcPos sp = find_infimum(deps);
-	cout << "to insert into: " << sp.show() << endl;
+	//cout << "to insert into: " << sp.show() << endl;
 	sp.src->theory.insert(thm.release(), sp.pos);
+	return sp;
 }
 
 }} // mdl::rus

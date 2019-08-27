@@ -362,6 +362,23 @@ void traverseProof(Step* step, std::function<void(Writable*)> f);
 
 typedef DAG<uint> AbstProof;
 typedef DAG<const Step*> SubProof;
+struct AbstProofSet {
+	void add(const AbstProof& p, uint id);
+	unique_ptr<set<uint>> map(AbstProof& p) const;
+	bool contains(AbstProof& p) const;
+	static AbstProofSet produce();
+
+	struct Node {
+		Node(uint arity) : children(arity) { }
+		Node(const Node&) = default;
+		Node(Node&&) = default;
+		vector<AbstProofSet> children;
+		set<uint> proofs;
+	};
+	typedef std::map<uint, Node> Nodes;
+	Nodes nodes;
+};
+
 
 inline Expr& Ref::expr() {
 	switch (kind()) {

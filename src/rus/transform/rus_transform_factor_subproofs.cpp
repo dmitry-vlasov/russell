@@ -6,13 +6,17 @@ namespace mdl { namespace rus { namespace {
 
 typedef map<uint, vector<const Step*>> AssertionMap;
 
+const string prefix = "subproof";
+
 AssertionMap init_assertion_map() {
 	AssertionMap ass_map;
 	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
-			if (Proof* proof = thm->proof.get()) {
-				for (const auto& step : proof->steps) {
-					ass_map[step->ass_id()].push_back(step.get());
+			if (Lex::toStr(thm->id()).substr(0, prefix.size()) != prefix) {
+				if (Proof* proof = thm->proof.get()) {
+					for (const auto& step : proof->steps) {
+						ass_map[step->ass_id()].push_back(step.get());
+					}
 				}
 			}
 		}
@@ -309,7 +313,7 @@ static void next_subproofs(ProofImplsSample& pis) {
 
 int new_gen_id() {
 	static uint i = 0;
-	auto gen_id = [](uint ind) { return Lex::toInt("gen_" + to_string(ind) + "_th"); };
+	auto gen_id = [](uint ind) { return Lex::toInt(prefix + "_" + to_string(ind) + "_th"); };
 	while (Sys::get().math.get<Assertion>().has(gen_id(i))) i += 1;
 	return gen_id(i);
 }
@@ -317,11 +321,10 @@ int new_gen_id() {
 static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 	try {
 		unique_ptr<Theorem> ret = prover::make_theorem(aproof, new_gen_id());
-		if (ret) {
-			cout << "maker succeeded" << endl;
-		} else {
-			cout << "maker failed" << endl;
-			exit(-1);
+		if (!ret) {
+			string err = "generation of theorem failed\n";
+			err += aproof.show([](uint l) { return Lex::toStr(l); });
+			throw Error(err);
 		}
 		return ret;
 	} catch (Error& err) {
@@ -333,148 +336,11 @@ static unique_ptr<Theorem> generate_theorem(const AbstProof& aproof) {
 
 }
 
-struct AbstProofForest {
-	struct Node;
-	typedef std::map<uint, Node> Nodes;
-	Nodes nodes;
-
-	struct Node {
-		Node(uint arity) : children(arity) { }
-		Node(const Node&) = default;
-		Node(Node&&) = default;
-		vector<string> showLines(vector<Nodes::const_iterator>& path) const {
-			vector<string> lines;
-			for (auto& ch : children) {
-				for (auto line : ch.showLines(path)) {
-					lines.push_back(line);
-				}
-				if (proofs.size()) {
-					string line;
-					for (auto& i : path) {
-						line += Lex::toStr(i->first) + " ";
-					}
-					line += " -> {";
-					for (uint p : proofs) {
-						line += Lex::toStr(p) + ", ";
-					}
-					line += "}";
-					lines.push_back(line);
-				}
-			}
-			return lines;
-		}
-		vector<AbstProofForest> children;
-		set<uint> proofs;
-	};
-
-	vector<string> showLines(vector<Nodes::const_iterator>& path) const {
-		vector<string> lines;
-		for (auto i = nodes.begin(); i != nodes.end(); ++i) {
-			path.push_back(i);
-			for (string line : i->second.showLines(path)) {
-				lines.push_back(line);
-			}
-			path.pop_back();
-		}
-		return lines;
-	}
-	string show() const {
-		vector<Nodes::const_iterator> path;
-		vector<string> lines = showLines(path);
-		string ret;
-		for (auto& line : lines) {
-			ret += line + "\n";
-		}
-		return ret;
-	}
-	void add(const AbstProof::Node& n, uint id) {
-		if (!nodes.count(n.label())) {
-			nodes.emplace(n.label(), Node(n.childrenArity()));
-		}
-		Node& m = nodes.at(n.label());
-		bool is_leaf = true;
-		for (uint i = 0; i < n.childrenArity(); ++ i) {
-			if (n.getChild(i)) {
-				is_leaf = false;
-				m.children.at(i).add(*n.getChild(i), id);
-			}
-		}
-		if (is_leaf) {
-			m.proofs.insert(id);
-		}
-	}
-	void add(const AbstProof& p, uint id) {
-		add(*p.getRoot(), id);
-	}
-	bool collect(const AbstProof::Node& n, unique_ptr<set<uint>>& ids) const {
-		if (!nodes.count(n.label())) {
-			return false;
-		} else {
-			const Node& m = nodes.at(n.label());
-			bool is_leaf = true;
-			for (uint i = 0; i < n.childrenArity(); ++ i) {
-				if (n.getChild(i)) {
-					is_leaf = false;
-					if (!m.children.at(i).collect(*n.getChild(i), ids)) {
-						return false;
-					}
-				}
-			}
-			if (is_leaf) {
-				if (!ids) {
-					ids.reset(new set<uint>());
-					for (uint l : m.proofs) {
-						ids->insert(l);
-					}
-				} else {
-					vector<uint> to_remove;
-					for (uint id : *ids) {
-						if (!m.proofs.count(id)) {
-							to_remove.push_back(id);
-						}
-					}
-					for (uint id : to_remove) {
-						ids->erase(id);
-					}
-					if (!ids->size()) {
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-	}
-	unique_ptr<set<uint>> map(AbstProof& p) const {
-		unique_ptr<set<uint>> ids;
-		collect(*p.getRoot(), ids);
-		if (!ids) {
-			ids.reset(new set<uint>());
-		}
-		return ids;
-	}
-	static AbstProofForest produce() {
-		vector<const Assertion*> assertions = Sys::get().math.get<Assertion>().values();
-		vector<const Proof*> proofs;
-		for (const Assertion* a : assertions) {
-			if (const Theorem* thm = dynamic_cast<const Theorem*>(a)) {
-				if (const Proof* proof = thm->proof.get()) {
-					proofs.push_back(proof);
-				}
-			}
-		}
-		AbstProofForest ret;
-		for (const Proof* p : proofs) {
-			AbstProof aproof = p->abst();
-			ret.add(aproof, p->theorem->id());
-		}
-		return ret;
-	}
-};
-
 void factorize_subproofs(const string& opts) {
 	AssertionMap ass_map = init_assertion_map();
 	map<string, string> parsed_opts = parse_options(opts);
 	uint max_size = parsed_opts.count("max_subproof_size") ? std::stoul(parsed_opts.at("max_subproof_size")) : ass_map.size();
+	uint gain_threshold = parsed_opts.count("gain_threshold") ? std::stoul(parsed_opts.at("gain_threshold")) : 32;
 
 	ProofImplsSample common_subproofs = init_subproofs(ass_map, max_size);
 	common_subproofs.makeNewOld();
@@ -504,30 +370,32 @@ void factorize_subproofs(const string& opts) {
 			break;
 		}
 	}
-	AbstProofForest proofsForest = AbstProofForest::produce();
+	AbstProofSet proofSet = AbstProofSet::produce();
 	uint start = 0;
 	while (common_subproofs.all_.set().at(start++)->volume() == 0);
-	cout << "common_subproofs.all_.size(): " << common_subproofs.all_.size() << endl;
-	cout << "first 10 max volume: " << endl;
+	//cout << "common_subproofs.all_.size(): " << common_subproofs.all_.size() << endl;
+	//cout << "first 10 max volume: " << endl;
 	uint inserted_count = 0;
-	for (uint i = 0; i < 10; ++ i) {
-		ProofImpls* impls = common_subproofs.all_.set().at(common_subproofs.all_.size() - i - 1).get();
-		cout << impls->show() << endl;
+	for (int i = common_subproofs.all_.size() - 1; i >= 0; --i) {
+		ProofImpls* impls = common_subproofs.all_.set().at(i).get();
+		if (impls->volume() < gain_threshold) {
+			break;
+		}
+		//cout << impls->show() << endl;
 		//cout << "volume: " << impls->volume() << endl;
 		unique_ptr<Theorem> theorem = generate_theorem(impls->proof_);
 		if (theorem) {
 			beautify(*theorem);
-			cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
-			unique_ptr<set<uint>> other = proofsForest.map(impls->proof_);
-			if (other->size()) {
-				cout << "this proof is already in the system: " << endl;
-				for (uint id : *other) {
-					cout << "\t" << Lex::toStr(id) << endl;
-				}
-			} else {
-				cout << "this proof is new, inserting" << endl;
-				insert_theorem(theorem);
+			if (!proofSet.contains(impls->proof_)) {
+				//cout << (theorem ? theorem->show() : "theorem: <null>") << endl;
+				cout << "inserting subproof " << Lex::toStr(theorem->id()) << ", gain: " << impls->volume() << ", ";
+				cout << "inserted into " << insert_theorem(theorem) << endl;
 				inserted_count += 1;
+			} else {
+				//cout << "this proof is already in the system: " << endl;
+				//for (uint id : *other) {
+				//	cout << "\t" << Lex::toStr(id) << endl;
+				//}
 			}
 		}
 	}

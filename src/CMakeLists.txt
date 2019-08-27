@@ -63,6 +63,7 @@ else()
 		rus/prover/unify/rus_prover_unify_terms.cpp
 		rus/prover/unify/rus_prover_unify.cpp
 
+		rus/transform/rus_transform_abst_proof_set.cpp
 		rus/transform/rus_transform_generalize_theorems.cpp
 		rus/transform/rus_transform_generalization_relation.cpp
 		rus/transform/rus_transform_factor_subproofs.cpp

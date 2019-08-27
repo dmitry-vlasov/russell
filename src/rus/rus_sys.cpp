@@ -6,6 +6,11 @@
 
 namespace mdl { namespace rus {
 
+void SrcPos::write(ostream& os, const Indent& i) const {
+	os << i << "source: " << (src ? Lex::toStr(src->id()) : "<null>") << ", ";
+	os << "pos: " << pos;
+}
+
 void Math::destroy() { sources.destroy(); }
 
 string Math::info() const {
