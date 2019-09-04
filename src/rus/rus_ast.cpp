@@ -299,6 +299,7 @@ void Theory::insert(Writable* w, uint pos) {
 	if (pos > nodes.size()) {
 		throw Error("at insert: theory size " + to_string(nodes.size()) + " < " + to_string(pos));
 	}
+	Token token = pos < nodes.size() ? getWithToken(nodes.at(pos))->token : Token(token.src());
 	if (Constant* c = dynamic_cast<Constant*>(w)) {
 		nodes.emplace(nodes.begin() + pos, unique_ptr<Constant>(c));
 	} else if (Type* t = dynamic_cast<Type*>(w)) {
@@ -320,8 +321,9 @@ void Theory::insert(Writable* w, uint pos) {
 	} else {
 		throw Error("unknown kind of theory contents: " + w->show());
 	}
-
+	getWithToken(nodes.at(pos))->token = token;
 }
+
 Writable* Theory::getWritable(const Node& n) {
 	switch (kind(n)) {
 	case CONSTANT: return constant(n);

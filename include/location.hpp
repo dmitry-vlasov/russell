@@ -218,7 +218,12 @@ template<class S>
 struct TokenStorage<S, TokenType::TINY> {
 	typedef S Source;
 	TokenStorage() = default;
-	TokenStorage(const Source* s) { bits.setSrc(resolve_src(s)); }
+	TokenStorage(const Source* s) {
+		if (s) {
+			//bits.setSrc(resolve_src(s));
+			bits.set(resolve_src(s), 0, 0);
+		}
+	}
 	TokenStorage(const Source* s, const char* b, const char* e) {
 		if (s) {
 			try {
