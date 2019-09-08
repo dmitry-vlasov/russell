@@ -405,7 +405,7 @@ inline void translate_import(const Import* imp, Maps& maps) {
 		imp->source.id(),
 		rus::Token(maps.sources.at(imp->token.src()->id()), imp->token.beg(), imp->token.end())
 	);
-	maps.source->theory.nodes.emplace_back(unique_ptr<rus::Import>(import));
+	maps.source->imports.emplace_back(unique_ptr<rus::Import>(import));
 }
 
 inline void translate_comment(const Comment* com, Maps& s) {

@@ -223,14 +223,13 @@ void Import::write(ostream& os, const Indent& i) const {
 static void write_node(ostream& os, const Indent& i, const Theory::Node& n) {
 	switch(Theory::kind(n)) {
 	case Theory::CONSTANT: Theory::constant(n)->write(os, i); break;
-	case Theory::TYPE:     Theory::type(n)->write(os, i);  break;
-	case Theory::RULE:     Theory::rule(n)->write(os, i); break;
-	case Theory::AXIOM:    Theory::axiom(n)->write(os, i);  break;
-	case Theory::DEF:      Theory::def(n)->write(os, i); break;
-	case Theory::THEOREM:  Theory::theorem(n)->write(os, i); break;
-	case Theory::THEORY:   Theory::theory(n)->write(os, i); break;
-	case Theory::IMPORT:   Theory::import(n)->write(os, i); break;
-	case Theory::COMMENT:  Theory::comment(n)->write(os, i); break;
+	case Theory::TYPE:     Theory::type(n)->write(os, i);     break;
+	case Theory::RULE:     Theory::rule(n)->write(os, i);     break;
+	case Theory::AXIOM:    Theory::axiom(n)->write(os, i);    break;
+	case Theory::DEF:      Theory::def(n)->write(os, i);      break;
+	case Theory::THEOREM:  Theory::theorem(n)->write(os, i);  break;
+	case Theory::THEORY:   Theory::theory(n)->write(os, i);   break;
+	case Theory::COMMENT:  Theory::comment(n)->write(os, i);  break;
 	default : assert(false && "impossible"); break;
 	}
 }
@@ -244,6 +243,11 @@ void Theory::write(ostream& os, const Indent& i) const {
 }
 
 void Source::write(ostream& os, const Indent& i) const {
+	for (const auto& i : imports) {
+		i->write(os);
+		os << "\n";
+	}
+	os << "\n";
 	for (const auto& n : theory.nodes) {
 		write_node(os, i + 1, n); os << "\n";
 	}

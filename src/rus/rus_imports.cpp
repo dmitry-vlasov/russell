@@ -106,16 +106,6 @@ void theory_deps(const Theory* th, set<uint>& deps) {
 	}
 }
 
-bool has_contents(const Source* s) {
-	for (const auto& n : s->theory.nodes) {
-		auto k = Theory::kind(n);
-		if (k != Theory::IMPORT && k != Theory::COMMENT) {
-			return true;
-		}
-	}
-	return false;
-}
-
 set<uint> minimize_deps(uint label, const set<uint>& deps, map<uint, set<uint>>& resolved) {
 	set<uint> minimized;
 	set<uint> cumulative;
@@ -168,35 +158,8 @@ void move_node(vector<Theory::Node>& nodes, Theory::Node& n) {
 void minimize_imports(Source* src, map<uint, set<uint>>& minimized) {
 	if (minimized.count(src->id())) return;
 	minimized[src->id()];
-	for (auto& n : src->theory.nodes) {
-		if (Theory::kind(n) == Theory::IMPORT) {
-			minimize_imports(Theory::import(n)->source.get(), minimized);
-		}
-	}
-	if (has_contents(src)) {
-		set<uint> deps;
-		theory_deps(&src->theory, deps);
-		deps.erase(src->id());
-		set<uint> min_deps = minimize_deps(src->id(), deps, minimized);
-		vector<Theory::Node> new_nodes;
-		for (uint inc : min_deps) {
-			new_nodes.emplace_back(unique_ptr<Import>(new Import(inc)));
-		}
-		for (auto& n : src->theory.nodes) {
-			switch (Theory::kind(n)) {
-			case Theory::COMMENT: move_node<Comment>(new_nodes, n);  break;
-			case Theory::CONSTANT:   move_node<Constant>(new_nodes, n); break;
-			case Theory::TYPE:    move_node<Type>(new_nodes, n);     break;
-			case Theory::RULE:    move_node<Rule>(new_nodes, n);     break;
-			case Theory::AXIOM:   move_node<Axiom>(new_nodes, n);    break;
-			case Theory::DEF:     move_node<Def>(new_nodes, n);      break;
-			case Theory::THEOREM: move_node<Theorem>(new_nodes, n);  break;
-			case Theory::THEORY:  move_node<Theory>(new_nodes, n);   break;
-			case Theory::IMPORT:  break;
-			default : assert(false && "impossible");
-			}
-		}
-		src->theory.nodes = std::move(new_nodes);
+	for (auto& imp : src->imports) {
+		minimize_imports(imp->source.get(), minimized);
 	}
 }
 

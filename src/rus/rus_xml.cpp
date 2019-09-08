@@ -87,7 +87,6 @@ string xml(const Theory::Node& n, uint bits) {
 	case Theory::DEF:      return xml(*Theory::def(n), bits);
 	case Theory::THEOREM:  return xml(*Theory::theorem(n), bits);
 	case Theory::THEORY:   return xml(*Theory::theory(n), bits);
-	case Theory::IMPORT:   return xml(*Theory::import(n), bits);
 	case Theory::COMMENT:  return "";
 	default : assert(false && "impossible"); return "";
 	}
@@ -110,8 +109,12 @@ string xml_outline(const Source& s, uint bits) {
 	ret += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<outline>\n";
-	for (const auto& n : s.theory.nodes)
+	for (const auto& i : s.imports) {
+		ret += Indent::paragraph(xml(*i, bits));
+	}
+	for (const auto& n : s.theory.nodes) {
 		ret += Indent::paragraph(xml(n, bits));
+	}
 	ret += "</outline>\n\n";
 	return ret;
 }

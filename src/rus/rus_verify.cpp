@@ -187,10 +187,8 @@ void verify_source(uint src, uint mode, set<uint>& verified) {
 	verified.insert(src);
 	Source* source = Sys::mod().math.get<Source>().access(src);
 	if (mode & VERIFY_DEEP) {
-		for (auto& n : source->theory.nodes) {
-			if (Theory::kind(n) == Theory::IMPORT) {
-				verify_source(Theory::import(n)->source.id(), mode, verified);
-			}
+		for (auto& imp : source->imports) {
+			verify_source(imp->source.id(), mode, verified);
 		}
 	}
 	verify_theory(&source->theory, mode);

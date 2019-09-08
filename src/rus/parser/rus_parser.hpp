@@ -152,6 +152,13 @@ struct ParseImport {
 	}
 };
 
+struct AddImport {
+	struct result { typedef void type; };
+	void operator()(vector<unique_ptr<Import>>& v, Import* i) const {
+		v.emplace_back(i);
+	}
+};
+
 struct SetType {
 	struct result { typedef void type; };
 	void operator()(unique_ptr<Symbol>& s, Id t) const {
@@ -231,12 +238,11 @@ struct SetToken {
     }
 };
 
-static Literal dfm(Lex::toInt("defiendum"));
-static Literal dfs(Lex::toInt("definiens"));
-
 struct AssembleDef {
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
+		static Literal dfm(Lex::toInt("defiendum"));
+		static Literal dfs(Lex::toInt("definiens"));
 		d->prop = make_unique<Prop>();
 		for (auto& s : d->def.symbols) {
 			if (*s == dfm) {
@@ -327,9 +333,6 @@ struct AddToTheory {
 	}
 	void operator()(Theory* t, Theory* th) const {
 		t->nodes.emplace_back(unique_ptr<Theory>(th));
-	}
-	void operator()(Theory* t, Import* i) const {
-		t->nodes.emplace_back(unique_ptr<Import>(i));
 	}
 	void operator()(Theory* t, Comment* c) const {
 		t->nodes.emplace_back(unique_ptr<Comment>(c));

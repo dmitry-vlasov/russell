@@ -131,7 +131,6 @@ size_t memvol(const Theory::Node& n) {
 	case Theory::DEF     : return memvol(*Theory::def(n));
 	case Theory::THEOREM : return memvol(*Theory::theorem(n));
 	case Theory::THEORY  : return memvol(*Theory::theory(n));
-	case Theory::IMPORT  : return memvol(*Theory::import(n));
 	case Theory::COMMENT : return memvol(*Theory::comment(n));
 	default: return 0;
 	}

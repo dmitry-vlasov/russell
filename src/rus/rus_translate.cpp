@@ -334,15 +334,14 @@ vector<mm::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
 	add_turnstile(nodes);
 	for (auto& n : thy->nodes) {
 		switch (Theory::kind(n)) {
-		case Theory::CONSTANT: add_const(nodes, Theory::constant(n), maps); break;
-		case Theory::TYPE:     add_type(nodes, Theory::type(n), maps);   break;
-		case Theory::RULE:     add_rule(nodes, Theory::rule(n), maps);  break;
-		case Theory::AXIOM:    add_assertion(nodes, Theory::axiom(n), maps);  break;
-		case Theory::DEF:      add_assertion(nodes, Theory::def(n), maps); break;
-		case Theory::THEOREM:  add_theorem(nodes, Theory::theorem(n), maps);  break;
-		case Theory::THEORY:   add_theory(nodes, Theory::theory(n), maps); break;
-		case Theory::IMPORT:   add_import(nodes, Theory::import(n));       break;
-		case Theory::COMMENT:  add_comment(nodes, Theory::comment(n));      break;
+		case Theory::CONSTANT: add_const(nodes, Theory::constant(n), maps);  break;
+		case Theory::TYPE:     add_type(nodes, Theory::type(n), maps);       break;
+		case Theory::RULE:     add_rule(nodes, Theory::rule(n), maps);       break;
+		case Theory::AXIOM:    add_assertion(nodes, Theory::axiom(n), maps); break;
+		case Theory::DEF:      add_assertion(nodes, Theory::def(n), maps);   break;
+		case Theory::THEOREM:  add_theorem(nodes, Theory::theorem(n), maps); break;
+		case Theory::THEORY:   add_theory(nodes, Theory::theory(n), maps);   break;
+		case Theory::COMMENT:  add_comment(nodes, Theory::comment(n));       break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -364,17 +363,15 @@ mm::Source* translate_source(uint src, Maps maps, uint tgt = -1) {
 static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
 	visited.insert(src);
 	const Source* source = Sys::get().math.get<Source>().access(src);
-	for (const auto& n : source->theory.nodes) {
-		if (Theory::kind(n) == Theory::IMPORT) {
-			uint imp = Theory::import(n)->source.id();
-			if (!visited.count(imp)) {
-				find_dependencies(imp, deps, visited);
-			}
-			const mm::Source* inpTarg = mm::Sys::mod().math.get<mm::Source>().access(imp);
-			const Source* inpSrc = Sys::get().math.get<Source>().access(imp);
-			if (inpSrc->has_changed() || !inpTarg) {
-				deps.insert(imp);
-			}
+	for (const auto& i : source->imports) {
+		uint imp = i->source.id();
+		if (!visited.count(imp)) {
+			find_dependencies(imp, deps, visited);
+		}
+		const mm::Source* inpTarg = mm::Sys::mod().math.get<mm::Source>().access(imp);
+		const Source* inpSrc = Sys::get().math.get<Source>().access(imp);
+		if (inpSrc->has_changed() || !inpTarg) {
+			deps.insert(imp);
 		}
 	}
 }

@@ -144,7 +144,7 @@ SrcPos find_infimum(const set<Token>& src_points) {
 		} else {
 			ret.src = max_lower_bounds.front();
 			for (auto& n : ret.src->theory.nodes) {
-				if (!Theory::comment(n) && !Theory::import(n)) {
+				if (!Theory::comment(n)) {
 					break;
 				}
 				ret.pos += 1;

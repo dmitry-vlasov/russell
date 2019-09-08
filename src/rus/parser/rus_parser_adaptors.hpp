@@ -140,6 +140,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Source,
+	(mdl::vector<mdl::unique_ptr<mdl::rus::Import>>, imports)
 	(mdl::rus::Theory, theory)
 )
 

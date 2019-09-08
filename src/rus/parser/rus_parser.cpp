@@ -54,6 +54,7 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	const phoenix::function<AddStepRefs>    addStepRefs;
 	const phoenix::function<AddToAssertion> addToAssertion;
 	const phoenix::function<AddToTheory>    addToTheory;
+	const phoenix::function<AddImport>      addImport;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
 	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(qi::labels::_1)];
@@ -228,8 +229,6 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		)
 		> lit("}")      [_val = new_<Constant>(_a, _b, _c)];
 
-	import = lit("import") > path [_val = parseImport(qi::labels::_1, phoenix::val(src))] > END_MARKER;
-
 	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")];
 	comment_ml =
 		   lit("/*") [_val = new_<Comment>(phoenix::val(true))]
@@ -245,16 +244,21 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 
 	comment %= comment_ml | comment_sl;
 
+	import = lit("import") > path [_val = parseImport(qi::labels::_1, phoenix::val(src))] > END_MARKER;
+
 	source =
-		+(
-			import   [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			constant [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			type     [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			rule     [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			axiom    [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			def      [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			theorem  [addToTheory(&at_c<0>(*_val), qi::labels::_1)] |
-			comment  [addToTheory(&at_c<0>(*_val), qi::labels::_1)]
+		*(
+			import [addImport(at_c<0>(*_val), qi::labels::_1)] |
+			comment [addToTheory(&at_c<1>(*_val), qi::labels::_1)]
+		) >>
+		*(
+			constant [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			type     [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			rule     [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			axiom    [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			def      [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			theorem  [addToTheory(&at_c<1>(*_val), qi::labels::_1)] |
+			comment  [addToTheory(&at_c<1>(*_val), qi::labels::_1)]
 		);
 
 	//qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

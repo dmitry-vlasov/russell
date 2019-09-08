@@ -436,7 +436,7 @@ struct Import : public Writable, public WithToken {
 };
 
 struct Theory : public Writable, public WithToken {
-	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, THEORY, IMPORT, COMMENT };
+	enum Kind { CONSTANT, TYPE, RULE, AXIOM, DEF, THEOREM, THEORY, COMMENT };
 	typedef variant<
 		unique_ptr<Constant>,
 		unique_ptr<Type>,
@@ -445,7 +445,6 @@ struct Theory : public Writable, public WithToken {
 		unique_ptr<Def>,
 		unique_ptr<Theorem>,
 		unique_ptr<Theory>,
-		unique_ptr<Import>,
 		unique_ptr<Comment>
 	> Node;
 
@@ -462,7 +461,6 @@ struct Theory : public Writable, public WithToken {
 	static Def* def(const Node& n) { return kind(n) == DEF ? std::get<unique_ptr<Def>>(n).get() : nullptr; }
 	static Theorem* theorem(const Node& n) { return kind(n) == THEOREM ? std::get<unique_ptr<Theorem>>(n).get() : nullptr; }
 	static Theory* theory(const Node& n) { return kind(n) == THEORY ? std::get<unique_ptr<Theory>>(n).get() : nullptr; }
-	static Import* import(const Node& n) { return kind(n) == IMPORT ? std::get<unique_ptr<Import>>(n).get() : nullptr; }
 	static Comment* comment(const Node& n) { return kind(n) == COMMENT ? std::get<unique_ptr<Comment>>(n).get() : nullptr; }
 
 	void insert(Writable*, uint pos);
@@ -480,6 +478,7 @@ struct Source : public mdl::Source<Source, Sys> {
 	Token* find(const Token& t);
 	void write(ostream& os, const Indent& i = Indent()) const override;
 
+	vector<unique_ptr<Import>> imports;
 	Theory theory;
 };
 

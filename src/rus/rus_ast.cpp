@@ -314,8 +314,6 @@ void Theory::insert(Writable* w, uint pos) {
 		nodes.emplace(nodes.begin() + pos, unique_ptr<Theorem>(t));
 	} else if (Theory* t = dynamic_cast<Theory*>(w)) {
 		nodes.emplace(nodes.begin() + pos, unique_ptr<Theory>(t));
-	} else if (Import* i = dynamic_cast<Import*>(w)) {
-		nodes.emplace(nodes.begin() + pos, unique_ptr<Import>(i));
 	} else if (Comment* c = dynamic_cast<Comment*>(w)) {
 		nodes.emplace(nodes.begin() + pos, unique_ptr<Comment>(c));
 	} else {
@@ -333,7 +331,6 @@ Writable* Theory::getWritable(const Node& n) {
 	case DEF:      return def(n);
 	case THEOREM:  return theorem(n);
 	case THEORY:   return theory(n);
-	case IMPORT:   return import(n);
 	case COMMENT:  return comment(n);
 	default: throw Error("unknown kind of theory contents");
 	}
@@ -348,7 +345,6 @@ WithToken* Theory::getWithToken(const Node& n) {
 	case DEF:      return def(n);
 	case THEOREM:  return theorem(n);
 	case THEORY:   return theory(n);
-	case IMPORT:   return import(n);
 	case COMMENT:  return comment(n);
 	default: throw Error("unknown kind of theory contents");
 	}
