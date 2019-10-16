@@ -133,6 +133,12 @@ inline ostream& operator << (ostream& os, const Subst& s) {
 	os << s.show(); return os;
 }
 
+struct SubstInd {
+	SubstInd(const Subst* s, uint i) : sub(s), ind(i) { }
+	const Subst* sub;
+	uint ind;
+};
+
 Substitution Subst2Substitution(const Subst&);
 string show_diff(const Subst& s1, const Subst& s2);
 class Space;

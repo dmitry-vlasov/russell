@@ -101,12 +101,6 @@ void reduce_unused_hyps(Theorem* th, const HypsInfoMap& info_map, std::atomic<in
 void reduce_unused_hyps(const string& opts)  {
 	map<string, string> parsed_opts = parse_options(opts);
 	uint theorem = parsed_opts.count("theorem") ? Lex::toInt(parsed_opts.at("theorem")) : -1;
-
-	/*vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().sortedValues(
-		[](const Assertion* a1, const Assertion* a2) {
-			return a1->token.preceeds(a2->token);
-		}
-	);*/
 	vector<Assertion*> assertions = Sys::mod().math.get<Assertion>().values();
 	std::atomic<int> hyp_counter(0);
 	std::atomic<int> step_counter(0);

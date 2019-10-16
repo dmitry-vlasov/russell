@@ -23,6 +23,9 @@ bool has_already_a_generalization(const Theorem* thm) {
 	return Sys::get().math.get<Assertion>().has(Lex::toInt("gen_" + thm_name));
 }
 
+
+const string generalize_prefix = "gen";
+
 void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 	if (is_already_a_generalization(thm) || has_already_a_generalization(thm)) {
 		return;
@@ -37,7 +40,7 @@ void generalize_theorems(Theorem* thm, std::atomic<int>& counter) {
 		throw err;
 	}*/
 	AbstProof abstProof = thm->proof->abst();
-	uint gen_name = Lex::toInt("gen_" + Lex::toStr(thm->id()));
+	uint gen_name = Lex::toInt(generalize_prefix + "_" + Lex::toStr(thm->id()));
 	unique_ptr<Theorem> gen_thm = prover::make_theorem(abstProof, gen_name);
 	if (!gen_thm) {
 		string err;

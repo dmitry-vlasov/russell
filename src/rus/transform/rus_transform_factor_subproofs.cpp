@@ -2,17 +2,19 @@
 #include <rus/prover/rus_prover_maker.hpp>
 #include <dag.hpp>
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
+
+const string subproof_prefix = "subproof";
+
+namespace {
 
 typedef map<uint, vector<const Step*>> AssertionMap;
-
-const string prefix = "subproof";
 
 AssertionMap init_assertion_map() {
 	AssertionMap ass_map;
 	for (Assertion& a : Sys::mod().math.get<Assertion>()) {
 		if (Theorem* thm = dynamic_cast<Theorem*>(&a)) {
-			if (Lex::toStr(thm->id()).substr(0, prefix.size()) != prefix) {
+			if (Lex::toStr(thm->id()).substr(0, subproof_prefix.size()) != subproof_prefix) {
 				if (Proof* proof = thm->proof.get()) {
 					for (const auto& step : proof->steps) {
 						ass_map[step->ass_id()].push_back(step.get());
@@ -105,7 +107,6 @@ struct ProofImpls {
 
 	AbstProof proof_;
 	SubProofSet impls_;
-	bool to_remove = false;
 };
 
 struct ProofImplsSet {
@@ -179,9 +180,7 @@ struct ProofImplsSample {
 
 	void makeNewOld() {
 		for (auto& o : old_.set()) {
-			if (!o->to_remove) {
-				all_.add(o.release());
-			}
+			all_.add(o.release());
 		}
 		old_ = std::move(new_);
 	}
@@ -313,7 +312,7 @@ static void next_subproofs(ProofImplsSample& pis) {
 
 int new_gen_id() {
 	static uint i = 0;
-	auto gen_id = [](uint ind) { return Lex::toInt(prefix + "_" + to_string(ind) + "_th"); };
+	auto gen_id = [](uint ind) { return Lex::toInt(subproof_prefix + "_" + to_string(ind) + "_th"); };
 	while (Sys::get().math.get<Assertion>().has(gen_id(i))) i += 1;
 	return gen_id(i);
 }

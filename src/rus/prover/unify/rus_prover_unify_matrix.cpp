@@ -94,6 +94,34 @@ Matrix::Matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const Proof
 	}
 }
 
+Matrix::Matrix(const vector<vector<SubstInd>>& matr, const ProofsSizeLimit* limit) :
+	dim_hyp_(matr.size()), proofInds_(dim_hyp_), empty_(false) {
+	for (uint i = 0; i < dim_hyp_; ++ i) {
+		const vector<SubstInd>& subs = matr.at(i);
+		if (subs.empty()) {
+			empty_ = true;
+			break;
+		}
+		proofInds_[i] = vector<uint>(subs.size());
+		for (uint j = 0; j < subs.size(); ++j) {
+			const SubstInd& s = subs.at(j);
+			for (const auto& x : *s.sub) {
+				LightSymbol v(x.first, x.second.type);
+				if (!mindex_.count(v)) {
+					mindex_.emplace(v, new Vector(dim_hyp_));
+				}
+				mindex_.at(v)->vect[i]->add(x.second.term, s.ind);
+			}
+			proofInds_[i][j] = s.ind;
+		}
+	}
+	for (auto& p : mindex_) {
+		for (uint i = 0; i < dim_hyp_; ++i) {
+			p.second->vect[i]->init(proofInds_[i]);
+		}
+	}
+}
+
 uint Matrix::card() const {
 	uint ret = 1;
 	for (const auto& p : proofInds_) {

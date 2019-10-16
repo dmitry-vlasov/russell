@@ -91,6 +91,17 @@ set<T> sets_union(const set<T>& right, const set<T>& left) {
 	return ret;
 }
 
+template<class T>
+set<T> sets_minus(const set<T>& right, const set<T>& left) {
+	set<T> ret;
+	for (const T& t : right) {
+		if (!left.count(t)) {
+			ret.insert(t);
+		}
+	}
+	return ret;
+}
+
 template<class K, class T>
 map<K, T> maps_union(const map<K, T>& right, const map<K, T>& left) {
 	map<K, T> ret;
@@ -262,6 +273,19 @@ inline vector<string> split_string(const string& str, const string& delim) {
 	}
 	//cout << "splited: '" << glue_string(ret, "---") << "'" << endl;
 	return ret;
+}
+
+inline bool string_starts_with(const string& str, const string& prefix) {
+	if (str.size() < prefix.size()) {
+		return false;
+	} else {
+		for (uint i = 0; i < prefix.size(); ++i) {
+			if (str[i] != prefix[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 } // mdl

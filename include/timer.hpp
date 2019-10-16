@@ -135,9 +135,13 @@ public :
 struct Watchdog {
 	Watchdog(uint m, const string& msg) : millis(m), message(msg) { }
 
-	void check() {
+	bool isOverLimit() {
 		timer.stop();
-		if (timer.getMilliseconds() > millis) {
+		return timer.getMilliseconds() > millis;
+	}
+
+	void check() {
+		if (isOverLimit()) {
 			throw Timeout(message);
 		}
 	}

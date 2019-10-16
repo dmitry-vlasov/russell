@@ -30,6 +30,32 @@ MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndex
 	return ret;
 }
 
+MultyUnifiedSubs unify_subs_matrix(const Subst& common, const vector<vector<SubstInd>>& matr, const ProofsSizeLimit* limit) {
+	Matrix mi(matr, limit);
+	if (mi.empty()) {
+		return MultyUnifiedSubs();
+	}
+	MultyUnifiedSubs ret;
+	try {
+		MultyUnifiedSubs unif;
+		MultyUnifiedSubs gen = mi.compute(unif);
+		for (const auto& p : unif) {
+			Subst sub = unify_subs(p.second, gen[p.first]);
+			if (sub.ok()) {
+				Subst delta = common;
+				if (delta.compose(sub)) {
+					ret[p.first] = delta;
+				}
+			}
+		}
+	} catch (std::exception& e) {
+		cout << e.what() << endl;
+		cout << mi.show() << endl;
+		throw e;
+	}
+	return ret;
+}
+
 Term unify_general(const vector<Term>& ex, Subst& sub) {
 	vector<const Term*> terms;
 	for (const auto& e : ex) {
