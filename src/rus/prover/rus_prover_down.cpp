@@ -243,6 +243,49 @@ string unified_subs_diff(const MultyUnifiedSubs& ms1, const MultyUnifiedSubs& ms
 	return ret;
 }
 
+vector<vector<SubstInd>> make_matr(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit) {
+	vector<vector<SubstInd>> matr;
+	for (uint i = 0; i < pr->premises.size(); ++ i) {
+		matr.emplace_back();
+		const auto& proofs = pr->premises[i]->proofs;
+		if (pr->premises[i].get() != hy) {
+			if (limit) {
+				if (limit->descrVect()[i].fixed) {
+					throw Error("should not be fixed");
+				}
+				matr.back().reserve(limit->descrVect()[i].chosen.size());
+				for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
+					uint j = limit->descrVect()[i].chosen[k];
+					matr.back().emplace_back(&proofs[j].get()->sub, j);
+				}
+			} else {
+				matr.back().reserve(proofs.size());
+				for (uint j = 0; j < proofs.size(); ++j) {
+					matr.back().emplace_back(&proofs[j].get()->sub, j);
+				}
+			}
+		} else {
+			if (limit) {
+				if (!limit->descrVect()[i].fixed) {
+					throw Error("should be fixed");
+				}
+				matr.back().reserve(limit->descrVect()[i].chosen.size());
+				for (uint k = 0; k < limit->descrVect()[i].chosen.size(); ++ k) {
+					uint j = limit->descrVect()[i].chosen[k];
+					matr.back().emplace_back(&hs[j].proof->sub, hs[j].ind);
+				}
+			} else {
+				matr.back().reserve(hs.size());
+				for (uint j = 0; j < hs.size(); ++j) {
+					ProofExpIndexed hi = hs[j];
+					matr.back().emplace_back(&hs[j].proof->sub, hs[j].ind);
+				}
+			}
+		}
+	}
+	return matr;
+}
+
 #define CHECK_MATRIX_UNIFICATION
 //#define SHOW_MATRIXES
 //#define VERIFY_UNIQUE_PROOFS
@@ -277,6 +320,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 
 	Timer timer;
 #ifdef CHECK_MATRIX_UNIFICATION
+
 	MultyUnifiedSubs unified_subs_1 = unify_subs_sequent(pr, hy, hs, &limit);
 	add_timer_stats("down_seq_time", timer);
 	uint seq_time = timer.getMicroseconds();
@@ -290,7 +334,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 #endif
 #endif
 	timer.start();
-	MultyUnifiedSubs unified_subs_2 = unify::unify_subs_matrix(pr, hy, hs, &limit);
+	MultyUnifiedSubs unified_subs_2 = unify::unify_subs_matrix(pr->sub, make_matr(pr, hy, hs, &limit), &limit);
 	add_timer_stats("down_mat_time", timer);
 	uint mat_time = timer.getMicroseconds();
 	add_matrix_stats(card, count, timer);
@@ -305,7 +349,7 @@ bool unify_down(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs) {
 		cout << "SUB UNIFICATION DIFF" << endl;
 		cout << "DIFF:" << endl;
 		compare_unified_subs(unified_subs_2, unified_subs_1, true);
-		cout << unify::Matrix(pr, hy, hs, &limit).show() << endl;
+		cout << unify::Matrix(make_matr(pr, hy, hs, &limit), &limit).show() << endl;
 		throw Error("SUB UNIFICATION DIFF");
 	}
 #endif

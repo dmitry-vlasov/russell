@@ -133,23 +133,26 @@ public :
 };
 
 struct Watchdog {
-	Watchdog(uint m, const string& msg) : millis(m), message(msg) { }
+	Watchdog(uint m, const string& msg, bool s = true) : millis(m), message(msg), strict(s) { }
 
 	bool isOverLimit() {
 		timer.stop();
 		return timer.getMilliseconds() > millis;
 	}
 
-	void check() {
-		if (isOverLimit()) {
+	bool check() {
+		bool ret = isOverLimit();
+		if (strict && ret) {
 			throw Timeout(message);
 		}
+		return ret;
 	}
 
 private:
 	Timer timer;
 	uint millis;
 	string message;
+	const bool strict;
 };
 
 }

@@ -4,32 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover { namespace unify {
 
-MultyUnifiedSubs unify_subs_matrix(Prop* pr, Hyp* hy, const vector<ProofExpIndexed>& hs, const ProofsSizeLimit* limit) {
-	Matrix mi(pr, hy, hs, limit);
-	if (mi.empty()) {
-		return MultyUnifiedSubs();
-	}
-	MultyUnifiedSubs ret;
-	try {
-		MultyUnifiedSubs unif;
-		MultyUnifiedSubs gen = mi.compute(unif);
-		for (const auto& p : unif) {
-			Subst sub = unify_subs(p.second, gen[p.first]);
-			if (sub.ok()) {
-				Subst delta = pr->sub;
-				if (delta.compose(sub)) {
-					ret[p.first] = delta;
-				}
-			}
-		}
-	} catch (std::exception& e) {
-		cout << e.what() << endl;
-		cout << mi.show() << endl;
-		throw e;
-	}
-	return ret;
-}
-
 MultyUnifiedSubs unify_subs_matrix(const Subst& common, const vector<vector<SubstInd>>& matr, const ProofsSizeLimit* limit) {
 	Matrix mi(matr, limit);
 	if (mi.empty()) {

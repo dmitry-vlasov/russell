@@ -236,10 +236,10 @@ void find_shortcuts1(
 	Assertion* ass = prop_unif.data->ass;
 	vector<vector<prover::SubstInd>> matr;
 	for (auto& hyp_vect : matched_hyps) {
-		matr.push_back(vector<prover::SubstInd>());
+		matr.emplace_back();
 		for (uint i = 0; i < hyp_vect.size(); ++i) {
 			const UnifPair& up = hyp_vect.at(i);
-			matr.back().push_back(prover::SubstInd(&up.unif.sub, i));
+			matr.back().emplace_back(&up.unif.sub, i);
 		}
 	}
 	prover::MultyUnifiedSubs all_unified = prover::unify::unify_subs_matrix(prop_unif.sub, matr, nullptr);
