@@ -65,7 +65,7 @@ struct MatrixUnifiedUnion {
 	vector<MatrixUnified> union_;
 };
 
-struct Matrix{
+struct Matrix {
 	Matrix(const vector<vector<SubstInd>>& subs, const ProofsSizeLimit* limit);
 
 	MultyUnifiedSubs compute(MultyUnifiedSubs& unif);

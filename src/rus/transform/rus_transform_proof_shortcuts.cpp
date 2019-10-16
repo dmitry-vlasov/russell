@@ -46,6 +46,7 @@ struct Shortcut {
 	Shortcut() = default;
 	Shortcut(Step* pr, Substitution&& s, const vector<Writable*>& hs = vector<Writable*>()) : hyps(hs), prop(pr), sub(std::move(s)) { }
 	Shortcut(Shortcut&&) = default;
+
 	vector<Writable*> hyps;
 	Step* prop = nullptr;
 	Substitution sub;
@@ -185,9 +186,13 @@ void find_shortcuts(
 		if (variants.card() > 1024 * 32) {
 			cout << "A) variants.card() = " << variants.card() << endl;
 		}
+		Assertion* ass = prop_unif.data->ass;
+		uint max_gain = 0;
+		unique_ptr<Shortcut> best_shortcut;
 		while (true) {
-			watchdog.check();
-			Assertion* ass = prop_unif.data->ass;
+			if (watchdog.isOverLimit()) {
+				break;
+			}
 			Substitution sub = Subst2Substitution(prop_unif.sub);
 			for (const Var* v : prop_unif.data->get()->expr.vars()) {
 				if (!sub.maps(v->lit())) {
@@ -209,10 +214,12 @@ void find_shortcuts(
 				hyps.push_back(up.node);
 			}
 			if (sub.ok()) {
-				Shortcut shortcut(step, std::move(sub), hyps);
-				if (shortcut.gain(ass) > 0) {
-					if (ass->disj.satisfies(shortcut.sub, nullptr)) {
-						shortcuts->emplace(ass, std::move(shortcut));
+				unique_ptr<Shortcut> shortcut = make_unique<Shortcut>(step, std::move(sub), hyps);
+				uint curr_gain = shortcut->gain(ass);
+				if (curr_gain > max_gain) {
+					if (ass->disj.satisfies(shortcut->sub, nullptr)) {
+						best_shortcut = std::move(shortcut);
+						max_gain = curr_gain;
 					}
 				}
 			}
@@ -221,6 +228,9 @@ void find_shortcuts(
 			} else {
 				variants.makeNext();
 			}
+		}
+		if (best_shortcut) {
+			shortcuts->emplace(ass, std::move(*best_shortcut));
 		}
 	}
 }
@@ -233,7 +243,25 @@ void find_shortcuts1(
 	const map<Ref, map<const Assertion*, vector<HypIndex::Unified>>>& hyps,
 	Watchdog& watchdog
 	) {
+
+	prover::CartesianProd<UnifPair> variants;
+	for (auto& hyp_vect : matched_hyps) {
+		variants.addDim(hyp_vect);
+	}
+	if (variants.card() > 1024 * 16) {
+		cout << "B) variants.card() = " << variants.card() << endl;
+		return;
+	}
+
 	Assertion* ass = prop_unif.data->ass;
+	prover::Subst sub = prop_unif.sub;
+	for (const Var* v : prop_unif.data->get()->expr.vars()) {
+		if (!sub.maps(v->lit())) {
+			prover::LightSymbol var(v->lit(), v->type());
+			sub.join(var, prover::Term(var));
+		}
+	}
+
 	vector<vector<prover::SubstInd>> matr;
 	for (auto& hyp_vect : matched_hyps) {
 		matr.emplace_back();
@@ -242,7 +270,9 @@ void find_shortcuts1(
 			matr.back().emplace_back(&up.unif.sub, i);
 		}
 	}
-	prover::MultyUnifiedSubs all_unified = prover::unify::unify_subs_matrix(prop_unif.sub, matr, nullptr);
+	prover::MultyUnifiedSubs all_unified = prover::unify::unify_subs_matrix(sub, matr, nullptr);
+	uint max_gain = 0;
+	unique_ptr<Shortcut> best_shortcut;
 	for (auto& p : all_unified) {
 		vector<Writable*> hyps;
 		const vector<uint> inds = p.first;
@@ -250,12 +280,17 @@ void find_shortcuts1(
 			uint ind = inds.at(i);
 			hyps.push_back(matched_hyps.at(i).at(ind).node);
 		}
-		Shortcut shortcut(step, Subst2Substitution(p.second), hyps);
-		if (shortcut.gain(ass) > 0) {
-			if (ass->disj.satisfies(shortcut.sub, nullptr)) {
-				shortcuts->emplace(ass, std::move(shortcut));
+		unique_ptr<Shortcut> shortcut = make_unique<Shortcut>(step, Subst2Substitution(p.second), hyps);
+		uint curr_gain = shortcut->gain(ass);
+		if (shortcut->gain(ass) > max_gain) {
+			if (ass->disj.satisfies(shortcut->sub, nullptr)) {
+				best_shortcut = std::move(shortcut);
+				max_gain = curr_gain;
 			}
 		}
+	}
+	if (best_shortcut) {
+		shortcuts->emplace(ass, std::move(*best_shortcut));
 	}
 }
 
