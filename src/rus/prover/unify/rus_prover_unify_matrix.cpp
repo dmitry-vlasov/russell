@@ -54,6 +54,8 @@ string Matrix::card_str() const {
 	return ret;
 }
 
+MultyUnifiedSubs intersect(const map<LightSymbol, VectorUnifiedUnion>& terms, MultyUnifiedSubs& unif);
+
 MultyUnifiedSubs Matrix::compute(MultyUnifiedSubs& unif) {
 	if (mindex_.empty()) {
 		CartesianProd<uint> proofs_prod;

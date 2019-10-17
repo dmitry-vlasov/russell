@@ -3,7 +3,6 @@
 #include "rus_prover_proof.hpp"
 #include "unify/rus_prover_unify_general.hpp"
 #include "unify/rus_prover_unify_index.hpp"
-#include "unify/rus_prover_unify_index_term.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 

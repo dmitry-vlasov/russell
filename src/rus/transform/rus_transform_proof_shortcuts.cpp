@@ -358,11 +358,16 @@ void apply_proof_shortcuts(Proof* proof, map<const Assertion*, Shortcut>& shortc
 		if (gain > 0) {
 			shortcut.apply(ass);
 			Disj disj;
-			proof->verify(VERIFY_SRC, &disj);
-			if (!(disj <= proof->theorem->disj)) {
-				shortcut.restore();
-			} else {
-				msg += string(msg.size() ? ", " : " ") + "for: " + Lex::toStr(ass->id()) + ", gain: " + to_string(gain);
+			try {
+				proof->verify(VERIFY_SRC, &disj);
+				if (!(disj <= proof->theorem->disj)) {
+					shortcut.restore();
+				} else {
+					msg += string(msg.size() ? ", " : " ") + "for: " + Lex::toStr(ass->id()) + ", gain: " + to_string(gain);
+				}
+			} catch (Error& err) {
+				err.msg += "proof:\n" + proof->show() + "\n";
+				throw err;
 			}
 		}
 	}
@@ -432,6 +437,7 @@ void reduce_proof_shortcuts(const string& opts)  {
 			}
 		}
 	);
+	Io::io().println("shortcuts done");
 #else
 	for (auto proof : proofs) {
 		unique_ptr<map<const Assertion*, Shortcut>>
