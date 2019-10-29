@@ -184,7 +184,7 @@ void find_shortcuts(
 	}
 	if (variants.card()) {
 		if (variants.card() > 1024 * 32) {
-			cout << "A) variants.card() = " << variants.card() << endl;
+			cout << "A) variants = " << variants.iter().show() << endl;
 		}
 		Assertion* ass = prop_unif.data->ass;
 		uint max_gain = 0;
@@ -331,7 +331,7 @@ unique_ptr<map<const Assertion*, Shortcut>> find_proof_shortcuts(Proof* proof, c
 								throw Error("must be a Step or Hyp");
 							}
 						});
-						find_shortcuts1(step, shortcuts, matched_hyps, prop_unif, hyps, watchdog);
+						find_shortcuts(step, shortcuts, matched_hyps, prop_unif, hyps, watchdog);
 					} else {
 						Shortcut shortcut(step, std::move(Subst2Substitution(prop_unif.sub)));
 						if (shortcut.gain(prop_unif.data->ass) > 0) {

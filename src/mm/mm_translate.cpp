@@ -40,7 +40,7 @@ inline rus::Token translate_token(const Token& t, const Maps& maps) {
 
 inline uint translate_const_symb(uint s) {
 	auto p = math_consts().find(s);
-	if (p == math_consts().end()) {
+	if (p == math_consts().end() || Sys::get().config.has("ascii")) {
 		return s;
 	} else {
 		return p->second.symb;
@@ -49,7 +49,7 @@ inline uint translate_const_symb(uint s) {
 
 inline uint translate_var_symb(uint s) {
 	auto p = math_vars().find(s);
-	if (p == math_vars().end()) {
+	if (p == math_vars().end() || Sys::get().config.has("ascii")) {
 		return s;
 	} else {
 		return p->second.var;
@@ -99,7 +99,7 @@ rus::Expr translate_expr(const Expr& ex, const Assertion* ass, const Maps& maps)
 			}
 		} else {
 			auto p = math_consts().find(s);
-			if (p == math_consts().end()) {
+			if (p == math_consts().end() || Sys::get().config.has("ascii")) {
 				e.symbols.push_back(make_unique<rus::Const>(s));
 			} else {
 				e.symbols.push_back(make_unique<rus::Const>(p->second.symb));
@@ -119,7 +119,7 @@ void translate_constant(const Const* constant, Maps& state) {
 		if (s != turnstile()) {
 			rus::Constant* c = nullptr;
 			auto p = math_consts().find(s);
-			if (p == math_consts().end()) {
+			if (p == math_consts().end() || Sys::get().config.has("ascii")) {
 				c = new rus::Constant(s, -1, -1);
 			} else {
 				c = new rus::Constant(p->second.symb, p->second.ascii, p->second.latex);
