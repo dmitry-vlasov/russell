@@ -156,9 +156,9 @@ inline map<uint, Constant>& math_consts() {
 // Weird variables
 inline map<uint, Variable>& math_vars() {
 	static map<uint, Variable> table = {
-			{make_key(".,"),   Variable(Lex::toInt(".cm"))},
-			{make_key(".(x)"), Variable(Lex::toInt(".[x]"))},
-			{make_key(".(+)"), Variable(Lex::toInt(".[+]"))}
+			{make_key(".,"),   Variable(Lex::toInt("xcm"))},
+			{make_key(".(x)"), Variable(Lex::toInt("xml"))},
+			{make_key(".(+)"), Variable(Lex::toInt("xpl"))}
 	};
 	return table;
 }

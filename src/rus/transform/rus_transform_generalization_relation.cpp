@@ -28,7 +28,6 @@ unique_ptr<Theorem> make_gen_rel_theorem(const GenRel& rel, uint th_name) {
 	}
 	step->expr = ret->prop->expr;
 	ret->proof->steps.emplace_back(step);
-	ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
 	return ret;
 }
 

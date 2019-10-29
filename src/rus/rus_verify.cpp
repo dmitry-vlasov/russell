@@ -122,11 +122,6 @@ void Step::verify(uint mode, Disj* disj) const {
 	}
 }
 
-void Qed::verify(uint mode) const {
-	if ((mode & VERIFY_QED) && (prop->expr != step->expr))
-		throw Error("qed prop doesn't match qed step", prop->expr.show() + " != " + step->expr.show());
-}
-
 void Proof::verify(uint mode, Disj* disj) const {
 	//cout << "PROOF OF " << Lex::toStr(theorem->id()) << endl;
 	//if (theorem->id() == Lex::toInt("19.8w")) {
@@ -135,8 +130,8 @@ void Proof::verify(uint mode, Disj* disj) const {
 	for (const auto& step : steps) {
 		step->verify(mode, disj);
 	}
-	if (qed) {
-		qed->verify(mode);
+	if ((mode & VERIFY_QED) && qed()->expr != theorem->prop->expr) {
+		throw Error("qed prop doesn't match qed step", theorem->prop->expr.show() + " != " + qed()->expr.show());
 	}
 }
 

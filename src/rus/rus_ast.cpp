@@ -257,10 +257,7 @@ static AbstProof::Node* abstProof(const Step* step) {
 }
 
 AbstProof Proof::abst() const {
-	if (!qed) {
-		throw Error("no qed in a proof");
-	}
-	return abstProof(qed->step);
+	return abstProof(qed());
 }
 
 static void complete_expr_vars(const Expr& expr, Vars& vars, std::function<bool(uint)> decled_somewehre_else = [](uint) { return false; }) {

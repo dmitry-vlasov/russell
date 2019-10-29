@@ -6,7 +6,7 @@ namespace mdl { namespace rus {
 
 void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 	set<const Step*> used_steps;
-	traverseProof(proof->qed->step, [&used_steps](Writable* n) {
+	traverseProof(proof->qed(), [&used_steps](Writable* n) {
 		if (Step* s = dynamic_cast<Step*>(n)) {
 			used_steps.insert(s);
 		}
@@ -46,7 +46,6 @@ void reduce_unused_steps(Proof* proof, std::atomic<int>& counter) {
 			throw Error("diff must be > 0");
 		}
 		proof->steps = std::move(new_steps);
-		proof->qed->step = steps_map.at(proof->qed->step);
 		//proof->theorem->verify();
 		//cout << *proof->theorem << endl;
 	}

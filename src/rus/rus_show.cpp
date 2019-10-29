@@ -169,11 +169,6 @@ void Ref::write(ostream& os, const Indent& i) const {
 	}
 }
 
-void Qed::write(ostream& os, const Indent& i) const {
-	os << i << "qed prop = ";
-	os << "step " << (step->ind() + 1) << " " << END_MARKER << "\n";
-}
-
 void Proof::write(ostream& os, const Indent& i) const {
 	os << i << "proof ";
 	if (vars.v.size()) {
@@ -185,9 +180,6 @@ void Proof::write(ostream& os, const Indent& i) const {
 	os << "{\n";
 	for (const auto& step : steps) {
 		step->write(os, i + 1);
-	}
-	if (qed) {
-		qed->write(os, i + 1);
 	}
 	os << i << "}\n";
 }

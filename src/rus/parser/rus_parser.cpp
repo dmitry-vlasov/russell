@@ -50,7 +50,6 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	const phoenix::function<MakeString>     makeString;
 	const phoenix::function<AppendComment>  appendComment;
 	const phoenix::function<AddProofStep>   addProofStep;
-	const phoenix::function<AddProofQed>    addProofQed;
 	const phoenix::function<AddStepRefs>    addStepRefs;
 	const phoenix::function<AddToAssertion> addToAssertion;
 	const phoenix::function<AddToTheory>    addToTheory;
@@ -122,18 +121,9 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 		> expr(_b, phoenix::at_c<1>(*_val))
 		> lit(END_MARKER);
 
-	qed =
-		lit("qed")
-		> lit("prop") [_val = new_<Qed>()]
-		> lit("=")
-		> lit("step") [phoenix::at_c<0>(*_val) = getProp(_r1)]
-		> uint_       [phoenix::at_c<1>(*_val) = getStep(qi::labels::_1 - 1, _r1)]
-		> END_MARKER;
-
 	proof_body =
 		  lit("{")     [pushVars(phoenix::ref(var_stack))]
 		> + (step(_r1) [addProofStep(_r1, qi::labels::_1)])
-		> qed(_r1)     [addProofQed(_r1, qi::labels::_1)]
 		> lit("}")     [popVars(phoenix::ref(var_stack))];
 
 	proof =
@@ -276,7 +266,6 @@ Grammar::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	qi::on_success(prop,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(ref,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(step,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(qed,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(proof,     setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 
 	qi::on_success(axiom,   setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

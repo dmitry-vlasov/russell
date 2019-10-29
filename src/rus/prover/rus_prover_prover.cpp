@@ -2,8 +2,8 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Prover::Prover(rus::Qed* q, Tactic* t) :
-	Prover(q->step->proof()->theorem, q->prop, t) {
+Prover::Prover(rus::Step* q, Tactic* t) :
+	Prover(q->proof()->theorem, q->proof()->theorem->prop.get(), t) {
 }
 
 Prover::Prover(rus::Theorem* thm, rus::Prop* p, Tactic* t) : Space(t),
@@ -147,8 +147,6 @@ void Prover::buildUpHyp(Hyp* h) {
 vector<unique_ptr<rus::Proof>> Prover::proved() {
 	vector<unique_ptr<rus::Proof>> ret(Space::proved());
 	for (auto& proof : ret) {
-		rus::Step* st = proof->steps.back().get();
-		proof->qed = make_unique<Qed>(prop_.get(), st);
 		proof->theorem = theorem;
 	}
 	return ret;

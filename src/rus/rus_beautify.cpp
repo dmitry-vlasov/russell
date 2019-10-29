@@ -87,7 +87,7 @@ void beautify(Assertion& a) {
 	a.prop->expr = std::move(apply(opt_inds, a.prop->expr));
 	complete_assertion_vars(&a);
 	if (Theorem* th = dynamic_cast<Theorem*>(&a)) {
-		traverseProof(th->proof->qed->step,[&opt_inds](Writable* w) {
+		traverseProof(th->proof->qed(),[&opt_inds](Writable* w) {
 			if (Step* step = dynamic_cast<Step*>(w)) {
 				step->expr = std::move(apply(opt_inds, step->expr));
 			}

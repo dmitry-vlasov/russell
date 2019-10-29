@@ -232,9 +232,8 @@ struct Expr : public Writable, public WithToken {
 	void write(ostream& os, const Indent& indent = Indent()) const override {
 		if (symbols.size()) {
 			os << indent;
-			os << *symbols.at(0);
-			for (uint i = 1; i < symbols.size(); ++ i) {
-				os << " " << *symbols.at(i);
+			for (uint i = 0; i < symbols.size(); ++ i) {
+				os << *symbols.at(i) << " ";
 			}
 		}
 	}

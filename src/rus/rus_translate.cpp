@@ -264,9 +264,7 @@ vector<unique_ptr<mm::Var>> translate_inners(const Vars& vars, Maps& maps, const
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<mm::Ref>& mm_proof, Maps& maps) {
 	maps.local.thm->innerVars = std::move(translate_inners(proof->vars, maps, thm, maps.local.thm->innerVars.size()));
-	if (proof->qed) {
-		translate_step(proof->qed->step, thm, mm_proof, maps);
-	}
+	translate_step(proof->qed(), thm, mm_proof, maps);
 }
 
 mm::Assertion* translate_proof(const Proof* proof, Maps& maps) {

@@ -366,8 +366,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 	}
 	rus::Proof* p = new rus::Proof(thm);
 	p->vars = std::move(translate_vars(ass->innerVars));
-	rus::Step* st = translate_step(tree, p, thm, state, ass);
-	p->qed = make_unique<rus::Qed>(thm->prop.get(), st);
+	translate_step(tree, p, thm, state, ass);
 	thm->proof.reset(p);
 	p->token.set(state.source);
 	delete tree;

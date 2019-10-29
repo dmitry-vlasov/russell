@@ -9,7 +9,7 @@ struct Prover : public Space {
 	template<class T>
 	using IndexMap = unify::IndexMap<T>;
 
-	Prover(rus::Qed*, Tactic*);
+	Prover(rus::Step*, Tactic*);
 	Prover(rus::Theorem*, rus::Prop*, Tactic*);
 
 	void registerNode(Node* n) {

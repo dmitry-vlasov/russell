@@ -91,9 +91,7 @@ size_t memvol(const Assertion& ass) {
 size_t memvol(const Ref& ref) {
 	return 0;
 }
-size_t memvol(const Qed& qed) {
-	return 0;
-}
+
 size_t memvol(const Step& step) {
 	size_t s = 0;
 	s += memvol(step.expr);
@@ -107,7 +105,6 @@ size_t memvol(const Proof& proof) {
 	size_t s = 0;
 	s += memvol(proof.vars);
 	s += proof.steps.capacity() * sizeof(Step);
-	s += proof.qed ? sizeof(Qed) : 0;
 	for (const auto& step : proof.steps) {
 		s += memsize(*step);
 	}

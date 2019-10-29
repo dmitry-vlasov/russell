@@ -281,13 +281,6 @@ struct AddProofStep {
 	}
 };
 
-struct AddProofQed {
-	struct result { typedef void type; };
-	void operator()(Proof* p, Qed* q) const {
-		p->qed.reset(q);
-	}
-};
-
 struct AddStepRefs {
 	struct result { typedef void type; };
 	void operator()(Step* s, vector<Ref*> rs) const {
@@ -360,7 +353,6 @@ struct Grammar : qi::grammar<LocationIter, rus::Source*(), unicode::space_type> 
 	qi::rule<LocationIter, Ref*(Proof*), unicode::space_type> ref;
 	qi::rule<LocationIter, vector<Ref*>(Proof*), unicode::space_type> refs;
 	qi::rule<LocationIter, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Id, vector<Ref*>>, unicode::space_type> step;
-	qi::rule<LocationIter, Qed*(Proof*), unicode::space_type> qed;
 	qi::rule<LocationIter, void(Proof*), unicode::space_type> proof_body;
 	qi::rule<LocationIter, Proof*(Theorem*), unicode::space_type> proof;
 	qi::rule<LocationIter, Theorem*(), unicode::space_type> theorem;
@@ -393,7 +385,6 @@ inline void Grammar::initNames() {
 	ref.name("ref");
 	refs.name("refs");
 	step.name("step");
-	qed.name("qed");
 	proof_body.name("proof_body");
 	proof.name("proof");
 	theorem.name("theorem");

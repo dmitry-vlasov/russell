@@ -86,17 +86,9 @@ static T* find_obj(Step* step, const char* pos) {
 }
 
 template<class T>
-static T* find_obj(Qed* qed, const char* pos) {
-	return qed->token.includes(pos) ? dynamic_cast<T*>(qed) : nullptr;
-}
-
-template<class T>
 static T* find_obj(Proof* proof, const char* pos) {
 	if (proof->token.includes(pos)) {
 		if (T* t = find_obj<T>(proof->vars, pos)) {
-			return t;
-		}
-		if (T* t = find_obj<T>(proof->qed, pos)) {
 			return t;
 		}
 		for (auto& step : proof->steps) {

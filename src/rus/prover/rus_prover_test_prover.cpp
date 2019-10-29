@@ -21,12 +21,12 @@ static bool proof_has_shared(const Proof* p) {
 	return false;
 }
 
-Return test_proof_with_oracle(uint i, const Proof* p, uint max_proofs) {
+Return test_proof_with_oracle(uint i, Proof* p, uint max_proofs) {
 	string msg;
 	msg +=  "testing proof of " + Lex::toStr(p->theorem->id()) + string(i == -1 ? "" : " (no. " + to_string(i) + ")") + " ... ";
 	Timer timer; timer.start();
 	Oracle* oracle = new prover::Oracle(p);
-	prover::Prover prover(p->qed.get(), oracle);
+	prover::Prover prover(p->qed(), oracle);
 	prover.setMaxProofs(max_proofs);
 	try {
 		//bool orig_proof_has_shared = proof_has_shared(p);
@@ -85,12 +85,12 @@ Return test_all_with_oracle(uint max_proofs, uint max_proof_len) {
 		}
 	);
 #endif
-	vector<const Proof*> proofs;
+	vector<Proof*> proofs;
 	const Proof* longest_proof = nullptr;
 	for (Assertion* ass : assertions) {
 		//cout << "adding source: " << Lex::toStr(src->id()) << " to a test sample" << endl;
 		if (Theorem* theorem = dynamic_cast<Theorem*>(ass)) {
-			const Proof* proof = theorem->proof.get();
+			Proof* proof = theorem->proof.get();
 			uint proof_len = proof->steps.size();
 			if (!longest_proof  || proof_len > longest_proof->steps.size()) {
 				longest_proof = proof;
@@ -147,9 +147,9 @@ Return test_with_oracle(string theorem, uint max_proofs, uint max_proof_len) {
 	if (!theorem.size()) {
 		return test_all_with_oracle(max_proofs, max_proof_len);
 	} else {
-		const rus::Assertion* ass = Sys::get().math.get<rus::Assertion>().access(Lex::toInt(theorem));
-		if (const rus::Theorem* th = dynamic_cast<const rus::Theorem*>(ass)) {
-			if (const rus::Proof* pr = th->proof.get()) {
+		rus::Assertion* ass = Sys::mod().math.get<rus::Assertion>().access(Lex::toInt(theorem));
+		if (rus::Theorem* th = dynamic_cast<rus::Theorem*>(ass)) {
+			if (rus::Proof* pr = th->proof.get()) {
 				Return r = test_proof_with_oracle(-1, pr, max_proofs);
 				if (!r.success()) {
 					debug_oracle = true;

@@ -398,16 +398,6 @@ inline const Expr& Ref::expr() const {
 	return step()->expr;
 }
 
-struct Qed : public Writable, public WithToken {
-	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
-		WithToken(t), prop(p), step(s) { }
-	Qed(const Qed&) = delete;
-	void verify(uint mode = VERIFY_ALL) const;
-	Prop* prop;
-	Step* step;
-	void write(ostream& os, const Indent& i = Indent()) const override;
-};
-
 struct Proof : public Writable, public WithToken {
 	Proof(Theorem* th = nullptr, const Token& t = Token());
 	Proof(const Proof&) = delete;
@@ -416,13 +406,14 @@ struct Proof : public Writable, public WithToken {
 	bool check(uint mode = VERIFY_ALL) const;
 	AbstProof abst() const;
 	void write(ostream& os, const Indent& i = Indent()) const override;
+	Step* qed() { return steps.back().get(); }
+	const Step* qed() const { return steps.back().get(); }
 
 	Vars vars;
 	Disj disj;
 	vector<unique_ptr<Step>> steps;
 	Theorem* theorem;
 	Proof* par;
-	unique_ptr<Qed> qed;
 	bool inner;
 };
 

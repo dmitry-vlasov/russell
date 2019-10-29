@@ -19,7 +19,7 @@ typedef cmap<Assertion*, HypsInfo> HypsInfoMap;
 
 HypsInfo find_unused_hyps(Theorem* th, std::atomic<int>& hyp_counter, std::atomic<int>& step_counter) {
 	set<Hyp*> used_hyps;
-	traverseProof(th->proof->qed->step, [&used_hyps](Writable* n) {
+	traverseProof(th->proof->qed(), [&used_hyps](Writable* n) {
 		if (Hyp* h = dynamic_cast<Hyp*>(n)) {
 			used_hyps.insert(h);
 		}

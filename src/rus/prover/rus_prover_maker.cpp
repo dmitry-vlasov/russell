@@ -484,8 +484,7 @@ unique_ptr<Theorem> Maker::make() {
 			});
 			rus::Step* step = ret->proof->steps.back().get();
 			ret->prop = make_unique<rus::Prop>(step->expr);
-			ret->proof->qed = make_unique<Qed>(ret->prop.get(), step);
-			rus::traverseProof(ret->proof->qed->step, [&map_hyp2ret](Writable* n) {
+			rus::traverseProof(ret->proof->qed(), [&map_hyp2ret](Writable* n) {
 				if (rus::Step* s = dynamic_cast<rus::Step*>(n)) {
 					for (auto& r : s->refs) {
 						if (rus::Hyp* h = r->hyp()) {

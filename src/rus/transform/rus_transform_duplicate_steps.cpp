@@ -37,7 +37,6 @@ void reduce_duplicate_steps(Proof* proof, std::atomic<int>& counter) {
 		counter.store(counter.load() + diff);
 	}
 	proof->steps = std::move(new_steps);
-	proof->qed->step = steps_map.at(proof->qed->step);
 	//proof->theorem->verify();
 }
 

@@ -301,7 +301,7 @@ unique_ptr<map<const Assertion*, Shortcut>> find_proof_shortcuts(Proof* proof, c
 	unique_ptr<map<const Assertion*, Shortcut>> shortcuts = make_unique<map<const Assertion*, Shortcut>>();
 	Watchdog watchdog(1000, "reduce shortcuts in " + Lex::toStr(proof->theorem->id()));
 	try {
-		traverseProof(proof->qed->step, [proof, &props, &hyps, &propIndex, &hypIndex, &watchdog](Writable* n) {
+		traverseProof(proof->qed(), [proof, &props, &hyps, &propIndex, &hypIndex, &watchdog](Writable* n) {
 			if (Step* step = dynamic_cast<Step*>(n)) {
 				proc_proof_node<Step>(step, props, hyps, proof, propIndex, hypIndex, watchdog);
 			} else if (Hyp* hyp = dynamic_cast<Hyp*>(n)) {
@@ -310,7 +310,7 @@ unique_ptr<map<const Assertion*, Shortcut>> find_proof_shortcuts(Proof* proof, c
 				throw Error("must be a Step or Hyp");
 			}
 		});
-		traverseProof(proof->qed->step, [&props, &hyps, &shortcuts, &watchdog](Writable* n) {
+		traverseProof(proof->qed(), [&props, &hyps, &shortcuts, &watchdog](Writable* n) {
 			watchdog.check();
 			if (Step* step = dynamic_cast<Step*>(n)) {
 				for (PropIndex::Unified& prop_unif : props.at(Ref(step))) {
