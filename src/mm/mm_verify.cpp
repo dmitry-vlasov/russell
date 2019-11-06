@@ -65,13 +65,13 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 }
 
 template<typename T>
-static void checkSymbols(const Assertion* ass, const vector<unique_ptr<T>>& lines) {
+void checkSymbols(const Assertion* ass, const vector<unique_ptr<T>>& lines) {
 	for (const auto& line : lines) {
 		checkSymbols(ass, line.get()->expr);
 	}
 }
 
-static void checkFloating(const Assertion* ass, const vector<unique_ptr<Var>>& floatings) {
+void checkFloating(const Assertion* ass, const vector<unique_ptr<Var>>& floatings) {
 	for (const auto& flo : floatings) {
 		if (flo.get()->expr.size() != 2) {
 			throw Error("floating declaration must have exactly 2 symbols", ass->token);
@@ -85,7 +85,7 @@ static void checkFloating(const Assertion* ass, const vector<unique_ptr<Var>>& f
 	}
 }
 
-static void checkDisjointed(const Assertion* ass, Literal var) {
+void checkDisjointed(const Assertion* ass, Literal var) {
 	for (uint v : ass->vars.vars) {
 		if (v == var.lit) return;
 	}
@@ -93,7 +93,7 @@ static void checkDisjointed(const Assertion* ass, Literal var) {
 }
 
 
-static void checkDisjointed(const Assertion* ass, const Disj& disj) {
+void checkDisjointed(const Assertion* ass, const Disj& disj) {
 	for (const auto& d : disj.vect) {
 		for (auto s : *d.get()) {
 			checkDisjointed(ass, s);
@@ -101,7 +101,7 @@ static void checkDisjointed(const Assertion* ass, const Disj& disj) {
 	}
 }
 
-static void checkSymbols(const Assertion* ass) {
+void checkSymbols(const Assertion* ass) {
 	checkSymbols(ass, ass->hyps);
 	checkSymbols(ass, ass->outerVars);
 	checkSymbols(ass, ass->innerVars);

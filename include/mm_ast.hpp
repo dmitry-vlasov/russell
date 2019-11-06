@@ -109,6 +109,7 @@ struct Ref : public Writable, WithToken {
 	Hyp* hyp() const { return std::get<Hyp*>(val); }
 	Var* var() const { return std::get<Var*>(val); }
 	const Assertion* ass() const { return std::get<Ass>(val).get(); }
+	Assertion* ass() { return std::get<Ass>(val).get(); }
 
 	uint label() const {
 		switch (kind()) {

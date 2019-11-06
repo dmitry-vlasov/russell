@@ -23,7 +23,8 @@ else()
 		daem.cpp 
 		
 		mm/mm_cut.cpp 
-		mm/mm_sys.cpp 
+		mm/mm_sys.cpp
+		mm/mm_fixsynt.cpp 
 		mm/mm_merge.cpp 
 		mm/mm_inclusions.cpp
 		mm/mm_lookup.cpp
@@ -83,6 +84,7 @@ else()
 		rus/rus_sys.cpp
 		#rus/rus_refactor.cpp  
 		#rus/rus_parser.cpp
+		rus/rus_fixsynt.cpp 
 		rus/rus_read.cpp  
 		rus/rus_show.cpp
 		rus/rus_stats.cpp 

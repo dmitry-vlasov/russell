@@ -61,6 +61,7 @@ void parse_src_peg();
 void parse_src_spirit();
 void read(uint src);
 void min_imports(uint src = -1);
+void fixsynt();
 Return lookup_ref(uint src, uint line, uint col, string what);
 SrcPos insert_theorem(unique_ptr<Theorem>& thm);
 

@@ -269,6 +269,7 @@ struct Expr : public Writable, public WithToken {
 		}
 		return ret;
 	}
+	void rebuildSymbols();
 
 	User<Type> type;
 	Symbols symbols;

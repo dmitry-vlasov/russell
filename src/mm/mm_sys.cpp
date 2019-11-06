@@ -47,6 +47,19 @@ Return options(const vector<string>& args) {
 	return Sys::conf().read(args);
 }
 
+void dump_axioms(const string& out) {
+	ostringstream oss;
+	for (const Assertion& a : Sys::get().math.get<Assertion>()) {
+		if (a.proof.refs.empty()) {
+			for (auto& h : a.hyps) {
+				oss << show_ex(h->expr) << endl;
+			}
+			oss << show_ex(a.expr) << endl;
+		}
+	}
+	Path(out).write(oss.str());
+}
+
 static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",     Descr("read the source",      Descr::Arg("in", "file"))},
@@ -61,6 +74,7 @@ static Descr description(string name) {
 		{"merge",    Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
 		{"lookup",   Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"minimize", Descr("minimize imports",     Descr::Arg("in", "file"))},
+		{"dumpax",   Descr("dump axioms expressions", Descr::Arg("out", "file"))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -84,6 +98,7 @@ const Sys::Actions& Sys::actions() {
 		{"opts",     Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
 		{"lookup",   Action([](const Args& args) { return lookup_ref(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("lookup"))},
 		{"minimize", Action([](const Args& args) { minimize_imports(Sys::make_name(args[0])); return Return(); }, description("minimize"))},
+		{"dumpax",   Action([](const Args& args) { dump_axioms(args[0]); return Return(); }, description("dumpax"))},
 	};
 	return actions;
 }

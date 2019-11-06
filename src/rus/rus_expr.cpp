@@ -138,6 +138,11 @@ inline Expr assemble(Tree* t) {
 	return Expr(Id(t->type()->id()), std::move(s), t);
 }
 
+void Expr::rebuildSymbols() {
+	symbols.clear();
+	assemble(tree(), symbols);
+}
+
 void apply(const Substitution* sub, Expr& e) {
 	apply(sub, e.tree());
 	Symbols sym;

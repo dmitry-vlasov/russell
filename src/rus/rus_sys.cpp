@@ -268,6 +268,7 @@ static Descr description(string name) {
 		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
 		{"types",      Descr("type system")},
+		{"fixsynt",    Descr("make so that all grammar rules start with a terminal symbol")},
 		{"prove",  Descr(
 			"prove theorem automatically",
 			Descr::Arg("in", "file"),
@@ -342,6 +343,7 @@ const Sys::Actions& Sys::actions() {
 		{"outline",    Action([](const Args& args) { return outline(Sys::make_name(args[0]), xml_bits(args[1])); }, description("outline"))},
 		{"struct",     Action([](const Args& args) { return structure(xml_bits(args[0])); }, description("struct"))},
 		{"types",      Action([](const Args& args) { return types(); }, description("types"))},
+		{"fixsynt",    Action([](const Args& args) { fixsynt(); return Return(); }, description("fixsynt"))},
 
 		{"prove",      Action([](const Args& args) { return prove(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); }, description("prove"))},
 
